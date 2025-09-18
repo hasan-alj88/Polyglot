@@ -1,8 +1,8 @@
-# Polyglot Event-Driven Language Documentation
+**# Polyglot Event-Driven Language Documentation
 
 ## Overview
 
-Polyglot is an event-driven orchestration language designed to seamlessly integrate code from multiple programming languages into a single, coherent pipeline. Its core philosophy is pragmatic: **leverage existing legacy code** instead of reinventing the wheel. It acts as a universal glue, allowing you to use the right tool for each job within an asynchronous, event-driven framework.
+Polyglot is an event-driven orchestration language designed to seamlessly integrate code from multiple programming languages into a single, coherent pipeline. Its core philosophy is pragmatic: **leverage existing legacy code** instead of reinventing the wheel. It acts as universal glue, allowing you to use the right tool for each job within an asynchronous, event-driven framework.
 
 **Note:** This language is currently in the brainstorming phase. Nothing concrete has been built yet, and we need to plan and collaborate to make it happen. This documentation serves two audiences: developers who will build this language, and future users who need to understand what to expect and how to use it.
 
@@ -10,8 +10,8 @@ Polyglot is an event-driven orchestration language designed to seamlessly integr
 
 - **Embrace Legacy Code:** Polyglot isn't another general-purpose language. It's a bridge builder, designed to integrate and orchestrate existing code from Python, JavaScript, Rust, C++, and more.
 - **Asynchronous by Default:** Every operation is inherently async, enabling efficient coordination between interpreted runtime scripts and compiled build-time processes.
-- **The Right Tool for the Job:** The language remains agnostic, allowing you to choose the best language for each specific task in a workflow.
-- **Pipeline-Centric Thinking:** Unlike traditional synchronous functions, Polyglot uses pipelines - compositions of chained, parallel, and switching events that trigger asynchronously when conditions allow.
+- **The Right Tool for the Job:** The language remains agnostic, allowing you to choose the best language for each task in a workflow.
+- **Pipeline-Centric Thinking:** Unlike traditional synchronous functions, Polyglot uses pipelines—compositions of chained, parallel, and switching events that trigger asynchronously when conditions allow.
 
 ### Primary Goals
 
@@ -35,7 +35,7 @@ Every Event must be structured in one of two ways:
 2. **Inputs (`[i]`)** - The data the event requires.
 3. **Setup (`[\]`)** - Pre-processing to acquire resources (e.g., open files, start runtimes).
 4. **Process (`[r]`)** - The main execution (run code, call functions).
-5. **Clean-up (`[/]`)** - Post-processing to release resources.
+5. **Cleanup (`[/]`)** - Post-processing to release resources.
 
 **Context Manager Form (Simplified):**
 
@@ -46,21 +46,21 @@ Every Event must be structured in one of two ways:
 
 ### Terminology
 
-| Term | Meaning |
-| --- | --- |
-| **Event** | A single execution block with inputs, wrapped processing, and outputs. |
-| **Pipeline** | A series of events connected through chaining, parallel execution, or switching. |
-| **Trigger** | An asynchronous condition that permits an event to execute. |
-| **Macro** | A reusable template for events, often containing a standard setup/cleanup pattern. |
+| Term         | Meaning                                                                            |
+|--------------|------------------------------------------------------------------------------------|
+| **Event**    | A single execution block with inputs, wrapped processing, and outputs.             |
+| **Pipeline** | A series of events connected through chaining, parallel execution, or switching.   |
+| **Trigger**  | An asynchronous condition that permits an event to execute.                        |
+| **Macro**    | A reusable template for events, often containing a standard setup/cleanup pattern. |
 
 ### Under the Hood
 
 Polyglot code compiles down to an **async orchestration layer** that manages:
 
 - **Language Runtimes:** Persistent or on-demand processes for Python, JS, Rust, Go, C++, etc.
-- **Bridges:** There are two kinds of binding:-
-  - first is though usual binding basically it will repeat the steps you would have done using exiting tool to bind which leverages existing tools like PyBind11, Node's `child_process`, FFI, and legacy tool that will bind lanuage to other under the hood.
-  - Taking advantage to async nature of polyglot by complie and use on the fly truning things that are complie-time only into a runtime. For example if you have a rust function that will accept array of fixed size. you convert you python list into fixed rust array then use that and convert it back.
+- **Bridges:** There are two kinds of binding: -
+  - first is though usual binding basically it will repeat the steps you would have done using exiting tool to bind which leverages existing tools like PyBind11, Node's `child_process`, FFI, and legacy tool that will bind language to other under the hood.
+  - Taking advantage of the async nature of polyglot by compiling and using on the fly turning things that are compile-time only into a runtime. For example, if you have a rust function that will accept an array of fixed size. you convert your python list into a fixed rust array, then use that and convert it back.
 - **Resource Lifecycle:** Manages connection pools, file handles, and memory cleanup across languages.
 - **Dependency Graph:** Analyzes variables to enforce correct execution order and prevent races.
 
@@ -68,27 +68,27 @@ Polyglot code compiles down to an **async orchestration layer** that manages:
 
 ### Structural Elements (Dual Form Support)
 
-Polyglot supports both compact and verbose notation for all elements. However, I would recommad using compact form for nicely formatted code.
+Polyglot supports both compact and verbose notation for all elements. However, I would recommend using compact form for nicely formatted code.
 
-| Compact | Verbose | Purpose |
-| --- | --- | --- |
-| `[@]` | `[e]` / `[event]` | Define or start a pipeline. |
-| `[i]` | `[input]` | Define an input. |
-| `[t]` | `[trigger]` | Define a trigger condition. |
-| `[\]` | `[setup]` | Pre-processing and resource setup. |
-| `[r]` | `[run]` | Main process execution. |
-| `[/]` | `[clean]` | Post-processing and resource cleanup. |
-| `[x]` | `[exit]` | End a pipeline or branch. |
-| `[^]` | `[wrap]` | Apply a context manager (macro with built-in setup/cleanup). |
-| `[?]` | `[switch]` | Switch (flow control) statement. |
-| `[!]` | `[error]` | Error handler. |
-| `[f]` | `[fork]` | Start a parallel (forked) branch. |
-| `[j]` | `[join]` | Join parallel branches and consolidate results. |
-| `[b]` | `[back]` | Start a background branch (fire-and-forget). |
-| `[M]` | `[macro]` | Define or use a Macro. |
-| `[v]` | `[inject]` | Injection slot (used inside Macros). |
-| `[~]` |     | Branch depth indicator - always means "as above". |
-| `[D]` | `[Define]` | Used to define custom types and imports. |
+| Compact | Verbose           | Purpose                                                      |
+|---------|-------------------|--------------------------------------------------------------|
+| `[@]`   | `[e]` / `[event]` | Define or start a pipeline.                                  |
+| `[i]`   | `[input]`         | Define an input.                                             |
+| `[t]`   | `[trigger]`       | Define a trigger condition.                                  |
+| `[\]`   | `[setup]`         | Pre-processing and resource setup.                           |
+| `[r]`   | `[run]`           | Main process execution.                                      |
+| `[/]`   | `[clean]`         | Post-processing and resource cleanup.                        |
+| `[x]`   | `[exit]`          | End a pipeline or branch.                                    |
+| `[^]`   | `[wrap]`          | Apply a context manager (macro with built-in setup/cleanup). |
+| `[?]`   | `[switch]`        | Switch (flow control) statement.                             |
+| `[!]`   | `[error]`         | Error handler.                                               |
+| `[f]`   | `[fork]`          | Start a parallel (forked) branch.                            |
+| `[j]`   | `[join]`          | Join parallel branches and consolidate results.              |
+| `[b]`   | `[back]`          | Start a background branch (fire-and-forget).                 |
+| `[M]`   | `[macro]`         | Define or use a Macro.                                       |
+| `[v]`   | `[inject]`        | Injection slot (used inside Macros).                         |
+| `[~]`   |                   | Branch depth indicator - always means "as above".            |
+| `[D]`   | `[Define]`        | Used to define custom types and imports.                     |
 
 ### The `[~]` Element: "As Above" Consistency
 
@@ -155,13 +155,13 @@ Elements are defined with the new unified form:
 - **`[r] Label: DataType = @[PipelineLabel](args: type,...)`**: Call another pipeline with result assignment.
 - **`[t] Label: boolean = t[TriggerType](args: type,...)`**: Define a trigger condition.
 - **`[r] Label: DataType = r[Lang](code: string, args: type, ...)`**: Run code in specified language.
-- **`[?] SwitchLabel: DataType = ?[var: DataType]`**: Capture value for switch statement.
-- **`[!] ErrorLabel: ErrorType = ![~]`**: Capture error from operation above.
+- **`[?] SwitchLabel: DataType = ?[var: DataType]`**: Capture value for a switch statement.
+- **`[!] ErrorLabel: ErrorType = ![~]`**: Capture error from the operation above.
 - **`[i] Label: DataType2 = value: DataType1`**: Define input value (conversion if types differ).
 
 **Label Rules:**
 
-- **Labels are optional**: Omit when return value is unused or operation is void
+- **Labels are optional**: Omit when a return value is unused or the operation is void
 - **DataType required**: All variables must specify datatype except Events/Pipelines
 - **Assignment syntax**: Use `=` for all assignments and function calls
 
@@ -173,13 +173,13 @@ Polyglot uses a flexible type system to bridge different languages while preserv
 
 - **`Event` / `Pipeline`**: For calling other pipelines
 - **`bool`**: True/False values
-  - bit-operations keywords `NOT`, `OR`,`AND`, `XOR`.  
+  - bit-operations keywords `NOT`, `OR`,`AND`, `XOR`.
 - **`Time`**: Formatted as `YYYY-MM-DDThh:mm:ss.000000`
-  - 1ns = `T"1"`
-  - 1ms = `T"1000"`
-  - 1s = `T"1."`
-  - 1m = `T"1:."`
-  - 1h = `T"1::."`
+  - 1 ns = `T"1"`
+  - 1 ms = `T"1000"`
+  - 1 s = `T"1."`
+  - 1 m = `T"1:."`
+  - 1 h = `T"1::."`
   - 1 day = `T"1T"`
   - 1 month = `T"-1-"`
   - 1 year = `T"1--"`
@@ -272,6 +272,7 @@ The `pg\outputs` type automatically adapts based on pipeline outputs:
 
 ```polyglot
 [@] SomePipeline
+[t] t[Call] \\ tiggered by 
 [r] OutputLabel: py\int = some_calculation
 [x]
 
@@ -282,6 +283,33 @@ The `pg\outputs` type automatically adapts based on pipeline outputs:
 // If pipeline has only one output, pg\outputs becomes that type automatically
 [r] PipelineOutputs: py\int = @[SomePipeline]  // Also valid
 [x]
+```
+
+Can access the pipeline (available) outputs via dot access.
+
+```polyglot
+[@] SomePipeline
+[t] t[call]
+[^] PythonWapper
+[r] output1: string = r[SomeProcess1]
+[r] output2: py\int = r[SomeProcess2]
+[r] @[SomeRiskcyProcess]
+[x]
+
+[@] OtherPipline
+[t] t[TriggerEvery](T"16::.") // every 4PM
+[^] PythonWapper
+[r] PipelineOutputs: pg\outputs = @[SomePipeline]
+\\ can check for errors
+[!] MyError: pg\error = ![PipelineOutputs]
+[!] <| Default MyError
+[~][r] = @[HandleDefaultError]()
+[~][x]
+\\ can use its outputs 
+[r] input1: rust\i32 =  PipelineOutputs.output2 : py\int \\convert
+[r] output3: rust\i32 = @[SomeOtherPipline](input1: rust\i32)
+[r] @[Print](PipelineOutputs.output2 : string)
+
 ```
 
 ### Custom Type Definition Example
@@ -390,9 +418,9 @@ Use `[f] <|` to fork parallel branches and `[j]` to join them and collect result
 
 - All forked branches must join before the end of the whole pipeline
 - The returns from branches can be used only in `[j]` otherwise compile error
-- Race condition must be specified:
+- Race conditions must be specified:
   - `j[JoinFirst]`: assigns the first received result to the join label
-  - `j[JoinAll]`: awaits all watch list to join before proceeding
+  - `j[JoinAll]`: awaits all watch lists to join before proceeding
 
 ### 3. Switching
 
@@ -454,7 +482,7 @@ Errors bubble up unless caught. Use `[!]` to define error handlers.
 
 **Branch Termination Options:**
 
-- `[~][x]`: Continue pipeline after the branch
+- `[~][x]`: Continue a pipeline after the branch
 - `[~][x] @[Exit]`: Terminate the entire pipeline
 - Panic: Halt program and force compilation error fixes
 
@@ -484,71 +512,73 @@ Macros (`[M]`) are reusable event templates. The `[v]` element is a placeholder 
 [x]
 ```
 
-### ## Context Managers: The `[^]` Wrapper Element
+### ## Context Managers: The`[^]`Wrapper Element
 
-The `[^]` (wrap) element is a powerful syntax sugar designed to make resource management safe, explicit, and incredibly easy to use. It encapsulates the common pattern of "setup a resource, use it, then clean it up" into a single, clean line of code.
+The`[^]`(wrap) element is a powerful syntax sugar designed to make resource management safe, explicit, and incredibly easy to use. It encapsulates the common pattern of "setup a resource, use it, then clean it up" into a single, clean line of code.
 
 ### For the User: What to Expect
 
-Imagine you need to open a file, process it, and ensure it gets closed even if an error occurs. In traditional languages, this requires careful `try/finally` blocks. In Polyglot, you just wrap your process:
+Imagine you need to open a file, process it, and ensure it gets closed even if an error occurs. In traditional languages, this requires careful`try/finally`blocks. In Polyglot, you wrap your process:
 
 polyglot
-
+```
 [@] SafeFileProcessing
 [i] FilePath: string = "data.txt"
 // The clean, user-friendly way:
 [^] FileHandler: c++\ofstream = @[FileManager](FilePath) // Setup & Cleanup handled here
 [r] Content: string = @[ReadFile](FileHandler) // Your code runs in the middle
 [x]
+```
 
-**Functionally, the `[^]` line means:** "Before the next step runs, execute the setup phase of the `@[FileManager]` macro. After the subsequent steps in this event finish (whether they succeed or fail), automatically execute its cleanup phase."
+**Functionally, the`[^]`line means:** "Before the next step runs, execute the setup phase of the`@[FileManager]`macro. After the subsequent steps in this event finish (whether they succeed or fail), automatically execute its cleanup phase."
 
 This ensures resources like file handles, database connections, network sockets, and language runtime contexts are never leaked.
 
 ### Under the Hood: It's a Macro
 
-The `[^]` element is not magic; it's elegant syntax sugar. **It compiles directly to a Macro invocation.**
+The `[^]` element is not magic; it's elegant syntax sugar.**It compiles directly to a Macro invocation.**
 
 The example above is functionally identical to writing:
 
 polyglot
-
+```
 [@] SafeFileProcessing
 [i] FilePath: string = "data.txt"
 // What the [^] element compiles to:
 [M] FileHandler: c++\ofstream = M[FileManager](SafeFileProcessing[r]) // Inject the next [r] block
 [r] Content: string = @[ReadFile](FileHandler)
 [x]
+```
 
-This means every `[^]` context manager **must** be backed by a Macro (`[M]`) definition that includes:
+This means every`[^]`context manager**must**be backed by a Macro (`[M]`) definition that includes:
 
-1. A `[\]` (setup) section
+1. A`[\]`(setup) section
   
-2. A `[v]` (injection slot) for your code
+2. A`[v]`(injection slot) for your code
   
-3. A `[/]` (cleanup) section
+3. A`[/]`(cleanup) section
   
 
 ### For the Developer: How to Build This
 
-Implementing the `[^]` element requires two components in the compiler:
+Implementing the`[^]`element requires two components in the compiler:
 
-1. **Syntax Translation:** During parsing, a line starting with `[^]` must be transformed into the longer Macro invocation form. The compiler needs to identify the subsequent `[r]` elements and pass them as the injection argument.
+1. **Syntax Translation:**During parsing, a line starting with`[^]`must be transformed into the longer Macro invocation form. The compiler needs to identify the subsequent`[r]`elements and pass them as the injection argument.
   
-2. **A Rich Standard Library:** The power of `[^]` comes from pre-defined macros in the standard library. We will need to build macros like:
+2. **A Rich Standard Library:**The power of`[^]`comes from pre-defined macros in the standard library. We will need to build macros like:
   
-  - `@[FileManager]` - for file handling
+  - `@[FileManager]`- for file handling
     
-  - `@[DatabaseConnection]` - for database connections
+  - `@[DatabaseConnection]`- for database connections
     
-  - `@[PythonRuntime]` - for managing a Python interpreter context
+  - `@[PythonRuntime]`- for managing a Python interpreter context
     
-  - `@[HTTPClient]` - for managing network connections
+  - `@[HTTPClient]`- for managing network connections
     
 
 ### Example: Building a Context Manager Macro
 
-Here is what the `@[FileManager]` macro, used in the example above, would look like:
+Here is what the`@[FileManager]`macro, used in the example above, would look like:
 
 ```polyglot
 // Macro Definition: The engine behind the [^] sugar
@@ -561,7 +591,7 @@ Here is what the `@[FileManager]` macro, used in the example above, would look
 [x]
 ```
 
-The `[^]` element hides this complexity from the user, providing the safety of explicit resource management with the simplicity of "magic."
+The`[^]`element hides this complexity from the user, providing the safety of explicit resource management with the simplicity of "magic."
 
 ### Examples
 
@@ -671,4 +701,4 @@ The `[^]` element hides this complexity from the user, providing the safety of
 [~][r] DefaultData: py\dict = @[GetDefaultData]()
 [~][x]
 [x]
-```
+```**
