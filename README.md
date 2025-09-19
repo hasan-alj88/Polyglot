@@ -70,25 +70,25 @@ Polyglot code compiles down to an **async orchestration layer** that manages:
 
 Polyglot supports both compact and verbose notation for all elements. However, I would recommend using compact form for nicely formatted code.
 
-| Compact | Verbose           | Purpose                                                      |
-|---------|-------------------|--------------------------------------------------------------|
-| `[@]`   | `[e]` / `[event]` | Define or start a pipeline.                                  |
-| `[i]`   | `[input]`         | Define an input.                                             |
-| `[t]`   | `[trigger]`       | Define a trigger condition.                                  |
-| `[\]`   | `[setup]`         | Pre-processing and resource setup.                           |
-| `[r]`   | `[run]`           | Main process execution.                                      |
-| `[/]`   | `[clean]`         | Post-processing and resource cleanup.                        |
-| `[x]`   | `[exit]`          | End a pipeline or branch.                                    |
-| `[^]`   | `[wrap]`          | Apply a context manager (macro with built-in setup/cleanup). |
-| `[?]`   | `[switch]`        | Switch (flow control) statement.                             |
-| `[!]`   | `[error]`         | Error handler.                                               |
-| `[f]`   | `[fork]`          | Start a parallel (forked) branch.                            |
-| `[j]`   | `[join]`          | Join parallel branches and consolidate results.              |
-| `[b]`   | `[back]`          | Start a background branch (fire-and-forget).                 |
-| `[M]`   | `[macro]`         | Define or use a Macro.                                       |
-| `[v]`   | `[inject]`        | Injection slot (used inside Macros).                         |
-| `[~]`   |                   | Branch depth indicator - always means "as above".            |
-| `[D]`   | `[Define]`        | Used to define custom types and imports.                     |
+| Compact | Verbose      | Purpose                                                      |
+|---------|--------------|--------------------------------------------------------------|
+| `[P]`   | `[Pipeline]` | Define or start a pipeline.                                  |
+| `[i]`   | `[input]`    | Define an input.                                             |
+| `[t]`   | `[trigger]`  | Define a trigger condition.                                  |
+| `[\]`   | `[setup]`    | Pre-processing and resource setup.                           |
+| `[r]`   | `[run]`      | Main process execution.                                      |
+| `[/]`   | `[clean]`    | Post-processing and resource cleanup.                        |
+| `[x]`   | `[exit]`     | End a pipeline or branch.                                    |
+| `[^]`   | `[wrap]`     | Apply a context manager (macro with built-in setup/cleanup). |
+| `[?]`   | `[switch]`   | Switch (flow control) statement.                             |
+| `[!]`   | `[error]`    | Error handler.                                               |
+| `[f]`   | `[fork]`     | Start a parallel (forked) branch.                            |
+| `[j]`   | `[join]`     | Join parallel branches and consolidate results.              |
+| `[b]`   | `[back]`     | Start a background branch (fire-and-forget).                 |
+| `[M]`   | `[macro]`    | Define or use a Macro.                                       |
+| `[v]`   | `[inject]`   | Injection slot (used inside Macros).                         |
+| `[~]`   |              | Branch depth indicator - always means "as above".            |
+| `[D]`   | `[Define]`   | Used to define custom types and imports.                     |
 
 ### The `[~]` Element: "As Above" Consistency
 
@@ -125,16 +125,16 @@ Components:
 **With Labels and Types:**
 
 ```polyglot
-[r] Result: py\int = @[CalculateSum](a: py\int, b: py\int)
-[i] UserData: py\dict = @[LoadUser](user_id: py\int)
+[r] Result: py\int = P[CalculateSum](a: py\int, b: py\int)
+[i] UserData: py\dict = P[LoadUser](user_id: py\int)
 [t] FileReady: boolean = t[FileExists](path: string)
 ```
 
 **Without Labels (void or unused returns):**
 
 ```polyglot
-[r] @[LogMessage]("Process started")
-[/] @[CloseConnection](db_handle: string)
+[r] P[LogMessage]("Process started")
+[/] P[CloseConnection](db_handle: string)
 [r] r[py]("print('Hello World')")
 ```
 
@@ -152,7 +152,7 @@ Components:
 
 Elements are defined with the new unified form:
 
-- **`[r] Label: DataType = @[PipelineLabel](args: type,...)`**: Call another pipeline with result assignment.
+- **`[r] Label: DataType = P[PipelineLabel](args: type,...)`**: Call another pipeline with result assignment.
 - **`[t] Label: boolean = t[TriggerType](args: type,...)`**: Define a trigger condition.
 - **`[r] Label: DataType = r[Lang](code: string, args: type, ...)`**: Run code in specified language.
 - **`[?] SwitchLabel: DataType = ?[var: DataType]`**: Capture value for a switch statement.
@@ -271,44 +271,44 @@ Polyglot provides built-in error types using the `pg\!` prefix:
 The `pg\outputs` type automatically adapts based on pipeline outputs:
 
 ```polyglot
-[@] SomePipeline
+[P] SomePipeline
 [t] t[Call] \\ tiggered by 
 [r] OutputLabel: py\int = some_calculation
 [x]
 
-[@] CallingPipeline
-[r] PipelineOutputs: pg\outputs = @[SomePipeline]
-[r] Results: py\int = @[Process](PipelineOutputs.OutputLabel)
+[P] CallingPipeline
+[r] PipelineOutputs: pg\outputs = P[SomePipeline]
+[r] Results: py\int = P[Process](PipelineOutputs.OutputLabel)
 
 // If pipeline has only one output, pg\outputs becomes that type automatically
-[r] PipelineOutputs: py\int = @[SomePipeline]  // Also valid
+[r] PipelineOutputs: py\int = P[SomePipeline]  // Also valid
 [x]
 ```
 
 Can access the pipeline (available) outputs via dot access.
 
 ```polyglot
-[@] SomePipeline
+[P] SomePipeline
 [t] t[call]
 [^] PythonWapper
 [r] output1: string = r[SomeProcess1]
 [r] output2: py\int = r[SomeProcess2]
-[r] @[SomeRiskcyProcess]
+[r] P[SomeRiskcyProcess]
 [x]
 
-[@] OtherPipline
+[P] OtherPipline
 [t] t[TriggerEvery](T"16::.") // every 4PM
 [^] PythonWapper
-[r] PipelineOutputs: pg\outputs = @[SomePipeline]
+[r] PipelineOutputs: pg\outputs = P[SomePipeline]
 \\ can check for errors
 [!] MyError: pg\error = ![PipelineOutputs]
 [!] <| Default MyError
-[~][r] = @[HandleDefaultError]()
+[~][r] = P[HandleDefaultError]()
 [~][x]
 \\ can use its outputs 
 [r] input1: rust\i32 =  PipelineOutputs.output2 : py\int \\convert
-[r] output3: rust\i32 = @[SomeOtherPipline](input1: rust\i32)
-[r] @[Print](PipelineOutputs.output2 : string)
+[r] output3: rust\i32 = P[SomeOtherPipline](input1: rust\i32)
+[r] P[Print](PipelineOutputs.output2 : string)
 
 ```
 
@@ -322,7 +322,7 @@ Can access the pipeline (available) outputs via dot access.
 [r] ImportOp: boolean = r[ImportCpp](CppType: string)
 [!] = ![~]
 [!] <| Default MyError
-[~][r] = @[Panic]("Failed to Import c++/{0}", ImportCpp)
+[~][r] = P[Panic]("Failed to Import c++/{0}", ImportCpp)
 [x]
 ```
 
@@ -342,7 +342,7 @@ These triggers can start a pipeline on their own, acting as the initial catalyst
 
 #### Core System Triggers
 
-- **`t[Call]`**: The primary trigger for synchronous-style behavior. Returns `True` if the event is explicitly called via `@[EventLabel]`.
+- **`t[Call]`**: The primary trigger for synchronous-style behavior. Returns `True` if the event is explicitly called via `P[EventLabel]`.
 - **`t[RunPolyglot]`**: Triggered by the command line (e.g., `polyglot -p <parameter>`).
 - **`t[OnStartup]`**: Trigger when the Polyglot runtime starts.
 
@@ -393,7 +393,7 @@ Use the `<=` operator to chain events sequentially. Data flows automatically fro
 ```polyglot
 [e] NextEvent <=
 [i] PreviousOutput: py\int = previous_data
-[r] ProcessedResult: py\int = @[Process](PreviousOutput: py\int)
+[r] ProcessedResult: py\int = P[Process](PreviousOutput: py\int)
 [x]
 ```
 
@@ -403,11 +403,11 @@ Use `[f] <|` to fork parallel branches and `[j]` to join them and collect result
 
 ```polyglot
 [f] <| Task1
-[~][r] ResultArs: rust\i32 = @[ProcessA](input: rust\i32)
+[~][r] ResultArs: rust\i32 = P[ProcessA](input: rust\i32)
 [~][r] ResultA: py\int = ResultArs  // implicit conversion
 
 [f] <| Task2
-[~][r] ResultB: py\int = @[ProcessB](input: rust\i32)
+[~][r] ResultB: py\int = P[ProcessB](input: rust\i32)
 
 [j] ResultA: py\int = f[Task1]    // include Task1 to watch list
 [j] ResultB: py\int = f[Task2]    // include Task2 to watch list
@@ -431,15 +431,15 @@ Switch statements provide conditional branching with automatic type conversion.
 // Note: If HashableTypes don't match, triggers implicit conversion t[Convert](rust\i32, py\int)
 
 [?] <| MySwitch == value1
-[~][r] = @[HandleValue1]()
+[~][r] = P[HandleValue1]()
 [~][x]
 
 [?] <| MySwitch == value2
-[~][r] = @[HandleValue2]()
+[~][r] = P[HandleValue2]()
 [~][x]
 
 [?] <| Default MySwitch
-[~][r] = @[HandleDefaultCase]()
+[~][r] = P[HandleDefaultCase]()
 [~][x]
 ```
 
@@ -448,33 +448,33 @@ Switch statements provide conditional branching with automatic type conversion.
 Errors bubble up unless caught. Use `[!]` to define error handlers.
 
 ```polyglot
-[r] Var: OutputType = @[PanicedPipeline]()
+[r] Var: OutputType = P[PanicedPipeline]()
 [!] MyError: ErrorType = ![~]
 // ![~] captures error from the operation above
 
 [!] <| MyError == py\!TypeError
-[~][r] = @[HandleTypeError]()
+[~][r] = P[HandleTypeError]()
 [~][x]  // Continue pipeline after this branch
 
 [!] <| MyError == py\!ValueError
-[~][r] = @[HandleValueError]()
-[~][x] @[Exit]  // Terminate entire pipeline
+[~][r] = P[HandleValueError]()
+[~][x] P[Exit]  // Terminate entire pipeline
 
 [!] <| Default MyError
-[~][r] = @[HandleDefaultError]()
+[~][r] = P[HandleDefaultError]()
 [~][x]
 ```
 
 **Error Status Access:**
 
 ```polyglot
-[@] SomePipeline
+[P] SomePipeline
 [r] OutputLabel: Type = some_calculation
 [x]
 
-[@] Other
-[r] PipelineOutputs: pg\outputs = @[SomePipeline]()
-[r] Results: Type = @[Process](PipelineOutputs.OutputLabel)
+[P] Other
+[r] PipelineOutputs: pg\outputs = P[SomePipeline]()
+[r] Results: Type = P[Process](PipelineOutputs.OutputLabel)
 [!] MyError: pg\error = ![PipelineOutputs]  // Explicit error access
 [!] MyError2: pg\error = ![~]               // Shorthand for above operation
 [x]
@@ -483,7 +483,7 @@ Errors bubble up unless caught. Use `[!]` to define error handlers.
 **Branch Termination Options:**
 
 - `[~][x]`: Continue a pipeline after the branch
-- `[~][x] @[Exit]`: Terminate the entire pipeline
+- `[~][x] P[Exit]`: Terminate the entire pipeline
 - Panic: Halt program and force compilation error fixes
 
 ## Macros
@@ -496,19 +496,19 @@ Macros (`[M]`) are reusable event templates. The `[v]` element is a placeholder 
 [M] MyMacro
 [i] FilePath: string = file_input
 [t] = t[Call]()
-[r] FileHandle: c++\ofstream = @[OpenFile](FilePath: string)
+[r] FileHandle: c++\ofstream = P[OpenFile](FilePath: string)
 [v] = CodeToInject  // This is the injection slot
-[/] = @[CloseFile](FileHandle: c++\ofstream)
+[/] = P[CloseFile](FileHandle: c++\ofstream)
 [x]
 ```
 
 ### Macro Invocation
 
 ```polyglot
-[@] MyPipeline 
+[P] MyPipeline 
 [i] Path: string
 [M] FileHandle: c++\ofstream = M[MyMacro](MyPipeline[r])
-[r] FileContent: string = @[ReadFile](FileHandle: c++\ofstream)
+[r] FileContent: string = P[ReadFile](FileHandle: c++\ofstream)
 [x]
 ```
 
@@ -522,15 +522,15 @@ Imagine you need to open a file, process it, and ensure it gets closed even if a
 
 polyglot
 ```
-[@] SafeFileProcessing
+[P] SafeFileProcessing
 [i] FilePath: string = "data.txt"
 // The clean, user-friendly way:
-[^] FileHandler: c++\ofstream = @[FileManager](FilePath) // Setup & Cleanup handled here
-[r] Content: string = @[ReadFile](FileHandler) // Your code runs in the middle
+[^] FileHandler: c++\ofstream = P[FileManager](FilePath) // Setup & Cleanup handled here
+[r] Content: string = P[ReadFile](FileHandler) // Your code runs in the middle
 [x]
 ```
 
-**Functionally, the`[^]`line means:** "Before the next step runs, execute the setup phase of the`@[FileManager]`macro. After the subsequent steps in this event finish (whether they succeed or fail), automatically execute its cleanup phase."
+**Functionally, the`[^]`line means:** "Before the next step runs, execute the setup phase of the`P[FileManager]`macro. After the subsequent steps in this event finish (whether they succeed or fail), automatically execute its cleanup phase."
 
 This ensures resources like file handles, database connections, network sockets, and language runtime contexts are never leaked.
 
@@ -542,11 +542,11 @@ The example above is functionally identical to writing:
 
 polyglot
 ```
-[@] SafeFileProcessing
+[P] SafeFileProcessing
 [i] FilePath: string = "data.txt"
 // What the [^] element compiles to:
 [M] FileHandler: c++\ofstream = M[FileManager](SafeFileProcessing[r]) // Inject the next [r] block
-[r] Content: string = @[ReadFile](FileHandler)
+[r] Content: string = P[ReadFile](FileHandler)
 [x]
 ```
 
@@ -567,27 +567,27 @@ Implementing the`[^]`element requires two components in the compiler:
   
 2. **A Rich Standard Library:**The power of`[^]`comes from pre-defined macros in the standard library. We will need to build macros like:
   
-  - `@[FileManager]`- for file handling
+  - `P[FileManager]`- for file handling
     
-  - `@[DatabaseConnection]`- for database connections
+  - `P[DatabaseConnection]`- for database connections
     
-  - `@[PythonRuntime]`- for managing a Python interpreter context
+  - `P[PythonRuntime]`- for managing a Python interpreter context
     
-  - `@[HTTPClient]`- for managing network connections
+  - `P[HTTPClient]`- for managing network connections
     
 
 ### Example: Building a Context Manager Macro
 
-Here is what the`@[FileManager]`macro, used in the example above, would look like:
+Here is what the`P[FileManager]`macro, used in the example above, would look like:
 
 ```polyglot
 // Macro Definition: The engine behind the [^] sugar
 [M] FileManager
 [i] Path: string
 [t] = t[Call]()
-[\] FileHandle: c++\ofstream = @[SystemOpenFile](Path: string) // SETUP
+[\] FileHandle: c++\ofstream = P[SystemOpenFile](Path: string) // SETUP
 [v] // INJECTION SLOT
-[/] = @[SystemCloseFile](FileHandle: c++\ofstream) // CLEANUP
+[/] = P[SystemCloseFile](FileHandle: c++\ofstream) // CLEANUP
 [x]
 ```
 
@@ -618,19 +618,19 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 ### Complete Workflow Example
 
 ```polyglot
-[@] DataProcessingWorkflow
+[P] DataProcessingWorkflow
 [i] InputData: py\string = input_data
 
 // Step 1: Process in Python
 [^] = PythonEnvironmentSetup
 [r] ProcessedData: py\dict 
-[~] = @[PythonFunction](InputData: py\string)
+[~] = P[PythonFunction](InputData: py\string)
 
 // Step 2: Send to a Rust service for heavy computation in parallel
 [f] <| RustCompute
 [~][^] RustSetup
 [~][r] RustData: rust\&str = ProcessedData  // implicit conversion
-[~][r] RustResult: py\string = @[RustFunction](RustData: rust\&str)
+[~][r] RustResult: py\string = P[RustFunction](RustData: rust\&str)
 [~][x]
 
 // Step 3: Also log the action in the background
@@ -640,7 +640,7 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 
 // Step 4: Wait for Rust to finish and handle result
 [j] RustResult: rust\&str = f[RustCompute]
-[r] FinalResult: py\dict = @[Convert](RustResult: py\string)
+[r] FinalResult: py\dict = P[Convert](RustResult: py\string)
 [r] = r[log]("info", "Workflow complete. Result: ${FinalResult}")
 [x]
 ```
@@ -648,19 +648,19 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 ### Array Processing Example
 
 ```polyglot
-[@] ArrayProcessingPipeline
+[P] ArrayProcessingPipeline
 [i] Numbers: py\array[int, list] = input_numbers
 [i] Matrix: rust\array[f64, Vec] = input_matrix
 
 // Process Python list in parallel
 [f] <| PythonSort 
 [~][r] SortedNumbers: py\array[int, list] 
-[~][~] = @[python_sort](Numbers: py\array[int, list])
+[~][~] = P[python_sort](Numbers: py\array[int, list])
 
 // Process Rust vector in parallel  
 [f] <| RustMath 
 [~][r] Result: rust\array[f64, Vec] 
-[~][~] = @[rust_matrix_multiply](Matrix: rust\array[f64, Vec])
+[~][~] = P[rust_matrix_multiply](Matrix: rust\array[f64, Vec])
 
 // Join results
 [j] SortedNumbers: py\array[int, list] = f[PythonSort]
@@ -668,7 +668,7 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 
 // Convert and combine
 [r] RustNumbers: rust\array[i32, Vec] = SortedNumbers  // implicit conversion
-[r] FinalOutput: rust\array[i32, Vec] = @[CombineResults](
+[r] FinalOutput: rust\array[i32, Vec] = P[CombineResults](
 [~]   RustNumbers: rust\array[i32, Vec], 
 [~]   Result: rust\array[f64, Vec]
 [~] )
@@ -678,7 +678,7 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 ### Advanced Error and Switch Handling
 
 ```polyglot
-[@] ConditionalProcessing
+[P] ConditionalProcessing
 [i] UserInput: py\int = input_value
 [i] DataFile: string = file_path
 
@@ -686,7 +686,7 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 [?] InputSwitch: py\int = ?[UserInput: py\int]
 
 [?] <| InputSwitch == 1     // Process file
-[~][r] FileData: py\dict = @[LoadFile](DataFile: string)
+[~][r] FileData: py\dict = P[LoadFile](DataFile: string)
 [~][!] FileError: pg\error = ![~]
 [~][~][!] <| FileError == py\!FileNotFoundError
 [~][~][~][r] ErrorMsg: string = "File not found, using default data"
@@ -694,11 +694,11 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 [~][x]
 
 [?] <| InputSwitch == 2     // Process database
-[~][r] DbData: py\dict = @[LoadDatabase](connection: string)
+[~][r] DbData: py\dict = P[LoadDatabase](connection: string)
 [~][x]
 
 [?] <| Default InputSwitch     // Default case
-[~][r] DefaultData: py\dict = @[GetDefaultData]()
+[~][r] DefaultData: py\dict = P[GetDefaultData]()
 [~][x]
 [x]
 ```
@@ -706,13 +706,13 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 ### Advanced parallel Events joining 
 
 ```ployglot
-[@] MainPipline
+[P] MainPipline
 // triggered when `polyglot -p main_pipline --file 
 [^] PythonEnvierment1
-[t] @[RunPolyglot]("main_pipline") // implict (: string)
-[i] file_path: string = @[RunPolyglotArgument]("file")
-[r] py_file_content: py\str = @[ReadFile](py, file_path)
-[r] rust_file_content: py\string = @[ReadFile](rust, file_path)
+[t] P[RunPolyglot]("main_pipline") // implict (: string)
+[i] file_path: string = P[RunPolyglotArgument]("file")
+[r] py_file_content: py\str = P[ReadFile](py, file_path)
+[r] rust_file_content: py\string = P[ReadFile](rust, file_path)
 
 [f] |> ParepareOutFile
 [~][^] ~ \\Same as main branch Wapper
@@ -722,18 +722,18 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 [f] |> LightComputation1
 [~][^] PythonEnvierment2
 [~][r] pydata1:py\dict = py_file_content: py\str \\ implict conversion
-[~][r] ans1: py\float = @[PyLightComputation1](pydata1:py\dict)
+[~][r] ans1: py\float = P[PyLightComputation1](pydata1:py\dict)
 [~][x]
 
 [f] |> LightComputation2
 [~][^] PythonEnvierment2
 [~][r] pydata2:py\dict = py_file_content: py\str \\ implict conversion
-[~][r] ans2: py\float = @[PyLightComputation1](pydatapy2\dict)
+[~][r] ans2: py\float = P[PyLightComputation1](pydatapy2\dict)
 [~][x]
 
 [f] |> HevyComputation1
 [~][^] RustEnvierment
-[~][r] rustans1: rust\f32 = @[PyLightComputation1](rust_file_content: py\string)
+[~][r] rustans1: rust\f32 = P[PyLightComputation1](rust_file_content: py\string)
 [~][r] ans3: py\float = rustans1: rust\f32 \\ implict conversion
 [~][x]
 
@@ -742,11 +742,11 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 
 [e] NextEvent <=
 [t] j[All](out_file) \\join can also be trigger (Start if ParepareOutFile complete)
-[i] py_file_out_content: py\str = @[ReadFile](py, out_file)
+[i] py_file_out_content: py\str = P[ReadFile](py, out_file)
 [^] ~ \\ Same as previous Event, And yes the cleanup for prev is perfomed
-[r] py_dict: py\dict = @[PyLightComputation3](py_file_out_content)
+[r] py_dict: py\dict = P[PyLightComputation3](py_file_out_content)
 [j] j[All](ans3) \\late join for HevyComputation1
-[r] final_output: py\float = @[PyLightComputation3](ans3, py_dict)
+[r] final_output: py\float = P[PyLightComputation3](ans3, py_dict)
 [x] \\the end of pipline
 
 ```
@@ -784,10 +784,10 @@ Polyglot Source Code → Parser → Config JSON → Initialization → Runtime E
 **Goal**: Basic polyglot-to-config translation with Python execution
 
 **Deliverables:**
-- Polyglot syntax parser supporting `[@]`, `[i]`, `[r]`, `[x]` elements
+- Polyglot syntax parser supporting `[P]`, `[i]`, `[r]`, `[x]` elements
 - Config JSON generation for simple pipelines
 - Single Python runtime integration
-- Basic `@[Pipeline]()` calling mechanism
+- Basic `P[Pipeline]()` calling mechanism
 - Simple trigger support: `t[Call]`, `t[OnStartup]`
 
 **Success Metric**: Execute a simple Python-only pipeline end-to-end
