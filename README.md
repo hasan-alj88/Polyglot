@@ -701,4 +701,205 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 [~][r] DefaultData: py\dict = @[GetDefaultData]()
 [~][x]
 [x]
-```**
+```
+
+### Advanced parallel Events joining 
+
+```ployglot
+[@] MainPipline
+// triggered when `polyglot -p main_pipline --file 
+[^] PythonEnvierment1
+[t] @[RunPolyglot]("main_pipline") // implict (: string)
+[i] file_path: string = @[RunPolyglotArgument]("file")
+[r] py_file_content: py\str = @[ReadFile](py, file_path)
+[r] rust_file_content: py\string = @[ReadFile](rust, file_path)
+
+[f] |> ParepareOutFile
+[~][^] ~ \\Same as main branch Wapper
+[~][r] out_file: string = "{file_path[:-5]}{_out.json}"
+[~][x]
+
+[f] |> LightComputation1
+[~][^] PythonEnvierment2
+[~][r] pydata1:py\dict = py_file_content: py\str \\ implict conversion
+[~][r] ans1: py\float = @[PyLightComputation1](pydata1:py\dict)
+[~][x]
+
+[f] |> LightComputation2
+[~][^] PythonEnvierment2
+[~][r] pydata2:py\dict = py_file_content: py\str \\ implict conversion
+[~][r] ans2: py\float = @[PyLightComputation1](pydatapy2\dict)
+[~][x]
+
+[f] |> HevyComputation1
+[~][^] RustEnvierment
+[~][r] rustans1: rust\f32 = @[PyLightComputation1](rust_file_content: py\string)
+[~][r] ans3: py\float = rustans1: rust\f32 \\ implict conversion
+[~][x]
+
+[j] j[All](ans1: py\float, ans2: py\float)
+
+
+[e] NextEvent <=
+[t] j[All](out_file) \\join can also be trigger (Start if ParepareOutFile complete)
+[i] py_file_out_content: py\str = @[ReadFile](py, out_file)
+[^] ~ \\ Same as previous Event, And yes the cleanup for prev is perfomed
+[r] py_dict: py\dict = @[PyLightComputation3](py_file_out_content)
+[j] j[All](ans3) \\late join for HevyComputation1
+[r] final_output: py\float = @[PyLightComputation3](ans3, py_dict)
+[x] \\the end of pipline
+
+```
+
+
+## Development Roadmap
+
+**Note:** This language is currently in the brainstorming phase. Nothing concrete has been built yet, and we need to plan and collaborate to make it happen. This documentation serves two audiences: developers who will build this language, and future users who need to understand what to expect and how to use it.
+
+### Architecture Overview
+
+Polyglot follows a clean separation of concerns through this execution pipeline:
+
+```
+Polyglot Source Code → Parser → Config JSON → Initialization → Runtime Execution
+```
+
+**System Components:**
+- **Polyglot Config JSON**: Contains monitors, runtime environments, events, and dependencies
+- **Trigger Hub**: Manages file watchers, schedules, API endpoints, and publishes trigger events to RabbitMQ
+- **Event Executor**: Listens to RabbitMQ, checks trigger bindings in the database, executes matching events
+- **Runtime Managers**: Handles Python environments, Rust compilation, C++ toolchains, etc.
+- **Database**: Stores trigger bindings, execution state, and event dependencies
+
+**Initialization Process:**
+1. Parse Polyglot code into a structured configuration
+2. Initialize runtime environments (Python interpreters, Rust toolchains, etc.)
+3. Start Trigger Hub with monitoring and scheduling services  
+4. Update trigger-to-event bindings in database
+5. Launch Event Executor listening to the message queue
+
+### Implementation Phases
+
+#### Phase 1: Core Parser & Single Runtime (Months 1–3)
+**Goal**: Basic polyglot-to-config translation with Python execution
+
+**Deliverables:**
+- Polyglot syntax parser supporting `[@]`, `[i]`, `[r]`, `[x]` elements
+- Config JSON generation for simple pipelines
+- Single Python runtime integration
+- Basic `@[Pipeline]()` calling mechanism
+- Simple trigger support: `t[Call]`, `t[OnStartup]`
+
+**Success Metric**: Execute a simple Python-only pipeline end-to-end
+
+#### Phase 2: Event-Driven Foundation (Months 4–6)
+**Goal**: Trigger Hub + RabbitMQ + Database integration
+
+**Deliverables:**
+- RabbitMQ message queue integration
+- Database schema for trigger bindings and event state
+- Trigger Hub supporting file watchers (`t[FileExists]`, `t[IfChange]`)
+- Event Executor with trigger evaluation logic
+- Time-based triggers (`t[Schedule]`, `t[At]`)
+- Error handling with `[!]` elements
+
+**Success Metric**: File change triggers Python pipeline execution automatically
+
+#### Phase 3: Multi-Language Runtime Management (Months 7–10)
+**Goal**: Support Rust, JavaScript, C++ execution with type conversion
+
+**Deliverables:**
+- Runtime pooling and lifecycle management
+- Language bridge implementations (PyBind11, Node.js child_process, FFI)
+- Type system implementation with `py\int`, `rust\i32`, etc.
+- Automatic type conversion (`t[Convert]`)
+- `r[lang]("code", args)` execution pattern
+- Context managers `[^]` with macro support `[M]`
+
+**Success Metric**: Execute a cross-language pipeline (Python → Rust → JavaScript)
+
+#### Phase 4: Advanced Flow Control (Months 11–14)
+**Goal**: Parallel execution, switches, complex error handling
+
+**Deliverables:**
+- Fork/join implementation (`[f]`, `[j]`) with race condition handling
+- Switch statement support (`[?]`) with pattern matching
+- Background execution (`[b]`) for fire-and-forget tasks
+- Advanced error handling with type-specific catches
+- Sequential chaining with `<=` operator
+- Dependency graph analysis and deadlock prevention
+
+**Success Metric**: Complex workflow with parallel branches and conditional logic
+
+#### Phase 5: Production Readiness (Months 15–18)
+**Goal**: Monitoring, reliability, external integrations
+
+**Deliverables:**
+- HTTP endpoint triggers (`t[HTTPEndpoint]`)
+- External service integrations (Docker, Git, webhooks)
+- Comprehensive error recovery and retry mechanisms
+- Performance monitoring and metrics
+- Production deployment tooling
+- Documentation and examples
+
+**Success Metric**: Production deployment handling real workloads
+
+### Future Optimization Plans
+
+#### Performance Optimization (Post-Phase 5)
+
+**Database Performance**:
+- **In-Memory Caching**: Redis layer for hot trigger states
+- **Event Sourcing**: Append-only trigger log instead of mutable state
+- **Connection Pooling**: Database connection optimization
+- **Read Replicas**: Separate read/write database instances
+- **Partitioned Architecture**: Memory-only for simple events, DB for complex workflows
+
+**Runtime Optimization**:
+- **Runtime Pooling**: Pre-warmed language interpreters
+- **Just-In-Time Compilation**: Rust/C++ compilation caching
+- **Resource Quotas**: CPU/memory limits per runtime environment
+- **Smart Scheduling**: Load balancing across runtime instances
+
+**Message Queue Optimization**:
+- **Batch Processing**: Group similar events for bulk execution
+- **Priority Queues**: Critical events bypass normal processing
+- **Dead Letter Queues**: Automatic error event isolation
+- **Message Partitioning**: Route events by resource requirements
+
+#### Scalability Improvements
+
+**Horizontal Scaling**:
+- Multi-node trigger hub deployment
+- Distributed event executor instances  
+- Language runtime clustering
+- Shared state via distributed database
+
+**Cloud-Native Features**:
+- Kubernetes operator for deployment
+- Auto-scaling based on event volume
+- Cloud storage integrations (S3, GCS)
+- Managed service bindings (RDS, ElastiCache)
+
+**Developer Experience**:
+- IDE language server with syntax highlighting
+- Interactive debugger for pipeline execution
+- Real-time monitoring dashboard
+- Visual pipeline designer
+- Package manager for sharing macros and pipelines
+
+#### Advanced Language Features
+
+**Extended Type System**:
+- Generic type support (`array[T]`, `Option[T]`)
+- Custom type validation and constraints
+- Automatic serialization/deserialization
+- Stream processing types for large datasets
+
+**Enhanced Macros**:
+- Conditional macro expansion
+- Macro composition and inheritance
+- Standard library of common patterns
+- Community macro registry
+
+These optimizations will be prioritized based on real-world usage patterns and performance bottlenecks discovered during production deployment.
