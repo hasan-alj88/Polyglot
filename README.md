@@ -1,4 +1,4 @@
-**# Polyglot Event-Driven Language Documentation
+from fileinput import filename**# Polyglot Event-Driven Language Documentation
 
 ## Overview
 
@@ -741,6 +741,38 @@ The`[^]`element hides this complexity from the user, providing the safety of exp
 [r] final_output: py\float = P[PyLightComputation3](ans3, py_dict)  
 [x] \\the end of pipline  
 ```
+## Polyglot User Experience
+
+Users can run polyglot pipelines with `t[PolyglotRun](parameter)` trigger through `polyglot -r parameter`. 
+Alternatively, The polyglot may evolve to have pakages in the supported languages where they may use the polyglot pipelines from the polyglot service in the background.  
+
+```python
+import polyglot as pg
+from .dataloader import load_file 
+def heavy_calculations(data: dict) -> float:
+  return pg.run_pipline('RustCalculation', data)
+
+def main():
+  filename = 'data_file.json'
+  data = load_file(filename)
+  result = heavy_calculations(data)
+  print(f'calculation on {filename} = {result}')
+
+if __name__ =='__main__':
+        main()
+```
+
+or 
+
+```Rust
+use polyglot::{run_pipline, PolyglotErrors};
+
+fn run_on_python(input_string: &str)->Reuslt<f32, PolyglotErrors>{
+  run_pipline(string::from("SomePythonPipline") ,input_string)
+}
+```
+
+
 
 ## Development Roadmap
 
@@ -772,7 +804,7 @@ Polyglot Source Code → Parser → Config JSON → Initialization → Runtime E
 
 ### Implementation Phases
 
-#### Phase 1: Core Parser & Single Runtime (Months 1–3)
+#### Phase 1: Core Parser & Single Runtime
 
 **Goal**: Basic polyglot-to-config translation with Python execution
 
@@ -786,7 +818,7 @@ Polyglot Source Code → Parser → Config JSON → Initialization → Runtime E
 
 **Success Metric**: Execute a simple Python-only pipeline end-to-end
 
-#### Phase 2: Event-Driven Foundation (Months 4–6)
+#### Phase 2: Event-Driven Foundation
 
 **Goal**: Trigger Hub + RabbitMQ + Database integration
 
@@ -801,7 +833,7 @@ Polyglot Source Code → Parser → Config JSON → Initialization → Runtime E
 
 **Success Metric**: File change triggers Python pipeline execution automatically
 
-#### Phase 3: Multi-Language Runtime Management (Months 7–10)
+#### Phase 3: Multi-Language Runtime Management
 
 **Goal**: Support Rust, JavaScript, C++ execution with type conversion
 
@@ -816,7 +848,7 @@ Polyglot Source Code → Parser → Config JSON → Initialization → Runtime E
 
 **Success Metric**: Execute a cross-language pipeline (Python → Rust → JavaScript)
 
-#### Phase 4: Advanced Flow Control (Months 11–14)
+#### Phase 4: Advanced Flow Control
 
 **Goal**: Parallel execution, switches, complex error handling
 
@@ -831,7 +863,7 @@ Polyglot Source Code → Parser → Config JSON → Initialization → Runtime E
 
 **Success Metric**: Complex workflow with parallel branches and conditional logic
 
-#### Phase 5: Production Readiness (Months 15–18)
+#### Phase 5: Production Readiness
 
 **Goal**: Monitoring, reliability, external integrations
 
@@ -848,7 +880,7 @@ Polyglot Source Code → Parser → Config JSON → Initialization → Runtime E
 
 ### Future Optimization Plans
 
-#### Performance Optimization (Post-Phase 5)
+#### Performance Optimization
 
 **Database Performance**:
 
