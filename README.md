@@ -41,6 +41,7 @@ Here's a simple "Hello World" Pipeline to demonstrate basic Polyglot syntax:
 ```
 
 **Explanation:**
+
 - `[|] HelloWorld` - Defines a Pipeline named HelloWorld
 - `[i] name: py\str` - Requires a string input parameter
 - `[t] |Call` - Triggered when called from other pipelines
@@ -67,6 +68,7 @@ This example shows sequential execution where each step runs after the previous 
 ```
 
 **Key Points:**
+
 - Data flows sequentially through each processing step
 - Each `[r]` element waits for the previous one to complete
 - The output of one step becomes the input of the next
@@ -93,6 +95,7 @@ An **Event** is a single block of execution with defined inputs, processing, and
 Every Event must be structured in one of two ways:
 
 #### Explicit Form:
+
 1. **Inputs (`[i]`)** - The data the event requires. Use `[i] None` if no input needed.
 2. **Triggers (`[t]`)** - The conditions that allow the event to execute.
 3. **Setup (`[\]`)** - Pre-processing to acquire resources (e.g., open files, start runtimes).
@@ -101,6 +104,7 @@ Every Event must be structured in one of two ways:
 6. **Outputs (`[o]`)** - Pipeline outputs. Use `[o] None` if no output needed.
 
 #### Wrapper Form (Simplified):
+
 1. **Inputs (`[i]`)** - The data the event requires. Use `[i] None` if no input needed.
 2. **Triggers (`[t]`)** - The conditions that allow the event to execute.
 3. **Wrapper (`[w]`)** - A predefined macro that handles both setup and cleanup automatically (equivalent to RAII and Python's context manager).
@@ -113,27 +117,27 @@ Every Event must be structured in one of two ways:
 
 Polyglot supports both compact and verbose notation for all elements. However, it is recommended to use compact form for nicely formatted code.
 
-| Compact | Verbose | Purpose | Reference Label |
+| Compact | Verbose | Purpose | Reference |
 | --- | --- | --- | --- |
-| `[|]` | `[Pipeline]` | Define or start a Pipeline. | \|PipelineName |
-| `[i]` | `[input]` | Define an input. | Within Pipeline:<br/>input_name: datatype<br/>outside Pipeline:<br/>\|PipelineName<input_name |
-| `[t]` | `[trigger]` | Define a trigger condition. | - |
-| `[\]` | `[setup]` | Pre-processing and resource setup. | - |
+| `[\|]` | `[Pipeline]` | Define or start a Pipeline. | \|PipelineName |
+| `[i]` | `[input]` | Define an input. | Within Pipeline: `input_name: datatype`. Outside Pipeline: `\|PipelineName<input_name` |
+| `[t]` | `[trigger]` | Define a trigger condition. | -   |
+| `[\]` | `[setup]` | Pre-processing and resource setup. | -   |
 | `[r]` | `[run]` | Main process *Sequential* execution. | variable: datatype |
-| `[/]` | `[clean]` | Post-processing and resource cleanup. | - |
-| `[x]` | `[exit]` | End a Pipeline or branch. | - |
+| `[/]` | `[clean]` | Post-processing and resource cleanup. | -   |
+| `[x]` | `[exit]` | End a Pipeline or branch. | -   |
 | `[w]` | `[wrap]` | Apply a context manager (macro with built-in setup/cleanup). | ^WrapperName |
 | `[?]` | `[switch]` | Switch (flow control) statement. | ?SwitchName |
 | `[!]` | `[error]` | Error handler. | !ErrorHandler |
-| `[f]` | `[fork]` | Start a parallel (forked) branch. | \|BranchName |
-| `[j]`, `[Y]` | `[join]` | Join parallel branches and consolidate results. | - |
-| `[b]` | `[back]` | Start a background branch (fire-and-forget). | \|BranchName |
-| `[o]` | `[output]` | Pipeline output | \|PipelineName>output_name |
+| `[f]` | `[fork]` | Start a parallel (forked) branch. | \\|BranchName |
+| `[j]`, `[Y]` | `[join]` | Join parallel branches and consolidate results. | -   |
+| `[b]` | `[back]` | Start a background branch (fire-and-forget). | \\|BranchName |
+| `[o]` | `[output]` | Pipeline output | `\\|PipelineName>output_name` |
 | `[M]` | `[macro]` | Define or use a Macro. | ^MacroName |
-| `[v]` | `[inject]` | Injection slot (used inside Macros). | - |
-| `[~]` | | Element Expansion | - |
-| `[^]` | | Continue above line. Used for multi-lines. | |
-| `[D]` | `[Define]` | Used to define custom types and imports. | - |
+| `[v]` | `[inject]` | Injection slot (used inside Macros). | -   |
+| `[~]` |     | Element Expansion | -   |
+| `[^]` |     | Continue above line. Used for multi-lines. |     |
+| `[D]` | `[Define]` | Used to define custom types and imports. | -   |
 | `[#]` | `[Enum]` | Enumeration Definition | #EnumName.Element |
 
 ### Binary Operators
@@ -153,11 +157,13 @@ Polyglot supports both compact and verbose notation for all elements. However, i
 **Critical Syntax Rule:** IO streams must match the flow with proper type declarations.
 
 **Inline Format:**
+
 ```polyglot
 [r] input1:type, input2:type >> |PredefinedPipeline >> output1:type, output2:type
 ```
 
 **Expansion Format (Equivalent):**
+
 ```polyglot
 [r] |PredefinedPipeline
 [~] << input1: type
@@ -165,6 +171,23 @@ Polyglot supports both compact and verbose notation for all elements. However, i
 [~] >> output1: type  
 [~] >> output2: type
 ```
+
+**Shorthand for Single Input/Output:** For single input or output operations, you may omit `>> None` and `None <<`:
+
+```polyglot
+\\ Allowed shorthand:
+[r] data: py\str >> |ProcessData      \\ Implies >> None
+[r] |GetData >> result: py\dict       \\ Implies None <<
+
+\\ However, for multiple inputs/outputs, use expansion for better visualization:
+[r] |ComplexProcess
+[~] << input1: py\str
+[~] << input2: py\int  
+[~] >> output1: py\dict
+[~] >> output2: py\bool
+```
+
+**Recommendation:** Only use shorthand for single input/output operations. The expansion element provides better formatting and visualization for complex operations.
 
 ### Square Elements Design Philosophy
 
@@ -188,6 +211,214 @@ To define and extract properties of square elements, Element Expansion `[~]` is 
 ```
 
 This consistency enables visual scanning of complex nested Pipelines at a glance.
+
+### Polyglot Data Type System
+
+Polyglot uses a comprehensive type system that bridges multiple programming languages with explicit type declarations.
+
+#### Type Declaration Format
+
+**General Format:** `language\datatype`
+
+Where:
+
+- `language` specifies the programming language context
+- `datatype` is the full literal data type as it exists in the native language
+
+#### Supported Languages
+
+Currently supported languages: `c++`, `py`, `rust`, `pg`
+
+**Examples of Language-Specific Types:**
+
+```polyglot
+c++\int                 \\ C++ integer
+c++\std::string         \\ C++ standard string
+c++\std::vector<int>    \\ C++ vector of integers
+py\str                  \\ Python string
+py\dict                 \\ Python dictionary
+py\list                 \\ Python list
+rust\&str               \\ Rust string slice
+rust\Vec<i32>           \\ Rust vector of 32-bit integers
+rust\HashMap<String, i32> \\ Rust hash map
+```
+
+#### Type Shortening
+
+Long type names can be shortened using the `[D]` Define element within a Macro:
+
+```polyglot
+[M] TypeDefinitions
+[D] c++\std::string >> c++\str
+[D] c++\std::vector<int> >> c++\intvec
+[D] rust\HashMap<String, i32> >> rust\strmap
+\\ Note: c++\std::string >> str  \\ ❌ Not allowed, must specify language
+[x]
+```
+
+#### Language Reference Type
+
+To reference a language itself, use the format `lang\language_name`:
+
+```polyglot
+[i] target_language: lang\c++    \\ References C++ language
+[i] script_language: lang\py     \\ References Python language
+```
+
+#### Native Polyglot Types
+
+Polyglot provides universal types prefixed with `pg\`:
+
+##### Basic Types
+
+- `pg\string` - Universal string type
+- `pg\int` - Universal integer
+- `pg\float` - Universal floating point
+- `pg\bool` - Universal boolean
+- `pg\blocks` - Code blocks (used for macros)
+- `pg\Enum` - Enumeration type
+
+##### Specialized Types
+
+**`pg\Datetime` - Universal DateTime Type**
+
+Format: `T"YYYY-MM-DD|hh:mm:ss.0000"`
+
+Missing parts are assumed as zero, using separators as guides:
+
+```polyglot
+T"2--"         \\ 2 years
+T"2-3-"        \\ 2 years and 3 months  
+T"3|"          \\ 3 days
+T"3:"          \\ 3 minutes
+T"3:30"        \\ 3 minutes and 30 seconds
+T"3:30:"       \\ 3 hours and 30 minutes
+T"200"         \\ 200 nanoseconds
+T"5.600"       \\ 5 seconds and 600 nanoseconds
+```
+
+**`pg\floatrange` - Numeric Range Type**
+
+Since Polyglot does not have comparison operators, ranges are used for bounds checking:
+
+```polyglot
+[r] None >> |CpuPercentage >> cpu_percent: pg\float
+[r] |FloatRange
+[~] << 80.0: pg\float
+[~] << 90.0: pg\float  
+[~] >> high_cpu: pg\floatrange
+
+[r] |FloatRange
+[~] << 90.0: pg\float
+[~] << None  \\ +infinity
+[~] >> critical_cpu: pg\floatrange
+
+\\ The ?> operator checks if value is in range
+[?] cpu_percent ?> high_cpu 
+[~][r] level: pg\Enum, msg: pg\string >> |Log >> None
+[~][~] << #LogLevel.warning
+[~][~] << "CPU usage in high range"
+
+[?] cpu_percent ?> critical_cpu
+[~][r] level: pg\Enum, msg: pg\string >> |Log >> None  
+[~][~] << #LogLevel.critical
+[~][~] << "CPU usage critical"
+```
+
+#### Enumeration Definition
+
+Enumerations are defined using the `[#]` element:
+
+```polyglot
+[#] Color
+[D] Red
+[D] Blue  
+[D] Green
+[x]
+
+[#] LogLevel
+[D] debug
+[D] info
+[D] warning
+[D] error
+[D] critical
+[x]
+
+\\ Usage in code:
+[r] level: pg\Enum, color: pg\Enum >> |DisplayMessage >> None
+[~] << #LogLevel.error
+[~] << #Color.Red
+```
+
+#### Type Conversion System
+
+**Implicit Conversion Rules:**
+
+Implicit conversion occurs during IO stream operations when types are compatible. If conversion is not defined, a **compiler error** is raised.
+
+**Assignment-Based Conversion:**
+
+```polyglot
+\\ Allowed when conversion Pipeline exists:
+[r] out_pg: pg\string << out_py: py\str    \\ ✅ Converts py\str to pg\string
+
+\\ Compiler error if no conversion defined:
+[r] |SomePythonFunction >> out: pg\string  \\ ❌ If function outputs py\str
+```
+
+**Conversion Examples:**
+
+```polyglot
+\\ Automatic conversions (when conversion Pipelines exist):
+py\str → pg\string      \\ ✅ String conversion
+py\int → rust\i32       \\ ✅ Integer conversion (if value fits)
+py\list → c++\vector    \\ ✅ Container conversion (with element conversion)
+
+\\ Compiler errors (no implicit conversion available):
+py\str → py\int         \\ ❌ No implicit string to integer conversion
+py\dict → rust\&str     \\ ❌ Incompatible types
+c++\std::string → py\int \\ ❌ No logical conversion path
+```
+
+#### Error Types
+
+Error types follow the format `language\!ErrorType`:
+
+**Polyglot Native Errors:**
+
+- `pg\!CompilerError` - Syntax/compilation issues
+- `pg\!TypeError` - Type conversion failures
+- `pg\!RuntimeError` - Execution failures
+- `pg\!TimeoutError` - Operation timeouts
+- `pg\!ResourceError` - Resource management issues
+- `pg\!NetworkError` - Network operation failures
+- `pg\!FileError` - File system operation failures
+
+**Language-Specific Errors:**
+
+```polyglot
+py\!ValueError          \\ Python ValueError
+py\!KeyError            \\ Python KeyError  
+rust\!PanicError        \\ Rust panic
+c++\!SegmentationFault  \\ C++ segmentation fault
+c++\!std::runtime_error \\ C++ standard runtime error
+```
+
+**Error Usage Example:**
+
+```polyglot
+[r] |RiskyOperation
+[~][!] !TimeOut << T"30:" 
+[~][~][!] !> timeout_error: pg\!TimeoutError
+[~][~][r] |Log
+[~][~][~] msg: pg\string << #LogLevel.error
+[~][~][~] level: pg\Enum << "Operation timed out after 30 seconds"
+[~][~][x] |Exit << 408
+
+[~][!] !PythonError !> py\!ValueError  
+[~][~][r] error: py\!ValueError >> |HandlePythonError
+[~][~][x] |Exit << 500
+```
 
 ### Syntax Construction Pattern
 
@@ -222,7 +453,7 @@ The `Default` keyword sets values when parameters are not provided:
 [i] Default debug: py\bool << False
 [t] |Call
 [w] PythonEnvironment
-[r] message: py\str, level: py\int, debug: py\bool >> |LogMessage >> None
+[r] message: py\str, level: py\int, debug: py\bool >> |LogMessage
 [o] None
 [x]
 ```
@@ -289,7 +520,7 @@ Boolean combinations between triggers using Element Expansion:
 
 | Sequential | Parallel |
 | --- | --- |
-| `[r]`, `[\]`, `[/]`, `[w]`, `[i]`, `[o]` | `[|]`, `[t]`, `[f]`, `[b]`, `[!]` |
+| `[r]`, `[\]`, `[/]`, `[w]`, `[i]`, `[o]` | `[  |
 
 #### Parallel Execution Rules
 
@@ -470,7 +701,7 @@ The Polyglot system is a micro-service architecture of two main components: the 
 
 ## 7. User Experience & Integration
 
-Users can run Polyglot Pipelines with `[t] |PolyglotRun << parameter: pg\string = parameter_name` trigger through `polyglot -r parameter_name`.  
+Users can run Polyglot Pipelines with `[t] |PolyglotRun << parameter: pg\string = parameter_name` trigger through `polyglot -r parameter_name`.
 
 Alternatively, Polyglot may evolve to have packages in the supported languages where they may use the Polyglot Pipelines from the Polyglot service in the background.
 
