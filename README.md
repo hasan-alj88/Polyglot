@@ -1,4 +1,6 @@
-# Polyglot Event-Driven Language Documentation
+# Polyglot Automation Language Documentation
+
+![](file:///home/hhj/snap/marktext/9/.config/marktext/images/2025-09-29-13-45-47-Logo.jpg?msec=1759142748191)
 
 ## 1. Overview & Philosophy
 
@@ -17,14 +19,16 @@ Polyglot is an event-driven orchestration language designed to seamlessly integr
 
 ### Primary Goals
 
+- **Simplfy Event-Driven Automation:** The abilty to construct complex workflows using pure event-driven paradigms in plain simple syntax.
 - **Polyglot Integration:** Seamlessly call functions and share data between different programming languages.
 - **Minimize Translation Time and Memory Footprint:** At the beginning, the time and memory footprint will not be negligible. Hence, Polyglot must aim for integration optimization as we divide and conquer the language integration problem into smaller and more specific subproblems. Optimization goal will be an achievable goal.
-- **Event-Driven Automation:** Construct complex workflows using pure event-driven paradigms.
 - **Concurrency Discipline:** Enforce data dependencies at compile-time to prevent race conditions by only using data of joined forked branches. Since using data of incomplete branches will cause corruption.
 - **Explicit Resource Management:** Mandatory setup and cleanup phases ensure resources are properly managed across all runtimes.
 - **Practical Orchestration:** Built-in support for sequential chains, parallel tasks, error handling, and flow control.
 
 ## 2. Getting Started
+
+Polyglot is a service that have two main parts which are `Trigger Monitors` and `Executioner`. The trigger monitor consist of wachters and scudules. The Executioner checkes the piplines triggers and run the piplnes accordingly. The Polyglot code itself is registoring the piplines triggers and exeutions.
 
 ### Hello World Example
 
@@ -33,9 +37,10 @@ Here's a simple "Hello World" Pipeline to demonstrate basic Polyglot syntax:
 ```polyglot
 [|] HelloWorld
 [i] name: py\str
-[t] |Call
+[t] |PolyglotCli << "HelloWorldProgram"
 [w] PythonEnvironment
-[r] name: py\str >> |Print >> None
+[r] msg: py\str << f"Hello {name}"
+[r] msg >> |Print
 [o] None
 [x]
 ```
@@ -44,7 +49,7 @@ Here's a simple "Hello World" Pipeline to demonstrate basic Polyglot syntax:
 
 - `[|] HelloWorld` - Defines a Pipeline named HelloWorld
 - `[i] name: py\str` - Requires a string input parameter
-- `[t] |Call` - Triggered when called from other pipelines
+- `[t] |PolyglotCli << "HelloWorldProgram"` - The pipline will be triggered when a user runs `polyglot -p HelloWorldProgram --name "My name"` in the command line (while the polyglot serive is running in the backgound).
 - `[w] PythonEnvironment` - Sets up Python runtime environment
 - `[r]` - Executes the main process (print the name)
 - `[o] None` - No output returned
@@ -57,7 +62,7 @@ This example shows sequential execution where each step runs after the previous 
 ```polyglot
 [|] DataProcessor
 [i] raw_data: py\str
-[t] |Call
+[t] |PolyglotCli << "DataProcessor"
 [w] PythonEnvironment
 \\ Sequential execution: each step runs after the previous completes
 [r] raw_data: py\str >> |CleanData >> clean_data: py\str
@@ -113,32 +118,33 @@ Every Event must be structured in one of two ways:
 
 ## 4. Language Syntax Reference
 
-### Structural Elements (Dual Form Support)
+### Structural Block Elements (Dual Form Support)
 
 Polyglot supports both compact and verbose notation for all elements. However, it is recommended to use compact form for nicely formatted code.
 
-| Compact | Verbose | Purpose | Reference |
-| --- | --- | --- | --- |
-| `[\|]` | `[Pipeline]` | Define or start a Pipeline. | \|PipelineName |
-| `[i]` | `[input]` | Define an input. | Within Pipeline: `input_name: datatype`. Outside Pipeline: `\|PipelineName<input_name` |
-| `[t]` | `[trigger]` | Define a trigger condition. | -   |
-| `[\]` | `[setup]` | Pre-processing and resource setup. | -   |
-| `[r]` | `[run]` | Main process *Sequential* execution. | variable: datatype |
-| `[/]` | `[clean]` | Post-processing and resource cleanup. | -   |
-| `[x]` | `[exit]` | End a Pipeline or branch. | -   |
-| `[w]` | `[wrap]` | Apply a context manager (macro with built-in setup/cleanup). | ^WrapperName |
-| `[?]` | `[switch]` | Switch (flow control) statement. | ?SwitchName |
-| `[!]` | `[error]` | Error handler. | !ErrorHandler |
-| `[f]` | `[fork]` | Start a parallel (forked) branch. | \\|BranchName |
-| `[j]`, `[Y]` | `[join]` | Join parallel branches and consolidate results. | -   |
-| `[b]` | `[back]` | Start a background branch (fire-and-forget). | \\|BranchName |
-| `[o]` | `[output]` | Pipeline output | `\\|PipelineName>output_name` |
-| `[M]` | `[macro]` | Define or use a Macro. | ^MacroName |
-| `[v]` | `[inject]` | Injection slot (used inside Macros). | -   |
-| `[~]` |     | Element Expansion | -   |
-| `[^]` |     | Continue above line. Used for multi-lines. |     |
-| `[D]` | `[Define]` | Used to define custom types and imports. | -   |
-| `[#]` | `[Enum]` | Enumeration Definition | #EnumName.Element |
+| Compact | Verbose | Purpose |
+| --- | --- | --- |
+| `[\\|]` | `[Pipeline]` | Define or start a Pipeline. |
+| `[i]`,`[I]` | `[input]` | Define an input. |
+| `[t]`,`[T]` | `[trigger]` | Define a trigger condition. |
+| `[q]`,`[Q]` | `[Queue]` | Define waiting in Queue conditions. |
+| `[\]` | `[setup]` | Pre-processing and resource setup. |
+| `[r]` | `[run]` | Main process *Sequential* execution. |
+| `[/]` | `[clean]` | Post-processing and resource cleanup. |
+| `[x]` | `[exit]` | End a Pipeline or branch. |
+| `[w]` | `[wrap]` | Apply a context manager (macro with built-in setup/cleanup). |
+| `[?]` | `[switch]` | Switch (flow control) statement. |
+| `[!]` | `[error]` | Error handler. |
+| `[f]` | `[fork]` | Start a parallel (forked) branch. |
+| `[j]`, `[Y]` | `[join]` | Join parallel branches and consolidate results. |
+| `[b]` | `[back]` | Start a background branch (fire-and-forget). |
+| `[o]` | `[output]` | Pipeline output |
+| `[M]` | `[macro]` | Define or use a Macro. |
+| `[v]` | `[inject]` | Injection slot (used inside Macros). |
+| `[~]` |     | Element Expansion |
+| `[^]` |     | Continue above line. Used for multi-lines. |
+| `[D]` | `[Define]` | Used to define custom types and imports. |
+| `[#]` | `[Enum]` | Enumeration Definition |
 
 ### Binary Operators
 
@@ -150,11 +156,265 @@ Polyglot supports both compact and verbose notation for all elements. However, i
 | `!>` | Error capture label | ErrorType | If Equal to this Error type run branch |
 | `?>` | variable | hashable value | If Equal to then run Branch |
 | `<-` | Chained Pipeline | Previous Pipeline label | Pipeline Chain operator |
-| `.` | Pipeline instance \ Branch | square element | The square element subset. Used for Macro and variable extractions |
+
+![](file:///home/hhj/snap/marktext/9/.config/marktext/images/2025-09-29-12-18-44-ploglot_pipline.jpg?msec=1759137524601)
+
+This diagram illustrates a Polyglot pipeline execution flow with trigger monitoring, input validation, queue management, and mixed sequential/parallel processing patterns.
+
+## Flow Analysis
+
+### Stage 1: Trigger and Input Monitoring (Parallel)
+
+The pipeline monitors **all triggers and inputs in parallel**:
+
+```
+[|] (pipline root)
+ ├── [i] → ◇Provided (implicit trigger: waits for value)
+ ├── [i] → ◇Provided (implicit trigger: waits for value)
+ ├── ... (more [i] nodes monitored in parallel)
+ ├── [t] → ◇Triggered (explicit trigger condition)
+ ├── [t] → ◇Triggered (explicit trigger condition)
+ └── ... (more [t] nodes monitored in parallel)
+```
+
+**Flow Type**: **Parallel Monitoring**
+
+- **`[i]` (Input) nodes**: Have implicit triggers that fire when a value is provided.
+  - If no Input add `[i] << None` since the `[i]` block is mandatory requirment.
+- **`[t]` (Trigger) nodes**: Have explicit trigger conditions that must be met
+- All nodes are monitored simultaneously and independently
+- All Triggers commands\piplines have exactly one boolean output
+
+**Activation Rule**: The pipeline will NOT run until ALL inputs are provided AND ALL triggers are activated.
+
+### Stage 2: Pipeline Activation Gate
+
+All monitored conditions converge at the **`[x]` gate**:
+
+```
+All [i] and [t] nodes → [x] gate (ALL condition check)
+```
+
+**Flow Type**: **Synchronization Gate**
+
+- **Condition**: `ALL inputs provided AND ALL triggers activated`
+- **If No**: Pipeline does not activate
+- **If Yes**: Proceeds to queue evaluation
+
+### Layer 3: Queue Condition Evaluation (Parallel)
+
+When all triggers activate, **queue conditions are checked in parallel**:
+
+```
+[x] → Yes → ┬── [Q] → ◇Triggered
+            ├── [Q] → ◇Triggered
+            └── ... (more [Q] conditions in parallel)
+```
+
+**Flow Type**: **Parallel Queue Evaluation**
+
+Each `[Q]` node evaluates its condition independently and simultaneously.
+
+**Purpose**: Queue conditions determine whether to:
+
+- Execute immediately (if conditions favor immediate execution)
+- Add to queue (if resources are busy or conditions require waiting)
+
+### Stage 4: Queue Decision Gate
+
+All queue evaluations converge:
+
+```
+All [Q] branches → ALL gate
+```
+
+**Flow Type**: **Queue Synchronization**
+
+- **If No (wait condition)**: Work item returns to queue, waits until conditions are met.
+  - if a queue is not specified it will queue in the default queue which is first in last out (FILO) type.
+  - if Queue drop condition is not specifed it will remain in the queue indefinatly utill it gets executed.
+- **If Yes (execute condition)**: Pipeline execution begins
+
+### Stage 5: Setup Phase - Sequential `[\]`
+
+Pipeline setup executes **in strict sequence**:
+
+```
+ALL gate → Yes → [\] → [\] → ...
+                  ↓1   ↓2   ↓(n)
+```
+
+**Flow Type**: **Sequential Setup**
+
+- Each `[\]` (setup) node runs one after another
+- Sets up pipeline prerequisites and resources
+- Must complete before main execution begins
+
+### Stage 6: Run Phase - Sequential `[r]`
+
+Main execution runs **in strict sequence**:
+
+```
+... → [r] → [r] → ...
+      ↓1   ↓2   ↓(n)
+```
+
+**Flow Type**: **Sequential Execution**
+
+- Each `[r]` (run) node executes in order
+- Represents the main processing logic
+- One step must complete before the next begins
+- The ellipsis indicates additional sequential run steps
+
+### Stage 7: Parallel Fork Phase - `[f]`
+
+The flow splits into **parallel forked branches**:
+
+```
+... → ┬── [f] → ...
+      ├── [f] → ...
+      ├── ... (more [f] branches)
+      ├── [b] → ... (background branch)
+      └── ... (more parallel operations)
+```
+
+**Flow Type**: **Parallel Execution (Fork)**
+
+- Split start as soon as all the branch variables used in the branch become avaliable. If the input variables are used the parallel branch runs immeditly after setup stage. If it depend on some values in `[r]` commands it will run as soon as the the values become avalible which after running the     `[r]` that will make it avaiable. If varaible from `[f]` is used it will not run untill it beome avaliable via join block {`[j]`,`[Y]`}, IDEs will should advice to have the branch `[f]` after that join that makes it avaible. If variables from `[b]` is used will result in complie error since its fire-and-forget branch.
+  
+- **`[f]` (Fork) branches**: Run in parallel and will rejoin later
+  
+- **`[b]` (Background) branches**: Run in parallel, fire-and-forget (do NOT rejoin)
+  
+- All forked branches execute simultaneously
+  
+
+### Stage 8: Nested Parallelism Within Fork
+
+One fork branch contains **additional nested parallelism**:
+
+```
+[f] → ┬── [r] → ...
+      ├── [f] → ... 
+      ├── [f] → ... 
+      ├── ... (more nested parallel)
+      ├── [b] → ... 
+      ├── [b] → ... 
+      ├── ... (more nested fire-and-forget)
+      └── [Y]
+```
+
+**Flow Type**: **Nested Parallel Execution**
+
+- Fork branches can spawn their own parallel sub-branches
+- Creates hierarchical parallelism
+- Each nested level can have sequential operations mixed in
+
+### Stage 9: Join Phase - `[Y]` / `[j]`
+
+Parallel fork branches **regroup and synchronize**:
+
+```
+Multiple [f] branches → [Y] / [j] (join)
+```
+
+**Flow Type**: **Parallel Join/Synchronization**
+
+- **`[Y]` or `[j]` (Join)** waits for ALL forked branches to complete
+- Consolidates results from parallel execution
+  - it also specifes race conditions such as
+    - `[Y] |JoinAll << ...`: Wait untill all branches finish and capture the variables.
+    - `[Y] first_value: datatype <<|JoinFirst <<...`: Wait untill the first parallel branch finish execution then assgin it to variable.
+    - `[Y] nth_value: datatype <<|JoinNth <<...`: Wait untill the nth parallel branch finish execution then assgin it to variable.
+    - `[Y] last_value: datatype <<|JoinLast <<...`: Wait untill the last parallel branch finish execution then assgin it to variable.
+    - More race condition will be added as the lanuguage evelove.
+- **Note**: Background `[b]` branches do NOT join here (fire-and-forget)
+
+### Stage 10: Cleanup Phase - Sequential `[/]`
+
+Post-processing runs **in strict sequence**:
+
+```
+[Y] → [/] → [/] → ...
+      ↓1   ↓2   ↓(n)
+```
+
+**Flow Type**: **Sequential Cleanup**
+
+- Each `[/]` (cleanup) node runs in order
+- Releases resources and finalizes state
+- Performs post-processing tasks
+
+### Layer 11: Output Phase - Sequential `[o]`
+
+Outputs are processed **sequentially**:
+
+```
+... → [o] → [o] → ...
+      ↓1   ↓2   ↓(n)
+```
+
+**Flow Type**: **Sequential Output**
+
+- Output nodes process results in order
+- Each output must complete before the next
+- If no output add `[o] >> None` since the `[o]` is mandatory requirement.
+
+### Layer 12: Pipeline Termination - `[x]`
+
+All flows converge at the **exit node**:
+
+```
+All paths → [x] (pipeline end)
+```
+
+**Flow Type**: **Pipeline Termination**
+
+- Marks the end of pipeline execution
+- All processing (except fire-and-forget background tasks) completes here
+
+## Flow Summary
+
+### Execution Pattern Sequence
+
+1. **Parallel Monitoring** - All `[i]` and `[t]` nodes monitored simultaneously
+2. **Activation Gate** - ALL conditions must be met
+3. **Parallel Queue Check** - Queue conditions evaluated in parallel
+4. **Queue Decision** - Execute now or wait in queue
+5. **Sequential Setup** - `[\]` nodes run in order
+6. **Sequential Run** - `[r]` nodes execute in sequence
+7. **Parallel Fork** - `[f]` branches run in parallel (+ `[b]` fire-and-forget)
+8. **Nested Parallel** - Forks within forks
+9. **Join** - `[Y]`/`[j]` synchronizes parallel branches (not `[b]`)
+10. **Sequential Cleanup** - `[/]` nodes run in order
+11. **Sequential Output** - `[o]` nodes process in sequence
+12. **Termination** - `[x]` ends pipeline
+
+### Key Execution Rules
+
+| Element | Execution Mode | Join Behavior |
+| --- | --- | --- |
+| `[i]` | Parallel monitoring (implicit trigger) | Must all be provided before activation |
+| `[t]` | Parallel monitoring (explicit trigger) | Must all trigger before activation |
+| `[Q]` | Parallel evaluation | Determines immediate execution vs. queuing |
+| `[\]` | **Sequential** (setup) | Each completes before next begins |
+| `[r]` | **Sequential** (run) | Each completes before next begins |
+| `[f]` | **Parallel** (fork) | **Regroups at join** `[Y]`/`[j]` |
+| `[b]` | **Parallel** (background) | **Fire-and-forget, no join** |
+| `[/]` | **Sequential** (cleanup) | Each completes before next begins |
+| `[o]` | **Sequential** (output) | Each completes before next begins |
+| `[x]` | Pipeline termination | All flows end here |
 
 ### IO Stream Syntax
 
-**Critical Syntax Rule:** IO streams must match the flow with proper type declarations.
+In polyglot we have predifined piplines which simmilar to functions in other programaning languages with some slight diffrences. The piplnes may not be called unless it has `[t] |Call` in its definiation otherwise calling that pipline wil not complie .
+
+**Critical Syntax Rules:**
+
+- IO streams must match the flow with proper type declarations. with input direction goes into the predfined pipline then outsteam direction to the output.
+  
+- The pipline used must predifined (either from standard lib or user defined)
+  
 
 **Inline Format:**
 
@@ -187,9 +447,9 @@ Polyglot supports both compact and verbose notation for all elements. However, i
 [~] >> output2: py\bool
 ```
 
-**Recommendation:** Only use shorthand for single input/output operations. The expansion element provides better formatting and visualization for complex operations.
+**Recommendation:** Only use shorthand for single input/output operations. The expansion element provides better formatting and visualization multi-IO operations.
 
-### Square Elements Design Philosophy
+### Block Elements Design Philosophy
 
 The compact Square elements use fixed 3-character notation (`[x]`) to:
 
@@ -197,17 +457,31 @@ The compact Square elements use fixed 3-character notation (`[x]`) to:
 2. **Enable visual scanning:** Humans, computers, and AI can quickly identify nested branches and Pipeline structure
 3. **Reinforce event structure:** Every event must have triggers `[t]`, setup `[\]`, processes `[r]`, and cleanup `[/]`
 
-### Element Expansion `[~]`
+### Block Expansion `[~]`
 
-To define and extract properties of square elements, Element Expansion `[~]` is used. For example, `[~][!]` is used to define the expanded element error handling.
+Polyglot does not group scope using brackets it uses the block expansion `[~]` to expand, we already seen example of exapnsion in the IO stream. For example the `[r]` block element can perfom one Predifined pipline call with IO stream and Error handling as below
 
 - Not to be confused with multi-line `[^]` where it is used to multi-line a long line.
 
 ```polyglot
 [r] |RiskyPipeline
+[~] << input1: datatype
+[~] << input2: datatype
+[~] >> output1: datatype
+[~] >> output2: datatype 
 [~][!] !TimeOut << T"3:"   \\ wait 3min
+\\ Here you can define actions if timed out
+\\ By expanding the [!]
+[~][~][r] ...  
+[~][~][r] ...  
+[~][~]...
 [~][!] !CpuPercentageLimit \\ Set
 [~][^] << 80.5             \\ Continuing line above    
+\\ Here you can define actions if CPU limit reached
+\\ By expanding the [!]
+[~][~][r] ...  
+[~][~][r] ...  
+[~][~]...
 ```
 
 This consistency enables visual scanning of complex nested Pipelines at a glance.
