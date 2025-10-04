@@ -1,1038 +1,243 @@
-# Polyglot Automation Language Documentation
+# Polyglot Automation Language
 
-![](file:///home/hhj/snap/marktext/9/.config/marktext/images/2025-09-29-13-45-47-Logo.jpg?msec=1759142748191)
+**Version:** 0.2.0-draft  
+**Status:** Brainstorming Phase  
+**License:** TBD (Apache 2.0 or MIT)
 
-## 1. Overview & Philosophy
+## Overview
 
-Polyglot is an event-driven orchestration language designed to seamlessly integrate code from multiple programming languages into a single, coherent pipeline. Its core philosophy is pragmatic: **leverage existing legacy code** instead of reinventing the wheel. It acts as universal glue, allowing you to use the right tool for each job within an asynchronous, event-driven framework.
+Polyglot is an automation language designed to seamlessly integrate code from multiple programming languages into single coherent pipelines. Its core philosophy is pragmatic: **leverage existing legacy code** instead of reinventing the wheel.
 
-**Note:** This language is currently in the brainstorming phase. Nothing concrete has been built yet, and we need to plan and collaborate to make it happen. This documentation serves two audiences: developers who will build this language, and future users who need to understand what to expect and how to use it.
+**Note:** This language is currently in the brainstorming phase. Nothing concrete has been built yet.
 
-### Core Philosophy
+## Core Philosophy
 
-- **Don't Reinvent the Wheel, Embrace Legacy Code:** Polyglot isn't another general-purpose language. It's a bridge builder, designed to integrate and orchestrate existing code from Python, JavaScript, Rust, C++, and more.
-- **Asynchronous by Default:** Every operation is inherently async, enabling efficient coordination between interpreted runtime scripts and compiled build-time processes. As such, technically Polyglot is an interpreted language in this sense.
-- **Use the Right Tool for the Job:** Polyglot loves all programming languages. Every programming language has pros and cons depending on the task. Polyglot allows you to choose the best language for each task in a workflow.
-- **Pipeline-Centric Thinking:** Unlike traditional synchronous functions, Polyglot uses pipelines—compositions of chained, parallel, and switching events that trigger asynchronously when conditions allow.
-- **Divide and Conquer Programming Language Translation:** Integrating programming languages to each other can get very complex. We envision with the evolution of this language the problem is to be subdivided into smaller problems such as converting one datatype from one language to other instead of having the whole implementation integrated.
-- **Minimalist Polyglot Footprint:** Polyglot is intended to orchestrate integration between languages with as little intervention as possible.
+- **Don't Reinvent the Wheel, Embrace Legacy Code—**Bridge existing code from Python, JavaScript, Rust, C++, and more
+- **Asynchronous by Default—**Every operation is inherently async, enabling efficient coordination
+- **Pipeline-Centric Thinking—**Compositions of chained, parallel, and switching events
+- **Use the Right Tool for the Job—**Choose the best language for each task in a workflow
+- **Divide and Conquer** - Subdivide complex language integration into smaller, optimizable challenges
+- **Minimalist Footprint—**Orchestrate with minimal intervention
 
-### Primary Goals
-
-- **Simplfy Event-Driven Automation:** The abilty to construct complex workflows using pure event-driven paradigms in plain simple syntax.
-- **Polyglot Integration:** Seamlessly call functions and share data between different programming languages.
-- **Minimize Translation Time and Memory Footprint:** At the beginning, the time and memory footprint will not be negligible. Hence, Polyglot must aim for integration optimization as we divide and conquer the language integration problem into smaller and more specific subproblems. Optimization goal will be an achievable goal.
-- **Concurrency Discipline:** Enforce data dependencies at compile-time to prevent race conditions by only using data of joined forked branches. Since using data of incomplete branches will cause corruption.
-- **Explicit Resource Management:** Mandatory setup and cleanup phases ensure resources are properly managed across all runtimes.
-- **Practical Orchestration:** Built-in support for sequential chains, parallel tasks, error handling, and flow control.
-
-## 2. Getting Started
-
-Polyglot is a service that have two main parts which are `Trigger Monitors` and `Executioner`. The trigger monitor consist of wachters and scudules. The Executioner checkes the piplines triggers and run the piplnes accordingly. The Polyglot code itself is registoring the piplines triggers and exeutions.
-
-### Hello World Example
-
-Here's a simple "Hello World" Pipeline to demonstrate basic Polyglot syntax:
+## Quick Example
 
 ```polyglot
-[|] HelloWorld
-[i] name: py\str
-[t] |PolyglotCli << "HelloWorldProgram"
-[w] PythonEnvironment
-[r] msg: py\str << f"Hello {name}"
-[r] msg >> |Print
-[o] None
+[@] com.example>DataPipeline>Analytics
+[X]
+
+[|] ProcessUserData
+[i] user_data: py\dict
+[t] |T.Call
+
+[Q] |Q.Priority << 2
+[Q] |Q.CpuAvailable << 75.0
+
+[w] |W.Python3.10
+
+[r] user_data >> |ValidateData >> validated: py\dict
+[~][!] ?> py!/InvalidData \\ custom python error raised
+[~][~][r] |U.Log << #LogLevel.Error << "Invalid data"
+[~][~][x] |Exit << 400 \\ Exit whole pipline with code 400
+
+[f] |AnalyzePython << validated >> py_results: py\dict
+[f] |AnalyzeRust << validated >> rust_results: rust\HashMap
+
+[j] |JoinAll
+
+[r] |CombineResults << py_results << rust_results >> final: py\dict
+
+[o] >> final
 [x]
 ```
 
-**Explanation:**
+## Primary Goals
 
-- `[|] HelloWorld` - Defines a Pipeline named HelloWorld
-- `[i] name: py\str` - Requires a string input parameter
-- `[t] |PolyglotCli << "HelloWorldProgram"` - The pipline will be triggered when a user runs `polyglot -p HelloWorldProgram --name "My name"` in the command line (while the polyglot serive is running in the backgound).
-- `[w] PythonEnvironment` - Sets up Python runtime environment
-- `[r]` - Executes the main process (print the name)
-- `[o] None` - No output returned
-- `[x]` - Ends the Pipeline
+- **Simplify Event-Driven Automation**—Construct complex workflows with clear syntax
+- **Polyglot Integration**—Seamlessly integrate codes from different programming languages
+- **Minimize Integration Overhead** - Optimize time and memory footprint
+- **Concurrency Discipline** - Enforce data dependencies at compile-time to prevent race conditions
+- **Explicit Resource Management**—Mandatory setup and cleanup phases
+- **Complete Resource Governance** - Transparent monitoring, graceful degradation, predictable behavior
+- **Performance Analysis** - Built-in metrics for debugging and optimization
 
-### Basic Chain Example
+## Architecture
 
-This example shows sequential execution where each step runs after the previous completes:
+Polyglot consists of three main microservices:
 
+### 1. Trigger Monitor
+Watches for conditions that activate pipelines:
+- File system changes
+- Scheduled times
+- REST API calls
+- Message queue events
+- CLI commands
+- Resource thresholds
+
+### 2. Queue Manager
+Handles pipeline queueing and resource management:
+- Priority-based scheduling
+- Resource admission control
+- Retry logic with backoff
+- Dead letter queues
+- Kill conditions for rouge processes
+
+### 3. Executioner
+Executes pipeline logic:
+- Multi-language runtime management
+- Type conversion between languages
+- Error handling and propagation
+- Performance metrics collection
+
+## Documentation Structure
+
+- **[README.md](README.md)** - This overview (you are here)
+- **[doc/01-getting-started.md](doc/01-getting-started.md)** - Installation and first pipeline
+- **[doc/02-language-syntax.md](doc/02-language-syntax.md)** - Complete syntax reference
+- **[doc/03-type-system.md](doc/03-type-system.md)** - Type system and conversions
+- **[doc/04-package-management.md](doc/04-package-management.md)** - Namespaces and imports
+- **[doc/05-standard-library.md](doc/05-standard-library.md)** - Built-in pipelines reference
+- **[doc/06-error-handling.md](doc/06-error-handling.md)** - Error handling patterns
+- **[doc/07-flow-control.md](doc/07-flow-control.md)** - Switch statements and conditionals
+- **[doc/08-queue-system.md](doc/08-queue-system.md)** - Queue configuration and management
+- **[doc/09-architecture.md](doc/09-architecture.md)** - System architecture deep dive
+- **[doc/10-execution-model.md](doc/10-execution-model.md)** - Pipeline execution flow
+- **[doc/11-language-integration.md](doc/11-language-integration.md)** - Multi-language integration details
+- **[doc/12-development-roadmap.md](doc/12-development-roadmap.md)** - Implementation phases and timeline
+- **[doc/13-contributing.md](doc/13-contributing.md)** - How to contribute
+
+## Key Features
+
+### Multi-Language Support
+Call functions seamlessly across Python, Rust, JavaScript, C++, and more with automatic type conversion.
+
+### Event-Driven Triggers
 ```polyglot
-[|] DataProcessor
-[i] raw_data: py\str
-[t] |PolyglotCli << "DataProcessor"
-[w] PythonEnvironment
-\\ Sequential execution: each step runs after the previous completes
-[r] raw_data: py\str >> |CleanData >> clean_data: py\str
-[r] clean_data: py\str >> |ValidateData >> valid_data: py\str  
-[r] valid_data: py\str >> |SaveData >> result: py\bool
-[o] result
-[x]
-```
-
-**Key Points:**
-
-- Data flows sequentially through each processing step
-- Each `[r]` element waits for the previous one to complete
-- The output of one step becomes the input of the next
-
-## 3. Core Concepts
-
-### Terminology
-
-| Term | Meaning |
-| --- | --- |
-| **Event** | A single execution block with inputs, wrapped processing, and outputs. |
-| **Pipeline** | A series of events connected through chaining, parallel execution, or switching. |
-| **Trigger** | An asynchronous condition that permits an event to execute. |
-| **Macro** | A reusable template for events, often containing a standard setup/cleanup pattern. |
-| **Element** | Square-bracketed components that define Pipeline structure and behavior. |
-| **Element Expansion** | Using `[~]` to define detailed properties of square elements. |
-
-### The Event: The Fundamental Unit
-
-An **Event** is a single block of execution with defined inputs, processing, and outputs. Every Pipeline is composed of interconnected events that execute asynchronously when their triggers are satisfied.
-
-**Critical Rule:** Every Event must have all required elements, or a **compile error** will be raised.
-
-Every Event must be structured in one of two ways:
-
-#### Explicit Form:
-
-1. **Inputs (`[i]`)** - The data the event requires. Use `[i] None` if no input needed.
-2. **Triggers (`[t]`)** - The conditions that allow the event to execute.
-3. **Setup (`[\]`)** - Pre-processing to acquire resources (e.g., open files, start runtimes).
-4. **Process (`[r]`)** - The main execution (run code, call functions).
-5. **Cleanup (`[/]`)** - Post-processing to release resources.
-6. **Outputs (`[o]`)** - Pipeline outputs. Use `[o] None` if no output needed.
-
-#### Wrapper Form (Simplified):
-
-1. **Inputs (`[i]`)** - The data the event requires. Use `[i] None` if no input needed.
-2. **Triggers (`[t]`)** - The conditions that allow the event to execute.
-3. **Wrapper (`[w]`)** - A predefined macro that handles both setup and cleanup automatically (equivalent to RAII and Python's context manager).
-4. **Process (`[r]`)** - The main execution.
-5. **Outputs (`[o]`)** - Pipeline outputs. Use `[o] None` if no output needed.
-
-## 4. Language Syntax Reference
-
-### Structural Block Elements (Dual Form Support)
-
-Polyglot supports both compact and verbose notation for all elements. However, it is recommended to use compact form for nicely formatted code.
-
-| Compact | Verbose | Purpose |
-| --- | --- | --- |
-| `[\\|]` | `[Pipeline]` | Define or start a Pipeline. |
-| `[i]`,`[I]` | `[input]` | Define an input. |
-| `[t]`,`[T]` | `[trigger]` | Define a trigger condition. |
-| `[q]`,`[Q]` | `[Queue]` | Define waiting in Queue conditions. |
-| `[\]` | `[setup]` | Pre-processing and resource setup. |
-| `[r]` | `[run]` | Main process *Sequential* execution. |
-| `[/]` | `[clean]` | Post-processing and resource cleanup. |
-| `[x]` | `[exit]` | End a Pipeline or branch. |
-| `[w]` | `[wrap]` | Apply a context manager (macro with built-in setup/cleanup). |
-| `[?]` | `[switch]` | Switch (flow control) statement. |
-| `[!]` | `[error]` | Error handler. |
-| `[f]` | `[fork]` | Start a parallel (forked) branch. |
-| `[j]`, `[Y]` | `[join]` | Join parallel branches and consolidate results. |
-| `[b]` | `[back]` | Start a background branch (fire-and-forget). |
-| `[o]` | `[output]` | Pipeline output |
-| `[M]` | `[macro]` | Define or use a Macro. |
-| `[v]` | `[inject]` | Injection slot (used inside Macros). |
-| `[~]` |     | Element Expansion |
-| `[^]` |     | Continue above line. Used for multi-lines. |
-| `[D]` | `[Define]` | Used to define custom types and imports. |
-| `[#]` | `[Enum]` | Enumeration Definition |
-
-### Binary Operators
-
-| Operator | 1st Operand | 2nd Operand | Purpose |
-| --- | --- | --- | --- |
-| `<<` | Square element | variable | Input Stream |
-| `>>` | variable | Square element | Output Stream |
-| `$>` | Pipeline instance \ Branch | label | "Label as" |
-| `!>` | Error capture label | ErrorType | If Equal to this Error type run branch |
-| `?>` | variable | hashable value | If Equal to then run Branch |
-| `<-` | Chained Pipeline | Previous Pipeline label | Pipeline Chain operator |
-
-![](file:///home/hhj/snap/marktext/9/.config/marktext/images/2025-09-29-12-18-44-ploglot_pipline.jpg?msec=1759137524601)
-
-This diagram illustrates a Polyglot pipeline execution flow with trigger monitoring, input validation, queue management, and mixed sequential/parallel processing patterns.
-
-## Flow Analysis
-
-### Stage 1: Trigger and Input Monitoring (Parallel)
-
-The pipeline monitors **all triggers and inputs in parallel**:
-
-```
-[|] (pipline root)
- ├── [i] → ◇Provided (implicit trigger: waits for value)
- ├── [i] → ◇Provided (implicit trigger: waits for value)
- ├── ... (more [i] nodes monitored in parallel)
- ├── [t] → ◇Triggered (explicit trigger condition)
- ├── [t] → ◇Triggered (explicit trigger condition)
- └── ... (more [t] nodes monitored in parallel)
-```
-
-**Flow Type**: **Parallel Monitoring**
-
-- **`[i]` (Input) nodes**: Have implicit triggers that fire when a value is provided.
-  - If no Input add `[i] << None` since the `[i]` block is mandatory requirment.
-- **`[t]` (Trigger) nodes**: Have explicit trigger conditions that must be met
-- All nodes are monitored simultaneously and independently
-- All Triggers commands\piplines have exactly one boolean output
-
-**Activation Rule**: The pipeline will NOT run until ALL inputs are provided AND ALL triggers are activated.
-
-### Stage 2: Pipeline Activation Gate
-
-All monitored conditions converge at the **`[x]` gate**:
-
-```
-All [i] and [t] nodes → [x] gate (ALL condition check)
-```
-
-**Flow Type**: **Synchronization Gate**
-
-- **Condition**: `ALL inputs provided AND ALL triggers activated`
-- **If No**: Pipeline does not activate
-- **If Yes**: Proceeds to queue evaluation
-
-### Layer 3: Queue Condition Evaluation (Parallel)
-
-When all triggers activate, **queue conditions are checked in parallel**:
-
-```
-[x] → Yes → ┬── [Q] → ◇Triggered
-            ├── [Q] → ◇Triggered
-            └── ... (more [Q] conditions in parallel)
-```
-
-**Flow Type**: **Parallel Queue Evaluation**
-
-Each `[Q]` node evaluates its condition independently and simultaneously.
-
-**Purpose**: Queue conditions determine whether to:
-
-- Execute immediately (if conditions favor immediate execution)
-- Add to queue (if resources are busy or conditions require waiting)
-
-### Stage 4: Queue Decision Gate
-
-All queue evaluations converge:
-
-```
-All [Q] branches → ALL gate
-```
-
-**Flow Type**: **Queue Synchronization**
-
-- **If No (wait condition)**: Work item returns to queue, waits until conditions are met.
-  - if a queue is not specified it will queue in the default queue which is first in last out (FILO) type.
-  - if Queue drop condition is not specifed it will remain in the queue indefinatly utill it gets executed.
-- **If Yes (execute condition)**: Pipeline execution begins
-
-### Stage 5: Setup Phase - Sequential `[\]`
-
-Pipeline setup executes **in strict sequence**:
-
-```
-ALL gate → Yes → [\] → [\] → ...
-                  ↓1   ↓2   ↓(n)
-```
-
-**Flow Type**: **Sequential Setup**
-
-- Each `[\]` (setup) node runs one after another
-- Sets up pipeline prerequisites and resources
-- Must complete before main execution begins
-
-### Stage 6: Run Phase - Sequential `[r]`
-
-Main execution runs **in strict sequence**:
-
-```
-... → [r] → [r] → ...
-      ↓1   ↓2   ↓(n)
-```
-
-**Flow Type**: **Sequential Execution**
-
-- Each `[r]` (run) node executes in order
-- Represents the main processing logic
-- One step must complete before the next begins
-- The ellipsis indicates additional sequential run steps
-
-### Stage 7: Parallel Fork Phase - `[f]`
-
-The flow splits into **parallel forked branches**:
-
-```
-... → ┬── [f] → ...
-      ├── [f] → ...
-      ├── ... (more [f] branches)
-      ├── [b] → ... (background branch)
-      └── ... (more parallel operations)
-```
-
-**Flow Type**: **Parallel Execution (Fork)**
-
-- Split start as soon as all the branch variables used in the branch become avaliable. If the input variables are used the parallel branch runs immeditly after setup stage. If it depend on some values in `[r]` commands it will run as soon as the the values become avalible which after running the     `[r]` that will make it avaiable. If varaible from `[f]` is used it will not run untill it beome avaliable via join block {`[j]`,`[Y]`}, IDEs will should advice to have the branch `[f]` after that join that makes it avaible. If variables from `[b]` is used will result in complie error since its fire-and-forget branch.
-  
-- **`[f]` (Fork) branches**: Run in parallel and will rejoin later
-  
-- **`[b]` (Background) branches**: Run in parallel, fire-and-forget (do NOT rejoin)
-  
-- All forked branches execute simultaneously
-  
-
-### Stage 8: Nested Parallelism Within Fork
-
-One fork branch contains **additional nested parallelism**:
-
-```
-[f] → ┬── [r] → ...
-      ├── [f] → ... 
-      ├── [f] → ... 
-      ├── ... (more nested parallel)
-      ├── [b] → ... 
-      ├── [b] → ... 
-      ├── ... (more nested fire-and-forget)
-      └── [Y]
-```
-
-**Flow Type**: **Nested Parallel Execution**
-
-- Fork branches can spawn their own parallel sub-branches
-- Creates hierarchical parallelism
-- Each nested level can have sequential operations mixed in
-
-### Stage 9: Join Phase - `[Y]` / `[j]`
-
-Parallel fork branches **regroup and synchronize**:
-
-```
-Multiple [f] branches → [Y] / [j] (join)
-```
-
-**Flow Type**: **Parallel Join/Synchronization**
-
-- **`[Y]` or `[j]` (Join)** waits for ALL forked branches to complete
-- Consolidates results from parallel execution
-  - it also specifes race conditions such as
-    - `[Y] |JoinAll << ...`: Wait untill all branches finish and capture the variables.
-    - `[Y] first_value: datatype <<|JoinFirst <<...`: Wait untill the first parallel branch finish execution then assgin it to variable.
-    - `[Y] nth_value: datatype <<|JoinNth <<...`: Wait untill the nth parallel branch finish execution then assgin it to variable.
-    - `[Y] last_value: datatype <<|JoinLast <<...`: Wait untill the last parallel branch finish execution then assgin it to variable.
-    - More race condition will be added as the lanuguage evelove.
-- **Note**: Background `[b]` branches do NOT join here (fire-and-forget)
-
-### Stage 10: Cleanup Phase - Sequential `[/]`
-
-Post-processing runs **in strict sequence**:
-
-```
-[Y] → [/] → [/] → ...
-      ↓1   ↓2   ↓(n)
-```
-
-**Flow Type**: **Sequential Cleanup**
-
-- Each `[/]` (cleanup) node runs in order
-- Releases resources and finalizes state
-- Performs post-processing tasks
-
-### Layer 11: Output Phase - Sequential `[o]`
-
-Outputs are processed **sequentially**:
-
-```
-... → [o] → [o] → ...
-      ↓1   ↓2   ↓(n)
-```
-
-**Flow Type**: **Sequential Output**
-
-- Output nodes process results in order
-- Each output must complete before the next
-- If no output add `[o] >> None` since the `[o]` is mandatory requirement.
-
-### Layer 12: Pipeline Termination - `[x]`
-
-All flows converge at the **exit node**:
-
-```
-All paths → [x] (pipeline end)
-```
-
-**Flow Type**: **Pipeline Termination**
-
-- Marks the end of pipeline execution
-- All processing (except fire-and-forget background tasks) completes here
-
-## Flow Summary
-
-### Execution Pattern Sequence
-
-1. **Parallel Monitoring** - All `[i]` and `[t]` nodes monitored simultaneously
-2. **Activation Gate** - ALL conditions must be met
-3. **Parallel Queue Check** - Queue conditions evaluated in parallel
-4. **Queue Decision** - Execute now or wait in queue
-5. **Sequential Setup** - `[\]` nodes run in order
-6. **Sequential Run** - `[r]` nodes execute in sequence
-7. **Parallel Fork** - `[f]` branches run in parallel (+ `[b]` fire-and-forget)
-8. **Nested Parallel** - Forks within forks
-9. **Join** - `[Y]`/`[j]` synchronizes parallel branches (not `[b]`)
-10. **Sequential Cleanup** - `[/]` nodes run in order
-11. **Sequential Output** - `[o]` nodes process in sequence
-12. **Termination** - `[x]` ends pipeline
-
-### Key Execution Rules
-
-| Element | Execution Mode | Join Behavior |
-| --- | --- | --- |
-| `[i]` | Parallel monitoring (implicit trigger) | Must all be provided before activation |
-| `[t]` | Parallel monitoring (explicit trigger) | Must all trigger before activation |
-| `[Q]` | Parallel evaluation | Determines immediate execution vs. queuing |
-| `[\]` | **Sequential** (setup) | Each completes before next begins |
-| `[r]` | **Sequential** (run) | Each completes before next begins |
-| `[f]` | **Parallel** (fork) | **Regroups at join** `[Y]`/`[j]` |
-| `[b]` | **Parallel** (background) | **Fire-and-forget, no join** |
-| `[/]` | **Sequential** (cleanup) | Each completes before next begins |
-| `[o]` | **Sequential** (output) | Each completes before next begins |
-| `[x]` | Pipeline termination | All flows end here |
-
-### IO Stream Syntax
-
-In polyglot we have predifined piplines which simmilar to functions in other programaning languages with some slight diffrences. The piplnes may not be called unless it has `[t] |Call` in its definiation otherwise calling that pipline wil not complie .
-
-**Critical Syntax Rules:**
-
-- IO streams must match the flow with proper type declarations. with input direction goes into the predfined pipline then outsteam direction to the output.
-  
-- The pipline used must predifined (either from standard lib or user defined)
-  
-
-**Inline Format:**
-
-```polyglot
-[r] input1:type, input2:type >> |PredefinedPipeline >> output1:type, output2:type
-```
-
-**Expansion Format (Equivalent):**
-
-```polyglot
-[r] |PredefinedPipeline
-[~] << input1: type
-[~] << input2: type
-[~] >> output1: type  
-[~] >> output2: type
-```
-
-**Shorthand for Single Input/Output:** For single input or output operations, you may omit `>> None` and `None <<`:
-
-```polyglot
-\\ Allowed shorthand:
-[r] data: py\str >> |ProcessData      \\ Implies >> None
-[r] |GetData >> result: py\dict       \\ Implies None <<
-
-\\ However, for multiple inputs/outputs, use expansion for better visualization:
-[r] |ComplexProcess
-[~] << input1: py\str
-[~] << input2: py\int  
-[~] >> output1: py\dict
-[~] >> output2: py\bool
-```
-
-**Recommendation:** Only use shorthand for single input/output operations. The expansion element provides better formatting and visualization multi-IO operations.
-
-### Block Elements Design Philosophy
-
-The compact Square elements use fixed 3-character notation (`[x]`) to:
-
-1. **Minimize branching footprint:** Complex Pipelines with extensive type conversions and compilations remain visually compact
-2. **Enable visual scanning:** Humans, computers, and AI can quickly identify nested branches and Pipeline structure
-3. **Reinforce event structure:** Every event must have triggers `[t]`, setup `[\]`, processes `[r]`, and cleanup `[/]`
-
-### Block Expansion `[~]`
-
-Polyglot does not group scope using brackets it uses the block expansion `[~]` to expand, we already seen example of exapnsion in the IO stream. For example the `[r]` block element can perfom one Predifined pipline call with IO stream and Error handling as below
-
-- Not to be confused with multi-line `[^]` where it is used to multi-line a long line.
-
-```polyglot
-[r] |RiskyPipeline
-[~] << input1: datatype
-[~] << input2: datatype
-[~] >> output1: datatype
-[~] >> output2: datatype 
-[~][!] !TimeOut << T"3:"   \\ wait 3min
-\\ Here you can define actions if timed out
-\\ By expanding the [!]
-[~][~][r] ...  
-[~][~][r] ...  
-[~][~]...
-[~][!] !CpuPercentageLimit \\ Set
-[~][^] << 80.5             \\ Continuing line above    
-\\ Here you can define actions if CPU limit reached
-\\ By expanding the [!]
-[~][~][r] ...  
-[~][~][r] ...  
-[~][~]...
-```
-
-This consistency enables visual scanning of complex nested Pipelines at a glance.
-
-### Polyglot Data Type System
-
-Polyglot uses a comprehensive type system that bridges multiple programming languages with explicit type declarations.
-
-#### Type Declaration Format
-
-**General Format:** `language\datatype`
-
-Where:
-
-- `language` specifies the programming language context
-- `datatype` is the full literal data type as it exists in the native language
-
-#### Supported Languages
-
-Currently supported languages: `c++`, `py`, `rust`, `pg`
-
-**Examples of Language-Specific Types:**
-
-```polyglot
-c++\int                 \\ C++ integer
-c++\std::string         \\ C++ standard string
-c++\std::vector<int>    \\ C++ vector of integers
-py\str                  \\ Python string
-py\dict                 \\ Python dictionary
-py\list                 \\ Python list
-rust\&str               \\ Rust string slice
-rust\Vec<i32>           \\ Rust vector of 32-bit integers
-rust\HashMap<String, i32> \\ Rust hash map
-```
-
-#### Type Shortening
-
-Long type names can be shortened using the `[D]` Define element within a Macro:
-
-```polyglot
-[M] TypeDefinitions
-[D] c++\std::string >> c++\str
-[D] c++\std::vector<int> >> c++\intvec
-[D] rust\HashMap<String, i32> >> rust\strmap
-\\ Note: c++\std::string >> str  \\ ❌ Not allowed, must specify language
-[x]
-```
-
-#### Language Reference Type
-
-To reference a language itself, use the format `lang\language_name`:
-
-```polyglot
-[i] target_language: lang\c++    \\ References C++ language
-[i] script_language: lang\py     \\ References Python language
-```
-
-#### Native Polyglot Types
-
-Polyglot provides universal types prefixed with `pg\`:
-
-##### Basic Types
-
-- `pg\string` - Universal string type
-- `pg\int` - Universal integer
-- `pg\float` - Universal floating point
-- `pg\bool` - Universal boolean
-- `pg\blocks` - Code blocks (used for macros)
-- `pg\Enum` - Enumeration type
-
-##### Specialized Types
-
-**`pg\Datetime` - Universal DateTime Type**
-
-Format: `T"YYYY-MM-DD|hh:mm:ss.0000"`
-
-Missing parts are assumed as zero, using separators as guides:
-
-```polyglot
-T"2--"         \\ 2 years
-T"2-3-"        \\ 2 years and 3 months  
-T"3|"          \\ 3 days
-T"3:"          \\ 3 minutes
-T"3:30"        \\ 3 minutes and 30 seconds
-T"3:30:"       \\ 3 hours and 30 minutes
-T"200"         \\ 200 nanoseconds
-T"5.600"       \\ 5 seconds and 600 nanoseconds
-```
-
-**`pg\floatrange` - Numeric Range Type**
-
-Since Polyglot does not have comparison operators, ranges are used for bounds checking:
-
-```polyglot
-[r] None >> |CpuPercentage >> cpu_percent: pg\float
-[r] |FloatRange
-[~] << 80.0: pg\float
-[~] << 90.0: pg\float  
-[~] >> high_cpu: pg\floatrange
-
-[r] |FloatRange
-[~] << 90.0: pg\float
-[~] << None  \\ +infinity
-[~] >> critical_cpu: pg\floatrange
-
-\\ The ?> operator checks if value is in range
-[?] cpu_percent ?> high_cpu 
-[~][r] level: pg\Enum, msg: pg\string >> |Log >> None
-[~][~] << #LogLevel.warning
-[~][~] << "CPU usage in high range"
-
-[?] cpu_percent ?> critical_cpu
-[~][r] level: pg\Enum, msg: pg\string >> |Log >> None  
-[~][~] << #LogLevel.critical
-[~][~] << "CPU usage critical"
-```
-
-#### Enumeration Definition
-
-Enumerations are defined using the `[#]` element:
-
-```polyglot
-[#] Color
-[D] Red
-[D] Blue  
-[D] Green
-[x]
-
-[#] LogLevel
-[D] debug
-[D] info
-[D] warning
-[D] error
-[D] critical
-[x]
-
-\\ Usage in code:
-[r] level: pg\Enum, color: pg\Enum >> |DisplayMessage >> None
-[~] << #LogLevel.error
-[~] << #Color.Red
-```
-
-#### Type Conversion System
-
-**Implicit Conversion Rules:**
-
-Implicit conversion occurs during IO stream operations when types are compatible. If conversion is not defined, a **compiler error** is raised.
-
-**Assignment-Based Conversion:**
-
-```polyglot
-\\ Allowed when conversion Pipeline exists:
-[r] out_pg: pg\string << out_py: py\str    \\ ✅ Converts py\str to pg\string
-
-\\ Compiler error if no conversion defined:
-[r] |SomePythonFunction >> out: pg\string  \\ ❌ If function outputs py\str
-```
-
-**Conversion Examples:**
-
-```polyglot
-\\ Automatic conversions (when conversion Pipelines exist):
-py\str → pg\string      \\ ✅ String conversion
-py\int → rust\i32       \\ ✅ Integer conversion (if value fits)
-py\list → c++\vector    \\ ✅ Container conversion (with element conversion)
-
-\\ Compiler errors (no implicit conversion available):
-py\str → py\int         \\ ❌ No implicit string to integer conversion
-py\dict → rust\&str     \\ ❌ Incompatible types
-c++\std::string → py\int \\ ❌ No logical conversion path
-```
-
-#### Error Types
-
-Error types follow the format `language\!ErrorType`:
-
-**Polyglot Native Errors:**
-
-- `pg\!CompilerError` - Syntax/compilation issues
-- `pg\!TypeError` - Type conversion failures
-- `pg\!RuntimeError` - Execution failures
-- `pg\!TimeoutError` - Operation timeouts
-- `pg\!ResourceError` - Resource management issues
-- `pg\!NetworkError` - Network operation failures
-- `pg\!FileError` - File system operation failures
-
-**Language-Specific Errors:**
-
-```polyglot
-py\!ValueError          \\ Python ValueError
-py\!KeyError            \\ Python KeyError  
-rust\!PanicError        \\ Rust panic
-c++\!SegmentationFault  \\ C++ segmentation fault
-c++\!std::runtime_error \\ C++ standard runtime error
-```
-
-**Error Usage Example:**
-
-```polyglot
-[r] |RiskyOperation
-[~][!] !TimeOut << T"30:" 
-[~][~][!] !> timeout_error: pg\!TimeoutError
-[~][~][r] |Log
-[~][~][~] msg: pg\string << #LogLevel.error
-[~][~][~] level: pg\Enum << "Operation timed out after 30 seconds"
-[~][~][x] |Exit << 408
-
-[~][!] !PythonError !> py\!ValueError  
-[~][~][r] error: py\!ValueError >> |HandlePythonError
-[~][~][x] |Exit << 500
-```
-
-### Syntax Construction Pattern
-
-**Unified Syntax:** `[SquareElements] ..BodyElements..`
-
-## 5. Advanced Features
-
-### Input Elements `[i]`
-
-The Input elements define the Pipeline's input parameters:
-
-```polyglot
-[|] ExamplePipeline
-\\ [i] argument\input label\name : datatype
-[i] arg1: py\str
-[i] arg2: py\int
-[t] |Call
-[w] PythonEnvironment  
-[r] arg1: py\str, arg2: py\int >> |ProcessData >> result: py\dict
-[o] result
-[x]
-```
-
-#### Default Input Parameters
-
-The `Default` keyword sets values when parameters are not provided:
-
-```polyglot
-[|] ConfigurablePipeline
-[i] message: py\str
-[i] Default level: py\int << 1
-[i] Default debug: py\bool << False
-[t] |Call
-[w] PythonEnvironment
-[r] message: py\str, level: py\int, debug: py\bool >> |LogMessage
-[o] None
-[x]
-```
-
-### Trigger Elements `[t]`
-
-Trigger elements define conditions that allow Pipeline execution. They must output exactly one boolean value, or a compiler error will be raised.
-
-#### Basic Call Trigger
-
-The `|Call` Pipeline is a standard Pipeline that enables the current Pipeline:
-
-```polyglot
-[|] BasicPipeline
-[i] data: py\str
-\\ Triggered when `BasicPipeline << data` is called from other Pipelines
-[t] |Call 
-[w] PythonEnvironment
-[r] data: py\str >> |ProcessData >> result: py\dict
-[o] result
-[x]
-```
-
-#### Conditional Triggers
-
-Triggers with arguments using Element Expansion:
-
-```polyglot
-[|] FileWatcher
-[i] file_path: py\str
-[t] |Call
-[t] |IsFileChanged
-[~] << file_path: py\str
-[w] FileSystemWrapper
-[r] file_path: py\str >> |ProcessFile >> result: py\dict
-[o] result
-[x]
-```
-
-#### Complex Trigger Combinations
-
-Boolean combinations between triggers using Element Expansion:
-
-```polyglot
-[|] SecureProcessor
-[i] username: py\str
-[i] password: py\str
-[i] Default api_key: py\str << ""
-[t] |Call
-[t] |SessionCheck AND (|LocalAuth OR |RemoteAuth)
-[~] |SessionCheck << session_id: py\str
-[~] |LocalAuth << username: py\str
-[~] |LocalAuth << password: py\str
-[~] |RemoteAuth << api_key: py\str
-[w] AuthenticationWrapper
-[r] username: py\str >> |ProcessSecureData >> result: py\dict
-[o] result
-[x]
+[t] |T.FileChanged << "data/*.csv"
+[t] |T.Schedule.Cron << "0 2 * * *"
+[t] |T.CpuLowerThan << 90.0
 ```
 
 ### Parallel Execution
-
-#### Sequential vs Parallel Elements
-
-| Sequential | Parallel |
-| --- | --- |
-| `[r]`, `[\]`, `[/]`, `[w]`, `[i]`, `[o]` | `[  |
-
-#### Parallel Execution Rules
-
-- All Sequential elements run after the previous Sequential elements complete
-- Outputs of parallel elements can only be used *after* joining via `[j]` with race condition specified
-- All `[f]` (fork) elements must be joined at some point before `[x]`, if not used consider using `[b]` for fire-and-forget
-
-#### Advanced Parallel Example
-
 ```polyglot
-[|] DataAnalysisPipeline
-[i] dataset: py\dict
-[i] config: py\dict
-[t] |Call
-[w] AnalysisEnvironment
-\\ Sequential validation
-[r] dataset: py\dict >> |ValidateData >> clean_dataset: py\dict
-\\ Parallel analysis branches
-[f] |StatisticalAnalysis
-[~] << clean_dataset: py\dict
-[~] << config: py\dict
-[~] >> stats: py\dict
-[f] |MachineLearningAnalysis  
-[~] << clean_dataset: py\dict
-[~] << config: py\dict
-[~] >> ml_results: py\dict, model: py\object
-[f] |VisualizationGeneration
-[~] << clean_dataset: py\dict
-[~] >> charts: py\list
-\\ Join all parallel results
+[f] |ProcessBranchA >> result_a
+[f] |ProcessBranchB >> result_b
 [j] |JoinAll
-[~] << stats
-[~] << ml_results
-[~] << charts
-[r] stats: py\dict, ml_results: py\dict, charts: py\list >> |CombineResults >> final_report: py\dict
-[o] final_report
+```
+
+### Sophisticated Error Handling
+```polyglot
+[r] |RiskyOperation
+[~] << input >> output
+
+[~][!] !> py\!ValueError
+[~][~][r] |U.Error.RetryWithBackoff << max_attempts: 5
+
+[~][!] !> pg\!NetworkError
+[~][~][r] |FallbackOperation << input >> output
+```
+
+### Resource Management
+```polyglot
+[Q] |Q.CpuAvailable << 80.0
+[Q] |Q.MemoryAvailable << 16384
+[Q] |Q.Kill.CpuLimit << 95.0
+[Q] |Q.Kill.MemoryLimit << 90.0
+[Q] |Q.Kill.ExecutionTimeout << T"30:"
+```
+
+### Flow Control
+```polyglot
+[?] status ?> "success"
+[~][r] |HandleSuccess
+
+[?] |CheckResourceAvailable >> is_available: pg\bool
+[~][r] |UseIntensiveAlgorithm
+```
+
+## Installation (Future)
+
+```bash
+# Download and install Polyglot
+curl -sSL https://polyglot.io/install.sh | sh
+
+# Verify installation
+polyglot --version
+
+# Run your first pipeline
+polyglot run my_pipeline.pg
+```
+
+## Minimal Example
+
+**hello.pg**
+```polyglot
+[@] com.example>HelloWorld
+[X]
+
+[|] SayHello
+[i] name: pg\string
+[t] |T.Call
+
+[w] |W.Python3.10
+
+[r] |U.Console.Print << "Hello, {name}!"
+
+[o] >> name
 [x]
 ```
 
-### Join Element Race Condition Management
-
-The `[j]` Join Element manages different race conditions:
-
-- **JoinAll:** Waits until all parallel processes capture their outputs
-- **JoinFirst:** Captures the first one and dumps the rest (may add option to forcefully kill redundant processes) *And stores it in a variable*
-- **JoinLast:** Captures the last parallel output *And stores it in a variable*
-- **JoinNth:** Captures the nth parallel output *And stores it in a variable*
-
-```polyglot
-\\ Cannot use any parallel output variables before join
-[j] |JoinAll
-[~] << parallel_output_var1
-[~] << parallel_output_var2
-[~] << parallel_output_var_nth
-\\ Now you can use the parallel output variables 
+Run it:
+```bash
+polyglot run hello.pg --input name="World"
 ```
 
-```polyglot
-\\ Cannot use any parallel output variables before join
-[j] |JoinFirst
-[~] << parallel_output_var1
-[~] << parallel_output_var2
-[~] << parallel_output_var_nth
-[~] >> result: datatype
-\\ Still cannot use any parallel output variables
-\\ Only can use 'result'
-```
+## Status & Timeline
 
-### Switch Pipelines
+**Current Phase:** Brainstorming and design  
+**MVP Target:** 4-6 months  
+**Production Ready:** 18+ months
 
-Using `[?]` you can switch between Pipelines based on conditions:
+See [Development Roadmap](doc/12-development-roadmap.md) for detailed timeline.
 
-```polyglot
-[|] LoadBalancedProcessor
-[i] data: py\dict
-[t] |Call
-[w] SystemMonitorWrapper
-[r] None >> |GetCPUAndMemoryLoadRating >> load_rating: py\int
+## Why Polyglot?
 
-[?] load_rating ?> 0
-[~][r] data: py\dict >> |HeavyComputation >> results: py\dict
+### Problem
+Modern data pipelines often require:
+- Python for data science
+- Rust for performance-critical parts
+- JavaScript for web interfaces
+- C++ for legacy system integration
 
-[?] load_rating ?> 1
-[~][r] data: py\dict >> |MidComputation >> results: py\dict
+Existing solutions:
+- **Airflow** - Python-centric, clunky multi-language support
+- **Temporal** - Complex SDK, not pipeline-focused
+- **Shell scripts—**No type safety, error-prone
+- **Manual orchestration—**Reinventing the wheel every time
 
-[?] load_rating ?> 2
-[~][r] data: py\dict >> |LightComputation >> results: py\dict
+### Solution
+Polyglot provides:
+- **Unified syntax** for multi-language workflows
+- **Type-safe** conversions between languages
+- **Resource management** built-in
+- **Event-driven** by default
+- **Production-ready** monitoring and error handling
 
-[?] load_rating ?> Default
-[~][r] level: pg\Enum, msg: pg\string >> |Log >> None
-[~][~] << #LogLevel.error
-[~][~] << f"Not enough memory and CPU to compute"
-[~][x] |Exit << 430  \\ Exit from whole Pipeline with code 430
+## Use Cases
 
-[o] results
-[x]
-```
+- **Data Engineering—**ETL pipelines combining Python preprocessing with Rust analytics
+- **Machine Learning—**Train models in Python, serve with Rust for performance
+- **System Automation—**Orchestrate maintenance tasks across different tools
+- **Legacy Integration—**Bridge old C++ systems with modern Python/JS applications
+- **Microservice Orchestration** - Coordinate services written in different languages
 
-### Error Handling `[!]`
+## Community
 
-Error monitors run in parallel to associated Pipelines and can affect execution:
+- **GitHub Discussions** - Design discussions and Q&A
+- **Discord** - Real-time collaboration (coming soon)
+- **RFC Process—**Propose new features
+- **Contributing**—See [CONTRIBUTING.md](doc/13-contributing.md)
 
-```polyglot
-[r] |RiskyPipeline
-[~][!] !TimeOut << T"3:" !> timeout1      \\ wait 3min
-[~][~] !> #pgErrors.TimeOut
-[~][~][r] level: pg\Enum, msg: pg\string >> |Log >> None
-[~][~][~] << #LogLevel.error
-[~][~][~] << f"Timed out at 3 min" 
-[~][~][x] |Exit << 408 \\ Exit from whole Pipeline with code 408
+## License
 
-\\ CPU limit monitor  
-[~][!] !CpuPercentageLimit
-[~][~] << cpu_threshold: py\float << 80.0
-[~][~] << level: pg\Enum << #ErrorLevel.warning 
-[~][~] !> #pgErrors.CpuLimitReached
-[~][~][r] level: pg\Enum, msg: pg\string >> |Log >> None
-[~][~][~] << #LogLevel.warning
-[~][~][~] << f"CPU at 80%, force close Pipeline" 
-[~][~][x] \\ continue as normal
+To be determined (likely Apache 2.0 or MIT)
 
-[r] \\ main process continues here
-[o] None
-[x]
-```
-
-### Wrapper Elements and Macros
-
-The `[w]` element is elegant syntax sugar that compiles directly to a Macro invocation:
-
-```polyglot
-\\ Macro Definition: The engine behind the [w] sugar 
-[M] FileReadCpp  
-\\ Macro inputs
-[i] run_blocks: pg\blocks
-[i] Path: pg\string
-\\ Macro Triggers 
-[t] |Call 
-\\ Setup
-[\] Path: pg\string >> |SystemOpenFile >> FileHandle: c++\ofstream
-\\ INJECTION SLOT
-[r][v] << run_blocks 
-\\ Cleanup
-[/] FileHandle: c++\ofstream >> |SystemCloseFile >> None
-[o] None
-[x]
-
-\\ Usage
-[|] SomePipeline
-[i] filepath: pg\string
-[t] |Call
-[w] FileReadCpp << filepath >> FileHandle: c++\ofstream
-[r] FileHandle: c++\ofstream >> |ReadFileContent >> content: pg\string
-[o] content
-[x]
-```
-
-## 6. Architecture & Implementation
-
-### Under the Hood
-
-The Polyglot system is a micro-service architecture of two main components: the `Trigger Monitor` and `Executioner`. The Polyglot code registers Pipeline triggers, inputs, outputs, and functionality so that the Trigger Monitor knows what triggers to monitor, and when trigger conditions are met for a Pipeline, the Executioner runs the Pipeline.
-
-#### The Executioner Components
-
-- **Language Runtimes:** Persistent or on-demand processes for Python, JS, Rust, Go, C++, etc.
-- **Bridges:** There are two kinds of bindings:
-  - First is through usual binding, basically repeating the steps you would have done using existing tools to bind, leveraging existing tools like PyBind11, Node's `child_process`, FFI, and legacy tools that bind languages to each other under the hood.
-  - Taking advantage of the async nature of Polyglot by compiling and using on the fly, turning things that are compile-time only into runtime. For example, if you have a Rust function that will only accept an array of fixed size, Polyglot can convert your Python list into a fixed Rust array, then use that Rust function and convert it back.
-- **Resource Lifecycle:** Manages connection pools, file handles, and memory cleanup across languages.
-- **Dependency Graph:** Analyzes variables to enforce correct execution order and prevent races.
-
-#### Trigger Monitor Components
-
-- **File Watch:** Listens to file changes.
-- **REST API:** Web service endpoints.
-- **Message Queue Listener:** Integration with message queuing systems.
-
-## 7. User Experience & Integration
-
-Users can run Polyglot Pipelines with `[t] |PolyglotRun << parameter: pg\string = parameter_name` trigger through `polyglot -r parameter_name`.
-
-Alternatively, Polyglot may evolve to have packages in the supported languages where they may use the Polyglot Pipelines from the Polyglot service in the background.
-
-### Python Integration Example
-
-```python
-import polyglot as pg
-from .dataloader import load_file 
-
-def heavy_calculations(data: dict) -> float:
-    return pg.run_pipeline('RustCalculation', data)
-
-def main():
-    filename = 'data_file.json'
-    data = load_file(filename)
-    result = heavy_calculations(data)
-    print(f'calculation on {filename} = {result}')
-
-if __name__ == '__main__':
-    main()
-```
-
-### Rust Integration Example
-
-```rust
-use polyglot::{run_pipeline, PolyglotErrors};  
-
-fn run_on_python(input_string: &str) -> Result<f32, PolyglotErrors> {  
-    run_pipeline(String::from("SomePythonPipeline"), input_string)
-}  
-```
-
-## 8. Development Roadmap
-
-**Note:** This language is currently in the brainstorming phase. Nothing concrete has been built yet, and we need to plan and collaborate to make it happen.
-
-### Code Interpreter
-
-- [ ] Lexer
-  - [ ] Tokens
-- [ ] Parser
-- [ ] Interpreter
-- [ ] Transpiler
-- [ ] Compiler
-
-### Trigger Monitor
-
-- [ ] File and Folder watch
-- [ ] Scheduler
-- [ ] Polyglot CLI
-
-### The Executioner
-
-- [ ] Setup Listeners
-- [ ] Implement the Standard Library
-  - [ ] Files, {Read, Write}
-  - [ ] Run
-    - [ ] Python
-    - [ ] C++
-    - [ ] Rust

@@ -1,0 +1,23 @@
+[|] LoadBalancedProcessor
+[i] data: py\dict
+[t] |Call
+[w] SystemMonitorWrapper
+[r] None >> |GetCPUAndMemoryLoadRating >> load_rating: py\int
+
+[?] load_rating ?> 0
+[~][r] data: py\dict >> |HeavyComputation >> results: py\dict
+
+[?] load_rating ?> 1
+[~][r] data: py\dict >> |MidComputation >> results: py\dict
+
+[?] load_rating ?> 2
+[~][r] data: py\dict >> |LightComputation >> results: py\dict
+
+[?] load_rating ?> Default
+[~][r] level: pg\Enum, msg: pg\string >> |Log >> None
+[~][~] << #LogLevel.error
+[~][~] << f"Not enough memory and CPU to compute"
+[~][x] |Exit << 430  \\ Exit from whole Pipeline with code 430
+
+[o] results
+[x]
