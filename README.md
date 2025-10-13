@@ -12,53 +12,24 @@ Polyglot is an automation language designed to seamlessly integrate code from mu
 
 ## Core Philosophy
 
-- **Don't Reinvent the Wheel, Embrace Legacy Code—**Bridge existing code from Python, JavaScript, Rust, C++, and more
-- **Asynchronous by Default—**Every operation is inherently async, enabling efficient coordination
-- **Pipeline-Centric Thinking—**Compositions of chained, parallel, and switching events
-- **Use the Right Tool for the Job—**Choose the best language for each task in a workflow
-- **Divide and Conquer** - Subdivide complex language integration into smaller, optimizable challenges
-- **Minimalist Footprint—**Orchestrate with minimal intervention
-
-## Quick Example
-
-```polyglot
-[@] com.example>DataPipeline>Analytics
-[X]
-
-[|] ProcessUserData
-[i] user_data: py\dict
-[t] |T.Call
-
-[Q] |Q.Priority << 2
-[Q] |Q.CpuAvailable << 75.0
-
-[w] |W.Python3.10
-
-[r] user_data >> |ValidateData >> validated: py\dict
-[~][!] ?> py!/InvalidData \\ custom python error raised
-[~][~][r] |U.Log << #LogLevel.Error << "Invalid data"
-[~][~][x] |Exit << 400 \\ Exit whole pipline with code 400
-
-[f] |AnalyzePython << validated >> py_results: py\dict
-[f] |AnalyzeRust << validated >> rust_results: rust\HashMap
-
-[j] |JoinAll
-
-[r] |CombineResults << py_results << rust_results >> final: py\dict
-
-[o] >> final
-[x]
-```
+- **Don't Reinvent the Wheel, Embrace Legacy Code**—Bridge existing code from Python, JavaScript, Rust, C++, and more
+- **Asynchronous by Default**—Every operation is inherently async, enabling efficient coordination
+- **Pipeline-Centric Thinking**—Compositions of chained, parallel, and switching events
+- **Use the Right Tool for the Job**—Choose the best language for each task in a workflow
+- **Divide and Conquer**—Subdivide complex tasks into smaller tasks that can be tackled by any programming language.
+- **Minimalist Footprint**—Orchestrate with minimal intervention and overhead from polyglot microservices.
+- **Tasks partition**— Partition your task to smaller atomic subtasks that are Queued and dispatched in according to your computational pressures.
 
 ## Primary Goals
 
-- **Simplify Event-Driven Automation**—Construct complex workflows with clear syntax
-- **Polyglot Integration**—Seamlessly integrate codes from different programming languages
-- **Minimize Integration Overhead** - Optimize time and memory footprint
-- **Concurrency Discipline** - Enforce data dependencies at compile-time to prevent race conditions
-- **Explicit Resource Management**—Mandatory setup and cleanup phases
-- **Complete Resource Governance** - Transparent monitoring, graceful degradation, predictable behavior
-- **Performance Analysis** - Built-in metrics for debugging and optimization
+- **Simplify Event-Driven Automation**—Construct complex workflows with clear and simple syntax
+- **Polyglot Integration**—Seamlessly integrates codes from different programming languages.
+- **Minimize Integration Overhead**—Optimize time and memory footprint.
+- **Concurrency Discipline**—Enforce data dependencies at compile-time to prevent race conditions.
+- **Explicit Resource Management**—Mandatory explicit setup and cleanup phases.
+- **Complete Resource Governance**—Transparent monitoring, graceful degradation, predictable behavior.
+- **Performance Analysis**—Built-in metrics for debugging and optimization
+- **Favoring Runtime instead of command-lines**—At the start, commandlines will be used as integration tool but will develop Runtimes where the function calls and import are native to the target programing language. Or even a docker images runs.
 
 ## Architecture
 
@@ -88,9 +59,66 @@ Executes pipeline logic:
 - Error handling and propagation
 - Performance metrics collection
 
+## Quick Example
+
+```polyglot
+\\Define current module and import libraries
+[@] com.example>DataPipeline>Analytics
+\\ Defice short alias for rust's HashMap
+[D] rust\HasMap = rust\HashMap<string, string>
+[X]
+
+
+
+\\ Pipline Defination
+[|] ProcessUserData
+[i] user_data: py\dict
+[t] |T.Call
+
+[Q] |Q.Priority
+[<] .priority: pg\uint = 2
+[Q] |Q.CpuAvailable
+[<] .thrushold: pg\float = 75.0
+
+[w] |W.Python3.10
+
+[r] |ValidateData
+[<] data.in: pg\ = user_data
+[>] data.validated: py\dict = validated
+[~][!] ?> py!/InvalidData \\ custom python error raised
+[~][~][r] |U.Log.Error
+[~][~][<] .message: pg\string = "Invalid data"
+[~][~][x] |Exit \\ Exit whole pipline with code 400
+[~][~][<] .code: pg\unit = 400
+
+
+[f] |AnalyzePython
+[<] .data: py\dict= validated
+[>] .result:py\dict =  py_results 
+
+
+[f] |AnalyzeRust
+[<] .data: rust\HashMap = validated
+[>] .result: rust\HashMap = rust_results 
+
+
+[j] |JoinAll
+[<] ... py_results
+[<] ... rust_results
+
+
+[r] |CombineResults 
+[<] py_results: py\dict =  py_results
+[<] rust_results: py\dict = rust_results \\ implict convertion rust\HasMap to py\dict
+[>] final: py\dict
+
+[o] .results :pg\json = final
+[x]
+```
+
 ## Documentation Structure
 
-- **[README.md](README.md)** - This overview (you are here)
+- **[README.md](README.md)**—This overview (you are here)
 - **[doc/01-getting-started.md](doc/01-getting-started.md)** - Installation and first pipeline
 - **[doc/02-language-syntax.md](doc/02-language-syntax.md)** - Complete syntax reference
 - **[doc/03-type-system.md](doc/03-type-system.md)** - Type system and conversions
@@ -112,9 +140,15 @@ Call functions seamlessly across Python, Rust, JavaScript, C++, and more with au
 
 ### Event-Driven Triggers
 ```polyglot
-[t] |T.FileChanged << "data/*.csv"
-[t] |T.Schedule.Cron << "0 2 * * *"
-[t] |T.CpuLowerThan << 90.0
+[t] |T.FileChanged
+[<] .path: pg\path =  \\cwd\\data
+[<] .pattern: pg\string = "*.csv"
+
+[t] |T.Schedule.Cron
+[<] .cron: pg\string = "0 2 * * *"
+
+[t] |T.Cpu.LowerThan
+[<] .thrushold: pg\float = 90.0
 ```
 
 ### Parallel Execution
@@ -191,13 +225,6 @@ Run it:
 polyglot run hello.pg --input name="World"
 ```
 
-## Status & Timeline
-
-**Current Phase:** Brainstorming and design  
-**MVP Target:** 4-6 months  
-**Production Ready:** 18+ months
-
-See [Development Roadmap](doc/12-development-roadmap.md) for detailed timeline.
 
 ## Why Polyglot?
 
@@ -208,11 +235,6 @@ Modern data pipelines often require:
 - JavaScript for web interfaces
 - C++ for legacy system integration
 
-Existing solutions:
-- **Airflow** - Python-centric, clunky multi-language support
-- **Temporal** - Complex SDK, not pipeline-focused
-- **Shell scripts—**No type safety, error-prone
-- **Manual orchestration—**Reinventing the wheel every time
 
 ### Solution
 Polyglot provides:

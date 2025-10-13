@@ -50,9 +50,9 @@ This namespace becomes the identifier other files use to import from this file.
 
 ```polyglot
 [@] com.example>MyProject>Module
-[D] @ShortAlias << @io.github.bigcorp>EnterpriseAnalytics
-[D] @Viz << @io.gitlab.datavis>Plotting>InteractiveCharts
-[D] @DB << @io.github.dbtools>PostgreSQL>ConnectionPool
+[D] @ShortAlias = @io.github.bigcorp>EnterpriseAnalytics
+[D] @Viz = @io.gitlab.datavis>Plotting>InteractiveCharts
+[D] @DB = @io.github.dbtools>PostgreSQL>ConnectionPool
 [X]  \\ End import block
 
 \\ Code follows after [X]
@@ -64,7 +64,7 @@ This namespace becomes the identifier other files use to import from this file.
 
 **Elements:**
 - `[D]` - Import statement (Define)
-- `@AliasName << @Full>Namespace>Path` - Assigns alias to namespace
+- `@AliasName = @Full>Namespace>Path` - Assigns alias to namespace
 - `[X]` - Terminates import block
 - `@AliasName|PipelineName` - References imported pipeline
 
@@ -74,7 +74,7 @@ For very long namespace paths:
 
 ```polyglot
 [@] com.example>project
-[D] @VeryLongAlias << @io.github.organization>VeryLongProjectName
+[D] @ShortenAlias = @io.github.organization>VeryLongProjectName
 [^] >VeryLongModuleName>SubModule>DeepModule
 [X]
 ```
@@ -86,13 +86,32 @@ The `[^]` continues the previous line.
 **Syntax:** `@LibraryReference|PipelineName`
 
 ```polyglot
-[D] @Analytics << @io.github.mltools>Analysis
+[D] @Analytics = @io.github.mltools>Analysis
 [X]
 
 [|] ProcessData
+[i] traning_dataset: pg\path
+
 [t] |T.Call
-[r] @Analytics|TrainModel << dataset >> model
-[r] @Analytics|Predict << model << data >> predictions
+[r] @Analytics|TrainModel
+[<] .datatset: pg\path = dataset_file 
+[>] .model: pg\path = model_file
+
+
+
+[|] ProcessData
+[i] traning_dataset: pg\path
+
+[t] |T.Call
+[r] @Analytics|TrainModel
+[<] .datatset: pg\path = dataset_file 
+[>] .model: pg\path = model_file
+
+[r] @Analytics|Predict
+[<] .model: pg\path = model 
+[<] data
+[>] predictions
+
 [o] >> predictions
 [x]
 ```

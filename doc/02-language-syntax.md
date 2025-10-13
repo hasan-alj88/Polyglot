@@ -18,7 +18,7 @@ Polyglot supports both **compact** and **verbose** notation. Compact form is rec
 |----------------------------|--------------|---------------------------------------------|
 | `[#]`                      | `[Enum]`     | Define an enumeration                       |
 | `[@]`                      | `[Import]`   | Declare file namespace for packaging        |
-| `[\|]`                     | `[Pipeline]` | Define a pipline                            | Define a pipeline |
+| `[\|]`                     | `[Pipeline]` | Define a pipeline                           |
 | `[i]`, `[I]`               | `[input]`    | Define an input                             |
 | `[t]`, `[T]`               | `[trigger]`  | Define a trigger condition                  |
 | `[q]`, `[Q]`               | `[Queue]`    | Define queue conditions/configuration       |
@@ -39,17 +39,19 @@ Polyglot supports both **compact** and **verbose** notation. Compact form is rec
 | `[^]`                      | `[con]`      | Continue above line (multi-line)            |
 | `[D]`                      | `[Define]`   | Define custom types and imports             |
 | `[E]`                      | `[Enum]`     | Enumeration definition                      |
+| `[>]`                      | `[argin]`    | Input argument binding (block element)      |
+| `[<]`                      | `[orgout]`   | Output argument binding (block element)     |
 
 ## Binary Operators
 
-| Operator | 1st Operand             | 2nd Operand                    | Purpose                            |
-|----------|-------------------------|--------------------------------|------------------------------------|
-| `<<`     | Square element\pipline  | Variable                       | Input stream                       |
-| `>>`     | Square element\pipline  | Variable                       | Output stream                      |
-| `!>`     | Error capture           | ErrorType                      | If equal to error type, run branch |
-| `?>`     | Square element\Variable | Hashable value\Boolean pipline | If equal or True, then run branch  |
-| `<\|<`   | Chained pipeline        | Previous pipeline label        | Pipeline chain operator            |
-| `@`      | Namespace accessor      | Library name or alias          | Access imported pipeline           |
+| Operator | 1st Operand            | 2nd Operand                    | Purpose                            |
+|----------|------------------------|--------------------------------|------------------------------------|
+| `!>`     | Error capture          | ErrorType                      | If equal to error type, run branch |
+| `?>`     | Block element\Variable | Hashable value\Boolean pipline | If equal or True, then run branch  |
+| `<\|<`   | Chained pipeline       | Previous pipeline label        | Pipeline chain operator            |
+| `@`      | Namespace accessor     | Library name or alias          | Access imported pipeline           |
+| `\| `    | Pipline accessor       | Predefined pipline             | Call a predefined pipeline         |
+| `~`      | Array accessor         | Array expansion type           | use Array items programmatically   |
 
 ## Pipeline Structure
 
@@ -57,21 +59,22 @@ Every pipeline follows this structure:
 
 ```polyglot
 [|] PipelineName
-[i] input_name: type              \\ Inputs (Madatory, if none use `[i] None`
+[i] input_name: type              \\ Inputs (Mandatory, if none use `[i] None`)
 [t] |TriggerPipeline               \\ Triggers (at least one required)
 [Q] |QueueConfig                   \\ Queue configuration (optional)
-[w] |WrapperMacro                  \\ Wrapper (optional)
+[w] |WrapperMacro                  \\ Wrapper (required at least one [w] or {[\],[/]})
 
-[\] |SetupOperation                \\ Setup phase (optional)
-[~] << setup_input
+[\] |SetupOperation                \\ Setup phase (required at least one [w] or {[\],[/]})
+[>] .arg1: type = setup_input
 
 [r] |MainOperation                 \\ Run phase (required)
-[~] << input >> output
+[>] .arg1: type = input
+[<] .arg2: type = output
 
-[/] |CleanupOperation              \\ Cleanup phase (optional)
-[~] << cleanup_input
+[/] |CleanupOperation              \\ Cleanup phase (required at least one [w] or {[\],[/]})
+[>] .arg1: type = cleanup_input
 
-[o] >> output                      \\ Output (required)
+[o] .output_name: type = output     \\ Output (required)
 [x]                                \\ Exit marker
 ```
 
@@ -113,9 +116,10 @@ Every pipeline follows this structure:
 \\ This is a comment
 [r] |Operation  \\ Inline comment
 ```
+
 ### Multi-line 
 
-```ployglot
+```polyglot
 \*
 Multi-line 
 Comment
@@ -124,25 +128,69 @@ Comment
 
 ### Multi-line Continuation
 ```polyglot
-[D] @AliasOfLongLib << @io.github.organization>VeryLongProjectName
+[D] @AliasOfLongLib = @io.github.organization>VeryLongProjectName
 [^] >VeryLongModuleName>SubModule
 
-[r] |SomePipeline << very_long_variable_name
-[^] << another_long_variable
-[^] >> output_result
 ```
 
 ### Element Expansion
+
+There are implicit expansion and explict expansion. There is an element block by definition an expansion for example pipline defition
+`[\|]`
+- `[t]`
+- `[i]`
+- `[Q]`
+- `[\]`
+- `[/]`
+- `[w]`
+- `[r]`
+- `[f]`
+- `[?]`
+- `[b]`
+- `[!]`
+- `[x]` - marks the end of pipeline definition block
+
+`[#]`
+- `[D]`
+- `[x]` - marks the end of pipeline definition block
+
+`[ ] |`, `[ ] ~` pre-defined pipline or array accesser
+- `[>]`
+- `[<]`
+
+
 ```polyglot
-[r] |Operation
-[~] << input1: py\dict
-[~] << input2: py\list  
-[~] >> output: py\dict
+[r] |Some.Operation
+[>] .arg1: py\dict = input1
+[>] .arg2: py\list = input2
+[<] result: py\dict = output
+```
+
+
+
+explict expansion uses the expansion block `[~]`
+- `[!]`
+- `[r]`
+- `[f]`
+- `[?]`
+- `[b]`
+
+```polyglot
+[f] |SomeRiskyPipeline
+[<] .input_argument: pg\string = "Input value"
+[~][!] >! pg\!Timeout
+[~][~][b] |HandleError
+[~][~][b] |Log.Error
+[~][~][<] .message: pg\string = "Time out" 
+[~][~][x] |U.Exit 
+[~][~][<] .code: pg\int = 408
 ```
 
 ## Type Notation
 
-Format: `language\datatype`
+Format: `language\datatype`.
+
+The language is predefined supported languages, and datatype must be exactly as you would declare it in the native language.
 
 Examples:
 ```polyglot
@@ -160,14 +208,15 @@ js\string                 \\ JavaScript string
 js\number                 \\ JavaScript number
 js\object                 \\ JavaScript object
 
-cpp\string                \\ C++ std::string
-cpp\vector<int>           \\ C++ std::vector<int>
+cpp\std::string           \\ C++ std::string
+cpp\std::vector<int>      \\ C++ std::vector<int>
 
 pg\string                 \\ Polyglot string
 pg\int                    \\ Polyglot integer
 pg\float                  \\ Polyglot float
 pg\bool                   \\ Polyglot boolean
 pg\bytes                  \\ Polyglot byte array
+pg\path                   \\ Polyglot path (file/directory)
 pg\Enum                   \\ Polyglot enumeration
 ```
 
@@ -195,45 +244,74 @@ pg\!ResourceError
 [X]
 
 [|] ProcessFile
-[i] file_path: pg\string
+[i] file_path: pg\path
 [t] |T.Call
 
 [w] |W.Python3.10
 
-[r] |U.System.File.Text.Read << file_path >> content: py\str
-[r] |U.String.ToUpperCase << content >> upper: py\str
-[r] |U.Console.Print << upper
+[r] |U.Python.File.Text.Read
+[>] path: pg\path = file_path
+[<] content: py\str = content
 
-[o] >> upper
+[r] |U.Python.String.ToUpperCase
+[>] .text: py\str = content
+[<] .result: py\str = upper
+
+[r] |U.Python.Console.Print
+[>] .message: py\str = upper
+
+[o] .result: py\str = upper
 [x]
 ```
 
 ### Parallel Processing Pipeline
 ```polyglot
 [@] com.example>parallel
+\\ import lib
+[D] @Mylib = @Hasan>Examples>PythonCodes>Examples>DataProcessing1
+\\ datatype alias
+[D] rust\HashMap = rust\HashMap<string, string> 
 [X]
 
 [|] ParallelAnalysis
-[i] dataset: py\dict
-[t] |T.Call
+[i] folder: py\path
+[i] Default rust_hevy_compute_file: pg\path = //FileDir//hevy.rs
+[t] |T.Folder.NewFiles
+[<] .folder: py\path = folder
 
 [w] |W.Python3.10
 
-[r] |ValidateData << dataset >> validated: py\dict
+[r] @Mylib|ValidateData
+[>] .data: py\dict = dataset
+[<] .validated_data: py\dict = validated
 
-[f] |StatisticalAnalysis << validated >> stats: py\dict
-[f] |MachineLearning << validated >> predictions: py\list
-[f] |Visualization << validated >> charts: py\bytes
+[f] @Mylib|StatisticalAnalysis
+[>] .data: py\dict = validated
+[<] .statistics: py\dict = stats
+
+[f] |Run.Rust1.8
+[<] .file: pg\path = rust_hevy_compute_file
+[>] .arg.data: rust\HashMap = validated \\ implict conversion
+[<] .predictions: rust\vector<uint> = predictions_rs
+[~][r] predictions: py\list = predictions_rs \\ implict conversion
+[~][o] predictions
+
+[f] @Mylib|Visualization
+[>] .data: py\dict = validated
+[<] .charts: py\bytes = charts
 
 [j] |JoinAll
+[<] ... stats
+[<] ... predictions
+[<] ... charts
 
-[r] |CombineResults 
-[~] << stats 
-[~] << predictions 
-[~] << charts 
-[~] >> report: py\dict
+[r] @Mylib|CombineResults 
+[>] .stats: py\dict = stats
+[>] .predictions: py\list = predictions
+[>] .charts: py\bytes = charts
+[<] .report: py\dict = report
 
-[o] >> report
+[o] final_report: py\dict = report
 [x]
 ```
 
@@ -248,18 +326,32 @@ pg\!ResourceError
 
 [w] |W.Python3.10
 
-[r] |U.Network.HttpGet << url >> response: py\dict
+[r] |U.Network.HttpGet
+[>] url: pg\string = url
+[<] response: py\dict = response
 
-[~][!] !> pg\!NetworkError
-[~][~][r] |U.Log << #LogLevel.Warning << "Network error, retrying"
-[~][~][r] |U.Error.RetryWithBackoff << max_attempts: 3
-[~][~][r] |U.Network.HttpGet << url >> response
+[!] !> pg\!NetworkError
+[~][r] |U.Log
+[~][>] level: pg\string = #LogLevel.Warning
+[~][>] message: pg\string = "Network error, retrying"
+[~]
+[~][r] |U.Error.RetryWithBackoff
+[~][>] max_attempts: pg\int = 3
+[~]
+[~][r] |U.Network.HttpGet
+[~][>] url: pg\string = url
+[~][<] response: py\dict = response
 
-[~][!] !> pg\!TimeoutError
-[~][~][r] |U.Log << #LogLevel.Error << "Timeout, using cached data"
-[~][~][r] |FetchFromCache << url >> response
+[!] !> pg\!TimeoutError
+[~][r] |U.Log
+[~][>] level: pg\string = #LogLevel.Error
+[~][>] message: pg\string = "Timeout, using cached data"
+[~]
+[~][r] |FetchFromCache
+[~][>] url: pg\string = url
+[~][<] cached_data: py\dict = response
 
-[o] >> response
+[o] result: py\dict = response
 [x]
 ```
 
@@ -273,20 +365,30 @@ pg\!ResourceError
 [t] |T.Call
 
 [?] status ?> "pending"
-[~][r] |U.Log << "Status is pending"
+[~][r] |U.Log
+[~][>] .message: pg\string = "Status is pending"
+[~]
 [~][r] |HandlePending
 
 [?] status ?> "complete"
-[~][r] |U.Log << "Status is complete"
+[~][r] |U.Log
+[~][>] .message: pg\string = "Status is complete"
+[~]
 [~][r] |HandleComplete
-[~][x] |Exit << 0
+[~][x] |Exit
+[~][>] .code: pg\int = 0
 
 [?] status ?> "failed"
-[~][r] |U.Log.Error << "Status is failed"
+[~][r] |U.Log.Error
+[~][>] .message: pg\string = "Status is failed"
+[~]
 [~][r] |HandleFailure
-[~][x] |Exit << 1
+[~][x] |Exit
+[~][>] .code: pg\int = 1
 
-[r] |U.Log << "Unknown status"
+[r] |U.Log
+[>] .message: pg\string = "Unknown status"
+
 [x]
 ```
 
@@ -297,25 +399,49 @@ pg\!ResourceError
 
 [|] ResourceIntensiveTask
 [i] large_data: py\dict
-[t] |T.FileChanged << "data/*.csv"
+[t] |T.FileChanged
+[>] pattern: pg\string = "data/*.csv"
 
-[Q] |Q.ToQueue << #Queue.Default
-[Q] |Q.Priority << 2
-[Q] |Q.CpuAvailable << 70.0
-[Q] |Q.MemoryAvailable << 8192
-[Q] |Q.MaxAttempts << 5
-[Q] |Q.RetryStrategy << #RetryStrategy.Exponential
-[Q] |Q.Kill.CpuLimit << 90.0
-[Q] |Q.Kill.MemoryLimit << 95.0
-[Q] |Q.Kill.ExecutionTimeout << T"30:"
+[Q] |Q.ToQueue
+[>] queue: pg\string = #Queue.Default
+
+[Q] |Q.Priority
+[>] level: pg\int = 2
+
+[Q] |Q.CpuAvailable
+[>] percent: pg\float = 70.0
+
+[Q] |Q.MemoryAvailable
+[>] megabytes: pg\int = 8192
+
+[Q] |Q.MaxAttempts
+[>] attempts: pg\int = 5
+
+[Q] |Q.RetryStrategy
+[>] strategy: pg\string = #RetryStrategy.Exponential
+
+[Q] |Q.Kill.CpuLimit
+[>] percent: pg\float = 90.0
+
+[Q] |Q.Kill.MemoryLimit
+[>] percent: pg\float = 95.0
+
+[Q] |Q.Kill.ExecutionTimeout
+[>] duration: pg\string = T"30:"
 
 [w] |W.Python3.10
 
-[\] |U.Log << "Starting intensive task"
-[r] |ProcessLargeData << large_data >> result: py\dict
-[/] |U.Log << "Completed intensive task"
+[\] |U.Log
+[>] message: pg\string = "Starting intensive task"
 
-[o] >> result
+[r] |ProcessLargeData
+[>] data: py\dict = large_data
+[<] result: py\dict = result
+
+[/] |U.Log
+[>] message: pg\string = "Completed intensive task"
+
+[o] output: py\dict = result
 [x]
 ```
 
