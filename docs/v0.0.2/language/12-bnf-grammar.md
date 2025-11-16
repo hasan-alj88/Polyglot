@@ -1,7 +1,7 @@
 # BNF Grammar Specification
 
 **Version:** 0.0.2
-**Last Updated:** 2025-11-13
+**Last Updated:** 2025-11-16
 **Status:** Complete
 
 ---
@@ -171,21 +171,29 @@ This grammar uses Extended Backus-Naur Form (EBNF) notation:
 
 ```bnf
 <input-declaration> ::= "[i]" <input-spec>
+                      | <fixed-declaration>
 
 <input-spec> ::= <required-input>
-               | <fixed-input>
                | <default-input>
 
 <required-input> ::= <field-name> ":" <type>
 
-<fixed-input> ::= "Fixed" <field-name> ":" <type> "<<" <expression>
+<default-input> ::= <field-name> ":" <type> "<<" <expression>
 
-<default-input> ::= "Default" <field-name> ":" <type> "<<" <expression>
+<fixed-declaration> ::= "[=]" <field-name> "<<" <expression>
 
 <output-declaration> ::= "[o]" <output-spec>
 
 <output-spec> ::= <field-name> ":" <type>
                 | "#None"
+
+<macro-export> ::= "[m]" <field-name>
+
+/* Note: Keywords removed:
+   - "Fixed" → use [=] block marker
+   - "Default" → use inline << in [i] declaration
+   - "Exposed" → use [m] block marker for macro exports
+*/
 ```
 
 ---
@@ -267,7 +275,32 @@ This grammar uses Extended Backus-Naur Form (EBNF) notation:
 ## Triggers (Surface)
 
 ```bnf
-<trigger-declaration> ::= "[t]" <trigger-spec>
+<trigger-declaration> ::= <simple-trigger>
+                        | <logical-trigger>
+
+<simple-trigger> ::= "[t]" <trigger-spec>
+
+<logical-trigger> ::= <or-trigger>
+                    | <and-trigger>
+                    | <xor-trigger>
+                    | <grouped-trigger>
+
+<or-trigger> ::= "[+]" <trigger-spec>    /* OR - implicit grouping with above */
+
+<and-trigger> ::= "[&]" <trigger-spec>   /* AND - explicit (or implicit at first level) */
+
+<xor-trigger> ::= "[^]" <trigger-spec>   /* XOR - exclusive OR, implicit grouping */
+
+<grouped-trigger> ::= <group-start> { <group-member> }
+                    | <nested-group>
+
+<group-start> ::= "[.]"  /* empty line - group marker */
+
+<group-member> ::= "[~]" <trigger-declaration>
+
+<nested-group> ::= <logical-operator> "[.]" { "[~][~]" <trigger-declaration> }
+
+<logical-operator> ::= "[+]" | "[&]" | "[^]"
 
 <trigger-spec> ::= "|T.Call"
                  | "|T.Cli"
@@ -286,6 +319,14 @@ This grammar uses Extended Backus-Naur Form (EBNF) notation:
 <interval-trigger> ::= "|T.Every.Seconds" { <input-assignment> }
                      | "|T.Every.Minute"
                      | "|T.Every.Hour"
+
+/* Note: Logical operators provide implicit grouping
+   - [+] OR: groups with condition above
+   - [&] AND: explicit or implicit at first trigger level
+   - [^] XOR: groups with condition above
+   - [.] + [~]: explicit grouping (empty line + prefix)
+   - [+][.], [&][.], [^][.]: nested groups with double [~][~]
+*/
 ```
 
 ---
@@ -371,18 +412,47 @@ This grammar uses Extended Backus-Naur Form (EBNF) notation:
 ## Switch/Conditional (Surface)
 
 ```bnf
-<switch-case> ::= "[?]" <match-expression>
+<switch-case> ::= "[?]" <comparison-expression>
                   { <nested-operation> }
 
-<match-expression> ::= <field-name> "?>" <match-target>
+<comparison-expression> ::= <field-name> <comparison-operator> <value>
+                          | <field-name> <negation-operator> <value>
+                          | <field-name> <range-comparison>
+                          | <field-name> <pattern-match>
 
-<match-target> ::= <literal>
-                 | <enumeration-value>
-                 | <range-expression>
-                 | "True"
-                 | "False"
+<comparison-operator> ::= "=?" | ">?" | "<?" | ">=?" | "<=?"
 
-<range-expression> ::= <numeric-literal> ".." <numeric-literal>
+<negation-operator> ::= "=!?" | ">!?" | "<!?" | ">=!?" | "<=!?"
+
+<range-comparison> ::= <range-inclusive>
+                     | <range-exclusive>
+                     | <range-mixed>
+                     | <range-negated>
+
+<range-inclusive> ::= "?[" <value> "," <value> "]"   /* both inclusive */
+
+<range-exclusive> ::= "?(" <value> "," <value> ")"   /* both exclusive */
+
+<range-mixed> ::= "?[" <value> "," <value> ")"       /* left incl, right excl */
+                | "?(" <value> "," <value> "]"       /* left excl, right incl */
+
+<range-negated> ::= "<!?<" <value> "," <value>       /* NOT between */
+
+<pattern-match> ::= "?" <pattern-type> <string-literal>
+                  | "=!?" <pattern-type> <string-literal>  /* negated */
+
+<pattern-type> ::= "*"   /* wildcard */
+                 | "re"  /* regex */
+
+<value> ::= <literal>
+          | <enumeration-value>
+          | <boolean-literal>
+
+/* Note: Old syntax removed:
+   - "?>" match operator → use comparison operators (=?, >?, <?, etc.)
+   - ".." range operator → use bracket/paren syntax (?[a, b], etc.)
+   - "True"/"False" keywords → use #True/#False enumerations
+*/
 ```
 
 ---
@@ -729,10 +799,10 @@ ELSE
 **Example:**
 ```polyglot
 // Surface Syntax - ERROR (inconsistent outputs)
-[?] .status ?> #Status.Success
+[?] .status =? #Status.Success
 [~][o] .result: pg\string
 
-[?] .status ?> #Status.Failed
+[?] .status =? #Status.Failed
 [~][o] .error: !            // Different field!
 
 // Compiler Error:
@@ -963,15 +1033,13 @@ These definitions apply to **both** Surface and Canonical syntax.
 
 ## Reserved Keywords
 
-```bnf
-<reserved-keyword> ::= "True"
-                     | "False"
-                     | "Fixed"
-                     | "Default"
-                     | "Exposed"
+**REMOVED:** Polyglot has ZERO keywords. All syntax uses symbolic operators and block markers.
 
-/* Note: Only 5 reserved keywords in Polyglot */
-```
+Previously had 5 keywords (True, False, Fixed, Default, Exposed) - all replaced with:
+- `True`/`False` → `#Boolean.True`/`#Boolean.False` (reserved enumeration with `#True`/`#False` aliases)
+- `Fixed` → `[=]` block marker for immutable assignment
+- `Default` → inline `<<` assignment in `[i]` declaration
+- `Exposed` → `[m]` block marker for macro-exported variables
 
 ---
 
@@ -1055,8 +1123,10 @@ Operator definitions apply to **both** Surface and Canonical syntax.
              | <enumeration-operator>
              | <error-operator>
              | <assignment-operator>
-             | <match-operator>
+             | <comparison-operator>
+             | <negation-operator>
              | <range-operator>
+             | <pattern-operator>
              | <type-separator>
 
 <pipeline-operator> ::= "|"
@@ -1071,12 +1141,152 @@ Operator definitions apply to **both** Surface and Canonical syntax.
 
 <assignment-operator> ::= "<<" | ">>"
 
-<match-operator> ::= "?>"
+<comparison-operator> ::= "=?" | ">?" | "<?" | ">=?" | "<=?"
 
-<range-operator> ::= ".."
+<negation-operator> ::= "=!?" | ">!?" | "<!?" | ">=!?" | "<=!?"
+
+<range-operator> ::= "?[" | "?(" | "]" | ")"
+                   | "<!?<"  /* negated range */
+
+<pattern-operator> ::= "?" <pattern-prefix> <string-literal>
+
+<pattern-prefix> ::= "*"   /* wildcard */
+                   | "re"  /* regex */
 
 <type-separator> ::= "\"
+
+/* Note: Old operators removed:
+   - "?>" (match operator) → replaced by comparison operators
+   - ".." (range operator) → replaced by bracket/paren syntax
+*/
 ```
+
+---
+
+## Operator Semantics
+
+### Comparison Operators
+
+**Type-aware comparison operators** that behave differently based on data type:
+
+```polyglot
+// Equality
+[?] .age =? 18              // equals (numeric, string, enum, etc.)
+[?] .status =? #Active      // enum equality
+[?] .name =? "John"         // string equality
+
+// Ordering (numeric, datetime, string)
+[?] .age >? 18              // greater than
+[?] .age <? 65              // less than
+[?] .age >=? 18             // greater or equal
+[?] .age <=? 65             // less or equal
+```
+
+### Range Operators
+
+**Bracket/paren notation** indicates inclusivity (mathematical interval notation):
+- `[` = inclusive boundary
+- `(` = exclusive boundary
+
+```polyglot
+// Range comparisons
+[?] .age ?[18, 65]          // 18 <= age <= 65 (both inclusive)
+[?] .age ?(18, 65)          // 18 < age < 65 (both exclusive)
+[?] .age ?[18, 65)          // 18 <= age < 65 (left incl, right excl)
+[?] .age ?(18, 65]          // 18 < age <= 65 (left excl, right incl)
+```
+
+### Negation Operators
+
+**Negated comparisons** using `!` prefix before `?`:
+
+```polyglot
+// Negated equality
+[?] .status =!? #Inactive   // not equals
+
+// Negated ordering (less useful, included for completeness)
+[?] .age >!? 65             // NOT greater than (same as <=? 65)
+[?] .age <!? 18             // NOT less than (same as >=? 18)
+
+// Negated range
+[?] .age <!?< 18, 65        // NOT between 18 and 65
+```
+
+### Pattern Matching
+
+**Wildcard and regex** pattern matching:
+
+```polyglot
+// Wildcard patterns (shell-style glob)
+[?] .filename ? *"*.csv"              // any file ending with .csv
+[?] .filename ? *"data_*.txt"         // files matching pattern
+
+// Regex patterns
+[?] .email ? re"^[a-z]+@.*"          // regex match
+[?] .code ? re"[A-Z]{3}-\d{4}"       // pattern: ABC-1234
+
+// Negated patterns
+[?] .filename =!? *"*.tmp"            // NOT matching wildcard
+[?] .email =!? re".*@spam\..*"       // NOT matching regex
+```
+
+### Logical Operators (Triggers)
+
+**Implicit and explicit grouping** for trigger conditions:
+
+```polyglot
+// Implicit grouping with [+] OR
+[t] |T.IsMorning
+[+] |T.IsEvening             // (IsMorning OR IsEvening)
+
+// Implicit grouping with [^] XOR
+[t] |T.OnWeekday
+[^] |T.OnWeekend             // (OnWeekday XOR OnWeekend)
+
+// Explicit grouping with [.]
+[.]                          // Empty line - group marker
+[~][t] |T.Condition1
+[~][+] |T.Condition2         // Explicitly grouped
+
+// Nested grouping
+[t] |T.A
+[+][.]                       // OR with nested group
+[~][~][t] |T.B               // Double [~] for nested member
+[~][~][t] |T.C
+// Meaning: A OR (B AND C)
+```
+
+### Block Markers
+
+**New block markers** replacing keywords:
+
+```polyglot
+// [=] Fixed/immutable assignment (replaces "Fixed" keyword)
+[=] .config: pg\string << "production"
+
+// [m] Macro-exported variable (replaces "Exposed" keyword)
+[m] .time: pg\dt
+
+// [*] Line continuation
+[<] .url: pg\string << "postgresql://"
+[*] >"admin:pass@"           // [*] >" for string concatenation
+[*] >"localhost:5432/"
+
+// [+] OR logical operator (triggers)
+// [&] AND logical operator (triggers)
+// [^] XOR logical operator (triggers)
+// [.] Group marker (on empty line)
+// [~] Group member prefix
+```
+
+**Important Notes:**
+- All operators are **context-sensitive** and **type-aware**
+- Comparison operators work differently for strings, numbers, datetimes, enums
+- Pattern operators only work with string types
+- Range operators work with numeric types and datetimes
+- Negation operators provide logical NOT for any comparison
+- Logical operators only apply to trigger conditions
+- Block markers must appear at the start of a line
 
 ---
 
@@ -1099,7 +1309,13 @@ Literal definitions apply to **both** Surface and Canonical syntax.
             | <set-literal>
             | <serial-literal>
 
-<boolean-literal> ::= "True" | "False"
+<boolean-literal> ::= <boolean-enum>
+
+<boolean-enum> ::= "#Boolean.True" | "#Boolean.False"
+                 | "#True" | "#False"  /* aliases */
+
+/* Note: "True" and "False" keywords removed.
+   Use #Boolean.True / #Boolean.False (or aliases #True / #False) */
 
 <integer-literal> ::= [ "-" ] <digit> { <digit> }
 
@@ -1117,7 +1333,10 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 <interpolation> ::= "{" <field-name> "}"
 
 <multiline-string> ::= <string-literal>
-                       { "[^]" '>"' <string-literal> }
+                       { "[*]" '>"' <string-literal> }
+
+/* Note: Line continuation changed from [^] to [*]
+   [^] is now used for XOR logical operator */
 ```
 
 ---
@@ -1332,8 +1551,11 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 
 4. **Operator Precedence**
    - Polyglot has NO arithmetic operators (`+`, `-`, `*`, `/`)
-   - NO comparison operators (`==`, `!=`, `<`, `>`, `<=`, `>=`)
-   - Use explicit named operations instead
+   - HAS comparison operators: `=?`, `>?`, `<?`, `>=?`, `<=?` (type-aware)
+   - HAS negation operators: `=!?`, `>!?`, `<!?`, `>=!?`, `<=!?`, `<!?<`
+   - HAS range operators: `?[`, `?(`, `]`, `)` (bracket/paren inclusivity)
+   - HAS pattern operators: `?` with `*` (wildcard) or `re` (regex)
+   - All operators are context-sensitive and type-aware
 
 5. **Type Separator**
    - ALWAYS backslash `\` for types (`pg\int`)
@@ -1346,7 +1568,7 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 7. **Case Sensitivity**
    - Block markers are case-sensitive
    - Identifiers are case-sensitive
-   - Keywords are case-sensitive
+   - Reserved enumerations are case-sensitive
 
 ---
 
@@ -1359,7 +1581,7 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 1. **Lexical Analysis**
    - Tokenize based on block markers first
    - Recognize operators as single tokens
-   - Handle multi-character operators (`<<`, `>>`, `?>`, `..`)
+   - Handle multi-character operators: `<<`, `>>`, `=?`, `>?`, `<?`, `>=?`, `<=?`, `=!?`, `>!?`, `<!?`, `>=!?`, `<=!?`, `<!?<`, `?[`, `?(`, `[*]`, `[+]`, `[&]`, `[^]`, `[.]`, `[~]`, `[=]`, `[m]`
 
 2. **Syntax Analysis**
    - Context-sensitive parsing based on block markers
@@ -1535,6 +1757,7 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 0.0.2 | 2025-11-16 | **Keyword Elimination Update**: Removed all 5 keywords (True, False, Fixed, Default, Exposed) and replaced with symbolic syntax. Added comparison operators (`=?`, `>?`, etc.), negation operators (`=!?`, `<!?<`, etc.), range operators (`?[`, `?(`, etc.), pattern matching (`?*`, `?re`), and logical operators (`[+]`, `[&]`, `[^]`, `[.]`, `[~]`). Updated all examples to use new syntax. |
 | 0.0.2 | 2025-11-13 | Two-phase BNF grammar (Surface + Canonical) with transformation rules |
 
 ---
