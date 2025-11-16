@@ -304,7 +304,7 @@ The complete catalog of `|Q.*` pipeline operations is **not yet finalized**. Thi
 ```polyglot
 [r] .pipeline_status: #Status << #Status.Success
 
-[?] .pipeline_status == #Status.Success
+[?] .pipeline_status =? #Status.Success
 [~][r] |U.Log.Info
 [~][<] .msg: pg\string << "Pipeline completed"
 ```
@@ -360,25 +360,29 @@ The complete catalog of `|Q.*` pipeline operations is **not yet finalized**. Thi
 #Comparison.GreaterOrEqual    // First value is greater than or equal to second
 ```
 
-**Usage with Range Matching:**
+**Usage with Type-Aware Comparison Operators:**
 
-Since Polyglot does NOT have comparison operators (`<`, `>`, `==`, etc.), use range notation with datetime and other comparable types:
+Polyglot provides type-aware comparison operators (`=?`, `>?`, `<?`, `>=?`, `<=?`) for direct comparisons:
 
 ```polyglot
-// Range notation for datetime comparison
+// Direct comparison with operators
 [r] .reference: pg\dt << DT"2024-01-15"
 
 // Check if date is after reference (greater than)
-[?] .some_date ?> .reference..
+[?] .some_date >? .reference
 [~][r] |HandleAfterDate
 
 // Check if date is before reference (less than)
-[?] .some_date ?> ...reference
+[?] .some_date <? .reference
 [~][r] |HandleBeforeDate
 
 // Check if date equals reference
-[?] .some_date ?> .reference
+[?] .some_date =? .reference
 [~][r] |HandleExactDate
+
+// Range comparison (between dates)
+[?] .some_date ?[DT"2024-01-01", DT"2024-12-31"]
+[~][r] |HandleDateInRange
 ```
 
 **Explicit Comparison Pipeline Pattern:**
@@ -391,21 +395,214 @@ For complex comparisons, use comparison pipelines that return `#Comparison` valu
 [<] .second: pg\dt << .date2
 [>] .result: #Comparison >> .comparison
 
-[?] .comparison ?> #Comparison.Less
+[?] .comparison =? #Comparison.Less
 [~][r] |HandleEarlierDate
 
-[?] .comparison ?> #Comparison.Equal
+[?] .comparison =? #Comparison.Equal
 [~][r] |HandleSameDate
 
-[?] .comparison ?> #Comparison.Greater
+[?] .comparison =? #Comparison.Greater
 [~][r] |HandleLaterDate
 ```
 
 **Notes:**
-- Range notation (`..`, `...`) is preferred for inline comparisons
-- `#Comparison` enum is for explicit comparison pipeline results
+- **v0.0.2 Update:** Range notation (`..`, `...`) has been replaced with bracket/paren range operators (`?[`, `?(`)
+- **v0.0.2 Update:** Match operator (`?>`) has been replaced with comparison operators (`=?`, `>?`, `<?`, etc.)
+- `#Comparison` enum is for explicit comparison pipeline results from utility pipelines
 - System-provided, cannot be extended
 - Used primarily with utility comparison pipelines
+
+---
+
+## Boolean System Enumeration
+
+### `#Boolean`
+**Status:** ✓ SCHEMA CONFIRMED
+**Extendable:** NO (System-provided)
+**Related Decision:** Keyword Elimination (2025-11-16) - Replaced True/False keywords
+**Keyword Replacement:** This enumeration replaces the `True` and `False` keywords
+
+**Purpose:** Polyglot's fundamental boolean type. All boolean values use the `#Boolean` reserved enumeration instead of keywords. Supports exhaustive pattern matching for type safety.
+
+**Schema:**
+```polyglot
+// Built-in boolean enumeration - exactly two variants, no fields
+#Boolean.True      // Boolean true value
+#Boolean.False     // Boolean false value
+```
+
+**Aliases:**
+```polyglot
+// Shorthand aliases for convenience
+#True    → #Boolean.True
+#False   → #Boolean.False
+```
+
+**Usage Patterns:**
+
+**1. Variable Assignment:**
+```polyglot
+// Using full form
+[r] .is_active: #Boolean << #Boolean.True
+[r] .is_valid: #Boolean << #Boolean.False
+
+// Using aliases (more common)
+[r] .is_active: #Boolean << #True
+[r] .is_valid: #Boolean << #False
+```
+
+**2. Conditional Switching (Exhaustive Matching Required):**
+```polyglot
+[|] ProcessFlag
+[i] .flag: #Boolean
+[t] |T.Call
+[w] |W.NoSetup.NoCleanup
+
+// Exhaustive boolean matching - BOTH branches required
+[?] .flag =? #True
+[~][r] |HandleTrue
+[~][o] .result: pg\string << "Handled true"
+
+[?] .flag =? #False
+[~][r] |HandleFalse
+[~][o] .result: pg\string << "Handled false"
+
+[X]
+```
+
+**3. Input Parameters with Boolean Type:**
+```polyglot
+[|] ToggleFeature
+[i] .enable: #Boolean      // Boolean input parameter
+[t] |T.Call
+[w] |W.NoSetup.NoCleanup
+
+[?] .enable =? #True
+[~][r] |EnableFeature
+
+[?] .enable =? #False
+[~][r] |DisableFeature
+
+[o] #None
+[X]
+```
+
+**4. Pipeline Outputs:**
+```polyglot
+[|] ValidateData
+[i] .data: pg\string
+[t] |T.Call
+[w] |W.NoSetup.NoCleanup
+
+[?] .data =? ""
+[~][o] .is_valid: #Boolean << #False
+
+[?] .data =!? ""
+[~][o] .is_valid: #Boolean << #True
+
+[X]
+```
+
+**Exhaustive Matching Requirements:**
+
+**Compiler/Linter Rules:**
+1. **Exhaustive Boolean Switch:** When switching on a `#Boolean` typed variable, BOTH `#True` and `#False` branches MUST be present
+2. **Type Safety:** Cannot assign non-boolean values to `#Boolean` typed variables
+3. **No Extension:** Users cannot add new variants to `#Boolean` (e.g., no `#Maybe` variant)
+4. **Alias Consistency:** `#True` and `#False` always resolve to `#Boolean.True` and `#Boolean.False`
+
+**Compiler Error Examples:**
+```polyglot
+// ❌ ERROR: Non-exhaustive boolean switch
+[?] .flag =? #True
+[~][r] |HandleTrue
+// Missing #False branch - COMPILE ERROR
+
+// ❌ ERROR: Type mismatch
+[r] .flag: #Boolean << "true"   // Cannot assign string to boolean
+
+// ❌ ERROR: Invalid variant
+[r] .flag: #Boolean << #Boolean.Maybe   // No such variant
+```
+
+**Comparison with Old Keyword Syntax:**
+
+| v0.0.1 (Keywords) | v0.0.2 (Reserved Enumeration) |
+|-------------------|-------------------------------|
+| `True` | `#Boolean.True` or `#True` |
+| `False` | `#Boolean.False` or `#False` |
+| `[r] .flag: pg\bool << True` | `[r] .flag: #Boolean << #True` |
+| `[?] .flag ?> True` | `[?] .flag =? #True` |
+
+**Type System Integration:**
+
+- **Type:** `#Boolean` is both a type and an enumeration
+- **Values:** Only `#Boolean.True` and `#Boolean.False` (or their aliases)
+- **Serialization:** Serialize as `#Boolean.True` or `#Boolean.False` (full form preferred)
+- **Validation:** Runtime validates that boolean variables only contain valid variants
+- **Pattern Matching:** Exhaustive matching enforced at compile-time
+
+**Standard Library Integration:**
+
+Boolean operations are provided through utility pipelines:
+
+```polyglot
+// Boolean NOT operation
+[r] |U.Boolean.Not
+[<] .value: #Boolean << #True
+[>] .result: #Boolean >> .negated     // → #False
+
+// Boolean AND operation
+[r] |U.Boolean.And
+[<] .a: #Boolean << #True
+[<] .b: #Boolean << #False
+[>] .result: #Boolean >> .and_result  // → #False
+
+// Boolean OR operation
+[r] |U.Boolean.Or
+[<] .a: #Boolean << #True
+[<] .b: #Boolean << #False
+[>] .result: #Boolean >> .or_result   // → #True
+
+// Boolean XOR operation
+[r] |U.Boolean.Xor
+[<] .a: #Boolean << #True
+[<] .b: #Boolean << #True
+[>] .result: #Boolean >> .xor_result  // → #False
+```
+
+**Important Design Rationale:**
+
+1. **Why Enumeration Instead of Keyword:**
+   - Maintains Polyglot's zero-keyword philosophy
+   - Enables exhaustive pattern matching
+   - Consistent with other special values (`#None`, `#Status.*`, etc.)
+   - Type-safe at compile-time
+
+2. **Why Exhaustive Matching:**
+   - Prevents logic errors from missing cases
+   - Forces developers to handle both true and false conditions
+   - Makes code more maintainable and explicit
+
+3. **Why Aliases:**
+   - `#True`/`#False` are more concise than `#Boolean.True`/`#Boolean.False`
+   - Common enough to warrant shorthand
+   - Still maintain namespace clarity (`#` prefix indicates enumeration)
+
+**Semantics:**
+
+- `#Boolean` is a **closed enumeration** - no extension allowed
+- Exactly two variants: `.True` and `.False`
+- No additional variants can be added (enforced by compiler)
+- Cannot have fields or additional data
+- Immutable singleton values
+- Must use comparison operators (`=?`, `=!?`) not match operator (old `?>` removed)
+
+**Migration from v0.0.1:**
+- Replace all `True` → `#True` (or `#Boolean.True`)
+- Replace all `False` → `#False` (or `#Boolean.False`)
+- Replace `[?] .var ?> True` → `[?] .var =? #True`
+- Change type from `pg\bool` to `#Boolean` (if `pg\bool` existed in v0.0.1)
 
 ---
 
@@ -464,15 +661,15 @@ When a pipeline performs actions but doesn't return any data:
 2. **Conditional Branches with No Output:**
 ```polyglot
 [|] ProcessData
-[i] .should_process: pg\bool
+[i] .should_process: #Boolean
 [t] |T.Call
 [w] |W.NoSetup.NoCleanup
 
-[?] .should_process ?> True
+[?] .should_process =? #True
 [~][r] |DoProcessing
 [~][o] .result: pg\string
 
-[?] .should_process ?> False
+[?] .should_process =? #False
 [~][o] #None  // This branch returns nothing
 
 [X]
@@ -565,7 +762,7 @@ When a pipeline performs actions but doesn't return any data:
 [t] |T.Call
 [w] |W.NoSetup.NoCleanup
 
-[?] .input ?> ""
+[?] .input =? ""
 [~]
 [~][r] .error: ! << !ValidationError
 [~][<] .message: pg\string << "Input cannot be empty"
@@ -573,7 +770,7 @@ When a pipeline performs actions but doesn't return any data:
 [~][<] .trace: pg\string << ""
 [~][o] .error: !
 
-[?] .input ?> ...""
+[?] .input =!? ""
 [~]
 [~][r] .result: pg\string << "Success"
 [~][o] .result: pg\string
@@ -732,6 +929,7 @@ Errors automatically propagate up the call stack if not caught:
 
 | Enumeration/Type | Context | Extendable | Schema Status |
 |------------------|---------|------------|---------------|
+| `#Boolean` | Boolean System | ✗ NO | ✓ CONFIRMED |
 | `#Path.Identifiers.*` | Path System | ✓ YES | ✓ CONFIRMED |
 | `#Queues.*` | Queue System | ✓ YES | ⚠ PENDING |
 | `#Queues.Pending` | Queue System | ✗ NO | ⚠ PENDING |
