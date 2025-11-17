@@ -346,12 +346,13 @@ struct Step {
 - Include `#[serde(rename_all = "snake_case")]`
 - Have unit tests for JSON serialization roundtrip
 
-**Prerequisites:** None (can develop in parallel with Epic 1)
+**Prerequisites:** Story 1.6 (Syntax Validator) - Epic 1 must be complete before defining IRs
 
 **Technical Notes:**
 - Follow ADR-008 (3-IR Structure)
 - Use serde_json for serialization
 - Validate during deserialization where possible (e.g., `#[serde(validate)]`)
+- **Workflow Note:** Complete all parsing (Epic 1) before defining IR structures to incorporate learnings from parser implementation
 
 ### Story 2.2: AST to Trigger IR Generator
 
