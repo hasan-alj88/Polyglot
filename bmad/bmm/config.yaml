@@ -3,4 +3,5 @@
 
 user_name: hhj
 communication_language: English
-output_folder: docs/
+output_folder: docs/project
+sprint_artifacts: docs/project/stories

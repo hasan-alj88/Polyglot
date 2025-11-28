@@ -103,6 +103,31 @@ impl<R: ImportResolver> Parser<R> {
         })
     }
 
+    /// Create parser directly from tokens (for validation)
+    ///
+    /// This constructor is useful when you already have tokens (e.g., from
+    /// separate lexer validation) and want to skip re-tokenization.
+    ///
+    /// # Arguments
+    /// * `tokens` - Pre-tokenized input
+    /// * `resolver` - Import resolver for package resolution
+    ///
+    /// # Returns
+    /// * `Ok(Parser)` ready to parse
+    pub fn new_from_tokens(tokens: Vec<Token>, resolver: R) -> Result<Self, ParserError> {
+        Ok(Self {
+            tokens,
+            current: 0,
+            resolver,
+            source_file: None,
+            package_aliases: HashMap::new(),
+            local_pipelines: HashMap::new(),
+            file_cache: HashMap::new(),
+            current_package: None,
+            file_ordering: HashMap::new(),
+        })
+    }
+
     /// Create parser with source file name (for error reporting)
     pub fn with_source_file(mut self, file: String) -> Self {
         self.source_file = Some(file);

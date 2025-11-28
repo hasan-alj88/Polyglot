@@ -31,11 +31,17 @@ pub mod visitor;
 pub mod import_resolver;
 pub mod file_registry_resolver;
 pub mod parser;
+pub mod validation;
+pub mod validation_error;
 
 // Convenient re-exports
 pub use span::{Position, Span};
 pub use error::ParserError;
 pub use visitor::Visitor;
+
+// Validation API re-exports
+pub use validation::validate_file;
+pub use validation_error::{ValidationError, Severity, ErrorCategory};
 
 // Re-export commonly used AST types
 pub use ast::{
