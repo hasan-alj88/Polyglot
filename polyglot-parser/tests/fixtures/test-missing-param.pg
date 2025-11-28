@@ -1,0 +1,21 @@
+// Test fixture: Pipeline call missing required parameter
+// Corresponds to Test Scenario 2 from test design document
+// Should fail: .input parameter not provided
+
+[@] Local@MyApp:1.0.0
+[<] @utils << Community@DataHelpers:2.3.1
+[X]
+
+[|] MyPipeline
+[i] .data: pg\string
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] @utils|Transform
+// Missing required parameter: .input
+[<] .scale << 2
+[>] .result >> .output
+
+[o] .output: pg\int
+[X]

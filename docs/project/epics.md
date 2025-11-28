@@ -254,6 +254,24 @@ So that `.pg` files can be structurally analyzed and compiled.
 - Error cases produce helpful messages
 - Complex nested structures
 
+**And** parser implements three-phase resolution (Phase 1 & 3 only):
+- Phase 1: Current file namespace
+- Phase 3: External packages via registry (FileRegistryResolver)
+- Phase 2: Deferred to Story 1.5.5
+
+**And** FileRegistryResolver provides:
+- JSON-based test registry format
+- Pipeline signature lookup (inputs, outputs, types)
+- Parameter validation (required/optional/defaults)
+- Type checking across pipeline boundaries
+
+**And** parser validates:
+- Pipeline references resolve correctly
+- Input parameters match signatures
+- Type compatibility (e.g., `pg\int` vs `pg\string`)
+- Required parameters without defaults are provided
+- Default values assigned for optional parameters
+
 **Prerequisites:** Story 1.3 (lexer), Story 1.4 (AST definitions)
 
 **Technical Notes:**
@@ -261,6 +279,76 @@ So that `.pg` files can be structurally analyzed and compiled.
 - Use `thiserror` for `ParserError` enum
 - Context in errors (`ParserError::UnexpectedToken { expected, found, context }`)
 - Performance target: <500ms validation (NFR-P1)
+- FileRegistryResolver implements ImportResolver trait
+- Test design: See `/docs/qa/assessments/1.5-test-design-20251128.md`
+- **Scope:** Single-file parsing only (multi-file compilation in Story 1.5.5)
+
+### Story 1.5.5: Multi-File Compilation & Same-Package Resolution (Phase 2)
+
+As a developer,
+I want to compile packages with multiple `.pg` files,
+So that pipeline definitions can be organized across files within the same package.
+
+**Acceptance Criteria:**
+
+**Given** multiple `.pg` files in the same package
+**When** I compile the package
+**Then** Phase 2 resolution searches same-package files before external registry
+
+**And** file ordering is controlled by `[#]` markers:
+- Files can specify compilation order: `[#] 1`, `[#] 2`, etc.
+- Files without `[#]` markers are processed after numbered files
+- Duplicate `[#]` numbers raise `ParserError::DuplicateFileOrder`
+
+**And** three-phase resolution is fully implemented:
+```rust
+fn resolve_pipeline_reference(name: &str, current_file: &str) -> Result<Pipeline> {
+    // PHASE 1: Current file namespace
+    if let Some(pipeline) = search_current_file(name) {
+        return Ok(pipeline);
+    }
+
+    // PHASE 2: Same package, different files (by [#] order)
+    let current_package = get_current_package(current_file);
+    let same_package_files = find_same_package_files(current_package)?;
+    validate_file_ordering(&same_package_files)?;
+
+    for file in same_package_files {
+        if let Some(pipeline) = search_file(file, name) {
+            return Ok(pipeline);
+        }
+    }
+
+    // PHASE 3: External packages (registry/database)
+    if let Some(pipeline) = search_registry(name) {
+        return Ok(pipeline);
+    }
+
+    Err(ParserError::UndeclaredPipeline { name, available: suggestions(), span })
+}
+```
+
+**And** file ordering validation:
+- Detect duplicate `[#]` markers across package files
+- Report error with both file paths containing duplicate number
+- Validate ordering is sequential (warn if gaps like 1, 3, 5)
+
+**And** integration tests verify:
+- Pipeline in file `[#] 1` can be called from file `[#] 2`
+- Pipeline in file `[#] 2` cannot be called from file `[#] 1` (compilation error)
+- Files without `[#]` markers can call pipelines from numbered files
+- Duplicate `[#]` markers detected and reported
+- Multi-file package compiles correctly
+
+**Prerequisites:** Story 1.5 (single-file parser)
+
+**Technical Notes:**
+- Extend Parser to handle multi-file context
+- File ordering stored in AST metadata
+- Phase 2 searches files in `[#]` order
+- Same package identified by matching `PackageSpec` (registry, path, version)
+- Error messages include file paths for clarity
+- Performance: Cache parsed files to avoid re-parsing
 
 ### Story 1.6: Syntax Validator (Standalone)
 

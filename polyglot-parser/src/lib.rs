@@ -29,6 +29,8 @@ pub mod ast;
 pub mod error;
 pub mod visitor;
 pub mod import_resolver;
+pub mod file_registry_resolver;
+pub mod parser;
 
 // Convenient re-exports
 pub use span::{Position, Span};
@@ -54,3 +56,8 @@ pub use import_resolver::{
     ImportResolver, StubImportResolver,
     ResolvedPackage, ImportError,
 };
+pub use file_registry_resolver::{
+    FileRegistryResolver, RegistryFile, PackageEntry,
+    PipelineSignature, ParameterDef,
+};
+pub use parser::Parser;

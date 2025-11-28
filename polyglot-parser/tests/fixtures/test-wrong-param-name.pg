@@ -1,0 +1,20 @@
+// Test fixture: Pipeline call with wrong parameter name
+// Corresponds to Test Scenario 3 from test design document
+// Should fail: .wrongName is not a valid parameter
+
+[@] Local@MyApp:1.0.0
+[<] @utils << Community@DataHelpers:2.3.1
+[X]
+
+[|] MyPipeline
+[i] .data: pg\int
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] @utils|Transform
+[<] .wrongName << "Some name"    // Error: Transform doesn't accept .wrongName
+[>] .result >> .output
+
+[o] .output: pg\int
+[X]

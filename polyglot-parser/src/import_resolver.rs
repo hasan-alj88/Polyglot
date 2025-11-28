@@ -258,7 +258,7 @@ impl ImportResolver for StubImportResolver {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::span::{Position, Span};
+    use crate::span::Span;
 
     #[test]
     fn test_stub_resolver_returns_database_inactive() {
