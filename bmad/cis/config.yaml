@@ -1,0 +1,6 @@
+# CIS Configuration File
+# This file stores user preferences for the BMAD Creative Intelligence Suite
+
+user_name: hhj
+communication_language: English
+output_folder: docs/

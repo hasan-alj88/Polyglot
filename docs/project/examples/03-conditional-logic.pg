@@ -1,0 +1,292 @@
+// ==============================================================================
+// Example 3: Conditional Logic & Exhaustive Patterns
+// Demonstrates: [?] conditionals, boolean logic, exhaustive [?] *? catch-all
+// Comparison operators, pattern matching, range operators
+// MANDATORY SECTIONS: [i], [t], [\][/] or [W], [o]
+// ==============================================================================
+
+[@] Local@ConditionalExample:1.0.0
+[#] 1
+[X]
+
+// ==============================================================================
+// PATTERN: Basic Conditional with Exhaustive Catch-All
+// ==============================================================================
+
+[|] BasicConditional
+[i] .score: pg\int
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[?] .score >? 90
+[~][r] .grade: pg\string << "A"
+[~]
+
+[?] .score >? 80
+[~][r] .grade: pg\string << "B"
+[~]
+
+[?] .score >? 70
+[~][r] .grade: pg\string << "C"
+[~]
+
+[?] *?                                   // EXHAUSTIVE: REQUIRED!
+[~][r] .grade: pg\string << "F"          // Without this: COMPILE ERROR
+[~]
+
+[o] .grade: pg\string
+[X]
+
+// ==============================================================================
+// PATTERN: Boolean Logic (AND, OR, NOT, XOR)
+// ==============================================================================
+
+[|] BooleanLogicExample
+[i] .age: pg\int
+[i] .is_member: pg\bool
+[i] .has_voucher: pg\bool
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .discount: pg\int << 0
+
+// AND logic: Both conditions must be true
+[?] .age >? 65
+[&] .is_member =? #Boolean.True
+[~][<] .discount << 20                   // Senior member discount
+[~]
+
+// OR logic: Either condition can be true
+[?] .has_voucher =? #Boolean.True
+[+] .is_member =? #Boolean.True
+[~][<] .discount << 10                   // Voucher or member discount
+[~]
+
+[?] *?                                   // EXHAUSTIVE catch-all
+[~][<] .discount << 0                    // No discount
+[~]
+
+[o] .discount: pg\int
+[X]
+
+// ==============================================================================
+// PATTERN: Nested Conditionals
+// ==============================================================================
+
+[|] NestedConditionals
+[i] .user_type: pg\string
+[i] .purchase_amount: pg\int
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .final_price: pg\int << .purchase_amount
+
+[?] .user_type =? "premium"
+[~][?] .purchase_amount >? 1000
+[~][~][<] .final_price << .purchase_amount  // 30% off (would need calc)
+[~][~]
+
+[~][?] .purchase_amount >? 500
+[~][~][<] .final_price << .purchase_amount  // 20% off
+[~][~]
+
+[~][?] *?
+[~][~][<] .final_price << .purchase_amount  // 10% off
+[~][~]
+[~]
+
+[?] .user_type =? "regular"
+[~][?] .purchase_amount >? 500
+[~][~][<] .final_price << .purchase_amount  // 10% off
+[~][~]
+
+[~][?] *?
+[~][~][<] .final_price << .purchase_amount  // No discount
+[~][~]
+[~]
+
+[?] *?                                   // EXHAUSTIVE at top level
+[~][<] .final_price << .purchase_amount  // No discount
+[~]
+
+[o] .final_price: pg\int
+[X]
+
+// ==============================================================================
+// PATTERN: Comparison Operators
+// ==============================================================================
+
+[|] ComparisonOperators
+[i] .value: pg\int
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .category: pg\string << "unknown"
+
+// Greater than
+[?] .value >? 100
+[~][<] .category << "high"
+[~]
+
+// Less than
+[?] .value <? 10
+[~][<] .category << "low"
+[~]
+
+// Greater or equal
+[?] .value =>? 50
+[&] .value =<? 100
+[~][<] .category << "medium"
+[~]
+
+// Equal
+[?] .value =? 50
+[~][<] .category << "exactly-fifty"
+[~]
+
+// Not equal
+[?] .value =!? 0
+[&] .value <? 50
+[~][<] .category << "small-nonzero"
+[~]
+
+[?] *?                                   // EXHAUSTIVE
+[~][<] .category << "uncategorized"
+[~]
+
+[o] .category: pg\string
+[X]
+
+// ==============================================================================
+// PATTERN: Range Operators
+// ==============================================================================
+
+[|] RangeExample
+[i] .temperature: pg\int
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .description: pg\string << "normal"
+
+// Closed interval [a, b] - both inclusive
+[?] .temperature ?[20, 25]
+[~][<] .description << "comfortable"
+[~]
+
+// Open interval (a, b) - both exclusive
+[?] .temperature ?(25, 35)
+[~][<] .description << "warm"
+[~]
+
+// Half-open (a, b] - left exclusive, right inclusive
+[?] .temperature ?(35, 45]
+[~][<] .description << "hot"
+[~]
+
+// Half-open [a, b) - left inclusive, right exclusive
+[?] .temperature ?[0, 20)
+[~][<] .description << "cold"
+[~]
+
+[?] *?                                   // EXHAUSTIVE
+[~][<] .description << "extreme"
+[~]
+
+[o] .description: pg\string
+[X]
+
+// ==============================================================================
+// PATTERN: Pattern Matching
+// ==============================================================================
+
+[|] PatternMatching
+[i] .email: pg\string
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .is_valid: pg\bool << #Boolean.False
+
+// Regex pattern matching
+[?] .email re? "^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}$"
+[~][<] .is_valid << #Boolean.True
+[~]
+
+[?] *?                                   // EXHAUSTIVE
+[~][<] .is_valid << #Boolean.False
+[~]
+
+[o] .is_valid: pg\bool
+[X]
+
+// ==============================================================================
+// PATTERN: Complex Boolean Expressions
+// ==============================================================================
+
+[|] ComplexBoolean
+[i] .age: pg\int
+[i] .income: pg\int
+[i] .credit_score: pg\int
+[i] .has_collateral: pg\bool
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .approved: pg\bool << #Boolean.False
+
+// Complex approval logic
+[?] .age =>? 21
+[&] .age =<? 65
+[&] .income >? 50000
+[&] .credit_score >? 700
+[~][<] .approved << #Boolean.True       // Standard approval
+[~]
+
+// Alternative: has collateral
+[?] .age =>? 18
+[&] .income >? 30000
+[&] .has_collateral =? #Boolean.True
+[~][<] .approved << #Boolean.True       // Collateral-based approval
+[~]
+
+[?] *?                                  // EXHAUSTIVE
+[~][<] .approved << #Boolean.False      // Denied
+[~]
+
+[o] .approved: pg\bool
+[X]
+
+// ==============================================================================
+// KEY CONCEPTS DEMONSTRATED:
+// ==============================================================================
+// ✓ EXHAUSTIVE CONDITIONS: All [?] blocks MUST include [?] *? catch-all
+// ✓ BOOLEAN LOGIC: [&] AND, [+] OR, [-] NOT, [^] XOR, [.] IMPLICATION
+// ✓ COMPARISON OPERATORS: =?, =!?, >?, <?, =>?, =<?
+// ✓ RANGE OPERATORS: ?[a,b], ?(a,b), ?(a,b], ?[a,b)
+// ✓ PATTERN MATCHING: re? for regex patterns
+// ✓ WILDCARD: *? matches anything (catch-all)
+// ✓ NESTED CONDITIONALS: [?] blocks can nest within [~] bodies
+// ✓ AUTO-AWAIT: Comparison operators auto-await operands
+// ✓ ASYNC SAFETY: Exhaustive conditions prevent indefinite waiting
+// ✓ NO SHORT-CIRCUIT: All conditions evaluated (async environment)
+// ✓ MANDATORY SECTIONS: All pipelines have [i], [t], [\][/] or [W], [o]
+// ==============================================================================

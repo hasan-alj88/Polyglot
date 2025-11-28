@@ -1,0 +1,242 @@
+/* ============================================================================
+ * Polyglot v0.0.2 - EBNF Grammar (AI-Optimized)
+ * Complete syntax specification for machine parsing
+ * ============================================================================ */
+
+/* ===== TOP LEVEL ===== */
+file ::= package_decl definition* EOF
+package_decl ::= '[@]' package_spec version_spec '[X]'
+package_spec ::= IDENTIFIER '@' IDENTIFIER ':' VERSION
+version_spec ::= '[#]' INTEGER '[X]' dependency*
+dependency ::= '[<]' '@' IDENTIFIER '<<' package_spec
+
+definition ::= enumeration | pipeline
+
+/* ===== ENUMERATIONS ===== */
+enumeration ::= '[#]' ENUM_NAME field* '[X]'
+field ::= enum_field | serial_field
+enum_field ::= '[<]' VARIABLE                          /* Declaration only */
+serial_field ::= '[<]' VARIABLE ':' type default?     /* Type + optional default */
+default ::= '<~' literal | '<<' literal
+
+/* ===== PIPELINES ===== */
+/* DECLARATION STRUCTURE (order in file):
+   1. Inputs [i] - At least one (use [i] #Pipeline.NoInput if none)
+   2. Triggers [t] - At least one (pipeline will NOT run without triggers)
+   3. Queue config [Q] - Optional
+   4. Wrapper [W] OR Setup [\] - MANDATORY (wrapper includes [\][/] in macro)
+   5. Execution blocks - Sequential [r], Parallel {[p],[Y]}, Background [b], Streaming [s]
+   6. Cleanup [/] - If using explicit setup (not needed if using [W] wrapper)
+   7. Outputs [o] - At least one (use [o] !NoError if no output)
+
+   EXECUTION WORKFLOW (runtime order):
+   [t],[i] → [\],[Q] → [r],{[p],[Y]},[b],[s] → [/] → [o] → [X]
+   (triggers fire, inputs provided) → (setup, queue config) →
+   (execute blocks) → (cleanup) → (return outputs) → (complete)
+*/
+pipeline ::= '[|]' PIPELINE_NAME io_decl+ trigger+ queue_config? (wrapper | setup_cleanup) block* output+ '[X]'
+
+/* Input declarations: provided by external caller, not pushed within pipeline */
+io_decl ::= input_decl
+input_decl ::= '[i]' (VARIABLE ':' type default? | '#Pipeline.NoInput')
+/* Three variations:
+   [i] .var: Type           - Required input (Declared, caller must provide)
+   [i] .var: Type <~ value  - Default input (DefaultReady, caller can override)
+   [i] .var: Type << value  - Constant input (Ready, no override)
+   [i] #Pipeline.NoInput    - No inputs (MANDATORY if pipeline has no inputs)
+*/
+
+trigger ::= '[t]' (TRIGGER_REF | '|T.Call') trigger_config?
+trigger_config ::= '[<]' VARIABLE ':' type '<<' literal
+/* Common triggers:
+   [t] |T.Call              - Manual call (for pipelines called via |PipelineName)
+   [t] TG.Cron""            - Time-based trigger
+   [t] TG.FileWatch""       - File system trigger
+   [t] TG.HTTP""            - HTTP endpoint trigger
+*/
+
+queue_config ::= '[Q]' queue_binding*
+queue_binding ::= '[<]' VARIABLE ':' type '<<' (literal | VARIABLE)
+
+wrapper ::= '[W]' WRAPPER_REF wrapper_config?
+wrapper_config ::= '[<]' VARIABLE ':' type '<<' (literal | VARIABLE)
+/* Wrapper includes [\][/] setup/cleanup in its macro definition
+   Common wrappers:
+   - RT.Python, RT.Rust, RT.Node, RT.Go (runtime wrappers)
+   - |W.Polyglot.Scope or W.Polyglot.Scope"" (placeholder - no setup/cleanup)
+
+   W.Polyglot.Scope: RAII-style scope cleanup placeholder
+   - Use when there's no explicit setup/cleanup needed
+   - Makes it explicit (not accidental omission)
+   - Indicates implicit variable cleanup at scope end
+   - Replaces old |W.NoSetup.NoCleanup
+*/
+
+setup_cleanup ::= '[\]' block* '[/]'
+/* Explicit setup/cleanup ONLY if no wrapper [W] is used
+   NOTE: If no setup/cleanup needed, use [W] |W.Polyglot.Scope instead
+*/
+
+output ::= '[o]' (VARIABLE ':' type | ENUM_NAME | '!NoError')
+/* Output variations:
+   [o] .var: Type           - Normal output
+   [o] #EnumName            - Enumeration output
+   [o] !NoError             - No output (MANDATORY if pipeline has no output)
+*/
+
+/* ===== BLOCKS ===== */
+block ::= variable_decl | execution_block | conditional_block | unpack_block | service_block
+
+/* Variable declarations at pipeline scope */
+variable_decl ::= '[r]' VARIABLE ':' type default?
+
+/* Pipeline execution blocks */
+execution_block ::= '[r]' PIPELINE_REF io_binding*
+io_binding ::= input_binding | output_binding
+input_binding ::= '[<]' VARIABLE ':' type '<<' (VARIABLE | literal)
+output_binding ::= '[>]' VARIABLE ':' type '>>' VARIABLE
+
+conditional_block ::= condition body_block+ catch_all
+condition ::= '[?]' expression boolean_logic*
+boolean_logic ::= ('[+]' | '[&]' | '[-]' | '[^]' | '[.]') expression
+body_block ::= '[~]' block* '[~]'
+catch_all ::= '[?]' '*?' '[~]' block* '[~]'
+
+unpack_block ::= unpack_start unpack_config unpack_body join_op?
+unpack_start ::= ('[p]' | '[r]' | '[b]') UNPACK_OP
+unpack_config ::= ('[<]' VARIABLE)+ ('[>]' VARIABLE type?)+
+unpack_body ::= '[~]' block* '[~]'
+join_op ::= '[Y]' JOIN_OP join_config
+join_config ::= '[<]' VARIABLE '[>]' VARIABLE type?
+
+service_block ::= '[Q]' PIPELINE_REF queue_config
+queue_config ::= '[<]' VARIABLE ':' type '<<' (literal | VARIABLE)
+
+/* ===== EXPRESSIONS ===== */
+expression ::= comparison | pattern_match | state_check
+comparison ::= VARIABLE compare_op (VARIABLE | literal)
+pattern_match ::= VARIABLE pattern_op STRING
+state_check ::= VARIABLE '.pgvar.state' '=?' STATE_ENUM
+
+compare_op ::= '=?' | '=!?' | '>?' | '<?'  | '=>?' | '=<?'
+pattern_op ::= '*?' | 're?'
+range_op ::= '?[' | '?(' | '?]' | '?)'
+
+/* ===== TYPES ===== */
+type ::= primitive_type | collection_type | enum_type | foreign_type
+primitive_type ::= NAMESPACE '\' TYPE_NAME
+collection_type ::= NAMESPACE '\' COLLECTION '{' type '}'
+enum_type ::= ENUM_NAME
+foreign_type ::= FOREIGN_NS '\' TYPE_NAME
+
+NAMESPACE ::= 'pg'
+FOREIGN_NS ::= 'py' | 'rs' | 'go' | 'js' | 'node'
+TYPE_NAME ::= 'string' | 'int' | 'float' | 'bool' | 'dt' | 'path' | 'serial'
+COLLECTION ::= 'array' | 'set'
+
+/* ===== IDENTIFIERS (ALL REQUIRE PREFIXES - NO KEYWORDS) ===== */
+VARIABLE ::= '.' IDENTIFIER ('.' IDENTIFIER)*
+ENUM_NAME ::= '#' IDENTIFIER ('.' IDENTIFIER)*
+PIPELINE_REF ::= '|' IDENTIFIER ('.' IDENTIFIER)*
+TRIGGER_REF ::= '|T.' IDENTIFIER
+WRAPPER_REF ::= '|W.' IDENTIFIER ('.' IDENTIFIER)*
+UNPACK_OP ::= '~' IDENTIFIER
+JOIN_OP ::= '~Y.' IDENTIFIER
+STATE_ENUM ::= '#PgVar.States.' STATE_NAME
+ERROR_TYPE ::= '!' IDENTIFIER ('.' IDENTIFIER)*
+
+STATE_NAME ::= 'Declared' | 'DefaultReady' | 'Pending' | 'Ready' | 'Faulted'
+             | 'Retrying' | 'Paused' | 'Cached' | 'Dirty'
+
+/* ===== LITERALS ===== */
+literal ::= STRING | NUMBER | BOOLEAN | DATETIME | ENUM_NAME | NONE
+STRING ::= '"' [^"]* '"'
+NUMBER ::= INTEGER | FLOAT
+INTEGER ::= '-'? [0-9]+
+FLOAT ::= '-'? [0-9]+ '.' [0-9]+
+BOOLEAN ::= '#Boolean.True' | '#Boolean.False'
+DATETIME ::= 'DT' (datetime_literal | duration_literal)
+datetime_literal ::= '"' ISO8601_DATE_TIME '"'
+duration_literal ::= ('.' IDENTIFIER | '.Minutes' | '.Hours' | '.Days') '"' NUMBER '"'
+NONE ::= '#None'
+
+/* ===== STRING LITERALS AS INLINE PIPELINE CALLS ===== */
+/* CRITICAL: String literals are NOT primitive values - they are inline pipeline calls
+
+   Syntax: Pipeline.Name"formatted_argument_string"
+
+   Plain strings implicitly call U.String:
+     "hello" → U.String"hello"
+
+   Interpolation with formatting:
+     "{.var:fmt}" where fmt is format identifier
+
+   Processing:
+     1. Extract {.var:fmt} placeholders
+     2. Pack into pg\array{pg\serial} with value/format pairs
+     3. Call |U.String.{language}.{type}.{fmt} for each
+     4. Substitute formatted results back
+     5. Pass to pipeline as .formatted_argument_string
+
+   String literal pipeline signature:
+     [|] Pipeline.Name
+     [i] .formatted_argument_string: pg\string  // MANDATORY name
+     [t] |T.String.Call                         // MANDATORY trigger
+     [o] .output: Type                          // Single output, ANY type
+     [X]
+
+   Examples:
+     "hello"              → U.String"hello"
+     DT.Now""             → pg\dt output (not string!)
+     DT.Minutes"5"        → pg\dt duration
+     "{.count:Hex}"       → Calls |U.String.Polyglot.Int.Hex
+*/
+
+inline_pipeline_call ::= (PIPELINE_NAME '.')* PIPELINE_NAME STRING
+formatted_argument_string ::= STRING  /* Contains {.var:fmt} placeholders */
+interpolation ::= '{' VARIABLE (':' IDENTIFIER)? '}'  /* {.var} or {.var:fmt} */
+
+/* ===== IDENTIFIERS ===== */
+IDENTIFIER ::= [a-zA-Z_][a-zA-Z0-9_]*
+VERSION ::= [0-9]+ '.' [0-9]+ '.' [0-9]+
+
+/* ===== COMMENTS ===== */
+COMMENT ::= '//' [^\n]* | '/*' .*? '*/'
+
+/* ===== BLOCK MARKER HIERARCHY ===== */
+/* [r] - Sequential execution OR variable declaration (context-dependent)
+   - At pipeline scope: Variable declaration [r] .var: Type << value
+   - In execution context: Sequential pipeline call [r] |Pipeline
+
+   [<] - Input binding (ONLY within parent block context)
+   - MUST have parent block (pipeline call, unpack, queue, etc.)
+   - Passes values INTO operation
+   - NEVER standalone at pipeline scope
+
+   [>] - Output binding (ONLY within parent block context)
+   - MUST have parent block
+   - Pulls values FROM operation
+*/
+
+/* ===== CRITICAL RULES ===== */
+/* 1. NO KEYWORDS: All identifiers MUST have operator prefix (. # | !) */
+/* 2. EXHAUSTIVE CONDITIONS: All [?] blocks MUST include [?] *? catch-all */
+/* 3. NO NESTED COLLECTIONS: pg\array{pg\array{T}} is INVALID */
+/* 4. ENUM vs SERIAL MIXING: Cannot be siblings, can be uncles */
+/* 5. RESERVED SCHEMA: .*.pgvar.* always Ready, database-tracked */
+/* 6. AUTO-AWAIT: Occurs when "pulling from" variables (<<, >>, =?, etc.) */
+/* 7. TYPE SEPARATOR: Backslash only (\) not slash or colon */
+/* 8. STRING LITERALS ARE INLINE PIPELINES:
+       - "text" → U.String"text"
+       - Pipeline.Name"params" syntax required
+       - Empty params need "": DT.Now"" not DT.Now
+       - Returns ANY type, not just strings
+       - Input: .formatted_argument_string: pg\string
+       - Trigger: |T.String.Call */
+/* 9. EMPTY COLLECTIONS: Use {} not [] (e.g., << {item1, item2} or << {}) */
+/* 10. MANDATORY PIPELINE SECTIONS: Every [|] MUST have:
+       - [i] inputs (or [i] #Pipeline.NoInput)
+       - [t] triggers (or pipeline will NEVER run)
+       - [W] wrapper OR [\][/] setup/cleanup
+       - [o] outputs (or [o] !NoError)
+*/

@@ -1,0 +1,432 @@
+[@] Local@FileProcessor:2.0.0
+[#] 1
+[<] @Storage << Community@CloudStorage:1.5.0
+[<] @Notify << Community@Notifications:2.0.0
+[X]
+
+/*
+ * =============================================================================
+ * File Processing Pipeline with State-Aware Error Handling
+ * =============================================================================
+ *
+ * This pipeline demonstrates:
+ * - DefaultReady fields for configuration
+ * - Automatic async waiting (no await keyword)
+ * - State introspection with #Variables.States
+ * - Comprehensive error handling with .errors field
+ * - DefaultReady override semantics (once only)
+ * =============================================================================
+ */
+
+// ========================================
+// ENUMERATIONS
+// ========================================
+
+[#] FileType
+[<] .CSV
+[<] .JSON
+[<] .XML
+[<] .Unknown
+[X]
+
+[#] ProcessingMode
+[<] .Fast
+[<] .Accurate
+[<] .Balanced
+[X]
+
+[#] NotificationChannel
+[<] .Email
+[<] .Slack
+[<] .SMS
+[X]
+
+/*
+ * File Processing Configuration
+ * Demonstrates three field types:
+ * - Schema-only (Declared): Must be provided
+ * - Default (DefaultReady): Has default, can override once
+ * - Constant (Ready): Always the same value
+ */
+[#] ProcessorConfig
+[<] .input_dir: pg\path                              // Declared - must provide
+[<] .output_dir: pg\path                             // Declared - must provide
+[<] .chunk_size: pg\int <~ 1000                      // DefaultReady - default 1000 rows
+[<] .timeout_seconds: pg\int <~ 300                  // DefaultReady - default 5 minutes
+[<] .max_retries: pg\int <~ 3                        // DefaultReady - default 3 attempts
+[<] .enable_notifications: pg\bool <~ #True          // DefaultReady - notifications on
+[<] .mode: #ProcessingMode <~ #ProcessingMode.Balanced  // DefaultReady - balanced mode
+[<] .version: pg\string << "2.0.0"                   // Ready - always "2.0.0"
+[X]
+
+[#] FileMetadata
+[<] .file_name: pg\string                            // Declared
+[<] .file_type: #FileType <~ #FileType.Unknown       // DefaultReady
+[<] .size_bytes: pg\int <~ 0                         // DefaultReady
+[<] .checksum: pg\string                             // Declared
+[<] .uploaded_at: pg\dt <~ DT"2025-01-01 00:00:00"  // DefaultReady
+[X]
+
+[#] ProcessingStats
+[<] .files_processed: pg\int <~ 0                    // DefaultReady
+[<] .rows_processed: pg\int <~ 0                     // DefaultReady
+[<] .errors_count: pg\int <~ 0                       // DefaultReady
+[<] .duration_seconds: pg\float <~ 0.0               // DefaultReady
+[X]
+
+// ========================================
+// MAIN PIPELINE
+// ========================================
+
+/*
+ * Process Files from Cloud Storage
+ *
+ * Inputs:
+ *   - config: Processor configuration with defaults
+ *   - file_pattern: Pattern to match files (e.g., "*.csv")
+ *
+ * This pipeline demonstrates async-centric design where:
+ * - Variables transition through states automatically
+ * - Runtime waits for Pending variables (no await)
+ * - Error handling uses .errors field and state checking
+ */
+[|] ProcessFilesFromStorage
+[i] .config: #ProcessorConfig << #ProcessorConfig    // DefaultReady fields kick in
+[i] .file_pattern: pg\string
+
+[t] T.Cron"0 2 * * *"
+
+[W] |W.Python3.11
+
+// List files matching pattern (async operation)
+[r] @Storage|ListFiles
+[<] .directory: pg\path << .config.input_dir
+[<] .pattern: pg\string << .file_pattern
+[<] .timeout: pg\int << .config.timeout_seconds      // Uses DefaultReady or override
+[>] .files: pg\array{#FileMetadata} >> .file_list
+[>] .errors: pg\array{!} >> .list_errors
+
+// Check if listing succeeded
+[?] .file_list.state =? #Variables.States.Faulted
+[~]// Storage listing failed
+[~][r] |U.Log.Error
+[~][<] .msg: pg\string << "Failed to list files: {.config.input_dir}"
+[~][<] .errors: pg\array{!} << .list_errors
+[~]
+[~]// Send notification if enabled
+[~][?] .config.enable_notifications =? #True
+[~][~][r] |SendFailureNotification
+[~][~][<] .message: pg\string << "File listing failed"
+[~][~][<] .errors: pg\array{!} << .list_errors
+[~]
+[~][o] @Storage!Storage.ListFailed
+
+// Listing succeeded - check if any files found
+[?] .file_list.state =? #Variables.States.Ready
+[~][r] |U.Log.Info
+[~][<] .msg: pg\string << "Found {String.Length"{.file_list}"} files to process"
+[~]
+[~]// Initialize processing stats
+[~][i] .stats: #ProcessingStats << #ProcessingStats  // All fields get defaults (0)
+[~]
+[~]// Process each file in parallel
+[~][r] ~ForEach
+[~][<] .file_list
+[~][>] .file_meta
+[~][~]
+[~][~]/*
+[~][~] * Process single file
+[~][~] * Each parallel operation can succeed or fail independently
+[~][~] */
+[~][~][p] |ProcessSingleFile
+[~][~][<] .metadata: #FileMetadata << .file_meta
+[~][~][<] .config: #ProcessorConfig << .config
+[~][~][>] .row_count: pg\int >> .processed_rows
+[~][~][>] .success: pg\bool >> .file_success
+[~][~][>] .errors: pg\array{!} >> .file_errors
+[~][~]
+[~][~]// Check processing result state
+[~][~][?] .file_success.state =? #Variables.States.Ready
+[~][~][~][?] .file_success =? #True
+[~][~][~][~]// File processed successfully
+[~][~][~][~][r] |U.Log.Info
+[~][~][~][~][<] .msg: pg\string << "Processed {.file_meta.file_name}: {.processed_rows} rows"
+[~][~][~][~]
+[~][~][~][~][o] !NoError
+[~][~][~]
+[~][~][~][?] .file_success =? #False
+[~][~][~][~]// Processing returned false (validation failed)
+[~][~][~][~][r] |U.Log.Warn
+[~][~][~][~][<] .msg: pg\string << "Validation failed for {.file_meta.file_name}"
+[~][~][~][~]
+[~][~][~][~][o] !NoError
+[~][~][~]
+[~][~][~][?] *?
+[~][~][~][~]// Unexpected boolean value
+[~][~][~][~][o] !NoError
+[~][~]
+[~][~][?] .file_success.state =? #Variables.States.Faulted
+[~][~][~]// Operation faulted - serious error
+[~][~][~][r] |U.Log.Error
+[~][~][~][<] .msg: pg\string << "Failed to process {.file_meta.file_name}"
+[~][~][~][<] .errors: pg\array{!} << .file_errors
+[~][~][~]
+[~][~][~]// Log to failure tracking system
+[~][~][~][r] @Storage|LogFailedFile
+[~][~][~][<] .file_name: pg\string << .file_meta.file_name
+[~][~][~][<] .error_details: pg\array{!} << .file_errors
+[~][~][~]
+[~][~][~][o] !pg.System.ProcessingFailed
+[~][~]
+[~][~][?] *?
+[~][~][~]// Catchall for other states
+[~][~][~][o] !NoError
+[~]
+[~]// Generate final statistics
+[~][r] |CalculateFinalStats
+[~][<] .file_count: pg\int << String.Length"{.file_list}"
+[~][>] .final_stats: #ProcessingStats >> .summary
+[~][>] .errors: pg\array{!} >> .calc_errors
+[~]
+[~][?] .summary.state =? #Variables.States.Ready
+[~][~][r] |U.Log.Info
+[~][~][<] .msg: pg\string << "Batch complete: {.summary.files_processed} files, {.summary.rows_processed} rows in {.summary.duration_seconds}s"
+[~][~]
+[~][~]// Send success notification if enabled
+[~][~][?] .config.enable_notifications =? #True
+[~][~][~][r] @Notify|SendSuccess
+[~][~][~][<] .stats: #ProcessingStats << .summary
+[~][~][~][<] .channel: #NotificationChannel << #NotificationChannel.Slack
+[~][~]
+[~][~][o] !NoError
+[~]
+[~][?] *?
+[~][~]// Stats calculation failed
+[~][~][r] |U.Log.Error
+[~][~][<] .msg: pg\string << "Failed to calculate final statistics"
+[~][~]
+[~][~][o] !pg.System.CalculationFailed
+
+// Catchall for unexpected states
+[?] *?
+[~][r] |U.Log.Error
+[~][<] .msg: pg\string << "Unexpected state in ProcessFilesFromStorage"
+[~]
+[~][o] !pg.System.UnexpectedError
+
+[o] #None
+[X]
+
+// ========================================
+// HELPER PIPELINES
+// ========================================
+
+/*
+ * Process Single File
+ *
+ * Reads file, validates content, transforms data, and writes output.
+ * Demonstrates nested state checking and error propagation.
+ */
+[|] ProcessSingleFile
+[i] .metadata: #FileMetadata                         // Ready - must be provided
+[i] .config: #ProcessorConfig                        // Ready/DefaultReady
+
+[t] |T.Call
+
+[W] |W.Python3.11
+
+// Download file from storage (async)
+[r] @Storage|DownloadFile
+[<] .file_name: pg\string << .metadata.file_name
+[<] .source_dir: pg\path << .config.input_dir
+[<] .timeout: pg\int << .config.timeout_seconds
+[>] .content: pg\string >> .file_content
+[>] .errors: pg\array{!} >> .download_errors
+
+// Check download state
+[?] .file_content.state =? #Variables.States.Faulted
+[~]// Download failed
+[~][r] |U.Log.Error
+[~][<] .msg: pg\string << "Download failed: {.metadata.file_name}"
+[~]
+[~][o] .row_count: pg\int << 0
+[~][o] .success: pg\bool << #False
+[~][o] .errors: pg\array{!} << .download_errors
+
+// Download succeeded - parse content
+[?] .file_content.state =? #Variables.States.Ready
+[~]// Parse based on file type
+[~][?] .metadata.file_type =? #FileType.CSV
+[~][~][r] |parse_csv
+[~][~][<] .content: pg\string << .file_content
+[~][~][<] .chunk_size: pg\int << .config.chunk_size  // Uses DefaultReady
+[~][~][>] .rows: pg\array{pg\serial} >> .parsed_data
+[~][~][>] .errors: pg\array{!} >> .parse_errors
+[~]
+[~][?] .metadata.file_type =? #FileType.JSON
+[~][~][r] |parse_json
+[~][~][<] .content: pg\string << .file_content
+[~][~][>] .rows: pg\array{pg\serial} >> .parsed_data
+[~][~][>] .errors: pg\array{!} >> .parse_errors
+[~]
+[~][?] *?
+[~][~]// Unsupported file type
+[~][~][r] |U.Log.Warn
+[~][~][<] .msg: pg\string << "Unsupported file type: {.metadata.file_type}"
+[~][~]
+[~][~][o] .row_count: pg\int << 0
+[~][~][o] .success: pg\bool << #False
+[~][~][o] .errors: pg\array{!} << .parse_errors
+[~]
+[~]// Check parsing result
+[~][?] .parsed_data.state =? #Variables.States.Ready
+[~][~]// Transform and save data
+[~][~][r] |transform_and_save
+[~][~][<] .rows: pg\array{pg\serial} << .parsed_data
+[~][~][<] .output_dir: pg\path << .config.output_dir
+[~][~][<] .file_name: pg\string << .metadata.file_name
+[~][~][>] .count: pg\int >> .saved_count
+[~][~][>] .errors: pg\array{!} >> .save_errors
+[~][~]
+[~][~][?] .saved_count.state =? #Variables.States.Ready
+[~][~][~][o] .row_count: pg\int << .saved_count
+[~][~][~][o] .success: pg\bool << #True
+[~][~][~][o] .errors: pg\array{!} << .save_errors
+[~][~]
+[~][~][?] *?
+[~][~][~]// Save faulted
+[~][~][~][o] .row_count: pg\int << 0
+[~][~][~][o] .success: pg\bool << #False
+[~][~][~][o] .errors: pg\array{!} << .save_errors
+[~]
+[~][?] .parsed_data.state =? #Variables.States.Faulted
+[~][~]// Parsing failed
+[~][~][o] .row_count: pg\int << 0
+[~][~][o] .success: pg\bool << #False
+[~][~][o] .errors: pg\array{!} << .parse_errors
+[~]
+[~][?] *?
+[~][~]// Unexpected state
+[~][~][o] .row_count: pg\int << 0
+[~][~][o] .success: pg\bool << #False
+[~][~][o] .errors: pg\array{!} << .parse_errors
+
+// Catchall
+[?] *?
+[~][o] .row_count: pg\int << 0
+[~][o] .success: pg\bool << #False
+[~][o] .errors: pg\array{!} << .download_errors
+
+[X]
+
+/*
+ * Send Failure Notification
+ *
+ * Demonstrates multi-channel notification with fallback.
+ */
+[|] SendFailureNotification
+[i] .message: pg\string
+[i] .errors: pg\array{!}
+
+[t] |T.Call
+
+[W] |W.Python3.11
+
+// Try primary notification channel (Slack)
+[r] @Notify|SendSlack
+[<] .message: pg\string << .message
+[<] .error_details: pg\array{!} << .errors
+[>] .sent: pg\bool >> .slack_sent
+[>] .errors: pg\array{!} >> .slack_errors
+
+// Check if Slack notification succeeded
+[?] .slack_sent.state =? #Variables.States.Ready
+[~][?] .slack_sent =? #True
+[~][~][r] |U.Log.Info
+[~][~][<] .msg: pg\string << "Slack notification sent"
+[~][~]
+[~][~][o] !NoError
+[~]
+[~][?] *?
+[~][~]// Slack failed, fallback to email
+[~][~][r] @Notify|SendEmail
+[~][~][<] .subject: pg\string << "File Processing Error"
+[~][~][<] .body: pg\string << .message
+[~][~][>] .sent: pg\bool >> .email_sent
+[~][~]
+[~][~][?] .email_sent =? #True
+[~][~][~][r] |U.Log.Info
+[~][~][~][<] .msg: pg\string << "Email fallback notification sent"
+[~][~]
+[~][~][?] *?
+[~][~][~][r] |U.Log.Error
+[~][~][~][<] .msg: pg\string << "All notification channels failed"
+[~][~]
+[~][~][o] !NoError
+
+// Slack notification faulted
+[?] .slack_sent.state =? #Variables.States.Faulted
+[~][r] |U.Log.Warn
+[~][<] .msg: pg\string << "Slack notification faulted, trying email"
+[~][<] .errors: pg\array{!} << .slack_errors
+[~]
+[~][r] @Notify|SendEmail
+[~][<] .subject: pg\string << "File Processing Error"
+[~][<] .body: pg\string << .message
+[~]
+[~][o] !NoError
+
+[?] *?
+[~][o] !NoError
+
+[o] #None
+[X]
+
+/*
+ * =============================================================================
+ * CONFIGURATION OVERRIDE EXAMPLE
+ * =============================================================================
+ *
+ * This demonstrates DefaultReady override semantics:
+ * - Config has defaults (chunk_size=1000, timeout=300)
+ * - Override them ONCE for urgent processing
+ * - After first override, they become Ready (immutable)
+ */
+[|] ProcessUrgentFiles
+[i] .file_pattern: pg\string
+
+[t] |T.Call
+
+[W] |W.Python3.11
+
+/*
+ * Create config instance with defaults
+ * At this point:
+ * - .chunk_size is DefaultReady with 1000
+ * - .timeout_seconds is DefaultReady with 300
+ * - .max_retries is DefaultReady with 3
+ * - .mode is DefaultReady with Balanced
+ */
+[i] .config: #ProcessorConfig << #ProcessorConfig
+
+// Override defaults for urgent processing (first override → becomes Ready)
+[r] .urgent_config.chunk_size: pg\int << 5000        // Override: 1000 → 5000 (now Ready)
+[r] .urgent_config.timeout_seconds: pg\int << 60     // Override: 300 → 60 (now Ready)
+[r] .urgent_config.mode: #ProcessingMode << #ProcessingMode.Fast  // Override: Balanced → Fast (now Ready)
+// .max_retries keeps default value 3 (still DefaultReady, never overridden)
+
+/*
+ * Now .urgent_config fields are:
+ * - .chunk_size: Ready (5000) - CANNOT override again
+ * - .timeout_seconds: Ready (60) - CANNOT override again
+ * - .max_retries: DefaultReady (3) - could still override once
+ * - .mode: Ready (Fast) - CANNOT override again
+ */
+
+// Use urgent config for processing
+[r] |ProcessFilesFromStorage
+[<] .config: #ProcessorConfig << .urgent_config
+[<] .file_pattern: pg\string << .file_pattern
+
+[o] #None
+[X]

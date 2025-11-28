@@ -1,0 +1,121 @@
+# ITIL Ticket Index - Polyglot Project
+# Auto-maintained by: Mai (Secretary)
+# Last Updated: 2025-11-19
+
+# Summary Statistics
+statistics:
+  total_tickets: 6
+  open_tickets: 2
+  closed_tickets: 0
+  by_priority:
+    P1: 2
+    P2: 2
+    P3: 1
+    P4: 1
+    P5: 0
+  by_type:
+    incidents: 1
+    problems: 2
+    changes: 0
+    service_requests: 3
+  by_status:
+    new: 2
+    assigned: 0
+    in_progress: 0
+    pending: 0
+    resolved: 3
+    completed: 1
+    closed: 0
+
+# Active Tickets Registry
+tickets:
+  - ticket_id: INC-2025-001
+    type: incident
+    title: "Comparison Operators - 12 Syntax Violations in v0.0.2 Docs"
+    priority: P1
+    status: resolved
+    impact: critical
+    urgency: immediate
+    assigned_to: Paige (Tech Writer)
+    assigned_group: documentation
+    created_date: 2025-11-18
+    resolved_date: 2025-11-18
+    file: incidents/INC-2025-001.yaml
+    related_problem: PRB-2025-001
+
+  - ticket_id: PRB-2025-001
+    type: problem
+    title: "Comparison Operators Ambiguity - Do They Exist in Polyglot?"
+    priority: P1
+    status: resolved
+    impact: critical
+    urgency: immediate
+    assigned_to: Carson (Brainstorming Coach)
+    assigned_group: creative
+    created_date: 2025-11-18
+    resolved_date: 2025-11-18
+    file: problems/PRB-2025-001.yaml
+    blocks: [Story 1.2]
+
+  - ticket_id: PRB-2025-002
+    type: problem
+    title: "Undocumented Syntax Features - [^], [?], Exhaustive Matching"
+    priority: P2
+    status: resolved
+    impact: high
+    urgency: high
+    assigned_to: Carson (Brainstorming Coach)
+    assigned_group: creative
+    created_date: 2025-11-18
+    resolved_date: 2025-11-18
+    file: problems/PRB-2025-002.yaml
+    blocks: [Story 1.2]
+
+  - ticket_id: SR-2025-001
+    type: service_request
+    title: "Update v0.0.2 Documentation with [s] Serial Load Block Complete Specification"
+    priority: P2
+    status: new
+    impact: high
+    urgency: high
+    assigned_to: Paige (Tech Writer)
+    assigned_group: documentation
+    created_date: 2025-11-19
+    file: service-requests/SR-2025-001.yaml
+    related_brainstorming: brainstorming-session-results-2025-11-19.md
+
+  - ticket_id: SR-2025-002
+    type: service_request
+    title: "Add PFG (Polyglot Formatting Guidelines) Brainstorming Session to Backlog"
+    priority: P4
+    status: completed
+    impact: medium
+    urgency: low
+    assigned_to: Mai (Secretary)
+    assigned_group: operations
+    created_date: 2025-11-19
+    completed_date: 2025-11-19
+    file: service-requests/SR-2025-002.yaml
+
+  - ticket_id: SR-2025-003
+    type: service_request
+    title: "Create Implementation Story for [s] Serial Load Block MVP"
+    priority: P3
+    status: new
+    impact: high
+    urgency: medium
+    assigned_to: Bob (Scrum Master)
+    assigned_group: project_management
+    created_date: 2025-11-19
+    file: service-requests/SR-2025-003.yaml
+    related_brainstorming: brainstorming-session-results-2025-11-19.md
+
+# Closed Tickets (Archive)
+closed_tickets: []
+
+# Next Ticket Numbers
+next_id:
+  incident: 2
+  problem: 3
+  change: 1
+  service_request: 4

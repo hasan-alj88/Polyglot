@@ -363,7 +363,7 @@ EOF
 
 **Expected Tokens:**
 ```
-OP_PULL(">>")
+OP_PULL(">+")
 EOF
 ```
 
@@ -797,7 +797,7 @@ DELIMITER_COLON(":")
 TYPE_NAMESPACE("pg")
 DELIMITER_BACKSLASH("\\")
 TYPE_NAME("string")
-OP_PULL(">>")
+OP_PULL(">+")
 IDENTIFIER_VARIABLE(".result")
 EOF
 ```

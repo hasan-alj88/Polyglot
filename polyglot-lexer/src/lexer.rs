@@ -140,6 +140,19 @@ impl Lexer {
                     })
                 }
             }
+            '+' => {
+                if self.peek_char() == Some('"') {
+                    self.advance(); // consume '+'
+                    self.advance(); // consume '"'
+                    Ok(Token::new(TokenKind::OpStringConcat, "+\"".to_string(), start_line, start_column))
+                } else {
+                    Err(LexerError::UnexpectedCharacter {
+                        line: self.line,
+                        column: self.column,
+                        character: ch,
+                    })
+                }
+            }
 
             // Identifiers with prefixes
             '.' => self.lex_variable_identifier(),
@@ -267,14 +280,13 @@ impl Lexer {
 
         // Special handling for line continuation marker [*]
         // Skip the newline that follows to treat next line as continuation
-        if kind == TokenKind::BlockLineContinuation {
-            if !self.is_at_end() && self.current_char() == '\n' {
+        if kind == TokenKind::BlockLineContinuation
+            && !self.is_at_end() && self.current_char() == '\n' {
                 self.advance(); // Skip the newline
                 self.line += 1; // Update line counter for accurate tracking
                 self.column = 1; // Reset column
                 // The Newline token is NOT emitted - that's the key behavior
             }
-        }
 
         Ok(Token::new(kind, lexeme, start_line, start_column))
     }
@@ -802,7 +814,7 @@ impl Lexer {
         }
 
         // Check for float
-        if !self.is_at_end() && self.current_char() == '.' && self.peek_char().map_or(false, |c| c.is_ascii_digit()) {
+        if !self.is_at_end() && self.current_char() == '.' && self.peek_char().is_some_and(|c| c.is_ascii_digit()) {
             number.push('.');
             self.advance();
 

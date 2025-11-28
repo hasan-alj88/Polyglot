@@ -1,0 +1,396 @@
+// ==============================================================================
+// Polyglot v0.0.2 - Annotated Canonical Examples
+// AI-optimized with inline state/type annotations
+// ALL PIPELINES INCLUDE MANDATORY SECTIONS: [i], [t], [W] or [\][/], [o]
+// ==============================================================================
+
+[@] Local@AIContextExamples:1.0.0
+[#] 1
+[X]
+
+// ==============================================================================
+// PATTERN 1: Basic Async Variable Flow (Declared → Pending → Ready)
+// ==============================================================================
+
+[|] BasicAsyncFlow
+[i] .input: pg\string                    // STATE: Declared (must provide)
+                                         // PUSH_COUNT: 0, ALLOWED: 1
+
+[t] |T.Call                              // MANDATORY: Trigger (manual call)
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+[r] |FetchData                           // BLOCK: Sequential execution
+[<] .id: pg\string << .input            // OPERATOR: << (push)
+                                         // AUTO-AWAIT: Yes (pulls from .input)
+                                         // .input must be Ready before proceeding
+[>] .result: pg\string >> .data         // OPERATOR: >> (pull from pipeline)
+                                         // STATE TRANSITION: .data Pending → Ready/Faulted
+                                         // PUSH_COUNT: async (depends on pipeline)
+
+[?] .data.pgvar.state =? #PgVar.States.Ready    // CONDITION: Check state
+                                                 // RESERVED NAMESPACE: .*.pgvar.state
+                                                 // AUTO-AWAIT: Yes (pulls from .data.pgvar.state)
+[~][o] .data: pg\string                          // OUTPUT: If Ready
+[~]
+
+[?] *?                                           // EXHAUSTIVE: Required catch-all
+                                                 // PATTERN: *? matches anything
+[~][o] !NoError                                  // OUTPUT: No error (using proper syntax)
+[~]
+[X]
+
+// ==============================================================================
+// PATTERN 2: DefaultReady with Override (1 push remaining)
+// ==============================================================================
+
+[#] Config
+[<] .timeout: pg\int <~ 30               // STATE: DefaultReady
+                                         // OPERATOR: <~ (default)
+                                         // PUSH_COUNT: 1, ALLOWED: 2
+                                         // OVERRIDE: 1 remaining
+[<] .retries: pg\int <~ 3                // STATE: DefaultReady
+[<] .version: pg\string << "2.0.0"       // STATE: Ready (constant)
+                                         // PUSH_COUNT: final, ALLOWED: 0
+[X]
+
+[|] UseConfigWithOverride
+[i] .custom_timeout: pg\int              // STATE: Declared
+[i] .config: #Config << #Config          // Use default Config
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+[<] .config.timeout << .custom_timeout   // OVERRIDE: First push consumes remaining 1
+                                         // STATE TRANSITION: DefaultReady → Ready
+                                         // PUSH_COUNT: now 0 (final)
+
+// [<] .config.timeout << 99             // ERROR: Would exceed push count (0 remaining)
+
+[o] .config: #Config
+[X]
+
+// ==============================================================================
+// PATTERN 3: Exhaustive Conditional Triggers (Required [?] *?)
+// ==============================================================================
+
+[|] ConditionalExample
+[i] .value: pg\int
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+[?] .value >? 100                        // CONDITION: Greater than
+                                         // AUTO-AWAIT: Yes
+[~][r] |ProcessHigh                      // BODY: Execute if true
+[~][<] .input << .value
+[~]
+
+[?] .value >? 50                         // CONDITION: Second check
+[&] .value =<? 100                       // BOOLEAN LOGIC: AND (both must be true)
+[~][r] |ProcessMedium
+[~][<] .input << .value
+[~]
+
+[?] *?                                   // EXHAUSTIVE: Catch-all (REQUIRED!)
+                                         // Without this: COMPILE ERROR
+[~][r] |ProcessLow
+[~][<] .input << .value
+[~]
+
+[o] !NoError                             // MANDATORY: Output (no output needed)
+[X]
+
+// ==============================================================================
+// PATTERN 4: Unpack Operator (Async Alternative to Loops)
+// ==============================================================================
+
+[|] UnpackExample
+[i] .items: pg\array{pg\string}          // INPUT: Array type
+                                         // ELEMENT TYPE: pg\string
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+[p] ~ForEach                             // UNPACK OPERATOR: ForEach
+                                         // EXECUTION: [p] = parallel
+                                         // ALTERNATIVE: [r] = sequential, [b] = background
+[<] .items                               // INPUT: Variable to unpack (auto-await)
+                                         // NO TYPE: Type is inferred from .items
+[>] .item                                // OUTPUT: Type inferred as pg\string
+                                         // INFERRED FROM: .items element type
+[~][r] |ProcessItem                      // MINI-SCOPE: Each iteration
+[~][<] .input: pg\string << .item        // USE: Unpacked item
+[~][>] .output: pg\string >> .result     // OUTPUT: From processing
+[~]
+[~][Y] ~Y.IntoArray                      // JOIN OPERATOR: Y = Join point
+                                         // CONVERGENCE: Parallel processes → single array
+[~][<] .result                           // PULL: Results from all iterations
+[~][>] .all_results                      // TYPE: pg\array{pg\string} (inferred)
+[~]
+
+[o] .all_results: pg\array{pg\string}
+[X]
+
+// ==============================================================================
+// PATTERN 5: Enum vs Serial Fields (Cannot be Siblings, Can be Uncles)
+// ==============================================================================
+
+// ❌ INVALID: Enum and Serial as Siblings
+// [#] BadMixing
+// [<] .EnumOption              // Enum field (no type)
+// [<] .serial_field: pg\int    // Serial field (has type) - ERROR: Siblings!
+// [X]
+
+// ✅ VALID: Enum and Serial as Uncles (Different Hierarchy Levels)
+[#] GoodMixing
+[<] .category.Option1            // ENUM FIELD: Declaration only (no type)
+[<] .category.Option2            // ENUM FIELD: Declaration only
+[<] .metadata: pg\string         // SERIAL FIELD: Has type (uncle to category fields)
+                                 // HIERARCHY: Different level, not siblings
+[X]
+
+// ==============================================================================
+// PATTERN 6: Collection Nesting Constraint (Must Wrap in Enumeration)
+// ==============================================================================
+
+// ❌ INVALID: Direct Collection Nesting
+// [i] .matrix: pg\array{pg\array{pg\int}}  // ERROR: Collections cannot nest directly
+
+// ✅ VALID: Wrap Inner Collection in Enumeration
+[#] Row
+[<] .cells: pg\array{pg\int}     // INNER COLLECTION: Wrapped in enumeration
+[X]
+
+[|] MatrixExample
+[i] .matrix: pg\array{#Row}      // OUTER COLLECTION: Contains enumeration
+                                 // VALID: Row wraps the inner array
+
+[t] |T.Call                      // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+[o] !NoError                     // MANDATORY: Output (using proper syntax)
+[X]
+
+// ✅ VALID: Recursive Structures Allowed
+[#] TreeNode
+[<] .value: pg\int
+[<] .children: pg\array{#TreeNode}    // RECURSIVE: Self-reference allowed
+                                      // VALID: Even though TreeNode contains pg\array
+[X]
+
+// ==============================================================================
+// PATTERN 7: Reserved Schema Namespace (.*.pgvar.*)
+// ==============================================================================
+
+[|] StateIntrospection
+[i] .variable: pg\string
+
+[t] |T.Call                      // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+[r] |SomeOperation
+[<] .input << .variable
+[>] .output >> .result
+
+// RESERVED NAMESPACE: Always Ready, database-tracked
+[<] .current_state: #PgVar.States << .result.pgvar.state
+                                         // PATH: .result.pgvar.state
+                                         // TYPE: #PgVar.States.*
+                                         // ALWAYS READY: No waiting
+
+[<] .pending_timestamp: pg\dt << .result.pgvar.history.Pending.at
+                                         // PATH: .*.pgvar.history.{StateName}.at
+                                         // TIMESTAMP: When entered Pending state
+
+[?] .result.pgvar.state =? #PgVar.States.Faulted
+[~][<] .errors: pg\array{!} << .result.pgvar.errors
+                                         // ERRORS FIELD: Only present when Faulted
+                                         // TYPE: pg\array{!ErrorType}
+[~]
+
+[o] !NoError                     // MANDATORY: Output
+[X]
+
+// ==============================================================================
+// PATTERN 8: DateTime System (Only pg\dt, No Duration Type)
+// ==============================================================================
+
+[|] DateTimeExample
+[i] #Pipeline.NoInput            // MANDATORY: No inputs (proper syntax)
+
+[t] |T.Call                      // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+[r] .start: pg\dt << DT.Now""            // INLINE PIPELINE CALL: DT.Now
+                                         // EMPTY PARAM: "" required even with no args
+                                         // RETURNS: pg\dt (string literals can return ANY type!)
+                                         // INPUT: .formatted_argument_string: pg\string
+
+[r] .elapsed: pg\dt << DT.ToNow"{.start}"
+                                         // INLINE PIPELINE CALL: DT.ToNow
+                                         // INTERPOLATION: {.start} triggers auto-await
+                                         // FORMATTED_ARG: String with placeholder
+                                         // RETURNS: pg\dt (duration since .start)
+
+[r] .timeout: pg\dt << DT.Minutes"3"     // INLINE PIPELINE CALL: DT.Minutes
+                                         // PARAMETER: "3" as formatted_argument_string
+                                         // RETURNS: pg\dt (3-minute duration)
+
+// TIMEOUT PATTERN: Check if elapsed > timeout
+[?] DT.ToNow"{.start}" >? DT.Minutes"3"
+[~][r] |HandleTimeout
+[~]
+
+[?] DT.ToNow"{.start}" =<? DT.Minutes"3"
+[~][r] |ProcessResult
+[~]
+
+[?] *?
+[~][r] |HandleDefault
+[~]
+
+[o] !NoError                     // MANDATORY: Output
+[X]
+
+// ==============================================================================
+// PATTERN 9: No Keywords - ALL Identifiers Need Prefixes
+// ==============================================================================
+
+// ❌ INVALID EXAMPLES (No Operator Prefixes):
+// [|] FetchUser                // ERROR: Missing | prefix
+// [t] T.Cron"0 2 * * *"        // ERROR: Missing | prefix on T.Cron
+// [<] user: UserProfile        // ERROR: Missing . on user, # on UserProfile
+// [r] ProcessData              // ERROR: Missing | prefix
+
+// ✅ VALID EXAMPLES (All Prefixes Present):
+[|] ValidExample
+[i] .user_id: pg\string          // ✓ . prefix on variable
+                                 // ✓ \ type separator
+
+[t] |T.Cron"0 2 * * *"           // ✓ | prefix on trigger (MANDATORY)
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+[r] |FetchUser                   // ✓ | prefix on pipeline
+[<] .id: pg\string << .user_id   // ✓ . prefix on variables
+[>] .user: #UserProfile >> .result    // ✓ # prefix on enumeration
+
+[?] .result.role =? #Roles.Admin // ✓ # prefix on enumeration
+[~][r] |ProcessAdmin             // ✓ | prefix on pipeline
+[~]
+
+[?] *?                           // ✓ Pattern operator
+[~][o] !NoError                  // ✓ Proper output syntax
+[~]
+[X]
+
+// ==============================================================================
+// PATTERN 10: Triggers and Wrappers (Mandatory Sections)
+// ==============================================================================
+
+[|] TriggeredPipeline
+[i] .config: pg\serial
+
+[t] |T.Daily                     // TRIGGER: Daily execution (MANDATORY)
+[<] .time: pg\dt << DT"02:00:00" // TRIGGER CONFIG: At 2 AM
+
+// ALTERNATIVE TRIGGERS:
+// [t] |T.Cron"0 */6 * * *"      // Every 6 hours
+// [t] |T.OnFileCreate            // File system event
+// [t] |T.OnAPICall               // API webhook
+// [t] |T.Call                    // Manual invocation
+
+[Q]                              // QUEUE CONTROL: Optional
+[<] .priority: pg\int << 7       // PRIORITY: 7 (higher = more important)
+
+[W] RT.Python"module.py"         // WRAPPER: Includes [\][/] in macro (MANDATORY)
+                                 // ALTERNATIVES: RT.Rust, RT.Node, RT.Go
+
+[r] |ProcessSequential           // EXECUTION: [r] = sequential (waits)
+// [p] |ProcessParallel          // EXECUTION: [p] = parallel (fire and forget)
+// [b] |ProcessBackground         // EXECUTION: [b] = background (no join)
+
+[o] !NoError                     // MANDATORY: Output
+[X]
+
+// ==============================================================================
+// PATTERN 11: Block Marker Hierarchy & Declared State for Collections
+// ==============================================================================
+
+[|] BlockMarkerExample
+[i] .condition1: pg\bool
+[i] .condition2: pg\bool
+
+[t] |T.Call                      // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+// CORRECT: Variable declaration at pipeline scope uses [r]
+[r] .channels: pg\array{#Channel}        // STATE: Declared (push_count: 0, allowed: 1)
+                                         // READY FOR: Conditional pushes
+
+// CORRECT: Conditional pushes to Declared array
+[?] .condition1 =? #Boolean.True
+[~][<] .channels << #Channel.Email       // PUSH: Into parent block (conditional)
+[~]                                      // [<] VALID: Has parent block [?]
+
+[?] .condition2 =? #Boolean.True
+[~][<] .channels << #Channel.SMS         // PUSH: Another item
+[~]
+
+[?] *?
+[~][o] !NoError
+[~]
+
+// After conditional pushes, .channels transitions to Ready
+// Can now PULL from .channels
+
+[o] .channels: pg\array{#Channel}
+[X]
+
+// WRONG PATTERNS (DO NOT USE):
+// [<] .var: Type << value              // ❌ NO parent block - use [r] instead
+// [r] .channels: pg\array{T} << {}     // ❌ Immediately Ready, no pushes allowed
+// DT.Now                               // ❌ Missing "" - inline pipelines require string literal syntax
+// << [1, 2, 3]                         // ❌ Wrong delimiter - use << {1, 2, 3}
+
+// ==============================================================================
+// PATTERN 12: Minimal Valid Pipeline Structure
+// ==============================================================================
+
+[|] MinimalPipeline
+[i] #Pipeline.NoInput            // MANDATORY: No inputs (proper syntax)
+
+[t] |T.Call                      // MANDATORY: Trigger (pipeline will NOT run without this)
+
+[W] RT.Python"minimal.py"        // MANDATORY: Wrapper (includes [\][/] in macro)
+
+[o] !NoError                     // MANDATORY: No output (proper syntax)
+[X]
+
+// ==============================================================================
+// KEY TAKEAWAYS FOR AI AGENTS:
+// ==============================================================================
+// 0. MANDATORY PIPELINE SECTIONS (CRITICAL!):
+//    - [i] inputs (or [i] #Pipeline.NoInput if none)
+//    - [t] triggers (or pipeline will NEVER run)
+//    - [W] wrapper OR [\][/] setup/cleanup
+//    - [o] outputs (or [o] !NoError if none)
+// 1. BLOCK MARKER HIERARCHY:
+//    - [r] for variable declarations at pipeline scope OR sequential execution
+//    - [<] ONLY within parent block (pipeline call, unpack, conditional, etc.)
+//    - [>] ONLY within parent block
+// 2. NO KEYWORDS: All identifiers need operator prefix (. # | !)
+// 3. EXHAUSTIVE CONDITIONS: All [?] blocks MUST include [?] *? catch-all
+// 4. AUTO-AWAIT: Occurs when "pulling from" variables (<<, >>, =?, etc.)
+// 5. STATE TRANSITIONS: Variables transition Declared → Pending → Ready/Faulted
+// 6. PUSH COUNT: Tracks assignments (schema-only=1, default=2, constant=0)
+// 7. NO NESTED COLLECTIONS: Must wrap inner collection in enumeration
+// 8. ENUM/SERIAL MIXING: Cannot be siblings, can be uncles
+// 9. RESERVED NAMESPACE: .*.pgvar.* always Ready, database-tracked
+// 10. DATETIME UNIFIED: Only pg\dt for both datetime and duration
+// 11. TYPE SEPARATOR: Backslash (\) only, not slash or colon
+// 12. STRING LITERALS ARE INLINE PIPELINES: "text" → U.String"text", DT.Now"" returns pg\dt
+// 13. COLLECTION SYNTAX: Use {} not [] (e.g., << {1, 2, 3})
+// 14. ASYNC TERMINOLOGY: Use PUSH/PULL, Variable States (not assign/mutable)
+// 15. DECLARED STATE: For collections receiving conditional pushes
+// ==============================================================================

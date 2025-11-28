@@ -1,0 +1,144 @@
+# Sprint Status - Polyglot Implementation Tracking
+# Generated: 2025-11-17
+# Project: Polyglot
+# Tracking System: file-system
+# Story Location: docs/project/stories/
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic exists in epic file but not contexted
+#   - contexted: Epic tech context created (required before drafting stories)
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - drafted: Story file created in stories folder
+#   - ready-for-dev: Draft approved and story context created
+#   - in-progress: Developer actively working on implementation
+#   - review: Under review (via code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - completed: Retrospective has been done
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epics should be 'contexted' before stories can be 'drafted'
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically drafts next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', SM reviews, then Dev moves to 'done'
+
+generated: 2025-11-17
+project: Polyglot
+project_key: polyglot
+tracking_system: file-system
+story_location: docs/project/stories/
+
+development_status:
+  # Epic 1: Lexer & Parser
+  epic-1: in-progress
+  1-1-project-workspace-build-system-setup: done
+  1-2-lexer-token-definitions: done
+  1-3-lexer-implementation: done
+  1-4-parser-ast-definitions: in-progress
+  1-5-recursive-descent-parser-implementation: backlog
+  1-6-syntax-validator-standalone: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: IR Generation & Validation
+  epic-2: backlog
+  2-1-ir-type-definitions-3-ir-structure: backlog
+  2-2-ast-to-trigger-ir-generator: backlog
+  2-3-ast-to-queue-ir-generator: backlog
+  2-4-ast-to-runner-ir-generator: backlog
+  2-5-ir-validation-compiler-integration: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Database Schema & Registry
+  epic-3: backlog
+  3-1-database-schema-design-migration-files: backlog
+  3-2-database-connection-pool-crud-operations: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Trigger Monitor Service
+  epic-4: backlog
+  4-1-trigger-monitor-service-skeleton: backlog
+  4-2-active-pipeline-loading: backlog
+  4-3-time-based-trigger-monitoring-synchronous-loop: backlog
+  4-4-manual-trigger-support: backlog
+  4-5-instance-creation-queue-handoff: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Queue Manager Service
+  epic-5: backlog
+  5-1-queue-manager-service-skeleton: backlog
+  5-2-redis-queue-operations: backlog
+  5-3-runner-assignment-handoff: backlog
+  5-4-postgresql-fallback-on-redis-failure: backlog
+  5-5-queue-status-monitoring: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: Runner Service
+  epic-6: backlog
+  6-1-runner-service-skeleton: backlog
+  6-2-instance-execution-orchestration: backlog
+  6-3-runtime-wrapper-invocation: backlog
+  6-4-execution-logging-integration: backlog
+  6-5-cross-language-error-handling: backlog
+  epic-6-retrospective: optional
+
+  # Epic 7: Python Runtime Wrapper
+  epic-7: backlog
+  7-1-runtimewrapper-trait-definition: backlog
+  7-2-python-wrapper-with-uv-virtual-environment-management: backlog
+  7-3-setup-and-close-lifecycle-methods: backlog
+  7-4-type-conversion-via-json-serialization: backlog
+  7-5-error-propagation-from-python-to-rust: backlog
+  epic-7-retrospective: optional
+
+  # Epic 8: CLI Development
+  epic-8: backlog
+  8-1-cli-skeleton-with-clap-45: backlog
+  8-2-compile-command-polyglot-compile: backlog
+  8-3-registry-commands-register-list-show: backlog
+  8-4-activation-commands-activate-deactivate: backlog
+  8-5-trigger-command-manual-trigger: backlog
+  8-6-status-and-logs-commands: backlog
+  8-7-service-management-commands: backlog
+  epic-8-retrospective: optional
+
+  # Epic 9: Configuration System
+  epic-9: backlog
+  9-1-toml-configuration-file-structure: backlog
+  9-2-environment-variable-support: backlog
+  9-3-default-configuration-generation: backlog
+  9-4-config-validation: backlog
+  epic-9-retrospective: optional
+
+  # Epic 10: Logging & Observability Infrastructure
+  epic-10: backlog
+  10-1-tracing-setup-across-all-crates: backlog
+  10-2-structured-logging-with-context: backlog
+  10-3-log-levels-configuration: backlog
+  10-4-influxdb-integration-preparation-post-mvp: backlog
+  epic-10-retrospective: optional
+
+  # Epic 11: Documentation & Examples
+  epic-11: backlog
+  11-1-getting-started-guide: backlog
+  11-2-cli-reference-documentation: backlog
+  11-3-architecture-overview-document: backlog
+  11-4-hello-world-example-pipeline: backlog
+  11-5-cross-language-example-python-calling-rust-vision: backlog
+  11-6-automation-workflow-example: backlog
+  epic-11-retrospective: optional
+
+  # Epic 12: Testing & Quality Assurance
+  epic-12: backlog
+  12-1-unit-test-framework-setup: backlog
+  12-2-integration-test-suite: backlog
+  12-3-end-to-end-mvp-test-compile-register-trigger-execute: backlog
+  12-4-cicd-pipeline-with-automated-testing: backlog
+  12-5-test-coverage-reporting: backlog
+  epic-12-retrospective: optional

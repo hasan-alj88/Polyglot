@@ -1,0 +1,20 @@
+[package]
+name = "runner"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+polyglot-db = { path = "../polyglot-db" }
+polyglot-runtime-wrappers = { path = "../polyglot-runtime-wrappers" }
+tokio = { workspace = true }
+sqlx = { workspace = true }
+redis = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+config = { workspace = true }
+
+[dev-dependencies]

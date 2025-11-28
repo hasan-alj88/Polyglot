@@ -1,0 +1,153 @@
+// ==============================================================================
+// Example 1: Basic Pipeline
+// Demonstrates: Core syntax, inputs, outputs, triggers, setup/cleanup, block markers
+// MANDATORY SECTIONS: [i], [t], [\][/] or [W], [o]
+// ==============================================================================
+
+[@] Local@BasicExample:1.0.0
+[#] 1
+[X]
+
+// ==============================================================================
+// Simple Hello World Pipeline
+// ==============================================================================
+
+[|] HelloWorld
+[i] .name: pg\string                     // Required input (Declared state)
+[i] .greeting: pg\string <~ "Hello"      // Default input (DefaultReady state)
+
+[t] |T.Call                              // MANDATORY: Trigger (manual call)
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .timestamp: pg\dt << DT.Now""        // Variable declaration with inline pipeline
+
+[r] .full_greeting: pg\string << "{.greeting}, {.name}!"
+
+[o] .full_greeting: pg\string
+[X]
+
+// ==============================================================================
+// Pipeline with Multiple Inputs
+// ==============================================================================
+
+[|] Calculator
+[i] .a: pg\int                           // Required input
+[i] .b: pg\int                           // Required input
+[i] .operation: pg\string <~ "add"       // Default operation
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .result: pg\int << 0                 // Variable (immediately Ready)
+
+// Perform calculation based on operation
+[?] .operation =? "add"
+[~][r] .result << .a                     // Would need actual addition logic
+[~]
+
+[?] .operation =? "subtract"
+[~][r] .result << .a                     // Would need actual subtraction logic
+[~]
+
+[?] *?                                   // EXHAUSTIVE: Required catch-all
+[~][r] .result << 0                      // Default to 0
+[~]
+
+[o] .result: pg\int
+[X]
+
+// ==============================================================================
+// Pipeline Demonstrating All Input Types
+// ==============================================================================
+
+[|] InputTypesDemo
+[i] .user_input: pg\string               // Required (Declared) - caller MUST provide
+[i] .optional_param: pg\int <~ 42        // Default (DefaultReady) - caller CAN override
+[i] .constant_value: pg\string << "v1.0" // Constant (Ready) - caller CANNOT override
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .output_message: pg\string << "User: {.user_input}, Param: {.optional_param}, Version: {.constant_value}"
+
+[o] .output_message: pg\string
+[X]
+
+// ==============================================================================
+// Pipeline with No Inputs (Using #Pipeline.NoInput)
+// ==============================================================================
+
+[|] NoInputExample
+[i] #Pipeline.NoInput                    // MANDATORY: No inputs declaration
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .current_time: pg\dt << DT.Now""
+[r] .message: pg\string << "Current time: {.current_time}"
+
+[o] .message: pg\string
+[X]
+
+// ==============================================================================
+// Pipeline with No Output (Using !NoError)
+// ==============================================================================
+
+[|] NoOutputExample
+[i] .message: pg\string
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+// Do some processing (no output returned)
+[r] .processed: pg\string << .message
+
+[o] !NoError                             // MANDATORY: No output declaration
+[X]
+
+// ==============================================================================
+// Pipeline with Wrapper (Includes [\][/] in Macro)
+// ==============================================================================
+
+[|] WrapperExample
+[i] .data: pg\string
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] RT.Python"process.py"                // MANDATORY: Wrapper (includes [\][/])
+
+[r] .processed: pg\string << .data
+
+[o] .processed: pg\string
+[X]
+
+// ==============================================================================
+// KEY SYNTAX DEMONSTRATED:
+// ==============================================================================
+// ✓ [@] Package declaration
+// ✓ [|] Pipeline definition with [X] close
+// ✓ [i] Input declarations (3 variations: required, default, constant)
+// ✓ [i] #Pipeline.NoInput for pipelines with no inputs
+// ✓ [t] Trigger declarations (MANDATORY - pipeline will NOT run without this)
+// ✓ [\][/] Setup/cleanup (MANDATORY if no wrapper)
+// ✓ [W] Wrapper (includes [\][/] in macro)
+// ✓ [r] Variable declarations
+// ✓ [o] Output declaration
+// ✓ [o] !NoError for pipelines with no output
+// ✓ [?] Conditional blocks with [?] *? exhaustive catch-all
+// ✓ [~] Conditional body markers
+// ✓ NO KEYWORDS - all identifiers use operator prefix (. # | !)
+// ✓ Inline pipelines are string literals (DT.Now"")
+// ✓ Type separator is \ (backslash)
+// ✓ String interpolation: "{.variable}"
+// ==============================================================================

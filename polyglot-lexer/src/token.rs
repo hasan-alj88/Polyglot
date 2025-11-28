@@ -64,6 +64,11 @@ pub enum TokenKind {
     OpDefault,              // <~
 
     // ========================================
+    // String Operators (1 token)
+    // ========================================
+    OpStringConcat,         // +"
+
+    // ========================================
     // Comparison Operators (6 tokens)
     // ========================================
     OpEqual,                // =?
@@ -237,6 +242,7 @@ impl TokenKind {
             TokenKind::OpPush => "push operator <<",
             TokenKind::OpPull => "pull operator >>",
             TokenKind::OpDefault => "default operator <~",
+            TokenKind::OpStringConcat => "string concatenation operator +\"",
             TokenKind::OpEqual => "equal operator =?",
             TokenKind::OpNotEqual => "not equal operator =!?",
             TokenKind::OpGreater => "greater than operator >?",

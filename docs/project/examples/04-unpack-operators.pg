@@ -1,0 +1,365 @@
+// ==============================================================================
+// Example 4: Unpack Operators & Join Points
+// Demonstrates: ~ForEach, ~Enumerate, ~Zip, ~Y.IntoArray, ~Y.IntoSerial, ~Y.IntoSet
+// Parallel [p], Sequential [r], Background [b] execution modes
+// MANDATORY SECTIONS: [i], [t], [\][/] or [W], [o]
+// ==============================================================================
+
+[@] Local@UnpackExample:1.0.0
+[#] 1
+[X]
+
+// ==============================================================================
+// PATTERN: ~ForEach with Parallel Execution
+// ==============================================================================
+
+[|] ParallelForEach
+[i] .numbers: pg\array{pg\int}
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[p] ~ForEach                             // PARALLEL execution
+[<] .numbers  // Input collection
+[>] .number                              // Output: type inferred as pg\int
+
+[~][r] |DoubleValue                      // Mini-scope: process each item
+[~][<] .value: pg\int << .number
+[~][>] .result: pg\int >> .doubled
+
+[~][Y] ~Y.IntoArray                      // JOIN: Convergence point
+[~][<] .doubled                          // Pull results from all iterations
+[~][>] .all_doubled                      // Type: pg\array{pg\int} (inferred)
+[~]
+
+[o] .all_doubled: pg\array{pg\int}
+[X]
+
+// ==============================================================================
+// PATTERN: ~ForEach with Sequential Execution
+// ==============================================================================
+
+[|] SequentialForEach
+[i] .items: pg\array{pg\string}
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] ~ForEach                             // SEQUENTIAL execution (ordered)
+[<] .items
+[>] .item
+
+[~][r] |ProcessItem
+[~][<] .input: pg\string << .item
+[~][>] .output: pg\string >> .processed
+
+[~][Y] ~Y.IntoArray
+[~][<] .processed
+[~][>] .all_processed
+[~]
+
+[o] .all_processed: pg\array{pg\string}
+[X]
+
+// ==============================================================================
+// PATTERN: ~Enumerate (Index + Item)
+// ==============================================================================
+
+[|] EnumerateExample
+[i] .items: pg\array{pg\string}
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[p] ~Enumerate                           // Parallel with index
+[<] .items
+[>] .index                               // Type: pg\int (inferred)
+[>] .item                                // Type: pg\string (inferred)
+
+[~][r] .indexed_item: pg\string << "[{.index}]: {.item}"
+
+[~][Y] ~Y.IntoArray
+[~][<] .indexed_item
+[~][>] .indexed_results
+[~]
+
+[o] .indexed_results: pg\array{pg\string}
+[X]
+
+// ==============================================================================
+// PATTERN: ~Zip (Combine Multiple Collections)
+// ==============================================================================
+
+[|] ZipExample
+[i] .names: pg\array{pg\string}
+[i] .ages: pg\array{pg\int}
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[p] ~Zip                                 // Zip two collections
+[<] .names
+[<] .ages
+[>] .name                                // From collection1
+[>] .age                                 // From collection2
+
+[~][r] .person: pg\string << "{.name} is {.age} years old"
+
+[~][Y] ~Y.IntoArray
+[~][<] .person
+[~][>] .descriptions
+[~]
+
+[o] .descriptions: pg\array{pg\string}
+[X]
+
+// ==============================================================================
+// PATTERN: ~Y.IntoSerial (Join into Serial/Struct)
+// ==============================================================================
+
+[#] PersonRecord
+[<] .name: pg\string
+[<] .age: pg\int
+[<] .processed_at: pg\dt
+[X]
+
+[|] JoinIntoSerial
+[i] .names: pg\array{pg\string}
+[i] .ages: pg\array{pg\int}
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[p] ~Zip
+[<] .names
+[<] .ages
+[>] .name
+[>] .age
+
+[~][r] .record: #PersonRecord << #PersonRecord
+[~][<] .record.name << .name
+[~][<] .record.age << .age
+[~][<] .record.processed_at << DT.Now""
+
+[~][Y] ~Y.IntoSerial                     // JOIN into serial structure
+[~][<] .record
+[~][>] .all_records
+[~]
+
+[o] .all_records: pg\serial              // Type: serialized structure
+[X]
+
+// ==============================================================================
+// PATTERN: ~Y.IntoSet (Join into Unique Set)
+// ==============================================================================
+
+[|] JoinIntoSet
+[i] .items: pg\array{pg\string}
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[p] ~ForEach
+[<] .items
+[>] .item
+
+[~][r] |NormalizeItem                    // Process each item
+[~][<] .input: pg\string << .item
+[~][>] .normalized: pg\string >> .result
+
+[~][Y] ~Y.IntoSet                        // JOIN: Duplicates removed
+[~][<] .result
+[~][>] .unique_items                     // Type: pg\set{pg\string}
+[~]
+
+[o] .unique_items: pg\set{pg\string}
+[X]
+
+// ==============================================================================
+// PATTERN: Background Execution ([b])
+// ==============================================================================
+
+[|] BackgroundExecution
+[i] .data: pg\array{pg\string}
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[b] ~ForEach                             // BACKGROUND: Fire and forget
+[<] .data
+[>] .item
+
+[~][r] |LogItem                          // Log each item (no join)
+[~][<] .message: pg\string << .item
+[~]
+
+// No join point - background tasks don't converge
+
+[o] !NoError                             // No output (background only)
+[X]
+
+// ==============================================================================
+// PATTERN: Nested Unpack Operators
+// ==============================================================================
+
+[#] Matrix
+[<] .rows: pg\array{pg\array{pg\int}}
+[X]
+
+[|] NestedUnpack
+[i] .matrix: #Matrix
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[p] ~ForEach                             // Outer loop: rows
+[<] .matrix.rows
+[>] .row
+
+[~][p] ~ForEach                          // Inner loop: cells
+[~][<] .row
+[~][>] .cell
+
+[~][~][r] .doubled: pg\int << .cell      // Would need actual doubling
+
+[~][~][Y] ~Y.IntoArray                   // Inner join
+[~][~][<] .doubled
+[~][~][>] .doubled_row
+[~][~]
+[~]
+
+[~][Y] ~Y.IntoArray                      // Outer join
+[~][<] .doubled_row
+[~][>] .doubled_matrix
+[~]
+
+[o] .doubled_matrix: pg\array{pg\array{pg\int}}
+[X]
+
+// ==============================================================================
+// PATTERN: Conditional Processing in Unpack
+// ==============================================================================
+
+[|] ConditionalUnpack
+[i] .numbers: pg\array{pg\int}
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .evens: pg\array{pg\int}             // Declared state (ready for pushes)
+[r] .odds: pg\array{pg\int}
+
+[p] ~ForEach
+[<] .numbers
+[>] .number
+
+[~][?] .number =? 0                      // Check even/odd (simplified)
+[~][~][<] .evens << .number              // PUSH to evens array
+[~][~]
+
+[~][?] *?
+[~][~][<] .odds << .number               // PUSH to odds array
+[~][~]
+[~]
+
+// No join needed - pushing directly to arrays
+
+[o] .evens: pg\array{pg\int}
+[o] .odds: pg\array{pg\int}
+[X]
+
+// ==============================================================================
+// Helper Pipelines (All with Mandatory Sections)
+// ==============================================================================
+
+[|] DoubleValue
+[i] .value: pg\int
+
+[t] |T.Call                              // MANDATORY: Called via |DoubleValue
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .result: pg\int << .value            // Would actually double
+
+[o] .result: pg\int
+[X]
+
+[|] ProcessItem
+[i] .input: pg\string
+
+[t] |T.Call                              // MANDATORY: Called via |ProcessItem
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .output: pg\string << .input
+
+[o] .output: pg\string
+[X]
+
+[|] NormalizeItem
+[i] .input: pg\string
+
+[t] |T.Call                              // MANDATORY: Called via |NormalizeItem
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .normalized: pg\string << .input     // Would actually normalize
+
+[o] .normalized: pg\string
+[X]
+
+[|] LogItem
+[i] .message: pg\string
+
+[t] |T.Call                              // MANDATORY: Called via |LogItem
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+// Just log - no output needed
+
+[o] !NoError
+[X]
+
+// ==============================================================================
+// KEY CONCEPTS DEMONSTRATED:
+// ==============================================================================
+// ✓ ~ForEach: Unpack collection, process each item
+// ✓ ~Enumerate: Unpack with index (index, item)
+// ✓ ~Zip: Combine multiple collections element-wise
+// ✓ EXECUTION MODES:
+//   - [p] Parallel: All items processed concurrently
+//   - [r] Sequential: Items processed in order
+//   - [b] Background: Fire and forget (no join)
+// ✓ JOIN OPERATORS:
+//   - ~Y.IntoArray: Convergence into array
+//   - ~Y.IntoSerial: Convergence into serial structure
+//   - ~Y.IntoSet: Convergence into unique set
+// ✓ TYPE INFERENCE: Output type inferred from input collection element type
+// ✓ MINI-SCOPE: [~] creates scope for each iteration
+// ✓ AUTO-AWAIT: Input collections auto-awaited before unpacking
+// ✓ NESTED UNPACK: Unpack operators can nest (matrix processing)
+// ✓ CONDITIONAL PUSHES: Can push to Declared arrays conditionally
+// ✓ MANDATORY SECTIONS: All pipelines have [i], [t], [\][/] or [W], [o]
+// ==============================================================================

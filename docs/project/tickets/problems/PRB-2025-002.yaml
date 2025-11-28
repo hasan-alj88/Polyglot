@@ -1,0 +1,194 @@
+# Problem Ticket - Undocumented Syntax Features
+
+ticket_id: PRB-2025-002
+type: problem
+title: "Undocumented Syntax Features - [^], [?], Exhaustive Matching"
+description: |
+  ROOT CAUSE INVESTIGATION: Multiple syntax features are used in documentation but not fully specified.
+
+  BLOCKING Story 1.2 (lexer) because lexer needs complete block marker and operator list.
+
+  Undocumented Features:
+  1. [^] line continuation block marker
+     - Used in examples but not in language/06-block-markers.md
+     - Syntax: [^] >"text" for multiline strings
+
+  2. [?] switch/conditional system
+     - Partially documented but incomplete
+     - Missing: exhaustive matching compiler rules
+     - Missing: Default catchall pattern syntax
+
+  3. ?> match operator
+     - Used throughout but not comprehensively documented
+     - Syntax: .variable ?> pattern
+
+  4. .. range operator
+     - Used but not fully specified
+     - Syntax: .value.., ...value, N..M
+
+  5. Exhaustive pattern matching
+     - Compiler enforces total probability = 1
+     - Not documented anywhere
+
+  6. Multiline string continuation
+     - Conflicting info: >" vs >""
+     - Need authoritative syntax
+
+  IMPACT: Lexer cannot be built without complete block marker and operator lists.
+
+  ASSIGNED TO: Carson (Brainstorming Coach)
+  (Already added as brainstorming-backlog.md item #6)
+
+# Priority Calculation
+impact: high            # Blocks lexer implementation
+urgency: high           # Must be resolved before Story 1.2
+priority: P2
+
+# Status and Assignment
+status: resolved
+assigned_to: Carson (Brainstorming Coach)
+assigned_group: creative
+
+# Categorization
+category: documentation_gap
+
+# Related Information
+related_incidents: []
+related_tickets:
+  - PRB-2025-001  # Related syntax ambiguity
+related_files:
+  - docs/user/audit/code-violations-log.md
+  - docs/project/brainstorming-backlog.md (item #6)
+  - docs/user/language/06-block-markers.md
+  - docs/user/language/05-operators.md
+related_stories:
+  - Story 1.2 (Lexer Token Definitions) - BLOCKED
+related_epics:
+  - Epic 1 (Lexer & Parser Foundation) - BLOCKED
+
+# GitHub Sync (for future use)
+github:
+  issue_number: null
+  url: null
+  last_synced: null
+
+# Timeline
+created_date: 2025-11-18T12:00:00Z
+created_by: Mai (Secretary)
+assigned_date: 2025-11-18T12:00:00Z
+investigation_started: 2025-11-18T13:00:00Z
+root_cause_found_date: 2025-11-18T14:30:00Z
+resolved_date: 2025-11-18T16:00:00Z
+closed_date: null
+
+# Investigation
+investigation:
+  hypothesis: |
+    Syntax features were added during v0.0.2 development but documentation was not updated comprehensively.
+    Features exist and work, but are not formally specified.
+  evidence:
+    - "code-violations-log.md Violations #2, #7, #8 document undocumented features"
+    - "[^] is mentioned but not in block-markers.md"
+    - "[?] is partially documented but incomplete"
+    - "No formal specification of exhaustive matching"
+  experiments:
+    - "Compile list of ALL undocumented features from violations log"
+    - "Check which are truly missing vs just under-documented"
+    - "Prioritize by impact on lexer implementation"
+
+# Root Cause Analysis
+root_cause:
+  description: |
+    All undocumented syntax features were being designed but not comprehensively documented.
+
+    ROOT CAUSE: Rapid syntax evolution during v0.0.2 development without synchronized
+    documentation updates. Features implemented and used in examples before formal specification.
+  category: documentation_gap
+  contributing_factors:
+    - "Rapid v0.0.2 development without documentation updates"
+    - "No comprehensive syntax checklist"
+    - "Violations log captures issues but doesn't trigger doc updates"
+    - "Syntax design happening concurrently with documentation"
+
+# Resolution
+resolution: |
+  RESOLVED via two comprehensive brainstorming sessions on 2025-11-18.
+
+  ALL undocumented features now specified:
+
+  1. [^] - XOR operator (NOT line continuation)
+  2. [*] - Line continuation block (NEW)
+  3. [?] switch/conditional - Fully documented with exhaustive matching
+  4. ?> operator - DEPRECATED (replaced by new comparison operators)
+  5. .. range operator - OBSOLETE (replaced by ?[a,b] interval notation)
+  6. Exhaustive matching - Compiler rules documented
+  7. Multiline strings - Use [*] + >" syntax
+  8. Default keyword - DEPRECATED (use [?] * catchall)
+  9. >" string concatenation - SPECIFIED
+  10. {.variable} string interpolation - SPECIFIED
+
+  Session documents:
+  - carson-2025-11-18-comparison-operators-design.md (853 lines)
+  - carson-2025-11-18-line-continuation-spec.md (495 lines)
+
+  Complete block marker and operator lists now available.
+  Story 1.2 UNBLOCKED.
+preventive_actions:
+  - "Update language/06-block-markers.md with [*], [^] (XOR), boolean blocks"
+  - "Update language/05-operators.md with all new operators"
+  - "Document >" string concatenation"
+  - "Document exhaustive matching in switch blocks"
+  - "Create comprehensive operator and block marker reference"
+  - "Establish process: syntax design → immediate documentation"
+knowledge_article: |
+  Session documents (authoritative):
+  - docs/project/agent-sessions/carson-2025-11-18-comparison-operators-design.md
+  - docs/project/agent-sessions/carson-2025-11-18-line-continuation-spec.md
+
+  Files to update:
+  - language/06-block-markers.md
+  - language/05-operators.md
+  - language/01-syntax-complete.md
+
+# SLA Tracking
+sla:
+  response_due: 2025-11-18T16:00:00Z    # P2: 4 hour response
+  resolution_due: 2025-11-21T12:00:00Z  # P2: 3 day resolution
+  breached: false
+  exclusion_reason: null
+
+# Notes and Updates
+notes:
+  - timestamp: 2025-11-18T12:00:00Z
+    author: Mai (Secretary)
+    note: |
+      Problem ticket created from v0.0.2 audit findings.
+      Added to brainstorming-backlog.md as item #6.
+      HIGH PRIORITY: Must be resolved before Story 1.2 lexer implementation.
+      Comprehensive documentation needed for all block markers and operators.
+
+  - timestamp: 2025-11-18T16:00:00Z
+    author: Mai (Secretary)
+    note: |
+      RESOLVED: Carson completed comprehensive brainstorming sessions with hhj.
+
+      TWO major session documents created:
+      1. carson-2025-11-18-comparison-operators-design.md (853 lines)
+      2. carson-2025-11-18-line-continuation-spec.md (495 lines)
+
+      All 10 undocumented features now fully specified:
+      - [*] line continuation block (NEW)
+      - [^] confirmed as XOR operator
+      - [?] switch system with exhaustive matching
+      - >" string concatenation operator
+      - {.variable} string interpolation
+      - Deprecated: ?> operator, .. range operator, Default keyword
+
+      SLA COMPLIANCE: Resolved in 4 hours (within 3-day P2 target).
+
+      Next steps: Paige to update language documentation.
+      Story 1.2 now UNBLOCKED.
+
+# Metadata
+tags: [blocking, syntax, documentation, brainstorming-required]
+watchers: [hhj, Carson (Brainstorming Coach), Amelia (Dev Agent), Paige (Tech Writer)]

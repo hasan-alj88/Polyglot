@@ -1,0 +1,14 @@
+[package]
+name = "polyglot-parser"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+polyglot-lexer = { path = "../polyglot-lexer" }
+thiserror = { workspace = true }
+serde = { workspace = true }
+
+[dev-dependencies]

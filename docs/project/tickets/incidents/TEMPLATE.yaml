@@ -1,0 +1,65 @@
+# Incident Ticket Template
+# Copy this file and rename to INC-YYYY-NNN.yaml
+
+ticket_id: INC-2025-001
+type: incident
+title: "Brief description of the incident"
+description: |
+  Detailed description of the incident.
+  What is broken? What is the impact?
+  What is the expected behavior vs actual behavior?
+
+# Priority Calculation
+impact: critical        # critical, high, medium, low
+urgency: immediate      # immediate, high, medium, low
+priority: P1            # Auto-calculated from impact × urgency matrix
+
+# Status and Assignment
+status: new             # new, assigned, in_progress, pending, resolved, closed
+assigned_to: null       # Agent name or null if unassigned
+assigned_group: null    # development, architecture, documentation, creative, project_management, quality_assurance, operations
+
+# Categorization
+category: syntax_error  # syntax_error, documentation_error, broken_link, inconsistency, blocking_issue
+
+# Related Information
+related_tickets: []     # [INC-2025-002, PRB-2025-001]
+related_files: []       # [docs/user/language/01-syntax-complete.md]
+related_stories: []     # [Story 1.2]
+related_epics: []       # [Epic 1]
+
+# GitHub Sync (for future use)
+github:
+  issue_number: null    # GitHub issue # (null if not synced)
+  url: null             # Full GitHub issue URL
+  last_synced: null     # ISO timestamp of last sync
+
+# Timeline
+created_date: 2025-11-18
+created_by: Mai (Secretary)
+assigned_date: null
+started_date: null
+resolved_date: null
+closed_date: null
+
+# Resolution
+resolution: null        # Detailed resolution notes (fill when resolved)
+root_cause: null        # Brief root cause (if known)
+workaround: null        # Temporary workaround (if any)
+
+# SLA Tracking
+sla:
+  response_due: 2025-11-18T13:00:00Z    # Based on priority
+  resolution_due: 2025-11-19T12:00:00Z  # Based on priority
+  breached: false
+  exclusion_reason: null  # If SLA excluded: waiting_on_user_input, waiting_on_external_dependency, deferred_by_design, blocked_by_other_ticket
+
+# Notes and Updates
+notes:
+  - timestamp: 2025-11-18T12:00:00Z
+    author: Mai (Secretary)
+    note: "Incident created from v0.0.2 documentation audit"
+
+# Metadata
+tags: []                # Additional tags for filtering
+watchers: [hhj]         # People to notify of updates

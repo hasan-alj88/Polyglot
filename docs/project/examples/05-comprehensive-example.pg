@@ -1,0 +1,387 @@
+// ==============================================================================
+// Example 5: Comprehensive Data Processing Pipeline
+// Demonstrates: Multiple pipelines, state transitions, conditionals, unpack ops,
+// enumerations, error handling, triggers, runtime wrappers, reserved namespace
+// MANDATORY SECTIONS: ALL pipelines have [i], [t], [\][/] or [W], [o]
+// ==============================================================================
+
+[@] Local@DataProcessor:1.0.0
+[#] 1
+[X]
+
+// ==============================================================================
+// ENUMERATIONS
+// ==============================================================================
+
+[#] ProcessingStatus
+[<] .Pending
+[<] .InProgress
+[<] .Completed
+[<] .Failed
+[X]
+
+[#] RecordType
+[<] .User
+[<] .Transaction
+[<] .Event
+[X]
+
+[#] ValidationResult
+[<] .Valid
+[<] .InvalidFormat
+[<] .MissingFields
+[<] .OutOfRange
+[X]
+
+// ==============================================================================
+// SERIAL STRUCTURES
+// ==============================================================================
+
+[#] DataRecord
+[<] .id: pg\string
+[<] .type: #RecordType
+[<] .timestamp: pg\dt
+[<] .payload: pg\serial
+[<] .validation_status: #ValidationResult
+[X]
+
+[#] ProcessingSummary
+[<] .total_records: pg\int
+[<] .valid_records: pg\int
+[<] .invalid_records: pg\int
+[<] .processing_time: pg\int
+[<] .errors: pg\array{!}
+[X]
+
+// ==============================================================================
+// PIPELINE: ValidateRecord (Helper Pipeline)
+// ==============================================================================
+
+[|] ValidateRecord
+[i] .record: #DataRecord
+
+[t] |T.Call                              // MANDATORY: Called via |ValidateRecord
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .is_valid: pg\bool << #Boolean.False
+[r] .validation_result: #ValidationResult << #ValidationResult.Valid
+
+// Check required fields
+[?] .record.id =? ""
+[+] .record.timestamp.pgvar.state =? #PgVar.States.Faulted
+[~][<] .validation_result << #ValidationResult.MissingFields
+[~][<] .is_valid << #Boolean.False
+[~]
+
+// Check timestamp range (last 30 days)
+[r] .now: pg\dt << DT.Now""
+[r] .days_ago: pg\dt << DT.Days"-30"
+
+[?] .record.timestamp <? .days_ago
+[~][<] .validation_result << #ValidationResult.OutOfRange
+[~][<] .is_valid << #Boolean.False
+[~]
+
+// Check record type
+[?] .record.type.pgvar.state =? #PgVar.States.Faulted
+[~][<] .validation_result << #ValidationResult.InvalidFormat
+[~][<] .is_valid << #Boolean.False
+[~]
+
+[?] *?                                   // EXHAUSTIVE: All checks passed
+[~][<] .is_valid << #Boolean.True
+[~][<] .validation_result << #ValidationResult.Valid
+[~]
+
+[o] .is_valid: pg\bool
+[o] .validation_result: #ValidationResult
+[X]
+
+// ==============================================================================
+// PIPELINE: TransformRecord (Helper Pipeline)
+// ==============================================================================
+
+[|] TransformRecord
+[i] .record: #DataRecord
+
+[t] |T.Call                              // MANDATORY: Called via |TransformRecord
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+// Normalize timestamp to UTC
+[r] .normalized_timestamp: pg\dt << DT.ToUTC"{.record.timestamp}"
+
+// Create transformed record
+[r] .transformed: #DataRecord << #DataRecord
+[<] .transformed.id << .record.id
+[<] .transformed.type << .record.type
+[<] .transformed.timestamp << .normalized_timestamp
+[<] .transformed.payload << .record.payload
+[<] .transformed.validation_status << .record.validation_status
+
+[o] .transformed: #DataRecord
+[X]
+
+// ==============================================================================
+// PIPELINE: ProcessRecordBatch (Sub-Pipeline)
+// ==============================================================================
+
+[|] ProcessRecordBatch
+[i] .records: pg\array{#DataRecord}
+
+[t] |T.Call                              // MANDATORY: Called via |ProcessRecordBatch
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] .valid_records: pg\array{#DataRecord}
+[r] .invalid_records: pg\array{#DataRecord}
+
+// UNPACK: Process each record in parallel
+[p] ~ForEach
+[<] .records
+[>] .record
+
+[~][r] |ValidateRecord                  // Call validation pipeline
+[~][<] .record << .record
+[~][>] .is_valid >> .valid
+[~][>] .validation_result >> .val_result
+
+[~][?] .valid =? #Boolean.True
+[~][~][r] |TransformRecord              // Transform valid records
+[~][~][<] .record << .record
+[~][~][>] .transformed >> .trans_record
+
+[~][~][<] .valid_records << .trans_record  // PUSH to array
+[~][~]
+
+[~][?] .valid =? #Boolean.False
+[~][~][<] .invalid_records << .record   // PUSH to array
+[~][~]
+
+[~][?] *?
+[~][~][o] !NoError
+[~][~]
+[~]
+
+[o] .valid_records: pg\array{#DataRecord}
+[o] .invalid_records: pg\array{#DataRecord}
+[X]
+
+// ==============================================================================
+// PIPELINE: AggregateResults (Helper Pipeline)
+// ==============================================================================
+
+[|] AggregateResults
+[i] .valid_records: pg\array{#DataRecord}
+[i] .invalid_records: pg\array{#DataRecord}
+[i] .start_time: pg\dt
+[i] .errors: pg\array{!}
+
+[t] |T.Call                              // MANDATORY: Called via |AggregateResults
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+// Count records
+[r] .total_valid: pg\int << 0
+[r] .total_invalid: pg\int << 0
+
+// Count valid records
+[r] ~ForEach
+[<] .valid_records
+[>] .record
+
+[~][r] .count: pg\int << 1
+
+[~][Y] ~Y.IntoArray
+[~][<] .count
+[~][>] .counts
+[~]
+
+// Sum counts (simplified - would need actual sum operation)
+[r] .total_valid << 0                    // Would calculate from .counts
+
+// Count invalid records (similar pattern)
+[r] .total_invalid << 0
+
+// Calculate processing time
+[r] .end_time: pg\dt << DT.Now""
+[r] .processing_time: pg\int << 0        // Would calculate from timestamps
+
+// Create summary
+[r] .summary: #ProcessingSummary << #ProcessingSummary
+[<] .summary.total_records << .total_valid
+[<] .summary.valid_records << .total_valid
+[<] .summary.invalid_records << .total_invalid
+[<] .summary.processing_time << .processing_time
+[<] .summary.errors << .errors
+
+[o] .summary: #ProcessingSummary
+[X]
+
+// ==============================================================================
+// PIPELINE: Main Data Processing Pipeline
+// ==============================================================================
+
+[|] ProcessDataFile
+[i] .file_path: pg\path
+[i] .batch_size: pg\int <~ 100           // Default batch size
+[i] .enable_notifications: pg\bool <~ #Boolean.False
+
+[t] |T.Call                              // MANDATORY: Trigger for main pipeline
+
+[W] RT.Python"data_processor.py"         // MANDATORY: Wrapper (includes [\][/])
+
+[r] .start_time: pg\dt << DT.Now""
+[r] .status: #ProcessingStatus << #ProcessingStatus.Pending
+[r] .errors: pg\array{!}
+
+// Update status to in progress
+[<] .status << #ProcessingStatus.InProgress
+
+// Read file using runtime wrapper
+[r] RT.Python"read_json_file"
+[<] .wrapper_input.file_path << .file_path
+[>] .file_content: pg\serial >> .raw_data
+
+// Check if file read succeeded
+[?] .raw_data.pgvar.state =? #PgVar.States.Faulted
+[~][r] .file_errors: pg\array{!} << .raw_data.pgvar.errors
+[~][<] .errors << .file_errors
+[~][<] .status << #ProcessingStatus.Failed
+[~][o] .status: #ProcessingStatus
+[~][o] .errors: pg\array{!}
+[~]
+
+[?] .raw_data.pgvar.state =? #PgVar.States.Ready
+[~][r] .records: pg\array{#DataRecord}   // Declared state for conditional pushes
+
+[~]// Parse records (simplified - would use actual parsing)
+[~][r] ~ForEach
+[~][<] .raw_data.records
+[~][>] .raw_record
+
+[~][~][r] .parsed: #DataRecord << #DataRecord
+[~][~][<] .parsed.id << .raw_record.id
+[~][~][<] .parsed.type << #RecordType.User  // Would parse actual type
+[~][~][<] .parsed.timestamp << DT.Now""     // Would parse actual timestamp
+[~][~][<] .parsed.payload << .raw_record
+[~][~][<] .parsed.validation_status << #ValidationResult.Valid
+
+[~][~][<] .records << .parsed            // PUSH to array
+[~][~]
+
+[~]// Process records in batches
+[~][r] |ProcessRecordBatch
+[~][<] .records << .records
+[~][>] .valid_records >> .valid
+[~][>] .invalid_records >> .invalid
+
+[~]// Aggregate results
+[~][r] |AggregateResults
+[~][<] .valid_records << .valid
+[~][<] .invalid_records << .invalid
+[~][<] .start_time << .start_time
+[~][<] .errors << .errors
+[~][>] .summary >> .final_summary
+
+[~]// Optional: Send notification
+[~][?] .enable_notifications =? #Boolean.True
+[~][&] .final_summary.valid_records >? 0
+[~][~][b] TG.Email""                     // Background trigger
+[~][~][<] .trigger_input.to << "admin@example.com"
+[~][~][<] .trigger_input.subject << "Processing Complete"
+[~][~][<] .trigger_input.body << "Processed {.final_summary.total_records} records"
+[~][~]
+
+[~][?] *?
+[~][~][o] !NoError
+[~][~]
+
+[~][<] .status << #ProcessingStatus.Completed
+[~][o] .summary: #ProcessingSummary
+[~][o] .status: #ProcessingStatus
+[~]
+
+[?] *?                                   // EXHAUSTIVE catch-all
+[~][<] .status << #ProcessingStatus.Failed
+[~][o] .status: #ProcessingStatus
+[~]
+[X]
+
+// ==============================================================================
+// PIPELINE: Monitor Processing Status (Using Reserved Namespace)
+// ==============================================================================
+
+[|] MonitorProcessing
+[i] .pipeline_id: pg\string
+
+[t] |T.Call                              // MANDATORY: Trigger
+
+[W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
+
+
+[r] |ProcessDataFile                     // Async pipeline call
+[<] .file_path << \\FileDir\\data\\input.json
+[<] .batch_size << 100
+[<] .enable_notifications << #Boolean.True
+[>] .summary >> .result
+[>] .status >> .proc_status
+
+// Monitor using reserved namespace
+[r] .current_state: #PgVar.States << .result.pgvar.state
+[r] .pending_since: pg\dt << .result.pgvar.history.Pending.at
+
+[?] .result.pgvar.state =? #PgVar.States.Ready
+[~][r] .ready_at: pg\dt << .result.pgvar.history.Ready.at
+[~][r] .duration: pg\int << 0            // Would calculate from timestamps
+[~][o] .result: #ProcessingSummary
+[~][o] .duration: pg\int
+[~]
+
+[?] .result.pgvar.state =? #PgVar.States.Faulted
+[~][r] .error_list: pg\array{!} << .result.pgvar.errors
+[~][r] .faulted_at: pg\dt << .result.pgvar.history.Faulted.at
+[~][o] .error_list: pg\array{!}
+[~][o] .faulted_at: pg\dt
+[~]
+
+[?] .result.pgvar.state =? #PgVar.States.Pending
+[~][o] .current_state: #PgVar.States
+[~][o] .pending_since: pg\dt
+[~]
+
+[?] *?
+[~][o] !NoError
+[~]
+[X]
+
+// ==============================================================================
+// KEY CONCEPTS DEMONSTRATED:
+// ==============================================================================
+// ✓ MULTIPLE PIPELINES: Main + 4 helper pipelines
+// ✓ PIPELINE CALLS: |PipelineName with [<] inputs, [>] outputs
+// ✓ ENUMERATIONS: Custom (#RecordType, #ValidationResult) + Reserved (#Boolean)
+// ✓ SERIAL STRUCTURES: #DataRecord, #ProcessingSummary
+// ✓ STATE TRANSITIONS: Pending → Ready/Faulted with state checking
+// ✓ RESERVED NAMESPACE: .*.pgvar.state, .*.pgvar.errors, .*.pgvar.history
+// ✓ CONDITIONAL LOGIC: Exhaustive [?] blocks with [?] *? catch-all
+// ✓ BOOLEAN LOGIC: [&] AND, [+] OR in conditionals
+// ✓ UNPACK OPERATORS: ~ForEach with parallel [p] execution
+// ✓ JOIN OPERATORS: ~Y.IntoArray for convergence
+// ✓ DECLARED STATE: Arrays ready for conditional pushes
+// ✓ DEFAULTREADY STATE: .batch_size with default override
+// ✓ ERROR HANDLING: .pgvar.state checking and error propagation
+// ✓ RUNTIME WRAPPERS: RT.Python for external code integration
+// ✓ TRIGGERS: TG.Email background notification
+// ✓ INLINE PIPELINES: DT.Now"", DT.Days"-30", DT.ToUTC"{...}"
+// ✓ AUTO-AWAIT: Automatic waiting on Pending variables
+// ✓ BLOCK MARKER HIERARCHY: [r] declarations, [<] within parent blocks
+// ✓ PUSH/PULL SEMANTICS: Variables transition through states
+// ✓ TYPE INFERENCE: Collection element types inferred in unpack
+// ✓ MANDATORY SECTIONS: ALL pipelines have [i], [t], [\][/] or [W], [o]
+// ==============================================================================

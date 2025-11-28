@@ -1,0 +1,307 @@
+# Polyglot Project TODO Tracking
+# Maintained by: Mai (Secretary)
+# Last Updated: 2025-11-27
+
+metadata:
+  project: Polyglot
+  current_phase: Phase 4 - Implementation
+  active_epic: Epic 1 - Lexer & Parser Foundation
+  active_story: Story 1.4 - Parser AST Definitions (next)
+  sprint_status_file: docs/project/stories/sprint-status.yaml
+
+# Active TODOs with owners, deadlines, and dependencies
+todos:
+  - id: TODO-001
+    description: Complete Story 1.2 - Lexer Token Definitions
+    assigned_to: Amelia (Dev Agent)
+    priority: HIGH
+    status: COMPLETED
+    deadline: 2025-11-19
+    completed_date: 2025-11-27
+    dependencies: []
+    epic: Epic 1
+    story: Story 1.2
+    notes: |
+      - TokenKind enum with 102+ variants implemented (exceeded 60 target)
+      - Complete token structure with location tracking
+      - LexerError with thiserror (9 error types)
+      - 26 passing unit tests
+      - Clippy warnings resolved
+    blockers: []
+
+  - id: TODO-002
+    description: Complete Story 1.3 - Lexer Implementation
+    assigned_to: Amelia (Dev Agent)
+    priority: HIGH
+    status: COMPLETED
+    deadline: 2025-11-19
+    completed_date: 2025-11-27
+    dependencies:
+      - TODO-001
+    epic: Epic 1
+    story: Story 1.3
+    notes: |
+      - Full lexer implementation (899 lines)
+      - String interpolation tokenization complete
+      - 15 working examples provided
+      - All tests passing (26 unit tests)
+      - Implementation completed ahead of schedule (combined with Story 1.2)
+    blockers: []
+
+  - id: TODO-015
+    description: Complete Story 1.4 - Parser AST Definitions
+    assigned_to: Amelia (Dev Agent)
+    priority: HIGH
+    status: READY
+    deadline: 2025-11-29
+    dependencies:
+      - TODO-002
+    epic: Epic 1
+    story: Story 1.4
+    notes: |
+      - Story DRAFTED on 2025-11-27 by John (PM)
+      - Gap resolution completed 2025-11-27 by Winston (Architect) + John (PM)
+      - All three architectural gaps resolved:
+        * Gap #1: Block Hierarchy Validation ✅
+        * Gap #2: Line Continuation + Operator Change (>" → +") ✅
+        * Gap #3: Error Detection System (26+ error types) ✅
+      - New AC #5 added: Comprehensive error handling system
+      - Documents created:
+        * docs/technical/block-hierarchy-reference.md
+        * docs/technical/parser-error-detection-design.md
+        * docs/technical/architecture.md (ADR-014 added)
+      - Operator change implemented and validated (all tests passing)
+      - Status: ready-for-dev (approved by user 2025-11-27)
+      - File: docs/project/stories/1-4-parser-ast-definitions.md
+      - Session notes: docs/project/agent-sessions/winston-john-2025-11-27-story-1-4-gaps-resolved.md
+    blockers: []
+
+  - id: TODO-003
+    description: Validate string literal pipeline references (Epic 2 scope)
+    assigned_to: Winston (Architect)
+    priority: MEDIUM
+    status: DEFERRED
+    deadline: TBD (Epic 2)
+    dependencies:
+      - TODO-001
+      - TODO-002
+    epic: Epic 2
+    story: TBD
+    notes: |
+      - Parser must validate pipeline references in StringLiteral tokens
+      - Compiler must verify pipelines yield pg\string type
+      - Deferred until Epic 2 planning
+    blockers: []
+
+  - id: TODO-004
+    description: Implement |String.Formatted pipeline with variable substitution
+    assigned_to: TBD
+    priority: MEDIUM
+    status: DEFERRED
+    deadline: TBD (Epic 3+)
+    dependencies:
+      - TODO-003
+    epic: Epic 3+
+    story: TBD
+    notes: |
+      - Runtime must support {.var:fmt} substitution in formatted strings
+      - Default pipeline for bare string literals
+      - Deferred to runtime implementation epic
+    blockers: []
+
+  - id: TODO-005
+    description: Extract ADRs from architecture.md into separate files
+    assigned_to: Paige (Tech Writer)
+    priority: LOW
+    status: PENDING
+    deadline: 2025-11-25
+    dependencies: []
+    epic: N/A (Process improvement)
+    story: N/A
+    notes: |
+      - Winston identified this need in party-mode discussion
+      - Separate ADRs from system design documentation
+      - Maintain traceability to decisions
+    blockers: []
+
+  - id: TODO-006
+    description: Create decision log separate from architecture
+    assigned_to: Mai (Secretary)
+    priority: MEDIUM
+    status: IN_PROGRESS
+    deadline: 2025-11-18
+    dependencies: []
+    epic: N/A (Process improvement)
+    story: N/A
+    notes: |
+      - Set up docs/technical/decisions/approved.md and docs/technical/decisions/pending.md
+      - Establish decision logging workflow
+      - Cross-reference with ADRs and meeting minutes
+    blockers: []
+
+  - id: TODO-007
+    description: Establish meeting minutes workflow
+    assigned_to: Mai (Secretary)
+    priority: HIGH
+    status: IN_PROGRESS
+    deadline: 2025-11-18
+    dependencies: []
+    epic: N/A (Process improvement)
+    story: N/A
+    notes: |
+      - Created docs/project/meetings/ directory
+      - First meeting minutes documented: 2025-11-18-tokens-and-string-literals.md
+      - Establish template and automation for future meetings
+    blockers: []
+
+  - id: TODO-008
+    description: Create and maintain agent responsibility registry
+    assigned_to: Mai (Secretary)
+    priority: HIGH
+    status: PENDING
+    deadline: 2025-11-18
+    dependencies: []
+    epic: N/A (Process improvement)
+    story: N/A
+    notes: |
+      - Track agent roles, current assignments, expertise areas
+      - Enable better meeting facilitation and task assignment
+      - Update after each meeting or major task assignment
+    blockers: []
+
+  - id: TODO-009
+    description: Fix broken cross-reference links in v0.0.2 documentation
+    assigned_to: Paige (Tech Writer)
+    priority: LOW
+    status: PENDING
+    deadline: 2025-11-20
+    dependencies: []
+    epic: N/A (Documentation maintenance)
+    story: N/A
+    notes: |
+      - 3 broken links found in language docs
+      - All reference ../decision-log.md (should be ../audit/decision-log.md)
+      - Files: 01-syntax-complete.md (line 1117), 02-type-system.md (line 1043), 04-error-handling.md (line 1018)
+    blockers: []
+
+  - id: TODO-010
+    description: Complete Phase 4 - Examples documentation (v0.0.2)
+    assigned_to: Carson (Brainstorming Coach) + Paige (Tech Writer)
+    priority: CRITICAL
+    status: PENDING
+    deadline: 2025-11-22
+    dependencies:
+      - Brainstorming items #4, #5, #6 (syntax clarity)
+    epic: N/A (Documentation completion)
+    story: N/A
+    notes: |
+      - Data processing examples
+      - File operations examples
+      - Complete workflow examples
+      - BLOCKING: Story 1.2 (lexer) requires well-documented syntax
+      - Cannot start compiler/lexer without complete syntax reference
+    blockers:
+      - Syntax inconsistencies in brainstorming backlog must be resolved first
+
+  - id: TODO-011
+    description: Complete Phase 5 - CLI & Packages documentation (v0.0.2)
+    assigned_to: Winston (Architect) + Paige (Tech Writer)
+    priority: HIGH
+    status: PENDING
+    deadline: 2025-11-25
+    dependencies:
+      - TODO-010
+    epic: N/A (Documentation completion)
+    story: N/A
+    notes: |
+      - CLI command documentation
+      - Package management guides
+      - polyglot compile, register, activate, test commands
+    blockers: []
+
+  - id: TODO-012
+    description: Resolve deferred Reserved Enumerations schemas (v0.0.2 Section 3.6)
+    assigned_to: Carson (Brainstorming Coach)
+    priority: MEDIUM
+    status: DEFERRED
+    deadline: TBD
+    dependencies: []
+    epic: N/A (Documentation completion)
+    story: N/A
+    notes: |
+      - #Queues.* schema pending
+      - #DT.Business.Week.* schema pending
+      - #Status.* schema pending
+      - #None definition pending
+      - Requires user input for design decisions
+    blockers:
+      - Awaiting user input on enumeration design
+
+  - id: TODO-013
+    description: Create Quick Start Guide (v0.0.2)
+    assigned_to: Paige (Tech Writer)
+    priority: MEDIUM
+    status: DEFERRED
+    deadline: TBD
+    dependencies:
+      - TODO-010
+      - TODO-011
+    epic: N/A (Documentation enhancement)
+    story: N/A
+    notes: |
+      - Beginner-friendly tutorial
+      - Currently marked as "future" in documentation plan
+      - Should wait until Phases 4-5 are complete
+    blockers: []
+
+  - id: TODO-014
+    description: Add ITIL ticket tracking command to Secretary agent menu
+    assigned_to: TBD (Agent Development Team)
+    priority: MEDIUM
+    status: PENDING
+    deadline: TBD
+    dependencies: []
+    epic: N/A (Agent Enhancement)
+    story: N/A
+    notes: |
+      - Integrate ITIL ticket tracking with agent responsibility tracking
+      - Reference existing itil-config.yaml configuration (docs/project/itil-config.yaml)
+      - Add menu command: Track ITIL tickets linked to agent responsibilities
+      - Features needed:
+        * View tickets assigned to specific agents
+        * Track ticket status by assignment group
+        * Link tickets to agent responsibility areas
+        * Generate agent workload reports
+      - Requested by: hhj during Secretary agent session 2025-11-19
+      - Related: Agent registry tracking (TODO-008)
+    blockers:
+      - Requires agent configuration modification capability
+      - May need workflow/task creation for ticket management
+
+# Completed TODOs (Archive)
+completed:
+  - id: TODO-DONE-001
+    description: Document last session notes (tokens & string literals)
+    assigned_to: Mai (Secretary)
+    completed_date: 2025-11-18
+    notes: |
+      - Extracted from docs/technical/architecture.md ADR-013
+      - Created comprehensive meeting minutes
+      - Documented all decisions and action items
+
+# Backlog (Not Yet Prioritized)
+backlog:
+  - description: Set up risk register
+    assigned_to: TBD
+    priority: MEDIUM
+    notes: John (PM) identified this gap during party-mode discussion
+
+  - description: Create dependency map visualization
+    assigned_to: TBD
+    priority: LOW
+    notes: Useful for understanding story/epic relationships
+
+  - description: Establish code review workflow
+    assigned_to: TBD
+    priority: MEDIUM
+    notes: Murat (TEA) should define quality gates and review criteria

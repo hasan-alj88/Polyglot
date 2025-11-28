@@ -1,0 +1,46 @@
+# Documentation Archive
+
+This folder contains historical documentation that has been completed, processed, or superseded by current documentation. Files are archived (not deleted) to preserve decision history and traceability.
+
+## Archive Organization
+
+### `/reports/`
+Completed assessment, readiness, and alignment reports where findings have been integrated into main documentation.
+
+### `/brainstorming/`
+Raw brainstorming session outputs that have been processed into PRD, Architecture, Epics, or Stories.
+
+### `/meetings/`
+Historical meeting notes where decisions have been captured in decision logs or integrated into specifications.
+
+### `/agent-sessions/`
+Agent-specific work session notes where specs have been integrated into language or architecture documentation.
+
+### `/audits/`
+Historical compliance and audit reports (point-in-time snapshots).
+
+### `/reviews/`
+Structure reviews, gap analyses, and other assessment documents that served their purpose.
+
+---
+
+## Archive Policy
+
+**When to Archive:**
+- Reports where findings are integrated into active docs
+- Brainstorming sessions that have been processed
+- Meeting notes where decisions are captured elsewhere
+- One-time audits and assessments
+- Superseded specifications
+
+**When NOT to Archive:**
+- Living documents that are actively maintained
+- Current decision logs
+- Active tracking documents
+- Reference specifications still in use
+
+---
+
+## Retrieval
+
+If you need to reference archived documents for historical context or decision traceability, they remain accessible in this folder. Each subfolder includes a manifest of what was archived and why.

@@ -1,0 +1,723 @@
+# ==============================================================================
+# Polyglot v0.0.2 - Language Constraints & Edge Cases
+# Dense reference for constraint validation
+# ==============================================================================
+
+version: "0.0.2"
+purpose: "Complete constraint specification for AI validation"
+
+# ==============================================================================
+# COLLECTION CONSTRAINTS
+# ==============================================================================
+
+collection_nesting:
+  rule: "Collections CANNOT contain other collections directly"
+  severity: "ERROR"
+
+  invalid_patterns:
+    - pattern: "pg\\array{pg\\array{T}}"
+      reason: "Arrays cannot contain arrays directly"
+      error_message: "Collection type may not have another collection as their items"
+
+    - pattern: "pg\\set{pg\\array{T}}"
+      reason: "Sets cannot contain arrays"
+      error_message: "Collection nesting not allowed"
+
+    - pattern: "pg\\array{pg\\set{T}}"
+      reason: "Arrays cannot contain sets"
+      error_message: "Collection nesting not allowed"
+
+  valid_workaround:
+    description: "Wrap inner collection in enumeration"
+    pattern: |
+      [#] Row
+      [<] .cells: pg\\array{T}
+      [X]
+      [i] .matrix: pg\\array{#Row}
+
+    examples:
+      matrix: "pg\\array{#Row} where Row contains pg\\array{pg\\int}"
+      table: "pg\\array{#Record} where Record contains pg\\array{pg\\string}"
+      nested_lists: "pg\\array{#Group} where Group contains pg\\array{#Item}"
+
+  exception_recursive:
+    description: "Recursive structures ARE allowed"
+    pattern: "pg\\array{#TreeNode} where TreeNode contains pg\\array{#TreeNode}"
+    valid: true
+    examples:
+      tree: "[#] TreeNode [<] .children: pg\\array{#TreeNode} [X]"
+      graph: "[#] GraphNode [<] .edges: pg\\array{#GraphNode} [X]"
+      menu: "[#] MenuItem [<] .submenus: pg\\array{#MenuItem} [X]"
+
+# ==============================================================================
+# ENUMERATION CONSTRAINTS
+# ==============================================================================
+
+enum_serial_mixing:
+  rule: "Enum fields and serial fields CANNOT be siblings"
+  constraint: "Can be uncles (different hierarchy levels)"
+  severity: "ERROR"
+
+  invalid_example:
+    code: |
+      [#] BadMixing
+      [<] .EnumField              # Enum field (no type)
+      [<] .serial_field: pg\\int  # Serial field (has type)
+      [X]
+    reason: "Enum and serial fields are siblings (same level)"
+    error_message: "Cannot mix enum and serial fields as siblings"
+
+  valid_example_uncles:
+    code: |
+      [#] GoodMixing
+      [<] .category.Option1       # Enum field (nested under .category)
+      [<] .category.Option2       # Enum field (nested under .category)
+      [<] .metadata: pg\\string   # Serial field (top level)
+      [X]
+    reason: "Enum fields under .category, serial field at top level (uncles)"
+
+  field_types:
+    enum_field:
+      syntax: "[<] .FieldName"
+      characteristics:
+        - "No type specified"
+        - "No value assigned"
+        - "Declaration only"
+      use: "Enum variants"
+
+    serial_field:
+      syntax: "[<] .field_name: Type <~ default"
+      characteristics:
+        - "Type required"
+        - "Optional default value"
+        - "Typed field"
+      use: "Struct fields"
+
+# ==============================================================================
+# BLOCK MARKER HIERARCHY CONSTRAINTS
+# ==============================================================================
+
+block_marker_hierarchy:
+  rule: "Block markers have specific usage contexts and hierarchy"
+  severity: "ERROR"
+
+  markers:
+    "[r]":
+      name: "Sequential execution OR variable declaration"
+      context_dependent: true
+
+      usage_1_variable_declaration:
+        context: "At pipeline scope (top-level)"
+        syntax: "[r] .variable: Type << value"
+        examples:
+          - "[r] .user: pg\\string << \"Alice\""
+          - "[r] .count: pg\\int << 42"
+          - "[r] .timestamp: pg\\dt << DT.Now\"\""
+        semantics: "Declares variable at pipeline scope"
+
+      usage_2_pipeline_call:
+        context: "In execution flow"
+        syntax: "[r] |PipelineName"
+        examples:
+          - "[r] |FetchUser"
+          - "[r] |ProcessData"
+        semantics: "Sequential pipeline execution"
+
+    "[<]":
+      name: "Input binding"
+      context: "ONLY within parent block context"
+      parent_required: true
+
+      valid_parents:
+        - "Pipeline call [r] |Pipeline"
+        - "Unpack operator [p] ~ForEach"
+        - "Queue control [Q] |Q.Priority"
+        - "Trigger config [t] |T.Cron"
+        - "Wrapper config [W] |W.Python3.11"
+        - "Join operator [Y] ~Y.IntoArray"
+
+      valid_usage:
+        - syntax: "[r] |Pipeline [<] .input: Type << value"
+          description: "Input binding to pipeline call"
+        - syntax: "[p] ~ForEach [<] .items"
+          description: "Input to unpack operator (variable only, no type or push)"
+
+      invalid_usage:
+        - syntax: "[<] .variable: Type << value"
+          reason: "No parent block - standalone [<] not allowed"
+          error_message: "Input binding [<] requires parent block context"
+          correct: "[r] .variable: Type << value"
+
+    "[>]":
+      name: "Output binding"
+      context: "ONLY within parent block context"
+      parent_required: true
+
+      valid_parents:
+        - "Pipeline call [r] |Pipeline"
+        - "Unpack operator outputs"
+        - "Join operator outputs"
+
+      valid_usage:
+        - syntax: "[r] |Pipeline [>] .output: Type >> .result"
+          description: "Output from pipeline call"
+
+      invalid_usage:
+        - syntax: "[>] .variable: Type >> .source"
+          reason: "No parent block"
+          error_message: "Output binding [>] requires parent block context"
+
+  common_mistakes:
+    mistake_1:
+      wrong: "[<] .current_time: pg\\dt << DT.Now"
+      right: "[r] .current_time: pg\\dt << DT.Now\"\""
+      explanation: "Variable declaration at pipeline scope uses [r], not [<]"
+
+    mistake_2:
+      wrong: "[<] .channels: pg\\array{#Channel} << {}"
+      right: "[r] .channels: pg\\array{#Channel}"
+      explanation: "Variable declaration uses [r]. Also, pushing empty array makes variable Ready (no more pushes allowed)"
+
+    mistake_3:
+      wrong: "DT.Now"
+      right: "DT.Now\"\""
+      explanation: "Inline pipeline calls are string literals"
+
+# ==============================================================================
+# OPERATOR PREFIX CONSTRAINTS
+# ==============================================================================
+
+no_keywords:
+  rule: "ALL identifiers MUST have operator prefix"
+  exceptions: "NONE - this is absolute"
+  severity: "ERROR"
+
+  required_prefixes:
+    variables:
+      prefix: "."
+      invalid: ["variable", "my_var", "user"]
+      valid: [".variable", ".my_var", ".user"]
+
+    enumerations:
+      prefix: "#"
+      invalid: ["UserProfile", "PgVar.States.Ready"]
+      valid: ["#UserProfile", "#PgVar.States.Ready"]
+
+    pipelines:
+      prefix: "|"
+      invalid: ["ProcessData", "T.Cron", "W.Python3.11"]
+      valid: ["|ProcessData", "|T.Cron", "|W.Python3.11"]
+
+    errors:
+      prefix: "!"
+      invalid: ["Network.Timeout", "ValidationError"]
+      valid: ["!Network.Timeout", "!ValidationError"]
+
+  rationale:
+    - "Clarity: No ambiguity about identifier type"
+    - "Consistency: Same pattern everywhere"
+    - "Serialization: Maps to hierarchical tree"
+    - "Cross-language: Unambiguous serialization"
+
+# ==============================================================================
+# EXHAUSTIVE CONDITION CONSTRAINTS
+# ==============================================================================
+
+exhaustive_conditions:
+  rule: "ALL [?] conditional blocks MUST include catch-all [?] *?"
+  severity: "ERROR"
+
+  invalid_example:
+    code: |
+      [?] .value >? 100
+      [~][r] |ProcessHigh
+      [~]
+      # ERROR: Missing [?] *? catch-all
+    error_message: "Non-exhaustive conditions - must include [?] *?"
+
+  valid_example:
+    code: |
+      [?] .value >? 100
+      [~][r] |ProcessHigh
+      [~]
+
+      [?] *?                    # REQUIRED
+      [~][r] |ProcessDefault
+      [~]
+
+  rationale: "In async environments, unhandled conditions lead to indefinite waiting"
+
+# ==============================================================================
+# VARIABLE STATE AND PUSH SEMANTICS
+# ==============================================================================
+
+variable_push_semantics:
+  terminology:
+    rule: "Use async-centric terminology, NOT traditional programming terms"
+    correct: ["PUSH to variable", "PULL from variable", "Variable States", "Declared state", "Ready state"]
+    incorrect: ["assign", "assignment", "mutable", "immutable", "initialize"]
+    note: "Polyglot is async-centric - variables transition through states"
+
+  declared_state_for_collections:
+    rule: "Declare collections in Declared state to allow multiple pushes"
+
+    wrong_pattern:
+      code: "[r] .channels: pg\\array{#Channel} << {}"
+      issues:
+        - "Pushing empty array makes variable Ready state immediately"
+        - "Ready state = 0 pushes remaining"
+        - "Cannot push more items after this"
+      error: "Variable already in Ready state, cannot accept more pushes"
+
+    correct_pattern:
+      code: "[r] .channels: pg\\array{#Channel}"
+      explanation:
+        - "Variable in Declared state"
+        - "Push count: 0, allowed: 1"
+        - "Can push items conditionally"
+        - "After all pushes, transitions to Ready"
+      usage: |
+        [r] .channels: pg\\array{#Channel}    # Declared state
+
+        [?] .condition1 =? #Boolean.True
+        [~][<] .channels << #Channel.Email    # PUSH item
+        [~]
+
+        [?] .condition2 =? #Boolean.True
+        [~][<] .channels << #Channel.SMS      # PUSH another item
+        [~]
+
+        # After conditional pushes, .channels becomes Ready
+
+  immediate_ready_vs_declared:
+    immediate_ready:
+      syntax: "[r] .var: Type << value"
+      state: "Ready (immediately)"
+      push_count: "final (0 remaining)"
+      use_case: "Constants, single immediate values"
+      examples:
+        - "[r] .version: pg\\string << \"1.0.0\""
+        - "[r] .max_retries: pg\\int << 3"
+
+    declared_state:
+      syntax: "[r] .var: Type"
+      state: "Declared"
+      push_count: "0, allowed: 1"
+      use_case: "Variables that will receive pushes later"
+      examples:
+        - "[r] .channels: pg\\array{#Channel}"
+        - "[r] .result: #UserProfile"
+
+# ==============================================================================
+# STATE TRANSITION CONSTRAINTS
+# ==============================================================================
+
+invalid_state_transitions:
+  - from: "Ready"
+    to: "Pending"
+    reason: "Once Ready, cannot return to Pending (immutable)"
+    severity: "ERROR"
+
+  - from: "Ready"
+    to: "Declared"
+    reason: "Cannot un-declare a variable"
+    severity: "ERROR"
+
+  - from: "Faulted"
+    to: "Ready"
+    reason: "Cannot succeed after failure (use Retrying state)"
+    severity: "ERROR"
+
+  - from: "Declared"
+    to: "Faulted"
+    reason: "Must transition through Pending first"
+    severity: "ERROR"
+
+# ==============================================================================
+# PUSH COUNT CONSTRAINTS
+# ==============================================================================
+
+push_count_limits:
+  schema_only:
+    initial: 0
+    allowed: 1
+    error_when_exceeded: "Variable already has final value (0 pushes remaining)"
+
+  default:
+    initial: 1
+    allowed: 2
+    error_when_exceeded: "Default already overridden (0 pushes remaining)"
+
+  constant:
+    initial: "final"
+    allowed: 0
+    error_when_exceeded: "Cannot push to Ready/constant variable"
+
+# ==============================================================================
+# TYPE COMPATIBILITY CONSTRAINTS
+# ==============================================================================
+
+comparison_constraints:
+  numeric_only:
+    operators: [">?", "<?", "=>?", "=<?"]
+    valid_types: ["pg\\int", "pg\\float"]
+    invalid_types: ["pg\\string", "pg\\bool", "enumerations"]
+
+  comparable:
+    operators: [">?", "<?", "=>?", "=<?"]
+    valid_types: ["pg\\string (lexicographic)", "pg\\dt (chronological)"]
+
+  equality_any:
+    operators: ["=?", "=!?"]
+    valid_types: "ANY type"
+
+# ==============================================================================
+# SYNTAX CONSTRAINTS
+# ==============================================================================
+
+syntax_rules:
+  type_separator:
+    valid: "\\"
+    invalid: ["/", ":", "."]
+    examples:
+      correct: "pg\\string"
+      incorrect: ["pg/string", "pg:string", "pg.string"]
+
+  collection_literals:
+    delimiter: "{}"
+    invalid_delimiter: "[]"
+    syntax: "<< {item1, item2, item3}"
+    empty_collection: "<< {}"
+    examples:
+      correct:
+        - "<< {1, 2, 3}"
+        - "<< {\"a\", \"b\", \"c\"}"
+        - "<< {#Channel.Email, #Channel.SMS}"
+        - "<< {}"
+      incorrect:
+        - "<< [1, 2, 3]"
+        - "<< []"
+    note: "All collections use {} with comma separation, NOT []"
+
+  inline_pipelines:
+    critical: "String literals are NOT primitives - they are inline pipeline calls"
+    rule: "All inline pipeline calls use string literal syntax"
+    syntax: "Pipeline.Name\"formatted_argument_string\""
+    implicit_call: "\"text\" → U.String\"text\""
+    empty_parameters: "Pipeline.Name\"\" (empty string MANDATORY)"
+
+    interpolation:
+      syntax: "\"{.variable:format}\""
+      examples:
+        - "\"{.var}\" - default formatting"
+        - "\"{.count:Hex}\" - hexadecimal format"
+        - "\"{.price:Currency}\" - currency format"
+      processing: "Calls |U.String.{language}.{type}.{format_identifier}"
+
+    pipeline_signature:
+      input: ".formatted_argument_string: pg\\string (MANDATORY name)"
+      trigger: "|T.String.Call (MANDATORY)"
+      output: "Single output of ANY type (not limited to strings)"
+
+    examples:
+      correct:
+        - "\"hello\" → U.String\"hello\""
+        - "DT.Now\"\" → returns pg\\dt"
+        - "DT.Minutes\"5\" → returns pg\\dt"
+        - "DT.ToNow\"{.start}\" → with interpolation"
+        - "\"{.number:Hex}\" → calls |U.String.Polyglot.Int.Hex"
+      incorrect:
+        - "DT.Now (missing \"\")"
+        - "DT.Minutes(5) (function call syntax)"
+        - "DT.ToNow(.start) (parentheses not allowed)"
+
+    return_types: "Can return ANY type: pg\\string, pg\\dt, pg\\int, etc."
+    reference: "/docs/technical/string-literals-internals.md"
+
+  string_literals:
+    critical: "String literals ARE inline pipeline calls, not primitive values"
+    delimiter: "\""
+    escape_sequences: ["\\\"", "\\n", "\\t", "\\\\"]
+    interpolation:
+      pattern: "{.variable}" or "{.variable:format}"
+      format_examples:
+        - "Hex - hexadecimal"
+        - "Binary - binary"
+        - "Decimal - decimal with commas"
+        - "Currency - currency format"
+        - "Percent - percentage"
+        - "ShortDate - short date format"
+    auto_await: "Interpolated variables trigger auto-await if Pending"
+    processing:
+      step_1: "Extract {.var:fmt} placeholders"
+      step_2: "Pack into pg\\array{pg\\serial} with value/format pairs"
+      step_3: "Call |U.String.{language}.{type}.{fmt} for each"
+      step_4: "Substitute formatted results back"
+      step_5: "Pass to pipeline as .formatted_argument_string"
+
+  block_markers:
+    case_sensitive: true
+    valid: "[|]"
+    invalid: ["[L]", "[l]", "(|)"]
+
+# ==============================================================================
+# REMOVED FEATURES (v0.0.2)
+# ==============================================================================
+
+removed_in_v0_0_2:
+  maps:
+    type: "pg\\map{K,V}"
+    status: "REMOVED"
+    replacement: "pg\\serial or #Enumeration"
+    migration:
+      from: "pg\\map{pg\\string, pg\\int}"
+      to: "pg\\serial"
+
+  old_enumerations:
+    "#Variables.States":
+      status: "DEPRECATED"
+      replacement: "#PgVar.States"
+
+    "#Bool":
+      status: "DEPRECATED"
+      replacement: "#Boolean"
+
+# ==============================================================================
+# RESERVED NAMESPACE CONSTRAINTS
+# ==============================================================================
+
+reserved_namespaces:
+  ".*.pgvar.*":
+    description: "Reserved for variable metadata"
+    always_ready: true
+    user_modification: "FORBIDDEN"
+    fields: [".pgvar.state", ".pgvar.errors", ".pgvar.history"]
+
+  "#PgVar":
+    description: "Reserved for Polyglot runtime enumerations"
+    user_modification: "FORBIDDEN"
+
+  "#Boolean":
+    description: "Reserved boolean enumeration"
+    user_modification: "FORBIDDEN"
+
+  "#None":
+    description: "Reserved unit type"
+    user_modification: "FORBIDDEN"
+
+# ==============================================================================
+# EDGE CASES
+# ==============================================================================
+
+edge_cases:
+  empty_collections:
+    valid: true
+    example: "[<] .items: pg\\array{pg\\int} << []"
+    type_inference: "Element type from declaration, not from literal"
+
+  recursive_depth:
+    constraint: "No hard limit (runtime dependent)"
+    recommendation: "Avoid excessive depth (>100 levels)"
+
+  unicode_identifiers:
+    support: "UTF-8 supported"
+    constraint: "Must start with letter or underscore"
+    example: ".用户名"
+
+  operator_precedence:
+    note: "Polyglot has minimal expression syntax"
+    precedence: "Operators evaluated left-to-right within block context"
+
+# ==============================================================================
+# MANDATORY PIPELINE SECTIONS
+# ==============================================================================
+
+pipeline_structure:
+  rule: "Every [|] pipeline MUST have ALL mandatory sections in correct order"
+  severity: "ERROR"
+
+  execution_workflow:
+    description: "Runtime execution order (different from declaration order)"
+    flow: "[t],[i] → [\\],[Q] → [r],{[p],[Y]},[b],[s] → [/] → [o] → [X]"
+    steps:
+      1_trigger_and_inputs: "Triggers fire, inputs provided by caller"
+      2_setup_and_queue: "Setup runs, queue configured (if present)"
+      3_execution: "Execution blocks run (sequential, parallel, background, streaming)"
+      4_cleanup: "Cleanup runs (RAII-style or explicit)"
+      5_outputs: "Outputs returned to caller"
+      6_complete: "Pipeline execution complete"
+    note: "Declaration order in file != execution order at runtime"
+
+  mandatory_order:
+    1_inputs:
+      marker: "[i]"
+      requirement: "At least one input"
+      default_if_none: "[i] #Pipeline.NoInput"
+      examples:
+        - "[i] .data: pg\\string"
+        - "[i] .count: pg\\int <~ 10"
+        - "[i] #Pipeline.NoInput"
+
+    2_triggers:
+      marker: "[t]"
+      requirement: "At least one trigger"
+      critical: "Pipeline will NEVER run without triggers"
+      common_triggers:
+        manual_call: "[t] |T.Call"
+        cron: "[t] TG.Cron\"\""
+        file_watch: "[t] TG.FileWatch\"\""
+        http: "[t] TG.HTTP\"\""
+      examples:
+        - "[t] |T.Call"
+        - "[t] TG.Cron\"0 0 * * *\""
+      notes:
+        - "If pipeline is called via |PipelineName, MUST have [t] |T.Call"
+
+    3_queue_config:
+      marker: "[Q]"
+      requirement: "Optional"
+      examples:
+        - "[Q]"
+        - "[Q] [<] .priority: pg\\int << 1"
+
+    4_setup_cleanup_or_wrapper:
+      requirement: "MANDATORY - either wrapper OR explicit setup/cleanup"
+      option_a_runtime_wrapper:
+        marker: "[W]"
+        includes_setup_cleanup: true
+        note: "Runtime wrappers include [\\][/] in their macro definition"
+        examples:
+          - "[W] RT.Python\"script.py\""
+          - "[W] RT.Rust\"module::function\""
+          - "[W] RT.Node\"module.js\""
+      option_b_scope_wrapper:
+        marker: "[W]"
+        wrapper: "|W.Polyglot.Scope or W.Polyglot.Scope\"\""
+        note: "Placeholder wrapper for pipelines with no setup/cleanup"
+        use_when: "No explicit setup/cleanup needed"
+        purpose: "RAII-style scope cleanup, makes no-setup explicit"
+        replaces: "|W.NoSetup.NoCleanup (deprecated)"
+        examples:
+          - "[W] |W.Polyglot.Scope"
+          - "[W] W.Polyglot.Scope\"\""
+      option_c_explicit:
+        markers: "[\\] and [/]"
+        use_when: "Custom setup/cleanup logic needed"
+        examples:
+          - "[\\]\n[r] .setup_var: pg\\int << 0\n[/]"
+
+    5_execution_blocks:
+      markers: "[r], {[p],[Y]}, [b], [s]"
+      requirement: "Optional (but usually present)"
+      types:
+        sequential: "[r]"
+        parallel: "{[p],[Y]}"
+        background: "[b]"
+        streaming: "[s]"
+      execution_order:
+        note: "Blocks run during execution phase: [\],[Q] → execution → [/]"
+        parallel_with_join: "[p] runs parallel tasks, [Y] joins results"
+
+    6_outputs:
+      marker: "[o]"
+      requirement: "At least one output"
+      default_if_none: "[o] !NoError"
+      examples:
+        - "[o] .result: pg\\string"
+        - "[o] #StatusCode"
+        - "[o] !NoError"
+
+  invalid_examples:
+    missing_triggers:
+      code: |
+        [|] MissingTriggers
+        [i] .data: pg\\string
+        [W] RT.Python\"process.py\"
+        [o] .result: pg\\string
+        [X]
+      error: "Pipeline will NEVER run - no triggers defined"
+      fix: "Add [t] |T.Call or other trigger"
+
+    missing_wrapper_and_setup:
+      code: |
+        [|] MissingSetup
+        [i] .data: pg\\string
+        [t] |T.Call
+        [r] .result: pg\\string << .data
+        [o] .result: pg\\string
+        [X]
+      error: "No wrapper [W] and no setup/cleanup [\\][/]"
+      fix: "Add [W] wrapper OR add [\\][/] explicit setup/cleanup"
+
+    missing_input_declaration:
+      code: |
+        [|] MissingInput
+        [t] |T.Call
+        [W] RT.Python\"process.py\"
+        [o] !NoError
+        [X]
+      error: "No inputs declared"
+      fix: "Add [i] #Pipeline.NoInput if no inputs needed"
+
+    missing_output_declaration:
+      code: |
+        [|] MissingOutput
+        [i] .data: pg\\string
+        [t] |T.Call
+        [W] RT.Python\"process.py\"
+        [X]
+      error: "No outputs declared"
+      fix: "Add [o] !NoError if no outputs needed"
+
+  valid_minimal_pipeline:
+    code: |
+      [|] MinimalPipeline
+      [i] #Pipeline.NoInput
+      [t] |T.Call
+      [W] |W.Polyglot.Scope
+      [o] !NoError
+      [X]
+    description: "Absolute minimum valid pipeline structure (no setup/cleanup)"
+
+  valid_full_pipeline:
+    code: |
+      [|] FullPipeline
+      [i] .data: pg\\string
+      [i] .count: pg\\int <~ 10
+      [t] |T.Call
+      [t] TG.Cron\"0 0 * * *\"
+      [Q]
+      [<] .priority: pg\\int << 1
+      [W] RT.Python\"process.py\"
+      [r] .result: pg\\string << .data
+      [o] .result: pg\\string
+      [X]
+    description: "Complete pipeline with all sections"
+
+# ==============================================================================
+# VALIDATION CHECKLIST
+# ==============================================================================
+
+validation_checklist:
+  syntax:
+    - "All identifiers have operator prefix (. # | !)"
+    - "Type separator is \\ (backslash)"
+    - "Block markers are case-sensitive"
+    - "Strings use double quotes"
+
+  semantics:
+    - "No nested collections directly"
+    - "Enum/serial fields not siblings"
+    - "Exhaustive conditions with [?] *?"
+    - "Reserved namespaces not modified"
+    - "Every [|] has inputs [i], triggers [t], wrapper/setup, outputs [o]"
+
+  types:
+    - "Correct type separator (\\)"
+    - "No removed types (pg\\map)"
+    - "Correct reserved enum names (#PgVar not #Variables)"
+
+  state:
+    - "Valid state transitions"
+    - "Push count not exceeded"
+    - "Auto-await semantics respected"

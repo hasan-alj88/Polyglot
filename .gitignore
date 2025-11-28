@@ -1,0 +1,49 @@
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+
+# Cargo.lock - commit for binaries, ignore for libraries
+# We keep Cargo.lock in root for reproducible builds of binaries
+/polyglot-lexer/Cargo.lock
+/polyglot-parser/Cargo.lock
+/polyglot-ir/Cargo.lock
+/polyglot-db/Cargo.lock
+/polyglot-runtime-wrappers/Cargo.lock
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python (for testing Python runtime wrapper)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+ENV/
+.venv
+
+# Database
+*.db
+*.sqlite
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Build artifacts
+dist/
+build/
+
+# Test coverage
+coverage/
+*.profraw
+*.profdata
