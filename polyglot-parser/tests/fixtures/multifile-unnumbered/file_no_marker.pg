@@ -1,0 +1,15 @@
+[@] Local@MultiFileTest:1.0.0
+[<] @self << Local@MultiFileTest:1.0.0
+[X]
+
+[|] UnnumberedPipeline
+[i] .input: pg\int
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] @self|BaseHelper
+[<] .value << .input
+[>] .result >> .output
+
+[o] .output: pg\int
+[X]

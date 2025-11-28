@@ -410,6 +410,17 @@ pub enum ParserError {
         span: Span,
     },
 
+    /// Duplicate file ordering marker
+    ///
+    /// Multiple files in same package have same [#] number (Story 1.5.5)
+    #[error("Duplicate file order marker at {span}: file order {order_num} used by both '{file1}' and '{file2}'")]
+    DuplicateFileOrder {
+        file1: String,
+        file2: String,
+        order_num: usize,
+        span: Span,
+    },
+
     /// Circular import dependency
     ///
     /// Package import creates circular dependency
@@ -495,6 +506,7 @@ impl ParserError {
             ParserError::UndeclaredError { span, .. } => *span,
             ParserError::UnresolvedImport { span, .. } => *span,
             ParserError::DuplicateDefinition { span, .. } => *span,
+            ParserError::DuplicateFileOrder { span, .. } => *span,
             ParserError::CircularImport { span, .. } => *span,
             ParserError::UseBeforeDeclaration { span, .. } => *span,
             ParserError::TypeMismatch { span, .. } => *span,

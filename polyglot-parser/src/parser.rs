@@ -45,6 +45,7 @@ use crate::import_resolver::ImportResolver;
 use crate::span::{Position, Span};
 use polyglot_lexer::{Lexer, Token, TokenKind};
 use std::collections::HashMap;
+use std::path::PathBuf;
 
 // ============================================================================
 // Parser State
@@ -60,6 +61,15 @@ pub struct Parser<R: ImportResolver> {
     package_aliases: HashMap<String, PackageSpec>,
     /// Pipeline name → Pipeline mapping (current file scope)
     local_pipelines: HashMap<String, Pipeline>,
+
+    // Multi-file compilation support (Story 1.5.5)
+    /// Cache of parsed files (PathBuf → Program) to avoid re-parsing
+    file_cache: HashMap<PathBuf, Program>,
+    /// Current package specification for same-package identification
+    current_package: Option<PackageSpec>,
+    /// File ordering ([#] marker values): PathBuf → Optional<order_number>
+    /// None means no [#] marker (processed after numbered files)
+    file_ordering: HashMap<PathBuf, Option<usize>>,
 }
 
 impl<R: ImportResolver> Parser<R> {
@@ -86,6 +96,10 @@ impl<R: ImportResolver> Parser<R> {
             source_file: None,
             package_aliases: HashMap::new(),
             local_pipelines: HashMap::new(),
+            // Initialize multi-file fields (Story 1.5.5)
+            file_cache: HashMap::new(),
+            current_package: None,
+            file_ordering: HashMap::new(),
         })
     }
 
@@ -104,8 +118,28 @@ impl<R: ImportResolver> Parser<R> {
         // Skip leading newlines
         self.skip_newlines();
 
+        // Parse optional [#] file ordering marker (Story 1.5.5)
+        let file_order = self.parse_file_ordering_marker()?;
+
+        // Store file ordering in parser state if present
+        if let Some(order_num) = file_order {
+            if let Some(ref file_path) = self.source_file {
+                let path = PathBuf::from(file_path);
+                self.file_ordering.insert(path, Some(order_num));
+            }
+        } else if let Some(ref file_path) = self.source_file {
+            // No [#] marker - file is processed after numbered files
+            let path = PathBuf::from(file_path);
+            self.file_ordering.insert(path, None);
+        }
+
+        self.skip_newlines();
+
         // Parse package declaration (mandatory)
         let package = self.parse_package_declaration()?;
+
+        // Store current package for Phase 2 resolution (Story 1.5.5)
+        self.current_package = Some(package.spec.clone());
 
         // Parse definitions (enums, errors, pipelines)
         let mut definitions = Vec::new();
@@ -1074,6 +1108,499 @@ impl<R: ImportResolver> Parser<R> {
     }
 
     // ========================================================================
+    // Multi-File Compilation Support (Story 1.5.5)
+    // ========================================================================
+
+    /// Discover all .pg files in the given directory that belong to the same package
+    ///
+    /// This is a placeholder for multi-file compilation. Full implementation will be
+    /// done when we have a higher-level compilation context that can manage multiple
+    /// parser instances.
+    ///
+    /// # Arguments
+    /// * `base_dir` - Directory to search for .pg files
+    /// * `current_package` - Package spec to match against
+    ///
+    /// # Returns
+    /// * `Ok(Vec<PathBuf>)` - List of file paths with matching package declarations
+    /// * `Err(ParserError)` - If file access or parsing fails
+    #[allow(dead_code)]
+    fn discover_same_package_files(
+        &self,
+        base_dir: &std::path::Path,
+        current_package: &PackageSpec,
+    ) -> Result<Vec<PathBuf>, ParserError> {
+        use std::fs;
+
+        let mut same_package_files = Vec::new();
+
+        // Read directory entries
+        let entries = fs::read_dir(base_dir).map_err(|e| ParserError::UnexpectedEof {
+            context: format!("Failed to read directory: {}", e),
+            started_at: Span::start(),
+        })?;
+
+        for entry in entries {
+            let entry = entry.map_err(|e| ParserError::UnexpectedEof {
+                context: format!("Failed to read directory entry: {}", e),
+                started_at: Span::start(),
+            })?;
+
+            let path = entry.path();
+
+            // Skip non-.pg files
+            if !path.extension().map_or(false, |ext| ext == "pg") {
+                continue;
+            }
+
+            // Skip the current file if source_file is set
+            if let Some(ref current_file) = self.source_file {
+                if path.ends_with(current_file) {
+                    continue;
+                }
+            }
+
+            // Try to extract package spec from file without full parsing
+            let source = fs::read_to_string(&path).map_err(|e| ParserError::UnexpectedEof {
+                context: format!("Failed to read file {:?}: {}", path, e),
+                started_at: Span::start(),
+            })?;
+
+            // Quick check: extract package declaration by parsing just the header
+            if let Ok(file_package_spec) = Self::extract_package_spec(&source) {
+                // Check if package specs match
+                if Self::package_specs_match(&file_package_spec, current_package) {
+                    same_package_files.push(path);
+                }
+            }
+        }
+
+        Ok(same_package_files)
+    }
+
+    /// Extract package spec from source without full parsing
+    ///
+    /// This is a lightweight operation that only parses the package declaration
+    fn extract_package_spec(source: &str) -> Result<PackageSpec, ParserError> {
+        let mut lexer = Lexer::new(source);
+        let tokens = lexer.tokenize().map_err(|e| ParserError::LexerError {
+            source: e,
+            span: Span::start(),
+        })?;
+
+        // Create a minimal parser just for package extraction
+        let mut parser = Parser {
+            tokens,
+            current: 0,
+            resolver: crate::import_resolver::StubImportResolver::new(),
+            source_file: None,
+            package_aliases: HashMap::new(),
+            local_pipelines: HashMap::new(),
+            file_cache: HashMap::new(),
+            current_package: None,
+            file_ordering: HashMap::new(),
+        };
+
+        parser.skip_newlines();
+        let package = parser.parse_package_declaration()?;
+        Ok(package.spec)
+    }
+
+    /// Check if two PackageSpecs represent the same package
+    ///
+    /// Packages match if registry, path, and version are identical
+    fn package_specs_match(spec1: &PackageSpec, spec2: &PackageSpec) -> bool {
+        // Compare registry names (String)
+        let registry_match = spec1.registry == spec2.registry;
+
+        // Compare paths (Vec<String>)
+        let path_match = spec1.path == spec2.path;
+
+        // Compare versions
+        let version_match = spec1.version.major == spec2.version.major
+            && spec1.version.minor == spec2.version.minor
+            && spec1.version.patch == spec2.version.patch;
+
+        registry_match && path_match && version_match
+    }
+
+    /// Parse optional [#] file ordering marker
+    ///
+    /// Syntax: `[#] N` where N is an integer
+    /// If present, returns Some(N), otherwise returns None
+    ///
+    /// # Returns
+    /// * `Ok(Some(usize))` - File ordering number if [#] marker present
+    /// * `Ok(None)` - No [#] marker found
+    /// * `Err(ParserError)` - Invalid [#] marker syntax
+    fn parse_file_ordering_marker(&mut self) -> Result<Option<usize>, ParserError> {
+        // Check if next token is [#] (BlockVersionEnum)
+        if !self.check(&TokenKind::BlockVersionEnum) {
+            return Ok(None);
+        }
+
+        // Consume [#] marker
+        let _marker_token = self.advance();
+
+        // Expect an integer literal for the ordering number
+        if !self.check(&TokenKind::LiteralInteger) {
+            let error_token = self.peek();
+            let error_span = Span::new(
+                Position::new(error_token.line, error_token.column, 0),
+                Position::new(error_token.line, error_token.column + error_token.lexeme.len(), 0),
+            );
+            return Err(ParserError::UnexpectedToken {
+                expected: "integer literal".to_string(),
+                found: format!("{:?}", error_token.kind),
+                context: "parsing file ordering marker [#]".to_string(),
+                span: error_span,
+            });
+        }
+
+        let order_token = self.advance();
+        let order_num = order_token.lexeme.parse::<usize>().map_err(|_| {
+            let span = Span::new(
+                Position::new(order_token.line, order_token.column, 0),
+                Position::new(order_token.line, order_token.column + order_token.lexeme.len(), 0),
+            );
+            ParserError::UnexpectedToken {
+                expected: "valid integer".to_string(),
+                found: order_token.lexeme.clone(),
+                context: "parsing file ordering number after [#]".to_string(),
+                span,
+            }
+        })?;
+
+        // Store in parser state and return
+        Ok(Some(order_num))
+    }
+
+    // ========================================================================
+    // Pipeline Resolution (Story 1.5.5 - Task 2)
+    // ========================================================================
+
+    /// Resolve a pipeline reference using three-phase resolution strategy
+    ///
+    /// Resolution phases:
+    /// 1. **Phase 1**: Current file namespace (local_pipelines)
+    /// 2. **Phase 2**: Same package, different files (by [#] order)
+    /// 3. **Phase 3**: External packages (via ImportResolver/registry)
+    ///
+    /// # Arguments
+    /// * `alias` - Package alias (e.g., "utils" from "@utils|Transform")
+    /// * `pipeline_name` - Pipeline name (e.g., "Transform")
+    ///
+    /// # Returns
+    /// * `Ok(true)` - Pipeline found and valid
+    /// * `Ok(false)` - Pipeline not found
+    /// * `Err(ParserError)` - Resolution error
+    ///
+    /// # Example
+    /// ```ignore
+    /// // Resolves @utils|Transform
+    /// parser.resolve_pipeline_reference("utils", "Transform")?;
+    /// ```
+    #[allow(dead_code)]
+    fn resolve_pipeline_reference(
+        &mut self,
+        alias: &str,
+        pipeline_name: &str,
+    ) -> Result<bool, ParserError> {
+        // PHASE 1: Current file namespace
+        // Check if pipeline is defined locally (no alias means current file)
+        if alias == "self" || alias.is_empty() {
+            if self.local_pipelines.contains_key(pipeline_name) {
+                return Ok(true);
+            }
+        }
+
+        // PHASE 2: Same package, different files
+        // Check if alias resolves to same package as current package
+        if let Some(alias_package) = self.package_aliases.get(alias) {
+            if let Some(ref current_pkg) = self.current_package {
+                if Self::package_specs_match(alias_package, current_pkg) {
+                    // Same package - search same-package files
+                    if let Some(base_dir) = self.get_base_directory() {
+                        let same_package_files = self.discover_same_package_files(&base_dir, current_pkg)?;
+
+                        // Validate file ordering (Task 3.1, 3.3)
+                        self.validate_file_ordering(&same_package_files)?;
+
+                        // Sort files by [#] ordering
+                        let ordered_files = self.sort_files_by_ordering(&same_package_files)?;
+
+                        // Search each file for the pipeline
+                        for file_path in ordered_files {
+                            if self.search_file_for_pipeline(&file_path, pipeline_name)? {
+                                return Ok(true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // PHASE 3: External packages (registry)
+        // Use the ImportResolver to check external packages
+        if let Some(package_spec) = self.package_aliases.get(alias) {
+            // Try to list available pipelines from the package
+            // For now, we don't have a direct "does pipeline exist" method,
+            // so we'll return false and let validation happen elsewhere
+            // TODO: Implement proper Phase 3 validation when FileRegistryResolver
+            // exposes pipeline existence checking
+            let _ = package_spec; // Use the variable
+        }
+
+        // Pipeline not found in any phase
+        Ok(false)
+    }
+
+    /// Get the base directory for file discovery
+    ///
+    /// Extracts the directory containing the current source file
+    fn get_base_directory(&self) -> Option<PathBuf> {
+        self.source_file.as_ref().and_then(|path| {
+            PathBuf::from(path).parent().map(|p| p.to_path_buf())
+        })
+    }
+
+    /// Validate file ordering markers for duplicates and gaps
+    ///
+    /// Checks for duplicate [#] markers across package files and warns about gaps
+    /// in sequential ordering (Story 1.5.5 - Tasks 3.1, 3.3)
+    ///
+    /// # Arguments
+    /// * `files` - List of file paths to validate
+    ///
+    /// # Errors
+    /// Returns `ParserError::DuplicateFileOrder` if duplicate [#] numbers found
+    ///
+    /// # Side Effects
+    /// Prints warnings to stderr if gaps detected in sequential ordering
+    fn validate_file_ordering(&mut self, files: &[PathBuf]) -> Result<(), ParserError> {
+        use std::collections::HashMap;
+        use std::fs;
+
+        // Map of order_num -> file_path for duplicate detection
+        let mut order_map: HashMap<usize, PathBuf> = HashMap::new();
+        let mut numbered_files: Vec<usize> = Vec::new();
+
+        // Parse [#] markers from each file and check for duplicates
+        for file_path in files {
+            // Read file to extract [#] marker
+            let source = fs::read_to_string(file_path).map_err(|e| ParserError::UnexpectedEof {
+                context: format!("Failed to read file {:?}: {}", file_path, e),
+                started_at: Span::start(),
+            })?;
+
+            // Quick check for [#] marker at beginning of file
+            let order_num = Self::extract_file_order_marker(&source)?;
+
+            if let Some(num) = order_num {
+                // Check for duplicate
+                if let Some(existing_file) = order_map.get(&num) {
+                    return Err(ParserError::DuplicateFileOrder {
+                        file1: existing_file.display().to_string(),
+                        file2: file_path.display().to_string(),
+                        order_num: num,
+                        span: Span::start(), // Could be improved with actual file span
+                    });
+                }
+
+                order_map.insert(num, file_path.clone());
+                numbered_files.push(num);
+
+                // Store in file_ordering for later use
+                self.file_ordering.insert(file_path.clone(), Some(num));
+            } else {
+                // No [#] marker - store as None
+                self.file_ordering.insert(file_path.clone(), None);
+            }
+        }
+
+        // Validate sequential ordering (Task 3.3)
+        if !numbered_files.is_empty() {
+            numbered_files.sort_unstable();
+
+            // Check for gaps in sequential ordering
+            for i in 0..numbered_files.len() - 1 {
+                let current = numbered_files[i];
+                let next = numbered_files[i + 1];
+
+                if next != current + 1 {
+                    eprintln!(
+                        "Warning: Gap in file ordering sequence: found [#] {} followed by [#] {} \
+                        (expected sequential numbering)",
+                        current, next
+                    );
+                }
+            }
+        }
+
+        Ok(())
+    }
+
+    /// Extract [#] file order marker from source without full parsing
+    ///
+    /// Quick extraction for validation purposes
+    ///
+    /// # Arguments
+    /// * `source` - Source code string
+    ///
+    /// # Returns
+    /// * `Ok(Some(num))` - File has [#] num marker
+    /// * `Ok(None)` - No [#] marker
+    /// * `Err` - Parse error
+    fn extract_file_order_marker(source: &str) -> Result<Option<usize>, ParserError> {
+        let mut lexer = Lexer::new(source);
+        let tokens = lexer.tokenize().map_err(|e| ParserError::LexerError {
+            source: e,
+            span: Span::start(),
+        })?;
+
+        // Look for [#] token followed by integer
+        for (i, token) in tokens.iter().enumerate() {
+            if matches!(token.kind, TokenKind::BlockVersionEnum) {
+                // Found [#], check next token
+                if let Some(next_token) = tokens.get(i + 1) {
+                    if matches!(next_token.kind, TokenKind::LiteralInteger) {
+                        if let Ok(num) = next_token.lexeme.parse::<usize>() {
+                            return Ok(Some(num));
+                        }
+                    }
+                }
+                // [#] found but no valid integer - return None (handled elsewhere)
+                return Ok(None);
+            }
+
+            // Stop at package declaration ([@]) - no [#] marker before it
+            if matches!(token.kind, TokenKind::BlockPackageStart) {
+                return Ok(None);
+            }
+        }
+
+        Ok(None)
+    }
+
+    /// Sort files by [#] ordering markers
+    ///
+    /// Files with [#] markers come first (sorted by number),
+    /// files without markers come last (in arbitrary order)
+    ///
+    /// # Arguments
+    /// * `files` - List of file paths to sort
+    ///
+    /// # Returns
+    /// Sorted vector of file paths
+    fn sort_files_by_ordering(&self, files: &[PathBuf]) -> Result<Vec<PathBuf>, ParserError> {
+        let mut ordered_files: Vec<(PathBuf, Option<usize>)> = files
+            .iter()
+            .map(|path| {
+                let ordering = self.file_ordering.get(path).copied().flatten();
+                (path.clone(), ordering)
+            })
+            .collect();
+
+        // Sort: numbered files first (by number), then unnumbered files
+        ordered_files.sort_by(|a, b| match (a.1, b.1) {
+            (Some(n1), Some(n2)) => n1.cmp(&n2),
+            (Some(_), None) => std::cmp::Ordering::Less,
+            (None, Some(_)) => std::cmp::Ordering::Greater,
+            (None, None) => std::cmp::Ordering::Equal,
+        });
+
+        Ok(ordered_files.into_iter().map(|(path, _)| path).collect())
+    }
+
+    /// Search a file for a pipeline definition
+    ///
+    /// Parses the file (using cache if available) and checks if it contains
+    /// the specified pipeline.
+    ///
+    /// # Arguments
+    /// * `file_path` - Path to the .pg file
+    /// * `pipeline_name` - Name of pipeline to search for
+    ///
+    /// # Returns
+    /// * `Ok(true)` - Pipeline found in file
+    /// * `Ok(false)` - Pipeline not found
+    /// * `Err(ParserError)` - Parse error
+    fn search_file_for_pipeline(
+        &mut self,
+        file_path: &PathBuf,
+        pipeline_name: &str,
+    ) -> Result<bool, ParserError> {
+        use std::fs;
+
+        // Check cache first
+        if let Some(program) = self.file_cache.get(file_path) {
+            return Ok(Self::program_contains_pipeline(program, pipeline_name));
+        }
+
+        // Not in cache - parse the file
+        let source = fs::read_to_string(file_path).map_err(|e| ParserError::UnexpectedEof {
+            context: format!("Failed to read file {:?}: {}", file_path, e),
+            started_at: Span::start(),
+        })?;
+
+        // Parse the file
+        let parsed_program = Self::parse_file(&source)?;
+
+        // Cache the parsed program
+        let found = Self::program_contains_pipeline(&parsed_program, pipeline_name);
+        self.file_cache.insert(file_path.clone(), parsed_program);
+
+        Ok(found)
+    }
+
+    /// Check if a Program contains a pipeline definition
+    ///
+    /// # Arguments
+    /// * `program` - Parsed program to search
+    /// * `pipeline_name` - Name of pipeline to find
+    ///
+    /// # Returns
+    /// `true` if pipeline is defined in the program
+    fn program_contains_pipeline(program: &Program, pipeline_name: &str) -> bool {
+        program.definitions.iter().any(|def| match def {
+            Definition::Pipeline(pipeline) => pipeline.name == pipeline_name,
+            _ => false,
+        })
+    }
+
+    /// Parse a file without consuming self
+    ///
+    /// Creates a minimal parser to parse a file for pipeline lookup
+    ///
+    /// # Arguments
+    /// * `source` - Source code to parse
+    ///
+    /// # Returns
+    /// Parsed Program or ParserError
+    fn parse_file(source: &str) -> Result<Program, ParserError> {
+        use crate::import_resolver::StubImportResolver;
+        let mut lexer = Lexer::new(source);
+        let tokens = lexer.tokenize().map_err(|e| ParserError::LexerError {
+            source: e,
+            span: Span::start(),
+        })?;
+
+        let parser = Parser {
+            tokens,
+            current: 0,
+            resolver: StubImportResolver::new(),
+            source_file: None,
+            package_aliases: HashMap::new(),
+            local_pipelines: HashMap::new(),
+            file_cache: HashMap::new(),
+            current_package: None,
+            file_ordering: HashMap::new(),
+        };
+
+        parser.parse()
+    }
+
+    // ========================================================================
     // Validation
     // ========================================================================
 
@@ -1189,5 +1716,118 @@ mod tests {
         let result = parser.parse();
 
         assert!(result.is_ok(), "Failed to parse: {:?}", result.err());
+    }
+
+    // ========================================================================
+    // File Ordering Marker Tests (Story 1.5.5 - Task 1.3)
+    // ========================================================================
+
+    #[test]
+    fn test_parse_file_ordering_marker_with_number() {
+        let source = r#"
+[#] 1
+[@] Local@MyApp:1.0.0
+[X]
+
+[|] Test
+[i] #Pipeline.NoInput
+[t] |T.Call
+[W] |W.Polyglot.Scope
+[o] .result: pg\int
+[X]
+        "#;
+
+        let resolver = FileRegistryResolver::empty();
+        let parser = Parser::new(source, resolver).unwrap();
+        let result = parser.parse();
+
+        assert!(result.is_ok(), "Failed to parse file with [#] 1 marker: {:?}", result.err());
+    }
+
+    #[test]
+    fn test_parse_file_ordering_marker_large_number() {
+        let source = r#"
+[#] 42
+[@] Local@MyApp:1.0.0
+[X]
+
+[|] Test
+[i] #Pipeline.NoInput
+[t] |T.Call
+[W] |W.Polyglot.Scope
+[o] .result: pg\int
+[X]
+        "#;
+
+        let resolver = FileRegistryResolver::empty();
+        let parser = Parser::new(source, resolver).unwrap();
+        let result = parser.parse();
+
+        assert!(result.is_ok(), "Failed to parse file with [#] 42 marker: {:?}", result.err());
+    }
+
+    #[test]
+    fn test_parse_file_without_ordering_marker() {
+        let source = r#"
+[@] Local@MyApp:1.0.0
+[X]
+
+[|] Test
+[i] #Pipeline.NoInput
+[t] |T.Call
+[W] |W.Polyglot.Scope
+[o] .result: pg\int
+[X]
+        "#;
+
+        let resolver = FileRegistryResolver::empty();
+        let parser = Parser::new(source, resolver).unwrap();
+        let result = parser.parse();
+
+        assert!(result.is_ok(), "Failed to parse file without [#] marker: {:?}", result.err());
+    }
+
+    #[test]
+    fn test_parse_file_ordering_marker_missing_number() {
+        let source = r#"
+[#]
+[@] Local@MyApp:1.0.0
+[X]
+        "#;
+
+        let resolver = FileRegistryResolver::empty();
+        let parser = Parser::new(source, resolver).unwrap();
+        let result = parser.parse();
+
+        assert!(result.is_err(), "Expected error for [#] without number");
+        match result {
+            Err(ParserError::UnexpectedToken { expected, context, .. }) => {
+                assert_eq!(expected, "integer literal");
+                assert_eq!(context, "parsing file ordering marker [#]");
+            }
+            _ => panic!("Expected UnexpectedToken error, got: {:?}", result),
+        }
+    }
+
+    #[test]
+    fn test_parse_file_ordering_marker_zero() {
+        let source = r#"
+[#] 0
+[@] Local@MyApp:1.0.0
+[X]
+
+[|] Test
+[i] #Pipeline.NoInput
+[t] |T.Call
+[W] |W.Polyglot.Scope
+[o] .result: pg\int
+[X]
+        "#;
+
+        let resolver = FileRegistryResolver::empty();
+        let parser = Parser::new(source, resolver).unwrap();
+        let result = parser.parse();
+
+        assert!(result.is_ok(), "Failed to parse file with [#] 0 marker: {:?}", result.err());
     }
 }

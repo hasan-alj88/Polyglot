@@ -1,0 +1,11 @@
+[#] 1
+[@] Local@MultiFileTest:1.0.0
+[X]
+
+[|] BaseHelper
+[i] .value: pg\int
+[t] |T.Call
+[W] |W.Polyglot.Scope
+[r] .result: pg\int << .value
+[o] .result: pg\int
+[X]
