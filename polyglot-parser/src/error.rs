@@ -344,6 +344,112 @@ pub enum ParserError {
         previous_context: String,
         reason: String,
     },
+
+    // ========================================
+    // Semantic Analysis Errors
+    // ========================================
+    // NOTE: These error types are defined here for completeness,
+    // but actual detection logic is in Story 1.5 (Parser) and Epic 2 (Semantic Analysis)
+
+    /// Undeclared variable reference
+    ///
+    /// Variable used before declaration or not declared at all
+    #[error("Undeclared variable at {span}: '{name}' has not been declared")]
+    UndeclaredVariable {
+        name: String,
+        span: Span,
+    },
+
+    /// Undeclared pipeline reference
+    ///
+    /// Pipeline called but not defined or imported
+    #[error("Undeclared pipeline at {span}: '{name}' is not defined or imported")]
+    UndeclaredPipeline {
+        name: String,
+        /// List of available pipelines for "did you mean?" suggestions
+        available: Vec<String>,
+        span: Span,
+    },
+
+    /// Undeclared enumeration reference
+    ///
+    /// Enumeration used but not defined or imported
+    #[error("Undeclared enumeration at {span}: '{name}' is not defined or imported")]
+    UndeclaredEnum {
+        name: String,
+        available: Vec<String>,
+        span: Span,
+    },
+
+    /// Undeclared error type reference
+    ///
+    /// Error type caught but not defined or imported
+    #[error("Undeclared error at {span}: '{name}' is not defined or imported")]
+    UndeclaredError {
+        name: String,
+        available: Vec<String>,
+        span: Span,
+    },
+
+    /// Unresolved import
+    ///
+    /// Imported package not found in registry
+    #[error("Unresolved import at {span}: package '{package}' not found")]
+    UnresolvedImport {
+        package: String,
+        span: Span,
+    },
+
+    /// Duplicate definition
+    ///
+    /// Pipeline, enum, or error defined multiple times
+    #[error("Duplicate definition at {span}: '{name}' already defined at {original_span}")]
+    DuplicateDefinition {
+        name: String,
+        original_span: Span,
+        span: Span,
+    },
+
+    /// Circular import dependency
+    ///
+    /// Package import creates circular dependency
+    #[error("Circular import at {span}: package '{package}' creates import cycle")]
+    CircularImport {
+        package: String,
+        /// List of packages forming the cycle
+        cycle: Vec<String>,
+        span: Span,
+    },
+
+    /// Variable used before declaration
+    ///
+    /// Variable referenced before it's declared in execution order
+    #[error("Variable used before declaration at {span}: '{name}' used at line {use_line}, declared at line {decl_line}")]
+    UseBeforeDeclaration {
+        name: String,
+        use_line: usize,
+        decl_line: usize,
+        span: Span,
+    },
+
+    /// Type mismatch in assignment or operation
+    ///
+    /// Source type incompatible with target type
+    #[error("Type mismatch at {span}: cannot assign {source_type} to {target_type}")]
+    TypeMismatch {
+        target_type: String,
+        source_type: String,
+        span: Span,
+    },
+
+    /// Invalid package version format
+    ///
+    /// Version string doesn't match semver format (major.minor.patch)
+    #[error("Invalid package version at {span}: '{version}' does not match semver format (major.minor.patch)")]
+    InvalidPackageVersion {
+        version: String,
+        span: Span,
+    },
 }
 
 // Implement Send + Sync for async compatibility (ADR-004)
@@ -383,6 +489,16 @@ impl ParserError {
             ParserError::MissingPipelinePrefix { span, .. } => *span,
             ParserError::InvalidLineContinuation { span, .. } => *span,
             ParserError::BrokenContinuation { span, .. } => *span,
+            ParserError::UndeclaredVariable { span, .. } => *span,
+            ParserError::UndeclaredPipeline { span, .. } => *span,
+            ParserError::UndeclaredEnum { span, .. } => *span,
+            ParserError::UndeclaredError { span, .. } => *span,
+            ParserError::UnresolvedImport { span, .. } => *span,
+            ParserError::DuplicateDefinition { span, .. } => *span,
+            ParserError::CircularImport { span, .. } => *span,
+            ParserError::UseBeforeDeclaration { span, .. } => *span,
+            ParserError::TypeMismatch { span, .. } => *span,
+            ParserError::InvalidPackageVersion { span, .. } => *span,
         }
     }
 

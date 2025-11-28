@@ -28,6 +28,7 @@ pub mod span;
 pub mod ast;
 pub mod error;
 pub mod visitor;
+pub mod import_resolver;
 
 // Convenient re-exports
 pub use span::{Position, Span};
@@ -36,8 +37,20 @@ pub use visitor::Visitor;
 
 // Re-export commonly used AST types
 pub use ast::{
+    // Top-level structures
+    Program, Definition,
+    PackageDeclaration, PackageSpec, Version, ImportDeclaration,
+    EnumerationDefinition, EnumField,
+    ErrorDefinition, ErrorField,
+    // Pipeline structures
     Pipeline, Block, BlockType, Statement, Expression,
     Identifier, Literal, BinaryOperator, UnaryOperator, AssignmentOperator,
     TypeAnnotation, InputParameter, Pattern, RangeExpression, DurationUnit,
     TriggerConfig, QueueConfig, WrapperConfig,
+};
+
+// Re-export import resolution types
+pub use import_resolver::{
+    ImportResolver, StubImportResolver,
+    ResolvedPackage, ImportError,
 };

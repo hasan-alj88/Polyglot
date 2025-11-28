@@ -1,6 +1,6 @@
 # Story 1.4: Parser AST Definitions
 
-Status: ready-for-dev
+Status: in-progress
 
 ## Story
 
@@ -62,6 +62,87 @@ so that the parser can build a structured representation of `.pg` files.
    - Helpful error messages with hints for fixing issues
    - Unit tests for all error variants (>80% coverage for error.rs)
    - **Note**: Error *detection logic* is Story 1.5; this story defines error *types*
+
+6. **Program-level AST structure** (Complete .pg file support)
+   - `Program` struct representing complete .pg file:
+     - `package: PackageDeclaration` - Package declaration block `[@] ... [X]`
+     - `definitions: Vec<Definition>` - Top-level definitions (pipelines, enums, errors)
+     - `source_file: Option<String>` - Source file path for multi-file compilation
+     - `span: Span` - Entire file span
+   - `Definition` enum with variants:
+     - `Pipeline(Pipeline)` - Pipeline definition `[|] ... [X]`
+     - `Enumeration(EnumerationDefinition)` - Enum definition `[#] ... [X]`
+     - `Error(ErrorDefinition)` - Error definition `[!] ... [X]`
+   - Unit tests for Program construction and multi-file scenarios
+
+7. **Package declaration AST**
+   - `PackageDeclaration` struct:
+     - `spec: PackageSpec` - Package specification (registry@path:version)
+     - `alias: Option<String>` - Optional package alias `[A] ...`
+     - `imports: Vec<ImportDeclaration>` - Import declarations `[<] ...`
+     - `span: Span`
+   - `PackageSpec` struct:
+     - `registry: String` - Registry tier (Local, Community, Enterprise)
+     - `path: Vec<String>` - Package path components (e.g., ["MyApp", "Example"])
+     - `version: Version` - Semantic version
+     - `span: Span`
+   - `Version` struct: `{ major: u32, minor: u32, patch: u32 }`
+   - `ImportDeclaration` struct:
+     - `alias: String` - Import alias for use in code
+     - `package: PackageSpec` - Imported package specification
+     - `span: Span`
+   - Unit tests for package parsing scenarios
+
+8. **Enumeration and Error definition AST**
+   - `EnumerationDefinition` struct:
+     - `name: Vec<String>` - Enum name path (e.g., ["Config", "Database"])
+     - `fields: Vec<EnumField>` - Field definitions
+     - `alias: Option<String>` - Optional alias `[A] ...`
+     - `span: Span`
+   - `EnumField` struct:
+     - `name: String` - Field name (e.g., ".pending")
+     - `field_type: TypeAnnotation` - Field type
+     - `value: Expression` - Field value (constant expression)
+     - `span: Span`
+   - `ErrorDefinition` struct:
+     - `name: Vec<String>` - Error name path
+     - `message: ErrorField` - Required message field
+     - `code: ErrorField` - Required code field
+     - `trace: ErrorField` - Required trace field
+     - `custom_fields: Vec<ErrorField>` - Optional custom fields
+     - `span: Span`
+   - `ErrorField` struct (same as EnumField structure)
+   - Unit tests for enum and error definition construction
+
+9. **Semantic error types** (Preparation for semantic analysis)
+   - Additional `ParserError` variants:
+     - `UndeclaredVariable { name, span }` - Variable used before declaration
+     - `UndeclaredPipeline { name, available, span }` - Pipeline not found (with suggestions)
+     - `UndeclaredEnum { name, available, span }` - Enum not found
+     - `UndeclaredError { name, available, span }` - Error type not found
+     - `UnresolvedImport { package, span }` - Import package not found
+     - `DuplicateDefinition { name, original_span, span }` - Duplicate pipeline/enum/error
+     - `CircularImport { package, cycle, span }` - Circular import dependency
+     - `UseBeforeDeclaration { name, use_line, decl_line, span }` - Variable ordering
+     - `TypeMismatch { target_type, source_type, span }` - Type incompatibility
+     - `InvalidPackageVersion { version, span }` - Malformed semver
+   - Unit tests for all semantic error variants
+   - **Note**: Error *detection logic* deferred to Story 1.5 and Epic 2
+
+10. **Import resolution interface** (Stub implementation for future DB integration)
+    - Create `polyglot-parser/src/import_resolver.rs` module
+    - Define `ImportResolver` trait:
+      - `resolve_package(&self, spec: &PackageSpec) -> Result<ResolvedPackage, ImportError>`
+      - `list_available_pipelines(&self, package: &str) -> Result<Vec<String>, ImportError>`
+      - `list_available_enums(&self, package: &str) -> Result<Vec<String>, ImportError>`
+      - `list_available_errors(&self, package: &str) -> Result<Vec<String>, ImportError>`
+    - Implement `StubImportResolver` (placeholder):
+      - Returns empty results when DB inactive
+      - Documents SQL queries that would be executed when DB active
+      - Logs warnings about inactive database
+      - Gracefully degrades (no panics, continues parsing)
+    - Unit tests for stub resolver behavior
+    - **Note**: Real implementation deferred to Epic 3 (Database Schema) + Epic 8 (CLI integration)
 
 ## Tasks / Subtasks
 

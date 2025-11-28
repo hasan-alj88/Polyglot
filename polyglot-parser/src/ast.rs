@@ -1,7 +1,10 @@
 //! Core AST node definitions for Polyglot v0.0.2
 //!
 //! Defines all Abstract Syntax Tree node types including:
+//! - Program: Complete .pg file with package declaration and definitions
 //! - Pipeline: Top-level construct with metadata
+//! - Enumeration: Top-level enum definition
+//! - Error: Top-level error type definition
 //! - Block: Container for statements with execution semantics
 //! - Statement: Executable statements (assignments, pipeline calls, control flow)
 //! - Expression: Evaluable expressions (literals, identifiers, operations)
@@ -19,6 +22,211 @@
 
 use crate::span::Span;
 use serde::{Deserialize, Serialize};
+
+// ============================================================================
+// Top-Level: Program (Complete .pg File)
+// ============================================================================
+
+/// Top-level compilation unit representing a complete .pg file
+///
+/// Every .pg file has this structure:
+/// ```polyglot
+/// [@] Local@MyApp.Example:1.0.0
+/// [A] MyAlias
+/// [<] @utils << Community@DataHelpers:2.3.1
+/// [X]
+///
+/// [|] FirstPipeline
+/// ...
+/// [X]
+///
+/// [#] Status
+/// ...
+/// [X]
+/// ```
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Program {
+    /// Package declaration (required - every .pg file has one)
+    pub package: PackageDeclaration,
+    /// Top-level definitions (pipelines, enumerations, errors)
+    pub definitions: Vec<Definition>,
+    /// Source file path (for multi-file compilation tracking)
+    pub source_file: Option<String>,
+    /// Source location (entire file span)
+    pub span: Span,
+}
+
+impl Program {
+    pub fn span(&self) -> &Span {
+        &self.span
+    }
+}
+
+/// Top-level definition (pipeline, enumeration, or error)
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub enum Definition {
+    /// Pipeline definition `[|] ... [X]`
+    Pipeline(Pipeline),
+    /// Enumeration definition `[#] ... [X]`
+    Enumeration(EnumerationDefinition),
+    /// Error type definition `[!] ... [X]`
+    Error(ErrorDefinition),
+}
+
+// ============================================================================
+// Package Declaration
+// ============================================================================
+
+/// Package declaration block `[@] ... [X]`
+///
+/// Example:
+/// ```polyglot
+/// [@] Local@MyApp.Example:1.0.0
+/// [A] MyAlias
+/// [<] @utils << Community@DataHelpers:2.3.1
+/// [<] @db << Local@DatabaseLib:1.0.0
+/// [X]
+/// ```
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PackageDeclaration {
+    /// Package specification (registry@path:version)
+    pub spec: PackageSpec,
+    /// Optional package alias `[A] ...`
+    pub alias: Option<String>,
+    /// Import declarations `[<] @ ...`
+    pub imports: Vec<ImportDeclaration>,
+    /// Source location
+    pub span: Span,
+}
+
+/// Package specification (registry@path:version)
+///
+/// Example: `Local@MyApp.Example:1.0.0`
+/// - Registry: "Local"
+/// - Path: ["MyApp", "Example"]
+/// - Version: 1.0.0
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PackageSpec {
+    /// Registry tier (Local, Community, Enterprise)
+    pub registry: String,
+    /// Package path components (e.g., ["MyApp", "Example"])
+    pub path: Vec<String>,
+    /// Semantic version
+    pub version: Version,
+    /// Source location
+    pub span: Span,
+}
+
+/// Semantic version (major.minor.patch)
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+pub struct Version {
+    pub major: u32,
+    pub minor: u32,
+    pub patch: u32,
+}
+
+impl Version {
+    pub fn new(major: u32, minor: u32, patch: u32) -> Self {
+        Self { major, minor, patch }
+    }
+}
+
+impl std::fmt::Display for Version {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}.{}.{}", self.major, self.minor, self.patch)
+    }
+}
+
+/// Import declaration `[<] @alias << package:version`
+///
+/// Example: `[<] @utils << Community@DataHelpers:2.3.1`
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ImportDeclaration {
+    /// Import alias (e.g., "utils")
+    pub alias: String,
+    /// Imported package specification
+    pub package: PackageSpec,
+    /// Source location
+    pub span: Span,
+}
+
+// ============================================================================
+// Enumeration Definition
+// ============================================================================
+
+/// Top-level enumeration definition `[#] ... [X]`
+///
+/// Example:
+/// ```polyglot
+/// [#] Status
+/// [<] .pending: pg\string << "PENDING"
+/// [<] .active: pg\string << "ACTIVE"
+/// [<] .completed: pg\string << "COMPLETED"
+/// [A] St
+/// [X]
+/// ```
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct EnumerationDefinition {
+    /// Enumeration name path (e.g., ["Config", "Database"])
+    pub name: Vec<String>,
+    /// Field definitions
+    pub fields: Vec<EnumField>,
+    /// Optional alias `[A] ...`
+    pub alias: Option<String>,
+    /// Source location
+    pub span: Span,
+}
+
+/// Enumeration field definition
+///
+/// Example: `[<] .pending: pg\string << "PENDING"`
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct EnumField {
+    /// Field name (e.g., ".pending")
+    pub name: String,
+    /// Field type annotation
+    pub field_type: TypeAnnotation,
+    /// Field value (constant expression)
+    pub value: Expression,
+    /// Source location
+    pub span: Span,
+}
+
+// ============================================================================
+// Error Definition
+// ============================================================================
+
+/// Top-level error definition `[!] ! ... [X]`
+///
+/// Example:
+/// ```polyglot
+/// [!] !NetworkError
+/// [<] .message: pg\string << "Network request failed"
+/// [<] .code: pg\int << 1001
+/// [<] .trace: pg\string << ""
+/// [<] .retryable: pg\bool << #True
+/// [X]
+/// ```
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ErrorDefinition {
+    /// Error name path (e.g., ["Http", "TimeoutError"])
+    pub name: Vec<String>,
+    /// Required message field
+    pub message: ErrorField,
+    /// Required code field
+    pub code: ErrorField,
+    /// Required trace field
+    pub trace: ErrorField,
+    /// Custom fields (optional)
+    pub custom_fields: Vec<ErrorField>,
+    /// Source location
+    pub span: Span,
+}
+
+/// Error field definition (same structure as EnumField)
+///
+/// Example: `[<] .message: pg\string << "Network request failed"`
+pub type ErrorField = EnumField;
 
 // ============================================================================
 // Top-Level: Pipeline
@@ -1263,5 +1471,349 @@ mod tests {
             DurationUnit::Weeks,
         ];
         assert_eq!(units.len(), 6);
+    }
+
+    // ========================================
+    // Tests for new Program-level AST nodes
+    // ========================================
+
+    #[test]
+    fn test_program_structure() {
+        let span = Span::new(Position::new(1, 1, 0), Position::new(20, 1, 500));
+
+        let program = Program {
+            package: PackageDeclaration {
+                spec: PackageSpec {
+                    registry: "Local".to_string(),
+                    path: vec!["MyApp".to_string(), "Example".to_string()],
+                    version: Version::new(1, 0, 0),
+                    span,
+                },
+                alias: Some("MyAlias".to_string()),
+                imports: vec![],
+                span,
+            },
+            definitions: vec![],
+            source_file: Some("example.pg".to_string()),
+            span,
+        };
+
+        assert_eq!(program.package.alias, Some("MyAlias".to_string()));
+        assert_eq!(program.source_file, Some("example.pg".to_string()));
+        assert_eq!(program.definitions.len(), 0);
+    }
+
+    #[test]
+    fn test_package_spec() {
+        let span = Span::new(Position::new(1, 1, 0), Position::new(1, 40, 39));
+
+        let spec = PackageSpec {
+            registry: "Community".to_string(),
+            path: vec!["DataHelpers".to_string()],
+            version: Version::new(2, 3, 1),
+            span,
+        };
+
+        assert_eq!(spec.registry, "Community");
+        assert_eq!(spec.path.len(), 1);
+        assert_eq!(spec.path[0], "DataHelpers");
+        assert_eq!(spec.version, Version::new(2, 3, 1));
+    }
+
+    #[test]
+    fn test_version_display() {
+        let version = Version::new(1, 2, 3);
+        assert_eq!(version.to_string(), "1.2.3");
+
+        let version = Version::new(0, 0, 1);
+        assert_eq!(version.to_string(), "0.0.1");
+    }
+
+    #[test]
+    fn test_version_ordering() {
+        let v1 = Version::new(1, 0, 0);
+        let v2 = Version::new(1, 0, 1);
+        let v3 = Version::new(1, 1, 0);
+        let v4 = Version::new(2, 0, 0);
+
+        assert!(v1 < v2);
+        assert!(v2 < v3);
+        assert!(v3 < v4);
+        assert_eq!(v1, Version::new(1, 0, 0));
+    }
+
+    #[test]
+    fn test_import_declaration() {
+        let span = Span::new(Position::new(2, 1, 50), Position::new(2, 45, 94));
+
+        let import = ImportDeclaration {
+            alias: "utils".to_string(),
+            package: PackageSpec {
+                registry: "Community".to_string(),
+                path: vec!["DataHelpers".to_string()],
+                version: Version::new(2, 3, 1),
+                span,
+            },
+            span,
+        };
+
+        assert_eq!(import.alias, "utils");
+        assert_eq!(import.package.registry, "Community");
+        assert_eq!(import.package.path[0], "DataHelpers");
+    }
+
+    #[test]
+    fn test_package_declaration_with_imports() {
+        let span = Span::new(Position::new(1, 1, 0), Position::new(5, 3, 150));
+
+        let package_decl = PackageDeclaration {
+            spec: PackageSpec {
+                registry: "Local".to_string(),
+                path: vec!["MyApp".to_string()],
+                version: Version::new(1, 0, 0),
+                span,
+            },
+            alias: None,
+            imports: vec![
+                ImportDeclaration {
+                    alias: "utils".to_string(),
+                    package: PackageSpec {
+                        registry: "Community".to_string(),
+                        path: vec!["DataHelpers".to_string()],
+                        version: Version::new(2, 3, 1),
+                        span,
+                    },
+                    span,
+                },
+                ImportDeclaration {
+                    alias: "db".to_string(),
+                    package: PackageSpec {
+                        registry: "Local".to_string(),
+                        path: vec!["DatabaseLib".to_string()],
+                        version: Version::new(1, 0, 0),
+                        span,
+                    },
+                    span,
+                },
+            ],
+            span,
+        };
+
+        assert_eq!(package_decl.imports.len(), 2);
+        assert_eq!(package_decl.imports[0].alias, "utils");
+        assert_eq!(package_decl.imports[1].alias, "db");
+    }
+
+    #[test]
+    fn test_enumeration_definition() {
+        let span = Span::new(Position::new(10, 1, 300), Position::new(15, 3, 450));
+
+        let enum_def = EnumerationDefinition {
+            name: vec!["Status".to_string()],
+            fields: vec![
+                EnumField {
+                    name: ".pending".to_string(),
+                    field_type: TypeAnnotation::Named {
+                        namespace: "pg".to_string(),
+                        type_name: "string".to_string(),
+                    },
+                    value: Expression::Literal {
+                        value: Literal::String("PENDING".to_string()),
+                        span,
+                    },
+                    span,
+                },
+                EnumField {
+                    name: ".active".to_string(),
+                    field_type: TypeAnnotation::Named {
+                        namespace: "pg".to_string(),
+                        type_name: "string".to_string(),
+                    },
+                    value: Expression::Literal {
+                        value: Literal::String("ACTIVE".to_string()),
+                        span,
+                    },
+                    span,
+                },
+            ],
+            alias: Some("St".to_string()),
+            span,
+        };
+
+        assert_eq!(enum_def.name, vec!["Status"]);
+        assert_eq!(enum_def.fields.len(), 2);
+        assert_eq!(enum_def.fields[0].name, ".pending");
+        assert_eq!(enum_def.alias, Some("St".to_string()));
+    }
+
+    #[test]
+    fn test_error_definition() {
+        let span = Span::new(Position::new(20, 1, 600), Position::new(25, 3, 750));
+
+        let error_def = ErrorDefinition {
+            name: vec!["NetworkError".to_string()],
+            message: EnumField {
+                name: ".message".to_string(),
+                field_type: TypeAnnotation::Named {
+                    namespace: "pg".to_string(),
+                    type_name: "string".to_string(),
+                },
+                value: Expression::Literal {
+                    value: Literal::String("Network request failed".to_string()),
+                    span,
+                },
+                span,
+            },
+            code: EnumField {
+                name: ".code".to_string(),
+                field_type: TypeAnnotation::Named {
+                    namespace: "pg".to_string(),
+                    type_name: "int".to_string(),
+                },
+                value: Expression::Literal {
+                    value: Literal::Integer(1001),
+                    span,
+                },
+                span,
+            },
+            trace: EnumField {
+                name: ".trace".to_string(),
+                field_type: TypeAnnotation::Named {
+                    namespace: "pg".to_string(),
+                    type_name: "string".to_string(),
+                },
+                value: Expression::Literal {
+                    value: Literal::String("".to_string()),
+                    span,
+                },
+                span,
+            },
+            custom_fields: vec![],
+            span,
+        };
+
+        assert_eq!(error_def.name, vec!["NetworkError"]);
+        assert_eq!(error_def.message.name, ".message");
+        assert_eq!(error_def.code.name, ".code");
+        assert_eq!(error_def.trace.name, ".trace");
+        assert_eq!(error_def.custom_fields.len(), 0);
+    }
+
+    #[test]
+    fn test_definition_enum_variants() {
+        let span = Span::new(Position::new(1, 1, 0), Position::new(10, 1, 300));
+
+        // Create a minimal pipeline for testing
+        let pipeline = Pipeline {
+            name: "TestPipeline".to_string(),
+            input: None,
+            output: None,
+            trigger: None,
+            queue: None,
+            wrapper: None,
+            body: Block {
+                block_type: BlockType::Sequential,
+                statements: vec![],
+                span,
+            },
+            span,
+        };
+
+        let def = Definition::Pipeline(pipeline);
+        match def {
+            Definition::Pipeline(p) => {
+                assert_eq!(p.name, "TestPipeline");
+            }
+            _ => panic!("Expected Pipeline variant"),
+        }
+    }
+
+    #[test]
+    fn test_program_with_multiple_definitions() {
+        let span = Span::new(Position::new(1, 1, 0), Position::new(50, 1, 1500));
+
+        let program = Program {
+            package: PackageDeclaration {
+                spec: PackageSpec {
+                    registry: "Local".to_string(),
+                    path: vec!["MyApp".to_string()],
+                    version: Version::new(1, 0, 0),
+                    span,
+                },
+                alias: None,
+                imports: vec![],
+                span,
+            },
+            definitions: vec![
+                Definition::Pipeline(Pipeline {
+                    name: "First".to_string(),
+                    input: None,
+                    output: None,
+                    trigger: None,
+                    queue: None,
+                    wrapper: None,
+                    body: Block {
+                        block_type: BlockType::Sequential,
+                        statements: vec![],
+                        span,
+                    },
+                    span,
+                }),
+                Definition::Enumeration(EnumerationDefinition {
+                    name: vec!["Status".to_string()],
+                    fields: vec![],
+                    alias: None,
+                    span,
+                }),
+                Definition::Error(ErrorDefinition {
+                    name: vec!["MyError".to_string()],
+                    message: EnumField {
+                        name: ".message".to_string(),
+                        field_type: TypeAnnotation::Named {
+                            namespace: "pg".to_string(),
+                            type_name: "string".to_string(),
+                        },
+                        value: Expression::Literal {
+                            value: Literal::String("Error".to_string()),
+                            span,
+                        },
+                        span,
+                    },
+                    code: EnumField {
+                        name: ".code".to_string(),
+                        field_type: TypeAnnotation::Named {
+                            namespace: "pg".to_string(),
+                            type_name: "int".to_string(),
+                        },
+                        value: Expression::Literal {
+                            value: Literal::Integer(1),
+                            span,
+                        },
+                        span,
+                    },
+                    trace: EnumField {
+                        name: ".trace".to_string(),
+                        field_type: TypeAnnotation::Named {
+                            namespace: "pg".to_string(),
+                            type_name: "string".to_string(),
+                        },
+                        value: Expression::Literal {
+                            value: Literal::String("".to_string()),
+                            span,
+                        },
+                        span,
+                    },
+                    custom_fields: vec![],
+                    span,
+                }),
+            ],
+            source_file: Some("multi.pg".to_string()),
+            span,
+        };
+
+        assert_eq!(program.definitions.len(), 3);
+        assert!(matches!(program.definitions[0], Definition::Pipeline(_)));
+        assert!(matches!(program.definitions[1], Definition::Enumeration(_)));
+        assert!(matches!(program.definitions[2], Definition::Error(_)));
     }
 }
