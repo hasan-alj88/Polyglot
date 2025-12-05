@@ -433,3 +433,197 @@ fn test_12_7_unpack_vs_default_pull() {
     assert_eq!(tokens2[0].kind, TokenKind::OpDefaultPull);
     assert_eq!(tokens2[0].lexeme, "~>");
 }
+
+// ========================================
+// 13. v0.0.2 Syntax Compliance Tests
+// ========================================
+
+#[test]
+fn test_13_1_input_argument_prefix() {
+    let input = "<config";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 3); // <, config, EOF
+    assert_eq!(tokens[0].kind, TokenKind::DelimiterInputPrefix);
+    assert_eq!(tokens[0].lexeme, "<");
+    assert_eq!(tokens[1].kind, TokenKind::Identifier);
+    assert_eq!(tokens[1].lexeme, "config");
+}
+
+#[test]
+fn test_13_2_output_argument_prefix() {
+    let input = ">result";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 3); // >, result, EOF
+    assert_eq!(tokens[0].kind, TokenKind::DelimiterOutputPrefix);
+    assert_eq!(tokens[0].lexeme, ">");
+    assert_eq!(tokens[1].kind, TokenKind::Identifier);
+    assert_eq!(tokens[1].lexeme, "result");
+}
+
+#[test]
+fn test_13_3_full_input_argument_with_type() {
+    let input = "[<] <config:pg.path << value";
+    let tokens = lex(input).unwrap();
+
+    // Verify critical tokens
+    assert_eq!(tokens[0].kind, TokenKind::BlockInputBinding);
+    assert_eq!(tokens[1].kind, TokenKind::DelimiterInputPrefix);
+    assert_eq!(tokens[1].lexeme, "<");
+    assert_eq!(tokens[2].kind, TokenKind::Identifier);
+    assert_eq!(tokens[2].lexeme, "config");
+    assert_eq!(tokens[3].kind, TokenKind::DelimiterColon);
+    assert_eq!(tokens[4].kind, TokenKind::TypeNamespace);
+    assert_eq!(tokens[4].lexeme, "pg");
+
+    // Find the push operator
+    let push_idx = tokens.iter().position(|t| t.kind == TokenKind::OpPush).unwrap();
+    assert_eq!(tokens[push_idx].kind, TokenKind::OpPush);
+}
+
+#[test]
+fn test_13_4_full_output_argument_with_type() {
+    let input = "[>] >result:pg.int >> .output";
+    let tokens = lex(input).unwrap();
+
+    // Verify critical tokens
+    assert_eq!(tokens[0].kind, TokenKind::BlockOutputBinding);
+    assert_eq!(tokens[1].kind, TokenKind::DelimiterOutputPrefix);
+    assert_eq!(tokens[1].lexeme, ">");
+    assert_eq!(tokens[2].kind, TokenKind::Identifier);
+    assert_eq!(tokens[2].lexeme, "result");
+    assert_eq!(tokens[3].kind, TokenKind::DelimiterColon);
+    assert_eq!(tokens[4].kind, TokenKind::TypeNamespace);
+    assert_eq!(tokens[4].lexeme, "pg");
+
+    // Find the pull operator
+    let pull_idx = tokens.iter().position(|t| t.kind == TokenKind::OpPull).unwrap();
+    assert_eq!(tokens[pull_idx].kind, TokenKind::OpPull);
+
+    // Find the output variable (should be after the pull operator)
+    let var_idx = tokens.iter().skip(pull_idx).position(|t| t.kind == TokenKind::IdentifierVariable).unwrap();
+    assert_eq!(tokens[pull_idx + var_idx].lexeme, ".output");
+}
+
+#[test]
+fn test_13_5_macro_definition_marker() {
+    let input = "[M]";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2); // [M], EOF
+    assert_eq!(tokens[0].kind, TokenKind::BlockMacroDefinition);
+    assert_eq!(tokens[0].lexeme, "[M]");
+}
+
+#[test]
+fn test_13_6_scope_input_marker() {
+    let input = "[{]";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2); // [{], EOF
+    assert_eq!(tokens[0].kind, TokenKind::BlockScopeInput);
+    assert_eq!(tokens[0].lexeme, "[{]");
+}
+
+#[test]
+fn test_13_7_scope_output_marker() {
+    let input = "[}]";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2); // [}], EOF
+    assert_eq!(tokens[0].kind, TokenKind::BlockScopeOutput);
+    assert_eq!(tokens[0].lexeme, "[}]");
+}
+
+#[test]
+fn test_13_8_alias_definition_marker() {
+    let input = "[A]";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2); // [A], EOF
+    assert_eq!(tokens[0].kind, TokenKind::BlockAliasDefinition);
+    assert_eq!(tokens[0].lexeme, "[A]");
+}
+
+#[test]
+fn test_13_9_package_declaration_with_double_colon() {
+    let input = "@Local::Examples";
+    let tokens = lex(input).unwrap();
+
+    // Verify: @, Local, :, :, Examples
+    assert_eq!(tokens[0].kind, TokenKind::DelimiterAt);
+    assert_eq!(tokens[1].kind, TokenKind::Identifier);
+    assert_eq!(tokens[1].lexeme, "Local");
+    assert_eq!(tokens[2].kind, TokenKind::DelimiterColon);
+    assert_eq!(tokens[3].kind, TokenKind::DelimiterColon);
+    assert_eq!(tokens[4].kind, TokenKind::Identifier);
+    assert_eq!(tokens[4].lexeme, "Examples");
+}
+
+#[test]
+fn test_13_10_complete_macro_definition() {
+    let input = "[M] TestMacro\n[{] .input:pg.string\n[}] .output:pg.string\n[X]";
+    let tokens = lex(input).unwrap();
+
+    // Find key markers
+    let macro_idx = tokens.iter().position(|t| t.kind == TokenKind::BlockMacroDefinition).unwrap();
+    let scope_in_idx = tokens.iter().position(|t| t.kind == TokenKind::BlockScopeInput).unwrap();
+    let scope_out_idx = tokens.iter().position(|t| t.kind == TokenKind::BlockScopeOutput).unwrap();
+    let end_idx = tokens.iter().position(|t| t.kind == TokenKind::BlockEnd).unwrap();
+
+    // Verify markers exist and are in order
+    assert!(macro_idx < scope_in_idx);
+    assert!(scope_in_idx < scope_out_idx);
+    assert!(scope_out_idx < end_idx);
+
+    // Verify first line has TestMacro identifier
+    assert_eq!(tokens[macro_idx + 1].kind, TokenKind::Identifier);
+    assert_eq!(tokens[macro_idx + 1].lexeme, "TestMacro");
+}
+
+#[test]
+fn test_13_11_runtime_wrapper_with_arguments() {
+    let input = "[r] |U.RT.Python.Cli\n[<] <config:pg.path << value\n[>] >return_value:pg.int >> .result";
+    let tokens = lex(input).unwrap();
+
+    // Find key tokens
+    let seq_idx = tokens.iter().position(|t| t.kind == TokenKind::BlockSequential).unwrap();
+    let pipe_idx = tokens.iter().position(|t| t.kind == TokenKind::IdentifierPipeline).unwrap();
+    let input_bind_idx = tokens.iter().position(|t| t.kind == TokenKind::BlockInputBinding).unwrap();
+    let input_prefix_idx = tokens.iter().position(|t| t.kind == TokenKind::DelimiterInputPrefix).unwrap();
+    let output_bind_idx = tokens.iter().position(|t| t.kind == TokenKind::BlockOutputBinding).unwrap();
+    let output_prefix_idx = tokens.iter().position(|t| t.kind == TokenKind::DelimiterOutputPrefix).unwrap();
+
+    // Verify structure
+    assert_eq!(tokens[seq_idx].kind, TokenKind::BlockSequential);
+    assert_eq!(tokens[pipe_idx].lexeme, "|U.RT.Python.Cli");
+    assert_eq!(tokens[input_prefix_idx + 1].kind, TokenKind::Identifier);
+    assert_eq!(tokens[input_prefix_idx + 1].lexeme, "config");
+    assert_eq!(tokens[output_prefix_idx + 1].kind, TokenKind::Identifier);
+    assert_eq!(tokens[output_prefix_idx + 1].lexeme, "return_value");
+}
+
+#[test]
+fn test_13_12_operators_still_work() {
+    // Ensure compound operators still work correctly
+    let input_push = "<<";
+    let tokens_push = lex(input_push).unwrap();
+    assert_eq!(tokens_push[0].kind, TokenKind::OpPush);
+
+    let input_pull = ">>";
+    let tokens_pull = lex(input_pull).unwrap();
+    assert_eq!(tokens_pull[0].kind, TokenKind::OpPull);
+
+    let input_less = "<?";
+    let tokens_less = lex(input_less).unwrap();
+    assert_eq!(tokens_less[0].kind, TokenKind::OpLess);
+
+    let input_greater = ">?";
+    let tokens_greater = lex(input_greater).unwrap();
+    assert_eq!(tokens_greater[0].kind, TokenKind::OpGreater);
+
+    let input_default = "<~";
+    let tokens_default = lex(input_default).unwrap();
+    assert_eq!(tokens_default[0].kind, TokenKind::OpDefault);
+}

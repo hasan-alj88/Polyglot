@@ -342,6 +342,10 @@ impl Lexer {
             '^' => TokenKind::BlockBoolNand,
             '.' => TokenKind::BlockBoolNor,
             '*' => TokenKind::BlockLineContinuation,
+            'M' => TokenKind::BlockMacroDefinition,
+            '{' => TokenKind::BlockScopeInput,
+            '}' => TokenKind::BlockScopeOutput,
+            'A' => TokenKind::BlockAliasDefinition,
             _ => {
                 return Err(LexerError::UnknownBlockMarker {
                     line: start_line,
@@ -639,6 +643,14 @@ impl Lexer {
                 start_line,
                 start_column,
             ))
+        } else if !self.is_at_end() && (self.current_char().is_ascii_alphabetic() || self.current_char() == '_') {
+            // Standalone < before identifier (input argument prefix)
+            Ok(Token::new(
+                TokenKind::DelimiterInputPrefix,
+                "<".to_string(),
+                start_line,
+                start_column,
+            ))
         } else {
             Err(LexerError::UnexpectedCharacter {
                 line: start_line,
@@ -667,6 +679,14 @@ impl Lexer {
             Ok(Token::new(
                 TokenKind::OpGreater,
                 ">?".to_string(),
+                start_line,
+                start_column,
+            ))
+        } else if !self.is_at_end() && (self.current_char().is_ascii_alphabetic() || self.current_char() == '_') {
+            // Standalone > before identifier (output argument prefix)
+            Ok(Token::new(
+                TokenKind::DelimiterOutputPrefix,
+                ">".to_string(),
                 start_line,
                 start_column,
             ))

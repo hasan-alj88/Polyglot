@@ -23,11 +23,11 @@ impl Token {
     }
 }
 
-/// All token types in Polyglot (102 types total)
+/// All token types in Polyglot (108 types total)
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum TokenKind {
     // ========================================
-    // Block Markers (26 tokens)
+    // Block Markers (30 tokens)
     // ========================================
     BlockPackageStart,     // [@]
     BlockVersionEnum,      // [#]
@@ -56,6 +56,10 @@ pub enum TokenKind {
     BlockBoolNand,         // [^]
     BlockBoolNor,          // [.]
     BlockLineContinuation, // [*]
+    BlockMacroDefinition,  // [M]
+    BlockScopeInput,       // [{]
+    BlockScopeOutput,      // [}]
+    BlockAliasDefinition,  // [A]
 
     // ========================================
     // Assignment Operators (4 tokens)
@@ -95,7 +99,7 @@ pub enum TokenKind {
     OpRangeHalfLeft,  // ?)
 
     // ========================================
-    // Delimiters (11 tokens)
+    // Delimiters (13 tokens)
     // ========================================
     DelimiterBraceOpen,          // {
     DelimiterBraceClose,         // }
@@ -109,6 +113,8 @@ pub enum TokenKind {
     DelimiterBackslash,          // \
     DelimiterPipe,               // |
     DelimiterDot,                // .
+    DelimiterInputPrefix,        // < (standalone, for input arguments)
+    DelimiterOutputPrefix,       // > (standalone, for output arguments)
 
     // ========================================
     // String Literal Tokens (6 tokens) - NEW
@@ -241,6 +247,10 @@ impl TokenKind {
             TokenKind::BlockBoolNand => "boolean NAND marker [^]",
             TokenKind::BlockBoolNor => "boolean NOR marker [.]",
             TokenKind::BlockLineContinuation => "line continuation marker [*]",
+            TokenKind::BlockMacroDefinition => "macro definition marker [M]",
+            TokenKind::BlockScopeInput => "scope input marker [{]",
+            TokenKind::BlockScopeOutput => "scope output marker [}]",
+            TokenKind::BlockAliasDefinition => "alias definition marker [A]",
 
             // Operators
             TokenKind::OpPush => "push operator <<",
@@ -274,6 +284,8 @@ impl TokenKind {
             TokenKind::DelimiterBackslash => "backslash \\",
             TokenKind::DelimiterPipe => "pipe |",
             TokenKind::DelimiterDot => "dot .",
+            TokenKind::DelimiterInputPrefix => "input prefix <",
+            TokenKind::DelimiterOutputPrefix => "output prefix >",
 
             // String tokens
             TokenKind::StringStart => "string start",

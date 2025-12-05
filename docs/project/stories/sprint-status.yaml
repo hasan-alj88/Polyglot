@@ -15,6 +15,7 @@
 #   - drafted: Story file created in stories folder
 #   - ready-for-dev: Draft approved and story context created
 #   - in-progress: Developer actively working on implementation
+#   - needs-rework: Story marked done but requires fixes for spec compliance
 #   - review: Under review (via code-review workflow)
 #   - done: Story completed
 #
@@ -39,14 +40,14 @@ development_status:
   # Epic 1: Lexer & Parser
   epic-1: in-progress
   1-1-project-workspace-build-system-setup: done
-  1-2-lexer-token-definitions: done
-  1-3-lexer-implementation: done
-  1-4-parser-ast-definitions: done
-  1-5-recursive-descent-parser-implementation: done
+  1-2-lexer-token-definitions: done  # Fixed: Added DelimiterInputPrefix, DelimiterOutputPrefix, macro/alias markers
+  1-3-lexer-implementation: done      # Fixed: lex_less_operators, lex_greater_operators handle standalone < >
+  1-4-parser-ast-definitions: done    # Fixed: Comprehensive test suite (45 tests, all passing)
+  1-5-recursive-descent-parser-implementation: needs-rework  # Cannot parse argument prefixes
   1-5-5-multi-file-compilation-same-package-resolution: done
-  1-6-syntax-validator-standalone: done
+  1-6-syntax-validator-standalone: needs-rework  # Would fail on valid v0.0.2 code
   1-7-december-2025-syntax-updates: done
-  1-8-serial-error-handling-test-coverage: in-progress
+  1-8-serial-error-handling-test-coverage: in-progress  # BLOCKED by needs-rework stories
   1-9-syntax-consistency-operator-prefixes: drafted
   epic-1-retrospective: optional
 
