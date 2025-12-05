@@ -1322,7 +1322,7 @@ fn test_string_with_interpolation() {
 ### Test Data Extraction
 
 All examples from user documentation can serve as integration tests:
-- `/docs/user/examples/01-hello-world.md` - 6 complete examples
+- `/docs/user/examples/hello-world.md` - 6 complete examples
 - `/docs/user/examples/data-processing.md` - Data transformation examples
 - `/docs/user/examples/error-handling.md` - Error scenarios
 

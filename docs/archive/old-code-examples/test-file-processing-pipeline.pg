@@ -152,18 +152,18 @@
 [~][~][~][~][r] |U.Log.Info
 [~][~][~][~][<] .msg: pg\string << "Processed {.file_meta.file_name}: {.processed_rows} rows"
 [~][~][~][~]
-[~][~][~][~][o] !NoError
+[~][~][~][~][o] !No.Output
 [~][~][~]
 [~][~][~][?] .file_success =? #False
 [~][~][~][~]// Processing returned false (validation failed)
 [~][~][~][~][r] |U.Log.Warn
 [~][~][~][~][<] .msg: pg\string << "Validation failed for {.file_meta.file_name}"
 [~][~][~][~]
-[~][~][~][~][o] !NoError
+[~][~][~][~][o] !No.Output
 [~][~][~]
 [~][~][~][?] *?
 [~][~][~][~]// Unexpected boolean value
-[~][~][~][~][o] !NoError
+[~][~][~][~][o] !No.Output
 [~][~]
 [~][~][?] .file_success.state =? #Variables.States.Faulted
 [~][~][~]// Operation faulted - serious error
@@ -180,7 +180,7 @@
 [~][~]
 [~][~][?] *?
 [~][~][~]// Catchall for other states
-[~][~][~][o] !NoError
+[~][~][~][o] !No.Output
 [~]
 [~]// Generate final statistics
 [~][r] |CalculateFinalStats
@@ -198,7 +198,7 @@
 [~][~][~][<] .stats: #ProcessingStats << .summary
 [~][~][~][<] .channel: #NotificationChannel << #NotificationChannel.Slack
 [~][~]
-[~][~][o] !NoError
+[~][~][o] !No.Output
 [~]
 [~][?] *?
 [~][~]// Stats calculation failed
@@ -345,7 +345,7 @@
 [~][~][r] |U.Log.Info
 [~][~][<] .msg: pg\string << "Slack notification sent"
 [~][~]
-[~][~][o] !NoError
+[~][~][o] !No.Output
 [~]
 [~][?] *?
 [~][~]// Slack failed, fallback to email
@@ -362,7 +362,7 @@
 [~][~][~][r] |U.Log.Error
 [~][~][~][<] .msg: pg\string << "All notification channels failed"
 [~][~]
-[~][~][o] !NoError
+[~][~][o] !No.Output
 
 // Slack notification faulted
 [?] .slack_sent.state =? #Variables.States.Faulted
@@ -374,10 +374,10 @@
 [~][<] .subject: pg\string << "File Processing Error"
 [~][<] .body: pg\string << .message
 [~]
-[~][o] !NoError
+[~][o] !No.Output
 
 [?] *?
-[~][o] !NoError
+[~][o] !No.Output
 
 [o] #None
 [X]

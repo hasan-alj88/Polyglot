@@ -7,7 +7,9 @@ pub enum LexerError {
     #[error("Unterminated string literal at line {line}, column {column}")]
     UnterminatedString { line: usize, column: usize },
 
-    #[error("Unterminated interpolation at line {line}, column {column}: expected '}}', got {got}")]
+    #[error(
+        "Unterminated interpolation at line {line}, column {column}: expected '}}', got {got}"
+    )]
     UnterminatedInterpolation {
         line: usize,
         column: usize,

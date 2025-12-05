@@ -27,7 +27,7 @@ The traditional "Hello World" program demonstrates the minimal syntax required t
 **Key Concepts:**
 - Pipeline definition with `[|]` and `[X]`
 - Output declaration with `[o]`
-- String type `pg\string`
+- String type `:pg.string`
 - Assignment operator `<<`
 
 **Code:**
@@ -38,15 +38,15 @@ The traditional "Hello World" program demonstrates the minimal syntax required t
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[r] .message: pg\string << "Hello, World!"
-[o] .message: pg\string
+[r] .message:pg.string << "Hello, World!"
+[o] .message:pg.string
 [X]
 ```
 
 **Explanation:**
 
 1. **`[|] HelloWorld`** - Defines a pipeline named `HelloWorld`
-2. **`[o] .message: pg\string << "Hello, World!"`** - Declares an output field `.message` of type `pg\string` and assigns the value `"Hello, World!"`
+2. **`[o] .message:pg.string << "Hello, World!"`** - Declares an output field `.message` of type `:pg.string` and assigns the value `"Hello, World!"`
 3. **`[X]`** - Closes the pipeline definition
 
 **Output:**
@@ -83,21 +83,21 @@ The traditional "Hello World" program demonstrates the minimal syntax required t
 
 ```polyglot
 [|] GreetUser
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[r] .greeting: pg\string << "Hello, {.name}!"
-[o] .greeting: pg\string
+[r] .greeting:pg.string << "Hello, {.name}!"
+[o] .greeting:pg.string
 [X]
 ```
 
 **Explanation:**
 
-1. **`[i] .name: pg\string`** - Declares an input field `.name` of type `pg\string`
-2. **`[o] .greeting: pg\string << "Hello, {.name}!"`** - Creates output with string interpolation
+1. **`[i] .name:pg.string`** - Declares an input field `.name` of type `:pg.string`
+2. **`[o] .greeting:pg.string << "Hello, {.name}!"`** - Creates output with string interpolation
 
-**Note:** String interpolation `{.name}` is syntax sugar that compiles to pipeline operations. See [DateTime System](../language/07-datetime-system.md) for details on how `{}` interpolation works (it's processed within `pg\serial`).
+**Note:** String interpolation `{.name}` is syntax sugar that compiles to pipeline operations. See [DateTime System](../language/07-datetime-system.md) for details on how `{}` interpolation works (it's processed within `:pg.serial`).
 
 **Usage Example:**
 ```
@@ -133,24 +133,24 @@ Output: .greeting = "Hello, Alice!"
 
 ```polyglot
 [|] ConditionalGreeting
-[i] .name: pg\string
-[i] .should_greet: pg\bool
+[i] .name:pg.string
+[i] .should_greet:pg.bool
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [?] .should_greet ?> True
 [~]
 [~][r] |FormatGreeting
-[~][<] .input_name: pg\string << .name
-[~][>] .formatted: pg\string >> .greeting_message
+[~][<] .input_name:pg.string << .name
+[~][>] .formatted:pg.string >> .greeting_message
 [~]
-[~][r] .result: pg\string << .greeting_message
-[~][o] .result: pg\string
+[~][r] .result:pg.string << .greeting_message
+[~][o] .result:pg.string
 
 [?] .should_greet ?> False
 [~]
-[~][r] .result: pg\string << ""
-[~][o] .result: pg\string
+[~][r] .result:pg.string << ""
+[~][o] .result:pg.string
 
 [X]
 
@@ -158,12 +158,12 @@ Output: .greeting = "Hello, Alice!"
 
 
 [|] FormatGreeting
-[i] .input_name: pg\string
+[i] .input_name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[r] .formatted: pg\string << "Hello, {.input_name}!"
-[o] .formatted: pg\string
+[r] .formatted:pg.string << "Hello, {.input_name}!"
+[o] .formatted:pg.string
 [X]
 ```
 
@@ -214,24 +214,24 @@ Output: (no output, greeting not executed)
 
 ```polyglot
 [|] SafeGreeting
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Try to format greeting (might fail if name is empty)
 [r] |ValidateAndGreet
-[<] .input_name: pg\string << .name
-[>] .greeting: pg\string >> .result_greeting
+[<] .input_name:pg.string << .name
+[>] .greeting:pg.string >> .result_greeting
 [~]
 [~][!] !ValidationError
-[~][>] .message: pg\string >> .err_msg
-[~][>] .code: pg\int >> .err_code
+[~][>] .message:pg.string >> .err_msg
+[~][>] .code:pg.int >> .err_code
 [~]
 [~]// Use fallback on error
-[~][r] .result_greeting: pg\string << "Hello, Guest!"
+[~][r] .result_greeting:pg.string << "Hello, Guest!"
 
 // Use the result (either success or fallback)
-[o] .result: pg\string << .result_greeting
+[o] .result:pg.string << .result_greeting
 [X]
 
 
@@ -239,28 +239,28 @@ Output: (no output, greeting not executed)
 
 // Validation pipeline that can fail
 [|] ValidateAndGreet
-[i] .input_name: pg\string
+[i] .input_name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Check if name is empty
 [r] |U.String.IsEmpty
-[<] .value: pg\string << .input_name
-[>] .is_empty: pg\bool >> .name_is_empty
+[<] .value:pg.string << .input_name
+[>] .is_empty:pg.bool >> .name_is_empty
 
 // Throw error if empty, otherwise format greeting
 [?] .name_is_empty ?> True
 [~]
 [~][r] .error: ! << !ValidationError
-[~][<] .message: pg\string << "Name cannot be empty"
-[~][<] .code: pg\int << 1001
-[~][<] .trace: pg\string << ""
+[~][<] .message:pg.string << "Name cannot be empty"
+[~][<] .code:pg.int << 1001
+[~][<] .trace:pg.string << ""
 [~][o] .error: !
 
 [?] .name_is_empty ?> False
 [~]
-[~][r] .greeting: pg\string << "Hello, {.input_name}!"
-[~][o] .greeting: pg\string
+[~][r] .greeting:pg.string << "Hello, {.input_name}!"
+[~][o] .greeting:pg.string
 
 [X]
 ```
@@ -268,11 +268,11 @@ Output: (no output, greeting not executed)
 **Explanation:**
 
 1. **`[r] |ValidateAndGreet`** - Calls pipeline that might fail
-2. **`[>] .greeting: pg\string >> .result_greeting`** - Pull output on success
+2. **`[>] .greeting:pg.string >> .result_greeting`** - Pull output on success
 3. **`[~]`** - Expansion marker for error handling block
 4. **`[~][!] !ValidationError`** - Catch specific error type AFTER the operation
-5. **`[~][>] .message: pg\string >> .err_msg`** - Extract error fields
-6. **`[~][r] .result_greeting: pg\string << "Hello, Guest!"`** - Fallback value on error
+5. **`[~][>] .message:pg.string >> .err_msg`** - Extract error fields
+6. **`[~][r] .result_greeting:pg.string << "Hello, Guest!"`** - Fallback value on error
 7. **NO check for "no error" needed** - Default behavior is success; only catch when error occurs
 
 **Error Raising (in ValidateAndGreet):**
@@ -324,22 +324,22 @@ Output: .result = "Hello, Guest!" (error caught and handled)
 
 ```polyglot
 [|] MultilingualGreeting
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Python wrapper: format message
 [r] |PythonFormatter
-[<] .name: pg\string << .name
-[>] .py_greeting: pg\string >> .python_result
+[<] .name:pg.string << .name
+[>] .py_greeting:pg.string >> .python_result
 
 // Node wrapper: add emoji
 [r] |NodeEmojifier
-[<] .message: pg\string << .python_result
-[>] .final: pg\string >> .node_result
+[<] .message:pg.string << .python_result
+[>] .final:pg.string >> .node_result
 
-[r] .greeting: pg\string << .node_result
-[o] .greeting: pg\string
+[r] .greeting:pg.string << .node_result
+[o] .greeting:pg.string
 [X]
 
 
@@ -347,17 +347,17 @@ Output: .result = "Hello, Guest!" (error caught and handled)
 
 // Python formatting
 [|] PythonFormatter
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.Python3.11  // Wrapper applies to entire pipeline
 
 [r] |U.Python.Run
-[<] .py: pg\string << "lambda _: f'¡Hola, {.name}!'"
-[>] .out: pg\serial >> .out
+[<] .py:pg.string << "lambda _: f'¡Hola, {.name}!'"
+[>] .out:pg.serial >> .out
 
 // Unpack
-[r] .py_greeting: pg\string << .out{0}
-[o] .py_greeting: pg\string
+[r] .py_greeting:pg.string << .out{0}
+[o] .py_greeting:pg.string
 [X]
 
 
@@ -365,12 +365,12 @@ Output: .result = "Hello, Guest!" (error caught and handled)
 
 // Node emoji addition
 [|] NodeEmojifier
-[i] .message: pg\string
+[i] .message:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup  // No special runtime needed
 
-[r] .final: pg\string << "{.message} 👋"
-[o] .final: pg\string
+[r] .final:pg.string << "{.message} 👋"
+[o] .final:pg.string
 [X]
 ```
 
@@ -417,28 +417,28 @@ Output: .greeting = "¡Hola, Diana! 👋"
 
 ```polyglot
 [|] ParallelGreetings
-[i] .names: pg\array{pg\string}
+[i] .names: pg.array.pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Generate greetings in parallel for each name
 [p] |GreetInEnglish
-[<] .name_list: pg\array{pg\string} << .names
+[<] .name_list: pg.array.pg.string << .names
 [~][r] |FormatEnglish
-[<] .name: pg\string << .name_list[*]
-[>] .greeting: pg\string >> english_greetings
+[<] .name:pg.string << .name_list[*]
+[>] .greeting:pg.string >> english_greetings
 
 [p] |GreetInSpanish
-[<] .name_list: pg\array{pg\string} << .names
+[<] .name_list: pg.array.pg.string << .names
 [~][r] |FormatSpanish
-[<] .name: pg\string << .name_list[*]
-[>] .greeting: pg\string >> spanish_greetings
+[<] .name:pg.string << .name_list[*]
+[>] .greeting:pg.string >> spanish_greetings
 
 [p] |GreetInFrench
-[<] .name_list: pg\array{pg\string} << .names
+[<] .name_list: pg.array.pg.string << .names
 [~][r] |FormatFrench
-[<] .name: pg\string << .name_list[*]
-[>] .greeting: pg\string >> french_greetings
+[<] .name:pg.string << .name_list[*]
+[>] .greeting:pg.string >> french_greetings
 
 // Synchronize all parallel results
 [Y] |Y.JoinAll
@@ -448,72 +448,72 @@ Output: .greeting = "¡Hola, Diana! 👋"
 
 // Combine results
 [r] |CombineGreetings
-[<] .english: pg\array{pg\string} << english_greetings
-[<] .spanish: pg\array{pg\string} << spanish_greetings
-[<] .french: pg\array{pg\string} << french_greetings
-[>] .all: pg\string >> combined_output
+[<] .english: pg.array.pg.string << english_greetings
+[<] .spanish: pg.array.pg.string << spanish_greetings
+[<] .french: pg.array.pg.string << french_greetings
+[>] .all:pg.string >> combined_output
 
-[o] .greetings: pg\string << combined_output
+[o] .greetings:pg.string << combined_output
 [X]
 
 // Helper pipelines
 [|] FormatEnglish
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[r] .greeting: pg\string << "Hello, {.name}!"
-[o] .greeting: pg\string
+[r] .greeting:pg.string << "Hello, {.name}!"
+[o] .greeting:pg.string
 [X]
 
 
 
 
 [|] FormatSpanish
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[r] .greeting: pg\string << "¡Hola, {.name}!"
-[o] .greeting: pg\string
+[r] .greeting:pg.string << "¡Hola, {.name}!"
+[o] .greeting:pg.string
 [X]
 
 
 
 
 [|] FormatFrench
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[r] .greeting: pg\string << "Bonjour, {.name}!"
-[o] .greeting: pg\string
+[r] .greeting:pg.string << "Bonjour, {.name}!"
+[o] .greeting:pg.string
 [X]
 
 
 
 
 [|] CombineGreetings
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Call all three formatter pipelines
 [r] |FormatEnglish
-[<] .name: pg\string << .name
-[>] .greeting: pg\string >> .english_greeting
+[<] .name:pg.string << .name
+[>] .greeting:pg.string >> .english_greeting
 
 [r] |FormatSpanish
-[<] .name: pg\string << .name
-[>] .greeting: pg\string >> .spanish_greeting
+[<] .name:pg.string << .name
+[>] .greeting:pg.string >> .spanish_greeting
 
 [r] |FormatFrench
-[<] .name: pg\string << .name
-[>] .greeting: pg\string >> .french_greeting
+[<] .name:pg.string << .name
+[>] .greeting:pg.string >> .french_greeting
 
 // Combine all results
-[r] .all: pg\string << "English: {.english_greeting}, Spanish: {.spanish_greeting}, French: {.french_greeting}"
-[o] .all: pg\string
+[r] .all:pg.string << "English: {.english_greeting}, Spanish: {.spanish_greeting}, French: {.french_greeting}"
+[o] .all:pg.string
 [X]
 ```
 
@@ -582,16 +582,16 @@ Output: .greetings = "English: [Hello, Alice!, Hello, Bob!], Spanish: [¡Hola, A
 ### Pattern 4: Error Handling
 ```polyglot
 [r] |MayFail
-[>] .result: pg\string >> .success_result
+[>] .result:pg.string >> .success_result
 [~]
 [~][!] !SomeError
-[~][>] .message: pg\string >> .err_msg
+[~][>] .message:pg.string >> .err_msg
 [~]
-[~][r] .success_result: pg\string << "fallback value"
+[~][r] .success_result:pg.string << "fallback value"
 
 // Continue with result (either success or fallback)
-[r] .output: pg\string << .success_result
-[o] .output: pg\string
+[r] .output:pg.string << .success_result
+[o] .output:pg.string
 ```
 
 ### Pattern 5: Pipeline Call

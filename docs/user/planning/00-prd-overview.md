@@ -35,7 +35,7 @@ Eliminate the complexity of integrating multiple programming languages in automa
 
 1. **Native Multi-Language Execution**
    - Python, Rust, JavaScript, C++ support
-   - Automatic type conversion with v0.0.2 type system (`pg\int`, `py\dict`, etc.)
+   - Automatic type conversion with v0.0.2 type system (`:pg.int`, `py\dict`, etc.)
    - Process isolation per language runtime
 
 2. **Event-Driven Automation**

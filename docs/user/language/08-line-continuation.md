@@ -46,7 +46,7 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 
 **Example:**
 ```polyglot
-[r] .message: pg\string <<
+[r] .message:pg.string <<
 [*] "This is a very long message "
 [*]  +" that needs to span multiple lines "
 [*]  +" for better code readability."
@@ -68,10 +68,10 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 // These are IDENTICAL at runtime:
 
 // Version 1: Single line
-[r] .msg: pg\string << "Hello World"
+[r] .msg:pg.string << "Hello World"
 
 // Version 2: With continuation
-[*] [r] .msg: pg\string <<
+[*] [r] .msg:pg.string <<
 [*] "Hello World"
 ```
 
@@ -95,7 +95,7 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 ### Basic Usage
 
 ```polyglot
-[r] .greeting: pg\string << "Hello"  +" ", "  +" "World!"
+[r] .greeting:pg.string << "Hello"  +" ", "  +" "World!"
 // Result: "Hello, World!"
 ```
 
@@ -117,10 +117,10 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 **NOT allowed:**
 ```polyglot
 // ✗ WRONG - No implicit concatenation
-[r] .msg: pg\string << "Hello" "World"
+[r] .msg:pg.string << "Hello" "World"
 
 // ✓ CORRECT - Explicit  +" operator
-[r] .msg: pg\string << "Hello"  +" "  +" "World"
+[r] .msg:pg.string << "Hello"  +" "  +" "World"
 ```
 
 ---
@@ -138,10 +138,10 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 
 **Example:**
 ```polyglot
-[r] .name: pg\string << "Alice"
-[r] .age: pg\int << 30
+[r] .name:pg.string << "Alice"
+[r] .age:pg.int << 30
 
-[r] .message: pg\string << "Hello, {.name}! You are {.age} years old."
+[r] .message:pg.string << "Hello, {.name}! You are {.age} years old."
 // Result: "Hello, Alice! You are 30 years old."
 ```
 
@@ -152,19 +152,19 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 **Use interpolation for variables:**
 ```polyglot
 // ✓ GOOD - Interpolation
-[r] .greeting: pg\string << "Hello, {.name}!"
+[r] .greeting:pg.string << "Hello, {.name}!"
 
 // ✗ BAD - Concatenation for variables
-[r] .greeting: pg\string << "Hello, "  +" .name  +" "!"  // Error!
+[r] .greeting:pg.string << "Hello, "  +" .name  +" "!"  // Error!
 ```
 
 **Use concatenation for literals:**
 ```polyglot
 // ✓ GOOD - Concatenation
-[r] .msg: pg\string << "Part1"  +" " "  +" "Part2"
+[r] .msg:pg.string << "Part1"  +" " "  +" "Part2"
 
 // ✗ UNNECESSARY - Interpolation for literals
-[r] .msg: pg\string << "Part1 {Part2}"  // No variable here
+[r] .msg:pg.string << "Part1 {Part2}"  // No variable here
 ```
 
 ---
@@ -269,7 +269,7 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 ### Example 1: Long SQL Query
 
 ```polyglot
-[r] .query: pg\string <<
+[r] .query:pg.string <<
 [*] "SELECT users.id, users.name, orders.total "
 [*]  +" "FROM users "
 [*]  +" "INNER JOIN orders ON users.id = orders.user_id "
@@ -284,10 +284,10 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 ### Example 2: Multi-line Log Message
 
 ```polyglot
-[r] .error_count: pg\int << 5
-[r] .timestamp: pg\dt << #DT.Now
+[r] .error_count:pg.int << 5
+[r] .timestamp:pg.dt << #DT.Now
 
-[r] .log_message: pg\string <<
+[r] .log_message:pg.string <<
 [*] "ERROR: System health check failed. "
 [*]  +" "Found {.error_count} critical errors "
 [*]  +" "at {.timestamp}. "
@@ -299,10 +299,10 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 ### Example 3: HTML Template
 
 ```polyglot
-[r] .user_name: pg\string << "Alice"
-[r] .user_email: pg\string << "alice@example.com"
+[r] .user_name:pg.string << "Alice"
+[r] .user_email:pg.string << "alice@example.com"
 
-[r] .html_template: pg\string <<
+[r] .html_template:pg.string <<
 [*] "<!DOCTYPE html><html><head +"
 [*]  +" "<title>Welcome {.user_name}</title +"
 [*]  +" "</head><body +"
@@ -316,14 +316,14 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 ### Example 4: API Request Body
 
 ```polyglot
-[r] .user_id: pg\int << 42
-[r] .action: pg\string << "update_profile"
+[r] .user_id:pg.int << 42
+[r] .action:pg.string << "update_profile"
 
-[r] .request_body: pg\string <<
+[r] .request_body:pg.string <<
 [*] "{"
 [*]  +" "  \"user_id\": {.user_id},"
 [*]  +" "  \"action\": \"{.action}\","
-[*]  +" "  \"timestamp\": \"{#DT.Now}\","
+[*]  +" "  \"timestamp\": \".#DT.Now}\","
 [*]  +" "  \"source\": \"api_v2\""
 [*]  +" "}"
 ```
@@ -333,11 +333,11 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 ### Example 5: Configuration String
 
 ```polyglot
-[r] .db_host: pg\string << "localhost"
-[r] .db_port: pg\int << 5432
-[r] .db_name: pg\string << "production"
+[r] .db_host:pg.string << "localhost"
+[r] .db_port:pg.int << 5432
+[r] .db_name:pg.string << "production"
 
-[r] .connection_string: pg\string <<
+[r] .connection_string:pg.string <<
 [*] "postgresql://{.db_host}:{.db_port}/"
 [*]  +" "{.db_name}?sslmode=require"
 [*]  +" "&connect_timeout=10"
@@ -349,11 +349,11 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 ### Example 6: Error Message with Context
 
 ```polyglot
-[r] .file_path: pg\path << \\DataDir\\users.csv
-[r] .line_number: pg\int << 142
-[r] .column_name: pg\string << "email"
+[r] .file_path:pg.path << \\DataDir\\users.csv
+[r] .line_number:pg.int << 142
+[r] .column_name:pg.string << "email"
 
-[r] .error_message: pg\string <<
+[r] .error_message:pg.string <<
 [*] "Validation Error: "
 [*]  +" "Invalid data in file {.file_path} "
 [*]  +" "at line {.line_number}, "
@@ -383,10 +383,10 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 
 ```polyglot
 // ✗ WRONG - Cannot concatenate variables with  +"
-[r] .msg: pg\string << .var1  +" "  +" .var2
+[r] .msg:pg.string << .var1  +" "  +" .var2
 
 // ✓ CORRECT - Use interpolation
-[r] .msg: pg\string << "{.var1} {.var2}"
+[r] .msg:pg.string << "{.var1} {.var2}"
 ```
 
 ---
@@ -395,10 +395,10 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 
 ```polyglot
 // ✗ WRONG - No implicit concatenation
-[r] .msg: pg\string << "Hello" "World"
+[r] .msg:pg.string << "Hello" "World"
 
 // ✓ CORRECT - Explicit  +" operator
-[r] .msg: pg\string << "Hello"  +" "  +" "World"
+[r] .msg:pg.string << "Hello"  +" "  +" "World"
 ```
 
 ---
@@ -497,7 +497,7 @@ Polyglot provides explicit syntax for multi-line expressions and string operatio
 
 - [Block Markers](06-block-markers.md) - `[*]` line continuation block
 - [Operators](05-operators.md) - `+"` concatenation operator
-- [Type System](02-type-system.md) - `pg\string` type details
+- [Type System](02-type-system.md) - `:pg.string` type details
 - [Comments](11-comments.md) - Comment stripping behavior
 
 ---

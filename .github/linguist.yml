@@ -1,0 +1,17 @@
+# GitHub Linguist Configuration for Polyglot Language
+# See: https://github.com/github/linguist/blob/master/CONTRIBUTING.md
+
+Polyglot:
+  type: programming
+  color: "#7e57c2"  # Purple color for Polyglot (Material Design Deep Purple 400)
+  extensions:
+    - ".pg"
+  tm_scope: source.polyglot
+  ace_mode: text
+  language_id: 999999999  # Placeholder - GitHub will assign official ID if language is added
+  aliases:
+    - polyglot
+    - pg
+  filenames: []
+  interpreters: []
+  group: Polyglot

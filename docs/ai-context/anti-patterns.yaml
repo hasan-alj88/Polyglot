@@ -1,0 +1,564 @@
+# ==============================================================================
+# Polyglot v0.0.2 - Anti-Patterns & Common Mistakes
+# Learn from common AI-generated code errors
+# ==============================================================================
+
+version: "0.0.2"
+purpose: "Common mistakes catalog with corrections for AI agents"
+source: "Real AI-generated code errors and their fixes"
+
+# ==============================================================================
+# CRITICAL MISTAKE #1: MISUNDERSTANDING POLYGLOT'S NATURE
+# ==============================================================================
+
+mistake_1_inline_foreign_code:
+  severity: "CRITICAL"
+  category: "Fundamental Misunderstanding"
+  description: "Treating Polyglot as a language where you can write Python/Rust/JS code inline"
+
+  wrong_code: |
+    // ❌ COMPLETELY WRONG - This is NOT how Polyglot works
+    [|] ETL_Pipeline
+    [i] .source_url: String
+    [o] .report_path: String
+
+    // Extract: Python for web scraping
+    .raw_data << py\requests.get(.source_url)
+    .parsed << py\beautifulsoup.parse(.raw_data)
+
+    // Transform: Rust for processing
+    .cleaned << rs\cleaner::process(.parsed)
+    .aggregated << rs\aggregator::compute_stats(.cleaned)
+
+    // Load: Go for database
+    .saved << go\db.BulkInsert(.aggregated)
+
+    // Report: Node.js for PDF
+    .report_path << js\pdf_generator.create(.saved)
+
+  problems:
+    - issue: "No such syntax as `py\requests.get()` or `rs\cleaner::process()`"
+      explanation: "Cannot call Python/Rust/JS code directly inline"
+
+    - issue: "No package declaration `[@]`"
+      explanation: "Every file must start with package declaration"
+
+    - issue: "No block markers `[r]`, `[t]`, `[W]`"
+      explanation: "All statements need block context"
+
+    - issue: "`String` instead of `pg\string`"
+      explanation: "All types must be namespaced"
+
+    - issue: "Missing mandatory sections: `[t]` trigger, `[W]` wrapper"
+      explanation: "Pipeline won't run without these"
+
+  correct_code: |
+    // ✅ CORRECT - Polyglot orchestrates external runtimes
+    [@] Local@ETLPipeline:1.0.0
+    [X]
+
+    [|] ETL_Workflow
+    [i] .source_url: pg\string
+    [i] .db_table: pg\string << "data"
+
+    [t] |T.Call                              // MANDATORY: Trigger
+
+    // Declare runtime wrappers
+    [W] |W.RT.Python3.14
+    [<] <requirements: pg\file << \\FileDir\\python\\requirements.txt
+
+    [W] |W.RT.Rust1.8
+
+    [W] |W.DB.Postgresql
+    [>] >session: pg\db >> .db
+
+    [W] |W.RT.Nodejs
+    [<] <package: pg\file << \\FileDir\\nodejs\\package.json
+
+    // EXTRACT: Python for web scraping
+    [r] |U.API.Rest.Get
+    [<] <url: pg\url << .source_url
+    [>] >response: pg\string >> .response
+
+    [r] |RT.Python.Run.Function
+    [<] <function: pg\string << "beautifulsoup4.parse"
+    [<] <args: pg\serial << .response
+    [>] >output: pg\serial >> .output
+
+    [r] .parsed: pg\string << .output.0
+
+    // TRANSFORM: Rust for processing
+    [r] |RT.Rust.Run.File
+    [<] <file: pg\path << \\FileDir\\rust\\process.rs
+    [<] <input: pg\serial << {.parsed}
+    [>] >output: pg\serial >> .rust_output
+
+    [r] .cleaned: pg\string << .rust_output.0
+    [r] .aggregated: pg\string << .rust_output.1
+
+    // LOAD: Database operations
+    [b] |DB.BulkInsert
+    [<] <session: pg\db << .db
+    [<] <table: pg\string << .db_table
+    [<] <data: pg\serial << .aggregated
+    [>] >result: pg\array{pg\serial} >> .saved
+
+    // REPORT: Node.js for PDF generation
+    [r] .data: pg\serial << .aggregated
+    [r] |RT.Nodejs.Run.File
+    [<] <file: pg\path << \\FileDir\\nodejs\\pdfgen.js
+    [<] <input: pg\serial << .data
+    [>] >output: pg\serial >> .out
+
+    [r] .report_path: pg\path << .out.file_path
+
+    [o] .report_path: pg\path
+    [X]
+
+  key_lessons:
+    - "Polyglot ORCHESTRATES external runtimes via wrappers"
+    - "Use [W] |W.RT.{Language} to declare runtime wrappers"
+    - "Call external code via |RT.{Language}.Run.{File|Function}"
+    - "Pass data using pg\serial with [<] and [>] bindings"
+    - "All mandatory sections required: [@], [i], [t], [W], [o], [X]"
+
+# ==============================================================================
+# MISTAKE #2: WRONG BLOCK MARKER FOR VARIABLE DECLARATION
+# ==============================================================================
+
+mistake_2_block_markers:
+  severity: "HIGH"
+  category: "Block Marker Hierarchy"
+  description: "Using [<] for variable declaration instead of [r]"
+
+  wrong_code: |
+    [<] .current_time: pg\dt << DT.Now
+
+  problems:
+    - issue: "[<] is for input binding to parent block (pipeline call, unpack, etc.)"
+      explanation: "Has no parent block context here"
+    - issue: "DT.Now missing quotes - should be DT.Now\"\""
+      explanation: "Inline pipeline calls are string literals"
+
+  correct_code: |
+    [r] .current_time: pg\dt << DT.Now""
+
+  explanation:
+    - "[r] is used for variable declarations at pipeline scope"
+    - "Inline pipeline calls require string literal syntax"
+    - "[<] is ONLY used within parent block (pipeline call, conditional, etc.)"
+
+  related_mistakes:
+    wrong_1: "[<] .var: Type << value"
+    correct_1: "[r] .var: Type << value"
+    context_1: "Variable declaration at pipeline scope"
+
+    wrong_2: |
+      [r] |Pipeline
+      [r] .input << .data          // Using [r] for pipeline input
+    correct_2: |
+      [r] |Pipeline
+      [<] .input << .data          // Use [<] for pipeline input
+    context_2: "Input binding to pipeline call"
+
+# ==============================================================================
+# MISTAKE #3: COLLECTION INITIALIZATION SEMANTICS
+# ==============================================================================
+
+mistake_3_array_initialization:
+  severity: "HIGH"
+  category: "Variable State Management"
+  description: "Pushing empty array makes variable immediately Ready, preventing further pushes"
+
+  wrong_code: |
+    [<] .channels: pg\array{#Channel} << []
+
+  problems:
+    - issue: "Using [<] instead of [r] for declaration"
+      explanation: "[<] requires parent block"
+    - issue: "Wrong syntax for empty array: [] should be {}"
+      explanation: "All collections use {} not []"
+    - issue: "Pushing empty array makes variable Ready immediately"
+      explanation: "Once Ready, no more pushes allowed"
+
+  correct_code: |
+    [r] .channels: pg\array{#Channel}            // Declared state, allows pushes
+
+    [?] .enable_email =? #Boolean.True
+    [~][<] .channels << #Channel.Email           // PUSH item conditionally
+    [~]
+
+    [?] .enable_sms =? #Boolean.True
+    [~][<] .channels << #Channel.SMS             // PUSH another item
+    [~]
+
+    [?] *?                                       // Exhaustive catch-all
+    [~][o] !No.Output
+    [~]
+
+  explanation:
+    - "Variable in Declared state allows values to be pushed into it"
+    - "If you push immediately (.var << {}), variable becomes Ready (no more pushes)"
+    - "For conditional pushes, declare variable without initial push"
+    - "Use [<] within conditional blocks to push values"
+
+  state_transitions:
+    declared_no_push:
+      code: "[r] .channels: pg\array{#Channel}"
+      state: "Declared"
+      push_count: "0, allowed: 1"
+      allows_pushes: true
+
+    declared_with_push:
+      code: "[r] .channels: pg\array{#Channel} << {}"
+      state: "Ready (immediate)"
+      push_count: "final, allowed: 0"
+      allows_pushes: false
+
+# ==============================================================================
+# MISTAKE #4: INLINE PIPELINE SYNTAX
+# ==============================================================================
+
+mistake_4_inline_pipelines:
+  severity: "MEDIUM"
+  category: "String Literal Syntax"
+  description: "Missing quotes on inline pipeline calls"
+
+  wrong_examples:
+    - code: "DT.Now"
+      problem: "Missing quotes"
+      correct: "DT.Now\"\""
+
+    - code: "DT.Minutes(5)"
+      problem: "Function call syntax doesn't exist"
+      correct: "DT.Minutes\"5\""
+
+    - code: "U.String\"{.var}\""
+      problem: "Correct - string interpolation"
+      correct: "Same"
+
+  explanation:
+    - "ALL inline pipeline calls are string literals"
+    - "Empty string \"\" required even with no parameters"
+    - "Interpolation uses {.variable} or {.variable:format}"
+    - "String literals can return ANY type (not just pg\string)"
+
+  examples:
+    datetime_now:
+      correct: "DT.Now\"\""
+      returns: "pg\dt"
+
+    datetime_duration:
+      correct: "DT.Minutes\"5\""
+      returns: "pg\dt"
+
+    string_formatting:
+      correct: "\"{.count:Hex}\""
+      returns: "pg\string"
+
+    interpolated:
+      correct: "\"Hello {.name}\""
+      returns: "pg\string"
+
+# ==============================================================================
+# MISTAKE #5: TYPE SYNTAX
+# ==============================================================================
+
+mistake_5_type_syntax:
+  severity: "HIGH"
+  category: "Type System"
+  description: "Wrong type names and separators"
+
+  wrong_examples:
+    - wrong: "String"
+      correct: "pg\string"
+      problem: "Missing namespace"
+
+    - wrong: "pg/string"
+      correct: "pg\string"
+      problem: "Wrong separator (/ instead of \\)"
+
+    - wrong: "pg:int"
+      correct: "pg\int"
+      problem: "Wrong separator (: instead of \\)"
+
+    - wrong: "array{int}"
+      correct: "pg\array{pg\int}"
+      problem: "Missing namespace on both"
+
+  rules:
+    - "ALL types must be namespaced"
+    - "Type separator is \\ (backslash) ONLY"
+    - "Common namespaces: pg, py, rs, go, js, node"
+    - "Collection element types also need namespace"
+
+# ==============================================================================
+# MISTAKE #6: MISSING MANDATORY SECTIONS
+# ==============================================================================
+
+mistake_6_mandatory_sections:
+  severity: "CRITICAL"
+  category: "Pipeline Structure"
+  description: "Missing mandatory pipeline sections"
+
+  wrong_code: |
+    [|] MissingTrigger
+    [i] .data: pg\string
+    [r] .result: pg\string << .data
+    [o] .result: pg\string
+    [X]
+
+  problems:
+    - issue: "Missing [t] trigger"
+      consequence: "Pipeline will NEVER run"
+    - issue: "Missing [W] wrapper or [\][/]"
+      consequence: "No execution environment"
+
+  correct_code: |
+    [|] CompletePipeline
+    [i] .data: pg\string
+    [t] |T.Call                    // MANDATORY: Trigger
+    [W] |W.Polyglot.Scope         // MANDATORY: Wrapper
+    [r] .result: pg\string << .data
+    [o] .result: pg\string
+    [X]
+
+  mandatory_sections:
+    inputs:
+      marker: "[i]"
+      required: "At least one"
+      default: "[i] !No.Input"
+
+    triggers:
+      marker: "[t]"
+      required: "At least one"
+      critical: "Pipeline won't run without this"
+      common: "[t] |T.Call"
+
+    wrapper_or_setup:
+      marker: "[W] or [\][/]"
+      required: "One of these"
+      default: "[W] |W.Polyglot.Scope"
+
+    outputs:
+      marker: "[o]"
+      required: "At least one"
+      default: "[o] !No.Output"
+
+# ==============================================================================
+# MISTAKE #7: OPERATOR PREFIX VIOLATIONS
+# ==============================================================================
+
+mistake_7_no_prefixes:
+  severity: "HIGH"
+  category: "Identifier Syntax"
+  description: "Forgetting operator prefixes on identifiers"
+
+  wrong_examples:
+    - wrong: "ProcessData"
+      correct: "|ProcessData"
+      type: "Pipeline"
+
+    - wrong: "user"
+      correct: ".user"
+      type: "Variable"
+
+    - wrong: "Config"
+      correct: "#Config"
+      type: "Enumeration"
+
+    - wrong: "NetworkError"
+      correct: "!NetworkError"
+      type: "Error"
+
+  rule: "ALL identifiers MUST have operator prefix"
+  prefixes:
+    - prefix: "."
+      type: "Variable"
+      example: ".count"
+
+    - prefix: "#"
+      type: "Enumeration"
+      example: "#UserRole"
+
+    - prefix: "|"
+      type: "Pipeline"
+      example: "|FetchUser"
+
+    - prefix: "!"
+      type: "Error"
+      example: "!NotFound"
+
+# ==============================================================================
+# MISTAKE #8: COLLECTION DELIMITER
+# ==============================================================================
+
+mistake_8_collection_syntax:
+  severity: "MEDIUM"
+  category: "Syntax"
+  description: "Using [] instead of {} for collections"
+
+  wrong_examples:
+    - wrong: "<< [1, 2, 3]"
+      correct: "<< {1, 2, 3}"
+
+    - wrong: "<< []"
+      correct: "<< {}"
+
+    - wrong: ".items: pg\array{pg\int} << [1, 2, 3]"
+      correct: ".items: pg\array{pg\int} << {1, 2, 3}"
+
+  rule: "ALL collections use {} with comma separation, NOT []"
+
+  examples:
+    integers: "{1, 2, 3}"
+    strings: "{\"a\", \"b\", \"c\"}"
+    enums: "{#Channel.Email, #Channel.SMS}"
+    empty: "{}"
+
+# ==============================================================================
+# MISTAKE #9: TERMINOLOGY
+# ==============================================================================
+
+mistake_9_wrong_terminology:
+  severity: "LOW"
+  category: "Conceptual"
+  description: "Using traditional programming terminology instead of async-centric terms"
+
+  wrong_terms:
+    - wrong: "assign"
+      correct: "PUSH to variable"
+    - wrong: "assignment"
+      correct: "PUSH operation"
+    - wrong: "mutable"
+      correct: "Variable States"
+    - wrong: "immutable"
+      correct: "Ready state (no more pushes)"
+    - wrong: "initialize"
+      correct: "Declare in Declared state"
+
+  correct_terminology:
+    - "PUSH to variable (.var << value)"
+    - "PULL from variable/pipeline (.var >> .dest)"
+    - "Variable States (Declared → DefaultReady → Pending → Ready/Faulted)"
+    - "Declared state (ready to accept pushes)"
+    - "Ready state (final value, no more pushes)"
+
+# ==============================================================================
+# MISTAKE #10: EXHAUSTIVE CONDITIONS
+# ==============================================================================
+
+mistake_10_non_exhaustive_conditions:
+  severity: "HIGH"
+  category: "Control Flow"
+  description: "Missing [?] *? catch-all in conditional blocks"
+
+  wrong_code: |
+    [?] .value >? 100
+    [~][r] |ProcessHigh
+    [~]
+
+    [?] .value >? 50
+    [~][r] |ProcessMedium
+    [~]
+    // ERROR: Missing [?] *? catch-all!
+
+  correct_code: |
+    [?] .value >? 100
+    [~][r] |ProcessHigh
+    [~]
+
+    [?] .value >? 50
+    [~][r] |ProcessMedium
+    [~]
+
+    [?] *?                    // REQUIRED: Catch-all
+    [~][r] |ProcessLow
+    [~]
+
+  rule: "ALL [?] conditional blocks MUST include [?] *? catch-all"
+  reason: "Prevents indefinite waiting in async environment"
+
+# ==============================================================================
+# LEARNING CHECKLIST
+# ==============================================================================
+
+learning_checklist:
+  fundamental:
+    - "✓ Understand: Polyglot ORCHESTRATES runtimes, doesn't execute foreign code inline"
+    - "✓ Use runtime wrappers [W] |W.RT.{Language} for all external code"
+    - "✓ Call external code via |RT.{Language}.Run.{File|Function}"
+    - "✓ Use pg\serial for all cross-language data interchange"
+
+  syntax:
+    - "✓ Package declaration [@] required at start"
+    - "✓ All identifiers need operator prefix (. # | !)"
+    - "✓ Type separator is \\ (backslash)"
+    - "✓ Collections use {} not []"
+    - "✓ Inline pipelines are string literals (DT.Now\"\")"
+
+  structure:
+    - "✓ Mandatory sections: [i], [t], [W], [o], [X]"
+    - "✓ [r] for variable declarations at pipeline scope"
+    - "✓ [<] for input binding to parent block (NOT standalone)"
+    - "✓ [>] for output binding from parent block"
+    - "✓ [?] *? catch-all required for exhaustive conditions"
+
+  semantics:
+    - "✓ Variable states: Declared → DefaultReady → Pending → Ready/Faulted"
+    - "✓ Declared state for arrays receiving conditional pushes"
+    - "✓ Use async terminology: PUSH/PULL not assign/mutable"
+    - "✓ Auto-await when pulling from Pending variables"
+
+# ==============================================================================
+# QUICK REFERENCE: CORRECT PATTERNS
+# ==============================================================================
+
+quick_reference:
+  variable_declaration:
+    syntax: "[r] .var: Type << value"
+    example: "[r] .count: pg\int << 42"
+
+  variable_declared_state:
+    syntax: "[r] .var: Type"
+    example: "[r] .channels: pg\array{#Channel}"
+
+  inline_pipeline:
+    syntax: "Pipeline.Name\"argument\""
+    example: "DT.Now\"\""
+
+  runtime_wrapper:
+    syntax: "[W] |W.RT.{Language}"
+    example: "[W] |W.RT.Python3.14"
+
+  call_external_code:
+    syntax: "[r] |RT.{Language}.Run.{File|Function}"
+    example: "[r] |RT.Python.Run.Function"
+
+  pipeline_input:
+    syntax: "[<] <name: Type << value"
+    example: "[<] <input: pg\serial << .data"
+
+  pipeline_output:
+    syntax: "[>] >name: Type >> .variable"
+    example: "[>] >output: pg\serial >> .result"
+
+  serial_access:
+    indexed: ".result.0"
+    named: ".result.field_name"
+    nested: ".result.items.0.name"
+
+  collections:
+    array: "pg\array{pg\int}"
+    set: "pg\set{pg\string}"
+    literal: "{1, 2, 3}"
+    empty: "{}"
+
+  mandatory_pipeline:
+    minimal: |
+      [|] MinimalPipeline
+      [i] !No.Input
+      [t] |T.Call
+      [W] |W.Polyglot.Scope
+      [o] !No.Output
+      [X]

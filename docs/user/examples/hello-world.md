@@ -167,7 +167,7 @@ A slightly more advanced version that accepts a name parameter.
 [|] GreetByName
 
 // Input: Name to greet
-[i] .name: pg\string
+[i] .name:pg.string
 
 // Trigger: Command-line with parameters
 [t] |T.Cli
@@ -193,11 +193,11 @@ A slightly more advanced version that accepts a name parameter.
 
 **Input Declaration:**
 ```polyglot
-[i] .name: pg\string
+[i] .name:pg.string
 ```
 - `[i]` declares an input parameter
 - `.name` is the variable (dot prefix required)
-- `pg\string` is a Polyglot native string type
+- `:pg.string` is a Polyglot native string type
 - This value will be passed when triggering the pipeline
 
 **Using Input in Code:**
@@ -243,7 +243,7 @@ Return a greeting string instead of printing.
 [|] GenerateGreeting
 
 // Input: Name to greet
-[i] .name: pg\string << "World"
+[i] .name:pg.string << "World"
 
 // Trigger: CLI
 [t] |T.Cli
@@ -268,7 +268,7 @@ Return a greeting string instead of printing.
 [>] .result: py\str >> .final_greeting
 
 // Output the combined greeting
-[o] .final_greeting: pg\string
+[o] .final_greeting:pg.string
 [X]
 ```
 
@@ -276,7 +276,7 @@ Return a greeting string instead of printing.
 
 **Input with Default:**
 ```polyglot
-[i] .name: pg\string << "World"
+[i] .name:pg.string << "World"
 ```
 - `<< "World"` provides a default value
 - If no input is provided, "World" is used
@@ -291,7 +291,7 @@ Return a greeting string instead of printing.
 
 **Final Output:**
 ```polyglot
-[o] .final_greeting: pg\string
+[o] .final_greeting:pg.string
 ```
 - Returns the final greeting string
 - Can be captured or displayed
@@ -327,7 +327,7 @@ Hello from Rust, Alice!
 1. **Package Block Required:** Every `.pg` file starts with `[@]`, `[#]`, `[X]`
 2. **Runtime Wrappers Are Important:** Use `[W] |W.Python3.11` and `[W] |W.Rust1.70` before running code
 3. **Variables Need Dots:** All variables start with `.` (e.g., `.name`, `.greeting`)
-4. **Type Format:** Use backslash separator: `py\str`, `rs\String`, `pg\string`
+4. **Type Format:** Use backslash separator: `py\str`, `rs\String`, `:pg.string`
 5. **Triggers Required:** Use `[t] |T.Cli` for manual execution
 6. **Assignment Operators:**
    - `<<` for input assignment
@@ -376,12 +376,12 @@ Hello from Rust, Alice!
 ❌ **Variable without dot prefix:**
 ```polyglot
 // WRONG
-[i] name: pg\string
+[i] name:pg.string
 ```
 
 ✅ **Correct:**
 ```polyglot
-[i] .name: pg\string
+[i] .name:pg.string
 ```
 
 ---
@@ -394,7 +394,7 @@ Hello from Rust, Alice!
 
 ✅ **Correct:**
 ```polyglot
-[i] .name: pg\string
+[i] .name:pg.string
 ```
 
 ---

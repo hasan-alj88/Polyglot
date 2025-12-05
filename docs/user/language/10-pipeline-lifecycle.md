@@ -43,10 +43,10 @@ Understanding the pipeline lifecycle is essential for working with Polyglot. Pip
 
 ```polyglot
 [|] ProcessFile
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 [r] |ReadFile
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> file_data
 [X]
 ```
 
@@ -67,15 +67,15 @@ Understanding the pipeline lifecycle is essential for working with Polyglot. Pip
 ```polyglot
 // Create instance 1
 [r] |ProcessFile
-[<] .file_path: pg\path << "data1.txt"
+[<] .file_path:pg.path << "data1.txt"
 
 // Create instance 2
 [r] |ProcessFile
-[<] .file_path: pg\path << "data2.txt"
+[<] .file_path:pg.path << "data2.txt"
 
 // Create instance 3
 [r] |ProcessFile
-[<] .file_path: pg\path << "data3.txt"
+[<] .file_path:pg.path << "data3.txt"
 ```
 
 **Think of it as:** Object instances from a class
@@ -120,10 +120,10 @@ class ProcessFile:
 ```polyglot
 // Polyglot pipeline definition
 [|] ProcessFile
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 [r] |ReadFile
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> file_data
 [X]
 ```
 
@@ -144,13 +144,13 @@ instance2.execute()  # Run instance 2
 ```polyglot
 // Polyglot pipeline instances
 [r] |ProcessFile  // Create instance 1
-[<] .file_path: pg\path << "data1.txt"
+[<] .file_path:pg.path << "data1.txt"
 
 [r] |ProcessFile  // Create instance 2
-[<] .file_path: pg\path << "data2.txt"
+[<] .file_path:pg.path << "data2.txt"
 
 [r] |ProcessFile  // Create instance 3
-[<] .file_path: pg\path << "data3.txt"
+[<] .file_path:pg.path << "data3.txt"
 ```
 
 ---
@@ -315,13 +315,13 @@ Polyglot has three built-in system queues:
 
 ```polyglot
 [|] PausableTask
-[i] .data: pg\string
+[i] .data:pg.string
 
 [r] |Step1
 
 // Conditionally pause
 [Q] |Q.PauseIf.RAM.Available.LessThan
-[<] .mb: pg\uint << 512
+[<] .mb:pg.uint << 512
 
 [r] |Step2  // Will run after resume
 
@@ -336,11 +336,11 @@ Users can define custom queues:
 
 ```polyglot
 [#] Queues.Background
-[<] .max_concurrent: pg\int << 5
+[<] .max_concurrent:pg.int << 5
 [X]
 
 [#] Queues.HighPriority
-[<] .max_concurrent: pg\int << 10
+[<] .max_concurrent:pg.int << 10
 [X]
 
 // Assign instance to custom queue
@@ -404,7 +404,7 @@ Created → Queued → Running (executing) → Paused → Resumed (executing) �
 
 ```polyglot
 [|] TaskWithPause
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Dispatched - now "Running"
 [r] |Step1  // Executing
@@ -431,7 +431,7 @@ Created → Queued → Running (executing) → Paused → Resumed (executing) �
 ```polyglot
 // Create and dispatch instance immediately
 [r] |ProcessData
-[<] .input: pg\string << "data"
+[<] .input:pg.string << "data"
 ```
 
 **Lifecycle:** Created → Queued → Running (if capacity available)
@@ -443,7 +443,7 @@ Created → Queued → Running (executing) → Paused → Resumed (executing) �
 ```polyglot
 [|] ScheduledTask
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 [r] |DoWork
 [X]
@@ -460,13 +460,13 @@ Created → Queued → Running (executing) → Paused → Resumed (executing) �
 ```polyglot
 // Create 3 independent instances
 [r] |ProcessFile
-[<] .file_path: pg\path << "file1.txt"
+[<] .file_path:pg.path << "file1.txt"
 
 [r] |ProcessFile
-[<] .file_path: pg\path << "file2.txt"
+[<] .file_path:pg.path << "file2.txt"
 
 [r] |ProcessFile
-[<] .file_path: pg\path << "file3.txt"
+[<] .file_path:pg.path << "file3.txt"
 ```
 
 **Result:** 3 independent instances, each with its own state
@@ -478,13 +478,13 @@ Created → Queued → Running (executing) → Paused → Resumed (executing) �
 ```polyglot
 // Create instances in parallel
 [p] |ProcessFileA
-[<] .file: pg\path << "a.txt"
+[<] .file:pg.path << "a.txt"
 
 [p] |ProcessFileB
-[<] .file: pg\path << "b.txt"
+[<] .file:pg.path << "b.txt"
 
 [p] |ProcessFileC
-[<] .file: pg\path << "c.txt"
+[<] .file:pg.path << "c.txt"
 
 [Y] |Y.Join
 // Wait for all instances to complete
@@ -500,24 +500,24 @@ Each instance has **its own state** - completely independent from other instance
 
 ```polyglot
 [|] Counter
-[i] .start: pg\int
+[i] .start:pg.int
 [r] .count: pg.mutable\int << .start
 
 [r] |Increment
 [<] .counter: pg.mutable\int << .count
-[>] .result: pg\int >> .count
+[>] .result:pg.int >> .count
 
 [X]
 
 // Create 3 instances
 [r] |Counter
-[<] .start: pg\int << 0  // Instance 1: count = 0
+[<] .start:pg.int << 0  // Instance 1: count = 0
 
 [r] |Counter
-[<] .start: pg\int << 10  // Instance 2: count = 10
+[<] .start:pg.int << 10  // Instance 2: count = 10
 
 [r] |Counter
-[<] .start: pg\int << 100  // Instance 3: count = 100
+[<] .start:pg.int << 100  // Instance 3: count = 100
 ```
 
 **Result:** Each instance has independent `.count` variable.
@@ -552,11 +552,11 @@ Each instance has a unique ID (implementation-specific):
 ```polyglot
 // Hypothetical - get instance ID
 [r] |Q.GetInstanceID
-[>] .id: pg\string >> instance_id
+[>] .id:pg.string >> instance_id
 
 // Use instance ID for control
 [Q] |Q.Pause
-[<] .instance_id: pg\string << instance_id
+[<] .instance_id:pg.string << instance_id
 ```
 
 ---
@@ -589,7 +589,7 @@ Use `|Q.Kill` to terminate instance immediately:
 
 // Kill if condition met
 [Q] |Q.KillIf.MemoryUsage.GreaterThan
-[<] .mb: pg\uint << 4096
+[<] .mb:pg.uint << 4096
 
 [r] |Step2  // May not execute if killed
 
@@ -604,7 +604,7 @@ Instance can kill itself:
 
 ```polyglot
 [|] ConditionalTask
-[i] .should_abort: pg\bool
+[i] .should_abort:pg.bool
 
 [?] .should_abort =? #Boolean.True
 [~][Q] |Q.Kill  // Kill self
@@ -644,11 +644,11 @@ Check queue state:
 ```polyglot
 [r] |Q.Status
 [<] .queue: #Queues << #Queues.Pending
-[>] .count: pg\int >> pending_count
+[>] .count:pg.int >> pending_count
 
 [r] |Q.Status
 [<] .queue: #Queues << #Queues.Dispatch
-[>] .count: pg\int >> running_count
+[>] .count:pg.int >> running_count
 ```
 
 ---
@@ -660,19 +660,19 @@ Control individual instances:
 ```polyglot
 // Pause instance
 [Q] |Q.Pause
-[<] .instance_id: pg\string << target_instance
+[<] .instance_id:pg.string << target_instance
 
 // Resume instance
 [Q] |Q.Resume
-[<] .instance_id: pg\string << target_instance
+[<] .instance_id:pg.string << target_instance
 
 // Kill instance
 [Q] |Q.Kill
-[<] .instance_id: pg\string << target_instance
+[<] .instance_id:pg.string << target_instance
 
 // Bump priority
 [Q] |Q.PriorityBump
-[<] .instance_id: pg\string << target_instance
+[<] .instance_id:pg.string << target_instance
 ```
 
 ---
@@ -684,11 +684,11 @@ Control based on system state:
 ```polyglot
 // Pause if low memory
 [Q] |Q.PauseIf.RAM.Available.LessThan
-[<] .mb: pg\uint << 512
+[<] .mb:pg.uint << 512
 
 // Kill if taking too long
 [Q] |Q.KillIf.Runtime.GreaterThan
-[<] .seconds: pg\uint << 300
+[<] .seconds:pg.uint << 300
 
 // Dispatch with priority if urgent
 [Q] |Q.Dispatch.Priority.High
@@ -702,26 +702,26 @@ One pipeline can control another:
 
 ```polyglot
 [|] Worker
-[i] .data: pg\string
+[i] .data:pg.string
 [r] |ProcessData
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [X]
 
 [|] Manager
 // Start worker
 [r] |Worker
-[<] .data: pg\string << "input"
-[>] .worker_id: pg\string >> worker_instance
+[<] .data:pg.string << "input"
+[>] .worker_id:pg.string >> worker_instance
 
 // Monitor worker
 [r] |Q.Status
-[<] .instance_id: pg\string << worker_instance
-[>] .status: pg\string >> worker_status
+[<] .instance_id:pg.string << worker_instance
+[>] .status:pg.string >> worker_status
 
 // Control worker if needed
 [?] .worker_status =? "overloaded"
 [~][Q] |Q.Pause
-[~][<] .instance_id: pg\string << worker_instance
+[~][<] .instance_id:pg.string << worker_instance
 
 [X]
 ```
@@ -735,11 +735,11 @@ One pipeline can control another:
 ```polyglot
 // ✓ GOOD - Stateless (can run many instances safely)
 [|] TransformData
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |Transform
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output
-[o] .result: pg\string
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output
+[o] .result:pg.string
 [X]
 
 // ⚠ CAUTION - Stateful (instances have mutable state)
@@ -757,7 +757,7 @@ One pipeline can control another:
 // ✓ GOOD - Trigger creates instances automatically
 [|] DailyReport
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 [r] |GenerateReport
 [X]
@@ -773,18 +773,18 @@ One pipeline can control another:
 ```polyglot
 // ✓ GOOD - Cleanup resources before exit
 [|] ProcessWithResources
-[i] .file: pg\path
+[i] .file:pg.path
 
 [r] |OpenFile
-[<] .path: pg\path << .file
-[>] .handle: pg\int >> file_handle
+[<] .path:pg.path << .file
+[>] .handle:pg.int >> file_handle
 
 [r] |ProcessFile
-[<] .handle: pg\int << file_handle
+[<] .handle:pg.int << file_handle
 
 // Cleanup (hypothetical cleanup block)
 [/] |CloseFile
-[/][<] .handle: pg\int << file_handle
+[/][<] .handle:pg.int << file_handle
 
 [X]
 ```
@@ -800,7 +800,7 @@ One pipeline can control another:
 [r] |Step2
 
 [Q] |Q.KillIf.Runtime.GreaterThan
-[<] .seconds: pg\uint << 600  // 10 minutes max
+[<] .seconds:pg.uint << 600  // 10 minutes max
 
 [X]
 ```
@@ -831,7 +831,7 @@ One pipeline can control another:
 ```polyglot
 // ✓ CORRECT - Understanding independence
 [|] IndependentWorker
-[r] .count: pg\int << 0
+[r] .count:pg.int << 0
 
 [r] |Increment
 // Only affects THIS instance's .count
@@ -871,7 +871,7 @@ One pipeline can control another:
 // Can be paused/resumed safely
 
 [t] |T.Every.Hour
-[<] .minute: pg\int << 0
+[<] .minute:pg.int << 0
 
 [r] |ProcessBatch
 [X]

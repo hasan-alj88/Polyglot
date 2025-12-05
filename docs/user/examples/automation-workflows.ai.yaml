@@ -1,0 +1,15 @@
+_meta:
+  src: automation-workflows.md
+  updated: 2025-12-02
+topic: Automation Workflow Examples
+kw: [automation, workflow, schedule, cron, triggers, file-watch, batch-processing, ETL]
+sum: Real-world automation examples: scheduled tasks, file monitoring, batch processing, ETL pipelines with triggers and error handling
+pts:
+  - Scheduled: [t] |T.DT.Daily, |T.DT.Every triggers
+  - File watch: [t] |T.File.Modified with path monitoring
+  - Batch: parallel processing with [p] ~ForEach
+  - ETL: extract-transform-load patterns
+  - Error handling with retry logic
+  - Queue prioritization with [Q]
+rels: [multi-step-pipelines.md, block-markers.md, datetime-system.md]
+code: [docs/project/examples/01-basic-pipeline.pg, docs/project/examples/05-comprehensive-example.pg]

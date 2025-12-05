@@ -27,7 +27,7 @@ The AST can parse individual pipelines but **cannot represent the full program s
 
 ### BNF Grammar Requirement
 
-Per `docs/user/language/12-bnf-grammar.md`:
+Per `docs/user/language/bnf-grammar.md`:
 
 ```bnf
 <program> ::= <package-declaration-block>
@@ -198,7 +198,7 @@ pub struct ImportDeclaration {
 
 **Example:**
 ```polyglot
-[#] Status
+[#] #Status
 [<] .pending: pg\string << "PENDING"
 [<] .active: pg\string << "ACTIVE"
 [<] .completed: pg\string << "COMPLETED"

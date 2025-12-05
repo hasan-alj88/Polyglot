@@ -3,7 +3,7 @@
 //! These tests use the fixtures from the test design document to verify
 //! parser behavior with realistic Polyglot code.
 
-use polyglot_parser::{Parser, FileRegistryResolver};
+use polyglot_parser::{FileRegistryResolver, Parser};
 use std::fs;
 use std::path::PathBuf;
 
@@ -24,18 +24,20 @@ fn load_fixture(filename: &str) -> String {
 fn test_valid_pipeline_fixture() {
     let source = load_fixture("test-valid-pipeline.pg");
     let registry = get_fixture_path("test-registry.json");
-    
-    let resolver = FileRegistryResolver::from_file(&registry)
-        .expect("Failed to load registry");
-    
-    let parser = Parser::new(&source, resolver)
-        .expect("Failed to create parser");
-    
+
+    let resolver = FileRegistryResolver::from_file(&registry).expect("Failed to load registry");
+
+    let parser = Parser::new(&source, resolver).expect("Failed to create parser");
+
     let result = parser.parse();
-    assert!(result.is_ok(), "Failed to parse valid pipeline: {:?}", result.err());
-    
+    assert!(
+        result.is_ok(),
+        "Failed to parse valid pipeline: {:?}",
+        result.err()
+    );
+
     let program = result.unwrap();
-    
+
     // Verify structure
     assert_eq!(program.definitions.len(), 1, "Should have 1 pipeline");
     assert_eq!(program.package.imports.len(), 1, "Should have 1 import");
@@ -45,17 +47,19 @@ fn test_valid_pipeline_fixture() {
 fn test_missing_param_fixture() {
     let source = load_fixture("test-missing-param.pg");
     let registry = get_fixture_path("test-registry.json");
-    
-    let resolver = FileRegistryResolver::from_file(&registry)
-        .expect("Failed to load registry");
-    
-    let parser = Parser::new(&source, resolver)
-        .expect("Failed to create parser");
-    
+
+    let resolver = FileRegistryResolver::from_file(&registry).expect("Failed to load registry");
+
+    let parser = Parser::new(&source, resolver).expect("Failed to create parser");
+
     // Parser should succeed (it's just parsing, not validating yet)
     let result = parser.parse();
-    assert!(result.is_ok(), "Parser should succeed even with validation errors: {:?}", result.err());
-    
+    assert!(
+        result.is_ok(),
+        "Parser should succeed even with validation errors: {:?}",
+        result.err()
+    );
+
     // TODO: Add semantic validation in future story
     // For now, we just verify it parses correctly
 }
@@ -64,13 +68,11 @@ fn test_missing_param_fixture() {
 fn test_wrong_param_name_fixture() {
     let source = load_fixture("test-wrong-param-name.pg");
     let registry = get_fixture_path("test-registry.json");
-    
-    let resolver = FileRegistryResolver::from_file(&registry)
-        .expect("Failed to load registry");
-    
-    let parser = Parser::new(&source, resolver)
-        .expect("Failed to create parser");
-    
+
+    let resolver = FileRegistryResolver::from_file(&registry).expect("Failed to load registry");
+
+    let parser = Parser::new(&source, resolver).expect("Failed to create parser");
+
     let result = parser.parse();
     assert!(result.is_ok(), "Parser should succeed: {:?}", result.err());
 }
@@ -80,11 +82,9 @@ fn test_type_mismatch_fixture() {
     let source = load_fixture("test-type-mismatch.pg");
     let registry = get_fixture_path("test-registry.json");
 
-    let resolver = FileRegistryResolver::from_file(&registry)
-        .expect("Failed to load registry");
+    let resolver = FileRegistryResolver::from_file(&registry).expect("Failed to load registry");
 
-    let parser = Parser::new(&source, resolver)
-        .expect("Failed to create parser");
+    let parser = Parser::new(&source, resolver).expect("Failed to create parser");
 
     let result = parser.parse();
     assert!(result.is_ok(), "Parser should succeed: {:?}", result.err());
@@ -106,7 +106,11 @@ fn test_multifile_forward_reference_succeeds() {
 
     let parser = Parser::new(&file1_source, resolver).unwrap();
     let result1 = parser.parse();
-    assert!(result1.is_ok(), "File1 should parse successfully: {:?}", result1.err());
+    assert!(
+        result1.is_ok(),
+        "File1 should parse successfully: {:?}",
+        result1.err()
+    );
 
     // Parse file2 (calls DataLoader from file1)
     let file2_source = fs::read_to_string(&file2_path).unwrap();
@@ -114,7 +118,11 @@ fn test_multifile_forward_reference_succeeds() {
 
     let parser = Parser::new(&file2_source, resolver).unwrap();
     let result2 = parser.parse();
-    assert!(result2.is_ok(), "File2 should parse successfully: {:?}", result2.err());
+    assert!(
+        result2.is_ok(),
+        "File2 should parse successfully: {:?}",
+        result2.err()
+    );
 
     // Note: Actual Phase 2 resolution validation would happen at runtime
     // For now, we verify both files parse correctly
@@ -154,7 +162,11 @@ fn test_multifile_unnumbered_can_call_numbered() {
 
     let parser = Parser::new(&file1_source, resolver).unwrap();
     let result1 = parser.parse();
-    assert!(result1.is_ok(), "Numbered file should parse: {:?}", result1.err());
+    assert!(
+        result1.is_ok(),
+        "Numbered file should parse: {:?}",
+        result1.err()
+    );
 
     // Parse unnumbered file (calls BaseHelper from file1)
     let file_no_marker_source = fs::read_to_string(&file_no_marker_path).unwrap();
@@ -162,7 +174,11 @@ fn test_multifile_unnumbered_can_call_numbered() {
 
     let parser = Parser::new(&file_no_marker_source, resolver).unwrap();
     let result2 = parser.parse();
-    assert!(result2.is_ok(), "Unnumbered file should parse: {:?}", result2.err());
+    assert!(
+        result2.is_ok(),
+        "Unnumbered file should parse: {:?}",
+        result2.err()
+    );
 }
 
 #[test]
@@ -185,11 +201,19 @@ fn test_multifile_duplicate_detection() {
     // Both files parse individually
     let parser1 = Parser::new(&file1_source, resolver.clone()).unwrap();
     let result1 = parser1.parse();
-    assert!(result1.is_ok(), "File1 should parse individually: {:?}", result1.err());
+    assert!(
+        result1.is_ok(),
+        "File1 should parse individually: {:?}",
+        result1.err()
+    );
 
     let parser2 = Parser::new(&file2_source, resolver).unwrap();
     let result2 = parser2.parse();
-    assert!(result2.is_ok(), "File2 should parse individually: {:?}", result2.err());
+    assert!(
+        result2.is_ok(),
+        "File2 should parse individually: {:?}",
+        result2.err()
+    );
 
     // TODO: Add test that validates file ordering across multiple files
     // and expects DuplicateFileOrder error
@@ -215,10 +239,140 @@ fn test_multifile_end_to_end() {
     let program2 = parser2.parse().expect("File2 should compile");
 
     // Verify structure of both programs
-    assert_eq!(program1.definitions.len(), 1, "File1 should have 1 pipeline");
-    assert_eq!(program2.definitions.len(), 1, "File2 should have 1 pipeline");
+    assert_eq!(
+        program1.definitions.len(),
+        1,
+        "File1 should have 1 pipeline"
+    );
+    assert_eq!(
+        program2.definitions.len(),
+        1,
+        "File2 should have 1 pipeline"
+    );
 
     // Verify package specs match (same package)
-    assert_eq!(program1.package.spec.registry, program2.package.spec.registry);
+    assert_eq!(
+        program1.package.spec.registry,
+        program2.package.spec.registry
+    );
     assert_eq!(program1.package.spec.path, program2.package.spec.path);
+}
+
+// ============================================================================
+// Story 1.7: December 2025 Syntax Updates
+// ============================================================================
+
+#[test]
+fn test_enumeration_requires_hash_prefix() {
+    // Enumeration definitions must now use #Config instead of Config
+    let source = r#"
+[@] Local@TestPkg:1.0.0
+[X]
+
+[#] #Config
+[<] .timeout: pg\int << 30
+[X]
+    "#;
+
+    let resolver = FileRegistryResolver::empty();
+    let parser = Parser::new(source, resolver).unwrap();
+    let result = parser.parse();
+
+    assert!(
+        result.is_ok(),
+        "Enumeration with # prefix should parse successfully: {:?}",
+        result.err()
+    );
+}
+
+#[test]
+fn test_default_pull_operator_in_assignment() {
+    // Test ~> operator for pull with default
+    let source = r#"
+[@] Local@TestPkg:1.0.0
+[X]
+
+[|] TestPipeline
+[i] .timeout: pg\int <~ 30
+[t] |T.Call
+[W] |W.Polyglot.Scope
+[r] .timeout ~> .settings.timeout
+[o] .result: pg\int
+[X]
+    "#;
+
+    let resolver = FileRegistryResolver::empty();
+    let parser = Parser::new(source, resolver).unwrap();
+    let result = parser.parse();
+
+    assert!(
+        result.is_ok(),
+        "Assignment with ~> operator should parse successfully: {:?}",
+        result.err()
+    );
+
+    let program = result.unwrap();
+    assert_eq!(program.definitions.len(), 1);
+}
+
+#[test]
+fn test_pipeline_formatted_string_literal() {
+    // Test |Pipeline"formatted string" syntax
+    let source = r#"
+[@] Local@TestPkg:1.0.0
+[X]
+
+[|] LogTest
+[i] .count: pg\int
+[t] |T.Call
+[W] |W.Polyglot.Scope
+[r] .msg: pg\string << |U.Log.Info"Processing {.count} items"
+[o] .msg: pg\string
+[X]
+    "#;
+
+    let resolver = FileRegistryResolver::empty();
+    let parser = Parser::new(source, resolver).unwrap();
+    let result = parser.parse();
+
+    assert!(
+        result.is_ok(),
+        "Pipeline formatted string should parse successfully: {:?}",
+        result.err()
+    );
+}
+
+#[test]
+fn test_all_new_syntax_together() {
+    // Integration test with all December 2025 syntax features
+    let source = r#"
+[@] Local@TestPkg:1.0.0
+[X]
+
+[#] #Config
+[<] .default_timeout: pg\int << 30
+[X]
+
+[|] CompleteTest
+[i] .count: pg\int
+[t] |T.Call
+[W] |W.Polyglot.Scope
+[r] .timeout ~> #Config.default_timeout
+[r] .msg: pg\string << |U.Log.Info"Processing {.count} items with timeout {.timeout}"
+[o] .result: pg\string
+[X]
+    "#;
+
+    let resolver = FileRegistryResolver::empty();
+    let parser = Parser::new(source, resolver).unwrap();
+    let result = parser.parse();
+
+    assert!(
+        result.is_ok(),
+        "All new syntax features should work together: {:?}",
+        result.err()
+    );
+
+    let program = result.unwrap();
+    assert_eq!(program.definitions.len(), 2); // 1 enum + 1 pipeline
 }

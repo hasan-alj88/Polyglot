@@ -442,8 +442,8 @@ polyglot-parser/
 - [Source: docs/technical/architecture.md#ADR-014-String-Concatenation-Operator]
 - [Source: docs/technical/parser-error-detection-design.md] - **Comprehensive error detection system**
 - [Source: docs/technical/block-hierarchy-reference.md] - Block nesting validation rules
-- [Source: docs/user/language/00-quick-start.md] - Syntax reference
-- [Source: docs/user/language/08-line-continuation.md] - Line continuation and `+"` operator
+- [Source: docs/user/language/quick-start.md] - Syntax reference
+- [Source: docs/user/language/line-continuation.md] - Line continuation and `+"` operator
 - [Source: docs/project/stories/1-2-lexer-token-definitions.md] - Similar pattern
 
 ## Dev Agent Record

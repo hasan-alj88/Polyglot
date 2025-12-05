@@ -1,7 +1,7 @@
 # Variable States: Technical Specification
 
-**Version:** 1.0.0
-**Last Updated:** 2025-11-24
+**Version:** 1.2.0
+**Last Updated:** 2025-12-03
 **Status:** Specification
 **Audience:** Language implementers, compiler engineers, runtime developers
 
@@ -58,10 +58,11 @@ Polyglot is not a synchronous language with async features bolted on. **Async is
 Traditional "mutability" concepts don't apply. Polyglot uses **state transitions** for async coordination.
 
 **Implications:**
-- Variables transition: Declared → Pending → Ready/Faulted
-- Once Ready, variables are immutable (consequence, not design goal)
+- Variables transition through 6 core states: Pending → Default/Final/Faulted → Cleared
+- Once Final, variables are immutable (consequence, not design goal)
 - States are queryable via `.state` field
-- Compiler/runtime manage transitions
+- Compiler/runtime manage transitions automatically
+- All variables end in Cleared state when scope ends
 
 ### Principle 3: Serialization Foundation
 
@@ -80,28 +81,30 @@ Pipelines automatically wait for variables to be ready. No explicit synchronizat
 **Implications:**
 - Pipeline boundaries trigger waits
 - Developers never write await
-- `[i]` blocks expect Ready variables
+- `[i]` blocks expect Final variables
 - Runtime handles blocking/unblocking
 
 ---
 
 ## Complete State Model
 
-Polyglot variables have **9 distinct states** organized into two categories:
+Polyglot variables have **10 distinct states** organized into two categories:
 
-### Core States (5)
+### Core States (6)
 
 States required for basic variable lifecycle:
 
 | State | Description | Can Read Value? | Mutable? | Triggers Pipeline? |
 |-------|-------------|----------------|----------|-------------------|
-| **Declared** | Schema defined, no value, no default | ❌ No | N/A | ❌ No ([i] requires Ready) |
-| **DefaultReady** | Has default value, allows ONE override | ✅ Yes | ⚠️ Once | ✅ Yes |
-| **Pending** | Async operation in progress | ❌ No | N/A | ⚠️ Waits |
-| **Ready** | Value available, immutable | ✅ Yes | ❌ No | ✅ Yes |
+| **Pending** | Declared without value, awaiting push | ❌ No | N/A | ❌ No ([i] requires Final) |
+| **Default** | Has default push, allows ONE override push | ✅ Yes | ⚠️ Once | ✅ Yes |
+| **Final** | Value available, immutable | ✅ Yes | ❌ No | ✅ Yes |
 | **Faulted** | Operation failed, has error info | ❌ No* | ❌ No | ❌ No (error path) |
+| **Cleared** | Scope ended, memory freed | ❌ No | ❌ No | ❌ No (terminal state) |
 
 *Can read `.errors` field
+
+**Note:** When a variable is declared without value (`.var: type`), it starts in **Pending** state (awaiting push). When declared with push/pull operators (`<<`, `>>`, `<~`, `~>`), it transitions directly to the appropriate state (Default, Final, or Pending if async).
 
 ### Queue Management States (4)
 
@@ -109,7 +112,7 @@ Advanced states for resilience and performance:
 
 | State | Description | Purpose | Transition |
 |-------|-------------|---------|------------|
-| **Retrying** | Automatic retry attempt in progress | Transient failure recovery | → Ready/Faulted |
+| **Retrying** | Automatic retry attempt in progress | Transient failure recovery | → Final/Faulted |
 | **Paused** | Waiting for external trigger | Human approval, scheduled events | → Pending (when triggered) |
 | **Cached** | Cached result, may be stale | Performance optimization | → Dirty (on invalidation) |
 | **Dirty** | Cache invalid, needs refresh | Cache invalidation | → Pending (on refresh) |
@@ -124,13 +127,19 @@ Polyglot has **three bidirectional operator pairs** for variable assignment:
 
 | Operator Pair | Direction | Purpose | Resulting State |
 |---------------|-----------|---------|-----------------|
-| None | N/A | Schema-only declaration | Declared |
-| `<~` / `~>` | Bidirectional | Default assignment | DefaultReady |
-| `<<` / `>>` | Bidirectional | Constant/Async assignment | Ready or Pending |
+| None | N/A | Declaration without value (awaits push) | Pending |
+| `<~` / `~>` | Bidirectional | Default push (override once) | Default |
+| `<<` / `>>` | Bidirectional | Normal push (sync or async) | Final or Pending (if async) |
+
+**Key Points:**
+- **Declaration without operator** (`.var: type`) → **Pending** state (awaiting push)
+- **Declaration with `<~` or `~>`** (`.var: type <~ value` or `.var: type ~> .source`) → **Default** state (default push)
+- **Declaration with `<<` or `>>`** (`.var: type << value` or `.var: type >> .source`) → **Final** (sync push) or **Pending** (async push)
+- **All variables** → **Cleared** state at end of scope (via `|W.Polyglot.Scope`)
 
 ---
 
-### 1. Schema-Only (No Operator)
+### 1. Declaration Without Value (No Operator)
 
 **Syntax:**
 ```polyglot
@@ -140,38 +149,44 @@ Polyglot has **three bidirectional operator pairs** for variable assignment:
 **Semantics:**
 - Declares field schema without value
 - No default provided
-- Field starts in **Declared** state
-- Must be explicitly populated before use
+- Field starts in **Pending** state
+- Must receive push before use
+- Awaits push via `<<` or `>>` operators (normal push)
 
 **Use Cases:**
 - Fields populated by pipelines
-- Required parameters
+- Required parameters that will be assigned later
 - Data from external sources
 
 **Example:**
 ```polyglot
 [#] UserProfile
-[<] .id: pg\string          # Declared (must populate)
-[<] .name: pg\string        # Declared (must populate)
-[<] .email: pg\string       # Declared (must populate)
+[<] .id: pg\string          # Pending (awaiting push)
+[<] .name: pg\string        # Pending (awaiting push)
+[<] .email: pg\string       # Pending (awaiting push)
 [X]
+
+[r] .user: #UserProfile << #UserProfile
+[r] .user.id << "user-123"      # Normal push: Pending → Final
+[r] .user.name << "John Doe"    # Normal push: Pending → Final
+[r] .user.email << "john@example.com"  # Normal push: Pending → Final
 ```
 
 ---
 
-### 2. Default Assignment `<~` / `~>`
+### 2. Default Push `<~` / `~>`
 
 **Syntax:**
 ```polyglot
-[<] .field: Type <~ default_value    # Left direction
-[>] .field: Type ~> .var             # Right direction
+[<] .field: Type <~ default_value    # Default push left
+[>] .field: Type ~> .var             # Default push right
 ```
 
 **Semantics:**
-- Provides default value
-- Field starts in **DefaultReady** state
-- Allows **ONE override** during instantiation
-- After first use or override → transitions to **Ready**
+- Provides default value via default push
+- Field starts in **Default** state
+- Allows **ONE override push** during instantiation
+- After first use or override push → transitions to **Final**
 - Default kicks in at `[i]` blocks if not overridden
 
 **Override-Once Behavior:**
@@ -185,7 +200,7 @@ Polyglot has **three bidirectional operator pairs** for variable assignment:
 
 [i] .config2: #Config << #Config{.timeout: 60}
 # .config2.timeout = 60 (overridden)
-# After this, .config2.timeout is immutable (Ready state)
+# After this, .config2.timeout is immutable (Final state)
 ```
 
 **Use Cases:**
@@ -196,43 +211,43 @@ Polyglot has **three bidirectional operator pairs** for variable assignment:
 **Implementation Requirements:**
 - Track override count per field
 - Enforce single override constraint
-- Transition DefaultReady → Ready after override or first use
+- Transition Default → Final after override or first use
 - Default application at `[i]` block entry
 
 ---
 
-### 3. Constant/Async Assignment `<<` / `>>`
+### 3. Normal Push `<<` / `>>`
 
 **Syntax:**
 ```polyglot
-[<] .field: Type << constant_value   # Constant (left)
-[>] .field: Type >> .var             # Async assignment (right)
+[<] .field: Type << value   # Normal push left
+[>] .field: Type >> .var    # Normal push right
 ```
 
 **Semantics:**
 
-#### Constant Assignment (`<<`)
-- Immediate **Ready** state
+#### Synchronous Push (`<<` or `>>` with literal/Final value)
+- Immediate **Final** state
 - Value is immutable
-- Cannot be overridden
+- No more pushes accepted
 
-#### Async Assignment (`>>`)
+#### Asynchronous Push (`<<` or `>>` with Pending source)
 - Variable starts in **Pending** state
-- Transitions to **Ready** or **Faulted** when pipeline completes
-- Immutable once Ready
+- Transitions to **Final** or **Faulted** when operation completes
+- Immutable once Final
 
 **Use Cases:**
-- Constants: Version numbers, fixed config
-- Async: Pipeline outputs, API responses
+- Sync push: Literals, Final variables, pure functions
+- Async push: Pipeline outputs, API responses, external operations
 
 **Example:**
 ```polyglot
 [#] AppInfo
-[<] .version: pg\string << "1.0.0"    # Ready immediately (constant)
+[<] .version: pg\string << "1.0.0"    # Sync push: Final immediately
 [X]
 
 [r] |FetchData
-[>] .result: pg\string >> .data       # Pending → Ready/Faulted (async)
+[>] .result: pg\string >> .data       # Async push: Pending → Final/Faulted
 ```
 
 ---
@@ -242,45 +257,54 @@ Polyglot has **three bidirectional operator pairs** for variable assignment:
 ### Basic Lifecycle Flow
 
 ```
-ENUMERATION FIELD DECLARATION
+VARIABLE DECLARATION
          |
          ↓
     ┌────┴────┬──────────┬──────────┐
     |         |          |          |
- Schema    Default   Constant    Async
-  Only      <~ ~>     << >>     Pipeline
+ No Value  Default   Constant    Async
+  (type)    <~ ~>     << value  Pipeline >>
     |         |          |          |
     ↓         ↓          ↓          ↓
-Declared  DefaultReady Ready    Pending
-(no value) (has default) (const)  (waiting)
+ Pending  Default Final    Pending
+(awaiting) (override-1) (immut)  (async wait)
     |         |          |          |
-    |         ↓          |          ↓
-    |    [i] block       |      Ready/Faulted
-    |   (expected        |          |
-    |    Ready)          |          |
-    |         |          |          |
+    ↓         ↓          |          ↓
+Assignment [i] block     |      Final/Faulted
+<< or >>  (defaults      |          |
+    |     applied)       |          |
+    ↓         |          |          |
     |    ┌────┴────┐     |          |
     |    |         |     |          |
     |    ↓         ↓     |          |
     | Override   Use     |          |
-    |    or    Default   |          |
-    | Populate           |          |
+    |   Once    Default  |          |
     |    |      |        |          |
     └────┴──────┴────────┴──────────┘
               |
               ↓
-       Ready (immutable)
+       Final (immutable)
+              |
+              ↓
+      [Scope Ends - Pipeline [X]]
+              |
+              ↓
+       |W.Polyglot.Scope Cleanup
+              |
+              ↓
+         Cleared
+      (memory freed)
 ```
 
 ### Extended Lifecycle with Queue States
 
 ```
-Declared ────────┐
+Pending ─────────┐
                  │
-DefaultReady ────┤
+Default ────┤
                  │
                  ↓
-             Pending ──────→ Ready (success)
+             Pending ──────→ Final (success)
                  ↓              ↑
                  ↓              │
             Faulted ─→ Retrying ┘
@@ -290,13 +314,137 @@ DefaultReady ────┤
                  │         │
                  └─────────┘
 
-Ready ──────→ Cached ──────→ Dirty ──────→ Pending
+Final ──────→ Cached ──────→ Dirty ──────→ Pending
 (result)   (performance) (invalidated)  (refresh)
    │
    ↓
 Paused ──────→ [External Trigger] ──────→ Pending
 (waiting)      (human approval, etc.)     (resume)
+
+All Paths Eventually Lead To:
+   │
+   ↓
+[Pipeline Ends]
+   │
+   ↓
+Cleared (scope cleanup, memory freed)
 ```
+
+---
+
+### Variable Scope and Memory Cleanup
+
+**Complete Variable Lifecycle (Birth to Death):**
+
+```
+DECLARATION (Birth)
+      ↓
+   [State Transitions: Pending/Default → ... → Final/Faulted]
+      ↓
+PIPELINE END (Death)
+      ↓
+SCOPE CLEANUP via |W.Polyglot.Scope
+      ↓
+   Cleared State
+      ↓
+MEMORY FREED
+```
+
+**Scope Rules:**
+1. **Variables are born** when declared (`[i]`, `[r]`, `[o]`) - start in **Pending** or **Default** state
+2. **Variables transition** through states during pipeline execution
+3. **Variables die** when pipeline ends (reaches `[X]`)
+4. **Variables enter Cleared state** via `|W.Polyglot.Scope` wrapper
+5. **Memory is freed** immediately, variable no longer accessible
+
+---
+
+### The `|W.Polyglot.Scope` Wrapper
+
+**Purpose:** Automatic memory management and resource cleanup
+
+**Behavior:**
+- **Implicitly present** in all pipelines (even when not written)
+- **Manages variable lifecycle** from declaration to cleanup
+- **Transitions all variables to Cleared state** when pipeline ends
+- **Frees memory** when variables go out of scope (pipeline ends)
+- **Handles cleanup** for ALL variable states (Final, Faulted, Pending, etc.)
+
+**Example:**
+```polyglot
+[|] ProcessData
+[i] .input: pg\string
+[t] |T.Call
+// [W] |W.Polyglot.Scope ← IMPLICIT!
+
+// Variable lifecycle:
+[r] .temp1: pg\string << .input + "A"    // .temp1 BORN (Pending → Final)
+[r] .temp2: pg\string << .temp1 + "B"    // .temp2 BORN (Pending → Final)
+[r] .result: pg\string << .temp2 + "C"   // .result BORN (Pending → Final)
+
+[o] .result: pg\string
+[X]
+// Pipeline ends - |W.Polyglot.Scope cleanup:
+// 1. .input → Cleared (freed)
+// 2. .temp1 → Cleared (freed)
+// 3. .temp2 → Cleared (freed)
+// 4. .result → Cleared (freed)
+```
+
+---
+
+### Nested Pipeline Scopes
+
+**Each pipeline creates its own scope:**
+
+```polyglot
+[|] OuterPipeline
+[i] .outer_input: pg\string
+[t] |T.Call
+// Outer scope starts
+
+[r] .outer_temp: pg\string << .outer_input + "X"
+
+// Call inner pipeline
+[r] |InnerPipeline
+[<] .data: pg\string << .outer_temp
+[>] .processed: pg\string >> .inner_result
+
+[o] .inner_result: pg\string
+[X]
+// Outer scope cleanup:
+// - .outer_input freed
+// - .outer_temp freed
+// - .inner_result freed
+
+[|] InnerPipeline
+[i] .data: pg\string
+[t] |T.Call
+// Inner scope starts (independent of outer!)
+
+[r] .inner_temp: pg\string << .data + "Y"
+[o] .inner_temp: pg\string
+[X]
+// Inner scope cleanup (happens BEFORE returning to outer):
+// - .data freed
+// - .inner_temp freed
+```
+
+**Key Point:** Variables in nested pipelines are cleaned up **immediately** when that pipeline ends, before control returns to the calling pipeline.
+
+---
+
+### State Transitions After Scope End
+
+**Important:** Once a pipeline ends and scope cleanup occurs, all variables transition to **Cleared** state and are then freed. No further state transitions are possible after cleanup.
+
+```
+Final ──→ [Pipeline Ends] ──→ [Scope Cleanup] ──→ Cleared ──→ FREED (memory released)
+Faulted ──→ [Pipeline Ends] ──→ [Scope Cleanup] ──→ Cleared ──→ FREED (memory released)
+Any State ──→ [Pipeline Ends] ──→ [Scope Cleanup] ──→ Cleared ──→ FREED (memory released)
+```
+
+**This is the terminal state:** Cleared is the final state before memory deallocation. All variables, regardless of their state during execution, transition to Cleared when the pipeline scope ends.
 
 ---
 
@@ -316,7 +464,7 @@ Paused ──────→ [External Trigger] ──────→ Pending
 
 **Usage:**
 ```polyglot
-[?] .var.state =? #Variables.States.Ready
+[?] .var.state =? #Variables.States.Final
 [~][r] |ProcessData
 [~][<] .input << .var
 
@@ -341,7 +489,7 @@ Paused ──────→ [External Trigger] ──────→ Pending
 **Semantics:**
 - Available on ALL variables
 - Populated on Faulted state
-- Empty array when Ready
+- Empty array when Final
 - Compiler-managed
 
 **Error Object Structure:**
@@ -376,17 +524,17 @@ Paused ──────→ [External Trigger] ──────→ Pending
 
 ## Reserved Enumerations
 
-### `#Variables.States.*`
+### `#Variables.States.*` or `#PgVar.States.*`
 
 Complete enumeration of variable states:
 
 ```polyglot
-[#] Variables.States
-[<] .Declared: pg\string << "Declared"
-[<] .DefaultReady: pg\string << "DefaultReady"
+[#] Variables.States  // Also aliased as #PgVar.States
 [<] .Pending: pg\string << "Pending"
-[<] .Ready: pg\string << "Ready"
+[<] .Default: pg\string << "Default"
+[<] .Final: pg\string << "Final"
 [<] .Faulted: pg\string << "Faulted"
+[<] .Cleared: pg\string << "Cleared"
 [<] .Retrying: pg\string << "Retrying"
 [<] .Paused: pg\string << "Paused"
 [<] .Cached: pg\string << "Cached"
@@ -394,11 +542,25 @@ Complete enumeration of variable states:
 [X]
 ```
 
+**Core States (6):**
+- **Pending**: Declared without value, awaiting assignment
+- **Default**: Has default value, allows one override
+- **Final**: Value available, immutable
+- **Faulted**: Operation failed, has error info
+- **Cleared**: Scope ended, memory freed (terminal state)
+
+**Queue Management States (4):**
+- **Retrying**: Automatic retry in progress
+- **Paused**: Waiting for external trigger
+- **Cached**: Cached result
+- **Dirty**: Cache invalidated
+
 **Implementation Requirements:**
 - Pre-compile time constants
 - Immutable
 - Available globally
 - Type-safe comparisons
+- Cleared state is terminal (cannot transition from Cleared to any other state)
 
 ---
 
@@ -408,31 +570,31 @@ Complete enumeration of variable states:
 
 | From State | To State(s) | Trigger | Notes |
 |------------|-------------|---------|-------|
-| Declared | Pending | Pipeline assignment | Field populated via `>>` |
-| Declared | Ready | Direct assignment | Explicit value provided |
-| DefaultReady | Pending | Override with async | Override with pipeline result |
-| DefaultReady | Ready | First use or override | Default used or overridden |
-| Pending | Ready | Pipeline success | Value fulfilled |
+| Pending | Final | Direct assignment `<<` or `>>` | Value assigned |
 | Pending | Faulted | Pipeline failure | Error occurred |
 | Pending | Retrying | Transient failure | Auto-retry triggered |
+| Default | Pending | Override with async `>>` | Override with pipeline result |
+| Default | Final | First use or override `<<` | Default used or overridden once |
+| Final | Cached | Cache enabled | Result cached |
+| Final | Cleared | Pipeline ends `[X]` | Scope cleanup |
 | Faulted | Retrying | Retry attempt | Manual or auto retry |
-| Retrying | Ready | Retry success | Operation succeeded |
+| Faulted | Cleared | Pipeline ends `[X]` | Scope cleanup |
+| Retrying | Final | Retry success | Operation succeeded |
 | Retrying | Faulted | Retry exhausted | All retries failed |
-| Ready | Cached | Cache enabled | Result cached |
 | Cached | Dirty | Invalidation event | Cache invalidated |
+| Cached | Cleared | Pipeline ends `[X]` | Scope cleanup |
 | Dirty | Pending | Refresh triggered | Re-fetch data |
-| Pending | Paused | External trigger needed | Wait for approval |
 | Paused | Pending | Trigger received | Resume execution |
+| **Any State** | **Cleared** | **Pipeline ends `[X]`** | **Scope cleanup (final state)** |
 
 ### Invalid Transitions
 
 **Forbidden transitions (compiler/runtime must prevent):**
 
-- Ready → Declared (cannot "un-ready" a variable)
-- Ready → Pending (cannot make Ready async again)
-- Faulted → Ready (must go through Retrying)
-- DefaultReady → Declared (cannot remove default)
-- Any state → DefaultReady (DefaultReady is initial state only)
+- Final → Pending (cannot make Final async again)
+- Faulted → Final (must go through Retrying)
+- Any state → Default (Default is initial state only)
+- **Cleared → Any state (Cleared is terminal, memory freed)**
 
 ---
 
@@ -446,13 +608,13 @@ Complete enumeration of variable states:
 ```
 When pipeline P references variable V:
   IF V.state == Pending:
-    Block P until V.state ∈ {Ready, Faulted}
-  ELSE IF V.state == Declared:
-    Throw CompileError: "Variable must be Ready at pipeline boundary"
-  ELSE IF V.state ∈ {Ready, DefaultReady, Cached}:
+    Block P until V.state ∈ {Final, Faulted}
+  ELSE IF V.state ∈ {Final, Default, Cached}:
     Proceed with pipeline execution
   ELSE IF V.state == Faulted:
     Propagate error to error handler
+  ELSE IF V.state == Cleared:
+    Throw RuntimeError: "Variable accessed after scope cleanup"
 ```
 
 **Blocking Mechanism:**
@@ -464,23 +626,25 @@ When pipeline P references variable V:
 
 ### `[i]` Block Entry Semantics
 
-**Rule:** All `[i]` variables MUST be Ready (or DefaultReady) before pipeline triggers.
+**Rule:** All `[i]` variables MUST be Final (or Default) before pipeline triggers.
 
 **Implementation:**
 ```
 On pipeline trigger:
   FOR EACH variable V in [i] block:
-    IF V.state == DefaultReady:
+    IF V.state == Default:
       Apply default value
-      Transition V.state to Ready
-    ELSE IF V.state == Declared:
-      Throw RuntimeError: "[i] variable not ready"
+      Transition V.state to Final
     ELSE IF V.state == Pending:
-      Wait until V.state ∈ {Ready, Faulted}
+      Wait until V.state ∈ {Final, Faulted}
+      IF after wait, still Pending:
+        Throw RuntimeError: "[i] variable not ready (timeout or deadlock)"
     ELSE IF V.state == Faulted:
       Invoke error handler
+    ELSE IF V.state == Final:
+      Proceed
 
-  IF ALL [i] variables Ready:
+  IF ALL [i] variables Final:
     Execute pipeline body
   ELSE:
     Abort pipeline
@@ -488,9 +652,9 @@ On pipeline trigger:
 
 ---
 
-### DefaultReady Override Semantics
+### Default Override Semantics
 
-**Rule:** DefaultReady fields allow ONE override before becoming immutable.
+**Rule:** Default fields allow ONE override before becoming immutable.
 
 **Implementation:**
 ```
@@ -498,16 +662,16 @@ Enumeration field F with default D:
 
 Instantiation without override:
   F.value = D
-  F.state = DefaultReady
+  F.state = Default
 
   On first read:
-    F.state = Ready
+    F.state = Final
     F.value remains D (immutable)
 
 Instantiation with override O:
   F.value = O
   F.override_count = 1
-  F.state = Ready  (immediate transition)
+  F.state = Final  (immediate transition)
   F.value is immutable
 
   On second override attempt:
@@ -561,10 +725,10 @@ Error propagation modes:
 #### 3. Optimization
 - Eliminate redundant state checks
 - Inline constant assignments
-- Optimize away DefaultReady → Ready transitions when no override
+- Optimize away Default → Final transitions when no override
 
 #### 4. Error Detection
-- Detect second override attempts on DefaultReady fields
+- Detect second override attempts on Default fields
 - Warn when Declared fields reach `[i]` blocks
 - Flag invalid state transitions
 
@@ -584,7 +748,7 @@ Error propagation modes:
 - Deadlock detection
 
 #### 3. Memory Management
-- Free Pending variable resources on Ready/Faulted
+- Free Pending variable resources on Final/Faulted
 - Clean up error objects after handling
 - Cache eviction for Cached state
 
@@ -600,7 +764,7 @@ Error propagation modes:
 #### 1. State Inspection
 - Runtime API to query variable state
 - State history (last N transitions)
-- Current value (if Ready)
+- Current value (if Final)
 
 #### 2. Error Details
 - Full `.errors` array access
@@ -633,7 +797,7 @@ Error propagation modes:
 [>] .user: #User >> .user_data
 
 # Is this valid?
-[?] .user_data.address.city.state =? #Variables.States.Ready
+[?] .user_data.address.city.state =? #Variables.States.Final
 ```
 
 **Resolution:** YES, all serialized fields have `.state` introspection.
@@ -645,9 +809,9 @@ Error propagation modes:
 
 ---
 
-### Edge Case 2: DefaultReady at `[i]` Block
+### Edge Case 2: Default at `[i]` Block
 
-**Scenario:** DefaultReady variable at pipeline entry
+**Scenario:** Default variable at pipeline entry
 
 ```polyglot
 [#] Config
@@ -659,10 +823,10 @@ Error propagation modes:
 # What is .config.timeout.state here?
 ```
 
-**Resolution:** **Ready** (default kicked in at `[i]`)
+**Resolution:** **Final** (default kicked in at `[i]`)
 
 **Implementation:**
-- At `[i]` block entry, DefaultReady → Ready transition occurs
+- At `[i]` block entry, Default → Final transition occurs
 - Default value applied if not overridden
 - Transition is atomic
 
@@ -680,7 +844,7 @@ Error propagation modes:
 [<] .input: pg\string << .data  # What if .data is Faulted?
 ```
 
-**Resolution:** Pipeline waits for Ready/Faulted, then:
+**Resolution:** Pipeline waits for Final/Faulted, then:
 - If Faulted: Error propagates to ProcessData
 - ProcessData can handle via error blocks
 - If unhandled, ProcessData aborts
@@ -716,7 +880,7 @@ Error propagation modes:
 
 ### Edge Case 5: Second Override Attempt
 
-**Scenario:** Trying to override DefaultReady field twice
+**Scenario:** Trying to override Default field twice
 
 ```polyglot
 [#] Config
@@ -747,17 +911,17 @@ Error propagation modes:
 
 ### A. State Comparison Table
 
-| State | Has Value? | Can Override? | Blocks Pipeline? | Error Info? |
-|-------|-----------|---------------|------------------|-------------|
-| Declared | ❌ | N/A (no value) | ✅ Yes (not Ready) | ❌ |
-| DefaultReady | ✅ (default) | ✅ (once) | ❌ No (Ready-like) | ❌ |
-| Pending | ❌ | ❌ | ✅ Yes (waits) | ❌ |
-| Ready | ✅ | ❌ | ❌ No | ❌ |
-| Faulted | ❌ | ❌ | ✅ Yes (error path) | ✅ (.errors) |
-| Retrying | ❌ | ❌ | ✅ Yes (waits) | ✅ (.errors) |
-| Paused | ❌ | ❌ | ✅ Yes (waits) | ❌ |
-| Cached | ✅ (cached) | ❌ | ❌ No | ❌ |
-| Dirty | ❌ (invalid) | ❌ | ✅ Yes (needs refresh) | ❌ |
+| State | Has Value? | Can Override? | Blocks Pipeline? | Error Info? | Terminal? |
+|-------|-----------|---------------|------------------|-------------|-----------|
+| Pending | ❌ | N/A (no value) | ✅ Yes (waits) | ❌ | ❌ |
+| Default | ✅ (default) | ✅ (once) | ❌ No (Final-like) | ❌ | ❌ |
+| Final | ✅ | ❌ | ❌ No | ❌ | ❌ |
+| Faulted | ❌ | ❌ | ✅ Yes (error path) | ✅ (.errors) | ❌ |
+| Cleared | ❌ | ❌ | ✅ Yes (freed) | ❌ | ✅ |
+| Retrying | ❌ | ❌ | ✅ Yes (waits) | ✅ (.errors) | ❌ |
+| Paused | ❌ | ❌ | ✅ Yes (waits) | ❌ | ❌ |
+| Cached | ✅ (cached) | ❌ | ❌ No | ❌ | ❌ |
+| Dirty | ❌ (invalid) | ❌ | ✅ Yes (needs refresh) | ❌ | ❌ |
 
 ---
 
@@ -796,7 +960,7 @@ Variable {
 ### D. Performance Considerations
 
 #### State Checks
-- Use fast-path for common case (Ready state)
+- Use fast-path for common case (Final state)
 - Branch prediction hints for error paths
 - Inline state comparisons when possible
 
@@ -826,6 +990,8 @@ Variable {
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0.0 | 2025-11-24 | Initial specification based on brainstorming session 2025-11-23 |
+| 1.1.0 | 2025-12-03 | **Major update**: Removed Declared state, added Cleared state, clarified 6-step lifecycle, documented ~> default pull operator, updated all state transitions to include Cleared as terminal state |
+| 1.2.0 | 2025-12-03 | **Terminology update**: Renamed states to remove traditional sync programming associations: `Ready` → `Final`, `DefaultReady` → `Default`. Emphasizes async-centric, data-flow paradigm. |
 
 ---
 
@@ -839,7 +1005,7 @@ Variable {
 - **Reserved enumeration:** Pre-defined enumeration that cannot be altered (`#Variables.States.*`)
 - **Serialization tree:** Hierarchical representation of all Polyglot data as serialized strings
 - **Dot notation:** Syntax for accessing nested fields (`.user.address.city`)
-- **[i] block:** Input block where variables must be Ready before pipeline triggers
+- **[i] block:** Input block where variables must be Final before pipeline triggers
 
 ---
 

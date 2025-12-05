@@ -40,9 +40,9 @@ Process three independent data files simultaneously instead of sequentially.
 [|] ProcessFilesParallel
 
 // Inputs
-[i] .file1: pg\path
-[i] .file2: pg\path
-[i] .file3: pg\path
+[i] .file1:pg.path
+[i] .file2:pg.path
+[i] .file3:pg.path
 
 // Trigger: CLI
 [t] |T.Cli
@@ -52,34 +52,34 @@ Process three independent data files simultaneously instead of sequentially.
 
 // Fork: Process files in parallel
 [p] |File.ReadText
-[<] .path: pg\path << .file1
-[>] .content: pg\string >> .data1
+[<] .path:pg.path << .file1
+[>] .content:pg.string >> .data1
 [~]
 [~][r] |Run.Python
-[~][<] .code: pg\string << """
+[~][<] .code:pg.string << """
 result = len(.data1.split('\\n'))
 """
-[>] .result: pg\int >> .lines1
+[>] .result:pg.int >> .lines1
 [X]
 
 [p] |File.ReadText
-[<] .path: pg\path << .file2
-[>] .content: pg\string >> .data2
+[<] .path:pg.path << .file2
+[>] .content:pg.string >> .data2
 [~]
 [~][r] |Run.Python
-[~][<] .code: pg\string << "
+[~][<] .code:pg.string << "
 [~][*] +"result = len(.data2.split('\\n'))"
-[~][>] .result: pg\int >> .lines2
+[~][>] .result:pg.int >> .lines2
 [~][X]
 
 [p] |File.ReadText
-[<] .path: pg\path << .file3
-[>] .content: pg\string >> .data3
+[<] .path:pg.path << .file3
+[>] .content:pg.string >> .data3
 [~]
 [~][r] |Run.Python
-[~][<] .code: pg\string << "
+[~][<] .code:pg.string << "
 [~][*] +"result = len(.data3.split('\\n'))"
-[~][>] .result: pg\int >> .lines3
+[~][>] .result:pg.int >> .lines3
 [~][X]
 
 // Join: Wait for all parallel tasks to complete
@@ -90,14 +90,14 @@ result = len(.data1.split('\\n'))
 
 // Combine results
 [r] |Run.Python
-[<] .code: pg\string << "
+[<] .code:pg.string << "
 [~][*] +"total = .lines1 + .lines2 + .lines3"
 [~][*] +"result = f"Total lines: {total} (File1: {."[~][*] +"lines1}, File2: {.lines2}, File3: {.[~][*] "
 [~][*]+"lines3})"
 
-[>] .result: pg\string >> .summary
+[>] .result:pg.string >> .summary
 
-[o] .summary: pg\string
+[o] .summary:pg.string
 [X]
 ```
 
@@ -175,8 +175,8 @@ Process a large CSV file by splitting it into partitions and processing each par
 [|] PartitionAndProcess
 
 // Inputs
-[i] .input_file: pg\path
-[i] .partition_count: pg\int << 4
+[i] .input_file:pg.path
+[i] .partition_count:pg.int << 4
 
 // Trigger: CLI
 [t] |T.Cli
@@ -186,11 +186,11 @@ Process a large CSV file by splitting it into partitions and processing each par
 
 // Read and partition data
 [r] |File.ReadText
-[<] .path: pg\path << .input_file
-[>] .content: pg\string >> .file_content
+[<] .path:pg.path << .input_file
+[>] .content:pg.string >> .file_content
 
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 from io import StringIO
 
@@ -221,15 +221,15 @@ result_p2 = partitions[1] if len(partitions) > 1 else ""
 result_p3 = partitions[2] if len(partitions) > 2 else ""
 result_p4 = partitions[3] if len(partitions) > 3 else ""
 """
-[>] .result_p1: pg\string >> .partition1
-[>] .result_p2: pg\string >> .partition2
-[>] .result_p3: pg\string >> .partition3
-[>] .result_p4: pg\string >> .partition4
+[>] .result_p1:pg.string >> .partition1
+[>] .result_p2:pg.string >> .partition2
+[>] .result_p3:pg.string >> .partition3
+[>] .result_p4:pg.string >> .partition4
 
 // Process partitions in parallel
 [p] |ProcessPartition1
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 from io import StringIO
 
@@ -240,12 +240,12 @@ rows = list(csv_reader)
 total = sum(int(row.get('amount', 0)) for row in rows)
 result = total
 """
-[>] .result: pg\int >> .sum1
+[>] .result:pg.int >> .sum1
 [X]
 
 [p] |ProcessPartition2
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 from io import StringIO
 
@@ -254,12 +254,12 @@ rows = list(csv_reader)
 total = sum(int(row.get('amount', 0)) for row in rows)
 result = total
 """
-[>] .result: pg\int >> .sum2
+[>] .result:pg.int >> .sum2
 [X]
 
 [p] |ProcessPartition3
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 from io import StringIO
 
@@ -268,12 +268,12 @@ rows = list(csv_reader)
 total = sum(int(row.get('amount', 0)) for row in rows)
 result = total
 """
-[>] .result: pg\int >> .sum3
+[>] .result:pg.int >> .sum3
 [X]
 
 [p] |ProcessPartition4
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 from io import StringIO
 
@@ -282,7 +282,7 @@ rows = list(csv_reader)
 total = sum(int(row.get('amount', 0)) for row in rows)
 result = total
 """
-[>] .result: pg\int >> .sum4
+[>] .result:pg.int >> .sum4
 [X]
 
 // Join and aggregate results
@@ -293,13 +293,13 @@ result = total
 [<] ... .sum4
 
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 grand_total = .sum1 + .sum2 + .sum3 + .sum4
 result = f"Grand total: {grand_total}"
 """
-[>] .result: pg\string >> .final_result
+[>] .result:pg.string >> .final_result
 
-[o] .final_result: pg\string
+[o] .final_result:pg.string
 [X]
 ```
 
@@ -346,9 +346,9 @@ Fetch data from 3 different API endpoints simultaneously.
 [|] FetchAPIsParallel
 
 // Inputs
-[i] .api1_url: pg\string
-[i] .api2_url: pg\string
-[i] .api3_url: pg\string
+[i] .api1_url:pg.string
+[i] .api2_url:pg.string
+[i] .api3_url:pg.string
 
 // Trigger: CLI
 [t] |T.Cli
@@ -359,7 +359,7 @@ Fetch data from 3 different API endpoints simultaneously.
 // Parallel API calls
 [p] |FetchAPI1
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import urllib.request
 import json
 
@@ -370,12 +370,12 @@ try:
 except Exception as e:
     result = json.dumps({"error": str(e)})
 """
-[>] .result: pg\string >> .api1_data
+[>] .result:pg.string >> .api1_data
 [X]
 
 [p] |FetchAPI2
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import urllib.request
 import json
 
@@ -386,12 +386,12 @@ try:
 except Exception as e:
     result = json.dumps({"error": str(e)})
 """
-[>] .result: pg\string >> .api2_data
+[>] .result:pg.string >> .api2_data
 [X]
 
 [p] |FetchAPI3
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import urllib.request
 import json
 
@@ -402,7 +402,7 @@ try:
 except Exception as e:
     result = json.dumps({"error": str(e)})
 """
-[>] .result: pg\string >> .api3_data
+[>] .result:pg.string >> .api3_data
 [X]
 
 // Join all API responses
@@ -413,7 +413,7 @@ except Exception as e:
 
 // Combine results
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 combined = {
@@ -424,9 +424,9 @@ combined = {
 
 result = json.dumps(combined, indent=2)
 """
-[>] .result: pg\string >> .combined_data
+[>] .result:pg.string >> .combined_data
 
-[o] .combined_data: pg\string
+[o] .combined_data:pg.string
 [X]
 ```
 
@@ -478,16 +478,16 @@ Process multiple files in parallel but limit CPU and memory usage.
 [|] ParallelWithResourceLimits
 
 // Inputs
-[i] .files: pg\string  // Comma-separated file paths
+[i] .files:pg.string  // Comma-separated file paths
 
 // Trigger: CLI
 [t] |T.Cli
 
 // Queue: Limit concurrent tasks
 [Q] |Q.RequireResource
-[<] .cpu_cores: pg\int << 2
-[<] .memory_mb: pg\int << 4096
-[<] .max_concurrent: pg\int << 4
+[<] .cpu_cores:pg.int << 2
+[<] .memory_mb:pg.int << 4096
+[<] .max_concurrent:pg.int << 4
 
 // Runtime Wrappers
 [W] |W.Python3.11
@@ -495,73 +495,73 @@ Process multiple files in parallel but limit CPU and memory usage.
 
 // Parse file list
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 files = .files.split(',')
 result_f1 = files[0].strip() if len(files) > 0 else ""
 result_f2 = files[1].strip() if len(files) > 1 else ""
 result_f3 = files[2].strip() if len(files) > 2 else ""
 result_f4 = files[3].strip() if len(files) > 3 else ""
 """
-[>] .result_f1: pg\path >> .file1
-[>] .result_f2: pg\path >> .file2
-[>] .result_f3: pg\path >> .file3
-[>] .result_f4: pg\path >> .file4
+[>] .result_f1:pg.path >> .file1
+[>] .result_f2:pg.path >> .file2
+[>] .result_f3:pg.path >> .file3
+[>] .result_f4:pg.path >> .file4
 
 // Process files in parallel (max 4 concurrent)
 [p] |ProcessFile1
 [r] |File.ReadText
-[<] .path: pg\path << .file1
-[>] .content: pg\string >> .content1
+[<] .path:pg.path << .file1
+[>] .content:pg.string >> .content1
 
 [r] |Run.Rust
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 let text = .content1;
 let word_count = text.split_whitespace().count();
 format!("{}", word_count)
 """
-[>] .result: pg\string >> .count1
+[>] .result:pg.string >> .count1
 [X]
 
 [p] |ProcessFile2
 [r] |File.ReadText
-[<] .path: pg\path << .file2
-[>] .content: pg\string >> .content2
+[<] .path:pg.path << .file2
+[>] .content:pg.string >> .content2
 
 [r] |Run.Rust
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 let text = .content2;
 let word_count = text.split_whitespace().count();
 format!("{}", word_count)
 """
-[>] .result: pg\string >> .count2
+[>] .result:pg.string >> .count2
 [X]
 
 [p] |ProcessFile3
 [r] |File.ReadText
-[<] .path: pg\path << .file3
-[>] .content: pg\string >> .content3
+[<] .path:pg.path << .file3
+[>] .content:pg.string >> .content3
 
 [r] |Run.Rust
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 let text = .content3;
 let word_count = text.split_whitespace().count();
 format!("{}", word_count)
 """
-[>] .result: pg\string >> .count3
+[>] .result:pg.string >> .count3
 [X]
 
 [p] |ProcessFile4
 [r] |File.ReadText
-[<] .path: pg\path << .file4
-[>] .content: pg\string >> .content4
+[<] .path:pg.path << .file4
+[>] .content:pg.string >> .content4
 
 [r] |Run.Rust
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 let text = .content4;
 let word_count = text.split_whitespace().count();
 format!("{}", word_count)
 """
-[>] .result: pg\string >> .count4
+[>] .result:pg.string >> .count4
 [X]
 
 // Join results
@@ -572,13 +572,13 @@ format!("{}", word_count)
 [<] ... .count4
 
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 total = int(.count1) + int(.count2) + int(.count3) + int(.count4)
 result = f"Total words: {total}"
 """
-[>] .result: pg\string >> .summary
+[>] .result:pg.string >> .summary
 
-[o] .summary: pg\string
+[o] .summary:pg.string
 [X]
 ```
 
@@ -587,9 +587,9 @@ result = f"Total words: {total}"
 **Resource Constraints:**
 ```polyglot
 [Q] |Q.RequireResource
-[<] .cpu_cores: pg\int << 2
-[<] .memory_mb: pg\int << 4096
-[<] .max_concurrent: pg\int << 4
+[<] .cpu_cores:pg.int << 2
+[<] .memory_mb:pg.int << 4096
+[<] .max_concurrent:pg.int << 4
 ```
 - Limits to 2 CPU cores
 - Maximum 4096 MB memory
@@ -650,15 +650,15 @@ Load multiple data files. Understand when to use automatic serial load vs manual
 // Error handling (scope-level)
 [s][!] !File.NotFound
 [r] |U.Log.Error
-[<] .msg: pg\string << "Data file not found"
+[<] .msg:pg.string << "Data file not found"
 
 [s][!] !JSON.ParseError
 [r] |U.Log.Error
-[<] .msg: pg\string << "Invalid JSON in data file"
+[<] .msg:pg.string << "Invalid JSON in data file"
 
 // Process loaded data
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 users = .users if .users != "#None.ErrorState" else []
@@ -672,9 +672,9 @@ result = json.dumps({
     "total_records": len(users) + len(products) + len(orders)
 }, indent=2)
 """
-[>] .result: pg\string >> .summary
+[>] .result:pg.string >> .summary
 
-[o] .summary: pg\string
+[o] .summary:pg.string
 [X]
 ```
 
@@ -700,27 +700,27 @@ result = json.dumps({
 [W] |W.Python3.11
 
 // Must declare variables BEFORE parallel blocks
-[r] .users: pg\string << ""
-[r] .products: pg\string << ""
-[r] .orders: pg\string << ""
+[r] .users:pg.string << ""
+[r] .products:pg.string << ""
+[r] .orders:pg.string << ""
 
 // Parallel execution: Load files concurrently
 [p] |LoadUsers
 [r] |File.ReadText
-[<] .path: pg\path << "\\Data\\users.json"
-[>] .content: pg\string >> users  // Assign to pre-declared variable
+[<] .path:pg.path << "\\Data\\users.json"
+[>] .content:pg.string >> users  // Assign to pre-declared variable
 [X]
 
 [p] |LoadProducts
 [r] |File.ReadText
-[<] .path: pg\path << "\\Data\\products.json"
-[>] .content: pg\string >> products
+[<] .path:pg.path << "\\Data\\products.json"
+[>] .content:pg.string >> products
 [X]
 
 [p] |LoadOrders
 [r] |File.ReadText
-[<] .path: pg\path << "\\Data\\orders.json"
-[>] .content: pg\string >> orders
+[<] .path:pg.path << "\\Data\\orders.json"
+[>] .content:pg.string >> orders
 [X]
 
 // MANUAL join required
@@ -731,7 +731,7 @@ result = json.dumps({
 
 // Parse JSON (sequential, after join)
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 try:
@@ -756,9 +756,9 @@ result = json.dumps({
     "total_records": len(users_data) + len(products_data) + len(orders_data)
 }, indent=2)
 """
-[>] .result: pg\string >> .summary
+[>] .result:pg.string >> .summary
 
-[o] .summary: pg\string
+[o] .summary:pg.string
 [X]
 ```
 
@@ -857,13 +857,13 @@ Load configuration files using serial blocks, then process data using parallel e
 // Error handling
 [s][!] !File.NotFound
 [r] |U.Log.Error
-[<] .msg: pg\string << "Dataset file missing"
+[<] .msg:pg.string << "Dataset file missing"
 [o] !DataError
 
 // Phase 2: Parallel Processing (manual join)
 [p] |ProcessDataset1
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 data = .raw_data1 if .raw_data1 != "#None.ErrorState" else []
@@ -871,31 +871,31 @@ data = .raw_data1 if .raw_data1 != "#None.ErrorState" else []
 processed = [item for item in data if item.get('active', False)]
 result = len(processed)
 """
-[>] .result: pg\int >> .count1
+[>] .result:pg.int >> .count1
 [X]
 
 [p] |ProcessDataset2
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 data = .raw_data2 if .raw_data2 != "#None.ErrorState" else []
 processed = [item for item in data if item.get('active', False)]
 result = len(processed)
 """
-[>] .result: pg\int >> .count2
+[>] .result:pg.int >> .count2
 [X]
 
 [p] |ProcessDataset3
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 data = .raw_data3 if .raw_data3 != "#None.ErrorState" else []
 processed = [item for item in data if item.get('active', False)]
 result = len(processed)
 """
-[>] .result: pg\int >> .count3
+[>] .result:pg.int >> .count3
 [X]
 
 // Manual join for processing results
@@ -906,13 +906,13 @@ result = len(processed)
 
 // Aggregate results
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 total = .count1 + .count2 + .count3
 result = f"Total active records: {total}"
 """
-[>] .result: pg\string >> .final_result
+[>] .result:pg.string >> .final_result
 
-[o] .final_result: pg\string
+[o] .final_result:pg.string
 [X]
 ```
 
@@ -1015,7 +1015,7 @@ Total active records: 1250
 
 ```polyglot
 [Q] |Q.RequireResource
-[<] .cpu_cores: pg\int << 4
+[<] .cpu_cores:pg.int << 4
 
 [p] |ProcessData1
 [p] |ProcessData2
@@ -1037,7 +1037,7 @@ Total active records: 1250
 
 // CPU phase (parallel with limits)
 [Q] |Q.RequireResource
-[<] .cpu_cores: pg\int << 4
+[<] .cpu_cores:pg.int << 4
 
 [p] |ProcessData1
 [p] |ProcessData2

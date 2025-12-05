@@ -17,7 +17,7 @@
 | No function signatures | ✅ PASS | All pipelines use `[|]...[X]` |
 | No keywords | ✅ PASS | Zero instances of `if`, `for`, `while`, etc. |
 | All variables have `.` prefix | ✅ PASS | All variables: `.file_meta`, `.validation_result`, etc. |
-| `[W]` uppercase for macros | ✅ PASS | `[W] |W.Python3.11`, `[W] |W.Rust`, `[W] |W.NoSetup.NoCleanup` |
+| `[W]` uppercase for macros | ✅ PASS | `[W] |W.Python3.11`, `[W] |W.Rust`, `[W] |W.Polyglot.Scope` |
 
 ---
 
@@ -46,7 +46,7 @@
 ```polyglot
 [W] |W.Python3.11
 [W] |W.Rust
-[W] |W.NoSetup.NoCleanup
+[W] |W.Polyglot.Scope
 ```
 
 **Validation:**
@@ -93,14 +93,14 @@
 [~][r] |U.Log.Info
 [~]
 [~][r] |process_valid_file
-[~][o] !NoError
+[~][o] !No.Output
 
 [?] *?                                          # CATCHALL PRESENT
 [~][r] |U.Log.Error
 [~]
 [~][r] @Notify|SendAlert
 [~]
-[~][o] !NoError
+[~][o] !No.Output
 ```
 
 **Validation:**

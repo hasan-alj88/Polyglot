@@ -151,7 +151,12 @@ pub fn walk_block<V: Visitor>(visitor: &mut V, block: &Block) {
 /// Walk a statement (depth-first traversal)
 pub fn walk_statement<V: Visitor>(visitor: &mut V, stmt: &Statement) {
     match stmt {
-        Statement::VariableDeclaration { name, type_annotation, init, .. } => {
+        Statement::VariableDeclaration {
+            name,
+            type_annotation,
+            init,
+            ..
+        } => {
             visitor.visit_identifier(name);
             if let Some(ty) = type_annotation {
                 visitor.visit_type_annotation(ty);
@@ -178,14 +183,23 @@ pub fn walk_statement<V: Visitor>(visitor: &mut V, stmt: &Statement) {
         Statement::Block { block, .. } => {
             visitor.visit_block(block);
         }
-        Statement::Conditional { condition, then_branch, else_branch, .. } => {
+        Statement::Conditional {
+            condition,
+            then_branch,
+            else_branch,
+            ..
+        } => {
             visitor.visit_expression(condition);
             visitor.visit_block(then_branch);
             if let Some(else_block) = else_branch {
                 visitor.visit_block(else_block);
             }
         }
-        Statement::ErrorCatch { error_type, handler, .. } => {
+        Statement::ErrorCatch {
+            error_type,
+            handler,
+            ..
+        } => {
             visitor.visit_identifier(error_type);
             visitor.visit_block(handler);
         }
@@ -435,9 +449,7 @@ mod tests {
             wrapper: None,
             body: Block {
                 block_type: BlockType::Sequential,
-                statements: vec![
-                    Statement::Return { value: None, span },
-                ],
+                statements: vec![Statement::Return { value: None, span }],
                 span,
             },
             span,

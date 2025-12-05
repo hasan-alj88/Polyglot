@@ -83,9 +83,9 @@ The v0.0.1 documentation contains **significant inconsistencies** across multipl
   - `/reference/02-type-system.md` (Line 39): `language.modifier\type`
 
 - **BUT:** product-brief.md uses `\` everywhere:
-  - Line 336: `[i] .count: pg\int`
-  - Line 340: `.path: pg\path`
-  - Line 379: `.level: pg\uint`
+  - Line 336: `[i] .count:pg.int`
+  - Line 340: `.path:pg.path`
+  - Line 379: `.level:pg.uint`
 
 **Conflicting Syntax:**
 ```polyglot
@@ -93,7 +93,7 @@ The v0.0.1 documentation contains **significant inconsistencies** across multipl
 .count: pg/int
 
 // product-brief.md throughout:
-.count: pg\int
+.count:pg.int
 
 // Mutable (both use backslash):
 .counter: pg.mutable\int
@@ -161,7 +161,7 @@ T"2h30m"                         // Duration
 ```polyglot
 [t] |T.Call
 [Q] |Q.PauseIf.RAM.Available.LessThan
-[<] .mb: pg\uint = 2048
+[<] .mb:pg.uint = 2048
 ```
 
 **Pattern B:** language/03-block-types.md (Lines 181-206)
@@ -331,9 +331,9 @@ T"2h30m"                         // Duration
 **System A:** product-brief.md (Lines 271-319)
 ```polyglot
 [D] HttpStatus
-[#] Success.OK: pg\uint = 200
-[#] Success.Created: pg\uint = 201
-[#] Error.BadRequest: pg\uint = 400
+[#] Success.OK:pg.uint = 200
+[#] Success.Created:pg.uint = 201
+[#] Error.BadRequest:pg.uint = 400
 [X]
 
 // Reference: #HttpStatus.Success.OK
@@ -376,9 +376,9 @@ T"2h30m"                         // Duration
 
 **Example from product-brief.md (Line 316-328):**
 ```polyglot
-[i] .input_file: pg\path                              \ Required
-[i] Fixed .api_key: pg\string << "secret-key-123"     \ Constant
-[i] Default .chunk_size: pg\int << 1024               \ Optional with default
+[i] .input_file:pg.path                              \ Required
+[i] Fixed .api_key:pg.string << "secret-key-123"     \ Constant
+[i] Default .chunk_size:pg.int << 1024               \ Optional with default
 ```
 
 **Example from language/syntax-reference.md (Lines 168-187):**
@@ -445,8 +445,8 @@ Uses `Fixed` for multi-line map literals:
 **But examples show:**
 ```polyglot
 [f] |ProcessBatch1
-[<] .data: pg\json = clean_data    // Uses variable from outer scope
-[>] .result1: pg\json = batch1_result
+[<] .data:pg.json = clean_data    // Uses variable from outer scope
+[>] .result1:pg.json = batch1_result
 
 [Y] |Y.JoinAll
 [<] ... batch1_result    // How does this access fork variable?

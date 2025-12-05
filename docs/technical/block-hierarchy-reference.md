@@ -124,7 +124,7 @@ All pipelines MUST contain these elements in final rendered form:
    - `[b]` Background (fire-and-forget)
 
 5. **Output:** `[o]`
-   - If no output: `[o] !NoError`
+   - If no output: `[o] !No.Output`
 
 **Note:** Requirements apply to FINAL RENDERED pipeline including unwrapped macros via `[W]`
 
@@ -140,7 +140,7 @@ All pipelines MUST contain these elements in final rendered form:
 [\] |Code.NoOp                  // Setup - REQUIRED
 [r] |U.DoSomething              // Sequential execution - REQUIRED
 [/] |Code.NoOp                  // Cleanup - REQUIRED
-[o] !NoError                    // No output - REQUIRED placeholder
+[o] !No.Output                    // No output - REQUIRED placeholder
 [X]
 ```
 
@@ -196,7 +196,7 @@ All pipelines MUST contain these elements in final rendered form:
 [Y]                             // Join - REQUIRED after [p]
 [r] |U.Finalize                 // Sequential execution
 [/] |Code.NoOp
-[o] !NoError
+[o] !No.Output
 [X]
 ```
 
@@ -223,7 +223,7 @@ All pipelines MUST contain these elements in final rendered form:
 [b] |U.ProcessInBackground      // Background only (execution)
 [<] .id: pg\string << .task_id
 [/] |U.Log.TaskQueued
-[o] !NoError
+[o] !No.Output
 [X]
 ```
 

@@ -679,7 +679,7 @@ ELSE
 ```polyglot
 // Surface Syntax - ERROR (no trigger)
 [|] MyPipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |DoStuff
 [X]
 
@@ -709,13 +709,13 @@ ELSE IF count > 1
 // Surface Syntax (no wrapper)
 [|] MyPipeline
 [t] |T.Call
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |DoStuff
 [X]
 
 // Canonical Form (wrapper inserted)
 [|] MyPipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup  // ← INSERTED BY COMPILER
 [r] |DoStuff
@@ -744,17 +744,17 @@ OUTPUT: Reorder elements to canonical sections:
 [|] MyPipeline
 [r] |DoStuff
 [t] |T.Call
-[i] .input: pg\string
-[o] .result: pg\string
+[i] .input:pg.string
+[o] .result:pg.string
 [X]
 
 // Canonical Form (reordered)
 [|] MyPipeline
-[i] .input: pg\string        // 1. Inputs
+[i] .input:pg.string        // 1. Inputs
 [t] |T.Call                  // 2. Trigger
 [W] |W.NoSetup.NoCleanup     // 3. Wrapper (inserted)
 [r] |DoStuff                 // 4. Operations
-[o] .result: pg\string       // 5. Output
+[o] .result:pg.string       // 5. Output
 [X]
 ```
 
@@ -805,7 +805,7 @@ ELSE
 ```polyglot
 // Surface Syntax - ERROR (inconsistent outputs)
 [?] .status =? #Status.Success
-[~][o] .result: pg\string
+[~][o] .result:pg.string
 
 [?] .status =? #Status.Failed
 [~][o] .error: !            // Different field!
@@ -837,23 +837,23 @@ OUTPUT: Expanded canonical form
 // Surface Syntax (with macro)
 [|] MyPipeline
 @MyMacros.DailyAt9AM      // ← Macro call
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |DoStuff
 [X]
 
 // After Macro Expansion
 [|] MyPipeline
 [t] |T.Daily              // ← Expanded from macro
-[<] .time: pg\dt << DT"09:00:"
-[i] .input: pg\string
+[<] .time:pg.dt << DT"09:00:"
+[i] .input:pg.string
 [r] |DoStuff
 [X]
 
 // Canonical Form (after all rules applied)
 [|] MyPipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 [W] |W.NoSetup.NoCleanup  // ← Inserted
 [r] |DoStuff
 [X]
@@ -877,19 +877,19 @@ ELSE
 ```polyglot
 // Surface Syntax (no output)
 [|] LogMessage
-[i] .msg: pg\string
+[i] .msg:pg.string
 [t] |T.Call
 [r] |U.Log.Info
-[<] .msg: pg\string << .msg
+[<] .msg:pg.string << .msg
 [X]
 
 // Canonical Form (may insert [o] #None)
 [|] LogMessage
-[i] .msg: pg\string
+[i] .msg:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 [r] |U.Log.Info
-[<] .msg: pg\string << .msg
+[<] .msg:pg.string << .msg
 [o] #None                    // ← OPTIONALLY INSERTED
 [X]
 ```
@@ -959,9 +959,9 @@ FOR each variable declaration:
 ```
 CONSTRAINT: error-fields
 FOR each <canonical-error>:
-  REQUIRE: .message: pg\string field
-  REQUIRE: .code: pg\int field
-  REQUIRE: .trace: pg\string field
+  REQUIRE: .message:pg.string field
+  REQUIRE: .code:pg.int field
+  REQUIRE: .trace:pg.string field
   ERROR if: Any required field is missing
 ```
 
@@ -969,8 +969,8 @@ FOR each <canonical-error>:
 ```
 CONSTRAINT: path-identifiers
 FOR each #Path.Identifiers.* enumeration:
-  REQUIRE: .unix: pg\path field
-  REQUIRE: .windows: pg\path field
+  REQUIRE: .unix:pg.path field
+  REQUIRE: .windows:pg.path field
   ERROR if: Either field is missing
 ```
 
@@ -1267,13 +1267,13 @@ Operator definitions apply to **both** Surface and Canonical syntax.
 
 ```polyglot
 // [i] with << - Constant input (replaces "Fixed" keyword)
-[i] .config: pg\string << "production"
+[i] .config:pg.string << "production"
 
 // [}] Scope output - macro-exported variable (replaces "Exposed" keyword)
-[}] .time: pg\dt
+[}] .time:pg.dt
 
 // [*] Line continuation
-[<] .url: pg\string << "postgresql://"
+[<] .url:pg.string << "postgresql://"
 [*] +"admin:pass@"           // [*] +" for string concatenation
 [*] +"localhost:5432/"
 
@@ -1563,7 +1563,7 @@ Literal definitions apply to **both** Surface and Canonical syntax.
    - All operators are context-sensitive and type-aware
 
 5. **Type Separator**
-   - ALWAYS backslash `\` for types (`pg\int`)
+   - ALWAYS backslash `\` for types (`:pg.int`)
    - NEVER forward slash `/`
 
 6. **Comments**
@@ -1641,9 +1641,9 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 **Surface Syntax (what user writes):**
 ```polyglot
 [|] Greet
-[i] .name: pg\string
+[i] .name:pg.string
 [r] |U.Log.Info
-[<] .msg: pg\string << "Hello, {.name}!"
+[<] .msg:pg.string << "Hello, {.name}!"
 [t] |T.Call
 [X]
 ```
@@ -1651,11 +1651,11 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 **Canonical Syntax (after transformation):**
 ```polyglot
 [|] Greet
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup         // ← Inserted by compiler
 [r] |U.Log.Info
-[<] .msg: pg\string << "Hello, {.name}!"
+[<] .msg:pg.string << "Hello, {.name}!"
 [o] #None                        // ← Optionally inserted
 [X]
 ```
@@ -1668,11 +1668,11 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 ```polyglot
 [|] DailyReport
 @Macros.ScheduleDaily(DT"09:00:")   // ← Macro call
-[i] .recipient: pg\string
+[i] .recipient:pg.string
 [r] |GenerateReport
-[>] .report: pg\string >> content
+[>] .report:pg.string >> content
 [r] |SendEmail
-[<] .body: pg\string << content
+[<] .body:pg.string << content
 [X]
 ```
 
@@ -1680,26 +1680,26 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 ```polyglot
 [|] DailyReport
 [t] |T.Daily                        // ← From macro
-[<] .time: pg\dt << DT"09:00:"     // ← From macro
-[i] .recipient: pg\string
+[<] .time:pg.dt << DT"09:00:"     // ← From macro
+[i] .recipient:pg.string
 [r] |GenerateReport
-[>] .report: pg\string >> content
+[>] .report:pg.string >> content
 [r] |SendEmail
-[<] .body: pg\string << content
+[<] .body:pg.string << content
 [X]
 ```
 
 **Canonical Syntax:**
 ```polyglot
 [|] DailyReport
-[i] .recipient: pg\string
+[i] .recipient:pg.string
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 [W] |W.NoSetup.NoCleanup            // ← Inserted
 [r] |GenerateReport
-[>] .report: pg\string >> content
+[>] .report:pg.string >> content
 [r] |SendEmail
-[<] .body: pg\string << content
+[<] .body:pg.string << content
 [o] #None                           // ← Optionally inserted
 [X]
 ```
@@ -1711,31 +1711,31 @@ Literal definitions apply to **both** Surface and Canonical syntax.
 **Surface Syntax:**
 ```polyglot
 [|] SafeRead
-[i] .path: pg\path
+[i] .path:pg.path
 [t] |T.Call
 [r] |U.File.Read
-[<] .path: pg\path << .path
-[>] .content: pg\string >> data
+[<] .path:pg.path << .path
+[>] .content:pg.string >> data
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err
-[r] .data: pg\string << "default"
-[o] .data: pg\string
+[>] .message:pg.string >> err
+[r] .data:pg.string << "default"
+[o] .data:pg.string
 [X]
 ```
 
 **Canonical Syntax (no changes needed, already valid):**
 ```polyglot
 [|] SafeRead
-[i] .path: pg\path
+[i] .path:pg.path
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup            // ← Inserted
 [r] |U.File.Read
-[<] .path: pg\path << .path
-[>] .content: pg\string >> data
+[<] .path:pg.path << .path
+[>] .content:pg.string >> data
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err
-[r] .data: pg\string << "default"
-[o] .data: pg\string
+[>] .message:pg.string >> err
+[r] .data:pg.string << "default"
+[o] .data:pg.string
 [X]
 ```
 

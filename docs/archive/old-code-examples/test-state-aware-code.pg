@@ -95,14 +95,14 @@
 [~][~][?] .save_result.state =? #Variables.States.Ready
 [~][~][~][?] .save_result =? #True
 [~][~][~][~]// Success
-[~][~][~][~][o] !NoError
+[~][~][~][~][o] !No.Output
 [~][~][~]
 [~][~][~][?] *?
 [~][~][~][~]// Validation failed but not faulted
 [~][~][~][~][r] |U.Log.Warn
 [~][~][~][~][<] .msg: pg\string << "Record {.record.id} validation failed"
 [~][~][~][~]
-[~][~][~][~][o] !NoError
+[~][~][~][~][o] !No.Output
 [~][~]
 [~][~][?] .save_result.state =? #Variables.States.Faulted
 [~][~][~]// Operation faulted
@@ -114,7 +114,7 @@
 [~][~]
 [~][~][?] *?
 [~][~][~]// Catchall
-[~][~][~][o] !NoError
+[~][~][~][o] !No.Output
 [~]
 [~]// Generate summary report
 [~][r] @DB|GetProcessingStats
@@ -126,7 +126,7 @@
 [~][~][r] |U.Log.Info
 [~][~][<] .msg: pg\string << "Batch {.batch_id} complete: {.final_result.successful} success, {.final_result.failed} failed"
 [~][~]
-[~][~][o] !NoError
+[~][~][o] !No.Output
 [~]
 [~][?] *?
 [~][~][r] |U.Log.Error

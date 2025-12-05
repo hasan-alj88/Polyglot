@@ -4,6 +4,10 @@
 **Facilitator:** Brainstorming Coach
 **Participant:** hhj
 
+---
+**ARCHIVE NOTE (2025-12-03):** This document contains historical syntax that has been superseded. Specifically, the "bidirectional default operator" concept (`[>] .field: Type ~> .var`) was explored here but later rejected. Current Polyglot standard uses only `[<]` for enumeration fields with `<<` or `<~` operators. See `operator-directionality-rule-2025-12-03.md` for current rules.
+---
+
 ## Session Start
 
 **Context:** Continuation of interrupted session on Polyglot variable immutability
@@ -131,10 +135,10 @@ Polyglot has **three distinct initialization patterns**, each with different sta
 # After first use or override → transitions to Ready (immutable)
 ```
 
-**Bidirectional default operators:**
+**Default operator (current standard):**
 ```polyglot
-[<] .field: Type <~ value    # Default assigned from left
-[>] .field: Type ~> .var     # Default assigned to right
+[<] .field: Type <~ value    # Default value for enumeration field
+# NOTE: The [>] ~> syntax explored in this session was later rejected
 ```
 
 **State:** Fields start in **DefaultReady** state with default value.
@@ -196,9 +200,9 @@ Declared  DefaultReady Ready    Pending
 ### Key Lifecycle Rules
 
 1. **Schema-only** (`[<] .field: Type`) → Declared → (must populate) → Ready
-2. **Default** (`[<] .field: Type <~ value` or `[>] .field: Type ~> .var`) → DefaultReady → (override once OR use default at [i]) → Ready
-3. **Constant** (`[<] .field: Type << value` or `[>] .field: Type >> .var`) → Ready (immutable, always this value)
-4. **Async assignment** (`[r] |pipeline [>] .field >> .var`) → Pending → Ready/Faulted
+2. **Default** (`[<] .field: Type <~ value`) → DefaultReady → (override once OR use default at [i]) → Ready
+3. **Constant** (`[<] .field: Type << value`) → Ready (immutable, always this value)
+4. **Async assignment** (`[r] |pipeline [>] >output >> .var`) → Pending → Ready/Faulted
 
 ### Critical Points:
 
@@ -770,7 +774,7 @@ _Key realizations from the session_
 **Correction 2: Pipeline Execution Flow**
 Pipeline flow is: `[i]`, `[t]` → `[Q]` → `[\]` → `[r]`, `[p]`, `[b]`, `[s]`, `[Y]` → `[o]` → `[/]`
 
-**Block markers documentation status (from docs/user/language/06-block-markers.md):**
+**Block markers documentation status (from docs/user/language/block-markers.md):**
 - `[Q]` - Queue control (FULLY DOCUMENTED) - Controls queue operations
 - `[\]` - Setup Block (PENDING CONFIRMATION) - Runs before pipeline execution (initialization)
 - `[/]` - Cleanup Block (PENDING CONFIRMATION) - Runs after pipeline execution (cleanup)
@@ -791,15 +795,15 @@ Pipeline flow is: `[i]`, `[t]` → `[Q]` → `[\]` → `[r]`, `[p]`, `[b]`, `[s]
 - **Terminology:** Structs are called "Enumerations" in Polyglot
 - **Three distinct field declaration patterns:**
   1. Schema-only: `[<] .field: Type` → Declared state (must populate later, no default)
-  2. Default: `[<] .field: Type <~ value` or `[>] .field: Type ~> .var` → DefaultReady state (allows ONE override)
-  3. Constant: `[<] .field: Type << value` or `[>] .field: Type >> .var` → Ready state (immutable)
-- **Bidirectional default operators discovered:** `<~` and `~>` both provide defaults
+  2. Default: `[<] .field: Type <~ value` → DefaultReady state (allows ONE override)
+  3. Constant: `[<] .field: Type << value` → Ready state (immutable)
+- **Note:** The bidirectional operator concept (`[>] ~>`) explored in this session was later rejected
 - **New state discovered:** DefaultReady - has default value but allows ONE override before becoming immutable
 - **Default kick-in point:** At `[i]` blocks where variables are expected to be Ready
 - **State implications:**
   - Schema-only → Declared (no value, no default, must populate)
-  - Default `<~`/`~>` → DefaultReady (has default, allows single override, kicks in at [i])
-  - Constant `<<`/`>>` → Ready (immutable, cannot override)
+  - Default `<~` → DefaultReady (has default, allows single override, kicks in at [i])
+  - Constant `<<` → Ready (immutable, cannot override)
 - Cannot use `<<` for fields that will be assigned later - use schema-only or `<~` instead
 
 ### Areas for Further Exploration

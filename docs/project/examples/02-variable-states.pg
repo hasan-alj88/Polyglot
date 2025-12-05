@@ -14,7 +14,7 @@
 // ==============================================================================
 
 [|] DeclaredStateExample
-[i] #Pipeline.NoInput
+[i] !No.Input
 
 [t] |T.Call                              // MANDATORY: Trigger
 
@@ -54,7 +54,7 @@
 [~]                                      // STATE: Ready
 
 [?] *?                                   // EXHAUSTIVE catch-all
-[~][o] !NoError                          // Use default (30)
+[~][o] !No.Output                          // Use default (30)
 [~]
 
 [o] .timeout: pg\int
@@ -85,11 +85,11 @@
 
 [?] .data.pgvar.state =? #PgVar.States.Faulted
 [~][r] .errors: pg\array{!} << .data.pgvar.errors  // Access error details
-[~][o] !NoError
+[~][o] !No.Output
 [~]
 
 [?] *?                                   // EXHAUSTIVE catch-all
-[~][o] !NoError
+[~][o] !No.Output
 [~]
 [X]
 
@@ -121,11 +121,11 @@
 
 [?] .result.pgvar.state =? #PgVar.States.Faulted
 [~][r] .error_list: pg\array{!} << .result.pgvar.errors
-[~][o] !NoError
+[~][o] !No.Output
 [~]
 
 [?] *?
-[~][o] !NoError
+[~][o] !No.Output
 [~]
 [X]
 
@@ -134,7 +134,7 @@
 // ==============================================================================
 
 [|] PushCountExample
-[i] #Pipeline.NoInput
+[i] !No.Input
 
 [t] |T.Call                              // MANDATORY: Trigger
 
@@ -155,7 +155,7 @@
 [r] .constant_var: pg\int << 100         // PUSH_COUNT: final (immediately Ready)
 // [<] .constant_var << 200              // ERROR: Cannot push to Ready variable
 
-[o] !NoError
+[o] !No.Output
 [X]
 
 // ==============================================================================

@@ -58,7 +58,7 @@ All block elements have hierarchical relationships where certain elements are au
 
 ```polyglot
 [|] MyPipeline          // Parent
-[i] .input: pg\string   // Child - implicit expansion
+[i] .input:pg.string   // Child - implicit expansion
 [t] |T.Daily            // Child - implicit expansion
 [r] |Operation          // Child - implicit expansion
 [X]
@@ -113,7 +113,7 @@ All block elements have hierarchical relationships where certain elements are au
 
 ```polyglot
 [|] Pipeline
-[i] .input: pg\string   // Implicit - expected child of [|]
+[i] .input:pg.string   // Implicit - expected child of [|]
 [t] |T.Daily            // Implicit - expected child of [|]
 [r] |Operation          // Implicit - expected child of [|]
 [X]
@@ -127,9 +127,9 @@ All block elements have hierarchical relationships where certain elements are au
 
 ```polyglot
 [r] |ProcessData
-[<] .input: pg\string << "value"    // Implicit - child of [r]
-[<] .size: pg\int << 1024           // Implicit - child of [r]
-[>] .result: pg\string >> output    // Implicit - child of [r]
+[<] .input:pg.string << "value"    // Implicit - child of [r]
+[<] .size:pg.int << 1024           // Implicit - child of [r]
+[>] .result:pg.string >> output    // Implicit - child of [r]
 ```
 
 **No `[~]` needed** - `[<]` and `[>]` are expected children of `[r]`.
@@ -171,9 +171,9 @@ Use `[~]` when:
 
 ```polyglot
 [p] |ParallelBlock
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [~][r] |NestedOperation         // [~] means: runs WITHIN parallel block
-[~][<] .input: pg\string << .data  // Implicit child of [~][r]
+[~][<] .input:pg.string << .data  // Implicit child of [~][r]
 [~][>] .result >> temp             // Implicit child of [~][r]
 [>] .output >> result              // Direct child of [p] - no [~]
 ```
@@ -187,11 +187,11 @@ Use `[~]` when:
 ### Example: Operations Inside Unpack
 
 ```polyglot
-[r] .items: pg\array{pg\string} << array{"a", "b", "c"}
+[r] .items: pg.array.pg.string << array{"a", "b", "c"}
 
 [r] ~.items                         // Unpack array
 [~][r] |ProcessItem                 // [~] means: runs WITHIN iteration
-[~][<] .item: pg\string << .current_item  // Implicit child of [~][r]
+[~][<] .item:pg.string << .current_item  // Implicit child of [~][r]
 ```
 
 **Why `[~]` is needed:**
@@ -230,14 +230,14 @@ Each `[~]` adds one level of nesting:
 ### Single Level Nesting
 
 ```polyglot
-[r] .items: pg\array{pg\string} << array{"a", "b", "c"}
+[r] .items: pg.array.pg.string << array{"a", "b", "c"}
 
 // Level 0 - outer scope
 [r] ~.items
 
 // Level 1 - within iteration
 [~][r] |ProcessItem
-[~][<] .item: pg\string << .current_item
+[~][<] .item:pg.string << .current_item
 ```
 
 ---
@@ -245,7 +245,7 @@ Each `[~]` adds one level of nesting:
 ### Two Level Nesting
 
 ```polyglot
-[r] .matrix: pg\array{pg\array{pg\int}} << array{
+[r] .matrix:pg.array{pg.array.pg.int} << array{
 [^]  array{1, 2, 3},
 [^]  array{4, 5, 6}
 [^]}
@@ -254,12 +254,12 @@ Each `[~]` adds one level of nesting:
 [r] ~.matrix
 
 // Level 1 - iterate rows
-[~][r] .row: pg\array{pg\int} << .current_row
+[~][r] .row: pg.array.pg.int << .current_row
 [~][r] ~.row
 
 // Level 2 - iterate columns within rows
 [~][~][r] |ProcessCell
-[~][~][<] .cell: pg\int << .current_cell
+[~][~][<] .cell:pg.int << .current_cell
 ```
 
 ---
@@ -268,7 +268,7 @@ Each `[~]` adds one level of nesting:
 
 ```polyglot
 // Level 0
-[r] .data: pg\array{pg\array{pg\array{pg\string}}}
+[r] .data:pg.array{pg\array{pg.array.pg.string}}
 
 [r] ~.data
 // Level 1
@@ -279,7 +279,7 @@ Each `[~]` adds one level of nesting:
 
 // Level 3
 [~][~][~][r] |ProcessElement
-[~][~][~][<] .element: pg\string << .current_element
+[~][~][~][<] .element:pg.string << .current_element
 ```
 
 ---
@@ -302,13 +302,13 @@ Level 3: [~][~][~][r] Operation    (within Level 2)
 Sequential operations (`[r]`) have **direct access** to outer scope:
 
 ```polyglot
-[r] .x: pg\int << 10
+[r] .x:pg.int << 10
 
 [r] |Operation1
-[<] .value: pg\int << .x  // Direct access
+[<] .value:pg.int << .x  // Direct access
 
 [r] |Operation2
-[<] .value: pg\int << .x  // Direct access
+[<] .value:pg.int << .x  // Direct access
 ```
 
 **No `[~]` needed** - sequential operations share scope.
@@ -320,13 +320,13 @@ Sequential operations (`[r]`) have **direct access** to outer scope:
 Parallel operations (`[p]`) use **copy semantics**:
 
 ```polyglot
-[r] .x: pg\int << 10
+[r] .x:pg.int << 10
 
 [p] |Parallel1
-[<] .value: pg\int << .x  // COPY of .x
+[<] .value:pg.int << .x  // COPY of .x
 
 [p] |Parallel2
-[<] .value: pg\int << .x  // COPY of .x (independent)
+[<] .value:pg.int << .x  // COPY of .x (independent)
 ```
 
 **No `[~]` needed for inputs** - but modifications don't affect outer scope.
@@ -339,9 +339,9 @@ Nested operations with `[~]` have access to **parent's scope**:
 
 ```polyglot
 [p] |Parallel
-[<] .shared_data: pg\string << input
+[<] .shared_data:pg.string << input
 [~][r] |NestedOperation
-[~][<] .data: pg\string << .shared_data  // Access to parallel block's scope
+[~][<] .data:pg.string << .shared_data  // Access to parallel block's scope
 ```
 
 ---
@@ -352,15 +352,15 @@ Each `[~]` level creates a scope boundary:
 
 ```polyglot
 // Level 0
-[r] .level0_var: pg\int << 0
+[r] .level0_var:pg.int << 0
 
 [r] ~Array
 // Level 1 - can access level0_var
-[~][r] .level1_var: pg\int << .level0_var
+[~][r] .level1_var:pg.int << .level0_var
 
 [~][r] ~NestedArray
 // Level 2 - can access both level0_var and level1_var
-[~][~][r] .level2_var: pg\int << .level1_var + .level0_var
+[~][~][r] .level2_var:pg.int << .level1_var + .level0_var
 ```
 
 ---
@@ -405,7 +405,7 @@ Each `[~]` level creates a scope boundary:
 
 3. **Top-level pipeline declarations**
 ```polyglot
-[i] .input: pg\string  // ✗ No [~] - direct child of pipeline
+[i] .input:pg.string  // ✗ No [~] - direct child of pipeline
 [t] |T.Daily           // ✗ No [~] - direct child of pipeline
 ```
 
@@ -504,7 +504,7 @@ Is the operation running WITHIN a parent context?
 ### Basic Unpack
 
 ```polyglot
-[r] .items: pg\array{pg\string} << array{"a", "b", "c"}
+[r] .items: pg.array.pg.string << array{"a", "b", "c"}
 
 [r] ~.items                     // Unpack
 [~][r] |ProcessItem             // [~] - WITHIN iteration
@@ -516,10 +516,10 @@ Is the operation running WITHIN a parent context?
 ### Nested Unpack
 
 ```polyglot
-[r] .matrix: pg\array{pg\array{pg\int}}
+[r] .matrix:pg.array{pg.array.pg.int}
 
 [r] ~.matrix                    // Level 1
-[~][r] .row: pg\array{pg\int} << .current_row
+[~][r] .row: pg.array.pg.int << .current_row
 [~][r] ~.row                    // Level 2 - unpack within unpack
 
 [~][~][r] |ProcessCell          // [~][~] - two levels deep
@@ -563,15 +563,15 @@ Write back: .counter = 11 (WRONG! Should be 12)
 
 **Copy semantics ensure safety:**
 ```polyglot
-[r] .counter: pg\int << 10
+[r] .counter:pg.int << 10
 
 [p] |Thread1
-[<] .value: pg\int << .counter  // COPY (value: 10)
+[<] .value:pg.int << .counter  // COPY (value: 10)
 // Modify .value locally
 [>] .result >> result1
 
 [p] |Thread2
-[<] .value: pg\int << .counter  // COPY (value: 10, independent)
+[<] .value:pg.int << .counter  // COPY (value: 10, independent)
 // Modify .value locally
 [>] .result >> result2
 
@@ -588,10 +588,10 @@ Write back: .counter = 11 (WRONG! Should be 12)
 
 ```polyglot
 [p] |Parallel1
-[~][r] .temp: pg\int << 0  // Local to Parallel1
+[~][r] .temp:pg.int << 0  // Local to Parallel1
 
 [p] |Parallel2
-[~][r] .temp: pg\int << 0  // Different .temp, local to Parallel2
+[~][r] .temp:pg.int << 0  // Different .temp, local to Parallel2
 ```
 
 **Each parallel block has isolated scope** - no shared mutable state.
@@ -601,7 +601,7 @@ Write back: .counter = 11 (WRONG! Should be 12)
 ### Sequential Access is Direct
 
 ```polyglot
-[r] .counter: pg\int << 0
+[r] .counter:pg.int << 0
 [r] .counter << .counter + 1  // Direct access - safe
 [r] .counter << .counter + 1  // Sequential - no race
 ```
@@ -651,13 +651,13 @@ Write back: .counter = 11 (WRONG! Should be 12)
 
 ```polyglot
 // Sequential - direct access
-[r] .x: pg\int << 10
+[r] .x:pg.int << 10
 [r] |Operation
-[<] .value: pg\int << .x  // Direct access to .x
+[<] .value:pg.int << .x  // Direct access to .x
 
 // Parallel - copy semantics
 [p] |Parallel
-[<] .value: pg\int << .x  // Copy of .x
+[<] .value:pg.int << .x  // Copy of .x
 ```
 
 ---
@@ -692,11 +692,11 @@ Write back: .counter = 11 (WRONG! Should be 12)
 
 ```polyglot
 // ✓ GOOD - Comments explain nesting
-[r] .matrix: pg\array{pg\array{pg\int}}
+[r] .matrix:pg.array{pg.array.pg.int}
 
 // Iterate rows
 [r] ~.matrix
-[~][r] .row: pg\array{pg\int} << .current_row
+[~][r] .row: pg.array.pg.int << .current_row
 
 // Iterate cells within each row
 [~][r] ~.row
@@ -711,20 +711,20 @@ Write back: .counter = 11 (WRONG! Should be 12)
 ```polyglot
 // ✓ BETTER - Flatten structure
 [|] ProcessMatrix
-[i] .matrix: pg\array{pg\array{pg\int}}
+[i] .matrix:pg.array{pg.array.pg.int}
 
 [r] ~.matrix
 [~][r] |ProcessRow
-[~][<] .row: pg\array{pg\int} << .current_row
+[~][<] .row: pg.array.pg.int << .current_row
 [~][>] .processed_row >> result_row
 
 [X]
 
 [|] ProcessRow
-[i] .row: pg\array{pg\int}
+[i] .row: pg.array.pg.int
 [r] ~.row
 [~][r] |ProcessCell
-[~][<] .cell: pg\int << .current_cell
+[~][<] .cell:pg.int << .current_cell
 [X]
 
 // ✗ HARDER TO MAINTAIN - Deep nesting
@@ -760,11 +760,11 @@ Write back: .counter = 11 (WRONG! Should be 12)
 ```polyglot
 // ✓ CORRECT - Intentional isolation
 [p] |Worker1
-[~][r] .local_state: pg\int << 0  // Isolated
+[~][r] .local_state:pg.int << 0  // Isolated
 [~][r] |ProcessWithState
 
 [p] |Worker2
-[~][r] .local_state: pg\int << 0  // Independent isolation
+[~][r] .local_state:pg.int << 0  // Independent isolation
 [~][r] |ProcessWithState
 ```
 

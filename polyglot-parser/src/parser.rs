@@ -269,6 +269,17 @@ impl<R: ImportResolver> Parser<R> {
         }
     }
 
+    /// Count and consume nesting prefix markers [~]
+    /// Returns the number of [~] markers found and consumed
+    fn count_nesting_prefix(&mut self) -> usize {
+        let mut count = 0;
+        while self.check(&TokenKind::BlockBody) {
+            self.advance();
+            count += 1;
+        }
+        count
+    }
+
     /// Expect and consume specific token kind, error if not found
     fn expect(&mut self, kind: &TokenKind, context: &str) -> Result<&Token, ParserError> {
         if self.check(kind) {
@@ -552,16 +563,22 @@ impl<R: ImportResolver> Parser<R> {
         // Consume [#] marker
         self.advance();
 
-        // Parse enum name (can be multi-part: Config.Database)
+        // Parse enum name (can be multi-part: #Config.Database)
+        // Expect # prefix (IdentifierEnum) as per December 2025 syntax update
         let mut name_parts = Vec::new();
         loop {
-            let name_token = self.expect(&TokenKind::Identifier, "enumeration name")?;
-            name_parts.push(name_token.lexeme.clone());
+            let name_token = self.expect(&TokenKind::IdentifierEnum, "enumeration name with # prefix")?;
+            // Remove the # prefix from the lexeme
+            let name = name_token.lexeme.trim_start_matches('#').to_string();
+            name_parts.push(name);
 
             if !self.match_token(&TokenKind::DelimiterDot) {
                 break;
             }
         }
+
+        // Skip newlines before fields
+        self.skip_newlines();
 
         // Parse fields: [<] .field_name: type << value
         let mut fields = Vec::new();
@@ -592,10 +609,22 @@ impl<R: ImportResolver> Parser<R> {
                 value,
                 span: field_span,
             });
+
+            // Skip newlines before next field
+            self.skip_newlines();
         }
 
         // Parse optional alias: [A] AliasName
         let alias = None; // TODO: Parse alias if needed
+
+        // Skip newlines before body
+        self.skip_newlines();
+
+        // Parse body (serial schema, serial blocks [s], and error catch [!])
+        let (serial_schema, body) = self.parse_enumeration_body()?;
+
+        // Skip newlines before end marker
+        self.skip_newlines();
 
         // Expect [X] end marker
         self.expect(&TokenKind::BlockEnd, "enumeration block")?;
@@ -606,9 +635,204 @@ impl<R: ImportResolver> Parser<R> {
         Ok(EnumerationDefinition {
             name: name_parts,
             fields,
+            serial_schema,
             alias,
+            body,
             span,
         })
+    }
+
+    /// Parse enumeration body with serial [s] and error catch [!] blocks
+    /// Returns (serial_schema, body) tuple
+    fn parse_enumeration_body(&mut self) -> Result<(Vec<SerialSchemaField>, Block), ParserError> {
+        let start_token = self.peek().clone();
+        let mut serial_schema = Vec::new();
+        let mut statements = Vec::new();
+
+        // Parse serial schema declarations [~][s] <~ .field:type and serial blocks [s]
+        loop {
+            self.skip_newlines();
+
+            // Check if we've reached the end marker
+            if self.check(&TokenKind::BlockEnd) || self.is_at_end() {
+                break;
+            }
+
+            // Check for nesting prefix [~]
+            let nesting_count = self.count_nesting_prefix();
+
+            if nesting_count > 0 && self.match_token(&TokenKind::BlockStreaming) {
+                // Parse [~][s] <~ .field:type (schema declaration)
+                let schema_start = self.previous().clone();
+                self.skip_newlines();
+
+                // Expect <~ default operator for schema declaration
+                if self.match_token(&TokenKind::OpDefault) {
+                    // Parse field name or wildcard
+                    if self.match_token(&TokenKind::OpWildcard) {
+                        // [~][s] <~ * (wildcard schema)
+                        let span = self.make_span(&schema_start, self.previous());
+                        serial_schema.push(SerialSchemaField {
+                            name: None,
+                            field_type: None,
+                            is_wildcard: true,
+                            span,
+                        });
+                    } else if self.check(&TokenKind::IdentifierVariable) {
+                        // [~][s] <~ .field:type
+                        let field_token = self.advance().clone();
+                        let field_name = field_token.lexeme.clone();
+
+                        // Expect : type
+                        self.expect(&TokenKind::DelimiterColon, "type annotation in schema")?;
+                        let field_type = self.parse_type_annotation()?;
+
+                        let span = self.make_span(&schema_start, self.previous());
+                        serial_schema.push(SerialSchemaField {
+                            name: Some(field_name),
+                            field_type: Some(field_type),
+                            is_wildcard: false,
+                            span,
+                        });
+                    } else {
+                        return Err(ParserError::UnexpectedToken {
+                            expected: "field name or wildcard *".to_string(),
+                            found: self.peek().kind.description().to_string(),
+                            context: "serial schema declaration after <~".to_string(),
+                            span: self.make_span_from_token(self.peek()),
+                        });
+                    }
+                }
+            } else if self.match_token(&TokenKind::BlockStreaming) {
+                // Check if this is [s][!] error handler or [s] serial load
+                self.skip_newlines();
+
+                if self.check(&TokenKind::BlockErrorCatch) {
+                    // This is [s][!] - serial error handler
+                    self.advance(); // consume [!]
+                    let error_start = self.previous().clone();
+                    self.skip_newlines();
+
+                    // Check for wildcard: [s][!] *
+                    if self.match_token(&TokenKind::OpWildcard) {
+                        // Default error handling
+                        let span = self.make_span(&error_start, self.previous());
+                        statements.push(Statement::ErrorCatch {
+                            error_type: Identifier::Error("*".to_string()),
+                            handler: Block {
+                                block_type: BlockType::Sequential,
+                                statements: Vec::new(),
+                                span: span.clone(),
+                            },
+                            span,
+                        });
+                    } else {
+                        // Custom error handling - parse [r] blocks
+                        let mut handler_statements = Vec::new();
+                        self.skip_newlines();
+
+                        while self.match_token(&TokenKind::BlockSequential) {
+                            let stmt = self.parse_statement()?;
+                            handler_statements.push(stmt);
+                            self.skip_newlines();
+                        }
+
+                        let span = self.make_span(&error_start, self.previous());
+                        statements.push(Statement::ErrorCatch {
+                            error_type: Identifier::Error("Serial".to_string()),
+                            handler: Block {
+                                block_type: BlockType::Sequential,
+                                statements: handler_statements,
+                                span: span.clone(),
+                            },
+                            span,
+                        });
+                    }
+                } else if self.check(&TokenKind::LiteralPipelineFormatted) {
+                    // This is [s] serial load block
+                    // Format: [s] |Pipeline.Name"argument"
+                    let token = self.advance().clone();
+                    let span = self.make_span_from_token(&token);
+
+                    // Create a string literal expression from the pipeline formatted string
+                    statements.push(Statement::PipelineCall {
+                        pipeline: Identifier::Pipeline("serial_load".to_string()),
+                        args: vec![Expression::Literal {
+                            value: Literal::String(token.lexeme.clone()),
+                            span: span.clone(),
+                        }],
+                        span,
+                    });
+                } else {
+                    return Err(ParserError::UnexpectedToken {
+                        expected: "pipeline formatted string or [!] error handler".to_string(),
+                        found: self.peek().kind.description().to_string(),
+                        context: "serial block after [s] marker".to_string(),
+                        span: self.make_span_from_token(self.peek()),
+                    });
+                }
+            } else if self.match_token(&TokenKind::BlockErrorCatch) {
+                // Parse [!] error catch block
+                let error_start = self.peek().clone();
+
+                // Check for wildcard: [!] *
+                if self.match_token(&TokenKind::OpWildcard) {
+                    // Default error handling
+                    let span = self.make_span(&error_start, self.previous());
+                    statements.push(Statement::ErrorCatch {
+                        error_type: Identifier::Error("*".to_string()),
+                        handler: Block {
+                            block_type: BlockType::Sequential,
+                            statements: Vec::new(),
+                            span: span.clone(),
+                        },
+                        span,
+                    });
+                } else {
+                    // Custom error handling - parse [r] blocks
+                    let mut handler_statements = Vec::new();
+                    self.skip_newlines();
+
+                    while self.match_token(&TokenKind::BlockSequential) {
+                        let stmt = self.parse_statement()?;
+                        handler_statements.push(stmt);
+                        self.skip_newlines();
+                    }
+
+                    let span = self.make_span(&error_start, self.previous());
+                    statements.push(Statement::ErrorCatch {
+                        error_type: Identifier::Error("Serial".to_string()),
+                        handler: Block {
+                            block_type: BlockType::Sequential,
+                            statements: handler_statements,
+                            span: span.clone(),
+                        },
+                        span,
+                    });
+                }
+            } else {
+                // Unknown block marker - stop parsing body
+                break;
+            }
+        }
+
+        let end_token = if !statements.is_empty() || !serial_schema.is_empty() {
+            self.previous().clone()
+        } else {
+            start_token.clone()
+        };
+
+        let span = self.make_span(&start_token, &end_token);
+
+        // Return (serial_schema, body) tuple
+        Ok((
+            serial_schema,
+            Block {
+                block_type: BlockType::Sequential,
+                statements,
+                span,
+            }
+        ))
     }
 
     /// Parse pipeline definition

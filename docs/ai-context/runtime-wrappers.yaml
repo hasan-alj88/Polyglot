@@ -1,0 +1,414 @@
+# ==============================================================================
+# Polyglot v0.0.2 - Runtime Wrapper Patterns
+# Complete guide to calling external code via runtime wrappers
+# ==============================================================================
+
+version: "0.0.2"
+purpose: "Runtime wrapper reference for AI code generation"
+
+# ==============================================================================
+# RUNTIME WRAPPER OVERVIEW
+# ==============================================================================
+
+overview:
+  paradigm: "Polyglot ORCHESTRATES external runtimes, doesn't execute foreign code directly"
+  mechanism: "Runtime wrappers (RT.*) provide execution environments for Python/Rust/Node/Go"
+  data_flow: "pg\\serial as universal interchange format with automatic type conversion"
+
+# ==============================================================================
+# WRAPPER DECLARATION PATTERNS
+# ==============================================================================
+
+wrapper_declaration:
+  location: "[W] section of pipeline (MANDATORY)"
+
+  python:
+    syntax: "[W] |W.RT.Python3.14"
+    versions: ["Python3.11", "Python3.12", "Python3.14"]
+    dependency_setup:
+      requirements_file:
+        syntax: "[<] <requirements: pg\\file << \\\\FileDir\\\\python\\\\requirements.txt"
+        description: "Load Python dependencies from requirements.txt"
+      inline_dependencies:
+        syntax: "[<] <packages: pg\\array{pg\\string} << {\"requests\", \"beautifulsoup4\"}"
+        description: "Specify Python packages inline"
+
+  rust:
+    syntax: "[W] |W.RT.Rust1.8"
+    versions: ["Rust1.75", "Rust1.8"]
+    dependency_setup:
+      cargo_toml:
+        syntax: "[<] <cargo: pg\\file << \\\\FileDir\\\\rust\\\\Cargo.toml"
+        description: "Load Rust dependencies from Cargo.toml (optional - auto-detected)"
+      build_config:
+        syntax: "[<] <release: pg\\bool << #Boolean.True"
+        description: "Build in release mode"
+
+  nodejs:
+    syntax: "[W] |W.RT.Nodejs"
+    versions: ["Nodejs18", "Nodejs20", "Nodejs22"]
+    dependency_setup:
+      package_json:
+        syntax: "[<] <package: pg\\file << \\\\FileDir\\\\nodejs\\\\package.json"
+        description: "Load Node.js dependencies from package.json"
+
+  go:
+    syntax: "[W] |W.RT.Go1.22"
+    versions: ["Go1.21", "Go1.22"]
+    dependency_setup:
+      go_mod:
+        syntax: "[<] <gomod: pg\\file << \\\\FileDir\\\\go\\\\go.mod"
+        description: "Load Go dependencies from go.mod (auto-detected)"
+
+  database:
+    postgresql:
+      syntax: "[W] |W.DB.Postgresql"
+      connection_setup:
+        syntax: "[>] >session: pg\\db >> .db_session"
+        description: "Establish database connection, bind to variable"
+    mysql:
+      syntax: "[W] |W.DB.MySQL"
+
+# ==============================================================================
+# CALLING EXTERNAL CODE PATTERNS
+# ==============================================================================
+
+calling_patterns:
+
+  # ------------------------------------------------------------------------------
+  # Python Patterns
+  # ------------------------------------------------------------------------------
+
+  python_run_file:
+    description: "Execute entire Python script file"
+    syntax: |
+      [r] |RT.Python.Run.File
+      [<] <file: pg\\path << \\\\FileDir\\\\python\\\\script.py
+      [<] <input: pg\\serial << .data
+      [>] >output: pg\\serial >> .result
+
+    input_format:
+      description: "Input data available as `polyglot_input` dict in Python"
+      python_access: "polyglot_input['field_name']"
+      example: |
+        # Python side (script.py)
+        import sys
+        data = polyglot_input  # Automatically available
+        result = process(data)
+        polyglot_output = result  # Return via this variable
+
+    output_format:
+      description: "Python script sets `polyglot_output` variable"
+      polyglot_access: ".result.field_name or .result.0"
+
+  python_run_function:
+    description: "Call specific Python function"
+    syntax: |
+      [r] |RT.Python.Run.Function
+      [<] <function: pg\\string << "module.function_name"
+      [<] <args: pg\\serial << {.arg1, .arg2}
+      [>] >output: pg\\serial >> .result
+
+    function_resolution:
+      simple: "\"function_name\" - call function in __main__"
+      module_function: "\"module.function_name\" - import module, call function"
+      nested: "\"package.module.function\" - nested import"
+
+    args_format:
+      positional: "{.arg1, .arg2, .arg3} → function(arg1, arg2, arg3)"
+      keyword: "{\"key1\": .val1, \"key2\": .val2} → function(key1=val1, key2=val2)"
+
+  # ------------------------------------------------------------------------------
+  # Rust Patterns
+  # ------------------------------------------------------------------------------
+
+  rust_run_file:
+    description: "Execute Rust source file or compiled binary"
+    syntax: |
+      [r] |RT.Rust.Run.File
+      [<] <file: pg\\path << \\\\FileDir\\\\rust\\\\process.rs
+      [<] <input: pg\\serial << .data
+      [>] >output: pg\\serial >> .result
+
+    compilation:
+      auto_compile: "Source .rs files compiled automatically"
+      cache: "Compiled binaries cached for reuse"
+      rebuild_trigger: "Recompile if source newer than binary"
+
+    input_format:
+      description: "Input passed as JSON via stdin"
+      rust_access: "serde_json::from_str::<Value>(&input)"
+
+    output_format:
+      description: "Output via stdout as JSON"
+      rust_return: "println!(\"{}\", serde_json::to_string(&result)?)"
+
+  rust_run_function:
+    description: "Call specific Rust function (requires module path)"
+    syntax: |
+      [r] |RT.Rust.Run.Function
+      [<] <function: pg\\string << "module::function_name"
+      [<] <args: pg\\serial << .input_data
+      [>] >output: pg\\serial >> .result
+
+  # ------------------------------------------------------------------------------
+  # Node.js Patterns
+  # ------------------------------------------------------------------------------
+
+  nodejs_run_file:
+    description: "Execute Node.js script"
+    syntax: |
+      [r] |RT.Nodejs.Run.File
+      [<] <file: pg\\path << \\\\FileDir\\\\nodejs\\\\process.js
+      [<] <input: pg\\serial << .data
+      [>] >output: pg\\serial >> .result
+
+    input_format:
+      description: "Input available as global `polyglotInput`"
+      js_access: "const data = polyglotInput.field"
+
+    output_format:
+      description: "Set global `polyglotOutput` or export from module"
+      js_return: "global.polyglotOutput = result"
+
+  nodejs_run_module:
+    description: "Import and call Node.js module function"
+    syntax: |
+      [r] |RT.Nodejs.Run.Module
+      [<] <module: pg\\string << "pdf-lib"
+      [<] <function: pg\\string << "createPDF"
+      [<] <args: pg\\serial << .pdf_data
+      [>] >output: pg\\serial >> .pdf_file
+
+  # ------------------------------------------------------------------------------
+  # Go Patterns
+  # ------------------------------------------------------------------------------
+
+  go_run_file:
+    description: "Execute Go source file"
+    syntax: |
+      [r] |RT.Go.Run.File
+      [<] <file: pg\\path << \\\\FileDir\\\\go\\\\process.go
+      [<] <input: pg\\serial << .data
+      [>] >output: pg\\serial >> .result
+
+    input_format:
+      description: "Input as JSON via stdin"
+      go_access: "json.Unmarshal(input, &data)"
+
+    output_format:
+      description: "Output as JSON to stdout"
+      go_return: "json.NewEncoder(os.Stdout).Encode(result)"
+
+# ==============================================================================
+# DATA INTERCHANGE - pg\\serial TYPE
+# ==============================================================================
+
+serial_interchange:
+  purpose: "Universal data format for cross-language communication"
+
+  automatic_conversion:
+    to_python:
+      pg_serial_to_dict: "pg\\serial {\"name\": \"Alice\"} → Python dict {'name': 'Alice'}"
+      pg_serial_to_list: "pg\\serial {1, 2, 3} → Python list [1, 2, 3]"
+      nested: "Nested structures preserved"
+
+    from_python:
+      dict_to_pg_serial: "Python dict → pg\\serial with named fields"
+      list_to_pg_serial: "Python list → pg\\serial with indexed fields"
+      primitive_to_pg_serial: "int/str/bool/float → corresponding pg\\* type"
+
+    to_rust:
+      pg_serial_to_struct: "pg\\serial → serde_json::Value"
+      deserialization: "Use serde to deserialize into Rust struct"
+
+    from_rust:
+      serialize_json: "Serialize Rust struct/value to JSON"
+      stdout: "Write JSON to stdout for capture"
+
+    to_nodejs:
+      pg_serial_to_object: "pg\\serial → JavaScript Object"
+      direct_access: "No conversion needed - JSON compatible"
+
+    from_nodejs:
+      object_to_pg_serial: "JavaScript Object → pg\\serial"
+      json_stringify: "Use JSON.stringify for complex objects"
+
+  accessing_serial_data:
+    indexed: ".result.0, .result.1, .result.2  // Array-like access"
+    named: ".result.field_name, .result.nested.field  // Object-like access"
+    mixed: ".result.items.0.name  // Mix of array and object access"
+
+# ==============================================================================
+# COMPLETE ETL EXAMPLE
+# ==============================================================================
+
+complete_example:
+  description: "ETL pipeline using Python (extract), Rust (transform), Node.js (load)"
+  code: |
+    [@] Local@ETLPipeline:1.0.0
+    [X]
+
+    [|] ETL_Workflow
+    [i] .source_url: pg\\string
+    [i] .db_table: pg\\string << "processed_data"
+
+    [t] |T.Call
+
+    # Declare runtime wrappers
+    [W] |W.RT.Python3.14
+    [<] <requirements: pg\\file << \\\\FileDir\\\\python\\\\requirements.txt
+
+    [W] |W.RT.Rust1.8
+
+    [W] |W.RT.Nodejs
+    [<] <package: pg\\file << \\\\FileDir\\\\nodejs\\\\package.json
+
+    [W] |W.DB.Postgresql
+    [>] >session: pg\\db >> .db_session
+
+    # EXTRACT: Python for web scraping
+    [r] |U.API.Rest.Get
+    [<] <url: pg\\url << .source_url
+    [>] >response: pg\\string >> .raw_html
+
+    [r] |RT.Python.Run.Function
+    [<] <function: pg\\string << "beautifulsoup4.parse"
+    [<] <args: pg\\serial << .raw_html
+    [>] >output: pg\\serial >> .parsed_data
+
+    # TRANSFORM: Rust for high-performance processing
+    [r] |RT.Rust.Run.File
+    [<] <file: pg\\path << \\\\FileDir\\\\rust\\\\transform.rs
+    [<] <input: pg\\serial << .parsed_data
+    [>] >output: pg\\serial >> .cleaned_data
+
+    # LOAD: Database bulk insert
+    [b] |DB.BulkInsert
+    [<] <session: pg\\db << .db_session
+    [<] <table: pg\\string << .db_table
+    [<] <data: pg\\serial << .cleaned_data
+    [>] >result: pg\\int >> .rows_inserted
+
+    # REPORT: Node.js for PDF generation
+    [r] |RT.Nodejs.Run.File
+    [<] <file: pg\\path << \\\\FileDir\\\\nodejs\\\\report.js
+    [<] <input: pg\\serial << {\"rows\": .rows_inserted, \"data\": .cleaned_data}
+    [>] >output: pg\\serial >> .report_output
+
+    [r] .report_path: pg\\path << .report_output.file_path
+
+    [o] .report_path: pg\\path
+    [o] .rows_inserted: pg\\int
+    [X]
+
+# ==============================================================================
+# COMMON PATTERNS
+# ==============================================================================
+
+common_patterns:
+
+  api_call_with_python:
+    description: "Use Python requests library via runtime wrapper"
+    code: |
+      [W] |W.RT.Python3.14
+
+      [r] |RT.Python.Run.Function
+      [<] <function: pg\\string << "requests.get"
+      [<] <args: pg\\serial << {\"url\": .api_url}
+      [>] >output: pg\\serial >> .response
+
+      [r] .status_code: pg\\int << .response.status_code
+      [r] .body: pg\\string << .response.text
+
+  json_parsing_with_rust:
+    description: "Parse JSON with Rust serde"
+    code: |
+      [W] |W.RT.Rust1.8
+
+      [r] |RT.Rust.Run.Function
+      [<] <function: pg\\string << "serde_json::from_str"
+      [<] <args: pg\\serial << .json_string
+      [>] >output: pg\\serial >> .parsed_json
+
+  pdf_generation_with_nodejs:
+    description: "Generate PDF using Node.js pdf-lib"
+    code: |
+      [W] |W.RT.Nodejs
+
+      [r] |RT.Nodejs.Run.File
+      [<] <file: pg\\path << \\\\FileDir\\\\generate_pdf.js
+      [<] <input: pg\\serial << .report_data
+      [>] >output: pg\\serial >> .pdf_result
+
+      [r] .pdf_path: pg\\path << .pdf_result.file_path
+
+  database_query:
+    description: "Execute database query"
+    code: |
+      [W] |W.DB.Postgresql
+      [>] >session: pg\\db >> .db
+
+      [r] |DB.Query
+      [<] <session: pg\\db << .db
+      [<] <sql: pg\\string << "SELECT * FROM users WHERE active = true"
+      [>] >result: pg\\serial >> .users
+
+# ==============================================================================
+# BEST PRACTICES
+# ==============================================================================
+
+best_practices:
+  - rule: "Always declare wrappers in [W] section before using RT.* pipelines"
+  - rule: "Use pg\\serial for all cross-language data interchange"
+  - rule: "Specify dependency files (requirements.txt, package.json) in wrapper setup"
+  - rule: "Access serial data with .result.field or .result.0 notation"
+  - rule: "Let automatic type conversion handle primitive types"
+  - rule: "Use [b] background execution for independent operations (e.g., logging, notifications)"
+  - rule: "Store file paths in \\\\FileDir\\\\ relative structure"
+  - rule: "Return pg\\serial from external code for complex objects"
+
+# ==============================================================================
+# ANTI-PATTERNS (WHAT NOT TO DO)
+# ==============================================================================
+
+anti_patterns:
+  - wrong: ".data << py\\requests.get(.url)"
+    reason: "Cannot call Python directly inline"
+    correct: "[r] |RT.Python.Run.Function [<] <function: pg\\string << \"requests.get\""
+
+  - wrong: "[r] |PythonScript [<] .input"
+    reason: "No such pipeline - must use RT.Python.Run.*"
+    correct: "[r] |RT.Python.Run.File [<] <file: pg\\path << \\\\FileDir\\\\script.py"
+
+  - wrong: "[W] Python3.14"
+    reason: "Missing | prefix on wrapper"
+    correct: "[W] |W.RT.Python3.14"
+
+  - wrong: "[<] <input: pg\\string << .data"
+    reason: "Use pg\\serial for cross-language data"
+    correct: "[<] <input: pg\\serial << .data"
+
+# ==============================================================================
+# REFERENCE
+# ==============================================================================
+
+reference:
+  runtime_pipelines:
+    python: "|RT.Python.Run.{File|Function}"
+    rust: "|RT.Rust.Run.{File|Function}"
+    nodejs: "|RT.Nodejs.Run.{File|Module}"
+    go: "|RT.Go.Run.File"
+
+  wrappers:
+    python: "|W.RT.Python{Version}"
+    rust: "|W.RT.Rust{Version}"
+    nodejs: "|W.RT.Nodejs{Version}"
+    go: "|W.RT.Go{Version}"
+    database: "|W.DB.{Postgresql|MySQL|SQLite}"
+
+  data_types:
+    interchange: "pg\\serial"
+    file: "pg\\file"
+    path: "pg\\path"
+    database: "pg\\db"

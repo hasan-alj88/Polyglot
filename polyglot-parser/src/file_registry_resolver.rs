@@ -137,12 +137,11 @@ impl FileRegistryResolver {
             }
         })?;
 
-        let registry: RegistryFile = serde_json::from_str(&content).map_err(|e| {
-            ParserError::UnresolvedImport {
+        let registry: RegistryFile =
+            serde_json::from_str(&content).map_err(|e| ParserError::UnresolvedImport {
                 package: format!("Failed to parse registry JSON: {}", e),
                 span: crate::span::Span::start(),
-            }
-        })?;
+            })?;
 
         let mut packages = HashMap::new();
         for package in registry.packages {
@@ -177,11 +176,7 @@ impl FileRegistryResolver {
 
     /// Find package entry by spec
     fn find_package(&self, spec: &PackageSpec) -> Option<&PackageEntry> {
-        let key = Self::make_package_key(
-            &spec.registry,
-            &spec.path,
-            &spec.version.to_string(),
-        );
+        let key = Self::make_package_key(&spec.registry, &spec.path, &spec.version.to_string());
 
         if self.warn_on_query {
             eprintln!("[DEBUG] FileRegistryResolver: Looking up package: {}", key);

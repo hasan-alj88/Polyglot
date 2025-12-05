@@ -30,7 +30,8 @@ fn main() {
     match lex(source) {
         Ok(tokens) => {
             // Find string content tokens
-            let string_contents: Vec<_> = tokens.iter()
+            let string_contents: Vec<_> = tokens
+                .iter()
                 .filter(|t| t.kind == TokenKind::StringContent)
                 .collect();
 
@@ -43,7 +44,12 @@ fn main() {
             println!();
 
             for (i, tok) in string_contents.iter().enumerate() {
-                println!("   String #{}: \"{}\" @ line {}", i + 1, escape_for_display(&tok.lexeme), tok.line);
+                println!(
+                    "   String #{}: \"{}\" @ line {}",
+                    i + 1,
+                    escape_for_display(&tok.lexeme),
+                    tok.line
+                );
 
                 // Show what escapes are present
                 let escapes = detect_escapes(&tok.lexeme);
@@ -60,10 +66,19 @@ fn main() {
             let has_backslash = string_contents.iter().any(|t| t.lexeme.contains('\\'));
 
             println!("🎯 Escape Sequence Verification:");
-            println!("   {} \\n (newline) processed", if has_newline { "✓" } else { "✗" });
+            println!(
+                "   {} \\n (newline) processed",
+                if has_newline { "✓" } else { "✗" }
+            );
             println!("   {} \\t (tab) processed", if has_tab { "✓" } else { "✗" });
-            println!("   {} \\\" (quote) processed", if has_quote { "✓" } else { "✗" });
-            println!("   {} \\\\ (backslash) processed", if has_backslash { "✓" } else { "✗" });
+            println!(
+                "   {} \\\" (quote) processed",
+                if has_quote { "✓" } else { "✗" }
+            );
+            println!(
+                "   {} \\\\ (backslash) processed",
+                if has_backslash { "✓" } else { "✗" }
+            );
 
             println!();
             if has_newline && has_tab && has_quote && has_backslash {
@@ -85,17 +100,25 @@ fn main() {
 
 fn escape_for_display(s: &str) -> String {
     s.replace("\\", "\\\\")
-     .replace("\n", "\\n")
-     .replace("\t", "\\t")
-     .replace("\r", "\\r")
-     .replace("\"", "\\\"")
+        .replace("\n", "\\n")
+        .replace("\t", "\\t")
+        .replace("\r", "\\r")
+        .replace("\"", "\\\"")
 }
 
 fn detect_escapes(s: &str) -> Vec<String> {
     let mut escapes = Vec::new();
-    if s.contains('\n') { escapes.push("newline (\\n)".to_string()); }
-    if s.contains('\t') { escapes.push("tab (\\t)".to_string()); }
-    if s.contains('"') { escapes.push("quote (\\\")".to_string()); }
-    if s.contains('\\') { escapes.push("backslash (\\\\)".to_string()); }
+    if s.contains('\n') {
+        escapes.push("newline (\\n)".to_string());
+    }
+    if s.contains('\t') {
+        escapes.push("tab (\\t)".to_string());
+    }
+    if s.contains('"') {
+        escapes.push("quote (\\\")".to_string());
+    }
+    if s.contains('\\') {
+        escapes.push("backslash (\\\\)".to_string());
+    }
     escapes
 }

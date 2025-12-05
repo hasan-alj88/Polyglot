@@ -156,7 +156,7 @@ pub struct ImportDeclaration {
 
 /// Top-level enumeration definition `[#] ... [X]`
 ///
-/// Example:
+/// Example with explicit fields:
 /// ```polyglot
 /// [#] Status
 /// [<] .pending: pg\string << "PENDING"
@@ -165,14 +165,29 @@ pub struct ImportDeclaration {
 /// [A] St
 /// [X]
 /// ```
+///
+/// Example with serial loading:
+/// ```polyglot
+/// [#] Config
+/// [~][s] <~ .timeout:pg\int
+/// [~][s] <~ .api_key:pg\string
+/// [~][s] <~ .debug:pg\bool
+/// [s] |YAML.Load"config.yaml"
+/// [s][!] *
+/// [X]
+/// ```
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct EnumerationDefinition {
     /// Enumeration name path (e.g., ["Config", "Database"])
     pub name: Vec<String>,
-    /// Field definitions
+    /// Field definitions (explicit [<] declarations)
     pub fields: Vec<EnumField>,
+    /// Serial schema declarations ([~][s] <~ .field:type or [~][s] <~ *)
+    pub serial_schema: Vec<SerialSchemaField>,
     /// Optional alias `[A] ...`
     pub alias: Option<String>,
+    /// Body containing serial blocks [s] and error handling [!]
+    pub body: Block,
     /// Source location
     pub span: Span,
 }
@@ -188,6 +203,21 @@ pub struct EnumField {
     pub field_type: TypeAnnotation,
     /// Field value (constant expression)
     pub value: Expression,
+    /// Source location
+    pub span: Span,
+}
+
+/// Serial schema field declaration for enumeration serial loading
+///
+/// Example: `[~][s] <~ .timeout:pg\int` or `[~][s] <~ *` (wildcard)
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct SerialSchemaField {
+    /// Field name (e.g., ".timeout"), None for wildcard
+    pub name: Option<String>,
+    /// Field type annotation, None for wildcard
+    pub field_type: Option<TypeAnnotation>,
+    /// Whether this is a wildcard schema `[~][s] <~ *`
+    pub is_wildcard: bool,
     /// Source location
     pub span: Span,
 }
@@ -1636,13 +1666,20 @@ mod tests {
                     span,
                 },
             ],
+            serial_schema: vec![],
             alias: Some("St".to_string()),
+            body: Block {
+                block_type: BlockType::Sequential,
+                statements: vec![],
+                span,
+            },
             span,
         };
 
         assert_eq!(enum_def.name, vec!["Status"]);
         assert_eq!(enum_def.fields.len(), 2);
         assert_eq!(enum_def.fields[0].name, ".pending");
+        assert_eq!(enum_def.serial_schema.len(), 0);
         assert_eq!(enum_def.alias, Some("St".to_string()));
     }
 
@@ -1762,7 +1799,13 @@ mod tests {
                 Definition::Enumeration(EnumerationDefinition {
                     name: vec!["Status".to_string()],
                     fields: vec![],
+                    serial_schema: vec![],
                     alias: None,
+                    body: Block {
+                        block_type: BlockType::Sequential,
+                        statements: vec![],
+                        span,
+                    },
                     span,
                 }),
                 Definition::Error(ErrorDefinition {

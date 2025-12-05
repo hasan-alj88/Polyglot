@@ -47,22 +47,22 @@ This document defines the official formatting rules for Polyglot v0.0.2 code. Co
 ```polyglot
 // VALID
 [|] ProcessData
-[i] .input: pg\string
+[i] .input:pg.string
 
 [r] |FirstOperation
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 
 [r] |SecondOperation
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 
 // INVALID - Missing blank line before pipeline calls
 [|] ProcessData
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |FirstOperation
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [r] |SecondOperation
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 
@@ -77,19 +77,19 @@ This document defines the official formatting rules for Polyglot v0.0.2 code. Co
 ```polyglot
 // VALID
 [r] |FirstOperation
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output1
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output1
 
 [r] |SecondOperation
-[<] .data: pg\string << output1
-[>] .result: pg\string >> output2
+[<] .data:pg.string << output1
+[>] .result:pg.string >> output2
 
 // INVALID - Missing blank line after pipeline call group
 [r] |FirstOperation
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output1
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output1
 [r] |SecondOperation
-[<] .data: pg\string << output1
+[<] .data:pg.string << output1
 ```
 
 ---
@@ -105,14 +105,14 @@ This document defines the official formatting rules for Polyglot v0.0.2 code. Co
 ```polyglot
 // VALID
 [|] FirstPipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [X]
 
 
 
 
 [|] SecondPipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [X]
 
 // INVALID - Only 1 blank line
@@ -136,14 +136,14 @@ This document defines the official formatting rules for Polyglot v0.0.2 code. Co
 ```polyglot
 // VALID
 [#] FirstEnumeration
-[<] .field: pg\string << "value"
+[<] .field:pg.string << "value"
 [X]
 
 
 
 
 [#] SecondEnumeration
-[<] .field: pg\string << "value"
+[<] .field:pg.string << "value"
 [X]
 
 // INVALID - Only 2 blank lines
@@ -166,18 +166,18 @@ This document defines the official formatting rules for Polyglot v0.0.2 code. Co
 ```polyglot
 // VALID
 [!] !FirstError
-[<] .message: pg\string << "Error 1"
-[<] .code: pg\int << 5001
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error 1"
+[<] .code:pg.int << 5001
+[<] .trace:pg.string << ""
 [X]
 
 
 
 
 [!] !SecondError
-[<] .message: pg\string << "Error 2"
-[<] .code: pg\int << 5002
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error 2"
+[<] .code:pg.int << 5002
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -191,27 +191,27 @@ This document defines the official formatting rules for Polyglot v0.0.2 code. Co
 // VALID - Sections separated by blank lines
 [|] ComplexPipeline
 // Input declarations
-[i] .file_path: pg\path
-[i] Default .max_size: pg\int << 1024
+[i] .file_path:pg.path
+[i] Default .max_size:pg.int << 1024
 
 // Trigger configuration
 [t] |T.File.Modified
-[<] .path: pg\path << .file_path
+[<] .path:pg.path << .file_path
 
 // Operations
 [r] |ReadFile
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> data
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> data
 
 [r] |ProcessData
-[<] .input: pg\string << data
-[>] .result: pg\string >> output
+[<] .input:pg.string << data
+[>] .result:pg.string >> output
 
 // Error handling
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 
 [X]
 ```
@@ -225,19 +225,19 @@ This document defines the official formatting rules for Polyglot v0.0.2 code. Co
 ```polyglot
 // VALID - No blank lines within operation group
 [r] |ProcessData
-[<] .input: pg\string << data
-[<] .max_size: pg\int << 1024
-[>] .result: pg\string >> output
+[<] .input:pg.string << data
+[<] .max_size:pg.int << 1024
+[>] .result:pg.string >> output
 [>] .error: !Error >> err
 
 // INVALID - Blank lines inside operation group
 [r] |ProcessData
 
-[<] .input: pg\string << data
+[<] .input:pg.string << data
 
-[<] .max_size: pg\int << 1024
+[<] .max_size:pg.int << 1024
 
-[>] .result: pg\string >> output
+[>] .result:pg.string >> output
 ```
 
 ---
@@ -266,8 +266,8 @@ PipelineName
 ```polyglot
 // VALID
 [|] ProcessData
-[i] .input: pg\string
-[i] Default .max_size: pg\int << 1024
+[i] .input:pg.string
+[i] Default .max_size:pg.int << 1024
 
 [r] |DoWork
 [X]
@@ -275,7 +275,7 @@ PipelineName
 // INVALID - Operations before inputs
 [|] ProcessData
 [r] |DoWork
-[i] .input: pg\string  // Wrong position
+[i] .input:pg.string  // Wrong position
 [X]
 ```
 
@@ -288,10 +288,10 @@ PipelineName
 ```polyglot
 // VALID
 [|] ScheduledTask
-[i] .data: pg\string
+[i] .data:pg.string
 
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 [r] |DoWork
 [X]
@@ -305,7 +305,7 @@ PipelineName
 
 ```polyglot
 [|] Pipeline
-[i] .input: pg\string
+[i] .input:pg.string
 
 [r] |Operation1
 [r] |Operation2
@@ -337,19 +337,19 @@ PipelineName
 ```polyglot
 // VALID
 [|] Transform
-[i] .input: pg\string
+[i] .input:pg.string
 
 [r] |Process
-[>] .result: pg\string >> output
+[>] .result:pg.string >> output
 
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 
 // INVALID - Output not last
 [|] Transform
-[o] .result: pg\string
+[o] .result:pg.string
 
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |Process
 [X]
 ```
@@ -363,12 +363,12 @@ PipelineName
 ```polyglot
 // VALID
 [|] Pipeline
-    [i] .input: pg\string
+    [i] .input:pg.string
 [X]
 
 // INVALID - Misaligned
 [|] Pipeline
-    [i] .input: pg\string
+    [i] .input:pg.string
     [X]
 ```
 
@@ -388,9 +388,9 @@ PipelineName
 // VALID
 [#] MyApp.Configuration
 [A] AppConfig
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
-[<] .debug: pg\bool << #False
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
+[<] .debug:pg.bool << #False
 [X]
 ```
 
@@ -406,15 +406,15 @@ PipelineName
 [<] .host:    pg\string << "localhost"
 [<] .port:    pg\int    << 8080
 [<] .debug:   pg\bool   << #False
-[<] .timeout: pg\int    << 30
+[<] .timeout:pg.int    << 30
 [X]
 
 // VALID - Not aligned (acceptable)
 [#] Configuration
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
-[<] .debug: pg\bool << #False
-[<] .timeout: pg\int << 30
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
+[<] .debug:pg.bool << #False
+[<] .timeout:pg.int << 30
 [X]
 ```
 
@@ -427,18 +427,18 @@ PipelineName
 ```polyglot
 // VALID
 [#] Config
-[<] .field1: pg\string << "value1"
-[<] .field2: pg\string << "value2"
-[<] .field3: pg\string << "value3"
+[<] .field1:pg.string << "value1"
+[<] .field2:pg.string << "value2"
+[<] .field3:pg.string << "value3"
 [X]
 
 // INVALID - Blank lines between fields
 [#] Config
-[<] .field1: pg\string << "value1"
+[<] .field1:pg.string << "value1"
 
-[<] .field2: pg\string << "value2"
+[<] .field2:pg.string << "value2"
 
-[<] .field3: pg\string << "value3"
+[<] .field3:pg.string << "value3"
 [X]
 ```
 
@@ -452,12 +452,12 @@ PipelineName
 // VALID
 [#] AppConfig
 // Database settings
-[<] .db_host: pg\string << "localhost"
-[<] .db_port: pg\int << 5432
+[<] .db_host:pg.string << "localhost"
+[<] .db_port:pg.int << 5432
 
 // Cache settings
-[<] .cache_enabled: pg\bool << #True
-[<] .cache_ttl: pg\int << 3600
+[<] .cache_enabled:pg.bool << #True
+[<] .cache_ttl:pg.int << 3600
 [X]
 ```
 
@@ -468,25 +468,25 @@ PipelineName
 ### Rule 4.1: Required Fields Order
 
 **REQUIRED:** Reserved fields MUST appear in this order:
-1. `.message: pg\string`
-2. `.code: pg\int`
-3. `.trace: pg\string`
+1. `.message:pg.string`
+2. `.code:pg.int`
+3. `.trace:pg.string`
 4. Custom fields (if any)
 
 ```polyglot
 // VALID
 [!] !MyApp.CustomError
-[<] .message: pg\string << "Error occurred"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
-[<] .custom_field: pg\string << ""
+[<] .message:pg.string << "Error occurred"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
+[<] .custom_field:pg.string << ""
 [X]
 
 // INVALID - Wrong order
 [!] !MyApp.CustomError
-[<] .code: pg\int << 5000
-[<] .message: pg\string << "Error occurred"
-[<] .trace: pg\string << ""
+[<] .code:pg.int << 5000
+[<] .message:pg.string << "Error occurred"
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -499,11 +499,11 @@ PipelineName
 ```polyglot
 // VALID
 [!] !DatabaseError
-[<] .message: pg\string << "Database failed"
-[<] .code: pg\int << 5100
-[<] .trace: pg\string << ""
-[<] .query: pg\string << ""
-[<] .affected_rows: pg\int << 0
+[<] .message:pg.string << "Database failed"
+[<] .code:pg.int << 5100
+[<] .trace:pg.string << ""
+[<] .query:pg.string << ""
+[<] .affected_rows:pg.int << 0
 [X]
 ```
 
@@ -517,9 +517,9 @@ PipelineName
 // VALID
 [!] !MyApp.Authentication.InvalidCredentials
 [A] !InvalidCreds
-[<] .message: pg\string << "Invalid credentials"
-[<] .code: pg\int << 4010
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Invalid credentials"
+[<] .code:pg.int << 4010
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -547,10 +547,10 @@ PipelineName
 
 ```polyglot
 // VALID
-[r] .count: pg\int << 42  // Initialize counter
+[r] .count:pg.int << 42  // Initialize counter
 
 // INVALID - Only 1 space
-[r] .count: pg\int << 42 // Initialize counter
+[r] .count:pg.int << 42 // Initialize counter
 ```
 
 ---
@@ -585,8 +585,8 @@ PipelineName
 // ========================================
 // INPUT DECLARATIONS
 // ========================================
-[i] .input: pg\string
-[i] Default .max_size: pg\int << 1024
+[i] .input:pg.string
+[i] Default .max_size:pg.int << 1024
 
 // ========================================
 // DATA PROCESSING
@@ -609,9 +609,9 @@ PipelineName
 // VALID
 // Process the data with validation
 [r] |ProcessData
-[<] .input: pg\string << data
-[<] .strict: pg\bool << #True  // Enable strict validation
-[<] .timeout: pg\int << 30    // Timeout in seconds
+[<] .input:pg.string << data
+[<] .strict:pg.bool << #True  // Enable strict validation
+[<] .timeout:pg.int << 30    // Timeout in seconds
 ```
 
 ---
@@ -620,18 +620,18 @@ PipelineName
 
 ### Rule 6.1: String Continuation with `[^]`
 
-**REQUIRED:** When using `[^]` for string continuation in `pg\serial`, indent continuation lines
+**REQUIRED:** When using `[^]` for string continuation in `:pg.serial`, indent continuation lines
 
 ```polyglot
 // VALID
-[r] .config: pg\serial << serial{
+[r] .config:pg.serial << serial{
 [^]  "host": "localhost",
 [^]  "port": 8080,
 [^]  "debug": false
 [^]}
 
 // INVALID - No indentation
-[r] .config: pg\serial << serial{
+[r] .config:pg.serial << serial{
 [^]"host": "localhost",
 [^]"port": 8080
 [^]}
@@ -645,14 +645,14 @@ PipelineName
 
 ```polyglot
 // VALID
-[r] .data: pg\serial << serial{
+[r] .data:pg.serial << serial{
 [^]  "name": "Alice",
 [^]  "age": 30,
 [^]  "email": "alice@example.com"
 [^]}
 
 // INVALID - Misaligned
-[r] .data: pg\serial << serial{
+[r] .data:pg.serial << serial{
 [^]  "name": "Alice",
   [^]  "age": 30,
 [^]  "email": "alice@example.com"
@@ -667,7 +667,7 @@ PipelineName
 
 ```polyglot
 // VALID
-[r] .config: pg\serial << serial{
+[r] .config:pg.serial << serial{
 [^]  "database": {
 [^]    "host": "localhost",
 [^]    "port": 5432
@@ -687,7 +687,7 @@ PipelineName
 
 ```polyglot
 // VALID - Multi-line array
-[r] .items: pg\serial << serial{
+[r] .items:pg.serial << serial{
 [^]  "names": [
 [^]    "Alice",
 [^]    "Bob",
@@ -696,7 +696,7 @@ PipelineName
 [^]}
 
 // VALID - Single-line for short arrays
-[r] .items: pg\serial << serial{
+[r] .items:pg.serial << serial{
 [^]  "codes": [1, 2, 3]
 [^]}
 ```
@@ -714,16 +714,16 @@ PipelineName
 ```polyglot
 // VALID - No extra indentation for [~]
 [p] |ParallelBlock
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [~][r] |NestedOperation
-[~][<] .input: pg\string << .data
+[~][<] .input:pg.string << .data
 [~][>] .result >> temp
 
 // INVALID - Extra indentation
 [p] |ParallelBlock
-[<] .data: pg\string << input
+[<] .data:pg.string << input
     [~][r] |NestedOperation
-    [~][<] .input: pg\string << .data
+    [~][<] .input:pg.string << .data
 ```
 
 ---
@@ -735,14 +735,14 @@ PipelineName
 ```polyglot
 // VALID
 [r] ~Array.ForEach
-[~][r] .item: pg\string << current
+[~][r] .item:pg.string << current
 [~][r] ~String.Split
 [~][~][r] |ProcessToken
-[~][~][<] .token: pg\string << current_token
+[~][~][<] .token:pg.string << current_token
 
 // INVALID - Increasing indentation
 [r] ~Array.ForEach
-    [~][r] .item: pg\string << current
+    [~][r] .item:pg.string << current
     [~][r] ~String.Split
         [~][~][r] |ProcessToken
 ```
@@ -756,9 +756,9 @@ PipelineName
 ```polyglot
 // VALID
 [p] |ProcessPartA
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [~][r] |TransformData
-[~][<] .input: pg\string << .data
+[~][<] .input:pg.string << .data
 [~][>] .result >> temp
 [>] .output >> result_a
 ```
@@ -787,7 +787,7 @@ PipelineName
 // ========================================
 
 [#] DataProcessor.Config
-[<] .max_size: pg\int << 1024
+[<] .max_size:pg.int << 1024
 [X]
 
 
@@ -798,9 +798,9 @@ PipelineName
 // ========================================
 
 [!] !DataProcessor.ValidationError
-[<] .message: pg\string << "Validation failed"
-[<] .code: pg\int << 4000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Validation failed"
+[<] .code:pg.int << 4000
+[<] .trace:pg.string << ""
 [X]
 
 
@@ -811,7 +811,7 @@ PipelineName
 // ========================================
 
 [|] ProcessData
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ValidateData
 [X]
 ```
@@ -865,30 +865,30 @@ PipelineName
 ```polyglot
 [|] CompleteExample
 // 1. Inputs
-[i] .input: pg\string
-[i] Default .timeout: pg\int << 30
+[i] .input:pg.string
+[i] Default .timeout:pg.int << 30
 
 // 2. Triggers (REQUIRED - compiler error if missing)
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 // 3. Queue control
 [Q] |Q.PauseIf.RAM.Available.LessThan
-[<] .mb: pg\uint << 512
+[<] .mb:pg.uint << 512
 
 // 4. Wrapper (if needed)
 [W] |W.Python3.11
 
 // 5. Operations
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 
 // 6. Error handlers
 [!] !pg.FileSystem.NotFound
 [r] |HandleError
 
 // 7. Output
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
@@ -905,16 +905,16 @@ PipelineName
 ```polyglot
 // VALID - All markers at column 0
 [|] Pipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |Operation
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 
 // INVALID - Indented markers
 [|] Pipeline
-    [i] .input: pg\string
+    [i] .input:pg.string
     [r] |Operation
-        [<] .data: pg\string << .input
+        [<] .data:pg.string << .input
 [X]
 ```
 
@@ -926,15 +926,15 @@ PipelineName
 
 ```polyglot
 // VALID
-[r] .x: pg\int << 42
-[>] .result: pg\string >> output
+[r] .x:pg.int << 42
+[>] .result:pg.string >> output
 
 // INVALID - No spaces
-[r] .x: pg\int<<42
-[>] .result: pg\string>>output
+[r] .x:pg.int<<42
+[>] .result:pg.string>>output
 
 // INVALID - Multiple spaces
-[r] .x: pg\int  <<  42
+[r] .x:pg.int  <<  42
 ```
 
 ---
@@ -945,8 +945,8 @@ PipelineName
 
 ```polyglot
 // VALID
-[i] .input: pg\string
-[r] .count: pg\int << 42
+[i] .input:pg.string
+[r] .count:pg.int << 42
 
 // INVALID - No space
 [i] .input:pg\string
@@ -964,11 +964,11 @@ PipelineName
 ```polyglot
 // VALID
 [r] |Operation
-[<] .input: pg\string << value
+[<] .input:pg.string << value
 
 // INVALID - Spaces inside brackets
 [ r ] |Operation
-[ < ] .input: pg\string << value
+[ < ] .input:pg.string << value
 ```
 
 ---
@@ -995,11 +995,11 @@ PipelineName
 
 ```polyglot
 [|] GreetUser
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[o] .greeting: pg\string << "Hello, {.name}!"
+[o] .greeting:pg.string << "Hello, {.name}!"
 [X]
 ```
 
@@ -1009,26 +1009,26 @@ PipelineName
 
 ```polyglot
 [|] ProcessFile
-[i] .file_path: pg\path
-[i] Default .max_size: pg\int << 1024
+[i] .file_path:pg.path
+[i] Default .max_size:pg.int << 1024
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [r] |ReadFile
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> file_data
 
 [r] |ValidateData
-[<] .data: pg\string << file_data
-[<] .max_size: pg\int << .max_size
-[>] .is_valid: pg\bool >> valid
+[<] .data:pg.string << file_data
+[<] .max_size:pg.int << .max_size
+[>] .is_valid:pg.bool >> valid
 
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
@@ -1039,11 +1039,11 @@ PipelineName
 ```polyglot
 [#] MyApp.Database.Configuration
 [A] DBConfig
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 5432
-[<] .database: pg\string << "myapp_db"
-[<] .ssl_enabled: pg\bool << #True
-[<] .connection_timeout: pg\int << 30
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 5432
+[<] .database:pg.string << "myapp_db"
+[<] .ssl_enabled:pg.bool << #True
+[<] .connection_timeout:pg.int << 30
 [X]
 ```
 
@@ -1054,12 +1054,12 @@ PipelineName
 ```polyglot
 [!] !MyApp.Database.ConnectionError
 [A] !DBConnError
-[<] .message: pg\string << "Failed to connect to database"
-[<] .code: pg\int << 5100
-[<] .trace: pg\string << ""
-[<] .host: pg\string << ""
-[<] .port: pg\int << 0
-[<] .retry_count: pg\int << 0
+[<] .message:pg.string << "Failed to connect to database"
+[<] .code:pg.int << 5100
+[<] .trace:pg.string << ""
+[<] .host:pg.string << ""
+[<] .port:pg.int << 0
+[<] .retry_count:pg.int << 0
 [X]
 ```
 
@@ -1069,20 +1069,20 @@ PipelineName
 
 ```polyglot
 [|] ParallelProcessing
-[i] .data: pg\string
+[i] .data:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [p] |ProcessPartA
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [~][r] |TransformA
-[~][<] .data: pg\string << .input
+[~][<] .data:pg.string << .input
 [>] .result >> result_a
 
 [p] |ProcessPartB
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [~][r] |TransformB
-[~][<] .data: pg\string << .input
+[~][<] .data:pg.string << .input
 [>] .result >> result_b
 
 [Y] |Y.Join
@@ -1090,11 +1090,11 @@ PipelineName
 [>] result_b
 
 [r] |CombineResults
-[<] .a: pg\string << result_a
-[<] .b: pg\string << result_b
-[>] .final: pg\string >> output
+[<] .a:pg.string << result_a
+[<] .b:pg.string << result_b
+[>] .final:pg.string >> output
 
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
@@ -1110,42 +1110,42 @@ PipelineName
  */
 [|] CompleteWorkflow
 // Input declarations
-[i] .file_path: pg\path
-[i] Default .timeout: pg\int << 30
-[i] Default .debug: pg\bool << #False
+[i] .file_path:pg.path
+[i] Default .timeout:pg.int << 30
+[i] Default .debug:pg.bool << #False
 
 // Trigger configuration
 [t] |T.File.Modified
-[<] .path: pg\path << .file_path
+[<] .path:pg.path << .file_path
 
 // Queue control
 [Q] |Q.PauseIf.RAM.Available.LessThan
-[<] .mb: pg\uint << 512
+[<] .mb:pg.uint << 512
 
 // Read file
 [r] |ReadFile
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> file_data
 
 // Process data
 [r] |ProcessData
-[<] .data: pg\string << file_data
-[<] .timeout: pg\int << .timeout
-[>] .result: pg\string >> processed
+[<] .data:pg.string << file_data
+[<] .timeout:pg.int << .timeout
+[>] .result:pg.string >> processed
 
 // Error handling
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << "File not found: {err_msg}"
+[<] .msg:pg.string << "File not found: {err_msg}"
 
 [!] !pg.FileSystem.PermissionDenied
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << "Access denied: {err_msg}"
+[<] .msg:pg.string << "Access denied: {err_msg}"
 
 // Output
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
@@ -1158,11 +1158,11 @@ PipelineName
 ```polyglot
 // INVALID - No blank lines before pipeline calls
 [|] ProcessData
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |FirstOperation
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [r] |SecondOperation
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 
@@ -1177,13 +1177,13 @@ PipelineName
 ```polyglot
 // INVALID - Inconsistent spacing around operators
 [r] .x:pg\int<< 42
-[r] .y: pg\int  <<  10
-[r] .z : pg\int <<  5
+[r] .y:pg.int  <<  10
+[r] .z :pg.int <<  5
 ```
 
 **Problem:** Inconsistent spacing around `:` and `<<`
 
-**Fix:** Use single space consistently: `.x: pg\int << 42`
+**Fix:** Use single space consistently: `.x:pg.int << 42`
 
 ---
 
@@ -1209,9 +1209,9 @@ PipelineName
 ```polyglot
 // INVALID - Indented block markers
 [|] Pipeline
-    [i] .input: pg\string
+    [i] .input:pg.string
     [r] |Operation
-        [<] .data: pg\string << .input
+        [<] .data:pg.string << .input
 [X]
 ```
 
@@ -1226,9 +1226,9 @@ PipelineName
 ```polyglot
 // INVALID - Wrong order of reserved fields
 [!] !CustomError
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
-[<] .message: pg\string << "Error"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
+[<] .message:pg.string << "Error"
 [X]
 ```
 
@@ -1244,9 +1244,9 @@ PipelineName
 // INVALID - Blank lines within operation group
 [r] |ProcessData
 
-[<] .input: pg\string << data
+[<] .input:pg.string << data
 
-[>] .result: pg\string >> output
+[>] .result:pg.string >> output
 ```
 
 **Problem:** Blank lines break up operation group
@@ -1260,9 +1260,9 @@ PipelineName
 ```polyglot
 // INVALID - Poor parallel block formatting
 [p] |ProcessPartA
-[<] .data: pg\string << input
+[<] .data:pg.string << input
     [~][r] |Transform
-        [~][<] .input: pg\string << .data
+        [~][<] .input:pg.string << .data
 [>] .result >> result_a
 ```
 
@@ -1303,7 +1303,7 @@ PipelineName
 **Problem:**
 ```polyglot
 [|] Pipeline
-    [i] .input: pg\string  // Indented
+    [i] .input:pg.string  // Indented
     [r] |Operation         // Indented
 [X]
 ```
@@ -1311,7 +1311,7 @@ PipelineName
 **Fix:**
 ```polyglot
 [|] Pipeline
-[i] .input: pg\string  // No indentation
+[i] .input:pg.string  // No indentation
 [r] |Operation         // No indentation
 [X]
 ```
@@ -1323,13 +1323,13 @@ PipelineName
 **Problem:**
 ```polyglot
 //No space after slashes
-[r] .x: pg\int << 42 //Only 1 space before inline comment
+[r] .x:pg.int << 42 //Only 1 space before inline comment
 ```
 
 **Fix:**
 ```polyglot
 // Space after slashes
-[r] .x: pg\int << 42  // At least 2 spaces before inline comment
+[r] .x:pg.int << 42  // At least 2 spaces before inline comment
 ```
 
 ---
@@ -1339,9 +1339,9 @@ PipelineName
 **Problem:**
 ```polyglot
 [|] Pipeline
-[o] .result: pg\string  // Output at top
+[o] .result:pg.string  // Output at top
 
-[i] .input: pg\string
+[i] .input:pg.string
 
 [r] |Process
 [X]
@@ -1350,11 +1350,11 @@ PipelineName
 **Fix:**
 ```polyglot
 [|] Pipeline
-[i] .input: pg\string
+[i] .input:pg.string
 
 [r] |Process
 
-[o] .result: pg\string  // Output last
+[o] .result:pg.string  // Output last
 [X]
 ```
 
@@ -1364,7 +1364,7 @@ PipelineName
 
 **Problem:**
 ```polyglot
-[r] .config: pg\serial << serial{
+[r] .config:pg.serial << serial{
 [^]"host": "localhost",
   [^]  "port": 8080,
 [^]"debug": false
@@ -1373,7 +1373,7 @@ PipelineName
 
 **Fix:**
 ```polyglot
-[r] .config: pg\serial << serial{
+[r] .config:pg.serial << serial{
 [^]  "host": "localhost",
 [^]  "port": 8080,
 [^]  "debug": false
@@ -1387,17 +1387,17 @@ PipelineName
 **Problem:**
 ```polyglot
 [p] |Parallel
-[<] .data: pg\string << input
+[<] .data:pg.string << input
     [~][r] |Nested  // Extra indentation
-    [~][<] .input: pg\string << .data
+    [~][<] .input:pg.string << .data
 ```
 
 **Fix:**
 ```polyglot
 [p] |Parallel
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [~][r] |Nested  // Same level
-[~][<] .input: pg\string << .data
+[~][<] .input:pg.string << .data
 ```
 
 ---
@@ -1407,16 +1407,16 @@ PipelineName
 **Problem:**
 ```polyglot
 [r] |FirstOperation
-[<] .data: pg\string << input
-[>] .result: pg\string >> output
+[<] .data:pg.string << input
+[>] .result:pg.string >> output
 [r] |SecondOperation  // No blank line
 ```
 
 **Fix:**
 ```polyglot
 [r] |FirstOperation
-[<] .data: pg\string << input
-[>] .result: pg\string >> output
+[<] .data:pg.string << input
+[>] .result:pg.string >> output
 
 [r] |SecondOperation  // Blank line added
 ```

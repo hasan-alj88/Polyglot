@@ -37,9 +37,9 @@ Polyglot's DateTime system provides comprehensive date and time handling with su
 
 ## DateTime Type Basics
 
-### The `pg\dt` Type
+### The `:pg.dt` Type
 
-**Type:** `pg\dt`
+**Type:** `:pg.dt`
 
 **Description:** DateTime type with calendar and timezone support
 
@@ -51,13 +51,13 @@ Polyglot's DateTime system provides comprehensive date and time handling with su
 
 ```polyglot
 // DateTime variable
-[r] .timestamp: pg\dt << DT"2024-01-15 14:30:00"
+[r] .timestamp:pg.dt << DT"2024-01-15 14:30:00"
 
 // DateTime input
-[i] .scheduled_time: pg\dt
+[i] .scheduled_time:pg.dt
 
 // DateTime with default
-[i] Default .start_time: pg\dt << DT"09:00:"
+[i] Default .start_time:pg.dt << DT"09:00:"
 ```
 
 ---
@@ -102,11 +102,11 @@ DT"datetime_string"
 
 ```polyglot
 // Date and time
-[r] .now: pg\dt << DT"2024-01-15 14:30:00"
+[r] .now:pg.dt << DT"2024-01-15 14:30:00"
 
 // With timezone
-[r] .utc_time: pg\dt << DT"2024-01-15 14:30:00 UTC"
-[r] .local_time: pg\dt << DT"2024-01-15 14:30:00 EST"
+[r] .utc_time:pg.dt << DT"2024-01-15 14:30:00 UTC"
+[r] .local_time:pg.dt << DT"2024-01-15 14:30:00 EST"
 ```
 
 ---
@@ -115,10 +115,10 @@ DT"datetime_string"
 
 ```polyglot
 // Just the date
-[r] .date: pg\dt << DT"2024-01-15"
+[r] .date:pg.dt << DT"2024-01-15"
 
 // Midnight implied
-[r] .start_of_day: pg\dt << DT"2024-01-15"
+[r] .start_of_day:pg.dt << DT"2024-01-15"
 ```
 
 ---
@@ -127,9 +127,9 @@ DT"datetime_string"
 
 ```polyglot
 // Just the time (colon at end indicates time-only)
-[r] .time: pg\dt << DT"14:30:"
-[r] .morning: pg\dt << DT"09:00:"
-[r] .midnight: pg\dt << DT"00:00:"
+[r] .time:pg.dt << DT"14:30:"
+[r] .morning:pg.dt << DT"09:00:"
+[r] .midnight:pg.dt << DT"00:00:"
 ```
 
 **Format:** Time literals end with `:` to distinguish from date strings.
@@ -140,16 +140,16 @@ DT"datetime_string"
 
 ```polyglot
 // ISO 8601 format
-[r] .iso: pg\dt << DT"2024-01-15T14:30:00Z"
+[r] .iso:pg.dt << DT"2024-01-15T14:30:00Z"
 
 // Date with slashes
-[r] .us_date: pg\dt << DT"01/15/2024"
+[r] .us_date:pg.dt << DT"01/15/2024"
 
 // Date with dashes
-[r] .std_date: pg\dt << DT"2024-01-15"
+[r] .std_date:pg.dt << DT"2024-01-15"
 
 // With milliseconds
-[r] .precise: pg\dt << DT"2024-01-15 14:30:00.123"
+[r] .precise:pg.dt << DT"2024-01-15 14:30:00.123"
 ```
 
 ---
@@ -174,10 +174,10 @@ Polyglot supports multiple calendar systems beyond Gregorian:
 
 ```polyglot
 // Default calendar
-[r] .date: pg\dt << DT"2024-01-15"
+[r] .date:pg.dt << DT"2024-01-15"
 
 // Explicit Gregorian
-[r] .greg_date: pg\dt << DT.Gregorian"2024-01-15"
+[r] .greg_date:pg.dt << DT.Gregorian"2024-01-15"
 ```
 
 ---
@@ -186,13 +186,13 @@ Polyglot supports multiple calendar systems beyond Gregorian:
 
 ```polyglot
 // Hijri date
-[r] .hijri_date: pg\dt << DT.Hijri"1445-07-15"
+[r] .hijri_date:pg.dt << DT.Hijri"1445-07-15"
 
 // Hijri with time
-[r] .hijri_time: pg\dt << DT.Hijri"1445-07-15 14:30:00"
+[r] .hijri_time:pg.dt << DT.Hijri"1445-07-15 14:30:00"
 
 // Current Hijri date
-[r] .now_hijri: pg\dt << DT.Hijri.Now
+[r] .now_hijri:pg.dt << DT.Hijri.Now
 ```
 
 ---
@@ -201,10 +201,10 @@ Polyglot supports multiple calendar systems beyond Gregorian:
 
 ```polyglot
 // Chinese date
-[r] .chinese_date: pg\dt << DT.Chinese"2024-01-15"
+[r] .chinese_date:pg.dt << DT.Chinese"2024-01-15"
 
 // Chinese New Year
-[r] .cny: pg\dt << DT.Chinese"2024-01-01"
+[r] .cny:pg.dt << DT.Chinese"2024-01-01"
 ```
 
 ---
@@ -213,10 +213,10 @@ Polyglot supports multiple calendar systems beyond Gregorian:
 
 ```polyglot
 // Hebrew date
-[r] .hebrew_date: pg\dt << DT.Hebrew"5784-10-15"
+[r] .hebrew_date:pg.dt << DT.Hebrew"5784-10-15"
 
 // Hebrew with time
-[r] .hebrew_time: pg\dt << DT.Hebrew"5784-10-15 14:30:00"
+[r] .hebrew_time:pg.dt << DT.Hebrew"5784-10-15 14:30:00"
 ```
 
 ---
@@ -225,10 +225,10 @@ Polyglot supports multiple calendar systems beyond Gregorian:
 
 ```polyglot
 // Persian date
-[r] .persian_date: pg\dt << DT.Persian"1402-10-24"
+[r] .persian_date:pg.dt << DT.Persian"1402-10-24"
 
 // Nowruz (Persian New Year)
-[r] .nowruz: pg\dt << DT.Persian"1403-01-01"
+[r] .nowruz:pg.dt << DT.Persian"1403-01-01"
 ```
 
 ---
@@ -237,18 +237,18 @@ Polyglot supports multiple calendar systems beyond Gregorian:
 
 ```polyglot
 // Define date in one calendar
-[r] .gregorian: pg\dt << DT"2024-01-15"
+[r] .gregorian:pg.dt << DT"2024-01-15"
 
 // Convert to another calendar (using standard library)
 [r] |DT.Convert.ToHijri
-[<] .date: pg\dt << .gregorian
-[>] .hijri_date: pg\dt >> .hijri
+[<] .date:pg.dt << .gregorian
+[>] .hijri_date:pg.dt >> .hijri
 
 // Format in specific calendar
 [r] |DT.Format.Hijri
-[<] .date: pg\dt << .gregorian
-[<] .format: pg\string << "YYYY-MM-DD"
-[>] .formatted: pg\string >> hijri_string
+[<] .date:pg.dt << .gregorian
+[<] .format:pg.string << "YYYY-MM-DD"
+[>] .formatted:pg.string >> hijri_string
 ```
 
 ---
@@ -271,12 +271,12 @@ DT.Ago"time_expression"
 **Examples:**
 ```polyglot
 // Time in the past
-[r] .two_days_ago: pg\dt << DT.Ago"2 days"
-[r] .one_hour_ago: pg\dt << DT.Ago"1 hour"
-[r] .thirty_minutes_ago: pg\dt << DT.Ago"30 minutes"
-[r] .one_week_ago: pg\dt << DT.Ago"1 week"
-[r] .six_months_ago: pg\dt << DT.Ago"6 months"
-[r] .one_year_ago: pg\dt << DT.Ago"1 year"
+[r] .two_days_ago:pg.dt << DT.Ago"2 days"
+[r] .one_hour_ago:pg.dt << DT.Ago"1 hour"
+[r] .thirty_minutes_ago:pg.dt << DT.Ago"30 minutes"
+[r] .one_week_ago:pg.dt << DT.Ago"1 week"
+[r] .six_months_ago:pg.dt << DT.Ago"6 months"
+[r] .one_year_ago:pg.dt << DT.Ago"1 year"
 ```
 
 ---
@@ -291,12 +291,12 @@ DT.From.Now"time_expression"
 **Examples:**
 ```polyglot
 // Time in the future
-[r] .in_two_days: pg\dt << DT.From.Now"2 days"
-[r] .in_one_hour: pg\dt << DT.From.Now"1 hour"
-[r] .in_thirty_minutes: pg\dt << DT.From.Now"30 minutes"
-[r] .in_one_week: pg\dt << DT.From.Now"1 week"
-[r] .in_six_months: pg\dt << DT.From.Now"6 months"
-[r] .in_one_year: pg\dt << DT.From.Now"1 year"
+[r] .in_two_days:pg.dt << DT.From.Now"2 days"
+[r] .in_one_hour:pg.dt << DT.From.Now"1 hour"
+[r] .in_thirty_minutes:pg.dt << DT.From.Now"30 minutes"
+[r] .in_one_week:pg.dt << DT.From.Now"1 week"
+[r] .in_six_months:pg.dt << DT.From.Now"6 months"
+[r] .in_one_year:pg.dt << DT.From.Now"1 year"
 ```
 
 ---
@@ -305,11 +305,11 @@ DT.From.Now"time_expression"
 
 ```polyglot
 // Current timestamp
-[r] .now: pg\dt << DT.Now
+[r] .now:pg.dt << DT.Now
 
 // Current time in specific calendar
-[r] .now_hijri: pg\dt << DT.Hijri.Now
-[r] .now_chinese: pg\dt << DT.Chinese.Now
+[r] .now_hijri:pg.dt << DT.Hijri.Now
+[r] .now_chinese:pg.dt << DT.Chinese.Now
 ```
 
 ---
@@ -376,7 +376,7 @@ DT.Every"6 hours"
 [|] ScheduledTask
 // Trigger every hour
 [t] |T.Every.Hour
-[<] .minute: pg\int << 0  // At the top of the hour
+[<] .minute:pg.int << 0  // At the top of the hour
 
 [r] |DoWork
 [X]
@@ -386,7 +386,7 @@ DT.Every"6 hours"
 [|] FrequentTask
 // Trigger every 30 seconds
 [t] |T.Every.Seconds
-[<] .interval: pg\int << 30
+[<] .interval:pg.int << 30
 
 [r] |CheckStatus
 [X]
@@ -400,7 +400,7 @@ DT.Every"6 hours"
 [|] DailyReport
 // Every day at 9:00 AM
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 [r] |GenerateReport
 [X]
@@ -414,8 +414,8 @@ DT.Every"6 hours"
 [|] WeeklyBackup
 // Every Monday at 2:00 AM
 [t] |T.Weekly
-[<] .day: pg\string << "Monday"
-[<] .time: pg\dt << DT"02:00:"
+[<] .day:pg.string << "Monday"
+[<] .time:pg.dt << DT"02:00:"
 
 [r] |BackupDatabase
 [X]
@@ -429,8 +429,8 @@ DT.Every"6 hours"
 [|] MonthlyInvoice
 // First day of every month at midnight
 [t] |T.Monthly
-[<] .day: pg\int << 1
-[<] .time: pg\dt << DT"00:00:"
+[<] .day:pg.int << 1
+[<] .time:pg.dt << DT"00:00:"
 
 [r] |GenerateInvoices
 [X]
@@ -467,21 +467,21 @@ Polyglot uses format strings for custom datetime formatting:
 ```polyglot
 // Format current time
 [r] |DT.Format
-[<] .datetime: pg\dt << DT.Now
-[<] .format: pg\string << "YYYY-MM-DD HH:mm:ss"
-[>] .formatted: pg\string >> timestamp
+[<] .datetime:pg.dt << DT.Now
+[<] .format:pg.string << "YYYY-MM-DD HH:mm:ss"
+[>] .formatted:pg.string >> timestamp
 
 // US date format
 [r] |DT.Format
-[<] .datetime: pg\dt << DT"2024-01-15"
-[<] .format: pg\string << "MM/DD/YYYY"
-[>] .formatted: pg\string >> us_date  // "01/15/2024"
+[<] .datetime:pg.dt << DT"2024-01-15"
+[<] .format:pg.string << "MM/DD/YYYY"
+[>] .formatted:pg.string >> us_date  // "01/15/2024"
 
 // 12-hour time with AM/PM
 [r] |DT.Format
-[<] .datetime: pg\dt << DT"14:30:"
-[<] .format: pg\string << "hh:mm A"
-[>] .formatted: pg\string >> time_12h  // "02:30 PM"
+[<] .datetime:pg.dt << DT"14:30:"
+[<] .format:pg.string << "hh:mm A"
+[>] .formatted:pg.string >> time_12h  // "02:30 PM"
 ```
 
 ---
@@ -491,15 +491,15 @@ Polyglot uses format strings for custom datetime formatting:
 ```polyglot
 // Parse custom date format
 [r] |DT.Parse
-[<] .input: pg\string << "15-01-2024"
-[<] .format: pg\string << "DD-MM-YYYY"
-[>] .datetime: pg\dt >> parsed_date
+[<] .input:pg.string << "15-01-2024"
+[<] .format:pg.string << "DD-MM-YYYY"
+[>] .datetime:pg.dt >> parsed_date
 
 // Parse 12-hour time
 [r] |DT.Parse
-[<] .input: pg\string << "02:30 PM"
-[<] .format: pg\string << "hh:mm A"
-[>] .datetime: pg\dt >> parsed_time
+[<] .input:pg.string << "02:30 PM"
+[<] .format:pg.string << "hh:mm A"
+[>] .datetime:pg.dt >> parsed_time
 ```
 
 ---
@@ -516,15 +516,15 @@ Polyglot uses format strings for custom datetime formatting:
 
 **This literal:**
 ```polyglot
-[r] .time: pg\dt << DT"2024-01-15 14:30:00"
+[r] .time:pg.dt << DT"2024-01-15 14:30:00"
 ```
 
 **Compiles to something like:**
 ```polyglot
 [r] |pg.DateTime.Parse
-[<] .input: pg\string << "2024-01-15 14:30:00"
-[<] .format: pg\string << "YYYY-MM-DD HH:mm:ss"
-[>] .result: pg\dt >> .time
+[<] .input:pg.string << "2024-01-15 14:30:00"
+[<] .format:pg.string << "YYYY-MM-DD HH:mm:ss"
+[>] .result:pg.dt >> .time
 ```
 
 ---
@@ -533,18 +533,18 @@ Polyglot uses format strings for custom datetime formatting:
 
 **This literal:**
 ```polyglot
-[r] .past: pg\dt << DT.Ago"2 days"
+[r] .past:pg.dt << DT.Ago"2 days"
 ```
 
 **Compiles to something like:**
 ```polyglot
 [r] |pg.DateTime.Now
-[>] .now: pg\dt >> current_time
+[>] .now:pg.dt >> current_time
 
 [r] |pg.DateTime.Subtract
-[<] .datetime: pg\dt << current_time
-[<] .duration: pg\string << "2 days"
-[>] .result: pg\dt >> .past
+[<] .datetime:pg.dt << current_time
+[<] .duration:pg.string << "2 days"
+[>] .result:pg.dt >> .past
 ```
 
 ---
@@ -560,14 +560,14 @@ Polyglot uses format strings for custom datetime formatting:
 **User choice:**
 ```polyglot
 // Use sugar for convenience
-[r] .time: pg\dt << DT"14:30:"
+[r] .time:pg.dt << DT"14:30:"
 
 // Or use pipelines directly for more control
 [r] |pg.DateTime.Parse
-[<] .input: pg\string << "14:30:"
-[<] .format: pg\string << "HH:mm:"
-[<] .timezone: pg\string << "UTC"
-[>] .time: pg\dt >> .parsed_time
+[<] .input:pg.string << "14:30:"
+[<] .format:pg.string << "HH:mm:"
+[<] .timezone:pg.string << "UTC"
+[>] .time:pg.dt >> .parsed_time
 ```
 
 ---
@@ -579,21 +579,21 @@ Polyglot uses format strings for custom datetime formatting:
 ```polyglot
 // Add duration
 [r] |DT.Add
-[<] .datetime: pg\dt << DT"2024-01-15"
-[<] .duration: pg\string << "7 days"
-[>] .result: pg\dt >> .future_date
+[<] .datetime:pg.dt << DT"2024-01-15"
+[<] .duration:pg.string << "7 days"
+[>] .result:pg.dt >> .future_date
 
 // Subtract duration
 [r] |DT.Subtract
-[<] .datetime: pg\dt << DT"2024-01-15"
-[<] .duration: pg\string << "2 days"
-[>] .result: pg\dt >> .past_date
+[<] .datetime:pg.dt << DT"2024-01-15"
+[<] .duration:pg.string << "2 days"
+[>] .result:pg.dt >> .past_date
 
 // Difference between dates
 [r] |DT.Difference
-[<] .start: pg\dt << DT"2024-01-01"
-[<] .end: pg\dt << DT"2024-01-15"
-[>] .duration: pg\string >> .days_between  // "14 days"
+[<] .start:pg.dt << DT"2024-01-01"
+[<] .end:pg.dt << DT"2024-01-15"
+[>] .duration:pg.string >> .days_between  // "14 days"
 ```
 
 ---
@@ -606,7 +606,7 @@ Polyglot uses comparison operators with the `?` suffix pattern for datetime comp
 
 ```polyglot
 // Compare dates using comparison operators
-[r] .reference: pg\dt << DT"2024-01-15"
+[r] .reference:pg.dt << DT"2024-01-15"
 
 // Check if date is after reference (>)
 [?] .date1 >? .reference
@@ -629,8 +629,8 @@ Polyglot uses comparison operators with the `?` suffix pattern for datetime comp
 [~][r] |HandleInRange
 
 // Example with specific dates
-[r] .start_date: pg\dt << DT"2024-01-01"
-[r] .end_date: pg\dt << DT"2024-01-31"
+[r] .start_date:pg.dt << DT"2024-01-01"
+[r] .end_date:pg.dt << DT"2024-01-31"
 [?] .date1 ?[.start_date, .end_date]
 [~][r] |DateIsInJanuary
 ```
@@ -642,24 +642,24 @@ Polyglot uses comparison operators with the `?` suffix pattern for datetime comp
 ```polyglot
 // Extract components
 [r] |DT.Year
-[<] .datetime: pg\dt << DT"2024-01-15"
-[>] .year: pg\int >> year_value  // 2024
+[<] .datetime:pg.dt << DT"2024-01-15"
+[>] .year:pg.int >> year_value  // 2024
 
 [r] |DT.Month
-[<] .datetime: pg\dt << DT"2024-01-15"
-[>] .month: pg\int >> month_value  // 1
+[<] .datetime:pg.dt << DT"2024-01-15"
+[>] .month:pg.int >> month_value  // 1
 
 [r] |DT.Day
-[<] .datetime: pg\dt << DT"2024-01-15"
-[>] .day: pg\int >> day_value  // 15
+[<] .datetime:pg.dt << DT"2024-01-15"
+[>] .day:pg.int >> day_value  // 15
 
 [r] |DT.Hour
-[<] .datetime: pg\dt << DT"14:30:00"
-[>] .hour: pg\int >> hour_value  // 14
+[<] .datetime:pg.dt << DT"14:30:00"
+[>] .hour:pg.int >> hour_value  // 14
 
 [r] |DT.DayOfWeek
-[<] .datetime: pg\dt << DT"2024-01-15"
-[>] .day_name: pg\string >> weekday  // "Monday"
+[<] .datetime:pg.dt << DT"2024-01-15"
+[>] .day_name:pg.string >> weekday  // "Monday"
 ```
 
 ---
@@ -669,13 +669,13 @@ Polyglot uses comparison operators with the `?` suffix pattern for datetime comp
 ```polyglot
 // Build datetime from components
 [r] |DT.FromComponents
-[<] .year: pg\int << 2024
-[<] .month: pg\int << 1
-[<] .day: pg\int << 15
-[<] .hour: pg\int << 14
-[<] .minute: pg\int << 30
-[<] .second: pg\int << 0
-[>] .datetime: pg\dt >> constructed_time
+[<] .year:pg.int << 2024
+[<] .month:pg.int << 1
+[<] .day:pg.int << 15
+[<] .hour:pg.int << 14
+[<] .minute:pg.int << 30
+[<] .second:pg.int << 0
+[>] .datetime:pg.dt >> constructed_time
 ```
 
 ---
@@ -692,16 +692,16 @@ Polyglot supports timezone-aware datetime operations.
 
 ```polyglot
 // UTC time
-[r] .utc: pg\dt << DT"2024-01-15 14:30:00 UTC"
+[r] .utc:pg.dt << DT"2024-01-15 14:30:00 UTC"
 
 // Specific timezone
-[r] .est: pg\dt << DT"2024-01-15 14:30:00 EST"
-[r] .pst: pg\dt << DT"2024-01-15 14:30:00 PST"
-[r] .cet: pg\dt << DT"2024-01-15 14:30:00 CET"
+[r] .est:pg.dt << DT"2024-01-15 14:30:00 EST"
+[r] .pst:pg.dt << DT"2024-01-15 14:30:00 PST"
+[r] .cet:pg.dt << DT"2024-01-15 14:30:00 CET"
 
 // Offset format
-[r] .plus_five: pg\dt << DT"2024-01-15 14:30:00 +05:00"
-[r] .minus_eight: pg\dt << DT"2024-01-15 14:30:00 -08:00"
+[r] .plus_five:pg.dt << DT"2024-01-15 14:30:00 +05:00"
+[r] .minus_eight:pg.dt << DT"2024-01-15 14:30:00 -08:00"
 ```
 
 ---
@@ -711,19 +711,19 @@ Polyglot supports timezone-aware datetime operations.
 ```polyglot
 // Convert between timezones
 [r] |DT.ToTimezone
-[<] .datetime: pg\dt << DT"2024-01-15 14:30:00 UTC"
-[<] .timezone: pg\string << "EST"
-[>] .converted: pg\dt >> est_time
+[<] .datetime:pg.dt << DT"2024-01-15 14:30:00 UTC"
+[<] .timezone:pg.string << "EST"
+[>] .converted:pg.dt >> est_time
 
 // Convert to UTC
 [r] |DT.ToUTC
-[<] .datetime: pg\dt << DT"2024-01-15 14:30:00 EST"
-[>] .utc_time: pg\dt >> utc_converted
+[<] .datetime:pg.dt << DT"2024-01-15 14:30:00 EST"
+[>] .utc_time:pg.dt >> utc_converted
 
 // Get local time
 [r] |DT.ToLocal
-[<] .datetime: pg\dt << DT"2024-01-15 14:30:00 UTC"
-[>] .local_time: pg\dt >> local_converted
+[<] .datetime:pg.dt << DT"2024-01-15 14:30:00 UTC"
+[>] .local_time:pg.dt >> local_converted
 ```
 
 ---
@@ -733,10 +733,10 @@ Polyglot supports timezone-aware datetime operations.
 ```polyglot
 // Get system timezone
 [r] |DT.GetSystemTimezone
-[>] .timezone: pg\string >> system_tz
+[>] .timezone:pg.string >> system_tz
 
 // Current time in system timezone
-[r] .now_local: pg\dt << DT.Now.Local
+[r] .now_local:pg.dt << DT.Now.Local
 ```
 
 ---
@@ -747,11 +747,11 @@ Polyglot supports timezone-aware datetime operations.
 
 ```polyglot
 // ✓ CORRECT - Use appropriate calendar for context
-[r] .hijri_date: pg\dt << DT.Hijri"1445-07-15"  // Islamic context
-[r] .gregorian_date: pg\dt << DT"2024-01-15"    // Western context
+[r] .hijri_date:pg.dt << DT.Hijri"1445-07-15"  // Islamic context
+[r] .gregorian_date:pg.dt << DT"2024-01-15"    // Western context
 
 // ✗ AVOID - Wrong calendar for context
-[r] .islamic_event: pg\dt << DT"2024-01-15"  // Should use Hijri
+[r] .islamic_event:pg.dt << DT"2024-01-15"  // Should use Hijri
 ```
 
 ---
@@ -760,10 +760,10 @@ Polyglot supports timezone-aware datetime operations.
 
 ```polyglot
 // ✓ CORRECT - Explicit timezone
-[r] .scheduled: pg\dt << DT"2024-01-15 14:30:00 UTC"
+[r] .scheduled:pg.dt << DT"2024-01-15 14:30:00 UTC"
 
 // ✗ RISKY - Ambiguous timezone
-[r] .scheduled: pg\dt << DT"2024-01-15 14:30:00"  // What timezone?
+[r] .scheduled:pg.dt << DT"2024-01-15 14:30:00"  // What timezone?
 ```
 
 ---
@@ -772,10 +772,10 @@ Polyglot supports timezone-aware datetime operations.
 
 ```polyglot
 // ✓ CORRECT - Dynamic, always current
-[r] .cutoff: pg\dt << DT.Ago"7 days"
+[r] .cutoff:pg.dt << DT.Ago"7 days"
 
 // ✗ AVOID - Hard-coded, becomes outdated
-[r] .cutoff: pg\dt << DT"2024-01-08"
+[r] .cutoff:pg.dt << DT"2024-01-08"
 ```
 
 ---
@@ -784,17 +784,17 @@ Polyglot supports timezone-aware datetime operations.
 
 ```polyglot
 // ✓ CORRECT - Store in UTC
-[r] .stored_time: pg\dt << DT"2024-01-15 14:30:00 UTC"
+[r] .stored_time:pg.dt << DT"2024-01-15 14:30:00 UTC"
 
 // Convert to local for display
 [r] |DT.ToLocal
-[<] .datetime: pg\dt << .stored_time
-[>] .display_time: pg\dt >> local_time
+[<] .datetime:pg.dt << .stored_time
+[>] .display_time:pg.dt >> local_time
 
 [r] |DT.Format
-[<] .datetime: pg\dt << local_time
-[<] .format: pg\string << "YYYY-MM-DD hh:mm A"
-[>] .formatted: pg\string >> display_string
+[<] .datetime:pg.dt << local_time
+[<] .format:pg.string << "YYYY-MM-DD hh:mm A"
+[>] .formatted:pg.string >> display_string
 ```
 
 ---
@@ -804,15 +804,15 @@ Polyglot supports timezone-aware datetime operations.
 ```polyglot
 // ✓ CORRECT - ISO 8601 format for APIs/interchange
 [r] |DT.Format
-[<] .datetime: pg\dt << .time
-[<] .format: pg\string << "YYYY-MM-DDTHH:mm:ssZ"
-[>] .iso: pg\string >> iso_string
+[<] .datetime:pg.dt << .time
+[<] .format:pg.string << "YYYY-MM-DDTHH:mm:ssZ"
+[>] .iso:pg.string >> iso_string
 
 // Parse ISO 8601
 [r] |DT.Parse
-[<] .input: pg\string << "2024-01-15T14:30:00Z"
-[<] .format: pg\string << "YYYY-MM-DDTHH:mm:ssZ"
-[>] .datetime: pg\dt >> parsed
+[<] .input:pg.string << "2024-01-15T14:30:00Z"
+[<] .format:pg.string << "YYYY-MM-DDTHH:mm:ssZ"
+[>] .datetime:pg.dt >> parsed
 ```
 
 ---
@@ -822,12 +822,12 @@ Polyglot supports timezone-aware datetime operations.
 ```polyglot
 // Be aware of DST when scheduling
 [t] |T.Daily
-[<] .time: pg\dt << DT"02:30:"  // May not exist during DST transition
-[<] .timezone: pg\string << "EST"
+[<] .time:pg.dt << DT"02:30:"  // May not exist during DST transition
+[<] .timezone:pg.string << "EST"
 
 // Use UTC for consistent scheduling
 [t] |T.Daily
-[<] .time: pg\dt << DT"07:30: UTC"  // 02:30 EST, unaffected by DST
+[<] .time:pg.dt << DT"07:30: UTC"  // 02:30 EST, unaffected by DST
 ```
 
 ---
@@ -838,11 +838,11 @@ Polyglot supports timezone-aware datetime operations.
 // Validate date is reasonable
 [?] .input_date < DT"1900-01-01"
 [~][r] |ThrowError
-[~][<] .message: pg\string << "Date too far in past"
+[~][<] .message:pg.string << "Date too far in past"
 
 [?] .input_date > DT.From.Now"100 years"
 [~][r] |ThrowError
-[~][<] .message: pg\string << "Date too far in future"
+[~][<] .message:pg.string << "Date too far in future"
 ```
 
 ---
@@ -851,12 +851,12 @@ Polyglot supports timezone-aware datetime operations.
 
 ```polyglot
 // ✓ CORRECT - Appropriate precision
-[r] .log_time: pg\dt << DT"2024-01-15 14:30:00.123"  // Milliseconds for logs
-[r] .schedule: pg\dt << DT"2024-01-15 14:30:00"       // Seconds for schedules
-[r] .birthday: pg\dt << DT"2024-01-15"                // Day for birthdays
+[r] .log_time:pg.dt << DT"2024-01-15 14:30:00.123"  // Milliseconds for logs
+[r] .schedule:pg.dt << DT"2024-01-15 14:30:00"       // Seconds for schedules
+[r] .birthday:pg.dt << DT"2024-01-15"                // Day for birthdays
 
 // ✗ UNNECESSARY - Too much precision
-[r] .birthday: pg\dt << DT"2024-01-15 00:00:00.000000"  // Overkill
+[r] .birthday:pg.dt << DT"2024-01-15 00:00:00.000000"  // Overkill
 ```
 
 ---
@@ -864,7 +864,7 @@ Polyglot supports timezone-aware datetime operations.
 ## See Also
 
 ### Language Specification
-- [Type System](02-type-system.md) - `pg\dt` type details
+- [Type System](02-type-system.md) - `:pg.dt` type details
 - [Complete Syntax Reference](01-syntax-complete.md) - DateTime syntax overview
 
 ### Standard Library

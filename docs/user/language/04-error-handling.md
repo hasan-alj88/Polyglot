@@ -85,25 +85,25 @@ Every error type MUST have three reserved fields:
 
 | Field | Type | Purpose |
 |-------|------|---------|
-| `.message` | `pg\string` | Human-readable error message |
-| `.code` | `pg\int` | Numeric error code |
-| `.trace` | `pg\string` | Stack trace information |
+| `.message` | `:pg.string` | Human-readable error message |
+| `.code` | `:pg.int` | Numeric error code |
+| `.trace` | `:pg.string` | Stack trace information |
 
 ---
 
 ### Reserved Field Semantics
 
-**`.message: pg\string`**
+**`.message:pg.string`**
 - Human-readable description of the error
 - Should be clear and actionable
 - May include context about what went wrong
 
-**`.code: pg\int`**
+**`.code:pg.int`**
 - Numeric error code for programmatic handling
 - Unique within error hierarchy
 - Follows error code conventions (e.g., HTTP-style codes)
 
-**`.trace: pg\string`**
+**`.trace:pg.string`**
 - Stack trace or execution path
 - Automatically populated by runtime
 - Empty string if no trace available
@@ -114,9 +114,9 @@ Every error type MUST have three reserved fields:
 
 ```polyglot
 [!] !MyApp.ValidationError
-[<] .message: pg\string << "Validation failed"
-[<] .code: pg\int << 4000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Validation failed"
+[<] .code:pg.int << 4000
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -133,9 +133,9 @@ Every error type MUST have three reserved fields:
 **Format:**
 ```polyglot
 [!] !ErrorName
-[<] .message: pg\string << "default message"
-[<] .code: pg\int << error_code
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "default message"
+[<] .code:pg.int << error_code
+[<] .trace:pg.string << ""
 [<] .custom_field: type << value  // Optional
 [X]
 ```
@@ -146,9 +146,9 @@ Every error type MUST have three reserved fields:
 
 ```polyglot
 [!] !MyApp.CustomError
-[<] .message: pg\string << "An error occurred"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "An error occurred"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -160,13 +160,13 @@ Custom errors can have additional fields beyond the three reserved:
 
 ```polyglot
 [!] !MyApp.DatabaseError
-[<] .message: pg\string << "Database operation failed"
-[<] .code: pg\int << 5100
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Database operation failed"
+[<] .code:pg.int << 5100
+[<] .trace:pg.string << ""
 // Custom fields
-[<] .query: pg\string << ""
-[<] .affected_rows: pg\int << 0
-[<] .connection_id: pg\string << ""
+[<] .query:pg.string << ""
+[<] .affected_rows:pg.int << 0
+[<] .connection_id:pg.string << ""
 [X]
 ```
 
@@ -197,11 +197,11 @@ Errors support aliases like enumerations:
 ```polyglot
 [!] !MyApp.Authentication.InvalidCredentials
 [A] !InvalidCreds  // Alias usable within package
-[<] .message: pg\string << "Invalid username or password"
-[<] .code: pg\int << 4010
-[<] .trace: pg\string << ""
-[<] .username_attempted: pg\string << ""
-[<] .login_attempts: pg\int << 0
+[<] .message:pg.string << "Invalid username or password"
+[<] .code:pg.int << 4010
+[<] .trace:pg.string << ""
+[<] .username_attempted:pg.string << ""
+[<] .login_attempts:pg.int << 0
 [X]
 ```
 
@@ -230,21 +230,21 @@ Errors support aliases like enumerations:
 **Example:**
 ```polyglot
 [|] ProcessFile
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [r] |ReadFile
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> .file_content
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> .file_content
 [~]
 [~][!] !pg.FileSystem.NotFound
-[~][>] .message: pg\string >> .err_msg
+[~][>] .message:pg.string >> .err_msg
 [~]
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << "File not found: {.err_msg}"
+[~][<] .msg:pg.string << "File not found: {.err_msg}"
 
-[o] .content: pg\string
+[o] .content:pg.string
 [X]
 ```
 
@@ -271,26 +271,26 @@ Catch different error types separately:
 [t] |T.Call
 [W] |W.DB.connect
 [<] .connection: #Database.connections << #Connection1
-[>] .handle: pg\db >> .db
+[>] .handle:pg.db >> .db
 [~]
 [~][!] !pg.Database.ConnectionFailed
-[~][>] .message: pg\string >> .err_msg
+[~][>] .message:pg.string >> .err_msg
 [~]
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << "Could not connect: {.err_msg}"
+[~][<] .msg:pg.string << "Could not connect: {.err_msg}"
 [~]
 [~][!] !pg.Database.Timeout
-[~][>] .message: pg\string >> .timeout_err
+[~][>] .message:pg.string >> .timeout_err
 [~]
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << "Timeout: {.timeout_err}"
+[~][<] .msg:pg.string << "Timeout: {.timeout_err}"
 
 [r] |U.DB.Query
-[<] .db: pg\db << .db
-[<] .sql: pg\string << sql"SELECT * FROM Table1"
-[>] .results: pg\serial >> .table1
+[<] .db:pg.db << .db
+[<] .sql:pg.string << sql"SELECT * FROM Table1"
+[>] .results:pg.serial >> .table1
 
-[o] .table1: pg\serial
+[o] .table1:pg.serial
 [X]
 ```
 
@@ -348,13 +348,13 @@ Errors interrupt normal flow:
 [s][!] !File.NotFound
 [>] .message >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << "Config file not found: {err_msg}"
+[<] .msg:pg.string << "Config file not found: {err_msg}"
 [o] !ConfigurationError
 
 [s][!] !JSON.ParseError
 [r] |HandleParseError
 
-[o] .db_config: pg\serial
+[o] .db_config:pg.serial
 [X]
 ```
 
@@ -374,7 +374,7 @@ Errors interrupt normal flow:
 [s][!] !JSON.ParseError       // Catches ParseError for ALL serial blocks
 [>] .message >> parse_err
 [r] |U.Log.Error
-[<] .msg: pg\string << "Invalid JSON: {parse_err}"
+[<] .msg:pg.string << "Invalid JSON: {parse_err}"
 [o] !ConfigurationError
 
 [s][!] !Serial.ReservedEnumeration.MissingField  // Validation errors
@@ -443,7 +443,7 @@ Errors interrupt normal flow:
 // Check error state
 [!] .config.error =? !NoError
 [r] |ProcessConfig
-[<] .data: pg\serial << .config
+[<] .data:pg.serial << .config
 
 // Handle error state
 [!] .config.error =? !File.NotFound
@@ -525,19 +525,19 @@ Use `[>]` with `>>` operator to extract error fields:
 [W] |W.NoSetup.NoCleanup
 
 [r] |MightFail
-[>] .result: pg\string >> .success_result
+[>] .result:pg.string >> .success_result
 [~]
 [~][!] !pg.FileSystem.NotFound
-[~][>] .message: pg\string >> .err_message
-[~][>] .code: pg\int >> .err_code
-[~][>] .trace: pg\string >> .err_trace
+[~][>] .message:pg.string >> .err_message
+[~][>] .code:pg.int >> .err_code
+[~][>] .trace:pg.string >> .err_trace
 [~]
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << .err_message
-[~][<] .code: pg\int << .err_code
-[~][<] .trace: pg\string << .err_trace
+[~][<] .msg:pg.string << .err_message
+[~][<] .code:pg.int << .err_code
+[~][<] .trace:pg.string << .err_trace
 
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
@@ -547,11 +547,11 @@ Use `[>]` with `>>` operator to extract error fields:
 
 ```polyglot
 [!] !MyApp.DatabaseError
-[<] .message: pg\string << "Query failed"
-[<] .code: pg\int << 5100
-[<] .trace: pg\string << ""
-[<] .query: pg\string << ""
-[<] .affected_rows: pg\int << 0
+[<] .message:pg.string << "Query failed"
+[<] .code:pg.int << 5100
+[<] .trace:pg.string << ""
+[<] .query:pg.string << ""
+[<] .affected_rows:pg.int << 0
 [X]
 
 // Later, catch and extract
@@ -559,12 +559,12 @@ Use `[>]` with `>>` operator to extract error fields:
 [r] |ExecuteQuery
 
 [!] !MyApp.DatabaseError
-[>] .message: pg\string >> err_msg
-[>] .query: pg\string >> failed_query
-[>] .affected_rows: pg\int >> rows
+[>] .message:pg.string >> err_msg
+[>] .query:pg.string >> failed_query
+[>] .affected_rows:pg.int >> rows
 
 [r] |U.Log.Error
-[<] .msg: pg\string << "Query failed: {failed_query}, rows: {rows}"
+[<] .msg:pg.string << "Query failed: {failed_query}, rows: {rows}"
 
 [X]
 ```
@@ -580,11 +580,11 @@ Extract only the fields you need:
 [r] |MightFail
 
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 // Don't need .code or .trace
 
 [r] |U.Log.Error
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 
 [X]
 ```
@@ -613,7 +613,7 @@ Extract only the fields you need:
 
 [!] !pg.FileSystem.NotFound
 [r] |U.Log.Error
-[<] .msg: pg\string << "File not found"
+[<] .msg:pg.string << "File not found"
 
 [X]
 ```
@@ -634,16 +634,16 @@ Extract only the fields you need:
 [r] |MightFail
 
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_message
-[>] .code: pg\int >> err_code
-[>] .trace: pg\string >> err_trace
+[>] .message:pg.string >> err_message
+[>] .code:pg.int >> err_code
+[>] .trace:pg.string >> err_trace
 
 [r] |U.Log.Error
-[<] .msg: pg\string << "Error {err_code}: {err_message}"
-[<] .trace: pg\string << err_trace
+[<] .msg:pg.string << "Error {err_code}: {err_message}"
+[<] .trace:pg.string << err_trace
 
 [r] |NotifyAdmin
-[<] .error_details: pg\string << "Full error information..."
+[<] .error_details:pg.string << "Full error information..."
 
 [X]
 ```
@@ -664,12 +664,12 @@ Extract only the fields you need:
 [r] |MightFail
 
 [!] !MyApp.DatabaseError
-[>] .message: pg\string >> err_msg
-[>] .query: pg\string >> failed_query
+[>] .message:pg.string >> err_msg
+[>] .query:pg.string >> failed_query
 // Don't need .code, .trace, or .affected_rows
 
 [r] |RetryWithDifferentQuery
-[<] .original_query: pg\string << failed_query
+[<] .original_query:pg.string << failed_query
 
 [X]
 ```
@@ -690,15 +690,15 @@ Extract only the fields you need:
 [r] |TryPrimaryMethod
 
 [!] !pg.Network.ConnectionFailed
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Warning
-[<] .msg: pg\string << "Primary failed, trying fallback"
+[<] .msg:pg.string << "Primary failed, trying fallback"
 
 [r] |TryFallbackMethod
 
 [!] !pg.Network.ConnectionFailed
 [r] |U.Log.Error
-[<] .msg: pg\string << "Both methods failed"
+[<] .msg:pg.string << "Both methods failed"
 
 [X]
 ```
@@ -719,13 +719,13 @@ Extract only the fields you need:
 [r] |LowLevelOperation
 
 [!] !pg.FileSystem.PermissionDenied
-[>] .message: pg\string >> low_level_msg
+[>] .message:pg.string >> low_level_msg
 
 // Transform to application-level error
 [r] |ThrowError
 [<] .error: !MyApp.AccessDenied
-[<] .message: pg\string << "User does not have access to this resource"
-[<] .original_error: pg\string << low_level_msg
+[<] .message:pg.string << "User does not have access to this resource"
+[<] .original_error:pg.string << low_level_msg
 
 [X]
 ```
@@ -747,23 +747,23 @@ Extract only the fields you need:
 
 [r] |ValidateUsername
 [!] !MyApp.ValidationError
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] .errors.append(err_msg)
 
 [r] |ValidateEmail
 [!] !MyApp.ValidationError
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] .errors.append(err_msg)
 
 [r] |ValidatePassword
 [!] !MyApp.ValidationError
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] .errors.append(err_msg)
 
 // Report all errors at once
 [?] .errors.length > 0
 [~][r] |ReportValidationErrors
-[~][<] .errors: pg\array{pg\string} << .errors
+[~][<] .errors: pg.array.pg.string << .errors
 
 [X]
 ```
@@ -797,15 +797,15 @@ Polyglot provides built-in error types in the `pg` namespace:
 **Example:**
 ```polyglot
 [r] |ReadFile
-[<] .path: pg\path << "data.txt"
+[<] .path:pg.path << "data.txt"
 
 [!] !pg.FileSystem.NotFound
 [r] |U.Log.Error
-[<] .msg: pg\string << "File not found"
+[<] .msg:pg.string << "File not found"
 
 [!] !pg.FileSystem.PermissionDenied
 [r] |U.Log.Error
-[<] .msg: pg\string << "Permission denied"
+[<] .msg:pg.string << "Permission denied"
 ```
 
 ---
@@ -823,11 +823,11 @@ Polyglot provides built-in error types in the `pg` namespace:
 **Example:**
 ```polyglot
 [r] |HTTP.Get
-[<] .url: pg\string << "https://api.example.com"
+[<] .url:pg.string << "https://api.example.com"
 
 [!] !pg.Network.Timeout
 [r] |U.Log.Warning
-[<] .msg: pg\string << "Request timed out, retrying..."
+[<] .msg:pg.string << "Request timed out, retrying..."
 ```
 
 ---
@@ -846,12 +846,12 @@ Polyglot provides built-in error types in the `pg` namespace:
 **Example:**
 ```polyglot
 [r] |Database.Query
-[<] .sql: pg\string << "SELECT * FROM users"
+[<] .sql:pg.string << "SELECT * FROM users"
 
 [!] !pg.Database.QueryError
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << "Query failed: {err_msg}"
+[<] .msg:pg.string << "Query failed: {err_msg}"
 ```
 
 ---
@@ -915,15 +915,15 @@ Both are:
 ```polyglot
 // Error - MUST have 3 reserved fields
 [!] !MyError
-[<] .message: pg\string << "Error"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""  // Runtime fills this
+[<] .message:pg.string << "Error"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""  // Runtime fills this
 [X]
 
 // Enumeration - no reserved fields
 [#] MyEnum
-[<] .field1: pg\string << "value"
-[<] .field2: pg\int << 42
+[<] .field1:pg.string << "value"
+[<] .field2:pg.int << 42
 [X]
 ```
 
@@ -952,18 +952,18 @@ Both are:
 **Good:**
 ```polyglot
 [!] !MyApp.ValidationError
-[<] .message: pg\string << "Username must be between 3 and 20 characters"
-[<] .code: pg\int << 4001
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Username must be between 3 and 20 characters"
+[<] .code:pg.int << 4001
+[<] .trace:pg.string << ""
 [X]
 ```
 
 **Avoid:**
 ```polyglot
 [!] !MyApp.ValidationError
-[<] .message: pg\string << "Error"  // Too vague
-[<] .code: pg\int << 4001
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error"  // Too vague
+[<] .code:pg.int << 4001
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -975,23 +975,23 @@ Both are:
 ```polyglot
 // Use HTTP-style or domain-specific codes
 [!] !MyApp.NotFound
-[<] .code: pg\int << 404
+[<] .code:pg.int << 404
 
 [!] !MyApp.Unauthorized
-[<] .code: pg\int << 401
+[<] .code:pg.int << 401
 
 [!] !MyApp.ValidationError
-[<] .code: pg\int << 4000
+[<] .code:pg.int << 4000
 ```
 
 **Avoid:**
 ```polyglot
 // Random or sequential codes
 [!] !MyApp.Error1
-[<] .code: pg\int << 1
+[<] .code:pg.int << 1
 
 [!] !MyApp.Error2
-[<] .code: pg\int << 2
+[<] .code:pg.int << 2
 ```
 
 ---
@@ -1023,12 +1023,12 @@ Both are:
 **Good:**
 ```polyglot
 [!] !MyApp.DatabaseError
-[<] .message: pg\string << "Query execution failed"
-[<] .code: pg\int << 5100
-[<] .trace: pg\string << ""
-[<] .query: pg\string << ""
-[<] .table: pg\string << ""
-[<] .affected_rows: pg\int << 0
+[<] .message:pg.string << "Query execution failed"
+[<] .code:pg.int << 5100
+[<] .trace:pg.string << ""
+[<] .query:pg.string << ""
+[<] .table:pg.string << ""
+[<] .affected_rows:pg.int << 0
 [X]
 ```
 
@@ -1036,9 +1036,9 @@ Both are:
 ```polyglot
 // No context - harder to debug
 [!] !MyApp.DatabaseError
-[<] .message: pg\string << "Query failed"
-[<] .code: pg\int << 5100
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Query failed"
+[<] .code:pg.int << 5100
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -1049,16 +1049,16 @@ Both are:
 **Good:**
 ```polyglot
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 // Only need the message
 ```
 
 **Avoid:**
 ```polyglot
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
-[>] .code: pg\int >> err_code
-[>] .trace: pg\string >> err_trace
+[>] .message:pg.string >> err_msg
+[>] .code:pg.int >> err_code
+[>] .trace:pg.string >> err_trace
 // Extracting fields you won't use
 ```
 
@@ -1070,16 +1070,16 @@ Both are:
 ```polyglot
 // Low-level operation
 [|] ReadConfigFile
-[i] .path: pg\path
+[i] .path:pg.path
 [r] |ReadFile
-[<] .path: pg\path << .path
+[<] .path:pg.path << .path
 // Let error bubble up - don't handle here
 [X]
 
 // High-level operation
 [|] Initialize
 [r] |ReadConfigFile
-[<] .path: pg\path << "config.json"
+[<] .path:pg.path << "config.json"
 [!] !pg.FileSystem.NotFound
 [r] |UseDefaultConfig  // Handle at appropriate level
 [X]
@@ -1093,7 +1093,7 @@ Both are:
 ```polyglot
 [!] !pg.FileSystem.NotFound
 [r] |U.Log.Warning
-[<] .msg: pg\string << "Config not found, using defaults"
+[<] .msg:pg.string << "Config not found, using defaults"
 [r] |UseDefaultConfig
 ```
 
@@ -1112,7 +1112,7 @@ Both are:
 [r] |TryPrimaryService
 [!] !pg.Network.ConnectionFailed
 [r] |U.Log.Warning
-[<] .msg: pg\string << "Primary failed, trying backup"
+[<] .msg:pg.string << "Primary failed, trying backup"
 [r] |TryBackupService
 ```
 
@@ -1121,7 +1121,7 @@ Both are:
 [r] |TryPrimaryService
 [!] !pg.Network.ConnectionFailed
 [r] |U.Log.Error
-[<] .msg: pg\string << "Failed"
+[<] .msg:pg.string << "Failed"
 // Give up immediately - no fallback
 ```
 
@@ -1143,7 +1143,7 @@ In v0.0.1, errors were handled with `#Errors.*` enumerations. This has been **co
 [!] #Errors.FileNotFound
 
 // Access error fields
-[r] .msg: pg\string << #Errors.FileNotFound.message
+[r] .msg:pg.string << #Errors.FileNotFound.message
 ```
 
 ---
@@ -1154,10 +1154,10 @@ In v0.0.1, errors were handled with `#Errors.*` enumerations. This has been **co
 // ✓ NEW - Use this
 [r] |MightFail
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 
 [r] |HandleError
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 ```
 
 ---

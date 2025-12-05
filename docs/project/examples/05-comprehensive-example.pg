@@ -163,7 +163,7 @@
 [~][~]
 
 [~][?] *?
-[~][~][o] !NoError
+[~][~][o] !No.Output
 [~][~]
 [~]
 
@@ -299,7 +299,7 @@
 [~][~]
 
 [~][?] *?
-[~][~][o] !NoError
+[~][~][o] !No.Output
 [~][~]
 
 [~][<] .status << #ProcessingStatus.Completed
@@ -356,7 +356,7 @@
 [~]
 
 [?] *?
-[~][o] !NoError
+[~][o] !No.Output
 [~]
 [X]
 

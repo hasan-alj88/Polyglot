@@ -70,11 +70,11 @@ The moment you start implementing data structures, algorithms, or complex logic 
 **Example of WRONG approach:**
 ```polyglot
 // ❌ WRONG - Implementing logic in Polyglot!
-[r] .uppercase_items: pg\array{pg\string} << pg\array.new()
+[r] .uppercase_items: pg.array.pg.string << pg\array.new()
 [r] ~ForEach
 [<] .items
 [>] .current_item
-[~][r] .upper: pg\string << String.Upper"{.current_item}"
+[~][r] .upper:pg.string << String.Upper"{.current_item}"
 [~][r] .uppercase_items << Array.Append"{.uppercase_items}, {.upper}"
 [~][o] !NoError
 ```
@@ -84,8 +84,8 @@ The moment you start implementing data structures, algorithms, or complex logic 
 // ✅ CORRECT - Orchestrating Python!
 [W] |W.Python3.11              // All macro unwraps use [W]
 [r] |transform_to_uppercase    // Python does the work
-[<] .items: pg\array{pg\string} << .items
-[>] .result: pg\array{pg\string} >> .uppercase_items
+[<] .items: pg.array.pg.string << .items
+[>] .result: pg.array.pg.string >> .uppercase_items
 ```
 
 **Polyglot's job:**
@@ -105,7 +105,7 @@ The moment you start implementing data structures, algorithms, or complex logic 
 
 ### PRINCIPLE #2: Immutable by Default
 
-**Decision tree for choosing between `#Enumeration` and `pg\serial`:**
+**Decision tree for choosing between `#Enumeration` and `:pg.serial`:**
 
 ```
 Does the data schema change at runtime?
@@ -127,7 +127,7 @@ Does the data schema change at runtime?
 - ✅ API request (known fields: method, url, headers, body)
 - ✅ Database record with fixed schema
 
-**Examples of when to use `pg\serial`:**
+**Examples of when to use `:pg.serial`:**
 - ✅ JSON from external API (unknown structure)
 - ✅ Dynamic configuration (keys vary by environment)
 - ✅ Generic key-value store
@@ -137,10 +137,10 @@ Does the data schema change at runtime?
 ```polyglot
 // ❌ WRONG - Using pg\serial for known schema!
 [r] @Auth|FetchUserProfile
-[>] .profile: pg\serial >> .user_profile
+[>] .profile:pg.serial >> .user_profile
 
-[r] .email: pg\string << .user_profile.email
-[r] .status: pg\string << .user_profile.status
+[r] .email:pg.string << .user_profile.email
+[r] .status:pg.string << .user_profile.status
 ```
 
 **Correct approach:**
@@ -149,17 +149,17 @@ Does the data schema change at runtime?
 
 // At file scope:
 [#] UserProfile
-[<] .user_id: pg\string << ""
-[<] .email: pg\string << ""
+[<] .user_id:pg.string << ""
+[<] .email:pg.string << ""
 [<] .status: #AccountStatus << #AccountStatus.Active
-[<] .permissions: pg\array{pg\string} << pg\array.new()
+[<] .permissions: pg.array.pg.string << pg\array.new()
 [X]
 
 // In pipeline:
 [r] @Auth|FetchUserProfile
 [>] .profile: #UserProfile >> .user_profile
 
-[r] .email: pg\string << .user_profile.email  // Type-safe!
+[r] .email:pg.string << .user_profile.email  // Type-safe!
 ```
 
 **Why immutable enumerations are better:**
@@ -191,7 +191,7 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 **Example of too much logic:**
 ```polyglot
 // ❌ WRONG - Too much logic in Polyglot!
-[r] .discount: pg\float << 0.0
+[r] .discount:pg.float << 0.0
 [?] .customer_tier =? "gold"
 [~][?] .order_total >? 1000.0
 [~][~][r] .discount << 0.20
@@ -206,7 +206,7 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 [~][?] .order_total >? 100.0
 [~][~][r] .discount << 0.05
 
-[r] .final_price: pg\float << .order_total * (1.0 - .discount)
+[r] .final_price:pg.float << .order_total * (1.0 - .discount)
 ```
 
 **Example of proper orchestration:**
@@ -214,9 +214,9 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 // ✅ CORRECT - Thin orchestration layer!
 [W] |W.Python3.11
 [r] |calculate_discount
-[<] .customer_tier: pg\string << .customer_tier
-[<] .order_total: pg\float << .order_total
-[>] .final_price: pg\float >> .final_price
+[<] .customer_tier:pg.string << .customer_tier
+[<] .order_total:pg.float << .order_total
+[>] .final_price:pg.float >> .final_price
 ```
 
 ---
@@ -253,14 +253,14 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 
 **ALL variables MUST start with dot (`.`) in ALL contexts:**
 
-✅ **Declarations:** `.name: pg\string << "value"`
+✅ **Declarations:** `.name:pg.string << "value"`
 ✅ **References:** `.result << .name`
 ✅ **Assignments:** `>> .output_var`
 ✅ **String interpolation:** `"Hello {.name}"`
 ✅ **Field access:** `.user_profile.email`
 
 ❌ **NEVER omit the dot:**
-- ❌ `name: pg\string`
+- ❌ `name:pg.string`
 - ❌ `>> output_var`
 - ❌ `"Hello {name}"`
 - ❌ `user_profile.email`
@@ -299,10 +299,10 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 ```polyglot
 // THIS IS COMPLETELY INVALID!
 [r] .process_data(
-    .input: pg\string
-) -> .result: pg\dict {
+    .input:pg.string
+) -> .result:pg.dict {
     [*] "Process the input"
-    [|] .temp: pg\string << "value"
+    [|] .temp:pg.string << "value"
     [r] |Transform
     [<] .data << .input
 }
@@ -318,12 +318,12 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 ```polyglot
 // This is the correct Polyglot syntax
 [|] ProcessData
-[i] .input: pg\string
-[o] .result: pg\dict
-[r] .temp: pg\string << "value"
+[i] .input:pg.string
+[o] .result:pg.dict
+[r] .temp:pg.string << "value"
 [r] |Transform
-[<] .data: pg\string << .input
-[>] .result: pg\dict >> output
+[<] .data:pg.string << .input
+[>] .result:pg.dict >> output
 [X]
 ```
 
@@ -344,7 +344,7 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 // THIS IS INVALID! (Looks like Python)
 [?] .age >? 18
     [r] |ProcessAdult
-    [r] .status: pg\string << "adult"
+    [r] .status:pg.string << "adult"
     [?] .verified =? #True
         [r] |GrantAccess
 ```
@@ -360,7 +360,7 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 // This is the correct Polyglot syntax
 [?] .age >? 18
 [~][r] |ProcessAdult
-[~][r] .status: pg\string << "adult"
+[~][r] .status:pg.string << "adult"
 [~][?] .verified =? #True
 [~][~][r] |GrantAccess
 ```
@@ -377,7 +377,7 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 [?] .age >? 18
 [r] |ProcessAdult
 
-[r] .status: pg\string << "adult"
+[r] .status:pg.string << "adult"
 
 [?] .verified =? #True
 [r] |GrantAccess
@@ -391,7 +391,7 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 
 ```polyglot
 // THIS IS INVALID!
-[r] .calculate_total(.items: pg\array, .tax_rate: pg\float) -> pg\float {
+[r] .calculate_total(.items:pg.array, .tax_rate:pg.float) -> pg\float {
     [r] .subtotal << sum(.items)
     [r] .total << .subtotal * (1 + .tax_rate)
     return .total
@@ -409,11 +409,11 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 ```polyglot
 // This is the correct Polyglot syntax
 [|] CalculateTotal
-[i] .items: pg\array{pg\float}
-[i] .tax_rate: pg\float
-[o] .total: pg\float
-[r] .subtotal: pg\float << pg\sum(.items)
-[r] .total: pg\float << .subtotal * (1 + .tax_rate)
+[i] .items: pg.array.pg.float
+[i] .tax_rate:pg.float
+[o] .total:pg.float
+[r] .subtotal:pg.float << pg\sum(.items)
+[r] .total:pg.float << .subtotal * (1 + .tax_rate)
 [X]
 ```
 
@@ -433,7 +433,7 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 ```polyglot
 // THIS IS UNNECESSARILY VERBOSE!
 [r] |ProcessData
-[~][<] .input: pg\string << "value"
+[~][<] .input:pg.string << "value"
 [~][>] .output >> result
 ```
 
@@ -446,7 +446,7 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 ```polyglot
 // This is the correct Polyglot syntax
 [r] |ProcessData
-[<] .input: pg\string << "value"    // Implicit child of [r]
+[<] .input:pg.string << "value"    // Implicit child of [r]
 [>] .output >> result               // Implicit child of [r]
 ```
 
@@ -460,9 +460,9 @@ If your Polyglot pipeline has more than ~20 lines of actual logic (excluding inp
 ```polyglot
 // Use [~] when nesting inside expanded contexts
 [p] |ParallelBlock
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [~][r] |NestedOperation              // [~] required - WITHIN parallel context
-[~][<] .input: pg\string << .data    // Implicit child of [~][r]
+[~][<] .input:pg.string << .data    // Implicit child of [~][r]
 ```
 
 **When `[~]` IS needed:**
@@ -481,24 +481,24 @@ Polyglot DOES use curly braces in specific contexts - but **NEVER for scope**:
 
 **1. Type Syntax (Collection Types):**
 ```polyglot
-[i] .items: pg\array{pg\string}     // ✅ Array of strings
-[i] .numbers: pg\set{pg\int}        // ✅ Set of integers
+[i] .items: pg.array.pg.string     // ✅ Array of strings
+[i] .numbers:pg.set{pg\int}        // ✅ Set of integers
 ```
 
 **2. String Interpolation:**
 ```polyglot
-[r] .message: pg\string << "Hello {.name}!"              // ✅ Variable interpolation
-[r] .length: pg\int << {.data|length}                    // ✅ With filter
+[r] .message:pg.string << "Hello {.name}!"              // ✅ Variable interpolation
+[r] .length:pg.int << {.data|length}                    // ✅ With filter
 ```
 
 **3. Path Construction:**
 ```polyglot
-[r] .config_file: pg\path << {.base_path / ".config"}    // ✅ Path operations
+[r] .config_file:pg.path << {.base_path / ".config"}    // ✅ Path operations
 ```
 
 **4. Serial Literals (TBD - check spec):**
 ```polyglot
-[r] .config: pg\serial << serial{
+[r] .config:pg.serial << serial{
     "host": "localhost",
     "port": 8080
 }
@@ -528,9 +528,9 @@ Polyglot DOES use curly braces in specific contexts - but **NEVER for scope**:
 ```polyglot
 // THIS IS INVALID!
 [|] ProcessFile
-.file_path: pg\path              // ❌ Missing [i]
+.file_path:pg.path              // ❌ Missing [i]
 |ReadFile                        // ❌ Missing [r]
-.content: pg\string              // ❌ Missing [o]
+.content:pg.string              // ❌ Missing [o]
 [X]
 ```
 
@@ -543,11 +543,11 @@ Polyglot DOES use curly braces in specific contexts - but **NEVER for scope**:
 ```polyglot
 // This is the correct Polyglot syntax
 [|] ProcessFile
-[i] .file_path: pg\path          // ✅ [i] for input
+[i] .file_path:pg.path          // ✅ [i] for input
 [r] |ReadFile                    // ✅ [r] for run
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> data
-[o] .content: pg\string          // ✅ [o] for output
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> data
+[o] .content:pg.string          // ✅ [o] for output
 [X]
 ```
 
@@ -608,8 +608,8 @@ result = ProcessData("input_value", timeout=30)
 ```polyglot
 // This is the correct Polyglot syntax
 [r] |ProcessData
-[<] .input: pg\string << "input_value"
-[<] .timeout: pg\int << 30
+[<] .input:pg.string << "input_value"
+[<] .timeout:pg.int << 30
 [>] .result >> output
 ```
 
@@ -638,7 +638,7 @@ Before submitting ANY Polyglot code, verify:
 - [ ] Nesting depth matches number of `[~]` prefixes
 
 ### Type Syntax:
-- [ ] Braces in types are legitimate: `pg\array{pg\string}`
+- [ ] Braces in types are legitimate: `pg.array.pg.string`
 - [ ] Braces in strings are legitimate: `"Hello {.name}"`
 - [ ] NO braces after block markers for scope
 
@@ -657,11 +657,11 @@ Before submitting ANY Polyglot code, verify:
 ```polyglot
 // THIS IS INCOMPLETE!
 [r] |MightFail
-[<] .input: pg\string << value
+[<] .input:pg.string << value
 [~][!] !FileNotFound
-[~][>] .message: pg\string >> err_msg
+[~][>] .message:pg.string >> err_msg
 [~][r] |HandleError              // ❌ Wrong nesting level!
-[~][<] .msg: pg\string << err_msg
+[~][<] .msg:pg.string << err_msg
 ```
 
 **Why this is wrong:**
@@ -673,12 +673,12 @@ Before submitting ANY Polyglot code, verify:
 ```polyglot
 // This is the correct Polyglot syntax
 [r] |MightFail
-[<] .input: pg\string << value
+[<] .input:pg.string << value
 [~]
 [~][!] !FileNotFound
-[~][>] .message: pg\string >> err_msg
+[~][>] .message:pg.string >> err_msg
 [~][~][r] |HandleError           // ✅ [~][~] = WITHIN error catch
-[~][~][<] .msg: pg\string << err_msg
+[~][~][<] .msg:pg.string << err_msg
 [~][~]
 [~][~][o] !FileNotFound          // ✅ Propagate error upward
 ```
@@ -697,9 +697,9 @@ Before submitting ANY Polyglot code, verify:
 
 ```polyglot
 // THIS IS INVALID!
-[r] .result: pg\string << pg\string.uppercase(.input)
-[r] .length: pg\int << pg\string.length(.input)
-[r] .trimmed: pg\string << pg\string.trim(.input)
+[r] .result:pg.string << pg\string.uppercase(.input)
+[r] .length:pg.int << pg\string.length(.input)
+[r] .trimmed:pg.string << pg\string.trim(.input)
 ```
 
 **Why this is wrong:**
@@ -710,9 +710,9 @@ Before submitting ANY Polyglot code, verify:
 
 ```polyglot
 // This is the correct Polyglot syntax
-[r] .result: pg\string << String.Upper"{.input}"
-[r] .length: pg\int << String.Length"{.input}"
-[r] .trimmed: pg\string << String.Trim"{.input}"
+[r] .result:pg.string << String.Upper"{.input}"
+[r] .length:pg.int << String.Length"{.input}"
+[r] .trimmed:pg.string << String.Trim"{.input}"
 ```
 
 **Why this is correct:**
@@ -731,7 +731,7 @@ Before submitting ANY Polyglot code, verify:
 ```polyglot
 // THIS IS INVALID!
 [r] ~my_array
-[~][r] .item: pg\string << .current_item
+[~][r] .item:pg.string << .current_item
 ```
 
 **Why this is wrong:**
@@ -745,9 +745,9 @@ Before submitting ANY Polyglot code, verify:
 [r] ~ForEach
 [<] .my_array
 [>] .current_item
-[~][r] .processed: pg\string << String.Upper"{.current_item}"
+[~][r] .processed:pg.string << String.Upper"{.current_item}"
 [~][r] |DoSomething
-[~][<] .input: pg\string << .processed
+[~][<] .input:pg.string << .processed
 [~][o] !NoError
 ```
 
@@ -767,7 +767,7 @@ Before submitting ANY Polyglot code, verify:
 ```polyglot
 // THIS IS UNNECESSARILY VERBOSE!
 [t] |T.Cron
-[<] .schedule: pg\string << "0 2 * * *"
+[<] .schedule:pg.string << "0 2 * * *"
 ```
 
 **Why this is wrong:**
@@ -869,7 +869,7 @@ Before submitting ANY Polyglot code, verify:
 
 [|] MyPipeline
 [r] @DB|ValidateData    // ✅ Clear it's from @DB package
-[<] .data: pg\serial << input_data
+[<] .data:pg.serial << input_data
 [X]
 ```
 
@@ -956,7 +956,7 @@ Before submitting ANY Polyglot code, verify:
 [X]
 
 [#] EmailRecipient
-[<] .user_id: pg\string << ""
+[<] .user_id:pg.string << ""
 [<] .status: #UserStatus << #UserStatus.Active    // ❌ What is UserStatus?
 [X]
 
@@ -986,8 +986,8 @@ Before submitting ANY Polyglot code, verify:
 
 // ✅ Now can use it
 [#] EmailRecipient
-[<] .user_id: pg\string << ""
-[<] .email: pg\string << ""
+[<] .user_id:pg.string << ""
+[<] .email:pg.string << ""
 [<] .status: #UserStatus << #UserStatus.Active    // ✅ UserStatus is defined
 [X]
 
@@ -1044,11 +1044,11 @@ Before submitting ANY Polyglot code, verify:
 ### Pipeline with Input/Output:
 ```polyglot
 [|] Transform
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output
-[o] .result: pg\string
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output
+[o] .result:pg.string
 [X]
 ```
 
@@ -1064,11 +1064,11 @@ Before submitting ANY Polyglot code, verify:
 ### Parallel Execution with Join:
 ```polyglot
 [p] |ProcessPartA
-[<] .input: pg\string << data
+[<] .input:pg.string << data
 [>] .output >> result_a
 
 [p] |ProcessPartB
-[<] .input: pg\string << data
+[<] .input:pg.string << data
 [>] .output >> result_b
 
 [Y] |Y.Join
@@ -1079,12 +1079,12 @@ Before submitting ANY Polyglot code, verify:
 ### Error Handling (Double-Nested):
 ```polyglot
 [r] |MightFail
-[<] .input: pg\string << value
+[<] .input:pg.string << value
 [~]
 [~][!] !FileNotFound
-[~][>] .message: pg\string >> err_msg
+[~][>] .message:pg.string >> err_msg
 [~][~][r] |HandleError       // ✅ [~][~] = nested within error catch
-[~][~][<] .msg: pg\string << err_msg
+[~][~][<] .msg:pg.string << err_msg
 [~][~]
 [~][~][o] !FileNotFound      // ✅ Propagate error
 ```
@@ -1094,7 +1094,7 @@ Before submitting ANY Polyglot code, verify:
 [r] ~ForEach
 [<] .my_array
 [>] .current_item
-[~][r] .processed: pg\string << String.Upper"{.current_item}"
+[~][r] .processed:pg.string << String.Upper"{.current_item}"
 [~][o] !NoError
 ```
 

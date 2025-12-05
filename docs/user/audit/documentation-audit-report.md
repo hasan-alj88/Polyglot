@@ -46,16 +46,16 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 ```polyglot
 // Try to format greeting (might fail if name is empty)
 [r] |ValidateAndGreet
-[<] .input_name: pg\string << .name
-[>] .greeting: pg\string >> result_greeting
+[<] .input_name:pg.string << .name
+[>] .greeting:pg.string >> result_greeting
 [>] .error: !Error >> greeting_error
 
 // Check for error using switch block
 [?] greeting_error != \\NoError\\
-[~][o] .message: pg\string << "Hello, Guest!"
+[~][o] .message:pg.string << "Hello, Guest!"
 
 [?] greeting_error == \\NoError\\
-[~][o] .message: pg\string << result_greeting
+[~][o] .message:pg.string << result_greeting
 ```
 
 **Issue:** Error output extraction at line 215 is not wrapped in `[~]` expansion markers. Without `[~]`, it's ambiguous which operation's error is being caught.
@@ -64,17 +64,17 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 ```polyglot
 // Try to format greeting (might fail if name is empty)
 [r] |ValidateAndGreet
-[<] .input_name: pg\string << .name
-[>] .greeting: pg\string >> result_greeting
+[<] .input_name:pg.string << .name
+[>] .greeting:pg.string >> result_greeting
 [~]
 [~][>] .error: !Error >> greeting_error
 
 // Check for error using switch block
 [?] greeting_error != \\NoError\\
-[~][o] .message: pg\string << "Hello, Guest!"
+[~][o] .message:pg.string << "Hello, Guest!"
 
 [?] greeting_error == \\NoError\\
-[~][o] .message: pg\string << result_greeting
+[~][o] .message:pg.string << result_greeting
 ```
 
 ---
@@ -89,11 +89,11 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 **Current (INVALID):**
 ```polyglot
 [r] |FormatGreeting
-[<] .input_name: pg\string << .name
-[>] .formatted: pg\string >> greeting_message
-[o] .result: pg\string << greeting_message
+[<] .input_name:pg.string << .name
+[>] .formatted:pg.string >> greeting_message
+[o] .result:pg.string << greeting_message
 [?] .should_greet ?> False  // No blank [~] line before switch
-[~][o] .result: pg\string << ""
+[~][o] .result:pg.string << ""
 ```
 
 **Issue:** Switch blocks must have blank `[~]` line before them for clarity.
@@ -101,13 +101,13 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 **Fixed Version:**
 ```polyglot
 [r] |FormatGreeting
-[<] .input_name: pg\string << .name
-[>] .formatted: pg\string >> greeting_message
+[<] .input_name:pg.string << .name
+[>] .formatted:pg.string >> greeting_message
 [~]
-[~][o] .result: pg\string << greeting_message
+[~][o] .result:pg.string << greeting_message
 
 [?] .should_greet ?> False
-[~][o] .result: pg\string << ""
+[~][o] .result:pg.string << ""
 ```
 
 ---
@@ -123,12 +123,12 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 ```polyglot
 [?] .should_greet ?> True
 [~][r] |FormatGreeting
-[~][<] .input_name: pg\string << .name
-[~][>] .formatted: pg\string >> greeting_message
-[~][o] .result: pg\string << greeting_message  // Mixed [r] and [o]
+[~][<] .input_name:pg.string << .name
+[~][>] .formatted:pg.string >> greeting_message
+[~][o] .result:pg.string << greeting_message  // Mixed [r] and [o]
 
 [?] .should_greet ?> False
-[~][o] .result: pg\string << ""  // Output with computation
+[~][o] .result:pg.string << ""  // Output with computation
 ```
 
 **Issue:** Using `[o]` with `<<` for computation. `[o]` is for declaration only, `[r]` for computation.
@@ -137,16 +137,16 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 ```polyglot
 [?] .should_greet ?> True
 [~][r] |FormatGreeting
-[~][<] .input_name: pg\string << .name
-[~][>] .formatted: pg\string >> greeting_message
+[~][<] .input_name:pg.string << .name
+[~][>] .formatted:pg.string >> greeting_message
 [~]
-[~][r] .result: pg\string << greeting_message  // Computation
-[~][o] .result: pg\string  // Declaration
+[~][r] .result:pg.string << greeting_message  // Computation
+[~][o] .result:pg.string  // Declaration
 
 [?] .should_greet ?> False
 [~]
-[~][r] .result: pg\string << ""  // Computation
-[~][o] .result: pg\string  // Declaration
+[~][r] .result:pg.string << ""  // Computation
+[~][o] .result:pg.string  // Declaration
 ```
 
 ---
@@ -164,10 +164,10 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 
 // Check for error using switch block
 [?] greeting_error != \\NoError\\
-[~][o] .message: pg\string << "Hello, Guest!"
+[~][o] .message:pg.string << "Hello, Guest!"
 
 [?] greeting_error == \\NoError\\
-[~][o] .message: pg\string << result_greeting
+[~][o] .message:pg.string << result_greeting
 ```
 
 **Issue:** The pattern shows error checking, but doesn't document that errors should be extracted within expansion blocks. Also uses `\\NoError\\` pattern which may not be standard.
@@ -175,21 +175,21 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 **Better Pattern:**
 ```polyglot
 [r] |ValidateAndGreet
-[<] .input_name: pg\string << .name
+[<] .input_name:pg.string << .name
 [~]
-[~][>] .greeting: pg\string >> result_greeting
+[~][>] .greeting:pg.string >> result_greeting
 [~][>] .error: !Error >> greeting_error
 
 // Use switch to handle error vs success
 [?] greeting_error ?is !NoError
 [~]
-[~][r] .message: pg\string << "Hello, Guest!"
-[~][o] .message: pg\string
+[~][r] .message:pg.string << "Hello, Guest!"
+[~][o] .message:pg.string
 
 [?] greeting_error ?is !ValidationError
 [~]
-[~][r] .message: pg\string << result_greeting
-[~][o] .message: pg\string
+[~][r] .message:pg.string << result_greeting
+[~][o] .message:pg.string
 ```
 
 ---
@@ -206,9 +206,9 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 // Check if name is empty using switch block
 [?] .input_name == ""
 [~][o] .error: !ValidationError  // Using [o] to throw error?
-[~][<] .message: pg\string << "Name cannot be empty"
-[~][<] .code: pg\int << 1001
-[~][<] .trace: pg\string << ""
+[~][<] .message:pg.string << "Name cannot be empty"
+[~][<] .code:pg.int << 1001
+[~][<] .trace:pg.string << ""
 ```
 
 **Issue:** Errors should be thrown using `[!]` block, not via `[o]` declaration.
@@ -219,9 +219,9 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 [?] .input_name == ""
 [~]
 [~][!] !ValidationError
-[~][<] .message: pg\string << "Name cannot be empty"
-[~][<] .code: pg\int << 1001
-[~][<] .trace: pg\string << ""
+[~][<] .message:pg.string << "Name cannot be empty"
+[~][<] .code:pg.int << 1001
+[~][<] .trace:pg.string << ""
 ```
 
 ---
@@ -237,7 +237,7 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 [r] |MayFail
 [>] .error: !Error >> error_var
 
-[t] .has_error: pg\bool << (error_var != \\NoError\\)
+[t] .has_error:pg.bool << (error_var != \\NoError\\)
 // Handle error
 ```
 
@@ -250,7 +250,7 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 [~]
 [~][>] .error: !Error >> error_var
 
-[r] .has_error: pg\bool << (error_var != \\NoError\\)
+[r] .has_error:pg.bool << (error_var != \\NoError\\)
 // Handle error
 ```
 
@@ -270,11 +270,11 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 **Current (INVALID):**
 ```polyglot
 [r] |ReadFile
-[<] .path: pg\path << .file_path
+[<] .path:pg.path << .file_path
 
 [!] !pg.FileSystem.NotFound  // No [~] wrapper
 [r] |U.Log.Error
-[<] .msg: pg\string << "File not found"
+[<] .msg:pg.string << "File not found"
 ```
 
 **Issue:** Error blocks must be wrapped in `[~]` expansion to show scope.
@@ -282,12 +282,12 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 **Fixed Version:**
 ```polyglot
 [r] |ReadFile
-[<] .path: pg\path << .file_path
+[<] .path:pg.path << .file_path
 [~]
 [~][!] !pg.FileSystem.NotFound
-[~][>] .message: pg\string >> err_msg
+[~][>] .message:pg.string >> err_msg
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << err_msg
+[~][<] .msg:pg.string << err_msg
 ```
 
 ---
@@ -317,23 +317,23 @@ This audit analyzed all Polyglot v0.0.2 documentation against the 14 violations 
 **Current (INVALID):**
 ```polyglot
 [r] |ReadFile
-[<] .path: pg\path << .file_path
+[<] .path:pg.path << .file_path
 
 [!] !pg.FileSystem.NotFound  // Missing [~] wrapper
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 ```
 
 **Fixed Version:**
 ```polyglot
 [r] |ReadFile
-[<] .path: pg\path << .file_path
+[<] .path:pg.path << .file_path
 [~]
 [~][!] !pg.FileSystem.NotFound
-[~][>] .message: pg\string >> err_msg
+[~][>] .message:pg.string >> err_msg
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << err_msg
+[~][<] .msg:pg.string << err_msg
 ```
 
 ---

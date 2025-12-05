@@ -44,7 +44,7 @@ These use the pattern: `Operation"{value}"` or `Operation"{.variable}"`
 
 - `|U.File.Text.AppendLine` - Append line to file
   - Input: `.file: pg\path`, `.line: pg\string`
-  - Output: `!NoError`
+  - Output: `!No.Output`
 
 **Needed but not yet seen:**
 - `|U.File.Text.Write` - Write text file (inferred)
@@ -82,7 +82,7 @@ These use the pattern: `Operation"{value}"` or `Operation"{.variable}"`
 **From validation examples:**
 - `|U.Log.Error` - Log error message
   - Input: `.msg: pg\string`
-  - Output: `!NoError`
+  - Output: `!No.Output`
 
 **Needed but not yet seen:**
 - `|U.Log.Info` - Log info message (inferred)
@@ -134,7 +134,7 @@ These use the pattern: `Operation"{value}"` or `Operation"{.variable}"`
 [<] .my_array
 [>] .current_item
 [~][r] .processed: pg\string << String.Upper"{.current_item}"
-[~][o] !NoError
+[~][o] !No.Output
 ```
 
 **Implementation Notes:**
@@ -157,7 +157,7 @@ These use the pattern: `Operation"{value}"` or `Operation"{.variable}"`
 
 **From validation examples:**
 ```polyglot
-[W] |W.NoSetup.NoCleanup
+[W] |W.Polyglot.Scope
 ```
 
 **Implementation Notes:**
@@ -205,7 +205,7 @@ These use the pattern: `Operation"{value}"` or `Operation"{.variable}"`
 ### Standard Errors
 
 **From validation examples:**
-- `!NoError` - No error (success case)
+- `!No.Output` - No error (success case)
 
 **Needed but not yet seen:**
 - `!pg.Network.ConnectionFailed` - Network errors (inferred)
@@ -282,7 +282,7 @@ These use the pattern: `Operation"{value}"` or `Operation"{.variable}"`
 
 - Validation examples: See `/docs/user/common-mistakes-antipatterns.md`
 - User corrections: See conversation 2025-11-22
-- Standard library catalog: `/docs/user/standard-library/03-utilities-catalog.md`
+- Standard library catalog: `/docs/user/standard-library/utilities-catalog.md`
 
 ---
 

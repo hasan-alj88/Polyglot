@@ -24,46 +24,62 @@
 //! - Parser implementation (error detection logic) is Story 1.5
 
 // Re-export key types from sub-modules
-pub mod span;
 pub mod ast;
 pub mod error;
-pub mod visitor;
-pub mod import_resolver;
 pub mod file_registry_resolver;
+pub mod import_resolver;
 pub mod parser;
+pub mod span;
 pub mod validation;
 pub mod validation_error;
+pub mod visitor;
 
 // Convenient re-exports
-pub use span::{Position, Span};
 pub use error::ParserError;
+pub use span::{Position, Span};
 pub use visitor::Visitor;
 
 // Validation API re-exports
 pub use validation::validate_file;
-pub use validation_error::{ValidationError, Severity, ErrorCategory};
+pub use validation_error::{ErrorCategory, Severity, ValidationError};
 
 // Re-export commonly used AST types
 pub use ast::{
-    // Top-level structures
-    Program, Definition,
-    PackageDeclaration, PackageSpec, Version, ImportDeclaration,
-    EnumerationDefinition, EnumField,
-    ErrorDefinition, ErrorField,
+    AssignmentOperator,
+    BinaryOperator,
+    Block,
+    BlockType,
+    Definition,
+    DurationUnit,
+    EnumField,
+    EnumerationDefinition,
+    ErrorDefinition,
+    ErrorField,
+    Expression,
+    Identifier,
+    ImportDeclaration,
+    InputParameter,
+    Literal,
+    PackageDeclaration,
+    PackageSpec,
+    Pattern,
     // Pipeline structures
-    Pipeline, Block, BlockType, Statement, Expression,
-    Identifier, Literal, BinaryOperator, UnaryOperator, AssignmentOperator,
-    TypeAnnotation, InputParameter, Pattern, RangeExpression, DurationUnit,
-    TriggerConfig, QueueConfig, WrapperConfig,
+    Pipeline,
+    // Top-level structures
+    Program,
+    QueueConfig,
+    RangeExpression,
+    Statement,
+    TriggerConfig,
+    TypeAnnotation,
+    UnaryOperator,
+    Version,
+    WrapperConfig,
 };
 
 // Re-export import resolution types
-pub use import_resolver::{
-    ImportResolver, StubImportResolver,
-    ResolvedPackage, ImportError,
-};
 pub use file_registry_resolver::{
-    FileRegistryResolver, RegistryFile, PackageEntry,
-    PipelineSignature, ParameterDef,
+    FileRegistryResolver, PackageEntry, ParameterDef, PipelineSignature, RegistryFile,
 };
+pub use import_resolver::{ImportError, ImportResolver, ResolvedPackage, StubImportResolver};
 pub use parser::Parser;

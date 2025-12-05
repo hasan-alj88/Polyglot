@@ -107,19 +107,19 @@ Primitive types are the fundamental building blocks of Polyglot's type system.
 
 | Type | Description | Size/Range | Default Value |
 |------|-------------|------------|---------------|
-| `pg\int` | Signed integer | 64-bit | 0 |
-| `pg\uint` | Unsigned integer | 64-bit | 0 |
-| `pg\float` | Floating point | 64-bit | 0.0 |
-| `pg\string` | UTF-8 string | Variable | "" (empty) |
-| `pg\bool` | Boolean | 1-bit | False |
-| `pg\path` | File system path | Variable | *(special)* |
-| `pg\dt` | DateTime | Variable | *(special)* |
+| `:pg.int` | Signed integer | 64-bit | 0 |
+| `:pg.uint` | Unsigned integer | 64-bit | 0 |
+| `:pg.float` | Floating point | 64-bit | 0.0 |
+| `:pg.string` | UTF-8 string | Variable | "" (empty) |
+| `:pg.bool` | Boolean | 1-bit | False |
+| `:pg.path` | File system path | Variable | *(special)* |
+| `:pg.dt` | DateTime | Variable | *(special)* |
 
 ---
 
 ## Numeric Types
 
-### Integer Type: `pg\int`
+### Integer Type: `:pg.int`
 
 **Description:** 64-bit signed integer
 
@@ -128,14 +128,14 @@ Primitive types are the fundamental building blocks of Polyglot's type system.
 **Usage:**
 ```polyglot
 // Declaration with value
-[r] .count: pg\int << 42
-[r] .temperature: pg\int << -15
+[r] .count:pg.int << 42
+[r] .temperature:pg.int << -15
 
 // Input declaration
-[i] .max_retries: pg\int
+[i] .max_retries:pg.int
 
 // Default input
-[i] Default .timeout_seconds: pg\int << 30
+[i] Default .timeout_seconds:pg.int << 30
 ```
 
 **Operations:**
@@ -146,7 +146,7 @@ Primitive types are the fundamental building blocks of Polyglot's type system.
 
 ---
 
-### Unsigned Integer Type: `pg\uint`
+### Unsigned Integer Type: `:pg.uint`
 
 **Description:** 64-bit unsigned integer (non-negative only)
 
@@ -155,14 +155,14 @@ Primitive types are the fundamental building blocks of Polyglot's type system.
 **Usage:**
 ```polyglot
 // File sizes, memory amounts
-[r] .file_size: pg\uint << 1024
-[r] .memory_mb: pg\uint << 2048
+[r] .file_size:pg.uint << 1024
+[r] .memory_mb:pg.uint << 2048
 
 // Array indices (always non-negative)
-[r] .index: pg\uint << 0
+[r] .index:pg.uint << 0
 
 // Counts (cannot be negative)
-[r] .user_count: pg\uint << 100
+[r] .user_count:pg.uint << 100
 ```
 
 **When to Use:**
@@ -173,7 +173,7 @@ Primitive types are the fundamental building blocks of Polyglot's type system.
 
 ---
 
-### Float Type: `pg\float`
+### Float Type: `:pg.float`
 
 **Description:** 64-bit floating-point number (IEEE 754 double precision)
 
@@ -182,37 +182,37 @@ Primitive types are the fundamental building blocks of Polyglot's type system.
 **Usage:**
 ```polyglot
 // Decimal numbers
-[r] .price: pg\float << 19.99
-[r] .percentage: pg\float << 0.75
-[r] .pi: pg\float << 3.14159265359
+[r] .price:pg.float << 19.99
+[r] .percentage:pg.float << 0.75
+[r] .pi:pg.float << 3.14159265359
 
 // Scientific notation
-[r] .speed_of_light: pg\float << 2.998e8
+[r] .speed_of_light:pg.float << 2.998e8
 ```
 
 **Precision Note:**
 - Floating-point arithmetic is approximate
-- Use integers for exact calculations (e.g., money: store cents as `pg\int`)
+- Use integers for exact calculations (e.g., money: store cents as `:pg.int`)
 
 ---
 
 ## String Type
 
-### String Type: `pg\string`
+### String Type: `:pg.string`
 
 **Description:** UTF-8 encoded string, immutable by default
 
 **Usage:**
 ```polyglot
 // String literals
-[r] .name: pg\string << "Alice"
-[r] .message: pg\string << "Hello, World!"
+[r] .name:pg.string << "Alice"
+[r] .message:pg.string << "Hello, World!"
 
 // Empty string
-[r] .empty: pg\string << ""
+[r] .empty:pg.string << ""
 
 // Multi-line strings (if supported)
-[r] .description: pg\string << "This is a
+[r] .description:pg.string << "This is a
 multi-line
 string"
 ```
@@ -225,14 +225,14 @@ Polyglot supports string interpolation with `{var:format}` syntax, which is **sy
 
 ```polyglot
 // Basic interpolation
-[r] .greeting: pg\string << "Hello, {.name}!"
+[r] .greeting:pg.string << "Hello, {.name}!"
 
 // With formatting
-[r] .formatted: pg\string << "Count: {.count:03d}"
-[r] .money: pg\string << "Price: ${.price:.2f}"
+[r] .formatted:pg.string << "Count: {.count:03d}"
+[r] .money:pg.string << "Price: ${.price:.2f}"
 ```
 
-**Note:** String interpolation is processed by the `pg\serial` type's string handling capabilities and compiles to underlying pipeline operations.
+**Note:** String interpolation is processed by the `:pg.serial` type's string handling capabilities and compiles to underlying pipeline operations.
 
 ---
 
@@ -243,28 +243,28 @@ Strings support various operations through standard library utilities:
 ```polyglot
 // Concatenation
 [r] |U.String.Concat
-[<] .left: pg\string << "Hello"
-[<] .right: pg\string << "World"
-[>] .result: pg\string >> combined
+[<] .left:pg.string << "Hello"
+[<] .right:pg.string << "World"
+[>] .result:pg.string >> combined
 
 // Formatting
 [r] |U.String.Format
-[<] .template: pg\string << "Count: {}"
-[<] .value: pg\int << 42
-[>] .result: pg\string >> formatted
+[<] .template:pg.string << "Count: {}"
+[<] .value:pg.int << 42
+[>] .result:pg.string >> formatted
 
 // Splitting
 [r] |U.String.Split
-[<] .input: pg\string << "a,b,c"
-[<] .delimiter: pg\string << ","
-[>] .result: pg\array{pg\string} >> parts
+[<] .input:pg.string << "a,b,c"
+[<] .delimiter:pg.string << ","
+[>] .result: pg.array.pg.string >> parts
 ```
 
 ---
 
 ## Boolean Type
 
-### Boolean Type: `pg\bool`
+### Boolean Type: `:pg.bool`
 
 **Description:** Boolean type with two values: `True` and `False`
 
@@ -275,14 +275,14 @@ Strings support various operations through standard library utilities:
 **Usage:**
 ```polyglot
 // Boolean literals
-[r] .is_valid: pg\bool << #True
-[r] .is_enabled: pg\bool << #False
+[r] .is_valid:pg.bool << #True
+[r] .is_enabled:pg.bool << #False
 
 // Comparison results
-[r] .result: pg\bool << (.count > 10)
+[r] .result:pg.bool << (.count > 10)
 
 // Input with default
-[i] Default .debug_mode: pg\bool << #False
+[i] Default .debug_mode:pg.bool << #False
 ```
 
 ---
@@ -291,50 +291,50 @@ Strings support various operations through standard library utilities:
 
 ```polyglot
 // Logical AND
-[r] .both_true: pg\bool << (.a && .b)
+[r] .both_true:pg.bool << (.a && .b)
 
 // Logical OR
-[r] .either_true: pg\bool << (.a || .b)
+[r] .either_true:pg.bool << (.a || .b)
 
 // Logical NOT
-[r] .negated: pg\bool << (!.is_valid)
+[r] .negated:pg.bool << (!.is_valid)
 
 // Comparison using switch/match pattern
 [?] .x >? .y
-[~][r] .equal: pg\bool << #True
-[~][~][r] .equal: pg\bool << #False
+[~][r] .equal:pg.bool << #True
+[~][~][r] .equal:pg.bool << #False
 ```
 
 ---
 
 ## Path Type
 
-### Path Type: `pg\path`
+### Path Type: `:pg.path`
 
 **Description:** Special type for file system paths with cross-platform support
 
 **Reserved Fields:**
-- `.unix: pg\path` - Unix/Linux/macOS path
-- `.windows: pg\path` - Windows path
+- `.unix:pg.path` - Unix/Linux/macOS path
+- `.windows:pg.path` - Windows path
 
 **Usage:**
 ```polyglot
 // Simple path
-[r] .file: pg\path << "data.csv"
+[r] .file:pg.path << "data.csv"
 
 // Path with identifier
-[r] .config: pg\path << \\DataDir\\config.json
+[r] .config:pg.path << \\DataDir\\config.json
 
 // Input path
-[i] .input_file: pg\path
+[i] .input_file:pg.path
 
 // Path with both OS variants
 [#] Path.Identifiers.MyApp.LogDir
-[<] .unix: pg\path << \\UnixRoot\\var\log\myapp\
-[<] .windows: pg\path << \\C\\Logs\MyApp\
+[<] .unix:pg.path << \\UnixRoot\\var\log\myapp\
+[<] .windows:pg.path << \\C\\Logs\MyApp\
 [X]
 
-[r] .log_file: pg\path << \\LogDir\\app.log
+[r] .log_file:pg.path << \\LogDir\\app.log
 ```
 
 ---
@@ -347,12 +347,12 @@ Path identifiers enable cross-platform paths using the reserved enumeration `#Pa
 // Define custom path identifier
 [#] Path.Identifiers.MyApp.DataDirectory
 [A] DataDir
-[<] .unix: pg\path << \\UnixRoot\\opt\myapp\data\
-[<] .windows: pg\path << \\C\\ProgramData\MyApp\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\myapp\data\
+[<] .windows:pg.path << \\C\\ProgramData\MyApp\Data\
 [X]
 
 // Use path identifier
-[r] .data_file: pg\path << \\DataDir\\records.csv
+[r] .data_file:pg.path << \\DataDir\\records.csv
 ```
 
 **Special Path Value:**
@@ -360,8 +360,8 @@ Path identifiers enable cross-platform paths using the reserved enumeration `#Pa
 
 ```polyglot
 [#] Path.Identifiers.WindowsOnly.Registry
-[<] .unix: pg\path << \\NoPath\\
-[<] .windows: pg\path << \\HKEY_LOCAL_MACHINE\\Software\
+[<] .unix:pg.path << \\NoPath\\
+[<] .windows:pg.path << \\HKEY_LOCAL_MACHINE\\Software\
 [X]
 ```
 
@@ -372,26 +372,26 @@ Path identifiers enable cross-platform paths using the reserved enumeration `#Pa
 ```polyglot
 // Join paths
 [r] |U.Path.Join
-[<] .base: pg\path << \\DataDir\\
-[<] .relative: pg\path << "subfolder/file.txt"
-[>] .result: pg\path >> full_path
+[<] .base:pg.path << \\DataDir\\
+[<] .relative:pg.path << "subfolder/file.txt"
+[>] .result:pg.path >> full_path
 
 // Check existence
 [r] |U.Path.Exists
-[<] .path: pg\path << .file
-[>] .exists: pg\bool >> file_exists
+[<] .path:pg.path << .file
+[>] .exists:pg.bool >> file_exists
 
 // Get parent directory
 [r] |U.Path.Parent
-[<] .path: pg\path << .file
-[>] .parent: pg\path >> directory
+[<] .path:pg.path << .file
+[>] .parent:pg.path >> directory
 ```
 
 ---
 
 ## DateTime Type
 
-### DateTime Type: `pg\dt`
+### DateTime Type: `:pg.dt`
 
 **Description:** DateTime type with calendar support and timezone awareness
 
@@ -405,17 +405,17 @@ Path identifiers enable cross-platform paths using the reserved enumeration `#Pa
 **Usage:**
 ```polyglot
 // DateTime literals (syntax sugar)
-[r] .now: pg\dt << DT"2024-01-15 14:30:00"
-[r] .date_only: pg\dt << DT"2024-01-15"
-[r] .time_only: pg\dt << DT"14:30:"
+[r] .now:pg.dt << DT"2024-01-15 14:30:00"
+[r] .date_only:pg.dt << DT"2024-01-15"
+[r] .time_only:pg.dt << DT"14:30:"
 
 // Relative time
-[r] .past: pg\dt << DT.Ago"2 days"
-[r] .future: pg\dt << DT.From.Now"1 hour"
+[r] .past:pg.dt << DT.Ago"2 days"
+[r] .future:pg.dt << DT.From.Now"1 hour"
 
 // Calendar-specific
-[r] .hijri_date: pg\dt << DT.Hijri"1445-07-15"
-[r] .chinese_date: pg\dt << DT.Chinese"2024-01-15"
+[r] .hijri_date:pg.dt << DT.Hijri"1445-07-15"
+[r] .chinese_date:pg.dt << DT.Chinese"2024-01-15"
 ```
 
 ---
@@ -426,12 +426,12 @@ Path identifiers enable cross-platform paths using the reserved enumeration `#Pa
 
 ```polyglot
 // This literal syntax...
-[r] .time: pg\dt << DT"12:30:"
+[r] .time:pg.dt << DT"12:30:"
 
 // ...compiles to pipeline operations equivalent to:
 [r] |pg.DateTime.Parse
-[<] .format: pg\string << "12:30:"
-[>] .result: pg\dt >> .time
+[<] .format:pg.string << "12:30:"
+[>] .result:pg.dt >> .time
 ```
 
 **See Also:** [DateTime System](07-datetime-system.md) for complete DT reference
@@ -440,7 +440,7 @@ Path identifiers enable cross-platform paths using the reserved enumeration `#Pa
 
 ## Collection Types
 
-### Array Type: `pg\array{T}`
+### Array Type: `:pg.array{T}`
 
 **Description:** Ordered collection of elements of the same type
 
@@ -452,22 +452,22 @@ pg\array{element_type}
 **Usage:**
 ```polyglot
 // Array of strings
-[r] .names: pg\array{pg\string} << array{
+[r] .names: pg.array.pg.string << array{
 [^]  "Alice",
 [^]  "Bob",
 [^]  "Charlie"
 [^]}
 
 // Array of integers
-[r] .numbers: pg\array{pg\int} << array{
+[r] .numbers: pg.array.pg.int << array{
 [^]  1, 2, 3, 4, 5
 [^]}
 
 // Empty array
-[r] .empty: pg\array{pg\string} << array{}
+[r] .empty: pg.array.pg.string << array{}
 
 // Input array
-[i] .items: pg\array{pg\path}
+[i] .items: pg.array.pg.path
 ```
 
 ---
@@ -476,28 +476,28 @@ pg\array{element_type}
 
 ```polyglot
 // Access element by index
-[r] .first: pg\string << .names[0]
+[r] .first:pg.string << .names[0]
 
 // Get array length
 [r] |U.Array.Length
-[<] .arr: pg\array{pg\string} << .names
-[>] .length: pg\uint >> count
+[<] .arr: pg.array.pg.string << .names
+[>] .length:pg.uint >> count
 
 // Append element
 [r] |U.Array.Append
-[<] .arr: pg\array{pg\int} << .numbers
-[<] .element: pg\int << 6
-[>] .result: pg\array{pg\int} >> updated
+[<] .arr: pg.array.pg.int << .numbers
+[<] .element:pg.int << 6
+[>] .result: pg.array.pg.int >> updated
 
 // Iterate (using unpack operator)
 [r] ~.names
 [~][r] |ProcessItem
-[~][<] .item: pg\string << .names.item
+[~][<] .item:pg.string << .names.item
 ```
 
 ---
 
-### Set Type: `pg\set{T}`
+### Set Type: `:pg.set{T}`
 
 **Description:** Unordered collection of unique elements
 
@@ -509,17 +509,17 @@ pg\set{element_type}
 **Usage:**
 ```polyglot
 // Set of integers
-[r] .unique_ids: pg\set{pg\int} << set{1, 2, 3, 4, 5}
+[r] .unique_ids:pg.set{pg\int} << set{1, 2, 3, 4, 5}
 
 // Set of strings
-[r] .tags: pg\set{pg\string} << set{
+[r] .tags:pg.set{pg\string} << set{
 [^]  "important",
 [^]  "urgent",
 [^]  "review"
 [^]}
 
 // Empty set
-[r] .empty: pg\set{pg\int} << set{}
+[r] .empty:pg.set{pg\int} << set{}
 ```
 
 ---
@@ -529,28 +529,28 @@ pg\set{element_type}
 ```polyglot
 // Check membership
 [r] |U.Set.Contains
-[<] .set: pg\set{pg\int} << .unique_ids
-[<] .element: pg\int << 42
-[>] .result: pg\bool >> is_member
+[<] .set:pg.set{pg\int} << .unique_ids
+[<] .element:pg.int << 42
+[>] .result:pg.bool >> is_member
 
 // Add element
 [r] |U.Set.Add
-[<] .set: pg\set{pg\string} << .tags
-[<] .element: pg\string << "new-tag"
-[>] .result: pg\set{pg\string} >> updated
+[<] .set:pg.set{pg\string} << .tags
+[<] .element:pg.string << "new-tag"
+[>] .result:pg.set{pg\string} >> updated
 
 // Union
 [r] |U.Set.Union
-[<] .left: pg\set{pg\int} << .set1
-[<] .right: pg\set{pg\int} << .set2
-[>] .result: pg\set{pg\int} >> combined
+[<] .left:pg.set{pg\int} << .set1
+[<] .right:pg.set{pg\int} << .set2
+[>] .result:pg.set{pg\int} >> combined
 ```
 
 ---
 
 ## Serial Type
 
-### Serial Type: `pg\serial`
+### Serial Type: `:pg.serial`
 
 **Description:** Serializable data structure with mutable schema (keys can change at runtime)
 
@@ -563,14 +563,14 @@ pg\set{element_type}
 **Usage:**
 ```polyglot
 // Simple serial
-[r] .config: pg\serial << serial{
+[r] .config:pg.serial << serial{
 [^]  "host": "localhost",
 [^]  "port": 8080,
 [^]  "debug": True
 [^]}
 
 // Nested serial
-[r] .settings: pg\serial << serial{
+[r] .settings:pg.serial << serial{
 [^]  "database": serial{
 [^]    "host": "db.example.com",
 [^]    "port": 5432
@@ -582,14 +582,14 @@ pg\set{element_type}
 [^]}
 
 // Empty serial
-[r] .data: pg\serial << serial{}
+[r] .data:pg.serial << serial{}
 ```
 
 ---
 
 ### Serial vs Enumeration
 
-| Feature | `pg\serial` | Enumeration |
+| Feature | `:pg.serial` | Enumeration |
 |---------|-------------|-------------|
 | Schema | Mutable (runtime) | Immutable (compile-time) |
 | Type safety | Weaker | Stronger |
@@ -603,31 +603,31 @@ pg\set{element_type}
 
 ```polyglot
 // Access field
-[r] .host: pg\string << .config["host"]
+[r] .host:pg.string << .config["host"]
 
 // Add field (mutable)
 [r] .config["new_key"] << "new_value"
 
 // Serialize to JSON
 [r] |U.Serial.ToJSON
-[<] .data: pg\serial << .config
-[>] .json: pg\string >> json_string
+[<] .data:pg.serial << .config
+[>] .json:pg.string >> json_string
 
 // Parse from JSON
 [r] |U.Serial.FromJSON
-[<] .json: pg\string << json_string
-[>] .data: pg\serial >> parsed
+[<] .json:pg.string << json_string
+[>] .data:pg.serial >> parsed
 ```
 
 ---
 
 ### String Interpolation Processing
 
-The `{}` processing in string interpolation is handled by `pg\serial` capabilities:
+The `{}` processing in string interpolation is handled by `:pg.serial` capabilities:
 
 ```polyglot
 // String interpolation with formatting
-[r] .message: pg\string << "Count: {.count:03d}, Price: ${.price:.2f}"
+[r] .message:pg.string << "Count: {.count:03d}, Price: ${.price:.2f}"
 
 // Internally processed by pg\serial's string handling
 // Compiles to pipeline operations
@@ -663,8 +663,8 @@ Use mutable types when:
 **Example:**
 ```polyglot
 // Immutable counter (creates new value each time)
-[r] .count: pg\int << 0
-[r] .count: pg\int << .count + 1  // New binding
+[r] .count:pg.int << 0
+[r] .count:pg.int << .count + 1  // New binding
 
 // Mutable counter (updates in place)
 [r] .counter: pg.mutable\int << 0
@@ -690,7 +690,7 @@ Use mutable types when:
 [r] ~Array.ForEach
 [~][r] .i << .i + 1
 [~][r] |ProcessItem
-[~][<] .index: pg\int << .i
+[~][<] .index:pg.int << .i
 ```
 
 ---
@@ -699,7 +699,7 @@ Use mutable types when:
 
 | Aspect | Immutable (default) | Mutable |
 |--------|---------------------|---------|
-| Syntax | `pg\int` | `pg.mutable\int` |
+| Syntax | `:pg.int` | `pg.mutable\int` |
 | Update | Creates new value | Updates in place |
 | Safety | Thread-safe | Requires care |
 | Performance | May copy | Direct update |
@@ -716,8 +716,8 @@ Use mutable types when:
 **Definition:**
 ```polyglot
 [#] MyEnumeration
-[<] .field1: pg\string << "value1"
-[<] .field2: pg\int << 42
+[<] .field1:pg.string << "value1"
+[<] .field2:pg.int << 42
 [X]
 ```
 
@@ -727,7 +727,7 @@ Use mutable types when:
 [r] .config: #MyEnumeration << #MyEnumeration
 
 // Access field
-[r] .value: pg\string << #MyEnumeration.field1
+[r] .value:pg.string << #MyEnumeration.field1
 
 // Input enumeration
 [i] .settings: #Configuration
@@ -752,7 +752,7 @@ Use mutable types when:
 
 ### Enumeration vs Serial Comparison
 
-| Feature | Enumeration (`#Enum`) | Serial (`pg\serial`) |
+| Feature | Enumeration (`#Enum`) | Serial (`:pg.serial`) |
 |---------|----------------------|---------------------|
 | Schema | Immutable (compile-time) | Mutable (runtime) |
 | Definition | `[#]...[X]` blocks | Inline literals |
@@ -772,17 +772,17 @@ Use mutable types when:
 **Description:** Special enumeration with three reserved fields for error handling
 
 **Reserved Fields:**
-- `.message: pg\string` - Error message
-- `.code: pg\int` - Error code
-- `.trace: pg\string` - Stack trace
+- `.message:pg.string` - Error message
+- `.code:pg.int` - Error code
+- `.trace:pg.string` - Stack trace
 
 **Definition:**
 ```polyglot
 [!] !MyApp.CustomError
-[<] .message: pg\string << "Custom error occurred"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
-[<] .context: pg\string << ""  // Additional custom field
+[<] .message:pg.string << "Custom error occurred"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
+[<] .context:pg.string << ""  // Additional custom field
 [X]
 ```
 
@@ -791,12 +791,12 @@ Use mutable types when:
 // Catch error
 [r] |MightFail
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
-[>] .code: pg\int >> err_code
+[>] .message:pg.string >> err_msg
+[>] .code:pg.int >> err_code
 
 // Handle error
 [r] |U.Log.Error
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 ```
 
 **See Also:** [Error Handling](04-error-handling.md) for complete error reference
@@ -809,10 +809,10 @@ Use mutable types when:
 
 | Category | Types | Mutability | Schema |
 |----------|-------|------------|--------|
-| **Primitives** | `pg\int`, `pg\uint`, `pg\float`, `pg\string`, `pg\bool` | Immutable default | Fixed |
-| **Special** | `pg\path`, `pg\dt` | Immutable | Fixed with reserved fields |
-| **Collections** | `pg\array{T}`, `pg\set{T}` | Immutable default | Fixed (element type) |
-| **Dynamic** | `pg\serial` | Mutable schema | Runtime mutable |
+| **Primitives** | `:pg.int`, `:pg.uint`, `:pg.float`, `:pg.string`, `:pg.bool` | Immutable default | Fixed |
+| **Special** | `:pg.path`, `:pg.dt` | Immutable | Fixed with reserved fields |
+| **Collections** | `:pg.array{T}`, `:pg.set{T}` | Immutable default | Fixed (element type) |
+| **Dynamic** | `:pg.serial` | Mutable schema | Runtime mutable |
 | **Enumerations** | `#EnumName` | Immutable | Compile-time fixed |
 | **Errors** | `!ErrorName` | Immutable | Fixed (3 reserved + custom) |
 
@@ -820,27 +820,27 @@ Use mutable types when:
 
 ### When to Use Each Type
 
-**Use `pg\int`, `pg\float`, `pg\string`, `pg\bool`:**
+**Use `:pg.int`, `:pg.float`, `:pg.string`, `:pg.bool`:**
 - Simple values
 - Calculations and comparisons
 - Most common use cases
 
-**Use `pg\path`:**
+**Use `:pg.path`:**
 - File system paths
 - Cross-platform path handling
 - When using path identifiers
 
-**Use `pg\dt`:**
+**Use `:pg.dt`:**
 - Dates and times
 - Scheduling and timestamps
 - Calendar operations
 
-**Use `pg\array{T}` or `pg\set{T}`:**
+**Use `:pg.array{T}` or `:pg.set{T}`:**
 - Collections of same-type elements
 - When element type is known
 - When order matters (array) or uniqueness matters (set)
 
-**Use `pg\serial`:**
+**Use `:pg.serial`:**
 - JSON-like data
 - Dynamic schemas
 - When keys are not known at compile-time
@@ -871,7 +871,7 @@ Many Polyglot literals are **syntax sugar** that compile to underlying pipeline 
 
 ```polyglot
 // String literal
-[r] .name: pg\string << "Alice"
+[r] .name:pg.string << "Alice"
 
 // Compiles to string construction pipeline
 ```
@@ -882,12 +882,12 @@ Many Polyglot literals are **syntax sugar** that compile to underlying pipeline 
 
 ```polyglot
 // Array literal
-[r] .items: pg\array{pg\int} << array{1, 2, 3}
+[r] .items: pg.array.pg.int << array{1, 2, 3}
 
 // Compiles to array construction pipeline
 
 // Set literal
-[r] .unique: pg\set{pg\string} << set{"a", "b", "c"}
+[r] .unique:pg.set{pg\string} << set{"a", "b", "c"}
 
 // Compiles to set construction pipeline
 ```
@@ -898,7 +898,7 @@ Many Polyglot literals are **syntax sugar** that compile to underlying pipeline 
 
 ```polyglot
 // Serial literal
-[r] .config: pg\serial << serial{
+[r] .config:pg.serial << serial{
 [^]  "host": "localhost",
 [^]  "port": 8080
 [^]}
@@ -912,12 +912,12 @@ Many Polyglot literals are **syntax sugar** that compile to underlying pipeline 
 
 ```polyglot
 // DateTime literal
-[r] .now: pg\dt << DT"2024-01-15 14:30:00"
+[r] .now:pg.dt << DT"2024-01-15 14:30:00"
 
 // Compiles to DateTime parsing pipeline
 [r] |pg.DateTime.Parse
-[<] .input: pg\string << "2024-01-15 14:30:00"
-[>] .result: pg\dt >> .now
+[<] .input:pg.string << "2024-01-15 14:30:00"
+[>] .result:pg.dt >> .now
 ```
 
 ---
@@ -926,13 +926,13 @@ Many Polyglot literals are **syntax sugar** that compile to underlying pipeline 
 
 ```polyglot
 // String interpolation
-[r] .msg: pg\string << "Count: {.count}"
+[r] .msg:pg.string << "Count: {.count}"
 
 // Compiles to string formatting pipeline
 [r] |pg.String.Format
-[<] .template: pg\string << "Count: {}"
-[<] .values: pg\array{pg\serial} << array{.count}
-[>] .result: pg\string >> .msg
+[<] .template:pg.string << "Count: {}"
+[<] .values: pg.array.pg.serial << array{.count}
+[>] .result:pg.string >> .msg
 ```
 
 **Note:** These literals provide convenient syntax while maintaining the pipeline-based execution model underneath.
@@ -948,18 +948,18 @@ Polyglot performs strict type checking at compile-time:
 **Type Mismatch Errors:**
 ```polyglot
 // ✗ ERROR - Type mismatch
-[r] .count: pg\int << "not a number"
+[r] .count:pg.int << "not a number"
 
 // ✗ ERROR - Cannot assign string to int
-[i] .number: pg\int
-[r] .number: pg\int << "42"
+[i] .number:pg.int
+[r] .number:pg.int << "42"
 ```
 
 **Correct Usage:**
 ```polyglot
 // ✓ CORRECT - Matching types
-[r] .count: pg\int << 42
-[r] .name: pg\string << "Alice"
+[r] .count:pg.int << 42
+[r] .name:pg.string << "Alice"
 ```
 
 ---
@@ -971,13 +971,13 @@ Explicit type conversion required:
 ```polyglot
 // Convert string to int
 [r] |U.String.ToInt
-[<] .input: pg\string << "42"
-[>] .result: pg\int >> number
+[<] .input:pg.string << "42"
+[>] .result:pg.int >> number
 
 // Convert int to string
 [r] |U.Int.ToString
-[<] .input: pg\int << 42
-[>] .result: pg\string >> text
+[<] .input:pg.int << 42
+[>] .result:pg.string >> text
 ```
 
 ---
@@ -988,13 +988,13 @@ Collections enforce element type:
 
 ```polyglot
 // ✓ CORRECT - All elements same type
-[r] .numbers: pg\array{pg\int} << array{1, 2, 3}
+[r] .numbers: pg.array.pg.int << array{1, 2, 3}
 
 // ✗ ERROR - Mixed types not allowed
-[r] .mixed: pg\array{pg\int} << array{1, "two", 3}
+[r] .mixed: pg.array.pg.int << array{1, "two", 3}
 
 // ✓ CORRECT - Use serial for mixed types
-[r] .mixed: pg\serial << serial{
+[r] .mixed:pg.serial << serial{
 [^]  "number": 1,
 [^]  "text": "two",
 [^]  "another": 3
@@ -1010,8 +1010,8 @@ Enumerations provide strong type safety:
 ```polyglot
 // Define enumeration
 [#] Status
-[<] .success: pg\string << "SUCCESS"
-[<] .failed: pg\string << "FAILED"
+[<] .success:pg.string << "SUCCESS"
+[<] .failed:pg.string << "FAILED"
 [X]
 
 // ✓ CORRECT - Using defined enumeration

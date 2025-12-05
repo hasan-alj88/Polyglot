@@ -26,8 +26,8 @@
 **At `[i]` blocks** - Polyglot waits automatically
 
 ```polyglot
-[i] .user_name: pg\string   # Ready here
-[i] .user_age: pg\int       # Ready here
+[i] .user_name:pg.string   # Ready here
+[i] .user_age:pg.int       # Ready here
 
 [r] |Process
 [<] .name << .user_name     # Can use immediately
@@ -62,8 +62,8 @@
 ### Config with Defaults
 ```polyglot
 [#] Config
-[<] .timeout: pg\int <~ 30
-[<] .retries: pg\int <~ 3
+[<] .timeout:pg.int <~ 30
+[<] .retries:pg.int <~ 3
 [X]
 ```
 

@@ -307,7 +307,7 @@
 [i] .config_path: pg\string
 [t] |T.Call
 
-[W] |W.NoSetup.NoCleanup
+[W] |W.Polyglot.Scope
 
 # Load configuration from file
 [s] |S.JSON.Load
@@ -573,7 +573,7 @@
 [i] #None
 [t] |T.Call
 
-[W] |W.NoSetup.NoCleanup
+[W] |W.Polyglot.Scope
 
 # Constant declaration
 [i] .app_name: pg\string << "MyApp"

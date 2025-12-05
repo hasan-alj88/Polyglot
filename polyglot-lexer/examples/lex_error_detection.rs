@@ -10,7 +10,7 @@ fn main() {
             r#"[|] Test
 [r] .x: pg\string << "Hello
 [X]"#,
-            "UnterminatedString"
+            "UnterminatedString",
         ),
         (
             "Unterminated Multi-line Comment",
@@ -18,28 +18,28 @@ fn main() {
 /* This comment never ends
 [r] .x: pg\int << 42
 [X]"#,
-            "UnterminatedComment"
+            "UnterminatedComment",
         ),
         (
             "Unknown Block Marker",
             r#"[|] Test
 [z] This is not valid
 [X]"#,
-            "UnknownBlockMarker"
+            "UnknownBlockMarker",
         ),
         (
             "Unterminated Block Marker",
             r#"[|] Test
 [@
 [X]"#,
-            "UnterminatedBlockMarker"
+            "UnterminatedBlockMarker",
         ),
         (
             "Invalid Escape Sequence",
             r#"[|] Test
 [r] .x: pg\string << "Invalid \x escape"
 [X]"#,
-            "InvalidEscapeSequence"
+            "InvalidEscapeSequence",
         ),
     ];
 
@@ -72,7 +72,10 @@ fn main() {
                     println!("✓ PASS ({})", error_type);
                     detected += 1;
                 } else {
-                    println!("⚠️  PARTIAL (expected {}, got {})", expected_error, error_type);
+                    println!(
+                        "⚠️  PARTIAL (expected {}, got {})",
+                        expected_error, error_type
+                    );
                     wrong_error += 1;
                 }
             }
@@ -85,7 +88,10 @@ fn main() {
     println!("  Correctly detected: {}", detected);
     println!("  Wrong error type:   {}", wrong_error);
     println!("  Not detected:       {}", not_detected);
-    println!("  Total tests:        {}", detected + wrong_error + not_detected);
+    println!(
+        "  Total tests:        {}",
+        detected + wrong_error + not_detected
+    );
     println!("==========================================");
 
     if not_detected == 0 && wrong_error == 0 {

@@ -13,7 +13,7 @@ fn main() {
 [W] |W.Polyglot.Scope
 [o] !NoError
 [X]"#,
-            true
+            true,
         ),
         (
             "Very Long Identifier",
@@ -24,7 +24,7 @@ fn main() {
 [r] .this_is_a_very_long_variable_name_that_exceeds_normal_length_expectations: pg\string << "test"
 [o] !NoError
 [X]"#,
-            true
+            true,
         ),
         (
             "Large Numbers",
@@ -37,7 +37,7 @@ fn main() {
 [r] .float: pg\float << 123.456789
 [o] !NoError
 [X]"#,
-            true
+            true,
         ),
         (
             "Multiple Newlines",
@@ -53,7 +53,7 @@ fn main() {
 
 [o] !NoError
 [X]"#,
-            true
+            true,
         ),
         (
             "Empty String",
@@ -64,7 +64,7 @@ fn main() {
 [r] .empty: pg\string << ""
 [o] !NoError
 [X]"#,
-            true
+            true,
         ),
         (
             "String Only Whitespace",
@@ -75,7 +75,7 @@ fn main() {
 [r] .spaces: pg\string << "   "
 [o] !NoError
 [X]"#,
-            true
+            true,
         ),
         (
             "Adjacent Operators",
@@ -94,7 +94,7 @@ fn main() {
 [~][o] !NoError
 [~]
 [X]"#,
-            true
+            true,
         ),
         (
             "Deeply Nested Conditionals",
@@ -120,7 +120,7 @@ fn main() {
 [~]
 [o] .msg: pg\string
 [X]"#,
-            true
+            true,
         ),
     ];
 

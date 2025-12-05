@@ -59,7 +59,7 @@ Polyglot File (.pg)
    │  └─ [~][r] Nested operations
    ├─ [!] Error handling
    ├─ [/] Cleanup (REQUIRED in canonical)
-   ├─ [o] Output (REQUIRED in canonical - or [o] !NoError)
+   ├─ [o] Output (REQUIRED in canonical - or [o] !No.Output)
    └─ [X]
 ```
 
@@ -256,7 +256,7 @@ Polyglot File (.pg)
 4. `[\]` Setup (REQUIRED)
 5. Execution blocks: `[r]`, `[p]`, `[s]`, `[b]`, `[Y]` (at least ONE required)
 6. `[/]` Cleanup (REQUIRED)
-7. `[o]` Output (REQUIRED - or `[o] !NoError`)
+7. `[o]` Output (REQUIRED - or `[o] !No.Output`)
 8. `[X]` End
 
 **Validation:** Compiler enforces canonical order after macro expansion

@@ -203,7 +203,7 @@
 [i] #None
 [t] |T.Call
 
-[W] |W.NoSetup.NoCleanup
+[W] |W.Polyglot.Scope
 
 # INVALID: Pipelines don't have .state field accessible like variables
 # [?] |fetch_weather.state =? #Pipelines.States.Completed  # ❌ SYNTAX ERROR

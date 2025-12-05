@@ -60,14 +60,37 @@ fn main() {
 
             // Count string-related tokens
             println!("\n🔍 String Interpolation Token Analysis:");
-            println!("  🔵 StringStart/End: {}",
-                tokens.iter().filter(|t| matches!(t.kind, TokenKind::StringStart | TokenKind::StringEnd)).count());
-            println!("  📝 StringContent: {}",
-                tokens.iter().filter(|t| t.kind == TokenKind::StringContent).count());
-            println!("  🟢 Interpolation Start/End: {}",
-                tokens.iter().filter(|t| matches!(t.kind, TokenKind::InterpolationStart | TokenKind::InterpolationEnd)).count());
-            println!("  🟡 Format Identifiers: {}",
-                tokens.iter().filter(|t| t.kind == TokenKind::FormatIdentifier).count());
+            println!(
+                "  🔵 StringStart/End: {}",
+                tokens
+                    .iter()
+                    .filter(|t| matches!(t.kind, TokenKind::StringStart | TokenKind::StringEnd))
+                    .count()
+            );
+            println!(
+                "  📝 StringContent: {}",
+                tokens
+                    .iter()
+                    .filter(|t| t.kind == TokenKind::StringContent)
+                    .count()
+            );
+            println!(
+                "  🟢 Interpolation Start/End: {}",
+                tokens
+                    .iter()
+                    .filter(|t| matches!(
+                        t.kind,
+                        TokenKind::InterpolationStart | TokenKind::InterpolationEnd
+                    ))
+                    .count()
+            );
+            println!(
+                "  🟡 Format Identifiers: {}",
+                tokens
+                    .iter()
+                    .filter(|t| t.kind == TokenKind::FormatIdentifier)
+                    .count()
+            );
         }
         Err(e) => {
             eprintln!("❌ Lexer Error: {}", e);

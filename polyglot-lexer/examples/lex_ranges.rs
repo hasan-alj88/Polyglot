@@ -39,17 +39,26 @@ fn main() {
     match lex(source) {
         Ok(tokens) => {
             // Find range operators
-            let range_ops: Vec<_> = tokens.iter()
-                .filter(|t| matches!(t.kind,
-                    TokenKind::OpRangeClosed | TokenKind::OpRangeOpen |
-                    TokenKind::OpRangeHalfLeft | TokenKind::OpRangeHalfRight))
+            let range_ops: Vec<_> = tokens
+                .iter()
+                .filter(|t| {
+                    matches!(
+                        t.kind,
+                        TokenKind::OpRangeClosed
+                            | TokenKind::OpRangeOpen
+                            | TokenKind::OpRangeHalfLeft
+                            | TokenKind::OpRangeHalfRight
+                    )
+                })
                 .collect();
 
-            let bracket_delimiters: Vec<_> = tokens.iter()
+            let bracket_delimiters: Vec<_> = tokens
+                .iter()
                 .filter(|t| t.kind == TokenKind::DelimiterSquareBracketClose)
                 .collect();
 
-            let paren_close: Vec<_> = tokens.iter()
+            let paren_close: Vec<_> = tokens
+                .iter()
                 .filter(|t| t.kind == TokenKind::DelimiterParenClose)
                 .collect();
 
@@ -59,8 +68,10 @@ fn main() {
 
             println!("📏 Range Operators Found:");
             for tok in &range_ops {
-                println!("   • {:?} \"{}\" @ line {}, col {}",
-                    tok.kind, tok.lexeme, tok.line, tok.column);
+                println!(
+                    "   • {:?} \"{}\" @ line {}, col {}",
+                    tok.kind, tok.lexeme, tok.line, tok.column
+                );
             }
             println!();
 
@@ -78,14 +89,27 @@ fn main() {
             // Verify expected operators
             let has_closed = range_ops.iter().any(|t| t.kind == TokenKind::OpRangeClosed);
             let has_open = range_ops.iter().any(|t| t.kind == TokenKind::OpRangeOpen);
-            let has_half_left = range_ops.iter().any(|t| t.kind == TokenKind::OpRangeHalfLeft);
-            let has_half_right = range_ops.iter().any(|t| t.kind == TokenKind::OpRangeHalfRight);
+            let has_half_left = range_ops
+                .iter()
+                .any(|t| t.kind == TokenKind::OpRangeHalfLeft);
+            let has_half_right = range_ops
+                .iter()
+                .any(|t| t.kind == TokenKind::OpRangeHalfRight);
 
             println!("🎯 Range Operator Verification:");
-            println!("   {} ?[ (closed range)", if has_closed { "✓" } else { "✗" });
+            println!(
+                "   {} ?[ (closed range)",
+                if has_closed { "✓" } else { "✗" }
+            );
             println!("   {} ?( (open range)", if has_open { "✓" } else { "✗" });
-            println!("   {} ?) (half-left range)", if has_half_left { "✓" } else { "✗" });
-            println!("   {} ?] (half-right range)", if has_half_right { "✓" } else { "✗" });
+            println!(
+                "   {} ?) (half-left range)",
+                if has_half_left { "✓" } else { "✗" }
+            );
+            println!(
+                "   {} ?] (half-right range)",
+                if has_half_right { "✓" } else { "✗" }
+            );
 
             println!();
             if has_closed && has_open && has_half_left && has_half_right {

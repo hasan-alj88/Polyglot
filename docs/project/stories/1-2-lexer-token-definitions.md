@@ -202,7 +202,7 @@ polyglot-lexer/
 - [Source: docs/project/epics.md#Story-1.2]
 - [Source: docs/technical/architecture.md#Technology-Stack-Details]
 - [Source: docs/technical/architecture.md#ADR-004-Error-Handling]
-- [Source: docs/user/language/00-quick-start.md] - Syntax reference
+- [Source: docs/user/language/quick-start.md] - Syntax reference
 - [Source: docs/project/stories/1-1-project-workspace-build-system-setup.md#File-List]
 
 ## Dev Agent Record

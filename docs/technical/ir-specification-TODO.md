@@ -378,8 +378,8 @@ Epic 2: Parser & IR Generation
 
 **Must Read Before Writing:**
 1. `docs/technical/variable-states-specification.md` - Variable state model
-2. `docs/user/language/01-syntax-complete.md` - Complete Polyglot syntax
-3. `docs/user/language/06-block-markers.md` - All block markers defined
+2. `docs/user/language/syntax-complete.md` - Complete Polyglot syntax
+3. `docs/user/language/block-markers.md` - All block markers defined
 4. `docs/technical/architecture.md` - How 3 IRs are used by services
 
 ---

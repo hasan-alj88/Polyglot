@@ -21,12 +21,14 @@ fn main() {
             println!("✓ Lexed successfully: {} tokens", tokens.len());
 
             // Check for BlockLineContinuation token
-            let line_cont_count = tokens.iter()
+            let line_cont_count = tokens
+                .iter()
                 .filter(|t| t.kind == TokenKind::BlockLineContinuation)
                 .count();
 
             // Check for Newline tokens
-            let newline_count = tokens.iter()
+            let newline_count = tokens
+                .iter()
                 .filter(|t| t.kind == TokenKind::Newline)
                 .count();
 
@@ -38,10 +40,17 @@ fn main() {
             for (i, token) in tokens.iter().enumerate() {
                 if token.kind == TokenKind::BlockLineContinuation {
                     // Show context: previous 2, current, next 2
-                    for j in i.saturating_sub(2)..=(i+2).min(tokens.len()-1) {
+                    for j in i.saturating_sub(2)..=(i + 2).min(tokens.len() - 1) {
                         let marker = if j == i { " ← [*] HERE" } else { "" };
-                        println!("  [{}] {:?}: \"{}\" (line {}, col {}){}",
-                            j, tokens[j].kind, tokens[j].lexeme, tokens[j].line, tokens[j].column, marker);
+                        println!(
+                            "  [{}] {:?}: \"{}\" (line {}, col {}){}",
+                            j,
+                            tokens[j].kind,
+                            tokens[j].lexeme,
+                            tokens[j].line,
+                            tokens[j].column,
+                            marker
+                        );
                     }
                 }
             }
@@ -78,12 +87,18 @@ fn main() {
             for (i, token) in tokens.iter().enumerate() {
                 if token.kind == TokenKind::OpPush {
                     println!("\nTokens after << operator:");
-                    for j in i..=(i+4).min(tokens.len()-1) {
-                        let marker = if tokens[j].kind == TokenKind::BlockLineContinuation { " ← [*]" }
-                                    else if tokens[j].kind == TokenKind::Newline { " ← NEWLINE" }
-                                    else { "" };
-                        println!("  [{:2}] {:?}: \"{}\"{}",
-                            j, tokens[j].kind, tokens[j].lexeme, marker);
+                    for j in i..=(i + 4).min(tokens.len() - 1) {
+                        let marker = if tokens[j].kind == TokenKind::BlockLineContinuation {
+                            " ← [*]"
+                        } else if tokens[j].kind == TokenKind::Newline {
+                            " ← NEWLINE"
+                        } else {
+                            ""
+                        };
+                        println!(
+                            "  [{:2}] {:?}: \"{}\"{}",
+                            j, tokens[j].kind, tokens[j].lexeme, marker
+                        );
                     }
                     break;
                 }

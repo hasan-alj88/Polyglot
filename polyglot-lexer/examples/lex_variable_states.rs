@@ -59,23 +59,31 @@ fn main() {
 
                 // Categorize
                 match token.kind {
-                    TokenKind::ReservedPgVarDeclared |
-                    TokenKind::ReservedPgVarDefaultReady |
-                    TokenKind::ReservedPgVarPending |
-                    TokenKind::ReservedPgVarReady |
-                    TokenKind::ReservedPgVarFaulted |
-                    TokenKind::ReservedBooleanTrue |
-                    TokenKind::ReservedBooleanFalse |
-                    TokenKind::ReservedNone |
-                    TokenKind::ReservedPipelineNoInput => reserved_count += 1,
+                    TokenKind::ReservedPgVarDeclared
+                    | TokenKind::ReservedPgVarDefaultReady
+                    | TokenKind::ReservedPgVarPending
+                    | TokenKind::ReservedPgVarReady
+                    | TokenKind::ReservedPgVarFaulted
+                    | TokenKind::ReservedBooleanTrue
+                    | TokenKind::ReservedBooleanFalse
+                    | TokenKind::ReservedNone
+                    | TokenKind::ReservedPipelineNoInput => reserved_count += 1,
 
-                    TokenKind::IdentifierError | TokenKind::ReservedNoError => error_identifiers += 1,
+                    TokenKind::IdentifierError | TokenKind::ReservedNoError => {
+                        error_identifiers += 1
+                    }
                     TokenKind::IdentifierVariable => variable_identifiers += 1,
 
-                    TokenKind::TypeNamespace | TokenKind::TypeString | TokenKind::TypeInt |
-                    TokenKind::TypeFloat | TokenKind::TypeBool | TokenKind::TypeDatetime |
-                    TokenKind::TypePath | TokenKind::TypeSerial | TokenKind::TypeArray |
-                    TokenKind::TypeSet => type_tokens += 1,
+                    TokenKind::TypeNamespace
+                    | TokenKind::TypeString
+                    | TokenKind::TypeInt
+                    | TokenKind::TypeFloat
+                    | TokenKind::TypeBool
+                    | TokenKind::TypeDatetime
+                    | TokenKind::TypePath
+                    | TokenKind::TypeSerial
+                    | TokenKind::TypeArray
+                    | TokenKind::TypeSet => type_tokens += 1,
 
                     TokenKind::DelimiterDot => delimiters += 1,
 
@@ -84,9 +92,11 @@ fn main() {
 
                 // Highlight specific tokens
                 let highlight = match token.kind {
-                    TokenKind::ReservedPgVarReady | TokenKind::ReservedPgVarFaulted |
-                    TokenKind::ReservedPgVarPending | TokenKind::ReservedPgVarDeclared |
-                    TokenKind::ReservedPgVarDefaultReady => "🔴",
+                    TokenKind::ReservedPgVarReady
+                    | TokenKind::ReservedPgVarFaulted
+                    | TokenKind::ReservedPgVarPending
+                    | TokenKind::ReservedPgVarDeclared
+                    | TokenKind::ReservedPgVarDefaultReady => "🔴",
 
                     TokenKind::IdentifierError | TokenKind::ReservedNoError => "⚠️ ",
 
@@ -127,11 +137,23 @@ fn main() {
 
             // Analysis
             println!("\n📊 Token Analysis:");
-            println!("  🔴 Reserved #PgVar.States enumerations: {}", reserved_count);
-            println!("  ⚠️  Error identifiers (!Error, !NoError): {}", error_identifiers);
-            println!("  💎 Variable identifiers (.variable): {}", variable_identifiers);
+            println!(
+                "  🔴 Reserved #PgVar.States enumerations: {}",
+                reserved_count
+            );
+            println!(
+                "  ⚠️  Error identifiers (!Error, !NoError): {}",
+                error_identifiers
+            );
+            println!(
+                "  💎 Variable identifiers (.variable): {}",
+                variable_identifiers
+            );
             println!("  🔗 Dot delimiters (namespace access): {}", delimiters);
-            println!("  🏷️  Type tokens (pg\\string, pg\\dt, etc.): {}", type_tokens);
+            println!(
+                "  🏷️  Type tokens (pg\\string, pg\\dt, etc.): {}",
+                type_tokens
+            );
 
             // Show sample of reserved namespace access
             println!("\n🔍 Reserved Namespace Access Pattern:");

@@ -100,7 +100,7 @@ BLOCK_MARKER → Context: Description
 
 **Context 2 Example:**
 ```polyglot
-[#] UserRole
+[#] #UserRole
 [<] .Admin
 [<] .User
 [X]
@@ -203,7 +203,7 @@ Note: STRING_LITERAL is tokenized as a sequence, not a single token.
 
 **Context 3 Example (Enum Field):**
 ```polyglot
-[#] Config
+[#] #Config
 [<] .mode.Production
 [<] .mode.Development
 [<] .timeout: pg\int
@@ -489,7 +489,7 @@ Note: STRING_LITERAL is tokenized as a sequence, not a single token.
 [o] .data: #UserData
 [o] !ValidationError
 [o] !Database.ConnectionTimeout
-[o] !NoError
+[o] !No.Output
 ```
 
 ---
@@ -909,7 +909,7 @@ Note: STRING_LITERAL is tokenized as a sequence, not a single token.
 [#] 1
 [X]                    ← Closes package
 
-[#] UserRole
+[#] #UserRole
 [<] .Admin
 [X]                    ← Closes enum
 

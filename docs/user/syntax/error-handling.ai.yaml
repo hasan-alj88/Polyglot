@@ -1,0 +1,16 @@
+_meta:
+  src: error-handling.md
+  updated: 2025-12-02
+topic: Error Handling Patterns
+kw: [error, [!], exception, handler, fault, .message, .code, .trace, catch, propagate]
+sum: Error handling via [!] blocks; custom error types with .message/.code/.trace fields; catch patterns, state transitions to Faulted
+pts:
+  - Define error: [!] ErrorName with .message .code .trace fields
+  - Catch: [~][!] !ErrorType or [~][!] * catch-all
+  - Propagate: [o] !ErrorType in output
+  - State: errors transition vars to Faulted state
+  - Required fields: .message (string), .code (int), .trace (string)
+  - Custom fields allowed beyond required
+  - !No.Output marker for pipelines with no output
+rels: [block-markers.md, variable-state-system.md, error-handling-patterns.md]
+code: [polyglot-parser/src/validation.rs]

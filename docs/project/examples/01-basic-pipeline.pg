@@ -80,11 +80,11 @@
 [X]
 
 // ==============================================================================
-// Pipeline with No Inputs (Using #Pipeline.NoInput)
+// Pipeline with No Inputs (Using !No.Input)
 // ==============================================================================
 
 [|] NoInputExample
-[i] #Pipeline.NoInput                    // MANDATORY: No inputs declaration
+[i] !No.Input                    // MANDATORY: No inputs declaration
 
 [t] |T.Call                              // MANDATORY: Trigger
 
@@ -98,7 +98,7 @@
 [X]
 
 // ==============================================================================
-// Pipeline with No Output (Using !NoError)
+// Pipeline with No Output (Using !No.Output)
 // ==============================================================================
 
 [|] NoOutputExample
@@ -112,7 +112,7 @@
 // Do some processing (no output returned)
 [r] .processed: pg\string << .message
 
-[o] !NoError                             // MANDATORY: No output declaration
+[o] !No.Output                             // MANDATORY: No output declaration
 [X]
 
 // ==============================================================================
@@ -137,13 +137,13 @@
 // ✓ [@] Package declaration
 // ✓ [|] Pipeline definition with [X] close
 // ✓ [i] Input declarations (3 variations: required, default, constant)
-// ✓ [i] #Pipeline.NoInput for pipelines with no inputs
+// ✓ [i] !No.Input for pipelines with no inputs
 // ✓ [t] Trigger declarations (MANDATORY - pipeline will NOT run without this)
 // ✓ [\][/] Setup/cleanup (MANDATORY if no wrapper)
 // ✓ [W] Wrapper (includes [\][/] in macro)
 // ✓ [r] Variable declarations
 // ✓ [o] Output declaration
-// ✓ [o] !NoError for pipelines with no output
+// ✓ [o] !No.Output for pipelines with no output
 // ✓ [?] Conditional blocks with [?] *? exhaustive catch-all
 // ✓ [~] Conditional body markers
 // ✓ NO KEYWORDS - all identifiers use operator prefix (. # | !)

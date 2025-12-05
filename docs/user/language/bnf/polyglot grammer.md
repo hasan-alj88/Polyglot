@@ -17,7 +17,7 @@
 - Basic form: `{language\type}`
 - Mutable form: `{language.mutable\type}`
 - Examples:
-  - `pg\int`, `pg\string`, `pg\bool`
+  - `:pg.int`, `:pg.string`, `:pg.bool`
   - `pg.mutable\int`, `py.mutable\dict`
 
 ### Variables
@@ -125,9 +125,9 @@ Creates a package-scoped alias for the enumeration
 ```polyglot
 [#] MyApp.Configuration
 [A] AppConfig
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
-[<] .debug: pg\bool << #False
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
+[<] .debug:pg.bool << #False
 [X]
 ```
 
@@ -135,8 +135,8 @@ Creates a package-scoped alias for the enumeration
 ```polyglot
 [#] Path.Identifiers.MyApp.DataDirectory
 [A] DataDir
-[<] .unix: pg\path << \\UnixRoot\\opt\data\
-[<] .windows: pg\path << \\C\\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\data\
+[<] .windows:pg.path << \\C\\Data\
 [X]
 ```
 
@@ -161,9 +161,9 @@ Error names must start with `!`
 **Syntax:** `[<] .{field}: {dtype} << {value}`
 
 **Required fields:**
-- `.message: pg\string`
-- `.code: pg\int`
-- `.trace: pg\string`
+- `.message:pg.string`
+- `.code:pg.int`
+- `.trace:pg.string`
 
 **Optional:** Additional custom fields
 
@@ -171,11 +171,11 @@ Error names must start with `!`
 ```polyglot
 [!] !MyApp.ValidationError
 [A] !ValidationErr
-[<] .message: pg\string << "Validation failed"
-[<] .code: pg\int << 4000
-[<] .trace: pg\string << ""
-[<] .field_name: pg\string << ""
-[<] .invalid_value: pg\string << ""
+[<] .message:pg.string << "Validation failed"
+[<] .code:pg.int << 4000
+[<] .trace:pg.string << ""
+[<] .field_name:pg.string << ""
+[<] .invalid_value:pg.string << ""
 [X]
 ```
 
@@ -246,59 +246,59 @@ Used for operations within expanded contexts (parallel blocks, conditionals, etc
 ### Example: Complete Pipeline
 ```polyglot
 [|] ProcessData
-[i] .input_file: pg\path
-[i] Default .timeout: pg\int << 30
+[i] .input_file:pg.path
+[i] Default .timeout:pg.int << 30
 [t] |T.File.Modified
-[<] .path: pg\path << .input_file
+[<] .path:pg.path << .input_file
 [W] |W.Python3.11
 [r] |ReadFile
-[<] .path: pg\path << .input_file
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << .input_file
+[>] .content:pg.string >> file_data
 [r] |ProcessContent
-[<] .data: pg\string << file_data
-[>] .result: pg\string >> output
+[<] .data:pg.string << file_data
+[>] .result:pg.string >> output
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << err_msg
-[o] .result: pg\string
+[<] .msg:pg.string << err_msg
+[o] .result:pg.string
 [X]
 ```
 
 ### Example: Parallel Pipeline
 ```polyglot
 [|] ParallelProcessor
-[i] .data: pg\string
-[r] .result_a: pg\string << ""
-[r] .result_b: pg\string << ""
+[i] .data:pg.string
+[r] .result_a:pg.string << ""
+[r] .result_b:pg.string << ""
 [p] |ProcessPartA
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .output >> result_a
 [p] |ProcessPartB
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .output >> result_b
 [Y] |Y.Join
 [>] result_a
 [>] result_b
 [r] |CombineResults
-[<] .a: pg\string << result_a
-[<] .b: pg\string << result_b
+[<] .a:pg.string << result_a
+[<] .b:pg.string << result_b
 [X]
 ```
 
 ### Example: Conditional Pipeline
 ```polyglot
 [|] ConditionalProcessor
-[i] .value: pg\int
+[i] .value:pg.int
 [?] .value =? 10
 [~][r] |ProcessLarge
-[~][<] .input: pg\int << .value
+[~][<] .input:pg.int << .value
 [?] .value =? 5
 [~][r] |ProcessMedium
-[~][<] .input: pg\int << .value
+[~][<] .input:pg.int << .value
 [?] *?  // Catchall wildcard
 [~][r] |ProcessSmall
-[~][<] .input: pg\int << .value
+[~][<] .input:pg.int << .value
 [X]
 ```
 
@@ -509,7 +509,7 @@ Used for operations within expanded contexts (parallel blocks, conditionals, etc
 | `!` | Error type | `!CustomError` |
 | `<<` | Push assignment (INTO) | `.x << value` |
 | `>>` | Pull assignment (FROM) | `.x >> output` |
-| `\` | Type separator | `pg\int` |
+| `\` | Type separator | `:pg.int` |
 | `\\` | Path/alias reference | `\\DataDir\\` |
 
 ---

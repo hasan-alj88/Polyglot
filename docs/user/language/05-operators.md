@@ -180,9 +180,9 @@ The `|` operator **calls pipelines** - the fundamental units of execution define
 
 ```polyglot
 [r] |ProcessData
-[<] .input: pg\string << "value"
-[<] .max_size: pg\int << 1024
-[>] .result: pg\string >> output
+[<] .input:pg.string << "value"
+[<] .max_size:pg.int << 1024
+[>] .result:pg.string >> output
 ```
 
 ---
@@ -206,12 +206,12 @@ The `~` operator **unpacks and expands** collections (arrays, sets, enumerations
 ### Unpacking Arrays
 
 ```polyglot
-[r] .items: pg\array{pg\string} << array{"a", "b", "c"}
+[r] .items: pg.array.pg.string << array{"a", "b", "c"}
 
 // Unpack and iterate
 [r] ~.items
 [~][r] |ProcessItem
-[~][<] .item: pg\string << .items.item
+[~][<] .item:pg.string << .items.item
 ```
 
 ---
@@ -222,7 +222,7 @@ The `~` operator **unpacks and expands** collections (arrays, sets, enumerations
 // Array.ForEach - unpack operation
 [r] ~Array.ForEach
 [~][r] |ProcessElement
-[~][<] .element: pg\string << .current_element
+[~][<] .element:pg.string << .current_element
 ```
 
 ---
@@ -231,15 +231,15 @@ The `~` operator **unpacks and expands** collections (arrays, sets, enumerations
 
 ```polyglot
 [#] Config
-[<] .field1: pg\string << "value1"
-[<] .field2: pg\int << 42
+[<] .field1:pg.string << "value1"
+[<] .field2:pg.int << 42
 [X]
 
 // Unpack enumeration fields
 [r] ~Config
 [~][r] |ProcessField
-[~][<] .field_name: pg\string << .field_key
-[~][<] .field_value: pg\string << .field_value
+[~][<] .field_name:pg.string << .field_key
+[~][<] .field_value:pg.string << .field_value
 ```
 
 ---
@@ -319,13 +319,13 @@ The `@` operator accesses pipelines and enumerations from **external packages** 
 ```polyglot
 // Call pipeline from package
 [r] @Community.datatools|Transform
-[<] .input: pg\string << "data"
-[>] .result: pg\string >> output
+[<] .input:pg.string << "data"
+[>] .result:pg.string >> output
 
 // Call with full namespace
 [r] @Company.acme.analytics|CalculateMetrics
-[<] .data: pg\array{pg\int} << numbers
-[>] .result: pg\float >> metrics
+[<] .data: pg.array.pg.int << numbers
+[>] .result:pg.float >> metrics
 ```
 
 ---
@@ -335,7 +335,7 @@ The `@` operator accesses pipelines and enumerations from **external packages** 
 ```polyglot
 // Access enumeration from package
 [i] .config: @Local.MyApp#Configuration
-[r] .setting: pg\string << @Local.MyApp#Configuration.field
+[r] .setting:pg.string << @Local.MyApp#Configuration.field
 
 // Use in type declaration
 [i] .error_codes: @Company.acme#ErrorCodes
@@ -384,8 +384,8 @@ The `#` operator **marks enumeration types** for definition and reference.
 
 ```polyglot
 [#] Configuration
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
 [X]
 ```
 
@@ -398,8 +398,8 @@ The `#` operator **marks enumeration types** for definition and reference.
 [r] .config: #Configuration << #Configuration
 
 // Access specific field
-[r] .host: pg\string << #Configuration.host
-[r] .port: pg\int << #Configuration.port
+[r] .host:pg.string << #Configuration.host
+[r] .port:pg.int << #Configuration.port
 ```
 
 ---
@@ -440,7 +440,7 @@ The `#` operator **marks enumeration types** for definition and reference.
 
 // Example
 [i] .config: @Local.MyApp#Configuration
-[r] .setting: pg\string << @Local.MyApp#Configuration.field
+[r] .setting:pg.string << @Local.MyApp#Configuration.field
 ```
 
 ---
@@ -477,9 +477,9 @@ The `!` operator **marks error types** - special enumerations with three reserve
 
 ```polyglot
 [!] !MyApp.CustomError
-[<] .message: pg\string << "Error occurred"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error occurred"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -491,10 +491,10 @@ The `!` operator **marks error types** - special enumerations with three reserve
 [r] |MightFail
 
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 
 [r] |HandleError
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 ```
 
 ---
@@ -506,7 +506,7 @@ The `!` operator **marks error types** - special enumerations with three reserve
 [i] .error: !ErrorType
 
 // Error field access
-[r] .msg: pg\string << !SomeError.message
+[r] .msg:pg.string << !SomeError.message
 ```
 
 ---
@@ -535,9 +535,9 @@ Polyglot has two distinct assignment operators with opposite data flow direction
 #### Push Literal Values
 
 ```polyglot
-[r] .x: pg\int << 5
-[r] .name: pg\string << "Alice"
-[r] .flag: pg\bool << #True
+[r] .x:pg.int << 5
+[r] .name:pg.string << "Alice"
+[r] .flag:pg.bool << #True
 ```
 
 ---
@@ -545,8 +545,8 @@ Polyglot has two distinct assignment operators with opposite data flow direction
 #### Push Variables
 
 ```polyglot
-[r] .source: pg\string << "original"
-[r] .destination: pg\string << .source
+[r] .source:pg.string << "original"
+[r] .destination:pg.string << .source
 ```
 
 ---
@@ -555,8 +555,8 @@ Polyglot has two distinct assignment operators with opposite data flow direction
 
 ```polyglot
 [r] |ProcessData
-[<] .input: pg\string << input_var
-[<] .max_size: pg\int << 1024
+[<] .input:pg.string << input_var
+[<] .max_size:pg.int << 1024
 ```
 
 ---
@@ -565,8 +565,8 @@ Polyglot has two distinct assignment operators with opposite data flow direction
 
 ```polyglot
 [#] Configuration
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
 [X]
 ```
 
@@ -576,9 +576,9 @@ Polyglot has two distinct assignment operators with opposite data flow direction
 
 ```polyglot
 [!] !CustomError
-[<] .message: pg\string << "Default message"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Default message"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -596,8 +596,8 @@ Polyglot has two distinct assignment operators with opposite data flow direction
 
 ```polyglot
 [r] |ProcessData
-[>] .result: pg\string >> output_var
-[>] .status: pg\int >> status_code
+[>] .result:pg.string >> output_var
+[>] .status:pg.int >> status_code
 ```
 
 ---
@@ -606,8 +606,8 @@ Polyglot has two distinct assignment operators with opposite data flow direction
 
 ```polyglot
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
-[>] .code: pg\int >> err_code
+[>] .message:pg.string >> err_msg
+[>] .code:pg.int >> err_code
 ```
 
 ---
@@ -616,11 +616,11 @@ Polyglot has two distinct assignment operators with opposite data flow direction
 
 ```polyglot
 [p] |ProcessPartA
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [>] .output >> result1
 
 [p] |ProcessPartB
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [>] .output >> result2
 ```
 
@@ -658,14 +658,14 @@ source_value >> .variable
 
 **Input Context → Use `<<`:**
 ```polyglot
-[<] .input: pg\string << "value"  // Pushing INTO input
-[r] .x: pg\int << 42               // Pushing INTO variable
+[<] .input:pg.string << "value"  // Pushing INTO input
+[r] .x:pg.int << 42               // Pushing INTO variable
 ```
 
 **Output Context → Use `>>`:**
 ```polyglot
-[>] .output: pg\string >> result   // Pulling FROM output
-[>] .message: pg\string >> err_msg // Pulling FROM error field
+[>] .output:pg.string >> result   // Pulling FROM output
+[>] .message:pg.string >> err_msg // Pulling FROM error field
 ```
 
 ---
@@ -674,16 +674,16 @@ source_value >> .variable
 
 ```polyglot
 // ✓ CORRECT - Consistent direction
-[<] .input: pg\string << source_var
+[<] .input:pg.string << source_var
 
 // ✗ ERROR - Wrong direction for input context
-[<] .input: pg\string >> source_var
+[<] .input:pg.string >> source_var
 
 // ✓ CORRECT - Consistent direction
-[>] .output: pg\string >> result_var
+[>] .output:pg.string >> result_var
 
 // ✗ ERROR - Wrong direction for output context
-[>] .output: pg\string << result_var
+[>] .output:pg.string << result_var
 ```
 
 ---
@@ -854,7 +854,7 @@ Polyglot uses standard mathematical interval notation for range checks:
 [r] |ProcessValidPhone
 ```
 
-**Type requirement:** Only works with `pg\string`
+**Type requirement:** Only works with `:pg.string`
 
 ---
 
@@ -866,7 +866,7 @@ Polyglot uses standard mathematical interval notation for range checks:
 
 **Basic usage:**
 ```polyglot
-[r] .message: pg\string << "Hello, "
+[r] .message:pg.string << "Hello, "
 [r] .message +" "World!"
 // Result: "Hello, World!"
 ```
@@ -880,7 +880,7 @@ Polyglot uses standard mathematical interval notation for range checks:
 
 **Note:** For variable interpolation, use `{.variable}` syntax:
 ```polyglot
-[r] .greeting: pg\string << "Hello, {.name}!"
+[r] .greeting:pg.string << "Hello, {.name}!"
 ```
 
 ---
@@ -910,10 +910,10 @@ Polyglot does not support complex expressions with multiple operators in a singl
 **Not Supported:**
 ```polyglot
 // ✗ NOT SUPPORTED - Complex expression
-[r] .result: pg\int << .a + .b * .c
+[r] .result:pg.int << .a + .b * .c
 
 // ✗ NOT SUPPORTED - Chained operations
-[r] .value: pg\string << |Pipeline1 | Pipeline2
+[r] .value:pg.string << |Pipeline1 | Pipeline2
 ```
 
 ---
@@ -925,14 +925,14 @@ Break complex operations into sequential steps:
 ```polyglot
 // ✓ CORRECT - Sequential operations
 [r] |Multiply
-[<] .left: pg\int << .b
-[<] .right: pg\int << .c
-[>] .result: pg\int >> temp1
+[<] .left:pg.int << .b
+[<] .right:pg.int << .c
+[>] .result:pg.int >> temp1
 
 [r] |Add
-[<] .left: pg\int << .a
-[<] .right: pg\int << temp1
-[>] .result: pg\int >> final_result
+[<] .left:pg.int << .a
+[<] .right:pg.int << temp1
+[>] .result:pg.int >> final_result
 ```
 
 ---
@@ -944,11 +944,11 @@ Each line should use only one operator:
 ```polyglot
 // ✓ CORRECT - One operator per line
 [r] |ProcessData
-[<] .input: pg\string << .source
-[>] .output: pg\string >> .destination
+[<] .input:pg.string << .source
+[>] .output:pg.string >> .destination
 
 // ✗ WRONG - Multiple operations in one line
-[r] |ProcessData[<] .input: pg\string << .source
+[r] |ProcessData[<] .input:pg.string << .source
 ```
 
 ---
@@ -1003,16 +1003,16 @@ Each line should use only one operator:
 
 ```polyglot
 // ✗ WRONG - Input needs <<
-[<] .input: pg\string >> value
+[<] .input:pg.string >> value
 
 // ✓ CORRECT
-[<] .input: pg\string << value
+[<] .input:pg.string << value
 
 // ✗ WRONG - Output needs >>
-[>] .output: pg\string << result
+[>] .output:pg.string << result
 
 // ✓ CORRECT
-[>] .output: pg\string >> result
+[>] .output:pg.string >> result
 ```
 
 ---

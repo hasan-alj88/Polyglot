@@ -8,6 +8,55 @@
 
 ---
 
+## 🚨 CRITICAL PARADIGM - READ THIS FIRST
+
+### Polyglot is a PIPELINE ORCHESTRATION Language
+
+**What Polyglot IS:**
+- 🎯 **Pipeline orchestration DSL** for coordinating external runtimes
+- 🔗 **Integration layer** that calls Python, Rust, Node.js, Go via runtime wrappers
+- 📦 **Data flow coordinator** using `pg\serial` as universal interchange format
+- ⚡ **Async-first** execution model with explicit state transitions
+
+**What Polyglot is NOT:**
+- ❌ **NOT a language where you write Python/Rust/JS code inline**
+- ❌ **NOT `py\requests.get()` or `rs\serde::parse()` - these syntaxes don't exist**
+- ❌ **NOT a "polyglot syntax" language mixing Python/Rust/JS code**
+- ❌ **NOT direct foreign function interface (FFI)**
+
+**How to Call External Code:**
+
+```polyglot
+// ❌ WRONG - This syntax doesn't exist
+.data << py\requests.get(.url)
+.clean << rs\cleaner::process(.data)
+
+// ✅ CORRECT - Use runtime wrappers
+[W] |W.RT.Python3.14                       // Declare Python runtime
+[W] |W.RT.Rust1.8                          // Declare Rust runtime
+
+[r] |RT.Python.Run.Function                // Call Python function
+[<] <function: pg\string << "requests.get"
+[<] <args: pg\serial << {.url}
+[>] >output: pg\serial >> .response
+
+[r] |RT.Rust.Run.File                      // Call Rust file
+[<] <file: pg\path << \\FileDir\\process.rs
+[<] <input: pg\serial << .response
+[>] >output: pg\serial >> .cleaned
+```
+
+**Key Concepts:**
+1. **Runtime Wrappers:** `[W] |W.RT.{Language}` - Declares execution environment
+2. **Pipeline Calls:** `|RT.{Language}.Run.{File|Function}` - Executes external code
+3. **Serial Interchange:** `pg\serial` - Universal data format across languages
+4. **Input/Output Binding:** `[<]` pushes data IN, `[>]` pulls results OUT
+
+**This is the #1 source of confusion for AI agents. Remember:**
+> Polyglot ORCHESTRATES polyglot systems. It doesn't MIX polyglot syntax.
+
+---
+
 ## Overview
 
 This package provides the complete Polyglot language specification in machine-parseable formats optimized for AI consumption. Unlike human documentation (prose, examples, tutorials), this package prioritizes:
@@ -17,7 +66,7 @@ This package provides the complete Polyglot language specification in machine-pa
 - **Completeness** - 100% of syntax rules and semantics
 - **Unambiguity** - Zero interpretation required
 
-**Total Size:** ~20KB across 7 files
+**Total Size:** ~25KB across 8 files
 **Information Density:** Complete language specification
 **Parse Time:** Instant (structured formats)
 
@@ -194,6 +243,48 @@ Declared → DefaultReady → Pending → Ready/Faulted
 
 ---
 
+### 8. `datetime-system.yaml` (DateTime Type Specification)
+**Format:** YAML
+**Size:** ~500 lines
+**Purpose:** Complete pg\dt type and DT.* namespace specification
+
+**Contents:**
+- pg\dt primitive type structure (DateTimePattern, DateTimeValue, DateTimeType)
+- 7 DateTimeValue variants (TimeOnly, DateOnly, DayOfWeekOnly, etc.)
+- DateTime literal syntax patterns (dates, times, durations)
+- DT.* pipeline namespace hierarchy (100+ pipelines)
+- Calendar systems (algorithmic and profile-based)
+- Profile system with 3-tier priority (Manual → API → ICU4X)
+- Timezone system (built-in and user-defined)
+- Extension system (timezones, profiles, aliases, holidays)
+- Relative date patterns (dot hierarchy)
+- Validation rules (date, time, duration, wildcard, day-of-week)
+- Equality semantics (Instant vs Duration)
+- Comparison operators (>?, <?, =?, etc.)
+- Trigger integration (T.DT.* semantics)
+- MVP scope vs Post-MVP deferrals
+- Best practices and critical rules
+
+**Key Patterns:**
+- `DT"formatted_string"` - Parse datetime
+- `DT.{Calendar}"..."` - Calendar-specific (Gregorian, Hijri, Hebrew, Chinese)
+- `DT.{Calendar}.{Profile}"..."` - Profile-based (SaudiArabia, Sephardic, etc.)
+- `DT.Ago"duration"` - Past time
+- `DT.Daily"time"`, `DT.Weekly"day time"` - Recurring patterns
+- `DT.Gregorian.{Month}.{Occurrence}.{DayOfWeek}""` - Relative dates
+- `DT.TimeZone.{Region}.{Location}"..."` - Timezone handling
+
+**Critical Rules:**
+- Time MUST have AM/PM or 24-hour format (no "3:00")
+- Duration units MUST be descending order (no "30m 2h")
+- No decimal durations (use "2h 30m" not "2.5h")
+- DateAndDayOfWeek validated by ICU4X
+- T.DT.* triggers when DT.* equals DT.Now""
+
+**Usage:** Validate DateTime literals, understand calendar systems, implement pg\dt type.
+
+---
+
 ## Quick Reference: Critical Rules
 
 ### 0. BLOCK MARKER HIERARCHY
@@ -265,14 +356,24 @@ Declared → DefaultReady → Pending → Ready/Faulted
 - Trigger: `|T.String.Call` (MANDATORY)
 - Output: Single output of ANY type (not limited to strings!)
 
-**Examples:**
-- `"hello"` → `U.String"hello"` (implicit call)
-- `DT.Now""` → returns `pg\dt` (empty param required)
-- `DT.Minutes"5"` → returns `pg\dt` duration
-- `"{.count:Hex}"` → calls `|U.String.Polyglot.Int.Hex`
+**CONSTRAINT - When inline syntax is valid:**
+`Pipeline.Name"..."` can ONLY be used when:
+1. Pipeline has NO input (except `.formatted_argument_string`), AND
+2. EITHER:
+   - Pipeline has exactly ONE output, OR
+   - Pipeline outputs are packed into `pg\serial` type
 
-**Invalid:** `DT.Now`, `DT.Minutes(5)`, `DT.ToNow(.start)`
-**Valid:** `DT.Now""`, `DT.Minutes"5"`, `DT.ToNow"{.start}"`
+**Examples:**
+- `"hello"` → `U.String"hello"` (implicit call) ✅
+- `DT.Now""` → returns `pg\dt` (no input, single output) ✅
+- `DT.Minutes"5"` → returns `pg\dt` duration (single input, single output) ✅
+- `"{.count:Hex}"` → calls `|U.String.Polyglot.Int.Hex` ✅
+
+**Invalid:** `DT.Now`, `DT.Minutes(5)`, `DT.ToNow(.start)` ❌
+**Valid:** `DT.Now""`, `DT.Minutes"5"`, `DT.ToNow"{.start}"` ✅
+
+**Invalid (multiple outputs):** `Pipeline.TwoOutputs"..."` ❌
+**Correct:** Use full pipeline call syntax with `[<]` and `[>]` bindings
 
 **See:** `/docs/technical/string-literals-internals.md` for complete mechanics
 
@@ -292,18 +393,57 @@ Declared → DefaultReady → Pending → Ready/Faulted
 
 ### 15. MANDATORY PIPELINE SECTIONS (CRITICAL!)
 **Rule:** Every `[|]` pipeline MUST have ALL of these sections:
-1. **Inputs** `[i]` - At least one (use `[i] #Pipeline.NoInput` if none)
+1. **Inputs** `[i]` - At least one (use `[i] !No.Input` if none)
 2. **Triggers** `[t]` - At least one (pipeline will NEVER run without triggers!)
 3. **Wrapper** - `[W]` wrapper (runtime wrapper OR scope placeholder)
-4. **Outputs** `[o]` - At least one (use `[o] !NoError` if no output)
+4. **Outputs** `[o]` - At least one (use `[o] !No.Output` if no output)
+
+### 16. HIERARCHY TREE DOCUMENTATION (REQUIRED!)
+**Rule:** ALL hierarchical structures MUST include ASCII tree diagrams
+**Why:** Polyglot data has serial hierarchy - variables, pipelines, enumerations, errors, and blocks all use dot notation
+
+**Applies to:**
+- Variable namespaces (`.variable.field.subfield`)
+- Pipeline namespaces (`DT.Gregorian.November.Fourth.Thursday`)
+- Enumeration fields (`#Enum.variant.nested`)
+- Error hierarchies (`!Network.HTTP.4xx.NotFound`)
+- Block element nesting
+- Reserved namespaces (`.*.pgvar.*`, `#PgVar.States.*`)
+
+**Tree Notation:**
+```
+.variable: pg\serial                // Variable (. prefix, with type)
+│
+├─ .variable.field: pg\string       // First branch with type
+│   └─ .variable.field.nested: pg\int  // Nested item with type
+└─ .variable.pgvar.*                // Reserved namespace (extendable)
+
+|Pipeline.*                         // Pipeline (| prefix)
+│
+├─ |Pipeline.Operation              // → pg\dt (return type)
+└─ |Pipeline.{UserDefined}*         // Extendable namespace
+
+#Enum                               // Enumeration (# prefix)
+│
+├─ #Enum.Variant                    // Enum field (NO type)
+└─ #Enum.field: pg\string           // Serial field (HAS type)
+
+~ForEach                            // Unpack operator (~ prefix)
+~Y.IntoArray                        // Join operator (~Y prefix)
+
+!Error.*                            // Error (! prefix)
+└─ !Error.Category.Specific
+```
+
+**Reference:** `/docs/technical/hierarchy-tree-notation.md`
 
 **Minimal Valid Pipeline:**
 ```polyglot
 [|] MinimalPipeline
-[i] #Pipeline.NoInput
+[i] !No.Input
 [t] |T.Call
 [W] |W.Polyglot.Scope        // Placeholder: no setup/cleanup
-[o] !NoError
+[o] !No.Output
 [X]
 ```
 
@@ -313,7 +453,7 @@ Declared → DefaultReady → Pending → Ready/Faulted
   - Use when no explicit setup/cleanup needed
   - Makes it explicit (not accidental omission)
   - Indicates RAII-style scope cleanup
-  - Replaces old `|W.NoSetup.NoCleanup`
+  - Replaces old `|W.Polyglot.Scope`
 - **Explicit Setup/Cleanup:** `[\]` ... `[/]` (for custom logic)
 
 **Why Mandatory:**
@@ -358,14 +498,14 @@ Declared → DefaultReady → Pending → Ready/Faulted
 | Format | Lines | Information | Density |
 |--------|-------|-------------|---------|
 | **Human Prose Docs** | ~10,000 | Language spec | 1x |
-| **AI Context Package** | ~1,800 | Same spec | **5.5x** |
+| **AI Context Package** | ~2,300 | Same spec | **4.3x** |
 
 **Key Advantages:**
-- **5.5x more compact** than prose documentation
+- **4.3x more compact** than prose documentation
 - **100% structured** (queryable, parseable)
 - **Zero ambiguity** (formal specifications)
 - **Instant lookup** (JSON/YAML queries)
-- **Complete coverage** (all syntax + semantics)
+- **Complete coverage** (all syntax + semantics + DateTime)
 
 ---
 
@@ -399,10 +539,11 @@ Declared → DefaultReady → Pending → Ready/Faulted
 
 ## Version History
 
-**v0.0.2** (2025-11-25)
+**v0.0.2** (2025-11-25 to 2025-11-30)
 - Initial AI context package
 - Complete language specification
-- All 7 reference files
+- All 8 reference files
+- Added datetime-system.yaml (2025-11-30)
 
 **Future Enhancements:**
 - AST schema (JSON Schema for IR structure)
@@ -423,6 +564,7 @@ Declared → DefaultReady → Pending → Ready/Faulted
 6. type-system.json - Type rules
 7. state-machine.yaml - Variable lifecycle
 8. reserved-enums.json - Reserved enumerations
+9. datetime-system.yaml - DateTime type (pg\dt)
 
 ### Reference Order (During Development)
 1. Quick check: constraints.yaml (am I violating a rule?)
@@ -430,14 +572,15 @@ Declared → DefaultReady → Pending → Ready/Faulted
 3. Types: type-system.json (is this type correct?)
 4. Operators: operators.json (what does this operator do?)
 5. States: state-machine.yaml (is this transition valid?)
-6. Examples: examples-annotated.pg (how do I use this pattern?)
+6. DateTime: datetime-system.yaml (is this datetime literal valid?)
+7. Examples: examples-annotated.pg (how do I use this pattern?)
 
 ---
 
 ## Maintenance
 
 **Authority:** This package is canonical for v0.0.2 syntax
-**Updates:** When language changes, update all 7 files
+**Updates:** When language changes, update all 8 files
 **Validation:** All examples must compile with v0.0.2 compiler
 
 **Related Documentation:**

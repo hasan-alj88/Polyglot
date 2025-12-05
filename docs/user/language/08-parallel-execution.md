@@ -59,16 +59,16 @@ Each `[p]` block is a **mini-pipeline** - a lightweight pipeline that:
 
 ```polyglot
 [|] ParallelExample
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Mini-pipeline 1
 [p] |ProcessPartA
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .output >> result_a
 
 // Mini-pipeline 2
 [p] |ProcessPartB
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .output >> result_b
 
 [X]
@@ -80,17 +80,17 @@ Each `[p]` block is a **mini-pipeline** - a lightweight pipeline that:
 
 ```polyglot
 [|] ProcessInParallel
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Parallel block 1
 [p] |TransformA
-[<] .input: pg\string << .data
-[>] .result: pg\string >> result1
+[<] .input:pg.string << .data
+[>] .result:pg.string >> result1
 
 // Parallel block 2
 [p] |TransformB
-[<] .input: pg\string << .data
-[>] .result: pg\string >> result2
+[<] .input:pg.string << .data
+[>] .result:pg.string >> result2
 
 // Join to synchronize
 [Y] |Y.Join
@@ -99,9 +99,9 @@ Each `[p]` block is a **mini-pipeline** - a lightweight pipeline that:
 
 // Use synchronized results
 [r] |CombineResults
-[<] .a: pg\string << result1
-[<] .b: pg\string << result2
-[>] .final: pg\string >> output
+[<] .a:pg.string << result1
+[<] .b:pg.string << result2
+[>] .final:pg.string >> output
 
 [X]
 ```
@@ -116,11 +116,11 @@ Variables from outer scope are **implicitly copied** into parallel blocks when a
 
 ```polyglot
 [|] CopyInExample
-[r] .shared_data: pg\string << "original"
+[r] .shared_data:pg.string << "original"
 
 [p] |Process
-[<] .input: pg\string << .shared_data  // Implicit copy FROM outer scope
-[>] .result: pg\string >> output1
+[<] .input:pg.string << .shared_data  // Implicit copy FROM outer scope
+[>] .result:pg.string >> output1
 
 [X]
 ```
@@ -135,16 +135,16 @@ Parallel blocks receive **copies** of data, not references:
 
 ```polyglot
 [|] CopyVsReference
-[r] .counter: pg\int << 10
+[r] .counter:pg.int << 10
 
 // Parallel block 1
 [p] |IncrementA
-[<] .value: pg\int << .counter  // Copies 10
+[<] .value:pg.int << .counter  // Copies 10
 // Modifying .value here does NOT affect outer .counter
 
 // Parallel block 2
 [p] |IncrementB
-[<] .value: pg\int << .counter  // Also copies 10
+[<] .value:pg.int << .counter  // Also copies 10
 // Independent from block 1
 
 [X]
@@ -177,7 +177,7 @@ To get data OUT of a parallel block, use `[>]` with `>>` operator:
 
 ```polyglot
 [p] |ProcessData
-[<] .input: pg\string << input_data
+[<] .input:pg.string << input_data
 // ... processing ...
 [>] .output >> result  // EXPLICIT copy OUT to outer scope
 ```
@@ -194,10 +194,10 @@ To get data OUT of a parallel block, use `[>]` with `>>` operator:
 **Example:**
 ```polyglot
 [|] CopyOutExample
-[r] .result: pg\string << ""
+[r] .result:pg.string << ""
 
 [p] |Process
-[<] .input: pg\string << "data"
+[<] .input:pg.string << "data"
 [>] .output >> result  // Copy OUT to .result
 
 // After join, .result contains the output
@@ -215,7 +215,7 @@ A parallel block can copy out multiple values:
 
 ```polyglot
 [p] |ProcessMultiple
-[<] .input: pg\string << data
+[<] .input:pg.string << data
 [>] .result1 >> output1
 [>] .result2 >> output2
 [>] .status >> status_code
@@ -229,21 +229,21 @@ A parallel block can copy out multiple values:
 
 ```polyglot
 [|] TimingExample
-[r] .result: pg\string << "initial"
+[r] .result:pg.string << "initial"
 
 [p] |SlowProcess
-[<] .input: pg\string << "data"
+[<] .input:pg.string << "data"
 [>] .output >> result  // Marked for copy-out
 
 // At this point, .result is still "initial"
-[r] .current: pg\string << result  // Still "initial"
+[r] .current:pg.string << result  // Still "initial"
 
 // Join happens here
 [Y] |Y.Join
 [>] result  // NOW .result gets the value
 
 // Now .result has the value from parallel block
-[r] .updated: pg\string << result  // Has processed value
+[r] .updated:pg.string << result  // Has processed value
 
 [X]
 ```
@@ -271,19 +271,19 @@ A parallel block can copy out multiple values:
 
 ```polyglot
 [|] JoinExample
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Initialize result variables
-[r] .result1: pg\string << ""
-[r] .result2: pg\string << ""
+[r] .result1:pg.string << ""
+[r] .result2:pg.string << ""
 
 // Parallel blocks
 [p] |ProcessA
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .output >> result1
 
 [p] |ProcessB
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .output >> result2
 
 // Synchronize
@@ -293,8 +293,8 @@ A parallel block can copy out multiple values:
 
 // Now both results are available
 [r] |UseResults
-[<] .a: pg\string << result1
-[<] .b: pg\string << result2
+[<] .a:pg.string << result1
+[<] .b:pg.string << result2
 
 [X]
 ```
@@ -324,9 +324,9 @@ Only variables listed in join block are synchronized:
 
 ```polyglot
 [|] SelectiveJoin
-[r] .result1: pg\string << ""
-[r] .result2: pg\string << ""
-[r] .result3: pg\string << ""
+[r] .result1:pg.string << ""
+[r] .result2:pg.string << ""
+[r] .result3:pg.string << ""
 
 [p] |Process
 [>] .out1 >> result1
@@ -378,7 +378,7 @@ Variables listed in join block are **synchronized and accessible** after join:
 
 ```polyglot
 [|] ListedVariable
-[r] .result: pg\string << "initial"
+[r] .result:pg.string << "initial"
 
 [p] |Process
 [>] .output >> result
@@ -387,7 +387,7 @@ Variables listed in join block are **synchronized and accessible** after join:
 [>] result  // Synchronized
 
 // .result is accessible with new value
-[r] .value: pg\string << result  // ✓ OK
+[r] .value:pg.string << result  // ✓ OK
 
 [X]
 ```
@@ -400,7 +400,7 @@ Variables not listed in join are **NOT synchronized** and retain original values
 
 ```polyglot
 [|] UnlistedVariable
-[r] .result: pg\string << "initial"
+[r] .result:pg.string << "initial"
 
 [p] |Process
 [>] .output >> result
@@ -409,7 +409,7 @@ Variables not listed in join are **NOT synchronized** and retain original values
 // result NOT listed
 
 // .result still has "initial" value
-[r] .value: pg\string << result  // Still "initial"
+[r] .value:pg.string << result  // Still "initial"
 
 [X]
 ```
@@ -434,23 +434,23 @@ Multiple parallel blocks execute independently:
 
 ```polyglot
 [|] MultipleParallel
-[i] .data: pg\array{pg\string}
+[i] .data: pg.array.pg.string
 
 // All execute concurrently
 [p] |ProcessPartA
-[<] .input: pg\array{pg\string} << .data
+[<] .input: pg.array.pg.string << .data
 [>] .result >> result_a
 
 [p] |ProcessPartB
-[<] .input: pg\array{pg\string} << .data
+[<] .input: pg.array.pg.string << .data
 [>] .result >> result_b
 
 [p] |ProcessPartC
-[<] .input: pg\array{pg\string} << .data
+[<] .input: pg.array.pg.string << .data
 [>] .result >> result_c
 
 [p] |ProcessPartD
-[<] .input: pg\array{pg\string} << .data
+[<] .input: pg.array.pg.string << .data
 [>] .result >> result_d
 
 // Join all results
@@ -491,29 +491,29 @@ Common pattern: Partition data, process in parallel, combine:
 
 ```polyglot
 [|] DataPartitioning
-[i] .data: pg\array{pg\int}
+[i] .data: pg.array.pg.int
 
 // Partition into chunks
 [r] |PartitionData
-[<] .input: pg\array{pg\int} << .data
-[<] .chunk_count: pg\int << 4
-[>] .chunks: pg\array{pg\array{pg\int}} >> chunks
+[<] .input: pg.array.pg.int << .data
+[<] .chunk_count:pg.int << 4
+[>] .chunks:pg.array{pg.array.pg.int} >> chunks
 
 // Process each chunk in parallel
 [p] |ProcessChunk1
-[<] .chunk: pg\array{pg\int} << chunks[0]
+[<] .chunk: pg.array.pg.int << chunks[0]
 [>] .result >> result1
 
 [p] |ProcessChunk2
-[<] .chunk: pg\array{pg\int} << chunks[1]
+[<] .chunk: pg.array.pg.int << chunks[1]
 [>] .result >> result2
 
 [p] |ProcessChunk3
-[<] .chunk: pg\array{pg\int} << chunks[2]
+[<] .chunk: pg.array.pg.int << chunks[2]
 [>] .result >> result3
 
 [p] |ProcessChunk4
-[<] .chunk: pg\array{pg\int} << chunks[3]
+[<] .chunk: pg.array.pg.int << chunks[3]
 [>] .result >> result4
 
 // Join results
@@ -525,8 +525,8 @@ Common pattern: Partition data, process in parallel, combine:
 
 // Combine
 [r] |CombineResults
-[<] .parts: pg\array{pg\int} << array{result1, result2, result3, result4}
-[>] .final: pg\array{pg\int} >> output
+[<] .parts: pg.array.pg.int << array{result1, result2, result3, result4}
+[>] .final: pg.array.pg.int >> output
 
 [X]
 ```
@@ -541,15 +541,15 @@ Use `[~]` for operations nested inside parallel blocks:
 
 ```polyglot
 [|] NestedInParallel
-[i] .data: pg\string
+[i] .data:pg.string
 
 [p] |ProcessWithNesting
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [~][r] |TransformData           // [~] means: runs WITHIN parallel block
-[~][<] .text: pg\string << .input
-[~][>] .transformed: pg\string >> temp
+[~][<] .text:pg.string << .input
+[~][>] .transformed:pg.string >> temp
 [~][r] |ValidateData            // Also WITHIN parallel block
-[~][<] .value: pg\string << temp
+[~][<] .value:pg.string << temp
 [>] .output >> result
 
 [Y] |Y.Join
@@ -582,23 +582,23 @@ Parallel blocks can contain other parallel blocks:
 
 ```polyglot
 [|] NestedParallel
-[i] .data: pg\array{pg\string}
+[i] .data: pg.array.pg.string
 
 // Outer parallel block
 [p] |ProcessOuter
-[<] .input: pg\array{pg\string} << .data
+[<] .input: pg.array.pg.string << .data
 [~][r] |SplitData
-[~][<] .items: pg\array{pg\string} << .input
-[~][>] .part1: pg\array{pg\string} >> part1
-[~][>] .part2: pg\array{pg\string} >> part2
+[~][<] .items: pg.array.pg.string << .input
+[~][>] .part1: pg.array.pg.string >> part1
+[~][>] .part2: pg.array.pg.string >> part2
 
 // Nested parallel blocks WITHIN outer block
 [~][p] |ProcessPart1
-[~][<] .data: pg\array{pg\string} << part1
+[~][<] .data: pg.array.pg.string << part1
 [~][>] .result >> nested1
 
 [~][p] |ProcessPart2
-[~][<] .data: pg\array{pg\string} << part2
+[~][<] .data: pg.array.pg.string << part2
 [~][>] .result >> nested2
 
 // Nested join WITHIN outer block
@@ -607,9 +607,9 @@ Parallel blocks can contain other parallel blocks:
 [~][>] nested2
 
 [~][r] |CombineNested
-[~][<] .a: pg\string << nested1
-[~][<] .b: pg\string << nested2
-[~][>] .combined: pg\string >> temp
+[~][<] .a:pg.string << nested1
+[~][<] .b:pg.string << nested2
+[~][>] .combined:pg.string >> temp
 
 [>] .output >> outer_result
 
@@ -630,29 +630,29 @@ Each parallel block can handle errors independently:
 
 ```polyglot
 [|] ParallelWithErrors
-[i] .files: pg\array{pg\path}
+[i] .files: pg.array.pg.path
 
 [p] |ProcessFile1
-[<] .file: pg\path << files[0]
+[<] .file:pg.path << files[0]
 [r] |ReadFile
-[<] .path: pg\path << .file
-[>] .content: pg\string >> content1
+[<] .path:pg.path << .file
+[>] .content:pg.string >> content1
 
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err1
-[r] .content1: pg\string << ""  // Default value
+[>] .message:pg.string >> err1
+[r] .content1:pg.string << ""  // Default value
 
 [>] .result >> result1
 
 [p] |ProcessFile2
-[<] .file: pg\path << files[1]
+[<] .file:pg.path << files[1]
 [r] |ReadFile
-[<] .path: pg\path << .file
-[>] .content: pg\string >> content2
+[<] .path:pg.path << .file
+[>] .content:pg.string >> content2
 
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err2
-[r] .content2: pg\string << ""  // Default value
+[>] .message:pg.string >> err2
+[r] .content2:pg.string << ""  // Default value
 
 [>] .result >> result2
 
@@ -671,7 +671,7 @@ Errors in parallel blocks can be propagated to outer scope:
 
 ```polyglot
 [|] ErrorPropagation
-[r] .error_occurred: pg\bool << #False
+[r] .error_occurred:pg.bool << #False
 
 [p] |MightFail
 [r] |RiskyOperation
@@ -697,18 +697,18 @@ Stop processing if any parallel block fails:
 
 ```polyglot
 [|] FailFast
-[r] .all_success: pg\bool << #True
+[r] .all_success:pg.bool << #True
 
 [p] |Task1
 [r] |Process1
 [!] !Error
-[r] .all_success: pg\bool << #False
+[r] .all_success:pg.bool << #False
 [>] .success >> success1
 
 [p] |Task2
 [r] |Process2
 [!] !Error
-[r] .all_success: pg\bool << #False
+[r] .all_success:pg.bool << #False
 [>] .success >> success2
 
 [Y] |Y.Join
@@ -716,7 +716,7 @@ Stop processing if any parallel block fails:
 
 [?] .all_success =? #Boolean.False
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << "One or more tasks failed"
+[~][<] .msg:pg.string << "One or more tasks failed"
 
 [X]
 ```
@@ -729,8 +729,8 @@ Stop processing if any parallel block fails:
 
 ```polyglot
 // ✓ CORRECT - Initialize before parallel
-[r] .result1: pg\string << ""
-[r] .result2: pg\string << ""
+[r] .result1:pg.string << ""
+[r] .result2:pg.string << ""
 
 [p] |Process1
 [>] .output >> result1
@@ -789,11 +789,11 @@ Stop processing if any parallel block fails:
 ```polyglot
 // ✓ CORRECT - Independent blocks
 [p] |ProcessA
-[<] .data: pg\string << input_a
+[<] .data:pg.string << input_a
 [>] .result >> result_a
 
 [p] |ProcessB
-[<] .data: pg\string << input_b
+[<] .data:pg.string << input_b
 [>] .result >> result_b
 
 // ✗ AVOID - Dependent blocks (use sequential instead)
@@ -801,7 +801,7 @@ Stop processing if any parallel block fails:
 [>] .output >> temp
 
 [p] |Step2  // Depends on temp from Step1 - RACE CONDITION!
-[<] .input: pg\string << temp
+[<] .input:pg.string << temp
 ```
 
 ---
@@ -810,10 +810,10 @@ Stop processing if any parallel block fails:
 
 ```polyglot
 // ✓ CORRECT - Explicit copy understanding
-[r] .shared: pg\string << "data"
+[r] .shared:pg.string << "data"
 
 [p] |Process
-[<] .input: pg\string << .shared  // Copies value
+[<] .input:pg.string << .shared  // Copies value
 // Modifications don't affect outer .shared
 ```
 
@@ -824,9 +824,9 @@ Stop processing if any parallel block fails:
 ```polyglot
 // ✓ CORRECT - Even partitioning
 [r] |PartitionEvenly
-[<] .data: pg\array{pg\int} << large_dataset
-[<] .workers: pg\int << 4
-[>] .chunks: pg\array{pg\array{pg\int}} >> even_chunks
+[<] .data: pg.array.pg.int << large_dataset
+[<] .workers:pg.int << 4
+[>] .chunks:pg.array{pg.array.pg.int} >> even_chunks
 
 // ✗ AVOID - Uneven workload
 [p] |SmallTask   // Finishes in 1 second
@@ -860,12 +860,12 @@ Stop processing if any parallel block fails:
 ```polyglot
 // ✓ CORRECT - Small data, many parallel blocks
 [p] |ProcessSmallData
-[<] .item: pg\int << item
+[<] .item:pg.int << item
 [>] .result >> result
 
 // ⚠ CAUTION - Large data copied multiple times
 [p] |ProcessLargeData
-[<] .huge_array: pg\array{pg\string} << million_items  // Memory overhead!
+[<] .huge_array: pg.array.pg.string << million_items  // Memory overhead!
 ```
 
 ---
@@ -876,15 +876,15 @@ Stop processing if any parallel block fails:
 
 ```polyglot
 [|] MapReduce
-[i] .data: pg\array{pg\int}
+[i] .data: pg.array.pg.int
 
 // Map phase - parallel
 [p] |MapChunk1
-[<] .chunk: pg\array{pg\int} << data[0:1000]
+[<] .chunk: pg.array.pg.int << data[0:1000]
 [>] .mapped >> mapped1
 
 [p] |MapChunk2
-[<] .chunk: pg\array{pg\int} << data[1000:2000]
+[<] .chunk: pg.array.pg.int << data[1000:2000]
 [>] .mapped >> mapped2
 
 [Y] |Y.Join
@@ -893,8 +893,8 @@ Stop processing if any parallel block fails:
 
 // Reduce phase - sequential
 [r] |Reduce
-[<] .parts: pg\array{pg\array{pg\int}} << array{mapped1, mapped2}
-[>] .result: pg\int >> final_result
+[<] .parts:pg.array{pg.array.pg.int} << array{mapped1, mapped2}
+[>] .result:pg.int >> final_result
 
 [X]
 ```
@@ -905,19 +905,19 @@ Stop processing if any parallel block fails:
 
 ```polyglot
 [|] FanOutFanIn
-[i] .request: pg\serial
+[i] .request:pg.serial
 
 // Fan-out - multiple parallel requests
 [p] |CallServiceA
-[<] .request: pg\serial << .request
+[<] .request:pg.serial << .request
 [>] .response >> response_a
 
 [p] |CallServiceB
-[<] .request: pg\serial << .request
+[<] .request:pg.serial << .request
 [>] .response >> response_b
 
 [p] |CallServiceC
-[<] .request: pg\serial << .request
+[<] .request:pg.serial << .request
 [>] .response >> response_c
 
 // Fan-in - join results
@@ -928,8 +928,8 @@ Stop processing if any parallel block fails:
 
 // Combine responses
 [r] |MergeResponses
-[<] .responses: pg\array{pg\serial} << array{response_a, response_b, response_c}
-[>] .combined: pg\serial >> final_response
+[<] .responses: pg.array.pg.serial << array{response_a, response_b, response_c}
+[>] .combined:pg.serial >> final_response
 
 [X]
 ```
@@ -940,20 +940,20 @@ Stop processing if any parallel block fails:
 
 ```polyglot
 [|] ParallelStages
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Stage 1 - Sequential
 [r] |Preprocess
-[<] .input: pg\string << .data
-[>] .prepared: pg\string >> prepared_data
+[<] .input:pg.string << .data
+[>] .prepared:pg.string >> prepared_data
 
 // Stage 2 - Parallel
 [p] |TransformA
-[<] .input: pg\string << prepared_data
+[<] .input:pg.string << prepared_data
 [>] .result >> result_a
 
 [p] |TransformB
-[<] .input: pg\string << prepared_data
+[<] .input:pg.string << prepared_data
 [>] .result >> result_b
 
 [Y] |Y.Join
@@ -962,8 +962,8 @@ Stop processing if any parallel block fails:
 
 // Stage 3 - Sequential
 [r] |Postprocess
-[<] .inputs: pg\array{pg\string} << array{result_a, result_b}
-[>] .final: pg\string >> output
+[<] .inputs: pg.array.pg.string << array{result_a, result_b}
+[>] .final:pg.string >> output
 
 [X]
 ```
@@ -976,7 +976,7 @@ Stop processing if any parallel block fails:
 
 ```polyglot
 [|] CollectResultsSequential
-[i] .csv_rows: pg\array{pg\serial}
+[i] .csv_rows: pg.array.pg.serial
 
 // Mutable accumulator for results
 [r] .results_mut: pg.mutable\string << ""
@@ -988,16 +988,16 @@ Stop processing if any parallel block fails:
 
 // Process each row
 [~][r] |ProcessRow
-[~][<] .row: pg\serial << .row
-[~][>] .row_result: pg\string >> .processed_result
+[~][<] .row:pg.serial << .row
+[~][>] .row_result:pg.string >> .processed_result
 
 // Accumulate result
 [~][r] .results_mut: pg.mutable\string << "{.results_mut}\n{.processed_result}"
 
 // Convert accumulated string to array
-[r] .results: pg\array{pg\string} << "{.results_mut}".splitby"\n"
+[r] .results: pg.array.pg.string << "{.results_mut}".splitby"\n"
 
-[o] .results: pg\array{pg\string}
+[o] .results: pg.array.pg.string
 [X]
 ```
 
@@ -1015,25 +1015,25 @@ Stop processing if any parallel block fails:
 
 ```polyglot
 [|] CollectResultsParallel
-[i] .data_a: pg\string
-[i] .data_b: pg\string
+[i] .data_a:pg.string
+[i] .data_b:pg.string
 
 // Parallel processing
 [p] |ProcessA
-[<] .input: pg\string << .data_a
-[>] .result: pg\string >> .result_a
+[<] .input:pg.string << .data_a
+[>] .result:pg.string >> .result_a
 
 [p] |ProcessB
-[<] .input: pg\string << .data_b
-[>] .result: pg\string >> .result_b
+[<] .input:pg.string << .data_b
+[>] .result:pg.string >> .result_b
 
 // Join with auto-aggregation into array
 [Y] |Y.JoinAll
 [<] .result_a
 [<] .result_b
-[>] .results: pg\array{pg\string}  // Auto-aggregates into array
+[>] .results: pg.array.pg.string  // Auto-aggregates into array
 
-[o] .results: pg\array{pg\string}
+[o] .results: pg.array.pg.string
 [X]
 ```
 
@@ -1051,7 +1051,7 @@ Stop processing if any parallel block fails:
 
 ```polyglot
 [|] HybridCollection
-[i] .datasets: pg\array{pg\array{pg\string}}
+[i] .datasets:pg.array{pg.array.pg.string}
 
 [r] .all_results: pg.mutable\array{pg\string} << array{}
 
@@ -1062,18 +1062,18 @@ Stop processing if any parallel block fails:
 
 // Parallel processing within each group
 [~][p] |ProcessChunk1
-[~][<] .chunk: pg\array{pg\string} << .dataset[0..50]
+[~][<] .chunk: pg.array.pg.string << .dataset[0..50]
 [~][>] .chunk_results >> .chunk_results_1
 
 [~][p] |ProcessChunk2
-[~][<] .chunk: pg\array{pg\string} << .dataset[50..100]
+[~][<] .chunk: pg.array.pg.string << .dataset[50..100]
 [~][>] .chunk_results >> .chunk_results_2
 
 // Join parallel results
 [~][Y] |Y.JoinAll
 [~][<] .chunk_results_1
 [~][<] .chunk_results_2
-[~][>] .group_results: pg\array{pg\string}
+[~][>] .group_results: pg.array.pg.string
 
 // Accumulate into master collection
 [~][r] .all_results: pg.mutable\array{pg\string} << .all_results.concat(.group_results)

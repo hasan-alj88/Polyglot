@@ -33,21 +33,21 @@ All examples follow v0.0.2 specifications:
 
 ```polyglot
 [!] !ValidationError
-[<] .message: pg\string << "Validation error"
-[<] .code: pg\int << 1001
-[<] .trace: pg\string << ""
-[<] .field_name: pg\string << ""
+[<] .message:pg.string << "Validation error"
+[<] .code:pg.int << 1001
+[<] .trace:pg.string << ""
+[<] .field_name:pg.string << ""
 [X]
 
 [!] !TransformError
-[<] .message: pg\string << "Transform error"
-[<] .code: pg\int << 2001
-[<] .trace: pg\string << ""
-[<] .input_value: pg\string << ""
+[<] .message:pg.string << "Transform error"
+[<] .code:pg.int << 2001
+[<] .trace:pg.string << ""
+[<] .input_value:pg.string << ""
 [X]
 
 [|] ValidateInput
-[i] .data: pg\string
+[i] .data:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
@@ -55,81 +55,81 @@ All examples follow v0.0.2 specifications:
 [?] .data ?> ""
 [~]
 [~][r] .error: ! << !ValidationError
-[~][<] .message: pg\string << "Input data cannot be empty"
-[~][<] .code: pg\int << 1001
-[~][<] .trace: pg\string << ""
-[~][<] .field_name: pg\string << "data"
+[~][<] .message:pg.string << "Input data cannot be empty"
+[~][<] .code:pg.int << 1001
+[~][<] .trace:pg.string << ""
+[~][<] .field_name:pg.string << "data"
 [~][o] .error: !
 
 // Check for minimum length (example: at least 3 characters)
-[r] .data_length: pg\int << {.data|length}
+[r] .data_length:pg.int << {.data|length}
 [?] .data_length ?> ...3
 [~]
 [~][r] .error: ! << !ValidationError
-[~][<] .message: pg\string << "Input must be at least 3 characters"
-[~][<] .code: pg\int << 1002
-[~][<] .trace: pg\string << ""
-[~][<] .field_name: pg\string << "data"
+[~][<] .message:pg.string << "Input must be at least 3 characters"
+[~][<] .code:pg.int << 1002
+[~][<] .trace:pg.string << ""
+[~][<] .field_name:pg.string << "data"
 [~][o] .error: !
 
 // Validation passed
-[o] .validated: pg\string << .data
+[o] .validated:pg.string << .data
 [X]
 
 [|] TransformData
-[i] .input: pg\string
+[i] .input:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Attempt transformation (example: uppercase conversion)
-[r] .result: pg\string << {.input|uppercase}
+[r] .result:pg.string << {.input|uppercase}
 
 // Check if transformation produced result
 [?] .result ?> ""
 [~]
 [~][r] .error: ! << !TransformError
-[~][<] .message: pg\string << "Transform produced empty result"
-[~][<] .code: pg\int << 2001
-[~][<] .trace: pg\string << ""
-[~][<] .input_value: pg\string << .input
+[~][<] .message:pg.string << "Transform produced empty result"
+[~][<] .code:pg.int << 2001
+[~][<] .trace:pg.string << ""
+[~][<] .input_value:pg.string << .input
 [~][o] .error: !
 
-[o] .transformed: pg\string << .result
+[o] .transformed:pg.string << .result
 [X]
 
 [|] ProcessDataWithRecovery
-[i] .raw_data: pg\string
+[i] .raw_data:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Step 1: Validate input
 [r] |ValidateInput
-[<] .data: pg\string << .raw_data
-[>] .validated: pg\string >> .clean_data
+[<] .data:pg.string << .raw_data
+[>] .validated:pg.string >> .clean_data
 [~]
 [~][!] !ValidationError
-[~][>] .message: pg\string >> .err_msg
-[~][>] .code: pg\int >> .err_code
-[~][>] .field_name: pg\string >> .err_field
+[~][>] .message:pg.string >> .err_msg
+[~][>] .code:pg.int >> .err_code
+[~][>] .field_name:pg.string >> .err_field
 [~]
 [~]// Recovery: Use default value
-[~][r] .clean_data: pg\string << "DEFAULT_VALUE"
-[~][r] .validation_failed: pg\bool << #True
+[~][r] .clean_data:pg.string << "DEFAULT_VALUE"
+[~][r] .validation_failed:pg.bool << #True
 
 // Step 2: Transform data
 [r] |TransformData
-[<] .input: pg\string << .clean_data
-[>] .transformed: pg\string >> .final_data
+[<] .input:pg.string << .clean_data
+[>] .transformed:pg.string >> .final_data
 [~]
 [~][!] !TransformError
-[~][>] .message: pg\string >> .transform_err_msg
-[~][>] .code: pg\int >> .transform_err_code
+[~][>] .message:pg.string >> .transform_err_msg
+[~][>] .code:pg.int >> .transform_err_code
 [~]
 [~]// Recovery: Use original data
-[~][r] .final_data: pg\string << .clean_data
-[~][r] .transform_failed: pg\bool << #True
+[~][r] .final_data:pg.string << .clean_data
+[~][r] .transform_failed:pg.bool << #True
 
-[o] .output: pg\string << .final_data
+[o] .output:pg.string << .final_data
 [X]
 ```
 
@@ -166,95 +166,95 @@ When given valid input "hello", produces "HELLO". When given invalid input "", u
 
 ```polyglot
 [!] !FileError
-[<] .message: pg\string << "File operation error"
-[<] .code: pg\int << 3001
-[<] .trace: pg\string << ""
-[<] .file_path: pg\path << #Path.Identifiers.Home
+[<] .message:pg.string << "File operation error"
+[<] .code:pg.int << 3001
+[<] .trace:pg.string << ""
+[<] .file_path:pg.path << #Path.Identifiers.Home
 [X]
 
 [|] ReadConfigFile
-[i] .config_name: pg\string
+[i] .config_name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Construct cross-platform path
 // Pattern: #Path.Identifiers.Home / ".config" / config_name
-[r] .base_path: pg\path << #Path.Identifiers.Home
-[r] .config_dir: pg\path << {.base_path / ".config"}
-[r] .config_file: pg\path << {.config_dir / .config_name}
+[r] .base_path:pg.path << #Path.Identifiers.Home
+[r] .config_dir:pg.path << {.base_path / ".config"}
+[r] .config_file:pg.path << {.config_dir / .config_name}
 
 // Attempt to read file
 [r] |U.File.Read
-[<] .path: pg\path << .config_file
-[>] .content: pg\string >> .file_content
+[<] .path:pg.path << .config_file
+[>] .content:pg.string >> .file_content
 [~]
 [~][!] !FileError
-[~][>] .message: pg\string >> .err_msg
-[~][>] .file_path: pg\path >> .err_path
+[~][>] .message:pg.string >> .err_msg
+[~][>] .file_path:pg.path >> .err_path
 [~]
 [~]// Recovery: Use default configuration
-[~][r] .file_content: pg\string << "# Default Configuration"
-[~][r] .used_default: pg\bool << #True
+[~][r] .file_content:pg.string << "# Default Configuration"
+[~][r] .used_default:pg.bool << #True
 
-[o] .config: pg\string << .file_content
+[o] .config:pg.string << .file_content
 [X]
 
 [|] SaveUserData
-[i] .data: pg\string
-[i] .filename: pg\string
+[i] .data:pg.string
+[i] .filename:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Construct cross-platform path to user data directory
-[r] .user_data_dir: pg\path << #Path.Identifiers.UserData
-[r] .output_file: pg\path << {.user_data_dir / .filename}
+[r] .user_data_dir:pg.path << #Path.Identifiers.UserData
+[r] .output_file:pg.path << {.user_data_dir / .filename}
 
 // Write data to file
 [r] |U.File.Write
-[<] .path: pg\path << .output_file
-[<] .content: pg\string << .data
+[<] .path:pg.path << .output_file
+[<] .content:pg.string << .data
 [~]
 [~][!] !FileError
-[~][>] .message: pg\string >> .write_err_msg
-[~][>] .file_path: pg\path >> .write_err_path
+[~][>] .message:pg.string >> .write_err_msg
+[~][>] .file_path:pg.path >> .write_err_path
 [~]
 [~]// Error occurred - output error indicator
-[~][r] .success: pg\bool << #False
+[~][r] .success:pg.bool << #False
 [~][r] .error: ! << !FileError
-[~][<] .message: pg\string << .write_err_msg
-[~][<] .code: pg\int << 3002
-[~][<] .trace: pg\string << ""
-[~][<] .file_path: pg\path << .write_err_path
+[~][<] .message:pg.string << .write_err_msg
+[~][<] .code:pg.int << 3002
+[~][<] .trace:pg.string << ""
+[~][<] .file_path:pg.path << .write_err_path
 [~][o] .error: !
 
 // Success case
-[r] .success: pg\bool << #True
-[o] .result: pg\bool << .success
+[r] .success:pg.bool << #True
+[o] .result:pg.bool << .success
 [X]
 
 [|] ProcessUserFiles
-[i] .user_id: pg\string
+[i] .user_id:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Read user config
 [r] |ReadConfigFile
-[<] .config_name: pg\string << "user_{.user_id}.conf"
-[>] .config: pg\string >> .user_config
+[<] .config_name:pg.string << "user_{.user_id}.conf"
+[>] .config:pg.string >> .user_config
 
 // Process config data
-[r] .processed_data: pg\string << {.user_config|trim}
+[r] .processed_data:pg.string << {.user_config|trim}
 
 // Save processed data
 [r] |SaveUserData
-[<] .data: pg\string << .processed_data
-[<] .filename: pg\string << "processed_{.user_id}.txt"
-[>] .result: pg\bool >> .save_success
+[<] .data:pg.string << .processed_data
+[<] .filename:pg.string << "processed_{.user_id}.txt"
+[>] .result:pg.bool >> .save_success
 [~]
 [~][!] !FileError
-[~][>] .message: pg\string >> .save_err
+[~][>] .message:pg.string >> .save_err
 
-[o] .success: pg\bool << .save_success
+[o] .success:pg.bool << .save_success
 [X]
 ```
 
@@ -263,7 +263,7 @@ When given valid input "hello", produces "HELLO". When given invalid input "", u
 This example demonstrates:
 1. **Path Identifiers**: Using `#Path.Identifiers.Home` and `#Path.Identifiers.UserData` for platform-independent paths
 2. **Path Construction**: Building paths with `/` operator that works on all platforms
-3. **Type Safety**: Variables explicitly typed as `pg\path`
+3. **Type Safety**: Variables explicitly typed as `:pg.path`
 4. **File Operations**: Reading and writing files with proper error handling
 5. **Error Propagation**: Catching file errors and either recovering or re-raising them
 
@@ -292,100 +292,100 @@ Reads user configuration from `~/.config/user_{id}.conf` (Unix) or `C:\Users\{us
 
 ```polyglot
 [!] !ProcessingError
-[<] .message: pg\string << "Processing error"
-[<] .code: pg\int << 4001
-[<] .trace: pg\string << ""
-[<] .item_id: pg\int << 0
+[<] .message:pg.string << "Processing error"
+[<] .code:pg.int << 4001
+[<] .trace:pg.string << ""
+[<] .item_id:pg.int << 0
 [X]
 
 [|] ProcessItem
-[i] .item: pg\string
-[i] .item_id: pg\int
+[i] .item:pg.string
+[i] .item_id:pg.int
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Simulate processing (example: uppercase + length)
-[r] .processed: pg\string << {.item|uppercase}
-[r] .length: pg\int << {.processed|length}
+[r] .processed:pg.string << {.item|uppercase}
+[r] .length:pg.int << {.processed|length}
 
 // Validate processing result
 [?] .length ?> 0
 [~]
 [~][r] .error: ! << !ProcessingError
-[~][<] .message: pg\string << "Processing produced empty result"
-[~][<] .code: pg\int << 4001
-[~][<] .trace: pg\string << ""
-[~][<] .item_id: pg\int << .item_id
+[~][<] .message:pg.string << "Processing produced empty result"
+[~][<] .code:pg.int << 4001
+[~][<] .trace:pg.string << ""
+[~][<] .item_id:pg.int << .item_id
 [~][o] .error: !
 
-[r] .result: pg\string << .processed
-[o] .output: pg\string << .result
+[r] .result:pg.string << .processed
+[o] .output:pg.string << .result
 [X]
 
 [|] ParallelBatchProcessor
-[i] .items: pg\array{pg\string}
+[i] .items: pg.array.pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Initialize result collectors
-[r] .results: pg\array{pg\string} << []
-[r] .errors: pg\array{!} << []
-[r] .item_count: pg\int << {.items|length}
+[r] .results: pg.array.pg.string << []
+[r] .errors:pg.array{!} << []
+[r] .item_count:pg.int << {.items|length}
 
 // Parallel processing block - process items concurrently
 // Process item 0 (if exists)
 [?] .item_count ?> 0..
 [~]
 [~][p] |ProcessItem
-[~][<] .item: pg\string << .items[0]
-[~][<] .item_id: pg\int << 0
-[~][>] .output: pg\string >> .result_0
+[~][<] .item:pg.string << .items[0]
+[~][<] .item_id:pg.int << 0
+[~][>] .output:pg.string >> .result_0
 [~][~]
 [~][~][!] !ProcessingError
-[~][~][>] .message: pg\string >> .err_0_msg
-[~][~][>] .item_id: pg\int >> .err_0_id
-[~][~][r] .result_0: pg\string << "ERROR"
+[~][~][>] .message:pg.string >> .err_0_msg
+[~][~][>] .item_id:pg.int >> .err_0_id
+[~][~][r] .result_0:pg.string << "ERROR"
 
 // Process item 1 (if exists)
 [?] .item_count ?> 1..
 [~]
 [~][p] |ProcessItem
-[~][<] .item: pg\string << .items[1]
-[~][<] .item_id: pg\int << 1
-[~][>] .output: pg\string >> .result_1
+[~][<] .item:pg.string << .items[1]
+[~][<] .item_id:pg.int << 1
+[~][>] .output:pg.string >> .result_1
 [~][~]
 [~][~][!] !ProcessingError
-[~][~][>] .message: pg\string >> .err_1_msg
-[~][~][>] .item_id: pg\int >> .err_1_id
-[~][~][r] .result_1: pg\string << "ERROR"
+[~][~][>] .message:pg.string >> .err_1_msg
+[~][~][>] .item_id:pg.int >> .err_1_id
+[~][~][r] .result_1:pg.string << "ERROR"
 
 // Process item 2 (if exists)
 [?] .item_count ?> 2..
 [~]
 [~][p] |ProcessItem
-[~][<] .item: pg\string << .items[2]
-[~][<] .item_id: pg\int << 2
-[~][>] .output: pg\string >> .result_2
+[~][<] .item:pg.string << .items[2]
+[~][<] .item_id:pg.int << 2
+[~][>] .output:pg.string >> .result_2
 [~][~]
 [~][~][!] !ProcessingError
-[~][~][>] .message: pg\string >> .err_2_msg
-[~][~][>] .item_id: pg\int >> .err_2_id
-[~][~][r] .result_2: pg\string << "ERROR"
+[~][~][>] .message:pg.string >> .err_2_msg
+[~][~][>] .item_id:pg.int >> .err_2_id
+[~][~][r] .result_2:pg.string << "ERROR"
 
 // Wait for all parallel operations to complete
 [Y] |Y.Join
 
 // Aggregate results (after join)
 [?] .item_count ?> 0..
-[~][r] .results: pg\array{pg\string} << [.result_0]
+[~][r] .results: pg.array.pg.string << [.result_0]
 
 [?] .item_count ?> 1..
-[~][r] .results: pg\array{pg\string} << {.results + .result_1}
+[~][r] .results: pg.array.pg.string << {.results + .result_1}
 
 [?] .item_count ?> 2..
-[~][r] .results: pg\array{pg\string} << {.results + .result_2}
+[~][r] .results: pg.array.pg.string << {.results + .result_2}
 
-[o] .processed: pg\array{pg\string} << .results
+[o] .processed: pg.array.pg.string << .results
 [X]
 ```
 
@@ -414,7 +414,7 @@ Given input array `["hello", "world", "polyglot"]`, processes all three items in
 **Purpose:** Demonstrates datetime operations, comparisons using range notation, and scheduling patterns.
 
 **Key Concepts:**
-- DateTime type `pg\dt`
+- DateTime type `:pg.dt`
 - Range notation for comparisons
 - Datetime arithmetic
 - Scheduling patterns
@@ -423,43 +423,43 @@ Given input array `["hello", "world", "polyglot"]`, processes all three items in
 
 ```polyglot
 [!] !ScheduleError
-[<] .message: pg\string << "Schedule error"
-[<] .code: pg\int << 5001
-[<] .trace: pg\string << ""
-[<] .event_time: pg\dt << DT"2024-01-01T00:00:00Z"
+[<] .message:pg.string << "Schedule error"
+[<] .code:pg.int << 5001
+[<] .trace:pg.string << ""
+[<] .event_time:pg.dt << DT"2024-01-01T00:00:00Z"
 [X]
 
 [|] CheckEventTiming
-[i] .event_time: pg\dt
-[i] .reference_time: pg\dt
+[i] .event_time:pg.dt
+[i] .reference_time:pg.dt
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Check if event is in the past (before reference)
 [?] .event_time ?> ...reference_time
 [~]
-[~][r] .timing: pg\string << "past"
-[~][r] .is_past: pg\bool << #True
+[~][r] .timing:pg.string << "past"
+[~][r] .is_past:pg.bool << #True
 
 // Check if event is in the future (after reference)
 [?] .event_time ?> .reference_time..
 [~]
-[~][r] .timing: pg\string << "future"
-[~][r] .is_future: pg\bool << #True
+[~][r] .timing:pg.string << "future"
+[~][r] .is_future:pg.bool << #True
 
 // Check if event is exactly at reference time
 [?] .event_time ?> .reference_time
 [~]
-[~][r] .timing: pg\string << "now"
-[~][r] .is_now: pg\bool << #True
+[~][r] .timing:pg.string << "now"
+[~][r] .is_now:pg.bool << #True
 
-[o] .result: pg\string << .timing
+[o] .result:pg.string << .timing
 [X]
 
 [|] ValidateScheduleWindow
-[i] .event_time: pg\dt
-[i] .window_start: pg\dt
-[i] .window_end: pg\dt
+[i] .event_time:pg.dt
+[i] .window_start:pg.dt
+[i] .window_end:pg.dt
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
@@ -467,71 +467,71 @@ Given input array `["hello", "world", "polyglot"]`, processes all three items in
 [?] .event_time ?> ...window_start
 [~]
 [~][r] .error: ! << !ScheduleError
-[~][<] .message: pg\string << "Event scheduled before window start"
-[~][<] .code: pg\int << 5001
-[~][<] .trace: pg\string << ""
-[~][<] .event_time: pg\dt << .event_time
+[~][<] .message:pg.string << "Event scheduled before window start"
+[~][<] .code:pg.int << 5001
+[~][<] .trace:pg.string << ""
+[~][<] .event_time:pg.dt << .event_time
 [~][o] .error: !
 
 // Check if event is after window end
 [?] .event_time ?> .window_end..
 [~]
 [~][r] .error: ! << !ScheduleError
-[~][<] .message: pg\string << "Event scheduled after window end"
-[~][<] .code: pg\int << 5002
-[~][<] .trace: pg\string << ""
-[~][<] .event_time: pg\dt << .event_time
+[~][<] .message:pg.string << "Event scheduled after window end"
+[~][<] .code:pg.int << 5002
+[~][<] .trace:pg.string << ""
+[~][<] .event_time:pg.dt << .event_time
 [~][o] .error: !
 
 // Event is within valid window
-[r] .valid: pg\bool << #True
-[o] .is_valid: pg\bool << .valid
+[r] .valid:pg.bool << #True
+[o] .is_valid:pg.bool << .valid
 [X]
 
 [|] ScheduleEventProcessor
-[i] .event_name: pg\string
-[i] .event_time: pg\dt
+[i] .event_name:pg.string
+[i] .event_time:pg.dt
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Get current time (simulated)
-[r] .now: pg\dt << DT"2024-06-15T10:00:00Z"
+[r] .now:pg.dt << DT"2024-06-15T10:00:00Z"
 
 // Define scheduling window (e.g., next 30 days)
-[r] .window_start: pg\dt << .now
-[r] .window_end: pg\dt << {.now + 30d}  // Add 30 days
+[r] .window_start:pg.dt << .now
+[r] .window_end:pg.dt << {.now + 30d}  // Add 30 days
 
 // Validate event is within scheduling window
 [r] |ValidateScheduleWindow
-[<] .event_time: pg\dt << .event_time
-[<] .window_start: pg\dt << .window_start
-[<] .window_end: pg\dt << .window_end
-[>] .is_valid: pg\bool >> .valid_schedule
+[<] .event_time:pg.dt << .event_time
+[<] .window_start:pg.dt << .window_start
+[<] .window_end:pg.dt << .window_end
+[>] .is_valid:pg.bool >> .valid_schedule
 [~]
 [~][!] !ScheduleError
-[~][>] .message: pg\string >> .schedule_err_msg
-[~][>] .code: pg\int >> .schedule_err_code
+[~][>] .message:pg.string >> .schedule_err_msg
+[~][>] .code:pg.int >> .schedule_err_code
 [~]
 [~]// Invalid schedule - output error
 [~][r] .error: ! << !ScheduleError
-[~][<] .message: pg\string << .schedule_err_msg
-[~][<] .code: pg\int << .schedule_err_code
-[~][<] .trace: pg\string << ""
-[~][<] .event_time: pg\dt << .event_time
+[~][<] .message:pg.string << .schedule_err_msg
+[~][<] .code:pg.int << .schedule_err_code
+[~][<] .trace:pg.string << ""
+[~][<] .event_time:pg.dt << .event_time
 [~][o] .error: !
 
 // Check timing relative to now
 [r] |CheckEventTiming
-[<] .event_time: pg\dt << .event_time
-[<] .reference_time: pg\dt << .now
-[>] .result: pg\string >> .timing_status
+[<] .event_time:pg.dt << .event_time
+[<] .reference_time:pg.dt << .now
+[>] .result:pg.string >> .timing_status
 
 // Build schedule confirmation message
-[r] .confirmation: pg\string << "Event '{.event_name}' scheduled for {.event_time} "
+[r] .confirmation:pg.string << "Event '{.event_name}' scheduled for {.event_time} "
 [*] +"Status: {.timing_status} "
 [*] +"Window: {.window_start} to {.window_end}"
 
-[o] .message: pg\string << .confirmation
+[o] .message:pg.string << .confirmation
 [X]
 ```
 
@@ -570,159 +570,159 @@ Given event "Team Meeting" scheduled for "2024-06-20T14:00:00Z", validates it fa
 
 ```polyglot
 [!] !NetworkError
-[<] .message: pg\string << "Network error"
-[<] .code: pg\int << 6001
-[<] .trace: pg\string << ""
-[<] .endpoint: pg\string << ""
-[<] .retry_count: pg\int << 0
+[<] .message:pg.string << "Network error"
+[<] .code:pg.int << 6001
+[<] .trace:pg.string << ""
+[<] .endpoint:pg.string << ""
+[<] .retry_count:pg.int << 0
 [X]
 
 [!] !ParseError
-[<] .message: pg\string << "Parse error"
-[<] .code: pg\int << 6101
-[<] .trace: pg\string << ""
-[<] .raw_data: pg\string << ""
+[<] .message:pg.string << "Parse error"
+[<] .code:pg.int << 6101
+[<] .trace:pg.string << ""
+[<] .raw_data:pg.string << ""
 [X]
 
 [!] !CacheError
-[<] .message: pg\string << "Cache error"
-[<] .code: pg\int << 6201
-[<] .trace: pg\string << ""
-[<] .cache_key: pg\string << ""
+[<] .message:pg.string << "Cache error"
+[<] .code:pg.int << 6201
+[<] .trace:pg.string << ""
+[<] .cache_key:pg.string << ""
 [X]
 
 [|] FetchFromNetwork
-[i] .url: pg\string
+[i] .url:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Simulate network fetch
-[r] .response: pg\string << "simulated_network_response"
+[r] .response:pg.string << "simulated_network_response"
 
 // Check if response is empty (simulating network failure)
 [?] .response ?> ""
 [~]
 [~][r] .error: ! << !NetworkError
-[~][<] .message: pg\string << "Network request returned empty response"
-[~][<] .code: pg\int << 6001
-[~][<] .trace: pg\string << ""
-[~][<] .endpoint: pg\string << .url
-[~][<] .retry_count: pg\int << 0
+[~][<] .message:pg.string << "Network request returned empty response"
+[~][<] .code:pg.int << 6001
+[~][<] .trace:pg.string << ""
+[~][<] .endpoint:pg.string << .url
+[~][<] .retry_count:pg.int << 0
 [~][o] .error: !
 
-[o] .data: pg\string << .response
+[o] .data:pg.string << .response
 [X]
 
 [|] ParseResponse
-[i] .raw: pg\string
+[i] .raw:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Simulate parsing (check for valid format)
-[r] .trimmed: pg\string << {.raw|trim}
-[r] .length: pg\int << {.trimmed|length}
+[r] .trimmed:pg.string << {.raw|trim}
+[r] .length:pg.int << {.trimmed|length}
 
 [?] .length ?> ...5
 [~]
 [~][r] .error: ! << !ParseError
-[~][<] .message: pg\string << "Response too short to be valid"
-[~][<] .code: pg\int << 6101
-[~][<] .trace: pg\string << ""
-[~][<] .raw_data: pg\string << .raw
+[~][<] .message:pg.string << "Response too short to be valid"
+[~][<] .code:pg.int << 6101
+[~][<] .trace:pg.string << ""
+[~][<] .raw_data:pg.string << .raw
 [~][o] .error: !
 
-[r] .parsed: pg\string << .trimmed
-[o] .result: pg\string << .parsed
+[r] .parsed:pg.string << .trimmed
+[o] .result:pg.string << .parsed
 [X]
 
 [|] CacheLookup
-[i] .key: pg\string
+[i] .key:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 // Simulate cache lookup (always miss for this example)
-[r] .found: pg\bool << #False
+[r] .found:pg.bool << #False
 
 [?] .found ?> False
 [~]
 [~][r] .error: ! << !CacheError
-[~][<] .message: pg\string << "Cache miss"
-[~][<] .code: pg\int << 6201
-[~][<] .trace: pg\string << ""
-[~][<] .cache_key: pg\string << .key
+[~][<] .message:pg.string << "Cache miss"
+[~][<] .code:pg.int << 6201
+[~][<] .trace:pg.string << ""
+[~][<] .cache_key:pg.string << .key
 [~][o] .error: !
 
-[o] .value: pg\string << "cached_value"
+[o] .value:pg.string << "cached_value"
 [X]
 
 [|] FetchDataWithFallbacks
-[i] .resource_id: pg\string
+[i] .resource_id:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[r] .data: pg\string << ""
-[r] .source: pg\string << "unknown"
+[r] .data:pg.string << ""
+[r] .source:pg.string << "unknown"
 
 // Strategy 1: Try cache first
 [r] |CacheLookup
-[<] .key: pg\string << .resource_id
-[>] .value: pg\string >> .cached_data
+[<] .key:pg.string << .resource_id
+[>] .value:pg.string >> .cached_data
 [~]
 [~][!] !CacheError
-[~][>] .message: pg\string >> .cache_err_msg
-[~][>] .cache_key: pg\string >> .cache_key
+[~][>] .message:pg.string >> .cache_err_msg
+[~][>] .cache_key:pg.string >> .cache_key
 [~]
 [~]// Cache miss - continue to network fetch
-[~][r] .cache_miss: pg\bool << #True
+[~][r] .cache_miss:pg.bool << #True
 
 // If we have cached data, use it
 [?] .cached_data ?> ...""
 [~]
-[~][r] .data: pg\string << .cached_data
-[~][r] .source: pg\string << "cache"
+[~][r] .data:pg.string << .cached_data
+[~][r] .source:pg.string << "cache"
 
 // Strategy 2: If no cache hit, try network
 [?] .data ?> ""
 [~]
-[~][r] .url: pg\string << "https://api.example.com/resource/{.resource_id}"
+[~][r] .url:pg.string << "https://api.example.com/resource/{.resource_id}"
 [~][r] |FetchFromNetwork
-[~][<] .url: pg\string << .url
-[~][>] .data: pg\string >> .network_response
+[~][<] .url:pg.string << .url
+[~][>] .data:pg.string >> .network_response
 [~][~]
 [~][~][!] !NetworkError
-[~][~][>] .message: pg\string >> .network_err_msg
-[~][~][>] .endpoint: pg\string >> .failed_endpoint
+[~][~][>] .message:pg.string >> .network_err_msg
+[~][~][>] .endpoint:pg.string >> .failed_endpoint
 [~][~]
 [~][~]// Network failed - use fallback
-[~][~][r] .network_response: pg\string << ""
-[~][~][r] .network_failed: pg\bool << #True
+[~][~][r] .network_response:pg.string << ""
+[~][~][r] .network_failed:pg.bool << #True
 
 // If we have network response, parse it
 [?] .network_response ?> ...""
 [~]
 [~][r] |ParseResponse
-[~][<] .raw: pg\string << .network_response
-[~][>] .result: pg\string >> .parsed_data
+[~][<] .raw:pg.string << .network_response
+[~][>] .result:pg.string >> .parsed_data
 [~][~]
 [~][~][!] !ParseError
-[~][~][>] .message: pg\string >> .parse_err_msg
-[~][~][>] .raw_data: pg\string >> .unparseable_data
+[~][~][>] .message:pg.string >> .parse_err_msg
+[~][~][>] .raw_data:pg.string >> .unparseable_data
 [~][~]
 [~][~]// Parse failed - use raw data
-[~][~][r] .parsed_data: pg\string << .network_response
-[~][~][r] .parse_failed: pg\bool << #True
+[~][~][r] .parsed_data:pg.string << .network_response
+[~][~][r] .parse_failed:pg.bool << #True
 [~]
-[~][r] .data: pg\string << .parsed_data
-[~][r] .source: pg\string << "network"
+[~][r] .data:pg.string << .parsed_data
+[~][r] .source:pg.string << "network"
 
 // Strategy 3: If still no data, use hardcoded fallback
 [?] .data ?> ""
 [~]
-[~][r] .data: pg\string << "FALLBACK_DEFAULT_DATA"
-[~][r] .source: pg\string << "fallback"
+[~][r] .data:pg.string << "FALLBACK_DEFAULT_DATA"
+[~][r] .source:pg.string << "fallback"
 
-[o] .result: pg\string << .data
-[o] .data_source: pg\string << .source
+[o] .result:pg.string << .data
+[o] .data_source:pg.string << .source
 [X]
 ```
 

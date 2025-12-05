@@ -402,7 +402,7 @@ result = rust_module('matrix_ops::get_diagonal')(data)
 [|] DailyReportGenerator
 
 [t] |T.Daily
-[<] .time: pg\dt << DT"02:00:"
+[<] .time:pg.dt << DT"02:00:"
 
 [W] |W.Rust
 [r] |GatherCodebaseStats
@@ -519,50 +519,50 @@ Create `DailyCodeReport.pg`:
 [|] DailyCodeReport
 
 // === INPUTS ===
-[i] .repo_path: pg\path
-[i] .stat_rust_file: pg\path << \\FileDir\\rustrepo\\statgen.rs
-[i] .pyfile: pg\path << \\FileDir\\pythonrepo\\formatter.py
-[i] .py_function_name: pg\string << "report_formatter"
-[i] .python_depen: pg\path << \\FileDir\\pythonrepo\\lock.toml
-[i] .llm_config: pg\path << \\FileDir\\llm.yaml
+[i] .repo_path:pg.path
+[i] .stat_rust_file:pg.path << \\FileDir\\rustrepo\\statgen.rs
+[i] .pyfile:pg.path << \\FileDir\\pythonrepo\\formatter.py
+[i] .py_function_name:pg.string << "report_formatter"
+[i] .python_depen:pg.path << \\FileDir\\pythonrepo\\lock.toml
+[i] .llm_config:pg.path << \\FileDir\\llm.yaml
 
 // === TRIGGER: Every day at 2 AM ===
 [t] |T.Daily
-[<] .time: pg\dt << DT"02:00:"
+[<] .time:pg.dt << DT"02:00:"
 
 // === QUEUE PRIORITY: Medium-high ===
 [Q] |Q.Priority
-[<] .level: pg\int << 7
+[<] .level:pg.int << 7
 
 // === STEP 1: Setup Runtimes ===
 [W] |W.Rust1.8
 [W] |W.Python3.11
-[<] .dependencies: pg\path << .python_depen
+[<] .dependencies:pg.path << .python_depen
 
 // === STEP 2: Gather codebase statistics with Rust ===
 [r] |U.Rust.Run
-[<] .file: pg\path << .stat_rust_file
-[>] .results: rs\HashMap >> .rust_stats: pg\serial
+[<] .file:pg.path << .stat_rust_file
+[>] .results: rs\HashMap >> .rust_stats:pg.serial
 // Rust returns HashMap<String, i32>, Polyglot auto-converts to pg\serial
 // Note: rs\HashMap is the foreign type reference for Rust's HashMap
 
 // === STEP 3: Format report with Python ===
 [r] |U.Python.Run
-[<] .python_file: pg\path << .pyfile
-[<] .function: pg\string << .py_function_name
+[<] .python_file:pg.path << .pyfile
+[<] .function:pg.string << .py_function_name
 [<] .raw_data: py\str << .rust_stats
-[>] .formatted: py\str >> .python_report: pg\string
+[>] .formatted: py\str >> .python_report:pg.string
 // Python creates markdown report from data
 
 // === STEP 4: Send to LLM for insights ===
 [r] |U.LLM.prompt
-[<] .config: pg\path << .llm_config
-[<] .report: pg\string << .python_report
-[>] .analysis: pg\string >> .llm_insights
+[<] .config:pg.path << .llm_config
+[<] .report:pg.string << .python_report
+[>] .analysis:pg.string >> .llm_insights
 // Calls OpenAI/Claude API for code health analysis
 
 // === OUTPUT ===
-[o] .final_report: pg\string
+[o] .final_report:pg.string
 
 [X]  // End pipeline definition
 ```
@@ -616,14 +616,14 @@ pub fn main() -> HashMap<String, i32> {
 
 **Key Points:**
 - Rust returns `HashMap<String, i32>` (Polyglot type: `rs\HashMap`)
-- Polyglot **automatically converts** `rs\HashMap` → `pg\serial` (cross-language serializable format)
+- Polyglot **automatically converts** `rs\HashMap` → `:pg.serial` (cross-language serializable format)
 - No manual JSON serialization needed!
 - Function signature: `pub fn main() -> HashMap<String, i32>`
 
 **Type System Note:**
 - ❌ WRONG: `rust\map<string&, i32>` (maps removed in v0.0.2, invalid syntax)
 - ✅ CORRECT: `rs\HashMap` (foreign type reference to Rust's HashMap)
-- ✅ CORRECT: `pg\serial` (Polyglot's dynamic key-value structure)
+- ✅ CORRECT: `:pg.serial` (Polyglot's dynamic key-value structure)
 
 ---
 
@@ -676,7 +676,7 @@ python = "^3.11"
 - Function name `report_formatter` matches the `.pg` file input
 - Polyglot passes deserialized data directly (no manual JSON parsing!)
 - Polyglot installs dependencies from `lock.toml` automatically
-- Returns plain `str` - Polyglot converts `py\str` → `pg\string`
+- Returns plain `str` - Polyglot converts `py\str` → `:pg.string`
 
 ---
 
@@ -782,7 +782,7 @@ polyglot logs DailyCodeReport --follow
 
 **Key Observations:**
 - **Runtime setup:** Polyglot prepared both Rust and Python environments
-- **Automatic type conversions:** `rs\HashMap` → `pg\serial` → `py\dict` → `py\str` → `pg\string`
+- **Automatic type conversions:** `rs\HashMap` → `:pg.serial` → `py\dict` → `py\str` → `:pg.string`
 - **Built-in utilities:** `|U.Rust.Run`, `|U.Python.Run`, `|U.LLM.prompt` handled execution
 - **No manual integration:** Zero FFI code, zero API wrapper code!
 
@@ -856,7 +856,7 @@ The 297 average lines per file indicates thoughtful component sizing.
 
 **3. Orchestrated Multi-Language Workflow:**
 - ✅ Rust gathered codebase stats (`HashMap<String, i32>` = `rs\HashMap`)
-- ✅ Polyglot auto-converted types (`rs\HashMap` → `pg\serial` → `py\dict` → `py\str`)
+- ✅ Polyglot auto-converted types (`rs\HashMap` → `:pg.serial` → `py\dict` → `py\str`)
 - ✅ Python formatted report
 - ✅ LLM analyzed with AI insights
 - ✅ **Zero manual FFI or API integration code!**

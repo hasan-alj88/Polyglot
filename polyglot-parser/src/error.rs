@@ -24,9 +24,9 @@
 //! 10. **Pipeline Call Errors** - Invalid references, missing prefixes
 //! 11. **Line Continuation Errors** - Invalid or broken continuations
 
-use thiserror::Error;
 use crate::span::Span;
 use polyglot_lexer::LexerError;
+use thiserror::Error;
 
 /// Comprehensive parser error types for Polyglot v0.0.2
 ///
@@ -41,10 +41,7 @@ pub enum ParserError {
     ///
     /// Wraps errors from the lexer layer with span information.
     #[error("Lexer error at {span}: {source}")]
-    LexerError {
-        source: LexerError,
-        span: Span,
-    },
+    LexerError { source: LexerError, span: Span },
 
     // ========================================
     // Token Errors
@@ -64,10 +61,7 @@ pub enum ParserError {
     ///
     /// File ended while parser was expecting more tokens.
     #[error("Unexpected end of file: {context}")]
-    UnexpectedEof {
-        context: String,
-        started_at: Span,
-    },
+    UnexpectedEof { context: String, started_at: Span },
 
     // ========================================
     // Block Hierarchy Errors
@@ -118,7 +112,9 @@ pub enum ParserError {
     /// Multiple execution blocks in same pipeline
     ///
     /// Cannot mix [r], [p], [Y], [b] in same pipeline
-    #[error("Multiple execution blocks: {first_block} at {first_span}, {second_block} at {second_span}")]
+    #[error(
+        "Multiple execution blocks: {first_block} at {first_span}, {second_block} at {second_span}"
+    )]
     MultipleExecutionBlocks {
         first_block: String,
         first_span: Span,
@@ -129,7 +125,9 @@ pub enum ParserError {
     /// Duplicate optional pipeline block
     ///
     /// Optional blocks like [t], [\], [/] can only appear once per pipeline
-    #[error("Duplicate optional block at {second_span}: {block_type} already defined at {first_span}")]
+    #[error(
+        "Duplicate optional block at {second_span}: {block_type} already defined at {first_span}"
+    )]
     DuplicateOptionalBlock {
         block_type: String,
         first_span: Span,
@@ -350,15 +348,11 @@ pub enum ParserError {
     // ========================================
     // NOTE: These error types are defined here for completeness,
     // but actual detection logic is in Story 1.5 (Parser) and Epic 2 (Semantic Analysis)
-
     /// Undeclared variable reference
     ///
     /// Variable used before declaration or not declared at all
     #[error("Undeclared variable at {span}: '{name}' has not been declared")]
-    UndeclaredVariable {
-        name: String,
-        span: Span,
-    },
+    UndeclaredVariable { name: String, span: Span },
 
     /// Undeclared pipeline reference
     ///
@@ -395,10 +389,7 @@ pub enum ParserError {
     ///
     /// Imported package not found in registry
     #[error("Unresolved import at {span}: package '{package}' not found")]
-    UnresolvedImport {
-        package: String,
-        span: Span,
-    },
+    UnresolvedImport { package: String, span: Span },
 
     /// Duplicate definition
     ///
@@ -457,10 +448,7 @@ pub enum ParserError {
     ///
     /// Version string doesn't match semver format (major.minor.patch)
     #[error("Invalid package version at {span}: '{version}' does not match semver format (major.minor.patch)")]
-    InvalidPackageVersion {
-        version: String,
-        span: Span,
-    },
+    InvalidPackageVersion { version: String, span: Span },
 }
 
 // Implement Send + Sync for async compatibility (ADR-004)

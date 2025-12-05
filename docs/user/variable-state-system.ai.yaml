@@ -1,0 +1,20 @@
+_meta:
+  src: variable-state-system.md
+  updated: 2025-12-03
+topic: Variable State System (User Guide)
+kw: [variables, states, async, Pending, Final, Faulted, Default, Cleared, state-machine, lifecycle, scope-cleanup, push, pull]
+sum: User guide to var state system: async-centric states, 6-state lifecycle, automatic transitions, no manual await, scope cleanup
+pts:
+  - Async-first: vars transition states automatically
+  - 6 states: Pending, Default, Final, Faulted, Cleared (+ queue mgmt states)
+  - Declaration no value: .var: type → Pending state
+  - Declaration with << or >>: → Final or Pending (if async)
+  - Default <~ or ~>: → Default (override once)
+  - Assignment: << assigns value, >> pulls from source
+  - PULL: >> waits for Final, propagates Faulted
+  - Final: immutable, no more pushes, unlimited pulls
+  - Scope end [X]: all vars → Cleared via |W.Polyglot.Scope
+  - No await: lang handles async internally
+  - [i] triggers: pipeline starts when inputs Final
+rels: [variable-states.md, async-centric-paradigm.md, operators.md, variable-states-specification.md]
+code: [docs/project/examples/02-variable-states.pg]

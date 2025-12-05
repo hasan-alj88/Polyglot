@@ -28,7 +28,7 @@ ALL valid Polyglot code MUST start with one of: `[t]`, `[i]`, `[W]`, or `{[\], [
 **Invalid Code Pattern:**
 ```polyglot
 [|] PipelineName
-[o] .output: pg\string << "value"
+[o] .output:pg.string << "value"
 [X]
 ```
 
@@ -36,7 +36,7 @@ ALL valid Polyglot code MUST start with one of: `[t]`, `[i]`, `[W]`, or `{[\], [
 ```polyglot
 [|] PipelineName
 [W] |W.NoSetup.NoCleanup
-[o] .output: pg\string << "value"
+[o] .output:pg.string << "value"
 [X]
 ```
 
@@ -64,12 +64,12 @@ The `[^]` line continuation block element for multi-line strings was not documen
 **Undocumented Syntax:**
 ```polyglot
 [|] CombineGreetings
-[i] .english: pg\array{pg\string}
-[i] .spanish: pg\array{pg\string}
-[i] .french: pg\array{pg\string}
+[i] .english: pg.array.pg.string
+[i] .spanish: pg.array.pg.string
+[i] .french: pg.array.pg.string
 [W] |W.NoSetup.NoCleanup
 
-[o] .all: pg\string << ""
+[o] .all:pg.string << ""
 [^] +"English: {.english}, "
 [^] +"Spanish: {.spanish}, "
 [^] +"French: {.french}"
@@ -143,9 +143,9 @@ ALL pipelines MUST have a trigger declaration using `[t] |T.*` format. Compiler 
 **Invalid Code Pattern:**
 ```polyglot
 [|] PipelineName
-[i] .input: pg\string
+[i] .input:pg.string
 [W] |W.NoSetup.NoCleanup
-[o] .output: pg\string << "value"
+[o] .output:pg.string << "value"
 [X]
 ```
 
@@ -153,23 +153,23 @@ ALL pipelines MUST have a trigger declaration using `[t] |T.*` format. Compiler 
 ```polyglot
 // Manual call trigger (called by other pipelines)
 [|] PipelineName
-[i] .input: pg\string
+[i] .input:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
-[o] .output: pg\string << "value"
+[o] .output:pg.string << "value"
 [X]
 
 // CLI trigger (polyglot run Local@pkg|PipelineName)
 [|] CliPipeline
 [t] |T.Cli
 [W] |W.NoSetup.NoCleanup
-[o] .result: pg\string << "done"
+[o] .result:pg.string << "done"
 [X]
 
 // Scheduled trigger
 [|] DailyTask
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 [W] |W.NoSetup.NoCleanup
 [r] |DoWork
 [X]
@@ -180,7 +180,7 @@ ALL pipelines MUST have a trigger declaration using `[t] |T.*` format. Compiler 
 2. **`[t] |T.Call`** - For pipelines called by other pipelines using `|PipelineName`
 3. **`[t] |T.Cli`** - For pipelines run via `polyglot run` command
 4. **DO NOT use boolean variables as triggers** - triggers are continuously-run operations
-5. **Invalid:** `[t] .condition: pg\bool << .should_greet` - This is WRONG syntax
+5. **Invalid:** `[t] .condition:pg.bool << .should_greet` - This is WRONG syntax
 
 **Files Affected:**
 - `examples/01-hello-world.md` - ALL examples (Examples 1-6, all helpers, all patterns)
@@ -211,23 +211,23 @@ The `[o]` output marker should ONLY declare which variables are outputs, NOT per
 **Invalid Code Pattern:**
 ```polyglot
 [|] GreetUser
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[o] .greeting: pg\string << "Hello, {.name}!"  // ✗ WRONG - assignment in [o]
+[o] .greeting:pg.string << "Hello, {.name}!"  // ✗ WRONG - assignment in [o]
 [X]
 ```
 
 **Correct Code Pattern:**
 ```polyglot
 [|] GreetUser
-[i] .name: pg\string
+[i] .name:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
-[r] .greeting: pg\string << "Hello, {.name}!"  // ✓ Compute with [r]
-[o] .greeting: pg\string                        // ✓ Declare as output
+[r] .greeting:pg.string << "Hello, {.name}!"  // ✓ Compute with [r]
+[o] .greeting:pg.string                        // ✓ Declare as output
 [X]
 ```
 
@@ -263,17 +263,17 @@ When a pipeline has multiple execution paths (switch branches `[?]` or parallel 
 **Invalid Code Pattern:**
 ```polyglot
 [|] ConditionalProcess
-[i] .condition: pg\bool
+[i] .condition:pg.bool
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [?] .condition ?> True
-[~][r] .result: pg\string << "Success"
-[~][o] .result: pg\string              // ✓ Has .result output
+[~][r] .result:pg.string << "Success"
+[~][o] .result:pg.string              // ✓ Has .result output
 
 [?] .condition ?> False
-[~][r] .status: pg\int << 404
-[~][o] .status: pg\int                 // ✗ WRONG - different output name
+[~][r] .status:pg.int << 404
+[~][o] .status:pg.int                 // ✗ WRONG - different output name
 
 [X]
 ```
@@ -281,21 +281,21 @@ When a pipeline has multiple execution paths (switch branches `[?]` or parallel 
 **Correct Code Pattern (Same Output Set):**
 ```polyglot
 [|] ConditionalProcess
-[i] .condition: pg\bool
+[i] .condition:pg.bool
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [?] .condition ?> True
-[~][r] .result: pg\string << "Success"
-[~][r] .status: pg\int << 200
-[~][o] .result: pg\string              // ✓ Both outputs
-[~][o] .status: pg\int
+[~][r] .result:pg.string << "Success"
+[~][r] .status:pg.int << 200
+[~][o] .result:pg.string              // ✓ Both outputs
+[~][o] .status:pg.int
 
 [?] .condition ?> False
-[~][r] .result: pg\string << "Failed"
-[~][r] .status: pg\int << 404
-[~][o] .result: pg\string              // ✓ Same outputs
-[~][o] .status: pg\int
+[~][r] .result:pg.string << "Failed"
+[~][r] .status:pg.int << 404
+[~][o] .result:pg.string              // ✓ Same outputs
+[~][o] .status:pg.int
 
 [X]
 ```
@@ -317,20 +317,20 @@ Expected: All branches must declare identical output sets
 **Example with Error Handling:**
 ```polyglot
 [|] SafeOperation
-[i] .input: pg\string
+[i] .input:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [r] |MightFail
-[<] .data: pg\string << .input
-[>] .result: pg\string >> success_result
+[<] .data:pg.string << .input
+[>] .result:pg.string >> success_result
 
 [!] !SomeError
-[~][r] .result: pg\string << "error fallback"
-[~][o] .result: pg\string              // ✓ Same output as success path
+[~][r] .result:pg.string << "error fallback"
+[~][o] .result:pg.string              // ✓ Same output as success path
 
-[r] .result: pg\string << success_result
-[o] .result: pg\string                  // ✓ Consistent across all paths
+[r] .result:pg.string << success_result
+[o] .result:pg.string                  // ✓ Consistent across all paths
 [X]
 ```
 
@@ -350,7 +350,7 @@ Expected: All branches must declare identical output sets
 // ✗ MISSING: Should also declare .greeting (or use consistent error pattern)
 
 [?] .input_name != ""
-[~][o] .greeting: pg\string            // ✓ Outputs .greeting
+[~][o] .greeting:pg.string            // ✓ Outputs .greeting
 // ✗ MISSING: Should also declare .error (or use consistent success pattern)
 ```
 
@@ -360,17 +360,17 @@ Expected: All branches must declare identical output sets
 ```polyglot
 [?] .input_name == ""
 [~][r] .error: !ValidationError
-[~][<] .message: pg\string << "Name cannot be empty"
-[~][<] .code: pg\int << 1001
-[~][<] .trace: pg\string << ""
-[~][r] .greeting: pg\string << ""      // Empty when error
+[~][<] .message:pg.string << "Name cannot be empty"
+[~][<] .code:pg.int << 1001
+[~][<] .trace:pg.string << ""
+[~][r] .greeting:pg.string << ""      // Empty when error
 [~][o] .error: !ValidationError
-[~][o] .greeting: pg\string
+[~][o] .greeting:pg.string
 
 [?] .input_name != ""
-[~][r] .greeting: pg\string << "Hello, {.input_name}!"
+[~][r] .greeting:pg.string << "Hello, {.input_name}!"
 [~][r] .error: !ValidationError << \\NoError\\  // No error value
-[~][o] .greeting: pg\string
+[~][o] .greeting:pg.string
 [~][o] .error: !ValidationError
 ```
 
@@ -380,14 +380,14 @@ Expected: All branches must declare identical output sets
 // OR use Result type pattern
 [?] .input_name == ""
 [~][r] .result: !ValidationError       // Output is error type
-[~][<] .message: pg\string << "Name cannot be empty"
-[~][<] .code: pg\int << 1001
-[~][<] .trace: pg\string << ""
+[~][<] .message:pg.string << "Name cannot be empty"
+[~][<] .code:pg.int << 1001
+[~][<] .trace:pg.string << ""
 [~][o] .result: !ValidationError
 
 [?] .input_name != ""
-[~][r] .result: pg\string << "Hello, {.input_name}!"
-[~][o] .result: pg\string              // ✗ DIFFERENT TYPE - needs union type
+[~][r] .result:pg.string << "Hello, {.input_name}!"
+[~][o] .result:pg.string              // ✗ DIFFERENT TYPE - needs union type
 ```
 
 **Note:** This reveals a potential need for union types or Result<T, E> pattern in Polyglot.
@@ -448,10 +448,10 @@ Polyglot philosophy: **Explicit over implicit**. Instead of comparison operators
 ```polyglot
 // ✓ CORRECT - Use explicit named operations
 [Q] |Q.DispatchIf.RAM.MoreThan
-[<] .ram_gb: pg\uint << 3
+[<] .ram_gb:pg.uint << 3
 
 [Q] |Q.DispatchIf.String.IsEmpty
-[<] .value: pg\string << .input_name
+[<] .value:pg.string << .input_name
 
 // Note: No need to check "IsNoError" - that's the default behavior.
 // If no error occurs, execution continues normally.
@@ -504,10 +504,10 @@ Polyglot philosophy: **Explicit over implicit**. Instead of comparison operators
 ```polyglot
 // ✓ CORRECT - Catch errors with [!] block
 [r] |RiskyOperation
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [~]
 [~][!] !Error.Network.Timeout
-[~][<] .timeout: pg\dt << DT"5m"
+[~][<] .timeout:pg.dt << DT"5m"
 [~][r] |HandleTimeout
 [~]
 [~][!] !Error.FileSystem.NotFound
@@ -519,7 +519,7 @@ Polyglot philosophy: **Explicit over implicit**. Instead of comparison operators
 
 **Critical Error Handling Rules:**
 - Errors use `[!]` block, NOT `[?]` switch
-- Backslash literals `\\..\\` are ONLY for `pg\path` and `pg\url` types
+- Backslash literals `\\..\\` are ONLY for `:pg.path` and `:pg.url` types
 - There is NO `\\NoError\\` literal - absence of error doesn't need handling
 - Error types are based on reserved enumeration: `!Error.Category.Type`
 - Only catch errors that actually occurred; "success" path continues normally
@@ -575,50 +575,50 @@ Polyglot philosophy: **Explicit over implicit**. Instead of comparison operators
 ```polyglot
 // Option 1: Explicit both cases
 [?] .condition ?> True
-[~][r] .result: pg\string << "yes"
-[~][o] .result: pg\string
+[~][r] .result:pg.string << "yes"
+[~][o] .result:pg.string
 
 [?] .condition ?> False
-[~][r] .result: pg\string << "no"
-[~][o] .result: pg\string
+[~][r] .result:pg.string << "no"
+[~][o] .result:pg.string
 
 // Option 2: With Default
 [?] .condition ?> True
-[~][r] .result: pg\string << "yes"
-[~][o] .result: pg\string
+[~][r] .result:pg.string << "yes"
+[~][o] .result:pg.string
 
 [?] Default
-[~][r] .result: pg\string << "no"
-[~][o] .result: pg\string
+[~][r] .result:pg.string << "no"
+[~][o] .result:pg.string
 ```
 
 **Correct Exhaustive Pattern (Range):**
 ```polyglot
 // Using range operator
 [?] .age >= 0 && .age < 18
-[~][r] .category: pg\string << "minor"
-[~][o] .category: pg\string
+[~][r] .category:pg.string << "minor"
+[~][o] .category:pg.string
 
 [?] .age >= 18 && .age < 65
-[~][r] .category: pg\string << "adult"
-[~][o] .category: pg\string
+[~][r] .category:pg.string << "adult"
+[~][o] .category:pg.string
 
 [?] .age >= 65
-[~][r] .category: pg\string << "senior"
-[~][o] .category: pg\string
+[~][r] .category:pg.string << "senior"
+[~][o] .category:pg.string
 
 // OR with Rust-style ranges
 [?] .age in 0..18
-[~][r] .category: pg\string << "minor"
-[~][o] .category: pg\string
+[~][r] .category:pg.string << "minor"
+[~][o] .category:pg.string
 
 [?] .age in 18..65
-[~][r] .category: pg\string << "adult"
-[~][o] .category: pg\string
+[~][r] .category:pg.string << "adult"
+[~][o] .category:pg.string
 
 [?] Default
-[~][r] .category: pg\string << "senior"
-[~][o] .category: pg\string
+[~][r] .category:pg.string << "senior"
+[~][o] .category:pg.string
 ```
 
 **Compiler Exhaustiveness Checking:**
@@ -689,16 +689,16 @@ The `+"` prefix is used for **multiline string continuation**, not for string in
 **Invalid Code Pattern:**
 ```polyglot
 // ✗ WRONG - Using +"" for interpolation
-[r] .greeting: pg\string << +"Hello, {user_name}!"
+[r] .greeting:pg.string << +"Hello, {user_name}!"
 ```
 
 **Correct Code Patterns:**
 ```polyglot
 // ✓ CORRECT - Regular string interpolation
-[r] .greeting: pg\string << "Hello, {user_name}!"
+[r] .greeting:pg.string << "Hello, {user_name}!"
 
 // ✓ CORRECT - Multiline continuation with +"
-[r] .report: pg\string << +"This is a very long string "
+[r] .report:pg.string << +"This is a very long string "
 [^] +"that continues on multiple lines "
 [^] +"with interpolation: {user_name}"
 ```
@@ -731,20 +731,20 @@ All variables in Polyglot are **immutable by default**. Once a variable is assig
 **Invalid Code Pattern:**
 ```polyglot
 // ✗ INVALID - Cannot reassign immutable variable
-[r] .age_category: pg\string << ""
-[~][r] .age_category: pg\string << "adult"  // COMPILER ERROR
+[r] .age_category:pg.string << ""
+[~][r] .age_category:pg.string << "adult"  // COMPILER ERROR
 ```
 
 **Correct Code Pattern:**
 ```polyglot
 // ✓ CORRECT - Use switch to assign value based on condition
 [?] .user_age ?> 18..
-[~][r] .age_category: pg\string << "adult"
-[~][o] .age_category: pg\string
+[~][r] .age_category:pg.string << "adult"
+[~][o] .age_category:pg.string
 
 [?] .user_age ?> ..17
-[~][r] .age_category: pg\string << "minor"
-[~][o] .age_category: pg\string
+[~][r] .age_category:pg.string << "minor"
+[~][o] .age_category:pg.string
 ```
 
 **Rationale:**
@@ -790,14 +790,14 @@ Error handling blocks using `[!]` MUST be wrapped in `[~]` expansion markers to 
 ```polyglot
 // ✓ CORRECT - Explicit error scope with [~]
 [r] |U.File.Read
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> file_data
 [~]
 [~][!] !pg.FileSystem.NotFound
-[~][>] .message: pg\string >> err_msg
+[~][>] .message:pg.string >> err_msg
 [~][r] |U.Log.Warning
-[~][<] .msg: pg\string << "File not found: {err_msg}"
-[~][r] .file_data: pg\string << "default content"
+[~][<] .msg:pg.string << "File not found: {err_msg}"
+[~][r] .file_data:pg.string << "default content"
 ```
 
 **Formatting Rule:**
@@ -843,8 +843,8 @@ For improved readability and explicit scoping, a blank line using `[~]` (expansi
 ```polyglot
 // ✓ CORRECT - Blank [~] line before error block
 [r] |U.File.Read
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> file_data
 [~]  // Blank line for readability
 [~][!] !pg.FileSystem.NotFound
 ```
@@ -878,20 +878,20 @@ The `[Q]` queue control marker is for managing pipeline execution queues and dis
 ```polyglot
 // ✗ INVALID - Using [Q] for conditionals
 [Q] |Q.DispatchIf.String.IsEmpty
-[<] .value: pg\string << .username
-[~][r] .error: pg\string << "Username required"
+[<] .value:pg.string << .username
+[~][r] .error:pg.string << "Username required"
 ```
 
 **Correct Code Pattern:**
 ```polyglot
 // ✓ CORRECT - Use utility pipelines for checks
 [r] |U.String.IsEmpty
-[<] .value: pg\string << .username
-[>] .is_empty: pg\bool >> username_empty
+[<] .value:pg.string << .username
+[>] .is_empty:pg.bool >> username_empty
 
 [?] username_empty ?> True
-[~][r] .error: pg\string << "Username required"
-[~][o] .error: pg\string
+[~][r] .error:pg.string << "Username required"
+[~][o] .error:pg.string
 ```
 
 **What is `[Q]` Actually For:**
@@ -925,35 +925,35 @@ Switch statements using `[?]` must cover ALL possible values (exhaustive matchin
 ```polyglot
 // ✗ INVALID - Not exhaustive (age > 200 not covered)
 [?] .user_age ?> 18..200
-[~][r] .age_category: pg\string << "adult"
+[~][r] .age_category:pg.string << "adult"
 
 [?] .user_age ?> 0..17
-[~][r] .age_category: pg\string << "minor"
+[~][r] .age_category:pg.string << "minor"
 ```
 
 **Correct Code Patterns:**
 ```polyglot
 // ✓ CORRECT - Unbounded ranges for exhaustiveness
 [?] .user_age ?> 18..
-[~][r] .age_category: pg\string << "adult"
-[~][o] .age_category: pg\string
+[~][r] .age_category:pg.string << "adult"
+[~][o] .age_category:pg.string
 
 [?] .user_age ?> ..17
-[~][r] .age_category: pg\string << "minor"
-[~][o] .age_category: pg\string
+[~][r] .age_category:pg.string << "minor"
+[~][o] .age_category:pg.string
 
 // ✓ CORRECT - Using Default catchall
 [?] .user_age ?> 0..17
-[~][r] .age_category: pg\string << "minor"
-[~][o] .age_category: pg\string
+[~][r] .age_category:pg.string << "minor"
+[~][o] .age_category:pg.string
 
 [?] .user_age ?> 18..65
-[~][r] .age_category: pg\string << "adult"
-[~][o] .age_category: pg\string
+[~][r] .age_category:pg.string << "adult"
+[~][o] .age_category:pg.string
 
 [?] Default
-[~][r] .age_category: pg\string << "senior"
-[~][o] .age_category: pg\string
+[~][r] .age_category:pg.string << "senior"
+[~][o] .age_category:pg.string
 ```
 
 **Range Operator Syntax:**
@@ -998,7 +998,7 @@ When defining enumerations, the alias `[A]` marker must appear AFTER the full na
 // ✗ INVALID - Alias before namespace (if this were the syntax)
 [A] OrderStatus
 [#] Shipping.ProductA.Order.Status
-[<] .Pending: pg\int << 0
+[<] .Pending:pg.int << 0
 [X]
 ```
 
@@ -1007,10 +1007,10 @@ When defining enumerations, the alias `[A]` marker must appear AFTER the full na
 // ✓ CORRECT - Namespace first, then alias
 [#] Shipping.ProductA.Order.Status
 [A] OrderStatus
-[<] .Pending: pg\int << 0
-[<] .Shipped: pg\int << 1
-[<] .Delivered: pg\int << 2
-[<] .Cancelled: pg\int << 3
+[<] .Pending:pg.int << 0
+[<] .Shipped:pg.int << 1
+[<] .Delivered:pg.int << 2
+[<] .Cancelled:pg.int << 3
 [X]
 
 // Usage: Can use #OrderStatus (alias) instead of full path

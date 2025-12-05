@@ -15,7 +15,7 @@ fn main() {
 $invalid_character_here
 [X]"#,
             "Should reject '$' character",
-            vec!["UnexpectedCharacter"]
+            vec!["UnexpectedCharacter"],
         ),
         (
             "Unicode Characters Outside Strings",
@@ -23,15 +23,14 @@ $invalid_character_here
 [r] .résumé: pg\string << "valid"
 [X]"#,
             "Should reject non-ASCII in identifiers",
-            vec!["UnexpectedCharacter", "InvalidIdentifier"]
+            vec!["UnexpectedCharacter", "InvalidIdentifier"],
         ),
         (
             "Control Characters",
             "[|] Test\n[r] .x: pg\\int << 42\n[X]",
             "Testing with standard characters (null byte test removed)",
-            vec!["ACCEPT"] // Just a normal program, will pass
+            vec!["ACCEPT"], // Just a normal program, will pass
         ),
-
         // ========================================
         // 2. Malformed Operators
         // ========================================
@@ -42,7 +41,7 @@ $invalid_character_here
 [?] .x =
 [X]"#,
             "Should reject incomplete '='",
-            vec!["UnexpectedCharacter"]
+            vec!["UnexpectedCharacter"],
         ),
         (
             "Invalid Operator Sequence",
@@ -50,7 +49,7 @@ $invalid_character_here
 [r] .x: pg\int <<< 42
 [X]"#,
             "Should reject '<<<'",
-            vec!["UnexpectedCharacter"]
+            vec!["UnexpectedCharacter"],
         ),
         (
             "Malformed Range Operator",
@@ -59,9 +58,8 @@ $invalid_character_here
 [?] .x ?{ 1, 10}
 [X]"#,
             "Should reject '?{' (not a valid range operator)",
-            vec!["UnexpectedCharacter"]
+            vec!["UnexpectedCharacter"],
         ),
-
         // ========================================
         // 3. Invalid Identifier Patterns
         // ========================================
@@ -71,7 +69,7 @@ $invalid_character_here
 [r] .123abc: pg\string << "test"
 [X]"#,
             "Should reject variable starting with digit",
-            vec!["UnexpectedCharacter", "InvalidIdentifier"]
+            vec!["UnexpectedCharacter", "InvalidIdentifier"],
         ),
         (
             "Empty Identifier After Dot",
@@ -79,7 +77,7 @@ $invalid_character_here
 [r] .: pg\string << "test"
 [X]"#,
             "Should reject empty identifier after dot",
-            vec!["UnexpectedCharacter", "InvalidIdentifier"]
+            vec!["UnexpectedCharacter", "InvalidIdentifier"],
         ),
         (
             "Double Prefix",
@@ -87,9 +85,8 @@ $invalid_character_here
 [r] ..variable: pg\string << "test"
 [X]"#,
             "Should reject double dot prefix",
-            vec!["UnexpectedCharacter", "InvalidIdentifier"]
+            vec!["UnexpectedCharacter", "InvalidIdentifier"],
         ),
-
         // ========================================
         // 4. Unterminated Constructs
         // ========================================
@@ -98,13 +95,13 @@ $invalid_character_here
             r#"[|] Test
 [r] .x: pg\string << "Hello World"#,
             "Should detect unterminated string",
-            vec!["UnterminatedString"]
+            vec!["UnterminatedString"],
         ),
         (
             "String with Newline",
             "[|] Test\n[r] .x: pg\\string << \"Line 1\nUnterminated",
             "Should detect string crossing line without escape",
-            vec!["UnterminatedString"]
+            vec!["UnterminatedString"],
         ),
         (
             "Interpolation Not Closed",
@@ -112,7 +109,7 @@ $invalid_character_here
 [r] .x: pg\string << "Value: {.var"
 [X]"#,
             "Should detect unclosed interpolation",
-            vec!["UnterminatedString"]
+            vec!["UnterminatedString"],
         ),
         (
             "Comment Never Closes",
@@ -122,9 +119,8 @@ $invalid_character_here
 [X]
 Still in comment..."#,
             "Should detect unterminated comment",
-            vec!["UnterminatedComment"]
+            vec!["UnterminatedComment"],
         ),
-
         // ========================================
         // 5. Invalid Block Markers
         // ========================================
@@ -134,7 +130,7 @@ Still in comment..."#,
 [x] This should be [X]
 [X]"#,
             "Should reject lowercase 'x' (must be uppercase 'X')",
-            vec!["UnknownBlockMarker"]
+            vec!["UnknownBlockMarker"],
         ),
         (
             "Invalid Block Character",
@@ -142,7 +138,7 @@ Still in comment..."#,
 [$] Invalid
 [X]"#,
             "Should reject '$' as block marker",
-            vec!["UnknownBlockMarker"]
+            vec!["UnknownBlockMarker"],
         ),
         (
             "Block Marker Not Closed",
@@ -150,7 +146,7 @@ Still in comment..."#,
 [r
 [X]"#,
             "Should detect block marker missing ']'",
-            vec!["UnterminatedBlockMarker"]
+            vec!["UnterminatedBlockMarker"],
         ),
         (
             "Empty Block Marker",
@@ -158,9 +154,8 @@ Still in comment..."#,
 [] Empty
 [X]"#,
             "Should reject empty block marker",
-            vec!["UnknownBlockMarker", "UnterminatedBlockMarker"]
+            vec!["UnknownBlockMarker", "UnterminatedBlockMarker"],
         ),
-
         // ========================================
         // 6. Invalid Number Formats
         // ========================================
@@ -170,7 +165,7 @@ Still in comment..."#,
 [r] .x: pg\float << 3.14.15
 [X]"#,
             "Should reject multiple decimal points",
-            vec!["UnexpectedCharacter", "InvalidNumberFormat"]
+            vec!["UnexpectedCharacter", "InvalidNumberFormat"],
         ),
         (
             "Leading Zeros (Possible Octal Ambiguity)",
@@ -178,7 +173,7 @@ Still in comment..."#,
 [r] .x: pg\int << 0123
 [X]"#,
             "Leading zeros - depends on implementation",
-            vec!["UnexpectedCharacter", "InvalidNumberFormat", "ACCEPT"]
+            vec!["UnexpectedCharacter", "InvalidNumberFormat", "ACCEPT"],
         ),
         (
             "Number Followed by Identifier",
@@ -186,9 +181,8 @@ Still in comment..."#,
 [r] .x: pg\int << 42abc
 [X]"#,
             "Should reject number followed immediately by letters",
-            vec!["UnexpectedCharacter", "InvalidNumberFormat"]
+            vec!["UnexpectedCharacter", "InvalidNumberFormat"],
         ),
-
         // ========================================
         // 7. Invalid Escape Sequences
         // ========================================
@@ -198,7 +192,7 @@ Still in comment..."#,
 [r] .x: pg\string << "Invalid \x escape"
 [X]"#,
             "Should reject '\\x' (not a valid escape)",
-            vec!["InvalidEscapeSequence"]
+            vec!["InvalidEscapeSequence"],
         ),
         (
             "Backslash at End",
@@ -206,9 +200,8 @@ Still in comment..."#,
 [r] .x: pg\string << "Ends with \"
 [X]"#,
             "Should detect backslash at string end",
-            vec!["InvalidEscapeSequence", "UnterminatedString"]
+            vec!["InvalidEscapeSequence", "UnterminatedString"],
         ),
-
         // ========================================
         // 8. Structural Errors
         // ========================================
@@ -217,7 +210,7 @@ Still in comment..."#,
             r#"[|] Test
 [r] .x: pg\int << 42"#,
             "Should detect missing [X]",
-            vec!["ACCEPT"] // Lexer may accept, parser will reject
+            vec!["ACCEPT"], // Lexer may accept, parser will reject
         ),
         (
             "Nested Strings (Invalid)",
@@ -225,7 +218,7 @@ Still in comment..."#,
 [r] .x: pg\string << "Outer "nested" string"
 [X]"#,
             "Should detect string terminating early",
-            vec!["UnexpectedCharacter", "ACCEPT"]
+            vec!["UnexpectedCharacter", "ACCEPT"],
         ),
     ];
 
@@ -248,7 +241,10 @@ Still in comment..."#,
                     println!("           Tokens: {}", tokens.len());
                     acceptable += 1;
                 } else {
-                    println!("✗ FAIL - No error detected (expected one of: {:?})", expected_errors);
+                    println!(
+                        "✗ FAIL - No error detected (expected one of: {:?})",
+                        expected_errors
+                    );
                     println!("           Got {} tokens instead", tokens.len());
                     not_detected += 1;
                 }
@@ -271,7 +267,10 @@ Still in comment..."#,
                     println!("           {}", e);
                     detected += 1;
                 } else {
-                    println!("⚠️  PARTIAL - Got {}, expected one of: {:?}", error_type, expected_errors);
+                    println!(
+                        "⚠️  PARTIAL - Got {}, expected one of: {:?}",
+                        error_type, expected_errors
+                    );
                     println!("           {}", e);
                     detected += 1; // Still counts as detected, just different error
                 }
@@ -283,9 +282,21 @@ Still in comment..."#,
     println!("========================================================================");
     println!("Invalid Syntax Test Results:");
     println!("  Total test cases:        {}", total);
-    println!("  Errors detected:         {} ({:.1}%)", detected, (detected as f64 / total as f64) * 100.0);
-    println!("  Not detected (failures): {} ({:.1}%)", not_detected, (not_detected as f64 / total as f64) * 100.0);
-    println!("  Acceptable (lexer OK):   {} ({:.1}%)", acceptable, (acceptable as f64 / total as f64) * 100.0);
+    println!(
+        "  Errors detected:         {} ({:.1}%)",
+        detected,
+        (detected as f64 / total as f64) * 100.0
+    );
+    println!(
+        "  Not detected (failures): {} ({:.1}%)",
+        not_detected,
+        (not_detected as f64 / total as f64) * 100.0
+    );
+    println!(
+        "  Acceptable (lexer OK):   {} ({:.1}%)",
+        acceptable,
+        (acceptable as f64 / total as f64) * 100.0
+    );
     println!("========================================================================");
 
     if not_detected == 0 {

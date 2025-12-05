@@ -117,7 +117,7 @@
 **Syntax Basics:**
 - Block markers: `[|]`, `[i]`, `[r]`, `[p]`, `[t]`, `[Q]`, `[<]`, `[>]`, `[#]`, `[!]`, `[A]`, `[X]`, `[Y]`, `[W]`, `[~]`
 - Operators: `|` (pipeline), `~` (unpack), `@` (package), `#` (enumeration), `!` (error), `<<` (push), `>>` (pull)
-- Types: `pg\int`, `pg\string`, `pg\bool`, `pg\path`, `pg\dt`, `pg\array{}`, `pg\set{}`, `pg\serial`
+- Types: `:pg.int`, `:pg.string`, `:pg.bool`, `:pg.path`, `:pg.dt`, `:pg.array{}`, `:pg.set{}`, `:pg.serial`
 - Comments: `//` (single-line), `/* */` (multi-line)
 
 **Standard Library:**
@@ -135,9 +135,9 @@
 **Create a Pipeline:**
 ```polyglot
 [|] PipelineName
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 
@@ -145,19 +145,19 @@
 ```polyglot
 [r] |MightFail
 [!] !ErrorType
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |HandleError
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 ```
 
 **Run in Parallel:**
 ```polyglot
 [p] |ProcessPartA
-[<] .data: pg\string << input_data
+[<] .data:pg.string << input_data
 [>] .output >> result1
 
 [p] |ProcessPartB
-[<] .data: pg\string << input_data
+[<] .data:pg.string << input_data
 [>] .output >> result2
 
 [Y] |Y.Join
@@ -169,7 +169,7 @@
 ```polyglot
 [W] |W.Python3.11
 [r] |RunPythonScript
-[<] .script: pg\path << "analyze.py"
+[<] .script:pg.path << "analyze.py"
 ```
 
 ---

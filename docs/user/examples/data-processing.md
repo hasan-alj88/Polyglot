@@ -11,7 +11,7 @@
 
 Learn how to process data files with Polyglot pipelines. These examples demonstrate reading, transforming, and writing data using Polyglot native types.
 
-**Note on Type Conversion:** Cross-language type conversion (e.g., `rs\Vec<T>` → `py\list`) is planned for a future version. For now, all examples use `pg\` (Polyglot native) types for data exchange between pipeline stages.
+**Note on Type Conversion:** Cross-language type conversion (e.g., `rs\Vec<T>` → `py\list`) is planned for a future version. For now, all examples use `:pg.` (Polyglot native) types for data exchange between pipeline stages.
 
 ---
 
@@ -40,9 +40,9 @@ You have a CSV file with customer data and need to extract only active customers
 [|] FilterActiveCustomers
 
 // Inputs
-[i] .input_file: pg\path
-[i] .output_file: pg\path
-[i] .min_purchase: pg\int << 100
+[i] .input_file:pg.path
+[i] .output_file:pg.path
+[i] .min_purchase:pg.int << 100
 
 // Trigger: CLI
 [t] |T.Cli
@@ -52,12 +52,12 @@ You have a CSV file with customer data and need to extract only active customers
 
 // Read CSV file
 [r] |File.ReadCSV
-[<] .path: pg\path << .input_file
-[>] .data: pg\string >> .csv_content
+[<] .path:pg.path << .input_file
+[>] .data:pg.string >> .csv_content
 
 // Filter data in Python
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 from io import StringIO
 
@@ -79,15 +79,15 @@ if filtered:
 
 result = output.getvalue()
 """
-[>] .result: pg\string >> .filtered_csv
+[>] .result:pg.string >> .filtered_csv
 
 // Write filtered data to output file
 [r] |File.WriteText
-[<] .path: pg\path << .output_file
-[<] .content: pg\string << .filtered_csv
+[<] .path:pg.path << .output_file
+[<] .content:pg.string << .filtered_csv
 
 // Output summary
-[o] .filtered_csv: pg\string
+[o] .filtered_csv:pg.string
 [X]
 ```
 
@@ -96,29 +96,29 @@ result = output.getvalue()
 **Reading CSV:**
 ```polyglot
 [r] |File.ReadCSV
-[<] .path: pg\path << .input_file
-[>] .data: pg\string >> .csv_content
+[<] .path:pg.path << .input_file
+[>] .data:pg.string >> .csv_content
 ```
-- Reads CSV file as a `pg\string`
+- Reads CSV file as a `:pg.string`
 - Standard library utility `|File.ReadCSV`
 
 **Processing Data:**
 ```polyglot
 [r] |Run.Python
-[<] .code: pg\string << """..."""
-[>] .result: pg\string >> .filtered_csv
+[<] .code:pg.string << """..."""
+[>] .result:pg.string >> .filtered_csv
 ```
-- Python code receives CSV as `pg\string`
+- Python code receives CSV as `:pg.string`
 - Filters rows based on criteria
-- Returns filtered CSV as `pg\string`
+- Returns filtered CSV as `:pg.string`
 
 **Writing Output:**
 ```polyglot
 [r] |File.WriteText
-[<] .path: pg\path << .output_file
-[<] .content: pg\string << .filtered_csv
+[<] .path:pg.path << .output_file
+[<] .content:pg.string << .filtered_csv
 ```
-- Writes `pg\string` to file
+- Writes `:pg.string` to file
 
 ### Running
 
@@ -174,8 +174,8 @@ Process application logs to extract all ERROR entries and count occurrences by e
 [|] AnalyzeLogs
 
 // Inputs
-[i] .log_file: pg\path
-[i] .output_report: pg\path
+[i] .log_file:pg.path
+[i] .output_report:pg.path
 
 // Trigger: CLI or FileWatch
 [t] |T.Cli
@@ -185,12 +185,12 @@ Process application logs to extract all ERROR entries and count occurrences by e
 
 // Read log file
 [r] |File.ReadText
-[<] .path: pg\path << .log_file
-[>] .content: pg\string >> .log_content
+[<] .path:pg.path << .log_file
+[>] .content:pg.string >> .log_content
 
 // Parse logs and extract errors
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import re
 from collections import Counter
 
@@ -221,15 +221,15 @@ for module, count in error_counts.most_common():
 
 result = report
 """
-[>] .result: pg\string >> .error_report
+[>] .result:pg.string >> .error_report
 
 // Write report to file
 [r] |File.WriteText
-[<] .path: pg\path << .output_report
-[<] .content: pg\string << .error_report
+[<] .path:pg.path << .output_report
+[<] .content:pg.string << .error_report
 
 // Output report
-[o] .error_report: pg\string
+[o] .error_report:pg.string
 [X]
 ```
 
@@ -291,8 +291,8 @@ Extract user data from JSON API response, transform fields, and load into CSV fo
 [|] JSONtoCSV_ETL
 
 // Inputs
-[i] .input_json: pg\path
-[i] .output_csv: pg\path
+[i] .input_json:pg.path
+[i] .output_csv:pg.path
 
 // Trigger: CLI
 [t] |T.Cli
@@ -302,12 +302,12 @@ Extract user data from JSON API response, transform fields, and load into CSV fo
 
 // EXTRACT: Read JSON file
 [r] |File.ReadText
-[<] .path: pg\path << .input_json
-[>] .content: pg\string >> .json_content
+[<] .path:pg.path << .input_json
+[>] .content:pg.string >> .json_content
 
 // TRANSFORM: Convert JSON to CSV format
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 import csv
 from io import StringIO
@@ -335,15 +335,15 @@ if transformed:
 
 result = output.getvalue()
 """
-[>] .result: pg\string >> .csv_data
+[>] .result:pg.string >> .csv_data
 
 // LOAD: Write to CSV file
 [r] |File.WriteText
-[<] .path: pg\path << .output_csv
-[<] .content: pg\string << .csv_data
+[<] .path:pg.path << .output_csv
+[<] .content:pg.string << .csv_data
 
 // Output final CSV
-[o] .csv_data: pg\string
+[o] .csv_data:pg.string
 [X]
 ```
 
@@ -417,7 +417,7 @@ Process large text file: count word frequencies using Rust's performance.
 [|] CountWords
 
 // Inputs
-[i] .input_file: pg\path
+[i] .input_file:pg.path
 
 // Trigger: CLI
 [t] |T.Cli
@@ -427,12 +427,12 @@ Process large text file: count word frequencies using Rust's performance.
 
 // Read file
 [r] |File.ReadText
-[<] .path: pg\path << .input_file
-[>] .content: pg\string >> .file_content
+[<] .path:pg.path << .input_file
+[>] .content:pg.string >> .file_content
 
 // Count words in Rust (fast!)
 [r] |Run.Rust
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 use std::collections::HashMap;
 
 let text = .file_content;
@@ -464,10 +464,10 @@ for (word, count) in counts.iter().take(10) {
 // Return as pg\string
 result
 """
-[>] .result: pg\string >> .word_report
+[>] .result:pg.string >> .word_report
 
 // Output report
-[o] .word_report: pg\string
+[o] .word_report:pg.string
 [X]
 ```
 
@@ -496,20 +496,20 @@ processing: 21
 ### Using pg\ Types for Data Exchange
 
 **Current Version (v0.0.2):**
-- Use `pg\string` for text data exchange
-- Use `pg\int`, `pg\bool` for simple values
-- Use `pg\path` for file paths
+- Use `:pg.string` for text data exchange
+- Use `:pg.int`, `:pg.bool` for simple values
+- Use `:pg.path` for file paths
 
 **Example:**
 ```polyglot
 // Read returns pg\string
 [r] |File.ReadText
-[>] .content: pg\string >> .data
+[>] .content:pg.string >> .data
 
 // Process with pg\string
 [r] |Run.Python
-[<] .input: pg\string << .data
-[>] .result: pg\string >> .output
+[<] .input:pg.string << .data
+[>] .result:pg.string >> .output
 ```
 
 ### Cross-Language Type Conversion (Future Feature)
@@ -526,7 +526,7 @@ Future versions will support automatic type conversion:
 [<] .data: py\list << .rust_data  // Auto-convert rs\Vec → py\list
 ```
 
-For now, serialize to `pg\string` (JSON, CSV, etc.) for cross-language data exchange.
+For now, serialize to `:pg.string` (JSON, CSV, etc.) for cross-language data exchange.
 
 ---
 
@@ -537,20 +537,20 @@ For now, serialize to `pg\string` (JSON, CSV, etc.) for cross-language data exch
 1. **Extract** - Read data from source
    ```polyglot
    [r] |File.ReadText
-   [>] .content: pg\string >> .raw_data
+   [>] .content:pg.string >> .raw_data
    ```
 
 2. **Transform** - Process data
    ```polyglot
    [r] |Run.Python  // or Run.Rust
-   [<] .input: pg\string << .raw_data
-   [>] .result: pg\string >> .transformed_data
+   [<] .input:pg.string << .raw_data
+   [>] .result:pg.string >> .transformed_data
    ```
 
 3. **Load** - Write to destination
    ```polyglot
    [r] |File.WriteText
-   [<] .content: pg\string << .transformed_data
+   [<] .content:pg.string << .transformed_data
    ```
 
 ---
@@ -592,7 +592,7 @@ For now, serialize to `pg\string` (JSON, CSV, etc.) for cross-language data exch
 ### Pattern 3: Scheduled ETL
 ```polyglot
 [t] |T.Daily
-[<] .at: pg\dt << DT"02:00:"
+[<] .at:pg.dt << DT"02:00:"
 
 [r] |File.ReadText
 [r] |Run.Python

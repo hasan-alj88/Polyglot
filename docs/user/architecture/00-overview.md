@@ -285,8 +285,17 @@ Queue Manager ← Completion/Pause ← Results/Errors
 
 ## See Also
 
+### Architecture Documentation
 - [Database Schema](./01-database-schema.md) - Complete IR storage design
 - [IR Representation](./02-ir-representation.md) - Type system details
+- [Queue System](./03-queue-system.md) - Queue architecture and behavior
+- [Trigger Monitoring](./04-trigger-monitoring.md) - Trigger system design
+- [Runtime Execution](./05-runtime-execution.md) - Execution model
+
+### Service Configuration & Deployment
+- **[Polyglot Service Guide](../polyglot-service.md)** - Service configuration, installation, deployment (Docker/systemd), performance tuning, and troubleshooting
+
+### Language Specification
 - [BNF Grammar](../language/bnf/polyglot grammer.md) - Language specification
 - [Standard Library](../standard-library/00-overview.md) - Built-in pipelines
 

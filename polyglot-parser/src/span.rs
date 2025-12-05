@@ -137,7 +137,11 @@ impl Span {
 impl std::fmt::Display for Span {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         if self.start.line == self.end.line {
-            write!(f, "{}:{}-{}", self.start.line, self.start.column, self.end.column)
+            write!(
+                f,
+                "{}:{}-{}",
+                self.start.line, self.start.column, self.end.column
+            )
         } else {
             write!(f, "{}-{}", self.start, self.end)
         }
@@ -181,14 +185,8 @@ mod tests {
 
     #[test]
     fn test_span_merge() {
-        let span1 = Span::new(
-            Position::new(1, 1, 0),
-            Position::new(1, 5, 4),
-        );
-        let span2 = Span::new(
-            Position::new(1, 8, 7),
-            Position::new(1, 12, 11),
-        );
+        let span1 = Span::new(Position::new(1, 1, 0), Position::new(1, 5, 4));
+        let span2 = Span::new(Position::new(1, 8, 7), Position::new(1, 12, 11));
         let merged = span1.merge(span2);
         assert_eq!(merged.start, span1.start);
         assert_eq!(merged.end, span2.end);
@@ -196,10 +194,7 @@ mod tests {
 
     #[test]
     fn test_span_contains_position() {
-        let span = Span::new(
-            Position::new(1, 1, 0),
-            Position::new(1, 10, 9),
-        );
+        let span = Span::new(Position::new(1, 1, 0), Position::new(1, 10, 9));
         assert!(span.contains(Position::new(1, 5, 4)));
         assert!(span.contains(Position::new(1, 1, 0))); // start inclusive
         assert!(span.contains(Position::new(1, 10, 9))); // end inclusive
@@ -208,28 +203,19 @@ mod tests {
 
     #[test]
     fn test_span_len() {
-        let span = Span::new(
-            Position::new(1, 1, 0),
-            Position::new(1, 10, 9),
-        );
+        let span = Span::new(Position::new(1, 1, 0), Position::new(1, 10, 9));
         assert_eq!(span.len(), 9);
     }
 
     #[test]
     fn test_span_display_same_line() {
-        let span = Span::new(
-            Position::new(5, 10, 50),
-            Position::new(5, 20, 60),
-        );
+        let span = Span::new(Position::new(5, 10, 50), Position::new(5, 20, 60));
         assert_eq!(format!("{}", span), "5:10-20");
     }
 
     #[test]
     fn test_span_display_different_lines() {
-        let span = Span::new(
-            Position::new(5, 10, 50),
-            Position::new(7, 5, 100),
-        );
+        let span = Span::new(Position::new(5, 10, 50), Position::new(7, 5, 100));
         assert_eq!(format!("{}", span), "5:10-7:5");
     }
 }

@@ -405,4 +405,4 @@ WHERE runner_ir @> '{"runtime": "python"}';
 
 ---
 
-**Note:** This schema implements ADR-003 (PostgreSQL JSONB for IR) and ADR-008 (3-IR Architecture). All type strings use v0.0.2 syntax: `pg\int`, `py\dict`, `pg\dt`, etc.
+**Note:** This schema implements ADR-003 (PostgreSQL JSONB for IR) and ADR-008 (3-IR Architecture). All type strings use v0.0.2 syntax: `:pg.int`, `py\dict`, `:pg.dt`, etc.

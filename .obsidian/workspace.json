@@ -1,0 +1,225 @@
+{
+  "main": {
+    "id": "4ec642f4154edf9a",
+    "type": "split",
+    "children": [
+      {
+        "id": "0ce8c3988c04f56c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7c1f25cdc78b319e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/user/async-centric-paradigm.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "async-centric-paradigm"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "185ca9d5f476b392",
+    "type": "split",
+    "children": [
+      {
+        "id": "15ad98bc154f737f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "067a675cf445dfbf",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "1d30f043ecfeb634",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "async-centric-paradigm.md",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "b55acddf370ce93d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 274.5004348754883
+  },
+  "right": {
+    "id": "d04eb4b75c391dbe",
+    "type": "split",
+    "children": [
+      {
+        "id": "aaedc6d89b466adf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6919c0c745e00b3f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "docs/user/async-centric-paradigm.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for async-centric-paradigm"
+            }
+          },
+          {
+            "id": "be2a55aceedad480",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "docs/user/common-mistakes-antipatterns.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from common-mistakes-antipatterns"
+            }
+          },
+          {
+            "id": "5aaa04e47bff9fd3",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "c3a9c8983fda6bd0",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "f7c1df6771c3b5b7",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "docs/user/common-mistakes-antipatterns.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of common-mistakes-antipatterns"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "7c1f25cdc78b319e",
+  "lastOpenFiles": [
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/work-products.bin",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/query-cache.bin",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/f3gr0pxoorc28q0hx2ahxn0vw.o",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/f2326xw4937372sxa579csyx6.o",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/f03f012bpbedzrij8m6xqj937.o",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/evavhz9o87oi7jf5vw5yv0azy.o",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/ee397jc8ukohnxxpqi2qmsz5f.o",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/ebz5e1p433fwglnxgbk8u79wy.o",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/eareotmcm0vcsubobtkv7c629.o",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/eac7367r297ercglegwqx7wnl.o",
+    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/dv3l3x48xb0cdqx8hzxngjqyp.o",
+    "docs/user/standard-library/04-triggers.md",
+    "docs/user/standard-library/03-utilities.md",
+    "docs/user/standard-library/06-reserved-enumerations.md",
+    "docs/user/standard-library/05-join-operations.md",
+    "docs/user/standard-library/04-triggers-catalog.md",
+    "docs/user/standard-library/03-utilities-catalog.md",
+    "docs/user/standard-library/02-queue-control.md",
+    "docs/user/standard-library/01-runtime-wrappers.md",
+    "docs/user/standard-library/00-overview.md",
+    "docs/user/quick-start.md",
+    "docs/user/quick-reference/variables-cheatsheet.md",
+    "docs/user/planning/00-prd-overview.md",
+    "docs/user/packages/03-importing-packages.md",
+    "docs/user/packages/02-creating-packages.md",
+    "docs/user/packages/01-registries.md",
+    "docs/user/packages/00-overview.md",
+    "docs/user/language/bnf/polyglot grammer.md",
+    "docs/user/language/variables-user-guide.md",
+    "docs/user/language/12-bnf-grammar.md",
+    "docs/user/language/11-comments.md",
+    "docs/user/language/10-pipeline-lifecycle.md",
+    "docs/user/language/09-expansion-operator.md",
+    "docs/user/language/08-parallel-execution.md",
+    "docs/user/language/08-line-continuation.md",
+    "docs/user/language/07-macros.md"
+  ]
+}

@@ -30,7 +30,10 @@ workflow_path: "greenfield-level-3.yaml"
 
 workflow_status:
   # Phase 1: Analysis
-  brainstorm-project: docs/project/brainstorming-session-results-2025-11-15.md
+  brainstorm-project:
+    - docs/project/brainstorming-session-results-2025-11-15.md  # Initial vision brainstorming
+    - docs/project/brainstorming-session-results-2025-11-29.md  # Type system & state machine design
+    - docs/project/brainstorming-session-results-2025-12-02.md  # Calendar system & temporal profiles
   research: optional
   product-brief: docs/product-brief-Polyglot-2025-11-15.md
 

@@ -209,7 +209,7 @@
 
 // No join point - background tasks don't converge
 
-[o] !NoError                             // No output (background only)
+[o] !No.Output                             // No output (background only)
 [X]
 
 // ==============================================================================
@@ -339,7 +339,7 @@
 
 // Just log - no output needed
 
-[o] !NoError
+[o] !No.Output
 [X]
 
 // ==============================================================================

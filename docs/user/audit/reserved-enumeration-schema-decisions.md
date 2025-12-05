@@ -26,8 +26,8 @@ This document catalogs all reserved enumerations in Polyglot, organized by conte
 **Schema:**
 ```polyglot
 [#] Path.Identifiers.{CustomName}
-[<] .unix: pg\path      // REQUIRED - Path for Unix/Linux/macOS
-[<] .windows: pg\path   // REQUIRED - Path for Windows
+[<] .unix:pg.path      // REQUIRED - Path for Unix/Linux/macOS
+[<] .windows:pg.path   // REQUIRED - Path for Windows
 [X]
 ```
 
@@ -35,12 +35,12 @@ This document catalogs all reserved enumerations in Polyglot, organized by conte
 ```polyglot
 [#] Path.Identifiers.MyApp.DataDir
 [A] DataDir
-[<] .unix: pg\path << \\UnixRoot\\opt\myapp\data\
-[<] .windows: pg\path << \\C\\ProgramData\MyApp\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\myapp\data\
+[<] .windows:pg.path << \\C\\ProgramData\MyApp\Data\
 [X]
 
 // Use the path identifier
-[r] .config_file: pg\path << \\DataDir\\config.json
+[r] .config_file:pg.path << \\DataDir\\config.json
 ```
 
 **Notes:**
@@ -67,14 +67,14 @@ These are non-extendable path roots provided by Polyglot for cross-platform path
 ```polyglot
 // Define cross-platform path identifier using roots
 [#] Path.Identifiers.MyApp.ConfigDir
-[<] .unix: pg\path << \\UnixRoot\\etc\myapp\
-[<] .windows: pg\path << \\C\\ProgramData\MyApp\Config\
+[<] .unix:pg.path << \\UnixRoot\\etc\myapp\
+[<] .windows:pg.path << \\C\\ProgramData\MyApp\Config\
 [X]
 
 // OS where path doesn't exist
 [#] Path.Identifiers.MyApp.WindowsOnlyPath
-[<] .unix: pg\path << \\NoPath\\
-[<] .windows: pg\path << \\C\\Windows\System32\myapp\
+[<] .unix:pg.path << \\NoPath\\
+[<] .windows:pg.path << \\C\\Windows\System32\myapp\
 [X]
 ```
 
@@ -103,8 +103,8 @@ Windows drive letters are referenced using backslash literal syntax:
 **Usage:**
 ```polyglot
 [#] Path.Identifiers.DataDrive
-[<] .unix: pg\path << \\UnixRoot\\mnt\data\
-[<] .windows: pg\path << \\D\\Data\
+[<] .unix:pg.path << \\UnixRoot\\mnt\data\
+[<] .windows:pg.path << \\D\\Data\
 [X]
 ```
 
@@ -125,27 +125,27 @@ Windows drive letters are referenced using backslash literal syntax:
 **Current Usage (from Decision #22):**
 ```polyglot
 [#] Queues.Background
-[<] .max_concurrent: pg\int << 5
+[<] .max_concurrent:pg.int << 5
 [X]
 ```
 
 **Questions for User:**
 1. Is `.max_concurrent` the ONLY required field?
 2. Are there other optional or required fields such as:
-   - `.priority: pg\int` - Default priority level for queue?
-   - `.timeout: pg\dt` - Timeout duration for queued pipelines?
-   - `.description: pg\string` - Human-readable description?
-   - `.max_wait_time: pg\dt` - Maximum wait time before dispatch?
+   - `.priority:pg.int` - Default priority level for queue?
+   - `.timeout:pg.dt` - Timeout duration for queued pipelines?
+   - `.description:pg.string` - Human-readable description?
+   - `.max_wait_time:pg.dt` - Maximum wait time before dispatch?
    - Other fields?
 3. What are the complete semantics of `.max_concurrent`?
 
 **Proposed Schema (NEEDS CONFIRMATION):**
 ```polyglot
 [#] Queues.{CustomQueueName}
-[<] .max_concurrent: pg\int << value   // REQUIRED? - Max concurrent executions
-// [<] .priority: pg\int << value      // OPTIONAL? - Default priority
-// [<] .timeout: pg\dt << value         // OPTIONAL? - Execution timeout
-// [<] .description: pg\string << ""    // OPTIONAL? - Queue description
+[<] .max_concurrent:pg.int << value   // REQUIRED? - Max concurrent executions
+// [<] .priority:pg.int << value      // OPTIONAL? - Default priority
+// [<] .timeout:pg.dt << value         // OPTIONAL? - Execution timeout
+// [<] .description:pg.string << ""    // OPTIONAL? - Queue description
 [X]
 ```
 
@@ -211,31 +211,31 @@ The complete catalog of `|Q.*` pipeline operations is **not yet finalized**. Thi
 **Questions for User:**
 1. What fields are required for business week definitions?
 2. Possible fields might include:
-   - `.start_day: pg\string` - Which day starts the business week? (e.g., "Monday")
-   - `.work_days: pg\int` - Number of working days? (e.g., 5)
-   - `.holidays: pg\array{pg\dt}` - List of holiday dates?
-   - `.start_time: pg\dt` - Daily business start time?
-   - `.end_time: pg\dt` - Daily business end time?
+   - `.start_day:pg.string` - Which day starts the business week? (e.g., "Monday")
+   - `.work_days:pg.int` - Number of working days? (e.g., 5)
+   - `.holidays:pg.array{pg\dt}` - List of holiday dates?
+   - `.start_time:pg.dt` - Daily business start time?
+   - `.end_time:pg.dt` - Daily business end time?
 3. What are common use cases for business week definitions?
 
 **Proposed Schema (NEEDS CONFIRMATION):**
 ```polyglot
 [#] DT.Business.Week.{CustomBusinessWeek}
-// [<] .start_day: pg\string << "Monday"          // REQUIRED? - Week start day
-// [<] .work_days: pg\int << 5                     // REQUIRED? - Working days per week
-// [<] .start_time: pg\dt << DT"09:00:"           // OPTIONAL? - Business hours start
-// [<] .end_time: pg\dt << DT"17:00:"             // OPTIONAL? - Business hours end
-// [<] .holidays: pg\array{pg\dt} << array{}      // OPTIONAL? - Holiday dates
+// [<] .start_day:pg.string << "Monday"          // REQUIRED? - Week start day
+// [<] .work_days:pg.int << 5                     // REQUIRED? - Working days per week
+// [<] .start_time:pg.dt << DT"09:00:"           // OPTIONAL? - Business hours start
+// [<] .end_time:pg.dt << DT"17:00:"             // OPTIONAL? - Business hours end
+// [<] .holidays:pg.array{pg\dt} << array{}      // OPTIONAL? - Holiday dates
 [X]
 ```
 
 **Example Use Case (HYPOTHETICAL):**
 ```polyglot
 [#] DT.Business.Week.Standard
-[<] .start_day: pg\string << "Monday"
-[<] .work_days: pg\int << 5
-[<] .start_time: pg\dt << DT"09:00:"
-[<] .end_time: pg\dt << DT"17:00:"
+[<] .start_day:pg.string << "Monday"
+[<] .work_days:pg.int << 5
+[<] .start_time:pg.dt << DT"09:00:"
+[<] .end_time:pg.dt << DT"17:00:"
 [X]
 
 // Use in trigger
@@ -295,8 +295,8 @@ The complete catalog of `|Q.*` pipeline operations is **not yet finalized**. Thi
 **Option B: Status with Fields**
 ```polyglot
 // Each status has fields like .code, .message
-#Status.Success.code: pg\int << 0
-#Status.Success.message: pg\string << "Operation completed successfully"
+#Status.Success.code:pg.int << 0
+#Status.Success.message:pg.string << "Operation completed successfully"
 // etc.
 ```
 
@@ -306,7 +306,7 @@ The complete catalog of `|Q.*` pipeline operations is **not yet finalized**. Thi
 
 [?] .pipeline_status =? #Status.Success
 [~][r] |U.Log.Info
-[~][<] .msg: pg\string << "Pipeline completed"
+[~][<] .msg:pg.string << "Pipeline completed"
 ```
 
 ---
@@ -328,9 +328,9 @@ The complete catalog of `|Q.*` pipeline operations is **not yet finalized**. Thi
 **Define Custom Errors:**
 ```polyglot
 [!] !MyApp.CustomError
-[<] .message: pg\string << "Error message"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error message"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -366,7 +366,7 @@ Polyglot provides type-aware comparison operators (`=?`, `>?`, `<?`, `>=?`, `<=?
 
 ```polyglot
 // Direct comparison with operators
-[r] .reference: pg\dt << DT"2024-01-15"
+[r] .reference:pg.dt << DT"2024-01-15"
 
 // Check if date is after reference (greater than)
 [?] .some_date >? .reference
@@ -391,8 +391,8 @@ For complex comparisons, use comparison pipelines that return `#Comparison` valu
 
 ```polyglot
 [r] |U.Compare.DateTime
-[<] .first: pg\dt << .date1
-[<] .second: pg\dt << .date2
+[<] .first:pg.dt << .date1
+[<] .second:pg.dt << .date2
 [>] .result: #Comparison >> .comparison
 
 [?] .comparison =? #Comparison.Less
@@ -461,11 +461,11 @@ For complex comparisons, use comparison pipelines that return `#Comparison` valu
 // Exhaustive boolean matching - BOTH branches required
 [?] .flag =? #True
 [~][r] |HandleTrue
-[~][o] .result: pg\string << "Handled true"
+[~][o] .result:pg.string << "Handled true"
 
 [?] .flag =? #False
 [~][r] |HandleFalse
-[~][o] .result: pg\string << "Handled false"
+[~][o] .result:pg.string << "Handled false"
 
 [X]
 ```
@@ -490,7 +490,7 @@ For complex comparisons, use comparison pipelines that return `#Comparison` valu
 **4. Pipeline Outputs:**
 ```polyglot
 [|] ValidateData
-[i] .data: pg\string
+[i] .data:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
@@ -531,7 +531,7 @@ For complex comparisons, use comparison pipelines that return `#Comparison` valu
 |-------------------|-------------------------------|
 | `True` | `#Boolean.True` or `#True` |
 | `False` | `#Boolean.False` or `#False` |
-| `[r] .flag: pg\bool << #True` | `[r] .flag: #Boolean << #True` |
+| `[r] .flag:pg.bool << #True` | `[r] .flag: #Boolean << #True` |
 | `[?] .flag ?> True` | `[?] .flag =? #True` |
 
 **Type System Integration:**
@@ -602,7 +602,7 @@ Boolean operations are provided through utility pipelines:
 - Replace all `True` → `#True` (or `#Boolean.True`)
 - Replace all `False` → `#False` (or `#Boolean.False`)
 - Replace `[?] .var ?> True` → `[?] .var =? #True`
-- Change type from `pg\bool` to `#Boolean` (if `pg\bool` existed in v0.0.1)
+- Change type from `:pg.bool` to `#Boolean` (if `:pg.bool` existed in v0.0.1)
 
 ---
 
@@ -627,12 +627,12 @@ When a pipeline performs actions but doesn't return any data:
 
 ```polyglot
 [|] LogMessage
-[i] .message: pg\string
+[i] .message:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [r] |U.Log.Info
-[<] .msg: pg\string << .message
+[<] .msg:pg.string << .message
 
 [o] #None  // ← Pipeline returns nothing
 [X]
@@ -643,16 +643,16 @@ When a pipeline performs actions but doesn't return any data:
 1. **Side-Effect Pipelines** (logging, notifications, etc.):
 ```polyglot
 [|] SendEmail
-[i] .to: pg\string
-[i] .subject: pg\string
-[i] .body: pg\string
+[i] .to:pg.string
+[i] .subject:pg.string
+[i] .body:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [r] |Email.Send
-[<] .to: pg\string << .to
-[<] .subject: pg\string << .subject
-[<] .body: pg\string << .body
+[<] .to:pg.string << .to
+[<] .subject:pg.string << .subject
+[<] .body:pg.string << .body
 
 [o] #None  // No return value needed
 [X]
@@ -667,7 +667,7 @@ When a pipeline performs actions but doesn't return any data:
 
 [?] .should_process =? #True
 [~][r] |DoProcessing
-[~][o] .result: pg\string
+[~][o] .result:pg.string
 
 [?] .should_process =? #False
 [~][o] #None  // This branch returns nothing
@@ -679,7 +679,7 @@ When a pipeline performs actions but doesn't return any data:
 ```polyglot
 [|] DailyBackup
 [t] |T.Daily
-[<] .time: pg\dt << DT"02:00:"
+[<] .time:pg.dt << DT"02:00:"
 [W] |W.NoSetup.NoCleanup
 
 [r] |RunBackup
@@ -694,16 +694,16 @@ When a pipeline performs actions but doesn't return any data:
 - Cannot be extended or have fields
 - Represents intentional absence of output
 - Different from error states (errors use `!Error` types)
-- Different from empty data structures (`pg\serial` with no keys, empty arrays, etc.)
+- Different from empty data structures (`:pg.serial` with no keys, empty arrays, etc.)
 
 **Comparison with Other "Empty" Values:**
 
 | Concept | Representation | Meaning |
 |---------|---------------|---------|
 | No output | `[o] #None` | Pipeline intentionally returns nothing |
-| Empty string | `[o] .text: pg\string << ""` | Pipeline returns empty string |
-| Empty array | `[o] .items: pg\array{pg\int} << array{}` | Pipeline returns array with no elements |
-| Empty serial | `[o] .data: pg\serial << serial{}` | Pipeline returns object with no keys |
+| Empty string | `[o] .text:pg.string << ""` | Pipeline returns empty string |
+| Empty array | `[o] .items: pg.array.pg.int << array{}` | Pipeline returns array with no elements |
+| Empty serial | `[o] .data:pg.serial << serial{}` | Pipeline returns object with no keys |
 
 **Notes:**
 - `#None` is ONLY used in output declarations `[o]`
@@ -741,39 +741,39 @@ When a pipeline performs actions but doesn't return any data:
 
 // Specific error type definition
 [!] !MyApp.ValidationError
-[<] .message: pg\string << "Default validation error"
-[<] .code: pg\int << 1001
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Default validation error"
+[<] .code:pg.int << 1001
+[<] .trace:pg.string << ""
 // Optional custom fields
-[<] .field_name: pg\string << ""
+[<] .field_name:pg.string << ""
 [X]
 ```
 
 **Required Fields (All Error Types):**
-- `.message: pg\string` - Human-readable error message
-- `.code: pg\int` - Numeric error code
-- `.trace: pg\string` - Stack trace or empty string
+- `.message:pg.string` - Human-readable error message
+- `.code:pg.int` - Numeric error code
+- `.trace:pg.string` - Stack trace or empty string
 
 **Error Raising Syntax:**
 
 ```polyglot
 [|] PipelineThatCanFail
-[i] .input: pg\string
+[i] .input:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [?] .input =? ""
 [~]
 [~][r] .error: ! << !ValidationError
-[~][<] .message: pg\string << "Input cannot be empty"
-[~][<] .code: pg\int << 1001
-[~][<] .trace: pg\string << ""
+[~][<] .message:pg.string << "Input cannot be empty"
+[~][<] .code:pg.int << 1001
+[~][<] .trace:pg.string << ""
 [~][o] .error: !
 
 [?] .input =!? ""
 [~]
-[~][r] .result: pg\string << "Success"
-[~][o] .result: pg\string
+[~][r] .result:pg.string << "Success"
+[~][o] .result:pg.string
 
 [X]
 ```
@@ -782,21 +782,21 @@ When a pipeline performs actions but doesn't return any data:
 
 ```polyglot
 [|] SafePipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [r] |PipelineThatCanFail
-[<] .input: pg\string << .input
-[>] .result: pg\string >> .success_result
+[<] .input:pg.string << .input
+[>] .result:pg.string >> .success_result
 [~]
 [~][!] !ValidationError
-[~][>] .message: pg\string >> .err_msg
-[~][>] .code: pg\int >> .err_code
+[~][>] .message:pg.string >> .err_msg
+[~][>] .code:pg.int >> .err_code
 [~]
-[~][r] .success_result: pg\string << "Default value"
+[~][r] .success_result:pg.string << "Default value"
 
-[o] .output: pg\string << .success_result
+[o] .output:pg.string << .success_result
 [X]
 ```
 
@@ -833,27 +833,27 @@ When a pipeline performs actions but doesn't return any data:
 ```polyglot
 // Application-specific validation error
 [!] !MyApp.ValidationError
-[<] .message: pg\string << "Validation failed"
-[<] .code: pg\int << 1001
-[<] .trace: pg\string << ""
-[<] .field: pg\string << ""
+[<] .message:pg.string << "Validation failed"
+[<] .code:pg.int << 1001
+[<] .trace:pg.string << ""
+[<] .field:pg.string << ""
 [X]
 
 // Business logic error
 [!] !MyApp.InsufficientFunds
-[<] .message: pg\string << "Insufficient funds"
-[<] .code: pg\int << 2001
-[<] .trace: pg\string << ""
-[<] .required_amount: pg\float << 0.0
-[<] .available_amount: pg\float << 0.0
+[<] .message:pg.string << "Insufficient funds"
+[<] .code:pg.int << 2001
+[<] .trace:pg.string << ""
+[<] .required_amount:pg.float << 0.0
+[<] .available_amount:pg.float << 0.0
 [X]
 
 // Integration error
 [!] !MyApp.API.RateLimitExceeded
-[<] .message: pg\string << "API rate limit exceeded"
-[<] .code: pg\int << 3001
-[<] .trace: pg\string << ""
-[<] .retry_after: pg\dt << DT"00:00:"
+[<] .message:pg.string << "API rate limit exceeded"
+[<] .code:pg.int << 3001
+[<] .trace:pg.string << ""
+[<] .retry_after:pg.dt << DT"00:00:"
 [X]
 ```
 
@@ -867,9 +867,9 @@ Errors automatically propagate up the call stack if not caught:
 [W] |W.NoSetup.NoCleanup
 
 [r] .error: ! << !SomeError
-[<] .message: pg\string << "Error at level 3"
-[<] .code: pg\int << 3000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error at level 3"
+[<] .code:pg.int << 3000
+[<] .trace:pg.string << ""
 [o] .error: !
 [X]
 
@@ -888,7 +888,7 @@ Errors automatically propagate up the call stack if not caught:
 [r] |Level2
 [~]
 [~][!] !SomeError  // Catches error from Level3
-[~][>] .message: pg\string >> .err_msg
+[~][>] .message:pg.string >> .err_msg
 [~][r] |HandleError
 [X]
 ```

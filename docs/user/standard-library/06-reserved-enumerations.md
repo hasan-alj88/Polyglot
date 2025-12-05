@@ -67,11 +67,11 @@ Reserved enumerations are system-provided enumerations that replace keywords and
 
 [?] .flag =? #True
 [~][r] |HandleTrue
-[~][o] .result: pg\string << "Enabled"
+[~][o] .result:pg.string << "Enabled"
 
 [?] .flag =? #False
 [~][r] |HandleFalse
-[~][o] .result: pg\string << "Disabled"
+[~][o] .result:pg.string << "Disabled"
 
 [X]
 ```
@@ -119,7 +119,7 @@ Boolean operations use utility pipelines:
 | `True` | `#True` or `#Boolean.True` |
 | `False` | `#False` or `#Boolean.False` |
 | `[?] .var ?> True` | `[?] .var =? #True` |
-| `pg\bool` (if existed) | `#Boolean` |
+| `:pg.bool` (if existed) | `#Boolean` |
 
 ---
 

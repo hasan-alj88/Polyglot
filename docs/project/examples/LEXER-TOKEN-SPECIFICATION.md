@@ -287,7 +287,7 @@ All identifiers REQUIRE operator prefixes (NO KEYWORDS).
 | `.` | Variables | Define and navigate variables | `.myvar`, `.config.timeout`, `.user.name` |
 | `#` | Enumerations | Define enumerations and schemas | `#UserProfile`, `#Boolean.True`, `#PgVar.States.Ready` |
 | `\|` | Pipelines | Define and call pipelines | `\|ProcessData`, `\|T.Call`, `\|W.Polyglot.Scope` |
-| `!` | Errors | Define error types | `!Network.Timeout`, `!Validation.Failed`, `!NoError` |
+| `!` | Errors | Define error types | `!Network.Timeout`, `!Validation.Failed`, `!No.Output` |
 
 ### Prefix Rules
 
@@ -351,16 +351,16 @@ Reserved enumerations provided by Polyglot runtime. Still require `#` prefix.
 
 | Value | Context | Description |
 |-------|---------|-------------|
-| `#Pipeline.NoInput` | Input declaration | Explicit "no inputs" marker |
-| `!NoError` | Output declaration | Explicit "no output" marker |
+| `!No.Input` | Input declaration | Explicit "no inputs" marker |
+| `!No.Output` | Output declaration | Explicit "no output" marker |
 
 **Usage:**
 ```polyglot
 [|] MinimalPipeline
-[i] #Pipeline.NoInput  // MANDATORY if no inputs
+[i] !No.Input  // MANDATORY if no inputs
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] !NoError           // MANDATORY if no output
+[o] !No.Output           // MANDATORY if no output
 [X]
 ```
 
@@ -917,7 +917,7 @@ user_name          // ✗ Wrong (no prefix)
 !NetworkError
 !Validation.Failed
 !Database.ConnectionTimeout
-!NoError
+!No.Output
 ```
 
 ### 16.6 Version Identifiers
@@ -1148,8 +1148,8 @@ TOKENS = {
   RESERVED_BOOLEAN_TRUE,       // #Boolean.True
   RESERVED_BOOLEAN_FALSE,      // #Boolean.False
   RESERVED_NONE,               // #None
-  RESERVED_PIPELINE_NOINPUT,   // #Pipeline.NoInput
-  RESERVED_NOERROR,            // !NoError
+  RESERVED_PIPELINE_NOINPUT,   // !No.Input
+  RESERVED_NOERROR,            // !No.Output
 
   // String Literal Tokens (6 tokens) - NEW: Interpolation support
   STRING_START,             // " (opening quote)

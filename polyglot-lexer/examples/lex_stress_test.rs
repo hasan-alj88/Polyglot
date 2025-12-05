@@ -171,7 +171,8 @@ fn main() {
             let duration = start.elapsed();
 
             // Analyze token distribution
-            let mut token_counts: std::collections::HashMap<String, usize> = std::collections::HashMap::new();
+            let mut token_counts: std::collections::HashMap<String, usize> =
+                std::collections::HashMap::new();
             for token in &tokens {
                 if token.kind != TokenKind::Eof {
                     let key = format!("{:?}", token.kind);
@@ -196,34 +197,65 @@ fn main() {
 
             // Feature coverage
             let has_strings = tokens.iter().any(|t| t.kind == TokenKind::StringStart);
-            let has_interpolation = tokens.iter().any(|t| t.kind == TokenKind::InterpolationStart);
+            let has_interpolation = tokens
+                .iter()
+                .any(|t| t.kind == TokenKind::InterpolationStart);
             let has_conditionals = tokens.iter().any(|t| t.kind == TokenKind::BlockConditional);
-            let has_ranges = tokens.iter().any(|t| matches!(t.kind,
-                TokenKind::OpRangeClosed | TokenKind::OpRangeOpen));
-            let has_reserved = tokens.iter().any(|t| matches!(t.kind,
-                TokenKind::ReservedBooleanTrue | TokenKind::ReservedBooleanFalse |
-                TokenKind::ReservedPgVarReady | TokenKind::ReservedPgVarFaulted));
+            let has_ranges = tokens
+                .iter()
+                .any(|t| matches!(t.kind, TokenKind::OpRangeClosed | TokenKind::OpRangeOpen));
+            let has_reserved = tokens.iter().any(|t| {
+                matches!(
+                    t.kind,
+                    TokenKind::ReservedBooleanTrue
+                        | TokenKind::ReservedBooleanFalse
+                        | TokenKind::ReservedPgVarReady
+                        | TokenKind::ReservedPgVarFaulted
+                )
+            });
             let has_errors = tokens.iter().any(|t| t.kind == TokenKind::IdentifierError);
             let has_parallel = tokens.iter().any(|t| t.kind == TokenKind::BlockParallel);
             let has_join = tokens.iter().any(|t| t.kind == TokenKind::BlockJoin);
 
             println!("🎯 Feature Coverage:");
             println!("   {} String literals", if has_strings { "✓" } else { "✗" });
-            println!("   {} String interpolation", if has_interpolation { "✓" } else { "✗" });
-            println!("   {} Conditional logic", if has_conditionals { "✓" } else { "✗" });
+            println!(
+                "   {} String interpolation",
+                if has_interpolation { "✓" } else { "✗" }
+            );
+            println!(
+                "   {} Conditional logic",
+                if has_conditionals { "✓" } else { "✗" }
+            );
             println!("   {} Range operators", if has_ranges { "✓" } else { "✗" });
-            println!("   {} Reserved enumerations", if has_reserved { "✓" } else { "✗" });
+            println!(
+                "   {} Reserved enumerations",
+                if has_reserved { "✓" } else { "✗" }
+            );
             println!("   {} Error handling", if has_errors { "✓" } else { "✗" });
-            println!("   {} Parallel execution", if has_parallel { "✓" } else { "✗" });
+            println!(
+                "   {} Parallel execution",
+                if has_parallel { "✓" } else { "✗" }
+            );
             println!("   {} Join operations", if has_join { "✓" } else { "✗" });
 
             println!();
-            if has_strings && has_interpolation && has_conditionals && has_ranges &&
-               has_reserved && has_errors && has_parallel && has_join {
+            if has_strings
+                && has_interpolation
+                && has_conditionals
+                && has_ranges
+                && has_reserved
+                && has_errors
+                && has_parallel
+                && has_join
+            {
                 println!("🎉 All advanced features present and tokenized correctly!");
                 println!();
                 println!("Performance: {} tokens in {:?}", tokens.len(), duration);
-                println!("             {:.2} tokens/ms", tokens.len() as f64 / duration.as_millis() as f64);
+                println!(
+                    "             {:.2} tokens/ms",
+                    tokens.len() as f64 / duration.as_millis() as f64
+                );
             } else {
                 println!("⚠️  Some features missing");
             }

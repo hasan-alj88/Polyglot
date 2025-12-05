@@ -64,11 +64,11 @@ Polyglot stores IR as **3 separate JSONB columns** in PostgreSQL, combining docu
 **Syntax:** `language\type`
 
 **Examples:**
-- `pg\int` - Polyglot integer
-- `pg\string` - Polyglot string
-- `pg\bool` - Polyglot boolean
-- `pg\dt` - Polyglot datetime
-- `pg\path` - Polyglot path type
+- `:pg.int` - Polyglot integer
+- `:pg.string` - Polyglot string
+- `:pg.bool` - Polyglot boolean
+- `:pg.dt` - Polyglot datetime
+- `:pg.path` - Polyglot path type
 - `py\int` - Python integer
 - `py\str` - Python string
 - `py\dict` - Python dictionary
@@ -89,8 +89,8 @@ Polyglot stores IR as **3 separate JSONB columns** in PostgreSQL, combining docu
 **Syntax:** `language\collection{element_type}`
 
 **Examples:**
-- `pg\array{pg\int}` - Array of integers
-- `pg\set{pg\string}` - Set of strings
+- `pg.array.pg.int` - Array of integers
+- `:pg.set{pg\string}` - Set of strings
 - `py\list{py\int}` - Python list of integers
 
 ### Type Conversion Strategy
@@ -277,9 +277,9 @@ WHERE id = ?;
 ### Polyglot → Python
 
 ```polyglot
-[i] .count: pg\int << 42
+[i] .count:pg.int << 42
 [r] |U.Python.Print
-[<] .value: py\int << .count  // Type conversion: pg\int → py\int
+[<] .value: py\int << .count  // Type conversion:pg.int → py\int
 ```
 
 **IR Storage:**
@@ -364,4 +364,4 @@ Error types (e.g., `!ValidationError`) are embedded in JSONB IR where handled:
 
 ---
 
-**Note:** This IR design is based on v0.0.1 architecture planning with v0.0.2 syntax compliance. All type strings use v0.0.2 backslash separator: `pg\int`, `py\dict`, `pg\dt`.
+**Note:** This IR design is based on v0.0.1 architecture planning with v0.0.2 syntax compliance. All type strings use v0.0.2 backslash separator: `:pg.int`, `py\dict`, `:pg.dt`.

@@ -62,8 +62,8 @@ Comments on their own line:
 Comments at the end of a line:
 
 ```polyglot
-[r] .count: pg\int << 42  // Initialize counter
-[r] .name: pg\string << "Alice"  // Set user name
+[r] .count:pg.int << 42  // Initialize counter
+[r] .name:pg.string << "Alice"  // Set user name
 ```
 
 ---
@@ -83,16 +83,16 @@ Comments at the end of a line:
 
 ```polyglot
 [|] ProcessFile
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 
 // Read the file from disk
 [r] |ReadFile
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> file_data  // Store content
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> file_data  // Store content
 
 // Validate the content
 [r] |ValidateData
-[<] .data: pg\string << file_data
+[<] .data:pg.string << file_data
 
 [X]
 ```
@@ -163,7 +163,7 @@ Use C-style block comments `/* */`:
  * =============================================================================
  */
 [|] ProcessFile
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 [r] |ReadAndProcess
 [X]
 ```
@@ -199,11 +199,11 @@ Use C-style block comments `/* */`:
 [|] MainPipeline
 
 // Declare input parameter
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Set up trigger
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 [X]
 ```
@@ -230,9 +230,9 @@ Use C-style block comments `/* */`:
 
 ```polyglot
 [#] Configuration
-[<] .host: pg\string << "localhost"  // Server host
-[<] .port: pg\int << 8080            // Server port
-[<] .debug: pg\bool << #False         // Debug mode flag
+[<] .host:pg.string << "localhost"  // Server host
+[<] .port:pg.int << 8080            // Server port
+[<] .debug:pg.bool << #False         // Debug mode flag
 [X]
 ```
 
@@ -242,15 +242,15 @@ Use C-style block comments `/* */`:
 
 ```polyglot
 [p] |ProcessPartA
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 // Comment inside parallel block
 [~][r] |TransformA
-[~][<] .input: pg\string << .data
+[~][<] .input:pg.string << .data
 [>] .result >> result_a
 
 // Comment between parallel blocks
 [p] |ProcessPartB
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [>] .result >> result_b
 ```
 
@@ -262,12 +262,12 @@ Use C-style block comments `/* */`:
 [|] ComplexPipeline
 
 // ==================== INPUTS ====================
-[i] .file_path: pg\path
-[i] Default .max_size: pg\int << 1024
+[i] .file_path:pg.path
+[i] Default .max_size:pg.int << 1024
 
 // ==================== TRIGGERS ====================
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 // ==================== OPERATIONS ====================
 [r] |ReadFile
@@ -305,7 +305,7 @@ Use C-style block comments `/* */`:
 // Comments use forward slash /
 // Types use backslash \
 
-[r] .count: pg\int << 42  // Type separator: \
+[r] .count:pg.int << 42  // Type separator: \
 ```
 
 ---
@@ -316,7 +316,7 @@ Use C-style block comments `/* */`:
 // Comments use forward slash
 // Path identifiers use backslash
 
-[r] .file: pg\path << \\DataDir\\file.txt  // Path identifier: \\
+[r] .file:pg.path << \\DataDir\\file.txt  // Path identifier: \\
 ```
 
 ---
@@ -325,8 +325,8 @@ Use C-style block comments `/* */`:
 
 ```polyglot
 // Comment - forward slash
-[r] .type: pg\int       // Type - backslash
-[r] .path: pg\path << \\Path\\   // Path identifier - backslash
+[r] .type:pg.int       // Type - backslash
+[r] .path:pg.path << \\Path\\   // Path identifier - backslash
 ```
 
 **Summary:**
@@ -359,13 +359,13 @@ Use C-style block comments `/* */`:
  *
  * Example:
  *   [r] |ProcessUserData
- *   [<] .file_path: pg\path << "users.csv"
- *   [<] .format: pg\string << "json"
+ *   [<] .file_path:pg.path << "users.csv"
+ *   [<] .format:pg.string << "json"
  */
 [|] ProcessUserData
-[i] .file_path: pg\path
-[i] .format: pg\string
-[o] .report: pg\string
+[i] .file_path:pg.path
+[i] .format:pg.string
+[o] .report:pg.string
 [X]
 ```
 
@@ -386,10 +386,10 @@ Use C-style block comments `/* */`:
  *   - timeout: Connection timeout in seconds
  */
 [#] AppConfig
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 5432
-[<] .debug: pg\bool << #False
-[<] .timeout: pg\int << 30
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 5432
+[<] .debug:pg.bool << #False
+[<] .timeout:pg.int << 30
 [X]
 ```
 
@@ -414,12 +414,12 @@ Use C-style block comments `/* */`:
  *   - retry_count: Number of connection attempts made
  */
 [!] !MyApp.Database.ConnectionError
-[<] .message: pg\string << "Database connection failed"
-[<] .code: pg\int << 5100
-[<] .trace: pg\string << ""
-[<] .host: pg\string << ""
-[<] .port: pg\int << 0
-[<] .retry_count: pg\int << 0
+[<] .message:pg.string << "Database connection failed"
+[<] .code:pg.int << 5100
+[<] .trace:pg.string << ""
+[<] .host:pg.string << ""
+[<] .port:pg.int << 0
+[<] .retry_count:pg.int << 0
 [X]
 ```
 
@@ -433,8 +433,8 @@ Use C-style block comments `/* */`:
 // ✓ GOOD - Clear and helpful
 // Calculate the total price including tax
 [r] |CalculateTotal
-[<] .subtotal: pg\float << price
-[<] .tax_rate: pg\float << 0.08
+[<] .subtotal:pg.float << price
+[<] .tax_rate:pg.float << 0.08
 
 // ✗ POOR - Obvious or redundant
 // Call the CalculateTotal pipeline
@@ -448,11 +448,11 @@ Use C-style block comments `/* */`:
 ```polyglot
 // ✓ GOOD - Explains reasoning
 // Use 10 second timeout to prevent hanging on slow networks
-[i] Default .timeout: pg\int << 10
+[i] Default .timeout:pg.int << 10
 
 // ✗ POOR - Just repeats the code
 // Set timeout to 10
-[i] Default .timeout: pg\int << 10
+[i] Default .timeout:pg.int << 10
 ```
 
 ---
@@ -462,11 +462,11 @@ Use C-style block comments `/* */`:
 ```polyglot
 // ✓ GOOD - Comment matches code
 // Retry up to 3 times before failing
-[i] Default .max_retries: pg\int << 3
+[i] Default .max_retries:pg.int << 3
 
 // ✗ WRONG - Comment doesn't match code
 // Retry up to 5 times before failing
-[i] Default .max_retries: pg\int << 3  // Comment is outdated!
+[i] Default .max_retries:pg.int << 3  // Comment is outdated!
 ```
 
 ---
@@ -497,11 +497,11 @@ Use C-style block comments `/* */`:
 ```polyglot
 // ✓ GOOD - Explains non-obvious logic
 [p] |ProcessChunk1
-[<] .data: pg\array{pg\int} << data[0:1000]
+[<] .data: pg.array.pg.int << data[0:1000]
 [>] .result >> result1
 
 [p] |ProcessChunk2
-[<] .data: pg\array{pg\int} << data[1000:2000]
+[<] .data: pg.array.pg.int << data[1000:2000]
 [>] .result >> result2
 
 /*
@@ -524,8 +524,8 @@ Use C-style block comments `/* */`:
 // ========================================
 // CONFIGURATION
 // ========================================
-[i] .input: pg\string
-[i] Default .debug: pg\bool << #False
+[i] .input:pg.string
+[i] Default .debug:pg.bool << #False
 
 // ========================================
 // DATA PROCESSING
@@ -559,7 +559,7 @@ Use C-style block comments `/* */`:
  * - Maximum memory usage: 512MB
  */
 [|] ProcessLargeFile
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 [X]
 ```
 
@@ -603,7 +603,7 @@ Use C-style block comments `/* */`:
 
 // ✓ CLEAR - Distinguish comments from paths
 // File path: \\DataDir\\file.txt
-[r] .file: pg\path << \\DataDir\\file.txt
+[r] .file:pg.path << \\DataDir\\file.txt
 ```
 
 ---
@@ -613,20 +613,20 @@ Use C-style block comments `/* */`:
 ```polyglot
 // ✗ POOR - Too obvious
 // Declare input of type string
-[i] .input: pg\string
+[i] .input:pg.string
 
 // Assign 5 to variable x
-[r] .x: pg\int << 5
+[r] .x:pg.int << 5
 
 // Call ProcessData pipeline
 [r] |ProcessData
 
 // ✓ BETTER - Only comment when adding value
-[i] .input: pg\string
+[i] .input:pg.string
 
 // Process input with custom validation rules
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 ```
 
 ---

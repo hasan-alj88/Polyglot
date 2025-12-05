@@ -45,7 +45,7 @@ const name = "Alice";  // Available now
 **Polyglot:** Variables transition to ready state asynchronously.
 ```polyglot
 [r] |FetchUser
-[>] .name: pg\string >> .user_name  # Becomes ready when pipeline completes
+[>] .name:pg.string >> .user_name  # Becomes ready when pipeline completes
 ```
 
 **The Magic:** Polyglot **automatically waits** for variables to be ready. You never write `await`.
@@ -62,9 +62,9 @@ Polyglot has **three ways** to assign variables:
 
 ```polyglot
 [#] UserProfile
-[<] .name: pg\string          # No default, will be populated
-[<] .email: pg\string         # No default, will be populated
-[<] .age: pg\int              # No default, will be populated
+[<] .name:pg.string          # No default, will be populated
+[<] .email:pg.string         # No default, will be populated
+[<] .age:pg.int              # No default, will be populated
 [X]
 ```
 
@@ -78,9 +78,9 @@ Polyglot has **three ways** to assign variables:
 
 ```polyglot
 [#] ServerConfig
-[<] .timeout: pg\int <~ 30           # Default: 30 seconds
-[<] .max_retries: pg\int <~ 3        # Default: 3 retries
-[<] .port: pg\int <~ 8080            # Default: port 8080
+[<] .timeout:pg.int <~ 30           # Default: 30 seconds
+[<] .max_retries:pg.int <~ 3        # Default: 3 retries
+[<] .port:pg.int <~ 8080            # Default: port 8080
 [X]
 ```
 
@@ -108,9 +108,9 @@ Polyglot has **three ways** to assign variables:
 
 ```polyglot
 [#] AppMetadata
-[<] .version: pg\string << "1.0.0"    # Always "1.0.0"
-[<] .name: pg\string << "MyApp"       # Always "MyApp"
-[<] .build: pg\string << "2025-11-24" # Always this date
+[<] .version:pg.string << "1.0.0"    # Always "1.0.0"
+[<] .name:pg.string << "MyApp"       # Always "MyApp"
+[<] .build:pg.string << "2025-11-24" # Always this date
 [X]
 ```
 
@@ -136,16 +136,16 @@ Polyglot has **three ways** to assign variables:
 
 ```polyglot
 [|] ProcessUser
-[i] .user_name: pg\string
-[i] .user_age: pg\int
+[i] .user_name:pg.string
+[i] .user_age:pg.int
 [t] |T.Call
 
 [W] |W.Python3.11
 
 # All [i] variables are READY here
 [r] |greet_user
-[<] .name: pg\string << .user_name    # ✅ Ready to use
-[<] .age: pg\int << .user_age          # ✅ Ready to use
+[<] .name:pg.string << .user_name    # ✅ Ready to use
+[<] .age:pg.int << .user_age          # ✅ Ready to use
 
 [o] #None
 [X]
@@ -161,13 +161,13 @@ When you pass a variable to a pipeline, **Polyglot waits automatically** if need
 
 ```polyglot
 [r] |FetchUser
-[<] .id: pg\string << "user123"
+[<] .id:pg.string << "user123"
 [>] .profile: #UserProfile >> .user_data
 
 # Polyglot automatically waits for .user_data to be ready
 [r] |ProcessProfile
 [<] .data: #UserProfile << .user_data   # No await needed!
-[>] .result: pg\string >> .processed
+[>] .result:pg.string >> .processed
 ```
 
 **You never write `await`.** The runtime handles it.
@@ -182,21 +182,21 @@ Every variable has a `.errors` field:
 
 ```polyglot
 [r] |FetchUserFromAPI
-[<] .user_id: pg\string << "user123"
+[<] .user_id:pg.string << "user123"
 [>] .user: #UserProfile >> .user_data
-[>] .errors: pg\array{!} >> .fetch_errors
+[>] .errors:pg.array{!} >> .fetch_errors
 
 # Check if operation failed
 [?] .user_data.state =? #Variables.States.Faulted
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << "Failed to fetch user: {.fetch_errors}"
+[~][<] .msg:pg.string << "Failed to fetch user: {.fetch_errors}"
 [~][o] #None
 
 # Success path
 [?] .user_data.state =? #Variables.States.Ready
 [~][r] |ProcessUser
 [~][<] .user: #UserProfile << .user_data
-[~][o] .processed_result: pg\string
+[~][o] .processed_result:pg.string
 ```
 
 ---
@@ -207,48 +207,48 @@ Every variable has a `.errors` field:
 
 ```polyglot
 [r] |CallExternalAPI
-[<] .endpoint: pg\string << "https://api.example.com/data"
-[>] .response: pg\string >> .api_response
-[>] .errors: pg\array{!} >> .api_errors
+[<] .endpoint:pg.string << "https://api.example.com/data"
+[>] .response:pg.string >> .api_response
+[>] .errors:pg.array{!} >> .api_errors
 [~]
 [~][!] !pg.Network.Timeout
-[~][>] .message: pg\string >> .timeout_msg
+[~][>] .message:pg.string >> .timeout_msg
 [~][~][r] |U.Log.Warn
-[~][~][<] .msg: pg\string << "API timeout, using cached data"
+[~][~][<] .msg:pg.string << "API timeout, using cached data"
 [~][~]
 [~][~][r] |GetCachedData
-[~][~][>] .cached: pg\string >> .fallback_data
-[~][~][o] .fallback_data: pg\string
+[~][~][>] .cached:pg.string >> .fallback_data
+[~][~][o] .fallback_data:pg.string
 [~]
 [~][!] !pg.Network.ConnectionFailed
-[~][>] .message: pg\string >> .connection_msg
+[~][>] .message:pg.string >> .connection_msg
 [~][~][r] |U.Log.Error
-[~][~][<] .msg: pg\string << "Connection failed: {.connection_msg}"
+[~][~][<] .msg:pg.string << "Connection failed: {.connection_msg}"
 [~][~][o] #None
 
 # Success path
-[o] .api_response: pg\string
+[o] .api_response:pg.string
 ```
 
 #### Pattern 2: Check State Explicitly
 
 ```polyglot
 [r] |RiskyOperation
-[>] .result: pg\string >> .operation_result
-[>] .errors: pg\array{!} >> .operation_errors
+[>] .result:pg.string >> .operation_result
+[>] .errors:pg.array{!} >> .operation_errors
 
 # Explicit state checking
 [?] .operation_result.state =? #Variables.States.Ready
 [~][r] |ProcessSuccess
-[~][<] .data: pg\string << .operation_result
+[~][<] .data:pg.string << .operation_result
 
 [?] .operation_result.state =? #Variables.States.Faulted
 [~][r] |ProcessFailure
-[~][<] .errors: pg\array{!} << .operation_errors
+[~][<] .errors:pg.array{!} << .operation_errors
 
 [?] *?
 [~][r] |U.Log.Warn
-[~][<] .msg: pg\string << "Unexpected state"
+[~][<] .msg:pg.string << "Unexpected state"
 
 [o] #None
 ```
@@ -261,11 +261,11 @@ Every variable has a `.errors` field:
 
 ```polyglot
 [#] DatabaseConfig
-[<] .host: pg\string <~ "localhost"
-[<] .port: pg\int <~ 5432
-[<] .database: pg\string <~ "myapp"
-[<] .timeout: pg\int <~ 30
-[<] .max_connections: pg\int <~ 10
+[<] .host:pg.string <~ "localhost"
+[<] .port:pg.int <~ 5432
+[<] .database:pg.string <~ "myapp"
+[<] .timeout:pg.int <~ 30
+[<] .max_connections:pg.int <~ 10
 [X]
 
 [|] ConnectToDatabase
@@ -278,12 +278,12 @@ Every variable has a `.errors` field:
 [i] .config: #DatabaseConfig << #DatabaseConfig
 
 [r] |establish_connection
-[<] .host: pg\string << .config.host
-[<] .port: pg\int << .config.port
-[<] .db: pg\string << .config.database
-[>] .connection: pg\string >> .db_conn
+[<] .host:pg.string << .config.host
+[<] .port:pg.int << .config.port
+[<] .db:pg.string << .config.database
+[>] .connection:pg.string >> .db_conn
 
-[o] .db_conn: pg\string
+[o] .db_conn:pg.string
 [X]
 ```
 
@@ -293,33 +293,33 @@ Every variable has a `.errors` field:
 
 ```polyglot
 [|] FetchWeatherData
-[i] .city: pg\string
+[i] .city:pg.string
 [t] |T.Call
 
 [W] |W.Python3.11
 
 [r] |call_weather_api
-[<] .location: pg\string << .city
-[>] .weather: pg\string >> .weather_data
-[>] .errors: pg\array{!} >> .api_errors
+[<] .location:pg.string << .city
+[>] .weather:pg.string >> .weather_data
+[>] .errors:pg.array{!} >> .api_errors
 [~]
 [~][!] !pg.Network.Timeout
 [~][~][r] |U.Log.Warn
-[~][~][<] .msg: pg\string << "API timeout for {.city}"
+[~][~][<] .msg:pg.string << "API timeout for {.city}"
 [~][~]
 [~][~]# Use cached weather data
 [~][~][r] |get_cached_weather
-[~][~][<] .location: pg\string << .city
-[~][~][>] .cached: pg\string >> .cached_weather
+[~][~][<] .location:pg.string << .city
+[~][~][>] .cached:pg.string >> .cached_weather
 [~][~]
-[~][~][o] .cached_weather: pg\string
+[~][~][o] .cached_weather:pg.string
 
 # Success path
 [r] |parse_weather_data
-[<] .raw: pg\string << .weather_data
-[>] .parsed: pg\string >> .result
+[<] .raw:pg.string << .weather_data
+[>] .parsed:pg.string >> .result
 
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
@@ -336,13 +336,13 @@ Every variable has a `.errors` field:
 
 # Launch parallel operations
 [p] |fetch_user_stats
-[>] .stats: pg\string >> .user_stats
+[>] .stats:pg.string >> .user_stats
 
 [p] |fetch_notifications
-[>] .notifications: pg\array{pg\string} >> .user_notifications
+[>] .notifications: pg.array.pg.string >> .user_notifications
 
 [p] |fetch_recent_activity
-[>] .activity: pg\array{pg\string} >> .recent_activity
+[>] .activity: pg.array.pg.string >> .recent_activity
 
 # Wait for all to complete
 [Y] |Y.Join
@@ -356,17 +356,17 @@ Every variable has a `.errors` field:
 [~][~][?] .recent_activity.state =? #Variables.States.Ready
 [~][~][~]# All ready - build full dashboard
 [~][~][~][r] |build_dashboard
-[~][~][~][<] .stats: pg\string << .user_stats
-[~][~][~][<] .notifications: pg\array{pg\string} << .user_notifications
-[~][~][~][<] .activity: pg\array{pg\string} << .recent_activity
-[~][~][~][>] .dashboard: pg\string >> .full_dashboard
+[~][~][~][<] .stats:pg.string << .user_stats
+[~][~][~][<] .notifications: pg.array.pg.string << .user_notifications
+[~][~][~][<] .activity: pg.array.pg.string << .recent_activity
+[~][~][~][>] .dashboard:pg.string >> .full_dashboard
 [~][~][~]
-[~][~][~][o] .full_dashboard: pg\string
+[~][~][~][o] .full_dashboard:pg.string
 
 # Partial failure handling
 [?] *?
 [~][r] |build_partial_dashboard
-[~][<] .stats: pg\string << .user_stats
+[~][<] .stats:pg.string << .user_stats
 [~][o] #None
 
 [o] #None
@@ -385,10 +385,10 @@ Every variable has a `.errors` field:
 
 ```polyglot
 [#] AppConfig
-[<] .log_level: pg\string <~ "INFO"
+[<] .log_level:pg.string <~ "INFO"
 [<] .debug_mode: #Boolean <~ #False
-[<] .api_timeout: pg\int <~ 30
-[<] .max_retries: pg\int <~ 3
+[<] .api_timeout:pg.int <~ 30
+[<] .max_retries:pg.int <~ 3
 [X]
 ```
 
@@ -402,10 +402,10 @@ Every variable has a `.errors` field:
 
 ```polyglot
 [#] SearchParams
-[<] .query: pg\string                    # Required
-[<] .page: pg\int <~ 1                   # Optional, default 1
-[<] .page_size: pg\int <~ 20             # Optional, default 20
-[<] .sort_by: pg\string <~ "relevance"   # Optional, default "relevance"
+[<] .query:pg.string                    # Required
+[<] .page:pg.int <~ 1                   # Optional, default 1
+[<] .page_size:pg.int <~ 20             # Optional, default 20
+[<] .sort_by:pg.string <~ "relevance"   # Optional, default "relevance"
 [X]
 ```
 
@@ -419,15 +419,15 @@ Every variable has a `.errors` field:
 
 ```polyglot
 [r] |FetchLiveData
-[>] .data: pg\string >> .live_data
-[>] .errors: pg\array{!} >> .fetch_errors
+[>] .data:pg.string >> .live_data
+[>] .errors:pg.array{!} >> .fetch_errors
 [~]
 [~][!] !pg.Network.*
 [~][~][r] |GetCachedData
-[~][~][>] .cached: pg\string >> .fallback_data
-[~][~][o] .fallback_data: pg\string
+[~][~][>] .cached:pg.string >> .fallback_data
+[~][~][o] .fallback_data:pg.string
 
-[o] .live_data: pg\string
+[o] .live_data:pg.string
 ```
 
 ---
@@ -440,15 +440,15 @@ Every variable has a `.errors` field:
 
 ```polyglot
 [r] |ProcessData
-[>] .result: pg\string >> .processed_data
+[>] .result:pg.string >> .processed_data
 
 [?] .processed_data.state =? #Variables.States.Ready
 [~][r] |SaveToDatabase
-[~][<] .data: pg\string << .processed_data
+[~][<] .data:pg.string << .processed_data
 
 [?] .processed_data.state =? #Variables.States.Faulted
 [~][r] |LogError
-[~][<] .errors: pg\array{!} << .processed_data.errors
+[~][<] .errors:pg.array{!} << .processed_data.errors
 ```
 
 ---
@@ -481,7 +481,7 @@ Use `<~` for config values you might override. Use `<<` for things like version 
 ```polyglot
 # Simple: Use error blocks
 [r] |DoSomething
-[>] .result: pg\string >> .data
+[>] .result:pg.string >> .data
 [~][!] !SomeError
 [~][~][r] |HandleError
 
@@ -499,7 +499,7 @@ Use `<~` for config values you might override. Use `<<` for things like version 
 ```polyglot
 # Method 1: Error blocks (recommended)
 [r] |RiskyOperation
-[>] .result: pg\string >> .output
+[>] .result:pg.string >> .output
 [~][!] !pg.Network.Timeout
 [~][~][r] |HandleTimeout
 
@@ -516,13 +516,13 @@ Use `<~` for config values you might override. Use `<<` for things like version 
 
 ```polyglot
 [r] |GetData
-[>] .result: pg\string >> .original_data
+[>] .result:pg.string >> .original_data
 
 # Can't reassign .original_data
 # But can create new variable
 [r] |TransformData
-[<] .input: pg\string << .original_data
-[>] .result: pg\string >> .transformed_data  # New variable
+[<] .input:pg.string << .original_data
+[>] .result:pg.string >> .transformed_data  # New variable
 ```
 
 ---
@@ -533,19 +533,19 @@ Use `<~` for config values you might override. Use `<<` for things like version 
 
 ```polyglot
 [#] Address
-[<] .street: pg\string <~ ""
-[<] .city: pg\string <~ ""
+[<] .street:pg.string <~ ""
+[<] .city:pg.string <~ ""
 [X]
 
 [#] User
-[<] .name: pg\string
+[<] .name:pg.string
 [<] .address: #Address << #Address
 [X]
 
 # Access nested fields
 [i] .user: #User << #User
 [r] |LogCity
-[<] .city: pg\string << .user.address.city
+[<] .city:pg.string << .user.address.city
 ```
 
 ---

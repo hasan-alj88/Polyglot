@@ -45,9 +45,9 @@ Define custom queues for application-specific orchestration:
 
 ```polyglot
 [#] #AppQueues
-[<] .HighPriority: pg\string << "high"
-[<] .BatchProcessing: pg\string << "batch"
-[<] .Background: pg\string << "background"
+[<] .HighPriority:pg.string << "high"
+[<] .BatchProcessing:pg.string << "batch"
+[<] .Background:pg.string << "background"
 [X]
 ```
 
@@ -63,7 +63,7 @@ The `[Q]` block marker establishes a queue control context for operations.
 
 ```polyglot
 [Q] |Q.Pause
-[<] .instance_id: pg\string << target_id
+[<] .instance_id:pg.string << target_id
 ```
 
 **Properties:**
@@ -81,8 +81,8 @@ Pause a running pipeline instance, moving it from `#Queues.Dispatch` to `#Queues
 **Signature:**
 ```polyglot
 [Q] |Q.Pause
-[<] .instance_id: pg\string << "instance-uuid"
-[>] .success: pg\bool >> result
+[<] .instance_id:pg.string << "instance-uuid"
+[>] .success:pg.bool >> result
 ```
 
 **Behavior:**
@@ -104,8 +104,8 @@ Resume a paused pipeline instance, moving it from `#Queues.Pause` back to `#Queu
 **Signature:**
 ```polyglot
 [Q] |Q.Resume
-[<] .instance_id: pg\string << "instance-uuid"
-[>] .success: pg\bool >> result
+[<] .instance_id:pg.string << "instance-uuid"
+[>] .success:pg.bool >> result
 ```
 
 **Behavior:**
@@ -127,8 +127,8 @@ Terminate a pipeline instance, forcing it to the `Exited` lifecycle state.
 **Signature:**
 ```polyglot
 [Q] |Q.Kill
-[<] .instance_id: pg\string << "instance-uuid"
-[>] .success: pg\bool >> result
+[<] .instance_id:pg.string << "instance-uuid"
+[>] .success:pg.bool >> result
 ```
 
 **Behavior:**
@@ -152,9 +152,9 @@ Move an instance forward in `#Queues.Pending`, increasing execution priority.
 **Signature:**
 ```polyglot
 [Q] |Q.PriorityBump
-[<] .instance_id: pg\string << "instance-uuid"
-[<] .positions: pg\int << 5  // Move forward 5 positions
-[>] .success: pg\bool >> result
+[<] .instance_id:pg.string << "instance-uuid"
+[<] .positions:pg.int << 5  // Move forward 5 positions
+[>] .success:pg.bool >> result
 ```
 
 **Behavior:**
@@ -176,9 +176,9 @@ Assign an instance to a custom queue instead of default `#Queues.Pending`.
 **Signature:**
 ```polyglot
 [Q] |Q.Queue.Assign
-[<] .instance_id: pg\string << "instance-uuid"
-[<] .queue: pg\string << #AppQueues.HighPriority
-[>] .success: pg\bool >> result
+[<] .instance_id:pg.string << "instance-uuid"
+[<] .queue:pg.string << #AppQueues.HighPriority
+[>] .success:pg.bool >> result
 ```
 
 **Behavior:**
@@ -200,10 +200,10 @@ Query the current status of a pipeline instance.
 **Signature:**
 ```polyglot
 [Q] |Q.Status
-[<] .instance_id: pg\string << "instance-uuid"
-[>] .state: pg\string >> current_state      // "Created", "Queued", "Running", "Exited"
-[>] .queue: pg\string >> current_queue      // Which queue (if any)
-[>] .is_paused: pg\bool >> paused_flag      // True if in Pause queue
+[<] .instance_id:pg.string << "instance-uuid"
+[>] .state:pg.string >> current_state      // "Created", "Queued", "Running", "Exited"
+[>] .queue:pg.string >> current_queue      // Which queue (if any)
+[>] .is_paused:pg.bool >> paused_flag      // True if in Pause queue
 ```
 
 **Behavior:**
@@ -226,46 +226,46 @@ Pause a long-running analysis if system load is high, then resume when resources
 
 ```polyglot
 [|] MonitoredAnalysis
-[i] .data: pg\string
-[i] .instance_id: pg\string  // Track this instance
+[i] .data:pg.string
+[i] .instance_id:pg.string  // Track this instance
 
 [r] |HeavyAnalysis
-[<] .input: pg\string << .data
-[>] .result: pg\string >> analysis_result
+[<] .input:pg.string << .data
+[>] .result:pg.string >> analysis_result
 
-[o] .result: pg\string << analysis_result
+[o] .result:pg.string << analysis_result
 [X]
 
 // Monitoring pipeline
 [|] ResourceMonitor
-[i] .target_instance: pg\string
+[i] .target_instance:pg.string
 
 [r] |CheckSystemLoad
-[>] .load: pg\int >> current_load
+[>] .load:pg.int >> current_load
 
 // If load > 80%, pause target
 [?] current_load ?> 80..
-[~][r] .condition: pg\bool << #True
-[~][~][r] .condition: pg\bool << #False
+[~][r] .condition:pg.bool << #True
+[~][~][r] .condition:pg.bool << #False
 
 [r] |DecideAction
-[<] .should_pause: pg\bool << .condition
-[>] .action: pg\string >> action_result
+[<] .should_pause:pg.bool << .condition
+[>] .action:pg.string >> action_result
 
 [Q] |Q.Pause
-[<] .instance_id: pg\string << .target_instance
-[>] .success: pg\bool >> pause_result
+[<] .instance_id:pg.string << .target_instance
+[>] .success:pg.bool >> pause_result
 
 // Wait for load to decrease
 [r] |WaitForResources
-[>] .ready: pg\bool >> resources_ready
+[>] .ready:pg.bool >> resources_ready
 
 // Resume when ready
 [Q] |Q.Resume
-[<] .instance_id: pg\string << .target_instance
-[>] .success: pg\bool >> resume_result
+[<] .instance_id:pg.string << .target_instance
+[>] .success:pg.bool >> resume_result
 
-[o] .status: pg\string << "Resumed"
+[o] .status:pg.string << "Resumed"
 [X]
 ```
 
@@ -276,46 +276,46 @@ Implement a high-priority queue for time-sensitive operations.
 ```polyglot
 // Define priority queues
 [#] #AppQueues
-[<] .HighPriority: pg\string << "high"
-[<] .NormalPriority: pg\string << "normal"
-[<] .LowPriority: pg\string << "low"
+[<] .HighPriority:pg.string << "high"
+[<] .NormalPriority:pg.string << "normal"
+[<] .LowPriority:pg.string << "low"
 [X]
 
 // Orchestrator assigns instances to queues
 [|] PriorityOrchestrator
-[i] .operation_type: pg\string
-[i] .instance_id: pg\string
+[i] .operation_type:pg.string
+[i] .instance_id:pg.string
 
 [r] |DeterminePriority
-[<] .type: pg\string << .operation_type
-[>] .priority: pg\string >> assigned_priority
+[<] .type:pg.string << .operation_type
+[>] .priority:pg.string >> assigned_priority
 
 // Assign to appropriate queue
 [Q] |Q.Queue.Assign
-[<] .instance_id: pg\string << .instance_id
-[<] .queue: pg\string << assigned_priority
-[>] .success: pg\bool >> assignment_result
+[<] .instance_id:pg.string << .instance_id
+[<] .queue:pg.string << assigned_priority
+[>] .success:pg.bool >> assignment_result
 
-[o] .assigned_to: pg\string << assigned_priority
+[o] .assigned_to:pg.string << assigned_priority
 [X]
 
 // Usage
 [|] TimesSensitiveOperation
-[i] .data: pg\string
+[i] .data:pg.string
 
 [r] |GetInstanceID
-[>] .id: pg\string >> my_instance_id
+[>] .id:pg.string >> my_instance_id
 
 // Request high priority
 [r] |PriorityOrchestrator
-[<] .operation_type: pg\string << "urgent"
-[<] .instance_id: pg\string << my_instance_id
+[<] .operation_type:pg.string << "urgent"
+[<] .instance_id:pg.string << my_instance_id
 
 [r] |ProcessData
-[<] .input: pg\string << .data
-[>] .result: pg\string >> final_result
+[<] .input:pg.string << .data
+[>] .result:pg.string >> final_result
 
-[o] .result: pg\string << final_result
+[o] .result:pg.string << final_result
 [X]
 ```
 
@@ -325,28 +325,28 @@ Monitor multiple pipeline instances and report their status.
 
 ```polyglot
 [|] InstanceMonitor
-[i] .instance_ids: pg\array{pg\string}
+[i] .instance_ids: pg.array.pg.string
 
 // Check each instance
 [~][r] |CheckInstances
-[<] .ids: pg\array{pg\string} << .instance_ids
+[<] .ids: pg.array.pg.string << .instance_ids
 
 // For each instance
 [p] |CheckSingleInstance
-[<] .id: pg\string << .ids[*]
+[<] .id:pg.string << .ids[*]
 
 [Q] |Q.Status
-[<] .instance_id: pg\string << .id
-[>] .state: pg\string >> instance_state
-[>] .queue: pg\string >> instance_queue
-[>] .is_paused: pg\bool >> instance_paused
+[<] .instance_id:pg.string << .id
+[>] .state:pg.string >> instance_state
+[>] .queue:pg.string >> instance_queue
+[>] .is_paused:pg.bool >> instance_paused
 
 [r] |FormatStatus
-[<] .id: pg\string << .id
-[<] .state: pg\string << instance_state
-[<] .queue: pg\string << instance_queue
-[<] .paused: pg\bool << instance_paused
-[>] .formatted: pg\string >> status_line
+[<] .id:pg.string << .id
+[<] .state:pg.string << instance_state
+[<] .queue:pg.string << instance_queue
+[<] .paused:pg.bool << instance_paused
+[>] .formatted:pg.string >> status_line
 
 [>] .formatted >> status_results
 
@@ -354,10 +354,10 @@ Monitor multiple pipeline instances and report their status.
 [>] status_results
 
 [r] |AggregateReport
-[<] .statuses: pg\array{pg\string} << status_results
-[>] .report: pg\string >> final_report
+[<] .statuses: pg.array.pg.string << status_results
+[>] .report:pg.string >> final_report
 
-[o] .dashboard: pg\string << final_report
+[o] .dashboard:pg.string << final_report
 [X]
 ```
 
@@ -367,45 +367,45 @@ Implement a kill switch for runaway pipeline instances.
 
 ```polyglot
 [|] EmergencyKillSwitch
-[i] .instance_id: pg\string
-[i] .reason: pg\string
+[i] .instance_id:pg.string
+[i] .reason:pg.string
 
 // Log the kill operation
 [r] |LogEmergency
-[<] .id: pg\string << .instance_id
-[<] .reason: pg\string << .reason
-[>] .logged: pg\bool >> log_result
+[<] .id:pg.string << .instance_id
+[<] .reason:pg.string << .reason
+[>] .logged:pg.bool >> log_result
 
 // Terminate instance
 [Q] |Q.Kill
-[<] .instance_id: pg\string << .instance_id
-[>] .success: pg\bool >> kill_result
+[<] .instance_id:pg.string << .instance_id
+[>] .success:pg.bool >> kill_result
 
 // Report outcome
 [r] |FormatKillReport
-[<] .success: pg\bool << kill_result
-[<] .id: pg\string << .instance_id
-[>] .report: pg\string >> final_report
+[<] .success:pg.bool << kill_result
+[<] .id:pg.string << .instance_id
+[>] .report:pg.string >> final_report
 
-[o] .result: pg\string << final_report
+[o] .result:pg.string << final_report
 [X]
 
 // Usage: Kill a specific instance
 [|] MonitorAndKill
-[i] .target: pg\string
+[i] .target:pg.string
 
 [r] |DetectRunaway
-[<] .instance: pg\string << .target
-[>] .is_runaway: pg\bool >> runaway_detected
+[<] .instance:pg.string << .target
+[>] .is_runaway:pg.bool >> runaway_detected
 
-[t] .condition: pg\bool << runaway_detected
+[t] .condition:pg.bool << runaway_detected
 
 [r] |EmergencyKillSwitch
-[<] .instance_id: pg\string << .target
-[<] .reason: pg\string << "Runaway detection triggered"
-[>] .result: pg\string >> kill_report
+[<] .instance_id:pg.string << .target
+[<] .reason:pg.string << "Runaway detection triggered"
+[>] .result:pg.string >> kill_report
 
-[o] .status: pg\string << kill_report
+[o] .status:pg.string << kill_report
 [X]
 ```
 
@@ -417,9 +417,9 @@ Prefer pipeline logic that handles termination gracefully over relying on `|Q.Ki
 ```polyglot
 // ✓ PREFERRED - graceful exit condition
 [|] GracefulPipeline
-[i] .should_continue: pg\bool
+[i] .should_continue:pg.bool
 
-[t] .condition: pg\bool << .should_continue
+[t] .condition:pg.bool << .should_continue
 [r] |ContinueProcessing
 [X]
 
@@ -434,11 +434,11 @@ Store instance IDs when you need to control them later.
 
 ```polyglot
 [r] |GetInstanceID
-[>] .id: pg\string >> my_instance_id
+[>] .id:pg.string >> my_instance_id
 
 // Store for later queue control
 [r] |StoreForMonitoring
-[<] .instance: pg\string << my_instance_id
+[<] .instance:pg.string << my_instance_id
 ```
 
 ### 3. **Use Custom Queues for Prioritization**
@@ -447,11 +447,11 @@ Don't rely solely on `|Q.PriorityBump`; design custom queue strategies.
 ```polyglot
 // ✓ GOOD - custom queue strategy
 [Q] |Q.Queue.Assign
-[<] .queue: pg\string << #AppQueues.HighPriority
+[<] .queue:pg.string << #AppQueues.HighPriority
 
 // ✗ LESS OPTIMAL - manual bumping
 [Q] |Q.PriorityBump
-[<] .positions: pg\int << 100
+[<] .positions:pg.int << 100
 ```
 
 ### 4. **Handle Queue Operation Failures**
@@ -459,10 +459,10 @@ Always check `.success` output from queue operations.
 
 ```polyglot
 [Q] |Q.Pause
-[<] .instance_id: pg\string << target_id
-[>] .success: pg\bool >> pause_success
+[<] .instance_id:pg.string << target_id
+[>] .success:pg.bool >> pause_success
 
-[t] .condition: pg\bool << (!pause_success)
+[t] .condition:pg.bool << (!pause_success)
 [r] |HandlePauseFailure
 ```
 
@@ -471,13 +471,13 @@ Use `|Q.Status` to verify instance state before operations.
 
 ```polyglot
 [Q] |Q.Status
-[<] .instance_id: pg\string << target
-[>] .state: pg\string >> current_state
+[<] .instance_id:pg.string << target
+[>] .state:pg.string >> current_state
 
 // Only pause if running
 [?] current_state ?> "Running"
 [~][Q] |Q.Pause
-[~][<] .instance_id: pg\string << target
+[~][<] .instance_id:pg.string << target
 ```
 
 ### 6. **Pause/Resume for Inspection, Not Control Flow**
@@ -490,7 +490,7 @@ Don't use pause/resume as primary control flow mechanism.
 [Q] |Q.Resume
 
 // ✓ PREFERRED - use triggers [t] or conditionals
-[t] .condition: pg\bool << event_occurred
+[t] .condition:pg.bool << event_occurred
 [r] |ContinueProcessing
 ```
 
@@ -500,9 +500,9 @@ Clearly define the meaning and dispatch rules for custom queues.
 ```polyglot
 // Define queue semantics in documentation
 [#] #AppQueues
-[<] .Interactive: pg\string << "interactive"     // Immediate dispatch, <100ms latency
-[<] .Batch: pg\string << "batch"                 // Scheduled dispatch, hourly
-[<] .Background: pg\string << "background"       // Low priority, fills idle time
+[<] .Interactive:pg.string << "interactive"     // Immediate dispatch, <100ms latency
+[<] .Batch:pg.string << "batch"                 // Scheduled dispatch, hourly
+[<] .Background:pg.string << "background"       // Low priority, fills idle time
 [X]
 ```
 
@@ -512,21 +512,21 @@ Verify queue control behavior under different conditions.
 ```polyglot
 [|] TestPauseResume
 [r] |CreateTestInstance
-[>] .id: pg\string >> test_id
+[>] .id:pg.string >> test_id
 
 [Q] |Q.Pause
-[<] .instance_id: pg\string << test_id
+[<] .instance_id:pg.string << test_id
 
 [Q] |Q.Status
-[<] .instance_id: pg\string << test_id
-[>] .is_paused: pg\bool >> paused
+[<] .instance_id:pg.string << test_id
+[>] .is_paused:pg.bool >> paused
 
 // Verify paused state
 [r] |AssertTrue
-[<] .value: pg\bool << paused
+[<] .value:pg.bool << paused
 
 [Q] |Q.Resume
-[<] .instance_id: pg\string << test_id
+[<] .instance_id:pg.string << test_id
 [X]
 ```
 
@@ -537,20 +537,20 @@ Monitor instances and kill them if they exceed time limits.
 
 ```polyglot
 [|] WatchdogMonitor
-[i] .instance_id: pg\string
-[i] .max_runtime_seconds: pg\int
+[i] .instance_id:pg.string
+[i] .max_runtime_seconds:pg.int
 
 [r] |WaitForTimeout
-[<] .seconds: pg\int << .max_runtime_seconds
+[<] .seconds:pg.int << .max_runtime_seconds
 
 [Q] |Q.Status
-[<] .instance_id: pg\string << .instance_id
-[>] .state: pg\string >> current_state
+[<] .instance_id:pg.string << .instance_id
+[>] .state:pg.string >> current_state
 
 // If still running, kill it
 [?] current_state ?> "Running"
 [~][Q] |Q.Kill
-[~][<] .instance_id: pg\string << .instance_id
+[~][<] .instance_id:pg.string << .instance_id
 [X]
 ```
 
@@ -559,34 +559,34 @@ Pause instances when resources are scarce, resume when available.
 
 ```polyglot
 [|] ResourceAwareScheduler
-[i] .monitored_instances: pg\array{pg\string}
+[i] .monitored_instances: pg.array.pg.string
 
 [r] |CheckResources
-[>] .cpu_available: pg\bool >> cpu_ok
-[>] .memory_available: pg\bool >> mem_ok
+[>] .cpu_available:pg.bool >> cpu_ok
+[>] .memory_available:pg.bool >> mem_ok
 
-[t] .condition: pg\bool << (!cpu_ok || !mem_ok)
+[t] .condition:pg.bool << (!cpu_ok || !mem_ok)
 
 // Pause all monitored instances
 [~][p] |PauseInstances
-[<] .ids: pg\array{pg\string} << .monitored_instances
+[<] .ids: pg.array.pg.string << .monitored_instances
 
 [Q] |Q.Pause
-[<] .instance_id: pg\string << .ids[*]
+[<] .instance_id:pg.string << .ids[*]
 
 [Y] |Y.Join
 [>] // Wait for all pauses
 
 // Wait for resources
 [r] |WaitForResources
-[>] .ready: pg\bool >> resources_ready
+[>] .ready:pg.bool >> resources_ready
 
 // Resume all instances
 [~][p] |ResumeInstances
-[<] .ids: pg\array{pg\string} << .monitored_instances
+[<] .ids: pg.array.pg.string << .monitored_instances
 
 [Q] |Q.Resume
-[<] .instance_id: pg\string << .ids[*]
+[<] .instance_id:pg.string << .ids[*]
 
 [Y] |Y.Join
 [X]
@@ -597,47 +597,47 @@ Automatically bump priority for instances waiting too long.
 
 ```polyglot
 [|] PriorityEscalation
-[i] .instance_id: pg\string
-[i] .max_wait_seconds: pg\int
+[i] .instance_id:pg.string
+[i] .max_wait_seconds:pg.int
 
 [r] |WaitForEscalation
-[<] .seconds: pg\int << .max_wait_seconds
+[<] .seconds:pg.int << .max_wait_seconds
 
 [Q] |Q.Status
-[<] .instance_id: pg\string << .instance_id
-[>] .state: pg\string >> current_state
+[<] .instance_id:pg.string << .instance_id
+[>] .state:pg.string >> current_state
 
 // If still queued, bump priority
 [?] current_state ?> "Queued"
 [~][Q] |Q.PriorityBump
-[~][<] .instance_id: pg\string << .instance_id
-[~][<] .positions: pg\int << 10
+[~][<] .instance_id:pg.string << .instance_id
+[~][<] .positions:pg.int << 10
 [X]
 ```
 
 ## Error Handling
 
-Queue operations return `.success: pg\bool` to indicate outcome. Handle failures appropriately.
+Queue operations return `.success:pg.bool` to indicate outcome. Handle failures appropriately.
 
 ```polyglot
 [Q] |Q.Pause
-[<] .instance_id: pg\string << target_id
-[>] .success: pg\bool >> pause_ok
+[<] .instance_id:pg.string << target_id
+[>] .success:pg.bool >> pause_ok
 
-[t] .condition: pg\bool << (!pause_ok)
+[t] .condition:pg.bool << (!pause_ok)
 
 // Handle failure
 [r] |InvestigateFailure
-[<] .operation: pg\string << "pause"
-[<] .instance: pg\string << target_id
+[<] .operation:pg.string << "pause"
+[<] .instance:pg.string << target_id
 
 [Q] |Q.Status
-[<] .instance_id: pg\string << target_id
-[>] .state: pg\string >> actual_state
+[<] .instance_id:pg.string << target_id
+[>] .state:pg.string >> actual_state
 
 [r] |LogError
-[<] .message: pg\string << "Failed to pause instance"
-[<] .state: pg\string << actual_state
+[<] .message:pg.string << "Failed to pause instance"
+[<] .state:pg.string << actual_state
 ```
 
 **Common Failure Causes:**

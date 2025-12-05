@@ -158,19 +158,19 @@ Execute code in other programming languages (Python, Node, Rust, Go, Ruby, Deno)
 
 ```polyglot
 [|] MultiRuntimePipeline
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Python processing
 [W] |W.Python3.11
 [r] |PythonAnalyze
-[<] .input: pg\string << .data
-[>] .result: pg\string >> python_result
+[<] .input:pg.string << .data
+[>] .result:pg.string >> python_result
 
 // Node processing
 [W] |W.Node20
 [r] |NodeTransform
-[<] .input: pg\string << python_result
-[>] .result: pg\string >> final_result
+[<] .input:pg.string << python_result
+[>] .result:pg.string >> final_result
 
 [X]
 ```
@@ -212,13 +212,13 @@ Control pipeline instance execution through queue operations.
 
 ```polyglot
 [|] ControlledTask
-[i] .data: pg\string
+[i] .data:pg.string
 
 [r] |Step1
 
 // Conditionally pause
 [Q] |Q.PauseIf.RAM.Available.LessThan
-[<] .mb: pg\uint << 512
+[<] .mb:pg.uint << 512
 
 [r] |Step2
 
@@ -249,14 +249,14 @@ Used with `[Y]` block marker and `[>]` to list variables to synchronize.
 
 ```polyglot
 [|] ParallelWorkflow
-[i] .data: pg\string
+[i] .data:pg.string
 
 [p] |ProcessA
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .result >> result_a
 
 [p] |ProcessB
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .result >> result_b
 
 // Join - synchronize results
@@ -266,8 +266,8 @@ Used with `[Y]` block marker and `[>]` to list variables to synchronize.
 
 // Now both results available
 [r] |CombineResults
-[<] .a: pg\string << result_a
-[<] .b: pg\string << result_b
+[<] .a:pg.string << result_a
+[<] .b:pg.string << result_b
 
 [X]
 ```
@@ -325,18 +325,18 @@ Utility operations are referenced throughout documentation and examples, but com
 ```polyglot
 // String formatting
 [r] |U.String.Format
-[<] .template: pg\string << "Hello, {}!"
-[<] .value: pg\string << "World"
-[>] .result: pg\string >> greeting
+[<] .template:pg.string << "Hello, {}!"
+[<] .value:pg.string << "World"
+[>] .result:pg.string >> greeting
 
 // Array operations
 [r] |U.Array.Length
-[<] .arr: pg\array{pg\string} << items
-[>] .length: pg\uint >> count
+[<] .arr: pg.array.pg.string << items
+[>] .length:pg.uint >> count
 
 // Logging
 [r] |U.Log.Info
-[<] .msg: pg\string << "Processing started"
+[<] .msg:pg.string << "Processing started"
 ```
 
 **Full Documentation:** [Utilities Catalog](03-utilities.md)
@@ -383,21 +383,21 @@ Trigger operations are referenced throughout documentation and examples, but com
 // Daily trigger
 [|] DailyReport
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 [r] |GenerateReport
 [X]
 
 // File change trigger
 [|] FileWatcher
 [t] |T.File.Modified
-[<] .path: pg\path << \\DataDir\\config.json
+[<] .path:pg.path << \\DataDir\\config.json
 [r] |ReloadConfig
 [X]
 
 // Interval trigger
 [|] FrequentTask
 [t] |T.Every.Seconds
-[<] .interval: pg\int << 30
+[<] .interval:pg.int << 30
 [r] |CheckStatus
 [X]
 ```
@@ -421,8 +421,8 @@ System-defined enumerations that provide core functionality.
 Schema (confirmed):
 ```polyglot
 [#] Path.Identifiers.{CustomName}
-[<] .unix: pg\path      // REQUIRED
-[<] .windows: pg\path   // REQUIRED
+[<] .unix:pg.path      // REQUIRED
+[<] .windows:pg.path   // REQUIRED
 [X]
 ```
 
@@ -430,12 +430,12 @@ Example:
 ```polyglot
 [#] Path.Identifiers.MyApp.DataDir
 [A] DataDir
-[<] .unix: pg\path << \\UnixRoot\\opt\myapp\data\
-[<] .windows: pg\path << \\C\\ProgramData\MyApp\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\myapp\data\
+[<] .windows:pg.path << \\C\\ProgramData\MyApp\Data\
 [X]
 
 // Usage
-[r] .file: pg\path << \\DataDir\\records.csv
+[r] .file:pg.path << \\DataDir\\records.csv
 ```
 
 ---
@@ -529,12 +529,12 @@ Migration:
 ```polyglot
 // Reserved enumerations use # operator
 [r] .status: #Status << #Status.Success
-[r] .file: pg\path << \\DataDir\\file.txt
+[r] .file:pg.path << \\DataDir\\file.txt
 
 // Extend reserved enumerations
 [#] Path.Identifiers.MyApp.CustomPath
-[<] .unix: pg\path << \\UnixRoot\\path\
-[<] .windows: pg\path << \\C\\path\
+[<] .unix:pg.path << \\UnixRoot\\path\
+[<] .windows:pg.path << \\C\\path\
 [X]
 ```
 
@@ -544,13 +544,13 @@ Migration:
 
 ```polyglot
 [r] |U.File.Read
-[<] .path: pg\path << file_path
+[<] .path:pg.path << file_path
 
 // Standard library operations can throw errors
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 ```
 
 ---
@@ -561,7 +561,7 @@ Migration:
 // Use [W] block marker for wrappers
 [W] |W.Python3.11
 [r] |RunPythonScript
-[<] .script: pg\path << "analyze.py"
+[<] .script:pg.path << "analyze.py"
 ```
 
 ---
@@ -582,10 +582,10 @@ Migration:
 ```polyglot
 // Use [t] block marker for triggers
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 [t] |T.File.Modified
-[<] .path: pg\path << \\ConfigDir\\app.conf
+[<] .path:pg.path << \\ConfigDir\\app.conf
 ```
 
 ---

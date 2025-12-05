@@ -1,0 +1,176 @@
+_meta:
+  generated: 2025-12-04
+  desc: Global cross-reference index for all Polyglot documentation
+  total_docs: 50+
+  coverage: syntax, examples, advanced, technical, user-guides, ai-context
+
+# Quick lookup by topic category
+categories:
+  syntax:
+    - block-markers.md: 30+ block markers reference ([x] sequences)
+    - overview.md: high-level syntax principles, async-first, no-keywords
+    - operators.md: <<, >>, <~, comparison, range, unpack/pack ops
+    - type-system.md: namespace types (pg\, rs\, py\), primitives, collections
+    - enumerations.md: [#] blocks, reserved enums, #Boolean, #PgVar.States
+    - error-handling.md: [!] blocks, .message/.code/.trace, catch patterns
+    - comments.md: // syntax, documentation conventions
+    - line-continuation.md: [*] multi-line logical lines
+
+  examples:
+    - automation-workflows.md: scheduled tasks, file-watch, batch ETL
+    - cross-language-integration.md: Python/Rust/Node/Go FFI, RT. wrappers
+    - error-handling-patterns.md: retry, fallback, timeout, recovery
+    - multi-step-pipelines.md: sequential chains, parallel branches, composition
+    - overview.md: example catalog and progression
+
+  advanced:
+    - variable-states.md: Declared/Pending/Ready/Faulted FSM
+    - datetime-system.md: Unix-ms base, Gregorian/JD, temporal profiles
+    - parallel-execution.md: [p], [Y], fork-join, ~ForEach patterns
+    - macro-system.md: [M], [{][}] injection, setup/cleanup
+    - expansion-operator.md: [~] nesting, ~* unpack, ~Y.* pack
+    - line-continuation.md: [*] continuation for readability
+
+  technical:
+    - architecture.md: parser→IR→DBFlux→queue→runtime flow
+    - datetime-architecture-decision-2025-12-02.md: ADR for Unix-ms vs MD
+    - variable-states-specification.md: FSM spec, transition rules, validation
+    - parser-error-detection-design.md: error detection strategy
+    - database-architecture-explained.md: DBFlux schema, queue system
+
+  user-guides:
+    - getting-started.md: quickstart, hello-world, CLI
+    - variable-state-system.md: async-centric state guide
+    - async-centric-paradigm.md: no-await philosophy
+    - core-philosophy.md: design principles, trade-offs
+    - introduction.md: what is Polyglot, why use it
+
+  ai-context:
+    - README.md: AI context package overview, CRITICAL PARADIGM (orchestration vs inline), file guide
+    - constraints.yaml: Complete constraint specification, orchestration paradigm, example interpretation rules
+    - runtime-wrappers.yaml: Runtime wrapper patterns (Python/Rust/Node/Go), serial interchange, ETL example
+    - anti-patterns.yaml: Common AI mistakes catalog with corrections, learning checklist
+    - grammar.ebnf: EBNF syntax specification
+    - type-system.json: Type rules, primitives, collections, compatibility
+    - operators.json: Complete operator reference with semantics
+    - state-machine.yaml: Variable lifecycle, state transitions
+    - reserved-enums.json: Runtime-provided enumerations (#PgVar, #Boolean, #None)
+    - examples-annotated.pg: Canonical patterns with inline STATE/TYPE annotations
+    - datetime-system.yaml: DateTime type specification (pg\dt), DT.* namespace
+
+# Core concepts cross-reference
+concepts:
+  block-markers:
+    docs: [block-markers.md, overview.md]
+    key_markers: ['[@]', '[|]', '[#]', '[!]', '[M]', '[X]', '[i]', '[o]', '[<]', '[>]', '[r]', '[p]', '[b]', '[s]', '[Y]', '[?]', '[t]', '[Q]', '[W]', '[~]', '[A]', '[\]', '[/]', '[{]', '[}]', '[&]', '[+]', '[-]', '[^]', '[.]', '[*]']
+    related: [syntax overview, pipeline structure, execution semantics]
+
+  variable-states:
+    docs: [variable-states.md, variable-state-system.md, variable-states-specification.md, enumerations.md]
+    states: [Declared, DefaultReady, Pending, Ready, Faulted]
+    transitions: [auto on ops, no manual mgmt]
+    related: [async-centric, operators, [i] trigger]
+
+  async-paradigm:
+    docs: [async-centric-paradigm.md, variable-state-system.md, parallel-execution.md]
+    features: [no-await, state-driven, auto-concurrent, PULL-waits]
+    related: [var-states, pipelines, [p] parallel]
+
+  operators:
+    docs: [operators.md, block-markers.md]
+    data-flow: ['<<' push, '>>' pull, '<~' default]
+    comparison: ['=?', '>?', '<?', '>=?', '<=?', '!?']
+    range: ['?[a,b]', '?[a,b)', '?(a,b]', '?(a,b)']
+    collection: ['~*' unpack, '~Y.*' pack]
+    related: [state-transitions, type-system]
+
+  pipelines:
+    docs: [overview.md, block-markers.md, multi-step-pipelines.md]
+    structure: ['[|]' def, '[i]' input, '[t]' trigger, '[W]' wrapper, exec blocks, '[o]' output, '[X]' term]
+    execution: ['[r]' seq, '[p]' parallel, '[b]' bg, '[s]' serial]
+    control: ['[?]' switch, '[Q]' queue]
+    related: [state-system, triggers, wrappers]
+
+  error-handling:
+    docs: [error-handling.md, error-handling-patterns.md]
+    define: ['[!]' ErrorName, required fields .message/.code/.trace]
+    catch: ['[~][!]' catch block, catch-all [~][!] *]
+    propagate: ['[o]' !ErrorType]
+    markers: ['!No.Input', '!No.Output']
+    related: [Faulted state, patterns]
+
+  types:
+    docs: [type-system.md, enumerations.md]
+    namespaces: ['pg\', 'rs\', 'py\', 'js\', 'go\']
+    primitives: [int, float, string, bool, path, url, datetime]
+    collections: ['array{T}', 'map{K,V}', 'set{T}']
+    enums: ['#Boolean', '#None', '#PgVar.States.*']
+    related: [FFI, cross-lang-integration]
+
+  datetime:
+    docs: [datetime-system.md, datetime-architecture-decision-2025-12-02.md]
+    base: Unix-timestamp-ms
+    calendars: [Gregorian, Julian-Date, future-Hijri]
+    triggers: ['|T.DT.Daily', '|T.DT.Every', '|T.DT.Cron']
+    storage: InfluxDB-temporal-records
+    related: [triggers, temporal-profiles]
+
+  multi-lang:
+    docs: [cross-language-integration.md, type-system.md]
+    wrappers: ['RT.Python', 'RT.Rust', 'RT.Node', 'RT.Go']
+    type-mapping: [pg↔rs↔py↔js↔go]
+    related: [namespaces, FFI, runtime-wrappers]
+
+# Keyword → Document mapping (most common searches)
+keywords:
+  block-markers: [block-markers.md, overview.md]
+  states: [variable-states.md, variable-state-system.md, variable-states-specification.md]
+  async: [async-centric-paradigm.md, variable-state-system.md, parallel-execution.md]
+  pipelines: [overview.md, block-markers.md, multi-step-pipelines.md]
+  errors: [error-handling.md, error-handling-patterns.md]
+  types: [type-system.md, enumerations.md]
+  operators: [operators.md, block-markers.md]
+  parallel: [parallel-execution.md, expansion-operator.md, multi-step-pipelines.md]
+  datetime: [datetime-system.md, datetime-architecture-decision-2025-12-02.md]
+  FFI: [cross-language-integration.md, type-system.md]
+  examples: [examples/overview.md, examples/*.md]
+  triggers: [block-markers.md, automation-workflows.md, datetime-system.md]
+  macros: [macro-system.md, block-markers.md]
+  runtime-wrappers: [ai-context/runtime-wrappers.yaml, cross-language-integration.md]
+  anti-patterns: [ai-context/anti-patterns.yaml]
+  orchestration: [ai-context/README.md, ai-context/constraints.yaml, ai-context/runtime-wrappers.yaml]
+  ai-context: [ai-context/*.yaml, ai-context/*.json, ai-context/*.ebnf, ai-context/*.pg]
+
+# Code → Documentation mapping
+code_refs:
+  'polyglot-parser/src/parser.rs': [block-markers.md, overview.md, operators.md, comments.md, line-continuation.md]
+  'polyglot-parser/src/validation.rs': [variable-states-specification.md, error-handling.md, enumerations.md]
+  'polyglot-parser/src/ast.rs': [type-system.md, enumerations.md]
+  'polyglot-ir/src/lib.rs': [variable-states-specification.md, architecture.md]
+  'polyglot-runtime-wrappers/src/lib.rs': [cross-language-integration.md, architecture.md]
+  'polyglot-cli/': [getting-started.md, architecture.md]
+  'docs/project/examples/*.pg': [examples/*.md, syntax/*.md]
+
+# Common queries → Best starting docs
+queries:
+  "how to write a pipeline": [getting-started.md, overview.md, block-markers.md]
+  "variable states explained": [variable-state-system.md, variable-states.md, async-centric-paradigm.md]
+  "error handling": [error-handling.md, error-handling-patterns.md]
+  "parallel execution": [parallel-execution.md, expansion-operator.md, multi-step-pipelines.md]
+  "datetime triggers": [datetime-system.md, automation-workflows.md, block-markers.md]
+  "multi-language support": [cross-language-integration.md, type-system.md]
+  "block marker reference": [block-markers.md]
+  "operator list": [operators.md, block-markers.md]
+  "type system": [type-system.md, enumerations.md]
+  "async how it works": [async-centric-paradigm.md, variable-state-system.md]
+  "how to call Python/Rust/Node": [ai-context/runtime-wrappers.yaml, cross-language-integration.md]
+  "common mistakes": [ai-context/anti-patterns.yaml]
+  "AI code generation": [ai-context/README.md, ai-context/constraints.yaml, ai-context/anti-patterns.yaml]
+  "what is Polyglot": [ai-context/README.md, introduction.md, core-philosophy.md]
+  "orchestration vs inline code": [ai-context/README.md, ai-context/constraints.yaml]
+
+# Update tracking
+last_updated:
+  block-markers.md: 2025-12-02
+  datetime-architecture-decision-2025-12-02.md: 2025-12-02
+  # ... (all files tracked with dates)

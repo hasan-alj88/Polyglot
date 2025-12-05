@@ -222,19 +222,19 @@ This directory contains **compliant Polyglot v0.0.2 code examples** generated fr
 
 **Every `[|]` pipeline MUST have ALL of these sections:**
 
-1. **Inputs `[i]`** - At least one (use `[i] #Pipeline.NoInput` if none)
+1. **Inputs `[i]`** - At least one (use `[i] !No.Input` if none)
 2. **Triggers `[t]`** - At least one (pipeline will NEVER run without triggers!)
 3. **Wrapper OR Setup/Cleanup** - `[W]` wrapper (includes `[\][/]` in macro) OR explicit `[\][/]`
-4. **Outputs `[o]`** - At least one (use `[o] !NoError` if no output)
+4. **Outputs `[o]`** - At least one (use `[o] !No.Output` if no output)
 
 ### Minimal Valid Pipeline
 
 ```polyglot
 [|] MinimalPipeline
-[i] #Pipeline.NoInput            // MANDATORY: No inputs
+[i] !No.Input            // MANDATORY: No inputs
 [t] |T.Call                      // MANDATORY: Trigger (will NOT run without this)
 [W] |W.Polyglot.Scope            // MANDATORY: No setup/cleanup (RAII placeholder)
-[o] !NoError                     // MANDATORY: No output
+[o] !No.Output                     // MANDATORY: No output
 [X]
 ```
 
@@ -258,7 +258,7 @@ This directory contains **compliant Polyglot v0.0.2 code examples** generated fr
 ```
 - RAII-style scope cleanup
 - Makes "no setup/cleanup" explicit (not accidental omission)
-- Replaces old `|W.NoSetup.NoCleanup`
+- Replaces old `|W.Polyglot.Scope`
 
 **2. Runtime Wrappers** (for external code integration):
 ```polyglot

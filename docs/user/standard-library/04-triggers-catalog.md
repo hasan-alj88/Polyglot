@@ -28,7 +28,7 @@ The `[t]` block marker establishes conditional execution contexts. Code within o
 
 **Basic Usage:**
 ```polyglot
-[t] .condition: pg\bool << (value > 10)
+[t] .condition:pg.bool << (value > 10)
 [r] |ExecuteWhenTrue
 // Executes only if condition is true
 ```
@@ -36,8 +36,8 @@ The `[t]` block marker establishes conditional execution contexts. Code within o
 **With Trigger Operations:**
 ```polyglot
 [t] |T.Timer.After
-[<] .milliseconds: pg\int << 5000
-[>] .triggered: pg\bool >> timer_fired
+[<] .milliseconds:pg.int << 5000
+[>] .triggered:pg.bool >> timer_fired
 
 // Following code executes after 5000ms
 [r] |DelayedOperation
@@ -71,8 +71,8 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Execute after 5 second delay
 [t] |T.Timer.After
-[<] .milliseconds: pg\int << 5000
-[>] .triggered: pg\bool >> timer_done
+[<] .milliseconds:pg.int << 5000
+[>] .triggered:pg.bool >> timer_done
 
 [r] |DelayedOperation
 ```
@@ -100,12 +100,12 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Execute when file is created
 [t] |T.Event.FileCreated
-[<] .path: pg\path << \\Path\\.unix << "/watch/folder"
-[>] .triggered: pg\bool >> file_created
-[>] .file_path: pg\path >> created_file
+[<] .path:pg.path << \\Path\\.unix << "/watch/folder"
+[>] .triggered:pg.bool >> file_created
+[>] .file_path:pg.path >> created_file
 
 [r] |ProcessNewFile
-[<] .path: pg\path << created_file
+[<] .path:pg.path << created_file
 ```
 
 ### |T.Condition.*
@@ -135,10 +135,10 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Trigger if value in range
 [t] |T.Condition.InRange
-[<] .value: pg\int << user_input
-[<] .min: pg\int << 0
-[<] .max: pg\int << 100
-[>] .satisfied: pg\bool >> in_range
+[<] .value:pg.int << user_input
+[<] .min:pg.int << 0
+[<] .max:pg.int << 100
+[>] .satisfied:pg.bool >> in_range
 
 [r] |ProcessValidInput
 ```
@@ -167,10 +167,10 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Trigger when value crosses threshold
 [t] |T.State.Threshold
-[<] .value: pg\float << current_temperature
-[<] .threshold: pg\float << 100.0
-[<] .direction: pg\string << "rising"
-[>] .triggered: pg\bool >> threshold_crossed
+[<] .value:pg.float << current_temperature
+[<] .threshold:pg.float << 100.0
+[<] .direction:pg.string << "rising"
+[>] .triggered:pg.bool >> threshold_crossed
 
 [r] |HandleOverheat
 ```
@@ -199,8 +199,8 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Wait for queue to have data
 [t] |T.Data.QueueNotEmpty
-[<] .queue_name: pg\string << #AppQueues.Processing
-[>] .has_data: pg\bool >> queue_ready
+[<] .queue_name:pg.string << #AppQueues.Processing
+[>] .has_data:pg.bool >> queue_ready
 
 [r] |ProcessNextItem
 ```
@@ -228,8 +228,8 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Wait for CPU availability
 [t] |T.Resource.CPUAvailable
-[<] .max_usage_percent: pg\int << 80
-[>] .available: pg\bool >> cpu_ready
+[<] .max_usage_percent:pg.int << 80
+[>] .available:pg.bool >> cpu_ready
 
 [r] |StartIntensiveOperation
 ```
@@ -256,12 +256,12 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Wait for pipeline completion
 [t] |T.Pipeline.Completed
-[<] .instance_id: pg\string << processing_instance
-[>] .completed: pg\bool >> is_done
-[>] .result: pg\serial >> pipeline_result
+[<] .instance_id:pg.string << processing_instance
+[>] .completed:pg.bool >> is_done
+[>] .result:pg.serial >> pipeline_result
 
 [r] |HandleResults
-[<] .data: pg\serial << pipeline_result
+[<] .data:pg.serial << pipeline_result
 ```
 
 ### |T.Network.*
@@ -288,12 +288,12 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Trigger on HTTP request
 [t] |T.Network.HTTPRequest
-[<] .endpoint: pg\string << "/api/webhook"
-[>] .received: pg\bool >> request_received
-[>] .body: pg\string >> request_body
+[<] .endpoint:pg.string << "/api/webhook"
+[>] .received:pg.bool >> request_received
+[>] .body:pg.string >> request_body
 
 [r] |HandleWebhook
-[<] .payload: pg\string << request_body
+[<] .payload:pg.string << request_body
 ```
 
 ### |T.Combine.*
@@ -320,8 +320,8 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Trigger when both conditions met
 [t] |T.Combine.And
-[<] .conditions: pg\array{pg\bool} << [condition1, condition2]
-[>] .all_true: pg\bool >> both_satisfied
+[<] .conditions:pg.array.pg.bool} << [condition1, condition2]
+[>] .all_true:pg.bool >> both_satisfied
 
 [r] |ExecuteWhenBothTrue
 ```
@@ -333,15 +333,15 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Conceptual example (API TBD)
 [|] DelayedAlert
-[i] .message: pg\string
+[i] .message:pg.string
 
 // Wait 5 seconds
 [t] |T.Timer.After
-[<] .milliseconds: pg\int << 5000
+[<] .milliseconds:pg.int << 5000
 
 // Execute after delay
 [r] |SendAlert
-[<] .text: pg\string << .message
+[<] .text:pg.string << .message
 
 [X]
 ```
@@ -351,19 +351,19 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Conceptual example (API TBD)
 [|] FileWatcher
-[i] .watch_path: pg\path
+[i] .watch_path:pg.path
 
 // Trigger on new file
 [t] |T.Event.FileCreated
-[<] .path: pg\path << .watch_path
-[>] .new_file: pg\path >> created_file
+[<] .path:pg.path << .watch_path
+[>] .new_file:pg.path >> created_file
 
 // Process the file
 [r] |ProcessFile
-[<] .file: pg\path << created_file
-[>] .result: pg\string >> processing_result
+[<] .file:pg.path << created_file
+[>] .result:pg.string >> processing_result
 
-[o] .result: pg\string << processing_result
+[o] .result:pg.string << processing_result
 [X]
 ```
 
@@ -372,21 +372,21 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Conceptual example (API TBD)
 [|] ValidatedOperation
-[i] .input: pg\int
+[i] .input:pg.int
 
 // Check if input in valid range
 [t] |T.Condition.InRange
-[<] .value: pg\int << .input
-[<] .min: pg\int << 0
-[<] .max: pg\int << 1000
-[>] .valid: pg\bool >> is_valid
+[<] .value:pg.int << .input
+[<] .min:pg.int << 0
+[<] .max:pg.int << 1000
+[>] .valid:pg.bool >> is_valid
 
 // Only execute if valid
 [r] |ProcessValidInput
-[<] .value: pg\int << .input
-[>] .result: pg\int >> processed
+[<] .value:pg.int << .input
+[>] .result:pg.int >> processed
 
-[o] .output: pg\int << processed
+[o] .output:pg.int << processed
 [X]
 ```
 
@@ -395,21 +395,21 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Conceptual example (API TBD)
 [|] ResourceAwareTask
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Wait for available resources
 [t] |T.Resource.CPUAvailable
-[<] .max_usage_percent: pg\int << 70
+[<] .max_usage_percent:pg.int << 70
 
 [t] |T.Resource.MemoryAvailable
-[<] .min_available_mb: pg\int << 512
+[<] .min_available_mb:pg.int << 512
 
 // Execute intensive operation
 [r] |IntensiveProcessing
-[<] .input: pg\string << .data
-[>] .result: pg\string >> final_result
+[<] .input:pg.string << .data
+[>] .result:pg.string >> final_result
 
-[o] .result: pg\string << final_result
+[o] .result:pg.string << final_result
 [X]
 ```
 
@@ -418,25 +418,25 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Conceptual example (API TBD)
 [|] MultiConditionTask
-[i] .value: pg\int
-[i] .timeout_ms: pg\int
+[i] .value:pg.int
+[i] .timeout_ms:pg.int
 
 // Combine time and value conditions
 [t] |T.Combine.Or
 
 [~][t] |T.Timer.After
-[<] .milliseconds: pg\int << .timeout_ms
+[<] .milliseconds:pg.int << .timeout_ms
 
 [~][t] |T.Condition.InRange
-[<] .value: pg\int << .value
-[<] .min: pg\int << 100
-[<] .max: pg\int << 200
+[<] .value:pg.int << .value
+[<] .min:pg.int << 100
+[<] .max:pg.int << 200
 
 // Execute if either condition met
 [r] |HandleCondition
-[>] .result: pg\string >> outcome
+[>] .result:pg.string >> outcome
 
-[o] .result: pg\string << outcome
+[o] .result:pg.string << outcome
 [X]
 ```
 
@@ -445,23 +445,23 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Conceptual example (API TBD)
 [|] SynchronizedWorkflow
-[i] .worker_instance: pg\string
+[i] .worker_instance:pg.string
 
 // Start dependent operation
 [r] |StartBackgroundWork
-[>] .instance_id: pg\string >> background_id
+[>] .instance_id:pg.string >> background_id
 
 // Wait for completion
 [t] |T.Pipeline.Completed
-[<] .instance_id: pg\string << background_id
-[>] .result: pg\serial >> background_result
+[<] .instance_id:pg.string << background_id
+[>] .result:pg.serial >> background_result
 
 // Process results
 [r] |ProcessResults
-[<] .data: pg\serial << background_result
-[>] .final: pg\string >> final_output
+[<] .data:pg.serial << background_result
+[>] .final:pg.string >> final_output
 
-[o] .output: pg\string << final_output
+[o] .output:pg.string << final_output
 [X]
 ```
 
@@ -472,10 +472,10 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Conceptual: Resume pipeline when resources available
 [t] |T.Resource.MemoryAvailable
-[<] .min_available_mb: pg\int << 1024
+[<] .min_available_mb:pg.int << 1024
 
 [Q] |Q.Resume
-[<] .instance_id: pg\string << paused_instance
+[<] .instance_id:pg.string << paused_instance
 ```
 
 ### With Runtime Wrappers
@@ -483,11 +483,11 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Conceptual: Execute Python when data ready
 [t] |T.Data.Available
-[<] .source: pg\string << data_source
+[<] .source:pg.string << data_source
 
 [W] |W.Python3.11
 [r] |PythonProcessor
-[<] .input: pg\string << data_source
+[<] .input:pg.string << data_source
 ```
 
 ### With Error Handling
@@ -495,13 +495,13 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 ```polyglot
 // Conceptual: Timeout detection with error
 [t] |T.Timer.Timeout
-[<] .milliseconds: pg\int << 30000
-[<] .operation_id: pg\string << op_id
-[>] .timed_out: pg\bool >> did_timeout
+[<] .milliseconds:pg.int << 30000
+[<] .operation_id:pg.string << op_id
+[>] .timed_out:pg.bool >> did_timeout
 
 [!] !TimeoutError
-[<] .message: pg\string << "Operation exceeded 30s"
-[<] .code: pg\int << 5001
+[<] .message:pg.string << "Operation exceeded 30s"
+[<] .code:pg.int << 5001
 ```
 
 ### With Parallel Execution
@@ -510,12 +510,12 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 // Conceptual: Parallel triggers
 [p] |WaitForCondition1
 [~][t] |T.Timer.After
-[<] .milliseconds: pg\int << 1000
+[<] .milliseconds:pg.int << 1000
 [>] .result >> result1
 
 [p] |WaitForCondition2
 [~][t] |T.Event.FileCreated
-[<] .path: pg\path << watch_path
+[<] .path:pg.path << watch_path
 [>] .result >> result2
 
 [Y] |Y.Join
@@ -554,7 +554,7 @@ Trigger state should be observable and inspectable.
 - No waiting or event handling
 
 ```polyglot
-[t] .condition: pg\bool << (value > 10)
+[t] .condition:pg.bool << (value > 10)
 [r] |Execute  // Executes immediately if true
 ```
 
@@ -566,7 +566,7 @@ Trigger state should be observable and inspectable.
 
 ```polyglot
 [t] |T.Timer.After
-[<] .milliseconds: pg\int << 5000
+[<] .milliseconds:pg.int << 5000
 // Waits 5 seconds before continuing
 [r] |Execute
 ```

@@ -62,14 +62,14 @@ Block markers are special syntax elements enclosed in square brackets `[ ]` that
 ```polyglot
 // ✓ VALID - All lines start with block markers
 [|] MyPipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 
 // ✗ INVALID - Missing block marker
 [|] MyPipeline
-.input: pg\string  // Missing [i]
+.input:pg.string  // Missing [i]
 |ProcessData       // Missing [r]
 [X]
 ```
@@ -271,10 +271,10 @@ Block markers use square brackets `[ ]` with the marker inside:
 **Example:**
 ```polyglot
 [|] ProcessData
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |TransformData
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output
 [X]
 ```
 
@@ -299,14 +299,14 @@ Block markers use square brackets `[ ]` with the marker inside:
 
 // Close enumeration
 [#] MyEnumeration
-[<] .field: pg\string << "value"
+[<] .field:pg.string << "value"
 [X]
 
 // Close error definition
 [!] !MyError
-[<] .message: pg\string << "Error"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -334,9 +334,9 @@ Block markers use square brackets `[ ]` with the marker inside:
 **Example:**
 ```polyglot
 [|] ProcessFile
-[i] .file_path: pg\path  // Required - caller must provide
+[i] .file_path:pg.path  // Required - caller must provide
 [r] |ReadFile
-[<] .path: pg\path << .file_path
+[<] .path:pg.path << .file_path
 [X]
 ```
 
@@ -351,10 +351,10 @@ Block markers use square brackets `[ ]` with the marker inside:
 **Example:**
 ```polyglot
 [|] ConnectToAPI
-[i] Fixed .api_key: pg\string << "secret-key-123"  // Cannot be overridden
-[i] Fixed .timeout: pg\int << 30
+[i] Fixed .api_key:pg.string << "secret-key-123"  // Cannot be overridden
+[i] Fixed .timeout:pg.int << 30
 [r] |MakeAPICall
-[<] .key: pg\string << .api_key
+[<] .key:pg.string << .api_key
 [X]
 ```
 
@@ -369,13 +369,13 @@ Block markers use square brackets `[ ]` with the marker inside:
 **Example:**
 ```polyglot
 [|] ProcessWithOptions
-[i] .input: pg\string  // Required
-[i] Default .max_size: pg\int << 1024  // Optional, defaults to 1024
-[i] Default .debug: pg\bool << #False   // Optional, defaults to False
+[i] .input:pg.string  // Required
+[i] Default .max_size:pg.int << 1024  // Optional, defaults to 1024
+[i] Default .debug:pg.bool << #False   // Optional, defaults to False
 
 [r] |Process
-[<] .data: pg\string << .input
-[<] .size: pg\int << .max_size
+[<] .data:pg.string << .input
+[<] .size:pg.int << .max_size
 [X]
 ```
 
@@ -395,18 +395,18 @@ Block markers use square brackets `[ ]` with the marker inside:
 ```polyglot
 // Pipeline with output
 [|] Transform
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output
-[o] .result: pg\string
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output
+[o] .result:pg.string
 [X]
 
 // Pipeline with no output
 [|] LogMessage
-[i] .message: pg\string
+[i] .message:pg.string
 [r] |U.Log.Info
-[<] .msg: pg\string << .message
+[<] .msg:pg.string << .message
 [o] #None
 [X]
 ```
@@ -433,9 +433,9 @@ Block markers use square brackets `[ ]` with the marker inside:
 [r] |Step3
 
 // Sequential variable assignments
-[r] .x: pg\int << 5
-[r] .y: pg\int << 10
-[r] .sum: pg\int << .x + .y
+[r] .x:pg.int << 5
+[r] .y:pg.int << 10
+[r] .sum:pg.int << .x + .y
 ```
 
 ---
@@ -460,16 +460,16 @@ Block markers use square brackets `[ ]` with the marker inside:
 **Example:**
 ```polyglot
 [|] ProcessInParallel
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Parallel block 1
 [p] |ProcessPartA
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .result >> result_a
 
 // Parallel block 2
 [p] |ProcessPartB
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .result >> result_b
 
 // Join results
@@ -479,8 +479,8 @@ Block markers use square brackets `[ ]` with the marker inside:
 
 // Use synchronized results
 [r] |CombineResults
-[<] .a: pg\string << result_a
-[<] .b: pg\string << result_b
+[<] .a:pg.string << result_a
+[<] .b:pg.string << result_b
 
 [X]
 ```
@@ -501,8 +501,8 @@ Block markers use square brackets `[ ]` with the marker inside:
 **Example:**
 ```polyglot
 [r] |ProcessData
-[<] .input: pg\string << "value"
-[<] .max_size: pg\int << 1024
+[<] .input:pg.string << "value"
+[<] .max_size:pg.int << 1024
 ```
 
 ---
@@ -517,14 +517,14 @@ Block markers use square brackets `[ ]` with the marker inside:
 **Example:**
 ```polyglot
 [#] Configuration
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
 [X]
 
 [!] !CustomError
-[<] .message: pg\string << "Error"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -543,12 +543,12 @@ Block markers use square brackets `[ ]` with the marker inside:
 ```polyglot
 // Extract from pipeline output
 [r] |ProcessData
-[>] .result: pg\string >> output_var
+[>] .result:pg.string >> output_var
 
 // Extract from error fields
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
-[>] .code: pg\int >> err_code
+[>] .message:pg.string >> err_msg
+[>] .code:pg.int >> err_code
 
 // Copy out from parallel block
 [p] |ProcessInParallel
@@ -586,9 +586,9 @@ Block markers use square brackets `[ ]` with the marker inside:
 
 **Single File Loading:**
 ```polyglot
-[s] .config: pg\serial << JSON"\\Config\\app.json"
+[s] .config:pg.serial << JSON"\\Config\\app.json"
 [s] .users: #UserData << YAML"\\Data\\users.yaml"
-[s] .settings: pg\serial << TOML"settings.toml"
+[s] .settings:pg.serial << TOML"settings.toml"
 ```
 
 **Parallel Loading (Automatic Join):**
@@ -598,7 +598,7 @@ Block markers use square brackets `[ ]` with the marker inside:
 [s] .cache_config << JSON"cache.json" // Load in parallel
 // Automatic join before next operation
 [r] |SetupDatabase
-[<] .config: pg\serial << .db_config
+[<] .config:pg.serial << .db_config
 ```
 
 **Three-Step Process:**
@@ -692,7 +692,7 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 [s][!] !File.NotFound         // Catches ALL serial NotFound in scope
 [>] .message >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << "Config file not found: {err_msg}"
+[<] .msg:pg.string << "Config file not found: {err_msg}"
 [o] !ConfigurationError
 
 [s][!] !JSON.ParseError       // Catches ALL serial ParseError in scope
@@ -741,7 +741,7 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 
 // Or use value directly if no error handler
 [r] |ProcessConfig
-[<] .data: pg\serial << .config
+[<] .data:pg.serial << .config
 ```
 
 ---
@@ -750,7 +750,7 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 
 **Flexible Types (No Validation):**
 ```polyglot
-[s] .data: pg\serial << JSON"data.json"          // No validation
+[s] .data:pg.serial << JSON"data.json"          // No validation
 [s] .custom: #UserEnum << JSON"custom.json"      // User enum, flexible
 ```
 
@@ -821,22 +821,22 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 [s][!] !File.NotFound
 [>] .message >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << "Config file not found: {err_msg}"
+[<] .msg:pg.string << "Config file not found: {err_msg}"
 [o] !ConfigurationError
 
 [s][!] !JSON.ParseError
 [r] |U.Log.Error
-[<] .msg: pg\string << "Invalid JSON in config"
+[<] .msg:pg.string << "Invalid JSON in config"
 [o] !ConfigurationError
 
 // Merge configs
 [r] |MergeConfigs
-[<] .base: pg\serial << .base_config
-[<] .env: pg\serial << .env_config
-[<] .secrets: pg\serial << .secrets
-[>] .merged: pg\serial >> final_config
+[<] .base:pg.serial << .base_config
+[<] .env:pg.serial << .env_config
+[<] .secrets:pg.serial << .secrets
+[>] .merged:pg.serial >> final_config
 
-[o] .final_config: pg\serial
+[o] .final_config:pg.serial
 [X]
 ```
 
@@ -882,20 +882,20 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 **Example:**
 ```polyglot
 [|] ParallelWorkflow
-[i] .input: pg\string
+[i] .input:pg.string
 
 // Initialize result variables
-[r] .result1: pg\string << ""
-[r] .result2: pg\string << ""
+[r] .result1:pg.string << ""
+[r] .result2:pg.string << ""
 
 // Parallel block 1
 [p] |ProcessPartA
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [>] .output >> result1
 
 // Parallel block 2
 [p] |ProcessPartB
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [>] .output >> result2
 
 // Join - synchronize results
@@ -905,8 +905,8 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 
 // After join, result1 and result2 are synchronized
 [r] |CombineResults
-[<] .a: pg\string << result1
-[<] .b: pg\string << result2
+[<] .a:pg.string << result1
+[<] .b:pg.string << result2
 
 [X]
 ```
@@ -939,18 +939,18 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 ```polyglot
 // Daily trigger
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 // Every minute
 [t] |T.Every.Minute
 
 // Every hour
 [t] |T.Every.Hour
-[<] .minute: pg\int << 0
+[<] .minute:pg.int << 0
 
 // Custom interval
 [t] |T.Every.Seconds
-[<] .interval: pg\int << 30
+[<] .interval:pg.int << 30
 ```
 
 ---
@@ -960,15 +960,15 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 ```polyglot
 // File modified
 [t] |T.File.Modified
-[<] .path: pg\path << \\DataDir\\file.txt
+[<] .path:pg.path << \\DataDir\\file.txt
 
 // File created
 [t] |T.File.Created
-[<] .path: pg\path << \\DataDir\\
+[<] .path:pg.path << \\DataDir\\
 
 // File deleted
 [t] |T.File.Deleted
-[<] .path: pg\path << \\DataDir\\file.txt
+[<] .path:pg.path << \\DataDir\\file.txt
 ```
 
 ---
@@ -978,7 +978,7 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 ```polyglot
 // Custom event trigger (API TBD)
 [t] |T.Event
-[<] .event_name: pg\string << "user.registered"
+[<] .event_name:pg.string << "user.registered"
 ```
 
 ---
@@ -1024,7 +1024,7 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 ```polyglot
 // Pause if condition
 [Q] |Q.PauseIf.RAM.Available.LessThan
-[<] .mb: pg\uint << 512
+[<] .mb:pg.uint << 512
 
 // Dispatch with priority
 [Q] |Q.Dispatch.Priority.High
@@ -1060,17 +1060,17 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 // Fixed Python version
 [W] |W.Python3.11
 [r] |RunPythonScript
-[<] .script: pg\path << "analyze.py"
+[<] .script:pg.path << "analyze.py"
 
 // Fixed Node version
 [W] |W.Node20
 [r] |RunJavaScript
-[<] .script: pg\path << "process.js"
+[<] .script:pg.path << "process.js"
 
 // Rust
 [W] |W.Rust
 [r] |RunRustCode
-[<] .binary: pg\path << "processor"
+[<] .binary:pg.path << "processor"
 ```
 
 ---
@@ -1081,12 +1081,12 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 // Latest Python 3.x
 [W] |W.Python
 [r] |RunScript
-[<] .script: pg\path << "script.py"
+[<] .script:pg.path << "script.py"
 
 // Latest Node.js
 [W] |W.Node
 [r] |RunScript
-[<] .script: pg\path << "app.js"
+[<] .script:pg.path << "app.js"
 ```
 
 ---
@@ -1095,19 +1095,19 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 
 ```polyglot
 [|] MultiRuntimePipeline
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Python processing
 [W] |W.Python3.11
 [r] |PythonAnalyze
-[<] .input: pg\string << .data
-[>] .result: pg\string >> python_result
+[<] .input:pg.string << .data
+[>] .result:pg.string >> python_result
 
 // Node.js processing
 [W] |W.Node20
 [r] |NodeTransform
-[<] .input: pg\string << python_result
-[>] .result: pg\string >> final_result
+[<] .input:pg.string << python_result
+[>] .result:pg.string >> final_result
 
 [X]
 ```
@@ -1132,9 +1132,9 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 **Example:**
 ```polyglot
 [#] AppConfiguration
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
-[<] .debug: pg\bool << #False
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
+[<] .debug:pg.bool << #False
 [X]
 ```
 
@@ -1151,9 +1151,9 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 **Syntax:**
 ```polyglot
 [!] !ErrorName
-[<] .message: pg\string << "message"
-[<] .code: pg\int << code
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "message"
+[<] .code:pg.int << code
+[<] .trace:pg.string << ""
 [<] .custom_field: type << value  // Optional
 [X]
 ```
@@ -1161,11 +1161,11 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 **Example:**
 ```polyglot
 [!] !MyApp.ValidationError
-[<] .message: pg\string << "Validation failed"
-[<] .code: pg\int << 4000
-[<] .trace: pg\string << ""
-[<] .field_name: pg\string << ""
-[<] .invalid_value: pg\string << ""
+[<] .message:pg.string << "Validation failed"
+[<] .code:pg.int << 4000
+[<] .trace:pg.string << ""
+[<] .field_name:pg.string << ""
+[<] .invalid_value:pg.string << ""
 [X]
 ```
 
@@ -1185,19 +1185,19 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 // Enumeration alias
 [#] Path.Identifiers.MyApp.DataDirectory
 [A] DataDir
-[<] .unix: pg\path << \\UnixRoot\\opt\data\
-[<] .windows: pg\path << \\C\\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\data\
+[<] .windows:pg.path << \\C\\Data\
 [X]
 
 // Use alias
-[r] .file: pg\path << \\DataDir\\records.csv
+[r] .file:pg.path << \\DataDir\\records.csv
 
 // Error alias
 [!] !MyApp.Authentication.InvalidCredentials
 [A] !InvalidCreds
-[<] .message: pg\string << "Invalid credentials"
-[<] .code: pg\int << 4010
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Invalid credentials"
+[<] .code:pg.int << 4010
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -1220,27 +1220,27 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 **Example:**
 ```polyglot
 [|] FileOperation
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 [t] |T.Call
 [W] |W.NoSetup.NoCleanup
 
 [r] |ReadFile
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> .file_content
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> .file_content
 [~]
 [~][!] !pg.FileSystem.NotFound
-[~][>] .message: pg\string >> .err_msg
+[~][>] .message:pg.string >> .err_msg
 [~]
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << .err_msg
+[~][<] .msg:pg.string << .err_msg
 [~]
 [~][!] !pg.FileSystem.PermissionDenied
-[~][>] .message: pg\string >> .denied_msg
+[~][>] .message:pg.string >> .denied_msg
 [~]
 [~][r] |U.Log.Error
-[~][<] .msg: pg\string << "Access denied: {.denied_msg}"
+[~][<] .msg:pg.string << "Access denied: {.denied_msg}"
 
-[o] .content: pg\string
+[o] .content:pg.string
 [X]
 ```
 
@@ -1269,9 +1269,9 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 
 ```polyglot
 [p] |ParallelBlock
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [~][r] |NestedOperation         // [~] means: runs WITHIN parallel block
-[~][<] .input: pg\string << .data  // Child of [~][r] - implicit expansion
+[~][<] .input:pg.string << .data  // Child of [~][r] - implicit expansion
 [~][>] .result >> temp
 ```
 
@@ -1281,16 +1281,16 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 
 ```polyglot
 // Level 0 (outer scope)
-[r] .items: pg\array{pg\string} << array{"a", "b", "c"}
+[r] .items: pg.array.pg.string << array{"a", "b", "c"}
 
 // Level 1 - unpack array
 [r] ~.items
-[~][r] .item: pg\string << .items.current
+[~][r] .item:pg.string << .items.current
 
 // Level 2 - nested operation
 [~][r] ~String.Split
 [~][~][r] |ProcessToken              // WITHIN nested expansion
-[~][~][<] .token: pg\string << .current_token
+[~][~][<] .token:pg.string << .current_token
 ```
 
 ---
@@ -1302,7 +1302,7 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 ```polyglot
 // No [~] needed - implicit expansion
 [r] |SomeOperation
-[<] .input: pg\string << "value"    // Implicit child of [r]
+[<] .input:pg.string << "value"    // Implicit child of [r]
 [>] .output >> result               // Implicit child of [r]
 ```
 
@@ -1330,15 +1330,15 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 ```polyglot
 [M] DatabaseSetup
 [>] Macro.Include"{\/}"  // Macro pushes these block types to caller
-[{] .db_host: pg\string  // Scope input
-[}] .db_conn: pg\db      // Scope output
+[{] .db_host:pg.string  // Scope input
+[}] .db_conn:pg.db      // Scope output
 
 [\] |U.DB.Connect
-[<] .host: pg\string << .db_host
-[>] .connection: pg\db >> .db_conn
+[<] .host:pg.string << .db_host
+[>] .connection:pg.db >> .db_conn
 
 [/] |U.DB.Disconnect
-[<] .conn: pg\db << .db_conn
+[<] .conn:pg.db << .db_conn
 [X]
 ```
 
@@ -1363,11 +1363,11 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 ```polyglot
 [|] MyPipeline
 [W] |DatabaseSetup       // Unwrap macro
-[<] .db_host: pg\string << "localhost"  // Pass input to macro
-[>] .db_conn: pg\db >> .db              // Receive output from macro
+[<] .db_host:pg.string << "localhost"  // Pass input to macro
+[>] .db_conn:pg.db >> .db              // Receive output from macro
 // .db now available for use!
 [r] |QueryDatabase
-[<] .connection: pg\db << .db
+[<] .connection:pg.db << .db
 [X]
 ```
 
@@ -1376,10 +1376,10 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 // Define macro
 [M] DBJsonMacro
 [>] Macro.Include"{\/}"
-[{] .db_config_file: pg\path      // Macro input
-[\] .db: pg\db << JSON.Load"{.db_config_file}"
+[{] .db_config_file:pg.path      // Macro input
+[\] .db:pg.db << JSON.Load"{.db_config_file}"
 [\] |U.DataBase.Connect
-[<] .db: pg\db << .db
+[<] .db:pg.db << .db
 [}] .db                           // Macro output (type inferred)
 [/] |U.DataBase.Disconnect
 [X]
@@ -1387,8 +1387,8 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 // Use macro (same syntax as pipeline call)
 [|] MyWorkflow
 [W] |DBJsonMacro
-[<] .db_config_file: pg\path << .db_config  // Input
-[>] .db: pg\db >> .db1                      // Output
+[<] .db_config_file:pg.path << .db_config  // Input
+[>] .db:pg.db >> .db1                      // Output
 // .db1 now contains the database connection
 [X]
 ```
@@ -1410,19 +1410,19 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 
 **Syntax:**
 ```polyglot
-[{] .variable_name: pg\type
+[{] .variable_name:pg.type
 ```
 
 **Example:**
 ```polyglot
 [M] Logger
-[{] .log_level: pg\string    // Input from caller
-[{] .message: pg\string       // Input from caller
-[}] .log_file: pg\file        // Output to caller
+[{] .log_level:pg.string    // Input from caller
+[{] .message:pg.string       // Input from caller
+[}] .log_file:pg.file        // Output to caller
 
 [\] |U.Log.Open
-[<] .level: pg\string << .log_level
-[>] .file: pg\file >> .log_file
+[<] .level:pg.string << .log_level
+[>] .file:pg.file >> .log_file
 [X]
 ```
 
@@ -1438,18 +1438,18 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 
 **Syntax:**
 ```polyglot
-[}] .variable_name: pg\type
+[}] .variable_name:pg.type
 ```
 
 **Example:**
 ```polyglot
 [M] CacheSetup
-[{] .cache_size: pg\int      // IN from caller
-[}] .cache_handle: pg\db     // OUT to caller
+[{] .cache_size:pg.int      // IN from caller
+[}] .cache_handle:pg.db     // OUT to caller
 
 [\] |U.Cache.Initialize
-[<] .size: pg\int << .cache_size
-[>] .handle: pg\db >> .cache_handle
+[<] .size:pg.int << .cache_size
+[>] .handle:pg.db >> .cache_handle
 [X]
 ```
 
@@ -1467,25 +1467,25 @@ Format.Method1"pattern".Method2"filter".Method3"transform"
 
 1. **Required Input (Declared state):**
 ```polyglot
-[i] .variable_name: pg\type
+[i] .variable_name:pg.type
 ```
 
 2. **Default Input (DefaultReady state):**
 ```polyglot
-[i] .variable_name: pg\type <~ default_value
+[i] .variable_name:pg.type <~ default_value
 ```
 
 3. **Constant Input (Ready state):**
 ```polyglot
-[i] .variable_name: pg\type << constant_value
+[i] .variable_name:pg.type << constant_value
 ```
 
 **Example:**
 ```polyglot
 [|] ConfigPipeline
-[i] .server_url: pg\string            // Required - caller must provide
-[i] .max_retries: pg\int <~ 3         // Default - caller can override
-[i] .timeout_seconds: pg\int << 30    // Constant - caller cannot override
+[i] .server_url:pg.string            // Required - caller must provide
+[i] .max_retries:pg.int <~ 3         // Default - caller can override
+[i] .timeout_seconds:pg.int << 30    // Constant - caller cannot override
 [X]
 ```
 
@@ -1757,7 +1757,7 @@ Block markers have hierarchical relationships with **implicit expansion** built-
 
 ```polyglot
 [|] MyPipeline          // Parent
-[i] .input: pg\string   // Child (implicit expansion)
+[i] .input:pg.string   // Child (implicit expansion)
 [t] |T.Daily            // Child (implicit expansion)
 [r] |Operation          // Child (implicit expansion)
 [X]
@@ -1828,13 +1828,13 @@ Block markers have hierarchical relationships with **implicit expansion** built-
 ```polyglot
 // ✓ CORRECT
 [|] Pipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |Operation
 [X]
 
 // ✗ WRONG - Missing block markers
 Pipeline
-.input: pg\string
+.input:pg.string
 |Operation
 ```
 
@@ -1876,13 +1876,13 @@ Pipeline
 
 ```polyglot
 // ✓ CORRECT - Clear intent
-[i] .file: pg\path  // Required
-[i] Fixed .api_key: pg\string << "secret"  // Constant
-[i] Default .timeout: pg\int << 30  // Optional
+[i] .file:pg.path  // Required
+[i] Fixed .api_key:pg.string << "secret"  // Constant
+[i] Default .timeout:pg.int << 30  // Optional
 
 // ✗ AVOID - Unclear requirements
-[i] .file: pg\path  // Is this required?
-[i] .api_key: pg\string  // Should this be fixed?
+[i] .file:pg.path  // Is this required?
+[i] .api_key:pg.string  // Should this be fixed?
 ```
 
 ---
@@ -1906,18 +1906,18 @@ Pipeline
 ```polyglot
 // ✓ CORRECT - Clear hierarchy
 [|] Pipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |Operation
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output
 [X]
 
 // ✗ HARDER TO READ - Inconsistent indentation
 [|] Pipeline
-    [i] .input: pg\string
+    [i] .input:pg.string
 [r] |Operation
-    [<] .data: pg\string << .input
-        [>] .result: pg\string >> output
+    [<] .data:pg.string << .input
+        [>] .result:pg.string >> output
 [X]
 ```
 
@@ -1929,21 +1929,21 @@ Pipeline
 // ✓ CORRECT - Grouped by purpose
 [|] ProcessData
 // Inputs
-[i] .file: pg\path
-[i] Default .max_size: pg\int << 1024
+[i] .file:pg.path
+[i] Default .max_size:pg.int << 1024
 
 // Triggers
 [t] |T.File.Modified
-[<] .path: pg\path << .file
+[<] .path:pg.path << .file
 
 // Operations
 [r] |ReadFile
-[<] .path: pg\path << .file
-[>] .content: pg\string >> data
+[<] .path:pg.path << .file
+[>] .content:pg.string >> data
 
 [r] |ProcessContent
-[<] .input: pg\string << data
-[>] .result: pg\string >> output
+[<] .input:pg.string << data
+[>] .result:pg.string >> output
 
 [X]
 ```

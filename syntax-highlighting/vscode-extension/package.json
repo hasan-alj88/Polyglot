@@ -1,0 +1,74 @@
+{
+  "name": "polyglot-language-support",
+  "displayName": "Polyglot Language Support",
+  "description": "Syntax highlighting and language support for Polyglot automation language",
+  "version": "0.1.0",
+  "publisher": "polyglot-lang",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "polyglot",
+    "automation",
+    "pipeline",
+    "workflow",
+    "orchestration"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polyglot-lang/polyglot"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "polyglot",
+        "aliases": [
+          "Polyglot",
+          "polyglot"
+        ],
+        "extensions": [
+          ".pg"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/polyglot-icon.svg",
+          "dark": "./icons/polyglot-icon.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "polyglot",
+        "scopeName": "source.polyglot",
+        "path": "./syntaxes/polyglot.tmLanguage.json"
+      },
+      {
+        "scopeName": "markdown.polyglot.codeblock",
+        "path": "./syntaxes/polyglot.markdown.injection.json",
+        "injectTo": [
+          "text.html.markdown"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.polyglot": "polyglot"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "polyglot",
+        "path": "./snippets/polyglot.json"
+      }
+    ]
+  },
+  "scripts": {
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^2.19.0"
+  }
+}

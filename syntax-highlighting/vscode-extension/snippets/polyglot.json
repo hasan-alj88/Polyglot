@@ -1,0 +1,163 @@
+{
+  "Pipeline Template": {
+    "prefix": "pipeline",
+    "body": [
+      "[@] @${1:package/name}",
+      "",
+      "[|] |${2:PipelineName}",
+      "  [i] ${3:!No.Input}",
+      "  [t] |T.${4:Manual}",
+      "",
+      "  [r] ${5:// execution block}",
+      "",
+      "  [o] ${6:!No.Output}",
+      "[X]"
+    ],
+    "description": "Create a basic Polyglot pipeline"
+  },
+  "Pipeline with Input/Output": {
+    "prefix": "pipeline-io",
+    "body": [
+      "[@] @${1:package/name}",
+      "",
+      "[|] |${2:PipelineName}",
+      "  [i] .${3:input}: ${4:pg\\string}",
+      "  [t] |T.Manual",
+      "",
+      "  [r] .${5:result}: ${6:pg\\string} << ${7:expression}",
+      "",
+      "  [o] .${5:result}: ${6:pg\\string}",
+      "[X]"
+    ],
+    "description": "Create a Polyglot pipeline with input and output"
+  },
+  "Execution Block (Sequential)": {
+    "prefix": "exec-seq",
+    "body": [
+      "[r] .${1:variable}: ${2:pg\\string} << ${3:value}"
+    ],
+    "description": "Sequential execution block"
+  },
+  "Execution Block (Parallel)": {
+    "prefix": "exec-parallel",
+    "body": [
+      "[p] .${1:variable}: ${2:pg\\string} << ${3:value}"
+    ],
+    "description": "Parallel execution block"
+  },
+  "Error Definition": {
+    "prefix": "error-def",
+    "body": [
+      "[!] !${1:ErrorName}",
+      "  .message: pg\\string",
+      "  .code: pg\\int",
+      "  .trace: pg\\string",
+      "[X]"
+    ],
+    "description": "Define a custom error type"
+  },
+  "Error Catch Block": {
+    "prefix": "error-catch",
+    "body": [
+      "[~][!] !${1:ErrorType}",
+      "  [r] ${2:// handle error}",
+      "[X]"
+    ],
+    "description": "Error catch block"
+  },
+  "Conditional Switch": {
+    "prefix": "switch",
+    "body": [
+      "[?] .${1:condition}",
+      "  [r] ${2:// when true}",
+      "[X]",
+      "[?] !.${1:condition}",
+      "  [r] ${3:// when false}",
+      "[X]"
+    ],
+    "description": "Conditional switch blocks"
+  },
+  "Enumeration Definition": {
+    "prefix": "enum",
+    "body": [
+      "[#] #${1:EnumName}",
+      "  .${2:Value1}",
+      "  .${3:Value2}",
+      "  .${4:Value3}",
+      "[X]"
+    ],
+    "description": "Define an enumeration"
+  },
+  "Variable Declaration": {
+    "prefix": "var",
+    "body": [
+      ".${1:name}: ${2:pg\\${3:type}}"
+    ],
+    "description": "Declare a variable"
+  },
+  "Push Assignment": {
+    "prefix": "push",
+    "body": [
+      ".${1:variable} << ${2:value}"
+    ],
+    "description": "Push (assign) value to variable"
+  },
+  "Pull Assignment": {
+    "prefix": "pull",
+    "body": [
+      ".${1:variable} >> .${2:source}"
+    ],
+    "description": "Pull value from source variable"
+  },
+  "Default Assignment": {
+    "prefix": "default",
+    "body": [
+      ".${1:variable}: ${2:pg\\${3:type}} <~ ${4:default_value}"
+    ],
+    "description": "Assign default value (can be overridden once)"
+  },
+  "Nested Block": {
+    "prefix": "nest",
+    "body": [
+      "[~] ${1:// nested scope}",
+      "  [r] ${2:// execution}",
+      "[X]"
+    ],
+    "description": "Create a nested scope"
+  },
+  "Join Point": {
+    "prefix": "join",
+    "body": [
+      "[Y] ~${1:CollectionVar}",
+      "  [r] ${2:// process each item}",
+      "[X]"
+    ],
+    "description": "Join point for iteration"
+  },
+  "Runtime Wrapper": {
+    "prefix": "wrapper-python",
+    "body": [
+      "[W] RT.Python",
+      "  .script: pg\\path << \"${1:script.py}\"",
+      "  .function: pg\\string << \"${2:function_name}\"",
+      "[X]"
+    ],
+    "description": "Python runtime wrapper"
+  },
+  "DateTime Trigger": {
+    "prefix": "trigger-datetime",
+    "body": [
+      "[t] |T.DT.${1:Daily}",
+      "  .time: pg\\string << \"${2:09:00}\"",
+      "[X]"
+    ],
+    "description": "DateTime-based trigger"
+  },
+  "Comment Block": {
+    "prefix": "comment",
+    "body": [
+      "// ${1:description}"
+    ],
+    "description": "Single-line comment"
+  }
+}

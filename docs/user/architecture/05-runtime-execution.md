@@ -75,11 +75,11 @@ Block execution follows a strict hierarchy:
 [>] .data >> dataset
 
 [r] |ProcessData
-[<] .input: pg\serial << dataset
+[<] .input:pg.serial << dataset
 [>] .processed >> result
 
 [r] |SaveData
-[<] .output: pg\serial << result
+[<] .output:pg.serial << result
 ```
 
 **Characteristics:**
@@ -107,16 +107,16 @@ Block execution follows a strict hierarchy:
 **Example:**
 ```polyglot
 // Initialize result variables
-[r] .result1: pg\string << ""
-[r] .result2: pg\string << ""
+[r] .result1:pg.string << ""
+[r] .result2:pg.string << ""
 
 // Parallel operations
 [p] |ProcessPartA
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [>] .output >> result1
 
 [p] |ProcessPartB
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [>] .output >> result2
 
 // Manual synchronization
@@ -126,8 +126,8 @@ Block execution follows a strict hierarchy:
 
 // Continue after join
 [r] |CombineResults
-[<] .a: pg\string << result1
-[<] .b: pg\string << result2
+[<] .a:pg.string << result1
+[<] .b:pg.string << result2
 ```
 
 **Characteristics:**
@@ -211,7 +211,7 @@ Automatic Join (wait for all)
 // Implicit join happens HERE (wait for all loads)
 
 [r] |SetupDatabase   // Executes only after ALL loads complete
-[<] .config: pg\serial << .db_config
+[<] .config:pg.serial << .db_config
 ```
 
 **Join Guarantees:**
@@ -241,7 +241,7 @@ Automatic Join (wait for all)
 
 // config1 has data, config2 and config3 have #None.ErrorState
 [r] |ProcessConfig1
-[<] .data: pg\serial << .config1  // Uses successful load
+[<] .data:pg.serial << .config1  // Uses successful load
 ```
 
 **Execution Behavior:**
@@ -403,7 +403,7 @@ Total: ~100ms (plus join overhead)
 [t] |T.Call                    // ← TRIGGER: Decide IF to execute
 
 [\] |Setup                     // ← SETUP: Initialize resources
-[<] .log_path: pg\path << "\\Logs\\loader.log"
+[<] .log_path:pg.path << "\\Logs\\loader.log"
 
 [s] .base << JSON"base.json"   // ← EXECUTE (Step 1: Collect)
 [s] .env << JSON"{.env}.json"  // ← EXECUTE (Step 1: Collect)
@@ -413,16 +413,16 @@ Total: ~100ms (plus join overhead)
 
 [s][!] !File.NotFound          // ← ERROR HANDLING
 [r] |U.Log.Warn
-[<] .msg: pg\string << "Config missing"
+[<] .msg:pg.string << "Config missing"
 
 [r] |MergeConfigs              // ← EXECUTE (Sequential)
-[<] .b: pg\serial << .base
-[<] .e: pg\serial << .env
+[<] .b:pg.serial << .base
+[<] .e:pg.serial << .env
 [>] .merged >> final_config
 
 [/] |Cleanup                   // ← CLEANUP: Release resources
 
-[o] .final_config: pg\serial   // ← OUTPUT: Return result
+[o] .final_config:pg.serial   // ← OUTPUT: Return result
 [X]                            // ← END: Close scope
 ```
 
@@ -482,7 +482,7 @@ Total: ~100ms (plus join overhead)
 
 // Good: Use simple load
 [r] |U.JSON.Load
-[<] .path: pg\path << "file.json"
+[<] .path:pg.path << "file.json"
 [>] .data >> single
 ```
 

@@ -67,21 +67,21 @@ Polyglot excels at AI/ML workflows where:
 
 // Rust: Fast data preprocessing (millions of rows/sec)
 [r] |Rust.PreprocessData
-[<] .input_csv: pg\path << \\Data\\raw_dataset.csv
+[<] .input_csv:pg.path << \\Data\\raw_dataset.csv
 [>] .clean_data: rs\Vec<Record> >> .preprocessed
 
 // Python: ML model inference
 [r] |Python.RunModel
 [<] .data: py\list << .preprocessed        // Auto type conversion
-[<] .model_path: pg\path << \\Models\\trained_model.pkl
+[<] .model_path:pg.path << \\Models\\trained_model.pkl
 [>] .predictions: py\ndarray >> .results
 
 // Rust: High-performance result aggregation
 [r] |Rust.AggregateResults
 [<] .predictions: rs\Vec<f64> << .results  // Auto type conversion
-[>] .summary: pg\string >> .final_output
+[>] .summary:pg.string >> .final_output
 
-[o] .final_output: pg\string
+[o] .final_output:pg.string
 [X]
 ```
 
@@ -280,23 +280,23 @@ Related examples and documentation.
 // Pipeline: High-performance image classification
 [|] BatchImageClassification
 
-[i] .image_dir: pg\path
-[i] .batch_size: pg\int << 1000
+[i] .image_dir:pg.path
+[i] .batch_size:pg.int << 1000
 
 [t] |T.Call
 
 // Queue: High priority, require GPU
 [Q] |Q.Priority
-[<] .level: pg\int << 9
+[<] .level:pg.int << 9
 
 [Q] |Q.RequireResource
-[<] .cpu_cores: pg\int << 8
-[<] .memory_mb: pg\int << 16384
-[<] .gpu_count: pg\int << 1
+[<] .cpu_cores:pg.int << 8
+[<] .memory_mb:pg.int << 16384
+[<] .gpu_count:pg.int << 1
 
 // Rust: Fast image preprocessing (10,000 images/sec)
 [r] |Rust.PreprocessImages
-[<] .input_dir: pg\path << .image_dir
+[<] .input_dir:pg.path << .image_dir
 [<] .target_size: rs\(u32,u32) << (224, 224)
 [<] .normalize: rs\bool << true
 [>] .image_tensors: rs\Vec<f32> >> .preprocessed_data
@@ -304,7 +304,7 @@ Related examples and documentation.
 // Python: CNN model inference (PyTorch/TensorFlow)
 [r] |Python.RunCNNModel
 [<] .tensors: py\ndarray << .preprocessed_data     // Auto type conversion
-[<] .model_path: pg\path << \\Models\\resnet50.pth
+[<] .model_path:pg.path << \\Models\\resnet50.pth
 [<] .batch_size: py\int << .batch_size
 [>] .predictions: py\ndarray >> .class_predictions
 [>] .confidence: py\ndarray >> .confidence_scores
@@ -313,9 +313,9 @@ Related examples and documentation.
 [r] |Rust.GenerateReport
 [<] .predictions: rs\Vec<i32> << .class_predictions  // Auto type conversion
 [<] .confidence: rs\Vec<f64> << .confidence_scores
-[>] .report: pg\string >> .final_report
+[>] .report:pg.string >> .final_report
 
-[o] .final_report: pg\string
+[o] .final_report:pg.string
 [X]
 ```
 

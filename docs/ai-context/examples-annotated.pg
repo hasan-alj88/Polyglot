@@ -36,7 +36,7 @@
 
 [?] *?                                           // EXHAUSTIVE: Required catch-all
                                                  // PATTERN: *? matches anything
-[~][o] !NoError                                  // OUTPUT: No error (using proper syntax)
+[~][o] !No.Output                                  // OUTPUT: No error (using proper syntax)
 [~]
 [X]
 
@@ -98,7 +98,7 @@
 [~][<] .input << .value
 [~]
 
-[o] !NoError                             // MANDATORY: Output (no output needed)
+[o] !No.Output                             // MANDATORY: Output (no output needed)
 [X]
 
 // ==============================================================================
@@ -169,7 +169,7 @@
 [t] |T.Call                      // MANDATORY: Trigger
 
 [W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
-[o] !NoError                     // MANDATORY: Output (using proper syntax)
+[o] !No.Output                     // MANDATORY: Output (using proper syntax)
 [X]
 
 // ✅ VALID: Recursive Structures Allowed
@@ -209,7 +209,7 @@
                                          // TYPE: pg\array{!ErrorType}
 [~]
 
-[o] !NoError                     // MANDATORY: Output
+[o] !No.Output                     // MANDATORY: Output
 [X]
 
 // ==============================================================================
@@ -217,23 +217,26 @@
 // ==============================================================================
 
 [|] DateTimeExample
-[i] #Pipeline.NoInput            // MANDATORY: No inputs (proper syntax)
+[i] !No.Input            // MANDATORY: No inputs (proper syntax)
 
 [t] |T.Call                      // MANDATORY: Trigger
 
 [W] |W.Polyglot.Scope                  // MANDATORY: No setup/cleanup
 [r] .start: pg\dt << DT.Now""            // INLINE PIPELINE CALL: DT.Now
+                                         // VALID: No input (except .formatted_argument_string), single output
                                          // EMPTY PARAM: "" required even with no args
                                          // RETURNS: pg\dt (string literals can return ANY type!)
                                          // INPUT: .formatted_argument_string: pg\string
 
 [r] .elapsed: pg\dt << DT.ToNow"{.start}"
                                          // INLINE PIPELINE CALL: DT.ToNow
+                                         // VALID: Single string input, single output
                                          // INTERPOLATION: {.start} triggers auto-await
                                          // FORMATTED_ARG: String with placeholder
                                          // RETURNS: pg\dt (duration since .start)
 
 [r] .timeout: pg\dt << DT.Minutes"3"     // INLINE PIPELINE CALL: DT.Minutes
+                                         // VALID: Single string input, single output
                                          // PARAMETER: "3" as formatted_argument_string
                                          // RETURNS: pg\dt (3-minute duration)
 
@@ -250,7 +253,7 @@
 [~][r] |HandleDefault
 [~]
 
-[o] !NoError                     // MANDATORY: Output
+[o] !No.Output                     // MANDATORY: Output
 [X]
 
 // ==============================================================================
@@ -280,7 +283,7 @@
 [~]
 
 [?] *?                           // ✓ Pattern operator
-[~][o] !NoError                  // ✓ Proper output syntax
+[~][o] !No.Output                  // ✓ Proper output syntax
 [~]
 [X]
 
@@ -310,7 +313,7 @@
 // [p] |ProcessParallel          // EXECUTION: [p] = parallel (fire and forget)
 // [b] |ProcessBackground         // EXECUTION: [b] = background (no join)
 
-[o] !NoError                     // MANDATORY: Output
+[o] !No.Output                     // MANDATORY: Output
 [X]
 
 // ==============================================================================
@@ -338,7 +341,7 @@
 [~]
 
 [?] *?
-[~][o] !NoError
+[~][o] !No.Output
 [~]
 
 // After conditional pushes, .channels transitions to Ready
@@ -353,28 +356,45 @@
 // DT.Now                               // ❌ Missing "" - inline pipelines require string literal syntax
 // << [1, 2, 3]                         // ❌ Wrong delimiter - use << {1, 2, 3}
 
+// INLINE PIPELINE CALL CONSTRAINTS:
+// ✅ VALID: Pipeline.Name"..." when:
+//    - Pipeline has NO input (except .formatted_argument_string), AND
+//    - Pipeline has ONE output OR outputs packed into pg\serial
+// ❌ INVALID: Pipeline.Name"..." when:
+//    - Pipeline has multiple inputs, OR
+//    - Pipeline has multiple outputs (not packed into pg\serial)
+//
+// Examples:
+// DT.Now""                             // ✅ No input, single output
+// DT.Minutes"5"                        // ✅ Single string input, single output
+// Pipeline.MultiOutput"..."            // ❌ Multiple outputs - use full syntax:
+//                                      //    [r] |Pipeline.MultiOutput
+//                                      //    [<] .formatted_argument_string << "..."
+//                                      //    [>] .output1: Type >> .result1
+//                                      //    [>] .output2: Type >> .result2
+
 // ==============================================================================
 // PATTERN 12: Minimal Valid Pipeline Structure
 // ==============================================================================
 
 [|] MinimalPipeline
-[i] #Pipeline.NoInput            // MANDATORY: No inputs (proper syntax)
+[i] !No.Input            // MANDATORY: No inputs (proper syntax)
 
 [t] |T.Call                      // MANDATORY: Trigger (pipeline will NOT run without this)
 
 [W] RT.Python"minimal.py"        // MANDATORY: Wrapper (includes [\][/] in macro)
 
-[o] !NoError                     // MANDATORY: No output (proper syntax)
+[o] !No.Output                     // MANDATORY: No output (proper syntax)
 [X]
 
 // ==============================================================================
 // KEY TAKEAWAYS FOR AI AGENTS:
 // ==============================================================================
 // 0. MANDATORY PIPELINE SECTIONS (CRITICAL!):
-//    - [i] inputs (or [i] #Pipeline.NoInput if none)
+//    - [i] inputs (or [i] !No.Input if none)
 //    - [t] triggers (or pipeline will NEVER run)
 //    - [W] wrapper OR [\][/] setup/cleanup
-//    - [o] outputs (or [o] !NoError if none)
+//    - [o] outputs (or [o] !No.Output if none)
 // 1. BLOCK MARKER HIERARCHY:
 //    - [r] for variable declarations at pipeline scope OR sequential execution
 //    - [<] ONLY within parent block (pipeline call, unpack, conditional, etc.)
@@ -393,4 +413,8 @@
 // 13. COLLECTION SYNTAX: Use {} not [] (e.g., << {1, 2, 3})
 // 14. ASYNC TERMINOLOGY: Use PUSH/PULL, Variable States (not assign/mutable)
 // 15. DECLARED STATE: For collections receiving conditional pushes
+// 16. INLINE PIPELINE CALL CONSTRAINT: Pipeline.Name"..." ONLY valid when:
+//     - Pipeline has NO input (except .formatted_argument_string), AND
+//     - Pipeline has ONE output OR outputs packed into pg\serial
+//     Otherwise use full pipeline call syntax with [<] and [>] bindings
 // ==============================================================================

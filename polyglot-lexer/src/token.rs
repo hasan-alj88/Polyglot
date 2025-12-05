@@ -1,5 +1,5 @@
 // Token types for Polyglot v0.0.2
-// Complete enumeration of all 102 token types (100 + 1 delimiter + 1 block marker)
+// Complete enumeration of all 104 token types
 
 use serde::{Deserialize, Serialize};
 
@@ -29,168 +29,171 @@ pub enum TokenKind {
     // ========================================
     // Block Markers (26 tokens)
     // ========================================
-    BlockPackageStart,      // [@]
-    BlockVersionEnum,       // [#]
-    BlockEnd,               // [X]
-    BlockPipelineStart,     // [|]
-    BlockInput,             // [i]
-    BlockTrigger,           // [t]
-    BlockQueue,             // [Q]
-    BlockWrapper,           // [W]
-    BlockSetup,             // [\]
-    BlockCleanup,           // [/]
-    BlockOutput,            // [o]
-    BlockSequential,        // [r]
-    BlockInputBinding,      // [<]
-    BlockOutputBinding,     // [>]
-    BlockParallel,          // [p]
-    BlockJoin,              // [Y]
-    BlockBackground,        // [b]
-    BlockStreaming,         // [s]
-    BlockConditional,       // [?]
-    BlockBody,              // [~]
-    BlockBoolOr,            // [+]
-    BlockBoolAnd,           // [&]
-    BlockBoolXor,           // [-]
-    BlockBoolNand,          // [^]
-    BlockBoolNor,           // [.]
-    BlockLineContinuation,  // [*]
+    BlockPackageStart,     // [@]
+    BlockVersionEnum,      // [#]
+    BlockEnd,              // [X]
+    BlockPipelineStart,    // [|]
+    BlockInput,            // [i]
+    BlockTrigger,          // [t]
+    BlockQueue,            // [Q]
+    BlockWrapper,          // [W]
+    BlockSetup,            // [\]
+    BlockCleanup,          // [/]
+    BlockOutput,           // [o]
+    BlockSequential,       // [r]
+    BlockInputBinding,     // [<]
+    BlockOutputBinding,    // [>]
+    BlockParallel,         // [p]
+    BlockJoin,             // [Y]
+    BlockBackground,       // [b]
+    BlockStreaming,        // [s]
+    BlockErrorCatch,       // [!]
+    BlockConditional,      // [?]
+    BlockBody,             // [~]
+    BlockBoolOr,           // [+]
+    BlockBoolAnd,          // [&]
+    BlockBoolXor,          // [-]
+    BlockBoolNand,         // [^]
+    BlockBoolNor,          // [.]
+    BlockLineContinuation, // [*]
 
     // ========================================
-    // Assignment Operators (3 tokens)
+    // Assignment Operators (4 tokens)
     // ========================================
-    OpPush,                 // <<
-    OpPull,                 // >>
-    OpDefault,              // <~
+    OpPush,        // <<
+    OpPull,        // >>
+    OpDefault,     // <~
+    OpDefaultPull, // ~>
 
     // ========================================
     // String Operators (1 token)
     // ========================================
-    OpStringConcat,         // +"
+    OpStringConcat, // +"
 
     // ========================================
     // Comparison Operators (6 tokens)
     // ========================================
-    OpEqual,                // =?
-    OpNotEqual,             // =!?
-    OpGreater,              // >?
-    OpLess,                 // <?
-    OpGreaterEqual,         // =>?
-    OpLessEqual,            // =<?
+    OpEqual,        // =?
+    OpNotEqual,     // =!?
+    OpGreater,      // >?
+    OpLess,         // <?
+    OpGreaterEqual, // =>?
+    OpLessEqual,    // =<?
 
     // ========================================
     // Pattern Operators (2 tokens)
     // ========================================
-    OpWildcard,             // *?
-    OpRegex,                // re?
+    OpWildcard, // *?
+    OpRegex,    // re?
 
     // ========================================
     // Range Operators (4 tokens)
     // ========================================
-    OpRangeClosed,          // ?[
-    OpRangeOpen,            // ?(
-    OpRangeHalfRight,       // ?]
-    OpRangeHalfLeft,        // ?)
+    OpRangeClosed,    // ?[
+    OpRangeOpen,      // ?(
+    OpRangeHalfRight, // ?]
+    OpRangeHalfLeft,  // ?)
 
     // ========================================
     // Delimiters (11 tokens)
     // ========================================
-    DelimiterBraceOpen,     // {
-    DelimiterBraceClose,    // }
-    DelimiterParenOpen,     // (
-    DelimiterParenClose,    // )
+    DelimiterBraceOpen,          // {
+    DelimiterBraceClose,         // }
+    DelimiterParenOpen,          // (
+    DelimiterParenClose,         // )
     DelimiterSquareBracketClose, // ] (for range operators, NOT block markers)
-    DelimiterQuote,         // " (for reference, actual strings use STRING_* tokens)
-    DelimiterComma,         // ,
-    DelimiterColon,         // :
-    DelimiterAt,            // @
-    DelimiterBackslash,     // \
-    DelimiterPipe,          // |
-    DelimiterDot,           // .
+    DelimiterQuote,              // " (for reference, actual strings use STRING_* tokens)
+    DelimiterComma,              // ,
+    DelimiterColon,              // :
+    DelimiterAt,                 // @
+    DelimiterBackslash,          // \
+    DelimiterPipe,               // |
+    DelimiterDot,                // .
 
     // ========================================
     // String Literal Tokens (6 tokens) - NEW
     // ========================================
-    StringStart,            // " (opening quote)
-    StringContent,          // Static text between interpolations
-    StringEnd,              // " (closing quote)
-    InterpolationStart,     // { (opening brace in string)
-    InterpolationEnd,       // } (closing brace in string)
-    FormatIdentifier,       // Format specifier (e.g., Hex, Currency)
+    StringStart,        // " (opening quote)
+    StringContent,      // Static text between interpolations
+    StringEnd,          // " (closing quote)
+    InterpolationStart, // { (opening brace in string)
+    InterpolationEnd,   // } (closing brace in string)
+    FormatIdentifier,   // Format specifier (e.g., Hex, Currency)
 
     // ========================================
     // Identifiers (6 categories)
     // ========================================
-    IdentifierVariable,     // .identifier
-    IdentifierEnum,         // #identifier
-    IdentifierPipeline,     // |identifier
-    IdentifierError,        // !identifier
-    IdentifierUnpack,       // ~identifier
-    IdentifierJoin,         // ~Y.identifier
-    Identifier,             // Plain identifier (for special cases)
+    IdentifierVariable, // .identifier
+    IdentifierEnum,     // #identifier
+    IdentifierPipeline, // |identifier
+    IdentifierError,    // !identifier
+    IdentifierUnpack,   // ~identifier
+    IdentifierJoin,     // ~Y.identifier
+    Identifier,         // Plain identifier (for special cases)
 
     // ========================================
     // Reserved Enumerations (10 tokens)
     // ========================================
-    ReservedPgVarDeclared,      // #PgVar.States.Declared
-    ReservedPgVarDefaultReady,  // #PgVar.States.DefaultReady
-    ReservedPgVarPending,       // #PgVar.States.Pending
-    ReservedPgVarReady,         // #PgVar.States.Ready
-    ReservedPgVarFaulted,       // #PgVar.States.Faulted
-    ReservedBooleanTrue,        // #Boolean.True
-    ReservedBooleanFalse,       // #Boolean.False
-    ReservedNone,               // #None
-    ReservedPipelineNoInput,    // #Pipeline.NoInput
-    ReservedNoError,            // !NoError
+    ReservedPgVarDeclared,     // #PgVar.States.Declared
+    ReservedPgVarDefaultReady, // #PgVar.States.DefaultReady
+    ReservedPgVarPending,      // #PgVar.States.Pending
+    ReservedPgVarReady,        // #PgVar.States.Ready
+    ReservedPgVarFaulted,      // #PgVar.States.Faulted
+    ReservedBooleanTrue,       // #Boolean.True
+    ReservedBooleanFalse,      // #Boolean.False
+    ReservedNone,              // #None
+    ReservedPipelineNoInput,   // #Pipeline.NoInput
+    ReservedNoError,           // !NoError
 
     // ========================================
-    // Literals (5 types)
+    // Literals (6 types)
     // ========================================
-    LiteralInteger,         // 42, -10
-    LiteralFloat,           // 3.14, -0.5
-    LiteralDatetime,        // DT"2024-01-15T14:30:00Z"
-    LiteralDuration,        // DT.Minutes"5"
-    LiteralCollection,      // {1, 2, 3}
+    LiteralInteger,           // 42, -10
+    LiteralFloat,             // 3.14, -0.5
+    LiteralDatetime,          // DT"2024-01-15T14:30:00Z"
+    LiteralDuration,          // DT.Minutes"5"
+    LiteralCollection,        // {1, 2, 3}
+    LiteralPipelineFormatted, // |Pipeline"formatted {.string}"
 
     // ========================================
     // Type Tokens (10 tokens)
     // ========================================
-    TypeNamespace,          // pg, py, rs, go, js, node
-    TypeString,             // string
-    TypeInt,                // int
-    TypeFloat,              // float
-    TypeBool,               // bool
-    TypeDatetime,           // dt
-    TypePath,               // path
-    TypeSerial,             // serial
-    TypeArray,              // array
-    TypeSet,                // set
+    TypeNamespace, // pg, py, rs, go, js, node
+    TypeString,    // string
+    TypeInt,       // int
+    TypeFloat,     // float
+    TypeBool,      // bool
+    TypeDatetime,  // dt
+    TypePath,      // path
+    TypeSerial,    // serial
+    TypeArray,     // array
+    TypeSet,       // set
 
     // ========================================
     // Special Identifiers (5 categories)
     // ========================================
-    SpecialDatetime,        // DT.Operation
-    SpecialRuntime,         // RT.Language
-    SpecialTrigger,         // TG.Type
-    SpecialTriggerType,     // |T.Call, |T.String.Call
-    SpecialWrapper,         // |W.Polyglot.Scope
+    SpecialDatetime,    // DT.Operation
+    SpecialRuntime,     // RT.Language
+    SpecialTrigger,     // TG.Type
+    SpecialTriggerType, // |T.Call, |T.String.Call
+    SpecialWrapper,     // |W.Polyglot.Scope
 
     // ========================================
     // Comments (2 tokens)
     // ========================================
-    CommentSingle,          // // ...
-    CommentMulti,           // /* ... */
+    CommentSingle, // // ...
+    CommentMulti,  // /* ... */
 
     // ========================================
     // Whitespace (4 tokens)
     // ========================================
-    Newline,                // \n
-    Whitespace,             // Space, tab (usually skipped)
+    Newline,    // \n
+    Whitespace, // Space, tab (usually skipped)
 
     // ========================================
     // Version (1 token)
     // ========================================
-    Version,                // 1.0.0
+    Version, // 1.0.0
 
     // ========================================
     // End of File (1 token)
@@ -229,6 +232,7 @@ impl TokenKind {
             TokenKind::BlockJoin => "join marker [Y]",
             TokenKind::BlockBackground => "background marker [b]",
             TokenKind::BlockStreaming => "streaming marker [s]",
+            TokenKind::BlockErrorCatch => "error catch marker [!]",
             TokenKind::BlockConditional => "conditional marker [?]",
             TokenKind::BlockBody => "body marker [~]",
             TokenKind::BlockBoolOr => "boolean OR marker [+]",
@@ -242,6 +246,7 @@ impl TokenKind {
             TokenKind::OpPush => "push operator <<",
             TokenKind::OpPull => "pull operator >>",
             TokenKind::OpDefault => "default operator <~",
+            TokenKind::OpDefaultPull => "default pull operator ~>",
             TokenKind::OpStringConcat => "string concatenation operator +\"",
             TokenKind::OpEqual => "equal operator =?",
             TokenKind::OpNotEqual => "not equal operator =!?",
@@ -305,6 +310,7 @@ impl TokenKind {
             TokenKind::LiteralDatetime => "datetime literal",
             TokenKind::LiteralDuration => "duration literal",
             TokenKind::LiteralCollection => "collection literal",
+            TokenKind::LiteralPipelineFormatted => "pipeline formatted string literal",
 
             // Types
             TokenKind::TypeNamespace => "type namespace",

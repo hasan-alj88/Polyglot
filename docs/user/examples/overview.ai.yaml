@@ -1,0 +1,13 @@
+_meta:
+  src: overview.md
+  updated: 2025-12-02
+topic: Examples Overview
+kw: [examples, patterns, cookbook, use-cases, real-world]
+sum: Index of Polyglot examples: automation, cross-lang FFI, error handling, multi-step pipelines; practical patterns and cookbooks
+pts:
+  - Categories: automation, integration, error-handling, pipelines
+  - Progression: basic → intermediate → advanced
+  - Real-world use-cases with complete code
+  - Best practices and anti-patterns
+rels: [automation-workflows.md, cross-language-integration.md, error-handling-patterns.md, multi-step-pipelines.md]
+code: [docs/project/examples/]

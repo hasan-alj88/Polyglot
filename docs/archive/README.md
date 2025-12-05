@@ -22,6 +22,15 @@ Historical compliance and audit reports (point-in-time snapshots).
 ### `/reviews/`
 Structure reviews, gap analyses, and other assessment documents that served their purpose.
 
+### `/syntax-updates/`
+Historical syntax change documentation where updates have been integrated into active language specifications and user documentation.
+
+### `/specifications/`
+Historical specification documents that have been superseded or integrated into current technical documentation.
+
+### `/old-user-docs/`
+Previous versions of user documentation that have been reorganized, restructured, or replaced by current documentation.
+
 ---
 
 ## Archive Policy

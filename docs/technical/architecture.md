@@ -3241,9 +3241,9 @@ Suggestion: Available formats for 'pg\string': [ToUpper, ToLower, Trim, ...]
 ##### Related Documentation
 
 - **Canonical Reference:** [String Literals Internals](string-literals-internals.md)
-- **Format Catalog:** [Standard Library - Format Identifiers](../user/standard-library/03-utilities-catalog.md#format-identifier-pipelines)
-- **Type System:** [Type System](../user/language/02-type-system.md)
-- **Pipeline Definitions:** [Pipeline Syntax](../user/language/01-syntax-complete.md)
+- **Format Catalog:** [Standard Library - Format Identifiers](../user/standard-library/utilities-catalog.md#format-identifier-pipelines)
+- **Type System:** [Type System](../user/language/type-system.md)
+- **Pipeline Definitions:** [Pipeline Syntax](../user/language/syntax-complete.md)
 
 ---
 
@@ -4127,7 +4127,7 @@ Reserved enumerations appear in IR as string constants:
 
 - **Brainstorming Session:** `docs/brainstorming-session-results-2025-11-23.md` (Lines 300-310, 432-448)
 - **Variable States Spec:** `docs/technical/variable-states-specification.md` (Lines 377-402)
-- **Syntax Spec:** `docs/v0.0.2/language/03-enumerations.md` (Reserved enumeration semantics)
+- **Syntax Spec:** `docs/v0.0.2/language/enumerations.md` (Reserved enumeration semantics)
 
 ---
 
@@ -4823,7 +4823,7 @@ If logos cannot handle a specific Polyglot syntax pattern (e.g., nested block ma
 - ✅ Improved developer experience for new Polyglot users (familiar syntax)
 - ✅ Reduced cognitive load when reading multi-line string concatenations
 - ✅ Better alignment with "Don't Reinvent the Wheel" philosophy
-- ✅ Documentation updated (57 occurrences in `docs/user/language/08-line-continuation.md`)
+- ✅ Documentation updated (57 occurrences in `docs/user/language/line-continuation.md`)
 - ✅ Lexer updated with new `TokenKind::OpStringConcat` token type
 - ✅ All 26 lexer tests still passing after change
 - ⚠️ Parser must validate `+"` only used between string literals (not variables - use interpolation instead)
@@ -4842,7 +4842,7 @@ If logos cannot handle a specific Polyglot syntax pattern (e.g., nested block ma
 - Line continuation `[*]` joins token streams; `+"` is required between literals
 
 **Cross-Reference:**
-- User Documentation: `docs/user/language/08-line-continuation.md`
+- User Documentation: `docs/user/language/line-continuation.md`
 - Token Definition: `polyglot-lexer/src/token.rs:69` (`OpStringConcat`)
 - Lexer Implementation: `polyglot-lexer/src/lexer.rs`
 

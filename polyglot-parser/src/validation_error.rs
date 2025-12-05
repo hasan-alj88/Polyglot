@@ -141,7 +141,11 @@ impl fmt::Display for ValidationError {
         };
 
         if let Some(ref path) = self.file_path {
-            write!(f, "{}: {}:{}:{}", severity_str, path, self.line, self.column)?;
+            write!(
+                f,
+                "{}: {}:{}:{}",
+                severity_str, path, self.line, self.column
+            )?;
         } else {
             write!(f, "{}: {}:{}", severity_str, self.line, self.column)?;
         }

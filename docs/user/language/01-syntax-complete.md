@@ -38,9 +38,9 @@ This document provides a complete reference for all Polyglot syntax elements. It
 
 ```polyglot
 [|] PipelineName
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 
@@ -50,10 +50,10 @@ This document provides a complete reference for all Polyglot syntax elements. It
 
 ```polyglot
 // ✓ VALID - starts with block element
-[r] .x: pg\int << 5
+[r] .x:pg.int << 5
 
 // ✗ INVALID - no block element
-.x: pg\int << 5
+.x:pg.int << 5
 ```
 
 ### Asynchronous by Nature
@@ -65,23 +65,23 @@ All Polyglot pipelines are inherently asynchronous. They execute in response to 
 **CRITICAL RULE:** ALL variables in Polyglot ALWAYS begin with a dot (`.`)
 
 This rule applies universally to:
-- **Declarations**: `.name: pg\string << "Alice"`
+- **Declarations**: `.name:pg.string << "Alice"`
 - **References**: `[<] .input << .name`
-- **Inputs**: `[i] .input: pg\string`
-- **Outputs**: `[o] .result: pg\string`
-- **Input constants**: `[i] .max: pg\int << 3`
-- **Macro scope**: `[{] .input: pg\string`, `[}] .output: pg\string`
+- **Inputs**: `[i] .input:pg.string`
+- **Outputs**: `[o] .result:pg.string`
+- **Input constants**: `[i] .max:pg.int << 3`
+- **Macro scope**: `[{] .input:pg.string`, `[}] .output:pg.string`
 - **All other contexts**: Always use dot prefix
 
 ```polyglot
 // ✓ CORRECT - All variables with dot prefix
-[r] .counter: pg\int << 0
-[r] .name: pg\string << "Alice"
+[r] .counter:pg.int << 0
+[r] .name:pg.string << "Alice"
 [<] .input << .name
 
 // ✗ INVALID - Missing dot prefix
-[r] counter: pg\int << 0     // WRONG
-[r] name: pg\string << "Alice"  // WRONG
+[r] counter:pg.int << 0     // WRONG
+[r] name:pg.string << "Alice"  // WRONG
 [<] input << name            // WRONG
 ```
 
@@ -122,24 +122,24 @@ File-scope definitions include:
 
 
 [#] Configuration
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
 [X]
 
 
 
 [!] !ValidationError
-[<] .message: pg\string << "Validation failed"
-[<] .code: pg\int << 4000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Validation failed"
+[<] .code:pg.int << 4000
+[<] .trace:pg.string << ""
 [X]
 
 
 
 [|] ProcessData
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |TransformData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 
@@ -152,10 +152,10 @@ File-scope definitions include:
 [#] 1
 [X]
 [#] Configuration  // ✗ WRONG - Missing 3 blank lines
-[<] .host: pg\string << "localhost"
+[<] .host:pg.string << "localhost"
 [X]
 [!] !ValidationError  // ✗ WRONG - Missing 3 blank lines
-[<] .message: pg\string << "Error"
+[<] .message:pg.string << "Error"
 [X]
 ```
 
@@ -167,13 +167,13 @@ File-scope definitions include:
 
 ```polyglot
 [|] MyPipeline
-[i] .input: pg\string
-[i] .count: pg\int
+[i] .input:pg.string
+[i] .count:pg.int
 [t] |T.Daily
 [r] |ProcessData
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output
-[o] .result: pg\string
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output
+[o] .result:pg.string
 [X]
 ```
 
@@ -260,13 +260,13 @@ Block markers are special syntax elements enclosed in square brackets `[ ]` that
 
 ```polyglot
 // Required input - caller MUST provide
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 
 // Fixed constant - caller CANNOT override
-[i] Fixed .api_key: pg\string << "secret-123"
+[i] Fixed .api_key:pg.string << "secret-123"
 
 // Optional with default - caller CAN override
-[i] Default .timeout: pg\int << 30
+[i] Default .timeout:pg.int << 30
 ```
 
 **`[o]` - Output Declaration**
@@ -274,7 +274,7 @@ Block markers are special syntax elements enclosed in square brackets `[ ]` that
 - Defines what the pipeline returns
 
 ```polyglot
-[o] .result: pg\string
+[o] .result:pg.string
 [o] #None  // No output
 ```
 
@@ -298,11 +298,11 @@ Block markers are special syntax elements enclosed in square brackets `[ ]` that
 
 ```polyglot
 [p] |ProcessPartA
-[<] .data: pg\string << input_data
+[<] .data:pg.string << input_data
 [>] .output >> result1
 
 [p] |ProcessPartB
-[<] .data: pg\string << input_data
+[<] .data:pg.string << input_data
 [>] .output >> result2
 ```
 
@@ -315,13 +315,13 @@ Block markers are special syntax elements enclosed in square brackets `[ ]` that
 Purpose 1: Input to pipeline calls
 ```polyglot
 [r] |SomePipeline
-[<] .param: pg\string << "value"
+[<] .param:pg.string << "value"
 ```
 
 Purpose 2: Field definition in enumerations/errors
 ```polyglot
 [#] MyEnumeration
-[<] .field: pg\string << "value"
+[<] .field:pg.string << "value"
 [X]
 ```
 
@@ -331,7 +331,7 @@ Purpose 2: Field definition in enumerations/errors
 
 ```polyglot
 [r] |SomePipeline
-[>] .result: pg\string >> variable_name
+[>] .result:pg.string >> variable_name
 ```
 
 ---
@@ -358,12 +358,12 @@ Purpose 2: Field definition in enumerations/errors
 
 ```polyglot
 [t] |T.Daily
-[<] .time: pg\dt << DT"12:30:"
+[<] .time:pg.dt << DT"12:30:"
 
 [t] |T.Every.Minute
 
 [t] |T.File.Modified
-[<] .path: pg\path << \\DataDir\\file.txt
+[<] .path:pg.path << \\DataDir\\file.txt
 ```
 
 **`[Q]` - Queue Control**
@@ -372,7 +372,7 @@ Purpose 2: Field definition in enumerations/errors
 
 ```polyglot
 [Q] |Q.PauseIf.RAM.Available.LessThan
-[<] .mb: pg\uint << 2048
+[<] .mb:pg.uint << 2048
 
 [Q] |Q.Dispatch.Priority.High
 ```
@@ -388,7 +388,7 @@ Purpose 2: Field definition in enumerations/errors
 ```polyglot
 [W] |W.Python3.11
 [r] |RunPythonScript
-[<] .script: pg\path << "analyze.py"
+[<] .script:pg.path << "analyze.py"
 ```
 
 ---
@@ -401,8 +401,8 @@ Purpose 2: Field definition in enumerations/errors
 
 ```polyglot
 [#] MyApp.Configuration
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
 [X]
 ```
 
@@ -412,9 +412,9 @@ Purpose 2: Field definition in enumerations/errors
 
 ```polyglot
 [!] !MyApp.CustomError
-[<] .message: pg\string << "Error occurred"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error occurred"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -425,8 +425,8 @@ Purpose 2: Field definition in enumerations/errors
 ```polyglot
 [#] Path.Identifiers.MyApp.DataDirectory
 [A] DataDir  // Use as \\DataDir\\
-[<] .unix: pg\path << \\UnixRoot\\opt\data\
-[<] .windows: pg\path << \\C\\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\data\
+[<] .windows:pg.path << \\C\\Data\
 [X]
 ```
 
@@ -441,9 +441,9 @@ Purpose 2: Field definition in enumerations/errors
 ```polyglot
 [r] |MightFail
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |HandleError
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 ```
 
 ---
@@ -456,9 +456,9 @@ Purpose 2: Field definition in enumerations/errors
 
 ```polyglot
 [p] |ParallelBlock
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [~][r] |NestedOperation     // Runs WITHIN parallel block
-[~][<] .input: pg\string << .data
+[~][<] .input:pg.string << .data
 ```
 
 ---
@@ -490,7 +490,7 @@ Purpose 2: Field definition in enumerations/errors
 - Used in macro definitions
 
 ```polyglot
-[{] .input_var: pg\type
+[{] .input_var:pg.type
 ```
 
 **`[}]` - Scope Output**
@@ -498,7 +498,7 @@ Purpose 2: Field definition in enumerations/errors
 - Used in macro definitions
 
 ```polyglot
-[}] .output_var: pg\type
+[}] .output_var:pg.type
 ```
 
 **`[i]` with `<<` - Constant Input**
@@ -506,7 +506,7 @@ Purpose 2: Field definition in enumerations/errors
 - Cannot be overridden by caller
 
 ```polyglot
-[i] .max_retries: pg\int << 3
+[i] .max_retries:pg.int << 3
 ```
 
 **Note:** `[i]` supports three variations:
@@ -781,14 +781,14 @@ All comparison operators use `?` suffix for consistency
 - Literals only (not variables)
 
 ```polyglot
-[r] .msg: pg\string << "Hello" +" ", " +" "World!"
+[r] .msg:pg.string << "Hello" +" ", " +" "World!"
 ```
 
 **`{.variable}` - String Interpolation**
 - Embed variables in strings
 
 ```polyglot
-[r] .greeting: pg\string << "Hello, {.name}!"
+[r] .greeting:pg.string << "Hello, {.name}!"
 ```
 
 ---
@@ -800,8 +800,8 @@ All comparison operators use `?` suffix for consistency
 - Input direction
 
 ```polyglot
-[<] .path: pg\path << "data.txt"
-[r] .x: pg\int << 5
+[<] .path:pg.path << "data.txt"
+[r] .x:pg.int << 5
 ```
 
 **`>>` - Right/Pull Assignment**
@@ -809,8 +809,8 @@ All comparison operators use `?` suffix for consistency
 - Output/extract direction
 
 ```polyglot
-[>] .result: pg\string >> output_var
-[>] .message: pg\string >> err_msg
+[>] .result:pg.string >> output_var
+[>] .message:pg.string >> err_msg
 ```
 
 **Visual Mnemonic:**
@@ -879,10 +879,10 @@ Data flows INTO the variable (left side):
 
 ```polyglot
 // Push literal INTO variable
-[r] .x: pg\int << 5
+[r] .x:pg.int << 5
 
 // Push variable INTO parameter
-[<] .input: pg\string << source_var
+[<] .input:pg.string << source_var
 
 // Push enumeration INTO variable
 [r] .status: #Status << #Status.Success
@@ -898,10 +898,10 @@ Data flows FROM source (right side):
 
 ```polyglot
 // Pull result FROM pipeline output
-[>] .result: pg\string >> destination_var
+[>] .result:pg.string >> destination_var
 
 // Pull field FROM error
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 
 // Pull value FROM source
 [>] .output >> result
@@ -985,22 +985,22 @@ pg\set{element_type}
 
 Examples:
 ```polyglot
-pg\array{pg\string}
+pg.array.pg.string
 pg\set{pg\int}
-pg\array{pg\path}
+pg.array.pg.path
 ```
 
 ---
 
 ### Special Types
 
-**`pg\serial`** - Serializable data structure
+**`:pg.serial`** - Serializable data structure
 - Mutable schema (keys can change at runtime)
 - Dynamic key-value pairs
 
-**`pg\path`** - Path type with reserved fields
-- `.unix: pg\path` - Unix/Linux/macOS path
-- `.windows: pg\path` - Windows path
+**`:pg.path`** - Path type with reserved fields
+- `.unix:pg.path` - Unix/Linux/macOS path
+- `.windows:pg.path` - Windows path
 
 ---
 
@@ -1008,13 +1008,13 @@ pg\array{pg\path}
 
 ```polyglot
 // Variable declarations
-[r] .count: pg\int << 0
-[r] .name: pg\string << "Example"
-[r] .is_valid: pg\bool << #True
+[r] .count:pg.int << 0
+[r] .name:pg.string << "Example"
+[r] .is_valid:pg.bool << #True
 
 // Input declarations
-[i] .input_file: pg\path
-[i] .items: pg\array{pg\string}
+[i] .input_file:pg.path
+[i] .items: pg.array.pg.string
 
 // Mutable types
 [r] .counter: pg.mutable\int << 0
@@ -1030,7 +1030,7 @@ Use double forward slash `//`:
 
 ```polyglot
 // This is a single-line comment
-[r] .x: pg\int << 5  // Comment at end of line
+[r] .x:pg.int << 5  // Comment at end of line
 ```
 
 ---
@@ -1046,7 +1046,7 @@ Use C-style block comments `/* */`:
  * and can include detailed explanations
  */
 
-[r] .config: pg\serial << serial{
+[r] .config:pg.serial << serial{
   /* Configuration block
      with multi-line explanation */
 [^]  "host": "localhost",
@@ -1063,13 +1063,13 @@ Use C-style block comments `/* */`:
 - Multi-line: `/* */`
 
 **Other syntax uses backslash `\`:**
-- Type separator: `pg\int`
+- Type separator: `:pg.int`
 - Path identifiers: `\\DataDir\\`
 - Enumeration aliases: `\\AliasName\\`
 
 ```polyglot
 // This is a comment - uses forward slash
-[r] .path: pg\path << \\DataDir\\file.txt  // Path identifier - uses backslash
+[r] .path:pg.path << \\DataDir\\file.txt  // Path identifier - uses backslash
 ```
 
 ---
@@ -1089,9 +1089,9 @@ Use C-style block comments `/* */`:
 
 ```polyglot
 [|] ProcessData
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |DoSomething
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 
@@ -1101,11 +1101,11 @@ Use C-style block comments `/* */`:
 
 ```polyglot
 [|] Transform
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output
-[o] .result: pg\string
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output
+[o] .result:pg.string
 [X]
 ```
 
@@ -1116,7 +1116,7 @@ Use C-style block comments `/* */`:
 ```polyglot
 [|] ScheduledTask
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 [r] |DoWork
 [X]
 ```
@@ -1128,34 +1128,34 @@ Use C-style block comments `/* */`:
 ```polyglot
 [|] CompleteExample
 // Input declarations
-[i] .input_file: pg\path
-[i] Default .timeout: pg\int << 30
+[i] .input_file:pg.path
+[i] Default .timeout:pg.int << 30
 
 // Trigger
 [t] |T.File.Modified
-[<] .path: pg\path << .input_file
+[<] .path:pg.path << .input_file
 
 // Queue control
 [Q] |Q.PauseIf.RAM.Available.LessThan
-[<] .mb: pg\uint << 512
+[<] .mb:pg.uint << 512
 
 // Sequential operations
 [r] |ReadFile
-[<] .path: pg\path << .input_file
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << .input_file
+[>] .content:pg.string >> file_data
 
 [r] |ProcessContent
-[<] .data: pg\string << file_data
-[>] .result: pg\string >> processed
+[<] .data:pg.string << file_data
+[>] .result:pg.string >> processed
 
 // Error handling
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 
 // Output
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
@@ -1192,7 +1192,7 @@ Parent-child relationships automatically expand:
 
 ```polyglot
 [r] |SomeOperation
-[<] .input: pg\string << "value"    // Implicit - no [~] needed
+[<] .input:pg.string << "value"    // Implicit - no [~] needed
 [>] .output >> result               // Implicit - no [~] needed
 ```
 
@@ -1202,11 +1202,11 @@ When adding operations WITHIN an expanded context:
 
 ```polyglot
 [p] |ProcessPartA
-[<] .data: pg\string << .shared_data
+[<] .data:pg.string << .shared_data
 [~][r] |TransformData                   // [~] means: runs WITHIN parallel block
-[~][<] .input: pg\string << .data       // Child of [~][r] - implicit
+[~][<] .input:pg.string << .data       // Child of [~][r] - implicit
 [~][r] |ValidateData                    // [~] means: runs WITHIN parallel block
-[~][<] .value: pg\string << temp        // Child of [~][r] - implicit
+[~][<] .value:pg.string << temp        // Child of [~][r] - implicit
 ```
 
 ---
@@ -1221,16 +1221,16 @@ Each `[~]` adds one nesting level:
 **Example:**
 ```polyglot
 // Level 0 (outer scope)
-[r] .data: pg\string << "input"
+[r] .data:pg.string << "input"
 
 // Level 1 - operation expands
 [r] ~Array.ForEach
-[~][r] .item: pg\string
+[~][r] .item:pg.string
 
 // Level 2 - nested expansion
 [~][r] ~String.Split
 [~][~][r] |ProcessToken              // WITHIN nested expansion
-[~][~][<] .token: pg\string          // Child of [~][~][r] - implicit
+[~][~][<] .token:pg.string          // Child of [~][~][r] - implicit
 ```
 
 ---
@@ -1252,14 +1252,14 @@ Understanding Polyglot terminology is essential for clear communication.
 **Usage:**
 ```polyglot
 [|] MyPipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 
 // Call the pipeline
 [r] |MyPipeline
-[<] .input: pg\string << "value"
+[<] .input:pg.string << "value"
 ```
 
 ---
@@ -1286,13 +1286,13 @@ Understanding Polyglot terminology is essential for clear communication.
 
 [|] SendNotifications
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 [r] |ComposeEmails
 [X]
 
 [|] UpdateInventory
 [t] |T.File.Modified
-[<] .path: pg\path << \\DataDir\\inventory.csv
+[<] .path:pg.path << \\DataDir\\inventory.csv
 [r] |SyncToDatabase
 [X]
 ```
@@ -1315,7 +1315,7 @@ Understanding Polyglot terminology is essential for clear communication.
 ```polyglot
 [W] |W.Python3.11
 [r] |RunPythonScript
-[<] .script: pg\path << "analyze.py"
+[<] .script:pg.path << "analyze.py"
 ```
 "This pipeline calls Python functions defined in `analyze.py`."
 
@@ -1339,20 +1339,20 @@ Understanding Polyglot terminology is essential for clear communication.
 ```polyglot
 // Definition (template)
 [|] ProcessFile
-[i] .filename: pg\path
+[i] .filename:pg.path
 [r] |ReadFile
-[<] .path: pg\path << .filename
+[<] .path:pg.path << .filename
 [X]
 
 // Create 3 instances
 [r] |ProcessFile
-[<] .filename: pg\path << "file1.csv"  // Instance #1
+[<] .filename:pg.path << "file1.csv"  // Instance #1
 
 [r] |ProcessFile
-[<] .filename: pg\path << "file2.csv"  // Instance #2
+[<] .filename:pg.path << "file2.csv"  // Instance #2
 
 [r] |ProcessFile
-[<] .filename: pg\path << "file3.csv"  // Instance #3
+[<] .filename:pg.path << "file3.csv"  // Instance #3
 ```
 
 ---
@@ -1379,7 +1379,7 @@ Understanding Polyglot terminology is essential for clear communication.
 
 // Paused → still "Running" (not exited)
 [r] |Q.Pause
-[<] .pipeline_id: pg\string << instance_id
+[<] .pipeline_id:pg.string << instance_id
 
 // Resumed → still "Running", execution continues
 
@@ -1398,10 +1398,10 @@ Understanding Polyglot terminology is essential for clear communication.
 
 | Old Keyword | Replacement | Example |
 |-------------|-------------|---------|
-| `True` | `#Boolean.True` or alias `#True` | `.valid: pg\bool << #True` |
-| `False` | `#Boolean.False` or alias `#False` | `.valid: pg\bool << #False` |
-| `Fixed` | `[i]` with `<<` (constant) | `[i] .key: pg\string << "secret"` |
-| `Default` | `[i]` with `<~` | `[i] .timeout: pg\int <~ 30` |
+| `True` | `#Boolean.True` or alias `#True` | `.valid:pg.bool << #True` |
+| `False` | `#Boolean.False` or alias `#False` | `.valid:pg.bool << #False` |
+| `Fixed` | `[i]` with `<<` (constant) | `[i] .key:pg.string << "secret"` |
+| `Default` | `[i]` with `<~` | `[i] .timeout:pg.int <~ 30` |
 | `Exposed` | *(removed - macro system revised)* | N/A |
 
 **Boolean Values:**
@@ -1411,8 +1411,8 @@ Polyglot uses the `#Boolean` reserved enumeration for boolean values:
 - **Aliases:** `#True`, `#False` (recommended for readability)
 
 ```polyglot
-[r] .is_valid: pg\bool << #True
-[r] .is_error: pg\bool << #False
+[r] .is_valid:pg.bool << #True
+[r] .is_error:pg.bool << #False
 ```
 
 ---
@@ -1433,15 +1433,15 @@ Polyglot uses the `#Boolean` reserved enumeration for boolean values:
 
 | Type | Description | Example |
 |------|-------------|---------|
-| `pg\int` | Integer | `.count: pg\int << 42` |
-| `pg\uint` | Unsigned integer | `.size: pg\uint << 1024` |
-| `pg\string` | String | `.name: pg\string << "Example"` |
-| `pg\bool` | Boolean | `.valid: pg\bool << #True` |
-| `pg\path` | File path | `.file: pg\path << \\DataDir\\data.csv` |
-| `pg\dt` | DateTime | `.time: pg\dt << DT"12:30:"` |
-| `pg\array{}` | Array | `.items: pg\array{pg\string}` |
-| `pg\set{}` | Set | `.unique: pg\set{pg\int}` |
-| `pg\serial` | Serializable | `.config: pg\serial` |
+| `:pg.int` | Integer | `.count:pg.int << 42` |
+| `:pg.uint` | Unsigned integer | `.size:pg.uint << 1024` |
+| `:pg.string` | String | `.name:pg.string << "Example"` |
+| `:pg.bool` | Boolean | `.valid:pg.bool << #True` |
+| `:pg.path` | File path | `.file:pg.path << \\DataDir\\data.csv` |
+| `:pg.dt` | DateTime | `.time:pg.dt << DT"12:30:"` |
+| `:pg.array{}` | Array | `.items: pg.array.pg.string` |
+| `:pg.set{}` | Set | `.unique:pg.set{pg\int}` |
+| `:pg.serial` | Serializable | `.config:pg.serial` |
 
 ---
 
@@ -1450,29 +1450,29 @@ Polyglot uses the `#Boolean` reserved enumeration for boolean values:
 **Define a Pipeline:**
 ```polyglot
 [|] PipelineName
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 
 **Call a Pipeline:**
 ```polyglot
 [r] |PipelineName
-[<] .input: pg\string << "value"
+[<] .input:pg.string << "value"
 ```
 
 **Handle an Error:**
 ```polyglot
 [r] |MightFail
 [!] !ErrorType
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 ```
 
 **Run in Parallel:**
 ```polyglot
 [p] |ProcessPartA
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [>] .output >> result1
 
 [Y] |Y.Join
@@ -1483,7 +1483,7 @@ Polyglot uses the `#Boolean` reserved enumeration for boolean values:
 ```polyglot
 [W] |W.Python3.11
 [r] |RunScript
-[<] .script: pg\path << "analyze.py"
+[<] .script:pg.path << "analyze.py"
 ```
 
 ---

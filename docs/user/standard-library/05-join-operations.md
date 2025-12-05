@@ -66,21 +66,21 @@ Basic synchronization operation that waits for all parallel blocks to complete a
 **Example: Basic Join**
 ```polyglot
 [|] ParallelProcessing
-[i] .data: pg\array{pg\int}
+[i] .data: pg.array.pg.int
 
 // Parallel block 1
 [p] |ProcessPartA
-[<] .input: pg\array{pg\int} << .data
+[<] .input: pg.array.pg.int << .data
 [r] |ComputeSum
-[<] .values: pg\array{pg\int} << .input
-[>] .sum: pg\int >> sum_result
+[<] .values: pg.array.pg.int << .input
+[>] .sum:pg.int >> sum_result
 
 // Parallel block 2
 [p] |ProcessPartB
-[<] .input: pg\array{pg\int} << .data
+[<] .input: pg.array.pg.int << .data
 [r] |ComputeProduct
-[<] .values: pg\array{pg\int} << .input
-[>] .product: pg\int >> product_result
+[<] .values: pg.array.pg.int << .input
+[>] .product:pg.int >> product_result
 
 // Join both results
 [Y] |Y.Join
@@ -89,11 +89,11 @@ Basic synchronization operation that waits for all parallel blocks to complete a
 
 // Use collected results
 [r] |CombineResults
-[<] .sum: pg\int << sum_result
-[<] .product: pg\int << product_result
-[>] .combined: pg\string >> final_result
+[<] .sum:pg.int << sum_result
+[<] .product:pg.int << product_result
+[>] .combined:pg.string >> final_result
 
-[o] .output: pg\string << final_result
+[o] .output:pg.string << final_result
 [X]
 ```
 
@@ -106,7 +106,7 @@ Wait for any one parallel block to complete, returning the first available resul
 [Y] |Y.JoinAny
 [>] result_variable1
 [>] result_variable2
-[>] .completed_index: pg\int >> which_completed
+[>] .completed_index:pg.int >> which_completed
 ```
 
 **Behavior:**
@@ -124,41 +124,41 @@ Wait for any one parallel block to complete, returning the first available resul
 **Example: Race Condition**
 ```polyglot
 [|] FastestResult
-[i] .query: pg\string
+[i] .query:pg.string
 
 // Try multiple data sources in parallel
 [p] |QueryDatabaseA
-[<] .query: pg\string << .query
+[<] .query:pg.string << .query
 [r] |FetchFromA
-[>] .result: pg\string >> result_a
+[>] .result:pg.string >> result_a
 
 [p] |QueryDatabaseB
-[<] .query: pg\string << .query
+[<] .query:pg.string << .query
 [r] |FetchFromB
-[>] .result: pg\string >> result_b
+[>] .result:pg.string >> result_b
 
 [p] |QueryDatabaseC
-[<] .query: pg\string << .query
+[<] .query:pg.string << .query
 [r] |FetchFromC
-[>] .result: pg\string >> result_c
+[>] .result:pg.string >> result_c
 
 // Use whichever completes first
 [Y] |Y.JoinAny
 [>] result_a
 [>] result_b
 [>] result_c
-[>] .completed_index: pg\int >> winner
+[>] .completed_index:pg.int >> winner
 
 // Log which source won
 [r] |LogWinner
-[<] .index: pg\int << winner
+[<] .index:pg.int << winner
 
 // Use the first result (index-based access conceptual)
 [r] |ProcessResult
-[<] .data: pg\string << result_a  // Or result_b/result_c based on winner
-[>] .final: pg\string >> output
+[<] .data:pg.string << result_a  // Or result_b/result_c based on winner
+[>] .final:pg.string >> output
 
-[o] .result: pg\string << output
+[o] .result:pg.string << output
 [X]
 ```
 
@@ -169,11 +169,11 @@ Wait for parallel blocks with a timeout; return completed results or timeout ind
 **Signature:**
 ```polyglot
 [Y] |Y.JoinTimeout
-[<] .timeout_ms: pg\int << 5000
+[<] .timeout_ms:pg.int << 5000
 [>] result_variable1
 [>] result_variable2
-[>] .timed_out: pg\bool >> timeout_flag
-[>] .completed_count: pg\int >> completed
+[>] .timed_out:pg.bool >> timeout_flag
+[>] .completed_count:pg.int >> completed
 ```
 
 **Behavior:**
@@ -192,42 +192,42 @@ Wait for parallel blocks with a timeout; return completed results or timeout ind
 **Example: Timeout Handling**
 ```polyglot
 [|] TimeConstrainedProcessing
-[i] .data1: pg\string
-[i] .data2: pg\string
-[i] .max_wait_ms: pg\int
+[i] .data1:pg.string
+[i] .data2:pg.string
+[i] .max_wait_ms:pg.int
 
 [p] |SlowOperation1
-[<] .input: pg\string << .data1
+[<] .input:pg.string << .data1
 [r] |ProcessSlowly1
-[>] .result: pg\string >> result1
+[>] .result:pg.string >> result1
 
 [p] |SlowOperation2
-[<] .input: pg\string << .data2
+[<] .input:pg.string << .data2
 [r] |ProcessSlowly2
-[>] .result: pg\string >> result2
+[>] .result:pg.string >> result2
 
 // Wait with timeout
 [Y] |Y.JoinTimeout
-[<] .timeout_ms: pg\int << .max_wait_ms
+[<] .timeout_ms:pg.int << .max_wait_ms
 [>] result1
 [>] result2
-[>] .timed_out: pg\bool >> did_timeout
-[>] .completed_count: pg\int >> completed
+[>] .timed_out:pg.bool >> did_timeout
+[>] .completed_count:pg.int >> completed
 
 // Handle timeout
-[t] .condition: pg\bool << did_timeout
+[t] .condition:pg.bool << did_timeout
 [r] |HandleTimeout
-[<] .completed: pg\int << completed
-[>] .fallback: pg\string >> timeout_message
+[<] .completed:pg.int << completed
+[>] .fallback:pg.string >> timeout_message
 
 // Use available results or fallback
 [r] |ProcessResults
-[<] .r1: pg\string << result1  // May be empty if incomplete
-[<] .r2: pg\string << result2
-[<] .timeout_msg: pg\string << timeout_message
-[>] .final: pg\string >> output
+[<] .r1:pg.string << result1  // May be empty if incomplete
+[<] .r2:pg.string << result2
+[<] .timeout_msg:pg.string << timeout_message
+[>] .final:pg.string >> output
 
-[o] .output: pg\string << output
+[o] .output:pg.string << output
 [X]
 ```
 
@@ -239,7 +239,7 @@ Collect results from parallel blocks operating on array elements (map-like patte
 ```polyglot
 [Y] |Y.Collect
 [>] result_variable
-[>] .results: pg\array{T} >> collected_array
+[>] .results:pg.array{T} >> collected_array
 ```
 
 **Behavior:**
@@ -257,22 +257,22 @@ Collect results from parallel blocks operating on array elements (map-like patte
 **Example: Parallel Map**
 ```polyglot
 [|] ParallelMap
-[i] .numbers: pg\array{pg\int}
+[i] .numbers: pg.array.pg.int
 
 // Process each element in parallel
 [p] |ProcessElements
-[<] .items: pg\array{pg\int} << .numbers
+[<] .items: pg.array.pg.int << .numbers
 
 [~][r] |SquareNumber
-[<] .value: pg\int << .items[*]
-[>] .squared: pg\int >> squared_results
+[<] .value:pg.int << .items[*]
+[>] .squared:pg.int >> squared_results
 
 // Collect all results into array
 [Y] |Y.Collect
 [>] squared_results
-[>] .results: pg\array{pg\int} >> all_squares
+[>] .results: pg.array.pg.int >> all_squares
 
-[o] .output: pg\array{pg\int} << all_squares
+[o] .output: pg.array.pg.int << all_squares
 [X]
 
 // Example usage:
@@ -287,7 +287,7 @@ Collect and reduce parallel results using an aggregation operation.
 **Signature:**
 ```polyglot
 [Y] |Y.Reduce
-[<] .operation: pg\string << "sum"  // or "product", "min", "max", "concat", etc.
+[<] .operation:pg.string << "sum"  // or "product", "min", "max", "concat", etc.
 [>] result_variable
 [>] .reduced: T >> reduced_result
 ```
@@ -307,23 +307,23 @@ Collect and reduce parallel results using an aggregation operation.
 **Example: Parallel Sum**
 ```polyglot
 [|] ParallelSum
-[i] .data_chunks: pg\array{pg\array{pg\int}}
+[i] .data_chunks:pg.array{pg.array.pg.int}
 
 // Sum each chunk in parallel
 [p] |SumChunks
-[<] .chunks: pg\array{pg\array{pg\int}} << .data_chunks
+[<] .chunks:pg.array{pg.array.pg.int} << .data_chunks
 
 [~][r] |SumChunk
-[<] .chunk: pg\array{pg\int} << .chunks[*]
-[>] .chunk_sum: pg\int >> chunk_sums
+[<] .chunk: pg.array.pg.int << .chunks[*]
+[>] .chunk_sum:pg.int >> chunk_sums
 
 // Reduce all chunk sums to final sum
 [Y] |Y.Reduce
-[<] .operation: pg\string << "sum"
+[<] .operation:pg.string << "sum"
 [>] chunk_sums
-[>] .reduced: pg\int >> total_sum
+[>] .reduced:pg.int >> total_sum
 
-[o] .total: pg\int << total_sum
+[o] .total:pg.int << total_sum
 [X]
 ```
 
@@ -351,33 +351,33 @@ Explicit synchronization point without result collection (wait-only).
 **Example: Synchronization Barrier**
 ```polyglot
 [|] MultiStageParallel
-[i] .files: pg\array{pg\path}
+[i] .files: pg.array.pg.path
 
 // Stage 1: Validate all files in parallel
 [p] |ValidateFiles
-[<] .file_list: pg\array{pg\path} << .files
+[<] .file_list: pg.array.pg.path << .files
 
 [~][r] |ValidateFile
-[<] .file: pg\path << .file_list[*]
-[>] .valid: pg\bool >> validation_results
+[<] .file:pg.path << .file_list[*]
+[>] .valid:pg.bool >> validation_results
 
 // Wait for all validations (no result collection needed here)
 [Y] |Y.Barrier
 
 // Stage 2: Process files in parallel (only if we reach here)
 [p] |ProcessFiles
-[<] .file_list: pg\array{pg\path} << .files
+[<] .file_list: pg.array.pg.path << .files
 
 [~][r] |ProcessFile
-[<] .file: pg\path << .file_list[*]
-[>] .result: pg\string >> processing_results
+[<] .file:pg.path << .file_list[*]
+[>] .result:pg.string >> processing_results
 
 // Collect final results
 [Y] |Y.Collect
 [>] processing_results
-[>] .results: pg\array{pg\string} >> final_results
+[>] .results: pg.array.pg.string >> final_results
 
-[o] .output: pg\array{pg\string} << final_results
+[o] .output: pg.array.pg.string << final_results
 [X]
 ```
 
@@ -389,18 +389,18 @@ Process data through multiple parallel stages with different operations.
 
 ```polyglot
 [|] ParallelDataPipeline
-[i] .raw_data: pg\string
+[i] .raw_data:pg.string
 
 // Stage 1: Parse data in parallel chunks
 [p] |ParseChunk1
-[<] .data: pg\string << .raw_data
+[<] .data:pg.string << .raw_data
 [r] |ParseFirst
-[>] .parsed: pg\serial >> parsed1
+[>] .parsed:pg.serial >> parsed1
 
 [p] |ParseChunk2
-[<] .data: pg\string << .raw_data
+[<] .data:pg.string << .raw_data
 [r] |ParseSecond
-[>] .parsed: pg\serial >> parsed2
+[>] .parsed:pg.serial >> parsed2
 
 [Y] |Y.Join
 [>] parsed1
@@ -408,14 +408,14 @@ Process data through multiple parallel stages with different operations.
 
 // Stage 2: Transform each parsed result in parallel
 [p] |TransformParsed1
-[<] .input: pg\serial << parsed1
+[<] .input:pg.serial << parsed1
 [r] |Transform
-[>] .output: pg\serial >> transformed1
+[>] .output:pg.serial >> transformed1
 
 [p] |TransformParsed2
-[<] .input: pg\serial << parsed2
+[<] .input:pg.serial << parsed2
 [r] |Transform
-[>] .output: pg\serial >> transformed2
+[>] .output:pg.serial >> transformed2
 
 [Y] |Y.Join
 [>] transformed1
@@ -423,11 +423,11 @@ Process data through multiple parallel stages with different operations.
 
 // Stage 3: Merge results
 [r] |MergeResults
-[<] .result1: pg\serial << transformed1
-[<] .result2: pg\serial << transformed2
-[>] .merged: pg\serial >> final_output
+[<] .result1:pg.serial << transformed1
+[<] .result2:pg.serial << transformed2
+[>] .merged:pg.serial >> final_output
 
-[o] .output: pg\serial << final_output
+[o] .output:pg.serial << final_output
 [X]
 ```
 
@@ -437,48 +437,48 @@ Try multiple computation strategies in parallel, use fastest result or timeout.
 
 ```polyglot
 [|] RedundantComputation
-[i] .problem: pg\string
-[i] .timeout_ms: pg\int
+[i] .problem:pg.string
+[i] .timeout_ms:pg.int
 
 // Strategy 1: Optimized algorithm
 [p] |OptimizedApproach
-[<] .input: pg\string << .problem
+[<] .input:pg.string << .problem
 [r] |FastAlgorithm
-[>] .result: pg\string >> fast_result
+[>] .result:pg.string >> fast_result
 
 // Strategy 2: Brute force algorithm
 [p] |BruteForceApproach
-[<] .input: pg\string << .problem
+[<] .input:pg.string << .problem
 [r] |BruteForceAlgorithm
-[>] .result: pg\string >> brute_result
+[>] .result:pg.string >> brute_result
 
 // Strategy 3: Heuristic algorithm
 [p] |HeuristicApproach
-[<] .input: pg\string << .problem
+[<] .input:pg.string << .problem
 [r] |HeuristicAlgorithm
-[>] .result: pg\string >> heuristic_result
+[>] .result:pg.string >> heuristic_result
 
 // Use first result or timeout
 [Y] |Y.JoinAny
 [>] fast_result
 [>] brute_result
 [>] heuristic_result
-[>] .completed_index: pg\int >> winner_index
+[>] .completed_index:pg.int >> winner_index
 
 // Add timeout to the join (conceptual - would need JoinTimeout for real implementation)
 [r] |LogStrategy
-[<] .strategy_index: pg\int << winner_index
-[>] .log_message: pg\string >> log
+[<] .strategy_index:pg.int << winner_index
+[>] .log_message:pg.string >> log
 
 // Select winning result (conceptual - would need index-based access)
 [r] |SelectResult
-[<] .index: pg\int << winner_index
-[<] .r1: pg\string << fast_result
-[<] .r2: pg\string << brute_result
-[<] .r3: pg\string << heuristic_result
-[>] .selected: pg\string >> final_answer
+[<] .index:pg.int << winner_index
+[<] .r1:pg.string << fast_result
+[<] .r2:pg.string << brute_result
+[<] .r3:pg.string << heuristic_result
+[>] .selected:pg.string >> final_answer
 
-[o] .answer: pg\string << final_answer
+[o] .answer:pg.string << final_answer
 [X]
 ```
 
@@ -488,40 +488,40 @@ Process array elements in parallel, collect successful results and errors separa
 
 ```polyglot
 [|] ParallelArrayWithErrors
-[i] .urls: pg\array{pg\string}
+[i] .urls: pg.array.pg.string
 
 // Fetch each URL in parallel
 [p] |FetchURLs
-[<] .url_list: pg\array{pg\string} << .urls
+[<] .url_list: pg.array.pg.string << .urls
 
 [~][r] |FetchURL
-[<] .url: pg\string << .url_list[*]
-[>] .content: pg\string >> contents
+[<] .url:pg.string << .url_list[*]
+[>] .content:pg.string >> contents
 [>] .error: !Error >> errors
 
 // Collect all results
 [Y] |Y.Collect
 [>] contents
-[>] .results: pg\array{pg\string} >> all_contents
+[>] .results: pg.array.pg.string >> all_contents
 
 [Y] |Y.Collect
 [>] errors
-[>] .results: pg\array{!Error} >> all_errors
+[>] .results:pg.array{!Error} >> all_errors
 
 // Filter successful fetches (conceptual)
 [r] |FilterSuccessful
-[<] .contents: pg\array{pg\string} << all_contents
-[<] .errors: pg\array{!Error} << all_errors
-[>] .successful: pg\array{pg\string} >> successful_contents
-[>] .failed_count: pg\int >> failure_count
+[<] .contents: pg.array.pg.string << all_contents
+[<] .errors:pg.array{!Error} << all_errors
+[>] .successful: pg.array.pg.string >> successful_contents
+[>] .failed_count:pg.int >> failure_count
 
 // Report results
 [r] |FormatReport
-[<] .success: pg\array{pg\string} << successful_contents
-[<] .failures: pg\int << failure_count
-[>] .report: pg\string >> summary
+[<] .success: pg.array.pg.string << successful_contents
+[<] .failures:pg.int << failure_count
+[>] .report:pg.string >> summary
 
-[o] .summary: pg\string << summary
+[o] .summary:pg.string << summary
 [X]
 ```
 
@@ -531,39 +531,39 @@ Perform parallel computation with multiple reduction stages.
 
 ```polyglot
 [|] MultiStageReduce
-[i] .dataset: pg\array{pg\int}
+[i] .dataset: pg.array.pg.int
 
 // Stage 1: Partition data into 4 chunks and sum each
 [p] |SumChunks
-[<] .data: pg\array{pg\int} << .dataset
+[<] .data: pg.array.pg.int << .dataset
 
 [~][r] |PartitionAndSum
-[<] .full_data: pg\array{pg\int} << .data
-[<] .partition_id: pg\int << [0, 1, 2, 3][*]
-[>] .partial_sum: pg\int >> partial_sums
+[<] .full_data: pg.array.pg.int << .data
+[<] .partition_id:pg.int << [0, 1, 2, 3][*]
+[>] .partial_sum:pg.int >> partial_sums
 
 // Reduce partial sums
 [Y] |Y.Reduce
-[<] .operation: pg\string << "sum"
+[<] .operation:pg.string << "sum"
 [>] partial_sums
-[>] .reduced: pg\int >> total
+[>] .reduced:pg.int >> total
 
 // Stage 2: Compute statistics in parallel
 [p] |ComputeMean
-[<] .sum: pg\int << total
-[<] .count: pg\int << .dataset.length
+[<] .sum:pg.int << total
+[<] .count:pg.int << .dataset.length
 [r] |Divide
-[>] .mean: pg\float >> mean_result
+[>] .mean:pg.float >> mean_result
 
 [p] |ComputeMax
-[<] .data: pg\array{pg\int} << .dataset
+[<] .data: pg.array.pg.int << .dataset
 [r] |FindMax
-[>] .max: pg\int >> max_result
+[>] .max:pg.int >> max_result
 
 [p] |ComputeMin
-[<] .data: pg\array{pg\int} << .dataset
+[<] .data: pg.array.pg.int << .dataset
 [r] |FindMin
-[>] .min: pg\int >> min_result
+[>] .min:pg.int >> min_result
 
 // Join statistics
 [Y] |Y.Join
@@ -573,13 +573,13 @@ Perform parallel computation with multiple reduction stages.
 
 // Format output
 [r] |FormatStatistics
-[<] .total: pg\int << total
-[<] .mean: pg\float << mean_result
-[<] .max: pg\int << max_result
-[<] .min: pg\int << min_result
-[>] .summary: pg\string >> stats
+[<] .total:pg.int << total
+[<] .mean:pg.float << mean_result
+[<] .max:pg.int << max_result
+[<] .min:pg.int << min_result
+[>] .summary:pg.string >> stats
 
-[o] .statistics: pg\string << stats
+[o] .statistics:pg.string << stats
 [X]
 ```
 
@@ -589,40 +589,40 @@ Orchestrate multiple pipeline instances and synchronize their results.
 
 ```polyglot
 [|] OrchestratePipelines
-[i] .job_configs: pg\array{pg\serial}
+[i] .job_configs: pg.array.pg.serial
 
 // Launch pipeline instances for each job
 [p] |LaunchJobs
-[<] .configs: pg\array{pg\serial} << .job_configs
+[<] .configs: pg.array.pg.serial << .job_configs
 
 [~][r] |LaunchJobPipeline
-[<] .config: pg\serial << .configs[*]
-[>] .instance_id: pg\string >> job_instances
+[<] .config:pg.serial << .configs[*]
+[>] .instance_id:pg.string >> job_instances
 
 // Collect all instance IDs
 [Y] |Y.Collect
 [>] job_instances
-[>] .results: pg\array{pg\string} >> all_instances
+[>] .results: pg.array.pg.string >> all_instances
 
 // Wait for all jobs to complete (conceptual - would use triggers)
 [p] |MonitorJobs
-[<] .instances: pg\array{pg\string} << all_instances
+[<] .instances: pg.array.pg.string << all_instances
 
 [~][t] |T.Pipeline.Completed
-[<] .instance_id: pg\string << .instances[*]
-[>] .result: pg\serial >> job_results
+[<] .instance_id:pg.string << .instances[*]
+[>] .result:pg.serial >> job_results
 
 // Collect all job results
 [Y] |Y.Collect
 [>] job_results
-[>] .results: pg\array{pg\serial} >> completed_jobs
+[>] .results: pg.array.pg.serial >> completed_jobs
 
 // Aggregate results
 [r] |AggregateJobResults
-[<] .jobs: pg\array{pg\serial} << completed_jobs
-[>] .summary: pg\string >> final_summary
+[<] .jobs: pg.array.pg.serial << completed_jobs
+[>] .summary:pg.string >> final_summary
 
-[o] .orchestration_result: pg\string << final_summary
+[o] .orchestration_result:pg.string << final_summary
 [X]
 ```
 
@@ -699,14 +699,14 @@ Collect and process errors alongside successful results.
 
 [Y] |Y.Collect
 [>] results
-[>] .results: pg\array{T} >> all_results
+[>] .results:pg.array{T} >> all_results
 
 [Y] |Y.Collect
 [>] errors
-[>] .results: pg\array{!Error} >> all_errors
+[>] .results:pg.array{!Error} >> all_errors
 
 [r] |ProcessErrors
-[<] .errors: pg\array{!Error} << all_errors
+[<] .errors:pg.array{!Error} << all_errors
 ```
 
 ### 6. **Use Timeouts for Bounded Waiting**
@@ -715,11 +715,11 @@ Don't wait indefinitely for parallel operations; use timeouts.
 
 ```polyglot
 [Y] |Y.JoinTimeout
-[<] .timeout_ms: pg\int << 5000
+[<] .timeout_ms:pg.int << 5000
 [>] results
-[>] .timed_out: pg\bool >> timeout_flag
+[>] .timed_out:pg.bool >> timeout_flag
 
-[t] .condition: pg\bool << timeout_flag
+[t] .condition:pg.bool << timeout_flag
 [r] |HandleTimeout
 ```
 
@@ -803,10 +803,10 @@ Different join strategies based on runtime conditions.
 [p] |Worker2
 
 // Choose join strategy based on priority
-[t] .condition: pg\bool << high_priority
+[t] .condition:pg.bool << high_priority
 [Y] |Y.JoinAny  // First result if high priority
 
-[t] .condition: pg\bool << (!high_priority)
+[t] .condition:pg.bool << (!high_priority)
 [Y] |Y.Join  // All results if normal priority
 ```
 
@@ -859,25 +859,25 @@ Join operations should handle failures in parallel blocks:
 
 [Y] |Y.Collect
 [>] results
-[>] .results: pg\array{T} >> all_results
+[>] .results:pg.array{T} >> all_results
 
 [Y] |Y.Collect
 [>] errors
-[>] .results: pg\array{!Error} >> all_errors
+[>] .results:pg.array{!Error} >> all_errors
 
 // Check for any errors
 [r] |HasErrors
-[<] .errors: pg\array{!Error} << all_errors
-[>] .has_errors: pg\bool >> error_flag
+[<] .errors:pg.array{!Error} << all_errors
+[>] .has_errors:pg.bool >> error_flag
 
-[t] .condition: pg\bool << error_flag
+[t] .condition:pg.bool << error_flag
 [r] |HandleErrors
-[<] .errors: pg\array{!Error} << all_errors
+[<] .errors:pg.array{!Error} << all_errors
 
 // Process successful results
-[t] .condition: pg\bool << (!error_flag)
+[t] .condition:pg.bool << (!error_flag)
 [r] |ProcessResults
-[<] .results: pg\array{T} << all_results
+[<] .results:pg.array{T} << all_results
 ```
 
 **Common Error Scenarios:**

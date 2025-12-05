@@ -45,7 +45,7 @@ An **enumeration** is an immutable data structure with a fixed set of fields, si
 - Immutable objects in OOP
 - Constants/configuration objects
 
-**Unlike `pg\serial`:**
+**Unlike `:pg.serial`:**
 - Schema is fixed at compile-time (not runtime)
 - Cannot add or remove fields after definition
 - Provides stronger type safety
@@ -91,9 +91,9 @@ An **enumeration** is an immutable data structure with a fixed set of fields, si
 
 ```polyglot
 [#] Configuration
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
-[<] .debug: pg\bool << #False
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
+[<] .debug:pg.bool << #False
 [X]
 ```
 
@@ -103,8 +103,8 @@ An **enumeration** is an immutable data structure with a fixed set of fields, si
 [r] .config: #Configuration << #Configuration
 
 // Access specific field
-[r] .host: pg\string << #Configuration.host
-[r] .port: pg\int << #Configuration.port
+[r] .host:pg.string << #Configuration.host
+[r] .port:pg.int << #Configuration.port
 ```
 
 ---
@@ -133,22 +133,22 @@ All Polyglot types can be used as field types:
 ```polyglot
 [#] AllTypes
 // Primitives
-[<] .integer: pg\int << 42
-[<] .unsigned: pg\uint << 100
-[<] .float: pg\float << 3.14
-[<] .text: pg\string << "example"
-[<] .flag: pg\bool << #True
+[<] .integer:pg.int << 42
+[<] .unsigned:pg.uint << 100
+[<] .float:pg.float << 3.14
+[<] .text:pg.string << "example"
+[<] .flag:pg.bool << #True
 
 // Special types
-[<] .file_path: pg\path << \\DataDir\\file.txt
-[<] .timestamp: pg\dt << DT"2024-01-15 14:30:"
+[<] .file_path:pg.path << \\DataDir\\file.txt
+[<] .timestamp:pg.dt << DT"2024-01-15 14:30:"
 
 // Collections
-[<] .items: pg\array{pg\string} << array{"a", "b", "c"}
-[<] .unique: pg\set{pg\int} << set{1, 2, 3}
+[<] .items: pg.array.pg.string << array{"a", "b", "c"}
+[<] .unique:pg.set{pg\int} << set{1, 2, 3}
 
 // Complex types
-[<] .data: pg\serial << serial{
+[<] .data:pg.serial << serial{
 [^]  "key": "value"
 [^]}
 [X]
@@ -163,12 +163,12 @@ All Polyglot types can be used as field types:
 ```polyglot
 // ✓ CORRECT - Field with value
 [#] Valid
-[<] .field: pg\string << "value"
+[<] .field:pg.string << "value"
 [X]
 
 // ✗ ERROR - Field without value
 [#] Invalid
-[<] .field: pg\string  // Missing << value
+[<] .field:pg.string  // Missing << value
 [X]
 ```
 
@@ -181,29 +181,29 @@ Enumerations can reference other enumerations:
 ```polyglot
 // Define database configuration
 [#] DatabaseConfig
-[<] .host: pg\string << "db.example.com"
-[<] .port: pg\int << 5432
-[<] .ssl: pg\bool << #True
+[<] .host:pg.string << "db.example.com"
+[<] .port:pg.int << 5432
+[<] .ssl:pg.bool << #True
 [X]
 
 // Define cache configuration
 [#] CacheConfig
-[<] .enabled: pg\bool << #True
-[<] .ttl: pg\int << 3600
+[<] .enabled:pg.bool << #True
+[<] .ttl:pg.int << 3600
 [X]
 
 // Combine into application config
 [#] AppConfig
 [<] .database: #DatabaseConfig << #DatabaseConfig
 [<] .cache: #CacheConfig << #CacheConfig
-[<] .app_name: pg\string << "MyApp"
+[<] .app_name:pg.string << "MyApp"
 [X]
 ```
 
 **Access nested fields:**
 ```polyglot
-[r] .db_host: pg\string << #AppConfig.database.host
-[r] .cache_ttl: pg\int << #AppConfig.cache.ttl
+[r] .db_host:pg.string << #AppConfig.database.host
+[r] .cache_ttl:pg.int << #AppConfig.cache.ttl
 ```
 
 ---
@@ -216,18 +216,18 @@ Enumerations support hierarchical names using dots:
 
 ```polyglot
 [#] MyApp.Database.Configuration
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 5432
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 5432
 [X]
 
 [#] MyApp.Cache.Configuration
-[<] .host: pg\string << "cache.local"
-[<] .port: pg\int << 6379
+[<] .host:pg.string << "cache.local"
+[<] .port:pg.int << 6379
 [X]
 
 [#] MyApp.API.Configuration
-[<] .base_url: pg\string << "https://api.example.com"
-[<] .timeout: pg\int << 30
+[<] .base_url:pg.string << "https://api.example.com"
+[<] .timeout:pg.int << 30
 [X]
 ```
 
@@ -262,7 +262,7 @@ Package.Context.Name
 [r] .db_config: #MyApp.Database.Configuration << #MyApp.Database.Configuration
 
 // Access field
-[r] .host: pg\string << #MyApp.Database.Configuration.host
+[r] .host:pg.string << #MyApp.Database.Configuration.host
 ```
 
 ---
@@ -290,8 +290,8 @@ Package.Context.Name
 ```polyglot
 [#] MyApp.Configuration.Database
 [A] DBConfig  // Alias
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 5432
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 5432
 [X]
 ```
 
@@ -304,7 +304,7 @@ Package.Context.Name
 [r] .config2: #DBConfig << #DBConfig
 
 // Access fields with alias
-[r] .host: pg\string << #DBConfig.host
+[r] .host:pg.string << #DBConfig.host
 ```
 
 ---
@@ -321,7 +321,7 @@ Package.Context.Name
 // Package: MyApp
 [#] MyApp.Configuration.Database
 [A] DBConfig  // Only usable in MyApp package
-[<] .host: pg\string << "localhost"
+[<] .host:pg.string << "localhost"
 [X]
 
 // In MyApp package - ✓ OK
@@ -352,28 +352,28 @@ Package.Context.Name
 **Application Configuration:**
 ```polyglot
 [#] AppConfig
-[<] .version: pg\string << "1.0.0"
-[<] .environment: pg\string << "production"
-[<] .max_connections: pg\int << 100
+[<] .version:pg.string << "1.0.0"
+[<] .environment:pg.string << "production"
+[<] .max_connections:pg.int << 100
 [X]
 ```
 
 **Color Palette:**
 ```polyglot
 [#] UI.Colors
-[<] .primary: pg\string << "#3498db"
-[<] .secondary: pg\string << "#2ecc71"
-[<] .danger: pg\string << "#e74c3c"
-[<] .warning: pg\string << "#f39c12"
+[<] .primary:pg.string << "#3498db"
+[<] .secondary:pg.string << "#2ecc71"
+[<] .danger:pg.string << "#e74c3c"
+[<] .warning:pg.string << "#f39c12"
 [X]
 ```
 
 **API Endpoints:**
 ```polyglot
 [#] API.Endpoints
-[<] .users: pg\string << "/api/v1/users"
-[<] .posts: pg\string << "/api/v1/posts"
-[<] .comments: pg\string << "/api/v1/comments"
+[<] .users:pg.string << "/api/v1/users"
+[<] .posts:pg.string << "/api/v1/posts"
+[<] .comments:pg.string << "/api/v1/comments"
 [X]
 ```
 
@@ -460,25 +460,25 @@ Package.Context.Name
 ### Example: Extending `#Path.Identifiers.*`
 
 **Schema (defined by Polyglot):**
-- `.unix: pg\path` - Unix/Linux/macOS path (REQUIRED)
-- `.windows: pg\path` - Windows path (REQUIRED)
+- `.unix:pg.path` - Unix/Linux/macOS path (REQUIRED)
+- `.windows:pg.path` - Windows path (REQUIRED)
 
 **User Extension:**
 ```polyglot
 [#] Path.Identifiers.MyApp.DataDirectory
 [A] DataDir
-[<] .unix: pg\path << \\UnixRoot\\opt\myapp\data\
-[<] .windows: pg\path << \\C\\ProgramData\MyApp\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\myapp\data\
+[<] .windows:pg.path << \\C\\ProgramData\MyApp\Data\
 [X]
 ```
 
 **Usage:**
 ```polyglot
 // Use with alias
-[r] .data_file: pg\path << \\DataDir\\records.csv
+[r] .data_file:pg.path << \\DataDir\\records.csv
 
 // Use with full name
-[r] .config_file: pg\path << \\Path.Identifiers.MyApp.DataDirectory\\config.json
+[r] .config_file:pg.path << \\Path.Identifiers.MyApp.DataDirectory\\config.json
 ```
 
 ---
@@ -486,17 +486,17 @@ Package.Context.Name
 ### Example: Extending `#Queues.*`
 
 **Schema (defined by Polyglot - pending confirmation):**
-- `.max_concurrent: pg\int` - Maximum concurrent executions (REQUIRED)
+- `.max_concurrent:pg.int` - Maximum concurrent executions (REQUIRED)
 - Other fields TBD
 
 **User Extension:**
 ```polyglot
 [#] Queues.Background
-[<] .max_concurrent: pg\int << 5
+[<] .max_concurrent:pg.int << 5
 [X]
 
 [#] Queues.HighPriority
-[<] .max_concurrent: pg\int << 10
+[<] .max_concurrent:pg.int << 10
 [X]
 ```
 
@@ -514,20 +514,20 @@ Package.Context.Name
 ```polyglot
 // ✓ CORRECT - Follows #Path.Identifiers.* schema
 [#] Path.Identifiers.MyApp.LogDir
-[<] .unix: pg\path << \\UnixRoot\\var\log\myapp\
-[<] .windows: pg\path << \\C\\Logs\MyApp\
+[<] .unix:pg.path << \\UnixRoot\\var\log\myapp\
+[<] .windows:pg.path << \\C\\Logs\MyApp\
 [X]
 
 // ✗ ERROR - Missing required .windows field
 [#] Path.Identifiers.MyApp.Invalid
-[<] .unix: pg\path << \\UnixRoot\\var\log\myapp\
+[<] .unix:pg.path << \\UnixRoot\\var\log\myapp\
 // Missing .windows field
 [X]
 
 // ✗ ERROR - Wrong field types
 [#] Path.Identifiers.MyApp.WrongTypes
-[<] .unix: pg\string << "/var/log"  // Should be pg\path
-[<] .windows: pg\string << "C:\\Logs"  // Should be pg\path
+[<] .unix:pg.string << "/var/log"  // Should be pg\path
+[<] .windows:pg.string << "C:\\Logs"  // Should be pg\path
 [X]
 ```
 
@@ -539,13 +539,13 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 
 ```polyglot
 [#] Path.Identifiers.WindowsOnly.Registry
-[<] .unix: pg\path << \\NoPath\\
-[<] .windows: pg\path << \\HKEY_LOCAL_MACHINE\\Software\
+[<] .unix:pg.path << \\NoPath\\
+[<] .windows:pg.path << \\HKEY_LOCAL_MACHINE\\Software\
 [X]
 
 [#] Path.Identifiers.UnixOnly.DevNull
-[<] .unix: pg\path << \\UnixRoot\\dev\null
-[<] .windows: pg\path << \\NoPath\\
+[<] .unix:pg.path << \\UnixRoot\\dev\null
+[<] .windows:pg.path << \\NoPath\\
 [X]
 ```
 
@@ -555,7 +555,7 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 
 ### Complete Comparison
 
-| Feature | Enumeration (`#Enum`) | Serial (`pg\serial`) | Error (`!Error`) |
+| Feature | Enumeration (`#Enum`) | Serial (`:pg.serial`) | Error (`!Error`) |
 |---------|----------------------|---------------------|------------------|
 | **Schema** | Immutable (compile-time) | Mutable (runtime) | Immutable (compile-time) |
 | **Definition** | `[#]...[X]` blocks | Inline literals | `[!]...[X]` blocks |
@@ -575,42 +575,42 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 ```polyglot
 // Configuration with known schema
 [#] DatabaseConfig
-[<] .host: pg\string << "db.example.com"
-[<] .port: pg\int << 5432
+[<] .host:pg.string << "db.example.com"
+[<] .port:pg.int << 5432
 [X]
 
 // Constants
 [#] ErrorCodes
-[<] .not_found: pg\int << 404
-[<] .unauthorized: pg\int << 401
-[<] .server_error: pg\int << 500
+[<] .not_found:pg.int << 404
+[<] .unauthorized:pg.int << 401
+[<] .server_error:pg.int << 500
 [X]
 
 // Fixed data structures
 [#] Dimensions
-[<] .width: pg\int << 1920
-[<] .height: pg\int << 1080
+[<] .width:pg.int << 1920
+[<] .height:pg.int << 1080
 [X]
 ```
 
 ---
 
-**Use Serial (`pg\serial`) when:**
+**Use Serial (`:pg.serial`) when:**
 ```polyglot
 // JSON from API
 [r] |HTTP.Get
-[<] .url: pg\string << "https://api.example.com/data"
-[>] .response: pg\serial >> api_data
+[<] .url:pg.string << "https://api.example.com/data"
+[>] .response:pg.serial >> api_data
 
 // Dynamic data
-[r] .user_data: pg\serial << serial{
+[r] .user_data:pg.serial << serial{
 [^]  "name": "Alice",
 [^]  "age": 30,
 [^]  "email": "alice@example.com"
 [^]}
 
 // Runtime-determined keys
-[r] .config: pg\serial << serial{}
+[r] .config:pg.serial << serial{}
 [r] .config["dynamic_key"] << "dynamic_value"
 ```
 
@@ -620,16 +620,16 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 ```polyglot
 // Custom error definitions
 [!] !MyApp.ValidationError
-[<] .message: pg\string << "Validation failed"
-[<] .code: pg\int << 4000
-[<] .trace: pg\string << ""
-[<] .field: pg\string << ""
+[<] .message:pg.string << "Validation failed"
+[<] .code:pg.int << 4000
+[<] .trace:pg.string << ""
+[<] .field:pg.string << ""
 [X]
 
 // Error catching
 [r] |MightFail
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 ```
 
 ---
@@ -640,23 +640,23 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 
 ```polyglot
 [#] App.Config
-[<] .name: pg\string << "MyApplication"
-[<] .version: pg\string << "1.0.0"
-[<] .environment: pg\string << "production"
+[<] .name:pg.string << "MyApplication"
+[<] .version:pg.string << "1.0.0"
+[<] .environment:pg.string << "production"
 [X]
 
 [#] App.Database
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 5432
-[<] .name: pg\string << "myapp_db"
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 5432
+[<] .name:pg.string << "myapp_db"
 [X]
 
 // Use in pipeline
 [|] Initialize
 [r] |ConnectDatabase
-[<] .host: pg\string << #App.Database.host
-[<] .port: pg\int << #App.Database.port
-[<] .database: pg\string << #App.Database.name
+[<] .host:pg.string << #App.Database.host
+[<] .port:pg.int << #App.Database.port
+[<] .database:pg.string << #App.Database.name
 [X]
 ```
 
@@ -666,10 +666,10 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 
 ```polyglot
 [#] Features
-[<] .new_ui: pg\bool << #True
-[<] .beta_features: pg\bool << #False
-[<] .debug_mode: pg\bool << #False
-[<] .analytics: pg\bool << #True
+[<] .new_ui:pg.bool << #True
+[<] .beta_features:pg.bool << #False
+[<] .debug_mode:pg.bool << #False
+[<] .analytics:pg.bool << #True
 [X]
 
 // Use in conditional logic
@@ -695,24 +695,24 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 ```polyglot
 [#] API.Endpoints.V1
 [A] API
-[<] .base: pg\string << "https://api.example.com/v1"
-[<] .users: pg\string << "/users"
-[<] .posts: pg\string << "/posts"
-[<] .comments: pg\string << "/comments"
+[<] .base:pg.string << "https://api.example.com/v1"
+[<] .users:pg.string << "/users"
+[<] .posts:pg.string << "/posts"
+[<] .comments:pg.string << "/comments"
 [X]
 
 // Build full URL
 [|] FetchUsers
 [r] |U.String.Concat
-[<] .parts: pg\array{pg\string} << array{
+[<] .parts: pg.array.pg.string << array{
 [^]  #API.base,
 [^]  #API.users
 [^]}
-[>] .url: pg\string >> full_url
+[>] .url:pg.string >> full_url
 
 [r] |HTTP.Get
-[<] .url: pg\string << full_url
-[>] .response: pg\serial >> users_data
+[<] .url:pg.string << full_url
+[>] .response:pg.serial >> users_data
 [X]
 ```
 
@@ -724,23 +724,23 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 // Define path identifiers
 [#] Path.Identifiers.MyApp.Logs
 [A] LogDir
-[<] .unix: pg\path << \\UnixRoot\\var\log\myapp\
-[<] .windows: pg\path << \\C\\Logs\MyApp\
+[<] .unix:pg.path << \\UnixRoot\\var\log\myapp\
+[<] .windows:pg.path << \\C\\Logs\MyApp\
 [X]
 
 [#] Path.Identifiers.MyApp.Data
 [A] DataDir
-[<] .unix: pg\path << \\UnixRoot\\opt\myapp\data\
-[<] .windows: pg\path << \\C\\ProgramData\MyApp\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\myapp\data\
+[<] .windows:pg.path << \\C\\ProgramData\MyApp\Data\
 [X]
 
 // Use in pipeline
 [|] ProcessLogs
 [r] |ReadFile
-[<] .path: pg\path << \\LogDir\\app.log
+[<] .path:pg.path << \\LogDir\\app.log
 
 [r] |SaveData
-[<] .path: pg\path << \\DataDir\\output.csv
+[<] .path:pg.path << \\DataDir\\output.csv
 [X]
 ```
 
@@ -750,26 +750,26 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 
 ```polyglot
 [#] Validation.User
-[<] .min_username_length: pg\int << 3
-[<] .max_username_length: pg\int << 20
-[<] .min_password_length: pg\int << 8
-[<] .require_email: pg\bool << #True
+[<] .min_username_length:pg.int << 3
+[<] .max_username_length:pg.int << 20
+[<] .min_password_length:pg.int << 8
+[<] .require_email:pg.bool << #True
 [X]
 
 // Use in validation pipeline
 [|] ValidateUser
-[i] .username: pg\string
-[i] .password: pg\string
+[i] .username:pg.string
+[i] .password:pg.string
 
 // Check username length
 [?] .username.length < #Validation.User.min_username_length
 [~][r] |ThrowError
-[~][<] .message: pg\string << "Username too short"
+[~][<] .message:pg.string << "Username too short"
 
 // Check password length
 [?] .password.length < #Validation.User.min_password_length
 [~][r] |ThrowError
-[~][<] .message: pg\string << "Password too short"
+[~][<] .message:pg.string << "Password too short"
 [X]
 ```
 
@@ -817,10 +817,10 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 **Good:**
 ```polyglot
 [#] App.Database
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 5432
-[<] .name: pg\string << "myapp_db"
-[<] .ssl: pg\bool << #True
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 5432
+[<] .name:pg.string << "myapp_db"
+[<] .ssl:pg.bool << #True
 [X]
 ```
 
@@ -828,11 +828,11 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 ```polyglot
 // Scattered configuration
 [#] DatabaseHost
-[<] .value: pg\string << "localhost"
+[<] .value:pg.string << "localhost"
 [X]
 
 [#] DatabasePort
-[<] .value: pg\int << 5432
+[<] .value:pg.int << 5432
 [X]
 ```
 
@@ -843,18 +843,18 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 **Good:**
 ```polyglot
 [#] Config
-[<] .port: pg\int << 8080  // Integer for port
-[<] .enabled: pg\bool << #True  // Boolean for flag
-[<] .timeout: pg\int << 30  // Integer for seconds
+[<] .port:pg.int << 8080  // Integer for port
+[<] .enabled:pg.bool << #True  // Boolean for flag
+[<] .timeout:pg.int << 30  // Integer for seconds
 [X]
 ```
 
 **Avoid:**
 ```polyglot
 [#] Config
-[<] .port: pg\string << "8080"  // Wrong type
-[<] .enabled: pg\string << "true"  // Should be boolean
-[<] .timeout: pg\string << "30"  // Should be integer
+[<] .port:pg.string << "8080"  // Wrong type
+[<] .enabled:pg.string << "true"  // Should be boolean
+[<] .timeout:pg.string << "30"  // Should be integer
 [X]
 ```
 
@@ -866,9 +866,9 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 // Good: Include comments explaining purpose
 [#] Payment.Gateway.Stripe
 // Stripe API configuration for production environment
-[<] .api_key: pg\string << "sk_live_..."
-[<] .webhook_secret: pg\string << "whsec_..."
-[<] .api_version: pg\string << "2024-01-01"
+[<] .api_key:pg.string << "sk_live_..."
+[<] .webhook_secret:pg.string << "whsec_..."
+[<] .api_version:pg.string << "2024-01-01"
 [X]
 ```
 
@@ -879,8 +879,8 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 **Good:**
 ```polyglot
 [#] Path.Identifiers.System.DevNull
-[<] .unix: pg\path << \\UnixRoot\\dev\null
-[<] .windows: pg\path << \\NoPath\\  // Doesn't exist on Windows
+[<] .unix:pg.path << \\UnixRoot\\dev\null
+[<] .windows:pg.path << \\NoPath\\  // Doesn't exist on Windows
 [X]
 ```
 
@@ -888,8 +888,8 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 ```polyglot
 // Don't leave fields empty or use placeholder strings
 [#] Path.Identifiers.System.DevNull
-[<] .unix: pg\path << \\UnixRoot\\dev\null
-[<] .windows: pg\path << ""  // Wrong - use \\NoPath\\
+[<] .unix:pg.path << \\UnixRoot\\dev\null
+[<] .windows:pg.path << ""  // Wrong - use \\NoPath\\
 [X]
 ```
 
@@ -901,16 +901,16 @@ When a path doesn't exist on a particular OS, use `\\NoPath\\`:
 ```polyglot
 // Known schema - use enumeration
 [#] UserProfile
-[<] .name: pg\string << "Alice"
-[<] .age: pg\int << 30
-[<] .email: pg\string << "alice@example.com"
+[<] .name:pg.string << "Alice"
+[<] .age:pg.int << 30
+[<] .email:pg.string << "alice@example.com"
 [X]
 ```
 
 **Avoid:**
 ```polyglot
 // Known schema - don't use serial unnecessarily
-[r] .user: pg\serial << serial{
+[r] .user:pg.serial << serial{
 [^]  "name": "Alice",
 [^]  "age": 30,
 [^]  "email": "alice@example.com"

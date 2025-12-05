@@ -1,0 +1,17 @@
+_meta:
+  src: type-system.md
+  updated: 2025-12-02
+topic: Type System & Namespaces
+kw: [types, namespaces, pg\, rs\, py\, backslash-sep, FFI, primitives, collections, reserved-enums]
+sum: NS-based type sys with backslash sep (pg\string, rs\Vec, py\dict); built-in primitives, collections, enums; multi-lang FFI support
+pts:
+  - Namespace format: lang\type (pg\int, rs\HashMap, py\dict)
+  - Primitives: int, float, string, bool, path, url, datetime
+  - Collections: array{T}, map{K,V}, set{T}
+  - Reserved enums: #Boolean, #None, #PgVar.States.*
+  - Markers: !No.Input (no inputs), !No.Output (no outputs)
+  - Type safety: strong typing, no implicit conversion
+  - FFI: seamless cross-lang type mapping
+  - Variable types: .var: ns\type syntax
+rels: [overview.md, enumerations.md, variable-state-system.md, cross-language-integration.md]
+code: [polyglot-parser/src/ast.rs]

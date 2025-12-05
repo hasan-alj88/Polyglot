@@ -58,14 +58,19 @@ fn main() {
 
                 // Categorize operators
                 match token.kind {
-                    TokenKind::OpRangeClosed | TokenKind::OpRangeOpen |
-                    TokenKind::OpRangeHalfLeft | TokenKind::OpRangeHalfRight => {
+                    TokenKind::OpRangeClosed
+                    | TokenKind::OpRangeOpen
+                    | TokenKind::OpRangeHalfLeft
+                    | TokenKind::OpRangeHalfRight => {
                         range_ops.push((i + 1, token.clone()));
                     }
 
-                    TokenKind::OpEqual | TokenKind::OpNotEqual |
-                    TokenKind::OpGreater | TokenKind::OpLess |
-                    TokenKind::OpGreaterEqual | TokenKind::OpLessEqual => {
+                    TokenKind::OpEqual
+                    | TokenKind::OpNotEqual
+                    | TokenKind::OpGreater
+                    | TokenKind::OpLess
+                    | TokenKind::OpGreaterEqual
+                    | TokenKind::OpLessEqual => {
                         comparison_ops.push((i + 1, token.clone()));
                     }
 
@@ -118,7 +123,10 @@ fn main() {
                 println!("   #{}: {:?} \"{}\"", idx, tok.kind, tok.lexeme);
             }
 
-            println!("\n⚖️  Comparison Operators ({} total):", comparison_ops.len());
+            println!(
+                "\n⚖️  Comparison Operators ({} total):",
+                comparison_ops.len()
+            );
             for (idx, tok) in &comparison_ops {
                 println!("   #{}: {:?} \"{}\"", idx, tok.kind, tok.lexeme);
             }
@@ -128,7 +136,10 @@ fn main() {
                 println!("   #{}: {:?} \"{}\"", idx, tok.kind, tok.lexeme);
             }
 
-            println!("\n⬅️  Assignment Operators ({} total):", assignment_ops.len());
+            println!(
+                "\n⬅️  Assignment Operators ({} total):",
+                assignment_ops.len()
+            );
             for (idx, tok) in &assignment_ops {
                 println!("   #{}: {:?} \"{}\"", idx, tok.kind, tok.lexeme);
             }

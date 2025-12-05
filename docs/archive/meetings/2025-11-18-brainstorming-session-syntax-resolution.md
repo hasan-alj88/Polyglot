@@ -259,9 +259,9 @@ Three comprehensive brainstorming sessions resolved ALL blocking syntax ambiguit
 2. **High Priority**:
    - Create `language/XX-macros.md`
    - Create `language/XX-line-continuation.md`
-   - Update `language/05-operators.md` (all new operators)
-   - Update `language/06-block-markers.md` (new blocks: `[*]`, `[M]`, `[W]`, `[{]`, `[}]`, `[=]`, boolean blocks)
-   - Update `language/01-syntax-complete.md` (comprehensive update)
+   - Update `language/operators.md` (all new operators)
+   - Update `language/block-markers.md` (new blocks: `[*]`, `[M]`, `[W]`, `[{]`, `[}]`, `[=]`, boolean blocks)
+   - Update `language/syntax-complete.md` (comprehensive update)
    - Remove all `Fixed` keyword references → `[=]`
    - Remove all `Default` keyword references → `[?] *`
 

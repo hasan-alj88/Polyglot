@@ -40,22 +40,22 @@ Process large image dataset through a CNN model with high-performance Rust prepr
 [|] BatchImageClassification
 
 // Inputs
-[i] .image_dir: pg\path
-[i] .model_path: pg\path
-[i] .batch_size: pg\int << 1000
-[i] .output_file: pg\path
+[i] .image_dir:pg.path
+[i] .model_path:pg.path
+[i] .batch_size:pg.int << 1000
+[i] .output_file:pg.path
 
 // Trigger: CLI or Scheduled
 [t] |T.Cli
 
 // Queue: High priority, require GPU
 [Q] |Q.Priority
-[<] .level: pg\int << 9
+[<] .level:pg.int << 9
 
 [Q] |Q.RequireResource
-[<] .cpu_cores: pg\int << 8
-[<] .memory_mb: pg\int << 16384
-[<] .gpu_count: pg\int << 1
+[<] .cpu_cores:pg.int << 8
+[<] .memory_mb:pg.int << 16384
+[<] .gpu_count:pg.int << 1
 
 // Runtime Wrappers
 [W] |W.Rust1.70
@@ -63,13 +63,13 @@ Process large image dataset through a CNN model with high-performance Rust prepr
 
 // Step 1: List all images
 [r] |Directory.ListFiles
-[<] .path: pg\path << .image_dir
-[<] .pattern: pg\string << "*.jpg,*.png"
-[>] .files: pg\string >> .image_files
+[<] .path:pg.path << .image_dir
+[<] .pattern:pg.string << "*.jpg,*.png"
+[>] .files:pg.string >> .image_files
 
 // Step 2: Rust preprocessing (fast!)
 [r] |Run.Rust
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 use std::fs;
 use std::path::Path;
 
@@ -88,11 +88,11 @@ for chunk in files.chunks(batch_size) {
 // Return summary
 format!("Preprocessed {} images in {} batches", preprocessed_count, batches.len())
 """
-[>] .result: pg\string >> .preprocess_summary
+[>] .result:pg.string >> .preprocess_summary
 
 // Step 3: Python ML model inference
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 # Simulate loading model and running inference
@@ -116,11 +116,11 @@ for i, file_path in enumerate(files):
 
 result = json.dumps(predictions)
 """
-[>] .result: pg\string >> .predictions_json
+[>] .result:pg.string >> .predictions_json
 
 // Step 4: Rust aggregation and report generation
 [r] |Run.Rust
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 use std::collections::HashMap;
 
 let predictions_str = .predictions_json;
@@ -147,15 +147,15 @@ for (class, count) in &class_counts {
 
 report
 """
-[>] .result: pg\string >> .final_report
+[>] .result:pg.string >> .final_report
 
 // Step 5: Write report to file
 [r] |File.WriteText
-[<] .path: pg\path << .output_file
-[<] .content: pg\string << .final_report
+[<] .path:pg.path << .output_file
+[<] .content:pg.string << .final_report
 
 // Output final report
-[o] .final_report: pg\string
+[o] .final_report:pg.string
 [X]
 ```
 
@@ -203,24 +203,24 @@ Daily data warehouse load: extract from API, transform, validate, load to databa
 [|] DailyDataWarehouseLoad
 
 // Inputs
-[i] .api_url: pg\string
-[i] .db_connection: pg\string
-[i] .output_log: pg\path
+[i] .api_url:pg.string
+[i] .db_connection:pg.string
+[i] .output_log:pg.path
 
 // Trigger: Daily at 2 AM
 [t] |T.Daily
-[<] .at: pg\dt << DT"02:00:"
+[<] .at:pg.dt << DT"02:00:"
 
 // Runtime Wrappers
 [W] |W.Python3.11
 
 // Setup: Initialize log
 [s] |Setup.CreateLog
-[<] .log_path: pg\path << .output_log
+[<] .log_path:pg.path << .output_log
 
 // EXTRACT: Fetch data from API with retry
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import urllib.request
 import json
 import time
@@ -247,9 +247,9 @@ while retry_count < max_retries and not success:
             result_success = False
             result_error = f"API fetch failed after {max_retries} retries: {str(e)}"
 """
-[>] .result_success: pg\bool!Error >> .extract_success
-[>] .result_data: pg\string >> .raw_data
-[>] .result_error: pg\string >> .extract_error
+[>] .result_success:pg.bool!Error >> .extract_success
+[>] .result_data:pg.string >> .raw_data
+[>] .result_error:pg.string >> .extract_error
 
 // Handle extraction failure
 [?] .extract_success
@@ -257,17 +257,17 @@ while retry_count < max_retries and not success:
 [!]
   // Log error and exit
   [r] |File.AppendText
-  [<] .path: pg\path << .output_log
-  [<] .content: pg\string << .extract_error
+  [<] .path:pg.path << .output_log
+  [<] .content:pg.string << .extract_error
 
   [o] #Error
-  [<] .message: pg\string << .extract_error
+  [<] .message:pg.string << .extract_error
   [X]
 [X]
 
 // TRANSFORM: Validate and transform data
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 try:
@@ -304,10 +304,10 @@ except Exception as e:
     result_error = f"Transform failed: {str(e)}"
     result_count = 0
 """
-[>] .result_success: pg\bool!Error >> .transform_success
-[>] .result_data: pg\string >> .transformed_data
-[>] .result_count: pg\int >> .record_count
-[>] .result_error: pg\string >> .transform_error
+[>] .result_success:pg.bool!Error >> .transform_success
+[>] .result_data:pg.string >> .transformed_data
+[>] .result_count:pg.int >> .record_count
+[>] .result_error:pg.string >> .transform_error
 
 // Handle transformation failure
 [?] .transform_success
@@ -315,17 +315,17 @@ except Exception as e:
 [!]
   // Log error and exit
   [r] |File.AppendText
-  [<] .path: pg\path << .output_log
-  [<] .content: pg\string << .transform_error
+  [<] .path:pg.path << .output_log
+  [<] .content:pg.string << .transform_error
 
   [o] #Error
-  [<] .message: pg\string << .transform_error
+  [<] .message:pg.string << .transform_error
   [X]
 [X]
 
 // LOAD: Insert into database
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 # Simulate database load
@@ -343,16 +343,16 @@ except Exception as e:
     result_success = False
     result_error = f"Database load failed: {str(e)}"
 """
-[>] .result_success: pg\bool!Error >> .load_success
-[>] .result_loaded: pg\int >> .loaded_count
-[>] .result_message: pg\string >> .load_message
-[>] .result_error: pg\string >> .load_error
+[>] .result_success:pg.bool!Error >> .load_success
+[>] .result_loaded:pg.int >> .loaded_count
+[>] .result_message:pg.string >> .load_message
+[>] .result_error:pg.string >> .load_error
 
 // Handle load failure
 [?] .load_success
   // Success - log completion
   [r] |Run.Python
-  [<] .code: pg\string << """
+  [<] .code:pg.string << """
 from datetime import datetime
 
 summary = f"""
@@ -365,21 +365,21 @@ Status: SUCCESS
 """
 result = summary
 """
-  [>] .result: pg\string >> .success_log
+  [>] .result:pg.string >> .success_log
 
   [r] |File.AppendText
-  [<] .path: pg\path << .output_log
-  [<] .content: pg\string << .success_log
+  [<] .path:pg.path << .output_log
+  [<] .content:pg.string << .success_log
 
-  [o] .success_log: pg\string
+  [o] .success_log:pg.string
 [!]
   // Log load error
   [r] |File.AppendText
-  [<] .path: pg\path << .output_log
-  [<] .content: pg\string << .load_error
+  [<] .path:pg.path << .output_log
+  [<] .content:pg.string << .load_error
 
   [o] #Error
-  [<] .message: pg\string << .load_error
+  [<] .message:pg.string << .load_error
   [X]
 [X]
 
@@ -434,36 +434,36 @@ Monitor upload directory, validate files, process with ML model, send notificati
 [|] ProcessUploadedFile
 
 // Configuration
-[i] .upload_dir: pg\path << \\Data\\uploads\\
-[i] .processed_dir: pg\path << \\Data\\processed\\
-[i] .error_dir: pg\path << \\Data\\errors\\
-[i] .notification_url: pg\string
+[i] .upload_dir:pg.path << \\Data\\uploads\\
+[i] .processed_dir:pg.path << \\Data\\processed\\
+[i] .error_dir:pg.path << \\Data\\errors\\
+[i] .notification_url:pg.string
 
 // Trigger: File watch
 [t] |T.FileWatch
-[<] .path: pg\path << .upload_dir
-[<] .pattern: pg\string << "*.csv"
-[<] .event: pg\string << "create"
+[<] .path:pg.path << .upload_dir
+[<] .pattern:pg.string << "*.csv"
+[<] .event:pg.string << "create"
 
 // Runtime Wrappers
 [W] |W.Python3.11
 
 // Get triggered file
 [r] |Trigger.GetFilePath
-[>] .file_path: pg\path >> .uploaded_file
+[>] .file_path:pg.path >> .uploaded_file
 
 // Extract filename
 [r] |Path.GetFileName
-[<] .path: pg\path << .uploaded_file
-[>] .filename: pg\string >> .file_name
+[<] .path:pg.path << .uploaded_file
+[>] .filename:pg.string >> .file_name
 
 // Step 1: Validate file
 [r] |File.ReadText
-[<] .path: pg\path << .uploaded_file
-[>] .content: pg\string >> .file_content
+[<] .path:pg.path << .uploaded_file
+[>] .content:pg.string >> .file_content
 
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 from io import StringIO
 
@@ -504,15 +504,15 @@ except Exception as e:
     result_valid = False
     result_error = f"Validation error: {str(e)}"
 """
-[>] .result_valid: pg\bool!Error >> .is_valid
-[>] .result_error: pg\string >> .validation_errors
-[>] .result_row_count: pg\int >> .row_count
+[>] .result_valid:pg.bool!Error >> .is_valid
+[>] .result_error:pg.string >> .validation_errors
+[>] .result_row_count:pg.int >> .row_count
 
 // Handle validation result
 [?] .is_valid
   // Valid - process file
   [r] |Run.Python
-  [<] .code: pg\string << """
+  [<] .code:pg.string << """
 import csv
 import json
 from io import StringIO
@@ -532,26 +532,26 @@ for row in rows:
 
 result = json.dumps(processed, indent=2)
 """
-  [>] .result: pg\string >> .processed_data
+  [>] .result:pg.string >> .processed_data
 
   // Move to processed directory
   [r] |Run.Python
-  [<] .code: pg\string << """
+  [<] .code:pg.string << """
 import os
 import shutil
 
 output_path = os.path.join(.processed_dir, .file_name.replace('.csv', '_processed.json'))
 result = output_path
 """
-  [>] .result: pg\path >> .output_path
+  [>] .result:pg.path >> .output_path
 
   [r] |File.WriteText
-  [<] .path: pg\path << .output_path
-  [<] .content: pg\string << .processed_data
+  [<] .path:pg.path << .output_path
+  [<] .content:pg.string << .processed_data
 
   // Send success notification
   [r] |Run.Python
-  [<] .code: pg\string << """
+  [<] .code:pg.string << """
 import urllib.request
 import json
 
@@ -570,13 +570,13 @@ try:
 except Exception as e:
     result = f"Processed but notification failed: {str(e)}"
 """
-  [>] .result: pg\string >> .success_message
+  [>] .result:pg.string >> .success_message
 
-  [o] .success_message: pg\string
+  [o] .success_message:pg.string
 [!]
   // Invalid - move to error directory
   [r] |Run.Python
-  [<] .code: pg\string << """
+  [<] .code:pg.string << """
 import os
 import shutil
 
@@ -586,15 +586,15 @@ shutil.move(.uploaded_file, error_path)
 error_log_path = error_path.replace('.csv', '_errors.txt')
 result = error_log_path
 """
-  [>] .result: pg\path >> .error_log_path
+  [>] .result:pg.path >> .error_log_path
 
   [r] |File.WriteText
-  [<] .path: pg\path << .error_log_path
-  [<] .content: pg\string << .validation_errors
+  [<] .path:pg.path << .error_log_path
+  [<] .content:pg.string << .validation_errors
 
   // Send error notification
   [r] |Run.Python
-  [<] .code: pg\string << """
+  [<] .code:pg.string << """
 import urllib.request
 import json
 
@@ -612,10 +612,10 @@ try:
 except Exception as e:
     result = f"Validation failed and notification failed: {str(e)}"
 """
-  [>] .result: pg\string >> .error_message
+  [>] .result:pg.string >> .error_message
 
   [o] #Error
-  [<] .message: pg\string << .error_message
+  [<] .message:pg.string << .error_message
   [X]
 [X]
 [X]
@@ -656,18 +656,18 @@ Process multiple data sources in parallel, aggregate results, load to data wareh
 [|] AggregateMultiSource
 
 // Inputs
-[i] .source1_url: pg\string
-[i] .source2_url: pg\string
-[i] .source3_url: pg\string
-[i] .output_file: pg\path
+[i] .source1_url:pg.string
+[i] .source2_url:pg.string
+[i] .source3_url:pg.string
+[i] .output_file:pg.path
 
 // Trigger: CLI or Scheduled
 [t] |T.Cli
 
 // Queue: Require resources
 [Q] |Q.RequireResource
-[<] .cpu_cores: pg\int << 4
-[<] .memory_mb: pg\int << 8192
+[<] .cpu_cores:pg.int << 4
+[<] .memory_mb:pg.int << 8192
 
 // Runtime Wrappers
 [W] |W.Python3.11
@@ -675,7 +675,7 @@ Process multiple data sources in parallel, aggregate results, load to data wareh
 // Parallel fetch from multiple sources
 [p] |FetchSource1
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import urllib.request
 import json
 
@@ -686,12 +686,12 @@ try:
 except Exception as e:
     result = json.dumps({"error": str(e)})
 """
-[>] .result: pg\string >> .data1
+[>] .result:pg.string >> .data1
 [X]
 
 [p] |FetchSource2
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import urllib.request
 import json
 
@@ -702,12 +702,12 @@ try:
 except Exception as e:
     result = json.dumps({"error": str(e)})
 """
-[>] .result: pg\string >> .data2
+[>] .result:pg.string >> .data2
 [X]
 
 [p] |FetchSource3
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import urllib.request
 import json
 
@@ -718,7 +718,7 @@ try:
 except Exception as e:
     result = json.dumps({"error": str(e)})
 """
-[>] .result: pg\string >> .data3
+[>] .result:pg.string >> .data3
 [X]
 
 // Join all sources
@@ -729,7 +729,7 @@ except Exception as e:
 
 // Aggregate and transform
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 # Parse all sources
@@ -757,15 +757,15 @@ aggregated['total_records'] = len(aggregated['combined_data'])
 
 result = json.dumps(aggregated, indent=2)
 """
-[>] .result: pg\string >> .aggregated_data
+[>] .result:pg.string >> .aggregated_data
 
 // Write to output file
 [r] |File.WriteText
-[<] .path: pg\path << .output_file
-[<] .content: pg\string << .aggregated_data
+[<] .path:pg.path << .output_file
+[<] .content:pg.string << .aggregated_data
 
 // Output summary
-[o] .aggregated_data: pg\string
+[o] .aggregated_data:pg.string
 [X]
 ```
 

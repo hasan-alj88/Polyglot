@@ -94,16 +94,54 @@ fn main() {
 
             // Verification
             println!("🎯 Verification:");
-            println!("   {} DT.* identifiers found", if dt_identifiers.len() >= 3 { "✓" } else { "✗" });
-            println!("   {} RT.* identifiers found", if rt_identifiers.len() >= 3 { "✓" } else { "✗" });
-            println!("   {} TG.* identifiers found", if tg_identifiers.len() >= 2 { "✓" } else { "✗" });
-            println!("   {} |T.* trigger types found", if trigger_types.len() >= 3 { "✓" } else { "✗" });
-            println!("   {} |W.* wrappers found", if wrapper_types.len() >= 2 { "✓" } else { "✗" });
+            println!(
+                "   {} DT.* identifiers found",
+                if dt_identifiers.len() >= 3 {
+                    "✓"
+                } else {
+                    "✗"
+                }
+            );
+            println!(
+                "   {} RT.* identifiers found",
+                if rt_identifiers.len() >= 3 {
+                    "✓"
+                } else {
+                    "✗"
+                }
+            );
+            println!(
+                "   {} TG.* identifiers found",
+                if tg_identifiers.len() >= 2 {
+                    "✓"
+                } else {
+                    "✗"
+                }
+            );
+            println!(
+                "   {} |T.* trigger types found",
+                if trigger_types.len() >= 3 {
+                    "✓"
+                } else {
+                    "✗"
+                }
+            );
+            println!(
+                "   {} |W.* wrappers found",
+                if wrapper_types.len() >= 2 {
+                    "✓"
+                } else {
+                    "✗"
+                }
+            );
 
             println!();
-            if dt_identifiers.len() >= 3 && rt_identifiers.len() >= 3 &&
-               tg_identifiers.len() >= 2 && trigger_types.len() >= 3 &&
-               wrapper_types.len() >= 2 {
+            if dt_identifiers.len() >= 3
+                && rt_identifiers.len() >= 3
+                && tg_identifiers.len() >= 2
+                && trigger_types.len() >= 3
+                && wrapper_types.len() >= 2
+            {
                 println!("🎉 All special identifiers working correctly!");
             } else {
                 println!("⚠️  Some special identifiers missing or not recognized");

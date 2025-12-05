@@ -61,18 +61,33 @@ fn main() {
     match lex(source) {
         Ok(tokens) => {
             // Track operators
-            let assignment_ops: Vec<_> = tokens.iter()
-                .filter(|t| matches!(t.kind, TokenKind::OpPush | TokenKind::OpPull | TokenKind::OpDefault))
+            let assignment_ops: Vec<_> = tokens
+                .iter()
+                .filter(|t| {
+                    matches!(
+                        t.kind,
+                        TokenKind::OpPush | TokenKind::OpPull | TokenKind::OpDefault
+                    )
+                })
                 .collect();
 
-            let comparison_ops: Vec<_> = tokens.iter()
-                .filter(|t| matches!(t.kind,
-                    TokenKind::OpEqual | TokenKind::OpNotEqual |
-                    TokenKind::OpGreater | TokenKind::OpLess |
-                    TokenKind::OpGreaterEqual | TokenKind::OpLessEqual))
+            let comparison_ops: Vec<_> = tokens
+                .iter()
+                .filter(|t| {
+                    matches!(
+                        t.kind,
+                        TokenKind::OpEqual
+                            | TokenKind::OpNotEqual
+                            | TokenKind::OpGreater
+                            | TokenKind::OpLess
+                            | TokenKind::OpGreaterEqual
+                            | TokenKind::OpLessEqual
+                    )
+                })
                 .collect();
 
-            let pattern_ops: Vec<_> = tokens.iter()
+            let pattern_ops: Vec<_> = tokens
+                .iter()
                 .filter(|t| matches!(t.kind, TokenKind::OpWildcard | TokenKind::OpRegex))
                 .collect();
 
@@ -105,13 +120,23 @@ fn main() {
             println!("🎯 Verification:");
             let has_push = assignment_ops.iter().any(|t| t.kind == TokenKind::OpPush);
             let has_pull = assignment_ops.iter().any(|t| t.kind == TokenKind::OpPull);
-            let has_default = assignment_ops.iter().any(|t| t.kind == TokenKind::OpDefault);
+            let has_default = assignment_ops
+                .iter()
+                .any(|t| t.kind == TokenKind::OpDefault);
             let has_equal = comparison_ops.iter().any(|t| t.kind == TokenKind::OpEqual);
-            let has_not_equal = comparison_ops.iter().any(|t| t.kind == TokenKind::OpNotEqual);
-            let has_greater = comparison_ops.iter().any(|t| t.kind == TokenKind::OpGreater);
+            let has_not_equal = comparison_ops
+                .iter()
+                .any(|t| t.kind == TokenKind::OpNotEqual);
+            let has_greater = comparison_ops
+                .iter()
+                .any(|t| t.kind == TokenKind::OpGreater);
             let has_less = comparison_ops.iter().any(|t| t.kind == TokenKind::OpLess);
-            let has_greater_eq = comparison_ops.iter().any(|t| t.kind == TokenKind::OpGreaterEqual);
-            let has_less_eq = comparison_ops.iter().any(|t| t.kind == TokenKind::OpLessEqual);
+            let has_greater_eq = comparison_ops
+                .iter()
+                .any(|t| t.kind == TokenKind::OpGreaterEqual);
+            let has_less_eq = comparison_ops
+                .iter()
+                .any(|t| t.kind == TokenKind::OpLessEqual);
             let has_wildcard = pattern_ops.iter().any(|t| t.kind == TokenKind::OpWildcard);
             let has_regex = pattern_ops.iter().any(|t| t.kind == TokenKind::OpRegex);
 
@@ -121,19 +146,38 @@ fn main() {
             println!("      {} <~ (default)", if has_default { "✓" } else { "✗" });
             println!("   Comparison:");
             println!("      {} =? (equal)", if has_equal { "✓" } else { "✗" });
-            println!("      {} =!? (not equal)", if has_not_equal { "✓" } else { "✗" });
+            println!(
+                "      {} =!? (not equal)",
+                if has_not_equal { "✓" } else { "✗" }
+            );
             println!("      {} >? (greater)", if has_greater { "✓" } else { "✗" });
             println!("      {} <? (less)", if has_less { "✓" } else { "✗" });
-            println!("      {} =>? (greater or equal)", if has_greater_eq { "✓" } else { "✗" });
-            println!("      {} =<? (less or equal)", if has_less_eq { "✓" } else { "✗" });
+            println!(
+                "      {} =>? (greater or equal)",
+                if has_greater_eq { "✓" } else { "✗" }
+            );
+            println!(
+                "      {} =<? (less or equal)",
+                if has_less_eq { "✓" } else { "✗" }
+            );
             println!("   Pattern:");
-            println!("      {} *? (wildcard)", if has_wildcard { "✓" } else { "✗" });
+            println!(
+                "      {} *? (wildcard)",
+                if has_wildcard { "✓" } else { "✗" }
+            );
             println!("      {} re? (regex)", if has_regex { "✓" } else { "✗" });
 
-            let all_present = has_push && has_pull && has_default &&
-                             has_equal && has_not_equal && has_greater && has_less &&
-                             has_greater_eq && has_less_eq &&
-                             has_wildcard && has_regex;
+            let all_present = has_push
+                && has_pull
+                && has_default
+                && has_equal
+                && has_not_equal
+                && has_greater
+                && has_less
+                && has_greater_eq
+                && has_less_eq
+                && has_wildcard
+                && has_regex;
 
             println!();
             if all_present {

@@ -128,6 +128,7 @@ Package system and registry reference.
 Implementation details for compiler and runtime developers.
 
 - [Architecture Overview](architecture/00-overview.md) - System architecture
+- **[Polyglot Service Guide](polyglot-service.md)** - Service installation, configuration, deployment, and troubleshooting
 - [Database Schema](architecture/01-database-schema.md) - IR storage design
 - [IR Representation](architecture/02-ir-representation.md) - Intermediate Representation
 - [Queue System](architecture/03-queue-system.md) - Queue architecture
@@ -190,9 +191,9 @@ All Polyglot code examples use the `polyglot` language tag:
 
 ```polyglot
 [|] ExamplePipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 

@@ -90,8 +90,10 @@ fn main() {
                     TokenKind::OpWildcard | TokenKind::OpRegex => "🌟",
 
                     // Range operators
-                    TokenKind::OpRangeClosed | TokenKind::OpRangeOpen |
-                    TokenKind::OpRangeHalfLeft | TokenKind::OpRangeHalfRight => "📏",
+                    TokenKind::OpRangeClosed
+                    | TokenKind::OpRangeOpen
+                    | TokenKind::OpRangeHalfLeft
+                    | TokenKind::OpRangeHalfRight => "📏",
 
                     // Reserved enums
                     TokenKind::ReservedBooleanTrue | TokenKind::ReservedBooleanFalse => "🔵",
@@ -119,37 +121,65 @@ fn main() {
             // Analysis by category
             println!("\n📊 Token Analysis by Category:");
 
-            let block_markers = tokens.iter().filter(|t| matches!(
-                t.kind,
-                TokenKind::BlockPackageStart | TokenKind::BlockVersionEnum |
-                TokenKind::BlockPipelineStart | TokenKind::BlockInput |
-                TokenKind::BlockTrigger | TokenKind::BlockWrapper |
-                TokenKind::BlockSequential | TokenKind::BlockOutput |
-                TokenKind::BlockEnd | TokenKind::BlockConditional |
-                TokenKind::BlockBody | TokenKind::BlockBoolAnd |
-                TokenKind::BlockInputBinding
-            )).count();
+            let block_markers = tokens
+                .iter()
+                .filter(|t| {
+                    matches!(
+                        t.kind,
+                        TokenKind::BlockPackageStart
+                            | TokenKind::BlockVersionEnum
+                            | TokenKind::BlockPipelineStart
+                            | TokenKind::BlockInput
+                            | TokenKind::BlockTrigger
+                            | TokenKind::BlockWrapper
+                            | TokenKind::BlockSequential
+                            | TokenKind::BlockOutput
+                            | TokenKind::BlockEnd
+                            | TokenKind::BlockConditional
+                            | TokenKind::BlockBody
+                            | TokenKind::BlockBoolAnd
+                            | TokenKind::BlockInputBinding
+                    )
+                })
+                .count();
 
-            let comparison_ops = tokens.iter().filter(|t| matches!(
-                t.kind,
-                TokenKind::OpEqual | TokenKind::OpNotEqual |
-                TokenKind::OpGreater | TokenKind::OpLess |
-                TokenKind::OpGreaterEqual | TokenKind::OpLessEqual
-            )).count();
+            let comparison_ops = tokens
+                .iter()
+                .filter(|t| {
+                    matches!(
+                        t.kind,
+                        TokenKind::OpEqual
+                            | TokenKind::OpNotEqual
+                            | TokenKind::OpGreater
+                            | TokenKind::OpLess
+                            | TokenKind::OpGreaterEqual
+                            | TokenKind::OpLessEqual
+                    )
+                })
+                .count();
 
-            let pattern_ops = tokens.iter().filter(|t| matches!(
-                t.kind,
-                TokenKind::OpWildcard | TokenKind::OpRegex
-            )).count();
+            let pattern_ops = tokens
+                .iter()
+                .filter(|t| matches!(t.kind, TokenKind::OpWildcard | TokenKind::OpRegex))
+                .count();
 
-            let reserved_enums = tokens.iter().filter(|t| matches!(
-                t.kind,
-                TokenKind::ReservedBooleanTrue | TokenKind::ReservedBooleanFalse |
-                TokenKind::ReservedNone | TokenKind::ReservedPipelineNoInput |
-                TokenKind::ReservedPgVarDeclared | TokenKind::ReservedPgVarReady |
-                TokenKind::ReservedPgVarPending | TokenKind::ReservedPgVarFaulted |
-                TokenKind::ReservedPgVarDefaultReady
-            )).count();
+            let reserved_enums = tokens
+                .iter()
+                .filter(|t| {
+                    matches!(
+                        t.kind,
+                        TokenKind::ReservedBooleanTrue
+                            | TokenKind::ReservedBooleanFalse
+                            | TokenKind::ReservedNone
+                            | TokenKind::ReservedPipelineNoInput
+                            | TokenKind::ReservedPgVarDeclared
+                            | TokenKind::ReservedPgVarReady
+                            | TokenKind::ReservedPgVarPending
+                            | TokenKind::ReservedPgVarFaulted
+                            | TokenKind::ReservedPgVarDefaultReady
+                    )
+                })
+                .count();
 
             println!("  📦 Block Markers: {}", block_markers);
             println!("  ⚖️  Comparison Operators: {}", comparison_ops);

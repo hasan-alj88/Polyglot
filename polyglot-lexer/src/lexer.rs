@@ -75,7 +75,12 @@ impl Lexer {
         self.skip_whitespace_inline();
 
         if self.is_at_end() {
-            return Ok(Token::new(TokenKind::Eof, String::new(), self.line, self.column));
+            return Ok(Token::new(
+                TokenKind::Eof,
+                String::new(),
+                self.line,
+                self.column,
+            ));
         }
 
         let start_line = self.line;
@@ -88,7 +93,12 @@ impl Lexer {
                 self.advance();
                 self.line += 1;
                 self.column = 1;
-                Ok(Token::new(TokenKind::Newline, "\n".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::Newline,
+                    "\n".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
 
             // Block markers
@@ -103,7 +113,12 @@ impl Lexer {
                 self.state = LexerState::InString;
                 self.advance();
                 self.string_buffer.clear();
-                Ok(Token::new(TokenKind::StringStart, "\"".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::StringStart,
+                    "\"".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
 
             // Comments
@@ -128,23 +143,35 @@ impl Lexer {
             '=' => self.lex_equal_operators(),
             '?' => self.lex_question_operators(),
             '*' => {
+                self.advance();
                 if self.peek_char() == Some('?') {
                     self.advance();
-                    self.advance();
-                    Ok(Token::new(TokenKind::OpWildcard, "*?".to_string(), start_line, start_column))
+                    Ok(Token::new(
+                        TokenKind::OpWildcard,
+                        "*?".to_string(),
+                        start_line,
+                        start_column,
+                    ))
                 } else {
-                    Err(LexerError::UnexpectedCharacter {
-                        line: self.line,
-                        column: self.column,
-                        character: ch,
-                    })
+                    // Standalone * is also a wildcard (used in [!] * error handling)
+                    Ok(Token::new(
+                        TokenKind::OpWildcard,
+                        "*".to_string(),
+                        start_line,
+                        start_column,
+                    ))
                 }
             }
             '+' => {
                 if self.peek_char() == Some('"') {
                     self.advance(); // consume '+'
                     self.advance(); // consume '"'
-                    Ok(Token::new(TokenKind::OpStringConcat, "+\"".to_string(), start_line, start_column))
+                    Ok(Token::new(
+                        TokenKind::OpStringConcat,
+                        "+\"".to_string(),
+                        start_line,
+                        start_column,
+                    ))
                 } else {
                     Err(LexerError::UnexpectedCharacter {
                         line: self.line,
@@ -164,40 +191,85 @@ impl Lexer {
             // Delimiters
             '{' => {
                 self.advance();
-                Ok(Token::new(TokenKind::DelimiterBraceOpen, "{".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::DelimiterBraceOpen,
+                    "{".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             '}' => {
                 self.advance();
-                Ok(Token::new(TokenKind::DelimiterBraceClose, "}".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::DelimiterBraceClose,
+                    "}".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             '(' => {
                 self.advance();
-                Ok(Token::new(TokenKind::DelimiterParenOpen, "(".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::DelimiterParenOpen,
+                    "(".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             ')' => {
                 self.advance();
-                Ok(Token::new(TokenKind::DelimiterParenClose, ")".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::DelimiterParenClose,
+                    ")".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             ']' => {
                 // Standalone ] delimiter (for range operators, NOT block markers)
                 self.advance();
-                Ok(Token::new(TokenKind::DelimiterSquareBracketClose, "]".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::DelimiterSquareBracketClose,
+                    "]".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             ',' => {
                 self.advance();
-                Ok(Token::new(TokenKind::DelimiterComma, ",".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::DelimiterComma,
+                    ",".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             ':' => {
                 self.advance();
-                Ok(Token::new(TokenKind::DelimiterColon, ":".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::DelimiterColon,
+                    ":".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             '@' => {
                 self.advance();
-                Ok(Token::new(TokenKind::DelimiterAt, "@".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::DelimiterAt,
+                    "@".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             '\\' => {
                 self.advance();
-                Ok(Token::new(TokenKind::DelimiterBackslash, "\\".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::DelimiterBackslash,
+                    "\\".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
 
             // Numbers
@@ -261,6 +333,7 @@ impl Lexer {
             'Y' => TokenKind::BlockJoin,
             'b' => TokenKind::BlockBackground,
             's' => TokenKind::BlockStreaming,
+            '!' => TokenKind::BlockErrorCatch,
             '?' => TokenKind::BlockConditional,
             '~' => TokenKind::BlockBody,
             '+' => TokenKind::BlockBoolOr,
@@ -281,12 +354,14 @@ impl Lexer {
         // Special handling for line continuation marker [*]
         // Skip the newline that follows to treat next line as continuation
         if kind == TokenKind::BlockLineContinuation
-            && !self.is_at_end() && self.current_char() == '\n' {
-                self.advance(); // Skip the newline
-                self.line += 1; // Update line counter for accurate tracking
-                self.column = 1; // Reset column
-                // The Newline token is NOT emitted - that's the key behavior
-            }
+            && !self.is_at_end()
+            && self.current_char() == '\n'
+        {
+            self.advance(); // Skip the newline
+            self.line += 1; // Update line counter for accurate tracking
+            self.column = 1; // Reset column
+                             // The Newline token is NOT emitted - that's the key behavior
+        }
 
         Ok(Token::new(kind, lexeme, start_line, start_column))
     }
@@ -450,13 +525,11 @@ impl Lexer {
                 ))
             }
 
-            '"' => {
-                Err(LexerError::UnterminatedInterpolation {
-                    line: start_line,
-                    column: start_column,
-                    got: "\"".to_string(),
-                })
-            }
+            '"' => Err(LexerError::UnterminatedInterpolation {
+                line: start_line,
+                column: start_column,
+                got: "\"".to_string(),
+            }),
 
             _ => Err(LexerError::UnexpectedCharacter {
                 line: self.line,
@@ -544,13 +617,28 @@ impl Lexer {
 
         if self.current_char() == '~' {
             self.advance();
-            Ok(Token::new(TokenKind::OpDefault, "<~".to_string(), start_line, start_column))
+            Ok(Token::new(
+                TokenKind::OpDefault,
+                "<~".to_string(),
+                start_line,
+                start_column,
+            ))
         } else if self.current_char() == '<' {
             self.advance();
-            Ok(Token::new(TokenKind::OpPush, "<<".to_string(), start_line, start_column))
+            Ok(Token::new(
+                TokenKind::OpPush,
+                "<<".to_string(),
+                start_line,
+                start_column,
+            ))
         } else if self.current_char() == '?' {
             self.advance();
-            Ok(Token::new(TokenKind::OpLess, "<?".to_string(), start_line, start_column))
+            Ok(Token::new(
+                TokenKind::OpLess,
+                "<?".to_string(),
+                start_line,
+                start_column,
+            ))
         } else {
             Err(LexerError::UnexpectedCharacter {
                 line: start_line,
@@ -568,10 +656,20 @@ impl Lexer {
 
         if self.current_char() == '>' {
             self.advance();
-            Ok(Token::new(TokenKind::OpPull, ">>".to_string(), start_line, start_column))
+            Ok(Token::new(
+                TokenKind::OpPull,
+                ">>".to_string(),
+                start_line,
+                start_column,
+            ))
         } else if self.current_char() == '?' {
             self.advance();
-            Ok(Token::new(TokenKind::OpGreater, ">?".to_string(), start_line, start_column))
+            Ok(Token::new(
+                TokenKind::OpGreater,
+                ">?".to_string(),
+                start_line,
+                start_column,
+            ))
         } else {
             Err(LexerError::UnexpectedCharacter {
                 line: start_line,
@@ -591,18 +689,38 @@ impl Lexer {
         if self.current_char() == '!' && self.peek_char() == Some('?') {
             self.advance();
             self.advance();
-            Ok(Token::new(TokenKind::OpNotEqual, "=!?".to_string(), start_line, start_column))
+            Ok(Token::new(
+                TokenKind::OpNotEqual,
+                "=!?".to_string(),
+                start_line,
+                start_column,
+            ))
         } else if self.current_char() == '>' && self.peek_char() == Some('?') {
             self.advance();
             self.advance();
-            Ok(Token::new(TokenKind::OpGreaterEqual, "=>?".to_string(), start_line, start_column))
+            Ok(Token::new(
+                TokenKind::OpGreaterEqual,
+                "=>?".to_string(),
+                start_line,
+                start_column,
+            ))
         } else if self.current_char() == '<' && self.peek_char() == Some('?') {
             self.advance();
             self.advance();
-            Ok(Token::new(TokenKind::OpLessEqual, "=<?".to_string(), start_line, start_column))
+            Ok(Token::new(
+                TokenKind::OpLessEqual,
+                "=<?".to_string(),
+                start_line,
+                start_column,
+            ))
         } else if self.current_char() == '?' {
             self.advance();
-            Ok(Token::new(TokenKind::OpEqual, "=?".to_string(), start_line, start_column))
+            Ok(Token::new(
+                TokenKind::OpEqual,
+                "=?".to_string(),
+                start_line,
+                start_column,
+            ))
         } else {
             Err(LexerError::UnexpectedCharacter {
                 line: start_line,
@@ -621,19 +739,39 @@ impl Lexer {
         match self.current_char() {
             '[' => {
                 self.advance();
-                Ok(Token::new(TokenKind::OpRangeClosed, "?[".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::OpRangeClosed,
+                    "?[".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             '(' => {
                 self.advance();
-                Ok(Token::new(TokenKind::OpRangeOpen, "?(".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::OpRangeOpen,
+                    "?(".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             ']' => {
                 self.advance();
-                Ok(Token::new(TokenKind::OpRangeHalfRight, "?]".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::OpRangeHalfRight,
+                    "?]".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             ')' => {
                 self.advance();
-                Ok(Token::new(TokenKind::OpRangeHalfLeft, "?)".to_string(), start_line, start_column))
+                Ok(Token::new(
+                    TokenKind::OpRangeHalfLeft,
+                    "?)".to_string(),
+                    start_line,
+                    start_column,
+                ))
             }
             _ => Err(LexerError::UnexpectedCharacter {
                 line: start_line,
@@ -678,16 +816,14 @@ impl Lexer {
             "#None" => TokenKind::ReservedNone,
             "#Boolean.True" => TokenKind::ReservedBooleanTrue,
             "#Boolean.False" => TokenKind::ReservedBooleanFalse,
-            _ if lexeme.starts_with("#PgVar.States.") => {
-                match &lexeme[14..] {
-                    "Declared" => TokenKind::ReservedPgVarDeclared,
-                    "DefaultReady" => TokenKind::ReservedPgVarDefaultReady,
-                    "Pending" => TokenKind::ReservedPgVarPending,
-                    "Ready" => TokenKind::ReservedPgVarReady,
-                    "Faulted" => TokenKind::ReservedPgVarFaulted,
-                    _ => TokenKind::IdentifierEnum,
-                }
-            }
+            _ if lexeme.starts_with("#PgVar.States.") => match &lexeme[14..] {
+                "Declared" => TokenKind::ReservedPgVarDeclared,
+                "DefaultReady" => TokenKind::ReservedPgVarDefaultReady,
+                "Pending" => TokenKind::ReservedPgVarPending,
+                "Ready" => TokenKind::ReservedPgVarReady,
+                "Faulted" => TokenKind::ReservedPgVarFaulted,
+                _ => TokenKind::IdentifierEnum,
+            },
             "#Pipeline.NoInput" => TokenKind::ReservedPipelineNoInput,
             _ => TokenKind::IdentifierEnum,
         };
@@ -702,6 +838,12 @@ impl Lexer {
         self.advance(); // consume '|'
 
         let ident = self.read_identifier_with_dots();
+
+        // Check if this is a pipeline formatted string: |Pipeline"string"
+        if !self.is_at_end() && self.current_char() == '"' {
+            return self.lex_pipeline_formatted_string(ident, start_line, start_column);
+        }
+
         let lexeme = format!("|{}", ident);
 
         // Check for special pipeline types
@@ -740,19 +882,102 @@ impl Lexer {
 
         self.advance(); // consume '~'
 
-        if self.current_char() == 'Y' && self.peek_char() == Some('.') {
+        if self.current_char() == '>' {
+            // Default pull operator ~>
+            self.advance(); // consume '>'
+            Ok(Token::new(
+                TokenKind::OpDefaultPull,
+                "~>".to_string(),
+                start_line,
+                start_column,
+            ))
+        } else if self.current_char() == 'Y' && self.peek_char() == Some('.') {
             // Join identifier
             self.advance(); // consume 'Y'
             self.advance(); // consume '.'
             let ident = self.read_identifier();
             let lexeme = format!("~Y.{}", ident);
-            Ok(Token::new(TokenKind::IdentifierJoin, lexeme, start_line, start_column))
+            Ok(Token::new(
+                TokenKind::IdentifierJoin,
+                lexeme,
+                start_line,
+                start_column,
+            ))
         } else {
             // Unpack identifier
             let ident = self.read_identifier();
             let lexeme = format!("~{}", ident);
-            Ok(Token::new(TokenKind::IdentifierUnpack, lexeme, start_line, start_column))
+            Ok(Token::new(
+                TokenKind::IdentifierUnpack,
+                lexeme,
+                start_line,
+                start_column,
+            ))
         }
+    }
+
+    /// Lex pipeline formatted string: |Pipeline"formatted {.var} string"
+    fn lex_pipeline_formatted_string(
+        &mut self,
+        pipeline_name: String,
+        start_line: usize,
+        start_column: usize,
+    ) -> Result<Token, LexerError> {
+        // At this point, we've already consumed '|' and read the pipeline identifier
+        // Current char is '"'
+        self.advance(); // consume opening '"'
+
+        let mut content = String::new();
+        let mut brace_depth = 0;
+
+        while !self.is_at_end() {
+            let ch = self.current_char();
+
+            if ch == '"' && brace_depth == 0 {
+                // End of string
+                self.advance(); // consume closing '"'
+                let lexeme = format!("|{}\"{}\"", pipeline_name, content);
+                return Ok(Token::new(
+                    TokenKind::LiteralPipelineFormatted,
+                    lexeme,
+                    start_line,
+                    start_column,
+                ));
+            } else if ch == '{' {
+                brace_depth += 1;
+                content.push(ch);
+                self.advance();
+            } else if ch == '}' {
+                if brace_depth > 0 {
+                    brace_depth -= 1;
+                }
+                content.push(ch);
+                self.advance();
+            } else if ch == '\\' {
+                // Handle escape sequences
+                content.push(ch);
+                self.advance();
+                if !self.is_at_end() {
+                    content.push(self.current_char());
+                    self.advance();
+                }
+            } else if ch == '\n' {
+                // Track line numbers for error reporting
+                self.line += 1;
+                self.column = 0;
+                content.push(ch);
+                self.advance();
+            } else {
+                content.push(ch);
+                self.advance();
+            }
+        }
+
+        // If we get here, string was not terminated
+        Err(LexerError::UnterminatedString {
+            line: start_line,
+            column: start_column,
+        })
     }
 
     fn lex_plain_identifier(&mut self) -> Result<Token, LexerError> {
@@ -770,7 +995,12 @@ impl Lexer {
             TokenKind::SpecialTrigger
         } else if ident == "re" && self.current_char() == '?' {
             self.advance();
-            return Ok(Token::new(TokenKind::OpRegex, "re?".to_string(), start_line, start_column));
+            return Ok(Token::new(
+                TokenKind::OpRegex,
+                "re?".to_string(),
+                start_line,
+                start_column,
+            ));
         } else {
             // Check for type keywords
             match ident.as_str() {
@@ -814,7 +1044,10 @@ impl Lexer {
         }
 
         // Check for float
-        if !self.is_at_end() && self.current_char() == '.' && self.peek_char().is_some_and(|c| c.is_ascii_digit()) {
+        if !self.is_at_end()
+            && self.current_char() == '.'
+            && self.peek_char().is_some_and(|c| c.is_ascii_digit())
+        {
             number.push('.');
             self.advance();
 

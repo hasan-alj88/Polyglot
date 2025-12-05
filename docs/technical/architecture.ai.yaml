@@ -1,0 +1,16 @@
+_meta:
+  src: architecture.md
+  updated: 2025-12-02
+topic: System Architecture Overview
+kw: [architecture, compiler, parser, IR, runtime, DBFlux, queue, async-engine]
+sum: Polyglot system arch: parser → IR → DBFlux storage → queue system → runtime execution; async-centric pipeline orchestration
+pts:
+  - Parser: multi-file compilation, AST validation
+  - IR: intermediate representation for pipelines
+  - Storage: DBFlux for pipeline definitions, state, queue
+  - Queue: priority-based execution scheduling
+  - Runtime: multi-lang wrappers (Python, Rust, Node, Go)
+  - Async: state-driven execution, no explicit await
+  - Components: CLI, parser, IR, runtime-wrappers, service
+rels: [database-architecture-explained.md, parser-error-detection-design.md, variable-states-specification.md]
+code: [polyglot-parser/, polyglot-ir/, polyglot-runtime-wrappers/, polyglot-cli/]

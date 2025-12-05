@@ -64,15 +64,34 @@ pub enum ImportError {
 impl std::fmt::Display for ImportError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ImportError::PackageNotFound { registry, path, version } => {
-                write!(f, "Package not found: {}@{}:{}", registry, path.join("."), version)
+            ImportError::PackageNotFound {
+                registry,
+                path,
+                version,
+            } => {
+                write!(
+                    f,
+                    "Package not found: {}@{}:{}",
+                    registry,
+                    path.join("."),
+                    version
+                )
             }
             ImportError::DatabaseInactive => {
                 write!(f, "Database connection not available for import resolution")
             }
-            ImportError::AmbiguousVersion { registry, path, available_versions } => {
-                write!(f, "Ambiguous package version: {}@{} matches {} versions",
-                       registry, path.join("."), available_versions.len())
+            ImportError::AmbiguousVersion {
+                registry,
+                path,
+                available_versions,
+            } => {
+                write!(
+                    f,
+                    "Ambiguous package version: {}@{} matches {} versions",
+                    registry,
+                    path.join("."),
+                    available_versions.len()
+                )
             }
             ImportError::ParserError(e) => write!(f, "Parser error: {}", e),
         }

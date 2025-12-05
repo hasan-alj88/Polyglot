@@ -50,15 +50,15 @@ Polyglot's macro system provides **compile-time inline code templates** for reus
 ```polyglot
 [M] DatabaseSetup
 [<] Macro.include"{\/"     // Contains: [{], [}], [\], [/]
-[{] .db_host: pg\string    // Scope input
-[}] .db_conn: pg\db        // Scope output
+[{] .db_host:pg.string    // Scope input
+[}] .db_conn:pg.db        // Scope output
 
 [\] |U.DB.Connect
-[<] .host: pg\string << .db_host
-[>] .connection: pg\db >> .db_conn
+[<] .host:pg.string << .db_host
+[>] .connection:pg.db >> .db_conn
 
 [/] |U.DB.Disconnect
-[<] .conn: pg\db << .db_conn
+[<] .conn:pg.db << .db_conn
 [X]
 ```
 
@@ -86,7 +86,7 @@ Polyglot's macro system provides **compile-time inline code templates** for reus
 
 // .db is now available in pipeline scope!
 [r] |QueryUsers
-[<] .conn: pg\db << .db
+[<] .conn:pg.db << .db
 [X]
 ```
 
@@ -106,20 +106,20 @@ Polyglot's macro system provides **compile-time inline code templates** for reus
 
 **Syntax:**
 ```polyglot
-[{] .variable_name: pg\type
+[{] .variable_name:pg.type
 ```
 
 **Example:**
 ```polyglot
 [M] Logger
-[{] .log_level: pg\string    // IN from caller
-[{] .log_file: pg\path       // IN from caller
-[}] .log_handle: pg\file     // OUT to caller
+[{] .log_level:pg.string    // IN from caller
+[{] .log_file:pg.path       // IN from caller
+[}] .log_handle:pg.file     // OUT to caller
 
 [\] |U.Log.Open
-[<] .level: pg\string << .log_level
-[<] .path: pg\path << .log_file
-[>] .handle: pg\file >> .log_handle
+[<] .level:pg.string << .log_level
+[<] .path:pg.path << .log_file
+[>] .handle:pg.file >> .log_handle
 [X]
 ```
 
@@ -133,7 +133,7 @@ Polyglot's macro system provides **compile-time inline code templates** for reus
 
 **Syntax:**
 ```polyglot
-[}] .variable_name: pg\type
+[}] .variable_name:pg.type
 ```
 
 **Flow:** All `[}]` variables become available in caller after macro unwrap
@@ -146,20 +146,20 @@ Polyglot's macro system provides **compile-time inline code templates** for reus
 
 **Syntax:**
 ```polyglot
-[i] .variable_name: pg\type << value
+[i] .variable_name:pg.type << value
 ```
 
 **Example:**
 ```polyglot
 [M] RateLimiter
-[i] .max_requests: pg\int << 1000    // Immutable constant
-[{] .window_seconds: pg\int          // Mutable input
-[}] .limiter: pg\db                  // Output
+[i] .max_requests:pg.int << 1000    // Immutable constant
+[{] .window_seconds:pg.int          // Mutable input
+[}] .limiter:pg.db                  // Output
 
 [\] |U.RateLimit.Create
-[<] .max: pg\int << .max_requests
-[<] .window: pg\int << .window_seconds
-[>] .handle: pg\db >> .limiter
+[<] .max:pg.int << .max_requests
+[<] .window:pg.int << .window_seconds
+[>] .handle:pg.db >> .limiter
 [X]
 ```
 
@@ -252,26 +252,26 @@ When multiple macros unwrapped in same pipeline:
 
 ```polyglot
 [M] Processor
-[{] .input: pg\string    // Expects string
-[}] .output: pg\int      // Produces int
+[{] .input:pg.string    // Expects string
+[}] .output:pg.int      // Produces int
 
 [\] |Convert
-[<] .in: pg\string << .input
-[>] .out: pg\int >> .output
+[<] .in:pg.string << .input
+[>] .out:pg.int >> .output
 [X]
 
 // Valid unwrap
 [|] Pipeline1
 [W] |Processor
 [<] .input << "123"              // ✓ Correct type
-[>] .output >> .result: pg\int   // ✓ Correct type
+[>] .output >> .result:pg.int   // ✓ Correct type
 [X]
 
 // Invalid unwrap (compile error)
 [|] Pipeline2
 [W] |Processor
 [<] .input << 456                // ✗ Wrong type (int, not string)
-[>] .output >> .result: pg\string // ✗ Wrong type (expects int)
+[>] .output >> .result:pg.string // ✗ Wrong type (expects int)
 [X]
 ```
 
@@ -283,12 +283,12 @@ When multiple macros unwrapped in same pipeline:
 
 ```polyglot
 [M] Validator
-[{] .data: pg\string
-[}] .is_valid: pg\bool
+[{] .data:pg.string
+[}] .is_valid:pg.bool
 
 [\] |U.Validate
-[<] .input: pg\string << .data
-[>] .result: pg\bool >> .is_valid
+[<] .input:pg.string << .data
+[>] .result:pg.bool >> .is_valid
 [X]
 
 // Different variable names at unwrap site
@@ -308,19 +308,19 @@ When multiple macros unwrapped in same pipeline:
 ```polyglot
 [M] DatabaseSetup
 [<] Macro.include"{\/"
-[{] .db_host: pg\string
-[{] .db_port: pg\int
-[{] .db_name: pg\string
-[}] .db_conn: pg\db
+[{] .db_host:pg.string
+[{] .db_port:pg.int
+[{] .db_name:pg.string
+[}] .db_conn:pg.db
 
 [\] |U.DB.Connect
-[<] .host: pg\string << .db_host
-[<] .port: pg\int << .db_port
-[<] .database: pg\string << .db_name
-[>] .connection: pg\db >> .db_conn
+[<] .host:pg.string << .db_host
+[<] .port:pg.int << .db_port
+[<] .database:pg.string << .db_name
+[>] .connection:pg.db >> .db_conn
 
 [/] |U.DB.Disconnect
-[<] .conn: pg\db << .db_conn
+[<] .conn:pg.db << .db_conn
 [X]
 
 // Usage
@@ -332,8 +332,8 @@ When multiple macros unwrapped in same pipeline:
 [>] .db_conn >> .db
 
 [r] |QueryUsers
-[<] .conn: pg\db << .db
-[>] .users: pg\array{pg\string} >> .user_list
+[<] .conn:pg.db << .db
+[>] .users: pg.array.pg.string >> .user_list
 [X]
 ```
 
@@ -344,22 +344,22 @@ When multiple macros unwrapped in same pipeline:
 ```polyglot
 [M] Logger
 [<] Macro.include"{\/"
-[{] .log_level: pg\string
-[{] .log_path: pg\path
-[}] .log_handle: pg\file
+[{] .log_level:pg.string
+[{] .log_path:pg.path
+[}] .log_handle:pg.file
 
 [\] |U.Log.Open
-[<] .level: pg\string << .log_level
-[<] .path: pg\path << .log_path
-[>] .handle: pg\file >> .log_handle
+[<] .level:pg.string << .log_level
+[<] .path:pg.path << .log_path
+[>] .handle:pg.file >> .log_handle
 
 [!] !pg.FileSystem.PermissionDenied
 [r] |U.Log.OpenFallback
-[<] .fallback_path: pg\path << \\TempDir\\fallback.log
-[>] .handle: pg\file >> .log_handle
+[<] .fallback_path:pg.path << \\TempDir\\fallback.log
+[>] .handle:pg.file >> .log_handle
 
 [/] |U.Log.Close
-[<] .handle: pg\file << .log_handle
+[<] .handle:pg.file << .log_handle
 [X]
 
 // Usage
@@ -370,8 +370,8 @@ When multiple macros unwrapped in same pipeline:
 [>] .log_handle >> .logger
 
 [r] |U.Log.Write
-[<] .handle: pg\file << .logger
-[<] .message: pg\string << "Application started"
+[<] .handle:pg.file << .logger
+[<] .message:pg.string << "Application started"
 [X]
 ```
 
@@ -382,17 +382,17 @@ When multiple macros unwrapped in same pipeline:
 ```polyglot
 [M] CacheSetup
 [<] Macro.include"{\/"
-[i] .cache_ttl: pg\int << 3600      // 1 hour constant
-[{] .cache_size: pg\int
-[}] .cache_handle: pg\db
+[i] .cache_ttl:pg.int << 3600      // 1 hour constant
+[{] .cache_size:pg.int
+[}] .cache_handle:pg.db
 
 [\] |U.Cache.Initialize
-[<] .size: pg\int << .cache_size
-[<] .ttl: pg\int << .cache_ttl
-[>] .handle: pg\db >> .cache_handle
+[<] .size:pg.int << .cache_size
+[<] .ttl:pg.int << .cache_ttl
+[>] .handle:pg.db >> .cache_handle
 
 [/] |U.Cache.Shutdown
-[<] .handle: pg\db << .cache_handle
+[<] .handle:pg.db << .cache_handle
 [X]
 
 // Usage
@@ -402,9 +402,9 @@ When multiple macros unwrapped in same pipeline:
 [>] .cache_handle >> .cache
 
 [r] |U.Cache.Get
-[<] .handle: pg\db << .cache
-[<] .key: pg\string << "user:123"
-[>] .value: pg\string >> .cached_value
+[<] .handle:pg.db << .cache
+[<] .key:pg.string << "user:123"
+[>] .value:pg.string >> .cached_value
 
 [?] .cached_value =!? ""
 [r] |FetchFromDatabase
@@ -437,9 +437,9 @@ When multiple macros unwrapped in same pipeline:
 
 // Main workflow logic
 [r] |ProcessData
-[<] .db: pg\db << .db
-[<] .cache: pg\db << .cache
-[<] .logger: pg\file << .logger
+[<] .db:pg.db << .db
+[<] .cache:pg.db << .cache
+[<] .logger:pg.file << .logger
 
 // Automatic cleanup in LIFO order
 [X]
@@ -472,12 +472,12 @@ When multiple macros unwrapped in same pipeline:
 **Input/Output should be logically paired:**
 ```polyglot
 // ✓ GOOD - Clear flow
-[{] .config_path: pg\path    // IN
+[{] .config_path:pg.path    // IN
 [}] .config: #Config         // OUT
 
 // ✗ BAD - Confusing flow
-[}] .result: pg\int          // OUT before IN?
-[{] .input: pg\string        // IN after OUT?
+[}] .result:pg.int          // OUT before IN?
+[{] .input:pg.string        // IN after OUT?
 ```
 
 ---
@@ -487,10 +487,10 @@ When multiple macros unwrapped in same pipeline:
 **Prefer `[i]` over `[{]` for immutable values:**
 ```polyglot
 // ✓ GOOD
-[i] .max_connections: pg\int << 100
+[i] .max_connections:pg.int << 100
 
 // ✗ BAD - Mutable when should be constant
-[{] .max_connections: pg\int
+[{] .max_connections:pg.int
 ```
 
 ---
@@ -501,16 +501,16 @@ When multiple macros unwrapped in same pipeline:
 ```polyglot
 // ✓ GOOD - Paired
 [\] |U.File.Open
-[<] .path: pg\path << .file_path
-[>] .handle: pg\file >> .file_handle
+[<] .path:pg.path << .file_path
+[>] .handle:pg.file >> .file_handle
 
 [/] |U.File.Close
-[<] .handle: pg\file << .file_handle
+[<] .handle:pg.file << .file_handle
 
 // ✗ BAD - Setup without cleanup
 [\] |U.File.Open
-[<] .path: pg\path << .file_path
-[>] .handle: pg\file >> .file_handle
+[<] .path:pg.path << .file_path
+[>] .handle:pg.file >> .file_handle
 // Missing [/] cleanup!
 ```
 
@@ -544,9 +544,9 @@ When multiple macros unwrapped in same pipeline:
 // Automatically releases on cleanup or error
 // Timeout: 30 seconds
 
-[{] .resource_id: pg\string
-[{] .timeout_ms: pg\int
-[}] .lock_handle: pg\db
+[{] .resource_id:pg.string
+[{] .timeout_ms:pg.int
+[}] .lock_handle:pg.db
 
 [\] |U.Lock.Acquire
 // ...

@@ -13,11 +13,36 @@ dependency ::= '[<]' '@' IDENTIFIER '<<' package_spec
 definition ::= enumeration | pipeline
 
 /* ===== ENUMERATIONS ===== */
-enumeration ::= '[#]' ENUM_NAME field* '[X]'
+/* TWO WAYS TO DEFINE ENUMERATIONS:
+   1. Explicit fields with [<] declarations
+   2. Serial file loading with [s] blocks (requires schema and error handling)
+*/
+enumeration ::= '[#]' ENUM_NAME enum_body '[X]'
+enum_body ::= field* serial_block*
+
+/* Explicit field declarations */
 field ::= enum_field | serial_field
-enum_field ::= '[<]' VARIABLE                          /* Declaration only */
-serial_field ::= '[<]' VARIABLE ':' type default?     /* Type + optional default */
+enum_field ::= '[<]' VARIABLE                          /* Declaration only (enum variant) */
+serial_field ::= '[<]' VARIABLE ':' type default?     /* Type + optional default (struct field) */
 default ::= '<~' literal | '<<' literal
+
+/* Serial file loading blocks (optional) */
+serial_block ::= serial_schema* serial_load+ serial_error_handler
+serial_schema ::= '[~][s]' '<~' (field_schema | wildcard_schema)
+field_schema ::= VARIABLE ':' type                     /* [~][s] <~ .timeout:pg\int */
+wildcard_schema ::= '*'                                /* [~][s] <~ * (allow all other fields) */
+serial_load ::= '[s]' pipeline_call                    /* [s] |YAML.Load"file.yaml" */
+serial_error_handler ::= '[s][!]' (wildcard | error_block)
+wildcard ::= '*'                                       /* Default error handling */
+error_block ::= block*                                 /* Custom error handling with [r] blocks */
+
+/* SERIAL LOADING CONSTRAINTS:
+   - Serial schema [~][s] <~ MANDATORY for enumeration serial loads (Safety Mechanism 5)
+   - Error handling [s][!] MANDATORY for all serial loads (Safety Mechanism 4)
+   - Multiple [s] blocks run in parallel
+   - One [s][!] handles errors for all [s] blocks at same nesting level
+   - Schema enforcement applies ONLY to enumerations, NOT pipeline [s] blocks
+*/
 
 /* ===== PIPELINES ===== */
 /* DECLARATION STRUCTURE (order in file):
@@ -25,7 +50,7 @@ default ::= '<~' literal | '<<' literal
    2. Triggers [t] - At least one (pipeline will NOT run without triggers)
    3. Queue config [Q] - Optional
    4. Wrapper [W] OR Setup [\] - MANDATORY (wrapper includes [\][/] in macro)
-   5. Execution blocks - Sequential [r], Parallel {[p],[Y]}, Background [b], Streaming [s]
+   5. Execution blocks - Sequential [r], Parallel {[p],[Y]}, Background [b], Serial [s]
    6. Cleanup [/] - If using explicit setup (not needed if using [W] wrapper)
    7. Outputs [o] - At least one (use [o] !NoError if no output)
 
@@ -50,9 +75,9 @@ trigger ::= '[t]' (TRIGGER_REF | '|T.Call') trigger_config?
 trigger_config ::= '[<]' VARIABLE ':' type '<<' literal
 /* Common triggers:
    [t] |T.Call              - Manual call (for pipelines called via |PipelineName)
-   [t] TG.Cron""            - Time-based trigger
-   [t] TG.FileWatch""       - File system trigger
-   [t] TG.HTTP""            - HTTP endpoint trigger
+   [t] |T.Cron""            - Time-based trigger
+   [t] |T.FileWatch""       - File system trigger
+   [t] |T.HTTP""            - HTTP endpoint trigger
 */
 
 queue_config ::= '[Q]' queue_binding*
@@ -66,6 +91,9 @@ wrapper_config ::= '[<]' VARIABLE ':' type '<<' (literal | VARIABLE)
    - |W.Polyglot.Scope or W.Polyglot.Scope"" (placeholder - no setup/cleanup)
 
    W.Polyglot.Scope: RAII-style scope cleanup placeholder
+   - Two equivalent forms:
+     1. [W] |W.Polyglot.Scope         (pipeline reference - RECOMMENDED)
+     2. [W] W.Polyglot.Scope""        (inline call - alternative)
    - Use when there's no explicit setup/cleanup needed
    - Makes it explicit (not accidental omission)
    - Indicates implicit variable cleanup at scope end
@@ -149,7 +177,7 @@ STATE_NAME ::= 'Declared' | 'DefaultReady' | 'Pending' | 'Ready' | 'Faulted'
              | 'Retrying' | 'Paused' | 'Cached' | 'Dirty'
 
 /* ===== LITERALS ===== */
-literal ::= STRING | NUMBER | BOOLEAN | DATETIME | ENUM_NAME | NONE
+literal ::= STRING | NUMBER | BOOLEAN | DATETIME | ENUM_NAME | NONE | COLLECTION_LITERAL
 STRING ::= '"' [^"]* '"'
 NUMBER ::= INTEGER | FLOAT
 INTEGER ::= '-'? [0-9]+
@@ -159,6 +187,15 @@ DATETIME ::= 'DT' (datetime_literal | duration_literal)
 datetime_literal ::= '"' ISO8601_DATE_TIME '"'
 duration_literal ::= ('.' IDENTIFIER | '.Minutes' | '.Hours' | '.Days') '"' NUMBER '"'
 NONE ::= '#None'
+COLLECTION_LITERAL ::= '{' '}'                          /* Empty collection */
+                     | '{' literal (',' literal)* '}'   /* Non-empty collection */
+
+/* CRITICAL: Collection literals use {}, NOT []
+   Valid:   << {1, 2, 3}
+   Valid:   << {}
+   Invalid: << [1, 2, 3]
+   Invalid: << []
+*/
 
 /* ===== STRING LITERALS AS INLINE PIPELINE CALLS ===== */
 /* CRITICAL: String literals are NOT primitive values - they are inline pipeline calls
@@ -185,11 +222,21 @@ NONE ::= '#None'
      [o] .output: Type                          // Single output, ANY type
      [X]
 
+   CONSTRAINT - When inline pipeline call syntax is valid:
+     Pipeline.Full.Name"..." can be used ONLY if:
+     1. Pipeline has NO input (except .formatted_argument_string), AND
+     2. EITHER:
+        a. Pipeline has exactly ONE output, OR
+        b. Pipeline outputs are packed into pg\serial type
+
    Examples:
      "hello"              → U.String"hello"
      DT.Now""             → pg\dt output (not string!)
      DT.Minutes"5"        → pg\dt duration
      "{.count:Hex}"       → Calls |U.String.Polyglot.Int.Hex
+
+   Invalid (multiple outputs, not packed):
+     Pipeline.TwoOutputs"..."  → ERROR: Use full pipeline call syntax
 */
 
 inline_pipeline_call ::= (PIPELINE_NAME '.')* PIPELINE_NAME STRING

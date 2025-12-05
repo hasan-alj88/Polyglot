@@ -9,9 +9,9 @@
 
 ## Overview
 
-Learn how to work with files and directories in Polyglot pipelines. These examples demonstrate reading, writing, monitoring, and managing files using the `pg\path` type and file triggers.
+Learn how to work with files and directories in Polyglot pipelines. These examples demonstrate reading, writing, monitoring, and managing files using the `:pg.path` type and file triggers.
 
-**Key Concept:** Use `pg\path` for file paths and file triggers for automated file processing.
+**Key Concept:** Use `:pg.path` for file paths and file triggers for automated file processing.
 
 ---
 
@@ -40,8 +40,8 @@ Convert all text in a file to uppercase and save to a new file.
 [|] TransformFile
 
 // Inputs
-[i] .input_file: pg\path
-[i] .output_file: pg\path
+[i] .input_file:pg.path
+[i] .output_file:pg.path
 
 // Trigger: CLI
 [t] |T.Cli
@@ -51,23 +51,23 @@ Convert all text in a file to uppercase and save to a new file.
 
 // Read input file
 [r] |File.ReadText
-[<] .path: pg\path << .input_file
-[>] .content: pg\string >> .file_content
+[<] .path:pg.path << .input_file
+[>] .content:pg.string >> .file_content
 
 // Transform: Convert to uppercase
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 result = .file_content.upper()
 """
-[>] .result: pg\string >> .transformed_content
+[>] .result:pg.string >> .transformed_content
 
 // Write to output file
 [r] |File.WriteText
-[<] .path: pg\path << .output_file
-[<] .content: pg\string << .transformed_content
+[<] .path:pg.path << .output_file
+[<] .content:pg.string << .transformed_content
 
 // Output success message
-[o] .transformed_content: pg\string
+[o] .transformed_content:pg.string
 [X]
 ```
 
@@ -76,18 +76,18 @@ result = .file_content.upper()
 **File Reading:**
 ```polyglot
 [r] |File.ReadText
-[<] .path: pg\path << .input_file
-[>] .content: pg\string >> .file_content
+[<] .path:pg.path << .input_file
+[>] .content:pg.string >> .file_content
 ```
 - `|File.ReadText` is a standard library utility
-- Input: `pg\path` type for file path
-- Output: `pg\string` with file contents
+- Input: `:pg.path` type for file path
+- Output: `:pg.string` with file contents
 
 **File Writing:**
 ```polyglot
 [r] |File.WriteText
-[<] .path: pg\path << .output_file
-[<] .content: pg\string << .transformed_content
+[<] .path:pg.path << .output_file
+[<] .content:pg.string << .transformed_content
 ```
 - `|File.WriteText` writes string to file
 - Creates file if it doesn't exist
@@ -142,30 +142,30 @@ Monitor a directory for new CSV files and automatically process them when they a
 [|] WatchAndProcess
 
 // No inputs - triggered by file system events
-[i] .watch_dir: pg\path << \\Data\\incoming\\
-[i] .output_dir: pg\path << \\Data\\processed\\
+[i] .watch_dir:pg.path << \\Data\\incoming\\
+[i] .output_dir:pg.path << \\Data\\processed\\
 
 // Trigger: File watch
 [t] |T.FileWatch
-[<] .path: pg\path << .watch_dir
-[<] .pattern: pg\string << "*.csv"
-[<] .event: pg\string << "create"
+[<] .path:pg.path << .watch_dir
+[<] .pattern:pg.string << "*.csv"
+[<] .event:pg.string << "create"
 
 // Runtime Wrappers
 [W] |W.Python3.11
 
 // Get triggered file path
 [r] |Trigger.GetFilePath
-[>] .file_path: pg\path >> .new_file
+[>] .file_path:pg.path >> .new_file
 
 // Read the new file
 [r] |File.ReadText
-[<] .path: pg\path << .new_file
-[>] .content: pg\string >> .csv_content
+[<] .path:pg.path << .new_file
+[>] .content:pg.string >> .csv_content
 
 // Process CSV
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 from io import StringIO
 
@@ -177,27 +177,27 @@ rows = list(csv_reader)
 row_count = len(rows)
 result = f"Processed {row_count} rows from file"
 """
-[>] .result: pg\string >> .process_summary
+[>] .result:pg.string >> .process_summary
 
 // Write summary to output directory
 [r] |Path.GetFileName
-[<] .path: pg\path << .new_file
-[>] .filename: pg\string >> .original_filename
+[<] .path:pg.path << .new_file
+[>] .filename:pg.string >> .original_filename
 
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import os
 output_path = os.path.join(.output_dir, .original_filename.replace('.csv', '_summary.txt'))
 result = output_path
 """
-[>] .result: pg\path >> .summary_file
+[>] .result:pg.path >> .summary_file
 
 [r] |File.WriteText
-[<] .path: pg\path << .summary_file
-[<] .content: pg\string << .process_summary
+[<] .path:pg.path << .summary_file
+[<] .content:pg.string << .process_summary
 
 // Output summary
-[o] .process_summary: pg\string
+[o] .process_summary:pg.string
 [X]
 ```
 
@@ -206,9 +206,9 @@ result = output_path
 **File Watch Trigger:**
 ```polyglot
 [t] |T.FileWatch
-[<] .path: pg\path << .watch_dir
-[<] .pattern: pg\string << "*.csv"
-[<] .event: pg\string << "create"
+[<] .path:pg.path << .watch_dir
+[<] .pattern:pg.string << "*.csv"
+[<] .event:pg.string << "create"
 ```
 - Monitors directory for new files
 - Pattern `*.csv` matches only CSV files
@@ -218,7 +218,7 @@ result = output_path
 **Get Triggered File:**
 ```polyglot
 [r] |Trigger.GetFilePath
-[>] .file_path: pg\path >> .new_file
+[>] .file_path:pg.path >> .new_file
 ```
 - Retrieves path of the file that triggered the pipeline
 
@@ -266,8 +266,8 @@ Find all text files in a directory and count total words across all files.
 [|] ScanAndCountWords
 
 // Inputs
-[i] .directory: pg\path
-[i] .file_pattern: pg\string << "*.txt"
+[i] .directory:pg.path
+[i] .file_pattern:pg.string << "*.txt"
 
 // Trigger: CLI
 [t] |T.Cli
@@ -277,13 +277,13 @@ Find all text files in a directory and count total words across all files.
 
 // List files in directory
 [r] |Directory.ListFiles
-[<] .path: pg\path << .directory
-[<] .pattern: pg\string << .file_pattern
-[>] .files: pg\string >> .file_list  // Comma-separated list
+[<] .path:pg.path << .directory
+[<] .pattern:pg.string << .file_pattern
+[>] .files:pg.string >> .file_list  // Comma-separated list
 
 // Process each file
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import os
 
 files = .file_list.split(',')
@@ -314,10 +314,10 @@ report += "\\n".join(file_details)
 
 result = report
 """
-[>] .result: pg\string >> .word_count_report
+[>] .result:pg.string >> .word_count_report
 
 // Output report
-[o] .word_count_report: pg\string
+[o] .word_count_report:pg.string
 [X]
 ```
 
@@ -326,9 +326,9 @@ result = report
 **Directory Listing:**
 ```polyglot
 [r] |Directory.ListFiles
-[<] .path: pg\path << .directory
-[<] .pattern: pg\string << .file_pattern
-[>] .files: pg\string >> .file_list
+[<] .path:pg.path << .directory
+[<] .pattern:pg.string << .file_pattern
+[>] .files:pg.string >> .file_list
 ```
 - Lists all files matching pattern
 - Returns comma-separated string of file paths
@@ -383,7 +383,7 @@ Parse a file path to extract directory, filename, and extension, then create a b
 [|] CreateBackup
 
 // Inputs
-[i] .source_file: pg\path
+[i] .source_file:pg.path
 
 // Trigger: CLI
 [t] |T.Cli
@@ -393,20 +393,20 @@ Parse a file path to extract directory, filename, and extension, then create a b
 
 // Extract path components
 [r] |Path.GetDirectory
-[<] .path: pg\path << .source_file
-[>] .directory: pg\path >> .dir
+[<] .path:pg.path << .source_file
+[>] .directory:pg.path >> .dir
 
 [r] |Path.GetFileName
-[<] .path: pg\path << .source_file
-[>] .filename: pg\string >> .name
+[<] .path:pg.path << .source_file
+[>] .filename:pg.string >> .name
 
 [r] |Path.GetExtension
-[<] .path: pg\path << .source_file
-[>] .extension: pg\string >> .ext
+[<] .path:pg.path << .source_file
+[>] .extension:pg.string >> .ext
 
 // Create backup path
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import os
 from datetime import datetime
 
@@ -421,20 +421,20 @@ backup_name = f"{base_name}_backup_{timestamp}{.ext}"
 backup_path = os.path.join(.dir, backup_name)
 result = backup_path
 """
-[>] .result: pg\path >> .backup_path
+[>] .result:pg.path >> .backup_path
 
 // Read source file
 [r] |File.ReadText
-[<] .path: pg\path << .source_file
-[>] .content: pg\string >> .file_content
+[<] .path:pg.path << .source_file
+[>] .content:pg.string >> .file_content
 
 // Write to backup path
 [r] |File.WriteText
-[<] .path: pg\path << .backup_path
-[<] .content: pg\string << .file_content
+[<] .path:pg.path << .backup_path
+[<] .content:pg.string << .file_content
 
 // Return backup path
-[o] .backup_path: pg\path
+[o] .backup_path:pg.path
 [X]
 ```
 
@@ -443,16 +443,16 @@ result = backup_path
 **Path Component Extraction:**
 ```polyglot
 [r] |Path.GetDirectory
-[<] .path: pg\path << .source_file
-[>] .directory: pg\path >> .dir
+[<] .path:pg.path << .source_file
+[>] .directory:pg.path >> .dir
 
 [r] |Path.GetFileName
-[<] .path: pg\path << .source_file
-[>] .filename: pg\string >> .name
+[<] .path:pg.path << .source_file
+[>] .filename:pg.string >> .name
 
 [r] |Path.GetExtension
-[<] .path: pg\path << .source_file
-[>] .extension: pg\string >> .ext
+[<] .path:pg.path << .source_file
+[>] .extension:pg.string >> .ext
 ```
 
 For path `\\Data\\files\\report.txt`:
@@ -499,8 +499,8 @@ Convert multiple CSV files to JSON format.
 [|] BatchCSVtoJSON
 
 // Inputs
-[i] .input_dir: pg\path
-[i] .output_dir: pg\path
+[i] .input_dir:pg.path
+[i] .output_dir:pg.path
 
 // Trigger: CLI
 [t] |T.Cli
@@ -510,13 +510,13 @@ Convert multiple CSV files to JSON format.
 
 // List all CSV files
 [r] |Directory.ListFiles
-[<] .path: pg\path << .input_dir
-[<] .pattern: pg\string << "*.csv"
-[>] .files: pg\string >> .csv_files
+[<] .path:pg.path << .input_dir
+[<] .pattern:pg.string << "*.csv"
+[>] .files:pg.string >> .csv_files
 
 // Process batch
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 import json
 import os
@@ -565,10 +565,10 @@ if errors:
 
 result = summary
 """
-[>] .result: pg\string >> .conversion_summary
+[>] .result:pg.string >> .conversion_summary
 
 // Output summary
-[o] .conversion_summary: pg\string
+[o] .conversion_summary:pg.string
 [X]
 ```
 
@@ -615,7 +615,7 @@ Application startup needs to load multiple JSON configuration files. Use `[s]` b
 [|] LoadApplicationConfigs
 
 // Inputs
-[i] .config_dir: pg\path
+[i] .config_dir:pg.path
 
 // Trigger: CLI
 [t] |T.Cli
@@ -634,17 +634,17 @@ Application startup needs to load multiple JSON configuration files. Use `[s]` b
 // Check for critical config errors
 [s][!] !File.NotFound
 [r] |U.Log.Error
-[<] .msg: pg\string << "Critical config file missing"
+[<] .msg:pg.string << "Critical config file missing"
 [o] !ConfigurationError
 
 [s][!] !JSON.ParseError
 [r] |U.Log.Error
-[<] .msg: pg\string << "Invalid JSON in config file"
+[<] .msg:pg.string << "Invalid JSON in config file"
 [o] !ConfigurationError
 
 // Use loaded configurations
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 # All configs are available as variables
@@ -669,10 +669,10 @@ combined = {
 
 result = json.dumps(combined, indent=2)
 """
-[>] .result: pg\string >> .merged_config
+[>] .result:pg.string >> .merged_config
 
 // Output merged configuration
-[o] .merged_config: pg\string
+[o] .merged_config:pg.string
 [X]
 ```
 
@@ -693,7 +693,7 @@ result = json.dumps(combined, indent=2)
 ```polyglot
 [s][!] !File.NotFound
 [r] |U.Log.Error
-[<] .msg: pg\string << "Critical config file missing"
+[<] .msg:pg.string << "Critical config file missing"
 ```
 - Catches `!File.NotFound` errors from **any** `[s]` block at this scope
 - Applies to all four config loads
@@ -780,15 +780,15 @@ Load all JSON plugin configurations from a directory, excluding test files.
 // Error handling for missing directory or parse errors
 [s][!] !File.NotFound
 [r] |U.Log.Warn
-[<] .msg: pg\string << "Plugin directory not found, using defaults"
+[<] .msg:pg.string << "Plugin directory not found, using defaults"
 
 [s][!] !JSON.ParseError
 [r] |U.Log.Error
-[<] .msg: pg\string << "Invalid plugin configuration detected"
+[<] .msg:pg.string << "Invalid plugin configuration detected"
 
 // Process loaded plugins
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 # .plugins contains merged plugin configurations
@@ -801,9 +801,9 @@ if isinstance(plugins, dict):
 else:
     result = "No plugins loaded"
 """
-[>] .result: pg\string >> .summary
+[>] .result:pg.string >> .summary
 
-[o] .summary: pg\string
+[o] .summary:pg.string
 [X]
 ```
 
@@ -895,11 +895,11 @@ Load environment-specific configurations with complex filtering and key extracti
 // Error handling
 [s][!] !File.NotFound
 [r] |U.Log.Warn
-[<] .msg: pg\string << "Some config files missing"
+[<] .msg:pg.string << "Some config files missing"
 
 // Merge environment and shared configs
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 env = .env_configs if .env_configs != "#None.ErrorState" else {}
@@ -914,9 +914,9 @@ result = json.dumps({
     "configs": merged
 }, indent=2)
 """
-[>] .result: pg\string >> .final_config
+[>] .result:pg.string >> .final_config
 
-[o] .final_config: pg\string
+[o] .final_config:pg.string
 [X]
 ```
 
@@ -983,8 +983,8 @@ polyglot run LoadEnvironmentConfigs --environment Production
 
 **pg\path Type:**
 ```polyglot
-[i] .file_path: pg\path
-[i] .directory: pg\path
+[i] .file_path:pg.path
+[i] .directory:pg.path
 ```
 - Platform-independent path handling
 - Supports both absolute and relative paths
@@ -1012,9 +1012,9 @@ polyglot run LoadEnvironmentConfigs --environment Production
 **File System Events:**
 ```polyglot
 [t] |T.FileWatch
-[<] .path: pg\path << .directory
-[<] .pattern: pg\string << "*.csv"
-[<] .event: pg\string << "create"
+[<] .path:pg.path << .directory
+[<] .pattern:pg.string << "*.csv"
+[<] .event:pg.string << "create"
 ```
 
 **Event Types:**
@@ -1162,20 +1162,20 @@ Step 3: Assign to variables (automatic join)
 
 **Windows Paths:**
 ```polyglot
-[i] .file: pg\path << \\Data\\files\\report.txt
-[i] .dir: pg\path << C:\\Users\\Alice\\Documents\\
+[i] .file:pg.path << \\Data\\files\\report.txt
+[i] .dir:pg.path << C:\\Users\\Alice\\Documents\\
 ```
 
 **Unix Paths:**
 ```polyglot
-[i] .file: pg\path << /data/files/report.txt
-[i] .dir: pg\path << /home/alice/documents/
+[i] .file:pg.path << /data/files/report.txt
+[i] .dir:pg.path << /home/alice/documents/
 ```
 
 **Relative Paths:**
 ```polyglot
-[i] .file: pg\path << ..\\data\\file.txt
-[i] .current: pg\path << .\\config.json
+[i] .file:pg.path << ..\\data\\file.txt
+[i] .current:pg.path << .\\config.json
 ```
 
 **Special Path Variables:**

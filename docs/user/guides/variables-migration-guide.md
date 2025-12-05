@@ -43,18 +43,18 @@ This guide helps you migrate from older Polyglot variable concepts to the new st
 ```polyglot
 # Had to check if field was populated
 [#] Config
-[<] .timeout: pg\int
+[<] .timeout:pg.int
 [X]
 
 [r] |CheckIfSet
-[<] .value: pg\int << .config.timeout  # Might fail if not set
+[<] .value:pg.int << .config.timeout  # Might fail if not set
 ```
 
 **After (Native Support):**
 ```polyglot
 # Use default assignment operator
 [#] Config
-[<] .timeout: pg\int <~ 30  # Default is 30, can override once
+[<] .timeout:pg.int <~ 30  # Default is 30, can override once
 [X]
 
 [i] .config: #Config << #Config
@@ -77,12 +77,12 @@ This guide helps you migrate from older Polyglot variable concepts to the new st
 **After (Standardized):**
 ```polyglot
 [r] |RiskyOperation
-[>] .result: pg\string >> .data
-[>] .errors: pg\array{!} >> .operation_errors
+[>] .result:pg.string >> .data
+[>] .errors:pg.array{!} >> .operation_errors
 
 [?] .data.state =? #Variables.States.Faulted
 [~][r] |HandleError
-[~][<] .errors: pg\array{!} << .operation_errors
+[~][<] .errors:pg.array{!} << .operation_errors
 ```
 
 **Impact:** Consistent error handling across all pipelines.
@@ -98,16 +98,16 @@ This guide helps you migrate from older Polyglot variable concepts to the new st
 ❌ **Old (Implicit Behavior):**
 ```polyglot
 [#] Config
-[<] .timeout: pg\int          # Unclear if this has a default
-[<] .retries: pg\int
+[<] .timeout:pg.int          # Unclear if this has a default
+[<] .retries:pg.int
 [X]
 ```
 
 ✅ **New (Explicit):**
 ```polyglot
 [#] Config
-[<] .timeout: pg\int <~ 30    # Explicit default
-[<] .retries: pg\int <~ 3     # Explicit default
+[<] .timeout:pg.int <~ 30    # Explicit default
+[<] .retries:pg.int <~ 3     # Explicit default
 [X]
 ```
 
@@ -125,18 +125,18 @@ This guide helps you migrate from older Polyglot variable concepts to the new st
 ❌ **Old (No Error Output):**
 ```polyglot
 [r] |FetchData
-[>] .result: pg\string >> .data
+[>] .result:pg.string >> .data
 ```
 
 ✅ **New (Explicit Error Handling):**
 ```polyglot
 [r] |FetchData
-[>] .result: pg\string >> .data
-[>] .errors: pg\array{!} >> .fetch_errors
+[>] .result:pg.string >> .data
+[>] .errors:pg.array{!} >> .fetch_errors
 
 [?] .data.state =? #Variables.States.Faulted
 [~][r] |U.Log.Error
-[~][<] .errors: pg\array{!} << .fetch_errors
+[~][<] .errors:pg.array{!} << .fetch_errors
 ```
 
 **Action Items:**
@@ -153,7 +153,7 @@ This guide helps you migrate from older Polyglot variable concepts to the new st
 ✅ **`[i]` blocks expect Ready variables:**
 ```polyglot
 [|] MyPipeline
-[i] .required_param: pg\string       # Must be Ready
+[i] .required_param:pg.string       # Must be Ready
 [i] .config: #Config << #Config       # Ready (defaults applied)
 [t] |T.Call
 ```
@@ -204,15 +204,15 @@ This guide helps you migrate from older Polyglot variable concepts to the new st
 **Before:**
 ```polyglot
 [#] ServerConfig
-[<] .host: pg\string
-[<] .port: pg\int
-[<] .timeout: pg\int
+[<] .host:pg.string
+[<] .port:pg.int
+[<] .timeout:pg.int
 [X]
 
 [|] StartServer
-[i] .host: pg\string
-[i] .port: pg\int
-[i] .timeout: pg\int
+[i] .host:pg.string
+[i] .port:pg.int
+[i] .timeout:pg.int
 [t] |T.Call
 # Had to pass all params manually
 ```
@@ -220,9 +220,9 @@ This guide helps you migrate from older Polyglot variable concepts to the new st
 **After:**
 ```polyglot
 [#] ServerConfig
-[<] .host: pg\string <~ "localhost"
-[<] .port: pg\int <~ 8080
-[<] .timeout: pg\int <~ 30
+[<] .host:pg.string <~ "localhost"
+[<] .port:pg.int <~ 8080
+[<] .timeout:pg.int <~ 30
 [X]
 
 [|] StartServer
@@ -245,8 +245,8 @@ This guide helps you migrate from older Polyglot variable concepts to the new st
 **After:**
 ```polyglot
 [r] |CallAPI
-[>] .response: pg\string >> .api_response
-[>] .errors: pg\array{!} >> .api_errors
+[>] .response:pg.string >> .api_response
+[>] .errors:pg.array{!} >> .api_errors
 [~]
 [~][!] !pg.Network.Timeout
 [~][~]# Automatic retry can be configured
@@ -278,11 +278,11 @@ This guide helps you migrate from older Polyglot variable concepts to the new st
 ```polyglot
 [p] |Task1
 [>] .result >> .data1
-[>] .errors: pg\array{!} >> .errors1
+[>] .errors:pg.array{!} >> .errors1
 
 [p] |Task2
 [>] .result >> .data2
-[>] .errors: pg\array{!} >> .errors2
+[>] .errors:pg.array{!} >> .errors2
 
 [Y] |Y.Join
 [<] .data1

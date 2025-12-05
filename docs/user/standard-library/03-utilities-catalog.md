@@ -60,13 +60,13 @@ The `|U.*` namespace provides essential utility operations for common programmin
 These pipelines are called automatically during string literal processing when format identifiers are used.
 
 **Pipeline Signature Requirements:**
-- **Input:** `.formatted_argument_string: pg\string` (MANDATORY name)
+- **Input:** `.formatted_argument_string:pg.string` (MANDATORY name)
 - **Trigger:** `|T.String.Call` (MANDATORY)
 - **Output:** Single output - can be ANY type (not limited to strings!)
 
 **Processing Flow:**
 1. Extract `{.var:FormatId}` from string
-2. Infer type of `.var` (e.g., `pg\int`)
+2. Infer type of `.var` (e.g., `:pg.int`)
 3. Construct pipeline call: `|U.String.Polyglot.Int.FormatId`
 4. Call pipeline with variable value
 5. Substitute result back into string
@@ -87,8 +87,8 @@ These pipelines are called automatically during string literal processing when f
 
 **Usage Example:**
 ```polyglot
-[r] .count: pg\int << 255
-[r] .msg: pg\string << "Value in hex: {.count:Hex}"
+[r] .count:pg.int << 255
+[r] .msg:pg.string << "Value in hex: {.count:Hex}"
 // Result: "Value in hex: FF"
 ```
 
@@ -107,8 +107,8 @@ These pipelines are called automatically during string literal processing when f
 
 **Usage Example:**
 ```polyglot
-[r] .price: pg\float << 1234.567
-[r] .msg: pg\string << "Total: {.price:Currency}"
+[r] .price:pg.float << 1234.567
+[r] .msg:pg.string << "Total: {.price:Currency}"
 // Result: "Total: $1,234.57"
 ```
 
@@ -128,8 +128,8 @@ These pipelines are called automatically during string literal processing when f
 
 **Usage Example:**
 ```polyglot
-[r] .timestamp: pg\dt << DT.Now""
-[r] .msg: pg\string << "Generated at {.timestamp:Time12}"
+[r] .timestamp:pg.dt << DT.Now""
+[r] .msg:pg.string << "Generated at {.timestamp:Time12}"
 // Result: "Generated at 2:30 PM"
 ```
 
@@ -147,7 +147,7 @@ These pipelines are called automatically during string literal processing when f
 **Usage Example:**
 ```polyglot
 [r] .enabled: #Boolean << #Boolean.True
-[r] .msg: pg\string << "Feature: {.enabled:OnOff}"
+[r] .msg:pg.string << "Feature: {.enabled:OnOff}"
 // Result: "Feature: On"
 ```
 
@@ -165,8 +165,8 @@ These pipelines are called automatically during string literal processing when f
 
 **Usage Example:**
 ```polyglot
-[r] .filepath: pg\path << \\Path\\.unix << "/home/user/docs/report.pdf"
-[r] .msg: pg\string << "Filename: {.filepath:Basename}"
+[r] .filepath:pg.path << \\Path\\.unix << "/home/user/docs/report.pdf"
+[r] .msg:pg.string << "Filename: {.filepath:Basename}"
 // Result: "Filename: report.pdf"
 ```
 
@@ -176,29 +176,29 @@ These pipelines are called automatically during string literal processing when f
 
 ```polyglot
 [|] U.String.Polyglot.{Type}.{CustomFormat}
-[i] .formatted_argument_string: pg\string
+[i] .formatted_argument_string:pg.string
 [t] |T.String.Call
 [W] |W.Polyglot.Scope
 // Custom formatting logic here
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
 **Example - Custom Phone Format:**
 ```polyglot
 [|] U.String.Polyglot.Int.PhoneUS
-[i] .formatted_argument_string: pg\string
+[i] .formatted_argument_string:pg.string
 [t] |T.String.Call
 [W] |W.Polyglot.Scope
-[r] .number: pg\int << .formatted_argument_string
+[r] .number:pg.int << .formatted_argument_string
 // Format as (XXX) XXX-XXXX
-[r] .result: pg\string << // formatting logic
-[o] .result: pg\string
+[r] .result:pg.string << // formatting logic
+[o] .result:pg.string
 [X]
 
 // Usage:
-[r] .phone: pg\int << 5551234567
-[r] .msg: pg\string << "Call: {.phone:PhoneUS}"
+[r] .phone:pg.int << 5551234567
+[r] .msg:pg.string << "Call: {.phone:PhoneUS}"
 // Result: "Call: (555) 123-4567"
 ```
 
@@ -219,7 +219,7 @@ Language-specific formatters can provide locale-aware or language-specific forma
 
 ```
 Error: Pipeline not found: |U.String.Polyglot.String.Hex
-Note: Format identifier 'Hex' expects type 'pg\int', but variable is 'pg\string'
+Note: Format identifier 'Hex' expects type ':pg.int', but variable is ':pg.string'
 ```
 
 **Why this works:** Format pipelines are named by type, so an incorrect type-format combination results in a missing pipeline definition.
@@ -517,8 +517,8 @@ Each utility performs one specific operation.
 ```polyglot
 // Conceptual example (API TBD)
 [r] |U.String.ToUpper
-[<] .input: pg\string << "hello"
-[>] .result: pg\string >> uppercase_result
+[<] .input:pg.string << "hello"
+[>] .result:pg.string >> uppercase_result
 // Expected: "HELLO"
 ```
 
@@ -529,12 +529,12 @@ Utilities compose naturally in pipelines.
 ```polyglot
 // Conceptual example (API TBD)
 [r] |U.String.Trim
-[<] .input: pg\string << "  hello  "
-[>] .result: pg\string >> trimmed
+[<] .input:pg.string << "  hello  "
+[>] .result:pg.string >> trimmed
 
 [r] |U.String.ToUpper
-[<] .input: pg\string << trimmed
-[>] .result: pg\string >> final_result
+[<] .input:pg.string << trimmed
+[>] .result:pg.string >> final_result
 // Expected: "HELLO"
 ```
 
@@ -545,13 +545,13 @@ Utilities will return error types for invalid operations.
 ```polyglot
 // Conceptual example (API TBD)
 [r] |U.Convert.ToInt
-[<] .input: pg\string << "not-a-number"
-[>] .result: pg\int >> number
+[<] .input:pg.string << "not-a-number"
+[>] .result:pg.int >> number
 [~]
 [~][!] !pg.Conversion.InvalidFormat
-[~][>] .message: pg\string >> error_msg
+[~][>] .message:pg.string >> error_msg
 [~][r] |HandleConversionError
-[~][<] .error_msg: pg\string << error_msg
+[~][<] .error_msg:pg.string << error_msg
 ```
 
 ### Pattern 4: Parallel Processing
@@ -561,11 +561,11 @@ Utilities work within parallel blocks using expansion.
 ```polyglot
 // Conceptual example (API TBD)
 [p] |ProcessStrings
-[<] .items: pg\array{pg\string} << ["hello", "world", "test"]
+[<] .items: pg.array.pg.string << ["hello", "world", "test"]
 
 [~][r] |U.String.ToUpper
-[<] .input: pg\string << .items[*]
-[>] .result: pg\string >> uppercase_results
+[<] .input:pg.string << .items[*]
+[>] .result:pg.string >> uppercase_results
 
 [Y] |Y.Join
 [>] uppercase_results
@@ -580,37 +580,37 @@ Utilities integrate with other standard library components:
 ```polyglot
 // Conceptual: Pre-process data before wrapper
 [r] |U.File.Read
-[<] .path: pg\path << \\Path\\.unix << "/data/input.txt"
-[>] .content: pg\string >> file_content
+[<] .path:pg.path << \\Path\\.unix << "/data/input.txt"
+[>] .content:pg.string >> file_content
 
 [W] |W.Python3.11
 [r] |PythonAnalyze
-[<] .data: pg\string << file_content
+[<] .data:pg.string << file_content
 ```
 
 **With Queue Control ([Q]):**
 ```polyglot
 // Conceptual: Validate before queuing
 [r] |U.Validate.Email
-[<] .input: pg\string << user_email
-[>] .valid: pg\bool >> is_valid
+[<] .input:pg.string << user_email
+[>] .valid:pg.bool >> is_valid
 
-[t] .condition: pg\bool << is_valid
+[t] .condition:pg.bool << is_valid
 [Q] |Q.Queue.Assign
-[<] .queue: pg\string << #AppQueues.EmailProcessing
+[<] .queue:pg.string << #AppQueues.EmailProcessing
 ```
 
 **With Error Handling:**
 ```polyglot
 // Conceptual: Utility operation with error handling
 [r] |U.File.Read
-[<] .path: pg\path << file_path
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << file_path
+[>] .content:pg.string >> file_data
 [~]
 [~][!] !pg.FileSystem.NotFound
-[~][>] .message: pg\string >> error_msg
+[~][>] .message:pg.string >> error_msg
 [~][r] |HandleFileError
-[~][<] .error_msg: pg\string << error_msg
+[~][<] .error_msg:pg.string << error_msg
 ```
 
 ## Design Principles

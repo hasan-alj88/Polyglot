@@ -601,7 +601,7 @@ Polyglot editor support is built on the Language Server Protocol for cross-edito
 [|] ${1:PipelineName}
 [i] ${2:#None}
 [t] |T.Call
-[W] |W.NoSetup.NoCleanup
+[W] |W.Polyglot.Scope
 
 $0
 [X]
@@ -954,7 +954,7 @@ polyglot-tools doc --format html file.pg > docs/api.html
 [|] ${PipelineName}
 [i] ${InputDeclaration}
 [t] |T.Call
-[W] |W.NoSetup.NoCleanup
+[W] |W.Polyglot.Scope
 
 [r] ${Operation}
 [o] ${OutputDeclaration}
@@ -967,7 +967,7 @@ polyglot-tools doc --format html file.pg > docs/api.html
 [|] ${PipelineName}
 [i] ${Inputs}
 [t] |T.Call
-[W] |W.NoSetup.NoCleanup
+[W] |W.Polyglot.Scope
 
 [r] |${OperationThatMightFail}
 [<] ${InputParams}
@@ -989,7 +989,7 @@ polyglot-tools doc --format html file.pg > docs/api.html
 [|] ${PipelineName}
 [i] ${Inputs}
 [t] |T.Call
-[W] |W.NoSetup.NoCleanup
+[W] |W.Polyglot.Scope
 
 [r] ${ResultVariable}: ${Type} << ${DefaultValue}
 
@@ -1115,8 +1115,8 @@ See [Syntax Highlighting Preview](../polyglot-syntax-darkmode-preview.html) for 
 ### Appendix C: Example Code
 
 See `docs/user/examples/` directory for comprehensive examples demonstrating:
-- [Hello World Examples](../user/examples/01-hello-world.md)
-- [Approved Examples](../user/examples/07-approved-examples.md)
+- [Hello World Examples](../user/examples/hello-world.md)
+- [Approved Examples](../user/examples/approved-examples.md)
 
 All examples follow PFG v1.0 specifications.
 

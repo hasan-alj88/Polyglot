@@ -1,0 +1,25 @@
+_meta:
+  src: block-markers.md
+  updated: 2025-12-02
+topic: Block Markers Reference
+kw: [block-markers, [x], structure, execution, semantics, registry, data-flow, control-flow, boolean, special, 3-char-sequences]
+sum: Comprehensive ref for 30+ 3-char block markers ([x]) defining structure/execution in Polyglot; no keywords/indentation, explicit semantics via markers
+pts:
+  - Registry: [@] pkg, [|] pipeline, [#] enum, [!] error, [M] macro
+  - Data Flow: [i] input, [o] output, [<] push, [>] pull
+  - Execution: [r] seq, [p] parallel, [b] bg, [s] serial, [Y] join
+  - Control: [?] switch, [t] trigger, [Q] queue, [W] wrapper
+  - Scope: [~] nest, [\] setup, [/] cleanup, [{] [{] macro-in, [}] macro-out
+  - Boolean: [&] AND, [+] OR, [-] NOT, [^] XOR, [.] group
+  - Special: [X] terminate, [A] alias, [*] line-continue
+  - Mandatory pipeline: [i][t][W|[\][/]][r|p|?...][o] in order
+  - [i] implicit trigger when var Ready state
+  - [<][>] require parent block (pipeline call/unpack)
+  - Push/pull direction: << PUSH right-to-left, >> PULL left-to-right
+  - Var decl in all exec blocks, not just [r]
+  - ~* unpack op, ~Y.* pack op
+  - Range ops: ?[a,b], ?[a,b), ?(a,b], ?(a,b)
+  - <~ DefaultReady, override once max
+  - !No.Input for no inputs, !No.Output for no outputs
+rels: [overview.md, operators.md, type-system.md, variable-state-system.md, pipeline-definition.md, handling-collections.md]
+code: [polyglot-parser/src/parser.rs, polyglot-parser/src/validation.rs]

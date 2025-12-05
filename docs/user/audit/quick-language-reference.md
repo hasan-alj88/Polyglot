@@ -29,23 +29,23 @@
 
 ```polyglot
 // ✗ INVALID - Missing block marker
-.x: pg\int << 5
+.x:pg.int << 5
 
 // ✗ INVALID - Wrong type separator
 .x: pg/int << 5
 
 // ✗ INVALID - Wrong assignment direction
-[<] .input: pg\string >> value
+[<] .input:pg.string >> value
 
 // ✗ INVALID - Missing pipeline operator
 [r] ProcessData
 
 // ✗ INVALID - Missing [X] close marker
 [|] Pipeline
-[i] .input: pg\string
+[i] .input:pg.string
 
 // ✗ INVALID - Assignment in [o] block
-[o] .result: pg\string << "value"
+[o] .result:pg.string << "value"
 
 // ✗ INVALID - Comparison operators don't exist
 [?] .age >= 18
@@ -58,39 +58,39 @@
 
 // ✗ INVALID - Inconsistent outputs across branches
 [?] .condition ?> True
-[~][o] .result: pg\string
+[~][o] .result:pg.string
 
 [?] .condition ?> False
-[~][o] .status: pg\int    // Different field!
+[~][o] .status:pg.int    // Different field!
 ```
 
 ### Always Do This
 
 ```polyglot
 // ✓ VALID - Starts with block marker
-[r] .x: pg\int << 5
+[r] .x:pg.int << 5
 
 // ✓ VALID - Correct type separator
-[r] .x: pg\int << 5
+[r] .x:pg.int << 5
 
 // ✓ VALID - Correct assignment direction
-[<] .input: pg\string << value
+[<] .input:pg.string << value
 
 // ✓ VALID - Pipeline operator present
 [r] |ProcessData
 
 // ✓ VALID - Properly closed
 [|] Pipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [X]
 
 // ✓ VALID - Computation then declaration
-[r] .greeting: pg\string << "Hello, {.name}!"
-[o] .greeting: pg\string
+[r] .greeting:pg.string << "Hello, {.name}!"
+[o] .greeting:pg.string
 
 // ✓ VALID - Use explicit named operations instead of comparisons
 [Q] |Q.DispatchIf.RAM.MoreThan
-[<] .ram_gb: pg\uint << 3
+[<] .ram_gb:pg.uint << 3
 
 // ✓ VALID - Or use range matching when appropriate
 [?] .age ?> 18..65
@@ -98,20 +98,20 @@
 
 // ✓ VALID - Catch errors with [!] block
 [r] |RiskyOperation
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [~]
 [~][!] !Error.Network.Timeout
-[~][<] .timeout: pg\dt << DT"5m"
+[~][<] .timeout:pg.dt << DT"5m"
 [~][r] |HandleTimeout
 
 // ✓ VALID - Consistent outputs across all branches
 [?] .status ?> #Status.Success
-[~][o] .result: pg\string
-[~][o] .code: pg\int
+[~][o] .result:pg.string
+[~][o] .code:pg.int
 
 [?] .status ?> #Status.Failed
-[~][o] .result: pg\string
-[~][o] .code: pg\int
+[~][o] .result:pg.string
+[~][o] .code:pg.int
 ```
 
 ---
@@ -124,8 +124,8 @@
 |--------|---------|------------------|-------|
 | `[\|]` | Pipeline definition | `[X]` | `[|] PipelineName` |
 | `[X]` | Close marker | `[\|]`, `[#]`, `[!]` | `[X]` |
-| `[i]` | Input declaration | - | `[i] .param: pg\string` |
-| `[o]` | Output declaration | - | `[o] .result: pg\string` |
+| `[i]` | Input declaration | - | `[i] .param:pg.string` |
+| `[o]` | Output declaration | - | `[o] .result:pg.string` |
 | `[r]` | Run sequential | - | `[r] |PipelineName` |
 | `[p]` | Parallel execution | - | `[p] |PipelineName` |
 | `[<]` | Pass input / Define field | - | `[<] .param << value` |
@@ -157,15 +157,15 @@
 
 // Error structure
 [!] !ErrorName
-[<] .message: pg\string << "msg"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "msg"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 [X]
 
 // Input variants
-[i] .required: pg\string                    // Required
-[i] Fixed .constant: pg\string << "value"   // Immutable
-[i] Default .optional: pg\int << 30         // Optional with default
+[i] .required:pg.string                    // Required
+[i] Fixed .constant:pg.string << "value"   // Immutable
+[i] Default .optional:pg.int << 30         // Optional with default
 
 // Nesting with [~]
 [p] |Parallel
@@ -188,7 +188,7 @@
 | `!` | Error | - | Mark error type | `!CustomError` |
 | `<<` | Push | **LEFT** | Push value INTO variable | `.x << value` |
 | `>>` | Pull | **RIGHT** | Pull value FROM source | `.x >> output` |
-| `\` | Type separator | - | Separate namespace/type | `pg\int` |
+| `\` | Type separator | - | Separate namespace/type | `:pg.int` |
 
 ### Operator Usage
 
@@ -220,11 +220,11 @@
 [X]
 //usage
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 
 // Assignment operators << and >>
-[<] .input: pg\string << "push INTO this"
-[>] .output: pg\string >> "pull FROM this"
+[<] .input:pg.string << "push INTO this"
+[>] .output:pg.string >> "pull FROM this"
 ```
 
 ### Assignment Direction
@@ -272,16 +272,16 @@ Instead, use:
 ```polyglot
 // Instead of: .ram >= 3 (INVALID)
 [Q] |Q.DispatchIf.RAM.MoreThan
-[<] .ram_gb: pg\uint << 3
+[<] .ram_gb:pg.uint << 3
 
 // Instead of: .name == "" (INVALID)
 [Q] |Q.DispatchIf.String.IsEmpty
-[<] .value: pg\string << .name
+[<] .value:pg.string << .name
 
 // Instead of: .count > 0 (INVALID)
 [Q] |Q.DispatchIf.Number.GreaterThan
-[<] .number: pg\int << .count
-[<] .threshold: pg\int << 0
+[<] .number:pg.int << .count
+[<] .threshold:pg.int << 0
 ```
 
 ---
@@ -312,9 +312,9 @@ pg\dt           // DateTime
 ```polyglot
 pg\array{element_type}         // Ordered array
 pg\set{element_type}           // Unordered set
-pg\array{pg\string}            // String array
+pg.array.pg.string            // String array
 pg\set{pg\int}                 // Integer set
-pg\array{pg\array{pg\int}}     // 2D array
+pg\array{pg.array.pg.int}     // 2D array
 ```
 
 ### Special Types
@@ -339,20 +339,20 @@ pg.mutable\array{pg\int}
 
 ```polyglot
 // Variables
-[r] .count: pg\int << 0
-[r] .name: pg\string << "Alice"
-[r] .valid: pg\bool << #True
-[r] .items: pg\array{pg\string} << array{"a", "b", "c"}
-[r] .config: pg\serial << serial{"host": "localhost"}
+[r] .count:pg.int << 0
+[r] .name:pg.string << "Alice"
+[r] .valid:pg.bool << #True
+[r] .items: pg.array.pg.string << array{"a", "b", "c"}
+[r] .config:pg.serial << serial{"host": "localhost"}
 
 // Inputs
-[i] .file: pg\path
-[i] .data: pg\array{pg\int}
-[i] Default .timeout: pg\int << 30
+[i] .file:pg.path
+[i] .data: pg.array.pg.int
+[i] Default .timeout:pg.int << 30
 
 // Outputs
-[o] .result: pg\string
-[o] .count: pg\int
+[o] .result:pg.string
+[o] .count:pg.int
 
 // Mutable
 [r] .counter: pg.mutable\int << 0
@@ -382,19 +382,19 @@ pg.mutable\array{pg\int}
 
 // T.Daily - Scheduled daily trigger
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 // T.File.Modified - File system trigger
 [t] |T.File.Modified
-[<] .path: pg\path << \\DataDir\\config.json
+[<] .path:pg.path << \\DataDir\\config.json
 
 // T.Every.Seconds - Interval trigger
 [t] |T.Every.Seconds
-[<] .interval: pg\int << 30
+[<] .interval:pg.int << 30
 ```
 
 **CRITICAL RULES:**
-- **DO NOT use boolean variables as triggers** - `[t] .condition: pg\bool << expr` is INVALID
+- **DO NOT use boolean variables as triggers** - `[t] .condition:pg.bool << expr` is INVALID
 - Triggers are continuously-run operations, NOT conditional execution
 - Missing trigger = compiler error
 
@@ -411,9 +411,9 @@ pg.mutable\array{pg\int}
 
 ```polyglot
 [|] PipelineName
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 
@@ -421,11 +421,11 @@ pg.mutable\array{pg\int}
 
 ```polyglot
 [|] PipelineName
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
-[>] .result: pg\string >> output
-[o] .result: pg\string
+[<] .data:pg.string << .input
+[>] .result:pg.string >> output
+[o] .result:pg.string
 [X]
 ```
 
@@ -434,7 +434,7 @@ pg.mutable\array{pg\int}
 ```polyglot
 [|] ScheduledPipeline
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 [r] |DoWork
 [X]
 ```
@@ -448,8 +448,8 @@ pg.mutable\array{pg\int}
 
 ```polyglot
 [#] MyApp.Config
-[<] .host: pg\string << "localhost"
-[<] .port: pg\int << 8080
+[<] .host:pg.string << "localhost"
+[<] .port:pg.int << 8080
 [X]
 ```
 
@@ -457,16 +457,16 @@ pg.mutable\array{pg\int}
 
 - [x] `[!]` error marker
 - [x] Error name with `!` prefix
-- [x] `.message: pg\string` field
-- [x] `.code: pg\int` field
-- [x] `.trace: pg\string` field
+- [x] `.message:pg.string` field
+- [x] `.code:pg.int` field
+- [x] `.trace:pg.string` field
 - [x] `[X]` close marker
 
 ```polyglot
 [!] !MyApp.CustomError
-[<] .message: pg\string << "Error occurred"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Error occurred"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 [X]
 ```
 
@@ -485,28 +485,28 @@ pg.mutable\array{pg\int}
 ### Pattern: Variable Assignment
 
 ```polyglot
-[r] .variable: pg\string << "value"
-[r] .counter: pg\int << 0
+[r] .variable:pg.string << "value"
+[r] .counter:pg.int << 0
 ```
 
 ### Pattern: Pipeline Call with I/O
 
 ```polyglot
 [r] |PipelineName
-[<] .input1: pg\string << "value"
-[<] .input2: pg\int << 42
-[>] .output: pg\string >> result_var
+[<] .input1:pg.string << "value"
+[<] .input2:pg.int << 42
+[>] .output:pg.string >> result_var
 ```
 
 ### Pattern: Parallel Execution
 
 ```polyglot
 [p] |TaskA
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [>] .result >> result_a
 
 [p] |TaskB
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [>] .result >> result_b
 
 [Y] |Y.Join
@@ -519,9 +519,9 @@ pg.mutable\array{pg\int}
 ```polyglot
 [r] |MightFail
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |HandleError
-[<] .msg: pg\string << err_msg
+[<] .msg:pg.string << err_msg
 ```
 
 ### Pattern: Switch/Conditional with `[?]`
@@ -530,11 +530,11 @@ pg.mutable\array{pg\int}
 // ✓ CORRECT - Use range matching or enum matching
 [?] .status ?> #Status.Success
 [~][r] |HandleSuccess
-[~][o] .result: pg\string
+[~][o] .result:pg.string
 
 [?] .status ?> #Status.Failed
 [~][r] |HandleFailure
-[~][o] .result: pg\string
+[~][o] .result:pg.string
 
 // ✓ CORRECT - Range matching with `..`
 [?] .age ?> 18..65
@@ -545,11 +545,11 @@ pg.mutable\array{pg\int}
 
 // ✓ CORRECT - Use explicit named operations for comparisons
 [Q] |Q.DispatchIf.String.IsEmpty
-[<] .value: pg\string << .input_name
+[<] .value:pg.string << .input_name
 [~][r] |HandleEmpty
 
 [Q] |Q.DispatchIf.String.IsNotEmpty
-[<] .value: pg\string << .input_name
+[<] .value:pg.string << .input_name
 [~][r] |HandleNotEmpty
 
 // IMPORTANT: All branches MUST output the same fields (compiler-enforced)
@@ -560,16 +560,16 @@ pg.mutable\array{pg\int}
 ```polyglot
 [W] |W.Python3.11
 [r] |RunScript
-[<] .script: pg\path << "analyze.py"
-[<] .data: pg\string << input_data
-[>] .result: pg\string >> output
+[<] .script:pg.path << "analyze.py"
+[<] .data:pg.string << input_data
+[>] .result:pg.string >> output
 ```
 
 ### Pattern: Nested Operations
 
 ```polyglot
 [p] |Parallel
-[<] .data: pg\string << input
+[<] .data:pg.string << input
 [~][r] |NestedOp1            // WITHIN parallel
 [~][<] .param << .data
 [~][r] |NestedOp2            // WITHIN parallel
@@ -579,10 +579,10 @@ pg.mutable\array{pg\int}
 ### Pattern: Unpack Iteration
 
 ```polyglot
-[r] .items: pg\array{pg\string} << array{"a", "b", "c"}
+[r] .items: pg.array.pg.string << array{"a", "b", "c"}
 [r] ~.items
 [~][r] |ProcessItem          // WITHIN iteration
-[~][<] .item: pg\string << .current_item
+[~][<] .item:pg.string << .current_item
 ```
 
 ---
@@ -592,7 +592,7 @@ pg.mutable\array{pg\int}
 ### Basic String Literal
 
 ```polyglot
-[r] .text: pg\string << "Hello, World!"
+[r] .text:pg.string << "Hello, World!"
 ```
 
 ### Multiline String Continuation with `[^]` and `+""`
@@ -601,13 +601,13 @@ pg.mutable\array{pg\int}
 
 ```polyglot
 // ✓ CORRECT - Explicit continuation with +""
-[r] .report: pg\string << "First line "
+[r] .report:pg.string << "First line "
 [^] +"second line "
 [^] +"third line"
 // Result: "First line second line third line"
 
 // ✗ INVALID - Missing +"" prefix causes syntax error
-[r] .report: pg\string << "First line "
+[r] .report:pg.string << "First line "
 [^] "second line"
 // Result: "First line ""second line"  (invalid - unclosed quotes)
 ```
@@ -625,7 +625,7 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 
 **Example with Interpolation:**
 ```polyglot
-[r] .message: pg\string << "Hello, {name}! "
+[r] .message:pg.string << "Hello, {name}! "
 [^] +"Welcome to {city}. "
 [^] +"Your account status is: {status}"
 // All variables interpolated correctly across lines
@@ -635,8 +635,8 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 
 ```polyglot
 // Simple interpolation - NO +"" prefix needed
-[r] .greeting: pg\string << "Hello, {name}!"
-[r] .result: pg\string << "Value: {count}, Status: {status}"
+[r] .greeting:pg.string << "Hello, {name}!"
+[r] .result:pg.string << "Value: {count}, Status: {status}"
 ```
 
 **Rules for String Interpolation:**
@@ -647,7 +647,7 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 ### Serial (JSON-like) Syntax
 
 ```polyglot
-[r] .data: pg\serial << serial{
+[r] .data:pg.serial << serial{
 [^]  "key1": "value1",
 [^]  "key2": 123,
 [^]  "nested": {
@@ -659,14 +659,14 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 ### Array Literal Syntax
 
 ```polyglot
-[r] .items: pg\array{pg\string} << array{
+[r] .items: pg.array.pg.string << array{
 [^]  "item1",
 [^]  "item2",
 [^]  "item3"
 [^]}
 
 // Or single line
-[r] .nums: pg\array{pg\int} << array{1, 2, 3, 4, 5}
+[r] .nums: pg.array.pg.int << array{1, 2, 3, 4, 5}
 ```
 
 ---
@@ -677,11 +677,11 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 
 ```polyglot
 [!] !MyApp.CustomError
-[<] .message: pg\string << "Default message"
-[<] .code: pg\int << 5000
-[<] .trace: pg\string << ""
+[<] .message:pg.string << "Default message"
+[<] .code:pg.int << 5000
+[<] .trace:pg.string << ""
 // Optional custom fields
-[<] .custom_field: pg\string << ""
+[<] .custom_field:pg.string << ""
 [X]
 ```
 
@@ -692,9 +692,9 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 [?] .some_condition ?> True
 [~]
 [~][r] .error: ! << !ValidationError
-[~][<] .message: pg\string << "Validation failed"
-[~][<] .code: pg\int << 1001
-[~][<] .trace: pg\string << ""
+[~][<] .message:pg.string << "Validation failed"
+[~][<] .code:pg.int << 1001
+[~][<] .trace:pg.string << ""
 [~][o] .error: !
 
 // Note: Variable type is `!` (generic error type)
@@ -708,16 +708,16 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 [r] |OperationThatMightFail
 [~]
 [~][!] !pg.FileSystem.NotFound
-[~][>] .message: pg\string >> err_msg
-[~][>] .code: pg\int >> err_code
+[~][>] .message:pg.string >> err_msg
+[~][>] .code:pg.int >> err_code
 [~]
 [~][r] |HandleError
-[~][<] .msg: pg\string << err_msg
+[~][<] .msg:pg.string << err_msg
 
 // Catch another error type
 [~]
 [~][!] !MyApp.ValidationError
-[~][>] .message: pg\string >> validation_msg
+[~][>] .message:pg.string >> validation_msg
 [~]
 [~][r] |HandleValidation
 ```
@@ -749,17 +749,17 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 ```polyglot
 [#] Path.Identifiers.MyApp.DataDir
 [A] DataDir
-[<] .unix: pg\path << \\UnixRoot\\opt\myapp\data\
-[<] .windows: pg\path << \\C\\ProgramData\MyApp\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\myapp\data\
+[<] .windows:pg.path << \\C\\ProgramData\MyApp\Data\
 [X]
 
 // Usage
-[r] .file: pg\path << \\DataDir\\config.json
+[r] .file:pg.path << \\DataDir\\config.json
 ```
 
 **Required Fields:**
-- `.unix: pg\path` - Unix/Linux/macOS path
-- `.windows: pg\path` - Windows path
+- `.unix:pg.path` - Unix/Linux/macOS path
+- `.windows:pg.path` - Windows path
 
 **Use `\\NoPath\\` if path doesn't exist on OS**
 
@@ -775,7 +775,7 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 
 ```polyglot
 [#] Queues.Background
-[<] .max_concurrent: pg\int << 5
+[<] .max_concurrent:pg.int << 5
 [X]
 
 // Usage
@@ -840,11 +840,11 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 
 // ✗ Missing [X]
 [|] Pipeline
-[i] .input: pg\string
+[i] .input:pg.string
 
 // ✗ Missing required error fields
 [!] !MyError
-[<] .message: pg\string << "msg"
+[<] .message:pg.string << "msg"
 [X]
 
 // ✗ Nested without [~]
@@ -858,9 +858,9 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 
 // ✓ All correct
 [|] Pipeline
-[i] .input: pg\string
+[i] .input:pg.string
 [r] |ProcessData
-[<] .data: pg\string << .input
+[<] .data:pg.string << .input
 [X]
 ```
 
@@ -906,15 +906,15 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 
 ```polyglot
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 [t] |T.Every.Minute
 [t] |T.Every.Hour
 [t] |T.Every.Seconds
-[<] .interval: pg\int << 30
+[<] .interval:pg.int << 30
 
 [t] |T.File.Modified
-[<] .path: pg\path << \\DataDir\\config.json
+[<] .path:pg.path << \\DataDir\\config.json
 
 [t] |T.File.Created
 [t] |T.File.Deleted
@@ -942,13 +942,13 @@ Unlike Python where strings on consecutive lines are automatically concatenated,
 
 // Logging
 [r] |U.Log.Info
-[<] .msg: pg\string << "message"
+[<] .msg:pg.string << "message"
 
 [r] |U.Log.Warning
-[<] .msg: pg\string << "warning"
+[<] .msg:pg.string << "warning"
 
 [r] |U.Log.Error
-[<] .msg: pg\string << "error"
+[<] .msg:pg.string << "error"
 ```
 
 ---
@@ -968,10 +968,10 @@ DT"YYYY-MM-DD HH:MM:SS"     // Full datetime
 ### DateTime Examples
 
 ```polyglot
-[r] .time: pg\dt << DT"09:00:"
-[r] .date: pg\dt << DT"2024-01-15"
-[r] .datetime: pg\dt << DT"2024-01-15 14:30:"
-[r] .precise: pg\dt << DT"2024-01-15 14:30:45"
+[r] .time:pg.dt << DT"09:00:"
+[r] .date:pg.dt << DT"2024-01-15"
+[r] .datetime:pg.dt << DT"2024-01-15 14:30:"
+[r] .precise:pg.dt << DT"2024-01-15 14:30:45"
 ```
 
 ### Calendar Systems
@@ -992,10 +992,10 @@ Only 5 reserved keywords exist:
 
 | Keyword | Purpose | Example |
 |---------|---------|---------|
-| `True` | Boolean true | `.valid: pg\bool << #True` |
-| `False` | Boolean false | `.valid: pg\bool << #False` |
-| `Fixed` | Immutable input | `[i] Fixed .key: pg\string << "secret"` |
-| `Default` | Optional input with default | `[i] Default .timeout: pg\int << 30` |
+| `True` | Boolean true | `.valid:pg.bool << #True` |
+| `False` | Boolean false | `.valid:pg.bool << #False` |
+| `Fixed` | Immutable input | `[i] Fixed .key:pg.string << "secret"` |
+| `Default` | Optional input with default | `[i] Default .timeout:pg.int << 30` |
 | `Exposed` | Macro exposure (TBD) | *(macro system details TBD)* |
 
 ---
@@ -1006,7 +1006,7 @@ Only 5 reserved keywords exist:
 
 ```polyglot
 // This is a single-line comment
-[r] .x: pg\int << 5  // Inline comment
+[r] .x:pg.int << 5  // Inline comment
 ```
 
 ### Multi-Line Comments
@@ -1018,7 +1018,7 @@ Only 5 reserved keywords exist:
  */
 [r] |Operation
 
-[r] .config: pg\serial << serial{ /* inline block comment */
+[r] .config:pg.serial << serial{ /* inline block comment */
 [^]  "host": "localhost"
 [^]}
 ```
@@ -1034,7 +1034,7 @@ Only 5 reserved keywords exist:
 ```polyglot
 [|] HelloWorld
 [r] |U.Log.Info
-[<] .msg: pg\string << "Hello, World!"
+[<] .msg:pg.string << "Hello, World!"
 [o] #None
 [X]
 ```
@@ -1043,19 +1043,19 @@ Only 5 reserved keywords exist:
 
 ```polyglot
 [|] ProcessFile
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 
 [r] |U.File.Read
-[<] .path: pg\path << .file_path
-[>] .content: pg\string >> file_data
+[<] .path:pg.path << .file_path
+[>] .content:pg.string >> file_data
 
 [r] |U.String.ToUpper
-[<] .input: pg\string << file_data
-[>] .output: pg\string >> upper_data
+[<] .input:pg.string << file_data
+[>] .output:pg.string >> upper_data
 
 [r] |U.File.Write
-[<] .path: pg\path << \\DataDir\\output.txt
-[<] .content: pg\string << upper_data
+[<] .path:pg.path << \\DataDir\\output.txt
+[<] .content:pg.string << upper_data
 
 [o] #None
 [X]
@@ -1066,13 +1066,13 @@ Only 5 reserved keywords exist:
 ```polyglot
 [|] DailyReport
 [t] |T.Daily
-[<] .time: pg\dt << DT"09:00:"
+[<] .time:pg.dt << DT"09:00:"
 
 [r] |GenerateReport
-[>] .report: pg\string >> report_content
+[>] .report:pg.string >> report_content
 
 [r] |U.Log.Info
-[<] .msg: pg\string << report_content
+[<] .msg:pg.string << report_content
 
 [o] #None
 [X]
@@ -1082,14 +1082,14 @@ Only 5 reserved keywords exist:
 
 ```polyglot
 [|] ParallelWork
-[i] .data: pg\array{pg\int}
+[i] .data: pg.array.pg.int
 
 [p] |ProcessPartA
-[<] .input: pg\array{pg\int} << .data
+[<] .input: pg.array.pg.int << .data
 [>] .result >> result_a
 
 [p] |ProcessPartB
-[<] .input: pg\array{pg\int} << .data
+[<] .input: pg.array.pg.int << .data
 [>] .result >> result_b
 
 [Y] |Y.Join
@@ -1097,11 +1097,11 @@ Only 5 reserved keywords exist:
 [>] result_b
 
 [r] |CombineResults
-[<] .a: pg\int << result_a
-[<] .b: pg\int << result_b
-[>] .final: pg\int >> output
+[<] .a:pg.int << result_a
+[<] .b:pg.int << result_b
+[>] .final:pg.int >> output
 
-[o] .final: pg\int
+[o] .final:pg.int
 [X]
 ```
 
@@ -1109,19 +1109,19 @@ Only 5 reserved keywords exist:
 
 ```polyglot
 [|] SafeFileRead
-[i] .file: pg\path
+[i] .file:pg.path
 
 [r] |U.File.Read
-[<] .path: pg\path << .file
-[>] .content: pg\string >> file_content
+[<] .path:pg.path << .file
+[>] .content:pg.string >> file_content
 
 [!] !pg.FileSystem.NotFound
-[>] .message: pg\string >> err_msg
+[>] .message:pg.string >> err_msg
 [r] |U.Log.Error
-[<] .msg: pg\string << err_msg
-[r] .file_content: pg\string << "default content"
+[<] .msg:pg.string << err_msg
+[r] .file_content:pg.string << "default content"
 
-[o] .content: pg\string
+[o] .content:pg.string
 [X]
 ```
 
@@ -1135,13 +1135,13 @@ Only 5 reserved keywords exist:
 // Define path identifier
 [#] Path.Identifiers.MyApp.DataDir
 [A] DataDir
-[<] .unix: pg\path << \\UnixRoot\\opt\myapp\data\
-[<] .windows: pg\path << \\C\\ProgramData\MyApp\Data\
+[<] .unix:pg.path << \\UnixRoot\\opt\myapp\data\
+[<] .windows:pg.path << \\C\\ProgramData\MyApp\Data\
 [X]
 
 // Use path identifier
-[r] .config_file: pg\path << \\DataDir\\config.json
-[r] .log_file: pg\path << \\DataDir\\logs\app.log
+[r] .config_file:pg.path << \\DataDir\\config.json
+[r] .log_file:pg.path << \\DataDir\\logs\app.log
 ```
 
 ### Built-in Path Roots
@@ -1156,13 +1156,13 @@ Only 5 reserved keywords exist:
 
 ```polyglot
 // Unix path
-[<] .unix: pg\path << \\UnixRoot\\opt\app\data\
+[<] .unix:pg.path << \\UnixRoot\\opt\app\data\
 
 // Windows path
-[<] .windows: pg\path << \\C\\ProgramData\App\Data\
+[<] .windows:pg.path << \\C\\ProgramData\App\Data\
 
 // Cross-platform via identifier
-[r] .file: pg\path << \\DataDir\\records.csv
+[r] .file:pg.path << \\DataDir\\records.csv
 ```
 
 ---
@@ -1189,8 +1189,8 @@ Only 5 reserved keywords exist:
 ```polyglot
 // Call pipeline from package
 [r] @Community.hasan@DataUtils|Transform
-[<] .input: pg\string << data
-[>] .output: pg\string >> result
+[<] .input:pg.string << data
+[>] .output:pg.string >> result
 
 // Use enumeration from package
 [i] .config: @Company.acme@InternalLib#Configuration

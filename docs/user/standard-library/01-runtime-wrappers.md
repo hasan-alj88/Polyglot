@@ -85,7 +85,7 @@ Runtime wrappers (`|W.*`) allow Polyglot pipelines to execute code in other prog
 ```polyglot
 [W] |W.Python3.11
 [r] |AnalyzeData
-[<] .input: pg\string << data
+[<] .input:pg.string << data
 [X]
 ```
 
@@ -191,13 +191,13 @@ Available Python versions (examples):
 **Example:**
 ```polyglot
 [|] PythonDataAnalysis
-[i] .data: pg\string
+[i] .data:pg.string
 
 [W] |W.Python3.11
 [r] |RunAnalysis
-[<] .script: pg\path << "analyze.py"
-[<] .input: pg\string << .data
-[>] .result: pg\string >> analysis_result
+[<] .script:pg.path << "analyze.py"
+[<] .input:pg.string << .data
+[>] .result:pg.string >> analysis_result
 
 [X]
 ```
@@ -217,12 +217,12 @@ Available Node versions (examples):
 **Example:**
 ```polyglot
 [|] NodeWebService
-[i] .request: pg\serial
+[i] .request:pg.serial
 
 [W] |W.Node20
 [r] |ProcessRequest
-[<] .data: pg\serial << .request
-[>] .response: pg\serial >> result
+[<] .data:pg.serial << .request
+[>] .response:pg.serial >> result
 
 [X]
 ```
@@ -351,9 +351,9 @@ Available Node versions (examples):
 ```polyglot
 [W] |W.Python3.11
 [r] |DataProcessing
-[<] .script: pg\path << "process.py"
-[<] .data_file: pg\path << \\DataDir\\input.csv
-[>] .results: pg\string >> processed_data
+[<] .script:pg.path << "process.py"
+[<] .data_file:pg.path << \\DataDir\\input.csv
+[>] .results:pg.string >> processed_data
 ```
 
 ---
@@ -378,9 +378,9 @@ Available Node versions (examples):
 ```polyglot
 [W] |W.Node20
 [r] |APICall
-[<] .endpoint: pg\string << "https://api.example.com"
-[<] .params: pg\serial << request_params
-[>] .response: pg\serial >> api_response
+[<] .endpoint:pg.string << "https://api.example.com"
+[<] .params:pg.serial << request_params
+[>] .response:pg.serial >> api_response
 ```
 
 ---
@@ -402,8 +402,8 @@ Available Node versions (examples):
 ```polyglot
 [W] |W.Rust
 [r] |FastComputation
-[<] .input: pg\array{pg\int} << large_dataset
-[>] .result: pg\array{pg\int} >> processed_data
+[<] .input: pg.array.pg.int << large_dataset
+[>] .result: pg.array.pg.int >> processed_data
 ```
 
 ---
@@ -425,9 +425,9 @@ Available Node versions (examples):
 ```polyglot
 [W] |W.Go
 [r] |ConcurrentProcessor
-[<] .workers: pg\int << 10
-[<] .tasks: pg\array{pg\string} << task_list
-[>] .results: pg\array{pg\string} >> processed_tasks
+[<] .workers:pg.int << 10
+[<] .tasks: pg.array.pg.string << task_list
+[>] .results: pg.array.pg.string >> processed_tasks
 ```
 
 ---
@@ -451,8 +451,8 @@ Available Node versions (examples):
 ```polyglot
 [W] |W.Ruby3.2
 [r] |TextProcessing
-[<] .input: pg\string << text_data
-[>] .result: pg\string >> processed_text
+[<] .input:pg.string << text_data
+[>] .result:pg.string >> processed_text
 ```
 
 ---
@@ -474,8 +474,8 @@ Available Node versions (examples):
 ```polyglot
 [W] |W.Deno
 [r] |TypeScriptTask
-[<] .script: pg\path << "process.ts"
-[>] .result: pg\string >> output
+[<] .script:pg.path << "process.ts"
+[>] .result:pg.string >> output
 ```
 
 ---
@@ -488,25 +488,25 @@ A single pipeline can use multiple runtime wrappers:
 
 ```polyglot
 [|] MultiRuntimePipeline
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Step 1: Python processing
 [W] |W.Python3.11
 [r] |PythonAnalyze
-[<] .input: pg\string << .data
-[>] .analysis: pg\string >> python_result
+[<] .input:pg.string << .data
+[>] .analysis:pg.string >> python_result
 
 // Step 2: Node processing
 [W] |W.Node20
 [r] |NodeTransform
-[<] .input: pg\string << python_result
-[>] .transformed: pg\string >> node_result
+[<] .input:pg.string << python_result
+[>] .transformed:pg.string >> node_result
 
 // Step 3: Rust performance processing
 [W] |W.Rust
 [r] |RustOptimize
-[<] .input: pg\string << node_result
-[>] .optimized: pg\string >> final_result
+[<] .input:pg.string << node_result
+[>] .optimized:pg.string >> final_result
 
 [X]
 ```
@@ -543,25 +543,25 @@ Data flows seamlessly between wrappers:
 
 ```polyglot
 [|] DataFlow
-[i] .input: pg\string
+[i] .input:pg.string
 
 // Python: Generate data
 [W] |W.Python3.11
 [r] |GenerateData
-[<] .seed: pg\string << .input
-[>] .data: pg\string >> python_data
+[<] .seed:pg.string << .input
+[>] .data:pg.string >> python_data
 
 // Node: Process data
 [W] |W.Node20
 [r] |ProcessData
-[<] .input: pg\string << python_data  // From Python
-[>] .processed: pg\string >> node_data
+[<] .input:pg.string << python_data  // From Python
+[>] .processed:pg.string >> node_data
 
 // Rust: Optimize data
 [W] |W.Rust
 [r] |OptimizeData
-[<] .input: pg\string << node_data  // From Node
-[>] .optimized: pg\string >> final_data
+[<] .input:pg.string << node_data  // From Node
+[>] .optimized:pg.string >> final_data
 
 [X]
 ```
@@ -596,9 +596,9 @@ Nested operations inherit wrapper context:
 ```polyglot
 [W] |W.Python3.11
 [p] |ParallelTask
-[<] .input: pg\string << data
+[<] .input:pg.string << data
 [~][r] |PythonOp1  // Runs in Python context
-[~][<] .param: pg\string << .input
+[~][<] .param:pg.string << .input
 [>] .result >> output
 ```
 
@@ -771,22 +771,22 @@ Nested operations inherit wrapper context:
 
 ```polyglot
 [|] AnalyzeCustomerData
-[i] .data_file: pg\path
+[i] .data_file:pg.path
 
 [W] |W.Python3.11
 [r] |LoadData
-[<] .file: pg\path << .data_file
-[>] .dataframe: pg\string >> df
+[<] .file:pg.path << .data_file
+[>] .dataframe:pg.string >> df
 
 [r] |AnalyzeData
-[<] .df: pg\string << df
-[>] .insights: pg\string >> analysis
+[<] .df:pg.string << df
+[>] .insights:pg.string >> analysis
 
 [r] |GenerateReport
-[<] .analysis: pg\string << analysis
-[>] .report: pg\string >> final_report
+[<] .analysis:pg.string << analysis
+[>] .report:pg.string >> final_report
 
-[o] .report: pg\string
+[o] .report:pg.string
 [X]
 ```
 
@@ -796,19 +796,19 @@ Nested operations inherit wrapper context:
 
 ```polyglot
 [|] FetchUserData
-[i] .user_id: pg\string
+[i] .user_id:pg.string
 
 [W] |W.Node20
 [r] |CallAPI
-[<] .endpoint: pg\string << "https://api.example.com/users"
-[<] .id: pg\string << .user_id
-[>] .response: pg\serial >> user_data
+[<] .endpoint:pg.string << "https://api.example.com/users"
+[<] .id:pg.string << .user_id
+[>] .response:pg.serial >> user_data
 
 [r] |ParseResponse
-[<] .data: pg\serial << user_data
-[>] .parsed: pg\serial >> user_info
+[<] .data:pg.serial << user_data
+[>] .parsed:pg.serial >> user_info
 
-[o] .user: pg\serial
+[o] .user:pg.serial
 [X]
 ```
 
@@ -818,31 +818,31 @@ Nested operations inherit wrapper context:
 
 ```polyglot
 [|] CompleteWorkflow
-[i] .input_file: pg\path
+[i] .input_file:pg.path
 
 // Step 1: Python - Load and clean data
 [W] |W.Python3.11
 [r] |LoadCSV
-[<] .file: pg\path << .input_file
-[>] .data: pg\string >> raw_data
+[<] .file:pg.path << .input_file
+[>] .data:pg.string >> raw_data
 
 [r] |CleanData
-[<] .input: pg\string << raw_data
-[>] .cleaned: pg\string >> clean_data
+[<] .input:pg.string << raw_data
+[>] .cleaned:pg.string >> clean_data
 
 // Step 2: Node - Transform to JSON
 [W] |W.Node20
 [r] |ConvertToJSON
-[<] .data: pg\string << clean_data
-[>] .json: pg\string >> json_data
+[<] .data:pg.string << clean_data
+[>] .json:pg.string >> json_data
 
 // Step 3: Rust - Performance processing
 [W] |W.Rust
 [r] |OptimizeData
-[<] .input: pg\string << json_data
-[>] .optimized: pg\string >> final_data
+[<] .input:pg.string << json_data
+[>] .optimized:pg.string >> final_data
 
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
@@ -852,19 +852,19 @@ Nested operations inherit wrapper context:
 
 ```polyglot
 [|] ParallelProcessing
-[i] .data: pg\string
+[i] .data:pg.string
 
 // Process in Python and Node in parallel
 [p] |PythonProcessing
 [W] |W.Python3.11
 [r] |AnalyzeWithPython
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .result >> python_result
 
 [p] |NodeProcessing
 [W] |W.Node20
 [r] |TransformWithNode
-[<] .input: pg\string << .data
+[<] .input:pg.string << .data
 [>] .result >> node_result
 
 // Join results
@@ -875,9 +875,9 @@ Nested operations inherit wrapper context:
 // Combine with Rust
 [W] |W.Rust
 [r] |CombineResults
-[<] .python: pg\string << python_result
-[<] .node: pg\string << node_result
-[>] .combined: pg\string >> final_result
+[<] .python:pg.string << python_result
+[<] .node:pg.string << node_result
+[>] .combined:pg.string >> final_result
 
 [X]
 ```

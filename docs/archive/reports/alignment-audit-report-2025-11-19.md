@@ -49,11 +49,11 @@ The v0.0.2 user documentation, BMAD project documentation, and ITIL ticket syste
 
 | Session Topic | Date | V0.0.2 Status | Notes |
 |---------------|------|---------------|-------|
-| Comparison Operators | 2025-11-18 | ✅ DOCUMENTED | `05-operators.md` updated |
-| Line Continuation | 2025-11-18 | ✅ DOCUMENTED | `08-line-continuation.md` exists |
-| Macro System | 2025-11-18 | ✅ DOCUMENTED | `07-macros.md` exists |
-| URL Literals | 2025-11-18 | ✅ DOCUMENTED | `02-type-system.md` references |
-| Error Handling Philosophy | 2025-11-18 | ✅ DOCUMENTED | `04-error-handling.md` updated |
+| Comparison Operators | 2025-11-18 | ✅ DOCUMENTED | `operators.md` updated |
+| Line Continuation | 2025-11-18 | ✅ DOCUMENTED | `line-continuation.md` exists |
+| Macro System | 2025-11-18 | ✅ DOCUMENTED | `macros.md` exists |
+| URL Literals | 2025-11-18 | ✅ DOCUMENTED | `type-system.md` references |
+| Error Handling Philosophy | 2025-11-18 | ✅ DOCUMENTED | `error-handling.md` updated |
 | **[s] Serial Load Block** | **2025-11-19** | **❌ PENDING** | **SR-2025-001 created** |
 
 **Finding:** 5 of 6 recent brainstorming sessions are documented in v0.0.2.
@@ -133,8 +133,8 @@ The v0.0.2 user documentation, BMAD project documentation, and ITIL ticket syste
 
 **V0.0.2 Reference:** Correctly references block markers from v0.0.2
 **Alignment Check:**
-- Block markers match user/language/06-block-markers.md ✅
-- Operators match user/language/05-operators.md ✅
+- Block markers match user/language/block-markers.md ✅
+- Operators match user/language/operators.md ✅
 - No deprecated constructs (keywords eliminated) ✅
 
 **Assessment:** ✅ **FULLY ALIGNED**
@@ -258,9 +258,9 @@ The v0.0.2 user documentation, BMAD project documentation, and ITIL ticket syste
 - **Brainstorming Session:** 2025-11-19 (60+ design decisions, 822 lines)
 - **Session Document:** `docs/project/brainstorming-session-results-2025-11-19.md`
 - **V0.0.2 Target Files:**
-  - `docs/user/language/06-block-markers.md` ([s] block syntax)
-  - `docs/user/language/04-error-handling.md` ([s][!] error handling)
-  - `docs/user/architecture/05-runtime-execution.md` (parallel loading model)
+  - `docs/user/language/block-markers.md` ([s] block syntax)
+  - `docs/user/language/error-handling.md` ([s][!] error handling)
+  - `docs/user/architecture/runtime-execution.md` (parallel loading model)
   - `docs/user/examples/file-operations.md` (serial load examples)
 
 **ITIL Tracking:**

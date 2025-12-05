@@ -262,10 +262,14 @@ fn test_7_1_variable_declaration_with_assignment() {
 
     // Verify we have all the expected tokens
     assert!(tokens.iter().any(|t| t.kind == TokenKind::BlockSequential));
-    assert!(tokens.iter().any(|t| t.kind == TokenKind::IdentifierVariable));
+    assert!(tokens
+        .iter()
+        .any(|t| t.kind == TokenKind::IdentifierVariable));
     assert!(tokens.iter().any(|t| t.kind == TokenKind::DelimiterColon));
     assert!(tokens.iter().any(|t| t.kind == TokenKind::TypeNamespace));
-    assert!(tokens.iter().any(|t| t.kind == TokenKind::DelimiterBackslash));
+    assert!(tokens
+        .iter()
+        .any(|t| t.kind == TokenKind::DelimiterBackslash));
     assert!(tokens.iter().any(|t| t.kind == TokenKind::TypeString));
     assert!(tokens.iter().any(|t| t.kind == TokenKind::OpPush));
     assert!(tokens.iter().any(|t| t.kind == TokenKind::StringStart));
@@ -283,7 +287,9 @@ fn test_9_1_single_line_comment() {
     // Comments are skipped, only variable and newline should remain
     let non_eof: Vec<_> = tokens.iter().filter(|t| t.kind != TokenKind::Eof).collect();
     assert!(non_eof.iter().any(|t| t.kind == TokenKind::Newline));
-    assert!(non_eof.iter().any(|t| t.kind == TokenKind::IdentifierVariable));
+    assert!(non_eof
+        .iter()
+        .any(|t| t.kind == TokenKind::IdentifierVariable));
 }
 
 #[test]
@@ -293,7 +299,9 @@ fn test_9_2_multi_line_comment() {
 
     // Comments are skipped
     let non_eof: Vec<_> = tokens.iter().filter(|t| t.kind != TokenKind::Eof).collect();
-    assert!(non_eof.iter().any(|t| t.kind == TokenKind::IdentifierVariable));
+    assert!(non_eof
+        .iter()
+        .any(|t| t.kind == TokenKind::IdentifierVariable));
 }
 
 // ========================================
@@ -335,4 +343,93 @@ fn test_11_5_unknown_block_marker() {
     let result = lex(input);
 
     assert!(result.is_err());
+}
+
+// ========================================
+// 12. December 2025 Syntax Updates (Story 1.7)
+// ========================================
+
+#[test]
+fn test_12_1_default_pull_operator() {
+    let input = ".x ~> .y";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 4); // .x, ~>, .y, EOF
+    assert_eq!(tokens[0].kind, TokenKind::IdentifierVariable);
+    assert_eq!(tokens[0].lexeme, ".x");
+    assert_eq!(tokens[1].kind, TokenKind::OpDefaultPull);
+    assert_eq!(tokens[1].lexeme, "~>");
+    assert_eq!(tokens[2].kind, TokenKind::IdentifierVariable);
+    assert_eq!(tokens[2].lexeme, ".y");
+}
+
+#[test]
+fn test_12_2_pipeline_formatted_string_simple() {
+    let input = r#"|U.Log.Info"Processing items""#;
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2); // PipelineFormatted + EOF
+    assert_eq!(tokens[0].kind, TokenKind::LiteralPipelineFormatted);
+    assert_eq!(tokens[0].lexeme, r#"|U.Log.Info"Processing items""#);
+}
+
+#[test]
+fn test_12_3_pipeline_formatted_string_with_interpolation() {
+    let input = r#"|U.Log.Info"Processing {.count} items""#;
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2); // PipelineFormatted + EOF
+    assert_eq!(tokens[0].kind, TokenKind::LiteralPipelineFormatted);
+    assert_eq!(
+        tokens[0].lexeme,
+        r#"|U.Log.Info"Processing {.count} items""#
+    );
+}
+
+#[test]
+fn test_12_4_pipeline_formatted_string_runtime() {
+    let input = r#"|RT.Shell.Run"ls -la {.directory}""#;
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2);
+    assert_eq!(tokens[0].kind, TokenKind::LiteralPipelineFormatted);
+    assert_eq!(tokens[0].lexeme, r#"|RT.Shell.Run"ls -la {.directory}""#);
+}
+
+#[test]
+fn test_12_5_enumeration_with_prefix() {
+    let input = "#Config";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2); // Enum + EOF
+    assert_eq!(tokens[0].kind, TokenKind::IdentifierEnum);
+    assert_eq!(tokens[0].lexeme, "#Config");
+}
+
+#[test]
+fn test_12_6_enumeration_multipart_with_prefix() {
+    let input = "#Config.Database";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2); // Enum + EOF
+    assert_eq!(tokens[0].kind, TokenKind::IdentifierEnum);
+    assert_eq!(tokens[0].lexeme, "#Config.Database");
+}
+
+#[test]
+fn test_12_7_unpack_vs_default_pull() {
+    // ~identifier should be unpack, not default pull
+    let input = "~data";
+    let tokens = lex(input).unwrap();
+
+    assert_eq!(tokens.len(), 2);
+    assert_eq!(tokens[0].kind, TokenKind::IdentifierUnpack);
+    assert_eq!(tokens[0].lexeme, "~data");
+
+    // ~> should be default pull
+    let input2 = "~>.variable";
+    let tokens2 = lex(input2).unwrap();
+
+    assert_eq!(tokens2[0].kind, TokenKind::OpDefaultPull);
+    assert_eq!(tokens2[0].lexeme, "~>");
 }

@@ -40,7 +40,7 @@ Process a data file only if it exists and is readable, otherwise return a clear 
 [|] ValidateAndReadFile
 
 // Inputs
-[i] .file_path: pg\path
+[i] .file_path:pg.path
 
 // Trigger: CLI
 [t] |T.Cli
@@ -50,22 +50,22 @@ Process a data file only if it exists and is readable, otherwise return a clear 
 
 // Check if file exists and is readable
 [r] |File.Validate
-[<] .path: pg\path << .file_path
-[>] .valid: pg\bool!Error >> .is_valid
-[>] .error_msg: pg\string >> .validation_error
+[<] .path:pg.path << .file_path
+[>] .valid:pg.bool!Error >> .is_valid
+[>] .error_msg:pg.string >> .validation_error
 
 // Handle validation result
 [?] .is_valid
   // File is valid - read it
   [r] |File.ReadText
-  [<] .path: pg\path << .file_path
-  [>] .content: pg\string >> .file_content
+  [<] .path:pg.path << .file_path
+  [>] .content:pg.string >> .file_content
 
-  [o] .file_content: pg\string
+  [o] .file_content:pg.string
 [!]
   // File is invalid - return error
   [o] #Error
-  [<] .message: pg\string << .validation_error
+  [<] .message:pg.string << .validation_error
 [X]
 ```
 
@@ -73,9 +73,9 @@ Process a data file only if it exists and is readable, otherwise return a clear 
 
 **Error Type Declaration:**
 ```polyglot
-[>] .valid: pg\bool!Error >> .is_valid
+[>] .valid:pg.bool!Error >> .is_valid
 ```
-- `pg\bool!Error` means the result may be a boolean OR an error
+- `:pg.bool!Error` means the result may be a boolean OR an error
 - Forces explicit error handling
 
 **Conditional Error Handling:**
@@ -85,7 +85,7 @@ Process a data file only if it exists and is readable, otherwise return a clear 
 [!]
   // Error path
   [o] #Error
-  [<] .message: pg\string << .validation_error
+  [<] .message:pg.string << .validation_error
 [X]
 ```
 - `[?]` conditional block checks if validation succeeded
@@ -141,8 +141,8 @@ Ensure CSV file has required columns and valid data types before importing to da
 [|] ValidateCSVSchema
 
 // Inputs
-[i] .csv_file: pg\path
-[i] .required_columns: pg\string  // Comma-separated list
+[i] .csv_file:pg.path
+[i] .required_columns:pg.string  // Comma-separated list
 
 // Trigger: CLI
 [t] |T.Cli
@@ -152,12 +152,12 @@ Ensure CSV file has required columns and valid data types before importing to da
 
 // Read CSV file
 [r] |File.ReadText
-[<] .path: pg\path << .csv_file
-[>] .content: pg\string >> .csv_content
+[<] .path:pg.path << .csv_file
+[>] .content:pg.string >> .csv_content
 
 // Validate schema and data
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import csv
 from io import StringIO
 
@@ -209,23 +209,23 @@ else:
     result_valid = True
     result_errors = ""
 """
-[>] .result_valid: pg\bool!Error >> .is_valid
-[>] .result_errors: pg\string >> .error_list
+[>] .result_valid:pg.bool!Error >> .is_valid
+[>] .result_errors:pg.string >> .error_list
 
 // Handle validation result
 [?] .is_valid
   // Schema is valid - proceed with processing
   [r] |Run.Python
-  [<] .code: pg\string << """
+  [<] .code:pg.string << """
 result = f"Validation passed! CSV is ready for import."
 """
-  [>] .result: pg\string >> .success_msg
+  [>] .result:pg.string >> .success_msg
 
-  [o] .success_msg: pg\string
+  [o] .success_msg:pg.string
 [!]
   // Schema validation failed
   [o] #Error
-  [<] .message: pg\string << .error_list
+  [<] .message:pg.string << .error_list
 [X]
 ```
 
@@ -295,8 +295,8 @@ Call an external API that may be temporarily unavailable. Retry up to 3 times wi
 [|] RetryAPICall
 
 // Inputs
-[i] .api_url: pg\string
-[i] .max_retries: pg\int << 3
+[i] .api_url:pg.string
+[i] .max_retries:pg.int << 3
 
 // Trigger: CLI
 [t] |T.Cli
@@ -306,7 +306,7 @@ Call an external API that may be temporarily unavailable. Retry up to 3 times wi
 
 // Retry loop with exponential backoff
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import time
 import urllib.request
 import urllib.error
@@ -345,18 +345,18 @@ if not success:
 else:
     result_error = ""
 """
-[>] .result_success: pg\bool!Error >> .api_success
-[>] .result_data: pg\string >> .api_response
-[>] .result_error: pg\string >> .api_error
+[>] .result_success:pg.bool!Error >> .api_success
+[>] .result_data:pg.string >> .api_response
+[>] .result_error:pg.string >> .api_error
 
 // Handle result
 [?] .api_success
   // API call succeeded
-  [o] .api_response: pg\string
+  [o] .api_response:pg.string
 [!]
   // API call failed after retries
   [o] #Error
-  [<] .message: pg\string << .api_error
+  [<] .message:pg.string << .api_error
 [X]
 ```
 
@@ -430,9 +430,9 @@ Fetch configuration from primary server; if unavailable, use backup server; if b
 [|] LoadConfigWithFallback
 
 // Inputs
-[i] .primary_url: pg\string
-[i] .backup_url: pg\string
-[i] .default_config: pg\string
+[i] .primary_url:pg.string
+[i] .backup_url:pg.string
+[i] .default_config:pg.string
 
 // Trigger: CLI
 [t] |T.Cli
@@ -442,7 +442,7 @@ Fetch configuration from primary server; if unavailable, use backup server; if b
 
 // Try primary source
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import urllib.request
 import urllib.error
 
@@ -455,19 +455,19 @@ except Exception as e:
     result_success = False
     result_error = f"Primary failed: {str(e)}"
 """
-[>] .result_success: pg\bool!Error >> .primary_success
-[>] .result_config: pg\string >> .config_from_primary
-[>] .result_source: pg\string >> .source_primary
+[>] .result_success:pg.bool!Error >> .primary_success
+[>] .result_config:pg.string >> .config_from_primary
+[>] .result_source:pg.string >> .source_primary
 
 // Check primary result
 [?] .primary_success
   // Primary succeeded
-  [o] .config_from_primary: pg\string
-  [o] .source_primary: pg\string
+  [o] .config_from_primary:pg.string
+  [o] .source_primary:pg.string
 [!]
   // Primary failed - try backup
   [r] |Run.Python
-  [<] .code: pg\string << """
+  [<] .code:pg.string << """
 import urllib.request
 import urllib.error
 
@@ -480,19 +480,19 @@ except Exception as e:
     result_success = False
     result_error = f"Backup also failed: {str(e)}"
 """
-  [>] .result_success: pg\bool!Error >> .backup_success
-  [>] .result_config: pg\string >> .config_from_backup
-  [>] .result_source: pg\string >> .source_backup
+  [>] .result_success:pg.bool!Error >> .backup_success
+  [>] .result_config:pg.string >> .config_from_backup
+  [>] .result_source:pg.string >> .source_backup
 
   // Check backup result
   [?] .backup_success
     // Backup succeeded
-    [o] .config_from_backup: pg\string
-    [o] .source_backup: pg\string
+    [o] .config_from_backup:pg.string
+    [o] .source_backup:pg.string
   [!]
     // Both failed - use default config
-    [o] .default_config: pg\string
-    [o] "default": pg\string
+    [o] .default_config:pg.string
+    [o] "default":pg.string
   [X]
 [X]
 ```
@@ -570,8 +570,8 @@ Multi-step data pipeline where any step can fail. Propagate errors to top-level 
 [|] ProcessDataPipeline
 
 // Inputs
-[i] .input_file: pg\path
-[i] .output_file: pg\path
+[i] .input_file:pg.path
+[i] .output_file:pg.path
 
 // Trigger: CLI
 [t] |T.Cli
@@ -581,26 +581,26 @@ Multi-step data pipeline where any step can fail. Propagate errors to top-level 
 
 // Step 1: Validate file
 [r] |ValidateFile
-[<] .path: pg\path << .input_file
-[>] .valid: pg\bool!Error >> .file_valid
-[>] .error: pg\string >> .validate_error
+[<] .path:pg.path << .input_file
+[>] .valid:pg.bool!Error >> .file_valid
+[>] .error:pg.string >> .validate_error
 
 // Propagate validation error if failed
 [?] .file_valid
   // Continue to step 2
 [!]
   [o] #Error
-  [<] .message: pg\string << f"Step 1 (Validation) failed: {.validate_error}"
+  [<] .message:pg.string << f"Step 1 (Validation) failed: {.validate_error}"
   [X]  // Exit pipeline
 [X]
 
 // Step 2: Parse data
 [r] |File.ReadText
-[<] .path: pg\path << .input_file
-[>] .content: pg\string >> .raw_data
+[<] .path:pg.path << .input_file
+[>] .content:pg.string >> .raw_data
 
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 try:
@@ -612,22 +612,22 @@ except json.JSONDecodeError as e:
     result_success = False
     result_error = f"Invalid JSON: {str(e)}"
 """
-[>] .result_success: pg\bool!Error >> .parse_success
-[>] .result_data: pg\string >> .parsed_data
-[>] .result_error: pg\string >> .parse_error
+[>] .result_success:pg.bool!Error >> .parse_success
+[>] .result_data:pg.string >> .parsed_data
+[>] .result_error:pg.string >> .parse_error
 
 // Propagate parse error if failed
 [?] .parse_success
   // Continue to step 3
 [!]
   [o] #Error
-  [<] .message: pg\string << f"Step 2 (Parsing) failed: {.parse_error}"
+  [<] .message:pg.string << f"Step 2 (Parsing) failed: {.parse_error}"
   [X]  // Exit pipeline
 [X]
 
 // Step 3: Transform data
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 try:
@@ -656,26 +656,26 @@ except Exception as e:
     result_success = False
     result_error = str(e)
 """
-[>] .result_success: pg\bool!Error >> .transform_success
-[>] .result_data: pg\string >> .transformed_data
-[>] .result_error: pg\string >> .transform_error
+[>] .result_success:pg.bool!Error >> .transform_success
+[>] .result_data:pg.string >> .transformed_data
+[>] .result_error:pg.string >> .transform_error
 
 // Propagate transform error if failed
 [?] .transform_success
   // Continue to step 4
 [!]
   [o] #Error
-  [<] .message: pg\string << f"Step 3 (Transform) failed: {.transform_error}"
+  [<] .message:pg.string << f"Step 3 (Transform) failed: {.transform_error}"
   [X]  // Exit pipeline
 [X]
 
 // Step 4: Write output
 [r] |File.WriteText
-[<] .path: pg\path << .output_file
-[<] .content: pg\string << .transformed_data
+[<] .path:pg.path << .output_file
+[<] .content:pg.string << .transformed_data
 
 // Success!
-[o] .transformed_data: pg\string
+[o] .transformed_data:pg.string
 [X]
 ```
 
@@ -684,13 +684,13 @@ except Exception as e:
 **Error Propagation Pattern:**
 ```polyglot
 [r] |SomeOperation
-[>] .success: pg\bool!Error >> .op_success
+[>] .success:pg.bool!Error >> .op_success
 
 [?] .op_success
   // Continue pipeline
 [!]
   [o] #Error
-  [<] .message: pg\string << "Operation failed: ..."
+  [<] .message:pg.string << "Operation failed: ..."
   [X]  // Exit early
 [X]
 ```
@@ -765,30 +765,30 @@ Load multiple configuration files in parallel. Some files may be missing or inva
 // Variable-level critical check
 [!] .required_config.error =? !File.NotFound
 [r] |U.Log.Fatal
-[<] .msg: pg\string << "Required configuration file missing!"
+[<] .msg:pg.string << "Required configuration file missing!"
 [o] !ConfigurationError
 [X]
 
 // Scope-level error handling for optional configs
 [s][!] !File.NotFound
 [r] |U.Log.Warn
-[<] .msg: pg\string << "Optional config file not found, using defaults"
+[<] .msg:pg.string << "Optional config file not found, using defaults"
 
 [s][!] !JSON.ParseError
 [r] |U.Log.Error
-[<] .msg: pg\string << "Invalid JSON in config file"
+[<] .msg:pg.string << "Invalid JSON in config file"
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 # Log which file failed
 result = "Check configuration files for syntax errors"
 """
-[>] .result: pg\string >> .error_hint
+[>] .result:pg.string >> .error_hint
 [r] |U.Log.Error
-[<] .msg: pg\string << .error_hint
+[<] .msg:pg.string << .error_hint
 
 // Process loaded configurations
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 # Check each config and use defaults if needed
@@ -821,9 +821,9 @@ status = {
 
 result = json.dumps(status, indent=2)
 """
-[>] .result: pg\string >> .config_status
+[>] .result:pg.string >> .config_status
 
-[o] .config_status: pg\string
+[o] .config_status:pg.string
 [X]
 ```
 
@@ -845,7 +845,7 @@ result = json.dumps(status, indent=2)
 ```polyglot
 [s][!] !File.NotFound
 [r] |U.Log.Warn
-[<] .msg: pg\string << "Optional config file not found, using defaults"
+[<] .msg:pg.string << "Optional config file not found, using defaults"
 ```
 - Catches errors from ALL `[s]` blocks at this scope
 - Applies to `optional_config1`, `optional_config2`, and `all_plugins`
@@ -965,7 +965,7 @@ Load data files with different criticality levels. Critical files must load, opt
 [~][!] !File.NotFound
 [~][?] .critical_data.error =? !File.NotFound
 [~]  [r] |U.Log.Fatal
-[~]  [<] .msg: pg\string << "Critical data file is missing - cannot continue"
+[~]  [<] .msg:pg.string << "Critical data file is missing - cannot continue"
 [~]  [o] !DataError
 [~]  [X]  // Exit pipeline immediately
 [~][X]
@@ -973,14 +973,14 @@ Load data files with different criticality levels. Critical files must load, opt
 // Scope-level handler for non-critical files (lower precedence)
 [s][!] !File.NotFound
 [r] |U.Log.Warn
-[<] .msg: pg\string << "Non-critical data file missing, continuing with defaults"
+[<] .msg:pg.string << "Non-critical data file missing, continuing with defaults"
 
 // Different handler for parse errors
 [s][!] !JSON.ParseError
 [r] |U.Log.Error
-[<] .msg: pg\string << "Invalid JSON detected"
+[<] .msg:pg.string << "Invalid JSON detected"
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 # Determine which file failed
 errors = []
 if .critical_data == "#None.ErrorState" and .critical_data.error == "!JSON.ParseError":
@@ -992,13 +992,13 @@ if .cache_data == "#None.ErrorState" and .cache_data.error == "!JSON.ParseError"
 
 result = f"Files with parse errors: {', '.join(errors)}"
 """
-[>] .result: pg\string >> .parse_errors
+[>] .result:pg.string >> .parse_errors
 [r] |U.Log.Error
-[<] .msg: pg\string << .parse_errors
+[<] .msg:pg.string << .parse_errors
 
 // Process with available data
 [r] |Run.Python
-[<] .code: pg\string << """
+[<] .code:pg.string << """
 import json
 
 critical = .critical_data if .critical_data != "#None.ErrorState" else {}
@@ -1012,9 +1012,9 @@ result = json.dumps({
     "cache_available": cache != {}
 }, indent=2)
 """
-[>] .result: pg\string >> .status
+[>] .result:pg.string >> .status
 
-[o] .status: pg\string
+[o] .status:pg.string
 [X]
 ```
 
@@ -1094,7 +1094,7 @@ Warning: Non-critical data file missing, continuing with defaults
 
 **Declaration:**
 ```polyglot
-[>] .result: pg\string!Error >> .output
+[>] .result:pg.string!Error >> .output
 ```
 - `!Error` suffix indicates the value may be an error
 - Forces explicit error handling in consuming code
@@ -1113,7 +1113,7 @@ Warning: Non-critical data file missing, continuing with defaults
 **Returning errors:**
 ```polyglot
 [o] #Error
-[<] .message: pg\string << "Error description"
+[<] .message:pg.string << "Error description"
 ```
 
 ### 3. Error Strategies
@@ -1133,7 +1133,7 @@ Warning: Non-critical data file missing, continuing with defaults
 ### Pattern 1: Validate → Process → Handle Error
 ```polyglot
 [r] |Validate
-[>] .valid: pg\bool!Error
+[>] .valid:pg.bool!Error
 
 [?] .valid
   [r] |Process

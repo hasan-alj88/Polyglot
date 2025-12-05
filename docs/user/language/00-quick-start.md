@@ -71,11 +71,11 @@ Create a file named `hello.pg`:
 
 // Python Hello
 [r] |Run.Python
-[<] .code: pg\string << "print('Hello from Python!')"
+[<] .code:pg.string << "print('Hello from Python!')"
 
 // Rust Hello
 [r] |Run.Rust
-[<] .code: pg\String << "println!(\"Hello from Rust!\");"
+[<] .code:pg.String << "println!(\"Hello from Rust!\");"
 
 // No outputs
 [o] #None
@@ -167,7 +167,7 @@ Polyglot uses uppercase markers in square brackets to define structure:
 | `[@]` | Package declaration | `[@] Local@MyApp:1.0.0` |
 | `[#]` | File number | `[#] 1` |
 | `[\|]` | Pipeline definition | `[\|] ProcessData` |
-| `[i]` | Input parameters | `[i] .data: pg\string` |
+| `[i]` | Input parameters | `[i] .data:pg.string` |
 | `[t]` | Trigger | `[t] \|T.Daily` |
 | `[Q]` | Queue configuration | `[Q] \|Q.Priority` |
 | `[W]` | Wrapper (runtime setup) | `[W] \|W.Python3.12` |
@@ -176,15 +176,15 @@ Polyglot uses uppercase markers in square brackets to define structure:
 | `[p]` | Parallel execution | `[p] \|ProcessPartA` |
 | `[Y]` | Join (collect parallel results) | `[Y] \|Y.JoinAll` |
 | `[c]` | Cleanup block | `[c] \|Cleanup.DeleteTemp` |
-| `[o]` | Output parameters | `[o] .result: pg\string` |
+| `[o]` | Output parameters | `[o] .result:pg.string` |
 | `[X]` | Terminator | `[X]` |
 
 ### 2. Pipeline Components
 
 **Inputs** - Define parameters passed into the pipeline:
 ```polyglot
-[i] .data: pg\string
-[i] .timeout: pg\int << 30
+[i] .data:pg.string
+[i] .timeout:pg.int << 30
 ```
 
 **Triggers** - Specify when the pipeline runs:
@@ -201,23 +201,23 @@ Polyglot uses uppercase markers in square brackets to define structure:
 **Queue Configuration** - Control execution priority and resources:
 ```polyglot
 [Q] |Q.Priority
-[<] .level: pg\int << 8    // Priority 1-10 (10 = highest)
+[<] .level:pg.int << 8    // Priority 1-10 (10 = highest)
 
 [Q] |Q.RequireResource
-[<] .cpu_cores: pg\int << 2
-[<] .memory_mb: pg\int << 4096
+[<] .cpu_cores:pg.int << 2
+[<] .memory_mb:pg.int << 4096
 ```
 
 **Wrapper** - Set up language runtime environment:
 ```polyglot
 [W] |W.Python3.12
-[<] .dependencies: pg\path << \\FileDir\\requirements.txt
+[<] .dependencies:pg.path << \\FileDir\\requirements.txt
 ```
 
 **Setup** - Initialize resources before execution:
 ```polyglot
 [\] |Setup.CreateTempDir
-[>] .temp_path: pg\path >> .workspace
+[>] .temp_path:pg.path >> .workspace
 ```
 
 **Sequential Execution** - Run blocks execute one after another:
@@ -230,10 +230,10 @@ Polyglot uses uppercase markers in square brackets to define structure:
 **Parallel Execution** - Process multiple branches simultaneously:
 ```polyglot
 [p] |ProcessPartA
-[>] .result_a: pg\string >> .output_a
+[>] .result_a:pg.string >> .output_a
 
 [p] |ProcessPartB
-[>] .result_b: pg\string >> .output_b
+[>] .result_b:pg.string >> .output_b
 
 // Join results
 [Y] |Y.JoinAll
@@ -244,14 +244,14 @@ Polyglot uses uppercase markers in square brackets to define structure:
 **Fire and Forget** - Run without waiting for results:
 ```polyglot
 [f] |SendNotification
-[<] .message: pg\string << "Processing started"
+[<] .message:pg.string << "Processing started"
 // Execution continues immediately
 ```
 
 **Cleanup** - Release resources after execution:
 ```polyglot
 [/] |Cleanup.DeleteTempFiles
-[<] .path: pg\path << .workspace
+[<] .path:pg.path << .workspace
 ```
 
 ### 3. Types and Variables
@@ -259,11 +259,11 @@ Polyglot uses uppercase markers in square brackets to define structure:
 **Type Format:** `language\type`
 
 Common types:
-- `pg\string`, `pg\int`, `pg\bool` - Polyglot native types
+- `:pg.string`, `:pg.int`, `:pg.bool` - Polyglot native types
 - `py\str`, `py\int`, `py\dict` - Python types
 - `rs\String`, `rs\i32`, `rs\HashMap` - Rust types
-- `pg\dt` - Polyglot datetime
-- `pg\path` - File system path
+- `:pg.dt` - Polyglot datetime
+- `:pg.path` - File system path
 
 **Variable Naming:**
 - All variables start with `.` (dot prefix)
@@ -272,8 +272,8 @@ Common types:
 
 **Assignment:**
 ```polyglot
-[<] .input_var: pg\int << 42           // Input assignment
-[>] .output_var: pg\string >> .result  // Output assignment
+[<] .input_var:pg.int << 42           // Input assignment
+[>] .output_var:pg.string >> .result  // Output assignment
 ```
 
 ### 4. Comments
@@ -331,16 +331,16 @@ Now that you've created your first pipeline, explore these topics:
 [|] DailyReport
 
 [t] |T.Daily
-[<] .at: pg\dt << DT"16:30:"
+[<] .at:pg.dt << DT"16:30:"
 
 [r] |FetchData
 [>] .data: py\dict >> .raw_data
 
 [r] |ProcessData
 [<] .input: py\dict << .raw_data
-[>] .report: pg\string >> .result
+[>] .report:pg.string >> .result
 
-[o] .result: pg\string
+[o] .result:pg.string
 [X]
 ```
 
@@ -350,8 +350,8 @@ Now that you've created your first pipeline, explore these topics:
 [|] ProcessNewFiles
 
 [t] |T.FileWatch
-[<] .path: pg\path << \\Data\\incoming\\
-[<] .pattern: pg\string << "*.csv"
+[<] .path:pg.path << \\Data\\incoming\\
+[<] .pattern:pg.string << "*.csv"
 
 [r] |ValidateFile
 [r] |ImportToDatabase
@@ -376,7 +376,7 @@ Now that you've created your first pipeline, explore these topics:
 
 [r] |CombineResults
 
-[o] .final_result: pg\string
+[o] .final_result:pg.string
 [X]
 ```
 
@@ -388,7 +388,7 @@ Now that you've created your first pipeline, explore these topics:
 
 1. **Missing package block** - Every `.pg` file must start with `[@]`, `[#]`, `[X]`
 2. **Variable naming** - Variables must start with `.` (e.g., `.data` not `data`)
-3. **Type separator** - Use backslash `\` (e.g., `pg\int` not `pg/int`)
+3. **Type separator** - Use backslash `\` (e.g., `:pg.int` not `pg/int`)
 4. **DateTime syntax** - Use `DT"..."` prefix (e.g., `DT"16:30:"` not `T"16:30:"`)
 5. **Assignment operator** - Use `<<` only (not `=`)
 

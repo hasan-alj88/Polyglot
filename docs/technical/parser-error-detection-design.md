@@ -689,6 +689,141 @@ impl ParserError {
 
 ---
 
+## Compiler Warnings
+
+Compiler warnings are distinct from errors. Warnings indicate non-canonical code style or potential issues that don't prevent compilation, but should be addressed for code quality and maintainability.
+
+### Warning vs Error Distinction
+
+| Aspect | Errors | Warnings |
+|--------|--------|----------|
+| **Compilation** | Prevent compilation (exit code 1) | Compilation succeeds (exit code 0) |
+| **Correctness** | Code is syntactically or semantically invalid | Code is valid but not idiomatic |
+| **Action Required** | MUST fix to compile | SHOULD fix for code quality |
+| **Display** | Always shown | Can be suppressed with `--no-warnings` |
+
+### Warning Categories
+
+#### 1. Style Warnings
+
+**Whitespace Between Variable Name and Type Colon**
+
+**Canonical Form:**
+```polyglot
+[r] .count:pg.int << 42
+[r] .data:pg.array.pg.string
+[i] .input:pg.serial
+```
+
+**Non-Canonical Form (Triggers Warning):**
+```polyglot
+[r] .count :pg.int << 42        // WARNING: Unexpected whitespace before type colon
+[r] .data :pg.array.pg.string   // WARNING: Unexpected whitespace before type colon
+[i] .input :pg.serial            // WARNING: Unexpected whitespace before type colon
+```
+
+**Warning Details:**
+- **Type:** `WhitespaceBeforeTypeColon`
+- **Severity:** Warning (compilation continues)
+- **Message:** "Unexpected whitespace between variable name and type colon. Remove the space for canonical format."
+- **Hint:** "Canonical: `.variable:type` (no space)\nFound: `.variable :type` (with space)"
+- **Span:** Location of the whitespace before colon
+- **Fix:** Automated fix available (remove whitespace)
+
+**Parser Behavior:**
+- Parser MUST accept both forms (`.var:type` and `.var :type`)
+- Parser MUST emit warning for non-canonical form (`.var :type`)
+- Parser MUST continue compilation (warning, not error)
+- Warning can be suppressed with `--no-warnings` flag
+
+**Future Formatter:**
+- Auto-formatter should normalize `.var :type` → `.var:type`
+- Flag this rule for future `polyglot fmt` command implementation
+- Formatter should be idempotent (running twice produces same result)
+
+**Example Warning Output:**
+```
+warning: unexpected whitespace before type colon
+  --> example.pg:5:14
+   |
+ 5 | [r] .count :pg.int << 42
+   |            ^ remove this whitespace
+   |
+   = help: canonical format is `.variable:type` with no space
+   = note: for more information, run with `--explain whitespace-before-type-colon`
+```
+
+#### 2. Deprecated Syntax Warnings (Future)
+
+Reserved for future language evolution when syntax changes require migration warnings.
+
+### Warning Control
+
+**CLI Flags:**
+- `--no-warnings` - Suppress all warnings
+- `--warn=<category>` - Enable specific warning category
+- `--deny-warnings` - Treat all warnings as errors
+- `--explain <warning-code>` - Show detailed explanation for warning
+
+**Code Annotations (Future):**
+```polyglot
+// #[allow(whitespace-before-type-colon)]
+[r] .count :pg.int << 42  // Warning suppressed
+```
+
+### Implementation Notes
+
+**Warning System Structure:**
+```rust
+pub enum CompilerWarning {
+    WhitespaceBeforeTypeColon {
+        variable_name: String,
+        span: Span,
+    },
+    // Future warning types...
+}
+
+impl CompilerWarning {
+    pub fn code(&self) -> &str {
+        match self {
+            Self::WhitespaceBeforeTypeColon { .. } => "whitespace-before-type-colon",
+        }
+    }
+
+    pub fn message(&self) -> String {
+        match self {
+            Self::WhitespaceBeforeTypeColon { variable_name, .. } => {
+                format!(
+                    "Unexpected whitespace between variable name '{}' and type colon. \
+                     Remove the space for canonical format.",
+                    variable_name
+                )
+            }
+        }
+    }
+
+    pub fn hint(&self) -> String {
+        match self {
+            Self::WhitespaceBeforeTypeColon { variable_name, .. } => {
+                format!(
+                    "Canonical: `{variable_name}:type` (no space)\n\
+                     Found: `{variable_name} :type` (with space)",
+                    variable_name = variable_name
+                )
+            }
+        }
+    }
+}
+```
+
+**Parser Integration:**
+- Parser emits warnings during type annotation parsing
+- Warnings collected separately from errors
+- All warnings displayed after successful compilation
+- Exit code remains 0 unless `--deny-warnings` specified
+
+---
+
 ## Error Recovery Strategies
 
 ### 1. Synchronization Points
@@ -745,7 +880,7 @@ Each error type must have at least:
 - **ADR-004**: Error Handling with thiserror (docs/technical/architecture.md)
 - **ADR-014**: String Concatenation Operator (docs/technical/architecture.md)
 - **Block Hierarchy**: docs/technical/block-hierarchy-reference.md
-- **Line Continuation**: docs/user/language/08-line-continuation.md
+- **Line Continuation**: docs/user/language/line-continuation.md
 - **Story 1.4**: docs/project/stories/1-4-parser-ast-definitions.md
 - **Story 1.5**: docs/project/stories/1-5-parser-implementation.md (future)
 
