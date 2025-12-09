@@ -34,6 +34,7 @@ workflow_status:
     - docs/project/brainstorming-session-results-2025-11-15.md  # Initial vision brainstorming
     - docs/project/brainstorming-session-results-2025-11-29.md  # Type system & state machine design
     - docs/project/brainstorming-session-results-2025-12-02.md  # Calendar system & temporal profiles
+    - docs/brainstorming-session-results-2025-12-08.md          # Marker system optimization (10 major changes)
   research: optional
   product-brief: docs/product-brief-Polyglot-2025-11-15.md
 
@@ -43,7 +44,7 @@ workflow_status:
   create-design: conditional
 
   # Phase 3: Solutioning
-  create-architecture: docs/technical/architecture.md
+  create-architecture: docs/technical/architecture/
   validate-architecture: optional
   solutioning-gate-check: docs/implementation-readiness-report-2025-11-17.md
 
