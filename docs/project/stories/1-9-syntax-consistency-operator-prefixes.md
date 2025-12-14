@@ -1,5 +1,7 @@
 # Story 1.9: Syntax Consistency - Operator Prefixes for All Objects
 
+**Syntax Version:** This story implements v0.0.3 syntax. v0.0.4 syntax (with `$` variables, `{|}` blocks, `[|]` IO) will be implemented in future epics.
+
 **Epic:** Epic 1 - Lexer & Parser
 **Created:** 2025-12-04
 **Created By:** Claude (Dev Agent)

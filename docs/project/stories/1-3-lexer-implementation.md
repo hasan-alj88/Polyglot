@@ -1,5 +1,7 @@
 # Story 1.3: Lexer Implementation
 
+**Syntax Version:** This story implements v0.0.3 syntax. v0.0.4 syntax (with `$` variables, `{|}` blocks, `[|]` IO) will be implemented in future epics.
+
 Status: backlog
 
 ## Story

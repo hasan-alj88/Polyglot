@@ -1,5 +1,7 @@
 # Story 1.4: Parser AST Definitions
 
+**Syntax Version:** This story implements v0.0.3 syntax. v0.0.4 syntax (with `$` variables, `{|}` blocks, `[|]` IO) will be implemented in future epics.
+
 Status: in-progress
 
 ## Story

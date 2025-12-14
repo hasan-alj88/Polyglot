@@ -4,6 +4,8 @@
 **Date:** 2025-11-15
 **Version:** 1.0
 
+**Syntax Version Note:** Code examples in this document use **v0.0.4 syntax** (finalized December 2025). Current parser implementation (Epic 1) targets v0.0.3. Migration to v0.0.4 planned for Q2 2026.
+
 ---
 
 ## Executive Summary
@@ -447,14 +449,14 @@ Morgan independently integrates C++ inference in <30 minutes: "I can use that op
    - Copies `hello_world.pg` example from docs
    - Modifies to call Rust `simd-json` library:
      ```polyglot
-     [|] FastJsonParse
-     [i] .json_string: pg\string
+     {|} FastJsonParse
+     [|] <json_string :pg.string
      [W] |W.Rust
      [r] |parse_json
-     [<] .input: pg\string << .json_string
-     [>] .parsed: pg\serial >> result
-     [o] .parsed: pg\serial
-     [X]
+        [|] <input :pg.string << $json_string
+        [|] >parsed :pg.serial >> $result
+     [|] >parsed :pg.serial
+     {x}
      ```
    - **Time:** 10 minutes (most time spent reading docs on syntax)
 
@@ -548,15 +550,15 @@ Morgan independently integrates C++ inference in <30 minutes: "I can use that op
 6. **Migrate Backup Job** (Monday, 2:30 PM - 3:00 PM)
    - Converts backup cron job to Polyglot pipeline:
      ```polyglot
-     [|] NightlyBackup
+     {|} NightlyBackup
      [t] |T.Cron
-     [<] .schedule: pg\string << "0 2 * * *"  // 2 AM daily
+        [|] <schedule :pg.string << "0 2 * * *"  // 2 AM daily
      [Q] |Q.Queue.Assign
-     [<] .queue: pg\string << "low_priority"
-     [<] .pause_on_resource_threshold: pg\bool << #True
+        [|] <queue :pg.string << "low_priority"
+        [|] <pause_on_resource_threshold :pg.bool << #;Boolean;True
      [r] |RunBackup
-     [<] .database: pg\string << "production_db"
-     [X]
+        [|] <database :pg.string << "production_db"
+     {x}
      ```
    - Compiles, registers, activates
    - Tests manually: `polyglot trigger NightlyBackup`
@@ -769,7 +771,7 @@ The MVP proves that Polyglot's async architecture works end-to-end. Success = a 
    - Schema for pipelines, instances, execution logs
 
 4. **Pipeline Lifecycle**
-   - Define pipelines using Polyglot syntax (`[|]`, `[X]`, `[r]`, `[p]`, etc.)
+   - Define pipelines using Polyglot syntax (`{|}` definition, `{x}` end, `[r]` return, `[p]` parallel, etc.)
    - Compile `.pg` files to IR
    - Register pipelines to registry
    - Activate/deactivate pipelines via CLI
@@ -1081,7 +1083,7 @@ As a programming language and framework, Polyglot must meet developer tool stand
 **Polyglot Language Syntax:**
 - `.pg` file format for pipeline definitions
 - Complete syntax specification (v0.0.2 already exists in `docs/user/`)
-- Support for all documented operators: `[|]` (pipeline), `[X]` (exit), `[r]` (return), `[p]` (parallel), `[Q]` (queue), `[W]` (wrapper), etc.
+- Support for all documented operators: `{|}` (pipeline definition), `{x}` (block end), `[r]` (return), `[p]` (parallel), `[Q]` (queue), `[W]` (wrapper), `[|]` (IO marker), etc.
 - Type system: Polyglot types with runtime conversion to target languages
 - Error handling constructs
 - Comments and documentation syntax
@@ -1270,7 +1272,7 @@ These functional requirements define the complete capability set for Polyglot. E
 
 **FR6:** Developers can reference the complete v0.0.2 syntax specification to write pipelines
 
-**FR7:** Pipelines support all documented operators: `[|]` (pipeline), `[X]` (exit), `[r]` (return), `[p]` (parallel), `[Q]` (queue), `[W]` (wrapper), and others
+**FR7:** Pipelines support all documented operators: `{|}` (pipeline definition), `{x}` (block end), `[r]` (return), `[p]` (parallel), `[Q]` (queue), `[W]` (wrapper), `[|]` (IO marker), and others
 
 **FR8:** System supports Polyglot type system with runtime type conversion
 

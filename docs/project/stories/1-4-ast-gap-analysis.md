@@ -1,5 +1,7 @@
 # AST Gap Analysis: Story 1.4 - Missing Semantic Analysis Support
 
+**Syntax Version:** This story implements v0.0.3 syntax. v0.0.4 syntax (with `$` variables, `{|}` blocks, `[|]` IO) will be implemented in future epics.
+
 **Date:** 2025-11-28
 **Analyst:** Bob (SM) via User Feedback
 **Status:** Critical Gap Identified

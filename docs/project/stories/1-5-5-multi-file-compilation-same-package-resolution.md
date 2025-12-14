@@ -1,5 +1,7 @@
 # Story 1.5.5: Multi-File Compilation & Same-Package Resolution
 
+**Syntax Version:** This story implements v0.0.3 syntax. v0.0.4 syntax (with `$` variables, `{|}` blocks, `[|]` IO) will be implemented in future epics.
+
 Status: ready-for-dev
 
 ## Story
