@@ -1,0 +1,93 @@
+# Change Ticket Template
+# Copy this file and rename to CHG-YYYY-NNN.yaml
+
+ticket_id: CHG-2025-001
+type: change
+title: "Brief description of the proposed change"
+description: |
+  Detailed description of the change.
+  What will be changed?
+  Why is this change needed?
+  What is the expected benefit?
+
+# Priority Calculation
+impact: medium          # critical, high, medium, low
+urgency: medium         # immediate, high, medium, low
+priority: P3            # Auto-calculated from impact × urgency matrix
+
+# Status and Assignment
+status: new             # new, assessment, approval_pending, approved, rejected, scheduled, in_progress, completed, closed
+assigned_to: null       # Agent name or null if unassigned
+assigned_group: null    # development, architecture, documentation, creative, project_management, quality_assurance, operations
+
+# Categorization
+category: syntax_modification  # syntax_modification, architecture_change, process_improvement, tool_addition
+
+# Change Assessment
+assessment:
+  scope: null           # What will be affected?
+  risk_level: medium    # low, medium, high, critical
+  risk_analysis: null   # What could go wrong?
+  rollback_plan: null   # How to undo if needed?
+  testing_required: true
+  documentation_updates: true
+
+# Approval
+approval:
+  required: true
+  approvers: [hhj]
+  approved_by: []
+  approved_date: null
+  rejection_reason: null
+
+# Related Information
+related_tickets: []     # [PRB-2025-001, INC-2025-003]
+related_files: []       # Files to be modified
+related_stories: []     # Stories affected
+related_epics: []       # Epics affected
+
+# GitHub Sync (for future use)
+github:
+  issue_number: null    # GitHub issue # (null if not synced)
+  url: null             # Full GitHub issue URL
+  last_synced: null     # ISO timestamp of last sync
+
+# Timeline
+created_date: 2025-11-18
+created_by: Mai (Secretary)
+assessment_completed: null
+approval_requested: null
+approved_date: null
+scheduled_date: null
+implementation_started: null
+completed_date: null
+closed_date: null
+
+# Implementation
+implementation:
+  planned_steps: []     # Step-by-step implementation plan
+  actual_steps: []      # What was actually done
+  deviations: null      # Any deviations from plan
+  verification: null    # How success was verified
+
+# Resolution
+resolution: null        # Outcome of the change
+success: null           # true/false
+lessons_learned: null   # What we learned
+
+# SLA Tracking
+sla:
+  response_due: 2025-11-19T12:00:00Z    # Based on priority
+  resolution_due: 2025-11-25T12:00:00Z  # Based on priority
+  breached: false
+  exclusion_reason: null
+
+# Notes and Updates
+notes:
+  - timestamp: 2025-11-18T12:00:00Z
+    author: Mai (Secretary)
+    note: "Change request created"
+
+# Metadata
+tags: []
+watchers: [hhj]

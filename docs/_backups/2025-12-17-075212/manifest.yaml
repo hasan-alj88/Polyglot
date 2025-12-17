@@ -1,0 +1,12 @@
+backup_date: '2025-12-17T07:53:34.547056'
+timestamp: 2025-12-17-075212
+reason: Pre-sync backup before v0.0.4 merge
+source: /home/hhj/RustroverProjects/Polyglot/docs
+destination: /home/hhj/RustroverProjects/Polyglot/docs/_backups/2025-12-17-075212
+file_count: 464
+total_size_bytes: 6852244
+total_size_mb: 6.53
+excluded_directories:
+- _backups
+- specifications
+- .git

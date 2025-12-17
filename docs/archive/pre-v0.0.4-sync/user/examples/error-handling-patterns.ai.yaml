@@ -1,0 +1,15 @@
+_meta:
+  src: error-handling-patterns.md
+  updated: 2025-12-02
+topic: Error Handling Patterns
+kw: [error-patterns, [!], retry, fallback, recovery, timeout, catch-all, fault-tolerance]
+sum: Error handling patterns: retry logic, fallback strategies, timeout handling, catch-all, graceful degradation via [!] blocks
+pts:
+  - Retry: loop with max attempts, exponential backoff
+  - Fallback: catch error, execute alternative path
+  - Timeout: time-limited operations with !Timeout error
+  - Catch-all: [~][!] * pattern for unknown errors
+  - Propagation: [o] !ErrorType to caller
+  - Recovery: state-aware error handlers
+rels: [error-handling.md, variable-state-system.md, automation-workflows.md]
+code: [docs/project/examples/05-comprehensive-example.pg]

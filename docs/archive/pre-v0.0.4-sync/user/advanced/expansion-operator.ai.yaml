@@ -1,0 +1,15 @@
+_meta:
+  src: expansion-operator.md
+  updated: 2025-12-02
+topic: Expansion Operator
+kw: [[~], expansion, nesting, scope, depth, unpack, ~*, pack, ~Y.*]
+sum: [~] expansion marker for nesting depth; scope control; ~* unpack collections, ~Y.* pack results
+pts:
+  - Nesting: [~] marks nested scope depth
+  - Depth: [~][~] two levels, etc
+  - Unpack: ~* expand collection → items
+  - Pack: ~Y.* collect items → collection
+  - Scope: vars scoped to nest level
+  - Pattern: [p] ~ForEach common use
+rels: [block-markers.md, parallel-execution.md, operators.md]
+code: [docs/project/examples/04-unpack-operators.pg]

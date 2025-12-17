@@ -1,0 +1,18 @@
+_meta:
+  src: variable-states.md
+  updated: 2025-12-02
+topic: Variable State System
+kw: [states, Declared, DefaultReady, Pending, Ready, Faulted, async, state-machine, transitions]
+sum: Complete var state system: Declared → DefaultReady/Pending → Ready/Faulted; async-centric, auto transitions, no manual await
+pts:
+  - States: Declared, DefaultReady, Pending, Ready, Faulted
+  - Declared: .var: type (no value yet)
+  - DefaultReady: .var: type <~ value (override once)
+  - Pending: async operation in-flight
+  - Ready: value available, can PULL
+  - Faulted: error occurred, propagates
+  - Transitions: automatic on ops (<< >> pipeline calls)
+  - No manual state mgmt, lang handles internally
+  - [i] triggers when Ready state reached
+rels: [async-centric-paradigm.md, enumerations.md, operators.md, variable-state-system.md]
+code: [polyglot-parser/src/validation.rs, polyglot-ir/src/lib.rs]

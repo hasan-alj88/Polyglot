@@ -1,0 +1,671 @@
+[@] Local@VariableStatesAdvanced:1.0.0
+[#] 1
+[X]
+
+# ADVANCED VARIABLE STATES EXAMPLES
+# Testing edge cases and complex scenarios to identify gaps
+
+
+# =============================================================================
+# Example 1: Complex Error Propagation Through Nested Operations
+# Testing: How do errors propagate? Do parent variables inherit child errors?
+# =============================================================================
+
+[#] DatabaseResult
+[<] .records: pg\array{pg\string} << []
+[<] .count: pg\int << 0
+[X]
+
+[|] NestedErrorPropagation
+[i] .query: pg\string
+[t] |T.Call
+
+[W] |W.Python3.11
+
+# First level: Database connection
+[r] |connect_to_database
+[>] .connection: pg\string >> .db_conn
+[>] .errors: pg\array{!} >> .conn_errors
+[~]
+[~][!] !pg.Database.ConnectionFailed
+[~][>] .message: pg\string >> .conn_error_msg
+[~][~]# GAP: If connection fails, what happens to .db_conn.state?
+[~][~]# Is it Faulted? Does it even exist in scope?
+[~][~][o] #None
+
+# Second level: Query execution (depends on first level)
+[r] |execute_query
+[<] .connection: pg\string << .db_conn        # GAP: What if .db_conn is Faulted?
+[<] .sql: pg\string << .query
+[>] .result: #DatabaseResult >> .query_result
+[>] .errors: pg\array{!} >> .query_errors
+[~]
+[~][!] !pg.Database.QueryFailed
+[~][>] .message: pg\string >> .query_error_msg
+[~][~]# GAP: Do .query_errors include .conn_errors from parent?
+[~][~]# Or are errors isolated per pipeline call?
+[~][~][o] #None
+
+# GAP: Can we check multiple error conditions in sequence?
+[?] .db_conn.state =? #Variables.States.Faulted
+[~][r] |U.Log.Error
+[~][<] .msg: pg\string << "Connection failed: {.conn_error_msg}"
+[~][o] #None
+
+[?] .query_result.state =? #Variables.States.Faulted
+[~][r] |U.Log.Error
+[~][<] .msg: pg\string << "Query failed: {.query_error_msg}"
+[~][o] #None
+
+[?] *?
+[~][o] .query_result: #DatabaseResult
+
+[X]
+
+
+# =============================================================================
+# Example 2: Cached State Usage Patterns
+# Testing: How does Cached state work? When/how do we mark variables as Cached?
+# =============================================================================
+
+[|] CachedStateManagement
+[i] .user_id: pg\string
+[t] |T.Call
+
+[W] |W.Python3.11
+
+# GAP: How do we explicitly request cached execution?
+# Is there a cache directive/annotation?
+# Or is caching automatic based on some criteria?
+
+# Hypothetical syntax 1: Queue control for caching?
+[Q] |Q.Cache.Enable
+[<] .ttl: pg\int << 3600                      # GAP: Is this valid syntax?
+
+[r] |fetch_expensive_user_profile
+[<] .id: pg\string << .user_id
+[>] .profile: pg\string >> .user_profile
+[>] .errors: pg\array{!} >> .profile_errors
+
+# GAP: How do we check if result came from cache?
+[?] .user_profile.state =? #Variables.States.Cached
+[~][r] |U.Log.Info
+[~][<] .msg: pg\string << "Using cached profile (age: {.user_profile.cache_age})"
+[~]# GAP: Do cached variables have .cache_age field?
+[~]# Or other cache metadata?
+
+[?] .user_profile.state =? #Variables.States.Ready
+[~][r] |U.Log.Info
+[~][<] .msg: pg\string << "Fresh profile fetched"
+
+[?] *?
+[~][r] |U.Log.Warn
+[~][<] .msg: pg\string << "Unexpected state: {.user_profile.state}"
+
+[o] .user_profile: pg\string
+[X]
+
+
+# =============================================================================
+# Example 3: Dirty State and Cache Invalidation
+# Testing: How/when does Dirty state occur? How to invalidate cache?
+# =============================================================================
+
+[|] CacheInvalidationPattern
+[i] .item_id: pg\string
+[t] |T.Call
+
+[W] |W.Python3.11
+
+# Fetch with caching enabled
+[r] |get_product_details
+[<] .id: pg\string << .item_id
+[>] .product: pg\string >> .cached_product
+
+# Later... product gets updated elsewhere
+[r] |update_product_price
+[<] .id: pg\string << .item_id
+[<] .new_price: pg\float << 29.99
+[>] .success: #Boolean >> .update_result
+
+# GAP: How do we mark .cached_product as Dirty?
+# Is there explicit cache invalidation syntax?
+# Hypothetical syntax 1: Queue control?
+[Q] |Q.Cache.Invalidate
+[<] .variable: ??? << .cached_product         # GAP: How to reference variable itself?
+
+# Hypothetical syntax 2: Special marker?
+# [V] .cached_product                         # GAP: Variable invalidation marker?
+
+# GAP: After invalidation, what is .cached_product.state?
+# Is it Dirty? Does it automatically refetch?
+# Or do we need explicit refetch?
+
+[?] .cached_product.state =? #Variables.States.Dirty
+[~]# Refetch because cache is dirty
+[~][r] |get_product_details
+[~][<] .id: pg\string << .item_id
+[~][>] .product: pg\string >> .fresh_product
+[~][o] .fresh_product: pg\string
+
+[?] *?
+[~][o] .cached_product: pg\string
+
+[X]
+
+
+# =============================================================================
+# Example 4: Retrying State - Automatic vs Manual Retry
+# Testing: How does Retrying state work? Is it automatic or manual?
+# =============================================================================
+
+[|] RetryPatterns
+[i] .url: pg\string
+[t] |T.Call
+
+[W] |W.Python3.11
+
+# GAP: How do we configure retry behavior?
+# Is it declared before the operation?
+# Hypothetical syntax 1: Queue control for retry policy
+[Q] |Q.Retry.Configure
+[<] .max_attempts: pg\int << 3
+[<] .backoff: pg\string << "exponential"      # GAP: Valid retry config syntax?
+
+[r] |fetch_from_unstable_api
+[<] .endpoint: pg\string << .url
+[>] .data: pg\string >> .api_data
+[>] .errors: pg\array{!} >> .api_errors
+[~]
+[~][!] !pg.Network.Timeout
+[~][>] .message: pg\string >> .timeout_msg
+[~][~]# GAP: Does retry happen automatically here?
+[~][~]# Or do we need to explicitly trigger retry?
+
+# GAP: Can we observe Retrying state?
+# Is there a way to check current retry attempt number?
+[?] .api_data.state =? #Variables.States.Retrying
+[~][r] |U.Log.Info
+[~][<] .msg: pg\string << "Retry in progress (attempt: {.api_data.retry_count})"
+[~]# GAP: Is .retry_count a reserved field like .state and .errors?
+
+[?] .api_data.state =? #Variables.States.Faulted
+[~][r] |U.Log.Error
+[~][<] .msg: pg\string << "All retry attempts failed"
+[~][o] #None
+
+[?] .api_data.state =? #Variables.States.Ready
+[~][o] .api_data: pg\string
+
+[?] *?
+[~][o] #None
+
+[X]
+
+
+# =============================================================================
+# Example 5: Paused State with Queue Control
+# Testing: How does Paused state work? Human approval scenarios?
+# =============================================================================
+
+[|] HumanApprovalWorkflow
+[i] .transaction_amount: pg\float
+[t] |T.Call
+
+[W] |W.Python3.11
+
+# Check if amount requires approval
+[?] .transaction_amount >? 10000.0
+[~]# Large transaction - requires approval
+[~]
+[~]# GAP: How do we pause execution and wait for external trigger?
+[~]# Hypothetical syntax: Queue control to pause
+[~][Q] |Q.Pause.WaitForApproval
+[~][<] .approval_type: pg\string << "human_review"
+[~][<] .approvers: pg\array{pg\string} << ["manager@company.com"]
+[~]
+[~]# GAP: What happens here? Does pipeline block?
+[~]# Or does it get queued in pause queue?
+[~]# How do we resume after approval?
+[~]
+[~][r] |process_large_transaction
+[~][<] .amount: pg\float << .transaction_amount
+[~][>] .result: pg\string >> .tx_result
+[~]
+[~]# GAP: Is there a way to check if we came from Paused state?
+[~][?] .tx_result.state =? #Variables.States.Ready
+[~][~][r] |U.Log.Info
+[~][~][<] .msg: pg\string << "Transaction approved and processed"
+[~]
+[~][o] .tx_result: pg\string
+
+[?] *?
+[~]# Small transaction - process immediately
+[~][r] |process_small_transaction
+[~][<] .amount: pg\float << .transaction_amount
+[~][>] .result: pg\string >> .small_tx_result
+[~][o] .small_tx_result: pg\string
+
+[X]
+
+
+# =============================================================================
+# Example 6: Background Execution [b] and State Coordination
+# Testing: How do background tasks interact with variable states?
+# =============================================================================
+
+[|] BackgroundStateCoordination
+[i] .document_id: pg\string
+[t] |T.Call
+
+[W] |W.Python3.11
+
+# Launch background task
+[b] |generate_pdf_report
+[<] .doc_id: pg\string << .document_id
+[>] .pdf_path: pg\string >> .report_path
+[>] .errors: pg\array{!} >> .pdf_errors
+
+# Continue with other work
+[r] |send_notification
+[<] .id: pg\string << .document_id
+[<] .msg: pg\string << "Report generation started"
+
+# GAP: What is .report_path.state right after [b] launches?
+# Is it Pending? Or does background execution work differently?
+# Can we continue without waiting?
+
+[r] |log_activity
+[<] .activity: pg\string << "Report requested"
+
+# Later... need the PDF result
+# GAP: Does this automatically wait for background task?
+[?] .report_path.state =? #Variables.States.Ready
+[~][r] |send_email_with_attachment
+[~][<] .file: pg\string << .report_path
+[~][o] #None
+
+[?] .report_path.state =? #Variables.States.Pending
+[~]# GAP: Can a background task still be Pending here?
+[~]# Or did we already wait automatically?
+[~][r] |U.Log.Info
+[~][<] .msg: pg\string << "Background task still running"
+[~][o] #None
+
+[?] *?
+[~][o] #None
+
+[X]
+
+
+# =============================================================================
+# Example 7: Serial Load Block [s] with State Management
+# Testing: How do serialized file loads interact with states?
+# =============================================================================
+
+[|] SerializedDataLoading
+[i] .config_path: pg\string
+[t] |T.Call
+
+[W] |W.Polyglot.Scope
+
+# Load configuration from file
+[s] |S.JSON.Load
+[<] .file_path: pg\string << .config_path
+[>] .config: pg\string >> .app_config
+[>] .errors: pg\array{!} >> .load_errors
+[~]
+[~][!] !pg.File.NotFound
+[~][>] .message: pg\string >> .not_found_msg
+[~][~]# GAP: If file not found, what is .app_config.state?
+[~][~]# Is it Faulted with Declared structure?
+[~][~]# Or does it not exist at all?
+[~][~]
+[~][~]# Use default config
+[~][~][i] .app_config: pg\string << "{\"default\": true}"
+[~][~]# GAP: Can we declare variables inside error blocks?
+[~][~]# Or does this shadow/conflict with outer .app_config?
+
+# GAP: What is .app_config.state after [s] succeeds?
+# Is it Ready? Or is there a special "Loaded" state?
+[?] .app_config.state =? #Variables.States.Ready
+[~][r] |validate_config
+[~][<] .config: pg\string << .app_config
+[~][>] .is_valid: #Boolean >> .config_valid
+
+[?] *?
+[~][o] #None
+
+[o] .app_config: pg\string
+[X]
+
+
+# =============================================================================
+# Example 8: Complex Join with Mixed States
+# Testing: How does Join handle variables in different states?
+# =============================================================================
+
+[|] MixedStateJoin
+[i] #None
+[t] |T.Call
+
+[W] |W.Python3.11
+
+# Launch multiple parallel operations
+[p] |fetch_data_source_a
+[>] .data: pg\string >> .source_a              # Fast - completes quickly
+
+[p] |fetch_data_source_b
+[>] .data: pg\string >> .source_b              # Slow - takes time
+
+[p] |fetch_data_source_c
+[>] .data: pg\string >> .source_c              # Unreliable - might fail
+
+# GAP: If we check states before Join, what do we see?
+[r] |U.Log.Debug
+[<] .msg: pg\string << "A: {.source_a.state}, B: {.source_b.state}, C: {.source_c.state}"
+
+# Join waits for all
+[Y] |Y.Join
+[<] .source_a
+[<] .source_b
+[<] .source_c
+
+# GAP: After Join, are variables guaranteed to be Ready OR Faulted?
+# Or can they be in other states (Cached, Retrying)?
+
+# Complex state checking
+[?] .source_a.state =? #Variables.States.Ready
+[~][?] .source_b.state =? #Variables.States.Ready
+[~][~][?] .source_c.state =? #Variables.States.Ready
+[~][~][~]# All ready - best case
+[~][~][~][r] |merge_all_sources
+[~][~][~][<] .a: pg\string << .source_a
+[~][~][~][<] .b: pg\string << .source_b
+[~][~][~][<] .c: pg\string << .source_c
+[~][~][~][>] .merged: pg\string >> .result
+[~][~][~][o] .result: pg\string
+[~][~]
+[~][~][?] .source_c.state =? #Variables.States.Faulted
+[~][~][~]# C failed but A and B ready
+[~][~][~][r] |merge_partial_sources
+[~][~][~][<] .a: pg\string << .source_a
+[~][~][~][<] .b: pg\string << .source_b
+[~][~][~][>] .merged: pg\string >> .partial_result
+[~][~][~][o] .partial_result: pg\string
+
+# GAP: This nested state checking is getting complex
+# Is there a better pattern for "if all ready" vs "if some ready"?
+# Maybe a state aggregation function?
+
+[?] *?
+[~][r] |U.Log.Error
+[~][<] .msg: pg\string << "Multiple sources failed"
+[~][o] #None
+
+[X]
+
+
+# =============================================================================
+# Example 9: State Introspection on Complex Nested Structures
+# Testing: How deep can state introspection go?
+# =============================================================================
+
+[#] Address
+[<] .street: pg\string << ""
+[<] .city: pg\string << ""
+[<] .zip: pg\string << ""
+[X]
+
+[#] ContactInfo
+[<] .email: pg\string << ""
+[<] .phone: pg\string << ""
+[<] .address: #Address << #Address
+[X]
+
+[#] UserProfile
+[<] .name: pg\string << ""
+[<] .age: pg\int << 0
+[<] .contact: #ContactInfo << #ContactInfo
+[<] .metadata: pg\map{pg\string,pg\string} << {}
+[X]
+
+[|] DeepStateIntrospection
+[i] .user_id: pg\string
+[t] |T.Call
+
+[W] |W.Python3.11
+
+[r] |fetch_complete_user_profile
+[<] .id: pg\string << .user_id
+[>] .profile: #UserProfile >> .user_data
+
+# Top-level state check
+[?] .user_data.state =? #Variables.States.Ready
+[~]# Nested field state checks
+[~]
+[~]# Level 1: Direct field
+[~][?] .user_data.contact.state =? #Variables.States.Ready
+[~][~]# GAP: Does .contact have its own state?
+[~][~]# Or does it inherit from parent .user_data?
+[~][~]
+[~][~]# Level 2: Deeply nested field
+[~][~][?] .user_data.contact.address.state =? #Variables.States.Ready
+[~][~][~]# GAP: How deep does state introspection go?
+[~][~][~]
+[~][~][~]# Level 3: Field within nested structure
+[~][~][~][?] .user_data.contact.address.city.state =? #Variables.States.Ready
+[~][~][~][~]# GAP: Do primitive fields (strings) have .state?
+[~][~][~][~]# Or only composite structures?
+[~][~][~][~]
+[~][~][~][~][r] |U.Log.Info
+[~][~][~][~][<] .msg: pg\string << "City: {.user_data.contact.address.city}"
+[~]
+[~]# GAP: What about map fields? Can we check state of map values?
+[~][?] .user_data.metadata.state =? #Variables.States.Ready
+[~][~]# Is this valid?
+[~][~]# What about: .user_data.metadata["key"].state ?
+[~][~][o] .user_data: #UserProfile
+
+[?] *?
+[~][o] #None
+
+[X]
+
+
+# =============================================================================
+# Example 10: State Transitions During Pipeline Execution
+# Testing: Can states change during a single pipeline execution?
+# =============================================================================
+
+[|] StateTransitionTiming
+[i] #None
+[t] |T.Call
+
+[W] |W.Python3.11
+
+[r] |start_long_operation
+[>] .result: pg\string >> .long_op
+
+# GAP: Immediately after [r], what is .long_op.state?
+# Is it Pending? Or is it Ready because [r] waits?
+[r] |check_state_immediately
+[<] .state: pg\string << .long_op.state        # GAP: Can we pass .state itself as value?
+
+# GAP: Between operations, can state change?
+# If .long_op was Pending, does it become Ready before next [r]?
+[r] |U.Log.Info
+[<] .msg: pg\string << "State is now: {.long_op.state}"
+
+# What if we explicitly don't wait?
+[p] |start_parallel_operation
+[>] .result: pg\string >> .parallel_op
+
+# GAP: Right after [p], .parallel_op should be Pending, right?
+# Can we observe this before it becomes Ready?
+[r] |check_parallel_state
+[<] .state: pg\string << .parallel_op.state
+# GAP: Or does even reading .state cause automatic wait?
+
+[o] #None
+[X]
+
+
+# =============================================================================
+# Example 11: Error Field Details and Structure
+# Testing: What exactly is in the .errors field?
+# =============================================================================
+
+[|] ErrorFieldStructure
+[i] .risky_operation_id: pg\string
+[t] |T.Call
+
+[W] |W.Python3.11
+
+[r] |perform_risky_operation
+[<] .id: pg\string << .risky_operation_id
+[>] .result: pg\string >> .op_result
+[>] .errors: pg\array{!} >> .op_errors
+[~]
+[~][!] !pg.Network.Timeout
+[~][>] .message: pg\string >> .timeout_msg
+[~][>] .code: pg\int >> .timeout_code           # GAP: Can errors have multiple fields?
+[~][~]# What goes into .op_errors?
+[~][~]# Is it array of error objects?
+[~][~]# What structure do error objects have?
+[~]
+[~][!] !pg.Database.Locked
+[~][>] .message: pg\string >> .locked_msg
+[~][>] .retry_after: pg\int >> .locked_retry
+[~][~]# Second error - does it append to .op_errors?
+
+# GAP: What is the structure of .op_errors?
+# Hypothetical structure:
+# [
+#   {type: "!pg.Network.Timeout", message: "...", code: 500},
+#   {type: "!pg.Database.Locked", message: "...", retry_after: 30}
+# ]
+
+# Can we iterate over errors?
+# GAP: Is there array iteration syntax?
+[?] .op_errors.length >? 0
+[~][r] |log_all_errors
+[~][<] .errors: pg\array{!} << .op_errors
+[~]
+[~]# Can we access individual errors?
+[~][r] |log_first_error
+[~][<] .error: pg\string << .op_errors[0]      # GAP: Array indexing syntax?
+[~]# Or: .op_errors.0 (dot notation)?
+
+[?] *?
+[~][o] .op_result: pg\string
+
+[o] #None
+[X]
+
+
+# =============================================================================
+# Example 12: Constants and Their State Lifecycle
+# Testing: Do constants really skip Declared/Pending?
+# =============================================================================
+
+[|] ConstantStates
+[i] #None
+[t] |T.Call
+
+[W] |W.Polyglot.Scope
+
+# Constant declaration
+[i] .app_name: pg\string << "MyApp"
+[i] .version: pg\string << "1.0.0"
+[i] .max_retries: pg\int << 3
+
+# GAP: Are these in Ready state from the start?
+[?] .app_name.state =? #Variables.States.Ready
+[~][r] |U.Log.Info
+[~][<] .msg: pg\string << "Constant is Ready: {.app_name}"
+
+# GAP: Can constants ever be in Declared state?
+[?] .app_name.state =? #Variables.States.Declared
+[~][r] |U.Log.Error
+[~][<] .msg: pg\string << "This should never happen!"
+
+# GAP: What about constants from [i] block parameters?
+# The [i] block inputs are also constants (passed in)
+# Are they already Ready when pipeline starts?
+
+[o] #None
+[X]
+
+
+# =============================================================================
+# Example 13: Type System Interaction with States
+# Testing: How do types affect state transitions?
+# =============================================================================
+
+[|] TypeAndStateInteraction
+[i] .input_value: pg\string
+[t] |T.Call
+
+[W] |W.Python3.11
+
+# GAP: If type conversion fails, what state does variable get?
+[r] |parse_integer
+[<] .value: pg\string << .input_value
+[>] .number: pg\int >> .parsed_int             # GAP: Type mismatch error?
+[>] .errors: pg\array{!} >> .parse_errors
+[~]
+[~][!] !pg.Type.ConversionFailed
+[~][>] .message: pg\string >> .conversion_msg
+[~][~]# Is .parsed_int in Faulted state?
+[~][~]# Or does it not exist?
+[~][~][o] #None
+
+# GAP: Can we check if variable exists vs is Faulted?
+[?] .parsed_int.state =? #Variables.States.Faulted
+[~][r] |U.Log.Error
+[~][<] .msg: pg\string << "Type conversion failed"
+[~][o] #None
+
+[?] .parsed_int.state =? #Variables.States.Ready
+[~]# Type conversion succeeded
+[~][r] |use_integer
+[~][<] .num: pg\int << .parsed_int
+[~][o] #None
+
+[?] *?
+[~]# GAP: What other states are possible here?
+[~][r] |U.Log.Warn
+[~][<] .msg: pg\string << "Unexpected state: {.parsed_int.state}"
+[~][o] #None
+
+[X]
+
+
+# =============================================================================
+# SUMMARY OF GAPS IDENTIFIED
+# =============================================================================
+
+# 1. Error Propagation: Do child errors bubble up to parent variables?
+# 2. Faulted Variable Usage: What happens if you try to use a Faulted variable as input?
+# 3. Cached State Syntax: How to enable/configure caching? Cache metadata fields?
+# 4. Cache Invalidation: How to mark variables as Dirty? Explicit invalidation syntax?
+# 5. Retry Configuration: How to configure retry policies? Is retry automatic or manual?
+# 6. Retry Metadata: Is there .retry_count or other retry-related fields?
+# 7. Paused State Mechanics: How to pause/resume? Does pipeline block or queue?
+# 8. Background Task States: Do [b] background tasks behave differently with states?
+# 9. Serial Load States: Are loaded variables in Ready or special "Loaded" state?
+# 10. Variable Declaration in Error Blocks: Can we declare variables inside [!] blocks?
+# 11. Join State Guarantees: After Join, what states are possible? Only Ready/Faulted?
+# 12. Nested State Inheritance: Do nested fields have own states or inherit from parent?
+# 13. Primitive Field States: Do pg\string, pg\int primitives have .state?
+# 14. Map/Collection States: Can we check state of map values or array elements?
+# 15. State as Value: Can we pass .variable.state itself as a value?
+# 16. Parallel State Observation: Can we observe Pending state before automatic wait?
+# 17. Error Field Structure: Exact structure of .errors array? Error object schema?
+# 18. Array/Map Indexing: Syntax for accessing array[0] or map["key"]?
+# 19. Constant State Lifecycle: Are constants always Ready? Ever Declared?
+# 20. Type Conversion Failures: How do type mismatches affect states?
+# 21. Variable Existence vs Faulted: Can we distinguish "doesn't exist" from "Faulted"?
+# 22. State Aggregation: Better patterns for checking "all ready" vs "some ready"?
+# 23. Queue Control Syntax: What does [Q] actually look like for different operations?

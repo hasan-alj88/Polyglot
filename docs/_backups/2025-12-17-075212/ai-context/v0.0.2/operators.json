@@ -1,0 +1,375 @@
+{
+  "polyglot_v0.0.2_operators": {
+    "version": "0.0.2",
+    "paradigm": "async-centric with automatic waiting",
+    "no_keywords": true,
+    "operator_prefixes_required": true,
+
+    "inline_pipelines": {
+      "critical": "String literals are NOT primitives - they are inline pipeline calls",
+      "rule": "All inline pipeline calls use string literal syntax",
+      "syntax": "Pipeline.Name\"formatted_argument_string\"",
+      "implicit_call": "\"text\" implicitly calls U.String\"text\"",
+      "empty_parameters": "Pipeline.Name\"\" (empty string required)",
+      "interpolation": {
+        "syntax": "\"{.variable:format}\"",
+        "examples": [
+          "\"{.var}\" - default format",
+          "\"{.count:Hex}\" - hexadecimal",
+          "\"{.price:Currency}\" - currency format"
+        ],
+        "processing": "Calls |U.String.{language}.{type}.{format_identifier}"
+      },
+      "pipeline_signature": {
+        "input": ".formatted_argument_string: pg\\string (MANDATORY name)",
+        "trigger": "|T.String.Call (MANDATORY)",
+        "output": "Single output of ANY type (not limited to strings)"
+      },
+      "examples_correct": [
+        "\"hello\" → U.String\"hello\"",
+        "DT.Now\"\" → returns pg\\dt",
+        "DT.Minutes\"5\" → returns pg\\dt",
+        "DT.ToNow\"{.start}\" → with interpolation",
+        "\"{.number:Hex}\" → calls |U.String.Polyglot.Int.Hex"
+      ],
+      "examples_incorrect": [
+        "DT.Now (missing \"\")",
+        "DT.Minutes(5) (function call syntax)",
+        "DT.ToNow(.start) (parentheses not allowed)"
+      ],
+      "return_types": "Can return ANY type: pg\\string, pg\\dt, pg\\int, etc.",
+      "note": "See /docs/technical/string-literals-internals.md for complete mechanics"
+    },
+
+    "collection_literals": {
+      "rule": "Collections use {} with comma separation, NOT []",
+      "delimiter": "{}",
+      "invalid_delimiter": "[]",
+      "examples_correct": ["{}", "{1, 2, 3}", "{\"a\", \"b\"}", "{#Channel.Email, #Channel.SMS}"],
+      "examples_incorrect": ["[]", "[1, 2, 3]", "[\"a\", \"b\"]"],
+      "note": "All collections (arrays, sets) use {} delimiters"
+    },
+
+    "assignment_operators": {
+      "<<": {
+        "name": "push",
+        "type": "assignment",
+        "direction": "right-to-left",
+        "syntax": ".dest << .source",
+        "semantics": "Pull from source (auto-await), push to dest",
+        "auto_await": true,
+        "block_marker_context": {
+          "variable_declaration": {
+            "marker": "[r]",
+            "syntax": "[r] .dest: Type << value",
+            "context": "At pipeline scope (top-level)",
+            "use": "Declare variable and push value immediately",
+            "examples": ["[r] .output: pg\\string << \"hello\"", "[r] .count: pg\\int << 42"]
+          },
+          "input_binding": {
+            "marker": "[<]",
+            "syntax": "[<] .dest << .source",
+            "context": "Within parent block (pipeline call, conditional, unpack, etc.)",
+            "use": "Push value to variable within block context",
+            "parent_required": true,
+            "examples": ["[r] |Pipeline [<] .input << .value", "[?] .cond =? #Boolean.True [~][<] .result << .value [~]"]
+          }
+        },
+        "state_effect": {
+          "if_source_constant": "dest becomes Ready",
+          "if_source_variable": "await source Ready, then push to dest",
+          "push_count": "consumes 1 push from dest"
+        },
+        "examples": [
+          "[r] .output: pg\\string << \"hello\"",
+          "[<] .output << .input",
+          "[<] .timeout << 30",
+          "[<] .config << #Config"
+        ]
+      },
+      ">>": {
+        "name": "pull",
+        "type": "assignment",
+        "direction": "left-to-right",
+        "syntax": "[>] .source: Type >> .dest",
+        "semantics": "Pull from pipeline output, assign to dest",
+        "async_operation": true,
+        "state_effect": {
+          "dest_state": "Pending → Ready/Faulted",
+          "blocking": "dest blocks when pulled from until Ready/Faulted"
+        },
+        "context": "Used in [r] blocks to capture pipeline output",
+        "examples": [
+          "[>] .result: pg\\int >> .output",
+          "[>] .user: #UserProfile >> .user_data"
+        ]
+      },
+      "<~": {
+        "name": "default",
+        "type": "assignment",
+        "direction": "right-to-left",
+        "syntax": "[<] .variable: Type <~ default_value",
+        "semantics": "Assigns default value, allows ONE override",
+        "state_effect": {
+          "result_state": "DefaultReady",
+          "push_count_initial": 1,
+          "push_count_allowed": 2,
+          "override_count": 1
+        },
+        "use_case": "Configuration defaults",
+        "examples": [
+          "[<] .timeout: pg\\int <~ 30",
+          "[<] .retries: pg\\int <~ 3",
+          "[<] .mode: #ProcessingMode <~ #ProcessingMode.Balanced"
+        ]
+      },
+      "~>": {
+        "name": "DEPRECATED",
+        "status": "REMOVED",
+        "note": "Use >> instead"
+      }
+    },
+
+    "comparison_operators": {
+      "=?": {
+        "name": "equal",
+        "type": "comparison",
+        "syntax": ".variable =? value",
+        "semantics": "Test equality",
+        "auto_await": true,
+        "returns": "#Boolean.True or #Boolean.False",
+        "type_constraint": "Any type (numeric, string, enum, bool)",
+        "example": "[?] .user.role =? #Roles.Admin"
+      },
+      "=!?": {
+        "name": "not_equal",
+        "type": "comparison",
+        "syntax": ".variable =!? value",
+        "semantics": "Test inequality",
+        "auto_await": true,
+        "returns": "#Boolean.True or #Boolean.False",
+        "type_constraint": "Any type",
+        "example": "[?] .status =!? #Status.Completed"
+      },
+      ">?": {
+        "name": "greater_than",
+        "type": "comparison",
+        "syntax": ".variable >? value",
+        "semantics": "Test greater than",
+        "auto_await": true,
+        "returns": "#Boolean.True or #Boolean.False",
+        "type_constraint": "Numeric (pg\\int, pg\\float) or comparable (pg\\string, pg\\dt)",
+        "example": "[?] .count >? 100"
+      },
+      "<?": {
+        "name": "less_than",
+        "type": "comparison",
+        "syntax": ".variable <? value",
+        "semantics": "Test less than",
+        "auto_await": true,
+        "type_constraint": "Numeric or comparable",
+        "example": "[?] .timeout <? DT.Minutes\"5\""
+      },
+      "=>?": {
+        "name": "greater_or_equal",
+        "type": "comparison",
+        "syntax": ".variable =>? value",
+        "semantics": "Test greater than or equal",
+        "auto_await": true,
+        "type_constraint": "Numeric or comparable",
+        "example": "[?] .age =>? 18"
+      },
+      "=<?": {
+        "name": "less_or_equal",
+        "type": "comparison",
+        "syntax": ".variable =<? value",
+        "semantics": "Test less than or equal",
+        "auto_await": true,
+        "type_constraint": "Numeric or comparable",
+        "example": "[?] .retries =<? 3"
+      }
+    },
+
+    "pattern_operators": {
+      "*?": {
+        "name": "wildcard",
+        "type": "pattern_match",
+        "syntax": "[?] *?",
+        "semantics": "Matches anything (catch-all)",
+        "required": "YES - for exhaustive conditions",
+        "use": "Final condition in [?] blocks",
+        "example": "[?] *? [~][r] |HandleDefault"
+      },
+      "re?": {
+        "name": "regex",
+        "type": "pattern_match",
+        "syntax": ".variable re? \"pattern\"",
+        "semantics": "Test against regex pattern",
+        "auto_await": true,
+        "example": "[?] .email re? \"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}$\""
+      }
+    },
+
+    "range_operators": {
+      "?[": {
+        "name": "closed_interval_start",
+        "type": "range",
+        "syntax": "[?] .variable ?[a, b]",
+        "semantics": "Closed interval [a, b] - both inclusive",
+        "example": "[?] .age ?[18, 65]"
+      },
+      "?(": {
+        "name": "open_interval_start",
+        "type": "range",
+        "syntax": "[?] .variable ?(a, b)",
+        "semantics": "Open interval (a, b) - both exclusive",
+        "example": "[?] .score ?(0, 100)"
+      },
+      "?]": {
+        "name": "half_open_right",
+        "type": "range",
+        "syntax": "[?] .variable ?(a, b]",
+        "semantics": "Half-open (a, b] - left exclusive, right inclusive",
+        "example": "[?] .value ?(0, 100]"
+      },
+      "?)": {
+        "name": "half_open_left",
+        "type": "range",
+        "syntax": "[?] .variable ?[a, b)",
+        "semantics": "Half-open [a, b) - left inclusive, right exclusive",
+        "example": "[?] .index ?[0, 10)"
+      }
+    },
+
+    "unpack_operators": {
+      "~ForEach": {
+        "name": "for_each",
+        "type": "unpack",
+        "syntax": "[p] ~ForEach",
+        "semantics": "Unpack collection, process each item",
+        "execution_mode": "[p] = parallel, [r] = sequential, [b] = background",
+        "type_inference": "Input pg\\array{T} → each item is type T",
+        "auto_await": "Input collection",
+        "mini_scope": true,
+        "example": "[p] ~ForEach [<] .items: pg\\array{pg\\int} [>] .item"
+      },
+      "~Enumerate": {
+        "name": "enumerate",
+        "type": "unpack",
+        "syntax": "[p] ~Enumerate",
+        "semantics": "Unpack with index",
+        "outputs": [".index: pg\\int", ".item: T"],
+        "example": "[p] ~Enumerate [<] .items [>] .index [>] .item"
+      },
+      "~Zip": {
+        "name": "zip",
+        "type": "unpack",
+        "syntax": "[p] ~Zip",
+        "semantics": "Combine multiple collections element-wise",
+        "inputs": "Multiple collections",
+        "example": "[p] ~Zip [<] .list1 [<] .list2 [>] .item1 [>] .item2"
+      }
+    },
+
+    "join_operators": {
+      "~Y.IntoArray": {
+        "name": "join_into_array",
+        "type": "join",
+        "syntax": "[Y] ~Y.IntoArray",
+        "semantics": "Join parallel outputs into array",
+        "marker": "[Y]",
+        "output_type": "pg\\array{T}",
+        "note": "Y = Join (symbol shows parallel processes converging)",
+        "example": "[~][Y] ~Y.IntoArray [~][<] .result [~][>] .all_results"
+      },
+      "~Y.IntoSerial": {
+        "name": "join_into_serial",
+        "type": "join",
+        "syntax": "[Y] ~Y.IntoSerial",
+        "semantics": "Join into serial/struct",
+        "output_type": "pg\\serial",
+        "example": "[~][Y] ~Y.IntoSerial"
+      },
+      "~Y.IntoSet": {
+        "name": "join_into_set",
+        "type": "join",
+        "syntax": "[Y] ~Y.IntoSet",
+        "semantics": "Join into unique set",
+        "output_type": "pg\\set{T}",
+        "duplicates_removed": true,
+        "example": "[~][Y] ~Y.IntoSet"
+      }
+    },
+
+    "hierarchy_operator": {
+      ".": {
+        "name": "dot",
+        "type": "dual_purpose",
+        "role_1": "Variable prefix (defines variables)",
+        "role_2": "Hierarchy navigator",
+        "syntax": [
+          ".variable",
+          ".parent.child",
+          ".config.timeout.value"
+        ],
+        "importance": "THE most important operator in Polyglot",
+        "foundation": "ALL Polyglot data is hierarchical serialized tree",
+        "examples": [
+          ".user",
+          ".config.database.host",
+          ".*.pgvar.state"
+        ]
+      }
+    },
+
+    "operator_prefixes": {
+      ".": {
+        "target": "Variables",
+        "purpose": "Define and navigate variables",
+        "required": "YES - ALL variables need . prefix",
+        "examples": [".myvar", ".config.timeout"]
+      },
+      "#": {
+        "target": "Enumerations/Schemas",
+        "purpose": "Define data structures",
+        "required": "YES",
+        "examples": ["#UserProfile", "#PgVar.States.Ready"]
+      },
+      "|": {
+        "target": "Pipelines",
+        "purpose": "Define and call pipelines",
+        "required": "YES",
+        "examples": ["|ProcessData", "|T.Cron", "|W.Python3.11"]
+      },
+      "!": {
+        "target": "Error types",
+        "purpose": "Define error types",
+        "required": "YES",
+        "examples": ["!Network.Timeout", "!Validation.Failed"]
+      }
+    },
+
+    "no_keywords_rule": {
+      "principle": "Polyglot has ZERO keywords",
+      "rule": "ALL identifiers MUST have operator prefix",
+      "invalid_examples": [
+        "FetchUser (missing |)",
+        "T.Cron (missing |)",
+        "user (missing .)",
+        "UserProfile (missing #)"
+      ],
+      "valid_examples": [
+        "|FetchUser",
+        "|T.Cron",
+        ".user",
+        "#UserProfile"
+      ],
+      "rationale": [
+        "Clarity - no ambiguity about identifier type",
+        "Consistency - same pattern everywhere",
+        "Serialization-centric - maps to hierarchical tree",
+        "Cross-language integration - unambiguous serialization"
+      ]
+    }
+  }
+}

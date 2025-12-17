@@ -1,0 +1,52 @@
+{
+  "repository_type": "monorepo",
+  "project_name": "Polyglot",
+  "total_parts": 2,
+  "parts": [
+    {
+      "part_id": "compiler",
+      "display_name": "Compiler Toolchain",
+      "project_type_id": "backend",
+      "root_path": "/home/hhj/RustroverProjects/Polyglot",
+      "language": "Rust",
+      "framework": "Tokio",
+      "architecture_pattern": "Modular Compiler Architecture",
+      "workspace_members": [
+        "polyglot-cli",
+        "polyglot-lexer",
+        "polyglot-parser",
+        "polyglot-ir",
+        "polyglot-db",
+        "polyglot-runtime-wrappers",
+        "trigger-monitor",
+        "queue-manager",
+        "runner"
+      ],
+      "key_technologies": [
+        "Rust 2021",
+        "Tokio async",
+        "PostgreSQL",
+        "Redis",
+        "InfluxDB"
+      ]
+    },
+    {
+      "part_id": "vscode-extension",
+      "display_name": "VSCode Extension",
+      "project_type_id": "extension",
+      "root_path": "/home/hhj/RustroverProjects/Polyglot/syntax-highlighting/vscode-extension",
+      "language": "TypeScript",
+      "framework": "VSCode Extension API",
+      "architecture_pattern": "VSCode Extension",
+      "purpose": "Syntax highlighting for .pg files"
+    }
+  ],
+  "integration_points": [
+    {
+      "from": "vscode-extension",
+      "to": "compiler",
+      "type": "Language Definition",
+      "description": "Extension provides editor support for language produced by compiler"
+    }
+  ]
+}

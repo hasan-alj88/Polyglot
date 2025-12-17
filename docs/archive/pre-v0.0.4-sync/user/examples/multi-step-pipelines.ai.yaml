@@ -1,0 +1,15 @@
+_meta:
+  src: multi-step-pipelines.md
+  updated: 2025-12-02
+topic: Multi-Step Pipeline Patterns
+kw: [pipeline, multi-step, sequential, parallel, composition, orchestration, data-flow]
+sum: Complex pipeline patterns: sequential chains, parallel branches, mixed execution, pipeline composition, state-aware flow control
+pts:
+  - Sequential: [r] |Step1, [r] |Step2 chaining
+  - Parallel: [p] ~ForEach with [Y] join
+  - Mixed: combine [r][p][?] execution modes
+  - Composition: pipelines calling pipelines
+  - Data flow: << push, >> pull between steps
+  - State-aware: execution waits for Ready state
+rels: [block-markers.md, parallel-execution.md, automation-workflows.md]
+code: [docs/project/examples/01-basic-pipeline.pg, docs/project/examples/04-unpack-operators.pg]

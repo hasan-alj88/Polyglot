@@ -1,0 +1,16 @@
+_meta:
+  src: enumerations.md
+  updated: 2025-12-02
+topic: Enumerations & Reserved Types
+kw: [enum, [#], reserved, Boolean, None, PgVar.States, alias, namespace]
+sum: Enum system with [#] block marker; reserved enums (#Boolean, #None, #PgVar.States.*); [A] alias support; namespace paths
+pts:
+  - Define: [#] EnumName, [<] .Field syntax
+  - Reserved: #Boolean.True|False, #None, #PgVar.States.*
+  - States: Declared, DefaultReady, Pending, Ready, Faulted
+  - Alias: [A] shorthand for full enum path
+  - Usage: #EnumName.Field or alias #Field
+  - No values: enums are symbolic only
+  - !No.Input/!No.Output are error markers not enums
+rels: [type-system.md, variable-state-system.md, block-markers.md]
+code: [polyglot-parser/src/ast.rs]
