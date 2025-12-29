@@ -2,7 +2,7 @@
 
 **Version:** v0.0.4
 **Status:** ✅ Production Ready
-**Last Updated:** 2025-12-28
+**Last Updated:** 2025-12-29
 **Schema:** BMAD-optimized for agent consumption
 
 ---
@@ -41,6 +41,7 @@ Start here if you're new to Polyglot.
 #### Types (Complexity: medium)
 - [Type System](./User/language/types/type-system.md) - Complete type reference
 - **[Enum Syntax Guide](./User/language/types/enums.md)** - 📗 v0.0.4 syntax, aliases, custom extensions, migration
+- **[Enum Definitions](./User/language/types/enum-definitions.md)** - 📗 `{#}` blocks, serial load, field accessors, configuration-driven enums (NEW!)
 - [Enums & Serial](./User/language/types/enums-serial.md) - Enumerations and serial data
 - [Variables Lifecycle](./User/language/types/variables-lifecycle.md) - 5-state variable system
 
@@ -53,6 +54,9 @@ Start here if you're new to Polyglot.
 #### Error Handling (Complexity: medium)
 - **[Error Handling Basics](./User/language/error-handling/basics.md)** - 📕 Error types, faulted states, fork-based handling
 - **[Error Blocks](./User/language/error-handling/error-blocks.md)** - 📕 Pattern matching, inline conversion (NEW!)
+
+#### Triggers (Complexity: medium)
+- **[Trigger I/O Wiring](./User/language/triggers/io-wiring.md)** - 📘 Trigger outputs, pipeline input wiring, reactive patterns (NEW!)
 
 #### Advanced Features
 - **[Pipeline Composition](./User/language/advanced/pipeline-composition.md)** - 📗 Chain pipelines with `|>` operator (NEW!)
