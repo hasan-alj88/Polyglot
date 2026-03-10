@@ -260,6 +260,8 @@ Still in comment..."#,
                     LexerError::InvalidEscapeSequence { .. } => "InvalidEscapeSequence",
                     LexerError::UnexpectedCharacter { .. } => "UnexpectedCharacter",
                     LexerError::InvalidNumberFormat { .. } => "InvalidNumberFormat",
+                    LexerError::TabsInIndentation { .. } => "TabsInIndentation",
+                    LexerError::InconsistentIndentation { .. } => "InconsistentIndentation",
                 };
 
                 if expected_errors.contains(&error_type) || expected_errors.contains(&"ACCEPT") {

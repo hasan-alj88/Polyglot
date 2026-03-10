@@ -1,4 +1,4 @@
-// Polyglot Lexer - v0.0.2
+// Polyglot Lexer - v0.0.4
 // Tokenizes Polyglot source code into a stream of tokens
 
 pub mod error;

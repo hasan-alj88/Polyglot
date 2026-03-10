@@ -66,6 +66,8 @@ fn main() {
                     LexerError::InvalidEscapeSequence { .. } => "InvalidEscapeSequence",
                     LexerError::UnexpectedCharacter { .. } => "UnexpectedCharacter",
                     LexerError::InvalidNumberFormat { .. } => "InvalidNumberFormat",
+                    LexerError::TabsInIndentation { .. } => "TabsInIndentation",
+                    LexerError::InconsistentIndentation { .. } => "InconsistentIndentation",
                 };
 
                 if error_type == expected_error {

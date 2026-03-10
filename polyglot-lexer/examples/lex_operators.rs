@@ -66,7 +66,7 @@ fn main() {
                 .filter(|t| {
                     matches!(
                         t.kind,
-                        TokenKind::OpPush | TokenKind::OpPull | TokenKind::OpDefault
+                        TokenKind::OpPushLeft | TokenKind::OpPushRight | TokenKind::OpDefaultPushLeft
                     )
                 })
                 .collect();
@@ -118,11 +118,11 @@ fn main() {
 
             // Verify all expected operators are present
             println!("🎯 Verification:");
-            let has_push = assignment_ops.iter().any(|t| t.kind == TokenKind::OpPush);
-            let has_pull = assignment_ops.iter().any(|t| t.kind == TokenKind::OpPull);
+            let has_push = assignment_ops.iter().any(|t| t.kind == TokenKind::OpPushLeft);
+            let has_pull = assignment_ops.iter().any(|t| t.kind == TokenKind::OpPushRight);
             let has_default = assignment_ops
                 .iter()
-                .any(|t| t.kind == TokenKind::OpDefault);
+                .any(|t| t.kind == TokenKind::OpDefaultPushLeft);
             let has_equal = comparison_ops.iter().any(|t| t.kind == TokenKind::OpEqual);
             let has_not_equal = comparison_ops
                 .iter()

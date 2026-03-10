@@ -85,7 +85,7 @@ fn main() {
 
             // Find the OpPush (<<) token and check what follows
             for (i, token) in tokens.iter().enumerate() {
-                if token.kind == TokenKind::OpPush {
+                if token.kind == TokenKind::OpPushLeft {
                     println!("\nTokens after << operator:");
                     for j in i..=(i + 4).min(tokens.len() - 1) {
                         let marker = if tokens[j].kind == TokenKind::BlockLineContinuation {

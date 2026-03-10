@@ -21,6 +21,11 @@ pub struct Lexer {
     column: usize,
     state: LexerState,
     string_buffer: String,
+
+    // Indentation tracking (for loop bodies only)
+    in_loop_body: bool,
+    indent_stack: Vec<usize>,
+    pending_tokens: Vec<Token>,
 }
 
 impl Lexer {
@@ -32,6 +37,9 @@ impl Lexer {
             column: 1,
             state: LexerState::Initial,
             string_buffer: String::new(),
+            in_loop_body: false,
+            indent_stack: vec![0], // Start with base indentation level
+            pending_tokens: Vec::new(),
         }
     }
 
@@ -61,6 +69,11 @@ impl Lexer {
 
     /// Get next token from source
     fn next_token(&mut self) -> Result<Token, LexerError> {
+        // If we have pending tokens (from indentation), return them first
+        if !self.pending_tokens.is_empty() {
+            return Ok(self.pending_tokens.remove(0));
+        }
+
         match self.state {
             LexerState::Initial => self.lex_initial(),
             LexerState::InString => self.lex_string(),
@@ -93,12 +106,23 @@ impl Lexer {
                 self.advance();
                 self.line += 1;
                 self.column = 1;
-                Ok(Token::new(
+
+                // Create the newline token
+                let newline_token = Token::new(
                     TokenKind::Newline,
                     "\n".to_string(),
                     start_line,
                     start_column,
-                ))
+                );
+
+                // If in loop body, check for indentation changes
+                if self.in_loop_body {
+                    let indent_tokens = self.lex_indentation()?;
+                    // Buffer any Indent/Dedent tokens for later
+                    self.pending_tokens.extend(indent_tokens);
+                }
+
+                Ok(newline_token)
             }
 
             // Block markers
@@ -182,11 +206,12 @@ impl Lexer {
             }
 
             // Identifiers with prefixes
-            '.' => self.lex_variable_identifier(),
+            '.' => self.lex_dot_or_variable(),
             '#' => self.lex_enum_identifier(),
             '|' => self.lex_pipeline_identifier(),
             '!' => self.lex_error_identifier(),
             '~' => self.lex_unpack_or_join_identifier(),
+            '%' => self.lex_metadata_identifier(),
 
             // Delimiters
             '{' => {
@@ -245,22 +270,41 @@ impl Lexer {
                 ))
             }
             ':' => {
+                // Check if this is a type identifier (:type.path) or just a delimiter
+                if self.peek_char().is_some_and(|c| c.is_ascii_alphabetic() || c == '_') {
+                    self.lex_type_identifier()
+                } else {
+                    self.advance();
+                    Ok(Token::new(
+                        TokenKind::DelimiterColon,
+                        ":".to_string(),
+                        start_line,
+                        start_column,
+                    ))
+                }
+            }
+            ';' => {
                 self.advance();
                 Ok(Token::new(
-                    TokenKind::DelimiterColon,
-                    ":".to_string(),
+                    TokenKind::DelimiterSemicolon,
+                    ";".to_string(),
                     start_line,
                     start_column,
                 ))
             }
             '@' => {
-                self.advance();
-                Ok(Token::new(
-                    TokenKind::DelimiterAt,
-                    "@".to_string(),
-                    start_line,
-                    start_column,
-                ))
+                // Check if this is a package spec (@Registry::Package:Version) or just a delimiter
+                if self.peek_char().is_some_and(|c| c.is_ascii_alphabetic() || c == '_') {
+                    self.lex_package_spec()
+                } else {
+                    self.advance();
+                    Ok(Token::new(
+                        TokenKind::DelimiterAt,
+                        "@".to_string(),
+                        start_line,
+                        start_column,
+                    ))
+                }
             }
             '\\' => {
                 self.advance();
@@ -330,17 +374,18 @@ impl Lexer {
             '<' => TokenKind::BlockInputBinding,
             '>' => TokenKind::BlockOutputBinding,
             'p' => TokenKind::BlockParallel,
-            'Y' => TokenKind::BlockJoin,
+            'f' => TokenKind::BlockFork,
+            'v' => TokenKind::BlockJoin,
             'b' => TokenKind::BlockBackground,
-            's' => TokenKind::BlockStreaming,
+            's' => TokenKind::BlockSerialLoad,
             '!' => TokenKind::BlockErrorCatch,
             '?' => TokenKind::BlockConditional,
             '~' => TokenKind::BlockBody,
             '+' => TokenKind::BlockBoolOr,
             '&' => TokenKind::BlockBoolAnd,
-            '-' => TokenKind::BlockBoolXor,
-            '^' => TokenKind::BlockBoolNand,
-            '.' => TokenKind::BlockBoolNor,
+            '-' => TokenKind::BlockBoolNot,
+            '^' => TokenKind::BlockBoolXor,
+            '.' => TokenKind::BlockSubfield,
             '*' => TokenKind::BlockLineContinuation,
             'M' => TokenKind::BlockMacroDefinition,
             '{' => TokenKind::BlockScopeInput,
@@ -354,6 +399,19 @@ impl Lexer {
                 });
             }
         };
+
+        // Loop body tracking for indentation
+        match kind {
+            TokenKind::BlockBody => {
+                // [~] starts a loop body - enable indentation tracking
+                self.enter_loop_body();
+            }
+            TokenKind::BlockLineContinuation => {
+                // [*] ends a loop body (for pack operator) - disable indentation tracking
+                self.exit_loop_body();
+            }
+            _ => {}
+        }
 
         // Special handling for line continuation marker [*]
         // Skip the newline that follows to treat next line as continuation
@@ -619,23 +677,65 @@ impl Lexer {
 
         self.advance(); // consume '<'
 
-        if self.current_char() == '~' {
+        if !self.is_at_end() && self.current_char() == '~' {
             self.advance();
             Ok(Token::new(
-                TokenKind::OpDefault,
+                TokenKind::OpDefaultPushLeft,
                 "<~".to_string(),
                 start_line,
                 start_column,
             ))
-        } else if self.current_char() == '<' {
+        } else if !self.is_at_end() && self.current_char() == '<' {
+            self.advance();
+            // Check for <<< (variadic)
+            if !self.is_at_end() && self.current_char() == '<' {
+                self.advance();
+                Ok(Token::new(
+                    TokenKind::OpVariadicPushLeft,
+                    "<<<".to_string(),
+                    start_line,
+                    start_column,
+                ))
+            } else {
+                Ok(Token::new(
+                    TokenKind::OpPushLeft,
+                    "<<".to_string(),
+                    start_line,
+                    start_column,
+                ))
+            }
+        } else if !self.is_at_end() && self.current_char() == '=' && self.peek_char() == Some('!') && self.peek_nth_char(2) == Some('?') {
+            // <=!? (not less or equal)
+            self.advance();
+            self.advance();
             self.advance();
             Ok(Token::new(
-                TokenKind::OpPush,
-                "<<".to_string(),
+                TokenKind::OpNotLessEqual,
+                "<=!?".to_string(),
                 start_line,
                 start_column,
             ))
-        } else if self.current_char() == '?' {
+        } else if !self.is_at_end() && self.current_char() == '=' && self.peek_char() == Some('?') {
+            // <=? (less or equal)
+            self.advance();
+            self.advance();
+            Ok(Token::new(
+                TokenKind::OpLessEqual,
+                "<=?".to_string(),
+                start_line,
+                start_column,
+            ))
+        } else if !self.is_at_end() && self.current_char() == '!' && self.peek_char() == Some('?') {
+            // <!? (not less than)
+            self.advance();
+            self.advance();
+            Ok(Token::new(
+                TokenKind::OpNotLess,
+                "<!?".to_string(),
+                start_line,
+                start_column,
+            ))
+        } else if !self.is_at_end() && self.current_char() == '?' {
             self.advance();
             Ok(Token::new(
                 TokenKind::OpLess,
@@ -644,10 +744,12 @@ impl Lexer {
                 start_column,
             ))
         } else if !self.is_at_end() && (self.current_char().is_ascii_alphabetic() || self.current_char() == '_') {
-            // Standalone < before identifier (input argument prefix)
+            // Input argument: <identifier (consume the full identifier)
+            let ident = self.read_identifier_with_dots();
+            let lexeme = format!("<{}", ident);
             Ok(Token::new(
-                TokenKind::DelimiterInputPrefix,
-                "<".to_string(),
+                TokenKind::IdentifierInputArgument,
+                lexeme,
                 start_line,
                 start_column,
             ))
@@ -666,15 +768,57 @@ impl Lexer {
 
         self.advance(); // consume '>'
 
-        if self.current_char() == '>' {
+        if !self.is_at_end() && self.current_char() == '>' {
+            self.advance();
+            // Check for >>> (variadic)
+            if !self.is_at_end() && self.current_char() == '>' {
+                self.advance();
+                Ok(Token::new(
+                    TokenKind::OpVariadicPushRight,
+                    ">>>".to_string(),
+                    start_line,
+                    start_column,
+                ))
+            } else {
+                Ok(Token::new(
+                    TokenKind::OpPushRight,
+                    ">>".to_string(),
+                    start_line,
+                    start_column,
+                ))
+            }
+        } else if !self.is_at_end() && self.current_char() == '=' && self.peek_char() == Some('!') && self.peek_nth_char(2) == Some('?') {
+            // >=!? (not greater or equal)
+            self.advance();
+            self.advance();
             self.advance();
             Ok(Token::new(
-                TokenKind::OpPull,
-                ">>".to_string(),
+                TokenKind::OpNotGreaterEqual,
+                ">=!?".to_string(),
                 start_line,
                 start_column,
             ))
-        } else if self.current_char() == '?' {
+        } else if !self.is_at_end() && self.current_char() == '=' && self.peek_char() == Some('?') {
+            // >=? (greater or equal)
+            self.advance();
+            self.advance();
+            Ok(Token::new(
+                TokenKind::OpGreaterEqual,
+                ">=?".to_string(),
+                start_line,
+                start_column,
+            ))
+        } else if !self.is_at_end() && self.current_char() == '!' && self.peek_char() == Some('?') {
+            // >!? (not greater than)
+            self.advance();
+            self.advance();
+            Ok(Token::new(
+                TokenKind::OpNotGreater,
+                ">!?".to_string(),
+                start_line,
+                start_column,
+            ))
+        } else if !self.is_at_end() && self.current_char() == '?' {
             self.advance();
             Ok(Token::new(
                 TokenKind::OpGreater,
@@ -683,10 +827,12 @@ impl Lexer {
                 start_column,
             ))
         } else if !self.is_at_end() && (self.current_char().is_ascii_alphabetic() || self.current_char() == '_') {
-            // Standalone > before identifier (output argument prefix)
+            // Output argument: >identifier (consume the full identifier)
+            let ident = self.read_identifier_with_dots();
+            let lexeme = format!(">{}", ident);
             Ok(Token::new(
-                TokenKind::DelimiterOutputPrefix,
-                ">".to_string(),
+                TokenKind::IdentifierOutputArgument,
+                lexeme,
                 start_line,
                 start_column,
             ))
@@ -712,24 +858,6 @@ impl Lexer {
             Ok(Token::new(
                 TokenKind::OpNotEqual,
                 "=!?".to_string(),
-                start_line,
-                start_column,
-            ))
-        } else if self.current_char() == '>' && self.peek_char() == Some('?') {
-            self.advance();
-            self.advance();
-            Ok(Token::new(
-                TokenKind::OpGreaterEqual,
-                "=>?".to_string(),
-                start_line,
-                start_column,
-            ))
-        } else if self.current_char() == '<' && self.peek_char() == Some('?') {
-            self.advance();
-            self.advance();
-            Ok(Token::new(
-                TokenKind::OpLessEqual,
-                "=<?".to_string(),
                 start_line,
                 start_column,
             ))
@@ -805,6 +933,54 @@ impl Lexer {
     // Identifier Lexing
     // ========================================
 
+    /// Determine if '.' should be a delimiter or start of variable identifier
+    /// In v0.0.2 syntax, pg.string uses dot as separator, so we need to check context
+    fn lex_dot_or_variable(&mut self) -> Result<Token, LexerError> {
+        let start_line = self.line;
+        let start_column = self.column;
+
+        // Check the character BEFORE the dot to determine context
+        // If preceded by an identifier char (like 'g' in 'pg'), it's likely a type separator
+        // If preceded by whitespace/delimiter (like ']' in '[i] .path'), it's a variable
+        let prev_char_is_identifier = if self.position > 0 {
+            let prev_char = self.source[self.position - 1];
+            prev_char.is_alphanumeric() || prev_char == '_'
+        } else {
+            false
+        };
+
+        // Only check for type separator if preceded by an identifier character
+        if prev_char_is_identifier && !self.is_at_end() {
+            let next_pos = self.position + 1;
+            if next_pos < self.source.len() {
+                // Check if the next characters form a type keyword
+                let remaining = &self.source[next_pos..];
+                if remaining.starts_with(&['s', 't', 'r', 'i', 'n', 'g'])
+                    || remaining.starts_with(&['i', 'n', 't'])
+                    || remaining.starts_with(&['f', 'l', 'o', 'a', 't'])
+                    || remaining.starts_with(&['b', 'o', 'o', 'l'])
+                    || remaining.starts_with(&['d', 't'])
+                    || remaining.starts_with(&['p', 'a', 't', 'h'])
+                    || remaining.starts_with(&['j', 's', 'o', 'n'])
+                    || remaining.starts_with(&['b', 'y', 't', 'e', 's'])
+                {
+                    // This dot is a type separator (e.g., pg.string)
+                    // Emit it as a delimiter
+                    self.advance();
+                    return Ok(Token::new(
+                        TokenKind::DelimiterDot,
+                        ".".to_string(),
+                        start_line,
+                        start_column,
+                    ));
+                }
+            }
+        }
+
+        // Otherwise, treat as variable identifier
+        self.lex_variable_identifier()
+    }
+
     fn lex_variable_identifier(&mut self) -> Result<Token, LexerError> {
         let start_line = self.line;
         let start_column = self.column;
@@ -857,6 +1033,17 @@ impl Lexer {
 
         self.advance(); // consume '|'
 
+        // Check for |> (pipeline composition operator)
+        if self.current_char() == '>' {
+            self.advance();
+            return Ok(Token::new(
+                TokenKind::OpPipelineCompose,
+                "|>".to_string(),
+                start_line,
+                start_column,
+            ));
+        }
+
         let ident = self.read_identifier_with_dots();
 
         // Check if this is a pipeline formatted string: |Pipeline"string"
@@ -896,6 +1083,23 @@ impl Lexer {
         Ok(Token::new(kind, lexeme, start_line, start_column))
     }
 
+    fn lex_metadata_identifier(&mut self) -> Result<Token, LexerError> {
+        let start_line = self.line;
+        let start_column = self.column;
+
+        self.advance(); // consume '%'
+
+        let ident = self.read_identifier_with_dots();
+        let lexeme = format!("%{}", ident);
+
+        Ok(Token::new(
+            TokenKind::IdentifierMetadata,
+            lexeme,
+            start_line,
+            start_column,
+        ))
+    }
+
     fn lex_unpack_or_join_identifier(&mut self) -> Result<Token, LexerError> {
         let start_line = self.line;
         let start_column = self.column;
@@ -906,17 +1110,17 @@ impl Lexer {
             // Default pull operator ~>
             self.advance(); // consume '>'
             Ok(Token::new(
-                TokenKind::OpDefaultPull,
+                TokenKind::OpDefaultPushRight,
                 "~>".to_string(),
                 start_line,
                 start_column,
             ))
-        } else if self.current_char() == 'Y' && self.peek_char() == Some('.') {
+        } else if self.current_char() == 'v' && self.peek_char() == Some('.') {
             // Join identifier
-            self.advance(); // consume 'Y'
+            self.advance(); // consume 'v'
             self.advance(); // consume '.'
             let ident = self.read_identifier();
-            let lexeme = format!("~Y.{}", ident);
+            let lexeme = format!("~v.{}", ident);
             Ok(Token::new(
                 TokenKind::IdentifierJoin,
                 lexeme,
@@ -930,6 +1134,71 @@ impl Lexer {
             Ok(Token::new(
                 TokenKind::IdentifierUnpack,
                 lexeme,
+                start_line,
+                start_column,
+            ))
+        }
+    }
+
+    /// Lex type identifier: :type.path (e.g., :pg.string, :pg.array.pg.int)
+    fn lex_type_identifier(&mut self) -> Result<Token, LexerError> {
+        let start_line = self.line;
+        let start_column = self.column;
+
+        self.advance(); // consume ':'
+
+        let type_path = self.read_identifier_with_dots();
+        let lexeme = format!(":{}", type_path);
+
+        Ok(Token::new(
+            TokenKind::IdentifierDataType,
+            lexeme,
+            start_line,
+            start_column,
+        ))
+    }
+
+    /// Lex package spec: @Registry::Package:Version
+    /// Format: @Local::MyApp:1.0.0.0 or @self
+    /// If no :: is found, returns DelimiterAt instead
+    fn lex_package_spec(&mut self) -> Result<Token, LexerError> {
+        let start_line = self.line;
+        let start_column = self.column;
+        let start_pos = self.position;
+
+        self.advance(); // consume '@'
+
+        let mut lexeme = String::from("@");
+
+        // Read until we hit a delimiter (space, newline, bracket, etc.)
+        while !self.is_at_end() {
+            let ch = self.current_char();
+
+            // Package specs can contain: alphanumeric, _, :, ., ::
+            if ch.is_ascii_alphanumeric() || ch == '_' || ch == ':' || ch == '.' {
+                lexeme.push(ch);
+                self.advance();
+            } else {
+                break;
+            }
+        }
+
+        // Check if this is a valid package spec (must contain ::)
+        if lexeme.contains("::") {
+            Ok(Token::new(
+                TokenKind::IdentifierPackageSpec,
+                lexeme,
+                start_line,
+                start_column,
+            ))
+        } else {
+            // Not a package spec, just a @ delimiter followed by identifier
+            // Backtrack to just after @
+            self.position = start_pos + 1;
+            self.column = start_column + 1;
+            Ok(Token::new(
+                TokenKind::DelimiterAt,
+                "@".to_string(),
                 start_line,
                 start_column,
             ))
@@ -1013,11 +1282,41 @@ impl Lexer {
             TokenKind::SpecialRuntime
         } else if ident.starts_with("TG") || ident.starts_with("tg") {
             TokenKind::SpecialTrigger
+        } else if ident == "re" && self.current_char() == '!' && self.peek_char() == Some('?') {
+            // re!? (not regex match)
+            self.advance();
+            self.advance();
+            return Ok(Token::new(
+                TokenKind::OpNotRegex,
+                "re!?".to_string(),
+                start_line,
+                start_column,
+            ));
         } else if ident == "re" && self.current_char() == '?' {
+            // re? (regex match)
             self.advance();
             return Ok(Token::new(
                 TokenKind::OpRegex,
                 "re?".to_string(),
+                start_line,
+                start_column,
+            ));
+        } else if ident == "in" && self.current_char() == '!' && self.peek_char() == Some('?') {
+            // in!? (not in collection)
+            self.advance();
+            self.advance();
+            return Ok(Token::new(
+                TokenKind::OpNotInCollection,
+                "in!?".to_string(),
+                start_line,
+                start_column,
+            ));
+        } else if ident == "in" && self.current_char() == '?' {
+            // in? (in collection)
+            self.advance();
+            return Ok(Token::new(
+                TokenKind::OpInCollection,
+                "in?".to_string(),
                 start_line,
                 start_column,
             ));
@@ -1151,6 +1450,21 @@ impl Lexer {
         }
     }
 
+    fn peek_nth_char(&self, n: usize) -> Option<char> {
+        if self.position + n < self.source.len() {
+            Some(self.source[self.position + n])
+        } else {
+            None
+        }
+    }
+
+    /// Peek ahead and get a string of `len` characters
+    /// Used for multi-character operator disambiguation (e.g., "<<<", ">>>")
+    fn peek_string(&self, len: usize) -> String {
+        let end = (self.position + len).min(self.source.len());
+        self.source[self.position..end].iter().collect()
+    }
+
     fn advance(&mut self) {
         if !self.is_at_end() {
             self.position += 1;
@@ -1160,5 +1474,103 @@ impl Lexer {
 
     fn is_at_end(&self) -> bool {
         self.position >= self.source.len()
+    }
+
+    // ========================================
+    // Indentation Tracking (Loop Bodies Only)
+    // ========================================
+
+    /// Enter loop body context - start tracking indentation
+    fn enter_loop_body(&mut self) {
+        self.in_loop_body = true;
+        self.indent_stack.clear();
+        self.indent_stack.push(0); // Reset to base level
+    }
+
+    /// Exit loop body context - stop tracking indentation
+    fn exit_loop_body(&mut self) {
+        self.in_loop_body = false;
+        self.indent_stack.clear();
+        self.indent_stack.push(0);
+    }
+
+    /// Count leading whitespace on current line
+    /// Returns error if tabs are found (tabs not allowed in indentation)
+    fn count_leading_whitespace(&mut self) -> Result<usize, LexerError> {
+        let mut count = 0;
+        let mut pos = self.position;
+
+        while pos < self.source.len() {
+            match self.source[pos] {
+                ' ' => count += 1,
+                '\t' => {
+                    return Err(LexerError::TabsInIndentation {
+                        line: self.line,
+                        column: count + 1,
+                    });
+                }
+                _ => break,
+            }
+            pos += 1;
+        }
+
+        Ok(count)
+    }
+
+    /// Generate Indent/Dedent tokens based on indentation level change
+    /// Only called when in_loop_body is true
+    fn lex_indentation(&mut self) -> Result<Vec<Token>, LexerError> {
+        if !self.in_loop_body {
+            return Ok(vec![]); // No indentation tracking outside loop bodies
+        }
+
+        let indent_level = self.count_leading_whitespace()?;
+        let previous_indent = *self.indent_stack.last().unwrap();
+
+        let start_line = self.line;
+        let start_column = self.column;
+
+        if indent_level > previous_indent {
+            // INDENT: indentation increased
+            self.indent_stack.push(indent_level);
+            Ok(vec![Token::new(
+                TokenKind::Indent,
+                String::new(),
+                start_line,
+                start_column,
+            )])
+        } else if indent_level < previous_indent {
+            // DEDENT: indentation decreased (may be multiple levels)
+            let mut tokens = Vec::new();
+
+            while let Some(&level) = self.indent_stack.last() {
+                if level <= indent_level {
+                    break;
+                }
+                self.indent_stack.pop();
+                tokens.push(Token::new(
+                    TokenKind::Dedent,
+                    String::new(),
+                    start_line,
+                    start_column,
+                ));
+            }
+
+            // Verify we landed on exact indentation level
+            if let Some(&level) = self.indent_stack.last() {
+                if level != indent_level {
+                    return Err(LexerError::InconsistentIndentation {
+                        line: self.line,
+                        expected: level,
+                        found: indent_level,
+                    });
+                }
+            }
+
+            Ok(tokens)
+        } else {
+            // Same indentation level - no tokens
+            Ok(vec![])
+        }
     }
 }

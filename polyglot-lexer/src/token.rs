@@ -1,5 +1,5 @@
-// Token types for Polyglot v0.0.2
-// Complete enumeration of all 104 token types
+// Token types for Polyglot v0.0.4
+// Complete enumeration of all token types
 
 use serde::{Deserialize, Serialize};
 
@@ -23,7 +23,8 @@ impl Token {
     }
 }
 
-/// All token types in Polyglot (108 types total)
+/// All token types in Polyglot v0.0.4 (123 types total)
+/// Recently added: Indent, Dedent (for loop body indentation tracking)
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum TokenKind {
     // ========================================
@@ -44,17 +45,18 @@ pub enum TokenKind {
     BlockInputBinding,     // [<]
     BlockOutputBinding,    // [>]
     BlockParallel,         // [p]
-    BlockJoin,             // [Y]
+    BlockFork,             // [f] - Fork/Conditional
+    BlockJoin,             // [v] - Join/Synchronize
     BlockBackground,       // [b]
-    BlockStreaming,        // [s]
+    BlockSerialLoad,       // [s] - Loading Serial files
     BlockErrorCatch,       // [!]
     BlockConditional,      // [?]
     BlockBody,             // [~]
     BlockBoolOr,           // [+]
     BlockBoolAnd,          // [&]
-    BlockBoolXor,          // [-]
-    BlockBoolNand,         // [^]
-    BlockBoolNor,          // [.]
+    BlockBoolNot,          // [-] - Boolean NOT
+    BlockBoolXor,          // [^] - Boolean XOR
+    BlockSubfield,         // [.] - Subfield definition marker
     BlockLineContinuation, // [*]
     BlockMacroDefinition,  // [M]
     BlockScopeInput,       // [{]
@@ -62,12 +64,14 @@ pub enum TokenKind {
     BlockAliasDefinition,  // [A]
 
     // ========================================
-    // Assignment Operators (4 tokens)
+    // Assignment Operators (6 tokens)
     // ========================================
-    OpPush,        // <<
-    OpPull,        // >>
-    OpDefault,     // <~
-    OpDefaultPull, // ~>
+    OpPushLeft,           // << - Push to left
+    OpPushRight,          // >> - Push to right
+    OpDefaultPushLeft,    // <~ - Default push to left
+    OpDefaultPushRight,   // ~> - Default push to right
+    OpVariadicPushLeft,   // <<< - Variadic push to left
+    OpVariadicPushRight,  // >>> - Variadic push to right
 
     // ========================================
     // String Operators (1 token)
@@ -75,20 +79,27 @@ pub enum TokenKind {
     OpStringConcat, // +"
 
     // ========================================
-    // Comparison Operators (6 tokens)
+    // Comparison Operators (11 tokens)
     // ========================================
-    OpEqual,        // =?
-    OpNotEqual,     // =!?
-    OpGreater,      // >?
-    OpLess,         // <?
-    OpGreaterEqual, // =>?
-    OpLessEqual,    // =<?
+    OpEqual,           // =?
+    OpNotEqual,        // =!?
+    OpGreater,         // >?
+    OpNotGreater,      // >!?
+    OpLess,            // <?
+    OpNotLess,         // <!?
+    OpGreaterEqual,    // >=?
+    OpNotGreaterEqual, // >=!?
+    OpLessEqual,       // <=?
+    OpNotLessEqual,    // <=!?
 
     // ========================================
-    // Pattern Operators (2 tokens)
+    // Pattern Operators (5 tokens)
     // ========================================
-    OpWildcard, // *?
-    OpRegex,    // re?
+    OpWildcard,      // *?
+    OpRegex,         // re?
+    OpNotRegex,      // re!?
+    OpInCollection,  // in?
+    OpNotInCollection, // in!?
 
     // ========================================
     // Range Operators (4 tokens)
@@ -99,7 +110,12 @@ pub enum TokenKind {
     OpRangeHalfLeft,  // ?)
 
     // ========================================
-    // Delimiters (13 tokens)
+    // Composition Operators (1 token)
+    // ========================================
+    OpPipelineCompose, // |>
+
+    // ========================================
+    // Delimiters (14 tokens)
     // ========================================
     DelimiterBraceOpen,          // {
     DelimiterBraceClose,         // }
@@ -109,6 +125,7 @@ pub enum TokenKind {
     DelimiterQuote,              // " (for reference, actual strings use STRING_* tokens)
     DelimiterComma,              // ,
     DelimiterColon,              // :
+    DelimiterSemicolon,          // ; (for reserved indication: #;Boolean;True)
     DelimiterAt,                 // @
     DelimiterBackslash,          // \
     DelimiterPipe,               // |
@@ -127,15 +144,20 @@ pub enum TokenKind {
     FormatIdentifier,   // Format specifier (e.g., Hex, Currency)
 
     // ========================================
-    // Identifiers (6 categories)
+    // Identifiers (10 categories)
     // ========================================
-    IdentifierVariable, // .identifier
-    IdentifierEnum,     // #identifier
-    IdentifierPipeline, // |identifier
-    IdentifierError,    // !identifier
-    IdentifierUnpack,   // ~identifier
-    IdentifierJoin,     // ~Y.identifier
-    Identifier,         // Plain identifier (for special cases)
+    IdentifierVariable,       // .identifier (can have dot hierarchy: .var.name)
+    IdentifierEnum,           // #identifier (can have dot hierarchy: #Config.Timeout)
+    IdentifierPipeline,       // |identifier (can have dot hierarchy: |U.Log.Info)
+    IdentifierError,          // !identifier (can have dot hierarchy: !Network.Timeout)
+    IdentifierUnpack,         // ~identifier (e.g., ~ForEach, ~Enumerate, ~Zip)
+    IdentifierJoin,           // ~Y.identifier
+    IdentifierInputArgument,  // <identifier (e.g., <input1, <data)
+    IdentifierOutputArgument, // >identifier (e.g., >output1, >result)
+    IdentifierDataType,       // :type.path (e.g., :pg.string, :pg.array.pg.int)
+    IdentifierPackageSpec,    // @Registry::Package:Version (e.g., @Local::MyApp:1.0.0.0)
+    IdentifierMetadata,       // %identifier (e.g., %Doc, %Author, %Deprecated)
+    Identifier,               // Plain identifier (DEPRECATED - should not exist in valid code)
 
     // ========================================
     // Reserved Enumerations (10 tokens)
@@ -162,18 +184,21 @@ pub enum TokenKind {
     LiteralPipelineFormatted, // |Pipeline"formatted {.string}"
 
     // ========================================
-    // Type Tokens (10 tokens)
+    // Type Tokens (10 tokens) - DEPRECATED
+    // These should NOT appear as standalone tokens in valid v0.0.4 code.
+    // Types should only appear within IdentifierDataType tokens (e.g., :pg.string)
+    // Keeping for backward compatibility during transition.
     // ========================================
-    TypeNamespace, // pg, py, rs, go, js, node
-    TypeString,    // string
-    TypeInt,       // int
-    TypeFloat,     // float
-    TypeBool,      // bool
-    TypeDatetime,  // dt
-    TypePath,      // path
-    TypeSerial,    // serial
-    TypeArray,     // array
-    TypeSet,       // set
+    TypeNamespace, // DEPRECATED: pg, py, rs, go, js, node
+    TypeString,    // DEPRECATED: string
+    TypeInt,       // DEPRECATED: int
+    TypeFloat,     // DEPRECATED: float
+    TypeBool,      // DEPRECATED: bool
+    TypeDatetime,  // DEPRECATED: dt
+    TypePath,      // DEPRECATED: path
+    TypeSerial,    // DEPRECATED: serial
+    TypeArray,     // DEPRECATED: array
+    TypeSet,       // DEPRECATED: set
 
     // ========================================
     // Special Identifiers (5 categories)
@@ -191,10 +216,12 @@ pub enum TokenKind {
     CommentMulti,  // /* ... */
 
     // ========================================
-    // Whitespace (4 tokens)
+    // Whitespace (6 tokens)
     // ========================================
     Newline,    // \n
     Whitespace, // Space, tab (usually skipped)
+    Indent,     // Indentation increase (loop bodies only)
+    Dedent,     // Indentation decrease (loop bodies only)
 
     // ========================================
     // Version (1 token)
@@ -235,17 +262,18 @@ impl TokenKind {
             TokenKind::BlockInputBinding => "input binding marker [<]",
             TokenKind::BlockOutputBinding => "output binding marker [>]",
             TokenKind::BlockParallel => "parallel marker [p]",
-            TokenKind::BlockJoin => "join marker [Y]",
+            TokenKind::BlockFork => "fork marker [f]",
+            TokenKind::BlockJoin => "join marker [v]",
             TokenKind::BlockBackground => "background marker [b]",
-            TokenKind::BlockStreaming => "streaming marker [s]",
+            TokenKind::BlockSerialLoad => "serial load marker [s]",
             TokenKind::BlockErrorCatch => "error catch marker [!]",
             TokenKind::BlockConditional => "conditional marker [?]",
             TokenKind::BlockBody => "body marker [~]",
             TokenKind::BlockBoolOr => "boolean OR marker [+]",
             TokenKind::BlockBoolAnd => "boolean AND marker [&]",
-            TokenKind::BlockBoolXor => "boolean XOR marker [-]",
-            TokenKind::BlockBoolNand => "boolean NAND marker [^]",
-            TokenKind::BlockBoolNor => "boolean NOR marker [.]",
+            TokenKind::BlockBoolNot => "boolean NOT marker [-]",
+            TokenKind::BlockBoolXor => "boolean XOR marker [^]",
+            TokenKind::BlockSubfield => "subfield definition marker [.]",
             TokenKind::BlockLineContinuation => "line continuation marker [*]",
             TokenKind::BlockMacroDefinition => "macro definition marker [M]",
             TokenKind::BlockScopeInput => "scope input marker [{]",
@@ -253,19 +281,29 @@ impl TokenKind {
             TokenKind::BlockAliasDefinition => "alias definition marker [A]",
 
             // Operators
-            TokenKind::OpPush => "push operator <<",
-            TokenKind::OpPull => "pull operator >>",
-            TokenKind::OpDefault => "default operator <~",
-            TokenKind::OpDefaultPull => "default pull operator ~>",
+            TokenKind::OpPushLeft => "push left operator <<",
+            TokenKind::OpPushRight => "push right operator >>",
+            TokenKind::OpDefaultPushLeft => "default push left operator <~",
+            TokenKind::OpDefaultPushRight => "default push right operator ~>",
+            TokenKind::OpVariadicPushLeft => "variadic push left operator <<<",
+            TokenKind::OpVariadicPushRight => "variadic push right operator >>>",
             TokenKind::OpStringConcat => "string concatenation operator +\"",
             TokenKind::OpEqual => "equal operator =?",
             TokenKind::OpNotEqual => "not equal operator =!?",
             TokenKind::OpGreater => "greater than operator >?",
+            TokenKind::OpNotGreater => "not greater than operator >!?",
             TokenKind::OpLess => "less than operator <?",
-            TokenKind::OpGreaterEqual => "greater or equal operator =>?",
-            TokenKind::OpLessEqual => "less or equal operator =<?",
+            TokenKind::OpNotLess => "not less than operator <!?",
+            TokenKind::OpGreaterEqual => "greater or equal operator >=?",
+            TokenKind::OpNotGreaterEqual => "not greater or equal operator >=!?",
+            TokenKind::OpLessEqual => "less or equal operator <=?",
+            TokenKind::OpNotLessEqual => "not less or equal operator <=!?",
             TokenKind::OpWildcard => "wildcard operator *?",
             TokenKind::OpRegex => "regex operator re?",
+            TokenKind::OpNotRegex => "not regex operator re!?",
+            TokenKind::OpInCollection => "in collection operator in?",
+            TokenKind::OpNotInCollection => "not in collection operator in!?",
+            TokenKind::OpPipelineCompose => "pipeline composition operator |>",
             TokenKind::OpRangeClosed => "closed range operator ?[",
             TokenKind::OpRangeOpen => "open range operator ?(",
             TokenKind::OpRangeHalfRight => "half-right range operator ?]",
@@ -280,6 +318,7 @@ impl TokenKind {
             TokenKind::DelimiterQuote => "quote \"",
             TokenKind::DelimiterComma => "comma ,",
             TokenKind::DelimiterColon => "colon :",
+            TokenKind::DelimiterSemicolon => "semicolon ;",
             TokenKind::DelimiterAt => "at sign @",
             TokenKind::DelimiterBackslash => "backslash \\",
             TokenKind::DelimiterPipe => "pipe |",
@@ -302,7 +341,12 @@ impl TokenKind {
             TokenKind::IdentifierError => "error identifier",
             TokenKind::IdentifierUnpack => "unpack identifier",
             TokenKind::IdentifierJoin => "join identifier",
-            TokenKind::Identifier => "identifier",
+            TokenKind::IdentifierInputArgument => "input argument identifier",
+            TokenKind::IdentifierOutputArgument => "output argument identifier",
+            TokenKind::IdentifierDataType => "data type identifier",
+            TokenKind::IdentifierPackageSpec => "package spec identifier",
+            TokenKind::IdentifierMetadata => "metadata identifier",
+            TokenKind::Identifier => "plain identifier",
 
             // Reserved
             TokenKind::ReservedPgVarDeclared => "reserved #PgVar.States.Declared",
@@ -350,6 +394,8 @@ impl TokenKind {
             // Whitespace
             TokenKind::Newline => "newline",
             TokenKind::Whitespace => "whitespace",
+            TokenKind::Indent => "indentation increase",
+            TokenKind::Dedent => "indentation decrease",
 
             // Version
             TokenKind::Version => "version number",

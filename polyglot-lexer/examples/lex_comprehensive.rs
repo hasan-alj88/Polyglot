@@ -78,7 +78,7 @@ fn main() {
                         pattern_ops.push((i + 1, token.clone()));
                     }
 
-                    TokenKind::OpPush | TokenKind::OpPull | TokenKind::OpDefault => {
+                    TokenKind::OpPushLeft | TokenKind::OpPushRight | TokenKind::OpDefaultPushLeft => {
                         assignment_ops.push((i + 1, token.clone()));
                     }
 
@@ -93,9 +93,9 @@ fn main() {
                     TokenKind::OpRangeHalfRight => "📏▶️ ",
                     TokenKind::OpRegex => "🔍",
                     TokenKind::OpWildcard => "🌟",
-                    TokenKind::OpPush => "⬅️ ",
-                    TokenKind::OpPull => "➡️ ",
-                    TokenKind::OpDefault => "🔄",
+                    TokenKind::OpPushLeft => "⬅️ ",
+                    TokenKind::OpPushRight => "➡️ ",
+                    TokenKind::OpDefaultPushLeft => "🔄",
                     TokenKind::ReservedBooleanTrue | TokenKind::ReservedBooleanFalse => "🔵",
                     _ => "  ",
                 };

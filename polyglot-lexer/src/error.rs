@@ -60,6 +60,16 @@ pub enum LexerError {
         column: usize,
         message: String,
     },
+
+    #[error("Tabs not allowed in indentation at line {line}, column {column}. Use spaces only.")]
+    TabsInIndentation { line: usize, column: usize },
+
+    #[error("Inconsistent indentation at line {line}: expected {expected} spaces, found {found}")]
+    InconsistentIndentation {
+        line: usize,
+        expected: usize,
+        found: usize,
+    },
 }
 
 impl LexerError {
@@ -74,6 +84,8 @@ impl LexerError {
             LexerError::InvalidEscapeSequence { line, .. } => *line,
             LexerError::UnexpectedCharacter { line, .. } => *line,
             LexerError::InvalidNumberFormat { line, .. } => *line,
+            LexerError::TabsInIndentation { line, .. } => *line,
+            LexerError::InconsistentIndentation { line, .. } => *line,
         }
     }
 
@@ -88,6 +100,8 @@ impl LexerError {
             LexerError::InvalidEscapeSequence { column, .. } => *column,
             LexerError::UnexpectedCharacter { column, .. } => *column,
             LexerError::InvalidNumberFormat { column, .. } => *column,
+            LexerError::TabsInIndentation { column, .. } => *column,
+            LexerError::InconsistentIndentation { .. } => 1, // Indentation errors are at column 1
         }
     }
 }
