@@ -1,7 +1,7 @@
 # Documentation Audit Report - v0.0.4 Inconsistencies
 
 **Audit Date:** 2025-12-16
-**Scope:** All markdown files in `/docs/specifications/v0.0.4`
+**Scope:** All markdown files in `/docs/User/specifications/v0.0.4`
 **Methodology:** Systematic grep analysis across 110+ documentation files
 
 ---
@@ -286,7 +286,7 @@ Archive files in `_archive/design-history/` contain v0.0.3 or earlier syntax but
    ```markdown
    > ⚠️ **HISTORICAL DOCUMENT**
    > This file contains v0.0.3 (or earlier) syntax and design decisions.
-   > For current v0.0.4 syntax, see [main documentation](../../README.md).
+   > For current v0.0.4 syntax, see main documentation (README.md).
    ```
 
 **References:**
@@ -475,16 +475,16 @@ To verify fixes, run these grep commands:
 
 ```bash
 # Verify no production code uses [V] uppercase:
-grep -r "\[V\]" --include="*.md" --exclude-dir="_archive" docs/specifications/v0.0.4/
+grep -r "\[V\]" --include="*.md" --exclude-dir="_archive" docs/User/specifications/v0.0.4/
 
 # Verify alias definition created (if decision is YES):
-grep -r "{A} #Boolean" --include="*.md" docs/specifications/v0.0.4/
+grep -r "{A} #Boolean" --include="*.md" docs/User/specifications/v0.0.4/
 
 # Verify special variable documented:
-grep -r "%Inline.FormattedString" --include="*.md" docs/specifications/v0.0.4/stdlib/
+grep -r "%Inline.FormattedString" --include="*.md" docs/User/specifications/v0.0.4/stdlib/
 
 # Verify archive warnings added:
-head -n 10 docs/specifications/v0.0.4/_archive/design-history/loop-system/*.md | grep "HISTORICAL"
+head -n 10 docs/User/specifications/v0.0.4/_archive/design-history/loop-system/*.md | grep "HISTORICAL"
 ```
 
 ---

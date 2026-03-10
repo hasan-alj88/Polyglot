@@ -698,10 +698,17 @@ metrics = true
 
 ## See Also
 
+### User Documentation
 - [Enums Syntax Guide](../types/enums.md) - Basic enum usage
 - [Error Handling Basics](../error-handling/basics.md) - Error patterns
 - [Type System](../types/type-system.md) - Type annotations
 - [I/O Operators](../syntax/io-operators.md) - Path handling and I/O
+
+### Technical Documentation
+- [Parser Architecture - Enum Indentation Parsing](../../../Agile/architecture/parser-architecture-v0.0.4.md#enum-block-indentation-parsing) - Parser implementation details
+- [EBNF Grammar - Serial Load Blocks](../../reference/grammar.md#serial-load-blocks) - Formal grammar specification
+- [Canonical Enum Example](../../../Tech/implementation/parser/canonical-enum-example-v0.0.4.md) - Complete reference implementation
+- [v0.0.3 → v0.0.4 Migration Guide](../../../Tech/implementation/parser/enum-syntax-migration-v0.0.3-to-v0.0.4.md) - Syntax migration reference
 
 ---
 

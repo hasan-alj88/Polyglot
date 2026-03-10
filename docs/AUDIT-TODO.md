@@ -25,7 +25,7 @@
 
 ## MINOR - Enhancements
 
-- [ ] **Archive deprecation warnings** | `_archive/design-history/**/*.md` (11 files) | **AMBIGUITY** | Add to top of ALL archive files: "⚠️ **HISTORICAL DOCUMENT** - This file contains v0.0.3 syntax. For v0.0.4, see [main docs](../../README.md)". Prevents outdated syntax copying.
+- [ ] **Archive deprecation warnings** | `_archive/design-history/**/*.md` (11 files) | **AMBIGUITY** | Add to top of ALL archive files: "⚠️ **HISTORICAL DOCUMENT** - This file contains v0.0.3 syntax. For v0.0.4, see main docs (README.md)". Prevents outdated syntax copying.
 
 - [ ] **Grammar expansion (optional)** | `reference/grammar.md:314-341` | **AMBIGUITY (enhancement)** | Inline template grammar correct but could expand: (1) Add explicit `literal_part ::= any_character_except_brace`, (2) Enumerate format_specifier options: `"hex" | "json" | "iso8601" | identifier`, (3) Add nested substitution examples.
 
@@ -79,7 +79,7 @@
 **Action Items:**
 1. Run verification command:
    ```bash
-   grep -r "\[V\]" --include="*.md" --exclude-dir="_archive" docs/specifications/v0.0.4/
+   grep -r "\[V\]" --include="*.md" --exclude-dir="_archive" docs/User/specifications/v0.0.4/
    ```
    Expected: No results (confirms no production code uses uppercase)
 
@@ -91,7 +91,7 @@
    >
    > **v0.0.4 uses lowercase `[v]`** for join operations.
    >
-   > For current syntax, see [v0.0.4 documentation](../../README.md).
+   > For current syntax, see v0.0.4 documentation (README.md).
    ```
 
 3. Update archive README files to list syntax changes
@@ -99,7 +99,7 @@
 **Verification:**
 ```bash
 # After fix, verify warnings added:
-head -n 10 docs/specifications/v0.0.4/_archive/design-history/loop-system/*.md | grep "DEPRECATED"
+head -n 10 docs/User/specifications/v0.0.4/_archive/design-history/loop-system/*.md | grep "DEPRECATED"
 ```
 
 **References:**
@@ -166,11 +166,11 @@ head -n 10 docs/specifications/v0.0.4/_archive/design-history/loop-system/*.md |
 **Verification:**
 ```bash
 # If OPTION A chosen:
-grep -r "{A} #Boolean" --include="*.md" docs/specifications/v0.0.4/
+grep -r "{A} #Boolean" --include="*.md" docs/User/specifications/v0.0.4/
 # Expected: 1 result showing alias definition
 
 # If OPTION B chosen:
-grep -r "#True\>" --include="*.md" --exclude-dir="_archive" docs/specifications/v0.0.4/
+grep -r "#True\>" --include="*.md" --exclude-dir="_archive" docs/User/specifications/v0.0.4/
 # Expected: 0 results (all replaced with #;Boolean;True)
 ```
 
@@ -210,7 +210,7 @@ grep -r "#True\>" --include="*.md" --exclude-dir="_archive" docs/specifications/
       - Special variable `%Inline.FormattedString` contains `"5, 3"`
       - Formatter parses and outputs to main pipeline's inputs
 
-   **See:** [Complete inline pipelines documentation](../../language/advanced/inline-pipelines.md)
+   **See:** Complete inline pipelines documentation (User/language/advanced/inline-pipelines.md)
    ```
 
 2. **Update `getting-started/core-principles.md`** (after line 506):
@@ -243,7 +243,7 @@ grep -r "#True\>" --include="*.md" --exclude-dir="_archive" docs/specifications/
 **Verification:**
 ```bash
 # After updates:
-grep -r "%Inline.FormattedString" --include="*.md" docs/specifications/v0.0.4/
+grep -r "%Inline.FormattedString" --include="*.md" docs/User/specifications/v0.0.4/
 # Expected: 5+ results (original 2 + new 3)
 ```
 
@@ -289,13 +289,13 @@ Recent fix corrected most multi-pipeline chains from single-line to multi-line f
 2. **Search Pattern:**
    ```bash
    # Find potential violations:
-   grep -n "\[r\].*|>.*|>" docs/specifications/v0.0.4/language/control-flow/pipeline-structure.md
+   grep -n "\[r\].*|>.*|>" docs/User/specifications/v0.0.4/language/control-flow/pipeline-structure.md
    ```
 
 3. **Automated Check:**
    ```bash
    # Should return NO results after fix:
-   grep -r "^\[r\].*|>.*|>.*|>" --include="*.md" --exclude-dir="_archive" docs/specifications/v0.0.4/
+   grep -r "^\[r\].*|>.*|>.*|>" --include="*.md" --exclude-dir="_archive" docs/User/specifications/v0.0.4/
    ```
 
 **Verification:**
@@ -357,8 +357,8 @@ Recent fix corrected most multi-pipeline chains from single-line to multi-line f
 **Verification:**
 ```bash
 # Count usage after standardization:
-grep -r "#;Boolean;True" --include="*.md" --exclude-dir="_archive" docs/specifications/v0.0.4/ | wc -l
-grep -r "#True\>" --include="*.md" --exclude-dir="_archive" docs/specifications/v0.0.4/ | wc -l
+grep -r "#;Boolean;True" --include="*.md" --exclude-dir="_archive" docs/User/specifications/v0.0.4/ | wc -l
+grep -r "#True\>" --include="*.md" --exclude-dir="_archive" docs/User/specifications/v0.0.4/ | wc -l
 
 # If OPTION A: Both should have counts
 # If OPTION B: Second should be 0
@@ -387,9 +387,9 @@ grep -r "#True\>" --include="*.md" --exclude-dir="_archive" docs/specifications/
    > - Reserved indication with semicolon
    >
    > **For current v0.0.4 syntax, see:**
-   > - [Main Documentation](../../README.md)
-   > - [v0.0.4 Grammar](../../reference/grammar.md)
-   > - [Syntax Complete](../../language/syntax/)
+   > - Main Documentation (README.md)
+   > - v0.0.4 Grammar (User/reference/grammar.md)
+   > - Syntax Complete (User/language/syntax/)
    ---
    ```
 
@@ -411,7 +411,7 @@ grep -r "#True\>" --include="*.md" --exclude-dir="_archive" docs/specifications/
 **Verification:**
 ```bash
 # Check all files have warning:
-for file in docs/specifications/v0.0.4/_archive/design-history/**/*.md; do
+for file in docs/User/specifications/v0.0.4/_archive/design-history/**/*.md; do
   if ! head -n 15 "$file" | grep -q "DEPRECATED SYNTAX"; then
     echo "Missing warning: $file"
   fi
@@ -484,27 +484,27 @@ Run these commands to verify fixes:
 # v0.0.4 Audit Validation
 
 echo "=== CRITICAL-001: Verify no production code uses [V] ==="
-grep -r "\[V\]" --include="*.md" --exclude-dir="_archive" docs/specifications/v0.0.4/
+grep -r "\[V\]" --include="*.md" --exclude-dir="_archive" docs/User/specifications/v0.0.4/
 echo "Expected: No results"
 echo ""
 
 echo "=== CRITICAL-002: Check alias definition ==="
-grep -r "{A} #Boolean" --include="*.md" docs/specifications/v0.0.4/
+grep -r "{A} #Boolean" --include="*.md" docs/User/specifications/v0.0.4/
 echo "Expected: 1 result if OPTION A, 0 if OPTION B"
 echo ""
 
 echo "=== MAJOR-001: Verify %Inline.FormattedString expansion ==="
-grep -r "%Inline.FormattedString" --include="*.md" docs/specifications/v0.0.4/ | wc -l
+grep -r "%Inline.FormattedString" --include="*.md" docs/User/specifications/v0.0.4/ | wc -l
 echo "Expected: 5+ results (was 2)"
 echo ""
 
 echo "=== MAJOR-002: Verify no multi-chain on single line ==="
-grep -r "^\[r\].*|>.*|>.*|>" --include="*.md" --exclude-dir="_archive" docs/specifications/v0.0.4/
+grep -r "^\[r\].*|>.*|>.*|>" --include="*.md" --exclude-dir="_archive" docs/User/specifications/v0.0.4/
 echo "Expected: No results"
 echo ""
 
 echo "=== MINOR-001: Verify archive warnings ==="
-head -n 10 docs/specifications/v0.0.4/_archive/design-history/loop-system/*.md | grep -c "DEPRECATED"
+head -n 10 docs/User/specifications/v0.0.4/_archive/design-history/loop-system/*.md | grep -c "DEPRECATED"
 echo "Expected: 7+ (one per file)"
 echo ""
 

@@ -1,214 +1,104 @@
----
-# BMAD Agent Context Block
-# Schema: bmad-context-v1
-
-# --- Identity ---
-id: readme
-shard: false
-
-# --- Classification ---
-type: guide
-topic: Polyglot v0.0.4 Language Specification
-summary: Polyglot v0.0.4 Language Specification
-keywords:
-  - polyglot
-  - documentation
-
-# --- BMAD Agent Routing ---
-agents:
-  - developer
-phase: any
-workflow: any
-module: bmm
-complexity: medium
-
-# --- Dependency Chain ---
-prereqs:
-  []
-unlocks:
-  []
-
-# --- Relationships ---
-related:
-  []
-
-# --- Metadata ---
-status: stable
-updated: 2025-12-16
-version: 0.0.4
-tags:
-  - "#documentation"
----
-# Polyglot v0.0.4 Language Specification
+# Polyglot Documentation
 
 **Version:** v0.0.4
-**Status:** ✅ Finalized - December 2025
-**Implementation Target:** Q2 2026 (Epic 1 implements v0.0.3)
-**Last Updated:** 2025-12-15
+**Status:** ✅ Specification Finalized - December 2025
+**Documentation Structure:** Scribe 3-Tier (Agile/User/Tech)
+**Last Updated:** 2025-12-24
 
 ---
 
-## Quick Navigation
+## 📁 Documentation Structure
 
-### 🎯 What's New in v0.0.4
-- [Changes from v0.0.3](./changes-from-v0.0.3/README.md) - Complete changelog
-- [Serial Load Block](./language/advanced/serial-load-block.md) ⭐ NEW - Parallel file loading
-- [Variable Lifecycle](./language/types/variables-lifecycle.md) - 5-state system
-- [Pipeline Structure](./language/control-flow/pipeline-structure.md) - Execution order clarified
+Polyglot documentation is organized into three main categories based on audience:
 
-### 🚀 Getting Started
-- [Quick Reference](./quick-reference/README.md) - One-page cheat sheets
-- [Hello World](./examples/hello-world.md) - Your first Polyglot program
-- [Core Principles](./getting-started/core-principles.md) - Language philosophy
+### 📋 [Agile/](Agile/) - Project Management
+*For: Product managers, architects, development team*
 
-### 📚 Core Concepts
-- [Prefix System](./language/syntax/prefix-system.md) - `$`, `:`, `#`, `|`, `!`, `@`, `%`
-- [Markers Reference](./language/syntax/markers.md) - All `[r]`, `[|]`, `{|}`, etc.
-- [I/O Operators](./language/syntax/io-operators.md) - `<<`, `>>`, `<~`
-- [Variables & Lifecycle](./language/types/variables-lifecycle.md) - Pending → Final → Released
+- **PRDs & Requirements** - Product vision and specifications
+- **Epics & Stories** - Development tracking and planning
+- **Architecture Decisions** - Technical design choices
+- **Technology Stack** - Platform and tool decisions
 
-### ⚡ Advanced Features
-- [Loop System](./language/advanced/loop-system.md) - Unpack `[~]` / Pack `[*]`
-- [Reserved Indication](./language/advanced/reserved-indication.md) - Semicolon `;` system
-- [Metadata System](./language/advanced/metadata-system.md) - `%` prefix annotations
-- [Error Handling](./features/error-handling/error-handling.md) - Try blocks and error types
-
-### 📖 Reference
-- [Standard Library](./stdlib/index.md) - Complete package tree
-- [Operators](./language/syntax/operators.md) - All operators reference
-- [Complete Feature List](./features/README.md) - All 21 features categorized
-
-### 🤝 Contributing
-- [Version Index](../VERSION-INDEX.md) - All Polyglot versions
-- [Design History](./design-history/README.md) - Historical decisions
-- [Master Index](../../MASTER-INDEX.md) - All documentation
+**Quick Links:**
+- [PRD](Agile/prds/prd.md) - Product Requirements Document
+- [Epics](Agile/epics/epics.md) - Project epics and milestones
+- [Technology Stack](Agile/tech-stack/technology-stack.md)
 
 ---
 
-## Complete Table of Contents
+### 📖 [User/](User/) - Language Documentation
+*For: Polyglot programmers and language users*
 
-### Core Syntax (9 files)
-1. [Core Principles](./getting-started/core-principles.md) - Language philosophy
-2. [Prefix System](./language/syntax/prefix-system.md) - All prefixes
-3. [Markers Reference](./language/syntax/markers.md) - All markers
-4. [I/O Operators](./language/syntax/io-operators.md) - Input/output syntax
-5. [Operators Reference](./language/syntax/operators.md) - All operators
-6. [Variables & Lifecycle](./language/types/variables-lifecycle.md) - 5 states
-7. [Pipeline Structure](./language/control-flow/pipeline-structure.md) - Execution order
-8. [Enums & Structs](./core-syntax/enums-structs.md) - Type definitions
-9. [Types System](./language/types/type-system.md) - Type notation
+The complete v0.0.4 language specification and user guides.
 
-### Features (21 files, 7 categories)
+#### Getting Started
+- [Core Principles](User/getting-started/core-principles.md) - Language philosophy
+- [v0.0.4 Specification](User/specifications/v0.0.4/README.md) - Complete language spec
 
-#### Core Features (4 files)
-- [Loop System](./language/advanced/loop-system.md) - `[~]` and `[*]`
-- [Reserved Indication](./language/advanced/reserved-indication.md) - `;` system
-- [Metadata System](./language/advanced/metadata-system.md) - `%` prefix
-- [Serial Load Block](./language/advanced/serial-load-block.md) ⭐ NEW - `[s]` marker
+#### Language Reference
+- [Syntax](User/language/syntax/) - Prefixes, markers, operators, I/O
+- [Types](User/language/types/) - Type system, enums, variables, lifecycle
+- [Control Flow](User/language/control-flow/) - Pipelines, execution order
+- [Advanced Features](User/language/advanced/) - Loops, metadata, serial loading
 
-#### Data Structures (3 files)
-- [Enums with Fields](./features/data-structures/enums-with-fields.md)
-- [Struct Shorthand](./features/data-structures/struct-shorthand.md)
-- [Collection Literals](./features/data-structures/collection-literals.md)
+#### Standard Library
+- [Standard Library Index](User/stdlib/index.md) - Complete package tree
+- [Loops](User/stdlib/loops/) - Unpack/pack operations
+- [Utilities](User/stdlib/utilities/) - Math, string, datetime, data parsing
+- [Wrappers](User/stdlib/wrappers/) - Runtime integration
 
-#### Control Flow (3 files)
-- [Match Expressions](./features/control-flow/match-expressions.md)
-- [Early Return](./features/control-flow/early-return.md)
-- [Boolean Markers](./features/control-flow/boolean-markers.md)
+#### Examples & Reference
+- [Code Examples](User/examples/) - Practical Polyglot programs
+- [Reference](User/reference/) - Grammar and quick references
 
-#### String Handling (2 files)
-- [Multi-line Strings](./features/string-handling/multi-line-strings.md)
-- [Inline Pipelines](./features/string-handling/inline-pipelines.md)
-
-#### Operators (3 files)
-- [Range Operators](./features/operators/range-operators.md)
-- [Operator Negation](./features/operators/operator-negation.md)
-- [Collection Membership](./features/operators/collection-membership.md)
-
-#### Pipeline Features (3 files)
-- [Pipeline Composition](./features/pipeline-features/pipeline-composition.md)
-- [Variadic Input](./features/pipeline-features/variadic-input.md)
-- [Trigger OR](./features/pipeline-features/trigger-or.md)
-
-#### Error Handling (1 file)
-- [Error Handling](./features/error-handling/error-handling.md)
-
-### Standard Library (80-100 files)
-- [Complete Package Tree](./stdlib/index.md)
-- [Utilities (`|U.*`)](./stdlib/utilities/README.md) - Math, String, DateTime, Data
-- [Wrappers (`|W.*`)](./stdlib/wrappers/README.md) - Runtime integration
-- [Unpack Operators (`~*`)](./stdlib/loops/unpack/README.md) - ForEach, Enumerate, etc.
-- [Pack Operators (`**`)](./stdlib/loops/pack/README.md) - Into.Array, Join.All, etc.
-
-### Quick Reference (5 files)
-- [Syntax at a Glance](./quick-reference/syntax-at-a-glance.md)
-- [Markers Cheat Sheet](./quick-reference/markers-cheatsheet.md)
-- [Operators Cheat Sheet](./quick-reference/operators-cheatsheet.md)
-- [Common Patterns](./quick-reference/common-patterns.md)
-- [Migration Quick Guide](./quick-reference/migration-quick-guide.md)
-
-### Examples (7 files)
-- [Hello World](./examples/hello-world.md)
-- [Variables & Assignment](./examples/variables-assignment.md)
-- [Pipeline Basics](./examples/pipeline-basics.md)
-- [Loops & Iteration](./examples/loops-iteration.md)
-- [Error Handling](./examples/error-handling-example.md)
-- [Metadata Usage](./examples/metadata-usage.md)
-- [Complete Application](./examples/complete-application.md)
-
-### Changes from v0.0.3 (2 files)
-- [Overview](./changes-from-v0.0.3/README.md)
-- [Syntax Changes](./changes-from-v0.0.3/syntax-changes.md)
-
-### Design History (3 READMEs)
-- [Overview](./design-history/README.md)
-- [Loop System Evolution](./design-history/loop-system/README.md)
-- [Syntax Refinement](./design-history/syntax-refinement/README.md)
+**Quick Links:**
+- [Getting Started](User/getting-started/core-principles.md)
+- [Complete Specification](User/specifications/v0.0.4/README.md)
+- [Standard Library](User/stdlib/index.md)
+- [Grammar Reference](User/reference/grammar.md)
 
 ---
 
-## Finding Information by Topic
+### 🔧 [Tech/](Tech/) - Developer Documentation
+*For: Polyglot language implementers and contributors*
 
-### By Syntax Element
-- **Variables:** [Variables & Lifecycle](./language/types/variables-lifecycle.md), [Quick Ref](./quick-reference/syntax-at-a-glance.md)
-- **Pipelines:** [Pipeline Structure](./language/control-flow/pipeline-structure.md), [Examples](./examples/pipeline-basics.md)
-- **Loops:** [Loop System](./language/advanced/loop-system.md), [Examples](./examples/loops-iteration.md)
-- **Types:** [Types System](./language/types/type-system.md), [Enums & Structs](./core-syntax/enums-structs.md)
-- **Errors:** [Error Handling](./features/error-handling/error-handling.md), [Examples](./examples/error-handling-example.md)
-- **Metadata:** [Metadata System](./language/advanced/metadata-system.md), [Examples](./examples/metadata-usage.md)
+Implementation details, architecture, and development guides.
 
-### By Use Case
-- **Reading Files:** [Serial Load Block](./language/advanced/serial-load-block.md)
-- **Iterating Collections:** [Loop System](./language/advanced/loop-system.md)
-- **Making Decisions:** [Match Expressions](./features/control-flow/match-expressions.md)
-- **Handling Failures:** [Error Handling](./features/error-handling/error-handling.md)
-- **String Processing:** [Multi-line Strings](./features/string-handling/multi-line-strings.md)
-- **Calling External Code:** [Wrappers](./stdlib/wrappers/README.md)
+- **Implementation** - Parser, lexer, compiler internals
+- **Architecture** - System design and decisions
+- **AI Context** - LLM development context
+- **Development** - Contributing guides and setup
 
-### By Marker
-- `[r]` - [Markers](./language/syntax/markers.md#execution-markers), [Variables](./language/types/variables-lifecycle.md)
-- `[|]` - [I/O Operators](./language/syntax/io-operators.md), [Pipeline Structure](./language/control-flow/pipeline-structure.md)
-- `[~]` / `[*]` - [Loop System](./language/advanced/loop-system.md)
-- `[s]` - [Serial Load Block](./language/advanced/serial-load-block.md) ⭐ NEW
-- `[y]` - [Markers](./language/syntax/markers.md#conditional-markers), [Control Flow](./features/control-flow/)
-- `[v]` - [Loop System](./language/advanced/loop-system.md#join-operations)
-
-### By Operator/Prefix
-- `$` - [Variables & Lifecycle](./language/types/variables-lifecycle.md)
-- `:` - [Types System](./language/types/type-system.md)
-- `#` - [Enums & Structs](./core-syntax/enums-structs.md)
-- `|` - [Standard Library](./stdlib/index.md)
-- `!` - [Error Handling](./features/error-handling/error-handling.md)
-- `@` - [Core Syntax](./language/syntax/prefix-system.md#registry-prefix)
-- `%` - [Metadata System](./language/advanced/metadata-system.md)
+**Quick Links:**
+- [Architecture](Tech/implementation/technical/architecture.md)
+- [AI Context](Tech/ai-context/README.md)
 
 ---
 
-## Key Concepts at a Glance
+## 🚀 Quick Start
+
+### New to Polyglot?
+1. Read [Core Principles](User/getting-started/core-principles.md)
+2. Explore the [v0.0.4 Specification](User/specifications/v0.0.4/README.md)
+3. Try [Code Examples](User/examples/)
+
+### Working on Polyglot?
+1. Review the [PRD](Agile/prds/prd.md)
+2. Check current [Epics](Agile/epics/epics.md)
+3. Read [Architecture](Tech/implementation/technical/architecture.md)
+
+### Contributing?
+1. Understand the [Architecture](Tech/implementation/technical/architecture.md)
+2. Review [Tech Stack](Agile/tech-stack/technology-stack.md)
+3. Check [Development Guide](Tech/development/) *(coming soon)*
+
+---
+
+## 📊 Key Concepts
 
 ### Core Principles
 1. **No Keywords** - Only markers and operators
-2. **One Line = One Marker + One Expression** - No semicolon separators
+2. **One Line = One Marker + One Expression**
 3. **Indentation for Nesting** - 3-space indentation
 4. **Universal Hierarchy** - `PREFIX.identifier.path` everywhere
 5. **Explicit Over Implicit** - Metadata makes intent clear
@@ -221,17 +111,7 @@ Pending → Default → Final → Released
   Faulted → Released
 ```
 
-### Pipeline Execution Order
-```
-1. Inputs (implicit triggers)
-2. Trigger [t]
-3. Queue [Q]
-4. Wrapper [W]
-5. Logic
-6. Outputs
-```
-
-### Critical Operators/Prefixes
+### Critical Prefixes & Operators
 - `$` - Variable (e.g., `$user`)
 - `:` - Type (e.g., `:pg.string`)
 - `#` - Enum/Struct (e.g., `#OrderStatus.Processing`)
@@ -246,52 +126,132 @@ Pending → Default → Final → Released
 - `[|]` - Pipeline I/O
 - `[~]` - Unpack (main → iteration)
 - `[*]` - Pack (iteration → main)
-- `[s]` - Serial load block ⭐ NEW
+- `[s]` - Serial load block
 - `[v]` - Join operation
-- `[y]` - Fork/conditional
+- `[f]` - Fork/conditional
 
 ---
 
-## Related Documentation
+## 📚 Documentation Index
 
-### User Documentation
-- [User Guide](../../user/) - Practical tutorials and guides
-- [Async-Centric Paradigm](../../user/async-centric-paradigm.md) - Core execution model
+For a complete, searchable index of all documentation:
+**→ See [INDEX.md](INDEX.md)**
 
-### Project Documentation
-- [PRD](../../project/prd.md) - Product requirements
-- [Epics](../../project/epics/) - Development epics
-- [Stories](../../project/stories/) - User stories
-
-### Version Information
-- [Version Index](../VERSION-INDEX.md) - All versions comparison
-- [Master Index](../../MASTER-INDEX.md) - Complete documentation map
-
-### AI Context
-- [AI Context Package](../../ai-context/v0.0.4/) - Machine-readable specification
-- [EBNF Grammar](../../ai-context/v0.0.4/grammar.ebnf) - Formal grammar
+The master index provides:
+- File counts by category
+- Navigation by audience
+- Known issues tracking
+- Recent activity log
 
 ---
 
-## Implementation Status
+## 🔍 Finding Information
+
+### By Audience
+- **Language Users** → Start in [User/](User/)
+- **Project Team** → Start in [Agile/](Agile/)
+- **Contributors** → Start in [Tech/](Tech/)
+
+### By Topic
+- **Syntax** → [User/language/syntax/](User/language/syntax/)
+- **Types** → [User/language/types/](User/language/types/)
+- **Standard Library** → [User/stdlib/](User/stdlib/)
+- **Examples** → [User/examples/](User/examples/)
+- **Architecture** → [Tech/implementation/](Tech/implementation/)
+- **Project Planning** → [Agile/](Agile/)
+
+### By Task
+- **Learn Polyglot** → [User/getting-started/](User/getting-started/)
+- **Understand v0.0.4 spec** → [User/specifications/v0.0.4/](User/specifications/v0.0.4/)
+- **Find stdlib function** → [User/stdlib/index.md](User/stdlib/index.md)
+- **Implement parser** → [Tech/implementation/](Tech/implementation/)
+- **Track project** → [Agile/epics/](Agile/epics/)
+
+---
+
+## 📈 Documentation Statistics
+
+- **Total Active Files:** 375
+- **Agile:** 40 files
+- **User:** 291 files
+- **Tech:** 35 files
+- **Audit:** 9 files
+
+**Recent Updates:**
+- 2025-12-24: Scribe reorganization complete (366 files migrated to 3-tier structure)
+- 2025-12-24: Documentation validation completed
+- 2025-12-15: v0.0.4 specification finalized
+
+---
+
+## 🛠️ Documentation Tools
+
+This documentation is managed by **Scribe**, the Documentation Architect.
+
+**Available Commands:**
+- `/scribe` - Documentation management workflows
+- `/polly` - Canonical Polyglot code examples
+
+**Workflows Available:**
+- `doc-validate` - Quality and link validation
+- `doc-sync` - Detect drift from codebase
+- `session-update` - Sync from agent sessions
+- See more in Scribe workflows (`.bmad-creative-writing/workflows/scribe/`)
+
+---
+
+## ⚠️ Known Issues
+
+**Critical:**
+- 733 broken internal links (being fixed)
+- 2 files with deprecated v0.0.3 syntax
+
+**Warnings:**
+- 535 code blocks without language hints
+- 200+ files with multiple H1 headings
+
+See [Latest Validation Report](Audit/checks/validate-2025-12-24.md) for details.
+
+---
+
+## 🤝 Contributing
+
+### Documentation Contributions
+- Follow Scribe 3-tier structure (Agile/User/Tech)
+- Use `/polly` for canonical Polyglot examples
+- Run validation before submitting
+
+### Code Contributions
+- Review [Architecture](Tech/implementation/technical/architecture.md)
+- Check [Technology Stack](Agile/tech-stack/technology-stack.md)
+- Follow coding standards in [Tech/](Tech/)
+
+---
+
+## 📝 Implementation Status
 
 **Current Implementation:** Epic 1 (v0.0.3)
 **Target Implementation:** Q2 2026 (v0.0.4)
 **Specification Status:** ✅ Finalized
 
-See [Project Documentation](../../project/) for current implementation progress.
+See [Agile/epics/](Agile/epics/) for current implementation progress.
 
 ---
 
-## Contributing & Feedback
+## 📞 Support & Feedback
 
 For questions, suggestions, or bug reports:
-- **Issues:** [GitHub Issues](https://github.com/polyglot/issues)
-- **Documentation:** This specification is the source of truth
-- **Design Decisions:** See [Design History](./design-history/README.md)
+- **Issues:** GitHub Issues
+- **Documentation:** This documentation is the source of truth
+- **Design Decisions:** See [User/specifications/v0.0.4/](User/specifications/v0.0.4/)
 
 ---
 
-**Last Updated:** 2025-12-15
-**Maintained By:** Polyglot Documentation Team
+**Maintained By:** Scribe Documentation Architect
+**Integration:** Polly (Polyglot Language Expert)
 **License:** See project LICENSE file
+
+---
+
+*This README reflects the Scribe 3-tier documentation structure (Agile/User/Tech).*
+*For the complete documentation index, see [INDEX.md](INDEX.md)*
