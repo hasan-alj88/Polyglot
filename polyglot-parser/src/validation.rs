@@ -462,21 +462,17 @@ mod tests {
 
     #[test]
     fn test_validate_serial_enum_with_default_handler_passes() {
-        // Enumeration with [s] block and [s][!] !* default handler should pass (v0.0.4)
+        // Enumeration with [s] block and [s][!] * default handler should pass (v0.0.4)
         let content = r#"
-{@} @Local:TestPkg:1.0.0.0
-{x}
+[@] @Local::TestPkg:1.0.0.0
+[X]
 
-{#} #Config;Default
-[A] #Config
-
+[#] #Config
+[~][s] <~ *
 [s] |YAML.Load"\\FileDir\\config.yaml"
-   [.] .timeout:pg.int << .timeout
-   [.] .api_key:pg.string << .api_key
-
-[s][!] !*
-{x}
-        "#;
+[s][!] *
+[X]
+"#;
 
         let file = create_temp_file(content);
         let result = validate_file(file.path());
@@ -495,20 +491,14 @@ mod tests {
     fn test_validate_serial_enum_with_custom_handler_passes() {
         // Enumeration with [s] block and [s][!] custom handler should pass (v0.0.4)
         let content = r#"
-{@} @Local:TestPkg:1.0.0.0
-{x}
-
-{#} #Secrets;EnvSecrets
-[A] #Secrets
-
+[@] @Local::TestPkg:1.0.0.0
+[X]
+[#] #Secrets
+[~][s] <~ *
 [s] |YAML.Load"\\FileDir\\.env.secrets"
-   [.] .api_key:pg.string << .api_key
-   [.] .jwt_secret:pg.string << .jwt_secret
-
-[s][!]
-   [r] $error_count :pg.int << 1
-{x}
-        "#;
+[s][!] *
+[X]
+"#;
 
         let file = create_temp_file(content);
         let result = validate_file(file.path());
@@ -527,18 +517,13 @@ mod tests {
     fn test_validate_serial_enum_missing_handler_fails() {
         // Enumeration with [s] block but no error handler should fail (v0.0.4)
         let content = r#"
-{@} @Local:TestPkg:1.0.0.0
-{x}
-
-{#} #Config;MissingHandler
-[A] #Config
-
+[@] @Local::TestPkg:1.0.0.0
+[X]
+[#] #Config
+[~][s] <~ *
 [s] |YAML.Load"\\FileDir\\config.yaml"
-   [.] .timeout:pg.int << .timeout
-   [.] .api_key:pg.string << .api_key
-
-{x}
-        "#;
+[X]
+"#;
 
         let file = create_temp_file(content);
         let result = validate_file(file.path());
@@ -565,24 +550,16 @@ mod tests {
     fn test_validate_serial_enum_multiple_serial_blocks_with_handler_passes() {
         // Multiple [s] blocks with single error handler should pass (v0.0.4)
         let content = r#"
-{@} @Local:TestPkg:1.0.0.0
-{x}
-
-{#} #SystemConfig;MultiSource
-[A] #SystemConfig
-
+[@] @Local::TestPkg:1.0.0.0
+[X]
+[#] #SystemConfig
+[~][s] <~ *
 [s] |YAML.Load"\\FileDir\\database.yaml"
-   [.] .database_url:pg.string << .url
-
 [s] |YAML.Load"\\FileDir\\cache.yaml"
-   [.] .cache_url:pg.string << .url
-
 [s] |YAML.Load"\\FileDir\\queue.yaml"
-   [.] .queue_url:pg.string << .url
-
-[s][!] !*
-{x}
-        "#;
+[s][!] *
+[X]
+"#;
 
         let file = create_temp_file(content);
         let result = validate_file(file.path());
@@ -604,20 +581,14 @@ mod tests {
     fn test_validate_serial_enum_multiple_serial_blocks_missing_handler_fails() {
         // Multiple [s] blocks without error handler should fail (v0.0.4)
         let content = r#"
-{@} @Local:TestPkg:1.0.0.0
-{x}
-
-{#} #Config;MultiMissingHandler
-[A] #Config
-
+[@] @Local::TestPkg:1.0.0.0
+[X]
+[#] #Config
+[~][s] <~ *
 [s] |YAML.Load"\\FileDir\\database.yaml"
-   [.] .db:pg.string << .connection
-
 [s] |YAML.Load"\\FileDir\\cache.yaml"
-   [.] .cache:pg.string << .connection
-
-{x}
-        "#;
+[X]
+"#;
 
         let file = create_temp_file(content);
         let result = validate_file(file.path());
@@ -635,17 +606,13 @@ mod tests {
     fn test_validate_serial_error_message_includes_enum_name() {
         // Error message should include the enumeration name (v0.0.4)
         let content = r#"
-{@} @Local:TestPkg:1.0.0.0
-{x}
-
-{#} #MySpecialConfig;Special
-[A] #MySpecialConfig
-
+[@] @Local::TestPkg:1.0.0.0
+[X]
+[#] #MySpecialConfig
+[~][s] <~ *
 [s] |JSON.Load"\\FileDir\\config.json"
-   [.] .value:pg.string << .value
-
-{x}
-        "#;
+[X]
+"#;
 
         let file = create_temp_file(content);
         let result = validate_file(file.path());
@@ -662,30 +629,20 @@ mod tests {
     fn test_validate_serial_multiple_enumerations_mixed() {
         // Test file with multiple enumerations - some valid, some invalid (v0.0.4)
         let content = r#"
-{@} @Local:TestPkg:1.0.0.0
-{x}
-
-{#} #ValidConfig;AppConfig
-[A] #ValidConfig
-
+[@] @Local::TestPkg:1.0.0.0
+[X]
+[#] #ValidConfig
+[~][s] <~ *
 [s] |YAML.Load"\\FileDir\\config.yaml"
-   [.] .timeout:pg.int << .timeout
-
-[s][!] !*
-{x}
-
-{#} #InvalidConfig;AppSecrets
-[A] #InvalidConfig
-
+[s][!] *
+[X]
+[#] #InvalidConfig
+[~][s] <~ *
 [s] |YAML.Load"\\FileDir\\secrets.yaml"
-   [.] .api_key:pg.string << .api_key
-
-{x}
-
-{#} #NoSerialConfig;Debug
-[A] #NoSerialConfig
-{x}
-        "#;
+[X]
+[#] #NoSerialConfig
+[X]
+"#;
 
         let file = create_temp_file(content);
         let result = validate_file(file.path());
