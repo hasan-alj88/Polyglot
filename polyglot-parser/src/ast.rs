@@ -31,7 +31,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// Every .pg file has this structure:
 /// ```polyglot
-/// [@] Local@MyApp.Example:1.0.0
+/// [@] @Local::MyApp.Example:1.0.0.0
 /// [A] MyAlias
 /// [<] @utils << Community@DataHelpers:2.3.1
 /// [X]
@@ -81,7 +81,7 @@ pub enum Definition {
 ///
 /// Example:
 /// ```polyglot
-/// [@] Local@MyApp.Example:1.0.0
+/// [@] @Local::MyApp.Example:1.0.0.0
 /// [A] MyAlias
 /// [<] @utils << Community@DataHelpers:2.3.1
 /// [<] @db << Local@DatabaseLib:1.0.0
@@ -117,23 +117,24 @@ pub struct PackageSpec {
     pub span: Span,
 }
 
-/// Semantic version (major.minor.patch)
+/// Semantic version (major.minor.patch.build)
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct Version {
     pub major: u32,
     pub minor: u32,
     pub patch: u32,
+    pub build: u32,
 }
 
 impl Version {
-    pub fn new(major: u32, minor: u32, patch: u32) -> Self {
-        Self { major, minor, patch }
+    pub fn new(major: u32, minor: u32, patch: u32, build: u32) -> Self {
+        Self { major, minor, patch, build }
     }
 }
 
 impl std::fmt::Display for Version {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}.{}.{}", self.major, self.minor, self.patch)
+        write!(f, "{}.{}.{}.{}", self.major, self.minor, self.patch, self.build)
     }
 }
 
@@ -1516,7 +1517,7 @@ mod tests {
                 spec: PackageSpec {
                     registry: "Local".to_string(),
                     path: vec!["MyApp".to_string(), "Example".to_string()],
-                    version: Version::new(1, 0, 0),
+                    version: Version::new(1, 0, 0, 0),
                     span,
                 },
                 alias: Some("MyAlias".to_string()),
@@ -1540,36 +1541,36 @@ mod tests {
         let spec = PackageSpec {
             registry: "Community".to_string(),
             path: vec!["DataHelpers".to_string()],
-            version: Version::new(2, 3, 1),
+            version: Version::new(2, 3, 1, 0),
             span,
         };
 
         assert_eq!(spec.registry, "Community");
         assert_eq!(spec.path.len(), 1);
         assert_eq!(spec.path[0], "DataHelpers");
-        assert_eq!(spec.version, Version::new(2, 3, 1));
+        assert_eq!(spec.version, Version::new(2, 3, 1, 0));
     }
 
     #[test]
     fn test_version_display() {
-        let version = Version::new(1, 2, 3);
-        assert_eq!(version.to_string(), "1.2.3");
+        let version = Version::new(1, 2, 3, 0);
+        assert_eq!(version.to_string(), "1.2.3.0");
 
-        let version = Version::new(0, 0, 1);
-        assert_eq!(version.to_string(), "0.0.1");
+        let version = Version::new(0, 0, 1, 0);
+        assert_eq!(version.to_string(), "0.0.1.0");
     }
 
     #[test]
     fn test_version_ordering() {
-        let v1 = Version::new(1, 0, 0);
-        let v2 = Version::new(1, 0, 1);
-        let v3 = Version::new(1, 1, 0);
-        let v4 = Version::new(2, 0, 0);
+        let v1 = Version::new(1, 0, 0, 0);
+        let v2 = Version::new(1, 0, 1, 0);
+        let v3 = Version::new(1, 1, 0, 0);
+        let v4 = Version::new(2, 0, 0, 0);
 
         assert!(v1 < v2);
         assert!(v2 < v3);
         assert!(v3 < v4);
-        assert_eq!(v1, Version::new(1, 0, 0));
+        assert_eq!(v1, Version::new(1, 0, 0, 0));
     }
 
     #[test]
@@ -1581,7 +1582,7 @@ mod tests {
             package: PackageSpec {
                 registry: "Community".to_string(),
                 path: vec!["DataHelpers".to_string()],
-                version: Version::new(2, 3, 1),
+                version: Version::new(2, 3, 1, 0),
                 span,
             },
             span,
@@ -1600,7 +1601,7 @@ mod tests {
             spec: PackageSpec {
                 registry: "Local".to_string(),
                 path: vec!["MyApp".to_string()],
-                version: Version::new(1, 0, 0),
+                version: Version::new(1, 0, 0, 0),
                 span,
             },
             alias: None,
@@ -1610,7 +1611,7 @@ mod tests {
                     package: PackageSpec {
                         registry: "Community".to_string(),
                         path: vec!["DataHelpers".to_string()],
-                        version: Version::new(2, 3, 1),
+                        version: Version::new(2, 3, 1, 0),
                         span,
                     },
                     span,
@@ -1620,7 +1621,7 @@ mod tests {
                     package: PackageSpec {
                         registry: "Local".to_string(),
                         path: vec!["DatabaseLib".to_string()],
-                        version: Version::new(1, 0, 0),
+                        version: Version::new(1, 0, 0, 0),
                         span,
                     },
                     span,
@@ -1774,7 +1775,7 @@ mod tests {
                 spec: PackageSpec {
                     registry: "Local".to_string(),
                     path: vec!["MyApp".to_string()],
-                    version: Version::new(1, 0, 0),
+                    version: Version::new(1, 0, 0, 0),
                     span,
                 },
                 alias: None,

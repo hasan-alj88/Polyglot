@@ -1,10 +1,10 @@
 [#] 1
-[@] Local@MultiFileTest:1.0.0
+[@] @Local::MultiFileTest:1.0.0.0
 [X]
 
 [|] Pipeline2
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .result: pg\int
+[o] .result: pg.int
 [X]

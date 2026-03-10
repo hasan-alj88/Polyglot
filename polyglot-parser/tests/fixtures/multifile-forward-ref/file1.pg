@@ -1,11 +1,11 @@
 [#] 1
-[@] Local@MultiFileTest:1.0.0
+[@] @Local::MultiFileTest:1.0.0.0
 [X]
 
 [|] DataLoader
-[i] .path: pg\path
+[i] .path: pg.path
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[r] .data: pg\string << "loaded data"
-[o] .data: pg\string
+[r] .data: pg.string << "loaded data"
+[o] .data: pg.string
 [X]

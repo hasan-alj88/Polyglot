@@ -283,14 +283,14 @@ mod tests {
     #[test]
     fn test_validate_valid_pipeline() {
         let content = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [|] ValidPipeline
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .result: pg\int
+[o] .result: pg.int
 [X]
         "#;
 
@@ -304,15 +304,15 @@ mod tests {
     fn test_validate_lexer_error() {
         // Invalid token - unclosed string
         let content = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [|] Pipeline
-[i] .input: pg\string
+[i] .input: pg.string
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[r] .value: pg\string << "unclosed string
-[o] .result: pg\string
+[r] .value: pg.string << "unclosed string
+[o] .result: pg.string
 [X]
         "#;
 
@@ -329,14 +329,14 @@ mod tests {
     fn test_validate_parser_error() {
         // Missing [X] closing marker
         let content = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [|] Pipeline
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .result: pg\int
+[o] .result: pg.int
         "#;
 
         let file = create_temp_file(content);
@@ -351,21 +351,21 @@ mod tests {
     #[test]
     fn test_validate_duplicate_pipelines() {
         let content = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [|] DuplicateName
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .result: pg\int
+[o] .result: pg.int
 [X]
 
 [|] DuplicateName
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .value: pg\string
+[o] .value: pg.string
 [X]
         "#;
 
@@ -393,21 +393,21 @@ mod tests {
     fn test_error_sorting() {
         // Multiple errors should be sorted by line number
         let content = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [|] First
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .result: pg\int
+[o] .result: pg.int
 [X]
 
 [|] First
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .value: pg\string
+[o] .value: pg.string
 [X]
 
 [|] First
@@ -438,12 +438,12 @@ mod tests {
     fn test_validate_serial_enum_without_serial_blocks_passes() {
         // Enumeration without [s] blocks should not require error handling
         let content = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [#] #Config
-[<] .timeout: pg\int << 30
-[<] .api_key: pg\string << "default"
+[<] .timeout: pg.int << 30
+[<] .api_key: pg.string << "default"
 [X]
         "#;
 
@@ -462,19 +462,20 @@ mod tests {
 
     #[test]
     fn test_validate_serial_enum_with_default_handler_passes() {
-        // Enumeration with [s] block and [s][!] * default handler should pass
+        // Enumeration with [s] block and [s][!] !* default handler should pass (v0.0.4)
         let content = r#"
-[@] Local@TestPkg:1.0.0
-[X]
+{@} @Local:TestPkg:1.0.0.0
+{x}
 
-[#] #Config
-[<] .timeout: pg\int << 30
-[<] .api_key: pg\string << "default"
-[~][s] <~ .timeout: pg\int
-[~][s] <~ .api_key: pg\string
-[s] |YAML.Load"config.yaml"
-[s][!] *
-[X]
+{#} #Config;Default
+[A] #Config
+
+[s] |YAML.Load"\\FileDir\\config.yaml"
+   [.] .timeout:pg.int << .timeout
+   [.] .api_key:pg.string << .api_key
+
+[s][!] !*
+{x}
         "#;
 
         let file = create_temp_file(content);
@@ -492,20 +493,21 @@ mod tests {
 
     #[test]
     fn test_validate_serial_enum_with_custom_handler_passes() {
-        // Enumeration with [s] block and [s][!] custom handler should pass
+        // Enumeration with [s] block and [s][!] custom handler should pass (v0.0.4)
         let content = r#"
-[@] Local@TestPkg:1.0.0
-[X]
+{@} @Local:TestPkg:1.0.0.0
+{x}
 
-[#] #Secrets
-[<] .api_key: pg\string << ""
-[<] .jwt_secret: pg\string << ""
-[~][s] <~ .api_key: pg\string
-[~][s] <~ .jwt_secret: pg\string
-[s] |YAML.Load".env.secrets"
+{#} #Secrets;EnvSecrets
+[A] #Secrets
+
+[s] |YAML.Load"\\FileDir\\.env.secrets"
+   [.] .api_key:pg.string << .api_key
+   [.] .jwt_secret:pg.string << .jwt_secret
+
 [s][!]
-[r] .error_count: pg\int << 1
-[X]
+   [r] $error_count :pg.int << 1
+{x}
         "#;
 
         let file = create_temp_file(content);
@@ -523,18 +525,19 @@ mod tests {
 
     #[test]
     fn test_validate_serial_enum_missing_handler_fails() {
-        // Enumeration with [s] block but no error handler should fail
+        // Enumeration with [s] block but no error handler should fail (v0.0.4)
         let content = r#"
-[@] Local@TestPkg:1.0.0
-[X]
+{@} @Local:TestPkg:1.0.0.0
+{x}
 
-[#] #Config
-[<] .timeout: pg\int << 30
-[<] .api_key: pg\string << "default"
-[~][s] <~ .timeout: pg\int
-[~][s] <~ .api_key: pg\string
-[s] |YAML.Load"config.yaml"
-[X]
+{#} #Config;MissingHandler
+[A] #Config
+
+[s] |YAML.Load"\\FileDir\\config.yaml"
+   [.] .timeout:pg.int << .timeout
+   [.] .api_key:pg.string << .api_key
+
+{x}
         "#;
 
         let file = create_temp_file(content);
@@ -560,21 +563,25 @@ mod tests {
 
     #[test]
     fn test_validate_serial_enum_multiple_serial_blocks_with_handler_passes() {
-        // Multiple [s] blocks with single error handler should pass
+        // Multiple [s] blocks with single error handler should pass (v0.0.4)
         let content = r#"
-[@] Local@TestPkg:1.0.0
-[X]
+{@} @Local:TestPkg:1.0.0.0
+{x}
 
-[#] #SystemConfig
-[<] .database_url: pg\string << "postgres://localhost"
-[<] .cache_url: pg\string << "redis://localhost"
-[<] .queue_url: pg\string << "amqp://localhost"
-[~][s] <~ *
-[s] |YAML.Load"database.yaml"
-[s] |YAML.Load"cache.yaml"
-[s] |YAML.Load"queue.yaml"
-[s][!] *
-[X]
+{#} #SystemConfig;MultiSource
+[A] #SystemConfig
+
+[s] |YAML.Load"\\FileDir\\database.yaml"
+   [.] .database_url:pg.string << .url
+
+[s] |YAML.Load"\\FileDir\\cache.yaml"
+   [.] .cache_url:pg.string << .url
+
+[s] |YAML.Load"\\FileDir\\queue.yaml"
+   [.] .queue_url:pg.string << .url
+
+[s][!] !*
+{x}
         "#;
 
         let file = create_temp_file(content);
@@ -595,18 +602,21 @@ mod tests {
 
     #[test]
     fn test_validate_serial_enum_multiple_serial_blocks_missing_handler_fails() {
-        // Multiple [s] blocks without error handler should fail
+        // Multiple [s] blocks without error handler should fail (v0.0.4)
         let content = r#"
-[@] Local@TestPkg:1.0.0
-[X]
+{@} @Local:TestPkg:1.0.0.0
+{x}
 
-[#] #Config
-[<] .db: pg\string << "postgres://localhost"
-[<] .cache: pg\string << "redis://localhost"
-[~][s] <~ *
-[s] |YAML.Load"database.yaml"
-[s] |YAML.Load"cache.yaml"
-[X]
+{#} #Config;MultiMissingHandler
+[A] #Config
+
+[s] |YAML.Load"\\FileDir\\database.yaml"
+   [.] .db:pg.string << .connection
+
+[s] |YAML.Load"\\FileDir\\cache.yaml"
+   [.] .cache:pg.string << .connection
+
+{x}
         "#;
 
         let file = create_temp_file(content);
@@ -623,15 +633,18 @@ mod tests {
 
     #[test]
     fn test_validate_serial_error_message_includes_enum_name() {
-        // Error message should include the enumeration name
+        // Error message should include the enumeration name (v0.0.4)
         let content = r#"
-[@] Local@TestPkg:1.0.0
-[X]
+{@} @Local:TestPkg:1.0.0.0
+{x}
 
-[#] #MySpecialConfig
-[<] .value: pg\string << "default"
-[s] |JSON.Load"config.json"
-[X]
+{#} #MySpecialConfig;Special
+[A] #MySpecialConfig
+
+[s] |JSON.Load"\\FileDir\\config.json"
+   [.] .value:pg.string << .value
+
+{x}
         "#;
 
         let file = create_temp_file(content);
@@ -647,27 +660,31 @@ mod tests {
 
     #[test]
     fn test_validate_serial_multiple_enumerations_mixed() {
-        // Test file with multiple enumerations - some valid, some invalid
+        // Test file with multiple enumerations - some valid, some invalid (v0.0.4)
         let content = r#"
-[@] Local@TestPkg:1.0.0
-[X]
+{@} @Local:TestPkg:1.0.0.0
+{x}
 
-[#] #ValidConfig
-[<] .timeout: pg\int << 30
-[~][s] <~ .timeout: pg\int
-[s] |YAML.Load"config.yaml"
-[s][!] *
-[X]
+{#} #ValidConfig;AppConfig
+[A] #ValidConfig
 
-[#] #InvalidConfig
-[<] .api_key: pg\string << "default"
-[~][s] <~ .api_key: pg\string
-[s] |YAML.Load"secrets.yaml"
-[X]
+[s] |YAML.Load"\\FileDir\\config.yaml"
+   [.] .timeout:pg.int << .timeout
 
-[#] #NoSerialConfig
-[<] .debug: pg\int << 1
-[X]
+[s][!] !*
+{x}
+
+{#} #InvalidConfig;AppSecrets
+[A] #InvalidConfig
+
+[s] |YAML.Load"\\FileDir\\secrets.yaml"
+   [.] .api_key:pg.string << .api_key
+
+{x}
+
+{#} #NoSerialConfig;Debug
+[A] #NoSerialConfig
+{x}
         "#;
 
         let file = create_temp_file(content);

@@ -19,12 +19,12 @@ fn test_input_argument_prefix_tokenization() {
 
     let tokens = lex(input).expect("Lexer should tokenize input argument prefix");
 
-    // Verify the input prefix token exists
-    let has_input_prefix = tokens
+    // Verify the input argument token exists (v0.0.2: <input_arg is one token)
+    let has_input_argument = tokens
         .iter()
-        .any(|t| matches!(t.kind, polyglot_lexer::TokenKind::DelimiterInputPrefix));
+        .any(|t| matches!(t.kind, polyglot_lexer::TokenKind::IdentifierInputArgument));
 
-    assert!(has_input_prefix, "Should have DelimiterInputPrefix token");
+    assert!(has_input_argument, "Should have IdentifierInputArgument token");
 }
 
 #[test]
@@ -45,12 +45,12 @@ fn test_output_argument_prefix_tokenization() {
 
     let tokens = lex(input).expect("Lexer should tokenize output argument prefix");
 
-    // Verify the output prefix token exists
-    let has_output_prefix = tokens
+    // Verify the output argument token exists (v0.0.2: >output_arg is one token)
+    let has_output_argument = tokens
         .iter()
-        .any(|t| matches!(t.kind, polyglot_lexer::TokenKind::DelimiterOutputPrefix));
+        .any(|t| matches!(t.kind, polyglot_lexer::TokenKind::IdentifierOutputArgument));
 
-    assert!(has_output_prefix, "Should have DelimiterOutputPrefix token");
+    assert!(has_output_argument, "Should have IdentifierOutputArgument token");
 }
 
 #[test]

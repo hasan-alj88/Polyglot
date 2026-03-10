@@ -1,9 +1,9 @@
-[@] Local@MultiFileTest:1.0.0
-[<] @self << Local@MultiFileTest:1.0.0
+[@] @Local::MultiFileTest:1.0.0.0
+[<] @self << @Local::MultiFileTest:1.0.0.0
 [X]
 
 [|] UnnumberedPipeline
-[i] .input: pg\int
+[i] .input: pg.int
 [t] |T.Call
 [W] |W.Polyglot.Scope
 
@@ -11,5 +11,5 @@
 [<] .value << .input
 [>] .result >> .output
 
-[o] .output: pg\int
+[o] .output: pg.int
 [X]

@@ -286,7 +286,7 @@ mod tests {
         let spec = PackageSpec {
             registry: "Community".to_string(),
             path: vec!["DataHelpers".to_string()],
-            version: Version::new(2, 3, 1),
+            version: Version::new(2, 3, 1, 0),
             span: Span::new(
                 crate::span::Position::new(1, 1, 0),
                 crate::span::Position::new(1, 30, 29),
@@ -332,11 +332,11 @@ mod tests {
         let error = ImportError::PackageNotFound {
             registry: "Community".to_string(),
             path: vec!["DataHelpers".to_string()],
-            version: Version::new(2, 3, 1),
+            version: Version::new(2, 3, 1, 0),
         };
         assert_eq!(
             error.to_string(),
-            "Package not found: Community@DataHelpers:2.3.1"
+            "Package not found: Community@DataHelpers:2.3.1.0"
         );
     }
 

@@ -323,7 +323,7 @@ mod tests {
                 {
                     "registry": "Community",
                     "path": ["DataHelpers"],
-                    "version": "2.3.1",
+                    "version": "2.3.1.0",
                     "active": true,
                     "pipelines": [
                         {
@@ -392,7 +392,7 @@ mod tests {
         let spec = PackageSpec {
             registry: "Community".to_string(),
             path: vec!["DataHelpers".to_string()],
-            version: Version::new(2, 3, 1),
+            version: Version::new(2, 3, 1, 0),
             span: Span::start(),
         };
 
@@ -412,7 +412,7 @@ mod tests {
         let spec = PackageSpec {
             registry: "Community".to_string(),
             path: vec!["NonExistent".to_string()],
-            version: Version::new(1, 0, 0),
+            version: Version::new(1, 0, 0, 0),
             span: Span::start(),
         };
 
@@ -427,7 +427,7 @@ mod tests {
         let spec = PackageSpec {
             registry: "Community".to_string(),
             path: vec!["DataHelpers".to_string()],
-            version: Version::new(2, 3, 1),
+            version: Version::new(2, 3, 1, 0),
             span: Span::start(),
         };
 
@@ -447,7 +447,7 @@ mod tests {
         let spec = PackageSpec {
             registry: "Community".to_string(),
             path: vec!["DataHelpers".to_string()],
-            version: Version::new(2, 3, 1),
+            version: Version::new(2, 3, 1, 0),
             span: Span::start(),
         };
 
@@ -468,7 +468,7 @@ mod tests {
         let spec = PackageSpec {
             registry: "Community".to_string(),
             path: vec!["DataHelpers".to_string()],
-            version: Version::new(2, 3, 1),
+            version: Version::new(2, 3, 1, 0),
             span: Span::start(),
         };
 

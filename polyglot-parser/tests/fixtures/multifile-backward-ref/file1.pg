@@ -1,6 +1,6 @@
 [#] 1
-[@] Local@MultiFileTest:1.0.0
-[<] @self << Local@MultiFileTest:1.0.0
+[@] @Local::MultiFileTest:1.0.0.0
+[<] @self << @Local::MultiFileTest:1.0.0.0
 [X]
 
 [|] EarlyPipeline
@@ -9,5 +9,5 @@
 [W] |W.Polyglot.Scope
 
 [r] @self|LatePipeline
-[o] .result: pg\string
+[o] .result: pg.string
 [X]

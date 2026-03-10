@@ -1,11 +1,11 @@
 [#] 2
-[@] Local@MultiFileTest:1.0.0
+[@] @Local::MultiFileTest:1.0.0.0
 [X]
 
 [|] LatePipeline
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[r] .result: pg\string << "late result"
-[o] .result: pg\string
+[r] .result: pg.string << "late result"
+[o] .result: pg.string
 [X]

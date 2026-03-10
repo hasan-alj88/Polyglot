@@ -266,11 +266,11 @@ fn test_multifile_end_to_end() {
 fn test_enumeration_requires_hash_prefix() {
     // Enumeration definitions must now use #Config instead of Config
     let source = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [#] #Config
-[<] .timeout: pg\int << 30
+[<] .timeout: pg.int << 30
 [X]
     "#;
 
@@ -289,15 +289,15 @@ fn test_enumeration_requires_hash_prefix() {
 fn test_default_pull_operator_in_assignment() {
     // Test ~> operator for pull with default
     let source = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [|] TestPipeline
-[i] .timeout: pg\int <~ 30
+[i] .timeout: pg.int <~ 30
 [t] |T.Call
 [W] |W.Polyglot.Scope
 [r] .timeout ~> .settings.timeout
-[o] .result: pg\int
+[o] .result: pg.int
 [X]
     "#;
 
@@ -319,15 +319,15 @@ fn test_default_pull_operator_in_assignment() {
 fn test_pipeline_formatted_string_literal() {
     // Test |Pipeline"formatted string" syntax
     let source = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [|] LogTest
-[i] .count: pg\int
+[i] .count: pg.int
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[r] .msg: pg\string << |U.Log.Info"Processing {.count} items"
-[o] .msg: pg\string
+[r] .msg: pg.string << |U.Log.Info"Processing {.count} items"
+[o] .msg: pg.string
 [X]
     "#;
 
@@ -346,20 +346,20 @@ fn test_pipeline_formatted_string_literal() {
 fn test_all_new_syntax_together() {
     // Integration test with all December 2025 syntax features
     let source = r#"
-[@] Local@TestPkg:1.0.0
+[@] @Local::TestPkg:1.0.0.0
 [X]
 
 [#] #Config
-[<] .default_timeout: pg\int << 30
+[<] .default_timeout: pg.int << 30
 [X]
 
 [|] CompleteTest
-[i] .count: pg\int
+[i] .count: pg.int
 [t] |T.Call
 [W] |W.Polyglot.Scope
 [r] .timeout ~> #Config.default_timeout
-[r] .msg: pg\string << |U.Log.Info"Processing {.count} items with timeout {.timeout}"
-[o] .result: pg\string
+[r] .msg: pg.string << |U.Log.Info"Processing {.count} items with timeout {.timeout}"
+[o] .result: pg.string
 [X]
     "#;
 

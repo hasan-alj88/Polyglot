@@ -2,12 +2,12 @@
 // Corresponds to Test Scenario 3 from test design document
 // Should fail: .wrongName is not a valid parameter
 
-[@] Local@MyApp:1.0.0
-[<] @utils << Community@DataHelpers:2.3.1
+[@] @Local::MyApp:1.0.0.0
+[<] @utils << @Community::DataHelpers:2.3.1.0
 [X]
 
 [|] MyPipeline
-[i] .data: pg\int
+[i] .data: pg.int
 
 [t] |T.Call
 [W] |W.Polyglot.Scope
@@ -16,5 +16,5 @@
 [<] .wrongName << "Some name"    // Error: Transform doesn't accept .wrongName
 [>] .result >> .output
 
-[o] .output: pg\int
+[o] .output: pg.int
 [X]

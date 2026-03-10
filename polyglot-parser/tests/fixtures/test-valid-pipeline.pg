@@ -1,12 +1,12 @@
 // Test fixture: Valid pipeline with external package import
 // Corresponds to Test Scenario 1 from test design document
 
-[@] Local@MyApp:1.0.0
-[<] @utils << Community@DataHelpers:2.3.1
+[@] @Local::MyApp:1.0.0.0
+[<] @utils << @Community::DataHelpers:2.3.1.0
 [X]
 
 [|] MyPipeline
-[i] .data: pg\int
+[i] .data: pg.int
 
 [t] |T.Call
 [W] |W.Polyglot.Scope
@@ -16,5 +16,5 @@
 [<] .scale << 2
 [>] .result >> .transformed
 
-[o] .transformed: pg\int
+[o] .transformed: pg.int
 [X]

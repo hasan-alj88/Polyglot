@@ -22,15 +22,15 @@
 //! use polyglot_parser::{Parser, FileRegistryResolver};
 //!
 //! let source = r#"
-//!     [@] Local@MyApp:1.0.0
+//!     [@] @Local::MyApp:1.0.0.0
 //!     [X]
 //!
 //!     [|] HelloWorld
 //!     [i] #Pipeline.NoInput
 //!     [t] |T.Call
 //!     [W] |W.Polyglot.Scope
-//!     [r] .message: pg\string << "Hello"
-//!     [o] .message: pg\string
+//!     [r] .message: pg.string << "Hello"
+//!     [o] .message: pg.string
 //!     [X]
 //! "#;
 //!
@@ -380,16 +380,27 @@ impl<R: ImportResolver> Parser<R> {
         })
     }
 
-    /// Parse package spec: registry@path:version
+    /// Parse package spec: @registry::path:version (v0.0.2 syntax)
     fn parse_package_spec(&mut self) -> Result<PackageSpec, ParserError> {
         let start_token = self.peek().clone();
 
-        // Parse registry (identifier before @)
+        // Check if we have the new IdentifierPackageSpec token (single token from lexer)
+        if self.check(&TokenKind::IdentifierPackageSpec) {
+            let pkg_token = self.advance().clone();
+            return self.parse_package_spec_from_string(&pkg_token.lexeme, &start_token);
+        }
+
+        // Fall back to old multi-token parsing for backward compatibility
+        // Expect @ delimiter (v0.0.2 syntax: @Registry::Path:version)
+        self.expect(&TokenKind::DelimiterAt, "package spec start")?;
+
+        // Parse registry (identifier after @)
         let registry_token = self.expect(&TokenKind::Identifier, "package registry")?;
         let registry = registry_token.lexeme.clone();
 
-        // Expect @ delimiter
-        self.expect(&TokenKind::DelimiterAt, "package spec separator")?;
+        // Expect :: delimiter (two colons for registry separator)
+        self.expect(&TokenKind::DelimiterColon, "package registry separator (first :)")?;
+        self.expect(&TokenKind::DelimiterColon, "package registry separator (second :)")?;
 
         // Parse path components (dot-separated identifiers)
         let mut path = Vec::new();
@@ -458,10 +469,66 @@ impl<R: ImportResolver> Parser<R> {
         })
     }
 
-    /// Parse version string into Version struct
+    /// Parse package spec from a single token lexeme like "@Local::MyApp:1.0.0.0"
+    fn parse_package_spec_from_string(&self, lexeme: &str, token: &Token) -> Result<PackageSpec, ParserError> {
+        // Remove leading @ and split by ::
+        let without_at = lexeme.trim_start_matches('@');
+        let parts: Vec<&str> = without_at.split("::").collect();
+
+        if parts.len() != 2 {
+            return Err(ParserError::InvalidPackageSpec {
+                spec: lexeme.to_string(),
+                span: Span::start(),
+            });
+        }
+
+        let registry = parts[0].to_string();
+
+        // Split the second part by the last : to separate path from version
+        let path_and_version = parts[1];
+        let colon_parts: Vec<&str> = path_and_version.rsplitn(2, ':').collect();
+
+        if colon_parts.len() != 2 {
+            return Err(ParserError::InvalidPackageSpec {
+                spec: lexeme.to_string(),
+                span: Span::start(),
+            });
+        }
+
+        let version_str = colon_parts[0];
+        let path_str = colon_parts[1];
+
+        // Parse path (dot-separated components)
+        let path: Vec<String> = path_str.split('.').map(|s| s.to_string()).collect();
+
+        // Parse version
+        let version = self.parse_version(version_str)?;
+
+        let span = Span {
+            start: Position {
+                line: token.line,
+                column: token.column,
+                offset: 0,
+            },
+            end: Position {
+                line: token.line,
+                column: token.column + token.lexeme.len(),
+                offset: 0,
+            },
+        };
+
+        Ok(PackageSpec {
+            registry,
+            path,
+            version,
+            span,
+        })
+    }
+
+    /// Parse version string into Version struct (major.minor.patch.build)
     fn parse_version(&self, version_str: &str) -> Result<Version, ParserError> {
         let parts: Vec<&str> = version_str.split('.').collect();
-        if parts.len() != 3 {
+        if parts.len() != 4 {
             return Err(ParserError::InvalidPackageVersion {
                 version: version_str.to_string(),
                 span: Span::start(),
@@ -489,7 +556,14 @@ impl<R: ImportResolver> Parser<R> {
             }
         })?;
 
-        Ok(Version::new(major, minor, patch))
+        let build = parts[3].parse::<u32>().map_err(|_| {
+            ParserError::InvalidPackageVersion {
+                version: version_str.to_string(),
+                span: Span::start(),
+            }
+        })?;
+
+        Ok(Version::new(major, minor, patch, build))
     }
 
     /// Parse import declaration: [<] @alias << Package@Path:Version
@@ -502,7 +576,7 @@ impl<R: ImportResolver> Parser<R> {
         let alias = alias_token.lexeme.clone();
 
         // Expect << operator
-        self.expect(&TokenKind::OpPush, "import assignment")?;
+        self.expect(&TokenKind::OpPushLeft, "import assignment")?;
 
         // Parse package spec
         let package = self.parse_package_spec()?;
@@ -595,7 +669,7 @@ impl<R: ImportResolver> Parser<R> {
             let field_type = self.parse_type_annotation()?;
 
             // Expect << assignment
-            self.expect(&TokenKind::OpPush, "field value assignment")?;
+            self.expect(&TokenKind::OpPushLeft, "field value assignment")?;
 
             // Parse value expression
             let value = self.parse_expression()?;
@@ -661,13 +735,13 @@ impl<R: ImportResolver> Parser<R> {
             // Check for nesting prefix [~]
             let nesting_count = self.count_nesting_prefix();
 
-            if nesting_count > 0 && self.match_token(&TokenKind::BlockStreaming) {
+            if nesting_count > 0 && self.match_token(&TokenKind::BlockSerialLoad) {
                 // Parse [~][s] <~ .field:type (schema declaration)
                 let schema_start = self.previous().clone();
                 self.skip_newlines();
 
                 // Expect <~ default operator for schema declaration
-                if self.match_token(&TokenKind::OpDefault) {
+                if self.match_token(&TokenKind::OpDefaultPushLeft) {
                     // Parse field name or wildcard
                     if self.match_token(&TokenKind::OpWildcard) {
                         // [~][s] <~ * (wildcard schema)
@@ -703,7 +777,7 @@ impl<R: ImportResolver> Parser<R> {
                         });
                     }
                 }
-            } else if self.match_token(&TokenKind::BlockStreaming) {
+            } else if self.match_token(&TokenKind::BlockSerialLoad) {
                 // Check if this is [s][!] error handler or [s] serial load
                 self.skip_newlines();
 
@@ -927,10 +1001,10 @@ impl<R: ImportResolver> Parser<R> {
         let param_type = self.parse_type_annotation()?;
 
         // Check for default value or constant
-        let default_value = if self.match_token(&TokenKind::OpDefault) {
+        let default_value = if self.match_token(&TokenKind::OpDefaultPushLeft) {
             // <~ operator: default value
             Some(self.parse_expression()?)
-        } else if self.match_token(&TokenKind::OpPush) {
+        } else if self.match_token(&TokenKind::OpPushLeft) {
             // << operator: constant value
             Some(self.parse_expression()?)
         } else {
@@ -948,14 +1022,14 @@ impl<R: ImportResolver> Parser<R> {
         })
     }
 
-    /// Parse type annotation: pg\int, pg\string, etc.
+    /// Parse type annotation: pg.int, pg.string, etc.
     fn parse_type_annotation(&mut self) -> Result<TypeAnnotation, ParserError> {
         // Parse namespace (pg, py, rs, etc.)
         let namespace_token = self.expect(&TokenKind::TypeNamespace, "type namespace")?;
         let namespace = namespace_token.lexeme.clone();
 
-        // Expect \ delimiter
-        self.expect(&TokenKind::DelimiterBackslash, "type separator")?;
+        // Expect . delimiter (v0.0.2 syntax: pg.string, not pg\string)
+        self.expect(&TokenKind::DelimiterDot, "type separator")?;
 
         // Parse type name
         let type_token = self.peek().clone();
@@ -1133,7 +1207,7 @@ impl<R: ImportResolver> Parser<R> {
             let type_annotation = self.parse_type_annotation()?;
 
             // Expect << assignment
-            self.expect(&TokenKind::OpPush, "variable assignment")?;
+            self.expect(&TokenKind::OpPushLeft, "variable assignment")?;
 
             // Parse expression
             let init = self.parse_expression()?;
@@ -1148,16 +1222,18 @@ impl<R: ImportResolver> Parser<R> {
                 span,
             })
         } else {
-            // Assignment: .name << expr OR .name >> .source
-            let operator = if self.match_token(&TokenKind::OpPush) {
+            // Assignment: .name << expr OR .name >> .source OR .name <~ expr OR .name ~> .source
+            let operator = if self.match_token(&TokenKind::OpPushLeft) {
                 AssignmentOperator::Push
-            } else if self.match_token(&TokenKind::OpPull) {
+            } else if self.match_token(&TokenKind::OpPushRight) {
                 AssignmentOperator::Pull
-            } else if self.match_token(&TokenKind::OpDefault) {
+            } else if self.match_token(&TokenKind::OpDefaultPushLeft) {
+                AssignmentOperator::Default
+            } else if self.match_token(&TokenKind::OpDefaultPushRight) {
                 AssignmentOperator::Default
             } else {
                 return Err(ParserError::UnexpectedToken {
-                    expected: "assignment operator (<<, >>, or <~)".to_string(),
+                    expected: "assignment operator (<<, >>, <~, or ~>)".to_string(),
                     found: self.peek().kind.description().to_string(),
                     context: "assignment".to_string(),
                     span: self.make_span_from_token(self.peek()),
@@ -1258,6 +1334,15 @@ impl<R: ImportResolver> Parser<R> {
                     span,
                 })
             }
+            TokenKind::IdentifierEnum => {
+                let token = self.advance().clone();
+                let name = token.lexeme.trim_start_matches('#').to_string();
+                let span = self.make_span_from_token(&token);
+                Ok(Expression::Identifier {
+                    name: Identifier::Enum(name),
+                    span,
+                })
+            }
             TokenKind::ReservedBooleanTrue => {
                 let token = self.advance().clone();
                 let span = self.make_span_from_token(&token);
@@ -1271,6 +1356,17 @@ impl<R: ImportResolver> Parser<R> {
                 let span = self.make_span_from_token(&token);
                 Ok(Expression::Literal {
                     value: Literal::Boolean(false),
+                    span,
+                })
+            }
+            TokenKind::LiteralPipelineFormatted => {
+                // Parse pipeline formatted string literal
+                let token = self.advance().clone();
+                let span = self.make_span_from_token(&token);
+                // For now, treat it as a string literal
+                // TODO: Parse interpolation from the formatted string
+                Ok(Expression::Literal {
+                    value: Literal::String(token.lexeme.clone()),
                     span,
                 })
             }
@@ -1919,15 +2015,15 @@ mod tests {
     #[test]
     fn test_parse_simple_pipeline() {
         let source = r#"
-[@] Local@MyApp:1.0.0
+[@] @Local::MyApp:1.0.0.0
 [X]
 
 [|] HelloWorld
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[r] .message: pg\string << "Hello"
-[o] .message: pg\string
+[r] .message: pg.string << "Hello"
+[o] .message: pg.string
 [X]
         "#;
 
@@ -1941,12 +2037,12 @@ mod tests {
     #[test]
     fn test_parse_pipeline_with_bindings() {
         let source = r#"
-[@] Local@MyApp:1.0.0
-[<] @utils << Community@DataHelpers:2.3.1
+[@] @Local::MyApp:1.0.0.0
+[<] @utils << @Community::DataHelpers:2.3.1.0
 [X]
 
 [|] MyPipeline
-[i] .data: pg\int
+[i] .data: pg.int
 
 [t] |T.Call
 [W] |W.Polyglot.Scope
@@ -1956,7 +2052,7 @@ mod tests {
 [<] .scale << 2
 [>] .result >> .transformed
 
-[o] .transformed: pg\int
+[o] .transformed: pg.int
 [X]
         "#;
 
@@ -1975,14 +2071,14 @@ mod tests {
     fn test_parse_file_ordering_marker_with_number() {
         let source = r#"
 [#] 1
-[@] Local@MyApp:1.0.0
+[@] @Local::MyApp:1.0.0.0
 [X]
 
 [|] Test
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .result: pg\int
+[o] .result: pg.int
 [X]
         "#;
 
@@ -1997,14 +2093,14 @@ mod tests {
     fn test_parse_file_ordering_marker_large_number() {
         let source = r#"
 [#] 42
-[@] Local@MyApp:1.0.0
+[@] @Local::MyApp:1.0.0.0
 [X]
 
 [|] Test
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .result: pg\int
+[o] .result: pg.int
 [X]
         "#;
 
@@ -2018,14 +2114,14 @@ mod tests {
     #[test]
     fn test_parse_file_without_ordering_marker() {
         let source = r#"
-[@] Local@MyApp:1.0.0
+[@] @Local::MyApp:1.0.0.0
 [X]
 
 [|] Test
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .result: pg\int
+[o] .result: pg.int
 [X]
         "#;
 
@@ -2040,7 +2136,7 @@ mod tests {
     fn test_parse_file_ordering_marker_missing_number() {
         let source = r#"
 [#]
-[@] Local@MyApp:1.0.0
+[@] @Local::MyApp:1.0.0.0
 [X]
         "#;
 
@@ -2062,14 +2158,14 @@ mod tests {
     fn test_parse_file_ordering_marker_zero() {
         let source = r#"
 [#] 0
-[@] Local@MyApp:1.0.0
+[@] @Local::MyApp:1.0.0.0
 [X]
 
 [|] Test
 [i] #Pipeline.NoInput
 [t] |T.Call
 [W] |W.Polyglot.Scope
-[o] .result: pg\int
+[o] .result: pg.int
 [X]
         "#;
 

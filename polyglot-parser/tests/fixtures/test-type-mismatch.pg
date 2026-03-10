@@ -1,20 +1,20 @@
 // Test fixture: Type mismatch between pipeline call and signature
 // Corresponds to Test Scenario 4 from test design document
-// Should fail: .data is pg\string but Transform expects pg\int
+// Should fail: .data is pg.string but Transform expects pg.int
 
-[@] Local@MyApp:1.0.0
-[<] @utils << Community@DataHelpers:2.3.1
+[@] @Local::MyApp:1.0.0.0
+[<] @utils << @Community::DataHelpers:2.3.1.0
 [X]
 
 [|] MyPipeline
-[i] .data: pg\string
+[i] .data: pg.string
 
 [t] |T.Call
 [W] |W.Polyglot.Scope
 
 [r] @utils|Transform
-[<] .input << .data    // Error: .data is pg\string, Transform expects pg\int
+[<] .input << .data    // Error: .data is pg.string, Transform expects pg.int
 [>] .result >> .output
 
-[o] .output: pg\int
+[o] .output: pg.int
 [X]

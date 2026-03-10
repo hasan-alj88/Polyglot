@@ -446,6 +446,11 @@ pub enum ParserError {
 
     /// Invalid package version format
     ///
+    /// Package spec string doesn't match expected format (@Registry::Path:Version)
+    #[error("Invalid package spec at {span}: '{spec}' does not match expected format @Registry::Path:Version")]
+    InvalidPackageSpec { spec: String, span: Span },
+
+    ///
     /// Version string doesn't match semver format (major.minor.patch)
     #[error("Invalid package version at {span}: '{version}' does not match semver format (major.minor.patch)")]
     InvalidPackageVersion { version: String, span: Span },
@@ -498,6 +503,7 @@ impl ParserError {
             ParserError::CircularImport { span, .. } => *span,
             ParserError::UseBeforeDeclaration { span, .. } => *span,
             ParserError::TypeMismatch { span, .. } => *span,
+            ParserError::InvalidPackageSpec { span, .. } => *span,
             ParserError::InvalidPackageVersion { span, .. } => *span,
         }
     }

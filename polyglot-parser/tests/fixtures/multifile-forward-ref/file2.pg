@@ -1,10 +1,10 @@
 [#] 2
-[@] Local@MultiFileTest:1.0.0
-[<] @self << Local@MultiFileTest:1.0.0
+[@] @Local::MultiFileTest:1.0.0.0
+[<] @self << @Local::MultiFileTest:1.0.0.0
 [X]
 
 [|] DataProcessor
-[i] .input_path: pg\path
+[i] .input_path: pg.path
 [t] |T.Call
 [W] |W.Polyglot.Scope
 
@@ -12,6 +12,6 @@
 [<] .path << .input_path
 [>] .data >> .loaded_data
 
-[r] .result: pg\string << .loaded_data
-[o] .result: pg\string
+[r] .result: pg.string << .loaded_data
+[o] .result: pg.string
 [X]

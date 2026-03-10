@@ -2,12 +2,12 @@
 // Corresponds to Test Scenario 2 from test design document
 // Should fail: .input parameter not provided
 
-[@] Local@MyApp:1.0.0
-[<] @utils << Community@DataHelpers:2.3.1
+[@] @Local::MyApp:1.0.0.0
+[<] @utils << @Community::DataHelpers:2.3.1.0
 [X]
 
 [|] MyPipeline
-[i] .data: pg\string
+[i] .data: pg.string
 
 [t] |T.Call
 [W] |W.Polyglot.Scope
@@ -17,5 +17,5 @@
 [<] .scale << 2
 [>] .result >> .output
 
-[o] .output: pg\int
+[o] .output: pg.int
 [X]
