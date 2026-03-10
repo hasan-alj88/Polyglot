@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "0ce8c3988c04f56c",
+        "id": "54eb26ee652613c3",
         "type": "tabs",
         "children": [
           {
-            "id": "7c1f25cdc78b319e",
+            "id": "2e59145fb121f90d",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/user/async-centric-paradigm.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "async-centric-paradigm"
+              "title": "New tab"
             }
           }
         ]
@@ -53,7 +49,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "async-centric-paradigm.md",
+                "query": "%Doc",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +70,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -95,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/user/async-centric-paradigm.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for async-centric-paradigm"
+              "title": "Backlinks"
             }
           },
           {
@@ -183,43 +177,44 @@
       "bases:Create new base": false
     }
   },
-  "active": "7c1f25cdc78b319e",
+  "active": "067a675cf445dfbf",
   "lastOpenFiles": [
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/work-products.bin",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/query-cache.bin",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/f3gr0pxoorc28q0hx2ahxn0vw.o",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/f2326xw4937372sxa579csyx6.o",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/f03f012bpbedzrij8m6xqj937.o",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/evavhz9o87oi7jf5vw5yv0azy.o",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/ee397jc8ukohnxxpqi2qmsz5f.o",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/ebz5e1p433fwglnxgbk8u79wy.o",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/eareotmcm0vcsubobtkv7c629.o",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/eac7367r297ercglegwqx7wnl.o",
-    "target/debug/incremental/polyglot_parser-0ul0c5yopyyn6/s-hdm6qmjfj1-0vzs5sj-cfthc9kxau3l93mffh333u0tq/dv3l3x48xb0cdqx8hzxngjqyp.o",
-    "docs/user/standard-library/04-triggers.md",
-    "docs/user/standard-library/03-utilities.md",
-    "docs/user/standard-library/06-reserved-enumerations.md",
-    "docs/user/standard-library/05-join-operations.md",
-    "docs/user/standard-library/04-triggers-catalog.md",
-    "docs/user/standard-library/03-utilities-catalog.md",
-    "docs/user/standard-library/02-queue-control.md",
-    "docs/user/standard-library/01-runtime-wrappers.md",
-    "docs/user/standard-library/00-overview.md",
-    "docs/user/quick-start.md",
-    "docs/user/quick-reference/variables-cheatsheet.md",
-    "docs/user/planning/00-prd-overview.md",
-    "docs/user/packages/03-importing-packages.md",
-    "docs/user/packages/02-creating-packages.md",
-    "docs/user/packages/01-registries.md",
-    "docs/user/packages/00-overview.md",
-    "docs/user/language/bnf/polyglot grammer.md",
-    "docs/user/language/variables-user-guide.md",
-    "docs/user/language/12-bnf-grammar.md",
-    "docs/user/language/11-comments.md",
-    "docs/user/language/10-pipeline-lifecycle.md",
-    "docs/user/language/09-expansion-operator.md",
-    "docs/user/language/08-parallel-execution.md",
-    "docs/user/language/08-line-continuation.md",
-    "docs/user/language/07-macros.md"
+    "list/lib/python3.12/site-packages/__pycache__/_virtualenv.cpython-312.pyc",
+    "list/lib/python3.12/site-packages/__pycache__",
+    "docs/Audit/history/trigger-docs-added-2026-01-07.md",
+    "docs/Audit/history/trigger-docs-added-2026-01-07.md.tmp.2196486.1767764687707",
+    "docs/INDEX.md.tmp.2196486.1767764620793",
+    "docs/INDEX.md.tmp.2196486.1767764612430",
+    "docs/INDEX.md.tmp.2196486.1767764600608",
+    "docs/INDEX.md.tmp.2196486.1767764590515",
+    "docs/INDEX.md.tmp.2196486.1767764584629",
+    "docs/INDEX.md.tmp.2196486.1767764575464",
+    "docs/INDEX.md.tmp.2196486.1767764569020",
+    "docs/INDEX.md.tmp.2196486.1767764558824",
+    "docs/v0.0.5/reference/trigger-dev-reference.md",
+    "docs/v0.0.5/reference/trigger-technical.md",
+    "docs/v0.0.5/language/trigger-system.md",
+    "bmad-polly/data/session-reports/session-2026-01-05-trigger-system-v0.0.5-COMPLETE.md",
+    "bmad-polly/data/outputs/trigger-dev-reference.md",
+    "bmad-polly/data/outputs/trigger-technical.md",
+    "bmad-polly/data/outputs/trigger-system.md",
+    "docs/Audit/history/scribe-polly-handoff-2026-01-05.md",
+    "bmad-polly/data/session-reports/session-2026-01-05-trigger-system-v0.0.5-needs-training.md",
+    "docs/Audit/history/index-update-2026-01-05.md",
+    "docs/Audit/checks/audit-report-2026-01-05.md",
+    "docs/v0.0.5/reference/grammar-reference.md",
+    "docs/v0.0.5/README.md",
+    "docs/v0.0.5/whats-new-v0.0.5.md",
+    "docs/v0.0.5/language/loop-system.md",
+    "docs/v0.0.5/quick-reference/runtime-orchestration.md",
+    "docs/v0.0.5/training-sessions/session-001-continuation-summary-2026-01-04.md",
+    "docs/v0.0.5/migration-guide-v0.0.4-to-v0.0.5.md",
+    "docs/v0.0.5/style-guide/field-naming-conventions.md",
+    "docs/v0.0.5/training-sessions/README.md",
+    "docs/v0.0.5/training-sessions/session-001-2026-01-02.md",
+    "docs/brainstorming-v0.0.5-enhancements.md",
+    "docs/v0.0.5/stdlib/stdlib-audit-serial-outputs.md",
+    "docs/v0.0.5/language/error-handling.md",
+    "_bmad/bmm/docs/images/workflow-method-greenfield.svg"
   ]
 }
