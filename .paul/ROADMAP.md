@@ -6,7 +6,7 @@ Building an async programming language that can asynchronously compile other pro
 ## Current Milestone
 **v0.1 Language Specification & Research** (v0.1.0)
 Status: In progress
-Phases: 1 of 5 complete
+Phases: 2 of 5 complete
 
 ## Phases
 
@@ -16,7 +16,7 @@ Phases: 1 of 5 complete
 | 2 | Complete Language Specification | 2+ | Planning | - |
 | 3 | Compiler Architecture Design | TBD | Not started | - |
 | 4 | Prior Art Research & Analysis | TBD | Not started | - |
-| 5 | Clean Slate Reset | 1 | Not started | - |
+| 5 | Clean Slate Reset | 1 | Complete | 2026-03-12 |
 
 ## Phase Details
 

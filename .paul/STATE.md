@@ -11,13 +11,14 @@ See: .paul/PROJECT.md (updated 2026-03-12)
 
 Milestone: v0.1 Language Specification & Research
 Phase: 2 of 5 (Complete Language Specification) — Planning
-Plan: 02-01 created, awaiting approval
-Status: PLAN created, ready for APPLY
-Last activity: 2026-03-12 — Added Phase 5: Clean Slate Reset
+Plan: 02-01 scrapped — writing from scratch via draft loop
+Status: Ready for /paul:plan (new approach)
+Last activity: 2026-03-12 — Wiped docs/ to skeleton (draft.md only), scrapped Plan 02-01
 
 Progress:
-- Milestone: [██░░░░░░░░] 25%
+- Milestone: [████░░░░░░] 40%
 - Phase 1: [██████████] 100%
+- Phase 5: [██████████] 100%
 - Phase 2: [░░░░░░░░░░] 0%
 
 ## Loop Position
@@ -25,7 +26,7 @@ Progress:
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ○        ○     [Plan created, awaiting approval]
+  ○        ○        ○     [Restarting — previous plan scrapped]
 ```
 
 ## Accumulated Context
@@ -42,6 +43,8 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | uv environment for Python tooling | 2026-03-12 | PyYAML added to pyproject.toml; validation scripts use pydantic |
 | Migrate docs on touch, not batch | 2026-03-12 | New files must comply; legacy files migrate when modified |
 | Added Phase 5: Clean Slate Reset | 2026-03-12 | Extends milestone scope — commit all pending changes, remove tarballs, clean git state |
+| Wiped docs/ to skeleton | 2026-03-12 | User wants to write spec from scratch via draft loop, not consolidate existing docs |
+| Scrapped Plan 02-01 | 2026-03-12 | Old plan consolidated scattered docs; new approach: fresh writing via /paul:draft |
 
 ### Deferred Issues
 - Rebuild Polly as PAUL special flow (after documentation phases)
@@ -59,13 +62,11 @@ Protected elements for current milestone:
 
 Last session: 2026-03-12
 Stopped at: Documentation standards v2.0 established; Plan 02-01 approved, APPLY not started
-Next action: Run /paul:apply .paul/phases/02-complete-language-specification/02-01-PLAN.md
-Resume file: .paul/HANDOFF-2026-03-12.md
+Next action: Run /paul:plan for Phase 2 with draft-loop approach
 Resume context:
-- Documentation standards infrastructure complete (conventions, templates, indexes, validation)
-- Agile/ and v0.0.5/ archived to tarballs
-- Plan 02-01 writes COMPLETE-SPEC.md core syntax (variables, types, prefixes, markers, operators)
-- Fresh session recommended for APPLY (heavy file reading + spec writing)
+- docs/ wiped to skeleton (only draft.md remains)
+- User will write spec from scratch via /paul:draft loop
+- All prior doc content available in git history if needed
 
 ---
 *STATE.md — Updated after every significant action*
