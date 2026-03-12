@@ -1,525 +1,484 @@
-# BMAD Documentation Conventions - Polyglot v0.0.4
+# Polyglot Documentation Conventions
 
-**Version:** 1.0
-**Schema:** bmad-conventions-v1
-**Last Updated:** 2025-12-16
-**Status:** ✅ Active Standard
+**Version:** 2.0
+**Last Updated:** 2026-03-12
+**Status:** Active Standard
+**Replaces:** BMAD Documentation Conventions v1.0
 
 ---
 
 ## Purpose
 
-This document defines standards for maintaining BMAD-optimized documentation in the Polyglot v0.0.4 specification. All contributors must follow these conventions to ensure consistent BMAD agent routing and navigation.
+This document defines the ground rules for all Polyglot project documentation. Every contributor -- human or AI -- must follow these conventions to ensure structure, order, and consistency across the documentation tree.
 
 ---
 
-## Folder Taxonomy Rules
+## 1. Audiences
 
-### Primary Structure
+All documentation is written for one of three audiences. The audience determines what to include and what to omit.
+
+| Audience | What They Need | What to Exclude |
+|----------|---------------|-----------------|
+| **User** | What is this? How do I use it? Syntax, examples, patterns. | Implementation details, architecture, compiler internals. |
+| **Developer** | Architecture, how it works, technical internals, parser/compiler details. | Simplified tutorials (those belong in User docs). |
+| **AI** | Structured indexes (`_index.yaml`) to find relevant content by keyword, section, and dependency. | AI does not read docs directly -- it reads indexes first, then loads targeted sections. |
+
+Every document must declare its audience in frontmatter. Use `mixed` only when a document genuinely serves both users and developers (rare).
+
+---
+
+## 2. Document Structure
+
+### 2.1 Top-Level Directories
 
 ```
-v0.0.4/
-├── getting-started/    # Entry-level content, complexity: low
-├── language/          # Core language specs, complexity: low-high
-│   ├── syntax/        # Syntax reference, complexity: medium
-│   ├── types/         # Type system specs, complexity: medium
-│   ├── control-flow/  # Execution model, complexity: medium
-│   └── advanced/      # Advanced features, complexity: high
-├── stdlib/            # Standard library API, complexity: low-medium
-│   ├── loops/         # Pack/unpack operators
-│   ├── utilities/     # Data, datetime, math, string
-│   └── wrappers/      # Runtime wrappers
-├── guides/            # How-to guides, complexity: low-medium
-├── reference/         # Grammar, AI context, complexity: medium
-└── _archive/          # Historical content (never deleted)
+docs/
+├── User/              # User documentation (audience: user)
+│   ├── getting-started/
+│   ├── language/
+│   │   ├── syntax/
+│   │   ├── types/
+│   │   ├── control-flow/
+│   │   └── advanced/
+│   ├── examples/
+│   ├── reference/
+│   ├── specifications/
+│   └── stdlib/
+│
+├── Tech/              # Technical documentation (audience: developer)
+│   ├── Architecture/
+│   ├── Polyglot/      # Language internals
+│   │   ├── Syntax/
+│   │   ├── Parser/
+│   │   └── Compiler/
+│   ├── QueueManager/
+│   └── Runner/
+│
+├── Audit/             # Documentation health (audience: developer)
+│   ├── documentation/  # Audit violations, fixes
+│   └── decisions/      # Decisions that may require doc re-sync
+│
+├── archive/           # Historical content (read-only)
+├── _templates/        # Document templates
+└── _index.yaml        # Root index for AI navigation
 ```
 
-### Folder Creation Rules
+### 2.2 Directory Rules
 
-**When to create new folders:**
-- Concept groups with 5+ related documents
-- Distinct complexity levels requiring separation
-- Different agent target audiences
+- Every directory under `docs/` gets an `_index.yaml` file (see Section 5)
+- Use kebab-case for directory and file names: `queue-manager.md`, not `QueueManager.md`
+  - Exception: top-level directories (`User/`, `Tech/`, `Audit/`) use PascalCase for readability
+- Create subdirectories when 5+ files share a common concept
+- Do not create subdirectories for fewer than 3 files
 
-**Naming conventions:**
-- Use kebab-case: `loop-system.md`, `serial-load-block.md`
-- Descriptive, not abbreviated: `datetime/` not `dt/`
-- Plural for collections: `utilities/`, `wrappers/`
+### 2.3 Where to Put New Documentation
+
+```
+New document?
+│
+├─ Is it for language users (syntax, tutorials, examples)?
+│  └─ YES → User/
+│
+├─ Is it about architecture, parser, compiler, or internals?
+│  └─ YES → Tech/
+│
+├─ Is it an audit finding or a decision record?
+│  └─ YES → Audit/
+│
+└─ Historical or superseded content?
+   └─ YES → archive/
+```
+
+---
+
+## 3. File Rules
+
+### 3.1 Size Limit: 50 KB Maximum
+
+**Every file under `docs/` must be < 50 KB (51,200 bytes).**
+
+This is enforced by the pre-commit validation script (`scripts/doc-validate.py`).
+
+**When a file exceeds or approaches 50 KB:**
+
+1. **Split by concept**, not by size. Each resulting file must be a self-contained topic.
+2. **Never** create "Part 1 / Part 2" continuations.
+3. Create a **hub document** (< 5 KB) at the original path that links to all split-out subtopics.
+4. Each split file gets its own `_index.yaml` entry with full metadata.
+5. Update all incoming cross-references to point to specific sub-documents.
+
+**Example -- splitting a large architecture doc:**
+
+```
+Before:  Tech/Architecture/architecture.md (68 KB)
+
+After:   Tech/Architecture/
+           overview.md          (hub, ~3 KB, links to all below)
+           parser-arch.md       (~15 KB)
+           ir-representation.md (~12 KB)
+           storage-layer.md     (~18 KB)
+           queue-system.md      (~14 KB)
+```
+
+### 3.2 Required Frontmatter
+
+Every `.md` file under `docs/` (except `_templates/` and `README.md`) must have YAML frontmatter with these 5 required fields:
+
+```yaml
+---
+id: unique-kebab-id
+audience: user | developer | mixed
+type: feature-guide | tutorial | architecture | spec | language-spec | audit | decision | reference | hub
+status: draft | review | stable | deprecated
+updated: YYYY-MM-DD
+---
+```
+
+| Field | Constraints | Purpose |
+|-------|-------------|---------|
+| `id` | kebab-case, unique across all docs, max 60 chars | Document identifier for cross-referencing |
+| `audience` | `user`, `developer`, or `mixed` | Who this document is for |
+| `type` | See enum above | Document classification |
+| `status` | `draft`, `review`, `stable`, `deprecated` | Lifecycle state |
+| `updated` | `YYYY-MM-DD` format | Last modification date |
+
+### 3.3 File Naming
+
+- Use kebab-case: `variables-lifecycle.md`, `queue-manager.md`
+- Descriptive, not abbreviated: `error-handling.md` not `err-hdl.md`
+- Plural for collections: `examples/`, `patterns/`
 - Singular for concepts: `syntax/`, `reference/`
 
-### Subdivision Criteria
-
-Create subfolder when:
-- ✅ 5+ files share common concept
-- ✅ Natural hierarchy exists (parent/child docs)
-- ✅ Different agent routing needed
-
-Don't create subfolder when:
-- ❌ Only 2-3 files in concept
-- ❌ No clear parent/child relationship
-- ❌ Same agent routing as parent
-
 ---
 
-## BMAD YAML Schema Reference
+## 4. Cross-Referencing
 
-### Required Fields
+### 4.1 Reference Syntax
 
-Every `.md` file **MUST** include YAML front matter with these fields:
-
-```yaml
----
-# --- Identity ---
-id: unique-kebab-id        # REQUIRED: unique identifier
-shard: false               # REQUIRED: true if part of larger doc set
-
-# --- Classification ---
-type: spec                 # REQUIRED: spec|guide|reference|tutorial|concept|api|changelog
-topic: Brief Topic         # REQUIRED: 2-4 words, ≤40 chars
-summary: Brief summary     # REQUIRED: ≤12 words, ≤80 chars
-keywords:                  # REQUIRED: 3-6 items for semantic search
-  - keyword1
-  - keyword2
-
-# --- BMAD Agent Routing ---
-agents:                    # REQUIRED: which BMAD agents need this
-  - developer
-phase: planning            # REQUIRED: analysis|planning|solutioning|implementation|any
-workflow: any              # REQUIRED: greenfield|bugfix|feature|refactor|any
-module: bmm                # REQUIRED: bmm|bmb|cis|core|any
-complexity: medium         # REQUIRED: low|medium|high
-
-# --- Dependency Chain ---
-prereqs:                   # REQUIRED: can be empty []
-  - doc-id-1
-unlocks:                   # REQUIRED: can be empty []
-  - doc-id-2
-
-# --- Relationships ---
-related:                   # REQUIRED: can be empty []
-  - doc-id-a
-
-# --- Metadata ---
-status: stable             # REQUIRED: draft|review|stable|deprecated
-updated: 2025-12-16        # REQUIRED: YYYY-MM-DD
-version: 0.0.4             # REQUIRED: semver if applicable
-tags:                      # REQUIRED: 2-5 tags with # prefix
-  - "#syntax"
----
+**Link to another file:**
+```markdown
+See [Queue Manager Architecture](../Tech/Architecture/queue-manager.md)
 ```
 
-### Optional Fields
-
-```yaml
-# --- Identity (Optional) ---
-shard_of: parent-doc-id    # If shard: true, reference parent
-
-# --- Relationships (Optional) ---
-parent: section-index-id   # Parent doc/section
-children:                  # Sub-documents if split
-  - child-id-1
+**Link to a specific section:**
+```markdown
+See [Priority Algorithm](../Tech/Architecture/queue-manager.md#priority-algorithm)
 ```
 
-### Field Definitions
+The anchor after `#` is the standard markdown heading anchor (lowercase, hyphens for spaces).
 
-| Field | Type | Constraints | Purpose |
-|-------|------|-------------|---------|
-| `id` | string | kebab-case, unique, ≤40 chars | Document identifier for linking |
-| `shard` | boolean | true/false | Part of larger doc set? |
-| `shard_of` | string | valid doc ID | Parent document if shard: true |
-| `type` | enum | spec, guide, reference, tutorial, concept, api, changelog | Document classification |
-| `topic` | string | 2-4 words, ≤40 chars | Quick scan label |
-| `summary` | string | ≤12 words, ≤80 chars | Context load summary |
-| `keywords` | list | 3-6 items | Semantic search |
-| `agents` | list | developer, architect, pm, analyst, ux-designer, tech-writer, scrum-master, game-*, test-* | Target agents |
-| `phase` | enum | analysis, planning, solutioning, implementation, any | Workflow stage |
-| `workflow` | enum | greenfield, bugfix, feature, refactor, any | Project type |
-| `module` | enum | bmm, bmb, cis, core, any | BMAD module |
-| `complexity` | enum | low, medium, high | Planning depth hint |
-| `prereqs` | list | valid doc IDs or [] | Read-first dependencies |
-| `unlocks` | list | valid doc IDs or [] | Enabled documents |
-| `related` | list | valid doc IDs or [] | Conceptually linked |
-| `parent` | string | valid doc ID | Parent document |
-| `children` | list | valid doc IDs | Sub-documents |
-| `status` | enum | draft, review, stable, deprecated | Document status |
-| `updated` | date | YYYY-MM-DD | Last update date |
-| `version` | string | semver or version tag | Document version |
-| `tags` | list | 2-5 tags with # prefix | Categorical tags |
+### 4.2 Required vs Optional References
 
-### Validation Rules
+**Required references** go in a `Prerequisites` section at the top:
+```markdown
+## Prerequisites
 
-**On file save:**
-- ✅ All required fields present
-- ✅ YAML parses without errors
-- ✅ `id` is unique across all docs
-- ✅ `prereqs`, `unlocks`, `related` reference valid IDs
-- ✅ `agents`, `phase`, `workflow`, `module`, `complexity`, `status`, `type` use valid enums
-- ✅ `topic` ≤ 40 chars, `summary` ≤ 80 chars
-- ✅ `keywords` has 3-6 items
-- ✅ `tags` has 2-5 items with # prefix
-- ✅ If `shard: true`, `shard_of` is present
-
----
-
-## BMAD Agent Routing Logic
-
-### Agent Type Mapping
-
-| Agent | Primary Docs | Secondary Docs | Phase | Complexity |
-|-------|--------------|----------------|-------|------------|
-| **architect** | spec, api, reference | concept | solutioning | high |
-| **developer** | guide, tutorial, reference, api | spec | implementation | low-medium |
-| **pm** | concept, spec | guide | planning | low |
-| **analyst** | concept, reference | spec | analysis | low |
-| **ux-designer** | guide, concept | tutorial | planning | low-medium |
-| **tech-writer** | guide, tutorial | reference | any | low-medium |
-| **scrum-master** | concept, guide | any | any | low |
-| **game-architect** | spec, reference | concept | solutioning | high |
-| **game-designer** | concept, guide | tutorial | planning | medium |
-| **test-architect** | reference, guide, spec | api | solutioning | medium-high |
-
-### Priority Rules
-
-When multiple agents match a document:
-
-1. **Primary match:** `agents` field lists agent explicitly
-2. **Type match:** Document `type` matches agent's primary types
-3. **Phase match:** Document `phase` matches current workflow phase
-4. **Complexity match:** Document `complexity` matches agent's typical depth
-
-**Example:**
-```yaml
-agents: [developer, architect]
-type: spec
-phase: solutioning
-complexity: high
+You **must** read [Pipeline Structure](path#section) before this document.
 ```
 
-**Routing:** 
-- Architect (primary) - matches all criteria
-- Developer (secondary) - matches `agents` but complexity mismatch
+**Optional references** go in a `See Also` section at the bottom:
+```markdown
+## See Also
 
----
-
-## Linking Protocol
-
-### When to Use prereqs vs related
-
-**Use `prereqs`** when:
-- Document B cannot be understood without reading Document A first
-- Document A defines concepts/terms used in Document B
-- Linear dependency chain exists
-
-**Use `related`** when:
-- Documents cover complementary topics
-- Reader may benefit from cross-reference
-- No strict reading order required
-
-**Example:**
-
-```yaml
-# markers.md
-unlocks:
-  - pipeline-structure
-  - control-flow
-
-# pipeline-structure.md
-prereqs:
-  - markers
-  - operators
-  - prefix-system
-related:
-  - control-flow
-  - loop-system
+- [Runner Internals](path) -- deeper dive into execution
+- [Async Model](path#overview) -- background on async design
 ```
 
-### Bidirectional Linking Rules
+### 4.3 Bidirectional Linking
 
-**Rule:** If A links to B, B should link back to A.
+In `_index.yaml` files, cross-references must be bidirectional:
+- If A lists B in `prereqs`, then B must list A in `unlocks`
+- If A lists B in `related`, then B must list A in `related`
 
-```yaml
-# File A
-unlocks: [B]
+This is validated by the pre-commit hook.
 
-# File B (must have)
-prereqs: [A]
-```
+In markdown body text, bidirectional links are recommended but not strictly enforced.
 
-```yaml
-# File A
-related: [B]
+### 4.4 Section Anchors
 
-# File B (must have)
-related: [A]
-```
-
-**Verification:**
-```bash
-# Check bidirectional links
-./scripts/verify_bidirectional_links.sh
-```
-
-### `unlocks` Chain Maintenance
-
-**Purpose:** Show what knowledge becomes accessible after reading this doc.
-
-**Rules:**
-- Only list immediate unlocks, not transitive
-- Include documents that **require** this as prereq
-- Keep synchronized with other docs' `prereqs`
-
-**Example:**
-
-```yaml
-# core-principles.md
-unlocks:
-  - markers
-  - prefix-system
-  - type-system
-
-# markers.md
-prereqs:
-  - core-principles  # ← Must match!
-
-# prefix-system.md
-prereqs:
-  - core-principles  # ← Must match!
-```
-
----
-
-## Archive Procedure
-
-### Criteria for Archiving
-
-Archive a document when:
-- ✅ Superseded by newer documentation
-- ✅ Historical context only (design decisions)
-- ✅ Version-specific content no longer applicable
-- ✅ Organizational/planning docs (complete)
-
-**Do NOT archive:**
-- ❌ Current specifications
-- ❌ Active feature documentation
-- ❌ Referenced API docs
-- ❌ Guides still in use
-
-### Archive Process
-
-1. **Determine archive category:**
-   - `_archive/design-history/` - Historical decisions
-   - `_archive/old-files/` - Superseded specifications
-   - `_archive/meta/` - Organizational documents
-
-2. **Preserve original path:**
-   ```
-   Original: /core-syntax/old-spec.md
-   Archive:  /_archive/old-files/core-syntax/old-spec.md
-   ```
-
-3. **Add archival metadata header:**
-   ```markdown
-   <!-- ARCHIVED: 2025-12-16 | Reason: Superseded by v0.0.4 spec | Superseded by: /language/syntax/markers.md -->
-   ```
-
-4. **Update links:**
-   - Find all references to archived doc
-   - Update to point to superseding document
-   - Or mark as "historical reference"
-
-5. **Update _graph.yaml:**
-   - Remove from active indexes
-   - Add to archived section if needed
-
-### Metadata Requirements
-
-Every archived file must have:
+Every major section heading becomes a linkable anchor. Use descriptive headings that produce clean anchors:
 
 ```markdown
-<!-- 
-ARCHIVED: YYYY-MM-DD 
-Reason: Brief reason for archiving
-Superseded by: /path/to/new/doc.md (or N/A)
--->
+## Priority Algorithm          → #priority-algorithm
+## Variable Lifecycle States   → #variable-lifecycle-states
 ```
 
----
-
-## Ongoing Edit Conventions
-
-### On Every Edit
-
-When modifying any `.md` file:
-
-1. **Update `updated` field:**
-   ```yaml
-   updated: 2025-12-16  # ← Update to today
-   ```
-
-2. **Review `status` field:**
-   ```yaml
-   status: stable  # draft → review → stable
-   ```
-
-3. **Check relationships:**
-   - Are `prereqs` still valid?
-   - Should `unlocks` be updated?
-   - New `related` docs to add?
-
-4. **Update affected indexes:**
-   - Folder `index.md` if structure changed
-   - `_tags.md` if tags changed
-   - `_graph.yaml` if routing changed
-
-### On New File Creation
-
-When creating a new `.md` file:
-
-1. **Determine correct folder:**
-   - Follow taxonomy rules (see above)
-   - Check complexity level
-   - Verify agent routing
-
-2. **Generate BMAD YAML:**
-   - Use template from this doc
-   - Fill all required fields
-   - Ensure `id` is unique
-
-3. **Establish relationships:**
-   - Define `prereqs` (what must be read first?)
-   - Define `unlocks` (what does this enable?)
-   - Define `related` (what's complementary?)
-
-4. **Update bidirectional links:**
-   - If A prereqs B, add A to B's `unlocks`
-   - If A related to B, add A to B's `related`
-
-5. **Update navigation files:**
-   - Add to folder `index.md`
-   - Add to `_tags.md` under appropriate tags
-   - Add to `_graph.yaml` indexes
-
-6. **Add breadcrumb navigation:**
-   ```markdown
-   > [Home](../index.md) / [Language](./index.md) / Markers
-   ```
+Avoid headings that produce ambiguous anchors (e.g., multiple `## Overview` in one file).
 
 ---
 
-## Token Budget Guidelines
+## 5. YAML Index Files (`_index.yaml`)
 
-### Per-Field Limits
+### 5.1 Purpose
 
-| Field | Max Tokens | Rationale |
-|-------|------------|-----------|
-| `id` | 4 | Unique reference |
-| `topic` | 6 | Quick scan |
-| `summary` | 15 | Context load |
-| `keywords` | 12 | Semantic search |
-| `agents` | 6 | Routing |
-| **Total Header** | **~50** | vs ~2000 reading full doc |
+Every directory under `docs/` has an `_index.yaml` file. These are the primary mechanism for AI tools to discover and selectively load content without scanning the filesystem.
 
-### Optimization Tips
+### 5.2 Schema
 
-**For `topic`:**
-- ✅ "Polyglot Loop System"
-- ❌ "Complete comprehensive guide to the loop system in Polyglot language"
+```yaml
+_schema: polyglot-doc-index-v1
 
-**For `summary`:**
-- ✅ "Unpack and pack operators for iteration control"
-- ❌ "This document provides a comprehensive overview of the unpack and pack operator system which allows developers to control iteration and collection operations in loops"
+# Directory-level metadata
+directory:
+  path: Tech/Architecture          # relative to docs/
+  audience: developer              # user | developer | mixed
+  description: "System architecture and component design"
+  parent: Tech/_index.yaml         # path to parent index (null at root)
 
-**For `keywords`:**
-- ✅ `[loops, iteration, unpack, pack]`
-- ❌ `[comprehensive loops guide, how to iterate, unpack operator documentation, pack operator reference]`
+# File entries
+files:
+  - id: queue-manager-arch
+    file: queue-manager.md
+    title: "Queue Manager Architecture"
+    audience: developer
+    status: stable
+    updated: 2026-03-12
+    size_kb: 34
+    keywords: [queue, scheduling, priority, async]
+    summary: >
+      Priority-based queue manager that schedules pipeline
+      execution across runtime wrappers.
+
+    # Section-level entries for selective loading
+    sections:
+      - anchor: overview
+        title: "Overview"
+        line_range: [1, 45]
+        summary: "High-level queue manager purpose and design goals"
+        keywords: [queue, design, goals]
+
+      - anchor: priority-algorithm
+        title: "Priority Algorithm"
+        line_range: [46, 120]
+        summary: "How pipeline priority is calculated and resolved"
+        keywords: [priority, algorithm, scheduling]
+
+    # Dependency graph
+    prereqs:
+      - id: pipeline-structure
+        reason: "Defines pipeline concepts used throughout"
+    unlocks:
+      - id: runner-internals
+    related:
+      - id: async-execution-model
+
+# Subdirectory pointers
+subdirectories:
+  - path: decisions/
+    description: "Architecture Decision Records"
+    index: Tech/Architecture/decisions/_index.yaml
+```
+
+### 5.3 Key Fields
+
+| Field | Required | Purpose |
+|-------|----------|---------|
+| `_schema` | Yes | Schema version identifier |
+| `directory.path` | Yes | Path relative to `docs/` |
+| `directory.audience` | Yes | Default audience for this directory |
+| `directory.parent` | Yes | Parent `_index.yaml` path (null at root) |
+| `files[].id` | Yes | Unique doc ID for cross-referencing |
+| `files[].sections[]` | No | Section-level metadata for partial loading |
+| `files[].sections[].line_range` | Yes (if section) | `[start, end]` line numbers for selective reads |
+| `prereqs[].reason` | Yes (if prereq) | Why this dependency exists |
+| `subdirectories[]` | No | Child directory pointers |
+
+### 5.4 Why Section-Level `line_range`?
+
+AI tools can use line ranges to request partial file reads (e.g., read lines 46-120), avoiding loading entire documents. Anchors alone require parsing the full file to find the section.
+
+### 5.5 Maintaining Indexes
+
+- Update `_index.yaml` when adding, removing, or restructuring files
+- Run `scripts/doc-reindex.py` to generate skeleton entries for new files
+- The pre-commit hook validates index consistency
 
 ---
 
-## Quality Checklist
+## 6. Smart Loading Protocol
 
-### Before Commit
+### 6.1 For AI Tools
 
-- [ ] YAML front matter present and valid
-- [ ] All required fields filled
-- [ ] `id` is unique
-- [ ] `updated` date is current
-- [ ] Bidirectional links verified
-- [ ] Folder `index.md` updated
-- [ ] `_tags.md` updated if tags changed
-- [ ] `_graph.yaml` updated if routing changed
-- [ ] Breadcrumb navigation present
-- [ ] Related docs section at bottom
-- [ ] No broken links (`./verify_links.sh`)
-- [ ] YAML parses (`./validate_yaml.sh`)
+When searching for relevant documentation:
 
-### Verification Scripts
+1. Start at `docs/_index.yaml` (root index)
+2. Read the root index to understand top-level structure
+3. Based on query, choose the relevant audience directory
+4. Read that directory's `_index.yaml`
+5. Scan `files[].keywords` and `files[].summary` for relevance
+6. Check `size_kb` to decide loading strategy:
+
+| File Size | Strategy |
+|-----------|----------|
+| <= 10 KB | Load full file |
+| <= 30 KB | Full file or sections based on query specificity |
+| > 30 KB | Load only matching section(s) by `line_range` |
+| Hub document | Always load full (small by design) |
+
+7. Follow `prereqs` only if the current query requires foundational context
+8. Follow `related` only if initial load does not answer the query
+
+### 6.2 Section-Level Loading Example
+
+```yaml
+sections:
+  - anchor: priority-algorithm
+    line_range: [46, 120]
+    summary: "How pipeline priority is calculated"
+```
+
+To load only this section: read `queue-manager.md` lines 46-120 (using `offset` and `limit` parameters), not the full 34 KB file.
+
+---
+
+## 7. Syntax Notation Conventions
+
+### 7.1 EBNF (Extended Backus-Naur Form)
+
+Use EBNF for all formal grammar definitions. Fence with ` ```ebnf `:
+
+```ebnf
+pipeline_def  = "[" , marker , "]" , identifier , body ;
+marker        = "r" | "p" | "s" ;
+identifier    = letter , { letter | digit | "_" } ;
+body          = INDENT , { statement , NEWLINE } , DEDENT ;
+```
+
+### 7.2 Railroad Diagrams
+
+Use text-based railroad diagrams for visual grammar representation:
+
+```
+pipeline_def:
+  ┌───┐   ┌────────┐   ┌───┐   ┌────────────┐   ┌──────┐
+──┤ [ ├───┤ marker ├───┤ ] ├───┤ identifier ├───┤ body ├──
+  └───┘   └────────┘   └───┘   └────────────┘   └──────┘
+               │
+         ┌─────┴─────┐
+         │ "r" │ "p" │
+         │     "s"   │
+         └───────────┘
+```
+
+### 7.3 When to Use Each
+
+- **EBNF**: Always included in language spec sections. Machine-readable, precise.
+- **Railroad diagrams**: Included alongside EBNF for visual learners. Human-readable, intuitive.
+- Both are required in the `language-spec-section` template.
+
+---
+
+## 8. Document Templates
+
+Templates live in `docs/_templates/`. Every new document must start from the appropriate template.
+
+| Template | Audience | When to Use |
+|----------|----------|-------------|
+| `user-feature-guide.md` | user | Documenting a language feature for end users |
+| `user-tutorial.md` | user | Step-by-step learning content |
+| `tech-architecture.md` | developer | System/component architecture documentation |
+| `tech-spec.md` | developer | Technical specifications |
+| `language-spec-section.md` | developer | Language feature specification (EBNF + railroad) |
+| `audit-record.md` | developer | Documentation audit findings |
+| `decision-record.md` | developer | Technical or design decisions |
+
+See `docs/_templates/` for full template contents.
+
+---
+
+## 9. Validation
+
+### 9.1 Pre-Commit Checks
+
+The script `scripts/doc-validate.py` runs on every commit touching `docs/`. It checks:
+
+1. **50 KB limit** -- rejects files exceeding 51,200 bytes
+2. **Frontmatter presence** -- every `.md` file has required YAML frontmatter
+3. **`_index.yaml` schema** -- validates against pydantic models
+4. **Cross-reference validity** -- all `prereqs`, `unlocks`, `related` IDs exist
+5. **Bidirectional links** -- prereqs <-> unlocks consistency
+6. **Unique IDs** -- no duplicate `id` values across all indexes
+7. **Section `line_range` validity** -- referenced lines exist in the file
+
+**Legacy files** (pre-existing without frontmatter) emit warnings, not errors. They must comply when modified.
+
+### 9.2 Validation Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `scripts/doc-validate.py` | Pre-commit validation (run automatically) |
+| `scripts/doc-reindex.py` | Generate/update `_index.yaml` from directory contents |
+
+### 9.3 Running Validation
 
 ```bash
-# Validate all YAML front matter
-./scripts/validate_yaml.sh
+# Validate all docs
+python scripts/doc-validate.py
 
-# Check bidirectional links
-./scripts/verify_bidirectional_links.sh
+# Validate specific directory
+python scripts/doc-validate.py docs/Tech/
 
-# Find broken links
-./scripts/verify_links.sh
-
-# Check unique IDs
-./scripts/verify_unique_ids.sh
+# Generate skeleton index for a directory
+python scripts/doc-reindex.py docs/Tech/Architecture/
 ```
 
 ---
 
-## Version Control
+## 10. Editing Guidelines
 
-### Commit Message Format
+### 10.1 On Every Edit
 
-```
-type(scope): Brief description
+1. Update `updated` field in frontmatter to today's date
+2. Review `status` field (draft -> review -> stable)
+3. Check cross-references still valid
+4. Update `_index.yaml` if sections changed (headings, line numbers)
 
-- Detail 1
-- Detail 2
+### 10.2 On New File Creation
 
-BMAD: [routing-changed|structure-changed|content-only]
-```
+1. Choose the correct template from `docs/_templates/`
+2. Place in the correct directory (see Section 2.3)
+3. Fill all required frontmatter fields
+4. Add entry to the directory's `_index.yaml`
+5. Establish cross-references (prereqs, unlocks, related)
+6. Ensure bidirectional links in referenced files' indexes
 
-**Types:**
-- `feat` - New document
-- `fix` - Correction
-- `docs` - Documentation update
-- `refactor` - Reorganization
-- `archive` - Archiving content
+### 10.3 On File Deletion or Move
 
-**Examples:**
-```
-feat(language): Add error-handling.md
-
-- New advanced feature documentation
-- Added agent routing for architect
-- Updated loop-system.md prereqs
-
-BMAD: routing-changed
-```
-
-```
-fix(stdlib): Correct foreach-array.md complexity
-
-- Changed complexity: high → medium
-- Updated _graph.yaml
-
-BMAD: routing-changed
-```
+1. Update all incoming cross-references
+2. Remove entry from old `_index.yaml`, add to new
+3. If superseded, mark old file as `status: deprecated` or archive it
 
 ---
 
-## Contact & Support
+## 11. Archive Procedure
 
-**Issues:** Report documentation issues at project repository
-**Questions:** Consult [Main Index](./index.md) or [Navigation Graph](./_graph.yaml)
-**Updates:** Check this file for convention changes
+### 11.1 When to Archive
+
+- Content superseded by newer documentation
+- Historical context only (old design decisions)
+- Version-specific content no longer applicable
+
+### 11.2 Process
+
+1. Create tarball: `docs-archive-{name}-{date}.tar.gz`
+2. Remove archived directory from `docs/`
+3. Update `_index.yaml` to remove entries
+4. Update any cross-references pointing to archived content
 
 ---
 
-**Last Updated:** 2025-12-16
-**Schema:** bmad-conventions-v1
-**Status:** ✅ Active Standard
+## 12. Migration Policy
+
+**New files** created after 2026-03-12 must fully comply with these conventions.
+
+**Existing files** (pre-2026-03-12) are exempt until they are modified. When an existing file is edited:
+1. Add required frontmatter
+2. Add entry to directory's `_index.yaml`
+3. Ensure file is < 50 KB (split if needed)
+
+This ensures gradual migration without requiring a bulk rewrite.
+
+---
+
+*Replaces: BMAD Documentation Conventions v1.0 (2025-12-16)*
+*Schema: polyglot-doc-conventions-v2*

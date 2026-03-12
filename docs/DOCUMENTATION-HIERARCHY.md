@@ -1,325 +1,116 @@
-# Polyglot Documentation Hierarchy Guide
+# Polyglot Documentation Hierarchy
 
-**Version:** 1.0  
-**Last Updated:** 2025-12-23  
-**Maintained by:** Scribe Documentation System
-
----
-
-## 🎯 Purpose
-
-This guide establishes the canonical documentation structure for the Polyglot programming language project, resolving ambiguities about where documentation should live and which sources are authoritative.
+**Version:** 2.0
+**Last Updated:** 2026-03-12
+**Replaces:** Scribe Documentation Hierarchy v1.0
 
 ---
 
-## 📋 Documentation Principles
-
-1. **Single Source of Truth** - Each piece of information has one authoritative location
-2. **Clear Hierarchy** - Readers know where to find what they need
-3. **No Duplication** - Mirrors are clearly marked; edits happen in one place
-4. **User-Centric** - Organization serves both learners and implementers
-5. **Discoverable** - Clear navigation and comprehensive indexing
-
----
-
-## 🏛️ Authoritative Structure
-
-### Level 1: Primary Documentation (Authoritative Sources)
+## Structure
 
 ```
 docs/
-├── specifications/v0.0.4/   ⭐ AUTHORITATIVE - Language specification
-│   ├── language/             Complete language reference
-│   ├── stdlib/               Standard library functions
-│   ├── reference/            Quick references
-│   ├── getting-started/      Official tutorials
-│   └── examples/             Reference implementations
+├── User/                    # For Polyglot language users
+│   ├── getting-started/     # Tutorials, first steps
+│   ├── language/            # Language syntax and semantics
+│   │   ├── syntax/          # Operators, markers, prefixes
+│   │   ├── types/           # Type system, enums, variables
+│   │   ├── control-flow/    # Pipelines, loops, conditionals
+│   │   └── advanced/        # Advanced features
+│   ├── examples/            # Working code examples
+│   ├── reference/           # Quick reference, grammar
+│   ├── specifications/      # Formal language specifications
+│   │   └── v0.0.4/          # Current version spec
+│   └── stdlib/              # Standard library reference
 │
-├── technical/                ⭐ AUTHORITATIVE - Implementation docs
-│   ├── architecture/         System architecture
-│   └── decisions/            Technical decisions
+├── Tech/                    # For language developers
+│   ├── Architecture/        # System-level design
+│   ├── Polyglot/            # Language internals
+│   │   ├── Syntax/          # Syntax design decisions
+│   │   ├── Parser/          # Parser implementation
+│   │   └── Compiler/        # Compiler design
+│   ├── QueueManager/        # Job queue infrastructure
+│   ├── Runner/              # Execution runtime
+│   ├── ai-context/          # AI development context
+│   ├── automation/          # Build and automation
+│   ├── development/         # Contributing guides
+│   └── implementation/      # Implementation details
 │
-├── project/                  ⭐ AUTHORITATIVE - Project management
-│   ├── stories/              User stories
-│   ├── examples/             Development examples
-│   └── tickets/              Issue tracking
+├── Audit/                   # Documentation health
+│   ├── documentation/       # Audit findings, violations, fixes
+│   ├── decisions/           # Design decisions requiring doc sync
+│   ├── history/             # Change tracking
+│   └── checks/              # Validation reports
 │
-└── examples/                 ⭐ AUTHORITATIVE - Working examples
-    └── inline-pipeline-parser/  Example collection
-```
-
-### Level 2: User-Friendly Guides (Complementary)
-
-```
-docs/
-├── language/                 💡 USER GUIDES - Practical explanations
-│   ├── syntax/               User-friendly syntax guides
-│   ├── types/                Type system tutorials
-│   ├── control-flow/         Flow control patterns
-│   └── advanced/             Advanced topics with examples
-│
-├── getting-started/          💡 USER GUIDES - First steps
-│   └── core-principles.md    Fundamental concepts
-│
-└── reference/                💡 QUICK REFERENCE - Lookup tables
-```
-
-### Level 3: Convenience Mirrors (Read-Only)
-
-```
-docs/
-└── stdlib/                   🔗 MIRROR of specifications/v0.0.4/stdlib/
-    └── README.md             (redirects to authoritative source)
-```
-
-### Level 4: Reserved for Future Use
-
-```
-docs/
-├── Users/                    (Empty - future user documentation)
-├── Tech/                     (Empty - alternative tech docs location)
-├── Architecture/             (Empty - alternative architecture location)
-└── Agile/                    (Empty - alternative agile location)
-```
-
-### Level 5: Infrastructure
-
-```
-docs/
-├── INDEX.md                  📊 Master index of all documentation
-├── Audit/                    📊 Quality tracking
-│   ├── history/              Document change history
-│   └── checks/               Quality audit reports
-│
-├── archive/                  🗄️ Historical documentation
-├── _backups/                 🗄️ Timestamped backups
-└── _patches/                 🗄️ Training session patches
+├── archive/                 # Historical content (read-only)
+├── _templates/              # Document templates (7 templates)
+├── _index.yaml              # Root index for AI navigation
+├── _conventions.md          # Documentation ground rules
+└── INDEX.md                 # Human-readable master index
 ```
 
 ---
 
-## 📖 Documentation Types & Locations
+## Audience Routing
 
-### Where Does Each Type of Documentation Go?
-
-| Documentation Type | Primary Location | Secondary Location | Notes |
-|--------------------|------------------|-------------------|-------|
-| **Language Syntax** | `specifications/v0.0.4/language/syntax/` | `language/syntax/` | Spec is authoritative; language/ has examples |
-| **Type System** | `specifications/v0.0.4/language/types/` | `language/types/` | Spec is authoritative |
-| **Standard Library** | `specifications/v0.0.4/stdlib/` | `stdlib/` (mirror) | stdlib/ is read-only mirror |
-| **Control Flow** | `specifications/v0.0.4/language/control-flow/` | `language/control-flow/` | Spec is authoritative |
-| **Advanced Features** | `specifications/v0.0.4/language/advanced/` | `language/advanced/` | Both have value |
-| **Getting Started** | `specifications/v0.0.4/getting-started/` | `getting-started/` | Spec preferred |
-| **Code Examples** | `examples/` | `specifications/v0.0.4/examples/` | examples/ for working code |
-| **Architecture** | `technical/architecture/` | - | Single location |
-| **Tech Decisions** | `technical/decisions/` | - | Single location |
-| **User Stories** | `project/stories/` | - | Single location |
-| **Project Planning** | `project/` | - | Single location |
+| I am a... | Start here | Then explore |
+|-----------|-----------|-------------|
+| **New Polyglot user** | `User/getting-started/` | `User/language/`, `User/examples/` |
+| **Experienced user** | `User/reference/` | `User/specifications/v0.0.4/`, `User/stdlib/` |
+| **Language developer** | `Tech/Architecture/` | `Tech/Polyglot/`, `Tech/implementation/` |
+| **Parser/compiler dev** | `Tech/Polyglot/Parser/` | `Tech/Polyglot/Compiler/`, `User/specifications/` |
+| **Documentation maintainer** | `Audit/documentation/` | `_conventions.md`, `_templates/` |
+| **AI tool** | `_index.yaml` | Follow subdirectory pointers in indexes |
 
 ---
 
-## 🎯 Decision Matrix: Where to Put New Documentation
+## Authoritative Sources
 
-### Use This Flowchart:
-
-```
-New Documentation?
-│
-├─ Is it formal language specification?
-│  └─ YES → specifications/v0.0.4/language/
-│
-├─ Is it standard library function reference?
-│  └─ YES → specifications/v0.0.4/stdlib/
-│
-├─ Is it working code example?
-│  └─ YES → examples/
-│
-├─ Is it technical architecture/decision?
-│  └─ YES → technical/
-│
-├─ Is it project management (stories/tickets)?
-│  └─ YES → project/
-│
-├─ Is it user-friendly tutorial/guide?
-│  └─ YES → language/ (if about language features)
-│         or getting-started/ (if introductory)
-│
-└─ Still not sure?
-   └─ Use Scribe's add-doc workflow - it will auto-detect!
-```
+| Topic | Authoritative Location | Notes |
+|-------|----------------------|-------|
+| Language syntax (formal) | `User/specifications/v0.0.4/` | The spec is the source of truth |
+| Language syntax (guides) | `User/language/` | Complements the spec with examples |
+| Standard library | `User/stdlib/` | Function reference |
+| System architecture | `Tech/Architecture/` | Component design |
+| Parser internals | `Tech/Polyglot/Parser/` | Implementation details |
+| Compiler design | `Tech/Polyglot/Compiler/` | Compilation pipeline |
+| Queue infrastructure | `Tech/QueueManager/` | Job scheduling |
+| Runtime execution | `Tech/Runner/` | Execution engine |
+| Documentation health | `Audit/documentation/` | Findings and fixes |
+| Design decisions | `Audit/decisions/` | Records with rationale |
 
 ---
 
-## ✏️ Editing Guidelines
+## Conventions
 
-### Where to Make Changes
+All documentation follows the ground rules defined in [_conventions.md](_conventions.md):
 
-1. **Specifications** (specifications/v0.0.4/)
-   - Edit directly in this location
-   - These are the authoritative sources
-   - Run `doc-validate` after changes
-
-2. **User Guides** (language/, getting-started/)
-   - Edit directly for user-facing content
-   - Add more examples and explanations
-   - These complement, don't duplicate, the spec
-
-3. **Mirrors** (stdlib/)
-   - **DO NOT EDIT DIRECTLY**
-   - Edit the source in specifications/v0.0.4/stdlib/
-   - Mirror is automatically synced
-
-4. **Empty Folders** (Users/, Tech/, Architecture/, Agile/)
-   - Reserved for future use
-   - Don't create content here yet
-   - Awaiting structural decision
+- **Audiences:** user, developer, AI (via `_index.yaml`)
+- **File size limit:** < 50 KB (split by concept if larger)
+- **Frontmatter:** 5 required fields on every `.md` file
+- **Cross-referencing:** Section-level anchors, bidirectional linking
+- **Indexes:** `_index.yaml` at every directory level
+- **Templates:** 7 templates in `_templates/` for consistent structure
+- **Syntax notation:** EBNF + railroad diagrams for language specs
 
 ---
 
-## 🔄 Synchronization Rules
+## Navigation
 
-### stdlib/ Mirror
+### For AI Tools
 
-**Rule:** `docs/User/stdlib/` mirrors `docs/User/specifications/v0.0.4/stdlib/`
+1. Read `docs/_index.yaml` (root index)
+2. Follow `subdirectories` pointers to relevant area
+3. Scan `files[].keywords` and `files[].summary` for matches
+4. Load files or sections using `line_range` for efficient context
 
-**Process:**
-1. All edits happen in `specifications/v0.0.4/stdlib/`
-2. Mirror is updated via sync process
-3. `stdlib/README.md` clearly marks this as a mirror
+### For Humans
 
-**Why?** Convenient top-level access while maintaining single source of truth
-
-### language/ Complement
-
-**Rule:** `docs/User/language/` complements `docs/User/specifications/v0.0.4/language/`
-
-**Relationship:**
-- Specification: Formal, complete, authoritative
-- Language guides: Practical, examples, user-friendly
-- Some overlap is acceptable for user experience
-
-**Process:**
-1. Specification changes take precedence
-2. Language guides can add examples and explanations
-3. Both are actively maintained
+1. Browse `INDEX.md` for a complete listing
+2. Use directory `README.md` files for section overviews
+3. Follow cross-references in "See Also" sections
 
 ---
 
-## 📊 Maintenance Responsibilities
-
-| Location | Maintainer | Update Frequency | Sync Required |
-|----------|-----------|------------------|---------------|
-| `specifications/v0.0.4/` | Language Team | On language changes | No |
-| `language/` | Docs Team | On major features | With spec |
-| `stdlib/` (mirror) | Auto-sync | Auto | Yes (from spec) |
-| `examples/` | Docs Team | As needed | No |
-| `technical/` | Dev Team | On architectural changes | No |
-| `project/` | PM Team | Ongoing | No |
-| `INDEX.md` | Scribe | On any doc changes | Yes (metadata workflow) |
-| `Audit/` | Scribe | Automated | Yes (audit workflow) |
-
----
-
-## 🔍 Discovery & Navigation
-
-### For New Users
-1. Start: `getting-started/core-principles.md`
-2. Then: `examples/inline-pipeline-parser/`
-3. Then: `language/` for user-friendly explanations
-4. Reference: `specifications/v0.0.4/` when needed
-
-### For Language Implementers
-1. Start: `specifications/v0.0.4/PARSER-IMPLEMENTATION-GUIDE.md`
-2. Reference: `specifications/v0.0.4/language/`
-3. Examples: `specifications/v0.0.4/examples/`
-4. Architecture: `technical/architecture/`
-
-### For Contributors
-1. Start: `project/` for current stories
-2. Reference: `technical/decisions/` for context
-3. Code: `examples/` for patterns
-4. Spec: `specifications/v0.0.4/` for accuracy
-
----
-
-## 🚨 Common Pitfalls
-
-### ❌ Don't Do This
-
-1. **Don't edit stdlib/ directly** - Edit specifications/v0.0.4/stdlib/ instead
-2. **Don't duplicate specifications** - Add to language/ only if adding user value
-3. **Don't create content in empty folders yet** - Use established structure
-4. **Don't skip metadata** - Every document needs YAML frontmatter
-5. **Don't bypass INDEX.md** - Use Scribe's metadata workflow to update
-
-### ✅ Do This Instead
-
-1. **Use Scribe workflows** - `add-doc`, `doc-edit`, etc.
-2. **Check INDEX.md first** - See if content already exists
-3. **Add metadata** - YAML frontmatter with title, type, tags
-4. **Run validation** - `doc-validate` after changes
-5. **Update INDEX.md** - Via `metadata` workflow
-
----
-
-## 📈 Evolution & Future Plans
-
-### Planned Improvements
-
-1. **Populate Users/** - Comprehensive user-facing documentation
-2. **Expand examples/** - More working code examples
-3. **Add tutorials** - Step-by-step learning path
-4. **Create glossary** - Term definitions
-5. **Add diagrams** - Visual explanations
-
-### Under Consideration
-
-- Versioned documentation (v0.0.5+)
-- API documentation generation
-- Interactive examples
-- Video tutorials
-- Community contributions
-
----
-
-## 📝 Quick Reference
-
-### Key Locations
-
-```
-⭐ EDIT HERE (Authoritative):
-   specifications/v0.0.4/language/
-   specifications/v0.0.4/stdlib/
-   technical/
-   project/
-   examples/
-
-💡 EDIT HERE (User Guides):
-   language/
-   getting-started/
-
-🔗 DO NOT EDIT (Mirrors):
-   stdlib/
-
-📊 AUTO-MAINTAINED:
-   INDEX.md
-   Audit/
-```
-
----
-
-## 🆘 Need Help?
-
-1. **Finding docs?** Check `INDEX.md`
-2. **Adding docs?** Use Scribe's `add-doc` workflow
-3. **Unsure where it goes?** Scribe auto-detects location
-4. **Validation errors?** Run `doc-validate`
-5. **Health check?** Run `doc-audit`
-
----
-
-**Maintained by:** Scribe Documentation System  
-**Questions?** Check the master INDEX.md or run Scribe workflows  
-**Last Audit:** 2025-12-23 | Health Score: 68/100
-
-*This hierarchy is living documentation. Suggest improvements through project issues.*
+*Created: 2026-03-12*
+*Maintained by: Project documentation team*

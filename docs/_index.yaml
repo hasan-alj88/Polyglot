@@ -1,0 +1,73 @@
+_schema: polyglot-doc-index-v1
+
+project:
+  name: Polyglot
+  version: "0.0.4"
+  doc_count: 792
+  last_full_reindex: 2026-03-12
+
+directory:
+  path: "."
+  audience: mixed
+  description: "Polyglot project documentation root"
+  parent: null
+
+audiences:
+  user:
+    entry_point: User/_index.yaml
+    description: "Language users -- syntax, tutorials, stdlib"
+  developer:
+    entry_point: Tech/_index.yaml
+    description: "Language implementers -- architecture, parser, compiler"
+
+files:
+  - id: documentation-conventions
+    file: _conventions.md
+    title: "Documentation Conventions"
+    audience: developer
+    status: stable
+    updated: 2026-03-12
+    size_kb: 12
+    keywords: [conventions, standards, rules, templates, indexing]
+    summary: >
+      Ground rules for all Polyglot documentation: audiences, structure,
+      50KB limit, cross-referencing, smart loading, templates.
+
+  - id: documentation-hierarchy
+    file: DOCUMENTATION-HIERARCHY.md
+    title: "Documentation Hierarchy"
+    audience: mixed
+    status: stable
+    updated: 2026-03-12
+    size_kb: 4
+    keywords: [hierarchy, structure, navigation, directories]
+    summary: >
+      Directory structure and audience routing for documentation tree.
+
+  - id: documentation-index
+    file: INDEX.md
+    title: "Documentation Master Index"
+    audience: mixed
+    status: stable
+    updated: 2026-03-12
+    size_kb: 4
+    keywords: [index, navigation, master, overview]
+    summary: >
+      Human-readable master index linking to all documentation sections.
+
+subdirectories:
+  - path: User/
+    description: "User documentation -- syntax, tutorials, examples, stdlib"
+    index: User/_index.yaml
+
+  - path: Tech/
+    description: "Technical documentation -- architecture, parser, compiler internals"
+    index: Tech/_index.yaml
+
+  - path: Audit/
+    description: "Documentation audit records and design decisions"
+    index: Audit/_index.yaml
+
+  - path: archive/
+    description: "Historical content (read-only)"
+    index: archive/_index.yaml
