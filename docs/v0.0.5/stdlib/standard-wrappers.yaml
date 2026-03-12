@@ -1,0 +1,188 @@
+# Standard Library Wrappers - v0.0.5
+# Wrappers provide runtime contexts and resource management
+
+version: "0.0.5"
+last_updated: "2026-01-04"
+
+categories:
+  database:
+    description: "Database connection wrappers"
+    wrappers:
+      - name: W.DB.Connect
+        signature: |W.DB.Connect
+        description: "Generic database connection wrapper"
+        inputs:
+          - name: host
+            type: string
+          - name: port
+            type: int
+        outputs:
+          - name: db
+            type: serial
+            description: "Database connection handle"
+        usage: |
+          [w] |W.DB.Connect
+           |  <host:string << $config.db.host
+           |  <port:int << $config.db.port
+           |  >db:serial >> $db
+        error_handling: true
+        resource_cleanup: true
+
+      - name: W.DB.Postgresql
+        signature: |W.DB.Postgresql
+        description: "PostgreSQL-specific connection wrapper"
+        inputs:
+          - name: db
+            type: schema
+            schema: -DB-Settings
+        outputs:
+          - name: db
+            type: serial
+        usage: |
+          [w] |W.DB.Postgresql
+           |  <db << #CustomerDB
+           |  >db:serial >> $db
+        error_handling: true
+        resource_cleanup: true
+
+  runtime:
+    description: "Language runtime wrappers (canonical naming)"
+    wrappers:
+      - name: W.RT.Python
+        signature: |W.RT.Python
+        description: "Python runtime environment wrapper"
+        inputs:
+          - name: version
+            type: string
+            description: "Python version to use (e.g., '3.9', '3.11')"
+            optional: true
+            default: "system default"
+        outputs:
+          - name: environment
+            type: reserved_enum
+            schema: -RT-Environment-Python
+            alias: -RTenv-python
+            description: "Python runtime environment handle"
+        usage: |
+          [w] |W.RT.Python
+           |  <version:string << "3.11"
+           |  >environment-RTenv-python >> $pyEnv
+        error_handling: true
+        resource_cleanup: true
+        notes:
+          - "Use with |RT.Python.Code for code execution"
+          - "Environment persists for pipeline lifetime"
+          - "Canonical naming pattern: |W.RT.{Language}"
+
+      - name: W.RT.Rust
+        signature: |W.RT.Rust
+        description: "Rust runtime environment wrapper"
+        inputs:
+          - name: version
+            type: string
+            optional: true
+        outputs:
+          - name: environment
+            type: reserved_enum
+            schema: -RT-Environment-Rust
+            alias: -RTenv-rust
+        usage: |
+          [w] |W.RT.Rust
+           |  <version:string << "1.75"
+           |  >environment-RTenv-rust >> $rustEnv
+        error_handling: true
+        resource_cleanup: true
+
+      - name: W.RT.JavaScript
+        signature: |W.RT.JavaScript
+        description: "JavaScript/Node.js runtime environment wrapper"
+        inputs:
+          - name: version
+            type: string
+            description: "Node.js version (e.g., '16', '18', '20')"
+            optional: true
+        outputs:
+          - name: environment
+            type: reserved_enum
+            schema: -RT-Environment-JavaScript
+            alias: -RTenv-javascript
+        usage: |
+          [w] |W.RT.JavaScript
+           |  <version:string << "20"
+           |  >environment-RTenv-javascript >> $jsEnv
+        error_handling: true
+        resource_cleanup: true
+
+  http:
+    description: "HTTP client wrappers"
+    wrappers:
+      - name: W.HTTP.Client
+        signature: |W.HTTP.Client
+        description: "HTTP client with connection pooling"
+        inputs:
+          - name: base_url
+            type: string
+          - name: timeout
+            type: int
+            optional: true
+        outputs:
+          - name: client
+            type: serial
+        error_handling: true
+        resource_cleanup: true
+
+  file:
+    description: "File system wrappers"
+    wrappers:
+      - name: W.File.Lock
+        signature: |W.File.Lock
+        description: "Acquire file lock for exclusive access"
+        inputs:
+          - name: path
+            type: path
+        outputs:
+          - name: lock
+            type: serial
+        error_handling: true
+        resource_cleanup: true
+        notes:
+          - "Automatically released when pipeline exits"
+          - "Prevents concurrent access"
+
+wrapper_characteristics:
+  error_handling:
+    description: "Wrappers can have [w][!] error handlers"
+    example: |
+      [w] |W.DB.Connect
+       |  <host << $host
+       |  >db >> $db
+
+      [w][!]
+         [!] !DBConnectionError -> !StartupError
+         [>] >result << !
+
+  resource_cleanup:
+    description: "Wrappers automatically clean up resources on pipeline exit"
+    behaviors:
+      - "Database connections closed"
+      - "File locks released"
+      - "Runtime environments terminated"
+      - "HTTP connections closed"
+
+  nesting:
+    description: "Wrappers do NOT nest - all at same indentation level"
+    example: |
+      [w] |W.DB.Connect
+       |  <host << $host
+       |  >db >> $db
+      [w] |W.RT.Python3.9
+       |  <requirements << $req_path
+       |  >env >> $py
+      [f] $condition ?= -True
+         [r] $result << $value
+
+notes:
+  - "Wrappers are declared at pipeline level, not nested"
+  - "Multiple wrappers can coexist in same pipeline"
+  - "Wrappers manage resource lifecycle automatically"
+  - "Error handlers optional but recommended"

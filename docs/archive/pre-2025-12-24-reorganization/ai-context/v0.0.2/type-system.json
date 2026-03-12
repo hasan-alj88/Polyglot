@@ -1,0 +1,224 @@
+{
+  "polyglot_v0.0.2_type_system": {
+    "version": "0.0.2",
+    "type_separator": "\\",
+    "namespace_format": "namespace\\typename",
+
+    "namespaces": {
+      "pg": {
+        "name": "Polyglot Core",
+        "serializable": true,
+        "cross_language": true
+      },
+      "py": {
+        "name": "Python Types",
+        "foreign": true,
+        "auto_convert": "pg types"
+      },
+      "rs": {
+        "name": "Rust Types",
+        "foreign": true,
+        "auto_convert": "pg types"
+      },
+      "go": {
+        "name": "Go Types",
+        "foreign": true,
+        "auto_convert": "pg types"
+      },
+      "js": {
+        "name": "JavaScript Types",
+        "foreign": true,
+        "auto_convert": "pg types"
+      },
+      "node": {
+        "name": "Node.js Types",
+        "foreign": true,
+        "auto_convert": "pg types"
+      }
+    },
+
+    "primitives": {
+      "pg\\string": {
+        "description": "UTF-8 string",
+        "nullable": false,
+        "serializable": true,
+        "size": "dynamic",
+        "default_value": "none"
+      },
+      "pg\\int": {
+        "description": "64-bit signed integer",
+        "range": "i64",
+        "nullable": false,
+        "serializable": true,
+        "default_value": "none"
+      },
+      "pg\\float": {
+        "description": "64-bit floating point",
+        "precision": "f64",
+        "nullable": false,
+        "serializable": true,
+        "default_value": "none"
+      },
+      "pg\\bool": {
+        "description": "Boolean (uses #Boolean enumeration)",
+        "values": ["#Boolean.True", "#Boolean.False"],
+        "nullable": false,
+        "serializable": true,
+        "default_value": "none"
+      },
+      "pg\\dt": {
+        "description": "DateTime and Duration (unified type)",
+        "timezone": "UTC",
+        "format": "ISO8601",
+        "nullable": false,
+        "serializable": true,
+        "duration_support": true,
+        "literals": ["DT\\\"2025-11-25 12:00:00\\\"", "DT.Minutes\\\"5\\\"", "DT.Now"],
+        "default_value": "none"
+      },
+      "pg\\path": {
+        "description": "File system path",
+        "platform": "cross-platform",
+        "nullable": false,
+        "serializable": true,
+        "literals": ["\\\\FileDir\\\\path\\\\to\\\\file"],
+        "default_value": "none"
+      }
+    },
+
+    "composite_types": {
+      "pg\\serial": {
+        "description": "Dynamic key-value structure (replaces pg\\map)",
+        "dynamic_keys": true,
+        "dynamic_types": true,
+        "serializable": true,
+        "hierarchical": true,
+        "use_case": "Configuration objects, dynamic data",
+        "syntax": "[<] .config: pg\\serial << {}",
+        "note": "Replaced pg\\map in v0.0.2"
+      },
+      "#Enumeration": {
+        "description": "User-defined enumeration or struct",
+        "definition": "[#] EnumName ... [X]",
+        "fields": {
+          "enum_field": {
+            "syntax": "[<] .FieldName",
+            "type": "declaration_only",
+            "no_value": true,
+            "no_type": true,
+            "use": "Enum variants"
+          },
+          "serial_field": {
+            "syntax": "[<] .field_name: Type <~ default",
+            "type": "typed_field",
+            "has_type": true,
+            "has_value": "optional",
+            "use": "Struct fields"
+          }
+        },
+        "mixing_rule": {
+          "constraint": "enum_field and serial_field CANNOT be siblings",
+          "allowed": "Can be uncles (different hierarchy levels)",
+          "rationale": "Prevents ambiguity in enumeration vs struct"
+        },
+        "recursive": true,
+        "recursive_example": "[#] TreeNode [<] .children: pg\\array{#TreeNode} [X]"
+      }
+    },
+
+    "collections": {
+      "pg\\array{T}": {
+        "description": "Ordered list with duplicates",
+        "ordered": true,
+        "duplicates": true,
+        "mutable": false,
+        "constraint": "T cannot be another collection directly",
+        "valid_element_types": ["primitives", "enumerations", "pg\\serial"],
+        "invalid_element_types": ["pg\\array{*}", "pg\\set{*}"],
+        "workaround": "Wrap collection in enumeration",
+        "syntax": "pg\\array{pg\\string}",
+        "size": "dynamic"
+      },
+      "pg\\set{T}": {
+        "description": "Unordered unique elements",
+        "ordered": false,
+        "duplicates": false,
+        "mutable": false,
+        "constraint": "T cannot be another collection directly",
+        "valid_element_types": ["primitives", "enumerations"],
+        "invalid_element_types": ["pg\\array{*}", "pg\\set{*}", "pg\\serial"],
+        "element_constraint": "T must be hashable",
+        "syntax": "pg\\set{pg\\int}",
+        "size": "dynamic"
+      }
+    },
+
+    "removed_types": {
+      "pg\\map{K,V}": {
+        "status": "REMOVED in v0.0.2",
+        "replacement": "pg\\serial or #Enumeration",
+        "reason": "Simplified type system",
+        "migration": "pg\\map{pg\\string, T} → pg\\serial"
+      }
+    },
+
+    "type_inference": {
+      "unpack_operators": {
+        "description": "Output type inferred from input collection",
+        "rule": "pg\\array{T} → each item is type T",
+        "example": {
+          "input": "pg\\array{pg\\string}",
+          "unpacked_item": "pg\\string",
+          "joined_output": "pg\\array{pg\\string}"
+        }
+      },
+      "pipeline_outputs": {
+        "description": "Output type inferred from [>] declaration",
+        "explicit": "[>] .result: pg\\int >> .output_var"
+      }
+    },
+
+    "type_compatibility": {
+      "comparison_operators": {
+        "numeric": ["pg\\int", "pg\\float"],
+        "comparable": ["pg\\string", "pg\\dt"],
+        "equality_only": ["pg\\bool", "enumerations"],
+        "rules": {
+          "pg\\int >? pg\\int": "valid",
+          "pg\\string >? pg\\string": "valid (lexicographic)",
+          "pg\\dt >? pg\\dt": "valid (chronological)",
+          "pg\\bool >? pg\\bool": "invalid (use =? only)",
+          "#Enum =? #Enum": "valid",
+          "#Enum >? #Enum": "invalid"
+        }
+      },
+      "assignment_compatibility": {
+        "same_type": "always compatible",
+        "foreign_to_pg": "auto-convert (py\\str → pg\\string)",
+        "pg_to_foreign": "auto-convert (pg\\string → py\\str)",
+        "cross_foreign": "not allowed (must go through pg)"
+      }
+    },
+
+    "constraints": {
+      "no_nested_collections": {
+        "rule": "Collections CANNOT contain other collections directly",
+        "invalid": [
+          "pg\\array{pg\\array{T}}",
+          "pg\\set{pg\\array{T}}",
+          "pg\\array{pg\\set{T}}"
+        ],
+        "valid_workaround": [
+          "[#] Row [<] .cells: pg\\array{T} [X]",
+          "pg\\array{#Row}"
+        ],
+        "exception": "Recursive structures allowed: pg\\array{#TreeNode} where TreeNode contains pg\\array{#TreeNode}"
+      },
+      "enum_serial_mixing": {
+        "rule": "Enum fields and serial fields cannot be siblings",
+        "invalid": "[#] Bad [<] .EnumField [<] .serial: pg\\int [X]",
+        "valid": "[#] Good [<] .category.Option1 [<] .metadata: pg\\int [X]"
+      }
+    }
+  }
+}

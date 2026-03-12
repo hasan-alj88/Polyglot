@@ -1,0 +1,80 @@
+# Problem Ticket Template
+# Copy this file and rename to PRB-YYYY-NNN.yaml
+
+ticket_id: PRB-2025-001
+type: problem
+title: "Brief description of the problem (root cause investigation)"
+description: |
+  Detailed description of the problem.
+  What pattern are we investigating?
+  What incidents have occurred?
+  What is the suspected root cause?
+
+# Priority Calculation
+impact: high            # critical, high, medium, low
+urgency: high           # immediate, high, medium, low
+priority: P2            # Auto-calculated from impact × urgency matrix
+
+# Status and Assignment
+status: new             # new, assigned, investigating, root_cause_found, resolved, closed
+assigned_to: null       # Agent name or null if unassigned
+assigned_group: null    # development, architecture, documentation, creative, project_management, quality_assurance, operations
+
+# Categorization
+category: syntax_ambiguity  # syntax_ambiguity, design_conflict, architectural_concern, recurring_incident
+
+# Related Information
+related_incidents: []   # [INC-2025-001, INC-2025-002] - incidents that triggered this problem
+related_tickets: []     # [CHG-2025-001] - changes that may result from this
+related_files: []       # Files involved in the problem
+related_stories: []     # Stories affected by this problem
+related_epics: []       # Epics affected by this problem
+
+# GitHub Sync (for future use)
+github:
+  issue_number: null    # GitHub issue # (null if not synced)
+  url: null             # Full GitHub issue URL
+  last_synced: null     # ISO timestamp of last sync
+
+# Timeline
+created_date: 2025-11-18
+created_by: Mai (Secretary)
+assigned_date: null
+investigation_started: null
+root_cause_found_date: null
+resolved_date: null
+closed_date: null
+
+# Investigation
+investigation:
+  hypothesis: null      # Current hypothesis about root cause
+  evidence: []          # List of evidence supporting hypothesis
+  experiments: []       # Tests/experiments performed
+
+# Root Cause Analysis
+root_cause:
+  description: null     # Detailed root cause description
+  category: null        # documentation_gap, design_flaw, process_issue, tool_limitation
+  contributing_factors: []
+
+# Resolution
+resolution: null        # How the problem was resolved
+preventive_actions: []  # Actions taken to prevent recurrence
+knowledge_article: null # Link to knowledge article created
+
+# SLA Tracking
+sla:
+  response_due: 2025-11-18T16:00:00Z    # Based on priority
+  resolution_due: 2025-11-21T12:00:00Z  # Based on priority
+  breached: false
+  exclusion_reason: null
+
+# Notes and Updates
+notes:
+  - timestamp: 2025-11-18T12:00:00Z
+    author: Mai (Secretary)
+    note: "Problem ticket created to investigate root cause"
+
+# Metadata
+tags: []
+watchers: [hhj]

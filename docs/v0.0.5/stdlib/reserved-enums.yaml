@@ -1,0 +1,163 @@
+# Reserved Enum Schemas - v0.0.5
+# These are stdlib-provided enum types with the `-` prefix
+# Format: -TypeCategory.EnumName.Value or -TypeCategory-SchemaName
+
+version: "0.0.5"
+last_updated: "2026-01-04"
+
+reserved_enums:
+  # Database Settings
+  - name: -DB-Settings
+    category: database
+    type: schema
+    description: "Database connection configuration schema"
+    required_fields:
+      - name: -host
+        type: string
+      - name: -port
+        type: int
+      - name: -username
+        type: string
+      - name: -password
+        type: string
+    example: |
+      {-} -DB-Settings.CustomerDB
+      [A] #CustomerDB
+      [s] << |TOML.Load"\\FileDir\\config\db.toml"
+      [s][!] !*
+      {x}
+
+  # Database RDBMS Types
+  - name: -DB.RDBMS
+    category: database
+    type: enum
+    description: "Database management system types"
+    values:
+      - Posgresql
+      - MySQL
+      - SQLite
+      - MariaDB
+      - Oracle
+      - MSSQL
+    usage: "-DB.RDBMS.Posgresql"
+
+  # Email Status
+  - name: -Email-Status
+    category: communication
+    type: enum
+    description: "Email sending status"
+    values:
+      - Success
+      - Failed
+      - Pending
+      - Queued
+    usage: "-Email-Status.Success"
+
+  # Boolean Values
+  - name: -Boolean
+    category: primitive
+    type: enum
+    description: "Boolean true/false values"
+    values:
+      - True
+      - False
+    usage: "-Boolean-True"
+    aliases:
+      - "-True (alias for -Boolean-True)"
+      - "-False (alias for -Boolean-False)"
+    notes:
+      - ":bool type is syntactic sugar for -Boolean"
+      - "Equivalence: :bool ≡ -Boolean"
+
+  # Runtime Environments
+  - name: -RT-Environment-Python
+    category: runtime
+    type: schema
+    alias: -RTenv-python
+    description: "Python runtime environment configuration"
+    required_fields:
+      - name: version
+        type: string
+      - name: path
+        type: path
+        description: "Path to Python executable"
+    usage: |
+      [w] |W.RT.Python
+       |  <version:string << "3.11"
+       |  >environment-RTenv-python >> $pyEnv
+    notes:
+      - "Use with |RT.Python.Code pipeline"
+      - "Canonical pattern: -RTenv-{language}"
+
+  - name: -RT-Environment-Rust
+    category: runtime
+    type: schema
+    alias: -RTenv-rust
+    description: "Rust runtime environment configuration"
+    required_fields:
+      - name: version
+        type: string
+      - name: cargo_path
+        type: path
+    usage: |
+      [w] |W.RT.Rust
+       |  >environment-RTenv-rust >> $rustEnv
+
+  - name: -RT-Environment-JavaScript
+    category: runtime
+    type: schema
+    alias: -RTenv-javascript
+    description: "JavaScript/Node.js runtime environment configuration"
+    required_fields:
+      - name: node_version
+        type: string
+      - name: npm_path
+        type: path
+    usage: |
+      [w] |W.RT.JavaScript
+       |  >environment-RTenv-javascript >> $jsEnv
+
+  # DateTime
+  - name: -DT-Now
+    category: datetime
+    type: function_enum
+    description: "Current datetime"
+    usage: "-DT-Now"
+    returns: datetime
+
+  - name: -DT-Business-Week
+    category: datetime
+    type: schema
+    description: "Business week configuration (Monday-Friday default)"
+    required_fields:
+      - name: -start_day
+        type: int
+        description: "0=Sunday, 1=Monday"
+      - name: -end_day
+        type: int
+      - name: -work_hours_start
+        type: int
+      - name: -work_hours_end
+        type: int
+    extendable: true
+    extension_example: "-DT-Business-Week.MyCompanyWeek-RestDays"
+
+  # Input
+  - name: -Input-None
+    category: trigger
+    type: sentinel
+    description: "Represents no input/empty input for triggers"
+    usage: ">args:serial >> -Input-None"
+
+  # Success/Error States
+  - name: -Success
+    category: control_flow
+    type: sentinel
+    description: "Success state marker"
+    usage: ">error <~ -Success"
+
+notes:
+  - "Reserved enums use `-` prefix instead of `#`"
+  - "Schemas define required fields that extensions must implement"
+  - "Function enums like `-DT-Now` are evaluated at runtime"
+  - "Extensions use dot notation: `-BaseType.Extension-Field`"

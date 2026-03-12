@@ -1,0 +1,541 @@
+// ==============================================================================
+// v0.0.4 Feature Showcase - CORRECTED
+// Demonstrates: Complete v0.0.4 syntax with all corrections
+// KEY CHANGES FROM INITIAL PROPOSAL:
+//   - Variable prefix: $ (not ,) - avoids separator ambiguity
+//   - I/O distinction: i< / o> for definition, < / > for call
+//   - Inline pipelines (not "string literals")
+//   - Metadata system with % prefix
+//   - Variadic input via %InStream metadata
+//   - Operator negation: !?
+//   - Struct auto-filling
+// ==============================================================================
+
+{@} @Local::FeatureShowcase:1.0.0.0
+[A] @Features
+[<] @PgTypes
+
+[%] %Doc <<
+[+] +"Complete feature showcase demonstrating"
+[+] +"all v0.0.4 syntax elements"
+
+[%] %Author
+   [.] .name << "Polyglot Language Team"
+   [.] .since << "0.0.4"
+{x}
+
+// ==============================================================================
+// File-scope Enum Definitions
+// ==============================================================================
+
+{#} #OrderStatus
+[.] .pending
+[.] .processing
+[.] .shipped
+[.] .delivered
+[.] .cancelled
+{x}
+
+{#} #Result
+[.] .success
+   [.] .data:serial
+[.] .error
+   [.] .message:string
+   [.] .code:int
+{x}
+
+// ==============================================================================
+// Feature 1: Multi-line Strings with [+] Marker
+// ==============================================================================
+
+{|} |BuildQuery
+[%] %Doc << "Demonstrates multi-line string construction with SQL safety"
+
+[<] i<user_id:string
+   [%] %description << "User identifier for query"
+[<] i<status:string
+   [%] %description << "Order status filter"
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] $query << |SQL""
+[+] +"SELECT o.*, u.email"
+[+] +"FROM orders o"
+[+] +"JOIN users u ON o.user_id = u.id"
+[+] +"WHERE u.id = "
+[+] +|SQL"{$user_id}"
+[+] +"  AND o.status = "
+[+] +|SQL"{$status}"
+
+[>] o>query << $query:string
+{x}
+
+// ==============================================================================
+// Feature 2: Collection Literals (Arrays and Sets)
+// ==============================================================================
+
+{|} |CollectionDemo
+[%] %Doc << "Arrays and sets with literal syntax"
+
+[<] i<include_premium:bool <~ #Boolean.False
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+// Array literals
+[r] $tags:array.string << {"web", "api", "v2", "beta"}
+[r] $priorities:array.string << {"high", "medium", "low"}
+
+// Set literals (unique values)
+[r] $unique_ids:set.int << {1, 2, 3, 4, 5}
+[r] $admin_roles:set.string << {"admin", "superuser", "owner"}
+
+// Set operations with <<< shorthand
+[r] $user_roles << {"user", "admin", "guest"}
+[r] |Set.Intersection
+   <<< $admin_roles
+   <<< $user_roles
+   >>> $common_roles
+
+[>] o>common_roles << $common_roles:set.string
+{x}
+
+// ==============================================================================
+// Feature 3: Range Validation (All Variants)
+// ==============================================================================
+
+{|} |ValidateRanges
+[%] %Doc << "Demonstrates all range validation operators"
+
+[<] i<age:int
+[<] i<score:int
+[<] i<temperature:int
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] $valid_age << #Boolean.False
+[r] $valid_score << #Boolean.False
+[r] $valid_temp << #Boolean.False
+
+// Inclusive range [min, max]
+[f] $age ?[18, 65]
+   [r] $valid_age << #Boolean.True
+
+// Exclusive minimum (min, max]
+[f] $age ?(18, 65]
+   [r] $young_adult << #Boolean.True
+
+// Exclusive maximum [min, max)
+[f] $age ?[18, 65)
+   [r] $senior_excluded << #Boolean.True
+
+// Exclusive both (min, max)
+[f] $age ?(18, 65)
+   [r] $strict_range << #Boolean.True
+
+// NOT in range
+[f] $age !?[18, 65]
+   [r] $out_of_range << #Boolean.True
+
+// Open-ended
+[f] $score >? 90
+   [r] $excellent << #Boolean.True
+
+[f] $temperature <? 32
+   [r] $freezing << #Boolean.True
+
+[>] o>valid_age << $valid_age:bool
+[>] o>valid_score << $valid_score:bool
+{x}
+
+// ==============================================================================
+// Feature 4: Collection Membership (in? and !in?)
+// ==============================================================================
+
+{|} |ValidateMembership
+[%] %Doc << "Collection membership testing"
+
+[<] i<priority:string
+[<] i<role:string
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] $valid_priorities << {"high", "medium", "low"}
+[r] $admin_roles << {"admin", "superuser"}
+
+// Check membership
+[f] $priority in? $valid_priorities
+   [r] $priority_valid << #Boolean.True
+[f] *?
+   [>] o>error << !InvalidPriority"Priority not in valid set"
+
+// Check NOT in collection
+[f] $role !in? $admin_roles
+   [r] $regular_user << #Boolean.True
+
+[>] o>priority_valid << $priority_valid:bool
+{x}
+
+// ==============================================================================
+// Feature 5: Early Return with [>] o>
+// ==============================================================================
+
+{|} |ValidateInput
+[%] %Doc << "Demonstrates early return pattern"
+
+[<] i<input:string
+[<] i<min_length:int <~ 3
+[<] i<max_length:int <~ 100
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+// Early return for empty input
+[f] $input =? ""
+   [>] o>error << !InvalidInput"Input cannot be empty"
+
+// Early return for too short
+[f] $input.length <? $min_length
+   [>] o>error << !InvalidInput"Input too short"
+
+// Early return for too long
+[f] $input.length >? $max_length
+   [>] o>error << !InvalidInput"Input too long"
+
+// Success path
+[r] $valid << #Boolean.True
+
+[>] o>valid << $valid:bool
+{x}
+
+// ==============================================================================
+// Feature 6: Match Expressions (Exhaustive)
+// ==============================================================================
+
+{|} |RoutePriority
+[%] %Doc << "Match expression with exhaustive cases"
+
+[<] i<priority:string
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+// Match must be exhaustive
+[m] $routing << $priority
+   [?] "high" ? "express"
+   [?] "medium" ? "standard"
+   [?] "low" ? "economy"
+   [?] * ? "standard"                  // Wildcard for exhaustiveness
+
+[>] o>routing << $routing:string
+{x}
+
+// ==============================================================================
+// Feature 7: Enum with Value Fields
+// ==============================================================================
+
+{#} #ApiResponse
+[.] .success
+   [.] .data:serial
+   [.] .status_code:int
+[.] .error
+   [.] .message:string
+   [.] .error_code:int
+[.] .redirect
+   [.] .url:string
+   [.] .permanent:bool
+{x}
+
+{|} |HandleResponse
+[<] i<response_type:string
+[<] i<data:serial
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+// Create enum with value fields based on match
+[m] $response << $response_type
+   [?] "success" ? #ApiResponse.success
+      [.] .data << $data
+      [.] .status_code << 200
+   [?] "error" ? #ApiResponse.error
+      [.] .message << "An error occurred"
+      [.] .error_code << 500
+   [?] * ? #ApiResponse.error
+      [.] .message << "Unknown response type"
+      [.] .error_code << 400
+
+[>] o>response << $response:ApiResponse
+{x}
+
+// ==============================================================================
+// Feature 8: Struct Field Shorthand
+// ==============================================================================
+
+{#} #User
+[.] .username:string
+[.] .email:string
+[.] .age:int
+[.] .created:dt
+{x}
+
+{|} |CreateUser
+[<] i<username:string
+[<] i<email:string
+[<] i<age:int
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+// Variables matching field names
+[r] $username << $username
+[r] $email << $email
+[r] $age << $age
+[r] $timestamp << |DT.Now""
+
+// Struct with shorthand
+[r] $user << #User
+   [.] .username                       // Shorthand: << $username
+   [.] .email                          // Shorthand: << $email
+   [.] .age                            // Shorthand: << $age
+   [.] .created << $timestamp          // Explicit: different variable
+
+[>] o>user << $user:User
+{x}
+
+// ==============================================================================
+// Feature 9: Inline Pipelines
+// ==============================================================================
+
+{|} |InlinePipelineDemo
+[<] i<value:int
+[<] i<user_input:string
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+// Inline pipeline transformations
+[r] $doubled << |Double"{$value}"
+[r] $timestamp << |DT.Now""
+[r] $safe_sql << |SQL"{$user_input}"
+[r] $encoded_url << |URL"{$user_input}"
+
+[>] o>doubled << $doubled:int
+[>] o>timestamp << $timestamp:dt
+{x}
+
+// ==============================================================================
+// Feature 10: Variadic Input with <<<
+// ==============================================================================
+
+{|} |Set.Union
+[%] %Doc << "Variadic set union demonstrating <<< shorthand"
+
+[<] i<type:pg.type
+[<] i<sets:serial
+   [%] %InStream << #IO.Stream.TriplePull
+   [%] %Keys << #IO.Stream.Keys.numeric
+   [%] %ItemType << $type
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] $result:set << {}
+
+[p] ~ForEach
+   <array << $sets
+   >item >> $current_set
+   [r] $result << |Set.UnionTwo
+      <set1 << $result
+      <set2 << $current_set
+      >union >> $result
+
+[>] o>result << $result:set
+{x}
+
+// Usage example
+{|} |UseVariadicSet
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] $set1 << {1, 2, 3}
+[r] $set2 << {3, 4, 5}
+[r] $set3 << {5, 6, 7}
+
+[r] |Set.Union
+   <<< $set1
+   <<< $set2
+   <<< $set3
+   >>> $all_numbers
+
+[>] o>result << $all_numbers:set.int
+{x}
+
+// ==============================================================================
+// Feature 11: Pipeline Composition with |>
+// ==============================================================================
+
+{|} |ComposedPipeline
+[<] i<url:url
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] |FetchData
+   <url << $url
+   |> |ParseJSON
+   |> |ValidateSchema
+   |> |TransformData
+   >result >> $final_data
+   >errors >> $processing_errors
+
+[>] o>final_data << $final_data:serial
+[>] o>errors << $processing_errors:array.error
+{x}
+
+// ==============================================================================
+// Feature 12: ForEach with Range
+// ==============================================================================
+
+{|} |RangeIteration
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+[r] $squares:array.int << {}
+
+[p] ~ForEach.Range"1..10"
+   >index >> $i
+   [r] $squared << $i * $i
+   [r] $squares << |Array.Append
+      <array << $squares
+      <item << $squared
+
+[>] o>squares << $squares:array.int
+{x}
+
+// ==============================================================================
+// Feature 13: Block Comments
+// ==============================================================================
+
+/*
+ * Multi-line comment block
+ * Useful for documentation and commenting out sections
+ * Can span many lines
+ */
+
+{|} |DocumentedPipeline
+/*
+ * This pipeline demonstrates comprehensive documentation
+ * using block comments and metadata
+ */
+
+[%] %Doc <<
+[+] +"Processes orders with validation"
+[+] +"and error handling"
+
+[<] i<order_id:string
+   [%] %description << "Order ID"
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+/* Validation section */
+[r] $valid << #Boolean.True
+
+/* Processing section */
+[r] $result << "processed"
+
+[>] o>result << $result:string
+{x}
+
+// ==============================================================================
+// Feature 14: Complete Real-World Example
+// ==============================================================================
+
+{|} |ProcessOrder
+[%] %PublicTo << {@Features}
+[%] %Doc << "Complete order processing with all v0.0.4 features"
+
+[%] %Errors
+   [.] .error << !InvalidOrder
+   [.] .when << "Order validation fails"
+
+[<] i<order_id:string
+   [%] %description << "Unique order identifier"
+[<] i<priority:string
+   [%] %description << "Order priority level"
+
+[t] |T.Call
+[W] |W.Polyglot.Scope
+
+// Multi-line SQL query
+[r] $query << |SQL""
+[+] +"SELECT * FROM orders"
+[+] +"WHERE id = "
+[+] +|SQL"{$order_id}"
+
+// Validation with early returns
+[r] $valid_priorities << {"high", "medium", "low"}
+
+[f] $priority !in? $valid_priorities
+   [>] o>error << !InvalidOrder"Invalid priority"
+
+// Range validation
+[f] $order_id.length !?[5, 20]
+   [>] o>error << !InvalidOrder"Invalid order ID length"
+
+// Match for routing
+[m] $routing << $priority
+   [?] "high" ? "express"
+   [?] "medium" ? "standard"
+   [?] "low" ? "economy"
+   [?] * ? "standard"
+
+// Set operations
+[r] $required_tags << {"validated", "active"}
+[r] $order_tags << {"active", "validated", "premium"}
+[r] |Set.Intersection
+   <<< $required_tags
+   <<< $order_tags
+   >>> $matched_tags
+
+// Struct creation with shorthand
+[r] $order_id << $order_id
+[r] $status << #OrderStatus.processing
+[r] $routing << $routing
+
+[r] $order << #Order
+   [.] .order_id
+   [.] .status
+   [.] .routing
+   [.] .created << |DT.Now""
+
+[>] o>order << $order:Order
+[>] o>routing << $routing:string
+{x}
+
+// ==============================================================================
+// KEY FEATURES DEMONSTRATED IN v0.0.4:
+// ==============================================================================
+// ✓ Variable prefix: $ (not ,)
+// ✓ I/O distinction: i< / o> for definition, < / > for call
+// ✓ Multi-line strings: [+] marker with inline pipelines
+// ✓ Collection literals: {1, 2, 3} for arrays and sets
+// ✓ Range operators: ?[,], ?(,], ?[,), ?(,)
+// ✓ Operator negation: !? for all conditional operators
+// ✓ Collection membership: in? and !in?
+// ✓ Early return: [>] o>variable
+// ✓ Match expressions: Exhaustive with wildcard
+// ✓ Enum value fields: Flexible hierarchical structure
+// ✓ Struct shorthand: Field name inference
+// ✓ Inline pipelines: |Pipeline"{$var}" syntax
+// ✓ Metadata system: % prefix with comprehensive attributes
+// ✓ Variadic input: <<< via %InStream metadata
+// ✓ Pipeline composition: |> operator
+// ✓ ForEach.Range: String literal ranges
+// ✓ Block comments: /* */ syntax
+// ✓ Universal hierarchy: PREFIX.identifier.path
+// ==============================================================================

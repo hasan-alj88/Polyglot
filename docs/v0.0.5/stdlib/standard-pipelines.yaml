@@ -1,0 +1,332 @@
+# Standard Library Pipelines - v0.0.5
+# Core pipelines provided by the Polyglot standard library
+
+version: "0.0.5"
+last_updated: "2026-01-04"
+
+categories:
+  data_formats:
+    description: "Data serialization and deserialization"
+    pipelines:
+      - name: YAML.Load
+        signature: |YAML.Load"path"
+        description: "Load YAML file into serial structure"
+        usage: |
+          [s] << |YAML.Load"\\FileDir\\config\database.yaml"
+        inline_capable: false
+
+      - name: JSON.Load
+        signature: |JSON.Load"path"
+        description: "Load JSON file into serial structure"
+        usage: |
+          [s] << |JSON.Load"\\FileDir\\config\settings.json"
+        inline_capable: false
+
+      - name: TOML.Load
+        signature: |TOML.Load"path"
+        description: "Load TOML file into serial structure"
+        usage: |
+          [s] << |TOML.Load"\\FileDir\\config\db.toml"
+        inline_capable: false
+
+      - name: XML.Parse
+        signature: |XML.Parse"path"
+        description: "Parse XML file into serial structure"
+        inline_capable: false
+
+  database:
+    description: "Database operations"
+    pipelines:
+      - name: DB.Query
+        signature: |DB.Query
+        description: "Execute database query"
+        inputs:
+          - name: db
+            type: serial
+            description: "Database connection"
+          - name: query
+            type: string
+            description: "SQL query string"
+        outputs:
+          - name: results
+            type: array.serial
+            description: "Query results"
+        usage: |
+          [r] |DB.Query
+           |  <db:serial << $db
+           |  <query:string << $queryText
+           |  >results:array.serial >> $results
+        inline_capable: false
+
+  templates:
+    description: "Template rendering"
+    pipelines:
+      - name: Template.Render
+        signature: |Template.Render
+        description: "Render template with data"
+        inputs:
+          - name: html
+            type: path
+            description: "Template file path"
+          - name: args.*
+            type: any
+            description: "Template variables (namespace args.)"
+        outputs:
+          - name: output
+            type: string
+            description: "Rendered content"
+        usage: |
+          [r] |Template.Render
+           |  <html:path << \\FileDir\\templates\email.html
+           |  <args.customer:string << $customer
+           |  <args.campaign:string << $campaign
+           |  >emailContent:string >> $emailContent
+        inline_capable: false
+
+  email:
+    description: "Email operations"
+    pipelines:
+      - name: Email.Send
+        signature: |Email.Send
+        description: "Send email message"
+        inputs:
+          - name: to
+            type: string
+          - name: subject
+            type: string
+          - name: body
+            type: string
+        outputs:
+          - name: status
+            type: enum
+            enum_type: -Email-Status
+        usage: |
+          [w] |Email.Send
+           |  <to:string << $customer.email
+           |  <subject:string << $subject
+           |  <body:string << $emailContent
+           |  >status >> $sendStatus
+        inline_capable: false
+        chainable: true
+
+  datetime:
+    description: "Date and time operations"
+    pipelines:
+      - name: DT.Now
+        signature: |DT.Now""
+        description: "Get current datetime"
+        outputs:
+          - name: result
+            type: datetime
+        usage: "[f] $date ?<= |DT.Now\"\""
+        inline_capable: true
+
+  version_info:
+    description: "Runtime version information"
+    pipelines:
+      - name: PG.Version
+        signature: |PG.Version"connection"
+        description: "Get PostgreSQL version"
+        inline_capable: true
+        usage: '[r] $version:string << |PG.Version"{$db}"'
+
+      - name: MySQL.Version
+        signature: |MySQL.Version"connection"
+        description: "Get MySQL version"
+        inline_capable: true
+        usage: '[r] $version:string << |MySQL.Version"{$db}"'
+
+  sql:
+    description: "SQL query construction"
+    pipelines:
+      - name: SQL
+        signature: |SQL""
+        description: "Multi-line SQL query builder"
+        usage: |
+          [r] |DB.Query
+           |  <query:string << |SQL""
+          [+] +"SELECT customer.name, customer.email"
+          [+] +"FROM Customers"
+          [+] +"WHERE segment = {$segment}"
+        supports_continuation: true
+        inline_capable: true
+
+  runtime:
+    description: "Language runtime code execution (canonical naming)"
+    pipelines:
+      - name: RT.Python.Code
+        signature: |RT.Python.Code
+        description: "Execute Python code with environment"
+        inputs:
+          - name: env.lang
+            type: reserved_enum
+            schema: -RT-Environment-Python
+            alias: -RTenv-python
+            description: "Python runtime environment from wrapper"
+          - name: env.vars.*
+            type: string
+            description: "Environment variables (all :string type)"
+            optional: true
+          - name: kwargs.*
+            type: native
+            description: "Function keyword arguments (native Python types: :py.str, :py.int, etc.)"
+            optional: true
+            notes: "Only for single-function code blocks"
+          - name: code
+            type: string
+            description: "Python code to execute"
+        outputs:
+          - name: exit_code
+            type: uint
+            description: "Process exit code (0 = success)"
+        errors:
+          - !RT.Python.Error
+        usage: |
+          [r] |RT.Python.Code
+           |  <env.lang-RTenv-python << $pyEnv
+           |  <env.vars.log_file:string << $config.log_file
+           |  <code:string << |Python""
+          [c] import os
+          [c] log_file = os.environ['log_file']
+          [c] with open(log_file, 'a') as f:
+          [c]     f.write('Hello World\n')
+           |  >exit_code:uint >> $exitCode
+        inline_capable: false
+        notes:
+          - "Use with |W.RT.Python wrapper"
+          - "All env.vars.* are :string (Shell/CMD environment)"
+          - "kwargs.* use native types (:py.str, :py.int, etc.)"
+          - "Canonical naming: |RT.{Language}.Code"
+
+      - name: RT.Rust.Code
+        signature: |RT.Rust.Code
+        description: "Execute Rust code with environment"
+        inputs:
+          - name: env.lang
+            type: reserved_enum
+            schema: -RT-Environment-Rust
+            alias: -RTenv-rust
+          - name: env.vars.*
+            type: string
+            optional: true
+          - name: code
+            type: string
+        outputs:
+          - name: exit_code
+            type: uint
+        errors:
+          - !RT.Rust.Error
+        usage: |
+          [r] |RT.Rust.Code
+           |  <env.lang-RTenv-rust << $rustEnv
+           |  <env.vars.log_file:string << $path
+           |  <code:string << |Rust""
+          [c] use std::env;
+          [c] let log_file = env::var("log_file").unwrap();
+           |  >exit_code:uint >> $exitCode
+        inline_capable: false
+
+      - name: RT.JavaScript.Code
+        signature: |RT.JavaScript.Code
+        description: "Execute JavaScript/Node.js code with environment"
+        inputs:
+          - name: env.lang
+            type: reserved_enum
+            schema: -RT-Environment-JavaScript
+            alias: -RTenv-javascript
+          - name: env.vars.*
+            type: string
+            optional: true
+          - name: code
+            type: string
+        outputs:
+          - name: exit_code
+            type: uint
+        errors:
+          - !RT.JavaScript.Error
+        usage: |
+          [r] |RT.JavaScript.Code
+           |  <env.lang-RTenv-javascript << $jsEnv
+           |  <env.vars.log_file:string << $path
+           |  <code:string << |JavaScript""
+          [c] const fs = require('fs');
+          [c] const logFile = process.env.log_file;
+           |  >exit_code:uint >> $exitCode
+        inline_capable: false
+
+      - name: Python
+        signature: |Python""
+        description: "Multi-line Python code builder (for use with [c] code blocks)"
+        supports_continuation: true
+        inline_capable: true
+        usage: |
+          <code:string << |Python""
+          [c] import os
+          [c] print('Hello')
+
+      - name: Rust
+        signature: |Rust""
+        description: "Multi-line Rust code builder"
+        supports_continuation: true
+        inline_capable: true
+
+      - name: JavaScript
+        signature: |JavaScript""
+        description: "Multi-line JavaScript code builder"
+        supports_continuation: true
+        inline_capable: true
+
+  utilities:
+    description: "Utility pipelines for common operations"
+    pipelines:
+      - name: U.File.CreateIfNotExists
+        signature: |U.File.CreateIfNotExists
+        description: "Create file if it doesn't exist"
+        inputs:
+          - name: path
+            type: path
+            description: "File path to create"
+        outputs:
+          - name: created
+            type: bool
+            description: "True if file was created, false if already existed"
+        usage: |
+          [r] |U.File.CreateIfNotExists
+           |  <path:path << $config.log_file
+           |  >created:bool >> $wasCreated
+        inline_capable: false
+        notes:
+          - "Creates parent directories if needed"
+          - "Safe to call repeatedly"
+
+      - name: U.Do.Nothing
+        signature: |U.Do.Nothing
+        description: "Explicit no-op placeholder"
+        usage: |
+          [!] !*
+             [r] |U.Do.Nothing
+        inline_capable: true
+        notes:
+          - "Use as placeholder in catch-all branches"
+          - "Better than empty blocks or comments"
+
+  validation:
+    description: "Data validation"
+    pipelines:
+      - name: Regex.Match
+        signature: |Regex.Match"pattern""text"
+        description: "Match regex pattern"
+        inline_capable: true
+        usage: '[r] $valid:bool << |Regex.Match"{$pattern}"{$text}"'
+
+      - name: Array.Length
+        signature: |Array.Length"array"
+        description: "Get array length"
+        inline_capable: true
+        usage: '[r] $count:int << |Array.Length"{$items}"'
+
+notes:
+  - "Inline-capable pipelines can be used as single-value replacements"
+  - "Non-inline pipelines require full I/O wiring syntax"
+  - "Chainable pipelines can use [|] |>NextPipeline syntax"
+  - "Multi-line content uses [+] continuation markers"

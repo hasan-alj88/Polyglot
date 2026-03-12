@@ -1,0 +1,27 @@
+# Inline Pipeline Parser Examples
+
+## Table of Contents
+
+- [Inline Pipeline Parser Examples](#table-of-contents)
+  - [Overview](./overview.md)
+  - [Example 1: Config Validator](./example-1-config-validator.md)
+    - [Complete Implementation](./example-1-config-validator.md#complete-implementation)
+    - [Usage](./example-1-config-validator.md#usage)
+    - [Execution Flow](./example-1-config-validator.md#execution-flow)
+  - [Example 2: Email Validator](./example-2-email-validator.md)
+    - [Complete Implementation](./example-2-email-validator.md#complete-implementation)
+    - [Usage](./example-2-email-validator.md#usage)
+  - [Example 3: URL Parser](./example-3-url-parser.md)
+    - [Complete Implementation](./example-3-url-parser.md#complete-implementation)
+    - [Usage](./example-3-url-parser.md#usage)
+  - [Example 4: Key-Value Config Parser](./example-4-key-value-config-parser.md)
+    - [Complete Implementation](./example-4-key-value-config-parser.md#complete-implementation)
+    - [Usage](./example-4-key-value-config-parser.md#usage)
+  - [Example 5: Command Parser with Action Enum](./example-5-command-parser-with-action-enum.md)
+    - [Complete Implementation](./example-5-command-parser-with-action-enum.md#complete-implementation)
+    - [Usage](./example-5-command-parser-with-action-enum.md#usage)
+  - [Pattern Summary](./pattern-summary.md)
+    - [1. Parser Pipeline](./pattern-summary.md#1-parser-pipeline)
+    - [2. Main Pipeline](./pattern-summary.md#2-main-pipeline)
+    - [3. Inline Invocation](./pattern-summary.md#3-inline-invocation)
+  - [See Also](./see-also.md)

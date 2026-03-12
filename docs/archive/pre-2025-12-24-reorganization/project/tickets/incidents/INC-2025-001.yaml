@@ -1,0 +1,137 @@
+# Incident Ticket - Comparison Operators Syntax Violations
+
+ticket_id: INC-2025-001
+type: incident
+title: "Comparison Operators - 12 Syntax Violations in v0.0.2 Docs"
+description: |
+  BLOCKING INCIDENT: 12 instances in v0.0.2 documentation use comparison operators
+  (==, !=, <, >, <=, >=) which may not exist in Polyglot syntax.
+
+  According to Nov 13 audit: "Comparison operators DON'T exist - use range notation"
+  However, code violations log (Violation #7) suggests they DO exist but named operations are preferred.
+
+  CONFLICTING INFORMATION - Need authoritative decision.
+
+  Files Affected (12 violations):
+  - language/02-type-system.md (2 instances)
+  - language/08-parallel-execution.md (2 instances)
+  - language/10-pipeline-lifecycle.md (2 instances)
+  - standard-library/02-queue-control.md (4 instances)
+  - standard-library/03-utilities-catalog.md (2 instances)
+
+  Example Violations:
+  - [?] .condition == True  (should be: [?] .condition ?> True)
+  - current_load > 80       (should be: current_load ?> 80..)
+  - current_state == "Running"  (should be: current_state ?> "Running")
+
+# Priority Calculation
+impact: critical        # Blocks Story 1.2 (lexer implementation)
+urgency: immediate      # Lexer cannot be built without knowing valid operators
+priority: P1
+
+# Status and Assignment
+status: resolved
+assigned_to: Paige (Tech Writer)
+assigned_group: documentation
+
+# Categorization
+category: syntax_error
+
+# Related Information
+related_tickets:
+  - PRB-2025-001  # Problem ticket investigating root cause
+related_files:
+  - docs/user/language/02-type-system.md
+  - docs/user/language/08-parallel-execution.md
+  - docs/user/language/10-pipeline-lifecycle.md
+  - docs/user/standard-library/02-queue-control.md
+  - docs/user/standard-library/03-utilities-catalog.md
+  - docs/user/audit/v0.0.2-documentation-audit-report.md
+  - docs/user/audit/code-violations-log.md
+related_stories:
+  - Story 1.2 (Lexer Token Definitions) - BLOCKED
+related_epics:
+  - Epic 1 (Lexer & Parser Foundation) - BLOCKED
+
+# GitHub Sync (for future use)
+github:
+  issue_number: null
+  url: null
+  last_synced: null
+
+# Timeline
+created_date: 2025-11-18T12:00:00Z
+created_by: Mai (Secretary)
+assigned_date: 2025-11-18T15:30:00Z
+started_date: 2025-11-18T12:30:00Z
+resolved_date: 2025-11-18T15:30:00Z
+closed_date: null
+
+# Resolution
+resolution: |
+  RESOLVED: PRB-2025-001 confirmed comparison operators DO EXIST in Polyglot.
+
+  New operator syntax with '?' suffix pattern:
+  - Comparison: >?, <?, =>?, =<?, =?, =!?
+
+  The 12 "violations" are mostly VALID syntax patterns that need updating to new format:
+
+  MIGRATION GUIDE:
+  - OLD: .condition == True    → NEW: .condition =? True
+  - OLD: current_load > 80     → NEW: current_load >? 80
+  - OLD: .value != \\NoError\\ → NEW: .value =!? \\NoError\\
+
+  ACTION REQUIRED: Paige (Tech Writer) to update 12 instances across 5 files
+  to use new '?' suffix comparison operators.
+
+  Files requiring updates:
+  - language/02-type-system.md (2 instances)
+  - language/08-parallel-execution.md (2 instances)
+  - language/10-pipeline-lifecycle.md (2 instances)
+  - standard-library/02-queue-control.md (4 instances)
+  - standard-library/03-utilities-catalog.md (2 instances)
+
+  Story 1.2 UNBLOCKED - lexer can now proceed with complete operator list.
+root_cause: |
+  Documentation was using comparison operators before they were formally specified.
+  Nov 13 audit incorrectly stated operators don't exist.
+  ROOT CAUSE: Incomplete operator specification during v0.0.2 development.
+workaround: "Not needed - operators now formally specified"
+
+# SLA Tracking
+sla:
+  response_due: 2025-11-18T13:00:00Z    # P1: 1 hour response
+  resolution_due: 2025-11-19T12:00:00Z  # P1: 24 hour resolution
+  breached: false
+  exclusion_reason: blocked_by_other_ticket  # Blocked by PRB-2025-001
+
+# Notes and Updates
+notes:
+  - timestamp: 2025-11-18T12:00:00Z
+    author: Mai (Secretary)
+    note: |
+      Incident created from v0.0.2 documentation audit.
+      Created PRB-2025-001 to investigate root cause.
+      BLOCKER: Story 1.2 cannot proceed without resolution.
+
+  - timestamp: 2025-11-18T15:30:00Z
+    author: Mai (Secretary)
+    note: |
+      RESOLVED: PRB-2025-001 investigation completed by Carson.
+
+      Comparison operators confirmed to EXIST with complete specification.
+      New '?' suffix pattern: >?, <?, =>?, =<?, =?, =!?
+
+      The 12 syntax "violations" are actually valid comparison patterns that
+      just need to be updated to the new operator format.
+
+      SLA COMPLIANCE: Resolved in 3.5 hours (within 24-hour P1 target).
+
+      NEXT ACTION: Assigned to Paige (Tech Writer) to update 12 instances
+      across 5 documentation files with new operator syntax.
+
+      Story 1.2 now UNBLOCKED for lexer implementation.
+
+# Metadata
+tags: [blocking, syntax, critical, documentation]
+watchers: [hhj, Amelia (Dev Agent), Carson (Brainstorming Coach)]
