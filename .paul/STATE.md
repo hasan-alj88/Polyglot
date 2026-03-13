@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-12)
 
 Milestone: v0.1 Language Specification & Research
 Phase: 2 of 5 (Complete Language Specification) — Planning
-Plan: 02-01 scrapped — writing from scratch via draft loop
-Status: Ready for /paul:plan (new approach)
-Last activity: 2026-03-12 — Wiped docs/ to skeleton (draft.md only), scrapped Plan 02-01
+Plan: 02-01 updated (Project Vision & Philosophy), approved
+Status: PLAN approved, ready for APPLY
+Last activity: 2026-03-12 — Updated Plan 02-01 scope: Core Principles → Project Vision & Philosophy
 
 Progress:
 - Milestone: [████░░░░░░] 40%
@@ -26,7 +26,7 @@ Progress:
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ○        ○        ○     [Restarting — previous plan scrapped]
+  ✓        ○        ○     [Plan 02-01 approved, ready for APPLY]
 ```
 
 ## Accumulated Context
@@ -45,6 +45,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Added Phase 5: Clean Slate Reset | 2026-03-12 | Extends milestone scope — commit all pending changes, remove tarballs, clean git state |
 | Wiped docs/ to skeleton | 2026-03-12 | User wants to write spec from scratch via draft loop, not consolidate existing docs |
 | Scrapped Plan 02-01 | 2026-03-12 | Old plan consolidated scattered docs; new approach: fresh writing via /paul:draft |
+| Rescoped Plan 02-01 | 2026-03-12 | Core Principles → Project Vision & Philosophy; covers whole project not just language rules |
 
 ### Deferred Issues
 - Rebuild Polly as PAUL special flow (after documentation phases)
@@ -62,10 +63,11 @@ Protected elements for current milestone:
 
 Last session: 2026-03-12
 Stopped at: Documentation standards v2.0 established; Plan 02-01 approved, APPLY not started
-Next action: Run /paul:plan for Phase 2 with draft-loop approach
+Next action: Run /paul:apply to start Plan 02-01
 Resume context:
 - docs/ wiped to skeleton (only draft.md remains)
-- User will write spec from scratch via /paul:draft loop
+- Plan 02-01: Project Vision & Philosophy via /paul:draft loop
+- 10 plans total for Phase 2 (vision first, then language topics)
 - All prior doc content available in git history if needed
 
 ---

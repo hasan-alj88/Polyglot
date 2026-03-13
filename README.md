@@ -1,29 +1,33 @@
-# Polyglot Automation System
+# Polyglot
 
-**Version:** 0.1.0-development  
-**Status:** Active Development - Not Production Ready  
+**Version:** 0.1.0-development
+**Status:** Active Development - Not Production Ready
 **License:** TBD (Apache 2.0 or MIT)
 
 <img src="./Polyglot%20Logo/PNG/Logo.png" width="150" alt="">
-
-## 🚧 Under Active Development
 
 > **Important**: Polyglot is currently in early development. APIs, architecture, and features are subject to change. We're building in public and welcome contributors!
 
 ## Overview
 
-Polyglot is an **automation microservice** that enables **cross-language workflow orchestration**. Trigger pipelines from any supported language and consume results from codebases written in completely different ecosystems.
+Polyglot is an **async-centric programming language and platform** built on two pillars:
+
+1. **Cross-Language Integration** — Write code in multiple programming languages and run them together seamlessly, leveraging the strengths of each.
+2. **Async-Centric Automation** — First-class parallelism, concurrency, race condition handling, and resource management — designed in, not bolted on.
+
+Think: *what if API was a programming language?*
+
+For the full project vision, philosophy, and design principles, see **[Project Vision](docs/vision.md)**.
 
 ## Core Philosophy
 
-- **Don't Reinvent the Wheel, Use legacy code**—Bridge existing Python, JavaScript, Rust, C++, and other codebases
-- **Asynchronous by Default**—Being an automation language, every operation is inherently async for efficient coordination.
-- **Pipeline-Centric**—Compose workflows through chaining, parallelism, and branching
-- **Right Tool for the Job**—Use the best language for each task in a workflow
-- **Divide and Conquer**—Automation allows you to break complex tasks into language-specific smaller atomic tasks.
-- **Minimalist Orchestration**—Coordinate with minimal overhead
-- **Resource Governance**—Explicit resource management, queuing, and limits
-
+- **The Right Tool for the Right Job** — Use the best language for each task in a workflow
+- **Don't Reinvent the Wheel, Use Legacy Code** — Bridge existing Python, JavaScript, Rust, C++, and other codebases
+- **Async-Centric by Design** — Every operation is inherently async; task behaviors are intentional, not afterthoughts
+- **Divide and Conquer** — Break cross-language integration into smaller, solvable pieces and optimize each one
+- **Pipeline-Centric** — Compose workflows through chaining, parallelism, and branching
+- **Resource Governance** — Explicit resource management, queuing, and limits
+- **Security First** — Concurrency, race conditions, and pipeline interactions are handled intentionally from day one
 
 ## Quick Example
 
@@ -31,8 +35,6 @@ Polyglot is an **automation microservice** that enables **cross-language workflo
 // Module declaration
 [@] com.example>DataPipeline>Analytics
 [X]
-
-
 
 [|] ProcessUserData
 [i] user_data: py\dict
@@ -76,7 +78,7 @@ Polyglot is an **automation microservice** that enables **cross-language workflo
 [<] ... rust_results
 
 // Combine results
-[r] |CombineResults 
+[r] |CombineResults
 [<] .py_data: py\dict = py_results
 [<] .rust_data: py\dict = rust_results
 [>] .combined: py\dict = final_results
@@ -99,11 +101,10 @@ Existing solutions force you to choose one language or write brittle glue code.
 
 ### The Solution
 Polyglot provides:
-- **Unified Syntax**—Single language for multi-language workflows
-- **Type-Safe Conversions**—Automatic conversion between language types
-- **Event-Driven**—React to file changes, schedules, resource availability
-- **Resource Management**—Built-in queuing, throttling, and limits
-- **Production Ready**—Monitoring, error handling, graceful degradation
+- **Unified Syntax** — Single language for multi-language workflows
+- **Type-Safe Conversions** — Automatic conversion between language types
+- **Event-Driven** — React to file changes, schedules, resource availability
+- **Resource Management** — Built-in queuing, throttling, and limits
 
 ## Key Features
 
@@ -114,7 +115,7 @@ Polyglot provides:
 [>] .df: py\DataFrame = data
 
 [f] |Rust.ComputeStats
-[<] .data: rust\Vec<f64> = rust_data 
+[<] .data: rust\Vec<f64> = rust_data
 [>] .stats: rust\HashMap = stats
 
 [f] |Node.SendWebhook
@@ -196,57 +197,6 @@ Polyglot provides:
 // Continue with whichever finishes first
 ```
 
-## Use Cases
-
-- **Data Engineering**—ETL pipelines combining Python preprocessing with Rust analytics
-- **DevOps**—CI/CD orchestration across multiple tools and languages
-- **Machine Learning**—Train in Python, serve with Rust for performance
-- **System Automation**—Scheduled maintenance across heterogeneous systems
-- **Legacy Integration**—Bridge old C++ systems with modern services
-- **IoT Processing**—Real-time sensor data processing with resource limits
-
-## Documentation
-
-### 📖 Language Specification (v0.0.2)
-Complete reference for Polyglot syntax, semantics, and standard library:
-
-- **[v0.0.2 Documentation](docs/v0.0.2/)** - Complete language specification
-  - [Complete Syntax Reference](docs/v0.0.2/language/01-syntax-complete.md)
-  - [Operators](docs/v0.0.2/language/05-operators.md) - `|`, `~`, `@`, `#`, `!`, `<<`, `>>`
-  - [Block Markers](docs/v0.0.2/language/06-block-markers.md) - `[|]`, `[X]`, `[r]`, `[p]`, `[Q]`, etc.
-  - [Type System](docs/v0.0.2/language/02-type-system.md)
-  - [Error Handling](docs/v0.0.2/language/04-error-handling.md)
-  - [BNF Grammar](docs/v0.0.2/language/12-bnf-grammar.md)
-  - [Examples](docs/v0.0.2/examples/)
-
-### 📋 Implementation Planning (BMAD Project)
-Development roadmap and architecture decisions:
-
-- **[Product Requirements (PRD)](docs/prd.md)** - Vision, requirements, success criteria
-- **[Architecture](docs/architecture.md)** - Technical design, ADRs, patterns
-- **[Epic Breakdown](docs/epics.md)** - Story sequencing and dependencies
-- **[Development Stories](docs/stories/)** - Current implementation status
-
-### 🔗 Understanding the Documentation
-**Important:** Polyglot has two complementary documentation sets:
-
-- **v0.0.2** defines the complete language (syntax, operators, type system)
-- **BMAD docs** define what gets implemented and when (MVP scope, architecture)
-
-👉 See **[v0.0.2 and BMAD Alignment](docs/v0.0.2-bmad-alignment.md)** to understand how they work together
-
-### 📚 Quick Links by Role
-
-**Writing `.pg` files?** → [v0.0.2 Language Specification](docs/v0.0.2/)
-
-**Contributing to implementation?** → [Architecture](docs/architecture.md) + [Epic Breakdown](docs/epics.md)
-
-**Understanding operators vs block markers?** → [Alignment Document](docs/v0.0.2-bmad-alignment.md)
-
-## Installation (Future)
-
->To Be Determined
-
 ## Minimal Example
 
 **hello.pg**
@@ -271,9 +221,10 @@ Run it:
 polyglot run hello.pg --name="World"
 >> Hello, World!
 ```
+
 ### The Cross-Language Bridge
-One of the aims is the ability to integrate code bases from different programming languages easily.
-The polyglot service needs to be running in the background for it.
+One of the aims is the ability to integrate codebases from different programming languages easily. The Polyglot service needs to be running in the background for it.
+
 ```python
 # Trigger from Python, get results from Rust
 import polyglot as pg
@@ -289,183 +240,42 @@ data = pl.readcsv('datafile.csv')
 result = await pg.run(rust_function, data=data)
 ```
 
+## Use Cases
+
+- **Data Engineering** — ETL pipelines combining Python preprocessing with Rust analytics
+- **DevOps** — CI/CD orchestration across multiple tools and languages
+- **Machine Learning** — Train in Python, serve with Rust for performance
+- **System Automation** — Scheduled maintenance across heterogeneous systems
+- **Legacy Integration** — Bridge old C++ systems with modern services
+- **IoT Processing** — Real-time sensor data processing with resource limits
+
+## Documentation
+
+- **[Project Vision & Philosophy](docs/vision.md)** — What Polyglot is, why it exists, and where it's going
+
+> Language specification, architecture, and ecosystem docs are being written as part of the documentation-first development approach. More coming soon.
+
 ## Project Status
 
-**Current Phase:** MVP Implementation (Epic 1 - Lexer & Parser)
+**Current Phase:** Documentation-first specification — defining the language and architecture before coding.
 
-**Recently Completed:**
-- ✅ **Story 1.1:** Project workspace and build system setup complete
-  - 9-crate Cargo workspace configured
-  - CI/CD pipeline with test, clippy, fmt
-  - All dependencies configured
+The project previously had a Rust implementation prototype which was reset in favor of a specification-first approach. We're writing comprehensive specs, then building the implementation on solid foundations.
 
-**In Progress:**
-- 🚧 **Story 1.2:** Lexer token definitions (drafted, ready for implementation)
+## Installation
 
-**Implementation Roadmap:**
-1. **Epic 1: Lexer & Parser** - Tokenization and AST generation *(in progress)*
-2. **Epic 2: IR Generation** - Transform AST to 3-IR structure
-3. **Epic 3: Database & Registry** - PostgreSQL schema and pipeline registry
-4. **Epic 4: Trigger Monitor** - Event detection service
-5. **Epic 5: Queue Manager** - Dispatch queue management
-6. **Epic 6: Runner Service** - Pipeline execution engine
-7. **Epic 7: Python Runtime Wrapper** - MVP proof-of-concept
-
-**Methodology:** Using BMAD (BMad Methodology) for systematic development
-
-See **[Epic Breakdown](docs/epics.md)** for detailed implementation timeline
-
-## Development Setup
-
-### Prerequisites
-
-Before building Polyglot, ensure you have the following installed:
-
-- **Rust Toolchain** (1.70+)
-  ```bash
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  ```
-
-- **PostgreSQL** (14+) - For pipeline and IR storage
-  ```bash
-  # Ubuntu/Debian
-  sudo apt install postgresql postgresql-contrib
-
-  # macOS
-  brew install postgresql@14
-  ```
-
-- **Redis** (6+) - For queue management
-  ```bash
-  # Ubuntu/Debian
-  sudo apt install redis-server
-
-  # macOS
-  brew install redis
-  ```
-
-- **InfluxDB** (2.x) - For metrics and monitoring (optional for core development)
-  ```bash
-  # See https://docs.influxdata.com/influxdb/v2/install/
-  ```
-
-### Building from Source
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/polyglot-lang/polyglot.git
-   cd polyglot
-   ```
-
-2. **Build the workspace**
-   ```bash
-   cargo build
-   ```
-
-   This builds all 9 crates:
-   - **Libraries**: `polyglot-lexer`, `polyglot-parser`, `polyglot-ir`, `polyglot-db`, `polyglot-runtime-wrappers`
-   - **Binaries**: `polyglot-cli`, `trigger-monitor`, `queue-manager`, `runner`
-
-3. **Run tests**
-   ```bash
-   cargo test --workspace
-   ```
-
-4. **Check code quality**
-   ```bash
-   # Lint with Clippy
-   cargo clippy --workspace --all-targets -- -D warnings
-
-   # Format check
-   cargo fmt --all -- --check
-   ```
-
-### Quick Start Development
-
-```bash
-# Build in debug mode (faster compilation)
-cargo build
-
-# Build in release mode (optimized)
-cargo build --release
-
-# Run the CLI
-cargo run --bin polyglot -- --help
-
-# Run specific tests
-cargo test --package polyglot-lexer
-cargo test --package polyglot-parser
-
-# Watch mode (requires cargo-watch)
-cargo install cargo-watch
-cargo watch -x "test --workspace"
-```
-
-### Project Structure
-
-```
-polyglot/
-├── polyglot-cli/              # CLI interface
-├── polyglot-lexer/            # Tokenization
-├── polyglot-parser/           # AST generation
-├── polyglot-ir/               # IR generation (Trigger, Queue, Runner)
-├── polyglot-db/               # Database operations
-├── polyglot-runtime-wrappers/ # Python, Node, Rust execution
-├── trigger-monitor/           # Trigger monitoring service
-├── queue-manager/             # Queue management service
-├── runner/                    # Pipeline execution service
-└── Cargo.toml                 # Workspace configuration
-```
-
-### Running Services Locally
-
-Start the required services for local development:
-
-```bash
-# Start PostgreSQL
-sudo systemctl start postgresql
-
-# Start Redis
-sudo systemctl start redis
-
-# (Optional) Start InfluxDB
-sudo systemctl start influxdb
-```
-
-Then run the Polyglot services:
-
-```bash
-# Terminal 1: Trigger Monitor
-cargo run --bin trigger-monitor
-
-# Terminal 2: Queue Manager
-cargo run --bin queue-manager
-
-# Terminal 3: Runner
-cargo run --bin runner
-
-# Terminal 4: Use CLI
-cargo run --bin polyglot -- run examples/hello.pg
-```
+> To be determined. Polyglot is not yet installable — we're in the specification phase.
 
 ## Getting Involved
 
 We're looking for collaborators interested in:
 - Language design and syntax refinement
-- Compiler implementation
+- Architecture review and feedback
+- Documentation and examples
+- Compiler implementation (once specs are complete)
 - Runtime system architecture
 - Standard library development
-- Documentation and examples
-- Testing and tooling
 
 **Contributing Guidelines:** Coming soon in `docs/contributing.md`
-
-**Current Contribution Opportunities:**
-- Lexer implementation (Story 1.2 - ready for development)
-- Documentation improvements
-- Example pipeline development
-- Architecture review and feedback
-
 
 ## License
 
@@ -473,4 +283,4 @@ To be determined (likely Apache 2.0 or MIT)
 
 ---
 
-**Status:** This is a design document. The language is not yet implemented. We're seeking feedback and collaborators to turn this vision into reality.
+**Status:** The language is being specified. We're seeking feedback and collaborators to turn this vision into reality.
