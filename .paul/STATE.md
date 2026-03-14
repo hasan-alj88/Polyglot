@@ -9,24 +9,25 @@ See: .paul/PROJECT.md (updated 2026-03-12)
 
 ## Current Position
 
-Milestone: v0.1 Language Specification & Research
-Phase: 2 of 5 (Complete Language Specification) — Planning
-Plan: 02-01 updated (Project Vision & Philosophy), approved
-Status: PLAN approved, ready for APPLY
-Last activity: 2026-03-12 — Updated Plan 02-01 scope: Core Principles → Project Vision & Philosophy
+Milestone: v0.1.1 Doc Audit Infrastructure
+Phase: 8 of 8 — All phases complete
+Plan: All plans executed
+Status: UNIFY complete, milestone ready to close
+Last activity: 2026-03-14 — Executed all 3 phases (6, 7, 8)
 
 Progress:
-- Milestone: [████░░░░░░] 40%
-- Phase 1: [██████████] 100%
-- Phase 5: [██████████] 100%
-- Phase 2: [░░░░░░░░░░] 0%
+- v0.1 Language Spec: [████░░░░░░] 40% (paused)
+- v0.1.1 Doc Audit: [██████████] 100%
+- Phase 6: [██████████] 100%
+- Phase 7: [██████████] 100%
+- Phase 8: [██████████] 100%
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ○        ○     [Plan 02-01 approved, ready for APPLY]
+  ✓        ✓        ✓     [Loop complete — milestone ready to close]
 ```
 
 ## Accumulated Context
@@ -46,6 +47,10 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Wiped docs/ to skeleton | 2026-03-12 | User wants to write spec from scratch via draft loop, not consolidate existing docs |
 | Scrapped Plan 02-01 | 2026-03-12 | Old plan consolidated scattered docs; new approach: fresh writing via /paul:draft |
 | Rescoped Plan 02-01 | 2026-03-12 | Core Principles → Project Vision & Philosophy; covers whole project not just language rules |
+| Created milestone v0.1.1 Doc Audit Infrastructure | 2026-03-14 | docs/audit/ as Claude's ground-truth reference for doc writing; extracted audience meta-instructions from vision.md |
+| docs/ as Obsidian vault | 2026-03-14 | All docs use YAML frontmatter + [[wikilinks]] for Obsidian compatibility |
+| Dual smart referencing | 2026-03-14 | @-imports (Claude mandatory reads) + [[wikilinks]] (Obsidian navigation) on all cross-references |
+| Audit scope: all documentation | 2026-03-14 | docs/audit/ rules apply to ALL documentation Claude writes, not just docs/ files |
 
 ### Deferred Issues
 - Rebuild Polly as PAUL special flow (after documentation phases)
@@ -61,14 +66,14 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-12
-Stopped at: Documentation standards v2.0 established; Plan 02-01 approved, APPLY not started
-Next action: Run /paul:apply to start Plan 02-01
+Last session: 2026-03-14
+Stopped at: v0.1.1 milestone fully executed
+Next action: Commit changes, then /paul:complete-milestone for v0.1.1, then resume v0.1 at Plan 02-02
 Resume context:
-- docs/ wiped to skeleton (only draft.md remains)
-- Plan 02-01: Project Vision & Philosophy via /paul:draft loop
-- 10 plans total for Phase 2 (vision first, then language topics)
-- All prior doc content available in git history if needed
+- docs/audit/ fully built: 7 files across audiences/, rules/, reference/
+- CLAUDE.md at project root points to audit/
+- vision.md cleaned of AI meta-instructions
+- v0.1 paused at Plan 02-02 (Variables & Lifecycle)
 
 ---
 *STATE.md — Updated after every significant action*

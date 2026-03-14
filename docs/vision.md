@@ -52,18 +52,6 @@ The project aims to provide a unified platform for developers to leverage the st
 
 ---
 
-## Who It's For
-
-Polyglot is designed for three distinct audiences:
-
-- **Users** — End users who run Polyglot services and consume the outputs of automated workflows. The platform should be approachable and its services reliable.
-- **Developers** — Software engineers building with and on Polyglot: writing `.pg` files, integrating Polyglot into existing codebases, and contributing to the platform itself.
-- **AI** — Agents and tools that interact with Polyglot programmatically: generating Polyglot code, triggering workflows, and consuming results through APIs.
-
-> Detailed documentation ground rules for each audience will be defined in a dedicated Audit document.
-
----
-
 ## The Polyglot Ecosystem
 
 > *These components are described here as an overview. Detailed specifications will be developed in dedicated documents.*
