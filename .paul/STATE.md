@@ -9,25 +9,23 @@ See: .paul/PROJECT.md (updated 2026-03-12)
 
 ## Current Position
 
-Milestone: v0.1.1 Doc Audit Infrastructure
-Phase: 8 of 8 — All phases complete
+Milestone: v0.1 Language Specification & Research
+Phase: 2 of 2 — All phases complete
 Plan: All plans executed
-Status: UNIFY complete, milestone ready to close
-Last activity: 2026-03-14 — Executed all 3 phases (6, 7, 8)
+Status: Complete — ready to close
+Last activity: 2026-03-14 — Restructured v0.1, committed v0.1.1
 
 Progress:
-- v0.1 Language Spec: [████░░░░░░] 40% (paused)
+- v0.1 Language Spec: [██████████] 100% (restructured to 2 phases)
 - v0.1.1 Doc Audit: [██████████] 100%
-- Phase 6: [██████████] 100%
-- Phase 7: [██████████] 100%
-- Phase 8: [██████████] 100%
+- v0.2 Language Spec: [░░░░░░░░░░] 0% (next)
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [Loop complete — milestone ready to close]
+  ✓        ✓        ✓     [v0.1 complete — ready to close]
 ```
 
 ## Accumulated Context
@@ -51,6 +49,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | docs/ as Obsidian vault | 2026-03-14 | All docs use YAML frontmatter + [[wikilinks]] for Obsidian compatibility |
 | Dual smart referencing | 2026-03-14 | @-imports (Claude mandatory reads) + [[wikilinks]] (Obsidian navigation) on all cross-references |
 | Audit scope: all documentation | 2026-03-14 | docs/audit/ rules apply to ALL documentation Claude writes, not just docs/ files |
+| Restructured v0.1 to 2 phases | 2026-03-14 | Dropped Language Spec, Compiler Architecture, Prior Art Research phases; Language Spec moves to v0.2 |
 
 ### Deferred Issues
 - Rebuild Polly as PAUL special flow (after documentation phases)
@@ -67,13 +66,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: v0.1.1 milestone fully executed
-Next action: Commit changes, then /paul:complete-milestone for v0.1.1, then resume v0.1 at Plan 02-02
+Stopped at: v0.1 restructured, v0.1.1 committed
+Next action: /paul:complete-milestone for v0.1, then /paul:discuss-milestone for v0.2
 Resume context:
-- docs/audit/ fully built: 7 files across audiences/, rules/, reference/
-- CLAUDE.md at project root points to audit/
-- vision.md cleaned of AI meta-instructions
-- v0.1 paused at Plan 02-02 (Variables & Lifecycle)
+- v0.1 restructured to 2 phases (both complete)
+- v0.1.1 committed (docs/audit/ infrastructure)
+- v0.2 Language Specification milestone created (not started)
+- Old Phase 2 plan artifacts deleted
 
 ---
 *STATE.md — Updated after every significant action*
