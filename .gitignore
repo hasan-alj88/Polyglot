@@ -47,3 +47,4 @@ build/
 coverage/
 *.profraw
 *.profdata
+docs/draft.md
