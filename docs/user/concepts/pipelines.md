@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-15
+updated: 2026-03-21
 status: draft
 ---
 
@@ -27,7 +27,7 @@ Every pipeline definition `{=}` (see [[blocks]]) must contain these elements in 
 
 ## Pipeline Metadata
 
-Every pipeline carries implicit `live` metadata fields populated by the Polyglot runtime. Query built-in metadata via the `%` accessor instead of creating custom booleans. See [[metadata]] for the full metadata tree, field listings, and access patterns.
+Every pipeline carries implicit `live` metadata fields populated by the Polyglot runtime. Pipeline metadata lives at `%=:{name}:{instance}` in the unified tree — see [[data-is-trees#How Concepts Connect]]. Query built-in metadata via the `%` accessor instead of creating custom booleans. See [[metadata]] for the full metadata tree, field listings, and access patterns.
 
 ### Error Trees
 
@@ -47,48 +47,13 @@ Every pipeline exposes an error tree -- a structured list of every error it can 
       [r] >content << "Error: could not read file"
 ```
 
-### Default behavior: `[!]` ends the pipeline
-
-By default, if an `[!]` handler does **not** push a replacement value into the output variable, the pipeline **terminates on error**. No downstream code runs. This is the safe default.
-
-```polyglot
-[r] =Fetch
-   [=] >payload >> >data
-   [!] !FetchError
-      [r] =LogError
-         [=] <msg << "fetch failed"
-      [ ] pipeline ends here on error
-[r] =Process
-   [=] <input << >data           [ ] only reachable if >data is Final
-```
-
-### Continuing after error: `[*] *Continue`
-
-To continue the prime pipeline after an error, place `[*] *Continue` inside the `[!]` block. `*Continue` is a collector that produces a boolean `>IsFailed` output, wired directly on the `[*]` line. If the `>IsFailed` output is not handled, the compiler emits PGW-205.
-
-Note: pipelines won't trigger if their input is Failed (IO implicit gate), so downstream steps with Failed inputs simply don't fire.
-
-```polyglot
-[r] =Fetch
-   [=] >payload >> >data
-   [!] !FetchError
-      [r] =LogError
-         [=] <msg << "fetch failed"
-      [*] *Continue >IsFailed >> $fetchFailed
-[?] $fetchFailed =? true
-   [r] =HandleMissing
-[?] *?
-   [r] =Process
-      [=] <input << >data        [ ] safe — >data is Final on this path
-```
-
-Three patterns for error handling:
-
 | Pattern | Pipeline continues? | Variable state |
 |---------|-------------------|---------------|
 | `[!]` pushes replacement (`<<`/`>>`) | Yes | Always Final |
 | `[!]` without replacement (default) | No — ends on error | Never Failed |
 | `[!]` with `[*] *Continue >IsFailed >> $var` | Yes | May be Failed — handle via `$var` boolean |
+
+For the full error model — chain error addressing, `*Continue` recovery patterns, standard error trees, and the Failed state — see [[errors]]. Errors live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
 ## IO as Implicit Triggers
 
@@ -285,3 +250,78 @@ Errors in chains use the `!` prefix with a step index or leaf name, followed by 
 ### Type Annotations on Wires
 
 Type annotations (`;type`) on chain IO lines are **optional**. When present, the compiler validates that connected ports have matching types. When omitted, types are inferred from the pipeline definitions.
+
+## Inline Pipeline Calls
+
+<!-- @types -->
+An inline pipeline call evaluates a pipeline as a single value. The syntax is `=Pipeline"string"` — a pipeline reference immediately followed by a string literal. Inline calls are valid anywhere a `value_expr` is expected: assignment RHS, comparison operands, etc. See [[types#`=Path"..."` Inline Notation]] for the `=Path` example.
+
+```polyglot
+[r] $dir;path << =Path"/tmp/MyApp"
+[r] $msg;string << =Greeting"Hello {$name}"
+[?] $dir =? =Path"/expected"
+```
+
+### Reserved Parameter: `<InlineStringLiteral;string`
+
+Every pipeline has a reserved parameter name `InlineStringLiteral`. To accept inline calls, a pipeline must explicitly declare it in its `[=]` IO:
+
+```polyglot
+[=] <InlineStringLiteral;string <~ ""
+```
+
+The default value is `""`. When the pipeline is called inline (`=Pipeline"..."`), the compiler auto-wires the rendered string into this parameter. When called normally (via `[r]`), the default `""` applies.
+
+### Mechanism
+
+1. **String interpolation** — `{$var}` inside the string literal resolves first
+2. **Auto-wire** — the rendered string is pushed into `<InlineStringLiteral;string`
+3. **Pipeline-specific parsing** — the pipeline body interprets the string its own way (e.g., `=Path` normalizes separators, `=T.Daily` parses a time)
+4. **Result returned** — the pipeline's output becomes the value of the expression
+
+### Return Value
+
+| Pipeline outputs | Value type |
+|------------------|-----------|
+| One `>output` | That output's type directly |
+| Multiple `>outputs` | `;serial` with output parameter names as keys |
+
+If the target type does not match the inline pipeline's output type, the compiler raises a type or schema mismatch error.
+
+### Dual-Mode Pipelines
+
+Since `<InlineStringLiteral;string` defaults to `""`, a pipeline can support both normal calls and inline calls. Guard inline-specific logic with a conditional:
+
+```polyglot
+{=} =Greeting
+   [%] .description << "Generates a greeting message"
+   [=] <InlineStringLiteral;string <~ ""
+   [=] <name;string <~ ""
+   [=] >message;string
+   [t] =T.Call
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [?] $InlineStringLiteral =!? ""
+      [ ] Inline call — parse the string
+      [r] $name << $InlineStringLiteral
+   [?] *?
+      [ ] Normal call — $name filled by caller
+   [r] >message << "Hello {$name}"
+```
+
+Both calling forms work:
+
+```polyglot
+[ ] Inline call
+[r] $msg;string << =Greeting"World"
+
+[ ] Normal call
+[r] =Greeting
+   [=] <name << "World"
+   [=] >message >> $msg
+```
+
+### Where Inline Calls Are NOT Valid
+
+- **Chain calls** — `>>` connects pipeline references, not values. `[r] =Path"/tmp" >> =Other` is invalid (both sides would be values).
+- **LHS of assignments** — inline calls produce values, they are not assignable targets.

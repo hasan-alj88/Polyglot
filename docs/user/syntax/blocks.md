@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-15
+updated: 2026-03-21
 status: draft
 ---
 
@@ -9,7 +9,7 @@ status: draft
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils.
+Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{M}` at `%M` (see [[data-is-trees]]).
 
 ## `{X}` — Definition Elements
 
@@ -18,7 +18,7 @@ Define top-level structures. Open a scope that continues with indentation.
 | Marker | Defines |
 |--------|---------|
 | `{@}` | Package declaration (mandatory, first in file). See [[packages]] |
-| `{#}` | Data definition. See [[types#Enum Fields vs Value Fields]] |
+| `{#}` | Struct definition. See [[types#Enum Fields vs Value Fields]] |
 | `{=}` | Pipeline definition. See [[pipelines]] |
 | `{M}` | Macro definition |
 | `{Array}` | Array collection definition. See [[collections]] |

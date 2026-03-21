@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-15
+updated: 2026-03-21
 status: draft
 ---
 
@@ -10,7 +10,7 @@ status: draft
 <!-- @operators -->
 <!-- @pipelines -->
 <!-- @identifiers -->
-Input and output parameters bind data into and out of operators. IO labels are [[identifiers#Serialized Identifiers]]. Assignment uses [[operators]] (`<<`, `>>`, `<~`, `~>`). For how IO assignment mode controls pipeline triggering, see [[pipelines#IO as Implicit Triggers]].
+Input and output parameters bind data into and out of operators. IO labels are [[identifiers#Serialized Identifiers]]. Assignment uses [[operators]] (`<<`, `>>`, `<~`, `~>`). For how IO assignment mode controls pipeline triggering, see [[pipelines#IO as Implicit Triggers]]. IO ports live as nested typed sections in the metadata tree at `%=:{name}:{instance}.<` (inputs) and `.>` (outputs) — see [[data-is-trees#IO Ports — Nested Typed Sections]].
 
 ## IO Labels
 

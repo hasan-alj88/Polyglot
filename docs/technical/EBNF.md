@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: specification
-updated: 2026-03-17
+updated: 2026-03-20
 status: draft
 ---
 
@@ -83,7 +83,9 @@ string_content      ::= any_char - '"' - '{'
 
 interpolation       ::= '{' variable_id '}' ;  (* e.g., {$name}, {$user:location} *)
 int_literal         ::= [ '-' ] digit { digit } ;
+                      (* Runtime RE: ^-?[0-9]+$  — leading zeros allowed *)
 float_literal       ::= [ '-' ] digit { digit } '.' digit { digit } ;
+                      (* Runtime RE: ^-?[0-9]+\.[0-9]+$  — leading zeros allowed *)
 bool_literal        ::= "#Boolean.True" | "#Boolean.False" ;
 
 literal             ::= string_literal
@@ -188,7 +190,12 @@ type_expr           ::= basic_type
 
 live_type           ::= "live" type_expr ;    (* Polyglot-managed, read-only *)
 
-basic_type          ::= "string" | "int" | "float" | "bool" | "path" ;
+basic_type          ::= "RawString" | "string" | "int" | "float" | "bool" | "path" ;
+                      (* RawString: compiler intrinsic, literal raw chars, no interpolation.
+                         string (#String): struct with .string;RawString + .re;RawString.
+                         int, float: #String subtypes with pre-set .re patterns.
+                         bool (#Boolean): separate enum struct, not a #String subtype.
+                         path (#path): struct with .Unix;string + .Windows;string. *)
 
 array_type          ::= "array" [ fixed_sep element_type ] ;
 element_type        ::= basic_type | name ;            (* user-defined type name without # prefix *)
@@ -357,8 +364,17 @@ value_expr          ::= literal
                       | io_param
                       | cross_pkg_enum
                       | inline_data
+                      | inline_pipeline_call
                       | arithmetic_expr
                       | output_param ;       (* >pipelineOutput as source *)
+
+inline_pipeline_call ::= pipeline_ref string_literal ;
+                      (* e.g., =Path"/tmp/MyApp", =Path"{.}/logs"
+                         The string literal is interpolated ({$var} resolved first),
+                         then auto-wired into the pipeline's <InlineStringLiteral;string
+                         parameter (must be declared in [=] IO, defaults to "").
+                         Each pipeline defines its own parsing logic for the string.
+                         For =Path, separators / and \ are normalized per OS. *)
 ```
 
 ### 8.2 Comparison Expressions
@@ -404,7 +420,7 @@ import_line         ::= "[@]" '@' name final_push package_id ;
 data_def            ::= "{#}" data_id NEWLINE
                          { indent data_field NEWLINE } ;
 
-data_field          ::= enum_field | value_field | metadata_line | comment_line ;
+data_field          ::= enum_field | value_field | flex_data_field | typed_flex_wildcard | metadata_line | comment_line ;
 
 enum_field          ::= "[.]" fixed_sep name NEWLINE
                          { indent ( data_field | metadata_line ) NEWLINE } ;  (* enum fields can nest sub-fields and metadata *)
@@ -413,6 +429,13 @@ value_field         ::= "[.]" fixed_sep name type_annotation [ assignment_op val
 
 (* Flexible-field data declaration *)
 flex_data_field     ::= "[:]" flex_sep name type_annotation [ assignment_op value_expr ] ;
+
+(* Typed flexible wildcard — all flex siblings at this level share this type *)
+typed_flex_wildcard ::= "[:]" flex_sep "*" type_annotation ;
+                      (* e.g., [:] :*;Handler — every :key at this level is ;Handler.
+                         Compiler infers type on new keys; no explicit annotation needed.
+                         Contradicting annotation → PGE-401.
+                         Absent wildcard → untyped (;serial). *)
 ```
 
 **Rules:**

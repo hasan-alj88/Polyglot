@@ -56,6 +56,8 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-405 | 4.5 | Undefined Interpolation Variable |
 | PGE-406 | 4.6 | Undefined Variable Reference |
 | PGE-407 | 4.7 | Invalid Path String |
+| PGE-408 | 4.8 | Missing Path Platform Subfield |
+| PGE-409 | 4.9 | Unhandled Serialâ†’Struct Conversion |
 | PGE-501 | 5.1 | Sibling Separator Homogeneity |
 | PGE-502 | 5.2 | Sibling Kind Homogeneity |
 | PGE-601 | 6.1 | Conditional Must Be Exhaustive |
@@ -95,6 +97,7 @@ Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a develope
 | PGW-201 | 2.7 | Default Pull Across State Change |
 | PGW-205 | 2.5 | Pipeline Terminates on Error |
 | PGW-301 | 3.5 | `[b]` Called Pipeline Has Discarded Outputs |
+| PGW-408 | 4.8 | Single-Platform Path |
 | PGW-801 | 8.1 | Auto-Wire Succeeded |
 | PGW-901 | 9.1 | Deprecated Pipeline Reference |
 

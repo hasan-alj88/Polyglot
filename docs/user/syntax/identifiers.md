@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-14
+updated: 2026-03-21
 status: draft
 ---
 
@@ -14,10 +14,11 @@ ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address f
 | Prefix | Type | Example |
 |--------|------|---------|
 | `@` | Packages | `@Local:999.MyPackage.Sub:v1.2.3` |
-| `#` | Data definitions | `#UserRecord`, `#Boolean.True` |
+| `#` | Struct definitions | `#UserRecord`, `#Boolean.True` |
 | `=` | Pipelines | `=ProcessData`, `=Pipeline.Name` |
 | `$` | Variables | `$name`, `$result:status`, `$*` (discard) |
 | `!` | Errors | `!No.Input`, `!Timeout:Connection` |
+| `%` | Metadata accessor | `=Pipeline%status`, `$var%state` |
 
 ## Serialized Identifiers
 
@@ -31,7 +32,7 @@ ALL identifiers are **serialized data**. Two field separators distinguish schema
 
 **Fixed fields (`.`)** — keys predefined by either:
 - **Polyglot standard** — built-in types, errors, enums (`#Boolean.True`, `pg.string`, `!No.Input`)
-- **User-defined data schemas** — fields declared via `{#}` blocks (`#UserRecord.name`, `#UserRecord.age`)
+- **User-defined structs** — fields declared via `{#}` blocks (`#UserRecord.name`, `#UserRecord.age`)
 
 **Flexible fields (`:`)** — user-defined, any key accepted:
 - `$user:name` — custom variable field
@@ -50,7 +51,9 @@ The `%` accessor reads `live`-typed metadata that the runtime populates. Users c
 
 **Discard variable (`$*`)** — a reserved identifier that immediately releases any value pushed into it. Use `$*` when a pipeline produces output you intentionally do not need. `$*` satisfies PGE-302 (parallel output must be collected) without naming the variable. For debugging or later use, prefer `*Ignore` with a named variable instead — see [[collections#*Ignore — Explicit Discard]].
 
-The prefix (`$`, `@`, `!`, `#`, `=`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to data definitions, see [[types#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[collections#Collection Types]].
+The prefix (`$`, `@`, `!`, `#`, `=`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[types#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[collections#Collection Types]].
+
+These serialized paths — `#Boolean.True`, `$user:name`, `=Pipeline%status` — are all branches on one unified tree. Every Polyglot object lives in the `%` metadata tree, organized by its prefix. After learning the core concepts, see [[data-is-trees]] for how everything connects.
 
 ## Serialization Rules
 
@@ -84,7 +87,7 @@ The prefix (`$`, `@`, `!`, `#`, `=`) identifies the type. The separators (`.` fi
 
 **Declared value fields:** A value field with no assignment is in **Declared** state. It can be pushed to (final or default) in usage, but pulling from a Declared variable is a compile error. See [[variable-lifecycle#Declared]].
 
-3. **Leaf-only assignment** — only leaf fields (no children) can have values assigned. Branch fields are structural only. More broadly, the serialized tree (schema) must match — pushing serialized data into a mismatched schema is a compile error. The field type (`.` fixed vs `:` flexible) determines schema compatibility.
+3. **Leaf-only assignment** — only leaf fields (no children) can have values assigned. Branch fields are structural only. More broadly, the serialized tree (struct schema) must match — pushing serialized data into a mismatched schema is a compile error. The field type (`.` fixed vs `:` flexible) determines schema compatibility.
 
 ```polyglot
 [ ] VALID:   assign to leaf

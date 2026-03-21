@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-15
+updated: 2026-03-21
 status: draft
 ---
 
@@ -13,7 +13,7 @@ status: draft
 
 ## Assignment Operators
 
-Directional — the arrow indicates data flow. See [[variable-lifecycle]] for lifecycle semantics, [[io]] for IO parameter context, [[pipelines#IO as Implicit Triggers]] for how assignment mode affects trigger behavior.
+Directional — the arrow indicates data flow. Operators push and pull data across branches of the `%` metadata tree (see [[data-is-trees]]). See [[variable-lifecycle]] for lifecycle semantics, [[io]] for IO parameter context, [[pipelines#IO as Implicit Triggers]] for how assignment mode affects trigger behavior.
 
 | Operator | Name | Direction | Usage |
 |----------|------|-----------|-------|

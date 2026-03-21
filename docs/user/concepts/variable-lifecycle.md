@@ -1,7 +1,7 @@
 ---
 audience: user
 type: spec
-updated: 2026-03-15
+updated: 2026-03-21
 ---
 
 # Variable Lifecycle
@@ -59,7 +59,7 @@ Variable lifecycle state is queryable at runtime via the `%` metadata accessor:
       [r] ...
 ```
 
-`$varName%state` returns a `;live.#VarState` value. The `live` field is always readable and does not follow the standard lifecycle (it is managed by the runtime). The `#VarState` enum maps directly to the stages above: Declared, Default, Final, Failed, Released. See [[metadata]] for the full metadata tree and all `live` fields.
+`$varName%state` returns a `;live.#VarState` value — reading from `%$:{name}:{instance}.state` in the metadata tree (see [[data-is-trees#How Concepts Connect]]). The `live` field is always readable and does not follow the standard lifecycle (it is managed by the runtime). The `#VarState` enum maps directly to the stages above: Declared, Default, Final, Failed, Released. See [[metadata]] for the full metadata tree and all `live` fields.
 
 ## Assignment Operators
 

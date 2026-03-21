@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-14
+updated: 2026-03-21
 status: draft
 ---
 
@@ -9,7 +9,7 @@ status: draft
 
 <!-- @identifiers -->
 <!-- @blocks -->
-Mandatory first block in every `.pg` file — exactly one `{@}` per file. Multiple `{#}` and `{=}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses are [[identifiers#Serialized Identifiers]] using `.` (fixed) and `:` (flexible) separators.
+Mandatory first block in every `.pg` file — exactly one `{@}` per file. Multiple `{#}` and `{=}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses are [[identifiers#Serialized Identifiers]] using `.` (fixed) and `:` (flexible) separators. Packages live at `%@` in the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
 ```polyglot
 { } Package declaration block

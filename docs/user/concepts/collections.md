@@ -1,7 +1,7 @@
 ---
 audience: user
 type: spec
-updated: 2026-03-15
+updated: 2026-03-21
 ---
 
 # Collections
@@ -9,15 +9,15 @@ updated: 2026-03-15
 <!-- @glossary:Polyglot Code -->
 <!-- @operators -->
 <!-- @blocks -->
-Collections in Polyglot Code ([[glossary#Polyglot Code]]) are data structures that hold multiple items. They are processed using expand (`~`) and collect (`*`) operators — see [[operators#Collection Operators]] and [[blocks#Data Flow]] for block element reference.
+Collections in Polyglot Code ([[glossary#Polyglot Code]]) are data structures that hold multiple items. They are processed using expand (`~`) and collect (`*`) operators — see [[operators#Collection Operators]] and [[blocks#Data Flow]] for block element reference. Expand operators live at `%~` and collect operators at `%*` in the metadata tree — see [[data-is-trees#How Concepts Connect]].
 
 ## Collection Types
 
 | Type | Description | Schema |
 |------|-------------|--------|
-| `array` | Ordered collection of items. Essentially `#` with enumerated flat keys starting at 0 | Fixed (`.`) |
-| `serial` | Dynamic data structure with flexible fields, added on the fly. Converts to/from JSON-like formats | Flexible (`:`) |
-| `#` | User-defined data definition declared with `{#}`. Predefined fixed schema | Fixed (`.`) |
+| `array` | Ordered collection — a struct with enumerated flat keys starting at 0 | Fixed (`.`) |
+| `serial` | Schema-free data structure. Always uses flexible fields (`:`) even if dot notation is used in access. Converts to/from JSON-like formats | Flexible (`:`) |
+| `#` (struct) | User-defined **struct** declared with `{#}`. Predefined fixed schema | Fixed (`.`) |
 
 For type annotations and basic type details, see [[types]].
 

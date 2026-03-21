@@ -1,12 +1,14 @@
 # Brainstorm: #DateTime Full Data Tree
 
+> **PGE-501 FIX (2026-03-20):** `.Calendar`, `.Week`, `.TimeUnit`, and `.Cultural` now use entirely flexible (`:`) fields at their child level. Known entries (`:gregorian`, `:hijri`, etc.) are pre-declared with their types; users can add more keys. No `.`/`:` mixing.
+
 ## Design Principles
 
 1. **Epoch is truth** — all calendars are projections of `.Instant.epoch` with leap rules
 2. **Fixed (`.`) for universal structure** — year, month, day, hour, etc.
 3. **Flexible (`:`) for extensible parts** — user calendars, holidays, custom eras
 4. **Enum fields for finite sets** — calendar systems, weekday names, months
-5. **Schema matching** — serialized data must match target schema; mismatch is compile error (PGE-403)
+5. **Schema matching** — serialized data must match target schema; mismatch is compile error (PGE-402)
 6. **No mixing `.`/`:` at same sibling level** (PGE-501)
 7. **Calendars carry their own leap logic** — each calendar defines how it maps epoch to its units
 
@@ -25,18 +27,18 @@
       .zone;Zone
 
    .Calendar                       — calendar system representations
-      .system;CalendarSystem       — which calendar is active
-      .gregorian;GregorianDate
-      .hijri;HijriDate
-      .hebrew;HebrewDate
-      .chinese;ChineseDate
-      .persian;PersianDate
-      .buddhist;BuddhistDate
-      .hindu;HinduDate
-      .japanese;JapaneseDate
-      .ethiopian;EthiopianDate
-      .coptic;CopticDate
-      :custom;CustomCalendar       — USER-DEFINED calendars
+      [:] :system;CalendarSystem   — which calendar is active
+      [:] :gregorian;GregorianDate
+      [:] :hijri;HijriDate
+      [:] :hebrew;HebrewDate
+      [:] :chinese;ChineseDate
+      [:] :persian;PersianDate
+      [:] :buddhist;BuddhistDate
+      [:] :hindu;HinduDate
+      [:] :japanese;JapaneseDate
+      [:] :ethiopian;EthiopianDate
+      [:] :coptic;CopticDate
+      [ ] users can add :balinese, :mayan, etc. — schema must match their declared type
 
    .Relative                       — durations, periods, intervals
       .duration;Duration           — absolute (seconds-based)
@@ -45,24 +47,24 @@
       .recurrence;Recurrence       — repeating patterns
 
    .Week                           — week system
-      .day;Weekday
-      .number;int                  — week-of-year
-      .system;WeekSystem           — ISO, US, Middle-Eastern, etc.
-      .business;BusinessWeek       — configurable work/off days
-      :custom;CustomWeek           — USER-DEFINED week system
+      [:] :day;Weekday
+      [:] :number;int              — week-of-year
+      [:] :system;WeekSystem       — ISO, US, Middle-Eastern, etc.
+      [:] :business;BusinessWeek   — configurable work/off days
+      [ ] users can add :pawukon etc. — schema must match their declared type
 
    .TimeUnit                       — non-standard time divisions
-      .chinese;ChineseTime         — shichen, ke, fen
-      .hindu;HinduTime             — prahara, muhurta, ghati
-      .decimal;DecimalTime         — French Republican decimal
-      :custom;CustomTimeUnit       — USER-DEFINED time divisions
+      [:] :chinese;ChineseTime     — shichen, ke, fen
+      [:] :hindu;HinduTime         — prahara, muhurta, ghati
+      [:] :decimal;DecimalTime     — French Republican decimal
+      [ ] users can add custom time divisions — schema must match their declared type
 
    .Cultural                       — cultural/religious extensions
-      .dayBoundary;DayBoundary     — midnight, sunset, sunrise
-      .holidays;array.Holiday      — typed holiday list
-      .observances;array.Observance — typed observance list
-      .seasons;array.Season        — typed season markers
-      :extra                       — USER-DEFINED anything else
+      [:] :dayBoundary;DayBoundary — midnight, sunset, sunrise
+      [:] :holidays;array.Holiday  — typed holiday list
+      [:] :observances;array.Observance — typed observance list
+      [:] :seasons;array.Season    — typed season markers
+      [ ] users can add custom cultural data — schema must match their declared type
 ```
 
 ## Supporting Enums
@@ -97,10 +99,10 @@
    .Custom;BusinessWeek
 
 #BusinessWeek
-   .firstDay;Weekday <~ #Weekday.Monday
-   .workDays;array.Weekday           — which days are work days
-   .offDays;array.Weekday            — which days are off
-   .hoursPerDay;int <~ 8
+   .firstDay;Weekday                 — user must set
+   .workDays;array.Weekday           — user must set
+   .offDays;array.Weekday            — user must set
+   .hoursPerDay;int                  — user must set
 
 #DayBoundary
    .Midnight           — civil standard
@@ -569,18 +571,18 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 
 ## Flexible Fields (`:`) Extension Points
 
-- `#DateTime.Calendar:custom` — entirely custom calendar systems
-- `#DateTime.Week:custom` — custom week systems (e.g., Balinese Pawukon)
-- `#DateTime.TimeUnit:custom` — custom time divisions (non-standard day splits)
-- `#DateTime.Cultural:extra` — anything beyond holidays/observances/seasons
+All four extensible levels (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`) are entirely flexible — users add new `:key;Type` entries alongside the pre-declared ones.
+
+- `#DateTime.Calendar:*` — add any calendar (`:balinese;BalineseDate`, `:mayan;MayanDate`, etc.)
+- `#DateTime.Week:*` — add any week system (`:pawukon;PawukonWeek`, etc.)
+- `#DateTime.TimeUnit:*` — add any time division
+- `#DateTime.Cultural:*` — add any cultural data
 - `#Holiday:extra`, `#Observance:extra`, `#Season:extra` — per-item metadata
 - `#JapaneseEra:historical` — older era names
 - `#HijriAuthority.Custom:rules` — custom moon-sighting/calculation authority
 - `#HijriMethod.Custom:logic` — custom Hijri month-start determination
 - `#HijriLeap.Custom:rule` — custom Hijri leap logic
 - `#LeapRule.Custom:rule` — custom leap logic for any calendar
-- `#CustomCalendar:months`, `:leapRule` — full custom calendar definition
-- `#CustomTimeUnit:subdivisions`, `:mapping` — full custom time unit definition
 
 ## Alias
 
@@ -735,8 +737,28 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
    <week;BusinessWeek
 ```
 
-## Open Questions
+## Open Questions (Decided)
 
-- How does `DT"..."` literal relate to `=DT.From.ISO`? (literal is compile-time, pipeline is runtime?)
-- Should `#BusinessWeek` defaults vary per `#WeekSystem` (e.g., ISO defaults Mon-Fri, MiddleEastern defaults Sun-Thu)?
-- Should `=DT.To.*` pipelines cache projections or recompute each call?
+### Q1 — DateTime inline notation (Decided 2026-03-20)
+
+`=DateTime"..."` is the full inline pipeline call. `=DT"..."` is its alias (matching `#dt` alias for `#DateTime`). Both are sugar for `=DT.From.ISO`:
+
+```polyglot
+[ ] These three are equivalent:
+[r] $deadline;dt << =DateTime"2026-03-20T12:00:00Z"
+[r] $deadline;dt << =DT"2026-03-20T12:00:00Z"
+[r] $deadline;dt
+   [r] =DT.From.ISO
+      [=] <iso << "2026-03-20T12:00:00Z"
+      [=] >dt >> $deadline
+```
+
+Follows the `=Path"..."` precedent exactly.
+
+### Q2 — BusinessWeek defaults per WeekSystem (Decided 2026-03-20)
+
+No defaults. `#BusinessWeek` fields (`.firstDay`, `.workDays`, `.offDays`, `.hoursPerDay`) must all be explicitly set by the user. No assumptions about regional norms.
+
+### Q3 — Projection caching (Decided 2026-03-20)
+
+No caching. `=DT.To.*` pipelines recompute each call. Users store results in a `$variable` if they need the value again — explicit over implicit.

@@ -1,7 +1,7 @@
 ---
 type: spec-index
 audience: developer
-updated: 2026-03-19
+updated: 2026-03-21
 ---
 
 # Polyglot Technical Documentation
@@ -15,6 +15,13 @@ Internal specifications for Polyglot project contributors. These documents descr
 | EBNF.md | Complete formal grammar in Extended Backus-Naur Form |
 | EDGE-CASES.md | 42 edge cases organized by EBNF section for validation |
 | COMPILE-RULES.md | Error/warning code lookup tables, legend, and rule format template |
+
+## Formal Specifications (spec/)
+
+| File | Covers |
+|------|--------|
+| spec/metadata-tree.md | Complete `%` metadata tree: path grammar, branches, instance rules, enum semantics, field expansion |
+| spec/type-identity.md | Structural type matching rules (moved from compile-rules/) |
 
 ## Compiler Rules (compile-rules/)
 

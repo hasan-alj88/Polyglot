@@ -55,4 +55,4 @@ severity: error
    [@] @W << @Local:999.Wrappers:v1.0.0         [ ] ✗ PGE-913 — W is a reserved stdlib namespace
 ```
 
-**Open point:** The reserved namespace list should be maintained as stdlib grows. Current reserved prefixes: `File`, `T`, `Q`, `W`, `Sys`.
+The reserved namespace list is maintained in [`docs/user/stdlib/INDEX.md`](../../../user/stdlib/INDEX.md). Any top-level namespace listed there is reserved. Current reserved prefixes: `File`, `Path`, `Sys`, `T`, `Q`, `W`.

@@ -245,6 +245,241 @@ Review in batches by section. Each edge case includes:
 [r] $hire;#NewHire << <payload
 ```
 
+### EC-4.5: `=Path"..."` inline path creation
+
+**What it tests:** `=Path"..."` inline pipeline call creating `;path` values. See [[types#=Path Inline Notation]], [[STDLIB#=Path]].
+
+```polyglot
+[ ] Basic usage
+[r] $dir;path << =Path"/tmp/MyApp"
+
+[ ] With {.} shorthand
+[r] $logDir;path << =Path"{.}/logs"
+
+[ ] Separator equivalence — both resolve identically
+[r] $a;path << =Path"{.}\MyApp\logs"
+[r] $b;path << =Path"{.}/MyApp/logs"
+
+[ ] Interpolation with user-defined path variable
+[r] $root;path
+   [.] .Unix << "/opt"
+   [.] .Windows << "D:"
+[r] $appDir;path << =Path"{$root}/MyApp"
+
+[ ] Literal braces in path string
+[r] $weird;path << =Path"/tmp/{{backup}}/files"
+```
+
+### EC-4.6: Single-platform path (PGW-408 / PGE-408)
+
+**What it tests:** Warning when only one OS subfield assigned; error when current OS subfield missing. See [[types#Explicit Subfield Assignment]].
+
+```polyglot
+[ ] ⚠ PGW-408 — single platform, but matches current OS (Unix)
+[r] $dir;path
+   [.] .Unix << "/tmp/MyApp"
+
+[ ] ✗ PGE-408 — .Unix missing, compiling on Unix
+[r] $dir;path
+   [.] .Windows << "C:\MyApp"
+
+[ ] ✓ suppressed warning
+[ ] Ignore PGW-408
+[r] $dir;path
+   [.] .Unix << "/tmp/MyApp"
+
+[ ] ✓ no warning — both platforms
+[r] $dir;path
+   [.] .Unix << "/tmp/MyApp"
+   [.] .Windows << "C:\MyApp"
+```
+
+### EC-4.7: Plain string to `;path` type mismatch (PGE-401)
+
+**What it tests:** Assigning a plain string to a `;path` variable is a type mismatch. See [[types#Explicit Subfield Assignment]].
+
+```polyglot
+[ ] ✗ PGE-401 — string ≠ path, no implicit coercion
+[r] $dir;path << "/tmp/MyApp"
+
+[ ] ✓ correct — use =Path"..." instead
+[r] $dir;path << =Path"/tmp/MyApp"
+```
+
+### EC-4.8: Inline pipeline call — single output
+
+**EBNF:** `inline_pipeline_call ::= pipeline_ref string_literal`
+
+**What it tests:** An inline pipeline call with one output evaluates to that output's type directly.
+
+```polyglot
+[ ] ✓ =Path has one output >result;path — value is ;path
+[r] $dir;path << =Path"/tmp/MyApp"
+
+[ ] ✓ inline call as comparison operand
+[?] $dir =? =Path"/expected"
+```
+
+### EC-4.9: Inline pipeline call — multiple outputs
+
+**What it tests:** An inline pipeline call with multiple outputs evaluates to `;serial` with output parameter names as keys.
+
+```polyglot
+{=} =ParsePair
+   [=] <InlineStringLiteral;string <~ ""
+   [=] >key;string
+   [=] >value;string
+   [t] =T.Call
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [ ] ... parsing logic ...
+
+[ ] ✓ multiple outputs → ;serial with keys "key" and "value"
+[r] $result;serial << =ParsePair"name=Alice"
+```
+
+### EC-4.10: Inline pipeline call — type mismatch
+
+**What it tests:** Target type must match the inline pipeline's output type.
+
+```polyglot
+[ ] ✗ PGE-401 — =Path returns ;path, not ;string
+[r] $name;string << =Path"/tmp"
+
+[ ] ✓ matching types
+[r] $dir;path << =Path"/tmp"
+```
+
+### EC-4.11: Inline pipeline call — user-defined pipeline
+
+**What it tests:** User-defined pipelines can accept inline calls by declaring `<InlineStringLiteral;string`.
+
+```polyglot
+{=} =Greeting
+   [=] <InlineStringLiteral;string <~ ""
+   [=] >message;string
+   [t] =T.Call
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [?] $InlineStringLiteral =!? ""
+      [r] >message << "Hello {$InlineStringLiteral}"
+   [?] *?
+      [r] >message << "Hello World"
+
+[ ] ✓ inline call
+[r] $msg;string << =Greeting"Alice"
+
+[ ] ✓ normal call — $InlineStringLiteral is "" (default)
+[r] =Greeting
+   [=] >message >> $msg
+```
+
+### EC-4.12: Pipeline without `<InlineStringLiteral;string` called inline
+
+**What it tests:** Calling a pipeline inline when it has not declared the reserved parameter.
+
+```polyglot
+{=} =NormalPipeline
+   [=] <input;string
+   [=] >output;string
+   [t] =T.Call
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [r] >output << $input
+
+[ ] ✗ compile error — =NormalPipeline has no <InlineStringLiteral;string
+[r] $result;string << =NormalPipeline"test"
+```
+
+### EC-4.13: Typed flexible wildcard — basic inference
+
+**EBNF:** `typed_flex_wildcard ::= "[:]" flex_sep "*" type_annotation`
+
+**What it tests:** New `:key` at a typed flexible level inherits the wildcard type. No explicit annotation needed. See [[types#Typed Flexible Fields]].
+
+```polyglot
+{#} #Handler
+   [.] .endpoint;string
+   [.] .method;string
+
+{#} #Registry
+   [.] .plugins
+      [:] :*;Handler
+
+[ ] ✓ compiler infers :myPlugin is ;Handler
+[r] $reg.plugins:myPlugin.endpoint << "/api/data"
+[r] $reg.plugins:myPlugin.method << "GET"
+```
+
+### EC-4.14: Typed flexible wildcard — contradicting annotation (PGE-401)
+
+**What it tests:** Explicit type annotation that contradicts the wildcard type is a compile error.
+
+```polyglot
+{#} #Registry
+   [.] .plugins
+      [:] :*;Handler
+
+[ ] ✗ PGE-401 — :myPlugin is ;Handler (from wildcard), not ;string
+[r] $reg.plugins:myPlugin;string << "not a handler"
+```
+
+### EC-4.15: Typed flexible wildcard — multi-level resolution
+
+**What it tests:** Nested typed flexible levels — compiler resolves one level at a time. See [[types#Constraints]].
+
+```polyglot
+{#} #Setting
+   [.] .value;string
+   [.] .default;string
+
+{#} #Section
+   [:] :*;Setting
+
+{#} #Config
+   [.] .sections
+      [:] :*;Section
+
+[ ] ✓ :auth → ;Section, :timeout → ;Setting, .value → ;string
+[r] $cfg.sections:auth:timeout.value << "30s"
+[r] $cfg.sections:auth:timeout.default << "60s"
+```
+
+### EC-4.16: Typed flexible wildcard — untyped level (no wildcard)
+
+**What it tests:** Flexible level without `[:] :*;Type` is untyped — treated as `;serial`.
+
+```polyglot
+{#} #OpenConfig
+   [.] .data
+      [:] :key1;string
+      [:] :key2;int
+
+[ ] ✓ individually declared flex fields — matched by name
+[r] $cfg.data:key1 << "hello"
+[r] $cfg.data:key2 << 42
+
+[ ] ✗ :unknown has no wildcard, no individual declaration — treated as ;serial
+[r] $cfg.data:unknown << "anything"
+```
+
+### EC-4.17: Typed flexible wildcard — individual override before wildcard fallback
+
+**What it tests:** Named flex field matches first; wildcard is fallback.
+
+```polyglot
+{#} #MixedRegistry
+   [.] .entries
+      [:] :default;SpecialHandler
+      [:] :*;Handler
+
+[ ] ✓ :default matches the named declaration → ;SpecialHandler
+[r] $reg.entries:default.specialField << "value"
+
+[ ] ✓ :other falls back to wildcard → ;Handler
+[r] $reg.entries:other.endpoint << "/api"
+```
+
 ---
 
 ## 5. Block Elements (§5)
@@ -2045,7 +2280,7 @@ No bracket prefix needed inside.
 | §1 File Structure | EC-1.1, EC-1.2 | `file`, `definition` |
 | §2 Lexical | EC-2.1–2.4 | `indent`, `bool_literal`, `int_literal`, `float_literal`, `string_literal` |
 | §3 Identifiers | EC-3.1–3.7 | `package_address`, `cross_pkg_enum`, `cross_pkg_pipeline`, `field_path`, sibling homogeneity |
-| §4 Types | EC-4.1–4.4 | `array_type`, `element_type`, `serial_type`, `user_type` |
+| §4 Types | EC-4.1–4.12 | `array_type`, `element_type`, `serial_type`, `user_type`, `inline_pipeline_call`, path types |
 | §5 Blocks | EC-5.1–5.2 | All block element categories, `[b]` background |
 | §6 Operators | EC-6.1–6.4 | All assignment ops, all comparison ops, range ops, arithmetic |
 | §7 IO | EC-7.1 | `input_param` with field separators |

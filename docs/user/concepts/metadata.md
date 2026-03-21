@@ -1,25 +1,41 @@
 ---
 audience: developer
 type: spec
-updated: 2026-03-18
+updated: 2026-03-21
 ---
 
 # Metadata
 
 <!-- @glossary:Polyglot Service -->
+<!-- @data-is-trees -->
 
-The `%` accessor reads metadata from named objects — pipelines, variables, data types, and macros. Metadata is organized as a tree: `%<object kind>.<instance ref>.<field>`.
+The `%` accessor reads metadata from named objects — pipelines, variables, data types, macros, operators, errors, and packages. All Polyglot objects live on one unified tree (see [[data-is-trees]] for the conceptual overview). This document covers the detailed field listings.
 
-Two categories exist:
+Metadata is organized as a tree: `%{type}:{ref}:{instance}.{fields}`. Two categories exist:
 - **User-declared** — written via `[%]` block elements inside `{x}` definitions, follow normal lifecycle rules
 - **Polyglot-managed (`live`)** — populated by the runtime, read-only (PGE-206 applies)
+
+For the formal path grammar and instance rules, see [[metadata-tree|technical/spec/metadata-tree]].
 
 ## Metadata Tree
 
 ```
 %
-├── =  (Pipeline)
-│   └── <instance ref>
+├── #  (Structs)
+│   └── :<type ref>:<instance>
+│       ├── .lastModified    ;live.string
+│       ├── .files           ;live.array.path
+│       ├── .errors          ;live.array.error
+│       ├── .usageCount      ;live.int
+│       ├── .description     ;string           (user-declared)
+│       ├── .version         ;string           (user-declared)
+│       ├── .authors         ;array.string     (user-declared)
+│       ├── .license         ;string           (user-declared)
+│       ├── .deprecated      ;bool             (user-declared)
+│       ├── .alias                             (user-declared)
+│       └── :info            ;serial           (user-declared, flexible)
+├── =  (Pipelines)
+│   └── :<name>:<instance>
 │       ├── .status          ;live.#PipelineStatus
 │       ├── .errors          ;live.array.error
 │       ├── .isSuccess       ;live.#Boolean
@@ -34,35 +50,63 @@ Two categories exist:
 │       ├── .deprecated      ;bool             (user-declared)
 │       ├── .deprecatedMessage ;string         (user-declared)
 │       ├── .alias                             (user-declared)
+│       ├── .<               (input ports)
+│       ├── .>               (output ports)
 │       └── :info            ;serial           (user-declared, flexible)
-├── $  (Variable)
-│   └── <instance ref>
+├── ~  (Expanders)
+│   └── :<name>:<instance>
+│       ├── .<               (expand inputs)
+│       └── .>               (expand outputs)
+├── *  (Collectors)
+│   └── :<name>:<instance>
+│       ├── .<               (collect inputs)
+│       └── .>               (collect outputs)
+├── $  (Variables)
+│   └── :<name>:<instance>
 │       └── .state           ;live.#VarState
-├── #  (Data)
-│   └── <instance ref>
-│       ├── .lastModified    ;live.string
-│       ├── .files           ;live.array.path
-│       ├── .errors          ;live.array.error
-│       ├── .usageCount      ;live.int
+├── M  (Macros)
+│   └── :<name>:<instance>
 │       ├── .description     ;string           (user-declared)
 │       ├── .version         ;string           (user-declared)
 │       ├── .authors         ;array.string     (user-declared)
 │       ├── .license         ;string           (user-declared)
 │       ├── .deprecated      ;bool             (user-declared)
+│       ├── .deprecatedMessage ;string         (user-declared)
 │       ├── .alias                             (user-declared)
-│       └── :info            ;serial           (user-declared, flexible)
-└── M  (Macro)
-    └── <instance ref>
-        ├── .description     ;string           (user-declared)
-        ├── .version         ;string           (user-declared)
-        ├── .authors         ;array.string     (user-declared)
-        ├── .license         ;string           (user-declared)
-        ├── .deprecated      ;bool             (user-declared)
-        ├── .deprecatedMessage ;string         (user-declared)
-        ├── .alias                             (user-declared)
-        ├── :info            ;serial           (user-declared, flexible)
-        └── (live fields TBD)
+│       ├── :info            ;serial           (user-declared, flexible)
+│       └── (live fields TBD)
+├── !  (Errors)
+│   └── :<namespace>
+│       └── .<error path>    (fixed hierarchy)
+├── @  (Packages)
+│   └── :<address>
+│       └── (package metadata)
+└── definition              (compile-time schema templates)
+    └── .{type}:{ref}       (structural template for all instances)
 ```
+
+## String Subtypes in the Tree
+
+String subtypes live under `%#:String:*` at a flexible level. Each subtype uses the `#String` schema with `.re` pre-filled:
+
+| Subtype | Tree path | `.re` pattern |
+|---------|-----------|---------------|
+| `int` | `%#:String:int` | `^-?[0-9]+$` |
+| `float` | `%#:String:float` | `^-?[0-9]+\.[0-9]+$` |
+| custom | `%#:String:<name>` | User-defined pattern |
+
+User code `;int` is an alias for `;String.int`. See [[types#Numeric Types — #String Subtypes]].
+
+## Enum Active-Field-Only
+
+An enum instance collapses to ONE active field. The definition lists all valid branches, but a specific instance has only the active one:
+
+```
+%definition.#:Boolean       ← lists .True and .False
+%#:Boolean:0.True           ← instance 0: .True is active, .False does NOT exist
+```
+
+Push atomically clears the previous field and sets the new one. Reading a non-active field returns no path. See [[data-is-trees#Enum Instances — Active-Field-Only]].
 
 ## User-Declared Metadata
 
@@ -104,7 +148,7 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 
 ## Live Metadata Fields
 
-`live` fields are implicit on every `{=}` pipeline, `$` variable, and `{#}` data definition. The runtime populates them automatically. Users read them via `%` but cannot push into them (PGE-206). See [[types#Live Type Modifier]].
+`live` fields are implicit on every `{=}` pipeline, `$` variable, and `{#}` struct. The runtime populates them automatically. Users read them via `%` but cannot push into them (PGE-206). See [[types#Live Type Modifier]].
 
 ### Pipeline (`{=}`)
 

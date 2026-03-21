@@ -50,4 +50,32 @@ severity: error
    [.] .Windows << "MyApp"              [ ] ✗ PGE-407 — Windows path missing drive letter or UNC prefix
 ```
 
-**Open point:** Define exact validation rules per OS — current examples show the principle but the full character/syntax rules need formal specification.
+**OS-specific validation:** Exact per-OS character/syntax rules (forbidden chars, max length, reserved names) are deferred to compiler implementation. The language spec covers structure and separator normalization only.
+
+**Cross-platform inference (resolved 2026-03-20):**
+
+The compiler statically infers whether a `=Path"..."` expression is provably cross-platform or potentially single-OS:
+
+- **Provably cross-platform** — contains `{.}`, `{..}`, or interpolates a `$var;path` that has both `.Unix` and `.Windows` defined → no handling needed
+- **Potentially single-OS** — contains only literal strings or interpolates variables without dual-OS proof → compiler raises PGE-407, forcing the user to either:
+  1. Define explicit dual-OS subfields (`.Unix` + `.Windows`)
+  2. Handle with `[!]` + `*Continue >FallBack`
+
+```polyglot
+[ ] ✓ provably cross-platform — {.} is dual-OS
+[r] $LogDir;path << =Path"{.}/logs"
+
+[ ] ✓ provably cross-platform — $Root has both subfields
+[r] $Root;path
+   [.] .Unix << "/opt"
+   [.] .Windows << "C:\opt"
+[r] $AppDir;path << =Path"{$Root}/MyApp"
+
+[ ] ✗ PGE-407 — literal string, no dual-OS proof
+[r] $dir;path << =Path"/tmp/MyApp"
+
+[ ] ✓ handled — fallback for single-OS path
+[r] $dir;path << =Path"/tmp/MyApp"
+   [!] !PathPlatformMismatch
+      [*] *Continue >FallBack << $defaultDir
+```
