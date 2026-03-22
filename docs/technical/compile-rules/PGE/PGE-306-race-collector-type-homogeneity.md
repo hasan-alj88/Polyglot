@@ -69,4 +69,4 @@ severity: error
    [*] >> $winner
 ```
 
-**Note:** Type matching is schema-based, not name-based — per [TYPE-IDENTITY.md](../TYPE-IDENTITY.md). Two differently-named `{#}` types with identical field structures are the same type. See [005-race-type-matching-semantics.md](../../compiler_issues/005-race-type-matching-semantics.md) for the design decision.
+**Note:** Type matching is schema-based, not name-based — per [TYPE-IDENTITY.md](../TYPE-IDENTITY.md). Two differently-named `{#}` types with identical field structures are the same type. See resolved design issue 005 (git history: `docs/technical/compiler_issues/005-race-type-matching-semantics.md`) for the design decision.

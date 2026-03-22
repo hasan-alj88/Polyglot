@@ -45,27 +45,9 @@ Semantic constraints enforced at compile time — beyond what EBNF grammar captu
 | 7 | Error Handling | PGE-7xx | 7.1 |
 | 8 | Chain Execution | PGE-8xx, PGW-8xx | 8.1–8.2 |
 
-## Compiler Issues (docs/technical/compiler_issues/)
+## Issue Tracking
 
-Deferred compiler enhancements and investigation items.
-
-| File | Summary |
-|------|---------|
-| 001-static-failed-detection.md | Statically detect when `[!]` handlers don't provide replacement values for output variables |
-| 002-metadata-schema-tree.md | Document the full `%` metadata schema tree — block types, instance references, `live` vs non-live fields |
-| 003-metadata-access-before-collection.md | Can `live` metadata be inspected before parallel collection? (Rule 3.3) |
-| 004-setup-internal-parallel-collection.md | Can `[\]` setup have both `[p]` and `[*]` internally? (Rule 3.4) |
-| 005-race-type-matching-semantics.md | Race collector type matching — exact vs structural (Rule 3.6) |
-| 006-compound-condition-exhaustiveness.md | Boolean algebra analysis for compound condition exhaustiveness (Rule 6.1) |
-| 007-pge601-duplicate-content.md | PGE-601 contains duplicated type-specific content from PGE-602/603 |
-| 008-pge203-pge204-overlap.md | PGE-203 and PGE-204 have overlapping scope |
-| 009-pge301-pge303-push-redundancy.md | PGE-303 push case is redundant with PGE-301 |
-| 010-pge101-split-failure-modes.md | PGE-101 covers 5 distinct failure modes under one code |
-| 011-pge104-incomplete-macro-whitelist.md | PGE-104 macro element whitelist is incomplete |
-| 012-pge205-continue-mechanism-split.md | PGE-205 *Continue mechanism warrants its own rule |
-| 013-pge401-extract-type-definition.md | PGE-401 canonical "same type" definition should be shared |
-| 014-pge601-restructure-type-sections.md | PGE-601 needs per-type sub-rules (PGE-605/606/607) |
-| 015-pge701-chain-error-expansion.md | PGE-701 chain error addressing needs explicit coverage |
+Compiler issues, design decisions, and project tracking are managed via [GitHub Issues](https://github.com/hasan-alj88/Polyglot/issues). Resolved design issues (001–030) are preserved in git history under `docs/technical/compiler_issues/`.
 
 ## Language Reference
 

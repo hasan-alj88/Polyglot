@@ -39,4 +39,4 @@ split_from: PGE-601
 **See also:**
 - [PGE-601 — Conditional Must Be Exhaustive](PGE-601-conditional-must-be-exhaustive.md) — parent rule
 - [PGE-605 — Compound Condition Overlap](PGE-605-compound-condition-overlap.md) — overlap detection for compound conditions
-- [006 — Compound Condition Exhaustiveness](../../compiler_issues/006-compound-condition-exhaustiveness.md) — design issue
+- [Issue #23 — Compound Exhaustiveness Algorithm](https://github.com/hasan-alj88/Polyglot/issues/23) — algorithm spec

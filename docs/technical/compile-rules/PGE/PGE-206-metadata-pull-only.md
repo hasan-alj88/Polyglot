@@ -17,7 +17,7 @@ severity: error
 2. **`%state`** is always accessible and returns the current state, including `"failed"`.
 3. **`live` metadata** on Failed variables is frozen at the point of failure — last known values remain readable. This allows `[!]` error handlers to inspect the failed variable's metadata for recovery decisions.
 
-**`%` schema tree:** Metadata is organized by block type — `%pipeline.*` for `{=}` pipelines, `%#.*` for `{#}` data definitions, `%M.*` for `{M}` macros. The `*` in the path is the instance reference — one pipeline definition may span several concurrent instances, each with its own metadata. The schema is fixed per block type (all instances share the same field structure). See [002-metadata-schema-tree.md](../compiler_issues/002-metadata-schema-tree.md) for full schema documentation status.
+**`%` schema tree:** Metadata is organized by block type — `%pipeline.*` for `{=}` pipelines, `%#.*` for `{#}` data definitions, `%M.*` for `{M}` macros. The `*` in the path is the instance reference — one pipeline definition may span several concurrent instances, each with its own metadata. The schema is fixed per block type (all instances share the same field structure). See resolved design issue 002 (git history: `docs/technical/compiler_issues/002-metadata-schema-tree.md`) for full schema documentation status.
 
 **VALID:**
 ```polyglot

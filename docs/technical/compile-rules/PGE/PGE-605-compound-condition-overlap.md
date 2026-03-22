@@ -12,7 +12,7 @@ severity: error
 **Rationale:** Overlapping compound branches create ambiguity — when an input matches multiple branches, the compiler cannot determine which should execute. This is always a bug. Even with `*?`, overlaps must be resolved.
 **Detection:** The compiler builds a partition grid over all tested variables (per the partition-refinement algorithm in Issue 006), maps each branch to its covered cells, and checks if any cell is covered by more than one branch. If so, PGE-605 fires with the overlapping branches and a concrete counterexample from the shared cell.
 
-**See also:** PGE-601 (general exhaustiveness), PGE-604 (numeric range overlap), PGE-608 (compound exhaustiveness), [Issue 006](../../compiler_issues/006-compound-condition-exhaustiveness.md), [algorithm](../../plan/TODO/006-compound-exhaustiveness-algorithm.md)
+**See also:** PGE-601 (general exhaustiveness), PGE-604 (numeric range overlap), PGE-608 (compound exhaustiveness), [Issue #23 — Exhaustiveness Algorithm](https://github.com/hasan-alj88/Polyglot/issues/23), [Issue #24 — Overlap Detection Algorithm](https://github.com/hasan-alj88/Polyglot/issues/24)
 
 **VALID:**
 ```polyglot

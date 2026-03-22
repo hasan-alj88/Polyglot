@@ -94,5 +94,5 @@ No new grammar needed. RE is declared via standard subfield assignment:
 - `docs/user/syntax/types.md` — Basic Types rewritten, RawString added
 - `docs/technical/EBNF.md` — `RawString` added to `basic_type`
 - `docs/technical/brainstorming/string-re-subfields.md` — marked decided
-- `docs/technical/plan/TODO.md` — brainstorm resolved
+- GitHub Issues — brainstorm resolved (previously tracked in `docs/technical/plan/TODO.md`)
 - `docs/audit/reference/glossary.md` — RawString term added

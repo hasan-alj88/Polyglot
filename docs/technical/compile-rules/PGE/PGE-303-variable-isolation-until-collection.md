@@ -66,4 +66,4 @@ severity: error
    [*] << $data
 ```
 
-**Note:** `live` metadata (`$data%state`) **can** be inspected before collection. PGE-303 isolates user-assignable push/pull operations only. `live` fields are runtime-managed and read-only (PGE-206), so no data race is possible. See [003-metadata-access-before-collection.md](../../technical/compiler_issues/003-metadata-access-before-collection.md).
+**Note:** `live` metadata (`$data%state`) **can** be inspected before collection. PGE-303 isolates user-assignable push/pull operations only. `live` fields are runtime-managed and read-only (PGE-206), so no data race is possible. See resolved design issue 003 (git history: `docs/technical/compiler_issues/003-metadata-access-before-collection.md`).

@@ -65,5 +65,5 @@ Any field typed `;string` expands to `.string;RawString` + `.re;RawString` in th
 - `docs/user/syntax/types.md` — path notation corrected
 - `docs/technical/plan/decisions/string-re-subfields.md` — paths corrected
 - `docs/technical/brainstorming/string-re-subfields.md` — deferred item marked decided
-- `docs/technical/plan/TODO.md` — doc gap marked done
+- GitHub Issues — doc gap marked done (previously tracked in `docs/technical/plan/TODO.md`)
 - `docs/draft.md` — full tree specification (source of truth for placement)

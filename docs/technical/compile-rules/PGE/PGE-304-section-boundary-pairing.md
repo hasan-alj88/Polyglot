@@ -75,4 +75,4 @@ severity: error
       [*] << $data                   [ ] ✗ PGE-304 — body↔[/] pairing not allowed
 ```
 
-**Note:** `[\]` setup and `[/]` cleanup form one scope with a mandatory sequential body execution between them. Parallel branches launched in either section must be collected somewhere within that scope (setup, cleanup, or `[\]`↔`[/]` pairing) before the scope ends — otherwise it's a compile error. Same-section internal pairing (e.g., `[p]` and `[*]` both in `[\]`) is valid. See [004-setup-internal-parallel-collection.md](../../technical/compiler_issues/004-setup-internal-parallel-collection.md).
+**Note:** `[\]` setup and `[/]` cleanup form one scope with a mandatory sequential body execution between them. Parallel branches launched in either section must be collected somewhere within that scope (setup, cleanup, or `[\]`↔`[/]` pairing) before the scope ends — otherwise it's a compile error. Same-section internal pairing (e.g., `[p]` and `[*]` both in `[\]`) is valid. See resolved design issue 004 (git history: `docs/technical/compiler_issues/004-setup-internal-parallel-collection.md`).

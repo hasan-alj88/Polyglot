@@ -16,4 +16,4 @@ superseded_by: PGE-203
 - **Double-default** (`<~ → <~`): PGE-203 now rejects re-defaulting a Default variable
 - **Post-promotion push** (Default → Final → push): Already fired PGE-203
 
-See [Issue 008](../../compiler_issues/008-pge203-pge204-overlap.md) for rationale.
+See resolved design issue 008 (git history: `docs/technical/compiler_issues/008-pge203-pge204-overlap.md`) for rationale.
