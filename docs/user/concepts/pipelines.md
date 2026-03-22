@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-21
+updated: 2026-03-22
 status: draft
 ---
 
@@ -52,8 +52,19 @@ Every pipeline exposes an error tree -- a structured list of every error it can 
 | `[!]` pushes replacement (`<<`/`>>`) | Yes | Always Final |
 | `[!]` without replacement (default) | No — ends on error | Never Failed |
 | `[!]` with `[*] *Continue >IsFailed >> $var` | Yes | May be Failed — handle via `$var` boolean |
+| `[>] <!` fallback on IO line | Yes | Always Final — fallback value used |
 
-For the full error model — chain error addressing, `*Continue` recovery patterns, standard error trees, and the Failed state — see [[errors]]. Errors live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]).
+For simple "on error, use this value" cases, use `[>] <!` fallback under the `[=]` output line:
+
+```polyglot
+[r] =File.Text.Read
+   [=] <path << $file
+   [=] >content >> $out
+      [>] <! "fallback value"
+      [>] <!File.NotFound "file not found"
+```
+
+`[!]` blocks run first; `<!` catches what `[!]` didn't handle. For the full error model — chain error addressing, `*Continue` recovery patterns, fallback operators, standard error trees, and the Failed state — see [[errors]]. Errors live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
 ## IO as Implicit Triggers
 
@@ -246,6 +257,22 @@ Errors in chains use the `!` prefix with a step index or leaf name, followed by 
 [ ] Always safe — numeric index avoids all ambiguity
 [!] !0.File.NotFound
 ```
+
+### Fallback in Chains
+
+In chain execution, `[>]`/`[<]` markers cannot carry step addressing. Use the `[=]` explicit form with `<!` instead:
+
+```polyglot
+[r] =File.Text.Read >> =Text.Parse.CSV
+   [=] >0.path << $file
+   [=] <1.rows >> $rows
+   [=] <0.content <! ""
+   [=] <1.rows <! ""
+   [!] !0.File.NotFound
+      [=] <0.content <! "missing"
+```
+
+See [[errors#Error Fallback Operators]] for the full fallback model.
 
 ### Type Annotations on Wires
 

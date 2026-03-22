@@ -1,7 +1,7 @@
 ---
 audience: user
 type: spec
-updated: 2026-03-21
+updated: 2026-03-22
 ---
 
 # Variable Lifecycle
@@ -18,7 +18,7 @@ Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through four lifecy
 | Declared | Variable exists but has no value | Default or Final |
 | Default | Assigned via `<~` or `~>` — allows one more reassignment | Final or Released |
 | Final | Assigned via `<<` or `>>` — no further assignment allowed | Released |
-| Failed | The pipeline responsible for producing this variable failed with an error. The variable will never resolve. Check the source pipeline's error tree for details | — |
+| Failed | The pipeline responsible for producing this variable failed with an error. The variable will never resolve. Check the source pipeline's error tree for details. **Exception:** if a `<!` fallback is declared, the variable becomes Final with the fallback value instead — see [[errors#Error Fallback Operators]] | — |
 | Released | Variable is out of scope and no longer accessible | — |
 
 ### Declared
@@ -39,6 +39,8 @@ A variable enters the Final stage when assigned with a final assignment operator
 
 A variable enters the Failed stage when the pipeline responsible for producing its value terminates with an error. A failed variable will never resolve -- it cannot transition to any other stage. Downstream pipelines waiting on a failed variable will not fire. Inspect the source pipeline's error tree (see [[pipelines#Error Trees]]) for details on the failure.
 
+**Fallback override:** If the IO line has a `<!` fallback declared (see [[errors#Error Fallback Operators]]), the variable bypasses the Failed stage entirely and becomes **Final** with the fallback value. The error that would have caused the Failed state is accessible via `$var%sourceError` metadata (see [[metadata#Variable (`$`)]]).
+
 ### Released
 
 A variable is released when:
@@ -50,13 +52,12 @@ A variable is released when:
 Variable lifecycle state is queryable at runtime via the `%` metadata accessor:
 
 ```polyglot
-[?] $myVar%state
-   [?] #Ready
-      [r] ...
-   [?] #Failed
-      [r] ...
-   [?] *?
-      [r] ...
+[?] $myVar%state =? #VarState.Ready
+   [r] ...
+[?] $myVar%state =? #VarState.Failed
+   [r] ...
+[?] *?
+   [r] ...
 ```
 
 `$varName%state` returns a `;live.#VarState` value — reading from `%$:{name}:{instance}.state` in the metadata tree (see [[data-is-trees#How Concepts Connect]]). The `live` field is always readable and does not follow the standard lifecycle (it is managed by the runtime). The `#VarState` enum maps directly to the stages above: Declared, Default, Final, Failed, Released. See [[metadata]] for the full metadata tree and all `live` fields.
@@ -72,6 +73,8 @@ All assignment operators are directional — the arrow indicates data flow direc
 | `>>` | Final (Pull) | Left to right | `>array >> $arr` | "Final-push >array into $arr" |
 | `<~` | Default | Right to left | `.field;string <~ "value"` | "Default-assign \"value\" to .field" |
 | `~>` | Default | Left to right | `>output;string ~> ""` | "Default-assign >output to empty string" |
+| `<!` | Fallback (Error) | Right to left | `<! "fallback"` | "On error, fallback-push into output" |
+| `!>` | Fallback (Error) | Left to right | `"fallback" !> >output` | "On error, fallback-push outward" |
 
 ## Examples
 

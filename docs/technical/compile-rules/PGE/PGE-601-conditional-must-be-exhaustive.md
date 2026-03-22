@@ -44,3 +44,4 @@ If neither static proof nor `*?` is present, PGE-601 fires.
 - [PGE-606 — String Exhaustiveness](PGE-606-string-exhaustiveness.md)
 - [PGE-607 — Flexible Field Exhaustiveness](PGE-607-flexible-field-exhaustiveness.md)
 - [PGE-608 — Compound Condition Exhaustiveness](PGE-608-compound-condition-exhaustiveness.md)
+- [PGE-609 — Conditional Missing Comparison Operator](PGE-609-conditional-missing-comparison-operator.md)

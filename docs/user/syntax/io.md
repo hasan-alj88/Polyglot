@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-21
+updated: 2026-03-22
 status: draft
 ---
 
@@ -142,3 +142,55 @@ Collector outputs can write directly to a pipeline output port using the `>` pre
 ```
 
 The target output port reaches **Final** state after the collector writes to it — no other push to that port is allowed. See [[variable-lifecycle#Final]].
+
+## Fallback IO
+
+<!-- @errors:Error Fallback Operators -->
+<!-- @operators -->
+Fallback lines provide a value to use when a pipeline call errors, preventing the variable from entering the Failed state. Fallback uses the `<!` / `!>` operators (see [[operators#Assignment Operators]]) and new `[>]` / `[<]` block markers (see [[blocks#Data Flow]]).
+
+### Fallback Line Pattern
+
+```
+[>] <! value_expr
+[>] <!Error.Name value_expr
+```
+
+`[>]` lines are indented under the `[=]` output line they belong to — the output reference is implicit from indentation scope:
+
+```polyglot
+[r] =File.Text.Read
+   [=] <path << $file
+   [=] >content >> $out
+      [>] <! "generic fallback"
+      [>] <!File.NotFound "file not found"
+      [>] <!File.ReadError "read error"
+```
+
+| Form | Meaning |
+|------|---------|
+| `[>] <! value` | **Generic fallback** — activates for any unhandled error |
+| `[>] <!Error.Name value` | **Error-specific fallback** — activates only for the named error |
+
+When a fallback activates, the target variable becomes **Final** with the fallback value (not Failed). The error is accessible via `$var%sourceError` metadata. See [[errors#Error Fallback Operators]] for the full execution model and [[variable-lifecycle#Fallback]] for lifecycle semantics.
+
+### Scoping Rules
+
+- `[>]` / `[<]` must be **indented under** an `[=]` IO line — they inherit the output/input reference
+- One generic `<!` per output — duplicates are PGE-703
+- One `<!Error.Name` per specific error per output — duplicates are PGE-703
+- Fallback values can be any `value_expr`: literals, `$` variables, inline pipeline calls
+
+### Chain Execution Exception
+
+In chain execution, fallback uses the `[=]` explicit form with step addressing (since `[>]`/`[<]` cannot carry step references):
+
+```polyglot
+[r] =File.Text.Read >> =Text.Parse.CSV
+   [=] >0.path << $file
+   [=] <1.rows >> $rows
+   [=] <0.content <! ""
+   [=] <1.rows <! ""
+   [!] !0.File.NotFound
+      [=] <0.content <! "missing"
+```

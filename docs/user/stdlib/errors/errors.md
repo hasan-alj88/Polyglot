@@ -27,6 +27,9 @@ No `[@]` import needed.
    :Connection (?)
       [ ] Uses flexible (:) field for specific timeout targets.
 
+!Math
+   .DivideByZero
+
 !Validation (?)
    .Error (?)
 ```
@@ -47,4 +50,10 @@ Each stdlib pipeline exposes the errors it can raise:
 =File.Text.Append
    !File.NotFound
    !File.WriteError
+
+=Math.Divide
+   !Math.DivideByZero
+
+=Math.Modulo
+   !Math.DivideByZero
 ```

@@ -30,6 +30,7 @@ Items marked `(?)` are derived from examples or the scenario catalog and have no
 |--------|------|-------------|--------|
 | `=File` | [pipelines/File.md](pipelines/File.md) | File operations (read, write, append, copy, move, delete) | Partial (?) |
 | `=Path` | [pipelines/Path.md](pipelines/Path.md) | Cross-platform path creation from string literals | Stable |
+| `=Math` | [pipelines/Math.md](pipelines/Math.md) | Numeric operations (add, subtract, multiply, divide, modulo, power, abs, negate) | Stable |
 | `=Sys` | [pipelines/Sys.md](pipelines/Sys.md) | System information (OS detection) | Stable |
 | `=T` | [pipelines/T.md](pipelines/T.md) | Triggers (call, daily, folder, schedule, HTTP, file) | Partial (?) |
 | `=Q` | [pipelines/Q.md](pipelines/Q.md) | Queue configurations (default, priority, dispatch, kill) | Partial (?) |

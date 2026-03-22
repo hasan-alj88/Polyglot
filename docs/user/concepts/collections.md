@@ -1,7 +1,7 @@
 ---
 audience: user
 type: spec
-updated: 2026-03-21
+updated: 2026-03-22
 ---
 
 # Collections
@@ -228,3 +228,25 @@ Expand an array of integers in parallel, double each value, collect the doubled 
       [*] >sum >> $TotalSum
 ...
 ```
+
+## Fallback in Expand Context
+
+<!-- @errors:Error Fallback Operators -->
+When a pipeline call inside an expand scope may error, use `[>] <!` fallback to provide a default value per iteration instead of failing the entire expand:
+
+```polyglot
+[p] ~ForEach.Array
+   [~] <Array << $files
+   [~] >item >> $file
+
+   [r] =File.Text.Read
+      [=] <path << $file
+      [=] >content >> $text
+         [>] <! ""
+
+   [r] *Into.Array
+      [*] <item << $text
+      [*] >Array >> $results
+```
+
+If any file fails to read, `$text` gets `""` for that iteration instead of entering the Failed state. The expand continues for all items. See [[errors#Error Fallback Operators]] for the full fallback model.

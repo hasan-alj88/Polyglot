@@ -65,6 +65,20 @@ Stdlib structs and enums available in every `.pg` file. No `[@]` import needed.
       [%] .alias << #Failed
 ```
 
+## #FileAccess
+
+```
+#FileAccess
+   [%] .description << "File access state"
+   [%] .version << "1.0.0"
+   .Available
+      [%] .alias << #Available
+   .Locked
+      [%] .alias << #Locked
+   .NotFound
+      [%] .alias << #NotFound
+```
+
 ## #VarState
 
 ```

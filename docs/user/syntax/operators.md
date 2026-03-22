@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-21
+updated: 2026-03-22
 status: draft
 ---
 
@@ -21,6 +21,8 @@ Directional — the arrow indicates data flow. Operators push and pull data acro
 | `>>` | Pull (Final) | Left → right | `>array >> $arr`. See [[variable-lifecycle#Final]] |
 | `<~` | Default | Right → left | `.field <~ "value"`. See [[variable-lifecycle#Default]] |
 | `~>` | Default | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
+| `<!` | Fallback (Error) | Right → left | `<! "fallback"`. See [[errors#Error Fallback Operators]] |
+| `!>` | Fallback (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
 
 ## Comparison Operators
 

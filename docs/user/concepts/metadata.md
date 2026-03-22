@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: spec
-updated: 2026-03-21
+updated: 2026-03-22
 ---
 
 # Metadata
@@ -63,7 +63,8 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │       └── .>               (collect outputs)
 ├── $  (Variables)
 │   └── :<name>:<instance>
-│       └── .state           ;live.#VarState
+│       ├── .state           ;live.#VarState
+│       └── .sourceError     ;live.error        (NEW — !NoError if no error)
 ├── M  (Macros)
 │   └── :<name>:<instance>
 │       ├── .description     ;string           (user-declared)
@@ -167,6 +168,7 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 | Accessor | Type | Description |
 |----------|------|-------------|
 | `$name%state` | `;live.#VarState` | Declared, Default, Final, Failed, Released |
+| `$name%sourceError` | `;live.error` | Error that triggered a `<!` fallback, or `!NoError` if no error. See [[errors#Error Fallback Operators]] |
 
 ### Data (`{#}`)
 

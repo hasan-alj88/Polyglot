@@ -34,6 +34,9 @@ Stdlib pipelines for file system operations. No `[@]` import needed.
    .Delete (?)
       <path;path
       >deleted;bool (?)
+   .Access
+      <path;path
+      >access;FileAccess
    .List (?)
       <folder;path
       >files;array.path (?)

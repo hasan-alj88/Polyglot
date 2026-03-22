@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-21
+updated: 2026-03-22
 status: draft
 ---
 
@@ -46,6 +46,8 @@ See [[io]] for IO parameter patterns and [[collections]] for expand/collect sema
 | `[*]` | Collection-collect IO line. See [[collections#Collect Operators]] |
 | `[*] <<` | Wait input — wait for variable to be Final (used inside `[*]` blocks). See [[collections#Sync & Race Collectors]] |
 | `[*] >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[collections#Sync & Race Collectors]] |
+| `[>]` | Output fallback — scoped under `[=]` output line. See [[errors#Error Fallback Operators]] |
+| `[<]` | Input fallback — scoped under `[=]` input line. See [[errors#Error Fallback Operators]] |
 
 ### Execution
 

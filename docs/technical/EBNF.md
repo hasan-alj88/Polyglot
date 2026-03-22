@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: specification
-updated: 2026-03-20
+updated: 2026-03-22
 status: draft
 ---
 
@@ -236,7 +236,7 @@ block_element       ::= registry_elem
 registry_elem       ::= "[@]" ;
 
 (* Data Flow *)
-data_flow_elem      ::= "[=]" | "[~]" | "[*]" ;
+data_flow_elem      ::= "[=]" | "[~]" | "[*]" | "[>]" | "[<]" ;
 
 (* Execution *)
 execution_elem      ::= "[r]" | "[p]" | "[b]" | "[#]" ;
@@ -260,6 +260,8 @@ metadata_elem       ::= "[%]" ;
 comment_elem        ::= "[ ]" ;
 ```
 
+**Rule:** `[>]` (output fallback) and `[<]` (input fallback) are scoped under `[=]` IO lines. They use the `<!` fallback operator to provide error-recovery values. See §10.2 for fallback line syntax.
+
 ---
 
 ## 6. Operators
@@ -271,9 +273,14 @@ final_push          ::= "<<" ;     (* right-to-left final assignment *)
 final_pull          ::= ">>" ;     (* left-to-right final assignment *)
 default_push        ::= "<~" ;     (* right-to-left default assignment *)
 default_pull        ::= "~>" ;     (* left-to-right default assignment *)
+fallback_push       ::= "<!" ;     (* right-to-left fallback — error recovery *)
+fallback_pull       ::= "!>" ;     (* left-to-right fallback — error recovery *)
 
-assignment_op       ::= final_push | final_pull | default_push | default_pull ;
+assignment_op       ::= final_push | final_pull | default_push | default_pull
+                      | fallback_push | fallback_pull ;
 ```
+
+**Rule:** `<!` and `!>` are fallback assignment operators for error recovery. They provide a value when the source pipeline errors, preventing the target variable from entering the Failed state. Fallback operators only activate when an error occurs — they are not evaluated on the success path. See `[>]`/`[<]` block markers (§5) and fallback line syntax (§10.2).
 
 ### 6.2 Comparison Operators
 
@@ -357,7 +364,8 @@ assignment_expr     ::= assign_target ( final_push | default_push ) value_expr
 assign_target       ::= typed_variable
                       | typed_field
                       | typed_io_param
-                      | output_param ;       (* direct output port write *)
+                      | output_param          (* direct output port write *)
+                      | "$*" ;                (* inline discard — output immediately released *)
 
 value_expr          ::= literal
                       | identifier
@@ -662,8 +670,18 @@ pipeline_ref        ::= pipeline_id                    (* local: =Pipeline.Name 
    Stdlib pipelines (=File.*, =T.*, =Q.*, =W.*) are pipeline_id: =File.Text.Read, =T.Call, etc.
    All Polyglot identifiers have a prefix; pipelines always use =. *)
 
-call_io_line        ::= "[=]" io_param assignment_op value_expr ;
+call_io_line        ::= "[=]" io_param assignment_op value_expr
+                         { indent fallback_line NEWLINE } ;
+
+fallback_line       ::= "[>]" "<!" value_expr                   (* generic fallback *)
+                      | "[>]" "<!" error_id value_expr           (* error-specific fallback *)
+                      | "[<]" "<!" value_expr                    (* generic input fallback *)
+                      | "[<]" "<!" error_id value_expr ;         (* error-specific input fallback *)
 ```
+
+**Rule:** Fallback lines are indented under the `[=]` IO line they belong to — the output/input reference is inherited from the parent scope. `[>]` is used under output lines, `[<]` under input lines. A generic `<!` catches any unhandled error; `<!Error.Name` catches only the named error. Error-specific fallbacks take priority over the generic. Duplicate generic or duplicate error-specific fallbacks for the same error on the same output are PGE-703. When a fallback activates, `$var%sourceError` is set to the triggering error.
+
+**Precedence:** `[!]` error blocks are checked before `<!` fallbacks. If `[!]` pushes a replacement value, the fallback is not evaluated.
 
 **Rule:** Standard library pipelines (`=File.*`, `=T.*`, `=Q.*`, `=W.*`) are built-in and do not require `[@]` import. Only user/external packages need import.
 
@@ -681,7 +699,8 @@ step_leaf_name      ::= name ;                          (* last segment of pipel
 chain_io_param      ::= ( '<' | '>' ) step_ref fixed_sep name { field_separator name }
                          [ type_annotation ] ;
 
-chain_io_line       ::= "[=]" chain_io_param assignment_op ( value_expr | chain_io_param ) ;
+chain_io_line       ::= "[=]" chain_io_param assignment_op ( value_expr | chain_io_param )
+                      | "[=]" chain_io_param fallback_push value_expr ;
 
 chain_error_block   ::= "[!]" '!' step_ref fixed_sep error_name NEWLINE
                          { indent exec_line NEWLINE } ;
@@ -696,6 +715,7 @@ error_name          ::= dotted_name ;
 - **Auto-wire:** When step N has exactly one output and step N+1 has exactly one input of the same type, the `chain_io_line` between them may be omitted.
 - Type annotations on `chain_io_param` are optional — types are inferred from pipeline definitions.
 - Errors reference the step that produces them: `!0.File.NotFound` or `!Read.File.NotFound`.
+- **Chain fallback:** In chains, fallback uses `<!` directly on `[=]` chain IO lines (not `[>]`/`[<]` block markers, since those cannot carry step references). Example: `[=] <0.content <! ""`. Same precedence and duplicate rules (PGE-703) apply.
 
 ### 10.4 Data Load
 
@@ -727,7 +747,10 @@ conditional_line    ::= "[?]" comparison_expr NEWLINE
 conditional_branch  ::= exec_line | comment_line ;
 
 (* Exhaustiveness: All [?] chains must cover every case.
-   If conditions are not exhaustive, a catch-all [?] *? branch is mandatory. *)
+   If conditions are not exhaustive, a catch-all [?] *? branch is mandatory.
+   PGE-601: Conditional must be exhaustive.
+   PGE-609: Every [?] line must include a comparison operator — no bare subjects.
+   PGE-610: Every [?] branch must contain at least one executable statement. *)
 ```
 
 ### 11.2 Error Handling
@@ -794,7 +817,12 @@ collect_line        ::= ( "[r]" | "[p]" ) collect_invocation NEWLINE
 
 collect_invocation  ::= '*' collect_operator ;
 
-collect_operator    ::= into_operator | agg_operator | sync_operator | race_operator ;
+collect_operator    ::= into_operator | agg_operator | sync_operator | race_operator
+                      | error_operator | discard_operator ;
+
+error_operator      ::= "Continue" ;
+
+discard_operator    ::= "Ignore" ;
 
 into_operator       ::= "Into.Array"
                       | "Into.Serial"
@@ -845,6 +873,12 @@ collect_io_line     ::= "[*]" io_param assignment_op value_expr   (* named param
 | `*First` | `[*] << $var...` | `[*] >> $winner` | Parallel `[p]` race |
 | `*Second` | `[*] << $var...` | `[*] >> $winner` | Parallel `[p]` race |
 | `*Nth` | `<n;int`, `[*] << $var...` | `[*] >> $winner` | Parallel `[p]` race |
+| `*Continue` | none | `>IsFailed;bool` via `[*] >IsFailed >> $var` | Inside `[!]` error block |
+| `*Ignore` | `[*] << $var...` | none | Parallel `[p]` discard |
+
+**Rule:** `*Continue` is an error recovery collector used inside `[!]` blocks. It signals the pipeline to continue after an error instead of terminating. Its single output `>IsFailed;bool` must be captured and handled — if the compiler cannot verify the output is checked, it emits PGW-205. Syntax: `[*] *Continue >IsFailed >> $fetchFailed`.
+
+**Rule:** `*Ignore` is an explicit discard collector. It takes `[*] <<` wait inputs only and produces no outputs. Use for parallel output that exists for debugging but is intentionally unused. Prefer `$*` inline discard when the value is never needed.
 
 ---
 
@@ -872,7 +906,8 @@ These are semantic rules enforced by the grammar's type system, not syntactic pr
 1. **Declared** — variable appears without assignment. Holds no value.
 2. **Default** — assigned via `<~` or `~>`. Allows one further reassignment.
 3. **Final** — assigned via `<<` or `>>`. No further assignment permitted.
-4. **Released** — scope ends (indentation returns to parent) or collected via `*`.
+4. **Failed** — the pipeline responsible for producing the variable's value terminated with an error. The variable will never resolve; downstream pipelines waiting on it will not fire. **Fallback override:** if a `<!` fallback is declared on the IO line, the variable bypasses Failed and becomes Final with the fallback value. When fallback activates, `$var%sourceError` is set to the triggering error.
+5. **Released** — scope ends (indentation returns to parent) or collected via `*`.
 
 ### Serialization Constraints
 

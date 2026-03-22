@@ -35,12 +35,14 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-108 | 1.8 | Wrapper Must Reference Macro |
 | PGE-109 | 1.9 | Wrapper IO Mismatch |
 | PGE-110 | 1.10 | Pipeline IO Name Mismatch |
+| PGE-111 | 1.11 | Duplicate IO Parameter Name |
 | PGE-201 | 2.1 | Lifecycle Stages |
 | PGE-202 | 2.2 | Declared State Is Unreadable |
 | PGE-203 | 2.3 | Final Is Push-Once |
 | PGE-205 | 2.5 | Failed Is Terminal |
 | PGE-206 | 2.6 | `live` Metadata Fields Are Pull-Only |
 | PGE-207 | 2.7 | Continue After Error |
+| PGE-208 | 2.8 | Access After Release |
 | PGE-301 | 3.1 | No Push Across Parallel Boundaries |
 | PGE-302 | 3.2 | Parallel Output Must Be Collected |
 | PGE-303 | 3.3 | Pull Isolation Until Collection |
@@ -49,6 +51,8 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-306 | 3.6 | Race Collector Type Homogeneity |
 | PGE-307 | 3.7 | Expand Operator Input Mismatch |
 | PGE-308 | 3.8 | Collect Operator IO Mismatch |
+| PGE-309 | 3.9 | Nested Expand Without Collect |
+| PGE-311 | 3.11 | Collector Without Expand |
 | PGE-401 | 4.1 | Type Mismatch |
 | PGE-402 | 4.2 | Schema Mismatch |
 | PGE-403 | 4.3 | Leaf-Only Assignment |
@@ -58,6 +62,8 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-407 | 4.7 | Invalid Path String |
 | PGE-408 | 4.8 | Missing Path Platform Subfield |
 | PGE-409 | 4.9 | Unhandled Serialâ†’Struct Conversion |
+| PGE-410 | 4.10 | Invalid Arithmetic Operator |
+| PGE-413 | 4.13 | Duplicate Data Field Name |
 | PGE-501 | 5.1 | Sibling Separator Homogeneity |
 | PGE-502 | 5.2 | Sibling Kind Homogeneity |
 | PGE-601 | 6.1 | Conditional Must Be Exhaustive |
@@ -68,8 +74,14 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-606 | 6.6 | String Exhaustiveness |
 | PGE-607 | 6.7 | Flexible Field Exhaustiveness |
 | PGE-608 | 6.8 | Compound Condition Exhaustiveness |
+| PGE-609 | 6.9 | Conditional Missing Comparison Operator |
+| PGE-610 | 6.10 | Empty Conditional Scope |
+| PGE-611 | 6.11 | Duplicate Wildcard Catch-All |
+| PGE-612 | 6.12 | Unreachable Branch After Wildcard |
 | PGE-701 | 7.1 | `[!]` Error Block Scoping |
 | PGE-702 | 7.2 | Chain Error Scoping |
+| PGE-703 | 7.3 | Duplicate Fallback Assignment |
+| PGE-704 | 7.4 | Duplicate Error Handler |
 | PGE-801 | 8.1 | Auto-Wire Type Mismatch |
 | PGE-802 | 8.2 | Auto-Wire Ambiguous Type |
 | PGE-803 | 8.3 | Auto-Wire Unmatched Parameter |

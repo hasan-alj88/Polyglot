@@ -15,6 +15,7 @@ This document has been split into per-namespace files organized by identifier pr
 - [=Sys](stdlib/pipelines/Sys.md) — system information
 - [=T](stdlib/pipelines/T.md) — triggers
 - [=Q](stdlib/pipelines/Q.md) — queue configurations
+- [=Math](stdlib/pipelines/Math.md) — numeric operations (add, subtract, multiply, divide, etc.)
 - [=W](stdlib/pipelines/W.md) — wrappers
 
 ## Expanders (~ → `%~`)
