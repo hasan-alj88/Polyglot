@@ -116,6 +116,7 @@ Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a develope
 | Code | Rule | Name |
 |------|------|------|
 | PGW-101 | 1.1 | Empty Execution Body |
+| PGW-102 | 1.2w | Empty Data Definition |
 | PGW-201 | 2.7 | Default Pull Across State Change |
 | PGW-205 | 2.5 | Pipeline Terminates on Error |
 | PGW-301 | 3.5 | `[b]` Called Pipeline Has Discarded Outputs |
