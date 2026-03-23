@@ -72,6 +72,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-410 | 4.10 | Invalid Arithmetic Operator |
 | PGE-413 | 4.13 | Duplicate Data Field Name |
 | PGE-414 | 4.14 | Recursive Data Definition |
+| PGE-415 | 4.15 | Conditional Type-Operator Mismatch |
 | PGE-501 | 5.1 | Sibling Separator Homogeneity |
 | PGE-502 | 5.2 | Sibling Kind Homogeneity |
 | PGE-601 | 6.1 | Conditional Must Be Exhaustive |
