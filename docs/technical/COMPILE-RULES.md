@@ -99,6 +99,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-803 | 8.3 | Auto-Wire Unmatched Parameter |
 | PGE-804 | 8.4 | Ambiguous Step Reference |
 | PGE-805 | 8.5 | Unresolved Step Reference |
+| PGE-806 | 8.6 | Non-Pipeline Step in Chain |
 | PGE-901 | 9.1 | Undefined Import Alias |
 | PGE-902 | 9.2 | Circular Package Dependency |
 | PGE-903 | 9.3 | Unresolved Pipeline Reference |

@@ -1,16 +1,16 @@
 ---
 rule: "8.6"
 code: PGE-806
-name: Inline Pipeline in Chain Context
+name: Non-Pipeline Step in Chain
 severity: error
 ---
 
-### Rule 8.6 — Inline Pipeline in Chain Context
+### Rule 8.6 — Non-Pipeline Step in Chain
 `PGE-806`
 
-**Statement:** An inline pipeline call (pipeline reference + string literal, e.g., `=Path"/tmp"`) must not appear in any position of a chain (`>>`). Chain steps must be callable pipeline references — not value expressions. Inline pipeline calls resolve to values, not callable steps.
-**Rationale:** A chain `=A >> =B >> =C` auto-wires output from one pipeline as input to the next. An inline call like `=Path"/tmp"` is a value expression — it already has its input (the inline string) and produces a value, just like `$variable`. Writing `=Path"/tmp" >> =Process` is equivalent to writing `$tmp >> =Process`, which is nonsensical — variables and values are not pipeline steps.
-**Detection:** The compiler inspects each step in a chain expression. Any step that is an `inline_pipeline_call` (pipeline ref + string literal) rather than a plain `pipeline_ref` is rejected.
+**Statement:** Every step in a chain (`>>`) must be a pipeline reference. Inline pipeline calls (pipeline ref + string literal, e.g., `=Path"/tmp"`) are value expressions, not callable steps, and must not appear in any chain position.
+**Rationale:** A chain `=A >> =B >> =C` auto-wires output from one pipeline as input to the next. Each step must be a callable pipeline that can receive input and produce output. An inline call like `=Path"/tmp"` is a value expression — it already has its input (the inline string) and produces a value, just like `$variable`. Writing `=Path"/tmp" >> =Process` is equivalent to writing `$tmp >> =Process`, which is nonsensical — values are not pipeline steps.
+**Detection:** The compiler inspects each step in a chain expression. Any step that is not a plain `pipeline_ref` is rejected — this includes `inline_pipeline_call` (pipeline ref + string literal).
 
 **See also:** PGE-804 (ambiguous step reference), PGE-805 (unresolved step reference), PGE-807 (inline pipeline on assignment LHS)
 
@@ -25,6 +25,11 @@ severity: error
    [r] =Process
       [=] <path << =Path"/tmp"
       [=] >result >> >out
+```
+
+```polyglot
+[ ] ✓ inline call as value in variable assignment
+[r] $configPath;path << =Path"/etc/config"
 ```
 
 ```polyglot
@@ -77,5 +82,20 @@ severity: error
       [=] <input << $data
       [=] >result >> >out
 ```
+
+```polyglot
+[ ] ✗ PGE-806 — inline call with interpolation in chain
+{=} =BadInterp
+   [t] =T.Manual
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [=] <dir;string
+   [=] >out;string
+   [r] =Fetch >> =Path"{$dir}/output" >> =Store   [ ] ✗ PGE-806 — value expr in chain
+      [=] <url << $dir
+      [=] >result >> >out
+```
+
+**Diagnostic:** "Chain step at position N is an inline pipeline call `=Name\"...\"` — all chain steps must be pipeline references"
 
 **Open point:** None.

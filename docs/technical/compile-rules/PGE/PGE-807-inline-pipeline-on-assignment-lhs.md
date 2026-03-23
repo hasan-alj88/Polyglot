@@ -12,7 +12,7 @@ severity: error
 **Rationale:** An inline pipeline call resolves to a value, just like a `$variable`. Writing `=Path"/tmp" << $value` is equivalent to writing `"some value" << $value` — you cannot push data into a value expression. Assignment targets must be variables (`$name`), output ports (`>name`), or field paths (`$var.field`).
 **Detection:** The compiler checks the left-hand side of every assignment expression. If it is an `inline_pipeline_call` rather than a valid `assign_target`, the expression is rejected.
 
-**See also:** PGE-806 (inline pipeline in chain context — same principle, different misuse), PGE-116 (unmarked execution line)
+**See also:** PGE-806 (non-pipeline step in chain — same principle, different misuse), PGE-116 (unmarked execution line)
 
 **VALID:**
 ```polyglot
