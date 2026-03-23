@@ -12,7 +12,7 @@ severity: error
 **Rationale:** Overlapping ranges create ambiguity — when a value falls in the overlap, the compiler cannot determine which branch should execute. This is always a bug. Even with `*?`, overlaps must be resolved.
 **Detection:** The compiler checks all pairs of numeric branch conditions for intersection. If any pair has a non-empty intersection, PGE-604 fires. The error message identifies the two overlapping branches and the overlapping interval.
 
-**See also:** PGE-603 (range not exhaustive), PGE-601 (general exhaustiveness)
+**See also:** PGE-603 (range not exhaustive), PGE-601 (general exhaustiveness), [Overlap Detection Algorithm](../algorithms/overlap-detection.md)
 
 **VALID:**
 ```polyglot
