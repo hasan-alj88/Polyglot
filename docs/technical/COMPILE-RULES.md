@@ -119,6 +119,7 @@ Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a develope
 | PGW-201 | 2.7 | Default Pull Across State Change |
 | PGW-205 | 2.5 | Pipeline Terminates on Error |
 | PGW-301 | 3.5 | `[b]` Called Pipeline Has Discarded Outputs |
+| PGW-302 | 3.5w | Error Handler on Fire-and-Forget |
 | PGW-408 | 4.8 | Single-Platform Path |
 | PGW-801 | 8.1 | Auto-Wire Succeeded |
 | PGW-701 | 7.1w | Error Handler on Non-Failable Call |

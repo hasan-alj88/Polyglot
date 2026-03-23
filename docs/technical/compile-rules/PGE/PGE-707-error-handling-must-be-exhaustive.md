@@ -21,6 +21,8 @@ severity: error
 
 If any declared error is not addressed by at least one mechanism, PGE-707 fires.
 
+**Exemption:** `[b]` (fire-and-forget) calls are exempt from PGE-707. The `[b]` marker is an explicit acknowledgment that the caller does not participate in the called pipeline's error handling — the called pipeline handles its own errors internally. See [PGW-302](../PGW/PGW-302-error-handler-on-fire-and-forget.md).
+
 **See also:**
 - [PGE-601 — Conditional Must Be Exhaustive](PGE-601-conditional-must-be-exhaustive.md) — the analogous rule for conditionals
 - [PGE-701 — Error Block Scoping](PGE-701-error-block-scoping.md) — `[!]` blocks must be under their producing `[r]`
