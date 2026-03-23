@@ -39,6 +39,9 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-112 | 1.12 | Queue Definition Must Use #Queue: Prefix |
 | PGE-113 | 1.13 | Queue Control Contradicts Queue Default |
 | PGE-114 | 1.14 | Unresolved Queue Reference |
+| PGE-115 | 1.15 | Duplicate Metadata Field |
+| PGE-116 | 1.16 | Unmarked Execution Line |
+| PGE-117 | 1.17 | Wrong Block Element Marker |
 | PGE-201 | 2.1 | Lifecycle Stages |
 | PGE-202 | 2.2 | Declared State Is Unreadable |
 | PGE-203 | 2.3 | Final Is Push-Once |
@@ -46,6 +49,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-206 | 2.6 | `live` Metadata Fields Are Pull-Only |
 | PGE-207 | 2.7 | Continue After Error |
 | PGE-208 | 2.8 | Access After Release |
+| PGE-209 | 2.9 | Unreachable Code |
 | PGE-301 | 3.1 | No Push Across Parallel Boundaries |
 | PGE-302 | 3.2 | Parallel Output Must Be Collected |
 | PGE-303 | 3.3 | Pull Isolation Until Collection |
@@ -85,6 +89,8 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-702 | 7.2 | Chain Error Scoping |
 | PGE-703 | 7.3 | Duplicate Fallback Assignment |
 | PGE-704 | 7.4 | Duplicate Error Handler |
+| PGE-705 | 7.5 | Undeclared Error Raise |
+| PGE-706 | 7.6 | Unused Error Declaration |
 | PGE-801 | 8.1 | Auto-Wire Type Mismatch |
 | PGE-802 | 8.2 | Auto-Wire Ambiguous Type |
 | PGE-803 | 8.3 | Auto-Wire Unmatched Parameter |
@@ -114,7 +120,12 @@ Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a develope
 | PGW-301 | 3.5 | `[b]` Called Pipeline Has Discarded Outputs |
 | PGW-408 | 4.8 | Single-Platform Path |
 | PGW-801 | 8.1 | Auto-Wire Succeeded |
+| PGW-701 | 7.1w | Error Handler on Non-Failable Call |
+| PGW-702 | 7.2w | Caller Overrides Pipeline Fallback |
+| PGW-703 | 7.3w | Missing Fallback Message |
 | PGW-901 | 9.1 | Deprecated Pipeline Reference |
+| PGW-1001 | 2.9 | Unreachable Code |
+| PGW-1002 | 10.2 | Missing Inline Format Metadata |
 
 ---
 
