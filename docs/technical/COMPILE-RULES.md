@@ -91,6 +91,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-610 | 6.10 | Empty Conditional Scope |
 | PGE-611 | 6.11 | Duplicate Wildcard Catch-All |
 | PGE-612 | 6.12 | Unreachable Branch After Wildcard |
+| PGE-613 | 6.13 | Tautological or Contradictory Branch Condition |
 | PGE-701 | 7.1 | `[!]` Error Block Scoping |
 | PGE-702 | 7.2 | Chain Error Scoping |
 | PGE-703 | 7.3 | Duplicate Fallback Assignment |

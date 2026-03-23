@@ -30,7 +30,7 @@ If neither static proof nor `*?` is present, PGE-601 fires.
 | Fixed field (`.`) | Closed | PGE-602 — all siblings present | No — if all siblings listed |
 | `string` | Open (infinite) | PGE-606 | Yes — always |
 | Flexible field (`:`) | Open | PGE-607 | Yes — always |
-| Compound (`[&]`/`[+]`/`[^]`) | Complex | PGE-608, PGE-605 (overlap) | Yes — always |
+| Compound (`[&]`/`[+]`/`[^]`) | Complex | PGE-608, PGE-605 (overlap), PGE-613 (pre-check) | No — if all variables closed and partition proof succeeds; Yes — if any variable open |
 
 **Key principle:** `*?` is a fallback for types where the compiler cannot prove exhaustiveness. When the compiler *can* prove exhaustiveness (enums with all variants, numeric ranges covering -∞ to +∞), `*?` is optional.
 
