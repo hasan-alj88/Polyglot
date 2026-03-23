@@ -9,7 +9,7 @@ severity: error
 `PGE-414`
 
 **Statement:** A `{#}` data definition must not reference itself — directly or transitively — unless the reference passes through `array` or `serial` indirection. Cycles in the type-reference graph that contain only fixed `[.]` or flexible `[:]` fields are a compile error.
-**Rationale:** Polyglot structs must span a finite tree. A direct self-reference like `.child;Node` inside `{#} #Node` creates an infinitely nested structure that cannot be instantiated, serialized, or traversed. Indirection through `array` or `serial` breaks the cycle because these are reference types — the contained data is finite even though the schema is recursive.
+**Rationale:** All Polyglot data lives in a metadata spanning tree with RawString leaves. Data types (`{#}`) are schemas of that tree — they define finite structure. A self-referencing type without indirection yields an infinite tree that cannot span. Indirection through `array` or `serial` breaks the cycle because these are reference types — the schema is recursive but the tree remains finite.
 **Detection:** The compiler builds a directed graph of `{#}` type references (edges from each type to the types it references via field annotations). It then checks for cycles. Any cycle that does not pass through an `array` or `serial` edge is rejected.
 
 **See also:** PGE-902 (circular package dependency — package-level cycles), PGE-401 (type mismatch — general type validation)
@@ -69,6 +69,13 @@ severity: error
 
 {#} #C
    [.] .ref;A                           [ ] ✗ PGE-414 — cycle detected
+```
+
+```polyglot
+[ ] ✗ PGE-414 — direct self-reference via flexible field
+{#} #Category
+   [:] :name;string
+   [:] :sub;Category                    [ ] ✗ PGE-414 — infinite recursion via flexible field
 ```
 
 **Open point:** None.
