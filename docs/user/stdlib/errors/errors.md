@@ -1,59 +1,96 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-20
+updated: 2026-03-23
 status: draft
 ---
 
-# Built-in Error Namespaces (!)
+# Error System
 
-Errors use the `!` prefix and hierarchical dot names. They appear inside `[!]` blocks scoped under the `[r]` call that produces them.
+<!-- @errors -->
+<!-- @blocks -->
 
-No `[@]` import needed.
+Errors use the `!` prefix and hierarchical dot names. Every error leaf is typed `#Error`. Custom errors are defined with `{!}` blocks; stdlib errors are built-in and require no `[@]` import.
 
-## Standard Error Namespaces
+## `#Error` Struct
 
+All errors — stdlib and user-defined — share the same struct:
+
+```polyglot
+{#} #Error
+   [.] .Name;RawString
+   [.] .ErrorAlias;RawString
+   [.] .Message;RawString
+   [.] .Info;serial
 ```
-!File
-   .NotFound
-   .ReadError
-   .WriteError (?)
 
-!No
-   .Input
-   .Output (?)
+| Field | Filled by | Purpose |
+|-------|-----------|---------|
+| `.Name` | Runtime (auto) | Full error identifier (e.g., `"File.NotFound"`) |
+| `.ErrorAlias` | Author | Short display name for logging/UI |
+| `.Message` | Author (at raise site) | Human-readable description |
+| `.Info` | Author (at raise site) | Arbitrary context data as `;serial` |
 
-!Timeout (?)
-   :Connection (?)
-      [ ] Uses flexible (:) field for specific timeout targets.
+## Defining Custom Errors (`{!}`)
 
-!Math
-   .DivideByZero
+`{!}` defines an error tree. Each leaf is typed `;#Error`:
 
-!Validation (?)
-   .Error (?)
+```polyglot
+{!} !Validation
+   [.] .Empty;#Error
+   [.] .TooLong;#Error
+   [.] .InvalidEmail;#Error
+```
+
+This creates `!Validation.Empty`, `!Validation.TooLong`, `!Validation.InvalidEmail` — all carrying the `#Error` struct.
+
+`{!}` creates entries at `%!:Namespace.Error` in the metadata tree. See [[data-is-trees#How Concepts Connect]].
+
+## Built-in Error Namespaces
+
+No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime:
+
+```polyglot
+{!} !File
+   [.] .NotFound;#Error
+   [.] .ReadError;#Error
+   [.] .WriteError;#Error
+
+{!} !No
+   [.] .Input;#Error
+   [.] .Output;#Error
+
+{!} !Timeout
+   [.] .Connection;#Error
+   [.] .Read;#Error
+
+{!} !Math
+   [.] .DivideByZero;#Error
+
+{!} !Validation
+   [.] .Error;#Error
 ```
 
 ## Pipeline Error Associations
 
-Each stdlib pipeline exposes the errors it can raise:
+Each stdlib pipeline declares the errors it can raise via `[=] !ErrorName` (see [[pipelines#Error Trees]]):
 
 ```
 =File.Text.Read
-   !File.NotFound
-   !File.ReadError
+   [=] !File.NotFound
+   [=] !File.ReadError
 
 =File.Text.Write
-   !File.NotFound
-   !File.WriteError
+   [=] !File.NotFound
+   [=] !File.WriteError
 
 =File.Text.Append
-   !File.NotFound
-   !File.WriteError
+   [=] !File.NotFound
+   [=] !File.WriteError
 
 =Math.Divide
-   !Math.DivideByZero
+   [=] !Math.DivideByZero
 
 =Math.Modulo
-   !Math.DivideByZero
+   [=] !Math.DivideByZero
 ```

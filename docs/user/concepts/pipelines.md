@@ -16,14 +16,14 @@ Every pipeline definition `{=}` (see [[blocks]]) must contain these elements in 
 | Order | Element | Marker | Required |
 |-------|---------|--------|----------|
 | 0 | Metadata | `[%]` | Optional |
-| 1 | Trigger / IO | `[t]`, `[=]` | `[t]` mandatory, `[=]` optional |
+| 1 | Trigger / IO / Errors | `[t]`, `[=]` | `[t]` mandatory, `[=]` optional |
 | 2 | Queue | `[Q]` | Mandatory |
 | 3 | Wrapper | `[W]` | Mandatory |
 | 4 | Execution | `[r]`, `[p]`, `[b]`, `[s]`, `[?]` | Yes |
 
 **Metadata:** `[%]` lines declare description, version, authors, license, deprecation, and aliases. `.info;serial` holds custom metadata. See [[blocks#Metadata]].
 
-**Note:** `[t]` triggers and `[=]` IO declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[t]` line and wire trigger outputs to pipeline inputs.
+**Note:** `[t]` triggers, `[=]` IO declarations, and `[=] !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment. Error declarations (`[=] !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[t]` line and wire trigger outputs to pipeline inputs.
 
 ## Pipeline Metadata
 
@@ -31,7 +31,21 @@ Every pipeline carries implicit `live` metadata fields populated by the Polyglot
 
 ### Error Trees
 
-Every pipeline exposes an error tree -- a structured list of every error it can raise, organized as sub-items under the pipeline's full path. Error trees allow callers to handle specific failure modes without guessing. For stdlib pipeline error trees, see [[STDLIB#Standard Library Error Trees]].
+Every failable pipeline **must** declare its errors with `[=] !ErrorName` in the IO section. This is the pipeline's error tree — a structured list of every error it can raise:
+
+```polyglot
+{=} =ValidateUser
+   [=] <name;string
+   [=] >validated;string
+   [=] !Validation.Empty
+   [=] !Validation.TooLong
+   [t] =T.Call
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   ...
+```
+
+Error declarations are mandatory for failable pipelines. A pipeline without `[=] !...` is non-failable — the compiler warns (PGW-701) if a caller adds `[!]` handlers on it. Errors are raised in the execution body with `[!] >> !ErrorName` (see [[errors#Raising Errors]]). Custom error types are defined with `{!}` blocks (see [[errors#Defining Custom Errors]]). For stdlib pipeline error trees, see [[stdlib/errors/errors#Pipeline Error Associations]].
 
 ## Error Handling
 

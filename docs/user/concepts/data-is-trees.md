@@ -29,7 +29,7 @@ The `%` root has fixed branches for every object type in Polyglot:
 ├── *   Collectors        — collect operators (*Into.*, *Agg.*, *All, *First)
 ├── $   Variables         — runtime data ($name, $result)
 ├── M   Macros            — reusable logic ({M} blocks)
-├── !   Errors            — error namespaces (!File.*, !No.*)
+├── !   Errors            — error trees ({!} blocks, stdlib !File.*, !No.*, etc.)
 ├── @   Packages          — package addresses (@Local:999.*)
 └── definition            — compile-time schema templates
 ```
@@ -47,7 +47,7 @@ Each concept you have learned maps to a branch in the tree:
 | Variables | [[variable-lifecycle]] | `%$` | `%$:myVar:0` |
 | Expand operators | [[collections#Expand Operators]] | `%~` | `%~:ForEach.Array:0` |
 | Collect operators | [[collections#Collect Operators]] | `%*` | `%*:Into.Array:0` |
-| Error namespaces | [[errors]] | `%!` | `%!:File.NotFound` |
+| Error trees | [[errors]], `{!}` blocks | `%!` | `%!:File.NotFound` |
 | Packages | [[packages]] | `%@` | `%@:Local:999.MyPkg` |
 | Macros | [[blocks]] `{M}` | `%M` | `%M:W.Tracing:0` |
 

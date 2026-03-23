@@ -9,7 +9,7 @@ status: draft
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{M}` at `%M`, `{Q}` at `%Q` (see [[data-is-trees]]).
+Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{M}` at `%M`, `{Q}` at `%Q`, `{!}` at `%!` (see [[data-is-trees]]).
 
 ## `{X}` — Definition Elements
 
@@ -22,6 +22,7 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{=}` | Pipeline definition. See [[pipelines]] |
 | `{M}` | Macro definition |
 | `{Q}` | Queue definition. See [[pipelines#Queue]] |
+| `{!}` | Error tree definition. See [[errors#Defining Custom Errors]] |
 | `{Array}` | Array collection definition. See [[collections]] |
 | `{ }` | Comment. See [[comments]] |
 
@@ -68,6 +69,7 @@ See [[pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 |--------|---------|
 | `[?]` | Conditional switch flow |
 | `[!]` | Error handling — scoped under `[r]` call. See [[pipelines#Error Handling]] |
+| `[!] >>` | Error raise — raises a declared error. See [[errors#Raising Errors]] |
 | `[t]` | Trigger. See [[pipelines#Triggers]] |
 | `[Q]` | Queue. See [[pipelines#Queue]] |
 | `[W]` | Wrapper. See [[pipelines#Wrappers]] |

@@ -91,6 +91,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-704 | 7.4 | Duplicate Error Handler |
 | PGE-705 | 7.5 | Undeclared Error Raise |
 | PGE-706 | 7.6 | Unused Error Declaration |
+| PGE-707 | 7.7 | Error Handling Must Be Exhaustive |
 | PGE-801 | 8.1 | Auto-Wire Type Mismatch |
 | PGE-802 | 8.2 | Auto-Wire Ambiguous Type |
 | PGE-803 | 8.3 | Auto-Wire Unmatched Parameter |
@@ -123,6 +124,7 @@ Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a develope
 | PGW-701 | 7.1w | Error Handler on Non-Failable Call |
 | PGW-702 | 7.2w | Caller Overrides Pipeline Fallback |
 | PGW-703 | 7.3w | Missing Fallback Message |
+| PGW-704 | 7.4w | Fallback on Non-Failable IO |
 | PGW-901 | 9.1 | Deprecated Pipeline Reference |
 | PGW-1001 | 2.9 | Unreachable Code |
 | PGW-1002 | 10.2 | Missing Inline Format Metadata |

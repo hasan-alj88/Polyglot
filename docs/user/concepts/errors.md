@@ -1,7 +1,7 @@
 ---
 audience: user
 type: spec
-updated: 2026-03-22
+updated: 2026-03-23
 ---
 
 # Error Handling
@@ -9,8 +9,96 @@ updated: 2026-03-22
 <!-- @pipelines:Error Handling -->
 <!-- @variable-lifecycle:Failed -->
 <!-- @data-is-trees -->
+<!-- @stdlib/errors/errors -->
 
-Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Polyglot objects — `.` for fixed fields, `:` for flexible fields.
+Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Polyglot objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[stdlib/errors/errors#`#Error` Struct]]).
+
+## Defining Custom Errors (`{!}`)
+
+Custom error trees are defined with `{!}` blocks (see [[blocks#Definition Elements]]). Each leaf is typed `;#Error`:
+
+```polyglot
+{!} !Validation
+   [.] .Empty;#Error
+   [.] .TooLong;#Error
+   [.] .InvalidEmail;#Error
+```
+
+This creates three error identifiers: `!Validation.Empty`, `!Validation.TooLong`, `!Validation.InvalidEmail`. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`) are built-in and require no definition. See [[stdlib/errors/errors#Built-in Error Namespaces]] for the complete list.
+
+## Declaring Pipeline Errors (`[=] !`)
+
+A pipeline that can raise errors **must** declare them in its IO section using `[=] !ErrorName`:
+
+```polyglot
+{=} =ValidateUser
+   [=] <name;string
+   [=] >validated;string
+   [=] >status;string
+   [=] !Validation.Empty
+   [=] !Validation.TooLong
+   [t] =T.Call
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   ...
+```
+
+Error declarations are mandatory — a pipeline without `[=] !...` is non-failable. The compiler uses this to enforce:
+- **PGE-705** — `[!] >>` raises an error not declared by the pipeline
+- **PGE-706** — `[=] !ErrorName` declared but never raised in the execution body
+- **PGW-701** — caller adds `[!]` handler on a non-failable pipeline call (dead code)
+- **PGW-704** — caller adds `[>] <!` fallback on output from a non-failable pipeline call (dead code)
+- **PGE-707** — caller does not address all declared errors (exhaustive handling required)
+
+## Raising Errors (`[!] >>`)
+
+In the execution body, `[!] >> !ErrorName` raises a declared error. The raise block fills `#Error` fields with `[=]` lines:
+
+```polyglot
+[?] $name =? ""
+   [!] >> !Validation.Empty
+      [=] .Message << "Name is required"
+      [=] .Info:field << "name"
+[?] $name.length >? 100
+   [!] >> !Validation.TooLong
+      [=] .Message << "Name exceeds 100 characters"
+      [=] .Info:field << "name"
+      [=] .Info:maxLength << 100
+[?] *?
+   [r] >validated << $name
+   [r] >status << "ok"
+```
+
+`.Name` is auto-filled by the runtime (e.g., `"Validation.Empty"`). `.Message` and `.Info` are set at the raise site.
+
+**Default behavior:** When `[!] >>` fires, **all pipeline outputs go Failed** unless the raise block provides fallback values (see [[errors#Output Fallback on Raise]]).
+
+## Output Fallback on Raise
+
+Inside a `[!] >>` block, the author can push fallback values to specific outputs. Outputs not mentioned go Failed:
+
+```polyglot
+[!] >> !Validation.Empty
+   [=] .Message << "Name is required"
+   [=] >status << "invalid"
+      [>] %FallbackMessage << "Pipeline returns invalid status on empty input"
+   [ ] >validated not mentioned — goes Failed
+```
+
+`[>] %FallbackMessage` documents **why** this fallback exists. It is displayed by PGW-702 when a caller overrides the fallback with `[>] <!`.
+
+### Fallback Warning Rules
+
+| Author fallback? | `%FallbackMessage`? | Caller `<!`? | Result |
+|-----------------|---------------------|-------------|--------|
+| Yes | Missing | — | **PGW-703** to author: missing message |
+| Yes | `""` (suppressed) | Yes | Override silently — author allows it |
+| Yes | `"reason"` | Yes | **PGW-702** to caller: shows author's reason |
+| Yes | `"reason"` | No | Normal — caller uses author's fallback |
+| No | — | Yes | Normal `<!` behavior |
+
+- **PGW-702** — caller `[>] <!` overrides a pipeline-defined fallback that has `%FallbackMessage`. See [[compile-rules/PGW/PGW-702-caller-overrides-pipeline-fallback]].
+- **PGW-703** — author sets output fallback in `[!] >>` without `[>] %FallbackMessage`. Suppress with `%FallbackMessage << ""`. See [[compile-rules/PGW/PGW-703-missing-fallback-message]].
 
 ## Error Scoping
 
@@ -90,7 +178,7 @@ See [[pipelines#Error Handling in Chains]] for the full chain execution context.
 
 ## Standard Error Trees
 
-Every pipeline exposes an error tree — a structured list of every error it can raise. The stdlib defines four root namespaces:
+Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The stdlib defines five root namespaces (defined as `{!}` blocks by the runtime):
 
 | Namespace | Covers |
 |-----------|--------|

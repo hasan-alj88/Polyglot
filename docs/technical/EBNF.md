@@ -44,6 +44,7 @@ definition          ::= data_def
                       | pipeline_def
                       | macro_def
                       | queue_def
+                      | error_def
                       | array_def
                       | comment_block ;
 ```
@@ -346,6 +347,7 @@ expression          ::= assignment_expr
                       | queue_line
                       | wrapper_line
                       | error_handler
+                      | error_raise
                       | conditional_expr
                       | expand_expr
                       | collect_expr
@@ -465,9 +467,11 @@ pipeline_body       ::= { ( metadata_line | comment_line ) NEWLINE }
                          wrapper_section
                          execution_section ;
 
-(* Trigger and IO form one section — order between [t] and [=] is not strict.
-   IO inputs are implicit triggers; some triggers produce inputs. *)
-trigger_io_section  ::= { indent ( trigger_line | io_decl_line | comment_line ) NEWLINE } ;
+(* Trigger, IO, and error declarations form one section — order between [t], [=], and error decls is not strict.
+   IO inputs are implicit triggers; some triggers produce inputs. Error declarations mark the pipeline as failable. *)
+trigger_io_section  ::= { indent ( trigger_line | io_decl_line | error_decl_line | comment_line ) NEWLINE } ;
+
+error_decl_line     ::= "[=]" error_id ;
 ```
 
 #### 9.3.1 Trigger Section
@@ -642,7 +646,30 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
 
 **Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `=Q.Default` is the stdlib-provided queue and does not require a `{Q}` definition.
 
-### 9.6 Array Definition
+### 9.6 Error Definition
+
+```ebnf
+error_def           ::= "{!}" error_namespace_id NEWLINE
+                         { indent error_leaf_line NEWLINE } ;
+
+error_namespace_id  ::= '!' dotted_name ;
+
+error_leaf_line     ::= "[.]" fixed_field ";#Error"
+                      | metadata_line
+                      | comment_line ;
+```
+
+`{!}` defines a custom error tree. Each leaf is typed `;#Error`. The namespace uses the `!` prefix. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`) are built-in.
+
+**Example:**
+```polyglot
+{!} !Validation
+   [.] .Empty;#Error
+   [.] .TooLong;#Error
+   [.] .InvalidEmail;#Error
+```
+
+### 9.7 Array Definition
 
 ```ebnf
 array_def           ::= "{Array}" variable_id type_annotation NEWLINE
@@ -651,13 +678,13 @@ array_def           ::= "{Array}" variable_id type_annotation NEWLINE
 array_body_line     ::= exec_line | comment_line ;
 ```
 
-### 9.6 Comment Block (Definition Level)
+### 9.8 Comment Block (Definition Level)
 
 ```ebnf
 comment_block       ::= "{ }" comment_text NEWLINE ;
 ```
 
-### 9.7 Metadata Block
+### 9.9 Metadata Block
 
 ```ebnf
 metadata_line       ::= "[%]" metadata_expr ;
@@ -819,7 +846,25 @@ error_block         ::= "[!]" error_id NEWLINE
 
 **Rule:** `[!]` blocks are scoped to the specific `[r]` call that produces the error. They are indented under that call, after its `[=]` IO lines — never at pipeline level.
 
-### 11.3 Logical Operators (in conditionals)
+### 11.3 Error Raise
+
+```ebnf
+error_raise         ::= "[!]" ">>" error_id NEWLINE
+                         { indent error_raise_line NEWLINE } ;
+
+error_raise_line    ::= "[=]" fixed_field assignment_op value_expr          (* #Error field: .Message, .Info *)
+                      | "[=]" io_param assignment_op value_expr              (* output fallback *)
+                         { indent raise_fallback_meta NEWLINE }
+                      | comment_line ;
+
+raise_fallback_meta ::= "[>]" "%FallbackMessage" assignment_op string_literal ;
+```
+
+**Rule:** `[!] >>` raises a declared error in the execution body. The raise block fills `#Error` fields (`.Message`, `.Info`, etc.) via `[=]` lines. Output fallbacks (`[=] >outputName << value`) set specific outputs to Final instead of Failed. `[>] %FallbackMessage` documents the author's intent for each fallback — omitting it triggers PGW-703; callers overriding it see PGW-702.
+
+**Rule:** `[!] >>` can only raise errors declared in the pipeline's `[=] !ErrorName` declarations. Raising an undeclared error is PGE-705.
+
+### 11.4 Logical Operators (in conditionals)
 
 ```ebnf
 logical_and         ::= "[&]" comparison_expr ;
@@ -992,11 +1037,15 @@ file
   │    ├─ value_field           [.] .name;string <~ ""
   │    └─ value_field           [.] .count;int <~ 0
   │
+  ├─ error_def              {!} !Processing
+  │    └─ leaf                 [.] .InvalidRecord;#Error
+  │
   └─ pipeline_def           {=} =ProcessItems
        ├─ metadata              [%] .version << "1.0.0"
        ├─ trigger               [t] =T.Call
        ├─ io                    [=] <items;array.Record
        │                        [=] >total;int ~> 0
+       ├─ error_decl            [=] !Processing.InvalidRecord
        ├─ queue                 [Q] =Q.Default
        ├─ wrapper               [W] =W.Polyglot
        └─ execution

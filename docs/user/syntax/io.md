@@ -48,6 +48,20 @@ IO inputs declared with `[=]` become `$`-prefixed variables in the execution bod
 
 IO inputs with no assignment must be filled externally and are in Final state when the pipeline fires. See [[pipelines#IO as Implicit Triggers]], [[variable-lifecycle]].
 
+## Error Declaration
+
+<!-- @errors:Declaring Pipeline Errors -->
+Pipelines that can raise errors declare them in the IO section using `[=] !ErrorName`:
+
+```polyglot
+[=] <name;string
+[=] >validated;string
+[=] !Validation.Empty
+[=] !Validation.TooLong
+```
+
+Error declarations use the same `[=]` marker as inputs (`<`) and outputs (`>`). The `!` prefix identifies them as error declarations. See [[errors#Declaring Pipeline Errors]] for compiler enforcement rules.
+
 ## Pipeline Call
 
 <!-- @pipelines:Error Handling -->
