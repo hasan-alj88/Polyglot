@@ -72,6 +72,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-409 | 4.9 | Unhandled Serialâ†’Struct Conversion |
 | PGE-410 | 4.10 | Invalid Arithmetic Operator |
 | PGE-411 | 4.11 | Negative Array Index Literal |
+| PGE-412 | 4.12 | Nested Array Type |
 | PGE-413 | 4.13 | Duplicate Data Field Name |
 | PGE-414 | 4.14 | Recursive Data Definition |
 | PGE-415 | 4.15 | Conditional Type-Operator Mismatch |
