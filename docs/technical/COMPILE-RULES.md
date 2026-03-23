@@ -42,6 +42,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-115 | 1.15 | Duplicate Metadata Field |
 | PGE-116 | 1.16 | Unmarked Execution Line |
 | PGE-117 | 1.17 | Wrong Block Element Marker |
+| PGE-118 | 1.18 | Tautological or Contradictory Trigger Condition |
 | PGE-201 | 2.1 | Lifecycle Stages |
 | PGE-202 | 2.2 | Declared State Is Unreadable |
 | PGE-203 | 2.3 | Final Is Push-Once |
