@@ -10,7 +10,7 @@ severity: error
 
 **Statement:** A metadata access expression (`$var%field`, `=Pipeline%field`, `#Data%field`) must reference a field that exists in the metadata schema for that object type. Each object type has a fixed set of valid metadata fields — accessing a field outside that schema is a compile error.
 **Rationale:** The `%` tree has a well-defined schema per object type. An invalid field access like `$count%description` (variables have no `.description` metadata) is always a logic error. Catching this at compile time prevents silent empty reads or undefined behavior at runtime.
-**Detection:** The compiler resolves the object type from the `%` access expression, looks up the metadata schema for that type, and rejects any field reference not in the schema. Both `live` fields and user-declared `[%]` fields are checked.
+**Detection:** The compiler resolves the object type from the `%` access expression and checks field existence. Fixed metadata fields (`%state`, `%status`, etc.) and user-declared `[%]` fields are a direct schema lookup. The `%info` field (`;serial`) requires fetching from the metadata tree to confirm the subfield path exists. Any field reference not found is rejected.
 
 **See also:** PGE-206 (metadata pull-only — `live` fields cannot be pushed), PGE-406 (undefined variable reference), PGE-405 (undefined field reference)
 

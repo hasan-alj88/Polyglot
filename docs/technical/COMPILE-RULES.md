@@ -113,6 +113,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-910 | 9.10 | Multi-File Self-Reference |
 | PGE-911 | 9.11 | Asymmetric Multi-File Reference |
 | PGE-914 | 9.14 | Circular Pipeline Call |
+| PGE-1001 | 10.1 | Undefined Metadata Field Access |
 
 ## Warning Code Reference (PGW)
 
