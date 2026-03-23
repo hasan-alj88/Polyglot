@@ -109,8 +109,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-904 | 9.4 | Unresolved Import Pipeline Reference |
 | PGE-905 | 9.5 | Multi-File Version Mismatch |
 | PGE-906 | 9.6 | Multi-File Package Name Mismatch |
-| PGE-907 | 9.7 | Duplicate Pipeline Definition |
-| PGE-908 | 9.8 | Duplicate Data Definition |
+| PGE-907 | 9.7 | Duplicate Definition |
 | PGE-909 | 9.9 | Multi-File Reference Not Found |
 | PGE-910 | 9.10 | Multi-File Self-Reference |
 | PGE-911 | 9.11 | Asymmetric Multi-File Reference |
@@ -140,6 +139,7 @@ Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a develope
 | PGW-703 | 7.3w | Missing Fallback Message |
 | PGW-704 | 7.4w | Fallback on Non-Failable IO |
 | PGW-901 | 9.1 | Deprecated Pipeline Reference |
+| PGW-902 | 9.2 | Unused Import |
 | PGW-1001 | 2.9 | Unreachable Code |
 | PGW-1002 | 10.2 | Missing Inline Format Metadata |
 
@@ -183,3 +183,4 @@ Codes that have been merged into other rules or removed. Listed here so searches
 | Code | Former Rule | Name | Redirect |
 |------|-------------|------|----------|
 | PGE-204 | 2.4 | Default Allows Exactly One More Push | Merged into PGE-203 (Final Is Push-Once) |
+| PGE-908 | 9.8 | Duplicate Data Definition | Merged into PGE-907 (Duplicate Definition) |
