@@ -43,11 +43,7 @@ For the full project vision, philosophy, and design principles, see **[Project V
 // Queue configuration
 [Q] |Q.Priority
 [<] .level: pg\uint = 2
-
-[Q] |Q.DispatchIf.CPU.Available.MoreThan
-[<] .threshold: pg\float = 75.0
-[Q] |Q.ReplaceReTriggeredIf.QueueTime.MoreThan
-[<] .timeout: pg\time = T"1::"
+[<] .maxInstances: pg\uint = 1
 
 // Runtime wrapper
 [W] |W.Python3.10
@@ -144,19 +140,18 @@ Polyglot provides:
 
 ### 3. Resource Management
 ```polyglot
+// Pending queue: priority ordering with concurrency limits
 [Q] |Q.Priority
 [<] .level: pg\uint = 5
+[<] .maxInstances: pg\uint = 2
 
-[Q] |Q.DispatchIf.CPU.Available.MoreThan
-[<] .threshold: pg\float = 80.0
+// Active queue controls (called from execution body)
+[r] |Q.KillIf.ExecutionTime.MoreThan
+[<] .pipeline: pg\string = "=HeavyWork"
+[<] .timeout: pg\string = "30m"
 
-[Q] |Q.DispatchIf.RAM.Available.MB.MoreThan
-[<] .threshold: pg\float = 2048
-
-[Q] |Q.KillIf.ExecutionTime.MoreThan
-[<] .timeout: pg\time = T"30:"
-
-[Q] |Q.KillIf.CPU.Usage.MoreThan
+[r] |Q.PauseIf.CPU.MoreThan
+[<] .pipeline: pg\string = "=HeavyWork"
 [<] .threshold: pg\float = 95.0
 ```
 

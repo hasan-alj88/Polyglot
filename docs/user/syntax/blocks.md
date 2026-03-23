@@ -9,7 +9,7 @@ status: draft
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{M}` at `%M` (see [[data-is-trees]]).
+Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{M}` at `%M`, `{Q}` at `%Q` (see [[data-is-trees]]).
 
 ## `{X}` — Definition Elements
 
@@ -21,6 +21,7 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{#}` | Struct definition. See [[types#Enum Fields vs Value Fields]] |
 | `{=}` | Pipeline definition. See [[pipelines]] |
 | `{M}` | Macro definition |
+| `{Q}` | Queue definition. See [[pipelines#Queue]] |
 | `{Array}` | Array collection definition. See [[collections]] |
 | `{ }` | Comment. See [[comments]] |
 
@@ -93,7 +94,7 @@ See [[pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 |--------|---------|
 | `[%]` | Definition metadata and aliases |
 
-`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Alias under a `[.]` field: `[%] .alias << #AliasName` resolves to the fully qualified path. Aliases preserve type prefix (`#` for data, `=` for pipelines).
+`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Alias under a `[.]` field: `[%] .alias << #AliasName` resolves to the fully qualified path. Aliases preserve type prefix (`#` for data, `=` for pipelines).
 
 See [[metadata]] for the full metadata tree, field listings, `live` semantics, and access patterns.
 

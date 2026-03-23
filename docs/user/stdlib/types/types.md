@@ -65,6 +65,62 @@ Stdlib structs and enums available in every `.pg` file. No `[@]` import needed.
       [%] .alias << #Failed
 ```
 
+## #QueueStrategy
+
+```
+#QueueStrategy
+   [%] .description << "Queue ordering strategy"
+   [%] .version << "1.0.0"
+   .FIFO
+      [%] .alias << #FIFO
+   .LIFO
+      [%] .alias << #LIFO
+   .Priority
+      [%] .alias << #Priority
+```
+
+## #RetriggerStrategy
+
+```
+#RetriggerStrategy
+   [%] .description << "Behavior when pipeline is re-triggered while queued or running"
+   [%] .version << "1.0.0"
+   .Disallow
+      [%] .alias << #Disallow
+   .Allow
+      [%] .alias << #Allow
+   .NoDuplicate
+      [%] .alias << #NoDuplicate
+   .QueueAfter
+      [%] .alias << #QueueAfter
+```
+
+## #QueueState
+
+```
+#QueueState
+   [%] .description << "Active queue pipeline state"
+   [%] .version << "1.0.0"
+   .Running
+      [%] .alias << #Running
+   .SoftPaused
+      [%] .alias << #SoftPaused
+   .HardPaused
+      [%] .alias << #HardPaused
+   .Killed
+      [%] .alias << #Killed
+```
+
+## #Queue
+
+```
+#Queue
+   [%] .description << "Queue configuration for pipeline execution"
+   [%] .version << "1.0.0"
+   [.] .strategy;#QueueStrategy
+   [.] .retrigger;#RetriggerStrategy
+```
+
 ## #FileAccess
 
 ```

@@ -1,0 +1,46 @@
+---
+rule: "1.13"
+code: PGE-113
+name: Queue Control Contradicts Queue Default
+severity: error
+---
+
+### Rule 1.13 — Queue Control Contradicts Queue Default
+`PGE-113`
+
+**Statement:** A pipeline's `[Q]` section must not contain IO parameters or active controls that contradict the defaults set in its queue's `{Q}` definition.
+**Rationale:** `{Q}` defines queue-level defaults that apply to all pipelines on that queue. If a pipeline overrides these with contradictory values, it creates ambiguous runtime behavior. The compiler catches these contradictions statically.
+**Detection:** The compiler compares each `[Q]` IO parameter and nested `[Q]` control against the referenced `{Q}` definition. A contradiction is any parameter that directly conflicts with a queue-level default.
+
+**VALID:**
+```polyglot
+{Q} #Queue:BatchQueue
+   [.] .strategy;#QueueStrategy << #FIFO
+   [.] .maxInstances;int << 5
+
+[ ] ✓ pipeline adds controls not in {Q} — no contradiction
+{=} =BatchJob
+   [t] =T.Call
+   [Q] #Queue:BatchQueue
+      [=] <maxConcurrent;int << 10
+      [Q] =Q.Pause.Soft
+         [=] <CPU.MoreThan;float << 90.0
+   [W] =W.Polyglot
+   [r] =DoWork
+```
+
+**INVALID:**
+```polyglot
+{Q} #Queue:BatchQueue
+   [.] .maxInstances;int << 1
+
+[ ] ✗ PGE-113 — maxInstances contradicts queue default
+{=} =BatchJob
+   [t] =T.Call
+   [Q] #Queue:BatchQueue
+      [=] <maxInstances;int << 5
+   [W] =W.Polyglot
+   [r] =DoWork
+```
+
+**Diagnostic:** "Pipeline `=BatchJob` sets `maxInstances << 5` but queue `#Queue:BatchQueue` defines `maxInstances << 1` — remove the pipeline override or change the queue default"

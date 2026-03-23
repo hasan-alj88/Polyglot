@@ -65,6 +65,16 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │   └── :<name>:<instance>
 │       ├── .state           ;live.#VarState
 │       └── .sourceError     ;live.error        (NEW — !NoError if no error)
+├── Q  (Queues)
+│   └── :<name>:<instance>
+│       ├── .strategy        ;live.#QueueStrategy
+│       ├── .retrigger       ;live.#RetriggerStrategy
+│       ├── .state           ;live.#QueueState
+│       ├── .pendingCount    ;live.int
+│       ├── .activeCount     ;live.int
+│       ├── .description     ;string           (user-declared)
+│       ├── .version         ;string           (user-declared)
+│       └── .alias                             (user-declared)
 ├── M  (Macros)
 │   └── :<name>:<instance>
 │       ├── .description     ;string           (user-declared)

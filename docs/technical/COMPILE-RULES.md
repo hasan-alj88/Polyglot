@@ -36,6 +36,9 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-109 | 1.9 | Wrapper IO Mismatch |
 | PGE-110 | 1.10 | Pipeline IO Name Mismatch |
 | PGE-111 | 1.11 | Duplicate IO Parameter Name |
+| PGE-112 | 1.12 | Queue Definition Must Use #Queue: Prefix |
+| PGE-113 | 1.13 | Queue Control Contradicts Queue Default |
+| PGE-114 | 1.14 | Unresolved Queue Reference |
 | PGE-201 | 2.1 | Lifecycle Stages |
 | PGE-202 | 2.2 | Declared State Is Unreadable |
 | PGE-203 | 2.3 | Final Is Push-Once |

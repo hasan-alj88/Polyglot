@@ -43,6 +43,7 @@ file                ::= package_block { definition } ;
 definition          ::= data_def
                       | pipeline_def
                       | macro_def
+                      | queue_def
                       | array_def
                       | comment_block ;
 ```
@@ -495,10 +496,32 @@ io_decl_line        ::= "[=]" typed_io_param [ assignment_op value_expr ] ;
 #### 9.3.3 Queue Section
 
 ```ebnf
-queue_section       ::= indent "[Q]" pipeline_ref NEWLINE ;
+queue_section       ::= indent "[Q]" queue_ref NEWLINE
+                         { indent ( queue_io_line | queue_control_line ) NEWLINE } ;
+
+queue_ref           ::= pipeline_ref | queue_id ;
+
+queue_io_line       ::= "[=]" typed_io_param assignment_op value_expr ;
+
+queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
+                         { indent queue_io_line NEWLINE } ;
 ```
 
-**Example:** `[Q] =Q.Default`
+`[Q]` references either a stdlib queue (`=Q.Default`) or a user-defined queue (`#Queue:Name`). Nested `[Q]` lines declare pipeline-specific active queue controls (pause, resume, kill). These override or extend the queue's `{Q}` defaults for this pipeline only — contradictions raise PGE-113.
+
+**Examples:**
+
+Simple: `[Q] =Q.Default`
+
+With IO and active controls:
+```polyglot
+[Q] #Queue:GPUQueue
+   [=] <maxConcurrent;int << 2
+   [Q] =Q.Pause.Hard
+      [=] <RAM.Available.LessThan;float << 3072.0
+   [Q] =Q.Resume
+      [=] <RAM.Available.MoreThan;float << 5120.0
+```
 
 #### 9.3.4 Wrapper Section
 
@@ -585,7 +608,41 @@ At the `[W]` line, macro IO is wired using `[=]` with `$` variables (not `<`/`>`
 
 **Examples:** `[W] =W.Polyglot` (no IO, no-op macro), `[W] =W.DB.Transaction` (with IO wiring)
 
-### 9.5 Array Definition
+### 9.5 Queue Definition
+
+```ebnf
+queue_def           ::= "{Q}" queue_id NEWLINE
+                         { indent queue_body_line NEWLINE } ;
+
+queue_id            ::= "#Queue:" name ;
+
+queue_body_line     ::= queue_field_line
+                      | queue_control_line
+                      | metadata_line
+                      | comment_line ;
+
+queue_field_line    ::= "[.]" fixed_field type_annotation assignment_op value_expr ;
+
+queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
+                         { indent queue_io_line NEWLINE } ;
+```
+
+`{Q}` defines and instantiates a named queue. The identifier must use the `#Queue:` prefix (PGE-112). Fields set queue-level defaults (strategy, retrigger). Nested `[Q]` lines set default active controls that apply to all pipelines on this queue.
+
+**Example:**
+```polyglot
+{Q} #Queue:GPUQueue
+   [%] .description << "Queue for GPU-intensive work"
+   [.] .strategy;#QueueStrategy << #LIFO
+   [.] .maxInstances;int << 1
+   [.] .retrigger;#RetriggerStrategy << #Disallow
+   [Q] =Q.Kill.Graceful
+      [=] <ExecutionTime.MoreThan;string << "2h"
+```
+
+**Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `=Q.Default` is the stdlib-provided queue and does not require a `{Q}` definition.
+
+### 9.6 Array Definition
 
 ```ebnf
 array_def           ::= "{Array}" variable_id type_annotation NEWLINE
