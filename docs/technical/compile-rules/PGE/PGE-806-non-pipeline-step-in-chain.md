@@ -12,7 +12,7 @@ severity: error
 **Rationale:** A chain `=A >> =B >> =C` auto-wires output from one pipeline as input to the next. Each step must be a callable pipeline that can receive input and produce output. An inline call like `=Path"/tmp"` is a value expression — it already has its input (the inline string) and produces a value, just like `$variable`. Writing `=Path"/tmp" >> =Process` is equivalent to writing `$tmp >> =Process`, which is nonsensical — values are not pipeline steps.
 **Detection:** The compiler inspects each step in a chain expression. Any step that is not a plain `pipeline_ref` is rejected — this includes `inline_pipeline_call` (pipeline ref + string literal).
 
-**See also:** PGE-804 (ambiguous step reference), PGE-805 (unresolved step reference), PGE-807 (inline pipeline on assignment LHS)
+**See also:** PGE-804 (ambiguous step reference), PGE-805 (unresolved step reference), PGE-807 (invalid assignment target)
 
 **VALID:**
 ```polyglot
