@@ -12,7 +12,7 @@ severity: warning
 **Rationale:** A declared but unpushed output port is likely a wiring oversight. Callers expecting this output will see a variable stuck in Declared state, preventing downstream triggers from firing. This is a warning rather than an error because the output might be intentionally optional in some designs.
 **Detection:** The compiler analyzes all code paths within the pipeline body and checks whether each declared `>name` output has at least one push (`<<` or `<~`) on every code path. If any output has zero pushes on any path, the warning is emitted.
 
-**See also:** PGE-203 (final is push-once — covers push-once semantics), PGE-110 (pipeline IO name mismatch — covers call-site wiring), PGW-202 (unused variable — analogous for `$` variables)
+**See also:** PGE-203 (final is push-once — covers push-once semantics), PGE-110 (pipeline IO name mismatch — covers call-site wiring), PGW-202 (unused variable — analogous for `$` variables), PGE-809 (uncaptured required output at call site — the caller-side counterpart), PGW-809 (uncaptured output with default/fallback — caller-side warning counterpart)
 
 **VALID:**
 ```polyglot

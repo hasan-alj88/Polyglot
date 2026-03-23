@@ -101,6 +101,8 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-805 | 8.5 | Unresolved Step Reference |
 | PGE-806 | 8.6 | Non-Pipeline Step in Chain |
 | PGE-807 | 8.7 | Invalid Assignment Target |
+| PGE-808 | 8.8 | Missing Required Input at Call Site |
+| PGE-809 | 8.9 | Uncaptured Required Output at Call Site |
 | PGE-901 | 9.1 | Undefined Import Alias |
 | PGE-902 | 9.2 | Circular Package Dependency |
 | PGE-903 | 9.3 | Unresolved Pipeline Reference |
@@ -125,11 +127,14 @@ Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a develope
 | PGW-102 | 1.2w | Empty Data Definition |
 | PGW-201 | 2.7 | Default Pull Across State Change |
 | PGW-202 | 2.2 | Unused Variable |
+| PGW-203 | 2.3 | Unpushed Output Port |
 | PGW-205 | 2.5 | Pipeline Terminates on Error |
 | PGW-301 | 3.5 | `[b]` Called Pipeline Has Discarded Outputs |
 | PGW-302 | 3.5w | Error Handler on Fire-and-Forget |
 | PGW-408 | 4.8 | Single-Platform Path |
 | PGW-801 | 8.1 | Auto-Wire Succeeded |
+| PGW-808 | 8.8w | Unaddressed Input With Default |
+| PGW-809 | 8.9w | Uncaptured Output With Default/Fallback |
 | PGW-701 | 7.1w | Error Handler on Non-Failable Call |
 | PGW-702 | 7.2w | Caller Overrides Pipeline Fallback |
 | PGW-703 | 7.3w | Missing Fallback Message |
