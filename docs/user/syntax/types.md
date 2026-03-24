@@ -96,6 +96,27 @@ Arrays can specify their element type using `.` (fixed field) notation:
 
 This constrains the array to hold only elements of the specified type.
 
+## Multidimensional Arrays
+
+Arrays support a dimension specifier using `:` (flexible field) notation with an `<N>D` suffix. Omitting the dimension defaults to 1D:
+
+```polyglot
+[=] <items;array.string              [ ] 1D array (default)
+[=] <matrix;array.float:2D           [ ] 2D matrix of floats
+[=] <cube;array.int:3D               [ ] 3D cube of ints
+[=] <hyper;array.float:4D            [ ] 4D hypercube of floats
+```
+
+Element access uses dot-separated integer indices. The number of indices must match the declared dimension count:
+
+```polyglot
+[r] $val << $items.0                 [ ] 1 index for 1D
+[r] $val << $matrix.0.1              [ ] 2 indices for :2D
+[r] $val << $cube.2.3.0              [ ] 3 indices for :3D
+```
+
+The compiler enforces access depth — too many or too few indices triggers PGE-417. Nested array types (`array.array.X`) remain banned (PGE-412) — use `:ND` instead.
+
 ## Struct Types
 
 <!-- @blocks -->

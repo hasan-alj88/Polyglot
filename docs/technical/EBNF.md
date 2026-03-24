@@ -199,8 +199,9 @@ basic_type          ::= "RawString" | "string" | "int" | "float" | "bool" | "pat
                          bool (#Boolean): separate enum struct, not a #String subtype.
                          path (#path): struct with .Unix;string + .Windows;string. *)
 
-array_type          ::= "array" [ fixed_sep element_type ] ;
+array_type          ::= "array" [ fixed_sep element_type ] [ flex_sep dimension ] ;
 element_type        ::= basic_type | name ;            (* user-defined type name without # prefix *)
+dimension           ::= digit { digit } "D" ;          (* e.g., :2D, :3D — omitted defaults to 1D *)
 
 serial_type         ::= "serial" ;
 
