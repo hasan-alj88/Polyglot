@@ -10,7 +10,7 @@ status: complete
 <!-- @glossary:Polyglot Code -->
 <!-- @identifiers -->
 <!-- @pipelines -->
-Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through four lifecycle stages. Variables are [[identifiers]] with the `$` prefix. For how lifecycle applies to IO parameters, see [[pipelines#IO as Implicit Triggers]].
+Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through five lifecycle stages. Variables are [[identifiers]] with the `$` prefix. For how lifecycle applies to IO parameters, see [[pipelines#IO as Implicit Triggers]].
 
 ## Stages
 
@@ -21,6 +21,33 @@ Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through four lifecy
 | Final | Assigned via `<<` or `>>` — no further assignment allowed | Released |
 | Failed | The pipeline responsible for producing this variable failed with an error. The variable will never resolve. Check the source pipeline's error tree for details. **Exception:** if a `<!` fallback is declared, the variable becomes Final with the fallback value instead — see [[errors#Error Fallback Operators]] | — |
 | Released | Variable is out of scope and no longer accessible | — |
+
+```mermaid
+stateDiagram-v2
+    [*] --> dec
+
+    dec : Declared
+    def : Default
+    fin : Final
+    fail : Failed
+    rel : Released
+
+    dec --> def : default assign
+    dec --> fin : final assign
+
+    def --> fin : final assign
+    def --> rel : scope end
+
+    fin --> rel : scope end / collect input
+
+    dec --> fail : pipeline error
+    def --> fail : pipeline error
+
+    fail --> fin : fallback
+
+    note right of fail : Terminal without fallback
+    note right of rel : Terminal
+```
 
 ### Declared
 
