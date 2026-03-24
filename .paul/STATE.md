@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: UNIFY complete for Issue #36, ready for MERGE
-Last activity: 2026-03-24 — Loop closed, SUMMARY written
+Status: Issue #36 merged and closed
+Last activity: 2026-03-24 — Merged feat/issue-36 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -22,18 +22,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #36 — Algorithm: Pipeline call cycle detection (topological sort)
-Branch: feat/issue-36-pipeline-call-cycle-detection
-Labels: algorithm, P3-medium
-Started: 2026-03-24
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/36
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -61,6 +57,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | v0.2 milestone created with 4 phases | 2026-03-24 | Phases 9-12: Core Language & Type System, Operators & Control Flow, Pipelines & Concurrency, Package System & Stdlib |
 | Arithmetic uses =Math.* stdlib, not raw operators | 2026-03-24 | PGE-410 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
 | Removed speculative stdlib items | 2026-03-24 | =T.Schedule/HTTP/File, =W.Rust/Node had zero usage; =T.Webhook confirmed from EDGE-CASES |
+| Closed #36 — Pipeline call cycle detection algorithm | 2026-03-24 | Merged feat/issue-36-pipeline-call-cycle-detection to main |
 
 ### Deferred Issues
 - Rebuild Polly as PAUL special flow (after documentation phases)
@@ -79,14 +76,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-24
-Stopped at: UNIFY complete for issue-36-01
-Next action: /paul:merge to commit and merge branch, or review first
-Resume file: .paul/phases/issue-36-cycle-detection/issue-36-01-SUMMARY.md
+Stopped at: Issue #36 merged and closed
+Next action: /paul:issues (pick next issue) or /paul:progress
+Resume file: .paul/ROADMAP.md
 Resume context:
-- Issue #36 loop complete (PLAN → APPLY → UNIFY ✓)
-- Algorithm spec at docs/technical/compile-rules/algorithms/cycle-detection.md
-- All 4 acceptance criteria passed
-- Ready for commit and merge to main
+- Issue #36 complete — cycle detection algorithm spec merged to main
+- No active issue — ready for next work
 
 ---
 *STATE.md — Updated after every significant action*
