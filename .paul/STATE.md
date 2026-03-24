@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #26 UNIFY complete, ready for MERGE
-Last activity: 2026-03-24 — Created 26-01-SUMMARY.md, loop closed
+Status: Issue #26 merged and closed
+Last activity: 2026-03-24 — Merged feat/issue-26 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -22,18 +22,18 @@ Progress:
 
 ## Active Issue
 
-Issue: #26 — STDLIB: Confirm or remove speculative =T.* trigger pipelines
-Branch: feat/issue-26-confirm-remove-speculative-t-triggers
+Issue: #28 — STDLIB: Confirm or remove speculative =W.* wrappers
+Branch: feat/issue-28-stdlib-confirm-remove-speculative-w-wrappers
 Labels: stdlib, P3-medium
 Started: 2026-03-24
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/26
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/28
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for /paul:merge]
+  ○        ○        ○        ○     [Issue #28 active]
 ```
 
 ## Accumulated Context
@@ -64,6 +64,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #36 — Pipeline call cycle detection algorithm | 2026-03-24 | Merged feat/issue-36-pipeline-call-cycle-detection to main |
 | Closed #37 — Multidimensional array via :ND | 2026-03-24 | Unified array + tensor into ;array.<type>:<N>D; removed ;tensor concept |
 | Closed #58 — Chain operator >> to => | 2026-03-24 | Chains use => with no spaces (=A=>=B=>=C); IO >> and [!] >> unchanged |
+| Closed #26 — Confirm/remove speculative =T.* triggers | 2026-03-24 | Verified Phase 12 already resolved all three; issue closed |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -82,12 +83,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-24
-Stopped at: Issue #26 UNIFY complete
-Next action: /paul:merge to merge branch and close loop
-Resume file: .paul/phases/issue-26-confirm-remove-speculative-t-triggers/26-01-SUMMARY.md
+Stopped at: Issue #26 merged and closed
+Next action: /paul:issues (pick next issue) or /paul:progress
+Resume file: .paul/ROADMAP.md
 Resume context:
-- Issue #26 verified and closed on GitHub — speculative =T.* triggers all resolved by Phase 12
-- Branch feat/issue-26-confirm-remove-speculative-t-triggers ready for merge
+- Issue #26 complete — speculative =T.* triggers verified resolved, issue closed
+- No active issue — ready for next work
 
 ---
 *STATE.md — Updated after every significant action*
