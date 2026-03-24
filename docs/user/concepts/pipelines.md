@@ -1,8 +1,8 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-22
-status: draft
+updated: 2026-03-24
+status: complete
 ---
 
 # Pipeline Structure
@@ -21,9 +21,11 @@ Every pipeline definition `{=}` (see [[blocks]]) must contain these elements in 
 | 3 | Wrapper | `[W]` | Mandatory |
 | 4 | Execution | `[r]`, `[p]`, `[b]`, `[s]`, `[?]` | Yes |
 
-**Metadata:** `[%]` lines declare description, version, authors, license, deprecation, and aliases. `.info;serial` holds custom metadata. See [[blocks#Metadata]].
+Misordering these sections is a compile error (PGE-101).
 
-**Note:** `[t]` triggers, `[=]` IO declarations, and `[=] !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment. Error declarations (`[=] !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[t]` line and wire trigger outputs to pipeline inputs.
+**Metadata:** `[%]` lines declare description, version, authors, license, deprecation, and aliases. `.info;serial` holds custom metadata. Duplicate metadata field names are a compile error (PGE-115). See [[blocks#Metadata]].
+
+**Note:** `[t]` triggers, `[=]` IO declarations, and `[=] !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment (PGE-102). Error declarations (`[=] !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[t]` line and wire trigger outputs to pipeline inputs.
 
 ## Pipeline Metadata
 
@@ -94,9 +96,13 @@ There is no need to validate inputs with `[?]` checks — unfilled required inpu
 
 ## Triggers
 
+Every pipeline must have at least one `[t]` trigger — omitting it is a compile error (PGE-105).
+
 - `=T.Call` — invoked when called from another pipeline
 - Standard library triggers live under `=T.*` namespace — no `[@]` import needed (see [[packages#Usage]])
 - Triggers with arguments: `=T.Daily"3AM"`, `=T.Webhook"/path"`, `=T.Folder.NewFiles"/dir/"`
+If a trigger's boolean expression evaluates to the same value for all combinations of trigger states, it is a tautology or contradiction (PGE-118).
+
 - Triggers that produce outputs wire them to pipeline inputs via indented `[=]` IO lines:
 
 ```polyglot
@@ -107,14 +113,14 @@ There is no need to validate inputs with `[?]` checks — unfilled required inpu
 
 ## Queue
 
-Polyglot uses a two-queue execution model:
+Every pipeline must declare a `[Q]` line — omitting it is a compile error (PGE-106). Polyglot uses a two-queue execution model:
 
 - **Pending Queue** — pipelines awaiting dispatch after all triggers fire. Strategies control ordering (FIFO, LIFO, Priority).
 - **Active Queue** — pipelines currently executing. Controls include pause, resume, and kill operations.
 
 ### Defining a Queue (`{Q}`)
 
-Custom queues are defined with `{Q}`, which both defines the queue struct and instantiates it. The identifier must use the `#Queue:` prefix. Queue-level defaults apply to all pipelines assigned to this queue.
+Custom queues are defined with `{Q}`, which both defines the queue struct and instantiates it. The identifier must use the `#Queue:` prefix (PGE-112). Queue-level defaults apply to all pipelines assigned to this queue.
 
 ```polyglot
 {Q} #Queue:GPUQueue
@@ -126,7 +132,7 @@ Custom queues are defined with `{Q}`, which both defines the queue struct and in
       [=] <ExecutionTime.MoreThan;string << "4h"
 ```
 
-`=Q.Default` is the only stdlib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first.
+`=Q.Default` is the only stdlib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first. Referencing an undefined queue is a compile error (PGE-114).
 
 ### Using a Queue (`[Q]`)
 
@@ -156,7 +162,9 @@ Pipeline-specific `[Q]` controls must not contradict the queue's `{Q}` defaults 
 
 ## Wrappers
 
-Wrappers invoke a macro (see [[blocks]] `{M}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it.
+Wrappers invoke a macro (see [[blocks]] `{M}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE-107). The `[W]` line must reference a valid macro (PGE-108), and the IO wired at the `[W]` site must match the macro's `[{]`/`[}]` declarations (PGE-109).
+
+Macros (`{M}`) cannot contain `[t]`, `[Q]`, `[=]`, `[p]`, `[b]`, or `[*]` — these are pipeline-only elements (PGE-104). See [[blocks]] for macro structural constraints.
 
 - `[\]` — macro setup, runs before the execution body
 - `[/]` — macro cleanup, runs after the execution body
@@ -233,11 +241,15 @@ See [[STDLIB#Wrappers]] for the full wrapper catalog.
 
 The execution section contains `[r]`, `[p]`, `[b]`, `[s]`, `[?]` lines — see [[blocks#Execution]]. For collection operations within execution, see [[collections]].
 
+### Execution Rules
+
+Every line in the execution body must begin with a block element marker — `[r]`, `[p]`, `[b]`, `[?]`, `[s]`, or an expand operator (PGE-116). Use `[r]` for process steps and assignment, not `[=]` — the `[=]` marker is reserved for IO declarations (PGE-117).
+
 ## Chain Execution
 
 <!-- @io:Chain IO Addressing -->
 <!-- @operators -->
-Chain execution wires multiple pipelines in sequence on a single `[r]` line, with `>>` separating each step. IO lines under the chain address individual steps by **numeric index** (0-based) or **leaf name** (the last segment of the pipeline's dotted name).
+Every step in a chain must be a pipeline reference — non-pipeline values are a compile error (PGE-806). Chain execution wires multiple pipelines in sequence on a single `[r]` line, with `>>` separating each step. IO lines under the chain address individual steps by **numeric index** (0-based) or **leaf name** (the last segment of the pipeline's dotted name).
 
 ```polyglot
 [r] =Pipeline1 >> =Pipeline2 >> =Pipeline3
@@ -259,7 +271,7 @@ IO parameters in a chain are prefixed with a step reference and `.`:
 
 The direction convention is **caller-perspective**: `>` means data flows *toward* the step (its input), `<` means data flows *from* the step (its output). This is consistent with how `[=]` IO works in regular pipeline calls. See [[io#Chain IO Addressing]].
 
-**Leaf name alternative:** When pipeline names are long, use the leaf name (last segment) instead of numeric index. Leaf names must be unambiguous within the chain — duplicate leaf names require numeric indices.
+**Leaf name alternative:** When pipeline names are long, use the leaf name (last segment) instead of numeric index. Leaf names must be unambiguous within the chain — duplicate leaf names require numeric indices. An ambiguous step reference is PGE-804; an unresolved step reference is PGE-805.
 
 ```polyglot
 [r] =File.List >> =Data.Transform.Rows >> =Report.Format
@@ -285,6 +297,8 @@ Auto-wire requires:
 - Exactly one output on the source step
 - Exactly one input on the target step
 - Matching data types between them
+
+A type mismatch between auto-wired ports is PGE-801. When multiple ports could match, the wire is ambiguous (PGE-802). An unmatched parameter with no valid auto-wire candidate is PGE-803. Note that successful auto-wire emits a warning (PGW-801) — explicit `[=]` wiring is preferred.
 
 If any condition is not met, explicit `[=]` wiring is required.
 
@@ -411,3 +425,54 @@ Both calling forms work:
 
 - **Chain calls** — `>>` connects pipeline references, not values. `[r] =Path"/tmp" >> =Other` is invalid (both sides would be values).
 - **LHS of assignments** — inline calls produce values, they are not assignable targets.
+
+## Call Site Rules
+
+When calling a pipeline (via `[r]`, `[p]`, `[b]`, or chain step), the compiler enforces IO wiring constraints:
+
+- **Assignment target** — the LHS of an assignment must be a variable, output port, or field path, not a value expression (PGE-807).
+- **Required inputs** — every required `<input` (no default) must be wired by the caller. Missing a required input is PGE-808.
+- **Required outputs** — every required `>output` must be captured or explicitly discarded with `$*`. Failing to capture is PGE-809.
+- **IO direction** — inputs use `<<`, outputs use `>>`. Reversing the direction operator is a compile error (PGE-810).
+- **IO name matching** — the parameter name at the call site must match a declared IO name on the target pipeline (PGE-110).
+- **Duplicate IO** — the same IO parameter cannot be wired twice in a single call (PGE-111).
+
+Inputs with defaults that are not addressed by the caller emit a warning (PGW-808). Outputs with defaults or fallbacks that are not captured emit a warning (PGW-809).
+
+## Compile Rules
+
+Pipeline structure, chain execution, and call site rules enforced at compile time. See [[compile-rules/PGE/{code}|{code}]] for full definitions.
+
+| Code | Name | Section |
+|------|------|---------|
+| PGE-101 | Pipeline Section Misordering | Pipeline Structure |
+| PGE-102 | IO Before Trigger | Pipeline Structure |
+| PGE-104 | Macro Structural Constraints | Wrappers |
+| PGE-105 | Missing Pipeline Trigger | Triggers |
+| PGE-106 | Missing Pipeline Queue | Queue |
+| PGE-107 | Missing Pipeline Setup/Cleanup | Wrappers |
+| PGE-108 | Wrapper Must Reference Macro | Wrappers |
+| PGE-109 | Wrapper IO Mismatch | Wrappers |
+| PGE-110 | Pipeline IO Name Mismatch | Call Site Rules |
+| PGE-111 | Duplicate IO Parameter Name | Call Site Rules |
+| PGE-112 | Queue Definition Must Use #Queue: Prefix | Queue |
+| PGE-113 | Queue Control Contradicts Queue Default | Queue |
+| PGE-114 | Unresolved Queue Reference | Queue |
+| PGE-115 | Duplicate Metadata Field | Pipeline Metadata |
+| PGE-116 | Unmarked Execution Line | Execution Rules |
+| PGE-117 | Wrong Block Element Marker | Execution Rules |
+| PGE-118 | Tautological Trigger Condition | Triggers |
+| PGE-801 | Auto-Wire Type Mismatch | Auto-Wire |
+| PGE-802 | Auto-Wire Ambiguous Type | Auto-Wire |
+| PGE-803 | Auto-Wire Unmatched Parameter | Auto-Wire |
+| PGE-804 | Ambiguous Step Reference | Step Addressing |
+| PGE-805 | Unresolved Step Reference | Step Addressing |
+| PGE-806 | Non-Pipeline Step in Chain | Chain Execution |
+| PGE-807 | Invalid Assignment Target | Call Site Rules |
+| PGE-808 | Missing Required Input at Call Site | Call Site Rules |
+| PGE-809 | Uncaptured Required Output at Call Site | Call Site Rules |
+| PGE-810 | IO Direction Mismatch | Call Site Rules |
+| PGW-701 | Error Handler on Non-Failable Call | Error Handling |
+| PGW-801 | Auto-Wire Succeeded | Auto-Wire |
+| PGW-808 | Unaddressed Input With Default | Call Site Rules |
+| PGW-809 | Uncaptured Output With Default/Fallback | Call Site Rules |

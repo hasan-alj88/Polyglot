@@ -10,15 +10,15 @@ See: .paul/PROJECT.md (updated 2026-03-12)
 ## Current Position
 
 Milestone: v0.2 Language Specification
-Phase: 10 of 12 — Complete. Next: Phase 11 (Pipelines & Concurrency)
-Plan: All plans in Phase 10 complete
+Phase: 11 of 12 — Complete. Next: Phase 12 (Package System & Stdlib)
+Plan: All plans in Phase 11 complete
 Status: Ready for next PLAN
-Last activity: 2026-03-24 — Phase 10 complete, transitioned to Phase 11
+Last activity: 2026-03-24 — Phase 11 complete, transitioned to Phase 12
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
 - v0.1.1 Doc Audit: [██████████] 100%
-- v0.2 Language Spec: [█████░░░░░] 50% (2/4 phases)
+- v0.2 Language Spec: [███████░░░] 75% (3/4 phases)
 
 ## Active Issue
 
@@ -72,13 +72,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-24
-Stopped at: Phase 10 complete, loop closed
-Next action: /paul:plan for Phase 11 (Pipelines & Concurrency)
-Resume file: .paul/HANDOFF-2026-03-24.md
+Stopped at: Phase 11 complete, loop closed
+Next action: /paul:plan for Phase 12 (Package System & Stdlib)
+Resume file: .paul/phases/11-pipelines-concurrency/11-01-SUMMARY.md
 Resume context:
-- Phase 10 fully closed (operators.md + conditionals.md both complete)
-- Phase 11 is Pipelines & Concurrency — largest remaining phase
-- Key finding: arithmetic uses =Math.* stdlib, not raw operators (PGE-410)
+- Phase 11 fully closed (pipelines.md + collections.md + errors.md all complete)
+- Phase 12 is Package System & Stdlib — last phase in v0.2
+- Key context: all spec files in docs/user/ now at status: complete except packages.md and stdlib
 
 ---
 *STATE.md — Updated after every significant action*

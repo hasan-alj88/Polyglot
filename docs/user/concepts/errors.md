@@ -1,7 +1,8 @@
 ---
 audience: user
 type: spec
-updated: 2026-03-23
+status: complete
+updated: 2026-03-24
 ---
 
 # Error Handling
@@ -102,7 +103,7 @@ Inside a `[!] >>` block, the author can push fallback values to specific outputs
 
 ## Error Scoping
 
-`[!]` error blocks are scoped to the specific `[r]` call that can produce them, indented under the call (after its `[=]` IO lines):
+`[!]` error blocks are scoped to the specific `[r]` call that can produce them (PGE-701), indented under the call (after its `[=]` IO lines). Under a single `[r]` call, no two `[!]` blocks may handle the same error name (PGE-704).
 
 ```polyglot
 [r] @FS=File.Text.Read
@@ -147,7 +148,7 @@ If the compiler cannot guarantee the `>IsFailed` output is handled, it emits PGW
 
 ## Chain Error Addressing
 
-In chain execution (`[r] =A >> =B >> =C`), errors are prefixed with a step reference:
+In chain execution (`[r] =A >> =B >> =C`), errors are prefixed with a step reference (PGE-702):
 
 **Prefer numeric indices** — always unambiguous:
 
@@ -291,3 +292,22 @@ When a fallback activates, the error that triggered it is accessible via `$var%s
 ### Compiler Rules
 
 - **PGE-703** — duplicate `<!` on same output for same error (or duplicate generic). See [[compile-rules/PGE/PGE-703-duplicate-fallback-assignment]].
+
+## Compile Rules
+
+Error declaration, handling, and fallback rules enforced at compile time. See [[compile-rules/PGE/{code}|{code}]] for full definitions.
+
+| Code | Name | Section |
+|------|------|---------|
+| PGE-701 | `[!]` Error Block Scoping | Error Scoping |
+| PGE-702 | Chain Error Scoping | Chain Error Addressing |
+| PGE-703 | Duplicate Fallback Assignment | Error Fallback Operators |
+| PGE-704 | Duplicate Error Handler | Error Scoping |
+| PGE-705 | Undeclared Error Raise | Raising Errors |
+| PGE-706 | Unused Error Declaration | Declaring Pipeline Errors |
+| PGE-707 | Error Handling Must Be Exhaustive | Declaring Pipeline Errors |
+| PGW-205 | Pipeline Terminates on Error | Error Recovery |
+| PGW-701 | Error Handler on Non-Failable Call | Declaring Pipeline Errors |
+| PGW-702 | Caller Overrides Pipeline Fallback | Output Fallback on Raise |
+| PGW-703 | Missing Fallback Message | Output Fallback on Raise |
+| PGW-704 | Fallback on Non-Failable IO | Error Fallback Operators |

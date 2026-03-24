@@ -1,7 +1,8 @@
 ---
 audience: user
 type: spec
-updated: 2026-03-22
+status: complete
+updated: 2026-03-24
 ---
 
 # Collections
@@ -36,6 +37,10 @@ Variables declared inside a mini-pipeline are scoped to that iteration — they 
 | `~ForEach.Array.Enumerate` | Each item with index | `<Array`, `>index`, `>item` |
 | `~ForEach.Serial` | All key-item pairs in a serial (all levels) | `<Serial`, `>key`, `>item` |
 | `~ForEach.Level` | Siblings at a specified level only | `<level`, `>key`, `>item` |
+
+The expand operator's IO must match its signature — `~ForEach.Array` requires `<Array` and `>item`, `~ForEach.Array.Enumerate` requires `<Array`, `>index`, and `>item` (PGE-307). Similarly, each collect operator's IO must match its contract (PGE-308).
+
+Every expand scope must contain at least one collector. A nested expand without an inner collector is a compile error — inner items cannot flow to outer collectors (PGE-309). Conversely, a `*Into` or `*Agg` collector outside any expand scope is invalid (PGE-311).
 
 ### `~ForEach.Level` — Level-Specific Iteration
 
@@ -81,6 +86,14 @@ Use `[r]` when collectors have dependencies between them, `[p]` when they are in
 <!-- @io:Wait and Collect-Into Markers -->
 Sync and race collectors operate **outside** expand scopes — they work on variables produced by parallel `[p]` pipeline calls. They use `[*] <<` (wait input) and `[*] >>` (collect output) forms (see [[io#Wait and Collect IO]]).
 
+### Parallel Boundaries
+
+Parallel execution enforces strict variable isolation:
+
+- A variable inside a `[p]` scope cannot be pushed into from outside that scope (PGE-301)
+- A `[p]` output variable cannot be pulled before its `[*]` collector has executed (PGE-303)
+- A `[p]` parallel and its `[*]` collector must pair within valid section boundaries — same scope, or `[\]` setup to `[/]` cleanup. A `[p]` in setup cannot be collected in the execution body (PGE-304). See [[pipelines#Parallel Forking in Setup]] for the pairing constraint.
+
 ### `*All` — Sync Barrier
 
 Waits for ALL listed variables to become Final. Uses `[*] <<` only — no `[*] >>`. Variables stay accessible after.
@@ -111,7 +124,7 @@ No type constraint on inputs.
 
 Wait for the Nth variable to become Final. The winner is stored in `[*] >>`; all other inputs are **cancelled**.
 
-All `[*] <<` inputs must be the **same type**. `[*] >>` output is required.
+All `[*] <<` inputs must be the **same type** (PGE-306). `[*] >>` output is required.
 
 `*First` and `*Second` are sugar for `*Nth` with `n=1` and `n=2`.
 
@@ -169,6 +182,8 @@ Two ways to intentionally discard output from a `[p]` parallel pipeline, both sa
 ```
 
 Prefer `$*` for clean discards. Prefer `*Ignore` when the variable may be needed later during development.
+
+**`[b]` — fire-and-forget parallel.** `[b]` has no collectible output (PGE-305). When `[b]` invokes a pipeline that declares outputs, those outputs are silently discarded — the compiler warns (PGW-301). An `[!]` error handler under a `[b]` call is unreachable dead code (PGW-302).
 
 ### Multi-Wave Parallel Pattern
 
@@ -250,3 +265,22 @@ When a pipeline call inside an expand scope may error, use `[>] <!` fallback to 
 ```
 
 If any file fails to read, `$text` gets `""` for that iteration instead of entering the Failed state. The expand continues for all items. See [[errors#Error Fallback Operators]] for the full fallback model.
+
+## Compile Rules
+
+Parallel execution, expand/collect, and race collector rules enforced at compile time. See [[compile-rules/PGE/{code}|{code}]] for full definitions.
+
+| Code | Name | Section |
+|------|------|---------|
+| PGE-301 | No Push Across Parallel Boundaries | Parallel Boundaries |
+| PGE-302 | Parallel Output Must Be Collected | Discarding Parallel Output |
+| PGE-303 | Pull Isolation Until Collection | Parallel Boundaries |
+| PGE-304 | Section-Boundary Pairing | Parallel Boundaries |
+| PGE-305 | `[b]` Has No Collectible Output | Discarding Parallel Output |
+| PGE-306 | Race Collector Type Homogeneity | Race Collectors |
+| PGE-307 | Expand Operator Input Mismatch | Expand Operators |
+| PGE-308 | Collect Operator IO Mismatch | Collect Operators |
+| PGE-309 | Nested Expand Without Collect | Expand Operators |
+| PGE-311 | Collector Without Expand | Collect Operators |
+| PGW-301 | `[b]` Called Pipeline Has Discarded Outputs | Discarding Parallel Output |
+| PGW-302 | Error Handler on Fire-and-Forget | Discarding Parallel Output |
