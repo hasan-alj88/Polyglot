@@ -7,7 +7,7 @@ prerequisite: PGE-613
 
 # Compound Condition Partition Refinement Algorithm
 
-Determines whether compound conditional branches (`[&]` AND, `[+]` OR, `[^]` XOR) are collectively exhaustive (PGE-608) and mutually exclusive (PGE-605).
+Determines whether compound conditional branches (`[&]` AND, `[|]` OR, `[^]` XOR) are collectively exhaustive (PGE-608) and mutually exclusive (PGE-605).
 
 ## Inputs
 
@@ -70,10 +70,10 @@ Example: `$status ∈ {Active, Inactive}` × `$age ∈ {(-∞,18], (18,65], (65,
 For each branch, determine which cells in the grid its compound expression covers:
 
 - **`[&]` AND:** A cell is covered if **all** sub-conditions are satisfied → intersection
-- **`[+]` OR:** A cell is covered if **any** sub-condition is satisfied → union
+- **`[|]` OR:** A cell is covered if **any** sub-condition is satisfied → union
 - **`[^]` XOR:** A cell is covered if **exactly one** sub-condition is satisfied → symmetric difference
 
-Example: `$status =? .Active [+] $age >? 65` (OR)
+Example: `$status =? .Active [|] $age >? 65` (OR)
 - `$status =? .Active` covers: {(Active, ≤18), (Active, 18-65), (Active, >65)}
 - `$age >? 65` covers: {(Active, >65), (Inactive, >65)}
 - OR union: {(Active, ≤18), (Active, 18-65), (Active, >65), (Inactive, >65)}

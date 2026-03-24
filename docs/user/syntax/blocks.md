@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-22
+updated: 2026-03-24
 status: complete
 ---
 
@@ -105,9 +105,38 @@ See [[metadata]] for the full metadata tree, field listings, `live` semantics, a
 | Marker | Meaning |
 |--------|---------|
 | `[&]` | AND |
-| `[+]` | OR |
+| `[\|]` | OR |
 | `[-]` | NOT |
 | `[^]` | XOR |
+
+### Line Continuation
+
+| Marker | Meaning |
+|--------|---------|
+| `[+]` | Line continuation — appends to preceding logical line |
+
+The originating line keeps its normal block marker. Only continuation lines get `[+]`. The parser joins all `[+]` lines with the preceding logical line. Strings can span across `[+]` boundaries (multi-line string content preserved). `[+]` is only valid when the preceding expression is incomplete.
+
+```polyglot
+[r] .complex_result;string
+[+] << "suffix
+[+]  more"
+```
+
+### Foreign Code
+
+| Marker | Meaning |
+|--------|---------|
+| `[c]` | Foreign code injection — embed another language via `#Code:<Language>:<Version>` |
+
+The first `[c]` line declares the language. All body lines also get `[c]` prefix. Body content is raw text — not parsed as Polyglot. The block ends when a line without `[c]` appears.
+
+```polyglot
+[c] #Code:Python:3:14
+[c] import pandas as pd
+[c] df = pd.read_csv("data.csv")
+[c] result = df.describe()
+```
 
 ### Comments
 

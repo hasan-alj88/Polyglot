@@ -8,7 +8,7 @@ severity: error
 ### Rule 6.5 — Compound Condition Overlap
 `PGE-605`
 
-**Statement:** In a `[?]` conditional with compound conditions (`[&]` AND, `[+]` OR, `[^]` XOR), no two branches may cover the same cell in the product space. Overlapping branches are always a compile error, regardless of whether `*?` is present. The compiler must identify the overlapping branches and a concrete input from the shared region.
+**Statement:** In a `[?]` conditional with compound conditions (`[&]` AND, `[|]` OR, `[^]` XOR), no two branches may cover the same cell in the product space. Overlapping branches are always a compile error, regardless of whether `*?` is present. The compiler must identify the overlapping branches and a concrete input from the shared region.
 **Rationale:** Overlapping compound branches create ambiguity — when an input matches multiple branches, the compiler cannot determine which should execute. This is always a bug. Even with `*?`, overlaps must be resolved.
 **Detection:** The compiler builds a partition grid over all tested variables (per the [partition refinement algorithm](../algorithms/compound-exhaustiveness.md)), maps each branch to its covered cells, and checks if any cell is covered by more than one branch. If so, PGE-605 fires with the overlapping branches and a concrete counterexample from the shared cell.
 

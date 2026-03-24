@@ -20,7 +20,7 @@ Detects when two or more `[?]` branches cover the same value, creating ambiguity
 | int / float | Interval intersection | PGE-604 | O(N²) pairwise |
 | Enum (`.` fixed fields) | Bit set AND | PGE-604 (enum) | O(N²) pairwise, O(1) per pair |
 | Bool (`#Boolean`) | Bit set AND | PGE-604 (enum) | O(N²) pairwise, O(1) per pair |
-| Compound (`[&]`/`[+]`/`[^]`) | Grid cell coverage | PGE-605 | O(N × K^M) — see [compound algorithm](compound-exhaustiveness.md) |
+| Compound (`[&]`/`[\|]`/`[^]`) | Grid cell coverage | PGE-605 | O(N × K^M) — see [compound algorithm](compound-exhaustiveness.md) |
 | String (`#String`) | Exact literal match | PGE-604 (string) | O(N²) pairwise |
 | Flexible field (`:`) | Exact literal match | PGE-604 (flexible) | O(N²) pairwise |
 
@@ -146,7 +146,7 @@ function checkOverlap(conditional):
     variable = conditional.branchedVariable
     branches = conditional.branches
 
-    if branches contain compound operators ([&], [+], [^]):
+    if branches contain compound operators ([&], [|], [^]):
         → Algorithm 4 (grid cell overlap via partition refinement)
     else if variable.type is int or float:
         → Algorithm 1 (interval intersection)

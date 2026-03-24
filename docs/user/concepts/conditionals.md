@@ -3,6 +3,7 @@ audience: user
 type: specification
 updated: 2026-03-24
 status: complete
+changes: "[+] OR reassigned to [|] per issue #74"
 ---
 
 # Conditionals
@@ -138,7 +139,7 @@ Strings are open sets — `*?` is always required ([[PGE-606|PGE-606]]). Flexibl
 | `;int` / `;float` | Open but rangeable | No — if ranges cover full domain; otherwise yes |
 | `;string` | Open (infinite) | Yes — always |
 | Flexible field (`:`) | Open | Yes — always |
-| Compound (`[&]`/`[+]`/`[^]`) | Complex | Depends on variable types |
+| Compound (`[&]`/`[\|]`/`[^]`) | Complex | Depends on variable types |
 
 ## Logical Operators
 
@@ -156,13 +157,13 @@ Both conditions must hold:
    [r] $access << #AccessLevel.Denied
 ```
 
-### `[+]` — OR
+### `[|]` — OR
 
 At least one condition holds:
 
 ```polyglot
 [?] $role =? #Role.Admin
-[+] $role =? #Role.Superuser
+[|] $role =? #Role.Superuser
    [r] $elevated;bool << #Boolean.True
 [?] *?
    [r] $elevated;bool << #Boolean.False
