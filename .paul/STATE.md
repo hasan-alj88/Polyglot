@@ -60,7 +60,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #36 — Pipeline call cycle detection algorithm | 2026-03-24 | Merged feat/issue-36-pipeline-call-cycle-detection to main |
 
 ### Deferred Issues
-- Rebuild Polly as PAUL special flow (after documentation phases)
+- ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
 - 9 stdlib files remain status: draft despite Stable content (Math, Path, Sys, ForEach, collectors, types)
 - EC-6.4 inconsistency: raw arithmetic in EDGE-CASES vs PGE-410
 

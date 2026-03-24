@@ -8,50 +8,47 @@ severity: error
 ### Rule 4.12 — Nested Array Type
 `PGE-412`
 
-**Statement:** Array type annotations must not nest — `array.array.X` is a compile error. The `;array` type is strictly one-dimensional (a one-level enumerated struct). For multidimensional data, use `;tensor`.
-**Rationale:** Nested arrays create ambiguous semantics — element access, iteration, and collection behavior are undefined for arrays-of-arrays. Polyglot provides `;tensor` as the explicit multidimensional data type with well-defined indexing.
+**Statement:** Array type annotations must not nest — `array.array.X` is a compile error. The `;array` type is one-dimensional by default. For multidimensional data, use the `:ND` dimension specifier (e.g., `;array.float:2D`).
+**Rationale:** Nested arrays create ambiguous semantics — element access, iteration, and collection behavior are undefined for arrays-of-arrays. The `:ND` specifier provides explicit multidimensional arrays with well-defined indexing and compiler-enforced access depth.
 **Detection:** The compiler checks type annotations. If `array` appears as the element type of another `array`, PGE-412 fires.
 
-**See also:** PGE-401 (type mismatch), PGE-411 (negative array index literal)
+**See also:** PGE-401 (type mismatch), PGE-411 (negative array index literal), PGE-417 (array dimension access mismatch)
 
 **VALID:**
 ```polyglot
-[ ] ✓ single-level array types
+[ ] ✓ 1D array (default — :1D implied)
 [=] >items;array.string
 ```
 
 ```polyglot
 [ ] ✓ array of structs
-[=] <records;array.#UserRecord
+[=] <records;array.UserRecord
 ```
 
 ```polyglot
-[ ] ✓ tensor for multidimensional data
-[=] >matrix;tensor.float
+[ ] ✓ 2D matrix using :ND dimension specifier
+[=] >matrix;array.float:2D
+```
+
+```polyglot
+[ ] ✓ 3D cube
+[=] <cube;array.int:3D
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-412 — nested array type
-[=] >matrix;array.array.string                [ ] ✗ PGE-412 — array is 1D only
+[=] >matrix;array.array.string                [ ] ✗ PGE-412 — use ;array.string:2D instead
 ```
 
 ```polyglot
 [ ] ✗ PGE-412 — nested array type
-[=] <data;array.array.int                     [ ] ✗ PGE-412 — use ;tensor instead
+[=] <data;array.array.int                     [ ] ✗ PGE-412 — use ;array.int:2D instead
 ```
 
 ```polyglot
 [ ] ✗ PGE-412 — deeply nested array type
-[=] <cube;array.array.array.float             [ ] ✗ PGE-412 — array nesting not allowed
+[=] <cube;array.array.array.float             [ ] ✗ PGE-412 — use ;array.float:3D instead
 ```
 
-**Diagnostic:** `"Nested array type on {parameter} at line {N} — array is one-dimensional only, use ;tensor for multidimensional data"`
-
-**Open point:** The `;tensor` type is backed by `#TensorItemType`:
-```polyglot
-{#} #TensorItemType
-   [.] .index;RawString                       [ ] positive ints separated by comma
-   [.] .value;Type
-```
-Full `;tensor` specification TBD.
+**Diagnostic:** `"Nested array type on {parameter} at line {N} — array is one-dimensional by default, use :ND for multidimensional data (e.g., ;array.float:2D)"`

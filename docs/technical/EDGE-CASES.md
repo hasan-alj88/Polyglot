@@ -480,6 +480,44 @@ Review in batches by section. Each edge case includes:
 [r] $reg.entries:other.endpoint << "/api"
 ```
 
+### EC-4.18: Multidimensional array — `:ND` dimension specifier
+
+**EBNF:** `array_type ::= "array" [ fixed_sep element_type ] [ flex_sep dimension ]` with `dimension ::= digit { digit } "D"`
+
+**What it tests:** Arrays support a dimension specifier via flexible field notation. Omitting `:<N>D` defaults to 1D. Access depth must match declared dimension count.
+
+```polyglot
+[ ] ✓ 1D array — default (no :ND specified)
+[=] <items;array.string
+[r] $first << $items.0
+
+[ ] ✓ 2D matrix — :2D dimension specifier
+[=] <matrix;array.float:2D
+[r] $val << $matrix.0.1
+
+[ ] ✓ 3D cube — :3D dimension specifier
+[=] <cube;array.int:3D
+[r] $val << $cube.2.3.0
+
+[ ] ✓ 4D with user-defined element type
+[=] <hyper;array.UserRecord:4D
+[r] $cell << $hyper.0.1.2.3
+
+[ ] ✗ PGE-417 — too many indices for :2D
+[=] <matrix;array.float:2D
+[ ] [r] $val << $matrix.0.1.2                 ← 3 indices on :2D
+
+[ ] ✗ PGE-417 — too few indices for :3D
+[=] <cube;array.int:3D
+[ ] [r] $val << $cube.2                        ← 1 index on :3D
+
+[ ] ✗ PGE-417 — :0D is not valid
+[ ] [=] <nothing;array.float:0D                ← dimension must be positive
+
+[ ] ✗ PGE-412 — nested array still banned
+[ ] [=] >matrix;array.array.float              ← use ;array.float:2D instead
+```
+
 ---
 
 ## 5. Block Elements (§5)
@@ -2287,7 +2325,7 @@ No bracket prefix needed inside.
 | §1 File Structure | EC-1.1, EC-1.2 | `file`, `definition` |
 | §2 Lexical | EC-2.1–2.4 | `indent`, `bool_literal`, `int_literal`, `float_literal`, `string_literal` |
 | §3 Identifiers | EC-3.1–3.7 | `package_address`, `cross_pkg_enum`, `cross_pkg_pipeline`, `field_path`, sibling homogeneity |
-| §4 Types | EC-4.1–4.12 | `array_type`, `element_type`, `serial_type`, `user_type`, `inline_pipeline_call`, path types |
+| §4 Types | EC-4.1–4.18 | `array_type`, `element_type`, `serial_type`, `user_type`, `inline_pipeline_call`, path types, multidimensional arrays |
 | §5 Blocks | EC-5.1–5.2 | All block element categories, `[b]` background |
 | §6 Operators | EC-6.1–6.4 | All assignment ops, all comparison ops, range ops, arithmetic |
 | §7 IO | EC-7.1 | `input_param` with field separators |
