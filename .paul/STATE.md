@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Milestone complete
-Last activity: 2026-03-24 — Phase 12 complete, v0.2 milestone finished
+Status: UNIFY complete for Issue #36, ready for MERGE
+Last activity: 2026-03-24 — Loop closed, SUMMARY written
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -22,14 +22,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #36 — Algorithm: Pipeline call cycle detection (topological sort)
+Branch: feat/issue-36-pipeline-call-cycle-detection
+Labels: algorithm, P3-medium
+Started: 2026-03-24
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/36
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [Loop complete — milestone finished]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -75,13 +79,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-24
-Stopped at: v0.2 milestone complete
-Next action: /paul:complete-milestone or /paul:milestone for next milestone
-Resume file: .paul/ROADMAP.md
+Stopped at: UNIFY complete for issue-36-01
+Next action: /paul:merge to commit and merge branch, or review first
+Resume file: .paul/phases/issue-36-cycle-detection/issue-36-01-SUMMARY.md
 Resume context:
-- v0.2 Language Specification fully complete — all 4 phases (9-12) done
-- Language specification covers: types, operators, control flow, pipelines, concurrency, packages, stdlib
-- Next milestone could be compiler architecture, canonical examples, or Polly rebuild
+- Issue #36 loop complete (PLAN → APPLY → UNIFY ✓)
+- Algorithm spec at docs/technical/compile-rules/algorithms/cycle-detection.md
+- All 4 acceptance criteria passed
+- Ready for commit and merge to main
 
 ---
 *STATE.md — Updated after every significant action*
