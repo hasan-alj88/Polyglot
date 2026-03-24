@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #37 merged and closed
-Last activity: 2026-03-24 — Merged design/issue-37 to main, issue closed
+Status: Issue #26 UNIFY complete, ready for MERGE
+Last activity: 2026-03-24 — Created 26-01-SUMMARY.md, loop closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -22,18 +22,18 @@ Progress:
 
 ## Active Issue
 
-Issue: #58 — Design: Change chain operator from >> to => to avoid push/pull ambiguity
-Branch: design/issue-58-change-chain-operator-to-avoid-ambiguity
-Labels: design
+Issue: #26 — STDLIB: Confirm or remove speculative =T.* trigger pipelines
+Branch: feat/issue-26-confirm-remove-speculative-t-triggers
+Labels: stdlib, P3-medium
 Started: 2026-03-24
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/58
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/26
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ○        ○        ○        ○     [Issue #58 active]
+  ✓        ✓        ✓        ○     [Ready for /paul:merge]
 ```
 
 ## Accumulated Context
@@ -63,6 +63,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Removed speculative stdlib items | 2026-03-24 | =T.Schedule/HTTP/File, =W.Rust/Node had zero usage; =T.Webhook confirmed from EDGE-CASES |
 | Closed #36 — Pipeline call cycle detection algorithm | 2026-03-24 | Merged feat/issue-36-pipeline-call-cycle-detection to main |
 | Closed #37 — Multidimensional array via :ND | 2026-03-24 | Unified array + tensor into ;array.<type>:<N>D; removed ;tensor concept |
+| Closed #58 — Chain operator >> to => | 2026-03-24 | Chains use => with no spaces (=A=>=B=>=C); IO >> and [!] >> unchanged |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -81,12 +82,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-24
-Stopped at: Issue #36 merged and closed
-Next action: /paul:issues (pick next issue) or /paul:progress
-Resume file: .paul/ROADMAP.md
+Stopped at: Issue #26 UNIFY complete
+Next action: /paul:merge to merge branch and close loop
+Resume file: .paul/phases/issue-26-confirm-remove-speculative-t-triggers/26-01-SUMMARY.md
 Resume context:
-- Issue #36 complete — cycle detection algorithm spec merged to main
-- No active issue — ready for next work
+- Issue #26 verified and closed on GitHub — speculative =T.* triggers all resolved by Phase 12
+- Branch feat/issue-26-confirm-remove-speculative-t-triggers ready for merge
 
 ---
 *STATE.md — Updated after every significant action*
