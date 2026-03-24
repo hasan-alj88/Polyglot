@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #60 merged and closed
-Last activity: 2026-03-24 — Merged docs/issue-60 to main, issue closed
+Status: Issue #73 merged and closed
+Last activity: 2026-03-24 — Merged feat/issue-73 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -22,18 +22,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #73 — Add match [m] syntax for concise conditional assignment
-Branch: feat/issue-73-add-match-syntax
-Labels: enhancement
-Started: 2026-03-24
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/73
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ○        ○        ○        ○     [Issue #73 active]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -67,6 +63,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #26 — Confirm/remove speculative =T.* triggers | 2026-03-24 | Verified Phase 12 already resolved all three; issue closed |
 | Closed #28 — Confirm/remove speculative =W.* wrappers | 2026-03-24 | Verified Phase 12 already removed =W.Rust/Node; issue closed |
 | Closed #60 — Add Mermaid state diagram to variable-lifecycle.md | 2026-03-24 | First Mermaid diagram in docs; established pattern for remaining 12 issues |
+| Closed #73 — Add match syntax for concise conditional assignment | 2026-03-24 | Merged feat/issue-73-add-match-syntax to main; reuses [?] in match context |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
