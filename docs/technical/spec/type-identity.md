@@ -1,8 +1,8 @@
 ---
 type: definition
 name: Type Identity
-updated: 2026-03-21
-status: draft
+updated: 2026-03-24
+status: complete
 ---
 
 # Type Identity in Polyglot

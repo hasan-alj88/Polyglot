@@ -1,7 +1,8 @@
 ---
 audience: developer
 type: spec
-updated: 2026-03-21
+updated: 2026-03-24
+status: complete
 ---
 
 # Metadata Tree Specification

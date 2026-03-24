@@ -55,14 +55,86 @@ Phases: 2 of 2 complete
 ## Milestone: v0.2 Language Specification
 
 **v0.2 Language Specification** (v0.2.0)
-Status: Not started
-Phases: TBD
+Status: In Progress
+Phases: 1 of 4 complete
 
 Theme: Draft the complete Polyglot language specification from scratch using `/paul:draft` loop. Covers variables & lifecycle, operators, pipelines, fork patterns, error handling, loops, enums, type system, package spec, and block markers.
 
 ### Phases
 
-TBD (during `/paul:discuss-milestone`)
+| Phase | Name | Plans | Status | Completed |
+|-------|------|-------|--------|-----------|
+| 9 | Core Language & Type System | 1 | Complete | 2026-03-24 |
+| 10 | Operators & Control Flow | TBD | Not started | - |
+| 11 | Pipelines & Concurrency | TBD | Not started | - |
+| 12 | Package System & Stdlib | TBD | Not started | - |
+
+### Phase 9: Core Language & Type System
+
+**Goal:** Draft specification for variables, lifecycle, data definitions, type system, enums, type identity, block markers, and package declarations
+
+**Depends on:** Nothing (first phase of v0.2)
+
+**Research:** Likely — existing EBNF, EDGE-CASES, and brainstorming docs inform spec
+
+**Scope:**
+- Variables & lifecycle (declaration, states, push/pull semantics)
+- Data definitions and schema matching
+- Type system and type identity
+- Enums and enum fields
+- Block markers ({@}, {#}, {=}, {M})
+
+**Plans:** TBD (during /paul:plan)
+
+### Phase 10: Operators & Control Flow
+
+**Goal:** Draft specification for operators, arithmetic, ranges, conditionals, exhaustiveness, loops, and string interpolation
+
+**Depends on:** Phase 9 (type system needed for operator type rules)
+
+**Research:** Likely — COMPILE-RULES PGE-4xx, PGE-6xx inform spec
+
+**Scope:**
+- Operators (comparison, negation, arithmetic)
+- Range syntax and bounds
+- Conditionals and exhaustiveness rules
+- Loops
+- String interpolation
+
+**Plans:** TBD (during /paul:plan)
+
+### Phase 11: Pipelines & Concurrency
+
+**Goal:** Draft specification for pipeline structure, triggers, queues, wrappers, chains, expand/collect, parallel execution, fork patterns, race collectors, and error handling
+
+**Depends on:** Phase 9 (type system), Phase 10 (operators for conditionals in pipelines)
+
+**Research:** Likely — EDGE-CASES, COMPILE-RULES PGE-1xx/3xx/7xx/8xx inform spec
+
+**Scope:**
+- Pipeline structure ([t], [Q], [W], execution body)
+- Chains and auto-wiring
+- Expand/collect and parallel execution
+- Fork patterns and race collectors
+- Error handling and recovery ([!] blocks, chain errors, fallbacks)
+
+**Plans:** TBD (during /paul:plan)
+
+### Phase 12: Package System & Stdlib
+
+**Goal:** Draft specification for packages, imports, multi-file projects, stdlib confirmations, and canonical examples
+
+**Depends on:** Phase 11 (pipeline spec needed for stdlib pipeline definitions)
+
+**Research:** Likely — stdlib confirmations (issues #26, #28) and COMPILE-RULES PGE-9xx
+
+**Scope:**
+- Package declarations and imports
+- Multi-file project rules
+- Stdlib confirmation (=T.*, =W.* speculative pipelines)
+- Canonical examples for all language features
+
+**Plans:** TBD (during /paul:plan)
 
 ---
 
@@ -131,4 +203,4 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 
 ---
 *Roadmap created: 2026-02-27*
-*Last updated: 2026-03-14*
+*Last updated: 2026-03-24*

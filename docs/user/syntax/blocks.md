@@ -2,7 +2,7 @@
 audience: user
 type: specification
 updated: 2026-03-22
-status: draft
+status: complete
 ---
 
 # Block System

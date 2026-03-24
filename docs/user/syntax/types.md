@@ -2,7 +2,7 @@
 audience: user
 type: specification
 updated: 2026-03-21
-status: draft
+status: complete
 ---
 
 # Type System
@@ -119,7 +119,7 @@ The `#` prefix is only used when **referencing** a struct outside of type annota
 Each level in a struct must be homogeneous in two ways (see [[identifiers#Serialization Rules]]):
 
 1. **Separator homogeneity** — all siblings at a level must be all fixed (`.`) or all flexible (`:`) — never mixed (PGE-501)
-2. **Kind homogeneity** — all siblings at a level must be all enum fields or all value fields — never mixed
+2. **Kind homogeneity** — all siblings at a level must be all enum fields or all value fields — never mixed (PGE-502)
 
 A field whose type is itself a struct defines the later levels. It is invalid to declare sub-levels after a field typed as a struct — the struct's definition already specifies those levels.
 
@@ -379,5 +379,21 @@ See [TYPE-IDENTITY](../../technical/compile-rules/TYPE-IDENTITY.md) rules 5 and 
 ## Namespaced Types
 
 Types use dot notation for namespaces — these are fixed schema fields. Namespacing is optional for basic types but available when needed (e.g., referencing enumeration fields from `{#}` definitions).
+
+```polyglot
+[ ] Direct type annotation — most common
+[r] $score;int <~ 0
+
+[ ] Fully qualified — equivalent to the above
+[r] $score;String.int <~ 0
+
+[ ] Struct enum field — must use # outside type annotations
+[r] $severity << #Severity.Critical
+
+[ ] Cross-package reference — @alias#DataName.Field
+[r] $status << @alerts#Severity.Error
+```
+
+In type annotations (after `;`), the `#` prefix is dropped — the compiler knows `;` starts a type context. Outside annotations, struct references keep the `#` prefix. See [[identifiers#Serialized Identifiers]] for the full prefix rules.
 
 

@@ -5,27 +5,31 @@
 See: .paul/PROJECT.md (updated 2026-03-12)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Documentation-first reset — specify before coding
+**Current focus:** Language specification — draft complete spec from scratch
 
 ## Current Position
 
-Milestone: v0.1 Language Specification & Research
-Phase: 2 of 2 — All phases complete
-Plan: All plans executed
-Status: Complete — ready to close
-Last activity: 2026-03-14 — Restructured v0.1, committed v0.1.1
+Milestone: v0.2 Language Specification
+Phase: 9 of 12 — Complete. Next: Phase 10 (Operators & Control Flow)
+Plan: All plans in Phase 9 complete
+Status: Ready for next PLAN
+Last activity: 2026-03-24 — Phase 9 complete, 6 spec files promoted to complete
 
 Progress:
-- v0.1 Language Spec: [██████████] 100% (restructured to 2 phases)
+- v0.1 Language Spec: [██████████] 100%
 - v0.1.1 Doc Audit: [██████████] 100%
-- v0.2 Language Spec: [░░░░░░░░░░] 0% (next)
+- v0.2 Language Spec: [██░░░░░░░░] 25% (1/4 phases)
+
+## Active Issue
+
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [v0.1 complete — ready to close]
+  ✓        ✓        ✓     [Loop complete — ready for next PLAN]
 ```
 
 ## Accumulated Context
@@ -50,6 +54,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Dual smart referencing | 2026-03-14 | @-imports (Claude mandatory reads) + [[wikilinks]] (Obsidian navigation) on all cross-references |
 | Audit scope: all documentation | 2026-03-14 | docs/audit/ rules apply to ALL documentation Claude writes, not just docs/ files |
 | Restructured v0.1 to 2 phases | 2026-03-14 | Dropped Language Spec, Compiler Architecture, Prior Art Research phases; Language Spec moves to v0.2 |
+| v0.2 milestone created with 4 phases | 2026-03-24 | Phases 9-12: Core Language & Type System, Operators & Control Flow, Pipelines & Concurrency, Package System & Stdlib |
 
 ### Deferred Issues
 - Rebuild Polly as PAUL special flow (after documentation phases)
@@ -65,14 +70,10 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-14
-Stopped at: v0.1 restructured, v0.1.1 committed
-Next action: /paul:complete-milestone for v0.1, then /paul:discuss-milestone for v0.2
-Resume context:
-- v0.1 restructured to 2 phases (both complete)
-- v0.1.1 committed (docs/audit/ infrastructure)
-- v0.2 Language Specification milestone created (not started)
-- Old Phase 2 plan artifacts deleted
+Last session: 2026-03-24
+Stopped at: Phase 9 complete, loop closed
+Next action: /paul:plan for Phase 10 (Operators & Control Flow)
+Resume file: .paul/phases/09-core-language-type-system/09-01-SUMMARY.md
 
 ---
 *STATE.md — Updated after every significant action*
