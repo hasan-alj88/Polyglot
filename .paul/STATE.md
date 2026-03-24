@@ -74,11 +74,11 @@ Protected elements for current milestone:
 Last session: 2026-03-24
 Stopped at: Phase 11 complete, loop closed
 Next action: /paul:plan for Phase 12 (Package System & Stdlib)
-Resume file: .paul/phases/11-pipelines-concurrency/11-01-SUMMARY.md
+Resume file: .paul/HANDOFF-2026-03-24.md
 Resume context:
 - Phase 11 fully closed (pipelines.md + collections.md + errors.md all complete)
 - Phase 12 is Package System & Stdlib — last phase in v0.2
-- Key context: all spec files in docs/user/ now at status: complete except packages.md and stdlib
+- Relevant compile rules for Phase 12: PGE-9xx (packages, imports, multi-file)
 
 ---
 *STATE.md — Updated after every significant action*
