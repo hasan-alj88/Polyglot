@@ -1,7 +1,7 @@
 ---
 type: spec-index
 audience: user
-updated: 2026-03-21
+updated: 2026-03-24
 ---
 
 # Polyglot Language Reference
@@ -17,7 +17,7 @@ Read the files below in order to learn how to write Polyglot Code. The progressi
 | 3 | identifiers.md | Prefixes (@#=$!%), . fixed / : flexible separators |
 | 4 | blocks.md | {X} definitions, [X] block elements, full registry |
 | 5 | types.md | Type system, RawString, #String, structs, enums |
-| 6 | operators.md | Assignment (<<, >>, <~, ~>), comparison, range |
+| 6 | operators.md | Assignment (<<, >>, <~, ~>), comparison, negation, range, arithmetic |
 | 7 | io.md | < input / > output parameters, IO line patterns |
 
 ## Phase 2: Core Concepts
@@ -26,22 +26,23 @@ Read the files below in order to learn how to write Polyglot Code. The progressi
 |---|------|--------|
 | 8 | variable-lifecycle.md | Declared → Default → Final → Failed → Released |
 | 9 | collections.md | array, serial, ~ expand, * collect |
-| 10 | pipelines.md | {=} mandatory structure: trigger, IO, queue, wrapper, execution |
-| 11 | errors.md | Error model, scoping, chain addressing, recovery |
+| 10 | conditionals.md | [?] chains, exhaustiveness, logical operators, nesting |
+| 11 | pipelines.md | {=} mandatory structure: trigger, IO, queue, wrapper, execution |
+| 12 | errors.md | Error model, scoping, chain addressing, recovery |
 
 ## Phase 3: The Big Picture
 
 | # | File | Covers |
 |---|------|--------|
-| 12 | data-is-trees.md | Everything is a tree — how all concepts connect via `%` |
-| 13 | metadata.md | Full `%` tree field listings, live fields, access patterns |
+| 13 | data-is-trees.md | Everything is a tree — how all concepts connect via `%` |
+| 14 | metadata.md | Full `%` tree field listings, live fields, access patterns |
 
 ## Phase 4: Packages & Standard Library
 
 | # | File | Covers |
 |---|------|--------|
-| 14 | packages.md | {@ } declaration, address format, imports |
-| 15 | stdlib/INDEX.md | Namespace registry → per-namespace reference files |
+| 15 | packages.md | {@ } declaration, address format, imports |
+| 16 | stdlib/INDEX.md | Namespace registry → per-namespace reference files |
 
 ## Phase 5: Practice
 

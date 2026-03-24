@@ -10,15 +10,15 @@ See: .paul/PROJECT.md (updated 2026-03-12)
 ## Current Position
 
 Milestone: v0.2 Language Specification
-Phase: 9 of 12 — Complete. Next: Phase 10 (Operators & Control Flow)
-Plan: All plans in Phase 9 complete
+Phase: 10 of 12 — Complete. Next: Phase 11 (Pipelines & Concurrency)
+Plan: All plans in Phase 10 complete
 Status: Ready for next PLAN
-Last activity: 2026-03-24 — Phase 9 complete, 6 spec files promoted to complete
+Last activity: 2026-03-24 — Phase 10 complete, transitioned to Phase 11
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
 - v0.1.1 Doc Audit: [██████████] 100%
-- v0.2 Language Spec: [██░░░░░░░░] 25% (1/4 phases)
+- v0.2 Language Spec: [█████░░░░░] 50% (2/4 phases)
 
 ## Active Issue
 
@@ -55,6 +55,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Audit scope: all documentation | 2026-03-14 | docs/audit/ rules apply to ALL documentation Claude writes, not just docs/ files |
 | Restructured v0.1 to 2 phases | 2026-03-14 | Dropped Language Spec, Compiler Architecture, Prior Art Research phases; Language Spec moves to v0.2 |
 | v0.2 milestone created with 4 phases | 2026-03-24 | Phases 9-12: Core Language & Type System, Operators & Control Flow, Pipelines & Concurrency, Package System & Stdlib |
+| Arithmetic uses =Math.* stdlib, not raw operators | 2026-03-24 | PGE-410 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
 
 ### Deferred Issues
 - Rebuild Polly as PAUL special flow (after documentation phases)
@@ -71,9 +72,9 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-24
-Stopped at: Phase 9 complete, loop closed
-Next action: /paul:plan for Phase 10 (Operators & Control Flow)
-Resume file: .paul/phases/09-core-language-type-system/09-01-SUMMARY.md
+Stopped at: Phase 10 complete, loop closed
+Next action: /paul:plan for Phase 11 (Pipelines & Concurrency)
+Resume file: .paul/phases/10-operators-control-flow/10-01-SUMMARY.md
 
 ---
 *STATE.md — Updated after every significant action*
