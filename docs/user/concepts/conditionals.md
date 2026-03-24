@@ -85,6 +85,46 @@ Numeric types (`;int`, `;float`) are open but rangeable. Ranges must cover the f
    [r] $status;string << "unknown"
 ```
 
+### Match Syntax (Conditional Assignment Sugar)
+
+<!-- @EBNF:match_line -->
+
+When every `[?]` arm performs the same operation — mapping one value to another — use match syntax. Match nests `[?]` arms under a `[r] $source >> $target` header:
+
+```polyglot
+[ ] Match form — equivalent to the [?] chain above
+[r] $code >> $status;string
+   [?] 200 >> "ok"
+   [?] 404 >> "not_found"
+   [?] 500 >> "error"
+   [?] * >> "unknown"
+```
+
+This desugars to the verbose form shown in the Numeric Exhaustiveness example above. The two forms are equivalent.
+
+**Rules:**
+
+1. The source variable (`$code`) must be in **Final** state — its value is fully resolved
+2. The target variable (`$status`) receives the matched result via push
+3. Arms are **assignment-only** — no side effects, pipeline calls, or nested logic
+4. `[?] *` is the wildcard catch-all (replaces `*?` from the verbose form — no comparison operator in match arms)
+5. All exhaustiveness rules ([[PGE-601|PGE-601]] through [[PGE-613|PGE-613]]) apply to the desugared form
+6. [[PGE-609|PGE-609]] does not apply to match arms — they use `value >> result` form, not `$var operator value`
+
+**Enum match — exhaustive without wildcard:**
+
+```polyglot
+[r] $dir >> $label;string
+   [?] #Direction.North >> "N"
+   [?] #Direction.South >> "S"
+   [?] #Direction.East >> "E"
+   [?] #Direction.West >> "W"
+```
+
+All variants of `#Direction` are listed, so no `*` is needed — same rule as the verbose form ([[PGE-602|PGE-602]]).
+
+**Not a match:** If `[r] $x >> $y` has no indented `[?]` children, it is a plain assignment — not a match header.
+
 ### String and Flexible Field Exhaustiveness
 
 Strings are open sets — `*?` is always required ([[PGE-606|PGE-606]]). Flexible fields (`:`) are also open — `*?` is always required ([[PGE-607|PGE-607]]).

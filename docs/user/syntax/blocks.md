@@ -55,7 +55,7 @@ See [[io]] for IO parameter patterns and [[collections]] for expand/collect sema
 
 | Marker | Meaning |
 |--------|---------|
-| `[r]` | Run/execute in series |
+| `[r]` | Run/execute in series; match header (with `>>` and `[?]` children). See [[conditionals#Match Syntax]] |
 | `[p]` | Run/execute in parallel |
 | `[b]` | Run/execute in background (fire and forget) |
 | `[#]` | Load serialized data into typed structure |
@@ -67,7 +67,7 @@ See [[pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 
 | Marker | Meaning |
 |--------|---------|
-| `[?]` | Conditional switch flow |
+| `[?]` | Conditional switch flow; match arm (under `[r]` `>>` match). See [[conditionals#Match Syntax]] |
 | `[!]` | Error handling — scoped under `[r]` call. See [[pipelines#Error Handling]] |
 | `[!] >>` | Error raise — raises a declared error. See [[errors#Raising Errors]] |
 | `[t]` | Trigger. See [[pipelines#Triggers]] |
