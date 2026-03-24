@@ -9,7 +9,7 @@ split_from: PGE-601
 ### Rule 6.8 — Compound Condition Exhaustiveness
 `PGE-608`
 
-**Statement:** A `[?]` conditional that uses compound conditions (`[&]` AND, `[+]` OR, `[^]` XOR) must be exhaustive. Exhaustiveness is proven in two ways:
+**Statement:** A `[?]` conditional that uses compound conditions (`[&]` AND, `[|]` OR, `[^]` XOR) must be exhaustive. Exhaustiveness is proven in two ways:
 1. **Partition proof (closed types only):** If all tested variables have closed types (enum, bool, int, float), the [partition refinement algorithm](../algorithms/compound-exhaustiveness.md) builds a Cartesian product grid and verifies that the union of all branch regions equals the full space. If proven, `*?` is not required.
 2. **`*?` catch-all (open types):** If any tested variable has an open type (string, RawString, flexible field), the entire compound is open-ended and `*?` is mandatory.
 

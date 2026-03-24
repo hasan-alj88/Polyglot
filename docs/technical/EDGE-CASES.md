@@ -534,7 +534,7 @@ Review in batches by section. Each edge case includes:
 | Execution | `[r]` `[p]` `[b]` `[s]` | Run, parallel, background, serial load |
 | Control Flow | `[?]` `[!]` `[t]` `[Q]` `[W]` | Conditionals, errors, trigger, queue, wrapper |
 | Data Access | `[.]` `[:]` | Data definitions |
-| Logical | `[&]` `[+]` `[-]` `[^]` | Conditional compound logic |
+| Logical | `[&]` `[\|]` `[-]` `[^]` | Conditional compound logic |
 | Comment | `[ ]` | Inline comments |
 
 ### EC-5.2: Background execution
@@ -1062,7 +1062,7 @@ Review in batches by section. Each edge case includes:
 
 **EBNF:** `logical_and ::= "[&]" comparison_expr` etc.
 
-**What it tests:** Compound conditions using `[&]`, `[+]`, `[-]`, `[^]`.
+**What it tests:** Compound conditions using `[&]`, `[|]`, `[-]`, `[^]`.
 
 ```polyglot
 [ ] AND: both conditions must be true
@@ -1072,7 +1072,7 @@ Review in batches by section. Each edge case includes:
 
 [ ] OR: either condition
 [?] $role =? #Role.Admin
-[+] $role =? #Role.Superuser
+[|] $role =? #Role.Superuser
    [r] $elevated << #Boolean.True
 
 [ ] Negation: insert ! before ? in comparison operator
@@ -1669,7 +1669,7 @@ No bracket prefix needed inside.
 
 ### EC-17.2: Negation in compound logical condition
 
-**What it tests:** Negation operators combined with `[&]` / `[+]` logical markers. See [[operators#Comparison Operators]], [[blocks#Logical]].
+**What it tests:** Negation operators combined with `[&]` / `[|]` logical markers. See [[operators#Comparison Operators]], [[blocks#Logical]].
 
 ```polyglot
 [ ] Active user who is not banned and age is not less than 13

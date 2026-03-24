@@ -10,26 +10,31 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: 12 of 12 — Complete. All phases finished.
+Phase: Issue #74 — COMPLETE (both plans done)
 Plan: All plans complete
-Status: Issue #73 merged and closed
-Last activity: 2026-03-24 — Merged feat/issue-73 to main, issue closed
+Status: Issue #74 ready for commit and merge
+Last activity: 2026-03-24 — Phase transition complete
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
 - v0.1.1 Doc Audit: [██████████] 100%
 - v0.2 Language Spec: [██████████] 100% (4/4 phases)
+- Issue #74: [██████████] 100% (2/2 plans)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #74 — Add [+], [|], [c] block markers: continuation, OR, code injection
+Branch: design/issue-74-add-block-markers-continuation-or-code-injection
+Labels: enhancement, design
+Started: 2026-03-24
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/74
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Issue #74 complete, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -64,6 +69,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #28 — Confirm/remove speculative =W.* wrappers | 2026-03-24 | Verified Phase 12 already removed =W.Rust/Node; issue closed |
 | Closed #60 — Add Mermaid state diagram to variable-lifecycle.md | 2026-03-24 | First Mermaid diagram in docs; established pattern for remaining 12 issues |
 | Closed #73 — Add match syntax for concise conditional assignment | 2026-03-24 | Merged feat/issue-73-add-match-syntax to main; reuses [?] in match context |
+| Issue #74 — Add [+], [|], [c] block markers | 2026-03-24 | [+] reassigned from OR to line continuation; [|] new OR marker; [c] foreign code injection; 11 files updated |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -82,12 +88,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-24
-Stopped at: Issue #60 merged and closed
-Next action: /paul:work-issue <number> or /paul:issues
-Resume file: .paul/ROADMAP.md
+Stopped at: Issue #74 phase complete, ready for merge
+Next action: /paul:merge to commit and merge to main
+Resume file: .paul/phases/issue-74-block-markers/74-02-SUMMARY.md
 Resume context:
-- Issue #60 complete — first Mermaid diagram added, pattern established
-- No active issue — ready for next work
+- Issue #74 complete — all files updated, both plans done
+- Branch: design/issue-74-add-block-markers-continuation-or-code-injection
+- Ready for commit and merge to main
 
 ---
 *STATE.md — Updated after every significant action*

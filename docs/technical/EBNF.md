@@ -232,6 +232,8 @@ block_element       ::= registry_elem
                       | scope_elem
                       | data_access_elem
                       | logical_elem
+                      | continuation_elem
+                      | foreign_code_elem
                       | metadata_elem
                       | comment_elem ;
 
@@ -254,7 +256,13 @@ scope_elem          ::= "[\]" | "[/]" | "[{]" | "[}]" ;
 data_access_elem    ::= "[.]" | "[:]" ;
 
 (* Logical *)
-logical_elem        ::= "[&]" | "[+]" | "[-]" | "[^]" ;
+logical_elem        ::= "[&]" | "[|]" | "[-]" | "[^]" ;
+
+(* Line Continuation *)
+continuation_elem   ::= "[+]" ;
+
+(* Foreign Code *)
+foreign_code_elem   ::= "[c]" ;
 
 (* Metadata *)
 metadata_elem       ::= "[%]" ;
@@ -890,12 +898,32 @@ raise_fallback_meta ::= "[>]" "%FallbackMessage" assignment_op string_literal ;
 
 ```ebnf
 logical_and         ::= "[&]" comparison_expr ;
-logical_or          ::= "[+]" comparison_expr ;
+logical_or          ::= "[|]" comparison_expr ;
 logical_xor         ::= "[^]" comparison_expr ;
 
 (* Note: [-] NOT is not needed as a logical operator.
    Negation is expressed by modifying the comparison operator: <? → <!?, >=? → >=!? etc. *)
 ```
+
+### 11.5 Line Continuation
+
+```ebnf
+continuation_line   ::= "[+]" expression ;
+```
+
+**Rule:** The originating line keeps its normal block marker. Only continuation lines get `[+]`. The parser joins all `[+]` lines with the preceding logical line. `[+]` is only valid when the preceding expression is incomplete. Strings can span across `[+]` boundaries (multi-line string content preserved).
+
+### 11.6 Foreign Code Injection
+
+```ebnf
+foreign_code_block  ::= foreign_code_header { foreign_code_line } ;
+foreign_code_header ::= "[c]" "#Code:" language_name ":" version ;
+foreign_code_line   ::= "[c]" any_text ;
+language_name       ::= name ;
+version             ::= digit { ( digit | ":" ) } ;
+```
+
+**Rule:** The first `[c]` line declares the language via `#Code:<Language>:<Version>`. All body lines also get `[c]` prefix. Body content is raw text — not parsed as Polyglot. The block ends when a line without `[c]` appears.
 
 ---
 
