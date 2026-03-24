@@ -1082,6 +1082,47 @@ Review in batches by section. Each edge case includes:
    [r] $allowed << #Boolean.True
 ```
 
+### EC-11.4: Match — numeric value mapping
+
+**EBNF:** `match_line ::= "[r]" value_expr ">>" assign_target { match_arm }`
+
+**What it tests:** Match syntax as sugar for repeated `[?]` conditional assignment. Source must be Final, arms are assignment-only.
+
+```polyglot
+[ ] Match: maps $code to $status via value >> result arms
+[r] $code >> $status;string
+   [?] 200 >> "ok"
+   [?] 404 >> "not_found"
+   [?] 500 >> "error"
+   [?] * >> "unknown"
+```
+
+### EC-11.5: Match — enum exhaustive (no wildcard needed)
+
+**EBNF:** `match_arm ::= "[?]" match_value ">>" value_expr`
+
+**What it tests:** Enum match with all variants listed — no `*` required, same as verbose form (PGE-602).
+
+```polyglot
+[ ] All #Direction variants covered — no * needed
+[r] $dir >> $label;string
+   [?] #Direction.North >> "N"
+   [?] #Direction.South >> "S"
+   [?] #Direction.East >> "E"
+   [?] #Direction.West >> "W"
+```
+
+### EC-11.6: Match header without arms — plain assignment
+
+**EBNF:** `run_line ::= "[r]" exec_expr`
+
+**What it tests:** `[r] $x >> $y` without indented `[?]` children is a plain assignment, not a match header.
+
+```polyglot
+[ ] No [?] children — this is a plain assignment, not a match
+[r] $source >> $target;string
+```
+
 ---
 
 ## 12. Collection Operations (§12)

@@ -8,11 +8,11 @@ severity: error
 ### Rule 6.9 — Conditional Missing Comparison Operator
 `PGE-609`
 
-**Statement:** Every `[?]` line must follow the form `[?] $variable <operator> value` or `[?] *?`. A `[?]` line without a comparison operator is a syntax violation.
+**Statement:** Every `[?]` line must follow the form `[?] $variable <operator> value` or `[?] *?`. A `[?]` line without a comparison operator is a syntax violation. **Exception:** `[?]` lines in match context (indented under `[r] $source >> $target`) use `[?] value >> result` form without a comparison operator — PGE-609 does not apply to match arms. See [[conditionals#Match Syntax]].
 
 **Rationale:** Conditionals are explicit comparison expressions, not switch/match blocks. There is no "subject" line that introduces a value to match against — each arm is a standalone test. Bare `[?] $variable` lines create ambiguity about what comparison is being performed.
 
-**Detection:** The compiler checks every `[?]` line. If the line does not contain a comparison operator (`=?`, `=!?`, `>?`, `<?`, `>=?`, `<=?`, `>!?`, `<!?`, `>=!?`, `<=!?`, `*?`) or a range operator (`?[`, `?(`, `?]`, `?)`), PGE-609 fires.
+**Detection:** The compiler checks every `[?]` line. First, it determines whether the `[?]` is in match context — its parent is a `[r] ... >> ...` match header. If so, PGE-609 is suppressed. Otherwise, if the line does not contain a comparison operator (`=?`, `=!?`, `>?`, `<?`, `>=?`, `<=?`, `>!?`, `<!?`, `>=!?`, `<=!?`, `*?`) or a range operator (`?[`, `?(`, `?]`, `?)`), PGE-609 fires.
 
 ---
 
@@ -44,6 +44,14 @@ severity: error
    [r] ...
 [?] *?
    [r] ...
+```
+
+```polyglot
+[ ] ✓ Match context — no comparison operator needed
+[r] $code >> $status;string
+   [?] 200 >> "ok"
+   [?] 404 >> "not_found"
+   [?] * >> "unknown"
 ```
 
 #### Invalid — Missing Comparison Operator

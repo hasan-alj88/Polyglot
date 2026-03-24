@@ -547,6 +547,7 @@ wrapper_io_line     ::= "[=]" variable_id assignment_op value_expr ;
 execution_section   ::= { indent exec_line NEWLINE } ;
 
 exec_line           ::= run_line
+                      | match_line
                       | parallel_line
                       | background_line
                       | data_load
@@ -837,6 +838,26 @@ conditional_branch  ::= exec_line | comment_line ;
    PGE-609: Every [?] line must include a comparison operator — no bare subjects.
    PGE-610: Every [?] branch must contain at least one executable statement. *)
 ```
+
+### 11.1.1 Match (Conditional Assignment Sugar)
+
+```ebnf
+match_line          ::= "[r]" value_expr ">>" assign_target NEWLINE
+                         indent { match_arm NEWLINE } ;
+
+match_arm           ::= "[?]" match_value ">>" value_expr
+                      | "[?]" "*" ">>" value_expr ;        (* wildcard catch-all *)
+
+match_value         ::= literal
+                      | identifier
+                      | cross_pkg_enum ;
+```
+
+**Rule:** Match is syntactic sugar. `[r] $x >> $y` with indented `[?]` children desugars to a `[?]` chain where each arm becomes `[?] $x =? value` / `[r] $y << result`. All exhaustiveness rules (PGE-601 through PGE-613) apply to the desugared form. `[?] *` in match context desugars to `[?] *?`.
+
+**Rule:** If a `[r] value_expr >> assign_target` line has no indented `[?]` children, it is a plain assignment — not a match header.
+
+**Rule:** Match arms are assignment-only. The source (`$x`) must be in Final state. The target (`$y`) receives the matched value. No side effects or complex logic in arms. PGE-609 does not apply to match arms (they use `value >> result` form, not `$var operator value`).
 
 ### 11.2 Error Handling
 
