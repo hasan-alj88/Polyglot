@@ -1,8 +1,8 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-21
-status: draft
+updated: 2026-03-24
+status: complete
 ---
 
 # Package Declaration
@@ -45,7 +45,25 @@ Reference imported packages via their alias:
 - `@alias1=SomePipeline` — access pipeline from imported package. See [[pipelines]]
 - `@alias1#DataName.EnumField` — reference enum value cross-package. See [[types#Enum Fields vs Value Fields]]
 
+Every `@alias` reference must resolve to a declared `[@]` import (PGE-901). The pipeline name after the alias must exist in the imported package (PGE-904). Referencing a deprecated pipeline emits a warning (PGW-901).
+
 **Note:** Standard library pipelines (`=File.*`, `=T.*`, `=Q.*`, `=W.*`) are built-in and do NOT require `[@]` import — see [[pipelines#Triggers]].
+
+## Import Rules
+
+Each `[@]` import line declares an alias for a package address. The compiler enforces:
+
+- **Unique aliases** — each `@alias` name in a file must be unique (PGE-912). Two `[@]` lines with the same alias make resolution ambiguous.
+- **No stdlib shadowing** — an alias must not match a reserved stdlib namespace prefix: `File`, `Path`, `Math`, `Sys`, `T`, `Q`, `W` (PGE-913). See [[stdlib/INDEX|stdlib/INDEX.md]] for the full reserved list.
+- **Alias must be used** — an `[@]` import that is never referenced anywhere in the file is flagged as dead code (PGW-902). This typically indicates incomplete refactoring.
+
+## Dependency Rules
+
+Package imports must form a directed acyclic graph. If Package A imports Package B and Package B imports Package A (directly or transitively), the cycle is a compile error (PGE-902). The compiler reports the full cycle path.
+
+Within a package, pipeline calls must also be acyclic — Polyglot has no recursion mechanism. Self-calls and mutual call loops are compile errors (PGE-914). See [[pipelines#Call Site Rules]].
+
+Pipeline references in `[r]`, `[p]`, or `[b]` calls must resolve to either a stdlib pipeline or a `{=}` definition within the same package (PGE-903). Cross-package pipelines must use the `@alias=Pipeline` form with a valid `[@]` import.
 
 ## Multi-File Packages
 
@@ -72,7 +90,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
 
 - **Same address** — every file in the package must declare the same `{@}` package name and version (PGE-905, PGE-906)
 - **Full mesh** — every file must reference all other files in the package. If file A references B and C, then B must reference A and C, and C must reference A and B (PGE-911)
-- **No duplicates** — a `{=}` pipeline name or `{#}` data name must be unique across all files in the package (PGE-907, PGE-908)
+- **No duplicates** — a `{=}` pipeline name or `{#}` data name must be unique across all files in the package (PGE-907)
 - **No self-reference** — a file must not list itself (PGE-910)
 - **File must exist** — every referenced path must resolve to an existing `.pg` file (PGE-909)
 
@@ -130,3 +148,23 @@ All three files share the `#Config` data type and can call each other's pipeline
    [ ] external imports
    [@] @utils << @Local:999.Utilities:v1.0.0
 ```
+
+## Compile Rules Reference
+
+| Code | Name | Section |
+|------|------|---------|
+| PGE-901 | Undefined Import Alias | [[#Usage]] |
+| PGE-902 | Circular Package Dependency | [[#Dependency Rules]] |
+| PGE-903 | Unresolved Pipeline Reference | [[#Dependency Rules]] |
+| PGE-904 | Unresolved Import Pipeline Reference | [[#Usage]] |
+| PGE-905 | Multi-File Version Mismatch | [[#Rules]] |
+| PGE-906 | Multi-File Package Name Mismatch | [[#Rules]] |
+| PGE-907 | Duplicate Definition | [[#Rules]] |
+| PGE-909 | Multi-File Reference Not Found | [[#Rules]] |
+| PGE-910 | Multi-File Self-Reference | [[#Rules]] |
+| PGE-911 | Asymmetric Multi-File Reference | [[#Rules]] |
+| PGE-912 | Duplicate Import Alias | [[#Import Rules]] |
+| PGE-913 | Import Alias Shadows Standard Library | [[#Import Rules]] |
+| PGE-914 | Circular Pipeline Call | [[#Dependency Rules]] |
+| PGW-901 | Deprecated Pipeline Reference | [[#Usage]] |
+| PGW-902 | Unused Import | [[#Import Rules]] |

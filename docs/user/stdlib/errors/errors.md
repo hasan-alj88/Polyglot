@@ -1,8 +1,8 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-23
-status: draft
+updated: 2026-03-24
+status: complete
 ---
 
 # Error System

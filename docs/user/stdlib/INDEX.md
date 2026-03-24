@@ -1,13 +1,14 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-21
-status: draft
+updated: 2026-03-24
+status: complete
 ---
 
 # Standard Library — Namespace Registry
 
-This is the authoritative list of all stdlib namespaces. Any top-level namespace listed here is **reserved** — user `[@]` import aliases must not shadow these names (PGE-913).
+<!-- @packages -->
+This is the authoritative list of all stdlib namespaces. Any top-level namespace listed here is **reserved** — user `[@]` import aliases must not shadow these names (PGE-913). See [[packages#Import Rules]].
 
 Standard library items do NOT require an `[@]` import — they are available in every `.pg` file by default.
 
@@ -20,21 +21,18 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
     <   input parameter
     >   output parameter
     ;   type annotation on a parameter
-    (?) inferred / speculative — not yet confirmed in specs
-
-Items marked `(?)` are derived from examples or the scenario catalog and have not been formally specified.
 
 ## Pipeline Namespaces (=)
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
-| `=File` | [pipelines/File.md](pipelines/File.md) | File operations (read, write, append, copy, move, delete) | Partial (?) |
+| `=File` | [pipelines/File.md](pipelines/File.md) | File operations (read, write, append, copy, move, delete, access, list) | Stable |
 | `=Path` | [pipelines/Path.md](pipelines/Path.md) | Cross-platform path creation from string literals | Stable |
 | `=Math` | [pipelines/Math.md](pipelines/Math.md) | Numeric operations (add, subtract, multiply, divide, modulo, power, abs, negate) | Stable |
 | `=Sys` | [pipelines/Sys.md](pipelines/Sys.md) | System information (OS detection) | Stable |
-| `=T` | [pipelines/T.md](pipelines/T.md) | Triggers (call, daily, folder, schedule, HTTP, file) | Partial (?) |
-| `=Q` | [pipelines/Q.md](pipelines/Q.md) | Queue configurations (default, priority, dispatch, kill) | Partial (?) |
-| `=W` | [pipelines/W.md](pipelines/W.md) | Wrappers (Polyglot, DB, File, HTTP, SSH, Auth, Log, Queue, Cache, Python) | Partial (?) |
+| `=T` | [pipelines/T.md](pipelines/T.md) | Triggers (call, manual, daily, folder, webhook) | Stable |
+| `=Q` | [pipelines/Q.md](pipelines/Q.md) | Queue configurations (default, FIFO, LIFO, priority, pause, resume, kill) | Stable |
+| `=W` | [pipelines/W.md](pipelines/W.md) | Wrappers (Polyglot, DB, File, HTTP, SSH, Auth, Log, Queue, Cache, Python) | Stable |
 
 ## Expander Operators (~)
 
@@ -61,4 +59,4 @@ Items marked `(?)` are derived from examples or the scenario catalog and have no
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
-| `!File`, `!No`, `!Timeout`, `!Validation` | [errors/errors.md](errors/errors.md) | Standard error trees | Partial (?) |
+| `!File`, `!No`, `!Timeout`, `!Math`, `!Validation` | [errors/errors.md](errors/errors.md) | Standard error trees | Stable |

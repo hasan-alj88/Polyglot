@@ -55,8 +55,8 @@ Phases: 2 of 2 complete
 ## Milestone: v0.2 Language Specification
 
 **v0.2 Language Specification** (v0.2.0)
-Status: In Progress
-Phases: 3 of 4 complete
+Status: Complete
+Phases: 4 of 4 complete
 
 Theme: Draft the complete Polyglot language specification from scratch using `/paul:draft` loop. Covers variables & lifecycle, operators, pipelines, fork patterns, error handling, loops, enums, type system, package spec, and block markers.
 
@@ -67,7 +67,7 @@ Theme: Draft the complete Polyglot language specification from scratch using `/p
 | 9 | Core Language & Type System | 1 | Complete | 2026-03-24 |
 | 10 | Operators & Control Flow | 1 | Complete | 2026-03-24 |
 | 11 | Pipelines & Concurrency | 1 | Complete | 2026-03-24 |
-| 12 | Package System & Stdlib | TBD | Not started | - |
+| 12 | Package System & Stdlib | 1 | Complete | 2026-03-24 |
 
 ### Phase 9: Core Language & Type System
 

@@ -1,18 +1,25 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-20
-status: draft
+updated: 2026-03-24
+status: complete
 ---
 
 # =T — Triggers
 
-Triggers are placed on `[t]` lines inside `{=}` pipeline definitions. No `[@]` import needed.
+<!-- @pipelines -->
+Triggers are placed on `[t]` lines inside `{=}` pipeline definitions. No `[@]` import needed. See [[pipelines#Triggers]] for trigger usage rules.
+
+**PRIMITIVE** — Trigger pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
 
 ```
 =T
    .Call
       [ ] Pipeline is invoked when called from another pipeline.
+      [ ] No additional parameters.
+
+   .Manual
+      [ ] Pipeline is invoked manually (e.g., from CLI or test harness).
       [ ] No additional parameters.
 
    .Daily
@@ -24,21 +31,11 @@ Triggers are placed on `[t]` lines inside `{=}` pipeline definitions. No `[@]` i
       .NewFiles
          <Folder;path
          >NewFiles;array.path
+         [ ] Fires when new files appear in the specified folder.
+         [ ] Inline path: =T.Folder.NewFiles"/inbox/"
 
-   .Schedule (?)
-      .Cron (?)
-         <cron;string (?)
-         [ ] Fires on a cron expression.
-
-   .HTTP (?)
-      .Webhook (?)
-         <endpoint;string (?)
-         <method;string (?)
-         [ ] Fires on an incoming HTTP request.
-
-   .File (?)
-      .Created (?)
-         <path;path (?)
-         <pattern;string (?)
-         [ ] Fires when a matching file is created.
+   .Webhook
+      <InlineStringLiteral;string <~ ""
+      [ ] Fires on an incoming HTTP request to the specified endpoint.
+      [ ] Inline path: =T.Webhook"/api/onboarding"
 ```

@@ -9,13 +9,13 @@ Building a new async programming language that can asynchronously compile other 
 ## Requirements
 
 ### Must Have
-- Complete language specification (v0.0.4+ syntax)
+- ✓ Complete language specification (v0.0.4+ syntax) — v0.2 milestone
 - Compiler architecture design document
 - Canonical examples for all language features
 
 ### Should Have
 - Prior art research and comparative analysis
-- Documentation standards and structure
+- ✓ Documentation standards and structure — v0.1.1 milestone
 - Technology choice rationale
 
 ### Nice to Have
@@ -41,4 +41,4 @@ Quick Reference:
 
 ---
 *Created: 2026-02-27*
-*Updated: 2026-03-12*
+*Updated: 2026-03-24 after Phase 12*

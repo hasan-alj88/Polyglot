@@ -1,13 +1,14 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-23
-status: draft
+updated: 2026-03-24
+status: complete
 ---
 
 # =File — File Operations
 
-Stdlib pipelines for file system operations. No `[@]` import needed.
+<!-- @errors -->
+Stdlib pipelines for file system operations. No `[@]` import needed. See [[errors#Pipeline Error Associations]] for error contracts.
 
 Success is signalled by `!NoError`. Side-effect-only pipelines (Write, Append, Copy, Move, Delete) have no output — `!NoError` confirms completion.
 

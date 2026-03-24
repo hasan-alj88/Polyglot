@@ -2,23 +2,23 @@
 
 ## Project Reference
 
-See: .paul/PROJECT.md (updated 2026-03-12)
+See: .paul/PROJECT.md (updated 2026-03-24)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Language specification — draft complete spec from scratch
+**Current focus:** Language specification complete — next milestone TBD
 
 ## Current Position
 
-Milestone: v0.2 Language Specification
-Phase: 11 of 12 — Complete. Next: Phase 12 (Package System & Stdlib)
-Plan: All plans in Phase 11 complete
-Status: Ready for next PLAN
-Last activity: 2026-03-24 — Phase 11 complete, transitioned to Phase 12
+Milestone: v0.2 Language Specification — COMPLETE
+Phase: 12 of 12 — Complete. All phases finished.
+Plan: All plans complete
+Status: Milestone complete
+Last activity: 2026-03-24 — Phase 12 complete, v0.2 milestone finished
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
 - v0.1.1 Doc Audit: [██████████] 100%
-- v0.2 Language Spec: [███████░░░] 75% (3/4 phases)
+- v0.2 Language Spec: [██████████] 100% (4/4 phases)
 
 ## Active Issue
 
@@ -29,7 +29,7 @@ No active issue. Run /paul:work-issue <number> to start.
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [Loop complete — ready for next PLAN]
+  ✓        ✓        ✓     [Loop complete — milestone finished]
 ```
 
 ## Accumulated Context
@@ -56,9 +56,12 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Restructured v0.1 to 2 phases | 2026-03-14 | Dropped Language Spec, Compiler Architecture, Prior Art Research phases; Language Spec moves to v0.2 |
 | v0.2 milestone created with 4 phases | 2026-03-24 | Phases 9-12: Core Language & Type System, Operators & Control Flow, Pipelines & Concurrency, Package System & Stdlib |
 | Arithmetic uses =Math.* stdlib, not raw operators | 2026-03-24 | PGE-410 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
+| Removed speculative stdlib items | 2026-03-24 | =T.Schedule/HTTP/File, =W.Rust/Node had zero usage; =T.Webhook confirmed from EDGE-CASES |
 
 ### Deferred Issues
 - Rebuild Polly as PAUL special flow (after documentation phases)
+- 9 stdlib files remain status: draft despite Stable content (Math, Path, Sys, ForEach, collectors, types)
+- EC-6.4 inconsistency: raw arithmetic in EDGE-CASES vs PGE-410
 
 ### Blockers/Concerns
 None.
@@ -72,13 +75,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-24
-Stopped at: Phase 11 complete, loop closed
-Next action: /paul:plan for Phase 12 (Package System & Stdlib)
-Resume file: .paul/HANDOFF-2026-03-24.md
+Stopped at: v0.2 milestone complete
+Next action: /paul:complete-milestone or /paul:milestone for next milestone
+Resume file: .paul/ROADMAP.md
 Resume context:
-- Phase 11 fully closed (pipelines.md + collections.md + errors.md all complete)
-- Phase 12 is Package System & Stdlib — last phase in v0.2
-- Relevant compile rules for Phase 12: PGE-9xx (packages, imports, multi-file)
+- v0.2 Language Specification fully complete — all 4 phases (9-12) done
+- Language specification covers: types, operators, control flow, pipelines, concurrency, packages, stdlib
+- Next milestone could be compiler architecture, canonical examples, or Polly rebuild
 
 ---
 *STATE.md — Updated after every significant action*
