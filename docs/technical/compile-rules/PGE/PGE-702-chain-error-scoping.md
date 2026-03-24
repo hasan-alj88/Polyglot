@@ -8,7 +8,7 @@ severity: error
 ### Rule 7.2 — Chain Error Scoping
 `PGE-702`
 
-**Statement:** In chain execution (`[r] =A >> =B >> =C`), each step's `[!]` error handler is scoped to that step only — as if each step were a separate `[r]` call. Error references use the `.N!ErrorName` syntax: a step prefix (`.N` numeric or `.LeafName` name-based) followed by `!` and the error path. The `!` separates the step reference from the error name, eliminating dotted-path ambiguity. Name-based step references must be unambiguous per PGE-804. The handler sees only its step's IO and can provide a replacement value for the chain's output variable.
+**Statement:** In chain execution (`[r] =A=>=B=>=C`), each step's `[!]` error handler is scoped to that step only — as if each step were a separate `[r]` call. Error references use the `.N!ErrorName` syntax: a step prefix (`.N` numeric or `.LeafName` name-based) followed by `!` and the error path. The `!` separates the step reference from the error name, eliminating dotted-path ambiguity. Name-based step references must be unambiguous per PGE-804. The handler sees only its step's IO and can provide a replacement value for the chain's output variable.
 **Rationale:** Chain steps are logically separate pipeline calls. Scoping error handlers to their producing step keeps error handling local and explicit. The `.N!Error` syntax mirrors how IO lines use `.N` for step addressing while clearly delimiting the step reference from the error path.
 **Detection:** The compiler checks that every `[!]` block under a chain `[r]` uses `.N!` or `.LeafName!` syntax. If a chain `[!]` uses the non-chain form (`!ErrorName` without step prefix), PGE-702 fires. If a name-based step reference is ambiguous, PGE-804 fires.
 
@@ -34,7 +34,7 @@ The handler **cannot** access other steps' IO (steps other than N).
 **VALID:**
 ```polyglot
 [ ] ✓ numeric step addressing
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path;path << $path
    [=] <1.rows;string >> >content
    [!] .0!File.NotFound
@@ -45,7 +45,7 @@ The handler **cannot** access other steps' IO (steps other than N).
 
 ```polyglot
 [ ] ✓ name-based — unique leaf names
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >Read.path;path << $path
    [=] <CSV.rows;string >> >content
    [!] .Read!File.NotFound
@@ -56,7 +56,7 @@ The handler **cannot** access other steps' IO (steps other than N).
 
 ```polyglot
 [ ] ✓ error handler reads $variable from enclosing pipeline scope
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path;path << $path
    [=] <1.rows;string >> >content
    [!] .0!File.NotFound
@@ -67,7 +67,7 @@ The handler **cannot** access other steps' IO (steps other than N).
 
 ```polyglot
 [ ] ✓ error handler with *Continue fallback
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path;path << $path
    [=] <1.rows;string >> >content
    [!] .0!File.NotFound
@@ -79,7 +79,7 @@ The handler **cannot** access other steps' IO (steps other than N).
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-702 — chain error without step prefix
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path;path << $path
    [=] <1.rows;string >> >content
    [!] !File.NotFound              [ ] ✗ PGE-702 — must use .0!File.NotFound
@@ -88,7 +88,7 @@ The handler **cannot** access other steps' IO (steps other than N).
 
 ```polyglot
 [ ] ✗ PGE-804 — ambiguous name-based step ref
-[r] =Text.Read >> =Data.Read
+[r] =Text.Read=>=Data.Read
    [=] >0.input;string << $text
    [=] <1.output;string >> >result
    [!] .Read!NotFound              [ ] ✗ PGE-804 — "Read" matches both steps

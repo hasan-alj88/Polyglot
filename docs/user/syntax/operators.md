@@ -23,6 +23,7 @@ Directional — the arrow indicates data flow. Operators push and pull data acro
 | `~>` | Default | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
 | `<!` | Fallback (Error) | Right → left | `<! "fallback"`. See [[errors#Error Fallback Operators]] |
 | `!>` | Fallback (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
+| `=>` | Chain | Left → right | `=A=>=B=>=C`. See [[pipelines#Chain Execution]] |
 
 ## Comparison Operators
 

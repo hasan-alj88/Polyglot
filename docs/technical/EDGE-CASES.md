@@ -912,12 +912,12 @@ Review in batches by section. Each edge case includes:
 
 <!-- @pipelines:Chain Execution -->
 <!-- @io:Chain IO Addressing -->
-**EBNF:** `chain_call ::= pipeline_ref ">>" pipeline_ref { ">>" pipeline_ref }`
+**EBNF:** `chain_call ::= pipeline_ref "=>" pipeline_ref { "=>" pipeline_ref }`
 
-**What it tests:** Multiple pipelines chained with `>>`, IO wired via numeric step indices. See [[pipelines#Chain Execution]], [[io#Chain IO Addressing]].
+**What it tests:** Multiple pipelines chained with `=>`, IO wired via numeric step indices. See [[pipelines#Chain Execution]], [[io#Chain IO Addressing]].
 
 ```polyglot
-[r] =Pipeline1 >> =Pipeline2 >> =Pipeline3
+[r] =Pipeline1=>=Pipeline2=>=Pipeline3
    [=] >0.inputParam1;path << $file
    [=] >0.inputParam2;string << "Hello"
    [=] <0.outputResult1;string >> <1.inputParam1
@@ -933,7 +933,7 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Using pipeline leaf name instead of numeric index for readability.
 
 ```polyglot
-[r] =File.List >> =Data.Transform.Rows >> =Report.Format
+[r] =File.List=>=Data.Transform.Rows=>=Report.Format
    [=] >List.folder;path << $folder
    [=] <List.files >> <Rows.input
    [=] <Rows.output >> <Format.content
@@ -947,7 +947,7 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Only entry and exit IO declared; intermediate wiring is implicit.
 
 ```polyglot
-[r] =File.Text.Read >> =Text.Transform >> =Text.Format
+[r] =File.Text.Read=>=Text.Transform=>=Text.Format
    [ ] Each step: one output;string → one input;string — auto-wired
    [=] >0.path;path << $path
    [=] <2.formatted;string >> >formatted
@@ -960,7 +960,7 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Errors scoped to specific chain steps using `!N.ErrorName`.
 
 ```polyglot
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path;path << $path
    [=] <1.rows;string >> >content
    [!] !0.File.NotFound
@@ -976,7 +976,7 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Numeric index and leaf name references used in the same chain, including in error blocks.
 
 ```polyglot
-[r] =User.Fetch >> =User.Validate >> =User.Store
+[r] =User.Fetch=>=User.Validate=>=User.Store
    [=] >0.id;int << $userId
    [=] <Fetch.profile >> <Validate.input
    [=] <1.validated >> <Store.record
@@ -993,11 +993,11 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [ ] INVALID — both steps have leaf name "Transform"
-[ ] [r] =Text.Transform >> =Data.Transform
+[ ] [r] =Text.Transform=>=Data.Transform
 [ ]    [=] >Transform.input << $val   ← ambiguous, compile error
 
 [ ] VALID — use numeric indices instead
-[r] =Text.Transform >> =Data.Transform
+[r] =Text.Transform=>=Data.Transform
    [=] >0.input << $val
    [=] <0.output >> <1.input
 ```
@@ -1009,7 +1009,7 @@ Review in batches by section. Each edge case includes:
 ```polyglot
 [ ] INVALID — step 0 outputs ;string, step 1 expects ;int
 [ ] Auto-wire cannot infer: explicit [=] wiring required
-[r] =ProduceString >> =ConsumeInt
+[r] =ProduceString=>=ConsumeInt
    [=] >0.input << $data
    [=] <0.output;string >> <1.input;int
    [ ] ← compile error: type mismatch string vs int
@@ -2038,7 +2038,7 @@ No bracket prefix needed inside.
       [*] << $slackId
 
    [ ] Record to HR system — chain: build record then save
-   [r] @HR=Record.Build >> @HR=Record.Save
+   [r] @HR=Record.Build=>@HR=Record.Save
       [=] >Build.hireId << $hire.id
       [=] >Build.adAccount << $adId
       [=] >Build.mailbox << $mailboxId
@@ -2150,7 +2150,7 @@ No bracket prefix needed inside.
       [*] >> $winner
 
    [ ] Enrich and format the winner — chain
-   [r] =Result.Enrich >> =Result.Format
+   [r] =Result.Enrich=>=Result.Format
       [=] >Enrich.raw << $winner
       [=] >Enrich.query << $query
       [=] <Enrich.enriched >> <Format.input

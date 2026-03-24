@@ -773,7 +773,7 @@ fallback_line       ::= "[>]" "<!" value_expr                   (* generic fallb
 ### 10.3 Chain Execution
 
 ```ebnf
-chain_call          ::= pipeline_ref ">>" pipeline_ref { ">>" pipeline_ref } NEWLINE
+chain_call          ::= pipeline_ref "=>" pipeline_ref { "=>" pipeline_ref } NEWLINE
                          { indent chain_io_line NEWLINE }
                          { indent chain_error_block NEWLINE } ;
 

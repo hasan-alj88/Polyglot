@@ -17,7 +17,7 @@ severity: error
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-802 — two outputs share the same type, ambiguous
-[r] =Fetch.Both >> =Process.Single
+[r] =Fetch.Both=>=Process.Single
    [=] >0.url;string << $url
    [ ] =Fetch.Both has >name;string AND >label;string — two ;string outputs
    [ ] =Process.Single has <text;string — one ;string input

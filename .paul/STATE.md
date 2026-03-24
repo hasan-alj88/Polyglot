@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #36 merged and closed
-Last activity: 2026-03-24 — Merged feat/issue-36 to main, issue closed
+Status: Issue #37 merged and closed
+Last activity: 2026-03-24 — Merged design/issue-37 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -22,14 +22,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #58 — Design: Change chain operator from >> to => to avoid push/pull ambiguity
+Branch: design/issue-58-change-chain-operator-to-avoid-ambiguity
+Labels: design
+Started: 2026-03-24
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/58
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ○        ○        ○        ○     [Issue #58 active]
 ```
 
 ## Accumulated Context
@@ -58,6 +62,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Arithmetic uses =Math.* stdlib, not raw operators | 2026-03-24 | PGE-410 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
 | Removed speculative stdlib items | 2026-03-24 | =T.Schedule/HTTP/File, =W.Rust/Node had zero usage; =T.Webhook confirmed from EDGE-CASES |
 | Closed #36 — Pipeline call cycle detection algorithm | 2026-03-24 | Merged feat/issue-36-pipeline-call-cycle-detection to main |
+| Closed #37 — Multidimensional array via :ND | 2026-03-24 | Unified array + tensor into ;array.<type>:<N>D; removed ;tensor concept |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
