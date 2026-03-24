@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #26 merged and closed
-Last activity: 2026-03-24 — Merged feat/issue-26 to main, issue closed
+Status: Issue #28 merged and closed
+Last activity: 2026-03-24 — Merged feat/issue-28 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -22,18 +22,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #28 — STDLIB: Confirm or remove speculative =W.* wrappers
-Branch: feat/issue-28-stdlib-confirm-remove-speculative-w-wrappers
-Labels: stdlib, P3-medium
-Started: 2026-03-24
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/28
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ○        ○        ○        ○     [Issue #28 active]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -65,6 +61,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #37 — Multidimensional array via :ND | 2026-03-24 | Unified array + tensor into ;array.<type>:<N>D; removed ;tensor concept |
 | Closed #58 — Chain operator >> to => | 2026-03-24 | Chains use => with no spaces (=A=>=B=>=C); IO >> and [!] >> unchanged |
 | Closed #26 — Confirm/remove speculative =T.* triggers | 2026-03-24 | Verified Phase 12 already resolved all three; issue closed |
+| Closed #28 — Confirm/remove speculative =W.* wrappers | 2026-03-24 | Verified Phase 12 already removed =W.Rust/Node; issue closed |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -83,11 +80,11 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-24
-Stopped at: Issue #26 merged and closed
+Stopped at: Issue #28 merged and closed
 Next action: /paul:issues (pick next issue) or /paul:progress
 Resume file: .paul/ROADMAP.md
 Resume context:
-- Issue #26 complete — speculative =T.* triggers verified resolved, issue closed
+- Issue #28 complete — speculative =W.* wrappers verified removed, issue closed
 - No active issue — ready for next work
 
 ---
