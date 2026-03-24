@@ -74,7 +74,11 @@ Protected elements for current milestone:
 Last session: 2026-03-24
 Stopped at: Phase 10 complete, loop closed
 Next action: /paul:plan for Phase 11 (Pipelines & Concurrency)
-Resume file: .paul/phases/10-operators-control-flow/10-01-SUMMARY.md
+Resume file: .paul/HANDOFF-2026-03-24.md
+Resume context:
+- Phase 10 fully closed (operators.md + conditionals.md both complete)
+- Phase 11 is Pipelines & Concurrency — largest remaining phase
+- Key finding: arithmetic uses =Math.* stdlib, not raw operators (PGE-410)
 
 ---
 *STATE.md — Updated after every significant action*
