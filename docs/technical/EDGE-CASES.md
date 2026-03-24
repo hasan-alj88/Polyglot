@@ -2006,9 +2006,9 @@ No bracket prefix needed inside.
       [=] >Build.mailbox << $mailboxId
       [=] >Build.slack << $slackId
       [=] <Save.status >> >report
-      [!] !0.Build.ValidationError
+      [!] .0!Build.ValidationError
          [r] >report << "record build failed"
-      [!] !1.Save.WriteError
+      [!] .1!Save.WriteError
          [r] >report << "record save failed"
 
    [ ] Mark success only if none of the IDs are failure markers
@@ -2061,6 +2061,12 @@ No bracket prefix needed inside.
       [r] >tier << "low"
       [r] >action << "pass"
 
+   [ ] Suspicious: high score XOR high flags (one but not both)
+   [?] $score >? 80
+   [^] $flags >? 2
+      [r] >tier << "suspicious"
+      [r] >action << "investigate"
+
    [ ] Zero or negative score — anomalous
    [?] $score <=? 0
       [r] >tier << "invalid"
@@ -2112,10 +2118,10 @@ No bracket prefix needed inside.
       [=] <Enrich.enriched >> <Format.input
       [=] <Format.output >> >result
       [=] <Format.source >> >source
-      [!] !Enrich.Failed
+      [!] .Enrich!Enrich.Failed
          [r] >result << {}
          [r] >source << "enrich_error"
-      [!] !Format.Failed
+      [!] .Format!Format.Failed
          [r] >source << "format_error"
 ```
 
@@ -2180,6 +2186,7 @@ No bracket prefix needed inside.
          [*] <key << $item:id
          [*] <value << $itemStatus
          [*] >Serial >> >summary
+```
 
 ### ST-5: Deep nesting — expand inside conditional inside expand with collectors
 
