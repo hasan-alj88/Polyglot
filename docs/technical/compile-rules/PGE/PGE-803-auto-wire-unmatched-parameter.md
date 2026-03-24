@@ -17,7 +17,7 @@ severity: error
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-803 — unmatched parameter after pairing
-[r] =Fetch.Data >> =Transform.Text
+[r] =Fetch.Data=>=Transform.Text
    [=] >0.url;string << $url
    [ ] =Fetch.Data outputs: >content;string, >count;int
    [ ] =Transform.Text inputs: <text;string

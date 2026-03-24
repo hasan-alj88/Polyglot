@@ -148,12 +148,12 @@ If the compiler cannot guarantee the `>IsFailed` output is handled, it emits PGW
 
 ## Chain Error Addressing
 
-In chain execution (`[r] =A >> =B >> =C`), errors are prefixed with a step reference (PGE-702):
+In chain execution (`[r] =A=>=B=>=C`), errors are prefixed with a step reference (PGE-702):
 
 **Prefer numeric indices** — always unambiguous:
 
 ```polyglot
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path;path << $path
    [=] <1.rows;string >> >content
    [!] !0.File.NotFound

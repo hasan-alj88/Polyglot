@@ -76,7 +76,7 @@ Pipeline calls use `[r]` execution with `[=]` IO lines. Error blocks `[!]` scope
 ## Chain IO Addressing
 
 <!-- @pipelines:Chain Execution -->
-In chain execution (`[r] =A >> =B >> =C`), IO parameters are addressed by step reference — a numeric index (0-based) or pipeline leaf name, followed by `.` and the parameter name. See [[pipelines#Chain Execution]] for full chain semantics.
+In chain execution (`[r] =A=>=B=>=C`), IO parameters are addressed by step reference — a numeric index (0-based) or pipeline leaf name, followed by `.` and the parameter name. See [[pipelines#Chain Execution]] for full chain semantics.
 
 The direction convention is **caller-perspective**:
 
@@ -200,7 +200,7 @@ When a fallback activates, the target variable becomes **Final** with the fallba
 In chain execution, fallback uses the `[=]` explicit form with step addressing (since `[>]`/`[<]` cannot carry step references):
 
 ```polyglot
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path << $file
    [=] <1.rows >> $rows
    [=] <0.content <! ""

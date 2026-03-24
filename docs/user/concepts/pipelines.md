@@ -249,10 +249,10 @@ Every line in the execution body must begin with a block element marker — `[r]
 
 <!-- @io:Chain IO Addressing -->
 <!-- @operators -->
-Every step in a chain must be a pipeline reference — non-pipeline values are a compile error (PGE-806). Chain execution wires multiple pipelines in sequence on a single `[r]` line, with `>>` separating each step. IO lines under the chain address individual steps by **numeric index** (0-based) or **leaf name** (the last segment of the pipeline's dotted name).
+Every step in a chain must be a pipeline reference — non-pipeline values are a compile error (PGE-806). Chain execution wires multiple pipelines in sequence on a single `[r]` line, with `=>` separating each step (no spaces — the chain is one continuous expression). IO lines under the chain address individual steps by **numeric index** (0-based) or **leaf name** (the last segment of the pipeline's dotted name).
 
 ```polyglot
-[r] =Pipeline1 >> =Pipeline2 >> =Pipeline3
+[r] =Pipeline1=>=Pipeline2=>=Pipeline3
    [=] >0.inputParam;path << $file
    [=] <0.outputResult >> <1.inputParam
    [=] <2.outputResult >> >output
@@ -274,7 +274,7 @@ The direction convention is **caller-perspective**: `>` means data flows *toward
 **Leaf name alternative:** When pipeline names are long, use the leaf name (last segment) instead of numeric index. Leaf names must be unambiguous within the chain — duplicate leaf names require numeric indices. An ambiguous step reference is PGE-804; an unresolved step reference is PGE-805.
 
 ```polyglot
-[r] =File.List >> =Data.Transform.Rows >> =Report.Format
+[r] =File.List=>=Data.Transform.Rows=>=Report.Format
    [=] >List.folder;path << $folder
    [=] <List.files >> <Rows.input
    [=] <Format.result >> >report
@@ -287,7 +287,7 @@ Numeric and leaf name references can be mixed in the same chain.
 When a step has exactly one output and the next step has exactly one input, and both share the same data type, the wire between them is implicit — no `[=]` line is needed. Only entry IO (first step's inputs) and exit IO (last step's outputs) must be declared.
 
 ```polyglot
-[r] =File.Text.Read >> =Text.Transform >> =Text.Format
+[r] =File.Text.Read=>=Text.Transform=>=Text.Format
    [ ] Each step: one output;string → one input;string — auto-wired
    [=] >0.path;path << $path
    [=] <2.formatted;string >> >formatted
@@ -309,7 +309,7 @@ Errors in chains use the `!` prefix with a step index or leaf name, followed by 
 **Prefer numeric indices** — they are always unambiguous:
 
 ```polyglot
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path;path << $path
    [=] <1.rows;string >> >content
    [!] !0.File.NotFound
@@ -336,7 +336,7 @@ Errors in chains use the `!` prefix with a step index or leaf name, followed by 
 In chain execution, `[>]`/`[<]` markers cannot carry step addressing. Use the `[=]` explicit form with `<!` instead:
 
 ```polyglot
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path << $file
    [=] <1.rows >> $rows
    [=] <0.content <! ""
@@ -423,7 +423,7 @@ Both calling forms work:
 
 ### Where Inline Calls Are NOT Valid
 
-- **Chain calls** — `>>` connects pipeline references, not values. `[r] =Path"/tmp" >> =Other` is invalid (both sides would be values).
+- **Chain calls** — `=>` connects pipeline references, not values. `[r] =Path"/tmp"=>=Other` is invalid (both sides would be values).
 - **LHS of assignments** — inline calls produce values, they are not assignable targets.
 
 ## Call Site Rules

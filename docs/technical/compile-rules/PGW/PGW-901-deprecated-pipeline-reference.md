@@ -8,7 +8,7 @@ severity: warning
 ### Rule 9.1 — Deprecated Pipeline Reference
 `PGW-901`
 
-**Statement:** Referencing a pipeline whose `%deprecated` metadata is `true` emits a compile warning. If the pipeline's `%deprecatedMessage` field is set, the warning includes it. This applies to all call forms: `[r]`, `[p]`, and chain (`>>`) references, whether local or imported via `@alias`.
+**Statement:** Referencing a pipeline whose `%deprecated` metadata is `true` emits a compile warning. If the pipeline's `%deprecatedMessage` field is set, the warning includes it. This applies to all call forms: `[r]`, `[p]`, and chain (`=>`) references, whether local or imported via `@alias`.
 **Rationale:** Deprecated pipelines still compile and run, but should be phased out. Surfacing deprecation at compile time — with an actionable message when available — guides developers toward replacements without breaking builds.
 **Detection:** After the compiler resolves a pipeline reference (PGE-903/PGE-904), it checks the target pipeline's `%deprecated` metadata. If `true`, PGW-901 fires. The warning message includes `%deprecatedMessage` if present, otherwise a generic "pipeline is deprecated" note.
 

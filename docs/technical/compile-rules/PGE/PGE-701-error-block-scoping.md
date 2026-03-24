@@ -26,7 +26,7 @@ severity: error
 
 ```polyglot
 [ ] ✓ chain errors scoped under the chain [r] — see PGE-702 for chain syntax
-[r] =File.Text.Read >> =Text.Parse.CSV
+[r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path;path << $path
    [=] <1.rows;string >> >content
    [!] .0!File.NotFound
