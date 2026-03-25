@@ -68,6 +68,37 @@ The tree has two layers:
 
 One definition can have many instances. A pipeline that runs three times concurrently has instances `:0`, `:1`, `:2` — each with its own metadata values.
 
+The following diagram shows how schema definitions produce runtime instances across three key branches:
+
+```mermaid
+graph TD
+    root["%"]
+
+    subgraph schema ["Schema Layer (compile-time)"]
+        def["%definition"]
+        defBool[".#:Boolean"]
+        defPipe[".=:ProcessData"]
+        defVar[".$:myVar"]
+    end
+
+    subgraph instances ["Instance Layer (runtime)"]
+        bool0["%#:Boolean:0"]
+        bool1["%#:Boolean:1"]
+        pipe0["%=:ProcessData:0"]
+        var0["%$:myVar:0"]
+    end
+
+    root --> def
+    def --> defBool
+    def --> defPipe
+    def --> defVar
+
+    defBool -- ":0" --> bool0
+    defBool -- ":1" --> bool1
+    defPipe -- ":0" --> pipe0
+    defVar -- ":0" --> var0
+```
+
 ### Worked Examples
 
 | Path | Reads |
