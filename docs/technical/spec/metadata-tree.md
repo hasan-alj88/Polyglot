@@ -24,7 +24,7 @@ instance_path ::= "%" type_prefix ":" ref ":" instance { "." field }
 
 | Element | Rule |
 |---------|------|
-| `type_prefix` | One of: `#`, `=`, `~`, `*`, `$`, `M`, `!`, `@` |
+| `type_prefix` | One of: `#`, `=`, `~`, `*`, `$`, `M`, `!`, `@`, `_` |
 | `ref` | Object name — flexible field (`:`) |
 | `instance` | Instance number — flexible field (`:`) |
 | `field` | Fixed field path (`.`) within the instance |
@@ -55,6 +55,7 @@ The `%` root has fixed branches for each object type prefix:
 | `%M` | Macros | Flexible (`:name`) | All `{M}` macro definitions |
 | `%!` | Errors | Flexible (`:namespace`) | All `!`-prefixed error namespaces |
 | `%@` | Packages | Flexible (`:address`) | All `@`-prefixed package addresses |
+| `%_` | Permissions | No instances | All `_`-prefixed permission declarations |
 
 Plus `%definition` (fixed) for compile-time schema templates.
 
@@ -144,6 +145,53 @@ The runtime enforces exactly one active enum field per instance:
 ```
 
 Parameter names within `.<` and `.>` are flexible — they follow the pipeline's `[=]` IO declarations.
+
+## Permission Branch
+
+`%_` stores permission declarations. Unlike other branches, `%_` has **no `:{instance}` level** — permissions are compile-time declarations, not runtime objects. All instances of a definition share the same permissions. See [[permissions]] for the full permission system.
+
+### Structure
+
+```
+%_
+├── :File
+│   ├── .read               ;string  (glob pattern)
+│   ├── .write              ;string
+│   ├── .execute            ;string
+│   └── .delete             ;string
+├── :Web
+│   ├── :request
+│   │   └── .<              (IO inputs)
+│   └── :socket
+│       └── .<
+├── :Database
+│   ├── :connect
+│   │   └── .<
+│   ├── .read               ;string
+│   └── .write              ;string
+├── :System
+│   ├── .env                ;string
+│   ├── :process
+│   │   └── .<
+│   └── .signal             ;string
+├── :Crypto
+│   ├── .key, .sign, .encrypt   ;string
+├── :IPC
+│   ├── :send, :receive
+│   │   └── .<
+│   └── .subscribe          ;string
+├── :Device
+│   ├── .camera, .microphone, .location, .bluetooth   ;bool
+└── :Memory
+    ├── .allocate, .shared   ;string
+```
+
+### Key Properties
+
+- **No instances** — permissions are per-definition, resolved at compile time. No runtime metadata exists.
+- **No `live` fields** — all permission data is static. The compiler resolves permissions entirely during compilation.
+- **Nested under `%@` and `%=`** — permissions also appear as `._` subsections under package (`%@:<address>._`) and pipeline (`%=:<name>:<instance>._`) branches, representing the package ceiling and pipeline-level declarations respectively.
+- **IO-form capabilities** — capabilities like `:request`, `:connect`, `:send` use `.<` for their IO input parameters, mirroring the IO form syntax in `[_]` declarations.
 
 ## Definition Templates
 
