@@ -12,25 +12,29 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #81 merged and closed
-Last activity: 2026-03-25 — Merged issue-81 to main, issue closed
+Status: Issue #82 APPLY complete, UNIFY complete
+Last activity: 2026-03-25 — Issue #82 plan executed and unified
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
 - v0.1.1 Doc Audit: [██████████] 100%
 - v0.2 Language Spec: [██████████] 100% (4/4 phases)
-- Issue #81: [██████████] 100% (1/1 plans)
+- Issue #82: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #82 — Add `%_` metadata tree branch for permissions
+Branch: design/issue-82-add-metadata-tree-branch-for-permissions
+Labels: docs, design, P2-high
+Started: 2026-03-25
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/82
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -68,6 +72,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Issue #74 — Add [+], [|], [c] block markers | 2026-03-24 | [+] reassigned from OR to line continuation; [|] new OR marker; [c] foreign code injection; 11 files updated |
 | Issue #80 — Add _ permission prefix and [_] block marker | 2026-03-25 | Implicit-deny permission system; _ is 7th identifier prefix; [_] block marker; 8 permission categories; compile-time enforcement |
 | Issue #81 — Add package permission ceiling in {@} block | 2026-03-25 | Ceiling syntax in {@}; pipeline-level [_] in pipelines.md; PGE-915/916 compile rules; two separate rules for pipeline vs import ceiling |
+| Issue #82 — Add %_ metadata tree branch for permissions | 2026-03-25 | %_ in all 3 tree files; 8 categories; ._ under %@ and %=; no instances; #86 created for . vs : audit |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -86,12 +91,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #81 merged and closed
-Next action: /paul:work-issue <number> or /paul:issues
-Resume file: .paul/ROADMAP.md
+Stopped at: Issue #82 UNIFY complete, ready for MERGE
+Next action: /paul:merge to merge issue branch to main
+Resume file: .paul/phases/issue-82-metadata-tree-permissions/82-01-SUMMARY.md
 Resume context:
-- Issue #80 complete — _ permission prefix, [_] block marker, permissions.md spec
-- Issue #81 complete — package ceiling in {@}, pipeline-level [_], PGE-915/916
+- Issue #82 complete — %_ in all 3 tree files, 8 categories, ._ under %@ and %=
+- Created #86 for . vs : field audit (deferred)
 - No active issue — ready for next work
 
 ---

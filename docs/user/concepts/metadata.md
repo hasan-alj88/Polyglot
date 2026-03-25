@@ -52,6 +52,7 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │       ├── .alias                             (user-declared)
 │       ├── .<               (input ports)
 │       ├── .>               (output ports)
+│       ├── ._              (pipeline permissions — see [[permissions#Definition Request]])
 │       └── :info            ;serial           (user-declared, flexible)
 ├── ~  (Expanders)
 │   └── :<name>:<instance>
@@ -91,7 +92,61 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │       └── .<error path>    (fixed hierarchy)
 ├── @  (Packages)
 │   └── :<address>
-│       └── (package metadata)
+│       ├── (package metadata)
+│       └── ._              (permission ceiling — see [[permissions#Package Ceiling]])
+├── _  (Permissions)
+│   ├── :File
+│   │   ├── .read               ;string  (glob pattern)
+│   │   ├── .write              ;string
+│   │   ├── .execute            ;string
+│   │   └── .delete             ;string
+│   ├── :Web
+│   │   ├── :request
+│   │   │   └── .<              (IO inputs)
+│   │   │       ├── .url        ;string
+│   │   │       └── .method     ;string
+│   │   └── :socket
+│   │       └── .<
+│   │           ├── .url        ;string
+│   │           └── .protocol   ;string
+│   ├── :Database
+│   │   ├── :connect
+│   │   │   └── .<
+│   │   │       ├── .host       ;string
+│   │   │       ├── .port       ;int
+│   │   │       ├── .database   ;string
+│   │   │       └── .auth       ;string
+│   │   ├── .read               ;string
+│   │   └── .write              ;string
+│   ├── :System
+│   │   ├── .env                ;string
+│   │   ├── :process
+│   │   │   └── .<
+│   │   │       ├── .command    ;string
+│   │   │       └── .args       ;string
+│   │   └── .signal             ;string
+│   ├── :Crypto
+│   │   ├── .key                ;string
+│   │   ├── .sign               ;string
+│   │   └── .encrypt            ;string
+│   ├── :IPC
+│   │   ├── :send
+│   │   │   └── .<
+│   │   │       ├── .channel    ;string
+│   │   │       └── .protocol   ;string
+│   │   ├── :receive
+│   │   │   └── .<
+│   │   │       ├── .channel    ;string
+│   │   │       └── .protocol   ;string
+│   │   └── .subscribe          ;string
+│   ├── :Device
+│   │   ├── .camera             ;bool
+│   │   ├── .microphone         ;bool
+│   │   ├── .location           ;bool
+│   │   └── .bluetooth          ;bool
+│   └── :Memory
+│       ├── .allocate            ;string
+│       └── .shared              ;string
 └── definition              (compile-time schema templates)
     └── .{type}:{ref}       (structural template for all instances)
 ```
