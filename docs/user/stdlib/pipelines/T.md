@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-24
+updated: 2026-03-25
 status: complete
 ---
 
@@ -11,6 +11,19 @@ status: complete
 Triggers are placed on `[t]` lines inside `{=}` pipeline definitions. No `[@]` import needed. See [[pipelines#Triggers]] for trigger usage rules.
 
 **PRIMITIVE** — Trigger pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
+
+## Permissions
+
+<!-- @permissions -->
+Most triggers require no permissions. IO-touching triggers must declare `[_]` permissions. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
+
+| Pipeline | Permission | Type |
+|----------|-----------|------|
+| `=T.Call` | None | — |
+| `=T.Manual` | None | — |
+| `=T.Daily` | None | — |
+| `=T.Folder.NewFiles` | `_File.read` | Inline |
+| `=T.Webhook` | `_Web.socket` | IO |
 
 ```
 =T

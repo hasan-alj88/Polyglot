@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-24
+updated: 2026-03-25
 status: complete
 ---
 
@@ -24,15 +24,15 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 
 ## Pipeline Namespaces (=)
 
-| Prefix | File | Description | Status |
-|--------|------|-------------|--------|
-| `=File` | [pipelines/File.md](pipelines/File.md) | File operations (read, write, append, copy, move, delete, access, list) | Stable |
-| `=Path` | [pipelines/Path.md](pipelines/Path.md) | Cross-platform path creation from string literals | Stable |
-| `=Math` | [pipelines/Math.md](pipelines/Math.md) | Numeric operations (add, subtract, multiply, divide, modulo, power, abs, negate) | Stable |
-| `=Sys` | [pipelines/Sys.md](pipelines/Sys.md) | System information (OS detection) | Stable |
-| `=T` | [pipelines/T.md](pipelines/T.md) | Triggers (call, manual, daily, folder, webhook) | Stable |
-| `=Q` | [pipelines/Q.md](pipelines/Q.md) | Queue configurations (default, FIFO, LIFO, priority, pause, resume, kill) | Stable |
-| `=W` | [pipelines/W.md](pipelines/W.md) | Wrappers (Polyglot, DB, File, HTTP, SSH, Auth, Log, Queue, Cache, Python) | Stable |
+| Prefix | File | Description | Status | Permission |
+|--------|------|-------------|--------|------------|
+| `=File` | [pipelines/File.md](pipelines/File.md) | File operations (read, write, append, copy, move, delete, access, list) | Stable | `_File.*` |
+| `=Path` | [pipelines/Path.md](pipelines/Path.md) | Cross-platform path creation from string literals | Stable | None |
+| `=Math` | [pipelines/Math.md](pipelines/Math.md) | Numeric operations (add, subtract, multiply, divide, modulo, power, abs, negate) | Stable | None |
+| `=Sys` | [pipelines/Sys.md](pipelines/Sys.md) | System information (OS detection) | Stable | `_System.env` |
+| `=T` | [pipelines/T.md](pipelines/T.md) | Triggers (call, manual, daily, folder, webhook) | Stable | Mixed |
+| `=Q` | [pipelines/Q.md](pipelines/Q.md) | Queue configurations (default, FIFO, LIFO, priority, pause, resume, kill) | Stable | None |
+| `=W` | [pipelines/W.md](pipelines/W.md) | Wrappers (Polyglot, DB, File, HTTP, SSH, Auth, Log, Queue, Cache, Python) | Stable | Mixed |
 
 ## Expander Operators (~)
 
@@ -59,4 +59,4 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
-| `!File`, `!No`, `!Timeout`, `!Math`, `!Validation` | [errors/errors.md](errors/errors.md) | Standard error trees | Stable |
+| `!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Permission` | [errors/errors.md](errors/errors.md) | Standard error trees | Stable |

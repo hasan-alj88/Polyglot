@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-24
+updated: 2026-03-25
 status: complete
 ---
 
@@ -15,6 +15,26 @@ Execution order: `[t],[=]` -> `[Q]` -> `[\]` -> Body -> `[/]`
 No `[@]` import needed.
 
 **PRIMITIVE** — Wrapper pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files. User-defined wrappers are created as `{M}` macros and referenced on `[W]` lines — see [[pipelines#Wrappers]].
+
+## Permissions
+
+<!-- @permissions -->
+Wrappers that manage external resources require `[_]` permission declarations. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
+
+| Pipeline | Permission | Type |
+|----------|-----------|------|
+| `=W.Polyglot` | None | — |
+| `=W.DB.Connection` | `_Database.connect` | IO |
+| `=W.DB.Transaction` | `_Database.connect` | IO |
+| `=W.File.Lock` | `_File.read` | Inline |
+| `=W.File.TempDir` | `_File.write` | Inline |
+| `=W.HTTP.Session` | `_Web.request` | IO |
+| `=W.SSH.Session` | `_System.process` | IO |
+| `=W.Auth.Token` | `_Crypto.key` | Inline |
+| `=W.Log.Context` | None | — |
+| `=W.Queue.Consumer` | `_IPC.receive` | IO |
+| `=W.Cache.Scope` | `_Database.read` | Inline |
+| `=W.Python` | `_System.process` | IO |
 
 ```
 =W

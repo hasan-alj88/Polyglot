@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-24
+updated: 2026-03-25
 status: complete
 ---
 
@@ -13,6 +13,10 @@ Queue pipelines manage the two-queue execution model: **Pending Queue** (pipelin
 All `=Q.*` pipelines are used via `[Q]` — either in a `{Q}` queue definition (queue-level defaults) or in a pipeline's `[Q]` section (pipeline-specific controls). Controls in `{Q}` apply to all pipelines on that queue. Controls in `[Q]` are pipeline-specific. Contradictions raise PGE-113.
 
 **PRIMITIVE** — Queue pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
+
+## Permissions
+
+No permissions required. All operations are pure computation (queue scheduling and resource management). See [[permissions]].
 
 ## Pending Queue Strategies
 
