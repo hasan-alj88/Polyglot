@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #85 — UNIFY complete, ready for merge
-Last activity: 2026-03-25 — Issue #85 APPLY+UNIFY complete
+Status: Issue #85 merged and closed
+Last activity: 2026-03-25 — Merged issue-85 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -26,18 +26,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #85 — Document stdlib pipeline permission declarations
-Branch: docs/issue-85-document-stdlib-pipeline-permission-declarations
-Labels: docs, stdlib, P3-medium
-Started: 2026-03-25
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/85
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -97,12 +93,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #85 UNIFY complete — ready for merge
-Next action: /paul:merge
-Resume file: .paul/phases/issue-85-document-stdlib-pipeline-permissions/85-01-SUMMARY.md
+Stopped at: Issue #85 merged and closed
+Next action: /paul:work-issue <number> or /paul:issues
+Resume file: .paul/ROADMAP.md
 Resume context:
 - Issue #85 complete — permission declarations in all 7 stdlib pipeline files + INDEX.md
 - Permission documentation chain complete (#80 → #81 → #82 → #83 → #84 → #85)
+- No active issue — ready for next work
 
 ---
 *STATE.md — Updated after every significant action*
