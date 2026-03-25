@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #86 APPLY+UNIFY complete, ready for merge
-Last activity: 2026-03-25 — Issue #86 plan executed, SUMMARY created
+Status: Issue #86 merged and closed
+Last activity: 2026-03-25 — Merged issue-86 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -27,20 +27,14 @@ Progress:
 
 ## Active Issue
 
-**Issue #86**: Audit fixed (.) vs flexible (:) field usage across all tree branches
-- **Labels**: design, P2-high
-- **Branch**: `design/issue-86-audit-fixed-vs-flexible-field-usage`
-- **Key rule**: `.` for Polyglot-defined fixed fields, `:` for user-extensible flexible fields
-- **Scope**: All % tree branches — %_, %@, %=, %!, %$, %#, %~, %*, %Q, %M, %definition
-- **Files**: data-is-trees.md, metadata.md, metadata-tree.md, permissions.md
-- **Context**: Raised during #82 — permission categories are Polyglot-defined, should use `.` not `:`
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for /paul:merge]
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -102,13 +96,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #86 UNIFY complete
-Next action: /paul:merge
-Resume file: .paul/phases/issue-86-audit-fixed-vs-flexible-field-usage/86-01-SUMMARY.md
+Stopped at: Issue #86 merged and closed
+Next action: /paul:work-issue <number> or /paul:issues
+Resume file: .paul/ROADMAP.md
 Resume context:
-- Issue #86 loop complete — %_ all fixed, %! namespaces fixed + !Error, %@ `::` separator
-- 7 files modified, all verification passed
-- Branch: design/issue-86-audit-fixed-vs-flexible-field-usage
+- Issue #86 complete — %_ all fixed, %! namespaces fixed + !Error, %@ `::` separator
+- No active issue — ready for next work
 
 ---
 *STATE.md — Updated after every significant action*
