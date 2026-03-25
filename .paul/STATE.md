@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #85 merged and closed
-Last activity: 2026-03-25 — Merged issue-85 to main, issue closed
+Status: Issue #86 APPLY+UNIFY complete, ready for merge
+Last activity: 2026-03-25 — Issue #86 plan executed, SUMMARY created
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -23,17 +23,24 @@ Progress:
 - Issue #83: [██████████] 100% (1/1 plans)
 - Issue #84: [██████████] 100% (1/1 plans)
 - Issue #85: [██████████] 100% (1/1 plans)
+- Issue #86: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+**Issue #86**: Audit fixed (.) vs flexible (:) field usage across all tree branches
+- **Labels**: design, P2-high
+- **Branch**: `design/issue-86-audit-fixed-vs-flexible-field-usage`
+- **Key rule**: `.` for Polyglot-defined fixed fields, `:` for user-extensible flexible fields
+- **Scope**: All % tree branches — %_, %@, %=, %!, %$, %#, %~, %*, %Q, %M, %definition
+- **Files**: data-is-trees.md, metadata.md, metadata-tree.md, permissions.md
+- **Context**: Raised during #82 — permission categories are Polyglot-defined, should use `.` not `:`
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓     [ready for /paul:merge]
 ```
 
 ## Accumulated Context
@@ -75,11 +82,13 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Issue #83 — Add permission compile rules | 2026-03-25 | PGE-917/918/919/920 + PGW-903; issue's PGE-916 renumbered to PGE-920; extends 9.x range |
 | Issue #84 — Add !Permission.* error tree | 2026-03-25 | 8 .Denied leaves; trimmed overlapping .NotFound/.Timeout; File IO pipeline associations; #87 created for multi-alias |
 | Issue #85 — Document stdlib pipeline permission declarations | 2026-03-25 | [_] permissions in all 7 stdlib pipeline files; Permission column in INDEX.md; completes #80-#85 chain |
+| Issue #86 — Audit fixed vs flexible field usage | 2026-03-25 | %_ all `.` fixed; %! namespaces `.` + new !Error with `:` children; %@ `::` separator + Company rename; path grammar updated |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
 - 9 stdlib files remain status: draft despite Stable content (Math, Path, Sys, ForEach, collectors, types)
 - EC-6.4 inconsistency: raw arithmetic in EDGE-CASES vs PGE-410
+- ~30 technical/ files still use old package address format (migrate on touch)
 
 ### Blockers/Concerns
 None.
@@ -93,13 +102,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #85 merged and closed
-Next action: /paul:work-issue <number> or /paul:issues
-Resume file: .paul/ROADMAP.md
+Stopped at: Issue #86 UNIFY complete
+Next action: /paul:merge
+Resume file: .paul/phases/issue-86-audit-fixed-vs-flexible-field-usage/86-01-SUMMARY.md
 Resume context:
-- Issue #85 complete — permission declarations in all 7 stdlib pipeline files + INDEX.md
-- Permission documentation chain complete (#80 → #81 → #82 → #83 → #84 → #85)
-- No active issue — ready for next work
+- Issue #86 loop complete — %_ all fixed, %! namespaces fixed + !Error, %@ `::` separator
+- 7 files modified, all verification passed
+- Branch: design/issue-86-audit-fixed-vs-flexible-field-usage
 
 ---
 *STATE.md — Updated after every significant action*

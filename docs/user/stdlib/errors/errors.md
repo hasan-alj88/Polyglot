@@ -44,7 +44,7 @@ All errors — stdlib and user-defined — share the same struct:
 
 This creates `!Validation.Empty`, `!Validation.TooLong`, `!Validation.InvalidEmail` — all carrying the `#Error` struct.
 
-`{!}` creates entries at `%!:Namespace.Error` in the metadata tree. See [[data-is-trees#How Concepts Connect]].
+`{!}` creates entries at `%!.Namespace.Error` in the metadata tree. See [[data-is-trees#How Concepts Connect]].
 
 ## Built-in Error Namespaces
 
@@ -80,6 +80,28 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
    [.] .Device.Denied;#Error
    [.] .Memory.Denied;#Error
 ```
+
+### `!Error` — User-Extensible Namespace
+
+`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Permission`) have Polyglot-defined fixed leaves.
+
+Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `[.]` for terminal leaves. Siblings at the same level must all use the same separator (sibling homogeneity rule).
+
+```polyglot
+{!} !Error
+   [:] :MyApp
+      [:] :Auth
+         [.] .Expired;#Error
+         [.] .Invalid;#Error
+      [:] :Data
+         [.] .Corrupt;#Error
+         [.] .Missing;#Error
+      [:] :GeneralFailure;#Error
+```
+
+This creates `!Error:MyApp:Auth.Expired`, `!Error:MyApp:Auth.Invalid`, `!Error:MyApp:Data.Corrupt`, `!Error:MyApp:Data.Missing`, and `!Error:MyApp:GeneralFailure`.
+
+Tree path: `%!.Error:MyApp:Auth.Expired` — `.Error` is Polyglot-defined (fixed), `:MyApp:Auth` are user-extensible (flexible), `.Expired` is a terminal leaf (fixed).
 
 ## Pipeline Error Associations
 

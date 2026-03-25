@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: spec
-updated: 2026-03-24
+updated: 2026-03-25
 status: complete
 ---
 
@@ -15,11 +15,15 @@ This document formally specifies the `%` metadata tree — the unified structure
 
 ## Path Grammar
 
-Two path patterns address the tree:
+The general path patterns:
 
 ```ebnf
-schema_path   ::= "%" "definition" "." type_prefix ":" ref
-instance_path ::= "%" type_prefix ":" ref ":" instance { "." field }
+schema_path     ::= "%" "definition" "." type_prefix ":" ref
+instance_path   ::= "%" type_prefix ":" ref ":" instance { "." field }
+permission_path ::= "%" "_" { "." field }
+error_path      ::= "%" "!" "." namespace { "." leaf }
+                   | "%" "!" ".Error" { ":" user_path }
+package_path    ::= "%" "@" ":" registry { ":" id_part } "::" name { ":" segment }
 ```
 
 | Element | Rule |
@@ -28,6 +32,11 @@ instance_path ::= "%" type_prefix ":" ref ":" instance { "." field }
 | `ref` | Object name — flexible field (`:`) |
 | `instance` | Instance number — flexible field (`:`) |
 | `field` | Fixed field path (`.`) within the instance |
+
+**Branch-specific rules:**
+- `%_` — all `.` fixed fields, no `:` anywhere. No ref or instance levels.
+- `%!` — `.` for Polyglot-defined namespaces and leaves. `.Error` children use `:` (user-extensible).
+- `%@` — `::` separates registry+ID from package name. `::` is treated as `:` in the tree.
 
 ### Shorthand in User Code
 
@@ -53,9 +62,9 @@ The `%` root has fixed branches for each object type prefix:
 | `%*` | Collectors | Flexible (`:name`) | All `*Into.*`, `*Agg.*`, `*All`, `*First`, `*Nth` |
 | `%$` | Variables | Flexible (`:name`) | All `$`-prefixed variables |
 | `%M` | Macros | Flexible (`:name`) | All `{M}` macro definitions |
-| `%!` | Errors | Flexible (`:namespace`) | All `!`-prefixed error namespaces |
-| `%@` | Packages | Flexible (`:address`) | All `@`-prefixed package addresses |
-| `%_` | Permissions | No instances | All `_`-prefixed permission declarations |
+| `%!` | Errors | Fixed (`.namespace`) | Polyglot-defined namespaces; `.Error` has flexible `:` children |
+| `%@` | Packages | Flexible (`:<registry>:<id>::<name>`) | All `@`-prefixed package addresses; `::` separates registry from name |
+| `%_` | Permissions | All fixed (`.`) | All `_`-prefixed permission declarations; no instances, no `:` levels |
 
 Plus `%definition` (fixed) for compile-time schema templates.
 
@@ -148,50 +157,51 @@ Parameter names within `.<` and `.>` are flexible — they follow the pipeline's
 
 ## Permission Branch
 
-`%_` stores permission declarations. Unlike other branches, `%_` has **no `:{instance}` level** — permissions are compile-time declarations, not runtime objects. All instances of a definition share the same permissions. See [[permissions]] for the full permission system.
+`%_` stores permission declarations. Unlike other branches, `%_` has **no `:{instance}` level** and **no `:` flexible fields** — permissions are compile-time declarations with an entirely fixed schema. All categories and capabilities are Polyglot-defined, not user-extensible. See [[permissions]] for the full permission system.
 
 ### Structure
 
 ```
 %_
-├── :File
+├── .File
 │   ├── .read               ;string  (glob pattern)
 │   ├── .write              ;string
 │   ├── .execute            ;string
 │   └── .delete             ;string
-├── :Web
-│   ├── :request
+├── .Web
+│   ├── .request
 │   │   └── .<              (IO inputs)
-│   └── :socket
+│   └── .socket
 │       └── .<
-├── :Database
-│   ├── :connect
+├── .Database
+│   ├── .connect
 │   │   └── .<
 │   ├── .read               ;string
 │   └── .write              ;string
-├── :System
+├── .System
 │   ├── .env                ;string
-│   ├── :process
+│   ├── .process
 │   │   └── .<
 │   └── .signal             ;string
-├── :Crypto
+├── .Crypto
 │   ├── .key, .sign, .encrypt   ;string
-├── :IPC
-│   ├── :send, :receive
+├── .IPC
+│   ├── .send, .receive
 │   │   └── .<
 │   └── .subscribe          ;string
-├── :Device
+├── .Device
 │   ├── .camera, .microphone, .location, .bluetooth   ;bool
-└── :Memory
+└── .Memory
     ├── .allocate, .shared   ;string
 ```
 
 ### Key Properties
 
+- **All fixed (`.`)** — every level uses `.` fixed-field navigation. No `:` flexible fields anywhere in `%_`. Permission categories and capabilities are predefined by Polyglot.
 - **No instances** — permissions are per-definition, resolved at compile time. No runtime metadata exists.
 - **No `live` fields** — all permission data is static. The compiler resolves permissions entirely during compilation.
 - **Nested under `%@` and `%=`** — permissions also appear as `._` subsections under package (`%@:<address>._`) and pipeline (`%=:<name>:<instance>._`) branches, representing the package ceiling and pipeline-level declarations respectively.
-- **IO-form capabilities** — capabilities like `:request`, `:connect`, `:send` use `.<` for their IO input parameters, mirroring the IO form syntax in `[_]` declarations.
+- **IO-form capabilities** — capabilities like `.request`, `.connect`, `.send` use `.<` for their IO input parameters, mirroring the IO form syntax in `[_]` declarations.
 
 ## Definition Templates
 
