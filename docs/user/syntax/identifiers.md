@@ -18,7 +18,10 @@ ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address f
 | `=` | Pipelines | `=ProcessData`, `=Pipeline.Name` |
 | `$` | Variables | `$name`, `$result:status`, `$*` (discard) |
 | `!` | Errors | `!No.Input`, `!Timeout:Connection` |
+| `_` | Permissions | `_File.read`, `_Web.request` |
 | `%` | Metadata accessor | `=Pipeline%status`, `$var%state` |
+
+**Permission identifiers (`_`)** — declare IO capabilities using `[_]` block elements. `_` prefixed identifiers use `.` fixed-field navigation for categories and subfields (`_File.read`, `_Database.connect`). No `[_]` declarations = pure computation, zero IO. See [[permissions]] for the full permission system.
 
 ## Serialized Identifiers
 
@@ -51,7 +54,7 @@ The `%` accessor reads `live`-typed metadata that the runtime populates. Users c
 
 **Discard variable (`$*`)** — a reserved identifier that immediately releases any value pushed into it. Use `$*` when a pipeline produces output you intentionally do not need. `$*` satisfies PGE-302 (parallel output must be collected) without naming the variable. For debugging or later use, prefer `*Ignore` with a named variable instead — see [[collections#*Ignore — Explicit Discard]].
 
-The prefix (`$`, `@`, `!`, `#`, `=`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[types#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[collections#Collection Types]].
+The prefix (`$`, `@`, `!`, `#`, `=`, `_`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[types#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[collections#Collection Types]].
 
 These serialized paths — `#Boolean.True`, `$user:name`, `=Pipeline%status` — are all branches on one unified tree. Every Polyglot object lives in the `%` metadata tree, organized by its prefix. After learning the core concepts, see [[data-is-trees]] for how everything connects.
 
