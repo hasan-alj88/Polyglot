@@ -91,7 +91,7 @@ Permissions operate at two levels: **package ceiling** and **definition request*
 
 ### Package Ceiling
 
-`[_]` lines in `{@}` set the maximum permissions any definition in the package may request. The package ceiling **allows but does not grant** — no definition inherits permissions automatically.
+`[_]` lines in `{@}` set the maximum permissions any definition in the package may request. The package ceiling **allows but does not grant** — no definition inherits permissions automatically. See [[packages#Permissions]] for the full ceiling syntax and compile rules (PGE-915, PGE-916).
 
 ```polyglot
 {@} LogAnalyzer
@@ -103,7 +103,7 @@ Permissions operate at two levels: **package ceiling** and **definition request*
 
 ### Definition Request
 
-Each `{=}` pipeline or `{M}` macro must explicitly request the permissions it needs. Requests can only **narrow** what the package ceiling allows — never widen.
+Each `{=}` pipeline or `{M}` macro must explicitly request the permissions it needs. Requests can only **narrow** what the package ceiling allows — never widen. See [[pipelines#Permissions]] for placement within pipeline definitions.
 
 ```polyglot
 {=} ProcessLogs

@@ -16,10 +16,11 @@ Every pipeline definition `{=}` (see [[blocks]]) must contain these elements in 
 | Order | Element | Marker | Required |
 |-------|---------|--------|----------|
 | 0 | Metadata | `[%]` | Optional |
-| 1 | Trigger / IO / Errors | `[t]`, `[=]` | `[t]` mandatory, `[=]` optional |
-| 2 | Queue | `[Q]` | Mandatory |
-| 3 | Wrapper | `[W]` | Mandatory |
-| 4 | Execution | `[r]`, `[p]`, `[b]`, `[s]`, `[?]` | Yes |
+| 1 | Permissions | `[_]` | Optional |
+| 2 | Trigger / IO / Errors | `[t]`, `[=]` | `[t]` mandatory, `[=]` optional |
+| 3 | Queue | `[Q]` | Mandatory |
+| 4 | Wrapper | `[W]` | Mandatory |
+| 5 | Execution | `[r]`, `[p]`, `[b]`, `[s]`, `[?]` | Yes |
 
 Misordering these sections is a compile error (PGE-101).
 
@@ -93,6 +94,27 @@ IO inputs act as implicit trigger gates based on their assignment operator:
 | `<input` (no assignment) | **Must be filled externally** — via caller or trigger wiring. Pipeline will not fire until this input reaches Final state |
 
 There is no need to validate inputs with `[?]` checks — unfilled required inputs prevent the pipeline from triggering.
+
+## Permissions
+
+<!-- @permissions -->
+Pipelines can declare `[_]` permission lines after the `{=}` header (and `[%]` metadata, if present), before `[t]`, `[Q]`, `[W]`, and IO. The same applies to all `{x}` definitions (`{M}` macros, etc.). See [[permissions]] for the full permission system.
+
+```polyglot
+{=} =AnalyzeLogs
+   [_] _File.read"/var/log/*.log"
+   [t] =T.Manual
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [=] <logPath;path
+   [=] >summary;string
+   [r] $content << =File.Text.Read >> "{$logPath}"
+   [r] >summary << ...
+```
+
+- **Subset of ceiling** — every `[_]` in a pipeline must fall within the package `{@}` ceiling (PGE-915). See [[packages#Permissions]] for ceiling rules.
+- **No `[_]` = pure computation** — a pipeline with no `[_]` lines cannot perform IO, even if the package has a ceiling. Any IO call is a compile error.
+- **Explicit request** — permissions are never inherited from the package. Each pipeline must declare what it needs.
 
 ## Triggers
 

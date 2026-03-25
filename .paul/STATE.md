@@ -12,25 +12,29 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #80 merged and closed
-Last activity: 2026-03-25 — Merged issue-80 to main, issue closed
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-03-25 — Loop closed, SUMMARY created
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
 - v0.1.1 Doc Audit: [██████████] 100%
 - v0.2 Language Spec: [██████████] 100% (4/4 phases)
-- Issue #80: [██████████] 100% (1/1 plans)
+- Issue #81: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #81 — Add package permission ceiling in `{@}` block
+Branch: design/issue-81-permission-ceiling
+Labels: docs, design, P2-high
+Started: 2026-03-25
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/81
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -67,6 +71,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #73 — Add match syntax for concise conditional assignment | 2026-03-24 | Merged feat/issue-73-add-match-syntax to main; reuses [?] in match context |
 | Issue #74 — Add [+], [|], [c] block markers | 2026-03-24 | [+] reassigned from OR to line continuation; [|] new OR marker; [c] foreign code injection; 11 files updated |
 | Issue #80 — Add _ permission prefix and [_] block marker | 2026-03-25 | Implicit-deny permission system; _ is 7th identifier prefix; [_] block marker; 8 permission categories; compile-time enforcement |
+| Issue #81 — Add package permission ceiling in {@} block | 2026-03-25 | Ceiling syntax in {@}; pipeline-level [_] in pipelines.md; PGE-915/916 compile rules; two separate rules for pipeline vs import ceiling |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
