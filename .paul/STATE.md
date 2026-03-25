@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
-Plan: 64-01 complete
-Status: Loop closed — issue #64 ready for merge
-Last activity: 2026-03-25 — Unified issue-64 plan
+Plan: All plans complete
+Status: Issue #64 merged and closed
+Last activity: 2026-03-25 — Merged issue-64 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -28,19 +28,14 @@ Progress:
 
 ## Active Issue
 
-**Issue #64**: Add Mermaid tree diagram to data-is-trees.md — schema vs instance
-- **Labels**: docs, P2-high
-- **Branch**: `docs/issue-64-add-mermaid-tree-diagram-data-is-trees`
-- **File**: `docs/user/concepts/data-is-trees.md`
-- **Diagram**: `graph TD` — schema vs instance layers, %definition → instances, key branches
-- **Placement**: After "## Schema vs Instance", before "### Worked Examples"
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [Loop complete]
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -103,13 +98,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #64 loop closed — ready for commit and merge
-Next action: /paul:merge
-Resume file: .paul/phases/issue-64-mermaid-data-is-trees/64-01-SUMMARY.md
+Stopped at: Issue #64 merged and closed
+Next action: /paul:work-issue <number> or /paul:issues
+Resume file: .paul/ROADMAP.md
 Resume context:
-- Issue #64 complete — Mermaid diagram added to data-is-trees.md
-- Branch: docs/issue-64-add-mermaid-tree-diagram-data-is-trees
-- Ready for commit + merge to main
+- Issue #64 complete — Mermaid diagram in data-is-trees.md
+- No active issue — ready for next work
 
 ---
 *STATE.md — Updated after every significant action*
