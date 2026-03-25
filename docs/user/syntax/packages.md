@@ -149,6 +149,34 @@ All three files share the `#Config` data type and can call each other's pipeline
    [@] @utils << @Local:999.Utilities:v1.0.0
 ```
 
+## Permissions
+
+<!-- @permissions -->
+The `{@}` block can declare `[_]` permission lines that set the **permission ceiling** — the maximum IO permissions any definition in the package can request. See [[permissions]] for the full permission system, inline/IO forms, and permission categories.
+
+### Ceiling Syntax
+
+`[_]` lines go after `[@]` imports in the `{@}` block:
+
+```polyglot
+{@} @Local:999.LogAnalyzer:v1.0.0
+   [@] @http << @Community:devops.HttpClient:v2.1.0
+   [_] _File.read"/var/log/*"
+   [_] _File.write"/tmp/reports/*"
+   [_] _Web.request
+      [_] <url;string << "https://alerts.internal/*"
+      [_] <method;string << "POST"
+   [_] _System.env"LOG_LEVEL"
+```
+
+### Ceiling Rules
+
+- **Ceiling, not grant** — `[_]` in `{@}` sets the maximum allowed permissions. Each `{=}` pipeline or `{M}` macro must explicitly request the permissions it needs. Nothing is inherited automatically. See [[permissions#Hierarchical Scoping]].
+- **No ceiling = no IO** — if `{@}` has no `[_]` lines, the entire package is pure computation. Any IO call in any pipeline is a compile error (PGE-915).
+- **Pipeline subset** — every `[_]` in a pipeline must fall within the package ceiling. A pipeline requesting `_File.read"/etc/shadow"` when the ceiling only allows `_File.read"/var/log/*"` is a compile error (PGE-915).
+- **Import ceiling** — the compiler checks each imported package's own `{@}` ceiling against the importer's ceiling. If the imported package declares permissions outside what the importer allows, it is a compile error (PGE-916). Each package declares its own ceiling independently; the compiler validates compatibility.
+- **Placement** — `[_]` lines go after `[@]` imports and before any `{=}`/`{#}`/`{M}` definitions in the `{@}` block.
+
 ## Compile Rules Reference
 
 | Code | Name | Section |
@@ -166,5 +194,7 @@ All three files share the `#Config` data type and can call each other's pipeline
 | PGE-912 | Duplicate Import Alias | [[#Import Rules]] |
 | PGE-913 | Import Alias Shadows Standard Library | [[#Import Rules]] |
 | PGE-914 | Circular Pipeline Call | [[#Dependency Rules]] |
+| PGE-915 | Pipeline Exceeds Package Permission Ceiling | [[#Permissions]] |
+| PGE-916 | Imported Package Exceeds Importer Permission Ceiling | [[#Permissions]] |
 | PGW-901 | Deprecated Pipeline Reference | [[#Usage]] |
 | PGW-902 | Unused Import | [[#Import Rules]] |
