@@ -25,7 +25,7 @@ Custom error trees are defined with `{!}` blocks (see [[blocks#Definition Elemen
    [.] .InvalidEmail;#Error
 ```
 
-This creates three error identifiers: `!Validation.Empty`, `!Validation.TooLong`, `!Validation.InvalidEmail`. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Permission`) are built-in and require no definition. See [[stdlib/errors/errors#Built-in Error Namespaces]] for the complete list.
+This creates three error identifiers: `!Validation.Empty`, `!Validation.TooLong`, `!Validation.InvalidEmail`. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Permission`, `!Error`) are built-in and require no definition. `!Error` is the only namespace with user-extensible children (see [[stdlib/errors/errors#`!Error` — User-Extensible Namespace]]). See [[stdlib/errors/errors#Built-in Error Namespaces]] for the complete list.
 
 ## Declaring Pipeline Errors (`[=] !`)
 
@@ -179,7 +179,7 @@ See [[pipelines#Error Handling in Chains]] for the full chain execution context.
 
 ## Standard Error Trees
 
-Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The stdlib defines six root namespaces (defined as `{!}` blocks by the runtime):
+Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The stdlib defines seven root namespaces (defined as `{!}` blocks by the runtime):
 
 | Namespace | Covers |
 |-----------|--------|
@@ -189,6 +189,7 @@ Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a str
 | `!Math` | Arithmetic errors (DivideByZero, ...) |
 | `!Validation` | Data validation failures |
 | `!Permission` | Runtime system denials when OS/system blocks a granted permission |
+| `!Error` | User-extensible namespace — the only one with `:` flexible children |
 
 See [[stdlib/errors/errors]] for the complete error tree listings.
 

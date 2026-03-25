@@ -1,7 +1,7 @@
 ---
 audience: user
 type: spec
-updated: 2026-03-21
+updated: 2026-03-25
 ---
 
 # Everything is a Tree
@@ -30,12 +30,12 @@ The `%` root has fixed branches for every object type in Polyglot:
 ├── $   Variables         — runtime data ($name, $result)
 ├── M   Macros            — reusable logic ({M} blocks)
 ├── !   Errors            — error trees ({!} blocks, stdlib !File.*, !No.*, etc.)
-├── @   Packages          — package addresses (@Local:999.*)
+├── @   Packages          — package addresses (@Local:999::MyPkg)
 ├── _   Permissions       — IO capability declarations ([_] blocks)
 └── definition            — compile-time schema templates
 ```
 
-Every branch uses flexible (`:`) fields for its instances — `%#:Boolean`, `%=:MyPipeline`, `%$:myVar`. The `%definition` branch is the exception: it stores compile-time structural templates.
+Most branches use flexible (`:`) fields for their instances — `%#:Boolean`, `%=:MyPipeline`, `%$:myVar`. Exceptions: `%_` uses only `.` fixed fields (Polyglot-defined permissions), `%!` uses `.` for Polyglot-defined namespaces (with `:` under `.Error` for user extensions), and `%definition` stores compile-time structural templates.
 
 ## How Concepts Connect
 
@@ -48,9 +48,9 @@ Each concept you have learned maps to a branch in the tree:
 | Variables | [[variable-lifecycle]] | `%$` | `%$:myVar:0` |
 | Expand operators | [[collections#Expand Operators]] | `%~` | `%~:ForEach.Array:0` |
 | Collect operators | [[collections#Collect Operators]] | `%*` | `%*:Into.Array:0` |
-| Error trees | [[errors]], `{!}` blocks | `%!` | `%!:File.NotFound` |
-| Packages | [[packages]] | `%@` | `%@:Local:999.MyPkg` |
-| Permissions | [[permissions]] | `%_` | `%_:File.read` |
+| Error trees | [[errors]], `{!}` blocks | `%!` | `%!.File.NotFound` |
+| Packages | [[packages]] | `%@` | `%@:Local:999::MyPkg` |
+| Permissions | [[permissions]] | `%_` | `%_.File.read` |
 | Macros | [[blocks]] `{M}` | `%M` | `%M:W.Tracing:0` |
 
 ## Schema vs Instance

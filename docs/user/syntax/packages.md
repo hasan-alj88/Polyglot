@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-24
+updated: 2026-03-25
 status: complete
 ---
 
@@ -9,34 +9,35 @@ status: complete
 
 <!-- @identifiers -->
 <!-- @blocks -->
-Mandatory first block in every `.pg` file — exactly one `{@}` per file. Multiple `{#}` and `{=}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses are [[identifiers#Serialized Identifiers]] using `.` (fixed) and `:` (flexible) separators. Packages live at `%@` in the metadata tree (see [[data-is-trees#How Concepts Connect]]).
+Mandatory first block in every `.pg` file — exactly one `{@}` per file. Multiple `{#}` and `{=}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses use `::` to separate the registry from the package name, with `:` (flexible) separators throughout. Packages live at `%@` in the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
 ```polyglot
 { } Package declaration block
-{@} @Local:999.MyPackageName.Sub:v1.2.3.2
+{@} @Local:999::MyPackageName:Sub:v1.0.0
    [ ] imports
-   [@] @alias1 << @Community:user123.PackageName.Sub:v1.2.3.2
-   [@] @alias2 << @Local:999.AnotherPackage.Sub:v1.2.3.2
+   [@] @alias1 << @Community:user123:ProjectName::PackageName:Sub:v1.0.0
+   [@] @alias2 << @Local:999::AnotherPackage:Sub:v1.0.0
 ```
 
 ## Address Format
 
-`@Registry:ID.Name.SubPkg:Version.Major.Minor.Patch`
+`@<Registry>:<ID>::<PackageName>:<Version>`
 
-Package addresses are serialized identifiers using `.` (fixed) and `:` (flexible):
+Package addresses use `:` for flexible (user-defined) levels and `::` as a registry separator:
 
 - `@` — package prefix
-- `Local` / `Community` / `Registry` — registry type (fixed)
+- `Local` / `Community` / `Company` — registry type (fixed)
+- `::` — registry separator (separates registry+ID from package name)
 - Registry ID (flexible) — format depends on registry type:
 
 | Registry Type | ID Format | Example |
 |--------------|-----------|---------|
-| `Local` | Port number (unused port) | `:999`, `:042` |
-| `Community` | Username and project name | `:devops.NotificationHub` |
-| `Registry` | Registered company name | `:Acme` |
+| `Local` | Port number (unused port) | `@Local:999::` |
+| `Community` | Username and project name | `@Community:user123:ProjectName::` |
+| `Company` | Registered company domain parts | `@Company:acme:corp::` |
 
-- `.Name.SubPkg` — package and subpackage (fixed)
-- `:v1.2.3.2` — version (flexible)
+- `:<PackageName>` — package and subpackage (flexible, user-defined, can nest: `:MyPkg:Sub`)
+- `:<Version>` — version (flexible)
 
 ## Usage
 
@@ -73,18 +74,18 @@ A single package can span multiple `.pg` files. Each file declares the same `{@}
 
 ```polyglot
 { } Explicit file references
-{@} @Local:1000.MyApp:v1.0.0
+{@} @Local:1000::MyApp:v1.0.0
    [@] << "{.}\my-app-02.pg"
    [@] << "{.}\my-app-03.pg"
 ```
 
 ```polyglot
 { } Folder shorthand — include all .pg files in the directory
-{@} @Local:1000.MyApp:v1.0.0
+{@} @Local:1000::MyApp:v1.0.0
    [@] << "{.}"
 ```
 
-Distinguished from import `[@]` by: no alias on the left, path string on the right. Import syntax is `[@] @alias << @Registry:...`, file reference syntax is `[@] << "path"`.
+Distinguished from import `[@]` by: no alias on the left, path string on the right. Import syntax is `[@] @alias << @<Registry>:<ID>::<Name>:<Version>`, file reference syntax is `[@] << "path"`.
 
 ### Rules
 
@@ -102,7 +103,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
 
 **my-app-01.pg:**
 ```polyglot
-{@} @Local:1000.MyApp:v1.0.0
+{@} @Local:1000::MyApp:v1.0.0
    [@] << "{.}\my-app-02.pg"
    [@] << "{.}\my-app-03.pg"
 
@@ -113,7 +114,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
 
 **my-app-02.pg:**
 ```polyglot
-{@} @Local:1000.MyApp:v1.0.0
+{@} @Local:1000::MyApp:v1.0.0
    [@] << "{.}\my-app-01.pg"
    [@] << "{.}\my-app-03.pg"
 
@@ -127,7 +128,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
 
 **my-app-03.pg:**
 ```polyglot
-{@} @Local:1000.MyApp:v1.0.0
+{@} @Local:1000::MyApp:v1.0.0
    [@] << "{.}\my-app-01.pg"
    [@] << "{.}\my-app-02.pg"
 
@@ -142,11 +143,11 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
 All three files share the `#Config` data type and can call each other's pipelines as if they were in one file. A file can also reference imports and sibling files together:
 
 ```polyglot
-{@} @Local:1000.MyApp:v1.0.0
+{@} @Local:1000::MyApp:v1.0.0
    [ ] sibling files
    [@] << "{.}\my-app-02.pg"
    [ ] external imports
-   [@] @utils << @Local:999.Utilities:v1.0.0
+   [@] @utils << @Local:999::Utilities:v1.0.0
 ```
 
 ## Permissions
@@ -159,8 +160,8 @@ The `{@}` block can declare `[_]` permission lines that set the **permission cei
 `[_]` lines go after `[@]` imports in the `{@}` block:
 
 ```polyglot
-{@} @Local:999.LogAnalyzer:v1.0.0
-   [@] @http << @Community:devops.HttpClient:v2.1.0
+{@} @Local:999::LogAnalyzer:v1.0.0
+   [@] @http << @Community:devops:HttpClient::HttpClient:v2.1.0
    [_] _File.read"/var/log/*"
    [_] _File.write"/tmp/reports/*"
    [_] _Web.request

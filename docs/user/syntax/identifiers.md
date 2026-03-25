@@ -13,7 +13,7 @@ ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address f
 
 | Prefix | Type | Example |
 |--------|------|---------|
-| `@` | Packages | `@Local:999.MyPackage.Sub:v1.2.3` |
+| `@` | Packages | `@Local:999::MyPackage:Sub:v1.0.0` |
 | `#` | Struct definitions | `#UserRecord`, `#Boolean.True` |
 | `=` | Pipelines | `=ProcessData`, `=Pipeline.Name` |
 | `$` | Variables | `$name`, `$result:status`, `$*` (discard) |
@@ -49,8 +49,8 @@ ALL identifiers are **serialized data**. Two field separators distinguish schema
 
 The `%` accessor reads `live`-typed metadata that the runtime populates. Users cannot assign to `%` fields. See [[types#Live Type Modifier]].
 
-**Package addresses** use both:
-- `@Local:999.PackageName.Sub:v1.2.3` — `:999` flexible registry ID, `.Sub` fixed subpackage, `:v1.2.3` flexible version
+**Package addresses** use `::` to separate registry from package name, with `:` flexible throughout:
+- `@Local:999::PackageName:Sub:v1.0.0` — `:999` flexible registry ID, `::` registry separator, `:PackageName:Sub` flexible package name, `:v1.0.0` flexible version
 
 **Discard variable (`$*`)** — a reserved identifier that immediately releases any value pushed into it. Use `$*` when a pipeline produces output you intentionally do not need. `$*` satisfies PGE-302 (parallel output must be collected) without naming the variable. For debugging or later use, prefer `*Ignore` with a named variable instead — see [[collections#*Ignore — Explicit Discard]].
 

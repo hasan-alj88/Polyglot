@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: spec
-updated: 2026-03-22
+updated: 2026-03-25
 ---
 
 # Metadata
@@ -88,29 +88,41 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │       ├── :info            ;serial           (user-declared, flexible)
 │       └── (live fields TBD)
 ├── !  (Errors)
-│   └── :<namespace>
-│       └── .<error path>    (fixed hierarchy)
+│   ├── .File                   (fixed — Polyglot-defined)
+│   │   └── .NotFound, .ReadError, .WriteError, .AccessDenied
+│   ├── .No
+│   │   └── .Data, .Pipeline, .Config, .Field
+│   ├── .Timeout
+│   │   └── .Pipeline, .Network, .Lock
+│   ├── .Math
+│   │   └── .DivideByZero, .Overflow, .Underflow
+│   ├── .Validation
+│   │   └── (defined via {!} — [.] terminal leaves)
+│   ├── .Permission
+│   │   └── .File.Denied, .Web.Denied, .Database.Denied, .System.Denied, .Crypto.Denied, .IPC.Denied, .Device.Denied, .Memory.Denied
+│   └── .Error                  (fixed name, flexible children)
+│       └── :UserDefined        (user-extensible via {!} !Error)
 ├── @  (Packages)
-│   └── :<address>
+│   └── :<registry>:<id>::<name>
 │       ├── (package metadata)
 │       └── ._              (permission ceiling — see [[permissions#Package Ceiling]])
 ├── _  (Permissions)
-│   ├── :File
+│   ├── .File
 │   │   ├── .read               ;string  (glob pattern)
 │   │   ├── .write              ;string
 │   │   ├── .execute            ;string
 │   │   └── .delete             ;string
-│   ├── :Web
-│   │   ├── :request
+│   ├── .Web
+│   │   ├── .request
 │   │   │   └── .<              (IO inputs)
 │   │   │       ├── .url        ;string
 │   │   │       └── .method     ;string
-│   │   └── :socket
+│   │   └── .socket
 │   │       └── .<
 │   │           ├── .url        ;string
 │   │           └── .protocol   ;string
-│   ├── :Database
-│   │   ├── :connect
+│   ├── .Database
+│   │   ├── .connect
 │   │   │   └── .<
 │   │   │       ├── .host       ;string
 │   │   │       ├── .port       ;int
@@ -118,33 +130,33 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │   │   │       └── .auth       ;string
 │   │   ├── .read               ;string
 │   │   └── .write              ;string
-│   ├── :System
+│   ├── .System
 │   │   ├── .env                ;string
-│   │   ├── :process
+│   │   ├── .process
 │   │   │   └── .<
 │   │   │       ├── .command    ;string
 │   │   │       └── .args       ;string
 │   │   └── .signal             ;string
-│   ├── :Crypto
+│   ├── .Crypto
 │   │   ├── .key                ;string
 │   │   ├── .sign               ;string
 │   │   └── .encrypt            ;string
-│   ├── :IPC
-│   │   ├── :send
+│   ├── .IPC
+│   │   ├── .send
 │   │   │   └── .<
 │   │   │       ├── .channel    ;string
 │   │   │       └── .protocol   ;string
-│   │   ├── :receive
+│   │   ├── .receive
 │   │   │   └── .<
 │   │   │       ├── .channel    ;string
 │   │   │       └── .protocol   ;string
 │   │   └── .subscribe          ;string
-│   ├── :Device
+│   ├── .Device
 │   │   ├── .camera             ;bool
 │   │   ├── .microphone         ;bool
 │   │   ├── .location           ;bool
 │   │   └── .bluetooth          ;bool
-│   └── :Memory
+│   └── .Memory
 │       ├── .allocate            ;string
 │       └── .shared              ;string
 └── definition              (compile-time schema templates)
