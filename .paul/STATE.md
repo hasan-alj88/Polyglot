@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #84 UNIFY complete — ready for merge
-Last activity: 2026-03-25 — !Permission error tree added, loop closed
+Status: Issue #84 merged and closed
+Last activity: 2026-03-25 — Merged issue-84 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -25,18 +25,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #84 — Add `!Permission.*` error tree for runtime system denials
-Branch: design/issue-84-add-permission-error-tree-for-runtime-system-denials
-Labels: design, stdlib, P2-high
-Started: 2026-03-25
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/84
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Issue #84 ready for merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -95,12 +91,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #84 UNIFY complete
-Next action: /paul:merge to close issue #84
-Resume file: .paul/phases/issue-84-add-permission-error-tree/84-01-SUMMARY.md
+Stopped at: Issue #84 merged and closed
+Next action: /paul:work-issue <number> or /paul:issues
+Resume file: .paul/ROADMAP.md
 Resume context:
-- Issue #84 loop closed — !Permission error tree with 8 .Denied leaves
-- Ready for /paul:merge
+- Issue #84 complete — !Permission error tree with 8 .Denied leaves
+- No active issue — ready for next work
 
 ---
 *STATE.md — Updated after every significant action*
