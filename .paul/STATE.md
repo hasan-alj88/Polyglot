@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
-Plan: All plans complete
-Status: Issue #86 merged and closed
-Last activity: 2026-03-25 — Merged issue-86 to main, issue closed
+Plan: 64-01 complete
+Status: Loop closed — issue #64 ready for merge
+Last activity: 2026-03-25 — Unified issue-64 plan
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -24,17 +24,23 @@ Progress:
 - Issue #84: [██████████] 100% (1/1 plans)
 - Issue #85: [██████████] 100% (1/1 plans)
 - Issue #86: [██████████] 100% (1/1 plans)
+- Issue #64: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+**Issue #64**: Add Mermaid tree diagram to data-is-trees.md — schema vs instance
+- **Labels**: docs, P2-high
+- **Branch**: `docs/issue-64-add-mermaid-tree-diagram-data-is-trees`
+- **File**: `docs/user/concepts/data-is-trees.md`
+- **Diagram**: `graph TD` — schema vs instance layers, %definition → instances, key branches
+- **Placement**: After "## Schema vs Instance", before "### Worked Examples"
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓     [Loop complete]
 ```
 
 ## Accumulated Context
@@ -77,6 +83,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Issue #84 — Add !Permission.* error tree | 2026-03-25 | 8 .Denied leaves; trimmed overlapping .NotFound/.Timeout; File IO pipeline associations; #87 created for multi-alias |
 | Issue #85 — Document stdlib pipeline permission declarations | 2026-03-25 | [_] permissions in all 7 stdlib pipeline files; Permission column in INDEX.md; completes #80-#85 chain |
 | Issue #86 — Audit fixed vs flexible field usage | 2026-03-25 | %_ all `.` fixed; %! namespaces `.` + new !Error with `:` children; %@ `::` separator + Company rename; path grammar updated |
+| Issue #64 — Add Mermaid tree diagram to data-is-trees.md | 2026-03-25 | graph TD diagram showing %definition schema → instances for #Boolean, =ProcessData, $myVar |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -96,12 +103,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #86 merged and closed
-Next action: /paul:work-issue <number> or /paul:issues
-Resume file: .paul/ROADMAP.md
+Stopped at: Issue #64 loop closed — ready for commit and merge
+Next action: /paul:merge
+Resume file: .paul/phases/issue-64-mermaid-data-is-trees/64-01-SUMMARY.md
 Resume context:
-- Issue #86 complete — %_ all fixed, %! namespaces fixed + !Error, %@ `::` separator
-- No active issue — ready for next work
+- Issue #64 complete — Mermaid diagram added to data-is-trees.md
+- Branch: docs/issue-64-add-mermaid-tree-diagram-data-is-trees
+- Ready for commit + merge to main
 
 ---
 *STATE.md — Updated after every significant action*
