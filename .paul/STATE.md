@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
-Plan: 65-01 complete
-Status: Loop closed — issue #65 ready for merge
-Last activity: 2026-03-25 — Unified issue-65 plan
+Plan: All plans complete
+Status: Issue #65 merged and closed
+Last activity: 2026-03-25 — Merged issue-65 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -29,19 +29,14 @@ Progress:
 
 ## Active Issue
 
-**Issue #65**: Add Mermaid flowchart to SPEC-INDEX.md — learning path
-- **Labels**: docs, P3-medium
-- **Branch**: `docs/issue-65-add-mermaid-flowchart-spec-index`
-- **File**: `docs/user/SPEC-INDEX.md`
-- **Diagram**: `flowchart LR` — 5-phase learning progression
-- **Placement**: After introductory paragraph, before "## Phase 1: Syntax Foundations"
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [Loop complete]
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -105,8 +100,8 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #65 loop closed — ready for merge
-Next action: /paul:merge
+Stopped at: Issue #65 merged and closed
+Next action: /paul:work-issue <number> or /paul:issues
 Resume file: docs/user/SPEC-INDEX.md
 Resume context:
 - Issue #65 active — Mermaid flowchart LR for learning path
