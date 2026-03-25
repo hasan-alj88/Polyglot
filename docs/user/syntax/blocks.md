@@ -36,6 +36,15 @@ Mark individual lines within blocks.
 |--------|---------|
 | `[@]` | Import/register package |
 
+### Permissions
+
+<!-- @permissions -->
+See [[permissions]] for inline/IO forms, permission categories, and hierarchical scoping rules.
+
+| Marker | Meaning |
+|--------|---------|
+| `[_]` | Permission declaration — declares IO capabilities (inline or IO form) |
+
 ### Data Flow
 
 <!-- @io -->
