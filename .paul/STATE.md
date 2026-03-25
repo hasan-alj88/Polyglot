@@ -12,25 +12,30 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #82 merged and closed
-Last activity: 2026-03-25 — Merged issue-82 to main, issue closed
+Status: Issue #83 APPLY+UNIFY complete, ready for MERGE
+Last activity: 2026-03-25 — Completed 83-01-PLAN (permission compile rules)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
 - v0.1.1 Doc Audit: [██████████] 100%
 - v0.2 Language Spec: [██████████] 100% (4/4 phases)
 - Issue #82: [██████████] 100% (1/1 plans)
+- Issue #83: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #83 — Add permission compile rules PGE-915 through PGE-919
+Branch: docs/issue-83-add-permission-compile-rules-pge-915-through-pge-919
+Labels: compiler, P2-high
+Started: 2026-03-25
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/83
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -69,6 +74,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Issue #80 — Add _ permission prefix and [_] block marker | 2026-03-25 | Implicit-deny permission system; _ is 7th identifier prefix; [_] block marker; 8 permission categories; compile-time enforcement |
 | Issue #81 — Add package permission ceiling in {@} block | 2026-03-25 | Ceiling syntax in {@}; pipeline-level [_] in pipelines.md; PGE-915/916 compile rules; two separate rules for pipeline vs import ceiling |
 | Issue #82 — Add %_ metadata tree branch for permissions | 2026-03-25 | %_ in all 3 tree files; 8 categories; ._ under %@ and %=; no instances; #86 created for . vs : audit |
+| Issue #83 — Add permission compile rules | 2026-03-25 | PGE-917/918/919/920 + PGW-903; issue's PGE-916 renumbered to PGE-920; extends 9.x range |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -87,14 +93,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #82 merged and closed
-Next action: /paul:work-issue <number> or /paul:issues
-Resume file: .paul/ROADMAP.md
+Stopped at: Issue #83 UNIFY complete
+Next action: /paul:merge to close issue #83
+Resume file: .paul/phases/issue-83-permission-compile-rules/83-01-SUMMARY.md
 Resume context:
-- Issue #82 complete — %_ in all 3 tree files, 8 categories, ._ under %@ and %=
-- Created #86 for . vs : field audit (deferred)
-- No active issue — ready for next work
-- No active issue — ready for next work
+- Issue #83 complete — PGE-917/918/919/920 + PGW-903 added
+- PGE-915/916 also added to COMPILE-RULES.md reference table
+- Ready for merge to main
 
 ---
 *STATE.md — Updated after every significant action*
