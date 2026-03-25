@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-22
+updated: 2026-03-25
 status: draft
 ---
 
@@ -47,6 +47,10 @@ Math pipelines use positional (unnamed) IO — inputs and outputs are ordered, n
 ```
 
 All pipelines also accept `;float` operands. When any input is `;float`, the output is `;float`.
+
+## Permissions
+
+No permissions required. All operations are pure computation. See [[permissions]].
 
 ## Usage Examples
 

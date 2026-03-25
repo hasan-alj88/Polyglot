@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-24
+updated: 2026-03-25
 status: complete
 ---
 
@@ -39,6 +39,22 @@ Success is signalled by `!NoError`. Side-effect-only pipelines (Write, Append, C
       <folder;path
       >files;array.path
 ```
+
+## Permissions
+
+<!-- @permissions -->
+All `=File.*` pipelines perform filesystem IO and require `[_]` permission declarations. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
+
+| Pipeline | Permission | Type |
+|----------|-----------|------|
+| `=File.Text.Read` | `_File.read` | Inline |
+| `=File.Text.Write` | `_File.write` | Inline |
+| `=File.Text.Append` | `_File.write` | Inline |
+| `=File.Copy` | `_File.read` + `_File.write` | Inline |
+| `=File.Move` | `_File.read` + `_File.write` | Inline |
+| `=File.Delete` | `_File.delete` | Inline |
+| `=File.Access` | `_File.read` | Inline |
+| `=File.List` | `_File.read` | Inline |
 
 ## Errors
 

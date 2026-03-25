@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-20
+updated: 2026-03-25
 status: draft
 ---
 
@@ -14,6 +14,10 @@ Creates a `;path` value from a string argument. No `[@]` import needed.
    <InlineStringLiteral;string <~ ""
    >result;path
 ```
+
+## Permissions
+
+No permissions required. All operations are pure computation. See [[permissions]].
 
 ## Behavior
 
