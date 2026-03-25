@@ -121,6 +121,12 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-910 | 9.10 | Multi-File Self-Reference |
 | PGE-911 | 9.11 | Asymmetric Multi-File Reference |
 | PGE-914 | 9.14 | Circular Pipeline Call |
+| PGE-915 | 9.15 | Pipeline Exceeds Package Permission Ceiling |
+| PGE-916 | 9.16 | Imported Package Exceeds Importer Permission Ceiling |
+| PGE-917 | 9.17 | Unknown Permission Category |
+| PGE-918 | 9.18 | Undeclared Permission |
+| PGE-919 | 9.19 | Permission Output |
+| PGE-920 | 9.20 | Duplicate Permission |
 | PGE-1001 | 10.1 | Undefined Metadata Field Access |
 
 ## Warning Code Reference (PGW)
@@ -147,6 +153,7 @@ Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a develope
 | PGW-704 | 7.4w | Fallback on Non-Failable IO |
 | PGW-901 | 9.1 | Deprecated Pipeline Reference |
 | PGW-902 | 9.2 | Unused Import |
+| PGW-903 | 9.3 | Unused Permission |
 | PGW-1001 | 2.9 | Unreachable Code |
 | PGW-1002 | 10.2 | Missing Inline Format Metadata |
 
