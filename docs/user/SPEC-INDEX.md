@@ -8,6 +8,17 @@ updated: 2026-03-24
 
 Read the files below in order to learn how to write Polyglot Code. The progression builds from syntax fundamentals through core concepts to the unified tree that connects everything.
 
+```mermaid
+flowchart LR
+    P1["Syntax Foundations\n(7 files)"]
+    P2["Core Concepts\n(5 files)"]
+    P3["The Big Picture\n(2 files)"]
+    P4["Packages & Stdlib\n(2 files)"]
+    P5["Practice"]
+
+    P1 --> P2 --> P3 --> P4 --> P5
+```
+
 ## Phase 1: Syntax Foundations
 
 | # | File | Covers |
