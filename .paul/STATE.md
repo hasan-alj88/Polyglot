@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-03-25 — Loop closed, SUMMARY created
+Status: Issue #81 merged and closed
+Last activity: 2026-03-25 — Merged issue-81 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -23,18 +23,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #81 — Add package permission ceiling in `{@}` block
-Branch: design/issue-81-permission-ceiling
-Labels: docs, design, P2-high
-Started: 2026-03-25
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/81
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -90,11 +86,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #80 merged and closed
+Stopped at: Issue #81 merged and closed
 Next action: /paul:work-issue <number> or /paul:issues
 Resume file: .paul/ROADMAP.md
 Resume context:
 - Issue #80 complete — _ permission prefix, [_] block marker, permissions.md spec
+- Issue #81 complete — package ceiling in {@}, pipeline-level [_], PGE-915/916
 - No active issue — ready for next work
 
 ---
