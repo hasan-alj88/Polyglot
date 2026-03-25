@@ -2,7 +2,7 @@
 audience: user
 type: spec
 status: complete
-updated: 2026-03-24
+updated: 2026-03-25
 ---
 
 # Error Handling
@@ -25,7 +25,7 @@ Custom error trees are defined with `{!}` blocks (see [[blocks#Definition Elemen
    [.] .InvalidEmail;#Error
 ```
 
-This creates three error identifiers: `!Validation.Empty`, `!Validation.TooLong`, `!Validation.InvalidEmail`. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`) are built-in and require no definition. See [[stdlib/errors/errors#Built-in Error Namespaces]] for the complete list.
+This creates three error identifiers: `!Validation.Empty`, `!Validation.TooLong`, `!Validation.InvalidEmail`. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Permission`) are built-in and require no definition. See [[stdlib/errors/errors#Built-in Error Namespaces]] for the complete list.
 
 ## Declaring Pipeline Errors (`[=] !`)
 
@@ -179,14 +179,16 @@ See [[pipelines#Error Handling in Chains]] for the full chain execution context.
 
 ## Standard Error Trees
 
-Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The stdlib defines five root namespaces (defined as `{!}` blocks by the runtime):
+Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The stdlib defines six root namespaces (defined as `{!}` blocks by the runtime):
 
 | Namespace | Covers |
 |-----------|--------|
 | `!File` | File system operations (NotFound, ReadError, WriteError, ...) |
-| `!No` | Missing resource errors (No.Input, No.Connection, ...) |
+| `!No` | Missing resource errors (No.Input, No.Output, ...) |
 | `!Timeout` | Operation timeouts (Timeout.Connection, Timeout.Read, ...) |
+| `!Math` | Arithmetic errors (DivideByZero, ...) |
 | `!Validation` | Data validation failures |
+| `!Permission` | Runtime system denials when OS/system blocks a granted permission |
 
 See [[stdlib/errors/errors]] for the complete error tree listings.
 

@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-24
+updated: 2026-03-25
 status: complete
 ---
 
@@ -69,6 +69,16 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
 
 {!} !Validation
    [.] .Error;#Error
+
+{!} !Permission
+   [.] .File.Denied;#Error
+   [.] .Web.Denied;#Error
+   [.] .Database.Denied;#Error
+   [.] .System.Denied;#Error
+   [.] .Crypto.Denied;#Error
+   [.] .IPC.Denied;#Error
+   [.] .Device.Denied;#Error
+   [.] .Memory.Denied;#Error
 ```
 
 ## Pipeline Error Associations
@@ -79,14 +89,17 @@ Each stdlib pipeline declares the errors it can raise via `[=] !ErrorName` (see 
 =File.Text.Read
    [=] !File.NotFound
    [=] !File.ReadError
+   [=] !Permission.File.Denied
 
 =File.Text.Write
    [=] !File.NotFound
    [=] !File.WriteError
+   [=] !Permission.File.Denied
 
 =File.Text.Append
    [=] !File.NotFound
    [=] !File.WriteError
+   [=] !Permission.File.Denied
 
 =Math.Divide
    [=] !Math.DivideByZero

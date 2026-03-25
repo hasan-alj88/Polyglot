@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
 Plan: All plans complete
-Status: Issue #83 merged and closed
-Last activity: 2026-03-25 — Merged issue-83 to main, issue closed
+Status: Issue #84 UNIFY complete — ready for merge
+Last activity: 2026-03-25 — !Permission error tree added, loop closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -21,17 +21,22 @@ Progress:
 - v0.2 Language Spec: [██████████] 100% (4/4 phases)
 - Issue #82: [██████████] 100% (1/1 plans)
 - Issue #83: [██████████] 100% (1/1 plans)
+- Issue #84: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #84 — Add `!Permission.*` error tree for runtime system denials
+Branch: design/issue-84-add-permission-error-tree-for-runtime-system-denials
+Labels: design, stdlib, P2-high
+Started: 2026-03-25
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/84
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Issue #84 ready for merge]
 ```
 
 ## Accumulated Context
@@ -71,6 +76,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Issue #81 — Add package permission ceiling in {@} block | 2026-03-25 | Ceiling syntax in {@}; pipeline-level [_] in pipelines.md; PGE-915/916 compile rules; two separate rules for pipeline vs import ceiling |
 | Issue #82 — Add %_ metadata tree branch for permissions | 2026-03-25 | %_ in all 3 tree files; 8 categories; ._ under %@ and %=; no instances; #86 created for . vs : audit |
 | Issue #83 — Add permission compile rules | 2026-03-25 | PGE-917/918/919/920 + PGW-903; issue's PGE-916 renumbered to PGE-920; extends 9.x range |
+| Issue #84 — Add !Permission.* error tree | 2026-03-25 | 8 .Denied leaves; trimmed overlapping .NotFound/.Timeout; File IO pipeline associations; #87 created for multi-alias |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -89,12 +95,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #83 merged and closed
-Next action: /paul:work-issue <number> or /paul:issues
-Resume file: .paul/ROADMAP.md
+Stopped at: Issue #84 UNIFY complete
+Next action: /paul:merge to close issue #84
+Resume file: .paul/phases/issue-84-add-permission-error-tree/84-01-SUMMARY.md
 Resume context:
-- Issue #83 complete — PGE-917/918/919/920 + PGW-903 added to compile rules
-- No active issue — ready for next work
+- Issue #84 loop closed — !Permission error tree with 8 .Denied leaves
+- Ready for /paul:merge
 
 ---
 *STATE.md — Updated after every significant action*
