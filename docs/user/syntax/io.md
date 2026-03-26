@@ -21,6 +21,16 @@ Input and output parameters bind data into and out of operators. IO labels are [
 
 IO labels are serialized identifiers — like all Polyglot identifiers, they follow the `.` (fixed) and `:` (flexible) field separator rules. See [[identifiers#Serialization Rules]].
 
+```mermaid
+flowchart LR
+    CALLER_L["Caller"]
+    PIPE["Pipeline"]
+    CALLER_R["Caller"]
+
+    CALLER_L -->|"> param — push toward pipeline"| PIPE
+    PIPE -->|"< param — pull from pipeline"| CALLER_R
+```
+
 ## IO Line Pattern
 
 ```

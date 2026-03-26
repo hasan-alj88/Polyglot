@@ -110,6 +110,40 @@ flowchart LR
 <!-- @io:Wait and Collect-Into Markers -->
 Sync and race collectors operate **outside** expand scopes — they work on variables produced by parallel `[p]` pipeline calls. They use `[*] <<` (wait input) and `[*] >>` (collect output) forms (see [[io#Wait and Collect IO]]).
 
+```mermaid
+flowchart LR
+    subgraph sync ["*All — sync barrier"]
+        direction LR
+        PA["[p] A → $a"]
+        PB["[p] B → $b"]
+        PC["[p] C → $c"]
+        ALL["[*] *All\n<< $a, << $b, << $c"]
+        AFTER["All variables\naccessible after"]
+
+        PA --> ALL
+        PB --> ALL
+        PC --> ALL
+        ALL --> AFTER
+    end
+
+    subgraph race ["*First — race"]
+        direction LR
+        RA["[p] A → $a"]
+        RB["[p] B → $b"]
+        RC["[p] C → $c"]
+        FIRST["[*] *First\n>> $fastest"]
+        WIN["Winner proceeds"]
+
+        RA --> FIRST
+        RB --> FIRST
+        RC --> FIRST
+        FIRST --> WIN
+        FIRST -.->|losers cancelled| RA
+        FIRST -.->|losers cancelled| RB
+        FIRST -.->|losers cancelled| RC
+    end
+```
+
 ### Parallel Boundaries
 
 Parallel execution enforces strict variable isolation:

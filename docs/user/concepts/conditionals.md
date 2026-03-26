@@ -141,6 +141,34 @@ Strings are open sets — `*?` is always required ([[PGE-606|PGE-606]]). Flexibl
 | Flexible field (`:`) | Open | Yes — always |
 | Compound (`[&]`/`[\|]`/`[^]`) | Complex | Depends on variable types |
 
+```mermaid
+flowchart TD
+    START{"Type of\nbranched variable?"}
+    CLOSED{"Closed type\n(enum / #Boolean)"}
+    RANGE{"Rangeable\n(;int / ;float)"}
+    OPEN{"Open type\n(;string / flexible :)"}
+
+    ALL_LISTED{"All variants\nlisted?"}
+    FULL_RANGE{"Ranges cover\nfull domain?"}
+
+    NO_WILD["No *? needed"]
+    WILD["*? required"]
+
+    START -->|enum / bool| CLOSED
+    START -->|int / float| RANGE
+    START -->|string / flexible| OPEN
+
+    CLOSED --> ALL_LISTED
+    ALL_LISTED -->|Yes| NO_WILD
+    ALL_LISTED -->|No| WILD
+
+    RANGE --> FULL_RANGE
+    FULL_RANGE -->|Yes| NO_WILD
+    FULL_RANGE -->|No| WILD
+
+    OPEN --> WILD
+```
+
 ## Logical Operators
 
 Compound conditions combine multiple predicates using block-element logical markers. See [[blocks#Logical]] for marker definitions.

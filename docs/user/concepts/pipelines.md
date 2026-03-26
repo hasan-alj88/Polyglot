@@ -458,6 +458,17 @@ The default value is `""`. When the pipeline is called inline (`=Pipeline"..."`)
 3. **Pipeline-specific parsing** — the pipeline body interprets the string its own way (e.g., `=Path` normalizes separators, `=T.Daily` parses a time)
 4. **Result returned** — the pipeline's output becomes the value of the expression
 
+```mermaid
+flowchart LR
+    RAW["=Path&quot;/tmp/{$app}&quot;"]
+    INTERP["1. Interpolate\n/tmp/MyApp"]
+    WIRE["2. Auto-wire into\n< InlineStringLiteral"]
+    PARSE["3. Pipeline parses\n=Path normalizes sep"]
+    RESULT["4. Result returned\n;path value"]
+
+    RAW --> INTERP --> WIRE --> PARSE --> RESULT
+```
+
 ### Return Value
 
 | Pipeline outputs | Value type |

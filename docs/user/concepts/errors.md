@@ -14,6 +14,17 @@ updated: 2026-03-25
 
 Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Polyglot objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[stdlib/errors/errors#`#Error` Struct]]).
 
+```mermaid
+flowchart LR
+    DEF["{!} Define\ncustom error tree"]
+    DEC["[=] ! Declare\npipeline errors"]
+    RAISE["[!] >> Raise\nerror in body"]
+    HANDLE["[!] Handle\nat call site"]
+    RECOVER["Recover\n*Continue / <! fallback"]
+
+    DEF --> DEC --> RAISE --> HANDLE --> RECOVER
+```
+
 ## Defining Custom Errors (`{!}`)
 
 Custom error trees are defined with `{!}` blocks (see [[blocks#Definition Elements]]). Each leaf is typed `;#Error`:
