@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
-Plan: All plans complete
-Status: Issue #65 merged and closed
-Last activity: 2026-03-25 — Merged issue-65 to main, issue closed
+Plan: 66-01 complete
+Status: Loop closed — issue #66 ready for merge
+Last activity: 2026-03-26 — Unified issue-66 plan
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -29,14 +29,19 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+**Issue #66**: Add Mermaid flowchart to pipelines.md — chain auto-wire
+- **Labels**: docs, P3-medium
+- **Branch**: `docs/issue-66-add-mermaid-flowchart-pipelines-auto-wire`
+- **File**: `docs/user/concepts/pipelines.md`
+- **Diagram**: `flowchart LR` — chain auto-wire connecting steps
+- **Placement**: After "### Auto-Wire" heading (line 307), before existing prose
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓     [Loop complete]
 ```
 
 ## Accumulated Context
@@ -100,8 +105,8 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #65 merged and closed
-Next action: /paul:work-issue <number> or /paul:issues
+Stopped at: Issue #66 branch created, ready for plan
+Next action: /paul:plan
 Resume file: docs/user/SPEC-INDEX.md
 Resume context:
 - Issue #65 active — Mermaid flowchart LR for learning path
