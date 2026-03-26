@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
-Plan: 66-01 complete
-Status: Loop closed — issue #66 ready for merge
-Last activity: 2026-03-26 — Unified issue-66 plan
+Plan: All plans complete
+Status: Issue #66 merged and closed
+Last activity: 2026-03-26 — Merged issue-66 to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -26,22 +26,18 @@ Progress:
 - Issue #86: [██████████] 100% (1/1 plans)
 - Issue #64: [██████████] 100% (1/1 plans)
 - Issue #65: [██████████] 100% (1/1 plans)
+- Issue #66: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-**Issue #66**: Add Mermaid flowchart to pipelines.md — chain auto-wire
-- **Labels**: docs, P3-medium
-- **Branch**: `docs/issue-66-add-mermaid-flowchart-pipelines-auto-wire`
-- **File**: `docs/user/concepts/pipelines.md`
-- **Diagram**: `flowchart LR` — chain auto-wire connecting steps
-- **Placement**: After "### Auto-Wire" heading (line 307), before existing prose
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [Loop complete]
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -86,6 +82,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Issue #86 — Audit fixed vs flexible field usage | 2026-03-25 | %_ all `.` fixed; %! namespaces `.` + new !Error with `:` children; %@ `::` separator + Company rename; path grammar updated |
 | Issue #64 — Add Mermaid tree diagram to data-is-trees.md | 2026-03-25 | graph TD diagram showing %definition schema → instances for #Boolean, =ProcessData, $myVar |
 | Issue #65 — Add Mermaid flowchart to SPEC-INDEX.md | 2026-03-25 | flowchart LR showing 5-phase learning path with file counts |
+| Issue #66 — Add Mermaid diagrams to pipelines.md auto-wire | 2026-03-26 | Two sequence diagrams: simple chain + multi-IO auto-wire with type matching |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -105,8 +102,8 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-25
-Stopped at: Issue #66 branch created, ready for plan
-Next action: /paul:plan
+Stopped at: Issue #66 merged and closed
+Next action: /paul:work-issue or /paul:issues
 Resume file: docs/user/SPEC-INDEX.md
 Resume context:
 - Issue #65 active — Mermaid flowchart LR for learning path
