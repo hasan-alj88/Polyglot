@@ -30,21 +30,18 @@ Progress:
 - Issue #61: [██████████] 100% (1/1 plans)
 - Issue #62: [██████████] 100% (1/1 plans)
 - Issue #63: [██████████] 100% (1/1 plans)
+- Issue #67: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-Issue: #67 — Add Mermaid flowchart to pipelines.md — parallel forking in setup
-Branch: docs/issue-67-add-mermaid-flowchart-parallel-forking
-Labels: docs, P3-medium
-Started: 2026-03-26
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/67
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Issue #67 — ready for merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -93,6 +90,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #61 — Add Mermaid flowchart to pipelines.md execution order | 2026-03-26 | flowchart LR showing 5-stage sequence: Trigger/IO → Queue → Setup → Body → Cleanup |
 | Issue #62 — Add Mermaid flowchart to errors.md error resolution | 2026-03-26 | flowchart TD decision tree: [!] match → replacement → fallback chain → Failed |
 | Issue #63 — Add Mermaid flowchart to collections.md expand/collect | 2026-03-26 | flowchart LR fan-out/fan-in: ~ForEach.Array → items → *Into.Array + *Agg.Sum collectors |
+| Issue #67 — Add Mermaid flowchart to pipelines.md parallel forking | 2026-03-26 | flowchart TD: [\] setup splits to sequential + [p] fork concurrent with body, [/] collects |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
