@@ -205,6 +205,17 @@ After `[W]` wiring, the macro's `[}]` outputs (e.g., `$dbConn`) become available
 
 Execution order: `[t],[=]` → `[Q]` → `[\]` → Execution Body → `[/]`
 
+```mermaid
+flowchart LR
+    TIO["[t],[=]\nTrigger/IO"]
+    Q["[Q]\nQueue"]
+    S["[\\]\nSetup"]
+    EB["Execution\nBody"]
+    C["[/]\nCleanup"]
+
+    TIO --> Q --> S --> EB --> C
+```
+
 ### Parallel Forking in Setup
 
 `[p]` or `[b]` inside `[\]` forks a parallel execution path:
