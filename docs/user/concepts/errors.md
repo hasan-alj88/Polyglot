@@ -254,6 +254,29 @@ Fallback accepts any `value_expr` — not just literals:
 
 When both `[!]` blocks and `<!` fallback exist on the same pipeline call:
 
+```mermaid
+flowchart TD
+    E["Pipeline call errors"]
+    M{"[!] block matches?"}
+    R{"Pushes replacement?"}
+    F1["Variable Final\n(done)"]
+    S{"Error-specific\nfallback on [>] line?"}
+    G{"Generic fallback\non [>] line?"}
+    F2["Variable Final\n(fallback value)"]
+    F3["Variable Final\n(fallback value)"]
+    T["Pipeline terminates /\nvariable Failed"]
+
+    E --> M
+    M -- Yes --> R
+    M -- No --> S
+    R -- Yes --> F1
+    R -- No --> S
+    S -- Yes --> F2
+    S -- No --> G
+    G -- Yes --> F3
+    G -- No --> T
+```
+
 1. Pipeline call errors
 2. `[!]` blocks check — if a matching `[!]` exists, its body runs first
 3. If `[!]` pushed a replacement value → variable is Final, done
