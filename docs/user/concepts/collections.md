@@ -62,6 +62,30 @@ Collector invocation uses an execution marker (`[r]` sequential, `[p]` parallel)
 
 Use `[r]` when collectors have dependencies between them, `[p]` when they are independent.
 
+```mermaid
+flowchart LR
+    SRC["Source Collection"]
+    EXP["~ForEach.Array — expand"]
+
+    subgraph scope ["Per-item scope ([p] = parallel, [r] = sequential)"]
+        I1["item 0"]
+        I2["item 1"]
+        I3["item N"]
+    end
+
+    C1["[*] *Into.Array"]
+    C2["[*] *Agg.Sum"]
+    R1["Result array — one level up"]
+    R2["Result value — one level up"]
+
+    SRC --> EXP
+    EXP --> I1
+    EXP --> I2
+    EXP --> I3
+    I1 & I2 & I3 --> C1 --> R1
+    I1 & I2 & I3 --> C2 --> R2
+```
+
 ### `*Into` — Collect into Collection
 
 | Operator | Collects into | IO |

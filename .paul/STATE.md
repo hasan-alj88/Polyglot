@@ -28,21 +28,22 @@ Progress:
 - Issue #65: [██████████] 100% (1/1 plans)
 - Issue #66: [██████████] 100% (1/1 plans)
 - Issue #61: [██████████] 100% (1/1 plans)
+- Issue #62: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-Issue: #62 — Add Mermaid flowchart to errors.md — error resolution precedence
-Branch: docs/issue-62-add-mermaid-flowchart-error-resolution
+Issue: #63 — Add Mermaid flowchart to collections.md — expand/collect cycle
+Branch: docs/issue-63-add-mermaid-flowchart-expand-collect
 Labels: docs, P2-high
 Started: 2026-03-26
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/62
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/63
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Issue #62 — ready for merge]
+  ✓        ✓        ✓        ○     [Issue #63 — ready for merge]
 ```
 
 ## Accumulated Context
@@ -89,6 +90,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #65 — Add Mermaid flowchart to SPEC-INDEX.md | 2026-03-25 | flowchart LR showing 5-phase learning path with file counts |
 | Issue #66 — Add Mermaid diagrams to pipelines.md auto-wire | 2026-03-26 | Two sequence diagrams: simple chain + multi-IO auto-wire with type matching |
 | Issue #61 — Add Mermaid flowchart to pipelines.md execution order | 2026-03-26 | flowchart LR showing 5-stage sequence: Trigger/IO → Queue → Setup → Body → Cleanup |
+| Issue #62 — Add Mermaid flowchart to errors.md error resolution | 2026-03-26 | flowchart TD decision tree: [!] match → replacement → fallback chain → Failed |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
