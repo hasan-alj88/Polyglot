@@ -30,14 +30,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #61 — Add Mermaid flowchart to pipelines.md — execution order
+Branch: docs/issue-61-add-mermaid-flowchart-execution-order
+Labels: docs, P2-high
+Started: 2026-03-26
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/61
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Issue #61 — ready for merge]
 ```
 
 ## Accumulated Context
