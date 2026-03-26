@@ -224,6 +224,23 @@ flowchart LR
 - **`[b]` in setup** — fire-and-forget. No collection in `[/]` is possible.
 - Variables produced in `[\]` (including by `[p]`) are accessible in `[/]` — same principle as `$dbConn` flowing from `[\]` to `[/]` in `=W.DB.Connection`.
 
+```mermaid
+flowchart TD
+    S["[\] Setup"]
+    SEQ["Sequential work"]
+    P["[p] Fork — parallel task"]
+    B["Execution Body"]
+    CL["[/] Cleanup"]
+    COL["[*] *All — collects [p] result"]
+
+    S --> SEQ
+    S --> P
+    SEQ --> B
+    B --> CL
+    P -.->|runs concurrently| CL
+    CL --> COL
+```
+
 **Pairing constraint:** A `[p]` started in `[\]` and its `[*] *All` collector form an exclusive pair — the collection **must** appear in `[/]`, never in the execution body. The execution body runs while the `[p]` is still in-flight; only `[/]` runs after execution completes and can safely collect.
 
 | Started in | Collected in | Valid? |
