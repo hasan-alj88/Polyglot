@@ -27,21 +27,22 @@ Progress:
 - Issue #64: [██████████] 100% (1/1 plans)
 - Issue #65: [██████████] 100% (1/1 plans)
 - Issue #66: [██████████] 100% (1/1 plans)
+- Issue #61: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-Issue: #61 — Add Mermaid flowchart to pipelines.md — execution order
-Branch: docs/issue-61-add-mermaid-flowchart-execution-order
+Issue: #62 — Add Mermaid flowchart to errors.md — error resolution precedence
+Branch: docs/issue-62-add-mermaid-flowchart-error-resolution
 Labels: docs, P2-high
 Started: 2026-03-26
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/61
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/62
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Issue #61 — ready for merge]
+  ✓        ✓        ✓        ○     [Issue #62 — ready for merge]
 ```
 
 ## Accumulated Context
@@ -87,6 +88,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #64 — Add Mermaid tree diagram to data-is-trees.md | 2026-03-25 | graph TD diagram showing %definition schema → instances for #Boolean, =ProcessData, $myVar |
 | Issue #65 — Add Mermaid flowchart to SPEC-INDEX.md | 2026-03-25 | flowchart LR showing 5-phase learning path with file counts |
 | Issue #66 — Add Mermaid diagrams to pipelines.md auto-wire | 2026-03-26 | Two sequence diagrams: simple chain + multi-IO auto-wire with type matching |
+| Issue #61 — Add Mermaid flowchart to pipelines.md execution order | 2026-03-26 | flowchart LR showing 5-stage sequence: Trigger/IO → Queue → Setup → Body → Cleanup |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
