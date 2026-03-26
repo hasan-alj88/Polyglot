@@ -306,6 +306,19 @@ Numeric and leaf name references can be mixed in the same chain.
 
 ### Auto-Wire
 
+```mermaid
+sequenceDiagram
+    participant P as Pipeline
+    participant S0 as Step 0<br/>File.Text.Read
+    participant S1 as Step 1<br/>Text.Transform
+    participant S2 as Step 2<br/>Text.Format
+
+    P->>S0: [=] path (path) from $path
+    S0-->>S1: auto: content (string)
+    S1-->>S2: auto: content (string)
+    S2->>P: [=] formatted (string) to output
+```
+
 When a step has exactly one output and the next step has exactly one input, and both share the same data type, the wire between them is implicit — no `[=]` line is needed. Only entry IO (first step's inputs) and exit IO (last step's outputs) must be declared.
 
 ```polyglot
@@ -319,6 +332,23 @@ Auto-wire requires:
 - Exactly one output on the source step
 - Exactly one input on the target step
 - Matching data types between them
+
+When multiple ports exist, auto-wire succeeds only if each type has exactly one match on each side — no ambiguity:
+
+```mermaid
+sequenceDiagram
+    participant P as Pipeline
+    participant S0 as Step 0<br/>3 outputs
+    participant S1 as Step 1<br/>3 inputs
+
+    P->>S0: [=] entry IO
+    Note over S0,S1: Each type has exactly one pair — auto-wire OK
+    S0-->>S1: auto: name (string)
+    S0-->>S1: auto: record (UserRecord)
+    S0-->>S1: auto: count (int)
+    Note over S0,S1: PGE-802 if two outputs share a type with one input
+    S1->>P: [=] exit IO
+```
 
 A type mismatch between auto-wired ports is PGE-801. When multiple ports could match, the wire is ambiguous (PGE-802). An unmatched parameter with no valid auto-wire candidate is PGE-803. Note that successful auto-wire emits a warning (PGW-801) — explicit `[=]` wiring is preferred.
 
