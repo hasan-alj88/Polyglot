@@ -18,10 +18,10 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-803 — unmatched parameter after pairing
 [r] =Fetch.Data=>=Transform.Text
-   [=] >0.url;string << $url
-   [ ] =Fetch.Data outputs: >content;string, >count;int
-   [ ] =Transform.Text inputs: <text;string
-   [ ] ;string pairs, but >count;int has no match on step 1
-   [ ] ✗ PGE-803 — >count;int unmatched
-   [=] <1.output;string >> >result
+   [=] >0.url#string << $url
+   [ ] =Fetch.Data outputs: >content#string, >count#int
+   [ ] =Transform.Text inputs: <text#string
+   [ ] #string pairs, but >count#int has no match on step 1
+   [ ] ✗ PGE-803 — >count#int unmatched
+   [=] <1.output#string >> >result
 ```

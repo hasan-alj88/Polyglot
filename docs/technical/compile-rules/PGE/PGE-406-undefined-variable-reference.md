@@ -17,42 +17,42 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ all references resolve to declarations
-[=] <name;string
-[=] >greeting;string
+[=] <name#string
+[=] >greeting#string
 [r] >greeting << "Hello, {$name}!"
 ```
 
 ```polyglot
 [ ] ✓ $variable declared then used
-[=] <input;string
-[r] $temp;string << <input
-[r] >result;string << $temp
+[=] <input#string
+[r] $temp#string << <input
+[r] >result#string << $temp
 ```
 
 ```polyglot
 [ ] ✓ pulling from a declared IO output in a conditional
-[=] >status;string
+[=] >status#string
 [?] >status
    [?] #Done
       [r] =Log
-         [=] <msg;string << "finished"
+         [=] <msg#string << "finished"
    [?] *?
       [r] =Log
-         [=] <msg;string << "pending"
+         [=] <msg#string << "pending"
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-406 — $variable never declared
-[=] <input;string
-[r] >result;string << $neverDeclared      [ ] ✗ PGE-406 — $neverDeclared not in scope
+[=] <input#string
+[r] >result#string << $neverDeclared      [ ] ✗ PGE-406 — $neverDeclared not in scope
 ```
 
 ```polyglot
 [ ] ✗ PGE-406 — typo in variable name
-[=] <input;string
-[r] $processed;string << <input
-[r] >result;string << $procesed           [ ] ✗ PGE-406 — $procesed not declared (typo for $processed)
+[=] <input#string
+[r] $processed#string << <input
+[r] >result#string << $procesed           [ ] ✗ PGE-406 — $procesed not declared (typo for $processed)
 ```
 
 ```polyglot
@@ -60,10 +60,10 @@ severity: error
 [?] >undeclaredOutput                     [ ] ✗ PGE-406 — >undeclaredOutput not in scope
    [?] #Done
       [r] =Log
-         [=] <msg;string << "done"
+         [=] <msg#string << "done"
    [?] *?
       [r] =Log
-         [=] <msg;string << "not done"
+         [=] <msg#string << "not done"
 ```
 
 **Open point:** None.

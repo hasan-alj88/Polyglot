@@ -20,8 +20,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >data;string
+   [=] <data#string
+   [=] >data#string
    [r] >data << $data
 
 [ ] ✓ <data and >data share a base name but differ in direction — allowed
@@ -32,9 +32,9 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <person.name;string
-   [=] <person.age;int
-   [=] >result;string
+   [=] <person.name#string
+   [=] <person.age#int
+   [=] >result#string
    [r] >result << "{$person.name} is {$person.age}"
 
 [ ] ✓ <person.name and <person.age are distinct serialized identifiers — allowed
@@ -46,9 +46,9 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] <data;int                               [ ] ✗ PGE-111 — <data declared twice
-   [=] >result;string
+   [=] <data#string
+   [=] <data#int                               [ ] ✗ PGE-111 — <data declared twice
+   [=] >result#string
    [r] >result << $data
 ```
 
@@ -57,9 +57,9 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >output;string
-   [=] >output;int                             [ ] ✗ PGE-111 — >output declared twice
+   [=] <input#string
+   [=] >output#string
+   [=] >output#int                             [ ] ✗ PGE-111 — >output declared twice
    [r] >output << $input
 ```
 

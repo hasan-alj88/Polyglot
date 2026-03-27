@@ -17,53 +17,53 @@
 ```
 #DateTime
    .Instant                        — absolute point in time
-      .epoch;int                   — Unix epoch seconds
-      .nano;int                    — nanosecond offset within second
-      .precision;Precision         — what resolution matters
+      .epoch#int                   — Unix epoch seconds
+      .nano#int                    — nanosecond offset within second
+      .precision#Precision         — what resolution matters
 
    .Civil                          — human-readable date/time
-      .date;Date
-      .time;Time
-      .zone;Zone
+      .date#Date
+      .time#Time
+      .zone#Zone
 
    .Calendar                       — calendar system representations
-      [:] :system;CalendarSystem   — which calendar is active
-      [:] :gregorian;GregorianDate
-      [:] :hijri;HijriDate
-      [:] :hebrew;HebrewDate
-      [:] :chinese;ChineseDate
-      [:] :persian;PersianDate
-      [:] :buddhist;BuddhistDate
-      [:] :hindu;HinduDate
-      [:] :japanese;JapaneseDate
-      [:] :ethiopian;EthiopianDate
-      [:] :coptic;CopticDate
+      [:] :system#CalendarSystem   — which calendar is active
+      [:] :gregorian#GregorianDate
+      [:] :hijri#HijriDate
+      [:] :hebrew#HebrewDate
+      [:] :chinese#ChineseDate
+      [:] :persian#PersianDate
+      [:] :buddhist#BuddhistDate
+      [:] :hindu#HinduDate
+      [:] :japanese#JapaneseDate
+      [:] :ethiopian#EthiopianDate
+      [:] :coptic#CopticDate
       [ ] users can add :balinese, :mayan, etc. — schema must match their declared type
 
    .Relative                       — durations, periods, intervals
-      .duration;Duration           — absolute (seconds-based)
-      .period;Period               — calendar-relative (months/years)
-      .interval;Interval           — start/end range
-      .recurrence;Recurrence       — repeating patterns
+      .duration#Duration           — absolute (seconds-based)
+      .period#Period               — calendar-relative (months/years)
+      .interval#Interval           — start/end range
+      .recurrence#Recurrence       — repeating patterns
 
    .Week                           — week system
-      [:] :day;Weekday
-      [:] :number;int              — week-of-year
-      [:] :system;WeekSystem       — ISO, US, Middle-Eastern, etc.
-      [:] :business;BusinessWeek   — configurable work/off days
+      [:] :day#Weekday
+      [:] :number#int              — week-of-year
+      [:] :system#WeekSystem       — ISO, US, Middle-Eastern, etc.
+      [:] :business#BusinessWeek   — configurable work/off days
       [ ] users can add :pawukon etc. — schema must match their declared type
 
    .TimeUnit                       — non-standard time divisions
-      [:] :chinese;ChineseTime     — shichen, ke, fen
-      [:] :hindu;HinduTime         — prahara, muhurta, ghati
-      [:] :decimal;DecimalTime     — French Republican decimal
+      [:] :chinese#ChineseTime     — shichen, ke, fen
+      [:] :hindu#HinduTime         — prahara, muhurta, ghati
+      [:] :decimal#DecimalTime     — French Republican decimal
       [ ] users can add custom time divisions — schema must match their declared type
 
    .Cultural                       — cultural/religious extensions
-      [:] :dayBoundary;DayBoundary — midnight, sunset, sunrise
-      [:] :holidays;array.Holiday  — typed holiday list
-      [:] :observances;array.Observance — typed observance list
-      [:] :seasons;array.Season    — typed season markers
+      [:] :dayBoundary#DayBoundary — midnight, sunset, sunrise
+      [:] :holidays#array:Holiday  — typed holiday list
+      [:] :observances#array:Observance — typed observance list
+      [:] :seasons#array:Season    — typed season markers
       [ ] users can add custom cultural data — schema must match their declared type
 ```
 
@@ -93,16 +93,16 @@
    .Sunday
 
 #WeekSystem
-   .ISO;BusinessWeek                — Monday-start, week 1 = first Thursday
-   .US;BusinessWeek                 — Sunday-start, week 1 = contains Jan 1
-   .MiddleEastern;BusinessWeek      — Saturday-start
-   .Custom;BusinessWeek
+   .ISO#BusinessWeek                — Monday-start, week 1 = first Thursday
+   .US#BusinessWeek                 — Sunday-start, week 1 = contains Jan 1
+   .MiddleEastern#BusinessWeek      — Saturday-start
+   .Custom#BusinessWeek
 
 #BusinessWeek
-   .firstDay;Weekday                 — user must set
-   .workDays;array.Weekday           — user must set
-   .offDays;array.Weekday            — user must set
-   .hoursPerDay;int                  — user must set
+   .firstDay#Weekday                 — user must set
+   .workDays#array:Weekday           — user must set
+   .offDays#array:Weekday            — user must set
+   .hoursPerDay#int                  — user must set
 
 #DayBoundary
    .Midnight           — civil standard
@@ -144,15 +144,15 @@ Converting between calendars always goes through epoch: CalendarA → epoch → 
 
 ```
 #CalendarProjection     — how any calendar maps from epoch
-   .epochOffset;int     — seconds offset from Unix epoch to calendar epoch
-   .leapRule;LeapRule   — how this calendar handles leap cycles
-   .monthStructure;MonthStructure — fixed-length, variable, or lunisolar
+   .epochOffset#int     — seconds offset from Unix epoch to calendar epoch
+   .leapRule#LeapRule   — how this calendar handles leap cycles
+   .monthStructure#MonthStructure — fixed-length, variable, or lunisolar
 
 #LeapRule
    .None                — no leap adjustment
    .FixedCycle          — repeating pattern (e.g., Gregorian 4/100/400)
-      .cycleYears;int
-      .leapYears;array.int  — which years in cycle are leap
+      .cycleYears#int
+      .leapYears#array:int  — which years in cycle are leap
    .Astronomical        — computed from astronomical observation
    .Tabular             — pre-calculated table
    .Custom
@@ -169,45 +169,45 @@ Converting between calendars always goes through epoch: CalendarA → epoch → 
 
 ```
 #Date
-   .year;int
-   .month;int
-   .day;int
+   .year#int
+   .month#int
+   .day#int
 
 #Time
-   .hour;int            — 0-23
-   .minute;int          — 0-59
-   .second;int          — 0-60 (leap second)
-   .nano;int            — 0-999999999
+   .hour#int            — 0-23
+   .minute#int          — 0-59
+   .second#int          — 0-60 (leap second)
+   .nano#int            — 0-999999999
 
 #Zone
-   .iana;string         — "America/New_York"
-   .offset;ZoneOffset
-   .dst;bool
+   .iana#string         — "America/New_York"
+   .offset#ZoneOffset
+   .dst#bool
 
 #ZoneOffset
-   .hours;int           — -12 to +14
-   .minutes;int         — 0, 15, 30, 45
+   .hours#int           — -12 to +14
+   .minutes#int         — 0, 15, 30, 45
 
 #Duration               — absolute time span
-   .seconds;int
-   .nanos;int
+   .seconds#int
+   .nanos#int
 
 #Period                 — calendar-relative span
-   .years;int
-   .months;int
-   .weeks;int
-   .days;int
+   .years#int
+   .months#int
+   .weeks#int
+   .days#int
 
 #Interval
-   .start;DateTime
-   .end;DateTime
-   .startInclusive;bool <~ #Boolean.True
-   .endInclusive;bool <~ #Boolean.False
+   .start#DateTime
+   .end#DateTime
+   .startInclusive#bool <~ #Boolean.True
+   .endInclusive#bool <~ #Boolean.False
 
 #Recurrence
-   .pattern;RecurrencePattern
-   .count;int <~ 0      — 0 = infinite
-   .until;DateTime       — optional end date
+   .pattern#RecurrencePattern
+   .count#int <~ 0      — 0 = infinite
+   .until#DateTime       — optional end date
 
 #RecurrencePattern
    .Daily
@@ -215,7 +215,7 @@ Converting between calendars always goes through epoch: CalendarA → epoch → 
    .Monthly
    .Yearly
    .Custom
-      .rule;string       — cron-like or RRULE
+      .rule#string       — cron-like or RRULE
 ```
 
 ## Non-Standard Time Units
@@ -226,10 +226,10 @@ These all map back to epoch seconds — they're alternative projections of `.Ins
 ### Chinese Traditional Time
 ```
 #ChineseTime
-   .shichen;ChineseShichen   — 2-hour double-hours (12/day)
-   .ke;int                   — quarter-unit (classically 100/day = 14.4 min each)
-   .fen;int                  — subdivision of ke (60 fen per ke)
-   .yeGeng;int               — night watch number (1-5, for nighttime)
+   .shichen#ChineseShichen   — 2-hour double-hours (12/day)
+   .ke#int                   — quarter-unit (classically 100/day = 14.4 min each)
+   .fen#int                  — subdivision of ke (60 fen per ke)
+   .yeGeng#int               — night watch number (1-5, for nighttime)
 
 #ChineseShichen
    .Zi                       — 23:00-01:00
@@ -249,26 +249,26 @@ These all map back to epoch seconds — they're alternative projections of `.Ins
 ### Hindu Traditional Time
 ```
 #HinduTime
-   .prahara;int              — 3-hour watch (8/day, varies by season)
-   .muhurta;int              — 48-minute unit (30/day)
-   .ghati;int                — 24-minute unit (60/day)
-   .pala;int                 — subdivision of ghati (60 pala per ghati)
-   .vipala;int               — subdivision of pala (60 vipala per pala)
+   .prahara#int              — 3-hour watch (8/day, varies by season)
+   .muhurta#int              — 48-minute unit (30/day)
+   .ghati#int                — 24-minute unit (60/day)
+   .pala#int                 — subdivision of ghati (60 pala per ghati)
+   .vipala#int               — subdivision of pala (60 vipala per pala)
 ```
 
 ### French Republican Decimal Time
 ```
 #DecimalTime
-   .hour;int                 — 0-9 (10 hours/day)
-   .minute;int               — 0-99 (100 minutes/hour)
-   .second;int               — 0-99 (100 seconds/minute)
+   .hour#int                 — 0-9 (10 hours/day)
+   .minute#int               — 0-99 (100 minutes/hour)
+   .second#int               — 0-99 (100 seconds/minute)
 ```
 
 ### Custom Time Unit
 ```
 #CustomTimeUnit
-   .name;string
-   .unitsPerDay;int          — how many of this unit fit in a day
+   .name#string
+   .unitsPerDay#int          — how many of this unit fit in a day
    :subdivisions             — user-defined sub-units
    :mapping                  — user-defined epoch-to-unit conversion
 ```
@@ -278,9 +278,9 @@ These all map back to epoch seconds — they're alternative projections of `.Ins
 ### Gregorian
 ```
 #GregorianDate
-   .year;int
-   .month;Month
-   .day;int
+   .year#int
+   .month#Month
+   .day#int
 ```
 
 ### Islamic / Hijri
@@ -291,12 +291,12 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 
 ```
 #HijriDate
-   .year;int
-   .month;HijriMonth
-   .day;int
-   .authority;HijriAuthority        — who determines month start
-   .method;HijriMethod              — how month start is determined
-   .leap;HijriLeap                  — leap year logic
+   .year#int
+   .month#HijriMonth
+   .day#int
+   .authority#HijriAuthority        — who determines month start
+   .method#HijriMethod              — how month start is determined
+   .leap#HijriLeap                  — leap year logic
 
 #HijriMonth
    .Muharram
@@ -317,7 +317,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
    .Local               — local moon-sighting committee
    .Regional            — follows a regional bloc (Gulf, South Asia, etc.)
    .Custom              — user-defined authority
-      .name;string
+      .name#string
       :rules             — user-defined sighting/calculation rules
 
 #HijriMethod
@@ -325,7 +325,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
    .Astronomical        — Umm al-Qura style (moon conjunction + sunset)
    .Observational       — physical moon-sighting by committee
    .Custom              — user-defined method
-      .name;string
+      .name#string
       :logic             — user-defined calculation/sighting logic
 
 #HijriLeap
@@ -338,9 +338,9 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ### Hebrew
 ```
 #HebrewDate
-   .year;int
-   .month;HebrewMonth
-   .day;int
+   .year#int
+   .month#HebrewMonth
+   .day#int
 
 #HebrewMonth
    .Tishrei
@@ -361,13 +361,13 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ### Chinese
 ```
 #ChineseDate
-   .year;int
-   .cycle;int            — 60-year cycle number
-   .month;int
-   .leapMonth;bool <~ #Boolean.False
-   .day;int
-   .stem;HeavenlyStem
-   .branch;EarthlyBranch
+   .year#int
+   .cycle#int            — 60-year cycle number
+   .month#int
+   .leapMonth#bool <~ #Boolean.False
+   .day#int
+   .stem#HeavenlyStem
+   .branch#EarthlyBranch
 
 #HeavenlyStem
    .Jia
@@ -399,9 +399,9 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ### Persian
 ```
 #PersianDate
-   .year;int
-   .month;PersianMonth
-   .day;int
+   .year#int
+   .month#PersianMonth
+   .day#int
 
 #PersianMonth
    .Farvardin
@@ -421,19 +421,19 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ### Buddhist
 ```
 #BuddhistDate
-   .year;int             — Buddhist Era (Gregorian + 543)
-   .month;Month          — uses Gregorian months
-   .day;int
+   .year#int             — Buddhist Era (Gregorian + 543)
+   .month#Month          — uses Gregorian months
+   .day#int
 ```
 
 ### Hindu
 ```
 #HinduDate
-   .year;int
-   .era;HinduEra
-   .month;HinduMonth
-   .day;int
-   .paksha;Paksha        — lunar fortnight
+   .year#int
+   .era#HinduEra
+   .month#HinduMonth
+   .day#int
+   .paksha#Paksha        — lunar fortnight
 
 #HinduEra
    .VikramSamvat
@@ -461,11 +461,11 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ### Japanese
 ```
 #JapaneseDate
-   .year;int
-   .era;JapaneseEra
-   .eraYear;int          — year within era
-   .month;Month          — Gregorian months
-   .day;int
+   .year#int
+   .era#JapaneseEra
+   .eraYear#int          — year within era
+   .month#Month          — Gregorian months
+   .day#int
 
 #JapaneseEra
    .Reiwa                — 2019-present
@@ -479,9 +479,9 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ### Ethiopian
 ```
 #EthiopianDate
-   .year;int
-   .month;EthiopianMonth
-   .day;int              — 1-30 (or 1-5/6 for Pagume)
+   .year#int
+   .month#EthiopianMonth
+   .day#int              — 1-30 (or 1-5/6 for Pagume)
 
 #EthiopianMonth
    .Meskerem
@@ -502,9 +502,9 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ### Coptic
 ```
 #CopticDate
-   .year;int
-   .month;CopticMonth
-   .day;int
+   .year#int
+   .month#CopticMonth
+   .day#int
 
 #CopticMonth
    .Thout
@@ -525,27 +525,27 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ### Custom Calendar
 ```
 #CustomCalendar        — user-extensible via :
-   .name;string
+   .name#string
    :months             — user-defined month names/counts
    :leapRule           — user-defined leap year logic
-   :epochOffset;int    — offset from Unix epoch
+   :epochOffset#int    — offset from Unix epoch
 ```
 
 ## Cultural Types
 
 ```
 #Holiday
-   .name;string
-   .date;Date
-   .recurring;bool <~ #Boolean.True
-   .calendar;CalendarSystem <~ #CalendarSystem.Gregorian
+   .name#string
+   .date#Date
+   .recurring#bool <~ #Boolean.True
+   .calendar#CalendarSystem <~ #CalendarSystem.Gregorian
    :extra              — user-defined metadata
 
 #Observance
-   .name;string
-   .date;Date
-   .type;ObservanceType
-   .recurring;bool <~ #Boolean.True
+   .name#string
+   .date#Date
+   .type#ObservanceType
+   .recurring#bool <~ #Boolean.True
    :extra              — user-defined metadata
 
 #ObservanceType
@@ -555,10 +555,10 @@ The design supports regional authorities, multiple methods, and fully custom Hij
    .Personal
 
 #Season
-   .name;string
-   .start;Date
-   .end;Date
-   .type;SeasonType
+   .name#string
+   .start#Date
+   .end#Date
+   .type#SeasonType
    :extra              — user-defined metadata
 
 #SeasonType
@@ -571,10 +571,10 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 
 ## Flexible Fields (`:`) Extension Points
 
-All four extensible levels (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`) are entirely flexible — users add new `:key;Type` entries alongside the pre-declared ones.
+All four extensible levels (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`) are entirely flexible — users add new `:key#Type` entries alongside the pre-declared ones.
 
-- `#DateTime.Calendar:*` — add any calendar (`:balinese;BalineseDate`, `:mayan;MayanDate`, etc.)
-- `#DateTime.Week:*` — add any week system (`:pawukon;PawukonWeek`, etc.)
+- `#DateTime.Calendar:*` — add any calendar (`:balinese#BalineseDate`, `:mayan#MayanDate`, etc.)
+- `#DateTime.Week:*` — add any week system (`:pawukon#PawukonWeek`, etc.)
 - `#DateTime.TimeUnit:*` — add any time division
 - `#DateTime.Cultural:*` — add any cultural data
 - `#Holiday:extra`, `#Observance:extra`, `#Season:extra` — per-item metadata
@@ -586,10 +586,10 @@ All four extensible levels (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`) are 
 
 ## Alias
 
-`#DateTime` alias is `#dt` — use `;dt` in type annotations:
+`#DateTime` alias is `#dt` — use `#dt` in type annotations:
 ```
-[r] $now;dt
-[r] $deadline;dt
+[r] $now#dt
+[r] $deadline#dt
 ```
 
 ## Stdlib Pipelines — =DT.*
@@ -600,141 +600,141 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 ```
 =DT.Now                — current instant → #dt
 =DT.From.Epoch         — epoch seconds → #dt
-   <epoch;int
+   <epoch#int
 =DT.From.ISO           — ISO-8601 string → #dt (same as DT"..." literal)
-   <iso;string
+   <iso#string
 =DT.From.Parts         — explicit components → #dt
-   <year;int
-   <month;int
-   <day;int
-   <hour;int <~ 0
-   <minute;int <~ 0
-   <second;int <~ 0
-   <nano;int <~ 0
-   <zone;string <~ "UTC"
+   <year#int
+   <month#int
+   <day#int
+   <hour#int <~ 0
+   <minute#int <~ 0
+   <second#int <~ 0
+   <nano#int <~ 0
+   <zone#string <~ "UTC"
 ```
 
 ### Calendar Conversion
 ```
 =DT.To.Gregorian       — #dt → #GregorianDate projection
-   <source;dt
+   <source#dt
 =DT.To.Hijri           — #dt → #HijriDate projection
-   <source;dt
-   <authority;HijriAuthority <~ #HijriAuthority.UmmAlQura
+   <source#dt
+   <authority#HijriAuthority <~ #HijriAuthority.UmmAlQura
 =DT.To.Hebrew          — #dt → #HebrewDate projection
-   <source;dt
+   <source#dt
 =DT.To.Chinese         — #dt → #ChineseDate projection
-   <source;dt
+   <source#dt
 =DT.To.Persian         — #dt → #PersianDate projection
-   <source;dt
+   <source#dt
 =DT.To.Buddhist        — #dt → #BuddhistDate projection
-   <source;dt
+   <source#dt
 =DT.To.Hindu           — #dt → #HinduDate projection
-   <source;dt
-   <era;HinduEra <~ #HinduEra.VikramSamvat
+   <source#dt
+   <era#HinduEra <~ #HinduEra.VikramSamvat
 =DT.To.Japanese        — #dt → #JapaneseDate projection
-   <source;dt
+   <source#dt
 =DT.To.Ethiopian       — #dt → #EthiopianDate projection
-   <source;dt
+   <source#dt
 =DT.To.Coptic          — #dt → #CopticDate projection
-   <source;dt
+   <source#dt
 =DT.To.Custom          — #dt → custom calendar projection
-   <source;dt
-   <calendar;CustomCalendar
+   <source#dt
+   <calendar#CustomCalendar
 ```
 
 ### Time Unit Conversion
 ```
 =DT.To.ChineseTime     — #dt → #ChineseTime (shichen/ke/fen)
-   <source;dt
+   <source#dt
 =DT.To.HinduTime       — #dt → #HinduTime (prahara/muhurta)
-   <source;dt
+   <source#dt
 =DT.To.DecimalTime     — #dt → #DecimalTime (French Republican)
-   <source;dt
+   <source#dt
 ```
 
 ### Arithmetic
 ```
 =DT.Add.Duration       — #dt + #Duration → #dt
-   <source;dt
-   <duration;Duration
+   <source#dt
+   <duration#Duration
 =DT.Add.Period         — #dt + #Period → #dt (calendar-aware)
-   <source;dt
-   <period;Period
+   <source#dt
+   <period#Period
 =DT.Sub                — #dt - #dt → #Duration
-   <a;dt
-   <b;dt
+   <a#dt
+   <b#dt
 ```
 
 ### Comparison
 ```
 =DT.Compare            — #dt vs #dt → #int (-1, 0, 1)
-   <a;dt
-   <b;dt
+   <a#dt
+   <b#dt
 =DT.IsBefore           — #dt < #dt → #bool
-   <a;dt
-   <b;dt
+   <a#dt
+   <b#dt
 =DT.IsAfter            — #dt > #dt → #bool
-   <a;dt
-   <b;dt
+   <a#dt
+   <b#dt
 =DT.InInterval         — #dt within #Interval → #bool
-   <source;dt
-   <interval;Interval
+   <source#dt
+   <interval#Interval
 ```
 
 ### Extraction
 ```
 =DT.Get.Year           — #dt → year as #int
-   <source;dt
+   <source#dt
 =DT.Get.Month          — #dt → month as #int
-   <source;dt
+   <source#dt
 =DT.Get.Day            — #dt → day as #int
-   <source;dt
+   <source#dt
 =DT.Get.Weekday        — #dt → #Weekday
-   <source;dt
+   <source#dt
 =DT.Get.WeekNumber     — #dt → week-of-year as #int
-   <source;dt
-   <system;WeekSystem <~ #WeekSystem.ISO
+   <source#dt
+   <system#WeekSystem <~ #WeekSystem.ISO
 =DT.Get.Epoch          — #dt → epoch seconds as #int
-   <source;dt
+   <source#dt
 =DT.Get.Zone           — #dt → #Zone
-   <source;dt
+   <source#dt
 ```
 
 ### Zone
 ```
 =DT.Zone.Set           — set timezone on #dt → #dt
-   <source;dt
-   <iana;string
+   <source#dt
+   <iana#string
 =DT.Zone.Convert       — convert #dt to different timezone → #dt
-   <source;dt
-   <iana;string
+   <source#dt
+   <iana#string
 ```
 
 ### Formatting
 ```
 =DT.Format             — #dt → formatted string
-   <source;dt
-   <pattern;string     — e.g. "YYYY-MM-DD HH:mm:ss"
+   <source#dt
+   <pattern#string     — e.g. "YYYY-MM-DD HH:mm:ss"
 =DT.Format.ISO         — #dt → ISO-8601 string
-   <source;dt
+   <source#dt
 =DT.Format.Calendar    — #dt → string in specific calendar format
-   <source;dt
-   <system;CalendarSystem
+   <source#dt
+   <system#CalendarSystem
 ```
 
 ### Business
 ```
 =DT.Business.IsWorkDay — #dt + #BusinessWeek → #bool
-   <source;dt
-   <week;BusinessWeek
+   <source#dt
+   <week#BusinessWeek
 =DT.Business.NextWorkDay — next work day → #dt
-   <source;dt
-   <week;BusinessWeek
+   <source#dt
+   <week#BusinessWeek
 =DT.Business.AddWorkDays — add N work days → #dt
-   <source;dt
-   <days;int
-   <week;BusinessWeek
+   <source#dt
+   <days#int
+   <week#BusinessWeek
 ```
 
 ## Open Questions (Decided)
@@ -745,9 +745,9 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 
 ```polyglot
 [ ] These three are equivalent:
-[r] $deadline;dt << =DateTime"2026-03-20T12:00:00Z"
-[r] $deadline;dt << =DT"2026-03-20T12:00:00Z"
-[r] $deadline;dt
+[r] $deadline#dt << =DateTime"2026-03-20T12:00:00Z"
+[r] $deadline#dt << =DT"2026-03-20T12:00:00Z"
+[r] $deadline#dt
    [r] =DT.From.ISO
       [=] <iso << "2026-03-20T12:00:00Z"
       [=] >dt >> $deadline

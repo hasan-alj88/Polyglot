@@ -23,15 +23,15 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] >out << $input
 
 {=} =Caller
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =CustomPipeline"some arg"        [ ] ⚠ PGW-1002 — no format validation available
       [=] >result >> >out
 ```

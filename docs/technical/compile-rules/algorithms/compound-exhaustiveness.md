@@ -108,7 +108,7 @@ The diagnostic must include the uncovered cells as counterexample.
 ## Walkthrough — Test 5 (Numeric Range × Enum)
 
 ```
-Variables: $status ∈ {Active, Inactive}, $age;int
+Variables: $status ∈ {Active, Inactive}, $age#int
 Boundaries for $age: {18}
 Partitions: $status → {Active, Inactive}, $age → {(-∞,18], (18,+∞)}
 Grid (4 cells):

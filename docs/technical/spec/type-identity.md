@@ -27,25 +27,25 @@ All Polyglot data is serialized strings. **"Same type" means "same schema"** —
 **Same type — different names, identical schema:**
 ```polyglot
 {#} #UserProfile
-   [.] .name;string
-   [.] .email;string
+   [.] .name#string
+   [.] .email#string
 
 {#} #ContactInfo
-   [.] .name;string
-   [.] .email;string
+   [.] .name#string
+   [.] .email#string
 
-[ ] ✓ same schema — name;string + email;string
+[ ] ✓ same schema — name#string + email#string
 ```
 
 **Different type — different field structure:**
 ```polyglot
 {#} #UserRecord
-   [.] .name;string
-   [.] .age;int
+   [.] .name#string
+   [.] .age#int
 
 {#} #OrderRecord
-   [.] .orderId;string
-   [.] .total;float
+   [.] .orderId#string
+   [.] .total#float
 
 [ ] ✗ schemas differ — name+age ≠ orderId+total
 ```

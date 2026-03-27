@@ -19,15 +19,15 @@ severity: warning
 ```polyglot
 [ ] ✓ data definition with fields
 {#} #UserRecord
-   [.] .name;string
-   [.] .email;string
-   [.] .role;string
+   [.] .name#string
+   [.] .email#string
+   [.] .role#string
 ```
 
 ```polyglot
 [ ] ✓ data definition with flexible fields
 {#} #Config
-   [:] :setting;string
+   [:] :setting#string
 ```
 
 ```polyglot

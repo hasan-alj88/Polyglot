@@ -19,8 +19,8 @@ severity: error
 [ ] ✓ permission IO uses input direction only
 {=} =WebCaller
    [_] _Web.request
-      [_] <url;string << "https://api.example.com/*"    [ ] ✓ input direction
-      [_] <method;string << "GET"                        [ ] ✓ input direction
+      [_] <url#string << "https://api.example.com/*"    [ ] ✓ input direction
+      [_] <method#string << "GET"                        [ ] ✓ input direction
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -42,8 +42,8 @@ severity: error
 [ ] ✗ PGE-919 — output direction in permission IO
 {=} =BadWebCaller
    [_] _Web.request
-      [_] <url;string << "https://api.example.com/*"
-      [_] >result;string                                 [ ] ✗ PGE-919 — output direction in permission block
+      [_] <url#string << "https://api.example.com/*"
+      [_] >result#string                                 [ ] ✗ PGE-919 — output direction in permission block
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -54,9 +54,9 @@ severity: error
 [ ] ✗ PGE-919 — output direction in database permission
 {=} =BadDbQuery
    [_] _Database.connect
-      [_] <host;string << "localhost"
-      [_] <port;int << "5432"
-      [_] >connection;string                             [ ] ✗ PGE-919 — permissions are input-only
+      [_] <host#string << "localhost"
+      [_] <port#int << "5432"
+      [_] >connection#string                             [ ] ✗ PGE-919 — permissions are input-only
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot

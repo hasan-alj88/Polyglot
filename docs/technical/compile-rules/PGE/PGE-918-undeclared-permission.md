@@ -31,9 +31,9 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <a;int
-   [=] <b;int
-   [=] >sum;int
+   [=] <a#int
+   [=] <b#int
+   [=] >sum#int
    [r] >sum << =Math.Add $a $b
 ```
 

@@ -23,7 +23,7 @@ A pipeline with no `[_]` declarations is **pure computation** — it can transfo
    [Q] =Q.Default
    [W] =W.Polyglot
    [ ] no [_] lines — this pipeline cannot do IO
-   [r] $result;int << =Math.Add $a $b
+   [r] $result#int << =Math.Add $a $b
 ```
 
 ## Permission Identifiers
@@ -57,13 +57,13 @@ When multiple parameters are needed, use IO form with input-only `[_]` lines:
 
 ```polyglot
 [_] _Web.request
-   [_] <url;string << "https://api.example.com/*"
-   [_] <method;string << "GET"
+   [_] <url#string << "https://api.example.com/*"
+   [_] <method#string << "GET"
 [_] _Database.connect
-   [_] <host;string << "localhost"
-   [_] <port;int << "5432"
-   [_] <database;string << "mydb"
-   [_] <auth;string << "certificate"
+   [_] <host#string << "localhost"
+   [_] <port#int << "5432"
+   [_] <database#string << "mydb"
+   [_] <auth#string << "certificate"
 ```
 
 IO form permissions are **input-only** — `[_] <param` with `<` input direction only. Permissions declare what is allowed, not what is returned. There is no `>` output in permission IO.
@@ -97,8 +97,8 @@ Permissions operate at two levels: **package ceiling** and **definition request*
 {@} LogAnalyzer
    [_] _File.read"/var/log/*"
    [_] _Web.request
-      [_] <url;string << "https://api.example.com/*"
-      [_] <method;string << "GET"
+      [_] <url#string << "https://api.example.com/*"
+      [_] <method#string << "GET"
 ```
 
 ### Definition Request

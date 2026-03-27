@@ -51,39 +51,39 @@ Enums are closed types. When all variants are listed, no `*?` is needed ([[PGE-6
 
 [ ] All variants covered — no *? needed
 [?] $dir =? #Direction.North
-   [r] $label;string << "N"
+   [r] $label#string << "N"
 [?] $dir =? #Direction.South
-   [r] $label;string << "S"
+   [r] $label#string << "S"
 [?] $dir =? #Direction.East
-   [r] $label;string << "E"
+   [r] $label#string << "E"
 [?] $dir =? #Direction.West
-   [r] $label;string << "W"
+   [r] $label#string << "W"
 ```
 
 Partial coverage with `*?` covering the rest is also valid:
 
 ```polyglot
 [?] $dir =? #Direction.North
-   [r] $label;string << "N"
+   [r] $label#string << "N"
 [?] *?
-   [r] $label;string << "other"
+   [r] $label#string << "other"
 ```
 
 `#Boolean` follows the same rule — list both `#Boolean.True` and `#Boolean.False`, or use `*?`.
 
 ### Numeric Exhaustiveness
 
-Numeric types (`;int`, `;float`) are open but rangeable. Ranges must cover the full domain or include `*?` ([[PGE-603|PGE-603]]). Overlapping ranges are flagged as warnings ([[PGE-604|PGE-604]]):
+Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the full domain or include `*?` ([[PGE-603|PGE-603]]). Overlapping ranges are flagged as warnings ([[PGE-604|PGE-604]]):
 
 ```polyglot
 [?] $code =? 200
-   [r] $status;string << "ok"
+   [r] $status#string << "ok"
 [?] $code =? 404
-   [r] $status;string << "not_found"
+   [r] $status#string << "not_found"
 [?] $code =? 500
-   [r] $status;string << "error"
+   [r] $status#string << "error"
 [?] *?
-   [r] $status;string << "unknown"
+   [r] $status#string << "unknown"
 ```
 
 ### Match Syntax (Conditional Assignment Sugar)
@@ -94,7 +94,7 @@ When every `[?]` arm performs the same operation — mapping one value to anothe
 
 ```polyglot
 [ ] Match form — equivalent to the [?] chain above
-[r] $code >> $status;string
+[r] $code >> $status#string
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
    [?] 500 >> "error"
@@ -115,7 +115,7 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
 **Enum match — exhaustive without wildcard:**
 
 ```polyglot
-[r] $dir >> $label;string
+[r] $dir >> $label#string
    [?] #Direction.North >> "N"
    [?] #Direction.South >> "S"
    [?] #Direction.East >> "E"
@@ -136,8 +136,8 @@ Strings are open sets — `*?` is always required ([[PGE-606|PGE-606]]). Flexibl
 |------|-----------|----------------|
 | Enum (`{#}` with `[.]` fields) | Closed (finite) | No — if all variants listed |
 | `#Boolean` | Closed (2 variants) | No — if both listed |
-| `;int` / `;float` | Open but rangeable | No — if ranges cover full domain; otherwise yes |
-| `;string` | Open (infinite) | Yes — always |
+| `#int` / `#float` | Open but rangeable | No — if ranges cover full domain; otherwise yes |
+| `#string` | Open (infinite) | Yes — always |
 | Flexible field (`:`) | Open | Yes — always |
 | Compound (`[&]`/`[\|]`/`[^]`) | Complex | Depends on variable types |
 
@@ -145,8 +145,8 @@ Strings are open sets — `*?` is always required ([[PGE-606|PGE-606]]). Flexibl
 flowchart TD
     START{"Type of\nbranched variable?"}
     CLOSED{"Closed type\n(enum / #Boolean)"}
-    RANGE{"Rangeable\n(;int / ;float)"}
-    OPEN{"Open type\n(;string / flexible :)"}
+    RANGE{"Rangeable\n(#int / #float)"}
+    OPEN{"Open type\n(#string / flexible :)"}
 
     ALL_LISTED{"All variants\nlisted?"}
     FULL_RANGE{"Ranges cover\nfull domain?"}
@@ -192,9 +192,9 @@ At least one condition holds:
 ```polyglot
 [?] $role =? #Role.Admin
 [|] $role =? #Role.Superuser
-   [r] $elevated;bool << #Boolean.True
+   [r] $elevated#bool << #Boolean.True
 [?] *?
-   [r] $elevated;bool << #Boolean.False
+   [r] $elevated#bool << #Boolean.False
 ```
 
 ### `[^]` — XOR
@@ -204,9 +204,9 @@ Exactly one of two conditions holds — not both, not neither:
 ```polyglot
 [?] $isAdmin =? #Boolean.True
 [^] $isSudo =? #Boolean.True
-   [r] $elevated;bool << #Boolean.True
+   [r] $elevated#bool << #Boolean.True
 [?] *?
-   [r] $elevated;bool << #Boolean.False
+   [r] $elevated#bool << #Boolean.False
 ```
 
 ### `[-]` — NOT
@@ -224,15 +224,15 @@ A `[?]` branch can contain inner `[?]` chains. Each nesting level is independent
 ```polyglot
 [?] $role =? #Role.Admin
    [?] $region =? #Region.EU
-      [r] $policy;string << "GDPR"
+      [r] $policy#string << "GDPR"
    [?] $region =? #Region.US
-      [r] $policy;string << "CCPA"
+      [r] $policy#string << "CCPA"
    [?] *?
-      [r] $policy;string << "Global"
+      [r] $policy#string << "Global"
 [?] $role =? #Role.User
-   [r] $policy;string << "Standard"
+   [r] $policy#string << "Standard"
 [?] *?
-   [r] $policy;string << "None"
+   [r] $policy#string << "None"
 ```
 
 The outer chain branches on `$role`. Inside the Admin branch, a separate chain branches on `$region` — this inner chain has its own `*?` because `#Region` may have more than EU and US variants.
@@ -244,17 +244,17 @@ Conditionals can switch on live metadata fields like pipeline `%status`:
 ```polyglot
 [?] =DataSync%status
    [?] #AwaitTrigger
-      [r] $msg;string << "idle"
+      [r] $msg#string << "idle"
    [?] #Running
-      [r] $msg;string << "in progress"
+      [r] $msg#string << "in progress"
    [?] #Failed
-      [r] $msg;string << "failed"
+      [r] $msg#string << "failed"
       [b] =Alert.Send
          [=] <msg << "DataSync failed"
    [?] #Disabled
-      [r] $msg;string << "pipeline disabled"
+      [r] $msg#string << "pipeline disabled"
    [?] *?
-      [r] $msg;string << "unknown state"
+      [r] $msg#string << "unknown state"
 ```
 
 See [[types#Live Type Modifier]] and [[pipelines#Querying Pipeline Status]] for metadata access patterns.

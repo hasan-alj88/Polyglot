@@ -15,18 +15,18 @@ severity: error
 **VALID:**
 ```polyglot
 {#} #UserRecord
-   [.] .name;string
-   [.] .age;int
+   [.] .name#string
+   [.] .age#int
 
 [ ] ✓ assigning to leaf fields individually
-[r] $user;UserRecord
+[r] $user#UserRecord
    [r] $user.name << "Alice"
    [r] $user.age << 30
 ```
 
 ```polyglot
 [ ] ✓ flexible leaf fields
-[r] $config;serial
+[r] $config#serial
    [r] $config:timeout << 30
    [r] $config:retries << 3
 ```
@@ -34,11 +34,11 @@ severity: error
 **INVALID:**
 ```polyglot
 {#} #UserRecord
-   [.] .name;string
-   [.] .age;int
+   [.] .name#string
+   [.] .age#int
 
 [ ] ✗ PGE-403 — assigning to branch node $user which has children .name, .age
-[r] $user;UserRecord
+[r] $user#UserRecord
    [r] $user << "Alice"            [ ] ✗ PGE-403 — $user is a branch, not a leaf
    [r] $user.name << "Alice"
    [r] $user.age << 30
@@ -46,15 +46,15 @@ severity: error
 
 ```polyglot
 {#} #Address
-   [.] .city;string
-   [.] .zip;string
+   [.] .city#string
+   [.] .zip#string
 
 {#} #Person
-   [.] .name;string
-   [.] .address;Address
+   [.] .name#string
+   [.] .address#Address
 
 [ ] ✗ PGE-403 — .address is a branch (has .city, .zip children)
-[r] $p;Person
+[r] $p#Person
    [r] $p.name << "Bob"
    [r] $p.address << "123 Main St"  [ ] ✗ PGE-403 — must assign .address.city and .address.zip
 ```

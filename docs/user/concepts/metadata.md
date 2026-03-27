@@ -23,37 +23,37 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 %
 ├── #  (Structs)
 │   └── :<type ref>:<instance>
-│       ├── .lastModified    ;live.string
-│       ├── .files           ;live.array.path
-│       ├── .errors          ;live.array.error
-│       ├── .usageCount      ;live.int
-│       ├── .description     ;string           (user-declared)
-│       ├── .version         ;string           (user-declared)
-│       ├── .authors         ;array.string     (user-declared)
-│       ├── .license         ;string           (user-declared)
-│       ├── .deprecated      ;bool             (user-declared)
+│       ├── .lastModified    #live.string
+│       ├── .files           #live.array:path
+│       ├── .errors          #live.array:error
+│       ├── .usageCount      #live.int
+│       ├── .description     #string           (user-declared)
+│       ├── .version         #string           (user-declared)
+│       ├── .authors         #array:string     (user-declared)
+│       ├── .license         #string           (user-declared)
+│       ├── .deprecated      #bool             (user-declared)
 │       ├── .alias                             (user-declared)
-│       └── :info            ;serial           (user-declared, flexible)
+│       └── :info            #serial           (user-declared, flexible)
 ├── =  (Pipelines)
 │   └── :<name>:<instance>
-│       ├── .status          ;live.#PipelineStatus
-│       ├── .errors          ;live.array.error
-│       ├── .isSuccess       ;live.#Boolean
-│       ├── .instanceCount   ;live.int
-│       ├── .lastRun         ;live.string
-│       ├── .duration        ;live.string
-│       ├── .triggerCount    ;live.int
-│       ├── .description     ;string           (user-declared)
-│       ├── .version         ;string           (user-declared)
-│       ├── .authors         ;array.string     (user-declared)
-│       ├── .license         ;string           (user-declared)
-│       ├── .deprecated      ;bool             (user-declared)
-│       ├── .deprecatedMessage ;string         (user-declared)
+│       ├── .status          #live.#PipelineStatus
+│       ├── .errors          #live.array:error
+│       ├── .isSuccess       #live.#Boolean
+│       ├── .instanceCount   #live.int
+│       ├── .lastRun         #live.string
+│       ├── .duration        #live.string
+│       ├── .triggerCount    #live.int
+│       ├── .description     #string           (user-declared)
+│       ├── .version         #string           (user-declared)
+│       ├── .authors         #array:string     (user-declared)
+│       ├── .license         #string           (user-declared)
+│       ├── .deprecated      #bool             (user-declared)
+│       ├── .deprecatedMessage #string         (user-declared)
 │       ├── .alias                             (user-declared)
 │       ├── .<               (input ports)
 │       ├── .>               (output ports)
 │       ├── ._              (pipeline permissions — see [[permissions#Definition Request]])
-│       └── :info            ;serial           (user-declared, flexible)
+│       └── :info            #serial           (user-declared, flexible)
 ├── ~  (Expanders)
 │   └── :<name>:<instance>
 │       ├── .<               (expand inputs)
@@ -64,28 +64,28 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │       └── .>               (collect outputs)
 ├── $  (Variables)
 │   └── :<name>:<instance>
-│       ├── .state           ;live.#VarState
-│       └── .sourceError     ;live.error        (NEW — !NoError if no error)
+│       ├── .state           #live.#VarState
+│       └── .sourceError     #live.error        (NEW — !NoError if no error)
 ├── Q  (Queues)
 │   └── :<name>:<instance>
-│       ├── .strategy        ;live.#QueueStrategy
-│       ├── .retrigger       ;live.#RetriggerStrategy
-│       ├── .state           ;live.#QueueState
-│       ├── .pendingCount    ;live.int
-│       ├── .activeCount     ;live.int
-│       ├── .description     ;string           (user-declared)
-│       ├── .version         ;string           (user-declared)
+│       ├── .strategy        #live.#QueueStrategy
+│       ├── .retrigger       #live.#RetriggerStrategy
+│       ├── .state           #live.#QueueState
+│       ├── .pendingCount    #live.int
+│       ├── .activeCount     #live.int
+│       ├── .description     #string           (user-declared)
+│       ├── .version         #string           (user-declared)
 │       └── .alias                             (user-declared)
 ├── M  (Macros)
 │   └── :<name>:<instance>
-│       ├── .description     ;string           (user-declared)
-│       ├── .version         ;string           (user-declared)
-│       ├── .authors         ;array.string     (user-declared)
-│       ├── .license         ;string           (user-declared)
-│       ├── .deprecated      ;bool             (user-declared)
-│       ├── .deprecatedMessage ;string         (user-declared)
+│       ├── .description     #string           (user-declared)
+│       ├── .version         #string           (user-declared)
+│       ├── .authors         #array:string     (user-declared)
+│       ├── .license         #string           (user-declared)
+│       ├── .deprecated      #bool             (user-declared)
+│       ├── .deprecatedMessage #string         (user-declared)
 │       ├── .alias                             (user-declared)
-│       ├── :info            ;serial           (user-declared, flexible)
+│       ├── :info            #serial           (user-declared, flexible)
 │       └── (live fields TBD)
 ├── !  (Errors)
 │   ├── .File                   (fixed — Polyglot-defined)
@@ -108,57 +108,57 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │       └── ._              (permission ceiling — see [[permissions#Package Ceiling]])
 ├── _  (Permissions)
 │   ├── .File
-│   │   ├── .read               ;string  (glob pattern)
-│   │   ├── .write              ;string
-│   │   ├── .execute            ;string
-│   │   └── .delete             ;string
+│   │   ├── .read               #string  (glob pattern)
+│   │   ├── .write              #string
+│   │   ├── .execute            #string
+│   │   └── .delete             #string
 │   ├── .Web
 │   │   ├── .request
 │   │   │   └── .<              (IO inputs)
-│   │   │       ├── .url        ;string
-│   │   │       └── .method     ;string
+│   │   │       ├── .url        #string
+│   │   │       └── .method     #string
 │   │   └── .socket
 │   │       └── .<
-│   │           ├── .url        ;string
-│   │           └── .protocol   ;string
+│   │           ├── .url        #string
+│   │           └── .protocol   #string
 │   ├── .Database
 │   │   ├── .connect
 │   │   │   └── .<
-│   │   │       ├── .host       ;string
-│   │   │       ├── .port       ;int
-│   │   │       ├── .database   ;string
-│   │   │       └── .auth       ;string
-│   │   ├── .read               ;string
-│   │   └── .write              ;string
+│   │   │       ├── .host       #string
+│   │   │       ├── .port       #int
+│   │   │       ├── .database   #string
+│   │   │       └── .auth       #string
+│   │   ├── .read               #string
+│   │   └── .write              #string
 │   ├── .System
-│   │   ├── .env                ;string
+│   │   ├── .env                #string
 │   │   ├── .process
 │   │   │   └── .<
-│   │   │       ├── .command    ;string
-│   │   │       └── .args       ;string
-│   │   └── .signal             ;string
+│   │   │       ├── .command    #string
+│   │   │       └── .args       #string
+│   │   └── .signal             #string
 │   ├── .Crypto
-│   │   ├── .key                ;string
-│   │   ├── .sign               ;string
-│   │   └── .encrypt            ;string
+│   │   ├── .key                #string
+│   │   ├── .sign               #string
+│   │   └── .encrypt            #string
 │   ├── .IPC
 │   │   ├── .send
 │   │   │   └── .<
-│   │   │       ├── .channel    ;string
-│   │   │       └── .protocol   ;string
+│   │   │       ├── .channel    #string
+│   │   │       └── .protocol   #string
 │   │   ├── .receive
 │   │   │   └── .<
-│   │   │       ├── .channel    ;string
-│   │   │       └── .protocol   ;string
-│   │   └── .subscribe          ;string
+│   │   │       ├── .channel    #string
+│   │   │       └── .protocol   #string
+│   │   └── .subscribe          #string
 │   ├── .Device
-│   │   ├── .camera             ;bool
-│   │   ├── .microphone         ;bool
-│   │   ├── .location           ;bool
-│   │   └── .bluetooth          ;bool
+│   │   ├── .camera             #bool
+│   │   ├── .microphone         #bool
+│   │   ├── .location           #bool
+│   │   └── .bluetooth          #bool
 │   └── .Memory
-│       ├── .allocate            ;string
-│       └── .shared              ;string
+│       ├── .allocate            #string
+│       └── .shared              #string
 └── definition              (compile-time schema templates)
     └── .{type}:{ref}       (structural template for all instances)
 ```
@@ -173,7 +173,7 @@ String subtypes live under `%#:String:*` at a flexible level. Each subtype uses 
 | `float` | `%#:String:float` | `^-?[0-9]+\.[0-9]+$` |
 | custom | `%#:String:<name>` | User-defined pattern |
 
-User code `;int` is an alias for `;String.int`. See [[types#Numeric Types — #String Subtypes]].
+User code `#int` is an alias for `#String.int`. See [[types#Numeric Types — #String Subtypes]].
 
 ## Enum Active-Field-Only
 
@@ -194,19 +194,19 @@ The `[%]` block element ([[blocks#Metadata]]) lives inside any `{x}` definition 
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `.description` | `;string` | Human-readable description |
-| `.version` | `;string` | Semantic version |
-| `.authors` | `;array.string` | Author list |
-| `.license` | `;string` | License identifier |
-| `.deprecated` | `;bool` | Deprecation flag |
-| `.deprecatedMessage` | `;string` | Reason for deprecation and suggested replacement |
+| `.description` | `#string` | Human-readable description |
+| `.version` | `#string` | Semantic version |
+| `.authors` | `#array:string` | Author list |
+| `.license` | `#string` | License identifier |
+| `.deprecated` | `#bool` | Deprecation flag |
+| `.deprecatedMessage` | `#string` | Reason for deprecation and suggested replacement |
 | `.alias` | — | Shorthand name. Preserves type prefix (`#` for data, `=` for pipelines) |
 
 ### Flexible Field
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `:info` | `;serial` | Opens a flexible scope for custom key-value tooling data |
+| `:info` | `#serial` | Opens a flexible scope for custom key-value tooling data |
 
 ### Assignment
 
@@ -232,29 +232,29 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 
 | Accessor | Type | Description |
 |----------|------|-------------|
-| `=Name%status` | `;live.#PipelineStatus` | AwaitTrigger, Disabled, Running, Failed |
-| `=Name%errors` | `;live.array.error` | Accumulated errors |
-| `=Name%isSuccess` | `;live.#Boolean` | Last run completed without error |
-| `=Name%instanceCount` | `;live.int` | Number of active instances |
-| `=Name%lastRun` | `;live.string` | Timestamp of last execution |
-| `=Name%duration` | `;live.string` | Duration of current/last run |
-| `=Name%triggerCount` | `;live.int` | Total times triggered |
+| `=Name%status` | `#live.#PipelineStatus` | AwaitTrigger, Disabled, Running, Failed |
+| `=Name%errors` | `#live.array:error` | Accumulated errors |
+| `=Name%isSuccess` | `#live.#Boolean` | Last run completed without error |
+| `=Name%instanceCount` | `#live.int` | Number of active instances |
+| `=Name%lastRun` | `#live.string` | Timestamp of last execution |
+| `=Name%duration` | `#live.string` | Duration of current/last run |
+| `=Name%triggerCount` | `#live.int` | Total times triggered |
 
 ### Variable (`$`)
 
 | Accessor | Type | Description |
 |----------|------|-------------|
-| `$name%state` | `;live.#VarState` | Declared, Default, Final, Failed, Released |
-| `$name%sourceError` | `;live.error` | Error that triggered a `<!` fallback, or `!NoError` if no error. See [[errors#Error Fallback Operators]] |
+| `$name%state` | `#live.#VarState` | Declared, Default, Final, Failed, Released |
+| `$name%sourceError` | `#live.error` | Error that triggered a `<!` fallback, or `!NoError` if no error. See [[errors#Error Fallback Operators]] |
 
 ### Data (`{#}`)
 
 | Accessor | Type | Description |
 |----------|------|-------------|
-| `#Name%lastModified` | `;live.string` | Last modification timestamp |
-| `#Name%files` | `;live.array.path` | Associated file paths |
-| `#Name%errors` | `;live.array.error` | Accumulated errors |
-| `#Name%usageCount` | `;live.int` | Usage count |
+| `#Name%lastModified` | `#live.string` | Last modification timestamp |
+| `#Name%files` | `#live.array:path` | Associated file paths |
+| `#Name%errors` | `#live.array:error` | Accumulated errors |
+| `#Name%usageCount` | `#live.int` | Usage count |
 
 ### Macro (`{M}`)
 

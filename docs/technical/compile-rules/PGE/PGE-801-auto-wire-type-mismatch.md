@@ -20,9 +20,9 @@ Entry IO (first step's inputs) and exit IO (last step's outputs) always require 
 ```polyglot
 [ ] ✗ PGE-801 — type mismatch, no 1-to-1 mapping
 [r] =Count.Items=>=Format.Label
-   [=] >0.list;array.string << $items
-   [ ] =Count.Items output: >total;int
-   [ ] =Format.Label input: <text;string
+   [=] >0.list#array:string << $items
+   [ ] =Count.Items output: >total#int
+   [ ] =Format.Label input: <text#string
    [ ] ✗ PGE-801 — int ≠ string, no matching type
-   [=] <1.label;string >> >output
+   [=] <1.label#string >> >output
 ```

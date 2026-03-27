@@ -21,8 +21,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] >out << $input
 ```
 
@@ -32,8 +32,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;Config
-   [#] $cfg;Config << "config.json"
+   [=] >out#Config
+   [#] $cfg#Config << "config.json"
    [r] >out << $cfg
 ```
 
@@ -44,8 +44,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    $out <~ $input                       [ ] ✗ PGE-116 — missing block element marker
 ```
 
@@ -55,7 +55,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;path
+   [=] >out#path
    =Path"/tmp/data"                     [ ] ✗ PGE-116 — missing [r] marker
 ```
 
@@ -65,8 +65,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >out;string
+   [=] <data#string
+   [=] >out#string
    =Transform                           [ ] ✗ PGE-116 — missing [r], [p], or [b] marker
       [=] <input << $data
       [=] >result >> >out

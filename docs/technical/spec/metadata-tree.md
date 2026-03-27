@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: spec
-updated: 2026-03-25
+updated: 2026-03-27
 status: complete
 ---
 
@@ -98,24 +98,29 @@ String subtypes live under `%#:String:*` at a flexible level:
 
 ```
 %#:String
-├── :int          ← .string;RawString + .re = "^-?[0-9]+$"
-├── :float        ← .string;RawString + .re = "^-?[0-9]+\.[0-9]+$"
+├── :int          ← .string#RawString + .re = "^-?[0-9]+$"
+├── :uint         ← .string#RawString + .re = "^[0-9]+$"
+├── :float        ← .string#RawString + .re = "^-?[0-9]+\.[0-9]+$"
+├── :sci          ← .string#RawString + .re = scientific notation
+├── :eng          ← .string#RawString + .re = engineering notation
+├── :dim          ← .string#RawString + .re = "^[1-9][0-9]*$"
 ├── :emailAddress ← user-defined: .re = custom pattern
 └── :(any)        ← extensible — users define new subtypes
 ```
 
 ### Alias Resolution
 
-User code `;int` is an alias for `;String.int`. The compiler resolves:
+User code `#int` is an alias for `#Int`. The `%Alias` schema property enables this — each subtype declares `[#] %Alias << "int"` (lowercase shorthand). The compiler resolves:
 
 | User writes | Compiler resolves to | Tree path |
 |-------------|---------------------|-----------|
-| `;int` | `;String.int` | `%#:String:int` |
-| `;float` | `;String.float` | `%#:String:float` |
-| `;string` | `;String` | `%#:String` |
-| `;emailAddress` | `;String.emailAddress` | `%#:String:emailAddress` |
+| `#int` | `#Int` | `%#:String:int` |
+| `#uint` | `#UnsignedInt` | `%#:String:uint` |
+| `#float` | `#Float` | `%#:String:float` |
+| `#string` | `#String` | `%#:String` |
+| `#emailAddress` | `#String.emailAddress` | `%#:String:emailAddress` |
 
-All subtypes share the `#String` schema (`.string;RawString` + `.re;RawString`) with `.re` pre-filled per subtype.
+All subtypes share the `#String` schema (`.string#RawString` + `.re#RawString`) with `.re` pre-filled per subtype.
 
 ## Enum Instance Rules
 
@@ -147,10 +152,10 @@ The runtime enforces exactly one active enum field per instance:
 ```
 %=:ProcessData:0
 ├── .<                      ← input ports
-│   ├── .filepath;path
-│   └── .options;serial
+│   ├── .filepath#path
+│   └── .options#serial
 └── .>                      ← output ports
-    └── .content;string
+    └── .content#string
 ```
 
 Parameter names within `.<` and `.>` are flexible — they follow the pipeline's `[=]` IO declarations.
@@ -164,10 +169,10 @@ Parameter names within `.<` and `.>` are flexible — they follow the pipeline's
 ```
 %_
 ├── .File
-│   ├── .read               ;string  (glob pattern)
-│   ├── .write              ;string
-│   ├── .execute            ;string
-│   └── .delete             ;string
+│   ├── .read               #string  (glob pattern)
+│   ├── .write              #string
+│   ├── .execute            #string
+│   └── .delete             #string
 ├── .Web
 │   ├── .request
 │   │   └── .<              (IO inputs)
@@ -176,23 +181,23 @@ Parameter names within `.<` and `.>` are flexible — they follow the pipeline's
 ├── .Database
 │   ├── .connect
 │   │   └── .<
-│   ├── .read               ;string
-│   └── .write              ;string
+│   ├── .read               #string
+│   └── .write              #string
 ├── .System
-│   ├── .env                ;string
+│   ├── .env                #string
 │   ├── .process
 │   │   └── .<
-│   └── .signal             ;string
+│   └── .signal             #string
 ├── .Crypto
-│   ├── .key, .sign, .encrypt   ;string
+│   ├── .key, .sign, .encrypt   #string
 ├── .IPC
 │   ├── .send, .receive
 │   │   └── .<
-│   └── .subscribe          ;string
+│   └── .subscribe          #string
 ├── .Device
-│   ├── .camera, .microphone, .location, .bluetooth   ;bool
+│   ├── .camera, .microphone, .location, .bluetooth   #bool
 └── .Memory
-    ├── .allocate, .shared   ;string
+    ├── .allocate, .shared   #string
 ```
 
 ### Key Properties
@@ -209,23 +214,50 @@ Parameter names within `.<` and `.>` are flexible — they follow the pipeline's
 
 | Definition path | Ensures |
 |-----------------|---------|
-| `%definition.#:UserRecord` | All `%#:UserRecord:N` instances have `.name;string`, `.age;int` |
+| `%definition.#:UserRecord` | All `%#:UserRecord:N` instances have `.name#string`, `.age#int` |
 | `%definition.=:ProcessData` | All `%=:ProcessData:N` instances have the same IO ports and `live` fields |
 
 Definitions are immutable at runtime — they are resolved entirely at compile time.
 
+### Schema Properties in Definition Templates
+
+When a `{#}` definition includes `[#] %Property` declarations, these appear as fixed fields under the definition template. Schema properties are compile-time metadata describing structural constraints on the type's tree shape:
+
+| Property | Type | Meaning |
+|----------|------|---------|
+| `%Key.Type` | type ref | Data type of keys at this level |
+| `%Key.Gap` | `#Boolean` | Can keys have gaps? (`#False` = contiguous, `#True` = sparse) |
+| `%Ordered` | `#Boolean` | Are keys ordered? |
+| `%Depth.Max` | `#Int` | Max tree depth (`0` = scalar, `1` = flat, `-1` = unlimited) |
+| `%Alias` | `#RawString` | Lowercase shorthand name (e.g., `"array"` for `#Array`) |
+
+Example — `#Array` definition template:
+
+```
+%definition.#:Array
+├── .Key
+│   ├── .Type              → #UnsignedInt
+│   └── .Gap               → #Boolean (.False active)
+├── .Ordered               → #Boolean (.True active)
+├── .Depth
+│   └── .Max               → (from Dim parameter)
+└── .Alias                 → "array"
+```
+
+Schema properties are introspectable at compile time and enforce structural invariants (e.g., `%Key.Gap << #False` means the compiler rejects non-contiguous keys).
+
 ## Field Expansion
 
-Any field typed `;string` expands to the full `#String` struct in the tree:
+Any field typed `#string` expands to the full `#String` struct in the tree:
 
 ```
-.description;string
+.description#string
   → .description
-      .string;RawString     ← the raw value
-      .re;RawString          ← the regex constraint (default: "" = accept any)
+      .string#RawString     ← the raw value
+      .re#RawString          ← the regex constraint (default: ".*" = accept any)
 ```
 
-This expansion applies recursively — `;array.string` expands each element's `.string` and `.re` subfields.
+This expansion applies recursively — `#array:string` expands each element's `.string` and `.re` subfields.
 
 ## Related
 

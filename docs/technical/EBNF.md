@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: specification
-updated: 2026-03-22
+updated: 2026-03-27
 status: draft
 ---
 
@@ -182,33 +182,45 @@ cross_pkg_enum      ::= '@' name '#' dotted_name ;     (* @alias#DataName.EnumFi
 ### 4.1 Type Annotations
 
 ```ebnf
-type_annotation     ::= ';' type_expr ;
+type_annotation     ::= '#' type_expr ;
 
 type_expr           ::= basic_type
-                      | array_type
-                      | serial_type
+                      | collection_type
+                      | wildcard_type
                       | user_type
                       | live_type ;
 
 live_type           ::= "live" type_expr ;    (* Polyglot-managed, read-only *)
 
-basic_type          ::= "RawString" | "string" | "int" | "float" | "bool" | "path" ;
+basic_type          ::= "RawString" | "string" | "int" | "uint" | "float"
+                      | "sci" | "eng" | "dim" | "bool" | "path" ;
                       (* RawString: compiler intrinsic, literal raw chars, no interpolation.
-                         string (#String): struct with .string;RawString + .re;RawString.
-                         int, float: #String subtypes with pre-set .re patterns.
+                         string (#String): struct with .string#RawString + .re#RawString.
+                         int, uint, float, sci, eng, dim: #String subtypes with pre-set .re patterns.
                          bool (#Boolean): separate enum struct, not a #String subtype.
-                         path (#path): struct with .Unix;string + .Windows;string. *)
+                         path (#path): struct with .Unix#string + .Windows#string. *)
 
-array_type          ::= "array" [ fixed_sep element_type ] [ flex_sep dimension ] ;
-element_type        ::= basic_type | name ;            (* user-defined type name without # prefix *)
-dimension           ::= digit { digit } "D" ;          (* e.g., :2D, :3D — omitted defaults to 1D *)
+collection_type     ::= array_type | dict_type | dataframe_type | serial_type ;
 
+array_type          ::= "array" [ flex_sep type_param ] [ flex_sep dimension ] ;
+                      (* e.g., #array:int, #array:float:2D, #array:Person *)
+dict_type           ::= "dict" flex_sep type_param flex_sep type_param ;
+                      (* e.g., #dict:string:int — key type : value type *)
+dataframe_type      ::= "dataframe" flex_sep type_param flex_sep type_param ;
+                      (* e.g., #dataframe:string:float — column key type : cell value type *)
 serial_type         ::= "serial" ;
 
-user_type           ::= dotted_name ;                   (* e.g., UserRecord — no # prefix in type annotations *)
+type_param          ::= basic_type | dimension | user_type | wildcard_type ;
+                      (* Nested type refs drop the # prefix within type context *)
+dimension           ::= digit { digit } "D" ;
+                      (* e.g., :2D, :3D — omitted defaults to 1D *)
+
+wildcard_type       ::= "*" ;                 (* #* — any type; used in generic constraints *)
+
+user_type           ::= dotted_name ;         (* e.g., Person — no # prefix in type annotations *)
 ```
 
-**Rule:** In all type annotations (after `;`), user-defined type names drop the `#` prefix. The `#` prefix is only for referencing data definitions outside type contexts (e.g., `#Boolean.True`, `@alias#DataName.EnumField`). Examples: `$var;UserRecord`, `array.UserRecord`, `<input;Alert`.
+**Rule:** `#` starts a type context. Within that context, nested type references separated by `:` **drop the `#` prefix** — the compiler resolves them. Examples: `$score#int`, `$users#array:Person`, `$map#dict:string:int`, `$matrix#array:float:2D`.
 
 ### 4.2 Typed Variable
 
@@ -217,6 +229,30 @@ typed_variable      ::= variable_id [ type_annotation ] ;
 typed_field         ::= field_ref [ type_annotation ] ;
 typed_io_param      ::= io_param [ type_annotation ] ;
 ```
+
+### 4.3 Generic Type Parameters in {#} Definitions
+
+```ebnf
+generic_param       ::= '<' name ;
+                      (* Type parameter input — e.g., <ValueType, <Dim *)
+
+generic_def_header  ::= data_id { generic_param } ;
+                      (* e.g., #Array<ValueType<Dim, #Dict<KeyType<ValueType *)
+
+schema_inheritance  ::= "[#]" "<~" data_id ;
+                      (* e.g., [#] <~ #String — inherit schema, can specialize *)
+
+schema_property     ::= "[#]" '%' dotted_name assignment_op expression ;
+                      (* e.g., [#] %Key.Type << #UnsignedInt *)
+                      (* e.g., [#] %Alias << "int" *)
+                      (* e.g., [#] %Depth.Max << 0 *)
+
+type_constraint     ::= "[<]" '%' dotted_name assignment_op expression ;
+                      (* Nested under [#] <param — constrains the type parameter *)
+                      (* e.g., [<] %Depth.Max << 0 — param must be scalar *)
+```
+
+**Rule:** Generic type parameters use `<` prefix (consistent with IO input semantics — the type is an "input" to the definition). Schema properties (`[#] %`) declare compile-time metadata. Type constraints (`[<]`) restrict what types may bind to a parameter.
 
 ---
 
@@ -271,7 +307,7 @@ metadata_elem       ::= "[%]" ;
 comment_elem        ::= "[ ]" ;
 ```
 
-**Rule:** `[>]` (output fallback) and `[<]` (input fallback) are scoped under `[=]` IO lines. They use the `<!` fallback operator to provide error-recovery values. See §10.2 for fallback line syntax.
+**Rule:** `[>]` (output fallback) and `[<]` (input fallback) are scoped under `[=]` IO lines — they use the `<!` fallback operator to provide error-recovery values (see §10.2). `[<]` also appears nested under `[#] <param` in `{#}` definitions as a type parameter constraint block (see §4.3).
 
 ---
 
@@ -391,7 +427,7 @@ value_expr          ::= literal
 inline_pipeline_call ::= pipeline_ref string_literal ;
                       (* e.g., =Path"/tmp/MyApp", =Path"{.}/logs"
                          The string literal is interpolated ({$var} resolved first),
-                         then auto-wired into the pipeline's <InlineStringLiteral;string
+                         then auto-wired into the pipeline's <InlineStringLiteral#string
                          parameter (must be declared in [=] IO, defaults to "").
                          Each pipeline defines its own parsing logic for the string.
                          For =Path, separators / and \ are normalized per OS. *)
@@ -452,15 +488,15 @@ flex_data_field     ::= "[:]" flex_sep name type_annotation [ assignment_op valu
 
 (* Typed flexible wildcard — all flex siblings at this level share this type *)
 typed_flex_wildcard ::= "[:]" flex_sep "*" type_annotation ;
-                      (* e.g., [:] :*;Handler — every :key at this level is ;Handler.
+                      (* e.g., [:] :*#Handler — every :key at this level is #Handler.
                          Compiler infers type on new keys; no explicit annotation needed.
                          Contradicting annotation → PGE-401.
-                         Absent wildcard → untyped (;serial). *)
+                         Absent wildcard → untyped (#serial). *)
 ```
 
 **Rules:**
-- No `;type` annotation implies an **enum field**.
-- With `;type` implies a **value field**.
+- No `#type` annotation implies an **enum field**.
+- With `#type` implies a **value field**.
 - All siblings at the same level must be the same kind (all enum or all value).
 - Enum fields always use `[.]` fixed fields.
 
@@ -529,11 +565,11 @@ Simple: `[Q] =Q.Default`
 With IO and active controls:
 ```polyglot
 [Q] #Queue:GPUQueue
-   [=] <maxConcurrent;int << 2
+   [=] <maxConcurrent#int << 2
    [Q] =Q.Pause.Hard
-      [=] <RAM.Available.LessThan;float << 3072.0
+      [=] <RAM.Available.LessThan#float << 3072.0
    [Q] =Q.Resume
-      [=] <RAM.Available.MoreThan;float << 5120.0
+      [=] <RAM.Available.MoreThan#float << 5120.0
 ```
 
 #### 9.3.4 Wrapper Section
@@ -647,11 +683,11 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
 ```polyglot
 {Q} #Queue:GPUQueue
    [%] .description << "Queue for GPU-intensive work"
-   [.] .strategy;#QueueStrategy << #LIFO
-   [.] .maxInstances;int << 1
-   [.] .retrigger;#RetriggerStrategy << #Disallow
+   [.] .strategy#QueueStrategy << #LIFO
+   [.] .maxInstances#int << 1
+   [.] .retrigger#RetriggerStrategy << #Disallow
    [Q] =Q.Kill.Graceful
-      [=] <ExecutionTime.MoreThan;string << "2h"
+      [=] <ExecutionTime.MoreThan#string << "2h"
 ```
 
 **Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `=Q.Default` is the stdlib-provided queue and does not require a `{Q}` definition.
@@ -664,19 +700,19 @@ error_def           ::= "{!}" error_namespace_id NEWLINE
 
 error_namespace_id  ::= '!' dotted_name ;
 
-error_leaf_line     ::= "[.]" fixed_field ";#Error"
+error_leaf_line     ::= "[.]" fixed_field "#Error"
                       | metadata_line
                       | comment_line ;
 ```
 
-`{!}` defines a custom error tree. Each leaf is typed `;#Error`. The namespace uses the `!` prefix. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`) are built-in.
+`{!}` defines a custom error tree. Each leaf is typed `#Error`. The namespace uses the `!` prefix. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`) are built-in.
 
 **Example:**
 ```polyglot
 {!} !Validation
-   [.] .Empty;#Error
-   [.] .TooLong;#Error
-   [.] .InvalidEmail;#Error
+   [.] .Empty#Error
+   [.] .TooLong#Error
+   [.] .InvalidEmail#Error
 ```
 
 ### 9.7 Array Definition
@@ -725,7 +761,7 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 **Rules:**
 - `[%]` appears inside any `{x}` definition (`{#}`, `{=}`, `{M}`).
 - One definition = one metadata set (class-level, not instance-level).
-- All top-level `[%]` fields use `.` fixed separator. Only `.info;serial` opens a `:` flexible scope underneath (sibling homogeneity preserved).
+- All top-level `[%]` fields use `.` fixed separator. Only `.info#serial` opens a `:` flexible scope underneath (sibling homogeneity preserved).
 - Under a `[.]` field, `[%] .alias << #AliasName` creates a shorthand that resolves to the fully qualified path (e.g., `#True` resolves to `#Boolean.True`).
 - At pipeline definition level, `[%] .alias << =AliasName` aliases the whole pipeline.
 - Aliases preserve their type prefix (`#` for data, `=` for pipelines) and participate in exhaustiveness checking when the variable carries the parent type annotation.
@@ -817,7 +853,7 @@ error_name          ::= dotted_name ;
 data_load           ::= "[#]" assignment_expr ;
 ```
 
-**In execution:** `[#] $hire;NewHire << $payload` — deserialize serialized data into a typed structure.
+**In execution:** `[#] $hire#NewHire << $payload` — deserialize serialized data into a typed structure.
 
 **In `{#}` definitions:** `[#]` can load external serialized files:
 
@@ -826,7 +862,7 @@ data_load           ::= "[#]" assignment_expr ;
 [#] #file2 << =Yaml.LoadFile"/config/appsettings.yaml"
 ```
 
-Fields can then reference loaded file data: `.dbConnection;string <~ #file1.db.connectionString`. Default error handling raises a compile error if the file is missing. Value changes propagate across the codebase where referenced.
+Fields can then reference loaded file data: `.dbConnection#string <~ #file1.db.connectionString`. Default error handling raises a compile error if the file is missing. Value changes propagate across the codebase where referenced.
 
 ---
 
@@ -993,7 +1029,7 @@ race_operator       ::= "First"
                       | "Second"
                       | "Nth" ;
 
-collect_io_line     ::= "[*]" io_param assignment_op value_expr   (* named param: [*] <n;int << 2 *)
+collect_io_line     ::= "[*]" io_param assignment_op value_expr   (* named param: [*] <n#int << 2 *)
                       | "[*]" "<<" variable_ref                  (* wait input: [*] << $var *)
                       | "[*]" ">>" variable_ref ;                (* collect output: [*] >> $winner *)
 ```
@@ -1024,11 +1060,11 @@ collect_io_line     ::= "[*]" io_param assignment_op value_expr   (* named param
 | `*All` | `[*] << $var...` | none — vars stay accessible | Parallel `[p]` sync |
 | `*First` | `[*] << $var...` | `[*] >> $winner` | Parallel `[p]` race |
 | `*Second` | `[*] << $var...` | `[*] >> $winner` | Parallel `[p]` race |
-| `*Nth` | `<n;int`, `[*] << $var...` | `[*] >> $winner` | Parallel `[p]` race |
-| `*Continue` | none | `>IsFailed;bool` via `[*] >IsFailed >> $var` | Inside `[!]` error block |
+| `*Nth` | `<n#int`, `[*] << $var...` | `[*] >> $winner` | Parallel `[p]` race |
+| `*Continue` | none | `>IsFailed#bool` via `[*] >IsFailed >> $var` | Inside `[!]` error block |
 | `*Ignore` | `[*] << $var...` | none | Parallel `[p]` discard |
 
-**Rule:** `*Continue` is an error recovery collector used inside `[!]` blocks. It signals the pipeline to continue after an error instead of terminating. Its single output `>IsFailed;bool` must be captured and handled — if the compiler cannot verify the output is checked, it emits PGW-205. Syntax: `[*] *Continue >IsFailed >> $fetchFailed`.
+**Rule:** `*Continue` is an error recovery collector used inside `[!]` blocks. It signals the pipeline to continue after an error instead of terminating. Its single output `>IsFailed#bool` must be captured and handled — if the compiler cannot verify the output is checked, it emits PGW-205. Syntax: `[*] *Continue >IsFailed >> $fetchFailed`.
 
 **Rule:** `*Ignore` is an explicit discard collector. It takes `[*] <<` wait inputs only and produces no outputs. Use for parallel output that exists for debugging but is intentionally unused. Prefer `$*` inline discard when the value is never needed.
 
@@ -1084,17 +1120,17 @@ file
   │         └─ metadata          [%] .alias << #Inactive
   │
   ├─ data_def               {#} #Record
-  │    ├─ value_field           [.] .name;string <~ ""
-  │    └─ value_field           [.] .count;int <~ 0
+  │    ├─ value_field           [.] .name#string <~ ""
+  │    └─ value_field           [.] .count#int <~ 0
   │
   ├─ error_def              {!} !Processing
-  │    └─ leaf                 [.] .InvalidRecord;#Error
+  │    └─ leaf                 [.] .InvalidRecord#Error
   │
   └─ pipeline_def           {=} =ProcessItems
        ├─ metadata              [%] .version << "1.0.0"
        ├─ trigger               [t] =T.Call
-       ├─ io                    [=] <items;array.Record
-       │                        [=] >total;int ~> 0
+       ├─ io                    [=] <items#array:Record
+       │                        [=] >total#int ~> 0
        ├─ error_decl            [=] !Processing.InvalidRecord
        ├─ queue                 [Q] =Q.Default
        ├─ wrapper               [W] =W.Polyglot

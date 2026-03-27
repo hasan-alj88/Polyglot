@@ -18,64 +18,64 @@ severity: error
 ```polyglot
 [ ] ✓ self-reference through array indirection
 {#} #TreeNode
-   [.] .label;string
-   [.] .children;array.TreeNode        [ ] ✓ array breaks the recursion
+   [.] .label#string
+   [.] .children#array:TreeNode        [ ] ✓ array breaks the recursion
 ```
 
 ```polyglot
 [ ] ✓ mutual reference through serial indirection
 {#} #Department
-   [.] .name;string
-   [.] .employees;serial.Employee
+   [.] .name#string
+   [.] .employees#serial.Employee
 
 {#} #Employee
-   [.] .name;string
-   [.] .dept;serial.Department          [ ] ✓ serial breaks the cycle
+   [.] .name#string
+   [.] .dept#serial.Department          [ ] ✓ serial breaks the cycle
 ```
 
 ```polyglot
 [ ] ✓ no self-reference
 {#} #Address
-   [.] .street;string
-   [.] .city;string
+   [.] .street#string
+   [.] .city#string
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-414 — direct self-reference
 {#} #Node
-   [.] .value;string
-   [.] .child;Node                      [ ] ✗ PGE-414 — infinite recursion
+   [.] .value#string
+   [.] .child#Node                      [ ] ✗ PGE-414 — infinite recursion
 ```
 
 ```polyglot
 [ ] ✗ PGE-414 — mutual recursion without indirection
 {#} #A
-   [.] .name;string
-   [.] .partner;B                       [ ] ✗ PGE-414 — A→B→A cycle
+   [.] .name#string
+   [.] .partner#B                       [ ] ✗ PGE-414 — A→B→A cycle
 
 {#} #B
-   [.] .label;string
-   [.] .partner;A
+   [.] .label#string
+   [.] .partner#A
 ```
 
 ```polyglot
 [ ] ✗ PGE-414 — transitive cycle (A→B→C→A)
 {#} #A
-   [.] .ref;B
+   [.] .ref#B
 
 {#} #B
-   [.] .ref;C
+   [.] .ref#C
 
 {#} #C
-   [.] .ref;A                           [ ] ✗ PGE-414 — cycle detected
+   [.] .ref#A                           [ ] ✗ PGE-414 — cycle detected
 ```
 
 ```polyglot
 [ ] ✗ PGE-414 — direct self-reference via flexible field
 {#} #Category
-   [:] :name;string
-   [:] :sub;Category                    [ ] ✗ PGE-414 — infinite recursion via flexible field
+   [:] :name#string
+   [:] :sub#Category                    [ ] ✗ PGE-414 — infinite recursion via flexible field
 ```
 
 **Open point:** None.

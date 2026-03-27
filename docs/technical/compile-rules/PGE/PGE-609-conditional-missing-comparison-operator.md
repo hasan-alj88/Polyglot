@@ -48,7 +48,7 @@ severity: error
 
 ```polyglot
 [ ] ✓ Match context — no comparison operator needed
-[r] $code >> $status;string
+[r] $code >> $status#string
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
    [?] * >> "unknown"

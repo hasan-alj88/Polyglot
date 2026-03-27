@@ -21,9 +21,9 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >result;string
-   [=] >count;int
+   [=] <input#string
+   [=] >result#string
+   [=] >count#int
    [r] =Parse
       [=] <data << $input
       [=] >parsed >> $clean
@@ -37,8 +37,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <status;int
-   [=] >message;string
+   [=] <status#int
+   [=] >message#string
    [?] $status
       [?] ?[200,299]
          [r] >message << "ok"           [ ] ✓ pushed in this branch
@@ -53,9 +53,9 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >result;string
-   [=] >forgotten;string               [ ] ⚠ PGW-203 — never pushed to
+   [=] <input#string
+   [=] >result#string
+   [=] >forgotten#string               [ ] ⚠ PGW-203 — never pushed to
    [r] >result << $input
 ```
 
@@ -65,9 +65,9 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <flag;bool
-   [=] >result;string
-   [=] >count;int                       [ ] ⚠ PGW-203 — not pushed in *? branch
+   [=] <flag#bool
+   [=] >result#string
+   [=] >count#int                       [ ] ⚠ PGW-203 — not pushed in *? branch
    [?] $flag
       [?] =? .True
          [r] >result << "yes"
@@ -83,9 +83,9 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >out;string
-   [=] >debug;string                    [ ] ⚠ PGW-203 — >debug never pushed to
+   [=] <data#string
+   [=] >out#string
+   [=] >debug#string                    [ ] ⚠ PGW-203 — >debug never pushed to
    [r] =Process
       [=] <input << $data
       [=] >result >> >out

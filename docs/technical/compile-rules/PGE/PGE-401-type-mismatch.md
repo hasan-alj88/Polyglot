@@ -20,54 +20,54 @@ Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same ty
 **VALID:**
 ```polyglot
 [ ] ✓ matching basic types
-[=] <name;string
+[=] <name#string
 [r] =Greet
-   [=] <input;string << <name       [ ] string → string ✓
-   [=] >output;string >> $greeting
+   [=] <input#string << <name       [ ] string → string ✓
+   [=] >output#string >> $greeting
 ```
 
 ```polyglot
 [ ] ✓ matching element-typed arrays
 [r] =Fetch.Names
-   [=] >list;array.string >> $names
+   [=] >list#array:string >> $names
 [r] =Process.Names
-   [=] <items;array.string << $names [ ] array.string → array.string ✓
+   [=] <items#array:string << $names [ ] array.string → array.string ✓
 ```
 
 ```polyglot
 [ ] ✓ matching user-defined types
 [r] =Fetch.User
-   [=] >user;UserRecord >> $user
+   [=] >user#UserRecord >> $user
 [r] =Save.User
-   [=] <record;UserRecord << $user   [ ] UserRecord → UserRecord ✓
+   [=] <record#UserRecord << $user   [ ] UserRecord → UserRecord ✓
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-401 — int pushed into string
 [r] =Compute
-   [=] >count;int >> $count
+   [=] >count#int >> $count
 [r] =Label
-   [=] <text;string << $count        [ ] ✗ PGE-401 — int ≠ string
+   [=] <text#string << $count        [ ] ✗ PGE-401 — int ≠ string
 ```
 
 ```polyglot
 [ ] ✗ PGE-401 — array.int pushed into array.string
 [r] =Fetch.Scores
-   [=] >scores;array.int >> $scores
+   [=] >scores#array:int >> $scores
 [r] =Display
-   [=] <names;array.string << $scores [ ] ✗ PGE-401 — array.int ≠ array.string
+   [=] <names#array:string << $scores [ ] ✗ PGE-401 — array.int ≠ array.string
 ```
 
 ```polyglot
 [ ] ✗ PGE-401 — different schema (different field structure)
 {#} #UserRecord
-   [.] .name;string
-   [.] .age;int
+   [.] .name#string
+   [.] .age#int
 
 {#} #OrderRecord
-   [.] .orderId;string
-   [.] .total;float
+   [.] .orderId#string
+   [.] .total#float
 
 [r] =Fetch.User
    [=] >user;#UserRecord >> $user
@@ -78,23 +78,23 @@ Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same ty
 ```polyglot
 [ ] ✓ different names, same schema — this is valid
 {#} #UserProfile
-   [.] .name;string
-   [.] .email;string
+   [.] .name#string
+   [.] .email#string
 
 {#} #ContactInfo
-   [.] .name;string
-   [.] .email;string
+   [.] .name#string
+   [.] .email#string
 
 [r] =Fetch.Profile
    [=] >profile;#UserProfile >> $profile
 [r] =Send.Email
-   [=] <contact;#ContactInfo << $profile [ ] ✓ same schema — name;string + email;string
+   [=] <contact;#ContactInfo << $profile [ ] ✓ same schema — name#string + email#string
 ```
 
 ```polyglot
 [ ] ✗ PGE-401 — no implicit int → float coercion
 [r] =Count.Items
-   [=] >total;int >> $total
+   [=] >total#int >> $total
 [r] =Divide
-   [=] <numerator;float << $total    [ ] ✗ PGE-401 — int ≠ float
+   [=] <numerator#float << $total    [ ] ✗ PGE-401 — int ≠ float
 ```

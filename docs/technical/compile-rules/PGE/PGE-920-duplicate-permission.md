@@ -25,7 +25,7 @@ severity: error
    [W] =W.Polyglot
    [r] $content << =File.Text.Read >> "/var/log/app.log"
    [r] =File.Text.Write >> "/tmp/reports/summary.txt"
-      [=] <content;string << $content
+      [=] <content#string << $content
 ```
 
 ```polyglot
@@ -65,11 +65,11 @@ severity: error
 [ ] ✗ PGE-920 — duplicate IO-form permission
 {=} =DupWeb
    [_] _Web.request
-      [_] <url;string << "https://api.example.com/*"
-      [_] <method;string << "GET"
+      [_] <url#string << "https://api.example.com/*"
+      [_] <method#string << "GET"
    [_] _Web.request                           [ ] ✗ PGE-920 — _Web.request already declared
-      [_] <url;string << "https://other.example.com/*"
-      [_] <method;string << "POST"
+      [_] <url#string << "https://other.example.com/*"
+      [_] <method#string << "POST"
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot

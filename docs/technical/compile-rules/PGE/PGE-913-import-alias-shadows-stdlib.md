@@ -26,9 +26,9 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @triggers=OnSchedule                     [ ] ✓ unambiguous — @triggers is not a stdlib name
-      [=] <cron;string << "0 * * * *"
+      [=] <cron#string << "0 * * * *"
    [r] @fileUtils=ReadConfig                    [ ] ✓ unambiguous — @fileUtils is not a stdlib name
-      [=] <path;string << "/etc/app.conf"
+      [=] <path#string << "/etc/app.conf"
 ```
 
 **INVALID:**

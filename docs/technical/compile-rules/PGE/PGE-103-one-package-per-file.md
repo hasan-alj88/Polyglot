@@ -14,7 +14,7 @@ name: One Package Declaration Per File
 ```polyglot
 [ ] ✓ exactly one {@} as the first block
 {@}
-   .address ;string << "Registry:com.example.MyPkg:1.0.0"
+   .address #string << "Registry:com.example.MyPkg:1.0.0"
 
 {=} =MyPipeline
    ...
@@ -30,11 +30,11 @@ name: One Package Declaration Per File
 ```polyglot
 [ ] ✗ PGE-103 — two {@} blocks
 {@}
-   .address ;string << "Registry:com.example.MyPkg:1.0.0"
+   .address #string << "Registry:com.example.MyPkg:1.0.0"
 
 {=} =MyPipeline
    ...
 
 {@}                [ ] ✗ PGE-103 — second package declaration
-   .address ;string << "Registry:com.example.Other:1.0.0"
+   .address #string << "Registry:com.example.Other:1.0.0"
 ```

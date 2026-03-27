@@ -23,9 +23,9 @@ severity: error
 ```polyglot
 [ ] ✓ all macro inputs provided, types match, output captured
 {M} =W.DB.Transaction
-   [{] $connStr;string
-   [{] $timeout;int
-   [}] $txHandle;string
+   [{] $connStr#string
+   [{] $timeout#int
+   [}] $txHandle#string
 
    [\]
       [r] =DB.Connect
@@ -40,18 +40,18 @@ severity: error
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.DB.Transaction
-      [=] $connStr << $connStr         [ ] ✓ matches [{] $connStr;string
-      [=] $timeout << $timeout         [ ] ✓ matches [{] $timeout;int
-      [=] $txHandle >> $txHandle       [ ] ✓ matches [}] $txHandle;string
+      [=] $connStr << $connStr         [ ] ✓ matches [{] $connStr#string
+      [=] $timeout << $timeout         [ ] ✓ matches [{] $timeout#int
+      [=] $txHandle >> $txHandle       [ ] ✓ matches [}] $txHandle#string
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-109 — missing required macro input
 {M} =W.DB.Transaction
-   [{] $connStr;string
-   [{] $timeout;int
-   [}] $txHandle;string
+   [{] $connStr#string
+   [{] $timeout#int
+   [}] $txHandle#string
    [\]
       [r] =DB.Connect
          [=] <connStr << $connStr
@@ -73,8 +73,8 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-109 — extra input not in macro contract
 {M} =W.Simple
-   [{] $input;string
-   [}] $output;string
+   [{] $input#string
+   [}] $output#string
    [\]
       [r] =Transform
          [=] <in << $input
@@ -94,8 +94,8 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-109 — capturing nonexistent output
 {M} =W.Simple
-   [{] $input;string
-   [}] $output;string
+   [{] $input#string
+   [}] $output#string
    [\]
       [r] =Transform
          [=] <in << $input

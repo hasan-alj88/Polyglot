@@ -21,7 +21,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >result;string
+   [=] >result#string
    [r] =Transform
       [=] <data << "raw"
       [=] >clean >> $cleaned
@@ -33,8 +33,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >clean;string
+   [=] <data#string
+   [=] >clean#string
    $clean <~ $data
    >> >clean
 
@@ -42,8 +42,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <item;string
-   [=] >ok;string
+   [=] <item#string
+   [=] >ok#string
    $ok <~ "stored"
    >> >ok
 ```
@@ -55,8 +55,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >result;string
+   [=] <data#string
+   [=] >result#string
    [r] =Recurse                         [ ] ✗ PGE-914 — calls itself
       [=] <data << $data
       [=] >result >> >result
@@ -68,8 +68,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <msg;string
-   [=] >out;string
+   [=] <msg#string
+   [=] >out#string
    [r] =Pong                            [ ] ✗ PGE-914 — Ping→Pong→Ping
       [=] <msg << $msg
       [=] >out >> >out
@@ -78,8 +78,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <msg;string
-   [=] >out;string
+   [=] <msg#string
+   [=] >out#string
    [r] =Ping
       [=] <msg << $msg
       [=] >out >> >out
@@ -91,8 +91,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <in;string
-   [=] >out;string
+   [=] <in#string
+   [=] >out#string
    [r] =StepB
       [=] <in << $in
       [=] >out >> >out
@@ -101,8 +101,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <in;string
-   [=] >out;string
+   [=] <in#string
+   [=] >out#string
    [r] =StepC
       [=] <in << $in
       [=] >out >> >out
@@ -111,8 +111,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <in;string
-   [=] >out;string
+   [=] <in#string
+   [=] >out#string
    [r] =StepA                           [ ] ✗ PGE-914 — StepA→StepB→StepC→StepA
       [=] <in << $in
       [=] >out >> >out

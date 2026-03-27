@@ -19,8 +19,8 @@ severity: error
 ```polyglot
 [ ] ✓ All declared errors are raised
 {=} =ValidateUser
-   [=] <name;string
-   [=] >validated;string
+   [=] <name#string
+   [=] >validated#string
    [=] !Validation.Empty
    [=] !Validation.TooLong
    [t] =T.Call
@@ -40,8 +40,8 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-706 — declares !Validation.TooLong but never raises it
 {=} =ValidateUserBad
-   [=] <name;string
-   [=] >validated;string
+   [=] <name#string
+   [=] >validated#string
    [=] !Validation.Empty
    [=] !Validation.TooLong                   [ ] ✗ PGE-706 — never raised in body
    [t] =T.Call

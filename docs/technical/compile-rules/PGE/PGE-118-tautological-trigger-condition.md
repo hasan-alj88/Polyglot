@@ -18,13 +18,13 @@ severity: error
 ```polyglot
 [ ] ✓ AND of compatible triggers — both can co-fire
 {=} =ProcessOnScheduleAndFiles
-   [=] <files;array.path
+   [=] <files#array:path
    [t] =T.Folder.NewFiles"/inbox/"
       [=] >NewFiles >> <files
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >result;string
+   [=] >result#string
    [r] >result << "processed"
 ```
 
@@ -36,7 +36,7 @@ severity: error
       [|] =T.Daily"3AM"
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] >out << "triggered"
 ```
 
@@ -48,7 +48,7 @@ severity: error
    [t] =T.Daily"5PM"                         [ ] ✗ PGE-118 — AND of mutually exclusive timers
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] >out << "unreachable"
 [ ] =T.Daily"3AM" AND =T.Daily"5PM" — never co-fire, always False
 ```
@@ -61,7 +61,7 @@ severity: error
       [^] =T.Webhook"/hook"                  [ ] ✗ PGE-118 — A XOR A = always False
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] >out << "unreachable"
 [ ] A ⊕ A = False for all values of A
 ```

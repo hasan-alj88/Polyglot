@@ -22,8 +22,8 @@ severity: warning
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <name;string
-   [=] >result;string
+   [=] <name#string
+   [=] >result#string
    [r] =ValidateUser
       [=] <name << $name
       [=] >status >> $status
@@ -36,8 +36,8 @@ severity: warning
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <name;string
-   [=] >result;string
+   [=] <name#string
+   [=] >result#string
    [r] =ValidateUser
       [=] <name << $name
       [=] >status >> $status
@@ -53,8 +53,8 @@ severity: warning
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <name;string
-   [=] >result;string
+   [=] <name#string
+   [=] >result#string
    [r] =ValidateUser
       [=] <name << $name
       [=] >status >> $status

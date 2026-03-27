@@ -25,8 +25,8 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=Validate                    [ ] ✓ @utils resolves (PGE-901), =Validate found in package (PGE-904)
-      [=] <input;string << $data
-      [=] >result;string >> $validated
+      [=] <input#string << $data
+      [=] >result#string >> $validated
 ```
 
 **INVALID:**
@@ -40,7 +40,7 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=NonExistent                 [ ] ✗ PGE-904 — no {=} =NonExistent in @Local:999.Utilities:v1.0.0
-      [=] <input;string << $data
+      [=] <input#string << $data
 ```
 
 ```polyglot
@@ -53,7 +53,7 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=Validte                     [ ] ✗ PGE-904 — typo: =Validte not found (did you mean =Validate?)
-      [=] <input;string << $data
+      [=] <input#string << $data
 ```
 
 ```polyglot
@@ -66,7 +66,7 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=OldPipeline                 [ ] ✗ PGE-904 — =OldPipeline no longer exists in @Local:999.Utilities:v1.0.0
-      [=] <input;string << $data
+      [=] <input#string << $data
 ```
 
 **Open point:** None.

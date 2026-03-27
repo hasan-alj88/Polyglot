@@ -20,7 +20,7 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
     :   flexible field navigation
     <   input parameter
     >   output parameter
-    ;   type annotation on a parameter
+    #   type annotation on a parameter
 
 ## Pipeline Namespaces (=)
 

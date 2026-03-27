@@ -21,9 +21,9 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >main;string
-   [=] >log;string
+   [=] <input#string
+   [=] >main#string
+   [=] >log#string
    [r] >main << $input                         [ ] >main is Final
    [ ] ✓ reachable — >log is still open
    [r] =Format
@@ -39,8 +39,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >result;string
+   [=] <input#string
+   [=] >result#string
    [r] >result << $input                       [ ] >result is now Final
    [r] =Log                                    [ ] ✗ PGE-209 — unreachable
       [=] <msg << "this never runs"
@@ -52,8 +52,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >output;string
+   [=] <data#string
+   [=] >output#string
    [?] $data =? "ok"
       [r] >output << $data
    [?] *?
@@ -69,9 +69,9 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >main;string
-   [=] >log;string
+   [=] <input#string
+   [=] >main#string
+   [=] >log#string
    [r] >main << $input                         [ ] >main is Final
    [r] >log << "done"                          [ ] >log is Final
    [ ] all output ports are now Final
@@ -88,8 +88,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >result;string
+   [=] <input#string
+   [=] >result#string
    [r] >result << $input                       [ ] >result is Final
    [ ] ✓ no dead code — cleanup handles post-finalization work
    [/] cleanup

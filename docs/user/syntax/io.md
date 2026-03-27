@@ -50,7 +50,7 @@ The statement marker echoes the parent operator's prefix:
 IO inputs declared with `[=]` become `$`-prefixed variables in the execution body once filled. There is no need to redeclare them:
 
 ```polyglot
-[=] <incoming;Alert
+[=] <incoming#Alert
 [ ] ...execution...
 [ ] Use directly as $incoming — it's already Final
 [?] $incoming.level >? 5
@@ -64,8 +64,8 @@ IO inputs with no assignment must be filled externally and are in Final state wh
 Pipelines that can raise errors declare them in the IO section using `[=] !ErrorName`:
 
 ```polyglot
-[=] <name;string
-[=] >validated;string
+[=] <name#string
+[=] >validated#string
 [=] !Validation.Empty
 [=] !Validation.TooLong
 ```

@@ -30,10 +30,10 @@ severity: error
 ```polyglot
 [ ] ✓ different separators at different levels
 {#} #Config
-   [.] .timeout;int
-   [.] .info;serial
+   [.] .timeout#int
+   [.] .info#serial
 
-[r] $cfg;Config
+[r] $cfg#Config
    [r] $cfg.timeout << 30
    [r] $cfg.info:author << "admin"     [ ] ✓ .info level is fixed, :author level is flexible
    [r] $cfg.info:version << "1.0"
@@ -49,6 +49,6 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-501 — mixed separators in {#} definition
 {#} #Bad
-   [.] .name;string
-   [:] :tag;string                     [ ] ✗ PGE-501 — : among . siblings
+   [.] .name#string
+   [:] :tag#string                     [ ] ✗ PGE-501 — : among . siblings
 ```

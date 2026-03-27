@@ -7,7 +7,7 @@ status: draft
 
 # =Math — Numeric Operations
 
-Stdlib pipelines for arithmetic on `;int` and `;float` values. No `[@]` import needed.
+Stdlib pipelines for arithmetic on `#int` and `#float` values. No `[@]` import needed.
 
 Math pipelines use positional (unnamed) IO — inputs and outputs are ordered, not named:
 
@@ -21,32 +21,32 @@ Math pipelines use positional (unnamed) IO — inputs and outputs are ordered, n
 ```
 =Math
    .Add
-      <<;int (variadic — 2+)
-      >>;int
+      <<#int (variadic — 2+)
+      >>#int
    .Subtract
-      <<;int (exactly 2 — minuend, subtrahend)
-      >>;int
+      <<#int (exactly 2 — minuend, subtrahend)
+      >>#int
    .Multiply
-      <<;int (variadic — 2+)
-      >>;int
+      <<#int (variadic — 2+)
+      >>#int
    .Divide
-      <<;int (exactly 2 — dividend, divisor)
-      >>;int
+      <<#int (exactly 2 — dividend, divisor)
+      >>#int
    .Modulo
-      <<;int (exactly 2 — dividend, divisor)
-      >>;int
+      <<#int (exactly 2 — dividend, divisor)
+      >>#int
    .Power
-      <<;int (exactly 2 — base, exponent)
-      >>;int
+      <<#int (exactly 2 — base, exponent)
+      >>#int
    .Abs
-      <<;int (exactly 1)
-      >>;int
+      <<#int (exactly 1)
+      >>#int
    .Negate
-      <<;int (exactly 1)
-      >>;int
+      <<#int (exactly 1)
+      >>#int
 ```
 
-All pipelines also accept `;float` operands. When any input is `;float`, the output is `;float`.
+All pipelines also accept `#float` operands. When any input is `#float`, the output is `#float`.
 
 ## Permissions
 

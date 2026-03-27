@@ -22,7 +22,7 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ pulling live %state in a conditional
-[=] >data;string
+[=] >data#string
 [r] =Fetch
    [=] >payload >> >data
 [?] >data%state
@@ -47,13 +47,13 @@ severity: error
 
 ```polyglot
 [ ] ✓ pushing into a non-live % field is allowed
-[%] .description;string << "Processes incoming invoices"
+[%] .description#string << "Processes incoming invoices"
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-206 — pushing into a live %state field
-[=] >data;string
+[=] >data#string
 [r] >data%state << #Final          [ ] ✗ PGE-206 — %state is live, cannot push
 ```
 

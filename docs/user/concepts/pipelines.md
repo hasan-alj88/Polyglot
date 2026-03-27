@@ -24,7 +24,7 @@ Every pipeline definition `{=}` (see [[blocks]]) must contain these elements in 
 
 Misordering these sections is a compile error (PGE-101).
 
-**Metadata:** `[%]` lines declare description, version, authors, license, deprecation, and aliases. `.info;serial` holds custom metadata. Duplicate metadata field names are a compile error (PGE-115). See [[blocks#Metadata]].
+**Metadata:** `[%]` lines declare description, version, authors, license, deprecation, and aliases. `.info#serial` holds custom metadata. Duplicate metadata field names are a compile error (PGE-115). See [[blocks#Metadata]].
 
 **Note:** `[t]` triggers, `[=]` IO declarations, and `[=] !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment (PGE-102). Error declarations (`[=] !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[t]` line and wire trigger outputs to pipeline inputs.
 
@@ -38,8 +38,8 @@ Every failable pipeline **must** declare its errors with `[=] !ErrorName` in the
 
 ```polyglot
 {=} =ValidateUser
-   [=] <name;string
-   [=] >validated;string
+   [=] <name#string
+   [=] >validated#string
    [=] !Validation.Empty
    [=] !Validation.TooLong
    [t] =T.Call
@@ -106,8 +106,8 @@ Pipelines can declare `[_]` permission lines after the `{=}` header (and `[%]` m
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <logPath;path
-   [=] >summary;string
+   [=] <logPath#path
+   [=] >summary#string
    [r] $content << =File.Text.Read >> "{$logPath}"
    [r] >summary << ...
 ```
@@ -128,7 +128,7 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
 - Triggers that produce outputs wire them to pipeline inputs via indented `[=]` IO lines:
 
 ```polyglot
-[=] <NewFiles;array.path
+[=] <NewFiles#array:path
 [t] =T.Folder.NewFiles"/inbox/"
    [=] >NewFiles >> <NewFiles
 ```
@@ -147,11 +147,11 @@ Custom queues are defined with `{Q}`, which both defines the queue struct and in
 ```polyglot
 {Q} #Queue:GPUQueue
    [.] .strategy;#QueueStrategy << #LIFO
-   [.] .maxInstances;int << 1
+   [.] .maxInstances#int << 1
    [.] .retrigger;#RetriggerStrategy << #Disallow
    [ ] Queue-level default: kill after 4 hours
    [Q] =Q.Kill.Graceful
-      [=] <ExecutionTime.MoreThan;string << "4h"
+      [=] <ExecutionTime.MoreThan#string << "4h"
 ```
 
 `=Q.Default` is the only stdlib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first. Referencing an undefined queue is a compile error (PGE-114).
@@ -166,18 +166,18 @@ The `[Q]` line in a pipeline declares which queue it uses. It accepts optional `
 
 ```polyglot
 [Q] #Queue:GPUQueue
-   [=] <maxConcurrent;int << 2
+   [=] <maxConcurrent#int << 2
    [ ] Pipeline-specific: pause/resume based on RAM
    [Q] =Q.Pause.Hard
-      [=] <RAM.Available.LessThan;float << 3072.0
+      [=] <RAM.Available.LessThan#float << 3072.0
    [Q] =Q.Resume
-      [=] <RAM.Available.MoreThan;float << 5120.0
+      [=] <RAM.Available.MoreThan#float << 5120.0
 ```
 
 | IO Parameter | Type | Description |
 |-------------|------|-------------|
-| `<maxInstances;int` | int | Max parallel instances of this pipeline |
-| `<maxConcurrent;int` | int | Max other pipelines running alongside |
+| `<maxInstances#int` | int | Max parallel instances of this pipeline |
+| `<maxConcurrent#int` | int | Max other pipelines running alongside |
 | `<retrigger;#RetriggerStrategy` | enum | Behavior on re-trigger while active |
 
 Pipeline-specific `[Q]` controls must not contradict the queue's `{Q}` defaults (PGE-113). See [[Q]] for the full stdlib queue pipeline catalog.
@@ -250,8 +250,8 @@ flowchart LR
 
 ```polyglot
 {M} =W.Tracing
-   [{] $traceId;string
-   [}] $duration;string
+   [{] $traceId#string
+   [}] $duration#string
 
    [\]
       [ ] Sequential: open session — blocks before body starts
@@ -302,7 +302,7 @@ Every step in a chain must be a pipeline reference — non-pipeline values are a
 
 ```polyglot
 [r] =Pipeline1=>=Pipeline2=>=Pipeline3
-   [=] >0.inputParam;path << $file
+   [=] >0.inputParam#path << $file
    [=] <0.outputResult >> <1.inputParam
    [=] <2.outputResult >> >output
 ```
@@ -324,7 +324,7 @@ The direction convention is **caller-perspective**: `>` means data flows *toward
 
 ```polyglot
 [r] =File.List=>=Data.Transform.Rows=>=Report.Format
-   [=] >List.folder;path << $folder
+   [=] >List.folder#path << $folder
    [=] <List.files >> <Rows.input
    [=] <Format.result >> >report
 ```
@@ -350,9 +350,9 @@ When a step has exactly one output and the next step has exactly one input, and 
 
 ```polyglot
 [r] =File.Text.Read=>=Text.Transform=>=Text.Format
-   [ ] Each step: one output;string → one input;string — auto-wired
-   [=] >0.path;path << $path
-   [=] <2.formatted;string >> >formatted
+   [ ] Each step: one output#string → one input#string — auto-wired
+   [=] >0.path#path << $path
+   [=] <2.formatted#string >> >formatted
 ```
 
 Auto-wire requires:
@@ -389,8 +389,8 @@ Errors in chains use the `!` prefix with a step index or leaf name, followed by 
 
 ```polyglot
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >0.path;path << $path
-   [=] <1.rows;string >> >content
+   [=] >0.path#path << $path
+   [=] <1.rows#string >> >content
    [!] !0.File.NotFound
       [r] >content << "Error: file not found"
    [!] !1.Parse.InvalidFormat
@@ -428,7 +428,7 @@ See [[errors#Error Fallback Operators]] for the full fallback model.
 
 ### Type Annotations on Wires
 
-Type annotations (`;type`) on chain IO lines are **optional**. When present, the compiler validates that connected ports have matching types. When omitted, types are inferred from the pipeline definitions.
+Type annotations (`#type`) on chain IO lines are **optional**. When present, the compiler validates that connected ports have matching types. When omitted, types are inferred from the pipeline definitions.
 
 ## Inline Pipeline Calls
 
@@ -436,17 +436,17 @@ Type annotations (`;type`) on chain IO lines are **optional**. When present, the
 An inline pipeline call evaluates a pipeline as a single value. The syntax is `=Pipeline"string"` — a pipeline reference immediately followed by a string literal. Inline calls are valid anywhere a `value_expr` is expected: assignment RHS, comparison operands, etc. See [[types#`=Path"..."` Inline Notation]] for the `=Path` example.
 
 ```polyglot
-[r] $dir;path << =Path"/tmp/MyApp"
-[r] $msg;string << =Greeting"Hello {$name}"
+[r] $dir#path << =Path"/tmp/MyApp"
+[r] $msg#string << =Greeting"Hello {$name}"
 [?] $dir =? =Path"/expected"
 ```
 
-### Reserved Parameter: `<InlineStringLiteral;string`
+### Reserved Parameter: `<InlineStringLiteral#string`
 
 Every pipeline has a reserved parameter name `InlineStringLiteral`. To accept inline calls, a pipeline must explicitly declare it in its `[=]` IO:
 
 ```polyglot
-[=] <InlineStringLiteral;string <~ ""
+[=] <InlineStringLiteral#string <~ ""
 ```
 
 The default value is `""`. When the pipeline is called inline (`=Pipeline"..."`), the compiler auto-wires the rendered string into this parameter. When called normally (via `[r]`), the default `""` applies.
@@ -454,7 +454,7 @@ The default value is `""`. When the pipeline is called inline (`=Pipeline"..."`)
 ### Mechanism
 
 1. **String interpolation** — `{$var}` inside the string literal resolves first
-2. **Auto-wire** — the rendered string is pushed into `<InlineStringLiteral;string`
+2. **Auto-wire** — the rendered string is pushed into `<InlineStringLiteral#string`
 3. **Pipeline-specific parsing** — the pipeline body interprets the string its own way (e.g., `=Path` normalizes separators, `=T.Daily` parses a time)
 4. **Result returned** — the pipeline's output becomes the value of the expression
 
@@ -464,7 +464,7 @@ flowchart LR
     INTERP["1. Interpolate\n/tmp/MyApp"]
     WIRE["2. Auto-wire into\n< InlineStringLiteral"]
     PARSE["3. Pipeline parses\n=Path normalizes sep"]
-    RESULT["4. Result returned\n;path value"]
+    RESULT["4. Result returned\n#path value"]
 
     RAW --> INTERP --> WIRE --> PARSE --> RESULT
 ```
@@ -474,20 +474,20 @@ flowchart LR
 | Pipeline outputs | Value type |
 |------------------|-----------|
 | One `>output` | That output's type directly |
-| Multiple `>outputs` | `;serial` with output parameter names as keys |
+| Multiple `>outputs` | `#serial` with output parameter names as keys |
 
 If the target type does not match the inline pipeline's output type, the compiler raises a type or schema mismatch error.
 
 ### Dual-Mode Pipelines
 
-Since `<InlineStringLiteral;string` defaults to `""`, a pipeline can support both normal calls and inline calls. Guard inline-specific logic with a conditional:
+Since `<InlineStringLiteral#string` defaults to `""`, a pipeline can support both normal calls and inline calls. Guard inline-specific logic with a conditional:
 
 ```polyglot
 {=} =Greeting
    [%] .description << "Generates a greeting message"
-   [=] <InlineStringLiteral;string <~ ""
-   [=] <name;string <~ ""
-   [=] >message;string
+   [=] <InlineStringLiteral#string <~ ""
+   [=] <name#string <~ ""
+   [=] >message#string
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -503,7 +503,7 @@ Both calling forms work:
 
 ```polyglot
 [ ] Inline call
-[r] $msg;string << =Greeting"World"
+[r] $msg#string << =Greeting"World"
 
 [ ] Normal call
 [r] =Greeting

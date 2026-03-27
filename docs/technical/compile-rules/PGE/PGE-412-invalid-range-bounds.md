@@ -21,8 +21,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <score;int
-   [=] >label;string
+   [=] <score#int
+   [=] >label#string
    [?] $score
       [?] ?[0,59]
          [r] >label << "fail"
@@ -38,8 +38,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <count;int
-   [=] >out;string
+   [=] <count#int
+   [=] >out#string
    [?] $count
       [?] ?[5,5]                        [ ] ✓ matches exactly 5
          [r] >out << "five"
@@ -53,8 +53,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <temp;float
-   [=] >out;string
+   [=] <temp#float
+   [=] >out#string
    [?] $temp
       [?] ?(0.0,100.0)
          [r] >out << "in range"
@@ -69,8 +69,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <score;int
-   [=] >out;string
+   [=] <score#int
+   [=] >out#string
    [?] $score
       [?] ?[100,0]                      [ ] ✗ PGE-412 — lo (100) > hi (0)
          [r] >out << "impossible"
@@ -84,8 +84,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <temp;float
-   [=] >out;string
+   [=] <temp#float
+   [=] >out#string
    [?] $temp
       [?] ?(5.0,5.0)                   [ ] ✗ PGE-412 — lo (5.0) >= hi (5.0) for exclusive
          [r] >out << "impossible"
@@ -99,8 +99,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <value;int
-   [=] >out;string
+   [=] <value#int
+   [=] >out#string
    [?] $value
       [?] ?[10,3)                       [ ] ✗ PGE-412 — lo (10) > hi (3)
          [r] >out << "impossible"

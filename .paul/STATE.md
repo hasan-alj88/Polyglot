@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: 12 of 12 — Complete. All phases finished.
-Plan: All plans complete
-Status: Issue #66 merged and closed
-Last activity: 2026-03-26 — Merged issue-66 to main, issue closed
+Plan: 75-04 complete (spec-wide ; → # migration)
+Status: Loop closed, all plans complete — ready for MERGE
+Last activity: 2026-03-27 — Executed and unified Plan 75-04; 109 files, 1,339 replacements
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -31,17 +31,22 @@ Progress:
 - Issue #62: [██████████] 100% (1/1 plans)
 - Issue #63: [██████████] 100% (1/1 plans)
 - Issue #67: [██████████] 100% (1/1 plans)
+- Issues #68-#72: [██████████] 100% (batch — 5 Mermaid diagrams)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #75 — Add ;map:K:V parameterized String subtype
+Branch: design/issue-75-add-map-k-v-parameterized-string-subtype
+Labels: design, stdlib
+Started: 2026-03-26
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/75
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [All plans complete — ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -91,6 +96,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Issue #62 — Add Mermaid flowchart to errors.md error resolution | 2026-03-26 | flowchart TD decision tree: [!] match → replacement → fallback chain → Failed |
 | Issue #63 — Add Mermaid flowchart to collections.md expand/collect | 2026-03-26 | flowchart LR fan-out/fan-in: ~ForEach.Array → items → *Into.Array + *Agg.Sum collectors |
 | Issue #67 — Add Mermaid flowchart to pipelines.md parallel forking | 2026-03-26 | flowchart TD: [\] setup splits to sequential + [p] fork concurrent with body, [/] collects |
+| Closed #68, #69, #70, #71, #72 — Batch Mermaid diagrams | 2026-03-26 | Merged docs/issue-68-72-mermaid-batch to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -109,15 +115,14 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-25
-Stopped at: Issue #66 merged and closed
-Next action: /paul:work-issue or /paul:issues
-Resume file: docs/user/SPEC-INDEX.md
+Last session: 2026-03-27
+Stopped at: All 4 plans complete, ready for merge
+Next action: /paul:merge to close issue #75
+Resume file: .paul/phases/issue-75-dict-kv/75-04-SUMMARY.md
 Resume context:
-- Issue #65 active — Mermaid flowchart LR for learning path
-- Branch: docs/issue-65-add-mermaid-flowchart-spec-index
-- Target: SPEC-INDEX.md after intro paragraph, before "## Phase 1"
-- 5 phases: Syntax(7) → Concepts(5) → Big Picture(2) → Packages(2) → Practice
+- Plans 75-01 (gaps), 75-02 (core spec), 75-03 (tech spec), 75-04 (migration) ALL complete
+- Zero ; type annotations remain in docs/
+- Ready to merge branch to main and close issue #75
 
 ---
 *STATE.md — Updated after every significant action*

@@ -23,17 +23,17 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <text;string
-   [=] <locale;string
+   [=] <text#string
+   [=] <locale#string
    [r] $locale <~ "en-US"                  [ ] default value
-   [=] >formatted;string
+   [=] >formatted#string
    [r] >formatted << "{$text} ({$locale})"
 
 {=} =UseFormat
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Format
       [=] <text << "Hello"
       [=] <locale << "fr-FR"               [ ] ✓ explicitly overrides default — no warning
@@ -47,7 +47,7 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Format
       [=] <text << "Hello"
                                             [ ] ⚠ PGW-808 — <locale uses default "en-US"
@@ -60,17 +60,17 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <url;string
-   [=] <timeout;int
+   [=] <url#string
+   [=] <timeout#int
    [r] $timeout <~ 30
-   [=] >body;string
+   [=] >body#string
    [r] >body << "response"
 
 {=} =BatchFetch
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [p] =Fetch
       [=] <url << "https://example.com"
                                             [ ] ⚠ PGW-808 — <timeout uses default 30

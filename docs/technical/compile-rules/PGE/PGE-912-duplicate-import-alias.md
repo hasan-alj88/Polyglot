@@ -26,9 +26,9 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=Validate
-      [=] <input;string << $data
+      [=] <input#string << $data
    [r] @auth=CheckToken
-      [=] <token;string << $jwt
+      [=] <token#string << $jwt
 ```
 
 **INVALID:**
@@ -43,7 +43,7 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=Validate                          [ ] ambiguous — which @utils?
-      [=] <input;string << $data
+      [=] <input#string << $data
 ```
 
 ```polyglot

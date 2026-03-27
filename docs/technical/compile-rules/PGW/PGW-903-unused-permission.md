@@ -25,7 +25,7 @@ severity: warning
    [W] =W.Polyglot
    [r] $content << =File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises _File.read
    [r] =File.Text.Write >> "/tmp/reports/summary.txt"          [ ] ✓ exercises _File.write
-      [=] <content;string << $content
+      [=] <content#string << $content
 ```
 
 ```polyglot
@@ -34,9 +34,9 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <a;int
-   [=] <b;int
-   [=] >sum;int
+   [=] <a#int
+   [=] <b#int
+   [=] >sum#int
    [r] >sum << =Math.Add $a $b
 ```
 
@@ -46,8 +46,8 @@ severity: warning
 {=} =PartialIO
    [_] _File.read"/var/log/*"
    [_] _Web.request                                            [ ] ⚠ PGW-903 — _Web.request never used
-      [_] <url;string << "https://api.example.com/*"
-      [_] <method;string << "GET"
+      [_] <url#string << "https://api.example.com/*"
+      [_] <method#string << "GET"
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -63,8 +63,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >output;string
+   [=] <input#string
+   [=] >output#string
    [r] >output << $input                                       [ ] no IO calls at all
 ```
 

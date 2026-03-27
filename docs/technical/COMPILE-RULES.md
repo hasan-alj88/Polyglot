@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: specification
-updated: 2026-03-18
+updated: 2026-03-27
 status: draft
 ---
 
@@ -78,6 +78,9 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-415 | 4.15 | Conditional Type-Operator Mismatch |
 | PGE-416 | 4.16 | Invalid Pipeline Input Literal |
 | PGE-417 | 4.17 | Array Dimension Access Mismatch |
+| PGE-418 | 4.18 | Type Parameter Constraint Violation |
+| PGE-419 | 4.19 | Duplicate Dictionary Key |
+| PGE-420 | 4.20 | Key Gap Violation |
 | PGE-501 | 5.1 | Sibling Separator Homogeneity |
 | PGE-502 | 5.2 | Sibling Kind Homogeneity |
 | PGE-601 | 6.1 | Conditional Must Be Exhaustive |

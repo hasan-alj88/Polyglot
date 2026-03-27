@@ -21,14 +21,14 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >output;string
+   [=] <input#string
+   [=] >output#string
    [r] >output << $input
 
 [ ] ✓ no warning — =Transform is not deprecated
 [r] =Transform
-   [=] <input;string << "hello"
-   [=] >output;string >> $result
+   [=] <input#string << "hello"
+   [=] >output#string >> $result
 ```
 
 **WARNING:**
@@ -39,14 +39,14 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >result;string
+   [=] <data#string
+   [=] >result#string
    [r] >result << $data
 
 [ ] ⚠ PGW-901 — =OldProcess is deprecated: "Use =NewProcess instead"
 [r] =OldProcess
-   [=] <data;string << $input
-   [=] >result;string >> $output
+   [=] <data#string << $input
+   [=] >result#string >> $output
 ```
 
 ```polyglot
@@ -55,14 +55,14 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <url;string
-   [=] >content;string
+   [=] <url#string
+   [=] >content#string
    [r] >content << "stub"
 
 [ ] ⚠ PGW-901 — =LegacyFetch is deprecated (no message provided)
 [r] =LegacyFetch
-   [=] <url;string << "https://example.com"
-   [=] >content;string >> $page
+   [=] <url#string << "https://example.com"
+   [=] >content#string >> $page
 ```
 
 ```polyglot
@@ -71,8 +71,8 @@ severity: warning
 
 [ ] ⚠ PGW-901 — imported pipeline is deprecated
 [r] @legacy=Format
-   [=] <text;string << $raw               [ ] ⚠ PGW-901 — =Format in @Local:999.OldUtils:v1.0.0 is deprecated
-   [=] >formatted;string >> $output
+   [=] <text#string << $raw               [ ] ⚠ PGW-901 — =Format in @Local:999.OldUtils:v1.0.0 is deprecated
+   [=] >formatted#string >> $output
 ```
 
 **Open point:** None.

@@ -28,7 +28,7 @@ Both produce a Final variable — downstream pipelines trigger normally.
 **VALID:**
 ```polyglot
 [ ] ✓ [!] handles the failure — direct replacement value
-[=] >result;string
+[=] >result#string
 [r] =Compute
    [=] >value >> >result
    [!] !ComputeError
@@ -39,7 +39,7 @@ Both produce a Final variable — downstream pipelines trigger normally.
 
 ```polyglot
 [ ] ✓ [!] without replacement — pipeline ends on error (default)
-[=] >data;string
+[=] >data#string
 [r] =Fetch
    [=] >payload >> >data
    [!] !FetchError
@@ -53,7 +53,7 @@ Both produce a Final variable — downstream pipelines trigger normally.
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-205 — pushing into a variable that may be Failed
-[=] >result;string
+[=] >result#string
 [r] =Compute
    [=] >value >> >result
    [!] !ComputeError

@@ -28,8 +28,8 @@ severity: error
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <x;int
-   [=] >result;int
+   [=] <x#int
+   [=] >result#int
    [r] >result << $x
 ```
 

@@ -24,10 +24,10 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <key;string
-   [=] >value;string
+   [=] <key#string
+   [=] >value#string
    [r] $value <~ "unknown"                 [ ] default value
-   [=] >found;bool
+   [=] >found#bool
    [r] $found <~ .False                    [ ] default value
    [r] >value << $value
    [r] >found << .True
@@ -36,7 +36,7 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Lookup
       [=] <key << "user.name"
       [=] >value >> $val                   [ ] ✓ captured
@@ -51,7 +51,7 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Lookup
       [=] <key << "user.name"
       [=] >value >> >out
@@ -64,8 +64,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [=] !File.NotFound
    [=] !File.ReadError
    [r] =File.Text.Read
@@ -78,7 +78,7 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =ReadFile
       [=] <path << "/tmp/data.txt"
                                             [ ] ⚠ PGW-809 — >content has fallback "unavailable"
