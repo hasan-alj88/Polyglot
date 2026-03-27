@@ -21,6 +21,6 @@ System pipelines that read environment state require `[_]` permission declaratio
 ```
 =Sys
    .OS
-      >os;OS
+      >os#OS
       [ ] Returns the current operating system as #OS enum.
 ```

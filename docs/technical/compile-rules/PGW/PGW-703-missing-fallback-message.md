@@ -19,9 +19,9 @@ severity: warning
 ```polyglot
 [ ] ✓ Fallback with %FallbackMessage — documented intent
 {=} =ValidateUser
-   [=] <name;string
-   [=] >validated;string
-   [=] >status;string
+   [=] <name#string
+   [=] >validated#string
+   [=] >status#string
    [=] !Validation.Empty
    [t] =T.Call
    [Q] =Q.Default
@@ -39,8 +39,8 @@ severity: warning
 ```polyglot
 [ ] ✓ Fallback with empty %FallbackMessage — intentionally allows silent override
 {=} =ValidateUserPermissive
-   [=] <name;string
-   [=] >status;string
+   [=] <name#string
+   [=] >status#string
    [=] !Validation.Empty
    [t] =T.Call
    [Q] =Q.Default
@@ -58,8 +58,8 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW-703 — output fallback without %FallbackMessage
 {=} =ValidateUserBad
-   [=] <name;string
-   [=] >status;string
+   [=] <name#string
+   [=] >status#string
    [=] !Validation.Empty
    [t] =T.Call
    [Q] =Q.Default

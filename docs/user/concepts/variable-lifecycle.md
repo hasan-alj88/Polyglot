@@ -90,7 +90,7 @@ Variable lifecycle state is queryable at runtime via the `%` metadata accessor:
    [r] ...
 ```
 
-`$varName%state` returns a `;live.#VarState` value — reading from `%$:{name}:{instance}.state` in the metadata tree (see [[data-is-trees#How Concepts Connect]]). The `live` field is always readable and does not follow the standard lifecycle (it is managed by the runtime). The `#VarState` enum maps directly to the stages above: Declared, Default, Final, Failed, Released. See [[metadata]] for the full metadata tree and all `live` fields.
+`$varName%state` returns a `#live.#VarState` value — reading from `%$:{name}:{instance}.state` in the metadata tree (see [[data-is-trees#How Concepts Connect]]). The `live` field is always readable and does not follow the standard lifecycle (it is managed by the runtime). The `#VarState` enum maps directly to the stages above: Declared, Default, Final, Failed, Released. See [[metadata]] for the full metadata tree and all `live` fields.
 
 ## Assignment Operators
 
@@ -99,10 +99,10 @@ All assignment operators are directional — the arrow indicates data flow direc
 
 | Operator | Type | Direction | Example | Reading |
 |----------|------|-----------|---------|---------|
-| `<<` | Final (Push) | Right to left | `$x;int << 3` | "Final-push 3 into $x" |
+| `<<` | Final (Push) | Right to left | `$x#int << 3` | "Final-push 3 into $x" |
 | `>>` | Final (Pull) | Left to right | `>array >> $arr` | "Final-push >array into $arr" |
-| `<~` | Default | Right to left | `.field;string <~ "value"` | "Default-assign \"value\" to .field" |
-| `~>` | Default | Left to right | `>output;string ~> ""` | "Default-assign >output to empty string" |
+| `<~` | Default | Right to left | `.field#string <~ "value"` | "Default-assign \"value\" to .field" |
+| `~>` | Default | Left to right | `>output#string ~> ""` | "Default-assign >output to empty string" |
 | `<!` | Fallback (Error) | Right to left | `<! "fallback"` | "On error, fallback-push into output" |
 | `!>` | Fallback (Error) | Left to right | `"fallback" !> >output` | "On error, fallback-push outward" |
 
@@ -116,8 +116,8 @@ All assignment operators are directional — the arrow indicates data flow direc
 [ ] Daily trigger at 3AM
 [t] =DT.Daily"3AM"
 [ ] Pipeline IO
-[=] <file;path <~ "\tmp\example1.txt"
-[=] >output;string ~> ""
+[=] <file#path <~ "\tmp\example1.txt"
+[=] >output#string ~> ""
 ...
 ```
 
@@ -127,10 +127,10 @@ All assignment operators are directional — the arrow indicates data flow direc
 ...
 {#} #CustomDataType
 [ ] Data fields with default values
-[.] .field1;string <~ "default value"
-[.] .field2;int <~ 0
+[.] .field1#string <~ "default value"
+[.] .field2#int <~ 0
 [ ] Data fields with final values
-[.] .field3;string << "final value"
-[.] .field4;int << 100
+[.] .field3#string << "final value"
+[.] .field4#int << 100
 ...
 ```

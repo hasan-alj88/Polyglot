@@ -56,24 +56,24 @@ Any comparison operator can be negated by inserting `!` before `?`. This replace
 ```polyglot
 [ ] Not less than — age is at least 18
 [?] $age <!? 18
-   [r] $eligible;bool << #Boolean.True
+   [r] $eligible#bool << #Boolean.True
 [?] *?
-   [r] $eligible;bool << #Boolean.False
+   [r] $eligible#bool << #Boolean.False
 
 [ ] Not greater than — score capped at 100
 [?] $score >!? 100
-   [r] $capped;bool << #Boolean.True
+   [r] $capped#bool << #Boolean.True
 [?] *?
-   [r] $capped;bool << #Boolean.False
+   [r] $capped#bool << #Boolean.False
 ```
 
 ### Type-Operator Compatibility
 
 The comparison operator must match the subject variable's type ([[PGE-415|PGE-415]]):
 
-- **Numeric** (`;int`, `;float`): all comparison and range operators. Int and float interoperate freely.
-- **String** (`;string`): equality only (`=?`, `=!?`). Ordering and ranges are invalid.
-- **Bool** (`;bool`): equality only (`=?`, `=!?`).
+- **Numeric** (`#int`, `#float`): all comparison and range operators. Int and float interoperate freely.
+- **String** (`#string`): equality only (`=?`, `=!?`). Ordering and ranges are invalid.
+- **Bool** (`#bool`): equality only (`=?`, `=!?`).
 - **Enum**: equality with enum variants of the same type. Ordering, ranges, and cross-type matches are invalid.
 - **Wildcard** (`*?`): always valid on any type.
 
@@ -81,7 +81,7 @@ The comparison operator must match the subject variable's type ([[PGE-415|PGE-41
 
 ## Range Operators
 
-Range checks use mathematical interval notation. The `?` prefix starts the range, then `[` (inclusive) or `(` (exclusive) for each bound. Ranges apply only to numeric types — `;int` and `;float` ([[PGE-415|PGE-415]]).
+Range checks use mathematical interval notation. The `?` prefix starts the range, then `[` (inclusive) or `(` (exclusive) for each bound. Ranges apply only to numeric types — `#int` and `#float` ([[PGE-415|PGE-415]]).
 
 | Syntax | Left bound | Right bound | Example |
 |--------|-----------|-------------|---------|
@@ -107,7 +107,7 @@ Polyglot does not have raw arithmetic operators. Arithmetic is performed through
 | Absolute value | `=Math.Abs` | exactly 1 |
 | Negate | `=Math.Negate` | exactly 1 |
 
-All accept `;int` and `;float` operands. When any input is `;float`, the output is `;float`. Division or modulo with a literal `0` divisor is a compile error ([[PGE-411|PGE-411]]).
+All accept `#int` and `#float` operands. When any input is `#float`, the output is `#float`. Division or modulo with a literal `0` divisor is a compile error ([[PGE-411|PGE-411]]).
 
 ```polyglot
 [ ] Addition

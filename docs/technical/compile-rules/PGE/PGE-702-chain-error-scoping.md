@@ -35,8 +35,8 @@ The handler **cannot** access other steps' IO (steps other than N).
 ```polyglot
 [ ] ✓ numeric step addressing
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >0.path;path << $path
-   [=] <1.rows;string >> >content
+   [=] >0.path#path << $path
+   [=] <1.rows#string >> >content
    [!] .0!File.NotFound
       [r] >content << "Error: file not found"
    [!] .1!Parse.InvalidFormat
@@ -46,8 +46,8 @@ The handler **cannot** access other steps' IO (steps other than N).
 ```polyglot
 [ ] ✓ name-based — unique leaf names
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >Read.path;path << $path
-   [=] <CSV.rows;string >> >content
+   [=] >Read.path#path << $path
+   [=] <CSV.rows#string >> >content
    [!] .Read!File.NotFound
       [r] >content << "Error: file not found"
    [!] .CSV!Parse.InvalidFormat
@@ -57,8 +57,8 @@ The handler **cannot** access other steps' IO (steps other than N).
 ```polyglot
 [ ] ✓ error handler reads $variable from enclosing pipeline scope
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >0.path;path << $path
-   [=] <1.rows;string >> >content
+   [=] >0.path#path << $path
+   [=] <1.rows#string >> >content
    [!] .0!File.NotFound
       [r] =File.Text.Read                [ ] ✓ handler reads $fallbackPath from pipeline scope
          [=] <path << $fallbackPath
@@ -68,8 +68,8 @@ The handler **cannot** access other steps' IO (steps other than N).
 ```polyglot
 [ ] ✓ error handler with *Continue fallback
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >0.path;path << $path
-   [=] <1.rows;string >> >content
+   [=] >0.path#path << $path
+   [=] <1.rows#string >> >content
    [!] .0!File.NotFound
       [r] =LogError
          [=] <msg << "file not found"
@@ -80,8 +80,8 @@ The handler **cannot** access other steps' IO (steps other than N).
 ```polyglot
 [ ] ✗ PGE-702 — chain error without step prefix
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >0.path;path << $path
-   [=] <1.rows;string >> >content
+   [=] >0.path#path << $path
+   [=] <1.rows#string >> >content
    [!] !File.NotFound              [ ] ✗ PGE-702 — must use .0!File.NotFound
       [r] >content << "fallback"
 ```
@@ -89,8 +89,8 @@ The handler **cannot** access other steps' IO (steps other than N).
 ```polyglot
 [ ] ✗ PGE-804 — ambiguous name-based step ref
 [r] =Text.Read=>=Data.Read
-   [=] >0.input;string << $text
-   [=] <1.output;string >> >result
+   [=] >0.input#string << $text
+   [=] <1.output#string >> >result
    [!] .Read!NotFound              [ ] ✗ PGE-804 — "Read" matches both steps
       [r] >result << "error"
 ```

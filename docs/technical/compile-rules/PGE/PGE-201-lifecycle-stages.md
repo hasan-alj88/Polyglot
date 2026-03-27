@@ -13,12 +13,12 @@ name: Lifecycle Stages
 **VALID:**
 ```polyglot
 [ ] ✓ Declared → Final via <<
-[=] >result;string
+[=] >result#string
 [r] =Compute
    [=] >result << "done"    [ ] Final — no further push allowed
 
 [ ] ✓ Declared → Default via <~, then → Final via <<
-[=] >label;string
+[=] >label#string
 [r] >label <~ "default"     [ ] Default — one more push allowed
 [r] >label << "confirmed"   [ ] Final
 ```
@@ -26,7 +26,7 @@ name: Lifecycle Stages
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-201 — backwards transition: attempting to re-enter Default after Final
-[=] >result;string
+[=] >result#string
 [r] =Compute
    [=] >result << "done"    [ ] Final
 [r] >result <~ "retry"      [ ] ✗ PGE-201 — cannot move Final → Default

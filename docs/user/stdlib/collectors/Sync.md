@@ -36,7 +36,7 @@ No `[@]` import needed.
 *Nth
    [ ] Generic race form — wait for the Nth arrival.
    [ ] *First and *Second are named aliases for *Nth n=1/n=2.
-   [*] <n;int            (which arrival to capture)
+   [*] <n#int            (which arrival to capture)
    [*] << $candidate...
    [*] >> $winner
 ```

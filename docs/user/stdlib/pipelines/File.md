@@ -16,28 +16,28 @@ Success is signalled by `!NoError`. Side-effect-only pipelines (Write, Append, C
 =File
    .Text
       .Read
-         <path;path
-         >content;string
+         <path#path
+         >content#string
       .Write
-         <path;path
-         <content;string
+         <path#path
+         <content#string
       .Append
-         <path;path
-         <content;string
+         <path#path
+         <content#string
    .Copy
-      <source;path
-      <destination;path
+      <source#path
+      <destination#path
    .Move
-      <source;path
-      <destination;path
+      <source#path
+      <destination#path
    .Delete
-      <path;path
+      <path#path
    .Access
-      <path;path
-      >access;FileAccess
+      <path#path
+      >access#FileAccess
    .List
-      <folder;path
-      >files;array.path
+      <folder#path
+      >files#array:path
 ```
 
 ## Permissions

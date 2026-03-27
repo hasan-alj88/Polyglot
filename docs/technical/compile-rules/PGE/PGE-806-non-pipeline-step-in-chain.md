@@ -21,7 +21,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Process
       [=] <path << =Path"/tmp"
       [=] >result >> >out
@@ -29,7 +29,7 @@ severity: error
 
 ```polyglot
 [ ] ✓ inline call as value in variable assignment
-[r] $configPath;path << =Path"/etc/config"
+[r] $configPath#path << =Path"/etc/config"
 ```
 
 ```polyglot
@@ -38,8 +38,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >out;string
+   [=] <data#string
+   [=] >out#string
    [r] =Parse=>=Validate=>=Store
       [=] <input << $data
       [=] >result >> >out
@@ -52,7 +52,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Path"/tmp"=>=Process            [ ] ✗ PGE-806 — value expr in chain
       [=] >result >> >out
 ```
@@ -63,8 +63,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >out;string
+   [=] <data#string
+   [=] >out#string
    [r] =Parse=>=Path"/tmp"=>=Store      [ ] ✗ PGE-806 — value expr in chain
       [=] <input << $data
       [=] >result >> >out
@@ -76,8 +76,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >out;path
+   [=] <data#string
+   [=] >out#path
    [r] =Parse=>=Path"/tmp"              [ ] ✗ PGE-806 — value expr in chain
       [=] <input << $data
       [=] >result >> >out
@@ -89,8 +89,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <dir;string
-   [=] >out;string
+   [=] <dir#string
+   [=] >out#string
    [r] =Fetch=>=Path"{$dir}/output"=>=Store        [ ] ✗ PGE-806 — value expr in chain
       [=] <url << $dir
       [=] >result >> >out

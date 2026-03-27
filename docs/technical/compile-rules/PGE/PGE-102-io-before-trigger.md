@@ -14,7 +14,7 @@ name: IO Before Trigger
 ```polyglot
 [ ] ✓ <filepath declared before [t] pushes into it
 {=} =Process
-   [=] <filepath;path
+   [=] <filepath#path
    [t] =T.Folder.NewFiles"/inbox/"
       [=] >NewFiles >> <filepath
    [Q] =Q.Default
@@ -30,7 +30,7 @@ name: IO Before Trigger
 {=} =Process
    [t] =T.Folder.NewFiles"/inbox/"
       [=] >NewFiles >> <filepath    [ ] ✗ PGE-102
-   [=] <filepath;path
+   [=] <filepath#path
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =File.Text.Read

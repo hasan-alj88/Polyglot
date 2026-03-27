@@ -36,8 +36,8 @@ If any declared error is not addressed by at least one mechanism, PGE-707 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $content
@@ -54,8 +54,8 @@ If any declared error is not addressed by at least one mechanism, PGE-707 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $content
@@ -70,8 +70,8 @@ If any declared error is not addressed by at least one mechanism, PGE-707 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $content
@@ -85,8 +85,8 @@ If any declared error is not addressed by at least one mechanism, PGE-707 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $content
@@ -104,8 +104,8 @@ If any declared error is not addressed by at least one mechanism, PGE-707 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $content
@@ -121,8 +121,8 @@ If any declared error is not addressed by at least one mechanism, PGE-707 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read                              [ ] declares !File.NotFound, !File.ReadError
       [=] <path << $path
       [=] >content >> $content
@@ -137,8 +137,8 @@ If any declared error is not addressed by at least one mechanism, PGE-707 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $content
@@ -154,8 +154,8 @@ If any declared error is not addressed by at least one mechanism, PGE-707 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $content

@@ -35,7 +35,7 @@ severity: error
    [.] .Info
 
 [ ] ✓ all variants listed — exhaustive, no *? needed
-[?] $level;Severity
+[?] $level#Severity
    [?] #Severity.Critical
       [r] =Alert.Page
    [?] #Severity.Error
@@ -48,7 +48,7 @@ severity: error
 
 ```polyglot
 [ ] ✓ partial coverage + *? covers the rest
-[?] $level;Severity
+[?] $level#Severity
    [?] #Severity.Critical
       [r] =Alert.Page
    [?] *?
@@ -64,7 +64,7 @@ severity: error
    [.] .Info
 
 [ ] ✗ PGE-602 — .Warning and .Info not covered, no *?
-[?] $level;Severity
+[?] $level#Severity
    [?] #Severity.Critical
       [r] =Alert.Page
    [?] #Severity.Error
@@ -82,7 +82,7 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ both variants listed — no *? needed
-[?] $isActive;bool
+[?] $isActive#bool
    [?] #Boolean.True
       [r] =Handle.Active
    [?] #Boolean.False
@@ -91,7 +91,7 @@ severity: error
 
 ```polyglot
 [ ] ✓ one variant + *? covers the other
-[?] $isActive;bool
+[?] $isActive#bool
    [?] #Boolean.True
       [r] =Handle.Active
    [?] *?
@@ -101,7 +101,7 @@ severity: error
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-602 — #Boolean.False not covered, no *?
-[?] $isActive;bool
+[?] $isActive#bool
    [?] #Boolean.True
       [r] =Handle.Active
    [ ] ✗ PGE-602 — #Boolean.False unhandled
@@ -118,13 +118,13 @@ When an enum variant contains value sub-fields, PGE-602 checks only the **top-le
 ```polyglot
 {#} #Result
    [.] .Success
-      [.] .message;string <~ ""
+      [.] .message#string <~ ""
    [.] .Failed
-      [.] .reason;string <~ "unknown"
-      [.] .retries;int <~ 0
+      [.] .reason#string <~ "unknown"
+      [.] .retries#int <~ 0
 
 [ ] ✓ both top-level variants — exhaustive, no *? needed
-[?] $outcome;Result
+[?] $outcome#Result
    [?] #Result.Success
       [r] =Log.Success
          [=] <msg << $outcome.message

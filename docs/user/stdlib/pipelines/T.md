@@ -36,19 +36,19 @@ Most triggers require no permissions. IO-touching triggers must declare `[_]` pe
       [ ] No additional parameters.
 
    .Daily
-      <InlineStringLiteral;string <~ ""
+      <InlineStringLiteral#string <~ ""
       [ ] Fires once per day at the specified time.
       [ ] Time string provided via inline call: =T.Daily"3AM"
 
    .Folder
       .NewFiles
-         <Folder;path
-         >NewFiles;array.path
+         <Folder#path
+         >NewFiles#array:path
          [ ] Fires when new files appear in the specified folder.
          [ ] Inline path: =T.Folder.NewFiles"/inbox/"
 
    .Webhook
-      <InlineStringLiteral;string <~ ""
+      <InlineStringLiteral#string <~ ""
       [ ] Fires on an incoming HTTP request to the specified endpoint.
       [ ] Inline path: =T.Webhook"/api/onboarding"
 ```

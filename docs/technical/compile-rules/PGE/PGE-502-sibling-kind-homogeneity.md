@@ -25,20 +25,20 @@ severity: error
 ```polyglot
 [ ] ✓ all value fields at top level
 {#} #UserRecord
-   [.] .name;string
-   [.] .age;int
-   [.] .email;string
+   [.] .name#string
+   [.] .age#int
+   [.] .email#string
 ```
 
 ```polyglot
 [ ] ✓ enum at top level with nested value sub-fields — different levels
 {#} #Severity
    [.] .Critical
-      [.] .code;int <~ 500
-      [.] .label;string <~ "CRITICAL"
+      [.] .code#int <~ 500
+      [.] .label#string <~ "CRITICAL"
    [.] .Error
-      [.] .code;int <~ 400
-      [.] .label;string <~ "ERROR"
+      [.] .code#int <~ 400
+      [.] .label#string <~ "ERROR"
    [.] .Info
 ```
 
@@ -47,7 +47,7 @@ severity: error
 [ ] ✗ PGE-502 — mixing enum and value fields at the same level
 {#} #Bad
    [.] .Active                         [ ] enum field (no ;type)
-   [.] .count;int <~ 0                 [ ] ✗ PGE-502 — value field among enum siblings
+   [.] .count#int <~ 0                 [ ] ✗ PGE-502 — value field among enum siblings
 ```
 
 ```polyglot
@@ -55,5 +55,5 @@ severity: error
 {#} #Status
    [.] .Running
    [.] .Stopped
-   [.] .uptime;int                     [ ] ✗ PGE-502 — value field among enum siblings
+   [.] .uptime#int                     [ ] ✗ PGE-502 — value field among enum siblings
 ```

@@ -18,23 +18,23 @@ severity: error
 ```polyglot
 [ ] ✓ unique field names at each level
 {#} #UserRecord
-   [.] .name;string
-   [.] .age;int
-   [.] .email;string
+   [.] .name#string
+   [.] .age#int
+   [.] .email#string
 ```
 
 ```polyglot
 [ ] ✓ same name at different levels is fine
 {#} #Config
    [.] .db
-      [.] .name;string
+      [.] .name#string
    [.] .cache
-      [.] .name;string           [ ] ✓ .db.name and .cache.name are distinct paths
+      [.] .name#string           [ ] ✓ .db.name and .cache.name are distinct paths
 ```
 
 ```polyglot
 [ ] ✓ unique field pushes on a struct variable
-[r] $user;UserRecord
+[r] $user#UserRecord
    [r] $user.name << "Alice"
    [r] $user.age << 30
    [r] $user.email << "alice@example.com"
@@ -44,14 +44,14 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-413 — duplicate field name in {#} definition
 {#} #Broken
-   [.] .name;string
-   [.] .name;int                             [ ] ✗ PGE-413 — .name declared twice
-   [.] .age;int
+   [.] .name#string
+   [.] .name#int                             [ ] ✗ PGE-413 — .name declared twice
+   [.] .age#int
 ```
 
 ```polyglot
 [ ] ✗ PGE-413 — duplicate field push on struct variable
-[r] $user;UserRecord
+[r] $user#UserRecord
    [r] $user.name << "Alice"
    [r] $user.name << "Bob"                   [ ] ✗ PGE-413 — .name pushed twice
    [r] $user.age << 30
@@ -60,8 +60,8 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-413 — duplicate flexible field name
 {#} #Registry
-   [:] :http;Handler
-   [:] :http;Plugin                          [ ] ✗ PGE-413 — :http declared twice
+   [:] :http#Handler
+   [:] :http#Plugin                          [ ] ✗ PGE-413 — :http declared twice
 ```
 
 **Open point:** None.

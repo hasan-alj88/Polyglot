@@ -127,7 +127,7 @@ See [[metadata]] for the full metadata tree, field listings, `live` semantics, a
 The originating line keeps its normal block marker. Only continuation lines get `[+]`. The parser joins all `[+]` lines with the preceding logical line. Strings can span across `[+]` boundaries (multi-line string content preserved). `[+]` is only valid when the preceding expression is incomplete.
 
 ```polyglot
-[r] .complex_result;string
+[r] .complex_result#string
 [+] << "suffix
 [+]  more"
 ```

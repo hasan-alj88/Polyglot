@@ -25,7 +25,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] >out << "done"
 ```
 
@@ -39,7 +39,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] >out << "done"
 ```
 
@@ -47,11 +47,11 @@ severity: error
 [ ] ✓ same field name in different definitions is fine
 {#} #Invoice
    [%] .description << "Invoice record"
-   [.] .amount;float
+   [.] .amount#float
 
 {#} #Payment
    [%] .description << "Payment record" [ ] ✓ different definitions
-   [.] .total;float
+   [.] .total#float
 ```
 
 **INVALID:**
@@ -63,7 +63,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] >out << "done"
 ```
 
@@ -75,7 +75,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] >out << "done"
 ```
 
@@ -84,7 +84,7 @@ severity: error
 {#} #OldRecord
    [%] .deprecated << .True
    [%] .deprecated << .False             [ ] ✗ PGE-115 — .deprecated appears twice
-   [.] .name;string
+   [.] .name#string
 ```
 
 **Open point:** None.

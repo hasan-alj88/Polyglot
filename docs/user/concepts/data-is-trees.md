@@ -122,11 +122,11 @@ Push atomically clears the previous field and sets the new one. Reading a non-ac
 
 ### String Subtypes — Nested Under `:String`
 
-`int` lives at `%#:String:int` — nested under `:String` at a flexible level. The alias `;int` in user code resolves to `;String.int`. Each subtype uses the `#String` schema with `.re` pre-filled:
+`int` lives at `%#:String:int` — nested under `:String` at a flexible level. The alias `#int` in user code resolves to `#String.int`. Each subtype uses the `#String` schema with `.re` pre-filled:
 
 ```
-%#:String:int               ← .string;RawString + .re;RawString (re = "^-?[0-9]+$")
-%#:String:float             ← .string;RawString + .re;RawString (re = "^-?[0-9]+\.[0-9]+$")
+%#:String:int               ← .string#RawString + .re#RawString (re = "^-?[0-9]+$")
+%#:String:float             ← .string#RawString + .re#RawString (re = "^-?[0-9]+\.[0-9]+$")
 %#:String:emailAddress      ← user-defined: .re = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
@@ -139,9 +139,9 @@ Pipeline instances carry their IO as nested fixed sections:
 ```
 %=:ProcessData:0
 ├── .<                      ← input ports (fixed typed section)
-│   └── .filepath;path
+│   └── .filepath#path
 └── .>                      ← output ports (fixed typed section)
-    └── .content;string
+    └── .content#string
 ```
 
 ## Reading the Tree

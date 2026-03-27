@@ -20,8 +20,8 @@ severity: error
 ```polyglot
 [ ] ✓ All raised errors are declared
 {=} =ValidateUser
-   [=] <name;string
-   [=] >validated;string
+   [=] <name#string
+   [=] >validated#string
    [=] !Validation.Empty
    [=] !Validation.TooLong
    [t] =T.Call
@@ -41,8 +41,8 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-705 — raises !Validation.InvalidEmail but pipeline doesn't declare it
 {=} =ValidateUserBad
-   [=] <name;string
-   [=] >validated;string
+   [=] <name#string
+   [=] >validated#string
    [=] !Validation.Empty
    [t] =T.Call
    [Q] =Q.Default

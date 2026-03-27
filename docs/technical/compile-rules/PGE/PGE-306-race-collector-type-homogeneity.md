@@ -14,17 +14,17 @@ severity: error
 
 **VALID:**
 ```polyglot
-[ ] ✓ all candidates are ;string
+[ ] ✓ all candidates are #string
 [p] =Search.EngineA
-   [=] >result;string >> $resultA
+   [=] >result#string >> $resultA
 
 [p] =Search.EngineB
-   [=] >result;string >> $resultB
+   [=] >result#string >> $resultB
 
 [*] *First
    [*] << $resultA
    [*] << $resultB
-   [*] >> $fastest                   [ ] ✓ type is ;string
+   [*] >> $fastest                   [ ] ✓ type is #string
 ```
 
 ```polyglot
@@ -33,7 +33,7 @@ severity: error
    [=] >profile;#UserProfile >> $profile
 
 [p] =Fetch.Count
-   [=] >count;int >> $count
+   [=] >count#int >> $count
 
 [*] *All
    [*] << $profile
@@ -44,28 +44,28 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-306 — mixed types in *First
 [p] =Search.Fast
-   [=] >result;string >> $fast
+   [=] >result#string >> $fast
 
 [p] =Search.Slow
-   [=] >result;int >> $slow
+   [=] >result#int >> $slow
 
 [*] *First
-   [*] << $fast                      [ ] ;string
-   [*] << $slow                      [ ] ;int — ✗ PGE-306
+   [*] << $fast                      [ ] #string
+   [*] << $slow                      [ ] #int — ✗ PGE-306
    [*] >> $winner
 ```
 
 ```polyglot
 [ ] ✗ PGE-306 — array.string ≠ array.int
 [p] =Fetch.Names
-   [=] >list;array.string >> $names
+   [=] >list#array:string >> $names
 
 [p] =Fetch.Counts
-   [=] >list;array.int >> $counts
+   [=] >list#array:int >> $counts
 
 [*] *First
-   [*] << $names                     [ ] ;array.string
-   [*] << $counts                    [ ] ;array.int — ✗ PGE-306
+   [*] << $names                     [ ] #array:string
+   [*] << $counts                    [ ] #array:int — ✗ PGE-306
    [*] >> $winner
 ```
 

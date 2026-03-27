@@ -4,21 +4,21 @@
 
 ## Problem
 
-When pushing to a typed flexible field (`[:] :*;Type`), must the user explicitly state the type on the new key, or can the compiler infer it from the struct definition?
+When pushing to a typed flexible field (`[:] :*#Type`), must the user explicitly state the type on the new key, or can the compiler infer it from the struct definition?
 
 ## Decision
 
-**Inferred.** The compiler knows the type from the `[:] :*;Type` declaration — no explicit annotation needed. Stating the type explicitly is not required.
+**Inferred.** The compiler knows the type from the `[:] :*#Type` declaration — no explicit annotation needed. Stating the type explicitly is not required.
 
-- **Omitted** — compiler infers from `[:] :*;Type` declaration
+- **Omitted** — compiler infers from `[:] :*#Type` declaration
 - **Stated and contradicts** — PGE-401 (type mismatch)
 
 ```polyglot
 {#} #Registry
    [.] .plugins
-      [:] :*;Handler
+      [:] :*#Handler
 
-[ ] compiler infers :myPlugin is ;Handler from [:] :*;Handler
+[ ] compiler infers :myPlugin is #Handler from [:] :*#Handler
 [r] $registry.plugins:myPlugin << ...
 ```
 
@@ -29,8 +29,8 @@ This documents how the compiler resolves types on flexible field paths — neede
 ### Algorithm
 
 1. **Resolve the parent path** — when the compiler sees `$registry.plugins:myPlugin`, resolve `$registry.plugins` to the `#Registry.plugins` struct level
-2. **Check the level's field declarations** — find `[:] :*;Handler` at that level
-3. **Apply the wildcard type** — any new `:key` at that level inherits `;Handler`
+2. **Check the level's field declarations** — find `[:] :*#Handler` at that level
+3. **Apply the wildcard type** — any new `:key` at that level inherits `#Handler`
 4. **Validate the pushed value** — the value being assigned must satisfy the `Handler` schema (PGE-402 if incomplete, PGE-401 if wrong type)
 
 ### Multi-Level Resolution
@@ -40,13 +40,13 @@ For nested typed flexible fields, the compiler resolves one level at a time. Eac
 ```polyglot
 {#} #Config
    [.] .sections
-      [:] :*;Section
+      [:] :*#Section
 
 {#} #Section
-   [:] :*;Setting
+   [:] :*#Setting
 
 {#} #Setting
-   [.] .value;string
+   [.] .value#string
 ```
 
 Path: `$config.sections:auth:timeout.value`
@@ -54,14 +54,14 @@ Path: `$config.sections:auth:timeout.value`
 | Step | Path segment | Resolved from | Inferred type |
 |------|-------------|---------------|---------------|
 | 1 | `.sections` | `#Config` definition | known fixed field |
-| 2 | `:auth` | `.sections` has `[:] :*;Section` | `;Section` |
-| 3 | `:timeout` | `#Section` has `[:] :*;Setting` | `;Setting` |
-| 4 | `.value` | `#Setting` definition | `;string` |
+| 2 | `:auth` | `.sections` has `[:] :*#Section` | `#Section` |
+| 3 | `:timeout` | `#Section` has `[:] :*#Setting` | `#Setting` |
+| 4 | `.value` | `#Setting` definition | `#string` |
 
 ### Edge Cases
 
-- **No `[:] :*;Type` at level** — untyped flexible field. No inference. Value is treated as `;serial` (schema-free).
-- **Individually declared flex fields** (e.g., `[:] :specific;SomeType`) — the compiler matches the key name first. If no exact match, falls back to `[:] :*;Type` wildcard if present.
+- **No `[:] :*#Type` at level** — untyped flexible field. No inference. Value is treated as `#serial` (schema-free).
+- **Individually declared flex fields** (e.g., `[:] :specific#SomeType`) — the compiler matches the key name first. If no exact match, falls back to `[:] :*#Type` wildcard if present.
 
 ## Related
 

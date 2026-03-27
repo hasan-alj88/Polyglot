@@ -16,15 +16,15 @@ severity: error
 ```polyglot
 {Q} #Queue:BatchQueue
    [.] .strategy;#QueueStrategy << #FIFO
-   [.] .maxInstances;int << 5
+   [.] .maxInstances#int << 5
 
 [ ] ✓ pipeline adds controls not in {Q} — no contradiction
 {=} =BatchJob
    [t] =T.Call
    [Q] #Queue:BatchQueue
-      [=] <maxConcurrent;int << 10
+      [=] <maxConcurrent#int << 10
       [Q] =Q.Pause.Soft
-         [=] <CPU.MoreThan;float << 90.0
+         [=] <CPU.MoreThan#float << 90.0
    [W] =W.Polyglot
    [r] =DoWork
 ```
@@ -32,13 +32,13 @@ severity: error
 **INVALID:**
 ```polyglot
 {Q} #Queue:BatchQueue
-   [.] .maxInstances;int << 1
+   [.] .maxInstances#int << 1
 
 [ ] ✗ PGE-113 — maxInstances contradicts queue default
 {=} =BatchJob
    [t] =T.Call
    [Q] #Queue:BatchQueue
-      [=] <maxInstances;int << 5
+      [=] <maxInstances#int << 5
    [W] =W.Polyglot
    [r] =DoWork
 ```

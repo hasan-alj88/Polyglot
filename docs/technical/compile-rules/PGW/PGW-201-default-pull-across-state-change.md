@@ -15,7 +15,7 @@ severity: warning
 **VALID:**
 ```polyglot
 [ ] ✓ Default pulled once, then promoted — no second pull before promotion
-[=] >label;string
+[=] >label#string
 [r] >label <~ "pending"           [ ] Default
 [r] >label << "confirmed"         [ ] Final
 [r] =Display
@@ -24,7 +24,7 @@ severity: warning
 
 ```polyglot
 [ ] ✓ Default pulled once, never promoted — consistent value
-[=] >fallback;string
+[=] >fallback#string
 [r] >fallback <~ "N/A"            [ ] Default
 [r] =Display
    [=] <text << >fallback         [ ] ✓ pull 1 — Default value
@@ -35,7 +35,7 @@ severity: warning
 **WARNING:**
 ```polyglot
 [ ] ⚠ PGW-201 — two pulls straddle the Default→Final transition
-[=] >label;string
+[=] >label#string
 [r] >label <~ "pending"           [ ] Default
 
 [ ] first pull — sees "pending"

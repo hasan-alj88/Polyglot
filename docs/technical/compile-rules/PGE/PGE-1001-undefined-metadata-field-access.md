@@ -10,7 +10,7 @@ severity: error
 
 **Statement:** A metadata access expression (`$var%field`, `=Pipeline%field`, `#Data%field`) must reference a field that exists in the metadata schema for that object type. Each object type has a fixed set of valid metadata fields — accessing a field outside that schema is a compile error.
 **Rationale:** The `%` tree has a well-defined schema per object type. An invalid field access like `$count%description` (variables have no `.description` metadata) is always a logic error. Catching this at compile time prevents silent empty reads or undefined behavior at runtime.
-**Detection:** The compiler resolves the object type from the `%` access expression and checks field existence. Fixed metadata fields (`%state`, `%status`, etc.) and user-declared `[%]` fields are a direct schema lookup. The `%info` field (`;serial`) requires fetching from the metadata tree to confirm the subfield path exists. Any field reference not found is rejected.
+**Detection:** The compiler resolves the object type from the `%` access expression and checks field existence. Fixed metadata fields (`%state`, `%status`, etc.) and user-declared `[%]` fields are a direct schema lookup. The `%info` field (`#serial`) requires fetching from the metadata tree to confirm the subfield path exists. Any field reference not found is rejected.
 
 **See also:** PGE-206 (metadata pull-only — `live` fields cannot be pushed), PGE-406 (undefined variable reference), PGE-405 (undefined field reference)
 
@@ -22,45 +22,45 @@ severity: error
 
 | Field | Type |
 |-------|------|
-| `%state` | `;live.#VarState` |
-| `%sourceError` | `;live.error` |
+| `%state` | `#live.#VarState` |
+| `%sourceError` | `#live.error` |
 
 ##### Pipeline (`{=}`)
 
 | Field | Type |
 |-------|------|
-| `%status` | `;live.#PipelineStatus` |
-| `%errors` | `;live.array.error` |
-| `%isSuccess` | `;live.#Boolean` |
-| `%instanceCount` | `;live.int` |
-| `%lastRun` | `;live.string` |
-| `%duration` | `;live.string` |
-| `%triggerCount` | `;live.int` |
-| `%description` | `;string` (user-declared `[%]`) |
-| `%version` | `;string` (user-declared `[%]`) |
-| `%authors` | `;array.string` (user-declared `[%]`) |
-| `%license` | `;string` (user-declared `[%]`) |
-| `%deprecated` | `;bool` (user-declared `[%]`) |
-| `%deprecatedMessage` | `;string` (user-declared `[%]`) |
+| `%status` | `#live.#PipelineStatus` |
+| `%errors` | `#live.array.error` |
+| `%isSuccess` | `#live.#Boolean` |
+| `%instanceCount` | `#live.int` |
+| `%lastRun` | `#live.string` |
+| `%duration` | `#live.string` |
+| `%triggerCount` | `#live.int` |
+| `%description` | `#string` (user-declared `[%]`) |
+| `%version` | `#string` (user-declared `[%]`) |
+| `%authors` | `#array:string` (user-declared `[%]`) |
+| `%license` | `#string` (user-declared `[%]`) |
+| `%deprecated` | `#bool` (user-declared `[%]`) |
+| `%deprecatedMessage` | `#string` (user-declared `[%]`) |
 | `%alias` | — (user-declared `[%]`) |
-| `%info` | `;serial` (user-declared `[%]`) |
+| `%info` | `#serial` (user-declared `[%]`) |
 
 ##### Data (`{#}`)
 
 | Field | Type |
 |-------|------|
-| `%lastModified` | `;live.string` |
-| `%files` | `;live.array.path` |
-| `%errors` | `;live.array.error` |
-| `%usageCount` | `;live.int` |
-| `%description` | `;string` (user-declared `[%]`) |
-| `%version` | `;string` (user-declared `[%]`) |
-| `%authors` | `;array.string` (user-declared `[%]`) |
-| `%license` | `;string` (user-declared `[%]`) |
-| `%deprecated` | `;bool` (user-declared `[%]`) |
-| `%deprecatedMessage` | `;string` (user-declared `[%]`) |
+| `%lastModified` | `#live.string` |
+| `%files` | `#live.array.path` |
+| `%errors` | `#live.array.error` |
+| `%usageCount` | `#live.int` |
+| `%description` | `#string` (user-declared `[%]`) |
+| `%version` | `#string` (user-declared `[%]`) |
+| `%authors` | `#array:string` (user-declared `[%]`) |
+| `%license` | `#string` (user-declared `[%]`) |
+| `%deprecated` | `#bool` (user-declared `[%]`) |
+| `%deprecatedMessage` | `#string` (user-declared `[%]`) |
 | `%alias` | — (user-declared `[%]`) |
-| `%info` | `;serial` (user-declared `[%]`) |
+| `%info` | `#serial` (user-declared `[%]`) |
 
 ---
 
@@ -71,8 +71,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [?] $input%state
       [?] =? .Final
          [r] >out << $input
@@ -86,7 +86,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [?] =Worker%status
       [?] =? .Running
          [r] >out << "active"
@@ -101,7 +101,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] >out << =Documented%description
 ```
 
@@ -112,8 +112,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <count;int
-   [=] >out;string
+   [=] <count#int
+   [=] >out#string
    [r] >out << $count%description       [ ] ✗ PGE-1001 — $var has no .description
 ```
 
@@ -123,7 +123,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] >out << =Worker%memory           [ ] ✗ PGE-1001 — no .memory in pipeline schema
 ```
 
@@ -133,8 +133,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >out;string
+   [=] <data#string
+   [=] >out#string
    [?] $data%isSuccess                  [ ] ✗ PGE-1001 — .isSuccess is pipeline metadata
       [?] =? .True
          [r] >out << "ok"

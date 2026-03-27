@@ -26,8 +26,8 @@ All strategies accept optional IO parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `<maxInstances;int` | int | Max parallel instances of this pipeline |
-| `<maxConcurrent;int` | int | Max other pipelines running alongside |
+| `<maxInstances#int` | int | Max parallel instances of this pipeline |
+| `<maxConcurrent#int` | int | Max other pipelines running alongside |
 | `<retrigger;#RetriggerStrategy` | enum | Behavior on re-trigger while active |
 
 ### =Q.Default
@@ -52,7 +52,7 @@ Priority-based ordering. Higher priority pipelines dispatch first. Requires `{Q}
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `<priority;int` | int | Priority level (higher = dispatched first) |
+| `<priority#int` | int | Priority level (higher = dispatched first) |
 
 ---
 
@@ -67,7 +67,7 @@ Pause a running pipeline. Finishes current work, then suspends. Frees CPU/GPU.
 ```polyglot
 [Q] =Q.Default
    [Q] =Q.Pause.Soft
-      [=] <CPU.MoreThan;float << 90.0
+      [=] <CPU.MoreThan#float << 90.0
 ```
 
 ### =Q.Pause.Hard
@@ -77,7 +77,7 @@ Pause a running pipeline immediately. Frees CPU/GPU and RAM.
 ```polyglot
 [Q] #Queue:GPUQueue
    [Q] =Q.Pause.Hard
-      [=] <RAM.Available.LessThan;float << 3072.0
+      [=] <RAM.Available.LessThan#float << 3072.0
 ```
 
 ### =Q.Resume
@@ -87,7 +87,7 @@ Resume a paused pipeline (soft or hard).
 ```polyglot
 [Q] #Queue:GPUQueue
    [Q] =Q.Resume
-      [=] <RAM.Available.MoreThan;float << 5120.0
+      [=] <RAM.Available.MoreThan#float << 5120.0
 ```
 
 ### =Q.Kill.Graceful
@@ -97,7 +97,7 @@ Finish current work, run `[/]` cleanup, then terminate.
 ```polyglot
 [Q] =Q.Default
    [Q] =Q.Kill.Graceful
-      [=] <ExecutionTime.MoreThan;string << "2h"
+      [=] <ExecutionTime.MoreThan#string << "2h"
 ```
 
 ### =Q.Kill.Hard
@@ -107,7 +107,7 @@ Immediate OS-level termination. No cleanup runs.
 ```polyglot
 [Q] =Q.Default
    [Q] =Q.Kill.Hard
-      [=] <ExecutionTime.MoreThan;string << "4h"
+      [=] <ExecutionTime.MoreThan#string << "4h"
 ```
 
 ---
@@ -120,17 +120,17 @@ Active queue controls accept conditional parameters that specify when the contro
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `<CPU.MoreThan;float` | float | CPU usage percentage threshold |
-| `<RAM.Available.LessThan;float` | float | RAM available in MB (below = trigger) |
-| `<RAM.Available.MoreThan;float` | float | RAM available in MB (above = trigger) |
-| `<ExecutionTime.MoreThan;string` | string | Execution time limit (e.g., "30m", "2h") |
+| `<CPU.MoreThan#float` | float | CPU usage percentage threshold |
+| `<RAM.Available.LessThan#float` | float | RAM available in MB (below = trigger) |
+| `<RAM.Available.MoreThan#float` | float | RAM available in MB (above = trigger) |
+| `<ExecutionTime.MoreThan#string` | string | Execution time limit (e.g., "30m", "2h") |
 
 ### Pipeline State Conditions
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `<Pipeline.Triggered;string` | string | Activate when named pipeline is triggered |
-| `<Pipeline.Running;string` | string | Activate when named pipeline starts running |
+| `<Pipeline.Triggered#string` | string | Activate when named pipeline is triggered |
+| `<Pipeline.Running#string` | string | Activate when named pipeline starts running |
 
 ### Example: Combined Controls
 
@@ -138,22 +138,22 @@ Active queue controls accept conditional parameters that specify when the contro
 {Q} #Queue:GPUQueue
    [%] .description << "Queue for GPU-intensive work"
    [.] .strategy;#QueueStrategy << #LIFO
-   [.] .maxInstances;int << 1
+   [.] .maxInstances#int << 1
    [.] .retrigger;#RetriggerStrategy << #Disallow
    [ ] Queue-level default: kill after 4 hours
    [Q] =Q.Kill.Graceful
-      [=] <ExecutionTime.MoreThan;string << "4h"
+      [=] <ExecutionTime.MoreThan#string << "4h"
 
 {=} =GPU.RenderFrames
-   [=] <frames;array.serial
-   [=] >rendered;array.serial ~> {}
+   [=] <frames#array:serial
+   [=] >rendered#array:serial ~> {}
    [t] =T.Call
    [Q] #Queue:GPUQueue
       [ ] Pipeline-specific: pause/resume based on RAM
       [Q] =Q.Pause.Hard
-         [=] <RAM.Available.LessThan;float << 3072.0
+         [=] <RAM.Available.LessThan#float << 3072.0
       [Q] =Q.Resume
-         [=] <RAM.Available.MoreThan;float << 5120.0
+         [=] <RAM.Available.MoreThan#float << 5120.0
    [W] =W.Polyglot
    [p] ~ForEach.Array
       [~] <Array << $frames

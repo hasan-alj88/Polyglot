@@ -2,7 +2,7 @@
 audience: user
 type: spec
 status: complete
-updated: 2026-03-24
+updated: 2026-03-27
 ---
 
 # Collections
@@ -14,13 +14,44 @@ Collections in Polyglot Code ([[glossary#Polyglot Code]]) are data structures th
 
 ## Collection Types
 
-| Type | Description | Schema |
-|------|-------------|--------|
-| `array` | Ordered collection — a struct with enumerated flat keys starting at 0 | Fixed (`.`) |
-| `serial` | Schema-free data structure. Always uses flexible fields (`:`) even if dot notation is used in access. Converts to/from JSON-like formats | Flexible (`:`) |
-| `#` (struct) | User-defined **struct** declared with `{#}`. Predefined fixed schema | Fixed (`.`) |
+Collections are **assembled at once** using collect operators (`*` prefix) — not incrementally added to at runtime. Collections are populated via collectors (`*Into.Array`, `*Into.Serial`, etc.) and are structurally complete after collection.
 
-For type annotations and basic type details, see [[types]].
+| Type | Description | Schema | Keys |
+|------|-------------|--------|------|
+| `#array` | Ordered, contiguous, typed elements, N-dimensional | Flexible (`:`) | `#UnsignedInt` indices (`:0`, `:1`, `:2`) |
+| `#dict` | Unordered, sparse, typed key-value pairs | Flexible (`:`) | User-typed keys |
+| `#dataframe` | Array of dicts — tabular data (depth 2) | Flexible (`:`) | `#UnsignedInt` rows, typed columns |
+| `#serial` | Schema-free, unlimited depth. Any keys, any types. Converts to/from JSON-like formats | Flexible (`:`) | Any |
+| `{#}` struct | User-defined struct with predefined fixed schema | Fixed (`.`) | Fixed field names |
+
+For type annotations, type hierarchy, and schema properties, see [[types]].
+
+### #Dict — Typed Key-Value Pairs
+
+`#Dict` accepts two type parameters: key type and value type. Keys are sparse (gaps allowed) and unordered.
+
+```polyglot
+[ ] String keys, integer values
+[r] $ages#dict:string:int <~ {}
+
+[ ] Integer keys, string values
+[r] $lookup#dict:int:string <~ {}
+
+[ ] String keys, struct values
+[r] $users#dict:string:Person <~ {}
+```
+
+Access uses `:` flexible-field notation: `$ages:alice`, `$lookup:42`. Both key and value types are constrained to depth 0 (scalars or records with only fixed fields).
+
+### #Dataframe — Tabular Data
+
+`#Dataframe` is an array of dicts — rows indexed by unsigned integers, each row a flat key-value map. Two type parameters: column name type and cell value type.
+
+```polyglot
+[r] $df#dataframe:string:float <~ {}
+```
+
+Access uses double `:` — row then column: `$df:1:price` (row 1, column "price"). `%Depth.Max` is 2 (row level + column level).
 
 ## Expand Operators (`~`)
 
@@ -208,7 +239,7 @@ All `[*] <<` inputs must be the **same type** (PGE-306). `[*] >>` output is requ
 
 [ ] *Nth — generic form; take the 2nd to arrive
 [*] *Nth
-   [*] <n;int << 2
+   [*] <n#int << 2
    [*] << $resultA
    [*] << $resultB
    [*] << $resultC
@@ -276,10 +307,10 @@ Expand an array of integers in parallel, double each value, collect the doubled 
 [ ] Triggers, queue config, and wrapper assumed defined
 ...
 [ ] Input: an array of integers
-[=] <numbers;array << $InputNumbers
+[=] <numbers#array << $InputNumbers
 [ ] Output: doubled array and total sum
-[=] >doubled;array >> $DoubledNumbers
-[=] >total;int >> $TotalSum
+[=] >doubled#array >> $DoubledNumbers
+[=] >total#int >> $TotalSum
 
 [ ] Expand — one mini-pipeline per item, run in parallel
 [p] ~ForEach.Array.Enumerate
@@ -288,7 +319,7 @@ Expand an array of integers in parallel, double each value, collect the doubled 
    [~] >item >> $num
 
    [ ] Double the number inside mini-pipeline scope
-   [r] $doubled;int << $num * 2
+   [r] $doubled#int << $num * 2
 
    [ ] Collect doubled values back into array (one level up)
    [p] *Into.Array

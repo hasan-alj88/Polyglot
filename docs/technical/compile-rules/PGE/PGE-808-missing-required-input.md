@@ -25,16 +25,16 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <name;string
-   [=] <title;string
-   [=] >greeting;string
+   [=] <name#string
+   [=] <title#string
+   [=] >greeting#string
    [r] >greeting << "Hello, {$title} {$name}!"
 
 {=} =UseGreet
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Greet
       [=] <name << "Alice"                 [ ] ✓ required input wired
       [=] <title << "Dr."                  [ ] ✓ required input wired
@@ -47,8 +47,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <items;array.string
-   [=] >results;array.string
+   [=] <items#array:string
+   [=] >results#array:string
    [p] ~ForEach.Array
       [~] <Array << $items
       [~] >item >> $item
@@ -67,16 +67,16 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <name;string
-   [=] <title;string
-   [=] >greeting;string
+   [=] <name#string
+   [=] <title#string
+   [=] >greeting#string
    [r] >greeting << "Hello, {$title} {$name}!"
 
 {=} =UseGreet
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Greet
       [=] <name << "Alice"
                                             [ ] ✗ PGE-808 — <title not wired, has no default
@@ -89,16 +89,16 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] <mode;string
-   [=] >result;string
+   [=] <data#string
+   [=] <mode#string
+   [=] >result#string
    [r] >result << $data
 
 {=} =BatchTransform
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [p] =Transform
       [=] <data << "hello"
                                             [ ] ✗ PGE-808 — <mode not wired, has no default

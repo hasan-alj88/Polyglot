@@ -21,8 +21,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >output;string
+   [=] <input#string
+   [=] >output#string
    [r] =Transform
       [=] <data << $input
       [=] >result >> $cleaned
@@ -35,8 +35,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] =Worker
       [=] <data << $input                     [ ] ✓ [=] wires IO on =Worker
       [=] >result >> >out                     [ ] ✓ [=] wires IO on =Worker
@@ -49,8 +49,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >result;string
+   [=] <input#string
+   [=] >result#string
    [=] >result << $input                      [ ] ✗ PGE-117 — should be [r]
 ```
 
@@ -60,8 +60,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >output;string
+   [=] <data#string
+   [=] >output#string
    [?] $data =? "ok"
       [=] >output << $data                    [ ] ✗ PGE-117 — should be [r]
    [?] *?

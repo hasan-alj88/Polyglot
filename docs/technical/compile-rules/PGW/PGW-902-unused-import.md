@@ -25,8 +25,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] @auth=Validate                   [ ] ✓ @auth used
       [=] <token << $input
       [=] >ok >> $valid
@@ -43,8 +43,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] >out << $input
 ```
 
@@ -59,8 +59,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] @auth=Validate
       [=] <token << $input
       [=] >ok >> >out
@@ -76,8 +76,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] >out << $input
 ```
 

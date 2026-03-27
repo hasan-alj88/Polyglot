@@ -20,8 +20,8 @@ severity: error
 {@} @Local:999.MyApp:v1.0.0
    [_] _File.read"/var/log/*"
    [_] _Web.request
-      [_] <url;string << "https://api.example.com/*"
-      [_] <method;string << "GET"
+      [_] <url#string << "https://api.example.com/*"
+      [_] <method#string << "GET"
    [_] _System.env"LOG_LEVEL"
 
 {=} =ReadLogs

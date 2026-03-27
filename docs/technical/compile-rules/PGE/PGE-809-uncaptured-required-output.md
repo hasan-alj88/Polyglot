@@ -25,9 +25,9 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >result;string
-   [=] >count;int
+   [=] <data#string
+   [=] >result#string
+   [=] >count#int
    [r] >result << $data
    [r] >count << 1
 
@@ -35,7 +35,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Process
       [=] <data << "hello"
       [=] >result >> $res                  [ ] ✓ captured
@@ -49,7 +49,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Process
       [=] <data << "hello"
       [=] >result >> >out
@@ -62,7 +62,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
+   [=] <data#string
    [b] =Logger                             [ ] ✓ [b] exempt — outputs not required
       [=] <message << $data
 ```
@@ -74,7 +74,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [r] =Process
       [=] <data << "hello"
       [=] >result >> >out
@@ -87,7 +87,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;string
+   [=] >out#string
    [p] =Process
       [=] <data << "hello"
       [=] >result >> $res

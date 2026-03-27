@@ -22,8 +22,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >output;string
+   [=] <input#string
+   [=] >output#string
    [r] >output << $input
 
 [ ] ✓ =Transform is defined in the same package
@@ -32,8 +32,8 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =Transform
-      [=] <input;string << "hello"
-      [=] >output;string >> $result
+      [=] <input#string << "hello"
+      [=] >output#string >> $result
 ```
 
 ```polyglot
@@ -43,8 +43,8 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =File.Text.Read
-      [=] <path;path << $filePath
-      [=] >content;string >> $text
+      [=] <path#path << $filePath
+      [=] >content#string >> $text
 ```
 
 **INVALID:**
@@ -57,7 +57,7 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =Process                            [ ] ✗ PGE-903 — no {=} =Process in package, not stdlib
-      [=] <data;string << $input
+      [=] <data#string << $input
 ```
 
 ```polyglot
@@ -68,8 +68,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >output;string
+   [=] <input#string
+   [=] >output#string
    [r] >output << $input
 
 {=} =Main
@@ -77,7 +77,7 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =Transfrom                          [ ] ✗ PGE-903 — typo: =Transfrom not found (did you mean =Transform?)
-      [=] <input;string << "hello"
+      [=] <input#string << "hello"
 ```
 
 ```polyglot
@@ -89,7 +89,7 @@ severity: error
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =Validate                           [ ] ✗ PGE-903 — =Validate is in another package; use @alias=Validate with [@] import
-      [=] <input;string << $data
+      [=] <input#string << $data
 ```
 
 **Open point:** None.

@@ -22,14 +22,14 @@ No warnings. Either the compiler can prove it's safe (no handling needed), prove
 
 ```polyglot
 [ ] ✓ Handled — *Continue provides fallback
-[r] $record;UserRecord << $someSerial
+[r] $record#UserRecord << $someSerial
    [!] !SchemaMismatch
       [*] *Continue >FallBack << $defaultRecord
 ```
 
 ```polyglot
 [ ] ✗ PGE-409 — serial→struct push without error handling
-[r] $record;UserRecord << $someSerial
+[r] $record#UserRecord << $someSerial
 ```
 
 ### 3. Runtime behavior

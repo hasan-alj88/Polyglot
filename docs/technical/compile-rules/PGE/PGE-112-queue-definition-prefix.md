@@ -17,7 +17,7 @@ severity: error
 [ ] ✓ correct prefix
 {Q} #Queue:GPUQueue
    [.] .strategy;#QueueStrategy << #LIFO
-   [.] .maxInstances;int << 1
+   [.] .maxInstances#int << 1
 ```
 
 **INVALID:**

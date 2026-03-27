@@ -18,8 +18,8 @@ severity: error
 ```polyglot
 [ ] ✓ wrapper references a {M} macro
 {M} =W.DB.Transaction
-   [{] $connStr;string
-   [}] $txHandle;string
+   [{] $connStr#string
+   [}] $txHandle#string
    [\]
       [r] =DB.Connect
          [=] <connStr << $connStr

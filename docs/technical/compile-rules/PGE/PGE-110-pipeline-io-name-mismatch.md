@@ -20,14 +20,14 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <name;string
-   [=] >greeting;string
+   [=] <name#string
+   [=] >greeting#string
    [r] >greeting << "Hello, {$name}!"
 
 [ ] ✓ IO names match the pipeline declaration
 [r] =Greet
-   [=] <name;string << "Alice"           [ ] ✓ <name exists in =Greet
-   [=] >greeting;string >> $result        [ ] ✓ >greeting exists in =Greet
+   [=] <name#string << "Alice"           [ ] ✓ <name exists in =Greet
+   [=] >greeting#string >> $result        [ ] ✓ >greeting exists in =Greet
 ```
 
 ```polyglot
@@ -35,14 +35,14 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >output;string
+   [=] <input#string
+   [=] >output#string
    [r] >output << $input
 
 [ ] ✓ parallel fork with correct IO names
 [p] =Transform
-   [=] <input;string << $data             [ ] ✓ <input exists in =Transform
-   [=] >output;string >> $transformed     [ ] ✓ >output exists in =Transform
+   [=] <input#string << $data             [ ] ✓ <input exists in =Transform
+   [=] >output#string >> $transformed     [ ] ✓ >output exists in =Transform
 ```
 
 **INVALID:**
@@ -51,21 +51,21 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <name;string
-   [=] >greeting;string
+   [=] <name#string
+   [=] >greeting#string
    [r] >greeting << "Hello, {$name}!"
 
 [ ] ✗ PGE-110 — input name doesn't exist in target pipeline
 [r] =Greet
-   [=] <username;string << "Alice"        [ ] ✗ PGE-110 — =Greet has <name, not <username
-   [=] >greeting;string >> $result
+   [=] <username#string << "Alice"        [ ] ✗ PGE-110 — =Greet has <name, not <username
+   [=] >greeting#string >> $result
 ```
 
 ```polyglot
 [ ] ✗ PGE-110 — output name doesn't exist in target pipeline
 [r] =Greet
-   [=] <name;string << "Alice"
-   [=] >message;string >> $result         [ ] ✗ PGE-110 — =Greet has >greeting, not >message
+   [=] <name#string << "Alice"
+   [=] >message#string >> $result         [ ] ✗ PGE-110 — =Greet has >greeting, not >message
 ```
 
 ```polyglot
@@ -73,14 +73,14 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <data;string
-   [=] >result;string
+   [=] <data#string
+   [=] >result#string
    [r] >result << $data
 
 [ ] ✗ PGE-110 — typo in parameter name
 [r] =Process
-   [=] <dta;string << $input              [ ] ✗ PGE-110 — =Process has <data, not <dta
-   [=] >result;string >> $output
+   [=] <dta#string << $input              [ ] ✗ PGE-110 — =Process has <data, not <dta
+   [=] >result#string >> $output
 ```
 
 **Open point:** None.

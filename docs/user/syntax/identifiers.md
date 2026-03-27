@@ -9,7 +9,7 @@ status: complete
 
 <!-- @types -->
 <!-- @packages -->
-ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address format, [[types]] for `;` type annotations:
+ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address format, [[types]] for `#` type annotations:
 
 | Prefix | Type | Example |
 |--------|------|---------|
@@ -68,24 +68,24 @@ These serialized paths — `#Boolean.True`, `$user:name`, `=Pipeline%status` —
 [ ] INVALID: $user.name, $user:age         [ ] mixed separators at same level
 ```
 
-2. **Sibling kind homogeneity** — all siblings at the same level must be the same kind: all enum fields or all value fields (have `;type`). Assignment within value fields is individually optional — unassigned value fields are in **Declared** state.
+2. **Sibling kind homogeneity** — all siblings at the same level must be the same kind: all enum fields or all value fields (have `#type`). Assignment within value fields is individually optional — unassigned value fields are in **Declared** state.
 
 ```polyglot
 [ ] VALID:   all value fields, all assigned
-[.] .timeout;int <~ 30
-[.] .retries;int <~ 3
+[.] .timeout#int <~ 30
+[.] .retries#int <~ 3
 
 [ ] VALID:   all value fields, none assigned (Declared state)
-[.] .timeout;int
-[.] .retries;int
+[.] .timeout#int
+[.] .retries#int
 
 [ ] VALID:   all value fields, mixed assignment (some assigned, some declared)
-[.] .timeout;int <~ 30
-[.] .retries;int
+[.] .timeout#int <~ 30
+[.] .retries#int
 
 [ ] INVALID: mixed kinds (enum + value at same level)
 [.] .Active
-[.] .count;int <~ 0
+[.] .count#int <~ 0
 ```
 
 **Declared value fields:** A value field with no assignment is in **Declared** state. It can be pushed to (final or default) in usage, but pulling from a Declared variable is a compile error. See [[variable-lifecycle#Declared]].

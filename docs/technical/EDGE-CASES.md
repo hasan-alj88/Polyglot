@@ -92,8 +92,8 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Bool values are `#Boolean.True` / `#Boolean.False` (not `true`/`false`). See [[types]].
 
 ```polyglot
-[r] $flag;bool << #Boolean.True
-[=] >enabled;bool ~> #Boolean.False
+[r] $flag#bool << #Boolean.True
+[=] >enabled#bool ~> #Boolean.False
 ```
 
 ### EC-2.3: Negative numeric literals
@@ -103,8 +103,8 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Negative integers and floats as literal values.
 
 ```polyglot
-[r] $offset;int << -1
-[r] $threshold;float << -0.5
+[r] $offset#int << -1
+[r] $threshold#float << -0.5
 ```
 
 ### EC-2.4: Empty string literal
@@ -114,7 +114,7 @@ Review in batches by section. Each edge case includes:
 **What it tests:** `""` as a valid string literal.
 
 ```polyglot
-[.] .name;string <~ ""
+[.] .name#string <~ ""
 ```
 
 ---
@@ -181,8 +181,8 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Variables with `:` flexible field separators. See [[identifiers#Serialized Identifiers]].
 
 ```polyglot
-[r] $config:timeout:value;int << 30
-[r] $user:name;string << "Alice"
+[r] $config:timeout:value#int << 30
+[r] $user:name#string << "Alice"
 ```
 
 ### EC-3.7: Sibling homogeneity violation (INVALID)
@@ -210,9 +210,9 @@ Review in batches by section. Each edge case includes:
 **What it tests:** `array.string`, `array.int`, `array.path` — dot separates array from element type. See [[types#Element-Typed Arrays]].
 
 ```polyglot
-[=] <names;array.string
-[=] <scores;array.int
-[=] <files;array.path
+[=] <names#array:string
+[=] <scores#array:int
+[=] <files#array:path
 ```
 
 ### EC-4.2: Element-typed array — user-defined type (no # prefix)
@@ -222,7 +222,7 @@ Review in batches by section. Each edge case includes:
 **What it tests:** `array.UserRecord` not `array.#UserRecord`. See [[types#User-Defined Types]].
 
 ```polyglot
-[=] <users;array.UserRecord
+[=] <users#array:UserRecord
 ```
 
 ### EC-4.3: Serial type
@@ -232,7 +232,7 @@ Review in batches by section. Each edge case includes:
 **What it tests:** `serial` as a type annotation on IO parameters. See [[types#Basic Types]], [[collections#Collection Types]].
 
 ```polyglot
-[=] <payload;serial
+[=] <payload#serial
 ```
 
 ### EC-4.4: User-defined type reference
@@ -242,32 +242,32 @@ Review in batches by section. Each edge case includes:
 **What it tests:** `#DataName` as type annotation. See [[types#User-Defined Types]].
 
 ```polyglot
-[r] $hire;#NewHire << <payload
+[r] $hire#NewHire << <payload
 ```
 
 ### EC-4.5: `=Path"..."` inline path creation
 
-**What it tests:** `=Path"..."` inline pipeline call creating `;path` values. See [[types#=Path Inline Notation]], [[STDLIB#=Path]].
+**What it tests:** `=Path"..."` inline pipeline call creating `#path` values. See [[types#=Path Inline Notation]], [[STDLIB#=Path]].
 
 ```polyglot
 [ ] Basic usage
-[r] $dir;path << =Path"/tmp/MyApp"
+[r] $dir#path << =Path"/tmp/MyApp"
 
 [ ] With {.} shorthand
-[r] $logDir;path << =Path"{.}/logs"
+[r] $logDir#path << =Path"{.}/logs"
 
 [ ] Separator equivalence — both resolve identically
-[r] $a;path << =Path"{.}\MyApp\logs"
-[r] $b;path << =Path"{.}/MyApp/logs"
+[r] $a#path << =Path"{.}\MyApp\logs"
+[r] $b#path << =Path"{.}/MyApp/logs"
 
 [ ] Interpolation with user-defined path variable
-[r] $root;path
+[r] $root#path
    [.] .Unix << "/opt"
    [.] .Windows << "D:"
-[r] $appDir;path << =Path"{$root}/MyApp"
+[r] $appDir#path << =Path"{$root}/MyApp"
 
 [ ] Literal braces in path string
-[r] $weird;path << =Path"/tmp/{{backup}}/files"
+[r] $weird#path << =Path"/tmp/{{backup}}/files"
 ```
 
 ### EC-4.6: Single-platform path (PGW-408 / PGE-408)
@@ -276,34 +276,34 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [ ] ⚠ PGW-408 — single platform, but matches current OS (Unix)
-[r] $dir;path
+[r] $dir#path
    [.] .Unix << "/tmp/MyApp"
 
 [ ] ✗ PGE-408 — .Unix missing, compiling on Unix
-[r] $dir;path
+[r] $dir#path
    [.] .Windows << "C:\MyApp"
 
 [ ] ✓ suppressed warning
 [ ] Ignore PGW-408
-[r] $dir;path
+[r] $dir#path
    [.] .Unix << "/tmp/MyApp"
 
 [ ] ✓ no warning — both platforms
-[r] $dir;path
+[r] $dir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
 ```
 
-### EC-4.7: Plain string to `;path` type mismatch (PGE-401)
+### EC-4.7: Plain string to `#path` type mismatch (PGE-401)
 
-**What it tests:** Assigning a plain string to a `;path` variable is a type mismatch. See [[types#Explicit Subfield Assignment]].
+**What it tests:** Assigning a plain string to a `#path` variable is a type mismatch. See [[types#Explicit Subfield Assignment]].
 
 ```polyglot
 [ ] ✗ PGE-401 — string ≠ path, no implicit coercion
-[r] $dir;path << "/tmp/MyApp"
+[r] $dir#path << "/tmp/MyApp"
 
 [ ] ✓ correct — use =Path"..." instead
-[r] $dir;path << =Path"/tmp/MyApp"
+[r] $dir#path << =Path"/tmp/MyApp"
 ```
 
 ### EC-4.8: Inline pipeline call — single output
@@ -313,8 +313,8 @@ Review in batches by section. Each edge case includes:
 **What it tests:** An inline pipeline call with one output evaluates to that output's type directly.
 
 ```polyglot
-[ ] ✓ =Path has one output >result;path — value is ;path
-[r] $dir;path << =Path"/tmp/MyApp"
+[ ] ✓ =Path has one output >result#path — value is #path
+[r] $dir#path << =Path"/tmp/MyApp"
 
 [ ] ✓ inline call as comparison operand
 [?] $dir =? =Path"/expected"
@@ -322,20 +322,20 @@ Review in batches by section. Each edge case includes:
 
 ### EC-4.9: Inline pipeline call — multiple outputs
 
-**What it tests:** An inline pipeline call with multiple outputs evaluates to `;serial` with output parameter names as keys.
+**What it tests:** An inline pipeline call with multiple outputs evaluates to `#serial` with output parameter names as keys.
 
 ```polyglot
 {=} =ParsePair
-   [=] <InlineStringLiteral;string <~ ""
-   [=] >key;string
-   [=] >value;string
+   [=] <InlineStringLiteral#string <~ ""
+   [=] >key#string
+   [=] >value#string
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [ ] ... parsing logic ...
 
-[ ] ✓ multiple outputs → ;serial with keys "key" and "value"
-[r] $result;serial << =ParsePair"name=Alice"
+[ ] ✓ multiple outputs → #serial with keys "key" and "value"
+[r] $result#serial << =ParsePair"name=Alice"
 ```
 
 ### EC-4.10: Inline pipeline call — type mismatch
@@ -343,21 +343,21 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Target type must match the inline pipeline's output type.
 
 ```polyglot
-[ ] ✗ PGE-401 — =Path returns ;path, not ;string
-[r] $name;string << =Path"/tmp"
+[ ] ✗ PGE-401 — =Path returns #path, not #string
+[r] $name#string << =Path"/tmp"
 
 [ ] ✓ matching types
-[r] $dir;path << =Path"/tmp"
+[r] $dir#path << =Path"/tmp"
 ```
 
 ### EC-4.11: Inline pipeline call — user-defined pipeline
 
-**What it tests:** User-defined pipelines can accept inline calls by declaring `<InlineStringLiteral;string`.
+**What it tests:** User-defined pipelines can accept inline calls by declaring `<InlineStringLiteral#string`.
 
 ```polyglot
 {=} =Greeting
-   [=] <InlineStringLiteral;string <~ ""
-   [=] >message;string
+   [=] <InlineStringLiteral#string <~ ""
+   [=] >message#string
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -367,28 +367,28 @@ Review in batches by section. Each edge case includes:
       [r] >message << "Hello World"
 
 [ ] ✓ inline call
-[r] $msg;string << =Greeting"Alice"
+[r] $msg#string << =Greeting"Alice"
 
 [ ] ✓ normal call — $InlineStringLiteral is "" (default)
 [r] =Greeting
    [=] >message >> $msg
 ```
 
-### EC-4.12: Pipeline without `<InlineStringLiteral;string` called inline
+### EC-4.12: Pipeline without `<InlineStringLiteral#string` called inline
 
 **What it tests:** Calling a pipeline inline when it has not declared the reserved parameter.
 
 ```polyglot
 {=} =NormalPipeline
-   [=] <input;string
-   [=] >output;string
+   [=] <input#string
+   [=] >output#string
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] >output << $input
 
-[ ] ✗ compile error — =NormalPipeline has no <InlineStringLiteral;string
-[r] $result;string << =NormalPipeline"test"
+[ ] ✗ compile error — =NormalPipeline has no <InlineStringLiteral#string
+[r] $result#string << =NormalPipeline"test"
 ```
 
 ### EC-4.13: Typed flexible wildcard — basic inference
@@ -399,14 +399,14 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 {#} #Handler
-   [.] .endpoint;string
-   [.] .method;string
+   [.] .endpoint#string
+   [.] .method#string
 
 {#} #Registry
    [.] .plugins
-      [:] :*;Handler
+      [:] :*#Handler
 
-[ ] ✓ compiler infers :myPlugin is ;Handler
+[ ] ✓ compiler infers :myPlugin is #Handler
 [r] $reg.plugins:myPlugin.endpoint << "/api/data"
 [r] $reg.plugins:myPlugin.method << "GET"
 ```
@@ -418,10 +418,10 @@ Review in batches by section. Each edge case includes:
 ```polyglot
 {#} #Registry
    [.] .plugins
-      [:] :*;Handler
+      [:] :*#Handler
 
-[ ] ✗ PGE-401 — :myPlugin is ;Handler (from wildcard), not ;string
-[r] $reg.plugins:myPlugin;string << "not a handler"
+[ ] ✗ PGE-401 — :myPlugin is #Handler (from wildcard), not #string
+[r] $reg.plugins:myPlugin#string << "not a handler"
 ```
 
 ### EC-4.15: Typed flexible wildcard — multi-level resolution
@@ -430,36 +430,36 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 {#} #Setting
-   [.] .value;string
-   [.] .default;string
+   [.] .value#string
+   [.] .default#string
 
 {#} #Section
-   [:] :*;Setting
+   [:] :*#Setting
 
 {#} #Config
    [.] .sections
-      [:] :*;Section
+      [:] :*#Section
 
-[ ] ✓ :auth → ;Section, :timeout → ;Setting, .value → ;string
+[ ] ✓ :auth → #Section, :timeout → #Setting, .value → #string
 [r] $cfg.sections:auth:timeout.value << "30s"
 [r] $cfg.sections:auth:timeout.default << "60s"
 ```
 
 ### EC-4.16: Typed flexible wildcard — untyped level (no wildcard)
 
-**What it tests:** Flexible level without `[:] :*;Type` is untyped — treated as `;serial`.
+**What it tests:** Flexible level without `[:] :*#Type` is untyped — treated as `#serial`.
 
 ```polyglot
 {#} #OpenConfig
    [.] .data
-      [:] :key1;string
-      [:] :key2;int
+      [:] :key1#string
+      [:] :key2#int
 
 [ ] ✓ individually declared flex fields — matched by name
 [r] $cfg.data:key1 << "hello"
 [r] $cfg.data:key2 << 42
 
-[ ] ✗ :unknown has no wildcard, no individual declaration — treated as ;serial
+[ ] ✗ :unknown has no wildcard, no individual declaration — treated as #serial
 [r] $cfg.data:unknown << "anything"
 ```
 
@@ -470,13 +470,13 @@ Review in batches by section. Each edge case includes:
 ```polyglot
 {#} #MixedRegistry
    [.] .entries
-      [:] :default;SpecialHandler
-      [:] :*;Handler
+      [:] :default#SpecialHandler
+      [:] :*#Handler
 
-[ ] ✓ :default matches the named declaration → ;SpecialHandler
+[ ] ✓ :default matches the named declaration → #SpecialHandler
 [r] $reg.entries:default.specialField << "value"
 
-[ ] ✓ :other falls back to wildcard → ;Handler
+[ ] ✓ :other falls back to wildcard → #Handler
 [r] $reg.entries:other.endpoint << "/api"
 ```
 
@@ -488,34 +488,34 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [ ] ✓ 1D array — default (no :ND specified)
-[=] <items;array.string
+[=] <items#array:string
 [r] $first << $items.0
 
 [ ] ✓ 2D matrix — :2D dimension specifier
-[=] <matrix;array.float:2D
+[=] <matrix#array:float:2D
 [r] $val << $matrix.0.1
 
 [ ] ✓ 3D cube — :3D dimension specifier
-[=] <cube;array.int:3D
+[=] <cube#array:int:3D
 [r] $val << $cube.2.3.0
 
 [ ] ✓ 4D with user-defined element type
-[=] <hyper;array.UserRecord:4D
+[=] <hyper#array:UserRecord:4D
 [r] $cell << $hyper.0.1.2.3
 
 [ ] ✗ PGE-417 — too many indices for :2D
-[=] <matrix;array.float:2D
+[=] <matrix#array:float:2D
 [ ] [r] $val << $matrix.0.1.2                 ← 3 indices on :2D
 
 [ ] ✗ PGE-417 — too few indices for :3D
-[=] <cube;array.int:3D
+[=] <cube#array:int:3D
 [ ] [r] $val << $cube.2                        ← 1 index on :3D
 
 [ ] ✗ PGE-417 — :0D is not valid
-[ ] [=] <nothing;array.float:0D                ← dimension must be positive
+[ ] [=] <nothing#array:float:0D                ← dimension must be positive
 
 [ ] ✗ PGE-412 — nested array still banned
-[ ] [=] >matrix;array.array.float              ← use ;array.float:2D instead
+[ ] [=] >matrix#array:array.float              ← use #array:float:2D instead
 ```
 
 ---
@@ -560,9 +560,9 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Each operator used in its correct context. See [[operators]], [[variable-lifecycle]].
 
 ```polyglot
-[.] .name;string <~ "default"
-[=] >count;int ~> 0
-[r] $x;int << 42
+[.] .name#string <~ "default"
+[=] >count#int ~> 0
+[r] $x#int << 42
 [=] >item >> $result
 ```
 
@@ -605,10 +605,10 @@ Review in batches by section. Each edge case includes:
 **What it tests:** `+`, `-`, `*`, `/` used in assignments.
 
 ```polyglot
-[r] $total;int << $price * $quantity
-[r] $name;string << "{$first} {$last}"
-[r] $avg;float << $sum / $count
-[r] $diff;int << $a - $b
+[r] $total#int << $price * $quantity
+[r] $name#string << "{$first} {$last}"
+[r] $avg#float << $sum / $count
+[r] $diff#int << $a - $b
 ```
 
 ---
@@ -623,8 +623,8 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Dot-navigated IO parameters. See [[io]].
 
 ```polyglot
-[=] <config.timeout;int << 30
-[=] >result.status;string >> $status
+[=] <config.timeout#int << 30
+[=] >result.status#string >> $status
 ```
 
 ---
@@ -639,8 +639,8 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Non-empty inline data with mixed types. See [[types#Inline Data Shorthand]].
 
 ```polyglot
-[r] $nums;array << {1, 2, 3, 4, 5}
-[r] $services;array.string << {"AD", "Email", "Slack"}
+[r] $nums#array << {1, 2, 3, 4, 5}
+[r] $services#array:string << {"AD", "Email", "Slack"}
 ```
 
 ### EC-8.2: Inline data — empty collection
@@ -650,7 +650,7 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Empty `{}` as valid collection initializer.
 
 ```polyglot
-[=] >results;array.string ~> {}
+[=] >results#array:string ~> {}
 ```
 
 ### EC-8.3: String interpolation
@@ -661,10 +661,10 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Variable interpolation inside string literals using `{$var}` syntax. See [[types#String Interpolation]].
 
 ```polyglot
-[r] $msg;string << "Hello {$first} {$last}!"
-[r] $path;string << "/users/{$userId}/profile"
+[r] $msg#string << "Hello {$first} {$last}!"
+[r] $path#string << "/users/{$userId}/profile"
 [ ] Escaped literal braces
-[r] $json;string << "{{\"key\": \"{$val}\"}}"
+[r] $json#string << "{{\"key\": \"{$val}\"}}"
 ```
 
 ---
@@ -690,7 +690,7 @@ Review in batches by section. Each edge case includes:
 <!-- @types:Enum Fields -->
 **EBNF:** `enum_field ::= "[.]" fixed_sep name`
 
-**What it tests:** All-enum siblings, no `;type`, no assignment. See [[types#Enum Fields vs Value Fields]].
+**What it tests:** All-enum siblings, no `#type`, no assignment. See [[types#Enum Fields vs Value Fields]].
 
 ```polyglot
 {#} #Direction
@@ -709,8 +709,8 @@ Review in batches by section. Each edge case includes:
 ```polyglot
 {#} #Status
    [.] .Failed
-      [.] .reason;string <~ "unknown"
-      [.] .retries;int <~ 0
+      [.] .reason#string <~ "unknown"
+      [.] .retries#int <~ 0
    [.] .Success
 ```
 
@@ -723,9 +723,9 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 {#} #Config
-   [.] .timeout;int <~ 30
-   [.] .retries;int <~ 3
-   [.] .verbose;bool <~ #Boolean.False
+   [.] .timeout#int <~ 30
+   [.] .retries#int <~ 3
+   [.] .verbose#bool <~ #Boolean.False
 ```
 
 ### EC-9.5: Flexible-field data definition
@@ -736,8 +736,8 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 {#} #Metadata
-   [:] :author;string <~ ""
-   [:] :version;string <~ "0.0.0"
+   [:] :author#string <~ ""
+   [:] :version#string <~ "0.0.0"
 ```
 
 ### EC-9.6: Pipeline — mandatory structure ordering
@@ -750,8 +750,8 @@ Review in batches by section. Each edge case includes:
 ```polyglot
 {=} =Ordered
    [t] =T.Call
-   [=] <input;string
-   [=] >output;string ~> ""
+   [=] <input#string
+   [=] >output#string ~> ""
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] >output << <input
@@ -765,7 +765,7 @@ Review in batches by section. Each edge case includes:
 {=} =Minimal
    [t] =T.Call
    [W] =W.Polyglot
-   [r] $x;int << 1
+   [r] $x#int << 1
 ```
 
 ### EC-9.8: Trigger with string argument
@@ -786,9 +786,9 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Constant, default, and required IO. See [[pipelines#IO as Implicit Triggers]].
 
 ```polyglot
-[=] <constant;string << "locked"
-[=] <fallback;string <~ "default"
-[=] <required;string
+[=] <constant#string << "locked"
+[=] <fallback#string <~ "default"
+[=] <required#string
 ```
 
 ### EC-9.10: `[p]` in `[\]` — parallel fork outlives setup, collected in `[/]`
@@ -800,8 +800,8 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 {M} =W.Tracing
-   [{] $traceId;string
-   [}] $duration;string
+   [{] $traceId#string
+   [}] $duration#string
    [\]
       [r] =Tracer.Open
          [=] <id << $traceId
@@ -828,7 +828,7 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 {M} =W.AuditLog
-   [{] $userId;string
+   [{] $userId#string
    [\]
       [r] =Session.Open
          [=] <id << $userId
@@ -887,12 +887,12 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [ ] In execution: deserialize serial into typed data
-[#] $hire;NewHire << $payload
+[#] $hire#NewHire << $payload
 
 [ ] In {#} definitions: load external config files
 {#} #Config
    [#] #file1 << =Json.LoadFile"/config/appsettings.json"
-   [.] .dbConnection;string <~ #file1.db.connectionString
+   [.] .dbConnection#string <~ #file1.db.connectionString
 ```
 
 ### EC-10.4: Parallel execution
@@ -918,12 +918,12 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [r] =Pipeline1=>=Pipeline2=>=Pipeline3
-   [=] >0.inputParam1;path << $file
-   [=] >0.inputParam2;string << "Hello"
-   [=] <0.outputResult1;string >> <1.inputParam1
-   [=] <0.outputResult2;string >> <1.inputParam2
-   [=] <1.outputResult;string >> <2.inputParam1
-   [=] <2.outputResult;string >> >output
+   [=] >0.inputParam1#path << $file
+   [=] >0.inputParam2#string << "Hello"
+   [=] <0.outputResult1#string >> <1.inputParam1
+   [=] <0.outputResult2#string >> <1.inputParam2
+   [=] <1.outputResult#string >> <2.inputParam1
+   [=] <2.outputResult#string >> >output
 ```
 
 ### EC-10.6: Chain execution — leaf name references
@@ -934,7 +934,7 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [r] =File.List=>=Data.Transform.Rows=>=Report.Format
-   [=] >List.folder;path << $folder
+   [=] >List.folder#path << $folder
    [=] <List.files >> <Rows.input
    [=] <Rows.output >> <Format.content
    [=] <Format.result >> >report
@@ -948,9 +948,9 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [r] =File.Text.Read=>=Text.Transform=>=Text.Format
-   [ ] Each step: one output;string → one input;string — auto-wired
-   [=] >0.path;path << $path
-   [=] <2.formatted;string >> >formatted
+   [ ] Each step: one output#string → one input#string — auto-wired
+   [=] >0.path#path << $path
+   [=] <2.formatted#string >> >formatted
 ```
 
 ### EC-10.8: Chain execution — error handling with step index
@@ -961,8 +961,8 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >0.path;path << $path
-   [=] <1.rows;string >> >content
+   [=] >0.path#path << $path
+   [=] <1.rows#string >> >content
    [!] !0.File.NotFound
       [r] >content << "Error: file not found"
    [!] !0.File.ReadError
@@ -977,7 +977,7 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [r] =User.Fetch=>=User.Validate=>=User.Store
-   [=] >0.id;int << $userId
+   [=] >0.id#int << $userId
    [=] <Fetch.profile >> <Validate.input
    [=] <1.validated >> <Store.record
    [=] <2.status >> >status
@@ -1007,11 +1007,11 @@ Review in batches by section. Each edge case includes:
 **What it tests:** Auto-wire fails when types don't match between adjacent steps.
 
 ```polyglot
-[ ] INVALID — step 0 outputs ;string, step 1 expects ;int
+[ ] INVALID — step 0 outputs #string, step 1 expects #int
 [ ] Auto-wire cannot infer: explicit [=] wiring required
 [r] =ProduceString=>=ConsumeInt
    [=] >0.input << $data
-   [=] <0.output;string >> <1.input;int
+   [=] <0.output#string >> <1.input#int
    [ ] ← compile error: type mismatch string vs int
 ```
 
@@ -1090,7 +1090,7 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [ ] Match: maps $code to $status via value >> result arms
-[r] $code >> $status;string
+[r] $code >> $status#string
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
    [?] 500 >> "error"
@@ -1105,7 +1105,7 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [ ] All #Direction variants covered — no * needed
-[r] $dir >> $label;string
+[r] $dir >> $label#string
    [?] #Direction.North >> "N"
    [?] #Direction.South >> "S"
    [?] #Direction.East >> "E"
@@ -1120,7 +1120,7 @@ Review in batches by section. Each edge case includes:
 
 ```polyglot
 [ ] No [?] children — this is a plain assignment, not a match
-[r] $source >> $target;string
+[r] $source >> $target#string
 ```
 
 ---
@@ -1307,11 +1307,11 @@ Review in batches by section. Each edge case includes:
 [ ] Only $fastest is accessible here — $rA and $rB are cancelled
 ```
 
-### EC-12.11: `*Nth` — generic race with `<n;int` IO
+### EC-12.11: `*Nth` — generic race with `<n#int` IO
 
-**EBNF:** `race_operator ::= "Nth"` ; `collect_io_line ::= "[*]" "<n;int" assignment_op value_expr`
+**EBNF:** `race_operator ::= "Nth"` ; `collect_io_line ::= "[*]" "<n#int" assignment_op value_expr`
 
-**What it tests:** `*Nth` takes `<n;int` position parameter. `*First`/`*Second` are sugar for n=1/n=2.
+**What it tests:** `*Nth` takes `<n#int` position parameter. `*First`/`*Second` are sugar for n=1/n=2.
 
 ```polyglot
 [p] =Search.A
@@ -1327,7 +1327,7 @@ Review in batches by section. Each edge case includes:
    [=] >result >> $rC
 
 [*] *Nth
-   [*] <n;int << 2
+   [*] <n#int << 2
    [*] << $rA
    [*] << $rB
    [*] << $rC
@@ -1432,7 +1432,7 @@ No bracket prefix needed inside.
 **What it tests:** Default allows exactly one promotion to Final. See [[variable-lifecycle]].
 
 ```polyglot
-[=] >output;string ~> "fallback"
+[=] >output#string ~> "fallback"
 [ ] ... later in execution ...
 [r] >output << "actual value"
 ```
@@ -1442,7 +1442,7 @@ No bracket prefix needed inside.
 **What it tests:** Once `<<` or `>>` is used, no more assignments.
 
 ```polyglot
-[r] $x;int << 42
+[r] $x#int << 42
 [ ] INVALID: $x is Final, cannot reassign
 [ ] [r] $x << 99   ← would be rejected
 ```
@@ -1468,20 +1468,20 @@ No bracket prefix needed inside.
 
 ```polyglot
 [ ] VALID — all value fields, all assigned
-[.] .timeout;int <~ 30
-[.] .retries;int <~ 3
+[.] .timeout#int <~ 30
+[.] .retries#int <~ 3
 
 [ ] VALID — all value fields, mixed assignment (some assigned, some declared)
-[.] .timeout;int <~ 30
-[.] .retries;int
+[.] .timeout#int <~ 30
+[.] .retries#int
 
 [ ] VALID — all value fields, none assigned
-[.] .timeout;int
-[.] .retries;int
+[.] .timeout#int
+[.] .retries#int
 
 [ ] INVALID — mixed kinds (enum + value at same level)
 [ ] [.] .Active
-[ ] [.] .count;int <~ 0
+[ ] [.] .count#int <~ 0
 ```
 
 ---
@@ -1499,12 +1499,12 @@ No bracket prefix needed inside.
 {=} =Invoice.Process
    [%] .description << "Processes incoming invoices and routes to accounting"
    [%] .version << "2.1.0"
-   [%] .authors;array.string << {"alice@corp.com", "bob@corp.com"}
+   [%] .authors#array:string << {"alice@corp.com", "bob@corp.com"}
    [%] .license << "MIT"
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [r] $done;bool << #Boolean.True
+   [r] $done#bool << #Boolean.True
 ```
 
 ### EC-15.2: `[%]` alias field — resolves to fully qualified path
@@ -1516,34 +1516,34 @@ No bracket prefix needed inside.
 ```polyglot
 {#} #SystemConfig
    [%] .alias << #Config
-   [.] .timeout;int <~ 30
-   [.] .retries;int <~ 3
+   [.] .timeout#int <~ 30
+   [.] .retries#int <~ 3
 
 {=} =Provision.User
    [%] .alias << =ProvisionUser
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [r] $x;int << 1
+   [r] $x#int << 1
 ```
 
-### EC-15.3: `.info;serial` flexible metadata
+### EC-15.3: `.info#serial` flexible metadata
 
-**EBNF:** `info_field ::= "[%]" ".info;serial" NEWLINE { indent flex_data_field NEWLINE }`
+**EBNF:** `info_field ::= "[%]" ".info#serial" NEWLINE { indent flex_data_field NEWLINE }`
 
-**What it tests:** `.info;serial` opens a `:` flexible scope for arbitrary tooling metadata. See [[blocks#Metadata]].
+**What it tests:** `.info#serial` opens a `:` flexible scope for arbitrary tooling metadata. See [[blocks#Metadata]].
 
 ```polyglot
 {=} =Report.Generate
    [%] .description << "Generates monthly report"
-   [%] .info;serial
+   [%] .info#serial
       [:] :owner << "platform-team"
       [:] :ticket << "INFRA-42"
       [:] :runbook << "https://wiki/runbooks/report"
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [r] $x;int << 1
+   [r] $x#int << 1
 ```
 
 ### EC-15.4: `live` metadata accessor — `%` on pipeline, variable, data
@@ -1557,24 +1557,24 @@ No bracket prefix needed inside.
 [ ] Pipeline live fields
 [?] =Invoice.Process%status
    [?] #AwaitTrigger
-      [r] $ready;bool << #Boolean.True
+      [r] $ready#bool << #Boolean.True
    [?] #Running
-      [r] $ready;bool << #Boolean.False
+      [r] $ready#bool << #Boolean.False
    [?] #Failed
       [b] =Audit.Log
          [=] <event << "pipeline_failed"
    [?] *?
-      [r] $ready;bool << #Boolean.False
+      [r] $ready#bool << #Boolean.False
 
 [ ] Variable lifecycle state
 [?] $myVar%state
    [?] #Ready
-      [r] $safe;bool << #Boolean.True
+      [r] $safe#bool << #Boolean.True
    [?] *?
-      [r] $safe;bool << #Boolean.False
+      [r] $safe#bool << #Boolean.False
 
 [ ] Data definition metadata (read-only counters)
-[r] $uses;int << #Config%usageCount
+[r] $uses#int << #Config%usageCount
 ```
 
 ---
@@ -1590,12 +1590,12 @@ No bracket prefix needed inside.
 
 ```polyglot
 {=} =Inbox.Monitor
-   [=] <NewFiles;array.path
+   [=] <NewFiles#array:path
    [t] =T.Folder.NewFiles"/inbox/"
       [=] >NewFiles >> <NewFiles
    [Q] =Q.Default
    [W] =W.Polyglot
-   [r] $count;int << 0
+   [r] $count#int << 0
 ```
 
 ### EC-16.2: Multiple trigger outputs wired to multiple inputs
@@ -1604,14 +1604,14 @@ No bracket prefix needed inside.
 
 ```polyglot
 {=} =Webhook.Receiver
-   [=] <payload;serial
-   [=] <headers;serial
+   [=] <payload#serial
+   [=] <headers#serial
    [t] =T.Webhook"/api/v2/events"
       [=] >payload >> <payload
       [=] >headers >> <headers
    [Q] =Q.Default
    [W] =W.Polyglot
-   [r] $type;string << $payload:eventType
+   [r] $type#string << $payload:eventType
 ```
 
 ### EC-16.3: Mixed trigger modes — some inputs from trigger, some from caller
@@ -1620,14 +1620,14 @@ No bracket prefix needed inside.
 
 ```polyglot
 {=} =File.Processor
-   [=] <file;path
-   [=] <options;serial <~ {}
+   [=] <file#path
+   [=] <options#serial <~ {}
    [t] =T.Folder.NewFiles"/watch/"
       [=] >NewFiles >> <file
    [Q] =Q.Default
    [W] =W.Polyglot
    [ ] $options uses default {}; $file comes from trigger
-   [r] $name;string << "{$file}"
+   [r] $name#string << "{$file}"
 ```
 
 ---
@@ -1644,27 +1644,27 @@ No bracket prefix needed inside.
 ```polyglot
 [ ] Not less than — equivalent to >=
 [?] $age <!? 18
-   [r] $eligible;bool << #Boolean.True
+   [r] $eligible#bool << #Boolean.True
 [?] *?
-   [r] $eligible;bool << #Boolean.False
+   [r] $eligible#bool << #Boolean.False
 
 [ ] Not greater than — equivalent to <=
 [?] $score >!? 100
-   [r] $capped;bool << #Boolean.True
+   [r] $capped#bool << #Boolean.True
 [?] *?
-   [r] $capped;bool << #Boolean.False
+   [r] $capped#bool << #Boolean.False
 
 [ ] Not less-or-equal — equivalent to >
 [?] $priority <=!? 3
-   [r] $urgent;bool << #Boolean.True
+   [r] $urgent#bool << #Boolean.True
 [?] *?
-   [r] $urgent;bool << #Boolean.False
+   [r] $urgent#bool << #Boolean.False
 
 [ ] Not greater-or-equal — equivalent to <
 [?] $retries >=!? 5
-   [r] $giveUp;bool << #Boolean.True
+   [r] $giveUp#bool << #Boolean.True
 [?] *?
-   [r] $giveUp;bool << #Boolean.False
+   [r] $giveUp#bool << #Boolean.False
 ```
 
 ### EC-17.2: Negation in compound logical condition
@@ -1676,9 +1676,9 @@ No bracket prefix needed inside.
 [?] $active =? #Boolean.True
 [&] $banned =!? #Boolean.True
 [&] $age <!? 13
-   [r] $allowed;bool << #Boolean.True
+   [r] $allowed#bool << #Boolean.True
 [?] *?
-   [r] $allowed;bool << #Boolean.False
+   [r] $allowed#bool << #Boolean.False
 ```
 
 ---
@@ -1695,8 +1695,8 @@ No bracket prefix needed inside.
 
 ```polyglot
 {M} =W.DB.Transaction
-   [{] $connectionString;string
-   [}] $dbConn;serial
+   [{] $connectionString#string
+   [}] $dbConn#serial
 
    [\]
       [r] =DB.Connect
@@ -1720,7 +1720,7 @@ No bracket prefix needed inside.
 
 ```polyglot
 {=} =Invoice.Save
-   [=] <invoice;Invoice
+   [=] <invoice#Invoice
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.DB.Transaction
@@ -1739,8 +1739,8 @@ No bracket prefix needed inside.
 
 ```polyglot
 {M} =W.AuditScope
-   [{] $userId;string
-   [{] $action;string
+   [{] $userId#string
+   [{] $action#string
 
    [\]
       [r] =Audit.Open
@@ -1849,11 +1849,11 @@ No bracket prefix needed inside.
 ```polyglot
 [ ] VALID — declared field, pushed to later
 {#} #Request
-   [.] .id;string
-   [.] .method;string <~ "GET"
+   [.] .id#string
+   [.] .method#string <~ "GET"
 
 [ ] In execution: .id is Declared, must be pushed before use
-[r] $req;Request
+[r] $req#Request
    [.] .id << $incomingId
 [ ] .method uses default; .id is now Final
 [r] >requestOut << $req
@@ -1872,7 +1872,7 @@ No bracket prefix needed inside.
    [~] <Array << $items
    [~] >item >> $item
 
-   [r] $doubled;int << $item * 2
+   [r] $doubled#int << $item * 2
 
    [r] *Agg.Sum
       [*] <number << $doubled
@@ -1894,9 +1894,9 @@ No bracket prefix needed inside.
 
 ```polyglot
 {=} =Safe.Lookup
-   [=] <key;string
-   [=] >result;string ~> "not_found"
-   [=] >found;bool ~> #Boolean.False
+   [=] <key#string
+   [=] >result#string ~> "not_found"
+   [=] >found#bool ~> #Boolean.False
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -1945,23 +1945,23 @@ No bracket prefix needed inside.
 ```polyglot
 [ ] VALID — open set needs *?
 [?] $code =? 200
-   [r] $status;string << "ok"
+   [r] $status#string << "ok"
 [?] $code =? 404
-   [r] $status;string << "not_found"
+   [r] $status#string << "not_found"
 [?] $code =? 500
-   [r] $status;string << "error"
+   [r] $status#string << "error"
 [?] *?
-   [r] $status;string << "unknown"
+   [r] $status#string << "unknown"
 
 [ ] VALID — exhaustive enum: all variants covered, no *? needed
 [?] $dir =? #Direction.North
-   [r] $label;string << "N"
+   [r] $label#string << "N"
 [?] $dir =? #Direction.South
-   [r] $label;string << "S"
+   [r] $label#string << "S"
 [?] $dir =? #Direction.East
-   [r] $label;string << "E"
+   [r] $label#string << "E"
 [?] $dir =? #Direction.West
-   [r] $label;string << "W"
+   [r] $label#string << "W"
 ```
 
 ### EC-22.2: Nested conditionals inside a branch
@@ -1971,15 +1971,15 @@ No bracket prefix needed inside.
 ```polyglot
 [?] $role =? #Role.Admin
    [?] $region =? #Region.EU
-      [r] $policy;string << "GDPR"
+      [r] $policy#string << "GDPR"
    [?] $region =? #Region.US
-      [r] $policy;string << "CCPA"
+      [r] $policy#string << "CCPA"
    [?] *?
-      [r] $policy;string << "Global"
+      [r] $policy#string << "Global"
 [?] $role =? #Role.User
-   [r] $policy;string << "Standard"
+   [r] $policy#string << "Standard"
 [?] *?
-   [r] $policy;string << "None"
+   [r] $policy#string << "None"
 ```
 
 ### EC-22.3: Switching on pipeline `%status` — nested enum switch
@@ -1989,17 +1989,17 @@ No bracket prefix needed inside.
 ```polyglot
 [?] =DataSync%status
    [?] #AwaitTrigger
-      [r] $msg;string << "idle"
+      [r] $msg#string << "idle"
    [?] #Running
-      [r] $msg;string << "in progress — instances: {$count}"
+      [r] $msg#string << "in progress — instances: {$count}"
    [?] #Failed
-      [r] $msg;string << "failed — check errors"
+      [r] $msg#string << "failed — check errors"
       [b] =Alert.Send
          [=] <msg << "DataSync failed"
    [?] #Disabled
-      [r] $msg;string << "pipeline disabled"
+      [r] $msg#string << "pipeline disabled"
    [?] *?
-      [r] $msg;string << "unknown state"
+      [r] $msg#string << "unknown state"
 ```
 
 ### EC-22.4: `[^]` XOR logical operator
@@ -2011,9 +2011,9 @@ No bracket prefix needed inside.
 [ ] Exactly one of $isAdmin or $isSudo — not both, not neither
 [?] $isAdmin =? #Boolean.True
 [^] $isSudo =? #Boolean.True
-   [r] $elevated;bool << #Boolean.True
+   [r] $elevated#bool << #Boolean.True
 [?] *?
-   [r] $elevated;bool << #Boolean.False
+   [r] $elevated#bool << #Boolean.False
 ```
 
 ---
@@ -2032,18 +2032,18 @@ No bracket prefix needed inside.
    [@] @Slack << @Community:polyglot-tools.SlackAdmin:v1.3.0
 
 {#} #NewHire
-   [.] .id;string
-   [.] .name;string
-   [.] .email;string
-   [.] .department;string
-   [.] .startDate;string
+   [.] .id#string
+   [.] .name#string
+   [.] .email#string
+   [.] .department#string
+   [.] .startDate#string
 
 {=} =Onboard.Employee
    [%] .description << "Provisions all accounts for a new hire"
    [%] .version << "2.0.0"
-   [=] <hire;NewHire
-   [=] >report;string ~> "incomplete"
-   [=] >success;bool ~> #Boolean.False
+   [=] <hire#NewHire
+   [=] >report#string ~> "incomplete"
+   [=] >success#bool ~> #Boolean.False
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -2106,11 +2106,11 @@ No bracket prefix needed inside.
 
 ```polyglot
 {=} =Risk.Classify
-   [=] <score;int
-   [=] <flags;int
-   [=] <verified;bool
-   [=] >tier;string ~> "unknown"
-   [=] >action;string ~> "review"
+   [=] <score#int
+   [=] <flags#int
+   [=] <verified#bool
+   [=] >tier#string ~> "unknown"
+   [=] >action#string ~> "review"
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -2163,9 +2163,9 @@ No bracket prefix needed inside.
 
 ```polyglot
 {=} =Search.BestResult
-   [=] <query;string
-   [=] >result;serial ~> {}
-   [=] >source;string ~> "none"
+   [=] <query#string
+   [=] >result#serial ~> {}
+   [=] >source#string ~> "none"
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -2210,8 +2210,8 @@ No bracket prefix needed inside.
 
 ```polyglot
 {=} =Batch.Process
-   [=] <items;array.serial
-   [=] >summary;serial ~> {}
+   [=] <items#array:serial
+   [=] >summary#serial ~> {}
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.DB.Transaction
@@ -2259,7 +2259,7 @@ No bracket prefix needed inside.
          [=] <conn << $dbConn
          [=] >status >> $itemStatus
          [!] !Item.ProcessFailed
-            [r] $itemStatus;string << "failed"
+            [r] $itemStatus#string << "failed"
 
       [r] *Into.Serial
          [*] <key << $item:id
@@ -2273,8 +2273,8 @@ No bracket prefix needed inside.
 
 ```polyglot
 {=} =Tree.Flatten
-   [=] <categories;array.serial
-   [=] >flat;array.string ~> {}
+   [=] <categories#array:serial
+   [=] >flat#array:string ~> {}
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -2290,7 +2290,7 @@ No bracket prefix needed inside.
             [~] <Array << $category:items
             [~] >item >> $leaf
 
-            [r] $label;string << "{$category:name}/{$leaf:name}"
+            [r] $label#string << "{$category:name}/{$leaf:name}"
 
             [r] *Into.Array
                [*] <item << $label
@@ -2305,9 +2305,9 @@ No bracket prefix needed inside.
 
 ```polyglot
 {M} =W.Traced
-   [{] $operationId;string
-   [}] $durationMs;int
-   [}] $spanId;string
+   [{] $operationId#string
+   [}] $durationMs#int
+   [}] $spanId#string
 
    [\]
       [ ] Sequential: open trace session before body
@@ -2336,8 +2336,8 @@ No bracket prefix needed inside.
          [=] <session << $session
 
 {=} =Invoice.Parse
-   [=] <raw;string
-   [=] >invoice;serial ~> {}
+   [=] <raw#string
+   [=] >invoice#serial ~> {}
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Traced
@@ -2377,7 +2377,7 @@ No bracket prefix needed inside.
 | §12 Collections | EC-12.1–12.13 | All expand variants, all collect variants, direct output, multiple collectors, sync/race collectors, multi-wave, [*] <</>>/semantics |
 | §13 Comments | EC-13.1–13.3 | Square, curly, multiline |
 | §14 Lifecycle | EC-14.1–14.4 | Default→Final, Final immutability, leaf-only, all-or-none |
-| §15 Metadata Blocks | EC-15.1–15.4 | `[%]` user fields, alias, `.info;serial`, `%` live accessor |
+| §15 Metadata Blocks | EC-15.1–15.4 | `[%]` user fields, alias, `.info#serial`, `%` live accessor |
 | §16 Trigger IO Wiring | EC-16.1–16.3 | Trigger outputs, multi-output wiring, mixed fill modes |
 | §17 Negation Operators | EC-17.1–17.2 | `<!?`, `>!?`, `<=!?`, `>=!?`, negation in compound logic |
 | §18 Macro Structure | EC-18.1–18.3 | `{M}` full structure, `[W]` usage wiring, no-output macro |

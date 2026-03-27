@@ -32,8 +32,8 @@ If the source is non-failable, PGW-704 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $content
@@ -47,8 +47,8 @@ If the source is non-failable, PGW-704 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >content;string
+   [=] <path#string
+   [=] >content#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $content
@@ -63,8 +63,8 @@ If the source is non-failable, PGW-704 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <path;string
-   [=] >result;string
+   [=] <path#string
+   [=] >result#string
    [r] =File.Text.Read
       [=] <path << $path
       [=] >content >> $text
@@ -82,8 +82,8 @@ If the source is non-failable, PGW-704 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >result;string
+   [=] <input#string
+   [=] >result#string
    [r] =Format
       [=] <text << $input
       [=] >formatted >> $out
@@ -97,7 +97,7 @@ If the source is non-failable, PGW-704 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >result;string
+   [=] >result#string
    [r] =Process
       [=] <data << "hello"
          [>] <! "fallback"                   [ ] ⚠ PGW-704 — source is a literal, cannot fail
@@ -111,7 +111,7 @@ If the source is non-failable, PGW-704 fires.
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >greeting;string
+   [=] >greeting#string
    [r] $name << "Alice"
    [r] =Greet
       [=] <name << $name

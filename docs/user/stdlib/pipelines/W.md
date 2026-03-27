@@ -45,11 +45,11 @@ Wrappers that manage external resources require `[_]` permission declarations. S
 
    .DB
       .Connection
-         [{] $connectionString;string
+         [{] $connectionString#string
          [}] $dbConn
          [ ] Opens DB connection on setup, closes on cleanup.
       .Transaction
-         [{] $connectionString;string
+         [{] $connectionString#string
          [}] $tx
          [}] $dbConn
          [ ] Opens connection + begins transaction on setup.
@@ -58,55 +58,55 @@ Wrappers that manage external resources require `[_]` permission declarations. S
 
    .File
       .Lock
-         [{] $lockPath;path
+         [{] $lockPath#path
          [}] $lock
          [ ] Acquires file lock on setup, releases on cleanup.
       .TempDir
-         [{] $prefix;string
+         [{] $prefix#string
          [}] $tempDir
          [ ] Creates temp directory on setup, deletes on cleanup.
 
    .HTTP
       .Session
-         [{] $baseUrl;string
-         [{] $timeout;int
+         [{] $baseUrl#string
+         [{] $timeout#int
          [}] $httpClient
          [ ] Creates HTTP client on setup, closes on cleanup.
 
    .SSH
       .Session
-         [{] $host;string
-         [{] $credentials;string
+         [{] $host#string
+         [{] $credentials#string
          [}] $sshSession
          [ ] Connects SSH on setup, disconnects on cleanup.
 
    .Auth
       .Token
-         [{] $clientId;string
-         [{] $clientSecret;string
+         [{] $clientId#string
+         [{] $clientSecret#string
          [}] $authToken
          [ ] Acquires OAuth token on setup, revokes on cleanup.
 
    .Log
       .Context
-         [{] $traceId;string
+         [{] $traceId#string
          [}] $logScope
          [ ] Opens structured log scope on setup, closes on cleanup.
 
    .Queue
       .Consumer
-         [{] $queueUrl;string
+         [{] $queueUrl#string
          [}] $consumer
          [ ] Connects to message queue on setup, disconnects on cleanup.
 
    .Cache
       .Scope
-         [{] $cacheUrl;string
+         [{] $cacheUrl#string
          [}] $cache
          [ ] Connects cache on setup, flushes + disconnects on cleanup.
 
    .Python
-      [}] $pyRuntime;PyRT
+      [}] $pyRuntime#PyRT
       [ ] Starts Python runtime on setup, stops on cleanup.
 ```
 

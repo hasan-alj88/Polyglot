@@ -17,14 +17,14 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ interpolated variable is in scope
-[=] >name;string
+[=] >name#string
 [r] >name << "Alice"
 [r] >output << "Hello, {$name}!"     [ ] ✓ $name is declared and in scope
 ```
 
 ```polyglot
 [ ] ✓ interpolating non-string type — valid (all data is serialized strings)
-[=] >count;int
+[=] >count#int
 [r] >count << 42
 [r] >output << "Total: {$count}"     [ ] ✓ $count is int but interpolation is valid
 ```

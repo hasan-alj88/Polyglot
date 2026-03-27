@@ -15,18 +15,18 @@ severity: error
 **VALID:**
 ```polyglot
 {#} #UserRecord
-   [.] .name;string
-   [.] .age;int
+   [.] .name#string
+   [.] .age#int
 
 [ ] ✓ accessing only declared fixed fields
-[r] $user;UserRecord
+[r] $user#UserRecord
    [r] $user.name << "Alice"
    [r] $user.age << 30
 ```
 
 ```polyglot
 [ ] ✓ flexible fields — adding keys at runtime is allowed
-[r] $meta;serial
+[r] $meta#serial
    [r] $meta:source << "api"
    [r] $meta:timestamp << "2026-03-18"
    [r] $meta:custom_tag << "urgent"     [ ] ✓ new : key added dynamically
@@ -34,11 +34,11 @@ severity: error
 
 ```polyglot
 {#} #Config
-   [.] .timeout;int
-   [.] .info;serial
+   [.] .timeout#int
+   [.] .info#serial
 
 [ ] ✓ fixed level frozen, but :info opens a flexible level
-[r] $cfg;Config
+[r] $cfg#Config
    [r] $cfg.timeout << 30
    [r] $cfg.info:author << "admin"      [ ] ✓ : level under .info is flexible
    [r] $cfg.info:version << "1.0"       [ ] ✓ new : key is fine
@@ -47,11 +47,11 @@ severity: error
 **INVALID:**
 ```polyglot
 {#} #UserRecord
-   [.] .name;string
-   [.] .age;int
+   [.] .name#string
+   [.] .age#int
 
 [ ] ✗ PGE-404 — .email not declared in fixed schema
-[r] $user;UserRecord
+[r] $user#UserRecord
    [r] $user.name << "Alice"
    [r] $user.age << 30
    [r] $user.email << "alice@example.com" [ ] ✗ PGE-404 — fixed schema is closed
@@ -59,11 +59,11 @@ severity: error
 
 ```polyglot
 {#} #Point
-   [.] .x;float
-   [.] .y;float
+   [.] .x#float
+   [.] .y#float
 
 [ ] ✗ PGE-404 — cannot add .z to a fixed schema at runtime
-[r] $p;Point
+[r] $p#Point
    [r] $p.x << 1.0
    [r] $p.y << 2.0
    [r] $p.z << 3.0                       [ ] ✗ PGE-404 — .z not in #Point

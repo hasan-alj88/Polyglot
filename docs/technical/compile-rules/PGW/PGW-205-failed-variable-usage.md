@@ -17,7 +17,7 @@ severity: warning
 **WARNING:**
 ```polyglot
 [ ] ⚠ PGW-205 — pipeline will terminate on error
-[=] >data;string
+[=] >data#string
 [r] =Fetch
    [=] >payload >> >data
    [!] !FetchError
@@ -30,7 +30,7 @@ severity: warning
 
 ```polyglot
 [ ] ⚠ PGW-205 suppressed via comment
-[=] >data;string
+[=] >data#string
 [r] =Fetch
    [=] >payload >> >data
    [ ] Ignore PGW-205
@@ -43,7 +43,7 @@ severity: warning
 **VALID (no warning):**
 ```polyglot
 [ ] ✓ [!] pushes replacement — no warning
-[=] >data;string
+[=] >data#string
 [r] =Fetch
    [=] >payload >> >data
    [!] !FetchError
@@ -54,7 +54,7 @@ severity: warning
 
 ```polyglot
 [ ] ✓ [!] with *Continue — no warning
-[=] >data;string
+[=] >data#string
 [r] =Fetch
    [=] >payload >> >data
    [!] !FetchError

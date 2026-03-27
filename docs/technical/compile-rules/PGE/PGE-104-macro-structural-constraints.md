@@ -30,8 +30,8 @@ name: Macro Structural Constraints
 ```polyglot
 [ ] ✓ macro with [{]/[}] IO, [\]/[/] scopes, and composite [W] inside
 {M} =W.DB.Transaction
-   [{] $connStr;string
-   [}] $txHandle;string
+   [{] $connStr#string
+   [}] $txHandle#string
 
    [\]
       [ ] ✓ composite wrapper inside macro setup
@@ -50,8 +50,8 @@ name: Macro Structural Constraints
 ```polyglot
 [ ] ✓ conditional inside macro setup — branching on input
 {M} =W.Cache.Init
-   [{] $backend;string
-   [}] $cacheHandle;string
+   [{] $backend#string
+   [}] $cacheHandle#string
 
    [\]
       [?] $backend
@@ -73,8 +73,8 @@ name: Macro Structural Constraints
 ```polyglot
 [ ] ✓ error handler inside macro setup
 {M} =W.Service.Init
-   [{] $config;string
-   [}] $serviceHandle;string
+   [{] $config#string
+   [}] $serviceHandle#string
 
    [\]
       [r] =Service.Connect
@@ -93,8 +93,8 @@ name: Macro Structural Constraints
 ```polyglot
 [ ] ✗ PGE-104 — [t] inside a macro
 {M} =W.Bad
-   [{] $input;string
-   [}] $output;string
+   [{] $input#string
+   [}] $output#string
 
    [\]
       [t] =T.Call    [ ] ✗ PGE-104 — triggers not allowed in macros
@@ -110,8 +110,8 @@ name: Macro Structural Constraints
 ```polyglot
 [ ] ✗ PGE-104 — [p] inside a macro
 {M} =W.Bad
-   [{] $input;string
-   [}] $output;string
+   [{] $input#string
+   [}] $output#string
 
    [\]
       [p] =Fetch.Data    [ ] ✗ PGE-104 — parallel not allowed in macros

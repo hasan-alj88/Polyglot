@@ -18,28 +18,28 @@ severity: error
 ```polyglot
 [ ] ✓ valid numeric indices for a 2-step chain
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >0.path;path << $path         [ ] ✓ index 0 exists
-   [=] <1.rows;string >> >content     [ ] ✓ index 1 exists
+   [=] >0.path#path << $path         [ ] ✓ index 0 exists
+   [=] <1.rows#string >> >content     [ ] ✓ index 1 exists
 ```
 
 ```polyglot
 [ ] ✓ valid name-based reference
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >Read.path;path << $path      [ ] ✓ "Read" matches step 0
-   [=] <CSV.rows;string >> >content   [ ] ✓ "CSV" matches step 1
+   [=] >Read.path#path << $path      [ ] ✓ "Read" matches step 0
+   [=] <CSV.rows#string >> >content   [ ] ✓ "CSV" matches step 1
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-805 — numeric index out of bounds
 [r] =File.Text.Read=>=Text.Parse.CSV    [ ] 2 steps: index 0 and 1
-   [=] >5.path;path << $path              [ ] ✗ PGE-805 — index 5 doesn't exist
+   [=] >5.path#path << $path              [ ] ✗ PGE-805 — index 5 doesn't exist
 ```
 
 ```polyglot
 [ ] ✗ PGE-805 — name matches zero steps
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >Format.input;string << $text      [ ] ✗ PGE-805 — no step named "Format"
+   [=] >Format.input#string << $text      [ ] ✗ PGE-805 — no step named "Format"
 ```
 
 ```polyglot

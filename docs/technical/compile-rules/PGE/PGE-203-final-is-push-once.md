@@ -15,7 +15,7 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ Final variable pulled multiple times — pulls are unlimited
-[=] >name;string
+[=] >name#string
 [r] >name << "Alice"            [ ] Final
 [r] =Greet
    [=] <who << >name            [ ] ✓ pull 1
@@ -25,7 +25,7 @@ severity: error
 
 ```polyglot
 [ ] ✓ Default → Final is one valid transition
-[=] >label;string
+[=] >label#string
 [r] >label <~ "pending"         [ ] Default
 [r] >label << "confirmed"       [ ] Final — exactly one more push allowed
 [r] =Display
@@ -34,7 +34,7 @@ severity: error
 
 ```polyglot
 [ ] ✓ >> also produces Final
-[=] >result;string
+[=] >result#string
 [r] =Compute
    [=] >value >> >result        [ ] Final via >>
 [r] =Log
@@ -44,21 +44,21 @@ severity: error
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-203 — second push into a Final variable
-[=] >name;string
+[=] >name#string
 [r] >name << "Alice"            [ ] Final
 [r] >name << "Bob"              [ ] ✗ PGE-203 — >name is already Final
 ```
 
 ```polyglot
 [ ] ✗ PGE-203 — default push into a Final variable
-[=] >count;int
+[=] >count#int
 [r] >count << 42                [ ] Final
 [r] >count <~ 0                 [ ] ✗ PGE-203 — cannot default-assign a Final variable
 ```
 
 ```polyglot
 [ ] ✗ PGE-203 — >> into an already-Final variable
-[=] >result;string
+[=] >result#string
 [r] =Step1
    [=] >out >> >result          [ ] Final via >>
 [r] =Step2
@@ -67,21 +67,21 @@ severity: error
 
 ```polyglot
 [ ] ✗ PGE-203 — second default push (Default cannot be re-defaulted)
-[=] >tag;string
+[=] >tag#string
 [r] >tag <~ "draft"                [ ] Default
 [r] >tag <~ "review"              [ ] ✗ PGE-203 — already in Default, cannot default-assign again
 ```
 
 ```polyglot
 [ ] ✓ Default → Final via one push
-[=] >label;string
+[=] >label#string
 [r] >label <~ "pending"            [ ] Default
 [r] >label << "confirmed"          [ ] Final — the one allowed push
 ```
 
 ```polyglot
 [ ] ✓ Default pulled without promotion — stays Default
-[=] >fallback;string
+[=] >fallback#string
 [r] >fallback <~ "N/A"             [ ] Default
 [r] =Display
    [=] <text << >fallback          [ ] ✓ pulling Default is valid
@@ -89,7 +89,7 @@ severity: error
 
 ```polyglot
 [ ] ✓ Each conditional branch independently promotes Default → Final
-[=] >status;string
+[=] >status#string
 [r] >status <~ "unknown"           [ ] Default
 [?] $condition
    [?] #Yes

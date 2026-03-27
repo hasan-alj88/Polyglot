@@ -26,8 +26,8 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] >out << $input
 ```
 
@@ -43,7 +43,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >out;path
+   [=] >out#path
    [r] $p <~ =Path"/tmp/data"
    [r] >out << $p
 ```
@@ -55,7 +55,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <value;string
+   [=] <value#string
    [r] =Path"/tmp" << $value            [ ] ✗ PGE-807 — value expr, not a variable
 ```
 
@@ -65,7 +65,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <value;string
+   [=] <value#string
    [r] =Path"/tmp" <~ $value            [ ] ✗ PGE-807 — value expr, not a variable
 ```
 
@@ -75,7 +75,7 @@ severity: error
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <value;string
+   [=] <value#string
    [r] "hello" << $value                [ ] ✗ PGE-807 — literal is not a variable
 ```
 

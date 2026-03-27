@@ -16,7 +16,7 @@ split_from: PGE-205
 **VALID:**
 ```polyglot
 [ ] ✓ *Continue with >FallBack — variable becomes Final, pipeline continues
-[=] >data;string
+[=] >data#string
 [r] =Fetch
    [=] >payload >> >data
    [!] !FetchError
@@ -29,7 +29,7 @@ split_from: PGE-205
 
 ```polyglot
 [ ] ✓ *Continue with typed >FallBack — int fallback
-[=] >count;int
+[=] >count#int
 [r] =CountItems
    [=] >total >> >count
    [!] !CountError
@@ -40,7 +40,7 @@ split_from: PGE-205
 
 ```polyglot
 [ ] ✓ *Continue with >FallBack from error handler pipeline
-[=] >config;string
+[=] >config#string
 [r] =LoadConfig
    [=] >payload >> >config
    [!] !ConfigError
@@ -54,7 +54,7 @@ split_from: PGE-205
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE-207 — *Continue outside [!] block
-[=] >data;string
+[=] >data#string
 [r] =Fetch
    [=] >payload >> >data
 [*] *Continue >FallBack << ""     [ ] ✗ PGE-207 — *Continue only valid inside [!]
@@ -62,7 +62,7 @@ split_from: PGE-205
 
 ```polyglot
 [ ] ✗ PGE-207 — *Continue without >FallBack value
-[=] >data;string
+[=] >data#string
 [r] =Fetch
    [=] >payload >> >data
    [!] !FetchError

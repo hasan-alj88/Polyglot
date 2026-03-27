@@ -21,8 +21,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] =Transform
       [=] <data << $input
       [=] >result >> $cleaned
@@ -35,8 +35,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] =SideEffect
       [=] <data << $input
       [=] >result >> $*                 [ ] ✓ $* explicit discard — no warning
@@ -49,8 +49,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <status;Status
-   [=] >out;string
+   [=] <status#Status
+   [=] >out#string
    [r] =Lookup
       [=] <key << $status
       [=] >code >> $code
@@ -68,8 +68,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] =Transform
       [=] <data << $input
       [=] >result >> $cleaned
@@ -85,8 +85,8 @@ severity: warning
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >out;string
+   [=] <input#string
+   [=] >out#string
    [r] $temp <~ "placeholder"           [ ] ⚠ PGW-202 — $temp never read
    [r] >out << $input
 ```

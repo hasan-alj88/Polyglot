@@ -57,7 +57,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE-208 — access after cleanup exits
 [\] setup
-   [r] $conn;Connection << =DB.Connect
+   [r] $conn#Connection << =DB.Connect
       [=] <url << $dbUrl
 
 [ ] execution body uses $conn...

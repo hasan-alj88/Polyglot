@@ -23,8 +23,8 @@ severity: warning
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <name;string
-   [=] >result;string
+   [=] <name#string
+   [=] >result#string
    [r] =ValidateUser
       [=] <name << $name
       [=] >validated >> $validated
@@ -40,8 +40,8 @@ severity: warning
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <name;string
-   [=] >result;string
+   [=] <name#string
+   [=] >result#string
    [r] =DoNothing
       [!] !SomeError                          [ ] ⚠ PGW-701 — =DoNothing is non-failable
          [r] >result << "this never fires"
@@ -54,8 +54,8 @@ severity: warning
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <input;string
-   [=] >result;string
+   [=] <input#string
+   [=] >result#string
    [r] =Format
       [=] <text << $input
       [=] >formatted >> $out

@@ -108,8 +108,8 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [@] << "{.}\my-app-03.pg"
 
 {#} #Config
-   [.] .host;string
-   [.] .port;int
+   [.] .host#string
+   [.] .port#int
 ```
 
 **my-app-02.pg:**
@@ -122,7 +122,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] >config;Config
+   [=] >config#Config
    [r] >config << ...
 ```
 
@@ -136,7 +136,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [t] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [=] <config;Config
+   [=] <config#Config
    [r] ...
 ```
 
@@ -165,8 +165,8 @@ The `{@}` block can declare `[_]` permission lines that set the **permission cei
    [_] _File.read"/var/log/*"
    [_] _File.write"/tmp/reports/*"
    [_] _Web.request
-      [_] <url;string << "https://alerts.internal/*"
-      [_] <method;string << "POST"
+      [_] <url#string << "https://alerts.internal/*"
+      [_] <method#string << "POST"
    [_] _System.env"LOG_LEVEL"
 ```
 

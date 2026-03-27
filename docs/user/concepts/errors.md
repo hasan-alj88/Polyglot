@@ -27,7 +27,7 @@ flowchart LR
 
 ## Defining Custom Errors (`{!}`)
 
-Custom error trees are defined with `{!}` blocks (see [[blocks#Definition Elements]]). Each leaf is typed `;#Error`:
+Custom error trees are defined with `{!}` blocks (see [[blocks#Definition Elements]]). Each leaf is typed `#Error`:
 
 ```polyglot
 {!} !Validation
@@ -44,9 +44,9 @@ A pipeline that can raise errors **must** declare them in its IO section using `
 
 ```polyglot
 {=} =ValidateUser
-   [=] <name;string
-   [=] >validated;string
-   [=] >status;string
+   [=] <name#string
+   [=] >validated#string
+   [=] >status#string
    [=] !Validation.Empty
    [=] !Validation.TooLong
    [t] =T.Call
@@ -165,8 +165,8 @@ In chain execution (`[r] =A=>=B=>=C`), errors are prefixed with a step reference
 
 ```polyglot
 [r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >0.path;path << $path
-   [=] <1.rows;string >> >content
+   [=] >0.path#path << $path
+   [=] <1.rows#string >> >content
    [!] !0.File.NotFound
       [r] >content << "Error: file not found"
    [!] !1.Parse.InvalidFormat
@@ -316,7 +316,7 @@ Here `!File.NotFound` is fully handled by `[!]` (it pushes a replacement). `!Fil
 
 ### Metadata Exposure
 
-When a fallback activates, the error that triggered it is accessible via `$var%sourceError` (`;live.error`). If no error occurred, `%sourceError` is `!NoError`. See [[metadata#Variable (`$`)]].
+When a fallback activates, the error that triggered it is accessible via `$var%sourceError` (`#live.error`). If no error occurred, `%sourceError` is `!NoError`. See [[metadata#Variable (`$`)]].
 
 ```polyglot
 [?] $content%sourceError =!? !NoError
