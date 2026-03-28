@@ -41,12 +41,14 @@ status: complete
 
 ## #None
 
-`#None` represents the absence of a value.
+`#None` represents the absence of a value. It is the only type with `###None` — empty string `""` is its only valid value. All other types reject `""` with PGE-421.
 
 ```polyglot
 {#} #None
    [ ] Represents the absence of a value
+   [ ] Empty string "" is the only valid value
    [#] << ##Scalar
+   [#] << ###None
 ```
 
 ## Related

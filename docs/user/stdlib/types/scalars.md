@@ -20,7 +20,7 @@ All scalar subtypes inherit `#String`'s schema via `[#] <~ #String` and override
 | `#Float` | `float` | `^-?[0-9]+\.[0-9]+$` | `3.14`, `-0.5`, `007.00` |
 | `#Sci` | `sci` | `^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$` | `1e10`, `3.14e-2` |
 | `#Eng` | `eng` | `^-?[1-9]\.[0-9]{0,2}[eE][+-]?(0\|[369]\|[1-9][0-9]*[0369])$` | `1.5e3`, `2.47e-6` |
-| `#Dimension` | `dim` | `^[0-9]+$` | `0`, `1`, `2`, `3` |
+| `#Dimension` | `dim` | `^[0-9]+D$` | `0D`, `1D`, `2D`, `3D` |
 | `#KeyString` | `key` | `^[^\s.<>:]+$` | `name`, `id`, `my-key` |
 | `#NestedKeyString` | `nestedkey` | `^[^\s<>]+$` | `File.Permission.Denied` |
 
@@ -88,8 +88,8 @@ All scalar subtypes inherit `#String`'s schema via `[#] <~ #String` and override
    [ ] The "D" suffix in :2D usage is syntax sugar -- :2D means dimension value = 2
    [#] <~ #String
    [#] %##Alias << "dim"
-   [ ] Matches: 0, 1, 2, 3, 10 (allows 0D for scalars)
-   [.] .re#RawString << "^[0-9]+$"
+   [ ] Matches: 0D, 1D, 2D, 3D, 10D (allows 0D for scalars)
+   [.] .re#RawString << "^[0-9]+D$"
 ```
 
 ## #KeyString

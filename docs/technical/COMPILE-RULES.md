@@ -81,6 +81,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category �
 | PGE-418 | 4.18 | Type Parameter Constraint Violation |
 | PGE-419 | 4.19 | Duplicate Dictionary Key |
 | PGE-420 | 4.20 | Key Gap Violation |
+| PGE-421 | 4.21 | Empty String on Non-None Type |
 | PGE-501 | 5.1 | Sibling Separator Homogeneity |
 | PGE-502 | 5.2 | Sibling Kind Homogeneity |
 | PGE-601 | 6.1 | Conditional Must Be Exhaustive |
@@ -136,6 +137,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category �
 | PGE-924 | 9.24 | Invalid Key Type |
 | PGE-925 | 9.25 | Mixed Field Kinds |
 | PGE-926 | 9.26 | Schema Outside Type Definition |
+| PGE-927 | 9.27 | Final Field Override via Inheritance |
 | PGE-1001 | 10.1 | Undefined Metadata Field Access |
 | PGE-1002 | 10.2 | Duplicate Alias |
 
@@ -335,6 +337,36 @@ Each rule follows this structure:
 ```polyglot
 {=} =MyPipeline
    [r] $x << ##Flat               [ ] ✗ PGE-926 — ## used outside {#}
+```
+
+### Rule 9.27 — Final Field Override via Inheritance
+`PGE-927`
+
+**Statement:** If a parent type sets a field with `<<` (final), a child type inheriting via `<~` cannot redeclare that field. Any attempt to reassign a final-inherited field is a compile error.
+
+**Rationale:** `<<` means the value is sealed — no further pushes, including through inheritance. Without this rule, a child type could silently override a field the parent declared immutable, breaking the finality guarantee.
+
+**VALID:**
+```polyglot
+{#} #String
+   [.] .re#RawString <~ ".*"
+
+[ ] ✓ .re is <~ (default) in #String — child CAN override
+{#} #Int
+   [#] <~ #String
+   [.] .re#RawString << "^-?[0-9]+$"
+```
+
+**INVALID:**
+```polyglot
+{#} #Int
+   [#] <~ #String
+   [.] .re#RawString << "^-?[0-9]+$"
+
+[ ] ✗ PGE-927 — .re is already << final in #Int
+{#} #PositiveInt
+   [#] <~ #Int
+   [.] .re#RawString << "^[1-9][0-9]*$"
 ```
 
 ### Rule 9.21w — Redundant Schema Property

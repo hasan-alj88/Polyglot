@@ -2447,16 +2447,17 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.3: #Dimension 0D
 
 **EBNF:** `type_definition` — `.re` for #Dimension and the `:ND` syntax sugar.
-**What it tests:** 0D is valid for scalars. The `D` suffix in `:2D` is syntax sugar — the stored value is `"2"`, not `"2D"`. **Spec discrepancy:** stdlib `types.md` has regex `"^[1-9][0-9]*$"` (rejects 0); authoritative `syntax/types.md` has `"^[0-9]+$D"` (malformed — trailing `D` is not part of the stored value). Correct regex is `"^[0-9]+$"`. See [[types#Layer 2: Scalar Subtypes — Specialize .re]].
+**What it tests:** 0D is valid for scalars. The stored value includes the `D` suffix — `"2D"`, not `"2"`. Regex is `"^[0-9]+D$"`. See [[types#Layer 2: Scalar Subtypes — Specialize .re]].
 **Cross-refs:** [[types]], [[STDLIB]]
+**Status:** RESOLVED — regex corrected to `"^[0-9]+D$"` in both syntax/types.md and stdlib/types/scalars.md.
 
 ```polyglot
 [ ] Authoritative definition — corrected regex
 {#} #Dimension
    [#] <~ #String
    [#] %##Alias << "dim"
-   [ ] Stored value is digits only; D suffix is syntax sugar
-   [.] .re#RawString << "^[0-9]+$"
+   [ ] Stored value includes D suffix
+   [.] .re#RawString << "^[0-9]+D$"
 
 [ ] ✓ 0D means scalar dimension
 [r] $scalar#array:int:0D
@@ -2464,9 +2465,6 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] ✓ standard dimensions
 [r] $vector#array:float:1D
 [r] $matrix#array:float:2D
-
-[ ] ⚠ stdlib types.md uses "^[1-9][0-9]*$" — rejects 0
-[ ] ⚠ syntax/types.md uses "^[0-9]+$D" — trailing D is malformed
 ```
 
 ### EC-24.4: #Eng exponent
@@ -2547,6 +2545,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **EBNF:** `inheritance ::= "[#]" "<~" type_ref` — schema inheritance with `<~` (overridable) vs `<<` (final).
 **What it tests:** #Int inherits `.string` and `.re` from #String via `<~`, then sets `.re` with `<<` (final). A user-defined `#PositiveInt <~ #Int` cannot override `.re` — it is already final. See [[types#Layer 2: Scalar Subtypes — Specialize .re]], [[variable-lifecycle]].
 **Cross-refs:** [[types]], [[variable-lifecycle]]
+**Status:** RESOLVED — PGE-927 (Final Field Override via Inheritance) added to COMPILE-RULES.md.
 
 ```polyglot
 [ ] #String sets .re with <~ (overridable default)
@@ -2558,8 +2557,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] <~ #String
    [.] .re#RawString << "^-?[0-9]+$"
 
-[ ] ✗ compile error — .re is already << final in #Int
-[ ] Cannot further specialize a final field
+[ ] ✗ PGE-927 — .re is already << final in #Int
 {#} #PositiveInt
    [#] <~ #Int
    [.] .re#RawString << "^[1-9][0-9]*$"
@@ -2623,17 +2621,23 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.10: #None — minimal type definition
 
-**EBNF:** `type_definition ::= "{#}" type_header { schema_line | field_line }` — zero fields, zero schema.
-**What it tests:** #None has no fields and no schema declarations. Its `###` is neither `###Value` nor `###Enum` — it has no leaf content at all. This is the minimal valid `{#}` definition. See [[types]].
+**EBNF:** `type_definition ::= "{#}" type_header { schema_line | field_line }` — zero fields, `###None` field type.
+**What it tests:** #None has no fields and uses `###None` — a third field type meaning "nullable." Empty string `""` is the only valid value. Only `###None` types accept empty string; all others reject it with PGE-421. See [[types]], [[types#`###` Field Types — Leaf Content]].
 **Cross-refs:** [[types]], [[STDLIB]]
+**Status:** RESOLVED — `###None` added as third field type, PGE-421 added, #None definition updated with `[#] << ###None`.
 
 ```polyglot
 {#} #None
    [ ] Represents the absence of a value
-   [ ] No fields, no schema — minimal type definition
+   [ ] Empty string "" is the only valid value
+   [#] << ##Scalar
+   [#] << ###None
 
 [ ] ✓ usage — signals absence
 [r] $result << #None
+
+[ ] ✗ PGE-421 — empty string on non-###None type
+[r] $bad#string << ""
 ```
 
 ### EC-24.11: #Array `<~` #Map parameterized inheritance
@@ -2698,8 +2702,9 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.13: 0D array
 
 **EBNF:** `array_type ::= "array" ":" element_type [ ":" dimension ]` — dimension 0.
-**What it tests:** `$scalar#array:int:0D` — Dim=0 means `%##Depth.Max = 0`, making this a scalar. But it is declared as an array. Edge case: does this collapse to a single value? A 0D array is a typed scalar container — it holds exactly one element with no flexible nesting. See [[types#Multidimensional Arrays]].
+**What it tests:** `$scalar#array:int:0D` — a 0D array is a typed scalar container holding exactly one element. Access is direct (no index). PGE-417 on any index attempt. See [[types#Multidimensional Arrays]].
 **Cross-refs:** [[types]]
+**Status:** RESOLVED — 0D array semantics documented in types.md: direct access, no indexing, PGE-417 on index.
 
 ```polyglot
 [ ] 0D array — scalar container
@@ -2834,11 +2839,11 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 Issues discovered during this audit that may warrant separate GitHub issues:
 
-1. **#Dimension regex correction** — Both `syntax/types.md` and `stdlib/types/types.md` need updating. Correct regex: `"^[0-9]+$"`. The trailing `D` in syntax/types.md is a notation error (EC-24.3).
-2. **`<~` finality semantics** — If `#Int` sets `.re` with `<<` (final), can `#PositiveInt <~ #Int` work at all? May need a compile rule (PGE) for "attempt to override final field via inheritance" (EC-24.7).
-3. **#None ###-classification** — #None has zero fields. The compiler's `###` inference has no fields to inspect. Should #None be exempt from `###` classification? (EC-24.10).
+1. ~~**#Dimension regex correction**~~ — RESOLVED: regex corrected to `"^[0-9]+D$"` (EC-24.3).
+2. ~~**`<~` finality semantics**~~ — RESOLVED: PGE-927 added (EC-24.7).
+3. ~~**#None ###-classification**~~ — RESOLVED: `###None` added as third field type, PGE-421 added (EC-24.10).
 4. **#Dataframe resolution** — Status TBD. Either promote to authoritative spec or remove from stdlib (EC-24.17).
-5. **0D array semantics** — Does `#array:int:0D` collapse to a scalar? Needs design decision on access semantics and `%##Depth.Max = 0` interaction (EC-24.13).
+5. ~~**0D array semantics**~~ — RESOLVED: 0D = scalar container, direct access, PGE-417 on index (EC-24.13).
 
 ---
 

@@ -132,7 +132,7 @@ All scalar subtypes inherit `#String`'s schema via `[#] <~ #String` and override
 | `#Float` | `float` | `^-?[0-9]+\.[0-9]+$` | `3.14`, `-0.5`, `007.00` |
 | `#Sci` | `sci` | `^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$` | `1e10`, `3.14e-2` |
 | `#Eng` | `eng` | `^-?[1-9]\.[0-9]{0,2}[eE][+-]?(0\|[369]\|[1-9][0-9]*[0369])$` | `1.5e3`, `2.47e-6` |
-| `#Dimension` | `dim` | `^[0-9]+$D` | `0`, `1`, `2`, `3` |
+| `#Dimension` | `dim` | `^[0-9]+D$` | `0D`, `1D`, `2D`, `3D` |
 
 Each subtype sets `.re` with `<<` (final — cannot be overridden further):
 
@@ -176,8 +176,8 @@ Each subtype sets `.re` with `<<` (final — cannot be overridden further):
    [ ] The "D" suffix in :2D usage is syntax sugar — :2D means dimension value = 2
    [#] <~ #String
    [#] %##Alias << "dim"
-   [ ] Matches: 0, 1, 2, 3, 10 (allows 0D for scalars)
-   [.] .re#RawString << "^[0-9]+$D"
+   [ ] Matches: 0D, 1D, 2D, 3D, 10D (allows 0D for scalars)
+   [.] .re#RawString << "^[0-9]+D$"
 ```
 
 Users can define custom string subtypes with their own `.re`:
@@ -284,17 +284,21 @@ Collections used as value types require explicit `%##Depth.Max` — the compiler
 
 ### `###` Field Types — Leaf Content
 
-The `###` prefix describes the nature of leaf content in a type's fields. There are two field types:
+The `###` prefix describes the nature of leaf content in a type's fields. There are three field types:
 
 | Field Type | Declaration | Meaning |
 |------------|-------------|---------|
 | `###Value` | Leaf holds typed data | Field has a `#type` annotation — inherits `#String` chain |
 | `###Enum` | Leaf is variant selector | Field has no `#type` — identity IS the value (active variant) |
+| `###None` | Leaf is nullable | No fields — empty string `""` is the only valid value |
 
-**Compiler inference:** The compiler infers `###Value` if fields have `#type` annotations, and `###Enum` if fields have no `#type`. Explicit `[#] << ###Value` or `[#] << ###Enum` declaration is optional but allowed.
+`###None` marks a type as nullable. A variable annotated with a `###None` type holds empty string `""` — it represents the absence of a value. Only types with `[#] << ###None` accept empty string; all other types reject `""` with **PGE-421**.
+
+**Compiler inference:** The compiler infers `###Value` if fields have `#type` annotations, `###Enum` if fields have no `#type`, and `###None` if the type has zero fields and zero schema (explicit `[#] << ###None` is required — it cannot be inferred). Explicit `[#] << ###Value` or `[#] << ###Enum` declaration is optional but allowed.
 
 **Error codes:**
-- **PGE-923** — explicit `###` contradicts fields: `###Value` on a type with untyped enum fields, or `###Enum` on a type with typed value fields
+- **PGE-421** — empty string `""` assigned to a non-`###None` type: only `###None` types accept empty string
+- **PGE-923** — explicit `###` contradicts fields: `###Value` on a type with untyped enum fields, `###Enum` on a type with typed value fields, or `###None` on a type with any fields
 - **PGE-925** — sibling fields mix typed (`#type`) and untyped (enum) declarations: all siblings must be the same `###` kind
 
 Examples from the type hierarchy:
@@ -311,6 +315,11 @@ Examples from the type hierarchy:
    [ ] Matches — .string#RawString has a #type annotation
    [.] .string#RawString
    [.] .re#RawString <~ ".*"
+
+{#} #None
+   [#] << ##Scalar
+   [#] << ###None
+   [ ] No fields — empty string "" is the only valid value
 ```
 
 ### Approved `##` Schema Types
@@ -412,6 +421,14 @@ Element access uses colon-separated integer indices. The number of indices must 
 [r] $val << $items:0                 [ ] 1 index for 1D
 [r] $val << $matrix:0:1              [ ] 2 indices for :2D
 [r] $val << $cube:2:3:0              [ ] 3 indices for :3D
+```
+
+A `0D` array is a scalar container — it holds exactly one element with no indexing. Access is direct (no `:N` index):
+
+```polyglot
+[r] $scalar#array:int:0D <~ {42}
+[r] $val#int << $scalar              [ ] direct access — no index
+[r] $bad << $scalar:0                [ ] ✗ PGE-417 — no indices on 0D
 ```
 
 The compiler enforces access depth — too many or too few indices triggers PGE-417. Nested array types (`#array:#array:X`) remain banned (PGE-412) — use `:ND` instead.
@@ -732,6 +749,7 @@ RawString (compiler intrinsic)
     └── (user-defined: #emailAddress, #phoneNumber, etc.)
 
 #Boolean (independent enum struct — NOT #String) [##Scalar, ###Enum]
+#None (absence of value — empty string "") [##Scalar, ###None]
 
 #Map<KeyType<ValueType (sparse, homogeneous key-value pairs)
 #Array<ValueType<Dim (contiguous, rectangular, N-dimensional — #Map variant)
