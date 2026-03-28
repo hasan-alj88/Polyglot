@@ -1,7 +1,7 @@
 ---
 audience: user
 type: spec
-updated: 2026-03-25
+updated: 2026-03-28
 ---
 
 # Everything is a Tree
@@ -16,6 +16,27 @@ All Polyglot data is serialized strings. Every object — structs, pipelines, va
 Polyglot has one true primitive: `RawString` — a sequence of literal raw characters (see [[types#RawString — The True Primitive]]). Everything else — `#String`, `int`, `float`, `#Boolean`, arrays, serials, user structs — is built on top of `RawString` through schemas that constrain how the string is interpreted.
 
 This means every Polyglot object is ultimately a tree of strings with typed structure layered on top.
+
+## Leaf-Only Values
+
+A universal invariant governs every tree in Polyglot: a node is either a **branch** or a **leaf**, never both.
+
+- **Branch nodes** have children but no value — they exist purely for structure and navigation (namespace or enum grouping)
+- **Leaf nodes** hold a `RawString` value but have no children — they are the terminal data
+- A node CANNOT have both a value and children
+
+This is not a per-type property — it is a universal invariant that applies to every data tree. No `%` metadata flag controls it; the compiler enforces it unconditionally.
+
+## Tree Shape and Leaf Content
+
+Types describe their tree structure through two additional prefix tiers beyond `#`:
+
+- `##` **schemas** describe tree shape — depth, key types, ordering, uniformity (e.g., `##Scalar`, `##Flat`, `##Contiguous`)
+- `###` **field types** describe leaf content nature — `###Value` for typed data leaves, `###Enum` for variant selector leaves
+
+Child nodes in a tree are accessed with the `<` operator: `$myMap<name`, `$matrix<0<1`. Fixed fields use `.` as before.
+
+See [[types#Three-Tier Prefix System]] for the full prefix table, [[types#Approved `##` Schema Types]] for all schema definitions, and [[types#The `<` Operator: Definition vs Access]] for accessor details.
 
 ## The Structured Tree
 

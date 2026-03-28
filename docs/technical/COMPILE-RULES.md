@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: specification
-updated: 2026-03-27
+updated: 2026-03-28
 status: draft
 ---
 
@@ -130,6 +130,12 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category �
 | PGE-918 | 9.18 | Undeclared Permission |
 | PGE-919 | 9.19 | Permission Output |
 | PGE-920 | 9.20 | Duplicate Permission |
+| PGE-921 | 9.21 | Schema Property Scope Conflict |
+| PGE-922 | 9.22 | Unbounded Collection Nesting |
+| PGE-923 | 9.23 | Field Type Contradiction |
+| PGE-924 | 9.24 | Invalid Key Type |
+| PGE-925 | 9.25 | Mixed Field Kinds |
+| PGE-926 | 9.26 | Schema Outside Type Definition |
 | PGE-1001 | 10.1 | Undefined Metadata Field Access |
 
 ## Warning Code Reference (PGW)
@@ -157,6 +163,9 @@ Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a develope
 | PGW-901 | 9.1 | Deprecated Pipeline Reference |
 | PGW-902 | 9.2 | Unused Import |
 | PGW-903 | 9.3 | Unused Permission |
+| PGW-904 | 9.21w | Redundant Schema Property |
+| PGW-905 | 9.22w | Contradicting Schema Override |
+| PGW-906 | 9.23w | Unlimited Depth on User Type |
 | PGW-1001 | 2.9 | Unreachable Code |
 | PGW-1002 | 10.2 | Missing Inline Format Metadata |
 
@@ -189,6 +198,183 @@ Each rule follows this structure:
 ​```
 
 **Open point:** (kept until resolved; removed when confirmed)
+```
+
+---
+
+## Schema Rules
+
+### Rule 9.21 — Schema Property Scope Conflict
+`PGE-921`
+
+**Statement:** A `%##` schema property set universally via `[#]` cannot also be assigned branch-wise via `[.]` or `[:]` in the same type definition.
+
+**Rationale:** Universal properties apply to every branch uniformly. A branch-wise override would create an ambiguous structural invariant — the compiler cannot enforce both a universal constraint and a per-branch exception simultaneously.
+
+**VALID:**
+```polyglot
+{#} #MyCollection
+   [#] %##Children.Gap << #False
+   [:] :*#string
+```
+
+**INVALID:**
+```polyglot
+{#} #MyCollection
+   [#] %##Children.Gap << #False     [ ] ✗ PGE-921 — universal scope
+   [.] .items
+      [.] %##Children.Gap << #True   [ ] ✗ PGE-921 — branch-wise conflicts with universal
+```
+
+### Rule 9.22 — Unbounded Collection Nesting
+`PGE-922`
+
+**Statement:** A collection type used as a value type within another collection must have an explicit `%##Depth.Max`. Depth must be bounded.
+
+**Rationale:** Without a depth bound, nested collections can produce infinitely deep trees. The compiler requires an explicit limit so that tree traversal and memory allocation are predictable.
+
+**VALID:**
+```polyglot
+{#} #Matrix
+   [#] <~ #Array<#Array<#float
+   [#] %##Depth.Max << 2
+```
+
+**INVALID:**
+```polyglot
+{#} #Nested
+   [#] <~ #Array<#Array<#float     [ ] ✗ PGE-922 — no %##Depth.Max declared
+```
+
+**WARNING:**
+```polyglot
+{#} #FlexNested
+   [#] <~ #Array<#Array<#float
+   [#] %##Depth.Max << -1          [ ] ⚠ PGW-906 — unlimited depth on user type
+```
+
+### Rule 9.23 — Field Type Contradiction
+`PGE-923`
+
+**Statement:** An explicit `###Value` declaration on a type whose fields are untyped enum fields, or an explicit `###Enum` declaration on a type whose fields have `#type` annotations, is a contradiction.
+
+**Rationale:** The `###` classification must match the actual field declarations. Mismatches indicate a design error — the type's fields and its declared leaf nature disagree.
+
+**VALID:**
+```polyglot
+{#} #Boolean
+   [#] << ###Enum
+   [.] .True
+   [.] .False
+```
+
+**INVALID:**
+```polyglot
+{#} #BadEnum
+   [#] << ###Enum                 [ ] ✗ PGE-923 — declares ###Enum
+   [.] .name#string               [ ] ✗ PGE-923 — but fields have #type (value fields)
+```
+
+### Rule 9.24 — Invalid Key Type
+`PGE-924`
+
+**Statement:** `%##Children.Type` must be set to a type that inherits from `#IndexString`. Keys must exclude syntax-reserved characters (whitespace, `.`, `:`, `<`, `>`).
+
+**Rationale:** Tree child keys appear in accessor syntax (`$var<key`). Types that permit syntax-reserved characters in their values would create parse ambiguity.
+
+**VALID:**
+```polyglot
+{#} #NamedMap
+   [#] << ##Flat
+   [#] %##Children.Type << #IndexString
+```
+
+**INVALID:**
+```polyglot
+{#} #BadMap
+   [#] << ##Flat
+   [#] %##Children.Type << #string   [ ] ✗ PGE-924 — #string allows '.', ':', '<', '>'
+```
+
+### Rule 9.25 — Mixed Field Kinds
+`PGE-925`
+
+**Statement:** Sibling fields at the same level cannot mix typed (`#type` annotated) and untyped (enum) declarations. All siblings must be the same `###` kind.
+
+**Rationale:** A type's fields are either all value fields or all enum fields. Mixing creates ambiguity in the `###` classification and violates the leaf-only values invariant for enum branches.
+
+**VALID:**
+```polyglot
+{#} #Record
+   [.] .name#string
+   [.] .age#int
+```
+
+**INVALID:**
+```polyglot
+{#} #Mixed
+   [.] .Active                    [ ] ✗ PGE-925 — untyped enum field
+   [.] .count#int                 [ ] ✗ PGE-925 — typed value field at same level
+```
+
+### Rule 9.26 — Schema Outside Type Definition
+`PGE-926`
+
+**Statement:** `##` schema references are only valid inside `{#}` type definitions. Using `##` outside a `{#}` block is a compile error.
+
+**Rationale:** Schemas describe tree structure of data types. They have no meaning outside a type definition context.
+
+**VALID:**
+```polyglot
+{#} #MyType
+   [#] << ##Flat
+```
+
+**INVALID:**
+```polyglot
+{=} =MyPipeline
+   [r] $x << ##Flat               [ ] ✗ PGE-926 — ## used outside {#}
+```
+
+### Rule 9.21w — Redundant Schema Property
+`PGW-904`
+
+**Statement:** A `%##` or `%###` property that is already inherited from a parent type or composed schema is redundant. The compiler emits a warning.
+
+**Rationale:** Redundant declarations add noise. The inherited value already applies. If the intent is to override, the value must differ (see PGW-905).
+
+**WARNING:**
+```polyglot
+{#} #MyArray
+   [#] <~ #Array<#int
+   [#] %##Children.Gap << #False   [ ] ⚠ PGW-904 — already inherited from ##Contiguous via #Array
+```
+
+### Rule 9.22w — Contradicting Schema Override
+`PGW-905`
+
+**Statement:** A `%##` property that overrides an inherited value from a composed `##` schema emits a warning. The override takes effect, but the compiler flags it for verification.
+
+**Rationale:** Overriding inherited schema properties is allowed but unusual. The warning ensures the developer intended the override rather than accidentally contradicting the schema.
+
+**WARNING:**
+```polyglot
+{#} #SparseArray
+   [#] <~ #Array<#int
+   [#] %##Children.Gap << #True    [ ] ⚠ PGW-905 — overrides #False from ##Contiguous
+```
+
+### Rule 9.23w — Unlimited Depth on User Type
+`PGW-906`
+
+**Statement:** Setting `%##Depth.Max << -1` (unlimited depth) on a user-defined type emits a warning. Only `#Serial` should use unlimited depth.
+
+**Rationale:** Unlimited depth is a deliberate escape hatch for schema-free data. User-defined types should have bounded depth for predictable tree traversal and memory use.
+
+**WARNING:**
+```polyglot
+{#} #DeepTree
+   [#] %##Depth.Max << -1         [ ] ⚠ PGW-906 — unlimited depth on user type
 ```
 
 ---

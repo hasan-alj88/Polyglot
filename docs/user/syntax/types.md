@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-27
+updated: 2026-03-28
 status: complete
 ---
 
@@ -48,6 +48,45 @@ Each special character has one job:
 
 **Rule:** `#` always starts the type context. After the first `#`, type parameters separated by `:` drop the prefix.
 
+## Three-Tier Prefix System
+
+The `#` character is not just for type annotations — it participates in a three-tier prefix system that describes types at different levels of abstraction:
+
+| Prefix | Name | Describes | Example |
+|--------|------|-----------|---------|
+| `#` | Type | Concrete data type | `#Array`, `#String`, `#Person` |
+| `##` | Schema | Tree shape — structure and constraints | `##Scalar`, `##Flat`, `##Contiguous` |
+| `###` | Field | Leaf content nature | `###Value`, `###Enum` |
+
+- `#` = **what** — the concrete type a variable holds
+- `##` = **shape** — the tree structure: depth, keys, ordering, uniformity
+- `###` = **content** — the leaf nature: typed value or enum variant
+
+Schema (`##`) and field (`###`) prefixes are used inside `{#}` type definitions to declare structural properties. They are not used in variable annotations — you always annotate variables with `#`. See [[data-is-trees]] for how these tiers relate to the unified tree.
+
+## The `<` Operator: Definition vs Access
+
+The `<` character serves two roles depending on context:
+
+| Context | Syntax | Meaning | Example |
+|---------|--------|---------|---------|
+| `{#}` header | `#Type<Param` | Type parameter definition | `{#} #Array<ValueType<Dim` |
+| `$var` access | `$var<key` | Tree child access | `$myArray<0`, `$myMap<name` |
+
+Chained access for nested trees: `$matrix<0<1`
+
+The parser distinguishes by context — `<` after a type name in a `{#}` header is a type parameter; `<` after a `$variable` is a child accessor.
+
+Type parameters support type annotation and defaults on the same line:
+
+```polyglot
+{#} #Map<KeyType<ValueType
+   [#] <KeyType#IndexString << #IndexString
+   [#] <ValueType#* << #*
+```
+
+The syntax `[#] <Param#Type << "default"` declares a type parameter with a type constraint (`#Type`) and a default value (`<< "default"`).
+
 ## Basic Types
 
 All Polyglot data is serialized strings. The type system is a schema layer on top of strings that constrains how each string is interpreted. Types are organized in layers — each built from the one below.
@@ -66,9 +105,8 @@ What `#string` refers to is `#String` — a struct built on `RawString`:
 ```polyglot
 {#} #String
    [ ] #String and #string both resolve here
-   [#] %Alias << "string"
-   [ ] Scalar — no flexible children, no collection nesting
-   [#] %Depth.Max << 0
+   [#] << ##Scalar
+   [#] %##Alias << "string"
    [ ] The actual string value
    [.] .string#RawString
    [ ] Regex constraint — default accepts all strings
@@ -78,8 +116,8 @@ What `#string` refers to is `#String` — a struct built on `RawString`:
 
 - `.string` — the raw string value
 - `.re` — a regular expression constraint. Defaults to `".*"` (accept any string). Subtypes override with `<~` (default assignment — overridable once). See [[variable-lifecycle]]
-- `%Alias << "string"` — lets users write `#string` (lowercase) as shorthand for `#String`
-- `%Depth.Max << 0` — formally marks this as a scalar (no flexible children)
+- `%##Alias << "string"` — lets users write `#string` (lowercase) as shorthand for `#String`
+- `[#] << ##Scalar` — applies the `##Scalar` schema (sets `%##Depth.Max << 0`, marking this as a scalar with no flexible children)
 
 A string literal (quoted text with `{$var}` interpolation) is always `#string`. When `.re` is set, the string value must match the pattern — violations are caught at compile time for literals (PGE-410) and at runtime for dynamic values (handled with `[!]` error blocks).
 
@@ -94,7 +132,7 @@ All scalar subtypes inherit `#String`'s schema via `[#] <~ #String` and override
 | `#Float` | `float` | `^-?[0-9]+\.[0-9]+$` | `3.14`, `-0.5`, `007.00` |
 | `#Sci` | `sci` | `^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$` | `1e10`, `3.14e-2` |
 | `#Eng` | `eng` | `^-?[1-9]\.[0-9]{0,2}[eE][+-]?(0\|[369]\|[1-9][0-9]*[0369])$` | `1.5e3`, `2.47e-6` |
-| `#Dimension` | `dim` | `^[1-9][0-9]*$` | `1`, `2`, `3` |
+| `#Dimension` | `dim` | `^[0-9]+$D` | `0`, `1`, `2`, `3` |
 
 Each subtype sets `.re` with `<<` (final — cannot be overridden further):
 
@@ -102,44 +140,44 @@ Each subtype sets `.re` with `<<` (final — cannot be overridden further):
 {#} #Int
    [ ] Inherits #String schema (.string, .re)
    [#] <~ #String
-   [#] %Alias << "int"
+   [#] %##Alias << "int"
    [ ] Matches: 42, -7, 0, 007
    [.] .re#RawString << "^-?[0-9]+$"
 
 {#} #UnsignedInt
    [ ] Non-negative integers — array keys, dimensions
    [#] <~ #String
-   [#] %Alias << "uint"
+   [#] %##Alias << "uint"
    [ ] Matches: 0, 1, 42, 007
    [.] .re#RawString << "^[0-9]+$"
 
 {#} #Float
    [#] <~ #String
-   [#] %Alias << "float"
+   [#] %##Alias << "float"
    [ ] Matches: 3.14, -0.5, 007.00
    [.] .re#RawString << "^-?[0-9]+\.[0-9]+$"
 
 {#} #Sci
    [#] <~ #String
-   [#] %Alias << "sci"
+   [#] %##Alias << "sci"
    [ ] Scientific notation with optional decimal
    [ ] Matches: 1e10, 3.14e-2, -5E+3
    [.] .re#RawString << "^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$"
 
 {#} #Eng
    [#] <~ #String
-   [#] %Alias << "eng"
+   [#] %##Alias << "eng"
    [ ] Engineering notation: exponents are multiples of 3
    [ ] Matches: 1.5e3, 2.47e-6, 9.99e12
    [.] .re#RawString << "^-?[1-9]\.[0-9]{0,2}[eE][+-]?(0|[369]|[1-9][0-9]*[0369])$"
 
 {#} #Dimension
-   [ ] Positive integers only — array dimension parameters
+   [ ] Array dimension parameters — 0D for scalars, 1D, 2D, etc.
    [ ] The "D" suffix in :2D usage is syntax sugar — :2D means dimension value = 2
    [#] <~ #String
-   [#] %Alias << "dim"
-   [ ] Matches: 1, 2, 3, 10
-   [.] .re#RawString << "^[1-9][0-9]*$"
+   [#] %##Alias << "dim"
+   [ ] Matches: 0, 1, 2, 3, 10 (allows 0D for scalars)
+   [.] .re#RawString << "^[0-9]+$D"
 ```
 
 Users can define custom string subtypes with their own `.re`:
@@ -152,6 +190,20 @@ Users can define custom string subtypes with their own `.re`:
 
 Literal numeric values always match their RE by construction — no error handling needed.
 
+### Layer 2c: #IndexString — Key Type for Tree Access
+
+`#IndexString` is a string subtype that excludes characters reserved by Polyglot syntax — whitespace, `.`, `:`, `<`, `>`. This makes it safe for use as tree child keys accessed via the `<` operator:
+
+```polyglot
+{#} #IndexString
+   [#] <~ #String
+   [#] %##Alias << "index"
+   [ ] Excludes whitespace, dot, colon, angle brackets
+   [.] .re#RawString << "^[^\s.<>:]+$"
+```
+
+Any type used as `%##Children.Type` (the key type for a collection's flexible children) must inherit from `#IndexString`. If it does not, the compiler raises PGE-924 — keys must exclude syntax-reserved characters to avoid compile ambiguity.
+
 > **Note:** The full metadata path for `int` is `%#:String:int` — String subtypes are nested under `:String` at a flexible level. `#int` is an alias for `#String:int`. See [[data-is-trees#String Subtypes — Nested Under `:String`]] for how subtypes connect to the unified tree, and [[metadata#String Subtypes in the Tree]] for the complete type registry structure.
 
 ### Layer 2b: #Boolean — Independent Enum Struct
@@ -160,9 +212,9 @@ Literal numeric values always match their RE by construction — no error handli
 
 ```polyglot
 {#} #Boolean
-   [#] %Alias << "bool"
-   [ ] Scalar — leaf node, NOT a #String subtype
-   [#] %Depth.Max << 0
+   [#] << ##Scalar
+   [#] << ###Enum
+   [#] %##Alias << "bool"
    [.] .True
    [.] .False
 ```
@@ -171,43 +223,115 @@ Literal numeric values always match their RE by construction — no error handli
 
 ### Other Types
 
-- `array` — ordered, contiguous collection with typed elements and N-dimensional support. Element access uses `:` flexible fields (`:0`, `:1`, `:2`, ...). See [[collections]].
-- `dict` — unordered, sparse key-value pairs with typed keys and values. See [[collections]].
-- `dataframe` — array of dicts (tabular data). See [[collections]].
-- `serial` — schema-free. Always uses flexible fields (`:`), even if dot notation is used in access. Any keys, any types, any depth. No compile-time validation of shape. Easily converts to/from JSON-like formats. See [[collections]].
+- `map` — sparse, homogeneous key-value pairs with `#IndexString` keys. Child access uses `<` operator (`$myMap<name`). See [[collections]].
+- `array` — contiguous, rectangular collection with typed elements and N-dimensional support. A `#Map` variant with `#UnsignedInt` keys. Child access uses `<` operator (`$myArray<0`). See [[collections]].
+- `serial` — schema-free. Any keys, any types, any depth. No compile-time validation of shape. Child access uses `<` operator (`$data<key`). See [[collections]].
 - struct (`{#}`) — defined schema. Compile-time enforced field names and types. See [[#Struct Types]].
 
 ## Schema Properties
 
-`{#}` definitions gain **schema properties** declared with `[#] %Property`. These are compile-time metadata that describe structural constraints on the type's tree shape:
+`{#}` definitions gain **schema properties** declared with `[#] %##Property`. These are compile-time metadata prefixed with `%##` to explicitly mark them as tree-structure properties. They describe structural constraints on the type's tree shape:
 
-| Property | Type | Meaning |
-|----------|------|---------|
-| `%Key.Type` | type ref | Data type of keys at this level |
-| `%Key.Gap` | `#Boolean` | Can keys have gaps? (`#False` = contiguous, `#True` = sparse) |
-| `%Ordered` | `#Boolean` | Are keys ordered? |
-| `%Depth.Max` | `#Int` | Max tree depth (`0` = scalar, `1` = flat, `-1` = unlimited) |
-| `%Alias` | `#String` | Lowercase shorthand name for the type |
+| Property | Type | Applies to | Meaning |
+|----------|------|-----------|---------|
+| `%##Depth.Max` | `#int` | Universal | Max tree depth (0=scalar, 1=flat, -1=unlimited) |
+| `%##Children.Type` | type ref | Branch nodes (depth > 0) | Data type of child keys |
+| `%##Children.Gap` | `#Boolean` | Branch nodes (depth > 0) | Gaps allowed in child keys? |
+| `%##Children.Uniform` | `#Boolean` | Branch nodes (depth > 0) | All children same schema? |
+| `%##Children.Regular` | `#Boolean` | Branch nodes (depth > 0) | All branches at same depth have same child count? |
+| `%##Children.Min` | `#uint` | Branch nodes (depth > 0) | Minimum child count |
+| `%##Children.Max` | `#int` | Branch nodes (depth > 0) | Max child count (-1=unlimited) |
+| `%##Children.Ordered` | `#Boolean` | Branch nodes (depth > 0) | Are children ordered? |
+| `%##Alias` | `#string` | Universal | Lowercase shorthand name |
 
-Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Property}`, making them introspectable at compile time.
+Schema properties apply universally via `[#]`, or branch-wise via `[.]`/`[:]`. Conflict between universal and branch-wise scope raises PGE-921. If a `%##` property is redundant with an inherited value, the compiler raises PGW-904; if it contradicts, the override takes effect with PGW-905.
 
-### %Depth.Max — Inference Model
+Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Property}`, making them introspectable at compile time. Schema references (`##`) are only valid inside `{#}` type definitions — using them outside raises PGE-926.
 
-`%Depth.Max` describes how many levels of **flexible** (`:`) nesting a type supports. Fixed (`.`) fields define static schema structure and do NOT count as depth.
+### %##Depth.Max — Inference Model
+
+`%##Depth.Max` describes how many levels of **flexible** (`:`) nesting a type supports. Fixed (`.`) fields define static schema structure and do NOT count as depth.
 
 | Value | Meaning | Examples |
 |-------|---------|---------|
 | `0` | Scalar/record — no flexible children | #String, #Int, #Boolean, #Person (all `.` fields) |
-| `1` | One level of flexible children | #Array (1D), #Dict |
+| `1` | One level of flexible children | #Array (1D), #Map |
 | `N` | N levels of flexible nesting | #Array with `:ND` dimension |
 | `-1` | Unlimited flexible nesting | #Serial |
 
-**Compiler inference:** When a `{#}` definition does not explicitly set `%Depth.Max`, the compiler infers it:
-- **All `.` fixed fields** → `%Depth.Max = 0` (record/scalar)
-- **Has `:` flexible fields** → `%Depth.Max` = count of nested `:` levels
-- **Explicit `[#] %Depth.Max`** → overrides inference
+**Compiler inference:** When a `{#}` definition does not explicitly set `%##Depth.Max`, the compiler infers it:
+- **All `.` fixed fields** → `%##Depth.Max = 0` (record/scalar)
+- **Has `:` flexible fields** → `%##Depth.Max` = count of nested `:` levels
+- **Explicit `[#] %##Depth.Max`** → overrides inference
 
 This means structs like `#Person` (with `.name#string`, `.age#int`) are automatically depth 0 and CAN be used as array/dict elements. A struct with `[:] :*#Handler` has depth 1 and CANNOT.
+
+Collections used as value types require explicit `%##Depth.Max` — the compiler raises PGE-922 if depth is missing. Using `%##Depth.Max << -1` on a user-defined type triggers PGW-906 (only `#Serial` should use unlimited depth).
+
+### `###` Field Types — Leaf Content
+
+The `###` prefix describes the nature of leaf content in a type's fields. There are two field types:
+
+| Field Type | Declaration | Meaning |
+|------------|-------------|---------|
+| `###Value` | Leaf holds typed data | Field has a `#type` annotation — inherits `#String` chain |
+| `###Enum` | Leaf is variant selector | Field has no `#type` — identity IS the value (active variant) |
+
+**Compiler inference:** The compiler infers `###Value` if fields have `#type` annotations, and `###Enum` if fields have no `#type`. Explicit `[#] << ###Value` or `[#] << ###Enum` declaration is optional but allowed.
+
+**Error codes:**
+- **PGE-923** — explicit `###` contradicts fields: `###Value` on a type with untyped enum fields, or `###Enum` on a type with typed value fields
+- **PGE-925** — sibling fields mix typed (`#type`) and untyped (enum) declarations: all siblings must be the same `###` kind
+
+Examples from the type hierarchy:
+
+```polyglot
+{#} #Boolean
+   [#] << ###Enum
+   [ ] Matches — .True/.False have no #type annotation
+   [.] .True
+   [.] .False
+
+{#} #String
+   [#] << ###Value
+   [ ] Matches — .string#RawString has a #type annotation
+   [.] .string#RawString
+   [.] .re#RawString <~ ".*"
+```
+
+### Approved `##` Schema Types
+
+Schema types are `{#}` definitions that set `%##` properties to describe common tree shapes. Types compose schemas with `[#] <<` lines (one line, one expression — they accumulate):
+
+```polyglot
+{#} ##Scalar
+   [#] %##Depth.Max << 0
+
+{#} ##Flat
+   [#] %##Depth.Max << 1
+
+{#} ##Deep
+   [#] %##Depth.Max << -1
+
+{#} ##Homogeneous
+   [#] %##Children.Uniform << #True
+
+{#} ##Heterogeneous
+   [#] %##Children.Uniform << #False
+
+{#} ##Contiguous
+   [#] %##Children.Gap << #False
+   [#] %##Children.Ordered << #True
+
+{#} ##Sparse
+   [#] %##Children.Gap << #True
+
+{#} ##Rectangular
+   [#] %##Children.Regular << #True
+   [#] %##Children.Uniform << #True
+```
+
+A type composes multiple schemas to describe its full shape. For example, `#Array` uses `##Contiguous` and `##Rectangular` together. User-defined schemas are possible but not generally recommended.
 
 ## Generic Type Parameters
 
@@ -237,13 +361,13 @@ Multiple type parameters chain with `<`: `#Name<param1<param2`. In usage, parame
 {#} #Array<ValueType<Dim
    [#] <ValueType << #*
       [ ] ValueType must be scalar/record (depth 0)
-      [<] %Depth.Max << 0
+      [<] << ##Scalar
    [#] <Dim << #Dimension
       [ ] Dimension must be scalar
-      [<] %Depth.Max << 0
+      [<] << ##Scalar
 ```
 
-The `[<]` constraint declares that any type passed as `ValueType` must have `%Depth.Max = 0` — preventing nested collections like `#array:#array:#int`.
+The `[<]` constraint declares that any type passed as `ValueType` must satisfy `##Scalar` (`%##Depth.Max = 0`) — preventing nested collections like `#array:#array:#int`.
 
 ## Element-Typed Arrays
 
@@ -327,17 +451,17 @@ This is shorthand for explicit field assignment: `#data:1 << 1`, `#data:2 << 2`,
 
 ## Enum Fields vs Value Fields
 
-In `{#}` struct definitions, fields are either **enum fields** or **value fields**:
+In `{#}` struct definitions, fields are either **enum fields** (`###Enum`) or **value fields** (`###Value`). See [[#`###` Field Types — Leaf Content]] for the formal definition:
 
-| Field Type | Has `#type`? | Has assignment? | Example |
-|------------|-------------|-----------------|---------|
-| Enum | No | No | `[.] .Critical` |
-| Value | Yes | Optional | `[.] .code#int <~ 500` |
+| Field Type | Has `#type`? | Has assignment? | `###` Kind | Example |
+|------------|-------------|-----------------|-----------|---------|
+| Enum | No | No | `###Enum` | `[.] .Critical` |
+| Value | Yes | Optional | `###Value` | `[.] .code#int <~ 500` |
 
 **Rules:**
-- No type annotation (`#type`) implies an **enum field**
+- No type annotation (`#type`) implies an **enum field** (`###Enum`)
 - Enum fields always use `[.]` fixed fields
-- All siblings at the same level must be the same kind (all enum or all value)
+- All siblings at the same level must be the same kind — mixing raises PGE-925
 - Enum fields can nest value sub-fields
 
 ```polyglot
@@ -582,19 +706,19 @@ In type annotations (after `#`), nested type refs drop the `#` prefix — the co
 
 ```
 RawString (compiler intrinsic)
-└── #String (foundation — .string + .re)
+└── #String (foundation — .string + .re) [##Scalar, ###Value]
     ├── #Int (.re = signed integers)
     ├── #UnsignedInt (.re = non-negative integers)
     ├── #Float (.re = decimals)
     ├── #Sci (.re = scientific notation)
     ├── #Eng (.re = engineering notation)
-    ├── #Dimension (.re = positive integers — array dimensions)
+    ├── #Dimension (.re = dimension values — allows 0D for scalars)
+    ├── #IndexString (.re = syntax-safe keys — no whitespace/dot/colon/angle)
     └── (user-defined: #emailAddress, #phoneNumber, etc.)
 
-#Boolean (independent enum struct — NOT #String)
+#Boolean (independent enum struct — NOT #String) [##Scalar, ###Enum]
 
-#Array<ValueType<Dim (ordered, contiguous, typed elements, N-dimensional)
-#Dict<KeyType<ValueType (unordered, sparse, typed K-V pairs)
-#Dataframe<KeyType<ValueType (array of dicts — tabular data)
+#Map<KeyType<ValueType (sparse, homogeneous key-value pairs)
+#Array<ValueType<Dim (contiguous, rectangular, N-dimensional — #Map variant)
 #Serial (schema-free, unlimited depth)
 ```
