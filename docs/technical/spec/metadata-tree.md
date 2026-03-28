@@ -270,14 +270,14 @@ When a `{#}` definition includes `[#] %##Property` declarations or composes `##`
 | Property | Type | Meaning |
 |----------|------|---------|
 | `%##Depth.Max` | `#int` | Max tree depth (`0` = scalar, `1` = flat, `-1` = unlimited) |
-| `%##Children.Type` | type ref | Data type of child keys (must inherit from `#IndexString`) |
+| `%##Children.Type` | type ref | Data type of child keys (must inherit from `#KeyString`) |
 | `%##Children.Gap` | `#Boolean` | Gaps allowed in child keys? |
 | `%##Children.Uniform` | `#Boolean` | All children same schema? |
 | `%##Children.Regular` | `#Boolean` | All branches at same depth have same child count? |
 | `%##Children.Min` | `#uint` | Minimum child count |
 | `%##Children.Max` | `#int` | Max child count (`-1` = unlimited) |
 | `%##Children.Ordered` | `#Boolean` | Are children ordered? |
-| `%##Alias` | `#string` | Lowercase shorthand name |
+| `%##Alias` | `#NestedKeyString` | Lowercase shorthand name |
 
 ### Field Type Properties (`%###`)
 

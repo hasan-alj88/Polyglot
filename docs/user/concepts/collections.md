@@ -18,7 +18,7 @@ Every collection in Polyglot is a tree. `#Map` is the universal flat key-value c
 
 | Type | Is a | Key type | Key structure |
 |------|------|----------|--------------|
-| `#Map<K<V` | Base collection | `K` (any `#IndexString`) | Flat key-value |
+| `#Map<K<V` | Base collection | `K` (any `#KeyString`) | Flat key-value |
 | `#Array<V<Dim` | `#Map` variant | `#UnsignedInt` | Cartesian product of 0..n-1 per dimension |
 | `#Serial` | Schema-free tree | Any | Unlimited depth, no constraints |
 
@@ -28,7 +28,7 @@ For type annotations, type hierarchy, and schema properties, see [[types]].
 
 ## #Map — Base Collection
 
-`#Map` is the universal flat key-value collection. Keys must inherit from `#IndexString` (no whitespace, `.`, `:`, `<`, `>` in keys). Values default to any scalar type.
+`#Map` is the universal flat key-value collection. Keys must inherit from `#KeyString` (no whitespace, `.`, `:`, `<`, `>` in keys). Values default to any scalar type.
 
 ```polyglot
 {#} #Map<KeyType<ValueType
@@ -37,7 +37,7 @@ For type annotations, type hierarchy, and schema properties, see [[types]].
    [#] << ##Sparse
    [#] %##Children.Type << KeyType
    [#] %##Alias << "map"
-   [#] <KeyType << #IndexString
+   [#] <KeyType << #KeyString
    [#] <ValueType << #*
       [<] << ##Scalar
    [:] :*#ValueType
@@ -51,7 +51,7 @@ For type annotations, type hierarchy, and schema properties, see [[types]].
 - `##Homogeneous` — all children share the same schema
 - `##Sparse` — gaps allowed in keys, no ordering guarantee
 
-`%##Children.Type << KeyType` binds the key type parameter to the tree's child key type. The default key type is `#IndexString`; the default value type is `#*` (any type) constrained to `##Scalar`.
+`%##Children.Type << KeyType` binds the key type parameter to the tree's child key type. The default key type is `#KeyString`; the default value type is `#*` (any type) constrained to `##Scalar`.
 
 ### Access
 

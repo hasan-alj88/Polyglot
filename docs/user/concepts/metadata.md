@@ -32,7 +32,7 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │       ├── .authors         #array:string     (user-declared)
 │       ├── .license         #string           (user-declared)
 │       ├── .deprecated      #bool             (user-declared)
-│       ├── .alias                             (user-declared)
+│       ├── %alias          #Array.NestedKeyString (user-declared, flexible)
 │       └── :info            #serial           (user-declared, flexible)
 ├── =  (Pipelines)
 │   └── :<name>:<instance>
@@ -49,7 +49,7 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │       ├── .license         #string           (user-declared)
 │       ├── .deprecated      #bool             (user-declared)
 │       ├── .deprecatedMessage #string         (user-declared)
-│       ├── .alias                             (user-declared)
+│       ├── %alias          #Array.NestedKeyString (user-declared, flexible)
 │       ├── .<               (input ports)
 │       ├── .>               (output ports)
 │       ├── ._              (pipeline permissions — see [[permissions#Definition Request]])
@@ -84,7 +84,7 @@ For the formal path grammar and instance rules, see [[metadata-tree|technical/sp
 │       ├── .license         #string           (user-declared)
 │       ├── .deprecated      #bool             (user-declared)
 │       ├── .deprecatedMessage #string         (user-declared)
-│       ├── .alias                             (user-declared)
+│       ├── %alias          #Array.NestedKeyString (user-declared, flexible)
 │       ├── :info            #serial           (user-declared, flexible)
 │       └── (live fields TBD)
 ├── !  (Errors)
@@ -200,12 +200,11 @@ The `[%]` block element ([[blocks#Metadata]]) lives inside any `{x}` definition 
 | `.license` | `#string` | License identifier |
 | `.deprecated` | `#bool` | Deprecation flag |
 | `.deprecatedMessage` | `#string` | Reason for deprecation and suggested replacement |
-| `.alias` | — | Shorthand name. Preserves type prefix (`#` for data, `=` for pipelines) |
-
-### Flexible Field
+### Flexible Fields
 
 | Field | Type | Description |
 |-------|------|-------------|
+| `%alias` | `#Array.NestedKeyString` | Shorthand names — multiple aliases per definition. Each alias is a `#NestedKeyString` (allows `.` and `:` for nested paths). Must be globally unique (PGE-1002) |
 | `:info` | `#serial` | Opens a flexible scope for custom key-value tooling data |
 
 ### Assignment
@@ -218,7 +217,9 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
    [%] .version << "2.1.0"
    [%] .authors << ["Alice", "Bob"]
    [%] .deprecated << false
-   [%] .alias << =ProcessInvoice
+   [%] %alias
+      [:] "ProcessInvoice"
+      [:] "InvoiceProcessor"
    [%] :info
       :team << "payments"
       :priority << "high"

@@ -137,6 +137,7 @@ Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category â€
 | PGE-925 | 9.25 | Mixed Field Kinds |
 | PGE-926 | 9.26 | Schema Outside Type Definition |
 | PGE-1001 | 10.1 | Undefined Metadata Field Access |
+| PGE-1002 | 10.2 | Duplicate Alias |
 
 ## Warning Code Reference (PGW)
 
@@ -278,7 +279,7 @@ Each rule follows this structure:
 ### Rule 9.24 â€” Invalid Key Type
 `PGE-924`
 
-**Statement:** `%##Children.Type` must be set to a type that inherits from `#IndexString`. Keys must exclude syntax-reserved characters (whitespace, `.`, `:`, `<`, `>`).
+**Statement:** `%##Children.Type` must be set to a type that inherits from `#KeyString`. Keys must exclude syntax-reserved characters (whitespace, `.`, `:`, `<`, `>`).
 
 **Rationale:** Tree child keys appear in accessor syntax (`$var<key`). Types that permit syntax-reserved characters in their values would create parse ambiguity.
 
@@ -286,7 +287,7 @@ Each rule follows this structure:
 ```polyglot
 {#} #NamedMap
    [#] << ##Flat
-   [#] %##Children.Type << #IndexString
+   [#] %##Children.Type << #KeyString
 ```
 
 **INVALID:**
