@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: Issue #89 — Add ~ForEach.Map and *Into.Map collection operators
-Plan: 89-01 complete (3/3 tasks)
-Status: Loop closed — ready for MERGE
-Last activity: 2026-03-28 — Unified 89-01; 18 files changed
+Phase: Issue #92 — Edge-case audit for all datatype definitions
+Plan: 92-02 unified; all edge cases resolved (except #Dataframe TBD)
+Status: Loop closed — ready for /paul:merge
+Last activity: 2026-03-28 — Unified 92-02; 5 files changed, 4 edge cases fixed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -36,14 +36,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #92 — Edge-case audit for all datatype definitions
+Branch: design/issue-92-edge-case-audit-for-all-datatype-definitions
+Labels: design
+Started: 2026-03-28
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/92
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [92-02 closed — ready for merge]
 ```
 
 ## Accumulated Context
@@ -97,6 +101,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #88 — Add schema properties to {#} definitions | 2026-03-28 | Three-tier prefix (#/##/###), #Map/#Array/#Serial hierarchy, 9 compile rules, 26 design decisions |
 | Closed #87 — Support multiple [%] .alias declarations per definition | 2026-03-28 | #IndexString→#KeyString, #NestedKeyString, flexible %alias, PGE-1002 |
 | Closed #89 — Add ~ForEach.Map and *Into.Map collection operators | 2026-03-28 | #Dict→#Map rename, ForEach/ and Into/ folder restructure, dot=folder convention |
+| Issue #92 — Edge-case audit 92-02: resolve edge cases | 2026-03-28 | #Dimension regex ^[0-9]+D$, PGE-927 final inheritance, ###None + PGE-421, 0D array semantics |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -116,14 +121,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-28
-Stopped at: Issue #89 loop closed, ready for merge
-Next action: /paul:merge to merge branch to main
-Resume file: .paul/phases/issue-89-foreach-map-into-map/89-01-SUMMARY.md
+Stopped at: 92-02 loop closed
+Next action: /paul:merge to close issue #92
+Resume file: .paul/phases/issue-92-datatype-edge-case-audit/92-02-SUMMARY.md
 Resume context:
-- ~ForEach.Map and *Into.Map added to all spec files
-- ForEach/ and Into/ restructured to folder-per-variant
-- #Dict renamed to #Map across 3 files
-- 8/8 acceptance criteria pass
+- 92-01: Audit + restructure (18 edge cases, 6 type files)
+- 92-02: Resolved 4 edge cases, 13 clean, 1 TBD (#Dataframe)
+- New: PGE-927, PGE-421, ###None field type, 0D array semantics
+- Ready for merge to main
 
 ---
 *STATE.md — Updated after every significant action*

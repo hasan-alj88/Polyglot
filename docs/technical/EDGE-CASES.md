@@ -1,7 +1,7 @@
 ---
 type: specification
 audience: developer
-updated: 2026-03-16
+updated: 2026-03-28
 status: draft
 ---
 
@@ -2375,6 +2375,478 @@ No bracket prefix needed inside.
 
 ---
 
+## 24. Datatype Definitions (§24)
+
+Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, and `###` field types. Complements §4 (type USAGE/ANNOTATIONS). See [[types]].
+
+| Edge Case | Title | Tests |
+|-----------|-------|-------|
+| EC-24.1 | #String `.re` default | Empty string matches `".*"`, ##Scalar inherited |
+| EC-24.2 | #Int leading zeros and negative zero | `"007"` and `"-0"` both match regex |
+| EC-24.3 | #Dimension 0D | 0D allowed for scalars, regex discrepancies across specs |
+| EC-24.4 | #Eng exponent | Multiples-of-3 constraint on exponent |
+| EC-24.5 | #KeyString excluded chars | Dot excluded, hyphen allowed |
+| EC-24.6 | #NestedKeyString allows dot/colon | Alias paths with separators |
+| EC-24.7 | `<~` inheritance chain finality | `<<` final prevents further override |
+| EC-24.8 | #Boolean — ##Scalar + ###Enum | Dual schema composition |
+| EC-24.9 | Enum inheritance via `<~` | Extending enum variants |
+| EC-24.10 | #None — minimal type | No fields, no schema |
+| EC-24.11 | #Array `<~` #Map parameterized inheritance | Schema property accumulation |
+| EC-24.12 | ##Contiguous vs ##Sparse override | Contradicting property override (PGW-905) |
+| EC-24.13 | 0D array | Dimension collapse to scalar |
+| EC-24.14 | Empty collections | Zero-element #Array and #Map |
+| EC-24.15 | Invalid key type | #Int as map key (PGE-924) |
+| EC-24.16 | #Serial — no ## schema constraints | Unlimited depth escape hatch (PGW-906 exemption) |
+| EC-24.17 | #Dataframe status | Stale stdlib entry, idiomatic replacement |
+| EC-24.18 | Stale %Property notation | stdlib types.md missing `##` prefix |
+
+---
+
+### EC-24.1: #String `.re` default
+
+**EBNF:** `type_definition ::= "{#}" type_header { schema_line | field_line }` — field defaults via `<~`.
+**What it tests:** Empty string `""` matches `.re = ".*"` — the default regex accepts all strings, including empty. Verifies `##Scalar` is inherited via `[#] << ##Scalar`. See [[types#Layer 1: #String — The Foundation Type]].
+**Cross-refs:** [[types]], [[variable-lifecycle]]
+
+```polyglot
+{#} #String
+   [#] << ##Scalar
+   [#] %##Alias << "string"
+   [.] .string#RawString
+   [.] .re#RawString <~ ".*"
+
+[ ] ✓ empty string matches ".*"
+[r] $empty#string << ""
+
+[ ] ✓ any content matches ".*"
+[r] $anything#string << "hello world 123 !@#"
+```
+
+### EC-24.2: #Int leading zeros and negative zero
+
+**EBNF:** `type_definition` — `.re` regex `"^-?[0-9]+$"` accepts leading zeros and `-0`.
+**What it tests:** `"007"` and `"-0"` both match `#Int`'s regex. Leading zeros are valid serialized strings — Polyglot does not normalize numeric representations. See [[types#Layer 2: Scalar Subtypes — Specialize .re]].
+**Cross-refs:** [[types]]
+
+```polyglot
+{#} #Int
+   [#] <~ #String
+   [#] %##Alias << "int"
+   [.] .re#RawString << "^-?[0-9]+$"
+
+[ ] ✓ leading zeros match regex
+[r] $padded#int << 007
+
+[ ] ✓ negative zero matches regex
+[r] $negZero#int << -0
+
+[ ] ✗ PGE-410 — decimal point not in regex
+[r] $bad#int << 3.14
+```
+
+### EC-24.3: #Dimension 0D
+
+**EBNF:** `type_definition` — `.re` for #Dimension and the `:ND` syntax sugar.
+**What it tests:** 0D is valid for scalars. The stored value includes the `D` suffix — `"2D"`, not `"2"`. Regex is `"^[0-9]+D$"`. See [[types#Layer 2: Scalar Subtypes — Specialize .re]].
+**Cross-refs:** [[types]], [[STDLIB]]
+**Status:** RESOLVED — regex corrected to `"^[0-9]+D$"` in both syntax/types.md and stdlib/types/scalars.md.
+
+```polyglot
+[ ] Authoritative definition — corrected regex
+{#} #Dimension
+   [#] <~ #String
+   [#] %##Alias << "dim"
+   [ ] Stored value includes D suffix
+   [.] .re#RawString << "^[0-9]+D$"
+
+[ ] ✓ 0D means scalar dimension
+[r] $scalar#array:int:0D
+
+[ ] ✓ standard dimensions
+[r] $vector#array:float:1D
+[r] $matrix#array:float:2D
+```
+
+### EC-24.4: #Eng exponent
+
+**EBNF:** `type_definition` — `.re` enforces multiples-of-3 exponent.
+**What it tests:** `"1.5e4"` fails (4 is not a multiple of 3), `"1.5e3"` passes. The regex `(0|[369]|[1-9][0-9]*[0369])` constrains the exponent to 0, 3, 6, 9, ... See [[types#Layer 2: Scalar Subtypes — Specialize .re]].
+**Cross-refs:** [[types]]
+
+```polyglot
+{#} #Eng
+   [#] <~ #String
+   [#] %##Alias << "eng"
+   [.] .re#RawString << "^-?[1-9]\.[0-9]{0,2}[eE][+-]?(0|[369]|[1-9][0-9]*[0369])$"
+
+[ ] ✓ exponent is multiple of 3
+[r] $valid#eng << "1.5e3"
+[r] $micro#eng << "2.47e-6"
+[r] $tera#eng << "9.99e12"
+
+[ ] ✗ PGE-410 — exponent 4 is not a multiple of 3
+[r] $bad#eng << "1.5e4"
+
+[ ] ✗ PGE-410 — exponent 1 is not a multiple of 3
+[r] $bad2#eng << "3.0e1"
+```
+
+### EC-24.5: #KeyString excluded chars
+
+**EBNF:** `type_definition` — `.re` excludes syntax-reserved characters.
+**What it tests:** `"my.key"` fails (dot is reserved for fixed-field navigation), `"my-key"` passes. Ensures tree path safety for `<` child access. See [[types#Layer 2c: #KeyString — Key Type for Tree Access]].
+**Cross-refs:** [[types]]
+
+```polyglot
+{#} #KeyString
+   [#] <~ #String
+   [#] %##Alias << "key"
+   [.] .re#RawString << "^[^\s.<>:]+$"
+
+[ ] ✓ hyphen allowed
+[r] $valid#key << "my-key"
+[r] $underscored#key << "my_key_123"
+
+[ ] ✗ PGE-410 — dot is reserved (fixed-field separator)
+[r] $dotted#key << "my.key"
+
+[ ] ✗ PGE-410 — colon is reserved (flexible-field separator)
+[r] $coloned#key << "my:key"
+
+[ ] ✗ PGE-410 — angle bracket is reserved
+[r] $angled#key << "my<key"
+```
+
+### EC-24.6: #NestedKeyString allows dot/colon
+
+**EBNF:** `type_definition` — `.re` allows `.` and `:` but excludes whitespace and angle brackets.
+**What it tests:** `"error.file.read"` passes (dots allowed for alias paths), `"my<key"` fails. Used as element type for `%##Alias` paths. See [[types#Layer 2d: #NestedKeyString — Key Type for Alias Paths]].
+**Cross-refs:** [[types]]
+
+```polyglot
+{#} #NestedKeyString
+   [#] <~ #String
+   [#] %##Alias << "nestedkey"
+   [.] .re#RawString << "^[^\s<>]+$"
+
+[ ] ✓ dots and colons allowed for nested paths
+[r] $alias#nestedkey << "error.file.read"
+[r] $nested#nestedkey << "String:int"
+
+[ ] ✗ PGE-410 — angle bracket excluded
+[r] $bad#nestedkey << "my<key"
+
+[ ] ✗ PGE-410 — whitespace excluded
+[r] $bad2#nestedkey << "my key"
+```
+
+### EC-24.7: `<~` inheritance chain finality
+
+**EBNF:** `inheritance ::= "[#]" "<~" type_ref` — schema inheritance with `<~` (overridable) vs `<<` (final).
+**What it tests:** #Int inherits `.string` and `.re` from #String via `<~`, then sets `.re` with `<<` (final). A user-defined `#PositiveInt <~ #Int` cannot override `.re` — it is already final. See [[types#Layer 2: Scalar Subtypes — Specialize .re]], [[variable-lifecycle]].
+**Cross-refs:** [[types]], [[variable-lifecycle]]
+**Status:** RESOLVED — PGE-927 (Final Field Override via Inheritance) added to COMPILE-RULES.md.
+
+```polyglot
+[ ] #String sets .re with <~ (overridable default)
+{#} #String
+   [.] .re#RawString <~ ".*"
+
+[ ] #Int inherits and sets .re with << (final)
+{#} #Int
+   [#] <~ #String
+   [.] .re#RawString << "^-?[0-9]+$"
+
+[ ] ✗ PGE-927 — .re is already << final in #Int
+{#} #PositiveInt
+   [#] <~ #Int
+   [.] .re#RawString << "^[1-9][0-9]*$"
+```
+
+### EC-24.8: #Boolean — ##Scalar + ###Enum
+
+**EBNF:** `schema_line ::= "[#]" "<<" schema_ref` — multiple schema compositions accumulate.
+**What it tests:** #Boolean composes both `##Scalar` (depth 0) and `###Enum` (leaf content is variant selector). A type can be both scalar AND enum. Can a user define a custom enum with the same pattern? Yes — `###Enum` and `##Scalar` are orthogonal. See [[types#Layer 2b: #Boolean — Independent Enum Struct]], [[types#`###` Field Types — Leaf Content]].
+**Cross-refs:** [[types]]
+
+```polyglot
+{#} #Boolean
+   [#] << ##Scalar
+   [#] << ###Enum
+   [#] %##Alias << "bool"
+   [.] .True
+   [.] .False
+
+[ ] ✓ user-defined enum with same pattern
+{#} #TrafficLight
+   [#] << ##Scalar
+   [#] << ###Enum
+   [.] .Red
+   [.] .Yellow
+   [.] .Green
+
+[ ] ✓ usage
+[r] $light << #TrafficLight.Red
+```
+
+### EC-24.9: Enum inheritance via `<~`
+
+**EBNF:** `inheritance ::= "[#]" "<~" type_ref` — `<~` on an enum type.
+**What it tests:** User defines `#MyStatus <~ #PipelineStatus` to add new variants. Enums use `[.]` fixed fields — `<~` on an enum should extend the field set (inheriting all parent variants). See [[types#Enum Fields vs Value Fields]].
+**Cross-refs:** [[types]]
+
+```polyglot
+{#} #PipelineStatus
+   [#] << ###Enum
+   [.] .AwaitTrigger
+   [.] .Disabled
+   [.] .Running
+   [.] .Failed
+
+[ ] Extends #PipelineStatus with additional variants
+{#} #MyStatus
+   [#] <~ #PipelineStatus
+   [.] .Degraded
+   [.] .Maintenance
+
+[ ] ✓ inherited variants still accessible
+[r] $status << #MyStatus.Running
+
+[ ] ✓ new variant accessible
+[r] $status << #MyStatus.Degraded
+
+[ ] ✗ parent type does not gain child's variants
+[r] $bad << #PipelineStatus.Degraded
+```
+
+### EC-24.10: #None — minimal type definition
+
+**EBNF:** `type_definition ::= "{#}" type_header { schema_line | field_line }` — zero fields, `###None` field type.
+**What it tests:** #None has no fields and uses `###None` — a third field type meaning "nullable." Empty string `""` is the only valid value. Only `###None` types accept empty string; all others reject it with PGE-421. See [[types]], [[types#`###` Field Types — Leaf Content]].
+**Cross-refs:** [[types]], [[STDLIB]]
+**Status:** RESOLVED — `###None` added as third field type, PGE-421 added, #None definition updated with `[#] << ###None`.
+
+```polyglot
+{#} #None
+   [ ] Represents the absence of a value
+   [ ] Empty string "" is the only valid value
+   [#] << ##Scalar
+   [#] << ###None
+
+[ ] ✓ usage — signals absence
+[r] $result << #None
+
+[ ] ✗ PGE-421 — empty string on non-###None type
+[r] $bad#string << ""
+```
+
+### EC-24.11: #Array `<~` #Map parameterized inheritance
+
+**EBNF:** `inheritance ::= "[#]" "<~" type_ref "<" type_param` — parameterized inheritance.
+**What it tests:** `#Array <~ #Map` substitutes `#Map`'s `KeyType` with `#UnsignedInt`. #Array inherits ##Flat, ##Homogeneous, and ##Sparse from #Map, then overrides with ##Contiguous and ##Rectangular. Schema properties accumulate — later declarations override earlier ones. See [[types#Approved ## Schema Types]].
+**Cross-refs:** [[types]], [[STDLIB]]
+
+```polyglot
+[ ] #Map defines base collection schema
+{#} #Map<KeyType<ValueType
+   [#] <KeyType << #KeyString
+   [#] <ValueType << #*
+      [<] << ##Scalar
+   [#] %##Alias << "map"
+   [#] %##Children.Type << KeyType
+   [#] << ##Flat
+   [#] << ##Homogeneous
+   [#] << ##Sparse
+   [:] :*#ValueType
+
+[ ] #Array inherits #Map, substituting KeyType with #UnsignedInt
+{#} #Array<ValueType<Dim
+   [#] <~ #Map<#UnsignedInt<ValueType
+   [#] <ValueType << #*
+      [<] << ##Scalar
+   [#] <Dim << #Dimension
+      [<] << ##Scalar
+   [#] %##Alias << "array"
+   [ ] ##Contiguous overrides ##Sparse properties:
+   [ ]   %##Children.Gap: #True → #False
+   [ ]   %##Children.Ordered: (unset) → #True
+   [#] << ##Contiguous
+   [#] << ##Rectangular
+   [#] %##Depth.Max << Dim
+   [:] :*#ValueType
+```
+
+### EC-24.12: ##Contiguous vs ##Sparse override
+
+**EBNF:** `schema_line ::= "[#]" "<<" schema_ref` — contradicting schema compositions.
+**What it tests:** #Map applies `##Sparse` (`%##Children.Gap << #True`). #Array inherits then applies `##Contiguous` (`%##Children.Gap << #False`, `%##Children.Ordered << #True`). This directly contradicts the inherited `%##Children.Gap` — the compiler raises PGW-905 (contradicting override). This is intentional: #Array IS a contiguous #Map variant. See [[types#Schema Properties]].
+**Cross-refs:** [[types]]
+
+```polyglot
+{#} ##Sparse
+   [#] %##Children.Gap << #True
+
+{#} ##Contiguous
+   [#] %##Children.Gap << #False
+   [#] %##Children.Ordered << #True
+
+[ ] #Array inherits ##Sparse from #Map, then overrides with ##Contiguous
+[ ] ⚠ PGW-905 — %##Children.Gap contradicts inherited value
+[ ] This is intentional — #Array is a contiguous specialization of #Map
+
+[r] $arr#array:int <~ {1, 2, 3}
+[ ] ✓ no gaps — contiguous enforced
+[ ] ✓ ordered — indices 0, 1, 2
+```
+
+### EC-24.13: 0D array
+
+**EBNF:** `array_type ::= "array" ":" element_type [ ":" dimension ]` — dimension 0.
+**What it tests:** `$scalar#array:int:0D` — a 0D array is a typed scalar container holding exactly one element. Access is direct (no index). PGE-417 on any index attempt. See [[types#Multidimensional Arrays]].
+**Cross-refs:** [[types]]
+**Status:** RESOLVED — 0D array semantics documented in types.md: direct access, no indexing, PGE-417 on index.
+
+```polyglot
+[ ] 0D array — scalar container
+[r] $scalar#array:int:0D <~ {42}
+
+[ ] %##Depth.Max = 0 — no flexible nesting
+[ ] Holds exactly one element — access without index
+[r] $val#int << $scalar
+
+[ ] ✗ PGE-417 — no indices allowed on 0D
+[r] $bad << $scalar:0
+```
+
+### EC-24.14: Empty collections
+
+**EBNF:** `inline_data ::= "{" "}"` — zero-element initialization.
+**What it tests:** Zero-element #Array and #Map. `%##Children.Min` is not explicitly set for #Array or #Map — the minimum child count defaults to 0. Empty collections are valid. See [[types#Inline Data Shorthand]].
+**Cross-refs:** [[types]]
+
+```polyglot
+[ ] ✓ empty array — zero elements, valid
+[r] $empty#array:int <~ {}
+
+[ ] ✓ empty map — zero entries, valid
+[r] $emptyMap#map:string:int <~ {}
+
+[ ] %##Children.Min is not set — defaults to 0
+[ ] Both are valid typed containers with no elements
+```
+
+### EC-24.15: Invalid key type (PGE-924)
+
+**EBNF:** `schema_property ::= "%##Children.Type" "<<" type_ref` — key type must inherit #KeyString.
+**What it tests:** `#Map<#Int<#String` — #Int inherits from #String, NOT from #KeyString. The `%##Children.Type` must inherit `#KeyString` to exclude syntax-reserved characters. Compiler raises PGE-924. See [[types#Layer 2c: #KeyString — Key Type for Tree Access]].
+**Cross-refs:** [[types]]
+
+```polyglot
+[ ] ✗ PGE-924 — #Int does not inherit #KeyString
+[ ] #Int.re allows "-7" — the hyphen is fine, but dots/colons are
+[ ] not excluded by #Int's regex, only by #KeyString's
+[r] $bad#map:int:string <~ {}
+
+[ ] ✓ correct — #KeyString (default) excludes reserved chars
+[r] $good#map:string:int <~ {}
+
+[ ] ✓ correct — custom key type inheriting #KeyString
+{#} #SafeKey
+   [#] <~ #KeyString
+   [.] .re#RawString << "^[a-z][a-z0-9-]*$"
+
+[r] $custom#map:SafeKey:int <~ {}
+```
+
+### EC-24.16: #Serial — no ## schema constraints
+
+**EBNF:** `type_definition` — `%##Depth.Max << -1` on a stdlib type.
+**What it tests:** #Serial uses `%##Depth.Max << -1` (unlimited depth). PGW-906 warns about unlimited depth on USER types, but #Serial is stdlib — it is the intentional escape hatch for schema-free data. Show that user types with `-1` get the warning but #Serial does not. See [[types#Schema Properties]].
+**Cross-refs:** [[types]]
+
+```polyglot
+[ ] ✓ #Serial — stdlib, no PGW-906
+{#} #Serial
+   [#] %##Alias << "serial"
+   [#] %##Children.Gap << #True
+   [#] %##Children.Ordered << #False
+   [#] %##Depth.Max << -1
+   [:] :*#*
+
+[ ] ⚠ PGW-906 — user type with unlimited depth
+{#} #MyFreeform
+   [#] %##Depth.Max << -1
+   [:] :*#*
+
+[ ] ✓ no warning — user type with bounded depth
+{#} #MyNested
+   [#] %##Depth.Max << 3
+   [:] :*#string
+```
+
+### EC-24.17: #Dataframe status
+
+**EBNF:** `type_definition` — stdlib collection type not in authoritative spec.
+**What it tests:** #Dataframe appears in stdlib `types.md` but NOT in the authoritative `syntax/types.md` type hierarchy. Status is TBD. The idiomatic Polyglot pattern for tabular data is a row struct combined with #Array. See [[types]], [[STDLIB]].
+**Cross-refs:** [[types]], [[STDLIB]]
+
+```polyglot
+[ ] #Dataframe is in stdlib types.md but NOT in syntax/types.md
+[ ] Status: TBD — may be removed or promoted
+
+[ ] Idiomatic pattern: row struct + #Array
+{#} #EmployeeRow
+   [.] .name#string
+   [.] .department#string
+   [.] .salary#int
+
+[r] $employees#array:EmployeeRow <~ {}
+
+[ ] Equivalent to what #Dataframe would provide,
+[ ] but with compile-time schema enforcement
+```
+
+### EC-24.18: Stale %Property notation
+
+**EBNF:** `schema_property ::= "[#]" "%##" property_path "<<" value` — the `##` prefix is mandatory.
+**What it tests:** stdlib `types.md` uses stale notation without the `##` prefix. The correct notation per `syntax/types.md` requires `%##`. Document the complete mapping. See [[types#Schema Properties]].
+**Cross-refs:** [[types]], [[STDLIB]]
+
+```polyglot
+[ ] ✗ STALE notation (stdlib types.md)    → ✓ CORRECT notation (syntax/types.md)
+[ ] %Alias                                → %##Alias
+[ ] %Key.Type                             → %##Children.Type
+[ ] %Key.Gap                              → %##Children.Gap
+[ ] %Ordered                              → %##Children.Ordered
+[ ] %Depth.Max                            → %##Depth.Max
+
+[ ] Stale: stdlib types.md #Array definition
+[#] %Alias << "array"
+[#] %Key.Type << #UnsignedInt
+[#] %Key.Gap << #False
+[#] %Ordered << #True
+[#] %Depth.Max << Dim
+
+[ ] Correct: authoritative syntax/types.md notation
+[#] %##Alias << "array"
+[#] %##Children.Type << #UnsignedInt
+[#] %##Children.Gap << #False
+[#] %##Children.Ordered << #True
+[#] %##Depth.Max << Dim
+```
+
+### Potential Follow-up Issues
+
+Issues discovered during this audit that may warrant separate GitHub issues:
+
+1. ~~**#Dimension regex correction**~~ — RESOLVED: regex corrected to `"^[0-9]+D$"` (EC-24.3).
+2. ~~**`<~` finality semantics**~~ — RESOLVED: PGE-927 added (EC-24.7).
+3. ~~**#None ###-classification**~~ — RESOLVED: `###None` added as third field type, PGE-421 added (EC-24.10).
+4. **#Dataframe resolution** — Status TBD. Either promote to authoritative spec or remove from stdlib (EC-24.17).
+5. ~~**0D array semantics**~~ — RESOLVED: 0D = scalar container, direct access, PGE-417 on index (EC-24.13).
+
+---
+
 ## Coverage Matrix
 
 | EBNF Section | Edge Cases | Covered Productions |
@@ -2402,5 +2874,6 @@ No bracket prefix needed inside.
 | §21 Third Registry Type | EC-21.1 | `Registry` address format |
 | §22 Control Flow — Gaps | EC-22.1–22.4 | `*?` exhaustiveness, nested conditionals, `%status` switch, `[^]` XOR |
 | §23 Stress Tests | ST-1–ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, macro+timer |
+| §24 Datatype Definitions | EC-24.1–24.18 | Scalar regex boundaries, `<~` inheritance, ##/### composition, collection parameterized inheritance, %## property completeness |
 
-**Total: 51 original + 33 new = 84 edge cases across 23 sections.**
+**Total: 51 original + 33 new + 18 datatype = 102 edge cases across 24 sections.**
