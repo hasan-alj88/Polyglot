@@ -36,18 +36,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #87 — Support multiple [%] .alias declarations per definition
-Branch: design/issue-87-support-multiple-alias-declarations
-Labels: design, P3-medium
-Started: 2026-03-28
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/87
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -99,6 +95,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #67 — Add Mermaid flowchart to pipelines.md parallel forking | 2026-03-26 | flowchart TD: [\] setup splits to sequential + [p] fork concurrent with body, [/] collects |
 | Closed #68, #69, #70, #71, #72 — Batch Mermaid diagrams | 2026-03-26 | Merged docs/issue-68-72-mermaid-batch to main |
 | Closed #88 — Add schema properties to {#} definitions | 2026-03-28 | Three-tier prefix (#/##/###), #Map/#Array/#Serial hierarchy, 9 compile rules, 26 design decisions |
+| Closed #87 — Support multiple [%] .alias declarations per definition | 2026-03-28 | #IndexString→#KeyString, #NestedKeyString, flexible %alias, PGE-1002 |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -118,8 +115,8 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-28
-Stopped at: Loop closed for 87-01
-Next action: /paul:merge to commit and merge to main
+Stopped at: Issue #87 merged to main
+Next action: /paul:issues or /paul:work-issue <number>
 Resume file: .paul/phases/issue-87-multiple-alias/87-01-SUMMARY.md
 Resume context:
 - Rename #IndexString → #KeyString, add #NestedKeyString
