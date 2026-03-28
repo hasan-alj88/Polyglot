@@ -81,7 +81,7 @@ Type parameters support type annotation and defaults on the same line:
 
 ```polyglot
 {#} #Map<KeyType<ValueType
-   [#] <KeyType#IndexString << #IndexString
+   [#] <KeyType#KeyString << #KeyString
    [#] <ValueType#* << #*
 ```
 
@@ -190,19 +190,33 @@ Users can define custom string subtypes with their own `.re`:
 
 Literal numeric values always match their RE by construction — no error handling needed.
 
-### Layer 2c: #IndexString — Key Type for Tree Access
+### Layer 2c: #KeyString — Key Type for Tree Access
 
-`#IndexString` is a string subtype that excludes characters reserved by Polyglot syntax — whitespace, `.`, `:`, `<`, `>`. This makes it safe for use as tree child keys accessed via the `<` operator:
+`#KeyString` is a string subtype that excludes characters reserved by Polyglot syntax — whitespace, `.`, `:`, `<`, `>`. This makes it safe for use as tree child keys accessed via the `<` operator:
 
 ```polyglot
-{#} #IndexString
+{#} #KeyString
    [#] <~ #String
-   [#] %##Alias << "index"
+   [#] %##Alias << "key"
    [ ] Excludes whitespace, dot, colon, angle brackets
    [.] .re#RawString << "^[^\s.<>:]+$"
 ```
 
-Any type used as `%##Children.Type` (the key type for a collection's flexible children) must inherit from `#IndexString`. If it does not, the compiler raises PGE-924 — keys must exclude syntax-reserved characters to avoid compile ambiguity.
+Any type used as `%##Children.Type` (the key type for a collection's flexible children) must inherit from `#KeyString`. If it does not, the compiler raises PGE-924 — keys must exclude syntax-reserved characters to avoid compile ambiguity.
+
+### Layer 2d: #NestedKeyString — Key Type for Alias Paths
+
+`#NestedKeyString` is a string subtype that allows `.` and `:` separators but still excludes whitespace, `<`, and `>`. This makes it safe for alias paths that reference nested definitions (e.g., `!File.Permission.Denied`):
+
+```polyglot
+{#} #NestedKeyString
+   [#] <~ #String
+   [#] %##Alias << "nestedkey"
+   [ ] Allows dot and colon; excludes whitespace and angle brackets
+   [.] .re#RawString << "^[^\s<>]+$"
+```
+
+Used as the element type for `%alias` — alias values may contain `.` and `:` to reference paths in the definition tree.
 
 > **Note:** The full metadata path for `int` is `%#:String:int` — String subtypes are nested under `:String` at a flexible level. `#int` is an alias for `#String:int`. See [[data-is-trees#String Subtypes — Nested Under `:String`]] for how subtypes connect to the unified tree, and [[metadata#String Subtypes in the Tree]] for the complete type registry structure.
 
@@ -223,7 +237,7 @@ Any type used as `%##Children.Type` (the key type for a collection's flexible ch
 
 ### Other Types
 
-- `map` — sparse, homogeneous key-value pairs with `#IndexString` keys. Child access uses `<` operator (`$myMap<name`). See [[collections]].
+- `map` — sparse, homogeneous key-value pairs with `#KeyString` keys. Child access uses `<` operator (`$myMap<name`). See [[collections]].
 - `array` — contiguous, rectangular collection with typed elements and N-dimensional support. A `#Map` variant with `#UnsignedInt` keys. Child access uses `<` operator (`$myArray<0`). See [[collections]].
 - `serial` — schema-free. Any keys, any types, any depth. No compile-time validation of shape. Child access uses `<` operator (`$data<key`). See [[collections]].
 - struct (`{#}`) — defined schema. Compile-time enforced field names and types. See [[#Struct Types]].
@@ -242,7 +256,7 @@ Any type used as `%##Children.Type` (the key type for a collection's flexible ch
 | `%##Children.Min` | `#uint` | Branch nodes (depth > 0) | Minimum child count |
 | `%##Children.Max` | `#int` | Branch nodes (depth > 0) | Max child count (-1=unlimited) |
 | `%##Children.Ordered` | `#Boolean` | Branch nodes (depth > 0) | Are children ordered? |
-| `%##Alias` | `#string` | Universal | Lowercase shorthand name |
+| `%##Alias` | `#NestedKeyString` | Universal | Lowercase shorthand name |
 
 Schema properties apply universally via `[#]`, or branch-wise via `[.]`/`[:]`. Conflict between universal and branch-wise scope raises PGE-921. If a `%##` property is redundant with an inherited value, the compiler raises PGW-904; if it contradicts, the override takes effect with PGW-905.
 
@@ -713,7 +727,8 @@ RawString (compiler intrinsic)
     ├── #Sci (.re = scientific notation)
     ├── #Eng (.re = engineering notation)
     ├── #Dimension (.re = dimension values — allows 0D for scalars)
-    ├── #IndexString (.re = syntax-safe keys — no whitespace/dot/colon/angle)
+    ├── #KeyString (.re = syntax-safe keys — no whitespace/dot/colon/angle)
+    ├── #NestedKeyString (.re = alias-safe paths — allows dot/colon, no whitespace/angle)
     └── (user-defined: #emailAddress, #phoneNumber, etc.)
 
 #Boolean (independent enum struct — NOT #String) [##Scalar, ###Enum]

@@ -1507,24 +1507,40 @@ No bracket prefix needed inside.
    [r] $done#bool << #Boolean.True
 ```
 
-### EC-15.2: `[%]` alias field — resolves to fully qualified path
+### EC-15.2: `[%]` %alias field — multiple aliases per definition
 
-**EBNF:** `alias_field ::= "[%]" ".alias" "<<" '#' name | '=' name`
+**EBNF:** `metadata_alias ::= "%" "alias" NEWLINE { indent flex_sep string_literal NEWLINE }`
 
-**What it tests:** `.alias` field makes a definition reachable via short name. Alias preserves type prefix.
+**What it tests:** `%alias` field makes a definition reachable via multiple shorthand names. Each alias is a `#NestedKeyString` — allows `.` and `:` for nested paths. All aliases must be globally unique (PGE-1002).
 
 ```polyglot
 {#} #SystemConfig
-   [%] .alias << #Config
+   [%] %alias
+      [:] "Config"
+      [:] "SysConfig"
    [.] .timeout#int <~ 30
    [.] .retries#int <~ 3
 
 {=} =Provision.User
-   [%] .alias << =ProvisionUser
+   [%] %alias
+      [:] "ProvisionUser"
    [t] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $x#int << 1
+```
+
+### EC-15.2b: `[%]` %alias with nested key path
+
+**What it tests:** Alias values can contain `.` and `:` to reference nested paths in the definition tree. Useful for cross-tree aliases (e.g., error aliases reachable from multiple namespaces).
+
+```polyglot
+{!} !Permission
+   [.] .File
+      [.] .Denied;#Error
+         [%] %alias
+            [:] "File.Permission.Denied"
+            [:] "FileDenied"
 ```
 
 ### EC-15.3: `.info#serial` flexible metadata

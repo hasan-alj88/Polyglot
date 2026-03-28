@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: Issue #88 — Schema Properties
-Plan: 88-01, 88-02, 88-03 complete (3/3)
-Status: Loop closed — all plans complete, ready for MERGE
-Last activity: 2026-03-28 — Executed and unified all 3 plans; 6 files updated
+Phase: Issue #87 — Multiple Alias Declarations
+Plan: 87-01 complete (3/3 tasks)
+Status: Loop closed — ready for MERGE
+Last activity: 2026-03-28 — Unified 87-01; 12 files updated
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -36,14 +36,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #87 — Support multiple [%] .alias declarations per definition
+Branch: design/issue-87-support-multiple-alias-declarations
+Labels: design, P3-medium
+Started: 2026-03-28
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/87
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -114,13 +118,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-28
-Stopped at: All 3 plans executed and unified — loop closed
+Stopped at: Loop closed for 87-01
 Next action: /paul:merge to commit and merge to main
-Resume file: .paul/phases/issue-88-schema-properties/88-03-SUMMARY.md
+Resume file: .paul/phases/issue-87-multiple-alias/87-01-SUMMARY.md
 Resume context:
-- All 3 plans complete: types.md, collections.md, data-is-trees.md, metadata-tree.md, COMPILE-RULES.md, EBNF.md
-- 26 design decisions from docs/draft.md applied to spec
-- 3 GitHub issues to create after merge: ~* operators, edge-case audit, generic #Dataframe
+- Rename #IndexString → #KeyString, add #NestedKeyString
+- Convert .alias to flexible %alias#Array.NestedKeyString
+- Update PGE-115, create PGE-1002 (duplicate alias)
 
 ---
 *STATE.md — Updated after every significant action*

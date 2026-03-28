@@ -105,7 +105,7 @@ See [[pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 |--------|---------|
 | `[%]` | Definition metadata and aliases |
 
-`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Alias under a `[.]` field: `[%] .alias << #AliasName` resolves to the fully qualified path. Aliases preserve type prefix (`#` for data, `=` for pipelines).
+`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE-1002).
 
 See [[metadata]] for the full metadata tree, field listings, `live` semantics, and access patterns.
 

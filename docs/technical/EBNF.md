@@ -243,7 +243,7 @@ generic_param       ::= '<' name ;
 generic_param_typed ::= '<' name '#' type_expr [ "<<" value_expr ] ;
                       (* Type parameter with type annotation and optional default *)
                       (* e.g., <Dim#Dimension << "1D" *)
-                      (* e.g., <KeyType << #IndexString *)
+                      (* e.g., <KeyType << #KeyString *)
 
 generic_def_header  ::= data_id { ( generic_param | generic_param_typed ) } ;
                       (* e.g., #Array<ValueType<Dim, #Map<KeyType<ValueType *)
@@ -794,8 +794,9 @@ metadata_fixed      ::= fixed_sep "description" [ type_annotation ] assignment_o
 metadata_info       ::= fixed_sep "info" type_annotation NEWLINE
                          { indent "[%]" flex_sep name [ type_annotation ] assignment_op value_expr NEWLINE } ;
 
-(* Alias — binds short name to parent definition or field *)
-metadata_alias      ::= fixed_sep "alias" assignment_op ( data_id | pipeline_id ) ;
+(* Alias — binds short names to parent definition or field *)
+metadata_alias      ::= "%" "alias" NEWLINE
+                         { indent flex_sep string_literal NEWLINE } ;
 
 (* Live fields — Polyglot-managed, read-only, implicit *)
 metadata_live       ::= fixed_sep name ";" "live" type_expr ;
@@ -805,9 +806,8 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 - `[%]` appears inside any `{x}` definition (`{#}`, `{=}`, `{M}`).
 - One definition = one metadata set (class-level, not instance-level).
 - All top-level `[%]` fields use `.` fixed separator. Only `.info#serial` opens a `:` flexible scope underneath (sibling homogeneity preserved).
-- Under a `[.]` field, `[%] .alias << #AliasName` creates a shorthand that resolves to the fully qualified path (e.g., `#True` resolves to `#Boolean.True`).
-- At pipeline definition level, `[%] .alias << =AliasName` aliases the whole pipeline.
-- Aliases preserve their type prefix (`#` for data, `=` for pipelines) and participate in exhaustiveness checking when the variable carries the parent type annotation.
+- `[%] %alias` declares shorthand names for definitions or fields. Each `[:]` child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed. All aliases must be globally unique (PGE-1002).
+- Aliases participate in exhaustiveness checking when the variable carries the parent type annotation.
 - `live` fields are implicit on all `{=}`, `$`, and `{#}` definitions. The runtime populates them. Users read via `%` accessor (e.g., `=Pipeline%status`, `$var%state`) but never assign.
 - Prefer reactive alternatives (error blocks, IO triggers) over polling `live` fields when possible.
 
@@ -1158,9 +1158,11 @@ file
   ├─ data_def               {#} #Status
   │    ├─ metadata              [%] .description << "entity status"
   │    ├─ enum_field            [.] .Active
-  │    │    └─ metadata          [%] .alias << #Active
+  │    │    └─ metadata          [%] %alias
+  │    │         └─ alias_entry    [:] "Active"
   │    └─ enum_field            [.] .Inactive
-  │         └─ metadata          [%] .alias << #Inactive
+  │         ���─ metadata          [%] %alias
+  │              └─ alias_entry    [:] "Inactive"
   │
   ├─ data_def               {#} #Record
   │    ├─ value_field           [.] .name#string <~ ""

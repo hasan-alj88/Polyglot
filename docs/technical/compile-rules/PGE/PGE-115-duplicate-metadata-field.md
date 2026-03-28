@@ -8,11 +8,11 @@ severity: error
 ### Rule 1.15 — Duplicate Metadata Field
 `PGE-115`
 
-**Statement:** Each fixed metadata field (`.description`, `.version`, `.authors`, `.license`, `.deprecated`, `.deprecatedMessage`, `.alias`) must appear at most once within a single `[%]` section. Duplicate fixed field declarations are a compile error.
+**Statement:** Each fixed metadata field (`.description`, `.version`, `.authors`, `.license`, `.deprecated`, `.deprecatedMessage`) must appear at most once within a single `[%]` section. Duplicate fixed field declarations are a compile error. Note: `%alias` is a flexible field (not fixed) and is covered by PGE-1002 instead.
 **Rationale:** Fixed metadata fields have singular semantics — a pipeline has one description, one version, one license. Two `.description` lines create ambiguity about which value is authoritative. This is analogous to PGE-413 (duplicate data field name) and PGE-111 (duplicate IO parameter name).
 **Detection:** The compiler collects all fixed-field names within each `[%]` section and rejects any name that appears more than once. Flexible `:info` keys are checked separately — duplicate keys under `:info` are also rejected.
 
-**See also:** PGE-413 (duplicate data field name — analogous rule for `{#}` fields), PGE-111 (duplicate IO parameter name — analogous rule for pipeline IO), PGE-1001 (undefined metadata field access)
+**See also:** PGE-413 (duplicate data field name — analogous rule for `{#}` fields), PGE-111 (duplicate IO parameter name — analogous rule for pipeline IO), PGE-1001 (undefined metadata field access), PGE-1002 (duplicate alias)
 
 **VALID:**
 ```polyglot

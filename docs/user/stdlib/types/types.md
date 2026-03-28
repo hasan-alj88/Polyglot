@@ -123,9 +123,11 @@ RawString (compiler intrinsic)
    [%] .description << "boolean type Enum"
    [%] .version << "1.0.0"
    .True
-      [%] .alias << #True
+      [%] %alias
+         [:] "True"
    .False
-      [%] .alias << #False
+      [%] %alias
+         [:] "False"
 ```
 
 ## #None
@@ -142,9 +144,11 @@ RawString (compiler intrinsic)
    [%] .description << "Operating system enum"
    [%] .version << "1.0.0"
    .Unix
-      [%] .alias << #Unix
+      [%] %alias
+         [:] "Unix"
    .Windows
-      [%] .alias << #Windows
+      [%] %alias
+         [:] "Windows"
 ```
 
 ## #path
@@ -163,13 +167,17 @@ RawString (compiler intrinsic)
 #PipelineStatus
    [%] .description << "Pipeline instance status"
    .AwaitTrigger
-      [%] .alias << #AwaitTrigger
+      [%] %alias
+         [:] "AwaitTrigger"
    .Disabled
-      [%] .alias << #Disabled
+      [%] %alias
+         [:] "Disabled"
    .Running
-      [%] .alias << #Running
+      [%] %alias
+         [:] "Running"
    .Failed
-      [%] .alias << #Failed
+      [%] %alias
+         [:] "Failed"
 ```
 
 ## #QueueStrategy
@@ -179,11 +187,14 @@ RawString (compiler intrinsic)
    [%] .description << "Queue ordering strategy"
    [%] .version << "1.0.0"
    .FIFO
-      [%] .alias << #FIFO
+      [%] %alias
+         [:] "FIFO"
    .LIFO
-      [%] .alias << #LIFO
+      [%] %alias
+         [:] "LIFO"
    .Priority
-      [%] .alias << #Priority
+      [%] %alias
+         [:] "Priority"
 ```
 
 ## #RetriggerStrategy
@@ -193,13 +204,17 @@ RawString (compiler intrinsic)
    [%] .description << "Behavior when pipeline is re-triggered while queued or running"
    [%] .version << "1.0.0"
    .Disallow
-      [%] .alias << #Disallow
+      [%] %alias
+         [:] "Disallow"
    .Allow
-      [%] .alias << #Allow
+      [%] %alias
+         [:] "Allow"
    .NoDuplicate
-      [%] .alias << #NoDuplicate
+      [%] %alias
+         [:] "NoDuplicate"
    .QueueAfter
-      [%] .alias << #QueueAfter
+      [%] %alias
+         [:] "QueueAfter"
 ```
 
 ## #QueueState
@@ -209,13 +224,17 @@ RawString (compiler intrinsic)
    [%] .description << "Active queue pipeline state"
    [%] .version << "1.0.0"
    .Running
-      [%] .alias << #Running
+      [%] %alias
+         [:] "Running"
    .SoftPaused
-      [%] .alias << #SoftPaused
+      [%] %alias
+         [:] "SoftPaused"
    .HardPaused
-      [%] .alias << #HardPaused
+      [%] %alias
+         [:] "HardPaused"
    .Killed
-      [%] .alias << #Killed
+      [%] %alias
+         [:] "Killed"
 ```
 
 ## #Queue
@@ -235,11 +254,14 @@ RawString (compiler intrinsic)
    [%] .description << "File access state"
    [%] .version << "1.0.0"
    .Available
-      [%] .alias << #Available
+      [%] %alias
+         [:] "Available"
    .Locked
-      [%] .alias << #Locked
+      [%] %alias
+         [:] "Locked"
    .NotFound
-      [%] .alias << #NotFound
+      [%] %alias
+         [:] "NotFound"
 ```
 
 ## #VarState
@@ -248,15 +270,20 @@ RawString (compiler intrinsic)
 #VarState
    [%] .description << "Variable lifecycle state"
    .Declared
-      [%] .alias << #Declared
+      [%] %alias
+         [:] "Declared"
    .Default
-      [%] .alias << #Default
+      [%] %alias
+         [:] "Default"
    .Final
-      [%] .alias << #Final
+      [%] %alias
+         [:] "Final"
    .Failed
-      [%] .alias << #Failed
+      [%] %alias
+         [:] "Failed"
    .Released
-      [%] .alias << #Released
+      [%] %alias
+         [:] "Released"
 ```
 
 ---
