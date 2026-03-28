@@ -37,12 +37,12 @@ Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Proper
 {#} #Array<type
    [#] <type << ;*           [ ] accepts any type
 
-{#} #Dict<keyType<valueType
+{#} #Map<keyType<valueType
    [#] <keyType << ;*        [ ] key type parameter
    [#] <valueType << ;*      [ ] value type parameter
 ```
 
-Multiple type parameters chain with `<`: `#Name<param1<param2`. In usage, parameters bind via the existing separator conventions: `;array.int` (fixed `.` for array element type), `;dict:string:int` (flexible `:` for dict K:V types).
+Multiple type parameters chain with `<`: `#Name<param1<param2`. In usage, parameters bind via the existing separator conventions: `;array.int` (fixed `.` for array element type), `;map:string:int` (flexible `:` for map K:V types).
 
 ### No `.schema` Field on `#String`
 
@@ -58,7 +58,7 @@ Schema properties are part of the definition metadata, not part of string instan
 
 ### Built-In Collection Definitions
 
-`#Array`, `#Dict`, and `#Serial` are **stdlib-provided** `{#}` definitions. Users can create custom collection types using the same `[#] %` mechanism.
+`#Array`, `#Map`, and `#Serial` are **stdlib-provided** `{#}` definitions. Users can create custom collection types using the same `[#] %` mechanism.
 
 ## Collection Type Definitions
 
@@ -83,10 +83,10 @@ Schema properties are part of the definition metadata, not part of string instan
 - Depth from dimension parameter (default 1)
 - **Note:** This changes arrays from `[.]` fixed to `[:]` flexible keys — access becomes `$arr:0` not `$arr.0`
 
-### `#Dict`
+### `#Map`
 
 ```polyglot
-{#} #Dict<keyType<valueType
+{#} #Map<keyType<valueType
    [#] <keyType << ;*
    [#] <valueType << ;*
    [#] %Key.Type << keyType
@@ -218,7 +218,7 @@ Complete hierarchy defined in `docs/draft.md`:
 - Layer 1: #String (foundation — .string + .re)
 - Layer 2: Scalars (#Int, #UnsignedInt, #Float, #Sci, #Eng, #Dimension)
 - Layer 2b: #Boolean (independent enum struct)
-- Layer 3: Collections (#Array, #Dict, #Dataframe, #Serial)
+- Layer 3: Collections (#Array, #Map, #Dataframe, #Serial)
 
 ## Supersedes
 

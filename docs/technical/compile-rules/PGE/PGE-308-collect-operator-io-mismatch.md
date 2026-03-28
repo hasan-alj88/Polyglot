@@ -17,6 +17,7 @@ severity: error
 | Operator | Required Inputs | Required Outputs |
 |----------|----------------|-----------------|
 | `*Into.Array` | `<item` | `>Array` |
+| `*Into.Map` | `<key`, `<value` | `>Map` |
 | `*Into.Serial` | `<key`, `<value` | `>Serial` |
 | `*Into.Level` | `<key`, `<value` | `>Serial` |
 

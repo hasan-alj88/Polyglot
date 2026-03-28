@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: Issue #87 — Multiple Alias Declarations
-Plan: 87-01 complete (3/3 tasks)
+Phase: Issue #89 — Add ~ForEach.Map and *Into.Map collection operators
+Plan: 89-01 complete (3/3 tasks)
 Status: Loop closed — ready for MERGE
-Last activity: 2026-03-28 — Unified 87-01; 12 files updated
+Last activity: 2026-03-28 — Unified 89-01; 18 files changed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -36,14 +36,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #89 — Add ~ForEach.Dict and *Into.Dict collection operators
+Branch: design/issue-89-add-foreach-dict-into-dict-operators
+Labels: design, stdlib
+Started: 2026-03-28
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/89
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Loop closed — ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -115,13 +119,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-28
-Stopped at: Issue #87 merged to main
-Next action: /paul:issues or /paul:work-issue <number>
-Resume file: .paul/phases/issue-87-multiple-alias/87-01-SUMMARY.md
+Stopped at: Issue #89 loop closed, ready for merge
+Next action: /paul:merge to merge branch to main
+Resume file: .paul/phases/issue-89-foreach-map-into-map/89-01-SUMMARY.md
 Resume context:
-- Rename #IndexString → #KeyString, add #NestedKeyString
-- Convert .alias to flexible %alias#Array.NestedKeyString
-- Update PGE-115, create PGE-1002 (duplicate alias)
+- ~ForEach.Map and *Into.Map added to all spec files
+- ForEach/ and Into/ restructured to folder-per-variant
+- #Dict renamed to #Map across 3 files
+- 8/8 acceptance criteria pass
 
 ---
 *STATE.md — Updated after every significant action*

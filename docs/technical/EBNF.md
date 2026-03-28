@@ -1019,6 +1019,7 @@ expand_invocation   ::= '~' expand_operator ;
 
 expand_operator     ::= "ForEach.Array"
                       | "ForEach.Array.Enumerate"
+                      | "ForEach.Map"
                       | "ForEach.Serial"
                       | "ForEach.Level" ;
 
@@ -1037,6 +1038,7 @@ expand_io_line      ::= "[~]" io_param assignment_op value_expr ;
 |----------|--------|---------|
 | `~ForEach.Array` | `<Array` | `>item` |
 | `~ForEach.Array.Enumerate` | `<Array` | `>index`, `>item` |
+| `~ForEach.Map` | `<Map` | `>key`, `>item` |
 | `~ForEach.Serial` | `<Serial` | `>key`, `>item` |
 | `~ForEach.Level` | `<level` | `>key`, `>item` |
 
@@ -1056,6 +1058,7 @@ error_operator      ::= "Continue" ;
 discard_operator    ::= "Ignore" ;
 
 into_operator       ::= "Into.Array"
+                      | "Into.Map"
                       | "Into.Serial"
                       | "Into.Level" ;
 
@@ -1092,6 +1095,7 @@ collect_io_line     ::= "[*]" io_param assignment_op value_expr   (* named param
 | Operator | Inputs | Outputs | Context |
 |----------|--------|---------|---------|
 | `*Into.Array` | `<item` | `>Array` | Inside `~ForEach` |
+| `*Into.Map` | `<key`, `<value` | `>Map` | Inside `~ForEach` |
 | `*Into.Serial` | `<key`, `<value` | `>Serial` | Inside `~ForEach` |
 | `*Into.Level` | `<key`, `<value` | `>Serial` | Inside `~ForEach` |
 | `*Agg.Sum` | `<number` | `>sum` | Inside `~ForEach` |

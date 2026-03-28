@@ -197,7 +197,7 @@ This prevents accidentally creating unbounded recursive structures while still a
 
 ## Collection Types Summary
 
-Collections are **assembled at once** using collect operators (`*` prefix) — not incrementally added to at runtime. Collections are populated via collectors (`*Into.Array`, `*Into.Serial`, etc.) and are structurally complete after collection.
+Collections are **assembled at once** using collect operators (`*` prefix) — not incrementally added to at runtime. Collections are populated via collectors (`*Into.Array`, `*Into.Map`, `*Into.Serial`, etc.) and are structurally complete after collection.
 
 ## Expand Operators (`~`)
 
@@ -212,6 +212,7 @@ Variables declared inside a mini-pipeline are scoped to that iteration — they 
 |----------|----------|-----|
 | `~ForEach.Array` | Each item in an array | `<Array`, `>item` |
 | `~ForEach.Array.Enumerate` | Each item with index | `<Array`, `>index`, `>item` |
+| `~ForEach.Map` | Each key-value pair in a map | `<Map`, `>key`, `>item` |
 | `~ForEach.Serial` | All key-item pairs in a serial (all levels) | `<Serial`, `>key`, `>item` |
 | `~ForEach.Level` | Siblings at a specified level only | `<level`, `>key`, `>item` |
 
@@ -268,6 +269,7 @@ flowchart LR
 | Operator | Collects into | IO |
 |----------|---------------|-----|
 | `*Into.Array` | Array | `<item`, `>Array` |
+| `*Into.Map` | Map | `<key`, `<value`, `>Map` |
 | `*Into.Serial` | Serial | `<key`, `<value`, `>Serial` |
 | `*Into.Level` | Serialized siblings | `<key`, `<value`, `>Serial` |
 
@@ -476,6 +478,40 @@ Expand an array of integers in parallel, double each value, collect the doubled 
    [p] *Agg.Sum
       [*] <number << $doubled
       [*] >sum >> $TotalSum
+...
+```
+
+## Example: Expand Map, Transform, and Collect
+
+Expand a map of ticker→price pairs, multiply each price by 1.1 using `=Math.Multiply`, and collect into a new map:
+
+```polyglot
+...
+{=} =AdjustPrices
+[ ] Triggers, queue config, and wrapper assumed defined
+...
+[ ] Input: a map of ticker → price
+[=] <prices#map:string:float << $InputPrices
+[ ] Output: adjusted prices map
+[=] >adjusted#map:string:float >> $AdjustedPrices
+
+[ ] Expand — one mini-pipeline per key-value pair
+[p] ~ForEach.Map
+   [~] <Map << $InputPrices
+   [~] >key >> $ticker
+   [~] >item >> $price
+
+   [ ] Multiply the price by 1.1
+   [r] =Math.Multiply
+      [=] <a#float << $price
+      [=] <b#float << 1.1
+      [=] >result#float >> $newPrice
+
+   [ ] Collect back into map (one level up)
+   [r] *Into.Map
+      [*] <key << $ticker
+      [*] <value << $newPrice
+      [*] >Map >> $AdjustedPrices
 ...
 ```
 
