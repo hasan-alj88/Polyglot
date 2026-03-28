@@ -28,7 +28,9 @@ This document has been split into per-namespace files organized by identifier pr
 - [*Continue](stdlib/collectors/Continue.md) — error recovery
 
 ## Types (# → `%#`)
-- [Built-in types](stdlib/types/types.md) — #Boolean, #None, #OS, #path, #PipelineStatus, #VarState
+- [Built-in types](stdlib/types/types.md) — type index
+  - [#String](stdlib/types/string.md), [scalars](stdlib/types/scalars.md), [#Boolean](stdlib/types/boolean.md)
+  - [collections](stdlib/types/collections.md), [enums](stdlib/types/enums.md), [structs](stdlib/types/structs.md)
 
 ## Errors (! → `%!`)
 - [Error namespaces](stdlib/errors/errors.md) — !File, !No, !Timeout, !Validation

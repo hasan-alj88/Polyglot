@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: Issue #89 — Add ~ForEach.Map and *Into.Map collection operators
-Plan: 89-01 complete (3/3 tasks)
-Status: Loop closed — ready for MERGE
-Last activity: 2026-03-28 — Unified 89-01; 18 files changed
+Phase: Issue #92 — Edge-case audit for all datatype definitions
+Plan: 92-01 unified; 92-02 needed for edge case resolution
+Status: Loop closed — ready for next PLAN
+Last activity: 2026-03-28 — Unified 92-01; 10 files changed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -36,14 +36,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #92 — Edge-case audit for all datatype definitions
+Branch: design/issue-92-edge-case-audit-for-all-datatype-definitions
+Labels: design
+Started: 2026-03-28
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/92
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [92-01 closed — 92-02 needed]
 ```
 
 ## Accumulated Context
@@ -116,14 +120,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-28
-Stopped at: Issue #89 loop closed, ready for merge
-Next action: /paul:merge to merge branch to main
-Resume file: .paul/phases/issue-89-foreach-map-into-map/89-01-SUMMARY.md
+Stopped at: 92-01 loop closed
+Next action: /paul:plan for 92-02 (resolve each edge case with fixes)
+Resume file: .paul/HANDOFF-2026-03-28.md
 Resume context:
-- ~ForEach.Map and *Into.Map added to all spec files
-- ForEach/ and Into/ restructured to folder-per-variant
-- #Dict renamed to #Map across 3 files
-- 8/8 acceptance criteria pass
+- 92-01: Audit + restructure complete (18 edge cases, 6 type files)
+- 92-02 needed: Review each EC-24.x, apply syntax corrections, add PGE/PGW
+- Key fixes: #Dimension regex, <~ finality PGE, #None classification, #Dataframe status, 0D array
+- Issue #92 stays open until all edge cases resolved
 
 ---
 *STATE.md — Updated after every significant action*

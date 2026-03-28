@@ -53,7 +53,12 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 
 | Name | File | Description | Status |
 |------|------|-------------|--------|
-| `#Boolean`, `#None`, `#OS`, `#path`, `#PipelineStatus`, `#VarState` | [types/types.md](types/types.md) | Stdlib structs and enums | Stable |
+| `#String` | [types/string.md](types/string.md) | Foundation type | Stable |
+| `#Int`, `#UnsignedInt`, `#Float`, `#Sci`, `#Eng`, `#Dimension`, `#KeyString`, `#NestedKeyString` | [types/scalars.md](types/scalars.md) | Scalar subtypes | Stable |
+| `#Boolean`, `#None` | [types/boolean.md](types/boolean.md) | Boolean enum + absence type | Stable |
+| `#Map`, `#Array`, `#Serial` | [types/collections.md](types/collections.md) | Collection types | Stable |
+| `#OS`, `#PipelineStatus`, `#QueueStrategy`, `#RetriggerStrategy`, `#QueueState`, `#FileAccess`, `#VarState` | [types/enums.md](types/enums.md) | Runtime enums | Stable |
+| `#path`, `#Queue` | [types/structs.md](types/structs.md) | Struct types | Stable |
 
 ## Error Namespaces (!)
 
