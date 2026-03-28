@@ -36,18 +36,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #89 — Add ~ForEach.Dict and *Into.Dict collection operators
-Branch: design/issue-89-add-foreach-dict-into-dict-operators
-Labels: design, stdlib
-Started: 2026-03-28
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/89
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed — ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -100,6 +96,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #68, #69, #70, #71, #72 — Batch Mermaid diagrams | 2026-03-26 | Merged docs/issue-68-72-mermaid-batch to main |
 | Closed #88 — Add schema properties to {#} definitions | 2026-03-28 | Three-tier prefix (#/##/###), #Map/#Array/#Serial hierarchy, 9 compile rules, 26 design decisions |
 | Closed #87 — Support multiple [%] .alias declarations per definition | 2026-03-28 | #IndexString→#KeyString, #NestedKeyString, flexible %alias, PGE-1002 |
+| Closed #89 — Add ~ForEach.Map and *Into.Map collection operators | 2026-03-28 | #Dict→#Map rename, ForEach/ and Into/ folder restructure, dot=folder convention |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
