@@ -2,7 +2,7 @@
 audience: user
 type: spec
 status: complete
-updated: 2026-03-27
+updated: 2026-03-28
 ---
 
 # Collections
@@ -12,46 +12,192 @@ updated: 2026-03-27
 <!-- @blocks -->
 Collections in Polyglot Code ([[glossary#Polyglot Code]]) are data structures that hold multiple items. They are processed using expand (`~`) and collect (`*`) operators — see [[operators#Collection Operators]] and [[blocks#Data Flow]] for block element reference. Expand operators live at `%~` and collect operators at `%*` in the metadata tree — see [[data-is-trees#How Concepts Connect]].
 
-## Collection Types
+## Collection Hierarchy
 
-Collections are **assembled at once** using collect operators (`*` prefix) — not incrementally added to at runtime. Collections are populated via collectors (`*Into.Array`, `*Into.Serial`, etc.) and are structurally complete after collection.
+Every collection in Polyglot is a tree. `#Map` is the universal flat key-value collection. `#Array` is a `#Map` variant where keys are contiguous integer enums. `#Serial` drops all schema constraints — it accepts any compilable tree.
 
-| Type | Description | Schema | Keys |
-|------|-------------|--------|------|
-| `#array` | Ordered, contiguous, typed elements, N-dimensional | Flexible (`:`) | `#UnsignedInt` indices (`:0`, `:1`, `:2`) |
-| `#dict` | Unordered, sparse, typed key-value pairs | Flexible (`:`) | User-typed keys |
-| `#dataframe` | Array of dicts — tabular data (depth 2) | Flexible (`:`) | `#UnsignedInt` rows, typed columns |
-| `#serial` | Schema-free, unlimited depth. Any keys, any types. Converts to/from JSON-like formats | Flexible (`:`) | Any |
-| `{#}` struct | User-defined struct with predefined fixed schema | Fixed (`.`) | Fixed field names |
+| Type | Is a | Key type | Key structure |
+|------|------|----------|--------------|
+| `#Map<K<V` | Base collection | `K` (any `#IndexString`) | Flat key-value |
+| `#Array<V<Dim` | `#Map` variant | `#UnsignedInt` | Cartesian product of 0..n-1 per dimension |
+| `#Serial` | Schema-free tree | Any | Unlimited depth, no constraints |
+
+User-defined structs (`{#}`) define fixed-field types with `.` accessor. Collections use `<` for flexible children. These two accessors can be combined: `$sales<0.product`.
 
 For type annotations, type hierarchy, and schema properties, see [[types]].
 
-### #Dict — Typed Key-Value Pairs
+## #Map — Base Collection
 
-`#Dict` accepts two type parameters: key type and value type. Keys are sparse (gaps allowed) and unordered.
-
-```polyglot
-[ ] String keys, integer values
-[r] $ages#dict:string:int <~ {}
-
-[ ] Integer keys, string values
-[r] $lookup#dict:int:string <~ {}
-
-[ ] String keys, struct values
-[r] $users#dict:string:Person <~ {}
-```
-
-Access uses `:` flexible-field notation: `$ages:alice`, `$lookup:42`. Both key and value types are constrained to depth 0 (scalars or records with only fixed fields).
-
-### #Dataframe — Tabular Data
-
-`#Dataframe` is an array of dicts — rows indexed by unsigned integers, each row a flat key-value map. Two type parameters: column name type and cell value type.
+`#Map` is the universal flat key-value collection. Keys must inherit from `#IndexString` (no whitespace, `.`, `:`, `<`, `>` in keys). Values default to any scalar type.
 
 ```polyglot
-[r] $df#dataframe:string:float <~ {}
+{#} #Map<KeyType<ValueType
+   [#] << ##Flat
+   [#] << ##Homogeneous
+   [#] << ##Sparse
+   [#] %##Children.Type << KeyType
+   [#] %##Alias << "map"
+   [#] <KeyType << #IndexString
+   [#] <ValueType << #*
+      [<] << ##Scalar
+   [:] :*#ValueType
 ```
 
-Access uses double `:` — row then column: `$df:1:price` (row 1, column "price"). `%Depth.Max` is 2 (row level + column level).
+### Schema composition
+
+`#Map` composes three `##` schema properties:
+
+- `##Flat` — depth is 1 (one level of children)
+- `##Homogeneous` — all children share the same schema
+- `##Sparse` — gaps allowed in keys, no ordering guarantee
+
+`%##Children.Type << KeyType` binds the key type parameter to the tree's child key type. The default key type is `#IndexString`; the default value type is `#*` (any type) constrained to `##Scalar`.
+
+### Access
+
+Use `<` to access flexible children by key:
+
+```polyglot
+[r] $ages#Map<#string<#int << ...
+[r] $aliceAge#int << $ages<alice
+[r] $bobAge#int << $ages<bob
+```
+
+## #Array — Map Variant
+
+`#Array` inherits from `#Map` with `#UnsignedInt` keys. It adds `##Contiguous` (no gaps, ordered) and `##Rectangular` (all branches at same depth have same child count).
+
+```polyglot
+{#} #Array<ValueType<Dim
+   [#] <~ #Map<#UnsignedInt<ValueType
+   [#] << ##Contiguous
+   [#] << ##Rectangular
+   [#] %##Alias << "array"
+   [#] <ValueType << #*
+      [<] << ##Scalar
+   [#] <Dim#Dimension << "1D"
+```
+
+The `<Dim#Dimension << "1D"` line declares a type parameter `Dim` with type annotation `#Dimension` and default value `"1D"`. Dimension controls the depth of the Cartesian key structure.
+
+### Cartesian product keys
+
+For a 1D array of length 3, the keys are `<0`, `<1`, `<2`.
+
+For a 3x4 2D array, the key tree is a Cartesian product:
+
+```
+<0 → <0, <1, <2, <3
+<1 → <0, <1, <2, <3
+<2 → <0, <1, <2, <3
+```
+
+`##Rectangular` ensures all branches at the same depth have the same child count.
+
+### Access
+
+```polyglot
+[ ] 1D array access
+[r] $first << $myArray<0
+
+[ ] 2D matrix access — branch 1, leaf 2
+[r] $cell << $matrix<1<2
+
+[ ] 3D cube access
+[r] $voxel << $cube<2<3<0
+```
+
+## #Serial — Schema-Free Tree
+
+`#Serial` has no `##` schema constraints at all. It accepts any compilable tree structure — depth, ordering, gaps, and uniformity are all unconstrained. This is the "raw tree" escape hatch.
+
+```polyglot
+{#} #Serial
+   [#] %##Alias << "serial"
+   [:] :*#*
+```
+
+Access uses chained `<` at unlimited depth:
+
+```polyglot
+[r] $value << $data<key<subkey<deeperkey
+```
+
+`#Serial` is useful for JSON-like data, configuration trees, and any structure where the schema is unknown at compile time.
+
+## User-Defined Struct
+
+User-defined structs declare fixed fields with `[.]`. The `##` schema is optional — the compiler infers it from field declarations.
+
+```polyglot
+{#} #Person
+   [.] .name#string
+   [.] .age#int
+```
+
+Fixed fields use the `.` accessor:
+
+```polyglot
+[r] $userName#string << $user.name
+[r] $userAge#int << $user.age
+```
+
+The `<` accessor is for flexible children only. Fixed fields (`.`) and flexible children (`:`) are distinct — a struct with only `[.]` fields has no flexible children to access via `<`.
+
+## Idiomatic Dataframe Pattern
+
+There is no built-in `#Dataframe` type. Define a row struct, then use `#Array` to create a table. The tabular structure is fully captured in `{#}` definitions and `%##` properties.
+
+```polyglot
+{#} #SalesRow
+   [.] .product#string
+   [.] .price#float
+   [.] .quantity#uint
+
+{#} #SalesTable
+   [#] <~ #Array<#SalesRow
+   [#] << ##Rectangular
+```
+
+`#SalesTable` inherits from `#Array<#SalesRow` — an array where each element is a `#SalesRow` struct. `##Rectangular` ensures uniform row structure.
+
+### Access
+
+Access combines `<` (array index) and `.` (fixed field):
+
+```polyglot
+[ ] First row's product name
+[r] $name#string << $sales<0.product
+
+[ ] Third row's price
+[r] $price#float << $sales<2.price
+```
+
+Build tables using `*Into.Array` collectors, not incremental assignment.
+
+## Nested Collection Safety
+
+When a collection type is used as another collection's value type (e.g., an array of arrays), the compiler requires explicit depth bounds.
+
+- **PGE-922** — A collection used as a value type without explicit `%##Depth.Max` is a compile error. Unbounded nesting must be declared intentionally.
+- **PGW-906** — Setting `%##Depth.Max << -1` (unlimited) on a user-defined type raises a warning. Only `#Serial` should use unlimited depth.
+
+```polyglot
+[ ] PGE-922: compile error — no depth bound on nested array
+{#} #BadGrid
+   [#] <~ #Array<#Array<#int
+
+[ ] Correct: explicit depth bound
+{#} #Grid
+   [#] <~ #Array<#Array<#int
+   [#] %##Depth.Max << 2
+```
+
+This prevents accidentally creating unbounded recursive structures while still allowing intentional nesting with explicit bounds.
+
+## Collection Types Summary
+
+Collections are **assembled at once** using collect operators (`*` prefix) — not incrementally added to at runtime. Collections are populated via collectors (`*Into.Array`, `*Into.Serial`, etc.) and are structurally complete after collection.
 
 ## Expand Operators (`~`)
 
@@ -371,5 +517,7 @@ Parallel execution, expand/collect, and race collector rules enforced at compile
 | PGE-308 | Collect Operator IO Mismatch | Collect Operators |
 | PGE-309 | Nested Expand Without Collect | Expand Operators |
 | PGE-311 | Collector Without Expand | Collect Operators |
+| PGE-922 | Unbounded Collection Nesting | Nested Collection Safety |
 | PGW-301 | `[b]` Called Pipeline Has Discarded Outputs | Discarding Parallel Output |
 | PGW-302 | Error Handler on Fire-and-Forget | Discarding Parallel Output |
+| PGW-906 | Unlimited Depth on User Type | Nested Collection Safety |

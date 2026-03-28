@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: specification
-updated: 2026-03-27
+updated: 2026-03-28
 status: draft
 ---
 
@@ -107,12 +107,16 @@ All identifiers require a prefix sigil. Field separators navigate within identif
 ```ebnf
 package_id          ::= '@' package_address ;
 data_id             ::= '#' dotted_name ;
+schema_id           ::= "##" name ;               (* e.g., ##Scalar, ##Flat, ##Contiguous *)
+field_type_id       ::= "###" name ;               (* e.g., ###Value, ###Enum *)
 pipeline_id         ::= '=' dotted_name ;
 variable_id         ::= '$' field_path ;
 error_id            ::= '!' dotted_name ;
 
 identifier          ::= package_id
                       | data_id
+                      | schema_id
+                      | field_type_id
                       | pipeline_id
                       | variable_id
                       | error_id ;
@@ -236,23 +240,48 @@ typed_io_param      ::= io_param [ type_annotation ] ;
 generic_param       ::= '<' name ;
                       (* Type parameter input — e.g., <ValueType, <Dim *)
 
-generic_def_header  ::= data_id { generic_param } ;
-                      (* e.g., #Array<ValueType<Dim, #Dict<KeyType<ValueType *)
+generic_param_typed ::= '<' name '#' type_expr [ "<<" value_expr ] ;
+                      (* Type parameter with type annotation and optional default *)
+                      (* e.g., <Dim#Dimension << "1D" *)
+                      (* e.g., <KeyType << #IndexString *)
+
+generic_def_header  ::= data_id { ( generic_param | generic_param_typed ) } ;
+                      (* e.g., #Array<ValueType<Dim, #Map<KeyType<ValueType *)
 
 schema_inheritance  ::= "[#]" "<~" data_id ;
                       (* e.g., [#] <~ #String — inherit schema, can specialize *)
 
-schema_property     ::= "[#]" '%' dotted_name assignment_op expression ;
-                      (* e.g., [#] %Key.Type << #UnsignedInt *)
-                      (* e.g., [#] %Alias << "int" *)
-                      (* e.g., [#] %Depth.Max << 0 *)
+schema_composition  ::= "[#]" "<<" schema_id ;
+                      (* e.g., [#] << ##Flat — compose a schema into this type *)
+                      (* Multiple [#] << lines accumulate: one line, one schema *)
 
-type_constraint     ::= "[<]" '%' dotted_name assignment_op expression ;
+field_type_composition ::= "[#]" "<<" field_type_id ;
+                      (* e.g., [#] << ###Enum — declare explicit field type *)
+
+schema_property     ::= "[#]" "%##" dotted_name assignment_op expression ;
+                      (* e.g., [#] %##Children.Type << #UnsignedInt *)
+                      (* e.g., [#] %##Alias << "int" *)
+                      (* e.g., [#] %##Depth.Max << 0 *)
+
+field_type_property ::= "[#]" "%###" dotted_name assignment_op expression ;
+                      (* e.g., [#] %###Value — field-level metadata *)
+
+type_constraint     ::= "[<]" "<<" schema_id ;
                       (* Nested under [#] <param — constrains the type parameter *)
-                      (* e.g., [<] %Depth.Max << 0 — param must be scalar *)
+                      (* e.g., [<] << ##Scalar — param must be scalar type *)
 ```
 
-**Rule:** Generic type parameters use `<` prefix (consistent with IO input semantics — the type is an "input" to the definition). Schema properties (`[#] %`) declare compile-time metadata. Type constraints (`[<]`) restrict what types may bind to a parameter.
+**Rule:** Generic type parameters use `<` prefix (consistent with IO input semantics — the type is an "input" to the definition). Type parameters may include a `#type` annotation and a `<<` default value on the same line. Schema composition (`[#] << ##Name`) accumulates — each line adds one schema's properties. Schema properties (`[#] %##`) declare tree-level compile-time metadata. Field type properties (`[#] %###`) declare leaf-level metadata. Type constraints (`[<]`) restrict what types may bind to a parameter. Schema references (`##`) are only valid inside `{#}` definitions (PGE-926).
+
+### 4.4 Tree Child Accessor
+
+```ebnf
+child_access        ::= variable_id '<' name { '<' name } ;
+                      (* e.g., $myMap<name, $myArray<0, $matrix<0<1 *)
+                      (* Chained: $cube<2<3<0 — branch 2, branch 3, leaf 0 *)
+```
+
+**Rule:** The `<` character after a `$variable` is a tree child accessor. It navigates into flexible children declared with `[:]` in `{#}` definitions. Fixed fields still use `.` (`$user.name`). The parser distinguishes `<` by context — after a type name in a `{#}` header it is a type parameter definition; after a `$variable` it is child access.
 
 ---
 
@@ -417,6 +446,7 @@ assign_target       ::= typed_variable
 
 value_expr          ::= literal
                       | identifier
+                      | child_access
                       | io_param
                       | cross_pkg_enum
                       | inline_data
@@ -473,10 +503,23 @@ import_line         ::= "[@]" '@' name final_push package_id ;
 ### 9.2 Data Definition
 
 ```ebnf
-data_def            ::= "{#}" data_id NEWLINE
-                         { indent data_field NEWLINE } ;
+data_def            ::= "{#}" generic_def_header NEWLINE
+                         { indent data_body_line NEWLINE } ;
 
-data_field          ::= enum_field | value_field | flex_data_field | typed_flex_wildcard | metadata_line | comment_line ;
+data_body_line      ::= schema_inheritance
+                      | schema_composition
+                      | field_type_composition
+                      | schema_property
+                      | field_type_property
+                      | type_param_line
+                      | data_field
+                      | metadata_line
+                      | comment_line ;
+
+type_param_line     ::= "[#]" ( generic_param | generic_param_typed ) NEWLINE
+                         { indent type_constraint NEWLINE } ;
+
+data_field          ::= enum_field | value_field | flex_data_field | typed_flex_wildcard ;
 
 enum_field          ::= "[.]" fixed_sep name NEWLINE
                          { indent ( data_field | metadata_line ) NEWLINE } ;  (* enum fields can nest sub-fields and metadata *)

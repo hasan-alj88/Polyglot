@@ -9,11 +9,11 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 ## Current Position
 
-Milestone: v0.2 Language Specification — COMPLETE
-Phase: 12 of 12 — Complete. All phases finished.
-Plan: 75-04 complete (spec-wide ; → # migration)
-Status: Loop closed, all plans complete — ready for MERGE
-Last activity: 2026-03-27 — Executed and unified Plan 75-04; 109 files, 1,339 replacements
+Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
+Phase: Issue #88 — Schema Properties
+Plan: 88-01, 88-02, 88-03 complete (3/3)
+Status: Loop closed — all plans complete, ready for MERGE
+Last activity: 2026-03-28 — Executed and unified all 3 plans; 6 files updated
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -32,21 +32,23 @@ Progress:
 - Issue #63: [██████████] 100% (1/1 plans)
 - Issue #67: [██████████] 100% (1/1 plans)
 - Issues #68-#72: [██████████] 100% (batch — 5 Mermaid diagrams)
+- Issue #88: [██████████] 100% (3/3 plans)
 
 ## Active Issue
 
-Issue: #75 — Add ;map:K:V parameterized String subtype
-Branch: design/issue-75-add-map-k-v-parameterized-string-subtype
-Labels: design, stdlib
-Started: 2026-03-26
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/75
+Issue: #88 — Add schema properties to {#} definitions for structural constraints
+Branch: design/issue-88-add-schema-properties-to-definitions
+Labels: design
+Started: 2026-03-27
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/88
+Note: Original scope completed via #75; pivoted to new schema design (##/###/< operator/collections)
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [All plans complete — ready for MERGE]
+  ✓        ✓        ✓        ○     [Loop closed — ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -115,14 +117,14 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-27
-Stopped at: All 4 plans complete, ready for merge
-Next action: /paul:merge to close issue #75
-Resume file: .paul/phases/issue-75-dict-kv/75-04-SUMMARY.md
+Last session: 2026-03-28
+Stopped at: All 3 plans executed and unified — loop closed
+Next action: /paul:merge to commit and merge to main
+Resume file: .paul/phases/issue-88-schema-properties/88-03-SUMMARY.md
 Resume context:
-- Plans 75-01 (gaps), 75-02 (core spec), 75-03 (tech spec), 75-04 (migration) ALL complete
-- Zero ; type annotations remain in docs/
-- Ready to merge branch to main and close issue #75
+- All 3 plans complete: types.md, collections.md, data-is-trees.md, metadata-tree.md, COMPILE-RULES.md, EBNF.md
+- 26 design decisions from docs/draft.md applied to spec
+- 3 GitHub issues to create after merge: ~* operators, edge-case audit, generic #Dataframe
 
 ---
 *STATE.md — Updated after every significant action*
