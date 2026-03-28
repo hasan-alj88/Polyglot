@@ -16,6 +16,7 @@ severity: error
 |----------|----------------|-----------------|
 | `~ForEach.Array` | `<Array` | `>item` |
 | `~ForEach.Array.Enumerate` | `<Array` | `>index`, `>item` |
+| `~ForEach.Map` | `<Map` | `>key`, `>item` |
 | `~ForEach.Serial` | `<Serial` | `>key`, `>item` |
 | `~ForEach.Level` | `<level` | `>key`, `>item` |
 

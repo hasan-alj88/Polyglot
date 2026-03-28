@@ -356,12 +356,12 @@ A type composes multiple schemas to describe its full shape. For example, `#Arra
    [#] <ValueType << #*
    [#] <Dim << #Dimension
 
-{#} #Dict<KeyType<ValueType
-   [#] <KeyType << #*
+{#} #Map<KeyType<ValueType
+   [#] <KeyType << #KeyString
    [#] <ValueType << #*
 ```
 
-Multiple type parameters chain with `<`: `#Name<param1<param2`. In usage, parameters bind positionally via `:` separators: `#array:int`, `#dict:string:int`, `#array:float:2D`.
+Multiple type parameters chain with `<`: `#Name<param1<param2`. In usage, parameters bind positionally via `:` separators: `#array:int`, `#map:string:int`, `#array:float:2D`.
 
 ### `#*` Wildcard Type
 

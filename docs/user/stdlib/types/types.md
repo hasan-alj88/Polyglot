@@ -25,7 +25,7 @@ RawString (compiler intrinsic)
 #Boolean (independent enum struct — NOT #String)
 
 #Array<ValueType<Dim (ordered, contiguous, typed elements, N-dimensional)
-#Dict<KeyType<ValueType (unordered, sparse, typed K-V pairs)
+#Map<KeyType<ValueType (unordered, sparse, typed K-V pairs)
 #Dataframe<KeyType<ValueType (array of dicts — tabular data)
 #Serial (schema-free, unlimited depth)
 ```
@@ -314,26 +314,20 @@ RawString (compiler intrinsic)
    [:] :*#ValueType
 ```
 
-### #Dict
+### #Map
 
 ```polyglot
-{#} #Dict<KeyType<ValueType
-   [ ] Type of dictionary keys
-   [#] <KeyType << #*
-      [<] %Depth.Max << 0
-   [ ] Type of dictionary values
+{#} #Map<KeyType<ValueType
+   [ ] Type of map keys
+   [#] <KeyType << #KeyString
+   [ ] Type of map values
    [#] <ValueType << #*
-      [<] %Depth.Max << 0
-   [#] %Alias << "dict"
-   [ ] Keys typed by first param
-   [#] %Key.Type << KeyType
-   [ ] Sparse — keys don't need to be contiguous
-   [#] %Key.Gap << #True
-   [ ] No guaranteed order
-   [#] %Ordered << #False
-   [ ] Flat only — one level of key-value pairs
-   [#] %Depth.Max << 1
-   [ ] All values share the same type
+      [<] << ##Scalar
+   [#] %##Alias << "map"
+   [#] %##Children.Type << KeyType
+   [#] << ##Flat
+   [#] << ##Homogeneous
+   [#] << ##Sparse
    [:] :*#ValueType
 ```
 
@@ -372,5 +366,5 @@ RawString (compiler intrinsic)
    [ ] Two levels: row (uint) → column (KeyType) → cell (ValueType)
    [#] %Depth.Max << 2
    [ ] Each row is a flat dict of KeyType → ValueType
-   [:] :*#Dict:KeyType:ValueType
+   [:] :*#Map:KeyType:ValueType
 ```

@@ -38,13 +38,13 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
-| `~ForEach` | [expanders/ForEach.md](expanders/ForEach.md) | Expand operators (iterate arrays, serials, levels) | Stable |
+| `~ForEach` | [expanders/ForEach/](expanders/ForEach/) | Expand operators (iterate arrays, maps, serials, levels) | Stable |
 
 ## Collector Operators (*)
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
-| `*Into` | [collectors/Into.md](collectors/Into.md) | Collect into collection (array, serial, level) | Stable |
+| `*Into` | [collectors/Into/](collectors/Into/) | Collect into collection (array, map, serial, level) | Stable |
 | `*Agg` | [collectors/Agg.md](collectors/Agg.md) | Reduce to single value (sum, count, average, max, min, concatenate) | Stable |
 | `*All` / `*First` / `*Nth` | [collectors/Sync.md](collectors/Sync.md) | Sync barriers and race collectors | Stable |
 | `*Continue` | [collectors/Continue.md](collectors/Continue.md) | Error recovery with fallback value | Stable |

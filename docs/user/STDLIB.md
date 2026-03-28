@@ -19,10 +19,10 @@ This document has been split into per-namespace files organized by identifier pr
 - [=W](stdlib/pipelines/W.md) — wrappers
 
 ## Expanders (~ → `%~`)
-- [~ForEach](stdlib/expanders/ForEach.md) — expand operators
+- [~ForEach](stdlib/expanders/ForEach/) — expand operators
 
 ## Collectors (* → `%*`)
-- [*Into](stdlib/collectors/Into.md) — collect into collection
+- [*Into](stdlib/collectors/Into/) — collect into collection
 - [*Agg](stdlib/collectors/Agg.md) — reduce to single value
 - [*All / *First / *Nth](stdlib/collectors/Sync.md) — sync & race collectors
 - [*Continue](stdlib/collectors/Continue.md) — error recovery
