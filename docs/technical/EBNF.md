@@ -210,12 +210,15 @@ array_type          ::= "array" [ flex_sep type_param ] [ flex_sep dimension ] ;
                       (* e.g., #array:int, #array:float:2D, #array:Person *)
 dict_type           ::= "dict" flex_sep type_param flex_sep type_param ;
                       (* e.g., #dict:string:int — key type : value type *)
-dataframe_type      ::= "dataframe" flex_sep type_param flex_sep type_param ;
-                      (* e.g., #dataframe:string:float — column key type : cell value type *)
+dataframe_type      ::= "dataframe" flex_sep enum_type_param flex_sep type_param ;
+                      (* e.g., #dataframe:SalesColumns:string — column enum : cell value type.
+                         enum_type_param must resolve to a ###Enum type (##EnumLeafs). *)
 serial_type         ::= "serial" ;
 
 type_param          ::= basic_type | dimension | user_type | wildcard_type ;
                       (* Nested type refs drop the # prefix within type context *)
+enum_type_param     ::= user_type ;
+                      (* Must resolve to a ###Enum type at compile time — PGE-928 if not *)
 dimension           ::= digit { digit } "D" ;
                       (* e.g., :2D, :3D — omitted defaults to 1D *)
 
@@ -519,7 +522,7 @@ data_body_line      ::= schema_inheritance
 type_param_line     ::= "[#]" ( generic_param | generic_param_typed ) NEWLINE
                          { indent type_constraint NEWLINE } ;
 
-data_field          ::= enum_field | value_field | flex_data_field | typed_flex_wildcard ;
+data_field          ::= enum_field | value_field | flex_data_field | typed_flex_wildcard | field_expansion ;
 
 enum_field          ::= "[.]" fixed_sep name NEWLINE
                          { indent ( data_field | metadata_line ) NEWLINE } ;  (* enum fields can nest sub-fields and metadata *)
@@ -535,6 +538,12 @@ typed_flex_wildcard ::= "[:]" flex_sep "*" type_annotation ;
                          Compiler infers type on new keys; no explicit annotation needed.
                          Contradicting annotation → PGE-401.
                          Absent wildcard → untyped (#serial). *)
+
+field_expansion    ::= "[.]" fixed_sep "*" type_param_ref type_annotation ;
+                      (* e.g., [.] .*ColumnEnum#Array<CellType — expands enum fields from type param.
+                         Type param must satisfy ##EnumLeafs (PGE-928).
+                         Compiler stamps out one [.] per enum variant, each with annotated type.
+                         Used by #Dataframe to expand columns from ColumnEnum parameter. *)
 ```
 
 **Rules:**
@@ -1021,7 +1030,10 @@ expand_operator     ::= "ForEach.Array"
                       | "ForEach.Array.Enumerate"
                       | "ForEach.Map"
                       | "ForEach.Serial"
-                      | "ForEach.Level" ;
+                      | "ForEach.Level"
+                      | "ForEach.Dataframe"
+                      | "ForEach.Dataframe.Enumerate"
+                      | "ForEach.Dataframe.Column" ;
 
 expand_io_line      ::= "[~]" io_param assignment_op value_expr ;
 ```
@@ -1041,6 +1053,9 @@ expand_io_line      ::= "[~]" io_param assignment_op value_expr ;
 | `~ForEach.Map` | `<Map` | `>key`, `>item` |
 | `~ForEach.Serial` | `<Serial` | `>key`, `>item` |
 | `~ForEach.Level` | `<level` | `>key`, `>item` |
+| `~ForEach.Dataframe` | `<Dataframe` | `>row` |
+| `~ForEach.Dataframe.Enumerate` | `<Dataframe` | `>index`, `>row` |
+| `~ForEach.Dataframe.Column` | `<Dataframe` | `>key`, `>column` |
 
 ### 12.2 Collect Operators (`*`)
 
@@ -1060,7 +1075,8 @@ discard_operator    ::= "Ignore" ;
 into_operator       ::= "Into.Array"
                       | "Into.Map"
                       | "Into.Serial"
-                      | "Into.Level" ;
+                      | "Into.Level"
+                      | "Into.Dataframe" ;
 
 agg_operator        ::= "Agg.Sum"
                       | "Agg.Count"
@@ -1098,6 +1114,7 @@ collect_io_line     ::= "[*]" io_param assignment_op value_expr   (* named param
 | `*Into.Map` | `<key`, `<value` | `>Map` | Inside `~ForEach` |
 | `*Into.Serial` | `<key`, `<value` | `>Serial` | Inside `~ForEach` |
 | `*Into.Level` | `<key`, `<value` | `>Serial` | Inside `~ForEach` |
+| `*Into.Dataframe` | `<row` | `>Dataframe` | Inside `~ForEach` |
 | `*Agg.Sum` | `<number` | `>sum` | Inside `~ForEach` |
 | `*Agg.Count` | `<item` | `>count` | Inside `~ForEach` |
 | `*Agg.Average` | `<number` | `>average` | Inside `~ForEach` |

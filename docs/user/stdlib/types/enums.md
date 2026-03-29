@@ -129,6 +129,24 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
    [.] .Released
 ```
 
+## #FieldKind
+
+```polyglot
+{#} #FieldKind
+   [%] .description << "Leaf content field type classifier"
+   [%] .version << "1.0.0"
+   [#] << ##Scalar
+   [#] << ###Enum
+   [#] %##Alias << "fieldkind"
+   [.] .Value
+   [.] .Enum
+   [.] .None
+```
+
+Used by the `%##Leafs.Kind` schema property to constrain what `###` field type all leafs in a type must be. For example, `[#] %##Leafs.Kind << #FieldKind.Enum` requires all leafs to be `###Enum` (no type annotation). See [[types#Approved ## Schema Types]].
+
+---
+
 ## Related
 
 - [[boolean]] -- #Boolean enum type

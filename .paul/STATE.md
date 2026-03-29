@@ -37,14 +37,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #90 — Add ~ForEach.Dataframe variants and *Into.Dataframe collection operators
+Branch: design/issue-90-foreach-dataframe-into-dataframe
+Labels: design, stdlib
+Started: 2026-03-29
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/90
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ○        ○        ○        ○     [Issue #90 active]
 ```
 
 ## Accumulated Context
