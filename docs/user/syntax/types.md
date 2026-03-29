@@ -240,6 +240,7 @@ Used as the element type for `%alias` — alias values may contain `.` and `:` t
 - `map` — sparse, homogeneous key-value pairs with `#KeyString` keys. Child access uses `<` operator (`$myMap<name`). See [[collections]].
 - `array` — contiguous, rectangular collection with typed elements and N-dimensional support. A `#Map` variant with `#UnsignedInt` keys. Child access uses `<` operator (`$myArray<0`). See [[collections]].
 - `serial` — schema-free. Any keys, any types, any depth. No compile-time validation of shape. Child access uses `<` operator (`$data<key`). See [[collections]].
+- `dataframe` — column-oriented table. Columns are `###Enum` fixed fields; each column holds an `#Array<CellType>` of rows. Column access uses `.` (fixed field), row access uses `<` (array index): `$df.column<row`. See [[collections]].
 - struct (`{#}`) — defined schema. Compile-time enforced field names and types. See [[#Struct Types]].
 
 ## Schema Properties
@@ -256,6 +257,7 @@ Used as the element type for `%alias` — alias values may contain `.` and `:` t
 | `%##Children.Min` | `#uint` | Branch nodes (depth > 0) | Minimum child count |
 | `%##Children.Max` | `#int` | Branch nodes (depth > 0) | Max child count (-1=unlimited) |
 | `%##Children.Ordered` | `#Boolean` | Branch nodes (depth > 0) | Are children ordered? |
+| `%##Leafs.Kind` | `#FieldKind` | Universal | Constrains what `###` field type all leafs must be |
 | `%##Alias` | `#NestedKeyString` | Universal | Lowercase shorthand name |
 
 Schema properties apply universally via `[#]`, or branch-wise via `[.]`/`[:]`. Conflict between universal and branch-wise scope raises PGE-921. If a `%##` property is redundant with an inherited value, the compiler raises PGW-904; if it contradicts, the override takes effect with PGW-905.
@@ -352,6 +354,10 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
 {#} ##Rectangular
    [#] %##Children.Regular << #True
    [#] %##Children.Uniform << #True
+
+{#} ##EnumLeafs
+   [ ] All leaf fields must be ###Enum (no type annotation)
+   [#] %##Leafs.Kind << #FieldKind.Enum
 ```
 
 A type composes multiple schemas to describe its full shape. For example, `#Array` uses `##Contiguous` and `##Rectangular` together. User-defined schemas are possible but not generally recommended.
@@ -391,6 +397,33 @@ Multiple type parameters chain with `<`: `#Name<param1<param2`. In usage, parame
 ```
 
 The `[<]` constraint declares that any type passed as `ValueType` must satisfy `##Scalar` (`%##Depth.Max = 0`) — preventing nested collections like `#array:#array:#int`.
+
+### `[.] .*Param` Field Expansion
+
+The `[.] .*Param#Type` syntax expands a type parameter's fields into the enclosing definition. The compiler reads the fields of `Param` and stamps out one `[.]` per field, each annotated with `#Type`:
+
+```polyglot
+{#} #Dataframe<ColumnEnum<CellType
+   [#] <ColumnEnum#* << #*
+      [<] << ##EnumLeafs
+   [#] <CellType#* << #*
+      [<] << ##Scalar
+   [ ] Expands ColumnEnum's fields, each typed as #Array<CellType>
+   [.] .*ColumnEnum#Array<CellType
+```
+
+If `ColumnEnum` is `#SalesColumns` with `.product`, `.price`, `.quantity`, the expansion produces:
+
+```polyglot
+   [.] .product#Array<CellType
+   [.] .price#Array<CellType
+   [.] .quantity#Array<CellType
+```
+
+Rules:
+- The expanded parameter must satisfy `##EnumLeafs` — only `###Enum` types with fixed fields can be expanded (PGE-928)
+- Each expanded field receives the annotated type (`#Array<CellType>` in the example)
+- The expanded fields are `[.]` fixed fields — accessed via `.` navigation
 
 ## Element-Typed Arrays
 

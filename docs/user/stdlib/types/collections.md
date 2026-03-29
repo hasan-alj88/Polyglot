@@ -113,26 +113,56 @@ Schema-free collection with unlimited depth. Any keys, any types, any nesting. N
 
 ## #Dataframe
 
-<!-- STATUS: TBD -->
-
-> **Note:** `#Dataframe` appears in earlier drafts but is not present in the authoritative type hierarchy (`syntax/types.md`). Its status is to be determined. The definition below is retained for reference only.
+Column-oriented table. Columns are `###Enum` fixed fields from a `ColumnEnum` type parameter; each column holds an `#Array<CellType>` of rows. All columns share the same cell type (homogeneous). Column access uses `.` (fixed field), row access uses `<` (array index).
 
 ```polyglot
-{#} #Dataframe<KeyType<ValueType
-   [ ] Column name type (typically #string)
-   [#] <KeyType#* << #*
+{#} #Dataframe<ColumnEnum<CellType
+   [ ] Column-oriented table: enum fields are columns, each holds #Array of rows
+   [#] <ColumnEnum#* << #*
+      [ ] Columns must be an enum type
       [<] << ##Scalar
-   [ ] Cell value type
-   [#] <ValueType#* << #*
+      [<] << ##EnumLeafs
+   [#] <CellType#* << #*
+      [ ] Cell values must be scalar
       [<] << ##Scalar
    [#] %##Alias << "dataframe"
-   [#] %##Children.Type << #UnsignedInt
-   [#] %##Children.Gap << #False
-   [#] %##Children.Ordered << #True
-   [ ] Two levels: row (uint) -> column (KeyType) -> cell (ValueType)
-   [#] %##Depth.Max << 2
-   [ ] Each row is a flat dict of KeyType -> ValueType
-   [:] :*#Map:KeyType:ValueType
+   [#] << ##EnumLeafs
+   [#] << ##Rectangular
+   [ ] Depth = 1 (array rows); fixed column fields don't count
+   [#] %##Depth.Max << 1
+   [ ] Columns from ColumnEnum, each holds #Array<CellType>
+   [.] .*ColumnEnum#Array<CellType
+```
+
+### Schema Properties
+
+| Property | Value | Meaning |
+|----------|-------|---------|
+| `%##Alias` | `"dataframe"` | Shorthand `#dataframe` |
+| `##EnumLeafs` | `%##Leafs.Kind << #FieldKind.Enum` | Columns are compile-time `###Enum` fields |
+| `##Rectangular` | `%##Children.Regular << #True`, `%##Children.Uniform << #True` | All columns same row count |
+| `%##Depth.Max` | `1` | One flex level (rows); fixed column fields don't count |
+
+### Field Expansion
+
+`[.] .*ColumnEnum#Array<CellType` is a **field expansion** — the compiler reads `ColumnEnum`'s `###Enum` fields and stamps out one `[.]` per field, each typed as `#Array<CellType>`. See [[types#Field Expansion]].
+
+### Usage
+
+```polyglot
+{#} #SalesColumns
+   [#] << ##Scalar
+   [#] << ###Enum
+   [.] .product
+   [.] .price
+   [.] .quantity
+
+[r] $sales#dataframe:SalesColumns:string <~ {}
+
+[ ] Access: .column<row
+[r] $name#string << $sales.product<0
+[r] $price#string << $sales.price<2
+[r] $prices#array:string << $sales.price    [ ] entire column
 ```
 
 ## Related
@@ -140,4 +170,5 @@ Schema-free collection with unlimited depth. Any keys, any types, any nesting. N
 - [[string]] -- #String foundation type
 - [[scalars]] -- scalar subtypes
 - [[structs]] -- #path and #Queue struct types
+- [[enums]] -- #FieldKind enum (used by `%##Leafs.Kind`)
 - [[types]] -- full type system specification

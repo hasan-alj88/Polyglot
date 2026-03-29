@@ -20,6 +20,7 @@ Every collection in Polyglot is a tree. `#Map` is the universal flat key-value c
 |------|------|----------|--------------|
 | `#Map<K<V` | Base collection | `K` (any `#KeyString`) | Flat key-value |
 | `#Array<V<Dim` | `#Map` variant | `#UnsignedInt` | Cartesian product of 0..n-1 per dimension |
+| `#Dataframe<E<C` | Column-oriented table | `E` (`###Enum` columns) | Enum columns × integer rows |
 | `#Serial` | Schema-free tree | Any | Unlimited depth, no constraints |
 
 User-defined structs (`{#}`) define fixed-field types with `.` accessor. Collections use `<` for flexible children. These two accessors can be combined: `$sales<0.product`.
@@ -144,36 +145,37 @@ Fixed fields use the `.` accessor:
 
 The `<` accessor is for flexible children only. Fixed fields (`.`) and flexible children (`:`) are distinct — a struct with only `[.]` fields has no flexible children to access via `<`.
 
-## Idiomatic Dataframe Pattern
+## #Dataframe — Column-Oriented Table
 
-There is no built-in `#Dataframe` type. Define a row struct, then use `#Array` to create a table. The tabular structure is fully captured in `{#}` definitions and `%##` properties.
+`#Dataframe<ColumnEnum<CellType` is a column-oriented table where columns are `###Enum` fixed fields and each column holds an `#Array<CellType>` of rows. All columns share the same cell type (homogeneous). See [[STDLIB#collections]] for the full type definition.
 
 ```polyglot
-{#} #SalesRow
-   [.] .product#string
-   [.] .price#float
-   [.] .quantity#uint
+{#} #SalesColumns
+   [#] << ##Scalar
+   [#] << ###Enum
+   [.] .product
+   [.] .price
+   [.] .quantity
 
-{#} #SalesTable
-   [#] <~ #Array<#SalesRow
-   [#] << ##Rectangular
+[r] $sales#dataframe:SalesColumns:string <~ {}
 ```
-
-`#SalesTable` inherits from `#Array<#SalesRow` — an array where each element is a `#SalesRow` struct. `##Rectangular` ensures uniform row structure.
 
 ### Access
 
-Access combines `<` (array index) and `.` (fixed field):
+Column access uses `.` (fixed field), row access uses `<` (array index):
 
 ```polyglot
-[ ] First row's product name
-[r] $name#string << $sales<0.product
+[ ] Revenue column, first row
+[r] $name#string << $sales.product<0
 
-[ ] Third row's price
-[r] $price#float << $sales<2.price
+[ ] Price column, third row
+[r] $price#string << $sales.price<2
+
+[ ] Entire column as array
+[r] $prices#array:string << $sales.price
 ```
 
-Build tables using `*Into.Array` collectors, not incremental assignment.
+Build dataframes using `*Into.Dataframe` collectors, not incremental assignment.
 
 ## Nested Collection Safety
 
@@ -215,8 +217,11 @@ Variables declared inside a mini-pipeline are scoped to that iteration — they 
 | `~ForEach.Map` | Each key-value pair in a map | `<Map`, `>key`, `>item` |
 | `~ForEach.Serial` | All key-item pairs in a serial (all levels) | `<Serial`, `>key`, `>item` |
 | `~ForEach.Level` | Siblings at a specified level only | `<level`, `>key`, `>item` |
+| `~ForEach.Dataframe` | Each row (all column values at index) | `<Dataframe`, `>row` |
+| `~ForEach.Dataframe.Enumerate` | Each row with row index | `<Dataframe`, `>index`, `>row` |
+| `~ForEach.Dataframe.Column` | Each column as an array | `<Dataframe`, `>key`, `>column` |
 
-The expand operator's IO must match its signature — `~ForEach.Array` requires `<Array` and `>item`, `~ForEach.Array.Enumerate` requires `<Array`, `>index`, and `>item` (PGE-307). Similarly, each collect operator's IO must match its contract (PGE-308).
+The expand operator's IO must match its signature — `~ForEach.Array` requires `<Array` and `>item`, `~ForEach.Dataframe` requires `<Dataframe` and `>row` (PGE-307). Similarly, each collect operator's IO must match its contract (PGE-308).
 
 Every expand scope must contain at least one collector. A nested expand without an inner collector is a compile error — inner items cannot flow to outer collectors (PGE-309). Conversely, a `*Into` or `*Agg` collector outside any expand scope is invalid (PGE-311).
 
@@ -272,6 +277,7 @@ flowchart LR
 | `*Into.Map` | Map | `<key`, `<value`, `>Map` |
 | `*Into.Serial` | Serial | `<key`, `<value`, `>Serial` |
 | `*Into.Level` | Serialized siblings | `<key`, `<value`, `>Serial` |
+| `*Into.Dataframe` | Dataframe | `<row`, `>Dataframe` |
 
 ### `*Agg` — Reduce to Single Value
 

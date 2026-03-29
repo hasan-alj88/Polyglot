@@ -2784,26 +2784,26 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [:] :*#string
 ```
 
-### EC-24.17: #Dataframe status
+### EC-24.17: #Dataframe status — RESOLVED
 
-**EBNF:** `type_definition` — stdlib collection type not in authoritative spec.
-**What it tests:** #Dataframe appears in stdlib `types.md` but NOT in the authoritative `syntax/types.md` type hierarchy. Status is TBD. The idiomatic Polyglot pattern for tabular data is a row struct combined with #Array. See [[types]], [[STDLIB]].
-**Cross-refs:** [[types]], [[STDLIB]]
+**EBNF:** `type_definition` — stdlib collection type promoted to authoritative spec.
+**What it tests:** ~~#Dataframe appears in stdlib `types.md` but NOT in the authoritative `syntax/types.md` type hierarchy.~~ RESOLVED: `#Dataframe<ColumnEnum<CellType` added as a column-oriented collection type. Columns are `###Enum` fixed fields from `ColumnEnum`; each holds `#Array<CellType>`. Uses `##EnumLeafs` schema property and `[.] .*Param` field expansion syntax. See [[types]], [[STDLIB]], [[collections]].
+**Cross-refs:** [[types]], [[STDLIB]], [[collections]]
 
 ```polyglot
-[ ] #Dataframe is in stdlib types.md but NOT in syntax/types.md
-[ ] Status: TBD — may be removed or promoted
+[ ] RESOLVED — #Dataframe is now in both syntax/types.md and stdlib collections.md
+{#} #EmployeeColumns
+   [#] << ##Scalar
+   [#] << ###Enum
+   [.] .name
+   [.] .department
+   [.] .salary
 
-[ ] Idiomatic pattern: row struct + #Array
-{#} #EmployeeRow
-   [.] .name#string
-   [.] .department#string
-   [.] .salary#int
+[r] $employees#dataframe:EmployeeColumns:string <~ {}
 
-[r] $employees#array:EmployeeRow <~ {}
-
-[ ] Equivalent to what #Dataframe would provide,
-[ ] but with compile-time schema enforcement
+[ ] Column-oriented access: .column<row
+[r] $name#string << $employees.name<0
+[r] $dept#string << $employees.department<2
 ```
 
 ### EC-24.18: Stale %Property notation
@@ -2842,7 +2842,7 @@ Issues discovered during this audit that may warrant separate GitHub issues:
 1. ~~**#Dimension regex correction**~~ — RESOLVED: regex corrected to `"^[0-9]+D$"` (EC-24.3).
 2. ~~**`<~` finality semantics**~~ — RESOLVED: PGE-927 added (EC-24.7).
 3. ~~**#None ###-classification**~~ — RESOLVED: `###None` added as third field type, PGE-421 added (EC-24.10).
-4. **#Dataframe resolution** — Status TBD. Either promote to authoritative spec or remove from stdlib (EC-24.17).
+4. ~~**#Dataframe resolution**~~ — RESOLVED: promoted to authoritative spec as column-oriented `#Dataframe<ColumnEnum<CellType` with `##EnumLeafs` (EC-24.17).
 5. ~~**0D array semantics**~~ — RESOLVED: 0D = scalar container, direct access, PGE-417 on index (EC-24.13).
 
 ---
