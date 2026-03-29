@@ -38,14 +38,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #94 — Add =Schema.* runtime validation pipelines — ## and ### as pipeline arguments
+Branch: design/issue-94-add-schema-runtime-validation-pipel
+Labels: design, stdlib
+Started: 2026-03-29
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/94
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ○        ○        ○        ○     [Issue #94 active]
 ```
 
 ## Accumulated Context
@@ -120,12 +124,15 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-29
-Stopped at: Issue #90 merged to main
-Next action: /paul:issues (pick next issue) or /paul:progress
+Stopped at: Plan 94-01 design complete in docs/draft.md — not yet applied
+Next action: Fresh analysis of docs/draft.md → /paul:plan → /paul:apply
+Resume file: .paul/HANDOFF-2026-03-29.md
 Resume context:
-- Issue #90 closed — #Dataframe type, ##EnumLeafs, expand/collect operators
-- Issue #94 created — =Schema.* runtime validation pipelines (deferred from #90)
-- No active issue
+- Issue #94 active (also incorporates #91, #79) on branch design/issue-94-add-schema-runtime-validation-pipel
+- Major type system redesign: {M} macros replace generic {#} type parameters
+- Complete design in docs/draft.md — 9 ground truths, macro syntax, bootstrap layers, dispatch rules
+- No spec files modified yet — all changes pending in draft.md
+- Next: fresh-context analysis of draft.md, then formalize and apply Plan 94-01
 
 ---
 *STATE.md — Updated after every significant action*
