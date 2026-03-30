@@ -42,16 +42,14 @@ Progress:
 
 ## Active Issue
 
-**Batch: Issues #99–#106** — EBNF edge cases (design + test)
-Branch: `design/issue-99-106-ebnf-edge-cases`
-Status: All 8 issues complete — ready for merge
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ◀     [ready to merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -128,6 +126,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Self-chains require numeric indexing | 2026-03-30 | PGE08012 — =A => =A valid but must use >0./<1. notation |
 | Array element type mandatory | 2026-03-30 | PGE04025 — untyped #array is compile error |
 | Inputs are always Final | 2026-03-30 | Input parameters reach Final before pipeline triggers; write = PGE02003 |
+| Closed #99-#106 — EBNF edge cases batch | 2026-03-30 | Merged design/issue-99-106-ebnf-edge-cases to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -146,11 +145,11 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-30 (session 6)
-Stopped at: Issue #98 merged to main
+Last session: 2026-03-30 (session 7)
+Stopped at: Issues #99-#106 batch merged to main
 Next action: /paul:issues (pick next issue) or /paul:progress
 Resume context:
-- Issue #98 closed — PGE02010, PGE08011, 3 edge cases
+- Issues #99-#106 closed — 16 new compile rules, 26 edge cases
 - No active issue
 
 ---
