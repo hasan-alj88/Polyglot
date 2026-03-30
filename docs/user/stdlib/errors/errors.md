@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-25
+updated: 2026-03-30
 status: complete
 ---
 
@@ -55,6 +55,7 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
    [.] .NotFound;#Error
    [.] .ReadError;#Error
    [.] .WriteError;#Error
+   [.] .ParseError;#Error
 
 {!} !No
    [.] .Input;#Error
@@ -68,7 +69,13 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
    [.] .DivideByZero;#Error
 
 {!} !Validation
-   [.] .Error;#Error
+   [.] .Schema;#Error
+   [.] .Type;#Error
+   [.] .Regex;#Error
+
+{!} !Field
+   [.] .NotFound;#Error
+   [.] .PathError;#Error
 
 {!} !Alias
    [.] .Clash;#Error
@@ -86,7 +93,7 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
 
 ### `!Error` — User-Extensible Namespace
 
-`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Alias`, `!Permission`) have Polyglot-defined fixed leaves.
+`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`) have Polyglot-defined fixed leaves.
 
 Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `[.]` for terminal leaves. Siblings at the same level must all use the same separator (sibling homogeneity rule).
 
@@ -125,6 +132,31 @@ Each stdlib pipeline declares the errors it can raise via `[=] !ErrorName` (see 
    [=] !File.NotFound
    [=] !File.WriteError
    [=] !Permission.File.Denied
+
+=File.Serial.Read
+   [=] !File.NotFound
+   [=] !File.ReadError
+   [=] !File.ParseError
+   [=] !Permission.File.Denied
+
+=File.Serial.Write
+   [=] !File.NotFound
+   [=] !File.WriteError
+   [=] !Permission.File.Denied
+
+=File.Serial.Read.Field
+   [=] !File.NotFound
+   [=] !File.ReadError
+   [=] !File.ParseError
+   [=] !Field.NotFound
+   [=] !Permission.File.Denied
+
+=#.Field
+   [=] !Field.NotFound
+   [=] !Field.PathError
+
+=#.Column
+   [=] !Field.NotFound
 
 =Math.Divide
    [=] !Math.DivideByZero

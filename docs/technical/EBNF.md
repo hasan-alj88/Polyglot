@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: specification
-updated: 2026-03-28
+updated: 2026-03-30
 status: draft
 ---
 
@@ -635,9 +635,14 @@ trigger_ref         ::= pipeline_ref [ string_literal ] ;
 #### 9.3.2 IO Section
 
 ```ebnf
-io_section          ::= { indent io_decl_line NEWLINE } ;
+io_section          ::= { indent ( io_decl_line | type_input_line ) NEWLINE } ;
 
 io_decl_line        ::= "[=]" typed_io_param [ assignment_op value_expr ] ;
+
+type_input_line     ::= "[=]" "<#" identifier ;
+                      (* Type definition as data tree input — extends <# from {M} macros to {=} pipeline IO.
+                         The pipeline receives the type's % metadata tree. Works with #, ##, ### tiers.
+                         Example: [=] <#type -- any type definition; [=] <#Config -- specific type *)
 ```
 
 **IO as implicit triggers:**

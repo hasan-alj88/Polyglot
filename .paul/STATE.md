@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
 Phase: No active phase
-Plan: 94-01 — Ground Truths + Macro-for-Generics Redesign
-Status: Loop complete — ready for next plan (94-02/04)
-Last activity: 2026-03-29 — Unified Plan 94-01
+Plan: 94-02 — Serial File Loading + Schema Validation Pipelines
+Status: Loop complete — ready for next plan (94-03) or commit + merge
+Last activity: 2026-03-30 — Unified Plan 94-02
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -49,7 +49,7 @@ GitHub: https://github.com/hasan-alj88/Polyglot/issues/94
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Plan 94-01 complete — next: 94-02/04]
+  ✓        ✓        ✓        ○     [Plan 94-02 complete — next: 94-03 or commit + merge]
 ```
 
 ## Accumulated Context
@@ -109,6 +109,10 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Dataframe uses ## composition not <~ inheritance | 2026-03-29 | Array ##Scalar constraint incompatible with Map elements; Dataframe composes ##Contiguous/##Rectangular/##Ordered directly |
 | [M] merge = identity rule | 2026-03-29 | Outer {#} names result, macro fills body, additional [#] lines extend |
 | =#.Column pipeline for column extraction | 2026-03-29 | Row-oriented Dataframe loses $df.column accessor; =#.Column replaces ~ForEach.Dataframe.Column |
+| Plan 94-02 — Serial file loading + schema validation | 2026-03-30 | 10 =#.* pipelines, 3 =File.Serial.* pipelines, <#type pipeline IO pattern, !Validation.Schema/.Type/.Regex + !Field.* + !File.ParseError; 7 files |
+| Base parsers as compiler intrinsics | 2026-03-30 | =#.JSON/YAML/TOML.Parse are compiler-internal, not user-definable |
+| Validation pipelines are non-failable | 2026-03-30 | =#.Match/Validate/Describe/Coerce report via outputs (>errors, >dropped), not [!] errors |
+| <#type extends <# to pipeline IO | 2026-03-30 | Same mechanism as {M} macro type inputs, now available at runtime in {=} pipelines; works with #/##/### tiers |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -127,16 +131,15 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-29 (session 3)
-Stopped at: Plan 94-01 loop complete
-Next action: /paul:plan for 94-02/04 (serial file loading + validation pipelines)
-Resume file: .paul/phases/94-schema-validation/94-01-PLAN.md
+Last session: 2026-03-30 (session 4)
+Stopped at: Plan 94-02 loop complete
+Next action: Commit 94-02 changes, then decide: Plan 94-03 (expand/collect audit #91) or /paul:merge
+Resume file: .paul/phases/94-schema-validation/94-02-SUMMARY.md
 Resume context:
-- Issue #94 active (also incorporates #93, #91, #79) on branch design/issue-94-add-schema-runtime-validation-pipel
-- 3 open design issues RESOLVED: Dataframe uses ## composition not inheritance, [M] merge = identity, =#.Column for column extraction
-- Plan 94-01 formalized: 3 tasks, 9 files, 7 acceptance criteria
-- After 94-01: Plan 94-02/04 (serial file loading + validation pipelines)
-- Will close #93, #79 when merged alongside #94
+- Issue #94 active on branch design/issue-94-add-schema-runtime-validation-pipel
+- Plans 94-01 + 94-02 complete (macro redesign + validation pipelines)
+- Plan 94-03 (expand/collect audit, issue #91) — not yet designed, deferred from 94-01
+- After all plans: /paul:merge to main (closes #94, #93, #79)
 
 ---
 *STATE.md — Updated after every significant action*

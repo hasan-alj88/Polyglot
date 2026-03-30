@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-29
+updated: 2026-03-30
 status: complete
 ---
 
@@ -472,6 +472,34 @@ To reference the enclosing macro from inside a nested `{#}`, use `%Parent` (one 
 ```
 
 The `[<]` constraint declares that any type passed as `ValueType` must satisfy `##Scalar` (`%##Depth.Max = 0`) — preventing nested collections like `#array:#array:#int`.
+
+### `<#type` in Pipeline IO
+
+The `<#` syntax extends from `{M}` macro type inputs to `{=}` pipeline IO declarations. A pipeline can receive a type definition's `%` metadata tree as input using `[=] <#type`:
+
+```polyglot
+{=} =ValidateConfig
+   [=] <data#serial
+   [=] <#type
+   [=] >valid#bool
+   [t] =T.Call
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [r] =#.Validate
+      [=] <data << $data
+      [=] <#type << <#type
+      [=] >valid >> >valid
+```
+
+The `<#type` input works with any tier of the prefix system:
+
+| Tier | Example | What the pipeline receives |
+|------|---------|--------------------------|
+| `#` struct | `<#Config` | The `#Config` type definition's full `%` metadata tree |
+| `##` schema | `<#Scalar` | The `##Scalar` schema's property declarations |
+| `###` property | `<#Enum` | The `###Enum` field property definition |
+
+This is the same mechanism as `[#] <#ParamName` in `{M}` macros (GT-1: all definitions are data trees), now available at runtime via `{=}` pipelines. See [[#|stdlib/pipelines/#]] for `=#.Match`, `=#.Validate`, `=#.Describe`, `=#.Coerce` — the validation pipelines that use this pattern.
 
 ## Element-Typed Arrays
 
