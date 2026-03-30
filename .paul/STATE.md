@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: Issue #98 — Complete
-Plan: 98-01 complete (1/1 plans)
-Status: Ready for merge
-Last activity: 2026-03-30 — Loop closed for 98-01
+Phase: No active phase
+Plan: —
+Status: Ready for next issue
+Last activity: 2026-03-30 — Merged issue #98 to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -37,21 +37,18 @@ Progress:
 - Issue #90: [██████████] 100% (1/1 plans)
 - Issue #94: [██████████] 100% (3/3 plans — also closes #93, #79, #91)
 - Issue #97: [██████████] 100% (1/1 plans)
+- Issue #98: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-Issue: #98 — EBNF edge cases: discard defaults and self-assignment
-Branch: design/issue-98-ebnf-discard-defaults-self-assignment
-Labels: design, test
-Started: 2026-03-30
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/98
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — ready for merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -119,6 +116,8 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #94 — =Schema.* runtime validation pipelines | 2026-03-30 | 3 plans: macro-for-generics redesign, validation pipelines, expand/collect audit; also closes #93, #79, #91 |
 | Issue #97 — EBNF bare literals/non-pipeline identifiers | 2026-03-30 | PGE01020 error + exec_expr tightened; X.3 auto-resolves; 1 plan |
 | Closed #97 — EBNF bare literals/non-pipeline identifiers | 2026-03-30 | Merged design/issue-97 to main |
+| Issue #98 — EBNF discard defaults and self-assignment | 2026-03-30 | PGE02010 (discard default), PGE08011 (self-assignment); 3 edge cases |
+| Closed #98 — EBNF discard defaults and self-assignment | 2026-03-30 | Merged design/issue-98 to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -138,9 +137,11 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-30 (session 6)
-Stopped at: Loop closed for 98-01
-Next action: /paul:merge to merge branch and close issue
-Resume file: .paul/phases/issue-98-ebnf-discard-defaults-self-assignment/98-01-SUMMARY.md
+Stopped at: Issue #98 merged to main
+Next action: /paul:issues (pick next issue) or /paul:progress
+Resume context:
+- Issue #98 closed — PGE02010, PGE08011, 3 edge cases
+- No active issue
 
 ---
 *STATE.md — Updated after every significant action*
