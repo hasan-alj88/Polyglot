@@ -32,7 +32,7 @@ Review in batches by section. Each edge case includes:
 | [07-io-parameters.md](07-io-parameters.md) | S7. IO Parameters | EC-7.1 |
 | [08-expressions.md](08-expressions.md) | S8. Expressions | EC-8.1--8.3 |
 | [09-definition-blocks.md](09-definition-blocks.md) | S9. Definition Blocks | EC-9.1--9.11 |
-| [10-execution.md](10-execution.md) | S10. Execution Statements | EC-10.1--10.11 |
+| [10-execution.md](10-execution.md) | S10. Execution Statements | EC-10.1--10.13 |
 | [11-control-flow.md](11-control-flow.md) | S11. Control Flow | EC-11.1--11.6 |
 | [12-collections.md](12-collections.md) | S12. Collection Operations | EC-12.1--12.13 |
 | [13-comments.md](13-comments.md) | S13. Comments | EC-13.1--13.3 |
@@ -63,7 +63,7 @@ Review in batches by section. Each edge case includes:
 | S7 IO | EC-7.1 | `input_param` with field separators |
 | S8 Expressions | EC-8.1--8.3 | `inline_data`, empty `{}`, chained arithmetic |
 | S9 Definitions | EC-9.1--9.11 | Package imports, enum/value fields, pipeline structure, triggers, IO modes, macro parallel fork |
-| S10 Execution | EC-10.1--10.11 | Pipeline call + error, stdlib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel |
+| S10 Execution | EC-10.1--10.13 | Pipeline call + error, stdlib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr restriction |
 | S11 Control Flow | EC-11.1--11.3 | Conditional chains, error scoping, logical operators |
 | S12 Collections | EC-12.1--12.13 | All expand variants, all collect variants, direct output, multiple collectors, sync/race collectors, multi-wave, [*] <</>>/semantics |
 | S13 Comments | EC-13.1--13.3 | Square, curly, multiline |
@@ -79,4 +79,4 @@ Review in batches by section. Each edge case includes:
 | S23 Stress Tests | ST-1--ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, macro+timer |
 | S24 Datatype Definitions | EC-24.1--24.18 | Scalar regex boundaries, `<~` inheritance, ##/### composition, collection parameterized inheritance, %## property completeness |
 
-**Total: 51 original + 33 new + 18 datatype = 102 edge cases across 24 sections.**
+**Total: 51 original + 33 new + 18 datatype + 2 exec_expr = 104 edge cases across 24 sections.**

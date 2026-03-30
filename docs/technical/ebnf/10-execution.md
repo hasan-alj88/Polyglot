@@ -18,8 +18,9 @@ background_line     ::= "[b]" exec_expr ;
 exec_expr           ::= assignment_expr
                       | pipeline_call
                       | chain_call
-                      | expand_invocation
-                      | identifier ;
+                      | expand_invocation ;
+
+(* Bare identifiers and literals are not valid exec_expr — see PGE01020. *)
 ```
 
 ### 10.2 Pipeline Call

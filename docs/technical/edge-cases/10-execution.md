@@ -177,3 +177,36 @@ updated: 2026-03-30
    [=] <0.output#string >> <1.input#int
    [ ] <- compile error: type mismatch string vs int
 ```
+
+### EC-10.12: Bare literal as execution expression (INVALID)
+
+<!-- @EBNF:exec_expr -->
+**EBNF:** `exec_expr` — `literal` is not a valid alternative.
+
+**What it tests:** A standalone literal under `[r]`/`[p]`/`[b]` — no assignment, no call, no effect. See [[technical/compile-rules/PGE/PGE01020-effectless-execution-expression|PGE01020]].
+
+```polyglot
+[ ] INVALID — bare integer literal
+[r] 42                                    [ ] ✗ PGE01020 — bare literal, no effect
+
+[ ] INVALID — bare string literal
+[r] "orphaned string"                     [ ] ✗ PGE01020 — bare literal, no effect
+```
+
+### EC-10.13: Non-pipeline identifier as execution expression (INVALID)
+
+<!-- @EBNF:exec_expr -->
+**EBNF:** `exec_expr` — `identifier` removed from alternatives.
+
+**What it tests:** Data type, variable, or package identifiers used as execution expressions — they aren't pipeline calls and produce no effect. See [[technical/compile-rules/PGE/PGE01020-effectless-execution-expression|PGE01020]].
+
+```polyglot
+[ ] INVALID — data type identifier (not a pipeline call)
+[r] #UserRecord                           [ ] ✗ PGE01020 — data type, not a call
+
+[ ] INVALID — variable identifier (not an assignment)
+[p] $existingVar                          [ ] ✗ PGE01020 — variable, not a call
+
+[ ] INVALID — package alias (not a pipeline reference)
+[b] @AD                                   [ ] ✗ PGE01020 — package alias, not a call
+```
