@@ -10,7 +10,7 @@ status: complete
 <!-- @glossary:Polyglot Code -->
 <!-- @identifiers -->
 <!-- @pipelines -->
-Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through five lifecycle stages. Variables are [[identifiers]] with the `$` prefix. For how lifecycle applies to IO parameters, see [[pipelines#IO as Implicit Triggers]].
+Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through five lifecycle stages. Variables are [[identifiers]] with the `$` prefix. For how lifecycle applies to IO parameters, see [[concepts/pipelines/io-triggers#IO as Implicit Triggers]].
 
 ## Stages
 
@@ -65,7 +65,7 @@ A variable enters the Final stage when assigned with a final assignment operator
 
 ### Failed
 
-A variable enters the Failed stage when the pipeline responsible for producing its value terminates with an error. A failed variable will never resolve — it cannot transition to any other stage (PGE-205). Downstream pipelines waiting on a failed variable will not fire. Inspect the source pipeline's error tree (see [[pipelines#Error Trees]]) for details on the failure.
+A variable enters the Failed stage when the pipeline responsible for producing its value terminates with an error. A failed variable will never resolve — it cannot transition to any other stage (PGE-205). Downstream pipelines waiting on a failed variable will not fire. Inspect the source pipeline's error tree (see [[concepts/pipelines/metadata#Error Trees]]) for details on the failure.
 
 **Fallback override:** If the IO line has a `<!` fallback declared (see [[errors#Error Fallback Operators]]), the variable bypasses the Failed stage entirely and becomes **Final** with the fallback value. The error that would have caused the Failed state is accessible via `$var%sourceError` metadata (see [[metadata#Variable (`$`)]]).
 
@@ -73,7 +73,7 @@ A variable enters the Failed stage when the pipeline responsible for producing i
 
 A variable is released when:
 - Its definition scope ends (block indentation returns to parent level)
-- It is collected via a `*` collection operator — see [[collections#Collect Operators]]
+- It is collected via a `*` collection operator — see [[concepts/collections/collect#Collect Operators]]
 
 Any access to a Released variable is a compile error (PGE-208). Code that can only execute after a variable is released is flagged as unreachable (PGE-209).
 
@@ -82,7 +82,7 @@ Any access to a Released variable is a compile error (PGE-208). Code that can on
 Variable lifecycle state is queryable at runtime via the `%` metadata accessor:
 
 ```polyglot
-[?] $myVar%state =? #VarState.Ready
+[?] $myVar%state =? #VarState.Default
    [r] ...
 [?] $myVar%state =? #VarState.Failed
    [r] ...

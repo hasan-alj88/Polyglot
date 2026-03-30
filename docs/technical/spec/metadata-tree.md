@@ -338,9 +338,9 @@ This expansion applies recursively — `#array:string` expands each element's `.
 
 ## Related
 
-- [[EBNF]] — formal grammar productions for `[%]` blocks
+- [[technical/ebnf/INDEX|EBNF]] — formal grammar productions for `[%]` blocks
 - [[COMPILE-RULES]] — error/warning code reference
 - [[type-identity|spec/type-identity]] — structural type matching rules
 - [[data-is-trees|user/concepts/data-is-trees]] — user-facing tree overview
-- [[metadata|user/concepts/metadata]] — field listings and access patterns
+- [[metadata|user/concepts/metadata]] — user-facing `[%]` usage and `live` field accessors
 - [Metadata Data Tree Decision](../plan/decisions/metadata-data-tree.md) — original design decision (2026-03-21)

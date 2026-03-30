@@ -8,7 +8,7 @@ severity: error
 ### Rule 4.8 — Missing Path Platform Subfield
 `PGE-408`
 
-**Statement:** A `#path` variable that uses explicit subfield assignment (`.Unix`, `.Windows`) must include the subfield for the current compilation OS. If the current OS subfield is absent, the compiler raises PGE-408. This applies only to explicit subfield assignment — `=Path"..."` inline calls handle platform resolution differently (see [[STDLIB#=Path]]).
+**Statement:** A `#path` variable that uses explicit subfield assignment (`.Unix`, `.Windows`) must include the subfield for the current compilation OS. If the current OS subfield is absent, the compiler raises PGE-408. This applies only to explicit subfield assignment — `=Path"..."` inline calls handle platform resolution differently (see [[stdlib/pipelines/Path|=Path]]).
 **Rationale:** A path that cannot resolve on the current OS is unusable. Catching this at compile time prevents runtime failures when the code attempts to use a path with no value for the host platform.
 **Detection:** The compiler checks each `#path` variable with explicit `.Unix` or `.Windows` subfield assignment. If the subfield for the current compilation target is missing, PGE-408 fires.
 

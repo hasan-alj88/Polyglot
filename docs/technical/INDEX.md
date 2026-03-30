@@ -1,10 +1,14 @@
 ---
 type: spec-index
 audience: developer
-updated: 2026-03-21
+updated: 2026-03-30
 ---
 
 # Polyglot Technical Documentation
+
+<!-- @vision:Core Philosophy -->
+<!-- @glossary:Polyglot Service -->
+<!-- @audit/README -->
 
 Internal specifications for Polyglot project contributors. These documents describe how Polyglot Code is parsed, validated, and processed.
 
@@ -12,8 +16,8 @@ Internal specifications for Polyglot project contributors. These documents descr
 
 | File | Covers |
 |------|--------|
-| EBNF.md | Complete formal grammar in Extended Backus-Naur Form |
-| EDGE-CASES.md | 42 edge cases organized by EBNF section for validation |
+| [[ebnf/INDEX\|ebnf/]] | Complete formal grammar in Extended Backus-Naur Form (15 section files) |
+| [[edge-cases/INDEX\|edge-cases/]] | 42+ edge cases organized by EBNF section for validation (24 section files) |
 | COMPILE-RULES.md | Error/warning code lookup tables, legend, and rule format template |
 
 ## Formal Specifications (spec/)

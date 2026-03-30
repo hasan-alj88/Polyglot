@@ -118,3 +118,8 @@ name: Macro Structural Constraints
          [=] <in << $input
          [=] >out >> $output
 ```
+
+### See Also
+
+- [[concepts/pipelines/wrappers|Wrappers]] — user-facing wrapper documentation (references PGE-104)
+- [[concepts/macros|Macros]] — user-facing macro concept overview

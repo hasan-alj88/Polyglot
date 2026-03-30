@@ -59,3 +59,7 @@ severity: error
 ```
 
 **Open point:** None — applies to all push operators (`<<`, `>>`, `<~`, `~>`). The boundary is the `[p]` scope; inputs to the parallel (`<` parameters) are pushed from the prime before the parallel starts, which is valid.
+
+### See Also
+
+- [[concepts/collections/INDEX|Collections]] — user-facing collection and parallel documentation (references PGE-301)
