@@ -219,3 +219,45 @@ updated: 2026-03-30
 {@} @Local:999.EmptyPackage:v1.0.0
 { } This file defines nothing
 ```
+
+### EC-9.16: Non-trigger pipeline used as `[t]` trigger
+
+<!-- @pipelines:Triggers -->
+**EBNF ref:** `trigger_ref ::= pipeline_ref [ string_literal ]`
+**What it tests:** Using a non-trigger operation (e.g., `=File.Text.Read`) with `[t]`. PGE01024 fires — operations declare allowed markers. See [[concepts/pipelines/INDEX|pipelines]].
+
+```polyglot
+[ ] ✗ PGE01024 — =File.Text.Read is not trigger-compatible
+{=} =Bad
+   [t] =File.Text.Read
+```
+
+### EC-9.17: Multiple `[t]` trigger lines — AND semantics
+
+<!-- @pipelines:Triggers -->
+**EBNF ref:** `trigger_io_section` — allows multiple `trigger_line` via `{ }` repetition
+**What it tests:** Multiple `[t]` lines use AND semantics — all triggers must fire. For OR, use `[|]`. See [[concepts/pipelines/INDEX|pipelines]].
+
+```polyglot
+[ ] ✓ AND — both triggers must fire
+{=} =DualTrigger
+   [t] =T.Daily"3AM"
+   [t] =T.Webhook"/api/ready"
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [r] =DoWork
+```
+
+### EC-9.18: Duplicate `[Q]` or `[W]` sections
+
+**EBNF ref:** `pipeline_body ::= ... queue_section wrapper_section ...`
+**What it tests:** Grammar enforces exactly one `[Q]` and one `[W]`. Duplicate sections are a parse error.
+
+```polyglot
+[ ] ✗ parse error — grammar requires single [Q] and [W]
+{=} =DuplicateQueue
+   [t] =T.Call
+   [Q] =Q.Default
+   [Q] =Q.Custom
+   [W] =W.Polyglot
+```

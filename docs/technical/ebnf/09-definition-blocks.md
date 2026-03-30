@@ -95,6 +95,11 @@ trigger_section     ::= indent "[t]" trigger_ref NEWLINE ;
 trigger_ref         ::= pipeline_ref [ string_literal ] ;
 ```
 
+**Rules:**
+- `trigger_ref` must reference an operation that declares `[t]` marker compatibility (PGE01024). Stdlib trigger pipelines (`=T.*`) are the canonical trigger operations.
+- Multiple `[t]` lines in one pipeline have **AND** semantics — all triggers must fire before the pipeline executes.
+- For **OR** semantics (any trigger fires the pipeline), use `[|]` to scope alternative triggers.
+
 **Examples:** `[t] =T.Call`, `[t] =T.Daily"3AM"`, `[t] =T.Folder.NewFiles`
 
 ### 9.3.2 IO Section

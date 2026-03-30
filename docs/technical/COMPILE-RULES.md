@@ -50,6 +50,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01021 | Empty Data Definition |
 | PGE01022 | Empty Error Namespace |
 | PGE01023 | Parameterless Macro |
+| PGE01024 | Incompatible Operation Marker |
 
 ### 02 — Lifecycle & State
 
