@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-24
+updated: 2026-03-30
 status: complete
 ---
 
@@ -27,6 +27,8 @@ Misordering these sections is a compile error (PGE-101).
 **Metadata:** `[%]` lines declare description, version, authors, license, deprecation, and aliases. `.info#serial` holds custom metadata. Duplicate metadata field names are a compile error (PGE-115). See [[blocks#Metadata]].
 
 **Note:** `[t]` triggers, `[=]` IO declarations, and `[=] !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment (PGE-102). Error declarations (`[=] !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[t]` line and wire trigger outputs to pipeline inputs.
+
+**Type inputs:** Pipelines can receive type definitions as data tree inputs using `[=] <#type` — the same `<#` syntax used in `{M}` macro type parameters. This extends GT-1 (all definitions are data trees) to runtime pipeline IO. See [[types#`<#type` in Pipeline IO]] for details and [[#|stdlib/pipelines/#]] for the `=#.*` validation pipelines that use this pattern.
 
 ## Pipeline Metadata
 
@@ -184,9 +186,9 @@ Pipeline-specific `[Q]` controls must not contradict the queue's `{Q}` defaults 
 
 ## Wrappers
 
-Wrappers invoke a macro (see [[blocks]] `{M}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE-107). The `[W]` line must reference a valid macro (PGE-108), and the IO wired at the `[W]` site must match the macro's `[{]`/`[}]` declarations (PGE-109).
+Wrappers invoke a wrapper definition (`{W}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE-107). The `[W]` line must reference a valid wrapper (PGE-108), and the IO wired at the `[W]` site must match the wrapper's `[{]`/`[}]` declarations (PGE-109).
 
-Macros (`{M}`) cannot contain `[t]`, `[Q]`, `[=]`, `[p]`, `[b]`, or `[*]` — these are pipeline-only elements (PGE-104). See [[blocks]] for macro structural constraints.
+`{W}` is a separate entity from `{M}` — wrappers are not macros. `{W}` defines wrappers (setup/cleanup scope with `[\]`/`[/]` and `[{]`/`[}]` IO), while `{M}` defines type macros (compile-time `{#}` generation). Wrappers (`{W}`) cannot contain `[t]`, `[Q]`, `[=]`, `[p]`, `[b]`, or `[*]` — these are pipeline-only elements (PGE-104). See [[blocks]] for wrapper structural constraints.
 
 - `[\]` — macro setup, runs before the execution body
 - `[/]` — macro cleanup, runs after the execution body
@@ -249,7 +251,7 @@ flowchart LR
 | Execution body `[p]` | Execution body `[*] *All` | ✓ — normal parallel pattern |
 
 ```polyglot
-{M} =W.Tracing
+{W} =W.Tracing
    [{] $traceId#string
    [}] $duration#string
 

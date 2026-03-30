@@ -28,8 +28,9 @@ RawString (compiler intrinsic)
 
 #Boolean (independent enum struct — NOT #String) [##Scalar, ###Enum]
 
-#Map<KeyType<ValueType (sparse, homogeneous key-value pairs)
-#Array<ValueType<Dim (contiguous, rectangular, N-dimensional — #Map variant)
+#Map:KeyType:ValueType (macro-generated — sparse, homogeneous key-value pairs)
+#Array:ValueType:Dim (macro-generated — contiguous, rectangular, N-dimensional — #Map variant)
+#Dataframe:ColumnEnum:CellType (macro-generated — row-oriented, Array of Map)
 #Serial (schema-free, unlimited depth)
 ```
 
@@ -40,7 +41,7 @@ RawString (compiler intrinsic)
 | Foundation | [string.md](string.md) | #String |
 | Scalar subtypes | [scalars.md](scalars.md) | #Int, #UnsignedInt, #Float, #Sci, #Eng, #Dimension, #KeyString, #NestedKeyString |
 | Boolean | [boolean.md](boolean.md) | #Boolean, #None |
-| Collections | [collections.md](collections.md) | #Map, #Array, #Serial |
+| Collections | [collections.md](collections.md) | #Map, #Array, #Dataframe, #Serial |
 | Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #FileAccess, #VarState |
 | Structs | [structs.md](structs.md) | #path, #Queue |
 

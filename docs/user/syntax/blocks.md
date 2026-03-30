@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-24
+updated: 2026-03-29
 status: complete
 ---
 
@@ -9,7 +9,7 @@ status: complete
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{M}` at `%M`, `{Q}` at `%Q`, `{!}` at `%!` (see [[data-is-trees]]).
+Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{M}` at `%M`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!` (see [[data-is-trees]]).
 
 ## `{X}` — Definition Elements
 
@@ -20,7 +20,8 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{@}` | Package declaration (mandatory, first in file). See [[packages]] |
 | `{#}` | Struct definition. See [[types#Enum Fields vs Value Fields]] |
 | `{=}` | Pipeline definition. See [[pipelines]] |
-| `{M}` | Macro definition |
+| `{M}` | Type macro definition. See [[macros]] |
+| `{W}` | Wrapper definition. See [[wrappers]] |
 | `{Q}` | Queue definition. See [[pipelines#Queue]] |
 | `{!}` | Error tree definition. See [[errors#Defining Custom Errors]] |
 | `{Array}` | Array collection definition. See [[collections]] |
@@ -68,6 +69,7 @@ See [[io]] for IO parameter patterns and [[collections]] for expand/collect sema
 | `[p]` | Run/execute in parallel |
 | `[b]` | Run/execute in background (fire and forget) |
 | `[#]` | Load serialized data into typed structure |
+| `[M]` | Macro invocation — expand a `{M}` type macro inside a `{#}` block. See [[macros]] |
 
 ### Control Flow
 
@@ -105,9 +107,43 @@ See [[pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 |--------|---------|
 | `[%]` | Definition metadata and aliases |
 
-`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE-1002).
+`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{W}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE-1002).
 
 See [[metadata]] for the full metadata tree, field listings, `live` semantics, and access patterns.
+
+### Metadata Accessors
+
+<!-- @metadata -->
+
+`%This`, `%Parent`, and `%name` provide scoped access to definition metadata from within `{x}` blocks.
+
+| Accessor | Returns |
+|----------|---------|
+| `%This` | Innermost enclosing `{x}` definition block |
+| `%Parent` | One level up from `%This` |
+| `%name` | Definition name string from the `{x}` block header |
+| `%name.Last` | Splits `%name` by `.` and returns the last segment |
+
+`%name` examples:
+
+| Context | `%name` returns |
+|---------|----------------|
+| `{#} #ThisName` | `"ThisName"` |
+| `{M} #String.Subtype` | `"String.Subtype"` |
+| `{=} =Pipeline.Name` | `"Pipeline.Name"` |
+| `{W} =W.Polyglot` | `"W.Polyglot"` |
+
+`%name.Last` splits by `.` and returns the final segment — `{M} #String.Subtype` yields `%name.Last` = `"Subtype"`.
+
+`%This` scoping:
+
+| Context | `%This` refers to |
+|---------|-------------------|
+| Inside `{M} #String.Subtype` body (outside nested `{#}`) | The macro definition |
+| Inside `{#} ##{$Name}` nested within the macro | The `{#}` definition being generated |
+| Outside any `{x}` block | Compile error |
+
+To reference the enclosing macro from inside a nested `{#}`, use `%Parent` (one level up from `%This`).
 
 ### Logical
 

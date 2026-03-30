@@ -1,7 +1,7 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-25
+updated: 2026-03-30
 status: complete
 ---
 
@@ -26,7 +26,8 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 
 | Prefix | File | Description | Status | Permission |
 |--------|------|-------------|--------|------------|
-| `=File` | [pipelines/File.md](pipelines/File.md) | File operations (read, write, append, copy, move, delete, access, list) | Stable | `_File.*` |
+| `=File` | [pipelines/File.md](pipelines/File.md) | File operations (text read/write/append, serial read/write/read.field, copy, move, delete, access, list) | Stable | `_File.*` |
+| `=#` | [pipelines/#.md](pipelines/%23.md) | Schema validation, field extraction, format parsing, dataframe column extraction | Stable | None |
 | `=Path` | [pipelines/Path.md](pipelines/Path.md) | Cross-platform path creation from string literals | Stable | None |
 | `=Math` | [pipelines/Math.md](pipelines/Math.md) | Numeric operations (add, subtract, multiply, divide, modulo, power, abs, negate) | Stable | None |
 | `=Sys` | [pipelines/Sys.md](pipelines/Sys.md) | System information (OS detection) | Stable | `_System.env` |
@@ -64,4 +65,4 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
-| `!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Permission` | [errors/errors.md](errors/errors.md) | Standard error trees | Stable |
+| `!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission` | [errors/errors.md](errors/errors.md) | Standard error trees | Stable |

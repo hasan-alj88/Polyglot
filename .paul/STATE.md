@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
 Phase: No active phase
-Plan: —
-Status: Ready for next issue
-Last activity: 2026-03-29 — Merged issue #90 to main
+Plan: 94-03 — Expand/Collect Audit (issue #91)
+Status: All plans complete — ready for /paul:merge
+Last activity: 2026-03-30 — Unified Plan 94-03
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -38,14 +38,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #94 — Add =Schema.* runtime validation pipelines — ## and ### as pipeline arguments
+Branch: design/issue-94-add-schema-runtime-validation-pipel
+Labels: design, stdlib
+Started: 2026-03-29
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/94
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [All 3 plans complete — ready for /paul:merge]
 ```
 
 ## Accumulated Context
@@ -101,6 +105,15 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #89 — Add ~ForEach.Map and *Into.Map collection operators | 2026-03-28 | #Dict→#Map rename, ForEach/ and Into/ folder restructure, dot=folder convention |
 | Closed #92 — Edge-case audit for all datatype definitions | 2026-03-28 | 92-01 audit + restructure, 92-02 resolved 4 edge cases: PGE-927, PGE-421, ###None, 0D array |
 | Closed #90 — Add #Dataframe type + expand/collect operators | 2026-03-29 | Column-oriented #Dataframe<E<C, ##EnumLeafs, %##Leafs.Kind, #FieldKind, field expansion, 3 expanders + 1 collector, PGE-928/929/930 |
+| Plan 94-01 — Macro-for-generics redesign | 2026-03-29 | Replaced generic <param with {M} macros; {M}/{W} split; [M] invocation; scalars as ## schemas; row-oriented Dataframe; 9 ground truths; 12 files updated |
+| Dataframe uses ## composition not <~ inheritance | 2026-03-29 | Array ##Scalar constraint incompatible with Map elements; Dataframe composes ##Contiguous/##Rectangular/##Ordered directly |
+| [M] merge = identity rule | 2026-03-29 | Outer {#} names result, macro fills body, additional [#] lines extend |
+| =#.Column pipeline for column extraction | 2026-03-29 | Row-oriented Dataframe loses $df.column accessor; =#.Column replaces ~ForEach.Dataframe.Column |
+| Plan 94-02 — Serial file loading + schema validation | 2026-03-30 | 10 =#.* pipelines, 3 =File.Serial.* pipelines, <#type pipeline IO pattern, !Validation.Schema/.Type/.Regex + !Field.* + !File.ParseError; 7 files |
+| Base parsers as compiler intrinsics | 2026-03-30 | =#.JSON/YAML/TOML.Parse are compiler-internal, not user-definable |
+| Validation pipelines are non-failable | 2026-03-30 | =#.Match/Validate/Describe/Coerce report via outputs (>errors, >dropped), not [!] errors |
+| <#type extends <# to pipeline IO | 2026-03-30 | Same mechanism as {M} macro type inputs, now available at runtime in {=} pipelines; works with #/##/### tiers |
+| Plan 94-03 — Expand/collect audit | 2026-03-30 | All operators compatible with macro-generated types; 2 stale Column references removed; no new operators needed |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -119,13 +132,14 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-29
-Stopped at: Issue #90 merged to main
-Next action: /paul:issues (pick next issue) or /paul:progress
+Last session: 2026-03-30 (session 4)
+Stopped at: All 3 plans complete (94-01/02/03)
+Next action: /paul:merge to main (closes #94, #93, #79, #91)
+Resume file: .paul/phases/94-schema-validation/94-03-SUMMARY.md
 Resume context:
-- Issue #90 closed — #Dataframe type, ##EnumLeafs, expand/collect operators
-- Issue #94 created — =Schema.* runtime validation pipelines (deferred from #90)
-- No active issue
+- Issue #94 active on branch design/issue-94-add-schema-runtime-validation-pipel
+- Plans 94-01 (macro redesign) + 94-02 (validation pipelines) + 94-03 (expand/collect audit) ALL complete
+- Ready for /paul:merge to main
 
 ---
 *STATE.md — Updated after every significant action*
