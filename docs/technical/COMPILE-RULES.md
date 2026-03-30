@@ -61,6 +61,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE02007 | Continue After Error |
 | PGE02008 | Access After Release |
 | PGE02009 | Unreachable Code |
+| PGE02010 | Discard Default Assignment |
 
 ### 03 — Parallelism
 
@@ -160,6 +161,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE08008 | Missing Required Input at Call Site |
 | PGE08009 | Uncaptured Required Output at Call Site |
 | PGE08010 | IO Direction Mismatch |
+| PGE08011 | Self-Assignment |
 
 ### 09 — Imports & Dependencies
 
