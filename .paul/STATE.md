@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
 Phase: No active phase
 Plan: —
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-03-30 — Created 97-01-SUMMARY.md
+Status: Ready for next issue
+Last activity: 2026-03-30 — Merged issue #97 to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -36,21 +36,18 @@ Progress:
 - Issue #92: [██████████] 100% (2/2 plans)
 - Issue #90: [██████████] 100% (1/1 plans)
 - Issue #94: [██████████] 100% (3/3 plans — also closes #93, #79, #91)
+- Issue #97: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-Issue: #97 — EBNF edge cases: bare literals and non-pipeline identifiers in execution
-Branch: design/issue-97-ebnf-edge-cases-bare-literals-non-pipeline-ids
-Labels: design, test
-Started: 2026-03-30
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/97
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -117,6 +114,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Plan 94-03 — Expand/collect audit | 2026-03-30 | All operators compatible with macro-generated types; 2 stale Column references removed; no new operators needed |
 | Closed #94 — =Schema.* runtime validation pipelines | 2026-03-30 | 3 plans: macro-for-generics redesign, validation pipelines, expand/collect audit; also closes #93, #79, #91 |
 | Issue #97 — EBNF bare literals/non-pipeline identifiers | 2026-03-30 | PGE01020 error + exec_expr tightened; X.3 auto-resolves; 1 plan |
+| Closed #97 — EBNF bare literals/non-pipeline identifiers | 2026-03-30 | Merged design/issue-97 to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -136,9 +134,11 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-30 (session 5)
-Stopped at: UNIFY complete for 97-01
-Next action: /paul:merge to commit and merge to main
-Resume file: .paul/phases/issue-97-ebnf-bare-expressions/97-01-SUMMARY.md
+Stopped at: Issue #97 merged to main
+Next action: /paul:issues (pick next issue) or /paul:progress
+Resume context:
+- Issue #97 closed — PGE01020, exec_expr tightened
+- No active issue
 
 ---
 *STATE.md — Updated after every significant action*
