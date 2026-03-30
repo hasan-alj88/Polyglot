@@ -111,6 +111,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE04021 | Empty String on Non-None Type *(planned)* |
 | PGE04022 | Macro Type Constraint Violation *(planned)* |
 | PGE04023 | Macro Field Constraint Violation *(planned)* |
+| PGE04024 | Non-Value Comparison |
 
 ### 05 — Data Definitions
 
@@ -140,6 +141,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE06011 | Duplicate Wildcard Catch-All |
 | PGE06012 | Unreachable Branch After Wildcard |
 | PGE06013 | Tautological or Contradictory Branch Condition |
+| PGE06014 | Wildcard-Only Match |
 
 ### 07 — Error Handling
 

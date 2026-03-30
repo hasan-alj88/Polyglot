@@ -111,3 +111,38 @@ updated: 2026-03-30
 [ ] No [?] children — this is a plain assignment, not a match
 [r] $source >> $target#string
 ```
+
+### EC-11.7: Wildcard-only match — tautological
+
+**EBNF ref:** `match_line ::= "[r]" value_expr ">>" assign_target { match_arm }`
+**What it tests:** Match with only `[?] *` — always produces the same result. PGE06014 fires.
+
+```polyglot
+[ ] ✗ PGE06014 — wildcard-only match is tautological
+[r] $code >> $msg#string
+   [?] * >> "always this"
+```
+
+### EC-11.8: Variable as match arm value — must be Final
+
+**EBNF ref:** `match_value ::= literal | identifier | cross_pkg_enum`
+**What it tests:** Runtime variable in match arm — valid but must be Final state. If the variable could be in Failed state without a fallback, PGE fires.
+
+```polyglot
+[ ] ✓ Final variable as match value
+[r] $threshold#int << 100
+[r] $input >> $label#string
+   [?] $threshold >> "at threshold"
+   [?] * >> "other"
+```
+
+### EC-11.9: Pipeline identifier in comparison — non-value type
+
+**EBNF ref:** `comparison_expr ::= value_expr comparison_op value_expr`
+**What it tests:** Pipeline identifiers are not value types. PGE04024 fires.
+
+```polyglot
+[ ] ✗ PGE04024 — pipeline identifiers cannot be compared
+[?] =Pipeline.A =? =Pipeline.B
+   [r] $same << #Boolean.True
+```
