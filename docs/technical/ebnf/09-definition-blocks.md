@@ -24,7 +24,9 @@ import_line         ::= "[@]" '@' name final_push package_id ;
 
 ```ebnf
 data_def            ::= "{#}" data_id NEWLINE
+                         indent data_body_line NEWLINE
                          { indent data_body_line NEWLINE } ;
+                      (* At least one body line required — empty {#} is PGE01021 *)
 
 data_body_line      ::= schema_inheritance
                       | schema_composition
@@ -277,7 +279,9 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
 
 ```ebnf
 error_def           ::= "{!}" error_namespace_id NEWLINE
+                         indent error_leaf_line NEWLINE
                          { indent error_leaf_line NEWLINE } ;
+                      (* At least one leaf required — empty {!} is PGE01022 *)
 
 error_namespace_id  ::= '!' dotted_name ;
 

@@ -41,14 +41,16 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+**Batch: Issues #99–#106** — EBNF edge cases (design + test)
+Branch: `design/issue-99-106-ebnf-edge-cases`
+Current: Issue #99 — empty definitions and zero-param macros
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ◀                         [applying issue #99]
 ```
 
 ## Accumulated Context

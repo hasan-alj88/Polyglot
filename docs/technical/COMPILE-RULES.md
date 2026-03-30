@@ -47,6 +47,9 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01018 | Tautological or Contradictory Trigger Condition |
 | PGE01019 | Macro Dispatch Ambiguity *(planned)* |
 | PGE01020 | Effectless Execution Expression |
+| PGE01021 | Empty Data Definition |
+| PGE01022 | Empty Error Namespace |
+| PGE01023 | Parameterless Macro |
 
 ### 02 — Lifecycle & State
 
@@ -217,7 +220,8 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | Code | Name |
 |------|------|
 | PGW01001 | Empty Execution Body |
-| PGW01002 | Empty Data Definition |
+| PGW01002 | Empty Data Definition *(superseded by PGE01021)* |
+| PGW01003 | No Definitions in File |
 | PGW02001 | Default Pull Across State Change |
 | PGW02002 | Unused Variable |
 | PGW02003 | Unpushed Output Port |

@@ -31,7 +31,7 @@ Review in batches by section. Each edge case includes:
 | [06-operators.md](06-operators.md) | S6. Operators | EC-6.1--6.4 |
 | [07-io-parameters.md](07-io-parameters.md) | S7. IO Parameters | EC-7.1 |
 | [08-expressions.md](08-expressions.md) | S8. Expressions | EC-8.1--8.6 |
-| [09-definition-blocks.md](09-definition-blocks.md) | S9. Definition Blocks | EC-9.1--9.11 |
+| [09-definition-blocks.md](09-definition-blocks.md) | S9. Definition Blocks | EC-9.1--9.15 |
 | [10-execution.md](10-execution.md) | S10. Execution Statements | EC-10.1--10.13 |
 | [11-control-flow.md](11-control-flow.md) | S11. Control Flow | EC-11.1--11.6 |
 | [12-collections.md](12-collections.md) | S12. Collection Operations | EC-12.1--12.13 |
@@ -40,7 +40,7 @@ Review in batches by section. Each edge case includes:
 | [15-metadata-blocks.md](15-metadata-blocks.md) | S15. Metadata Blocks | EC-15.1--15.4 |
 | [16-trigger-io-wiring.md](16-trigger-io-wiring.md) | S16. Trigger IO Wiring | EC-16.1--16.3 |
 | [17-negation-operators.md](17-negation-operators.md) | S17. Negation Operators | EC-17.1--17.2 |
-| [18-macro-structure.md](18-macro-structure.md) | S18. Macro Structure | EC-18.1--18.3 |
+| [18-macro-structure.md](18-macro-structure.md) | S18. Macro Structure | EC-18.1--18.4 |
 | [19-collections-gaps.md](19-collections-gaps.md) | S19. Collections -- Gaps | EC-19.1--19.4 |
 | [20-lifecycle-gaps.md](20-lifecycle-gaps.md) | S20. Variable Lifecycle -- Gaps | EC-20.1--20.3 |
 | [21-registry-type.md](21-registry-type.md) | S21. Third Registry Type | EC-21.1 |
@@ -62,7 +62,7 @@ Review in batches by section. Each edge case includes:
 | S6 Operators | EC-6.1--6.4 | All assignment ops, all comparison ops, range ops, arithmetic |
 | S7 IO | EC-7.1 | `input_param` with field separators |
 | S8 Expressions | EC-8.1--8.6 | `inline_data`, empty `{}`, chained arithmetic, discard default restriction, self-assignment detection |
-| S9 Definitions | EC-9.1--9.11 | Package imports, enum/value fields, pipeline structure, triggers, IO modes, macro parallel fork |
+| S9 Definitions | EC-9.1--9.15 | Package imports, enum/value fields, pipeline structure, triggers, IO modes, macro parallel fork, empty definitions |
 | S10 Execution | EC-10.1--10.13 | Pipeline call + error, stdlib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr restriction |
 | S11 Control Flow | EC-11.1--11.3 | Conditional chains, error scoping, logical operators |
 | S12 Collections | EC-12.1--12.13 | All expand variants, all collect variants, direct output, multiple collectors, sync/race collectors, multi-wave, [*] <</>>/semantics |
@@ -71,7 +71,7 @@ Review in batches by section. Each edge case includes:
 | S15 Metadata Blocks | EC-15.1--15.4 | `[%]` user fields, alias, `.info#serial`, `%` live accessor |
 | S16 Trigger IO Wiring | EC-16.1--16.3 | Trigger outputs, multi-output wiring, mixed fill modes |
 | S17 Negation Operators | EC-17.1--17.2 | `<!?`, `>!?`, `<=!?`, `>=!?`, negation in compound logic |
-| S18 Macro Structure | EC-18.1--18.3 | `{M}` full structure, `[W]` usage wiring, no-output macro |
+| S18 Macro Structure | EC-18.1--18.4 | `{M}` full structure, `[W]` usage wiring, no-output macro, zero-param macro |
 | S19 Collections -- Gaps | EC-19.1--19.4 | `*Into.Serial`, `*Into.Level`, `*Second`, `[b]` collector |
 | S20 Lifecycle -- Gaps | EC-20.1--20.3 | Declared state, Released state, `~>` on output params |
 | S21 Third Registry Type | EC-21.1 | `Registry` address format |
@@ -79,4 +79,4 @@ Review in batches by section. Each edge case includes:
 | S23 Stress Tests | ST-1--ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, macro+timer |
 | S24 Datatype Definitions | EC-24.1--24.18 | Scalar regex boundaries, `<~` inheritance, ##/### composition, collection parameterized inheritance, %## property completeness |
 
-**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment = 107 edge cases across 24 sections.**
+**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def = 112 edge cases across 24 sections.**

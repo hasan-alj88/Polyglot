@@ -177,3 +177,45 @@ updated: 2026-03-30
       [r] =Session.Close
          [=] <session << $session
 ```
+
+### EC-9.12: Empty pipeline body — no sections at all
+
+<!-- @pipelines -->
+**EBNF ref:** `pipeline_body` — trigger, queue, wrapper, execution sections
+**What it tests:** A `{=}` with no content. PGE01005 (missing trigger) fires first. See [[concepts/pipelines/INDEX|pipelines]].
+
+```polyglot
+[ ] ✗ PGE01005 — empty pipeline has no trigger
+{=} =EmptyPipeline
+```
+
+### EC-9.13: Empty `{#}` data definition — no fields
+
+**EBNF ref:** `data_def` — requires at least one `data_body_line`
+**What it tests:** A `{#}` with no fields. PGE01021 fires. See [[syntax/types/INDEX|types]].
+
+```polyglot
+[ ] ✗ PGE01021 — no fields
+{#} #EmptyRecord
+```
+
+### EC-9.14: Empty `{!}` error namespace — no leaves
+
+**EBNF ref:** `error_def` — requires at least one `error_leaf_line`
+**What it tests:** A `{!}` with no error leaves. PGE01022 fires. See [[concepts/errors|errors]].
+
+```polyglot
+[ ] ✗ PGE01022 — no error leaves
+{!} !EmptyErrors
+```
+
+### EC-9.15: File with only comments after `{@}`
+
+**EBNF ref:** `file ::= package_block { definition }`
+**What it tests:** A file that declares a package but defines nothing. PGW01003 fires. See [[syntax/packages|packages]].
+
+```polyglot
+[ ] ⚠ PGW01003 — no definitions in file
+{@} @Local:999.EmptyPackage:v1.0.0
+{ } This file defines nothing
+```
