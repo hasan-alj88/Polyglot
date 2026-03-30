@@ -24,7 +24,7 @@ Review in batches by section. Each edge case includes:
 | File | Section | Edge Cases |
 |------|---------|------------|
 | [01-file-structure.md](01-file-structure.md) | S1. File Structure | EC-1.1, EC-1.2 |
-| [02-lexical.md](02-lexical.md) | S2. Lexical Elements | EC-2.1--2.4 |
+| [02-lexical.md](02-lexical.md) | S2. Lexical Elements | EC-2.1--2.7 |
 | [03-identifiers.md](03-identifiers.md) | S3. Identifiers | EC-3.1--3.7 |
 | [04-type-system.md](04-type-system.md) | S4. Type System | EC-4.1--4.18 |
 | [05-block-elements.md](05-block-elements.md) | S5. Block Elements | EC-5.1--5.2 |
@@ -55,7 +55,7 @@ Review in batches by section. Each edge case includes:
 | EBNF Section | Edge Cases | Covered Productions |
 |-------------|-----------|-------------------|
 | S1 File Structure | EC-1.1, EC-1.2 | `file`, `definition` |
-| S2 Lexical | EC-2.1--2.4 | `indent`, `bool_literal`, `int_literal`, `float_literal`, `string_literal` |
+| S2 Lexical | EC-2.1--2.7 | `indent`, `bool_literal`, `int_literal`, `float_literal`, `string_literal`, inline strings, leading zeros, negative zero |
 | S3 Identifiers | EC-3.1--3.7 | `package_address`, `cross_pkg_enum`, `cross_pkg_pipeline`, `field_path`, sibling homogeneity |
 | S4 Types | EC-4.1--4.18 | `array_type`, `element_type`, `serial_type`, `user_type`, `inline_pipeline_call`, path types, multidimensional arrays |
 | S5 Blocks | EC-5.1--5.2 | All block element categories, `[b]` background |
@@ -79,4 +79,4 @@ Review in batches by section. Each edge case includes:
 | S23 Stress Tests | ST-1--ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, macro+timer |
 | S24 Datatype Definitions | EC-24.1--24.18 | Scalar regex boundaries, `<~` inheritance, ##/### composition, collection parameterized inheritance, %## property completeness |
 
-**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle = 121 edge cases across 24 sections.**
+**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle + 3 literals = 124 edge cases across 24 sections.**

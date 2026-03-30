@@ -233,6 +233,7 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | PGW03001 | `[b]` Called Pipeline Has Discarded Outputs |
 | PGW03002 | Error Handler on Fire-and-Forget |
 | PGW04001 | Single-Platform Path |
+| PGW04002 | Leading Zeros in Literal |
 | PGW07001 | Error Handler on Non-Failable Call |
 | PGW07002 | Caller Overrides Pipeline Fallback |
 | PGW07003 | Missing Fallback Message |
