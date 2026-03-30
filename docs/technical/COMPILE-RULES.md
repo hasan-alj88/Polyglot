@@ -46,6 +46,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01017 | Wrong Block Element Marker |
 | PGE01018 | Tautological or Contradictory Trigger Condition |
 | PGE01019 | Macro Dispatch Ambiguity *(planned)* |
+| PGE01020 | Effectless Execution Expression |
 
 ### 02 — Lifecycle & State
 

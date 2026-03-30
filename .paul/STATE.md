@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
 Phase: No active phase
 Plan: —
-Status: Ready for next issue
-Last activity: 2026-03-30 — Merged issue #94 to main (also closed #93, #79, #91)
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-03-30 — Created 97-01-SUMMARY.md
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -39,14 +39,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #97 — EBNF edge cases: bare literals and non-pipeline identifiers in execution
+Branch: design/issue-97-ebnf-edge-cases-bare-literals-non-pipeline-ids
+Labels: design, test
+Started: 2026-03-30
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/97
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -112,6 +116,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | <#type extends <# to pipeline IO | 2026-03-30 | Same mechanism as {M} macro type inputs, now available at runtime in {=} pipelines; works with #/##/### tiers |
 | Plan 94-03 — Expand/collect audit | 2026-03-30 | All operators compatible with macro-generated types; 2 stale Column references removed; no new operators needed |
 | Closed #94 — =Schema.* runtime validation pipelines | 2026-03-30 | 3 plans: macro-for-generics redesign, validation pipelines, expand/collect audit; also closes #93, #79, #91 |
+| Issue #97 — EBNF bare literals/non-pipeline identifiers | 2026-03-30 | PGE01020 error + exec_expr tightened; X.3 auto-resolves; 1 plan |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -130,13 +135,10 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-30 (session 4)
-Stopped at: Issue #94 merged to main
-Next action: /paul:issues (pick next issue) or /paul:progress
-Resume context:
-- Issue #94 closed — macro-for-generics, validation pipelines, expand/collect audit
-- Also closed: #93, #79, #91
-- No active issue
+Last session: 2026-03-30 (session 5)
+Stopped at: UNIFY complete for 97-01
+Next action: /paul:merge to commit and merge to main
+Resume file: .paul/phases/issue-97-ebnf-bare-expressions/97-01-SUMMARY.md
 
 ---
 *STATE.md — Updated after every significant action*
