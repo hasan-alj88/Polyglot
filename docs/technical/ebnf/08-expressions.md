@@ -42,7 +42,9 @@ assign_target       ::= typed_variable
                       | typed_field
                       | typed_io_param
                       | output_param          (* direct output port write *)
-                      | "$*" ;                (* inline discard — output immediately released *)
+                      | "$*" ;                (* inline discard — final operators only (<<, >>); see PGE02010 *)
+
+(* Self-assignment (same identifier both sides) is PGE08011. *)
 
 value_expr          ::= literal
                       | identifier

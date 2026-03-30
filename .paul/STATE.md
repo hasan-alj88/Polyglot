@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: No active phase
-Plan: —
-Status: Ready for next issue
-Last activity: 2026-03-30 — Merged issue #97 to main
+Phase: Issue #98 — Complete
+Plan: 98-01 complete (1/1 plans)
+Status: Ready for merge
+Last activity: 2026-03-30 — Loop closed for 98-01
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -40,14 +40,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #98 — EBNF edge cases: discard defaults and self-assignment
+Branch: design/issue-98-ebnf-discard-defaults-self-assignment
+Labels: design, test
+Started: 2026-03-30
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/98
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Loop complete — ready for merge]
 ```
 
 ## Accumulated Context
@@ -133,12 +137,10 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-30 (session 5)
-Stopped at: Issue #97 merged to main
-Next action: /paul:issues (pick next issue) or /paul:progress
-Resume context:
-- Issue #97 closed — PGE01020, exec_expr tightened
-- No active issue
+Last session: 2026-03-30 (session 6)
+Stopped at: Loop closed for 98-01
+Next action: /paul:merge to merge branch and close issue
+Resume file: .paul/phases/issue-98-ebnf-discard-defaults-self-assignment/98-01-SUMMARY.md
 
 ---
 *STATE.md — Updated after every significant action*
