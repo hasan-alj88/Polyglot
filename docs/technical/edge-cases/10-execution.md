@@ -210,3 +210,17 @@ updated: 2026-03-30
 [ ] INVALID — package alias (not a pipeline reference)
 [b] @AD                                   [ ] ✗ PGE01020 — package alias, not a call
 ```
+
+### EC-10.14: Orphan `[+]` continuation line
+
+**EBNF ref:** `continuation_line ::= "[+]" expression`
+**What it tests:** `[+]` at start of block with no preceding incomplete expression. PGE01026 fires.
+
+```polyglot
+[ ] ✗ PGE01026 — [+] with no preceding expression
+{=} =Bad
+   [t] =T.Call
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [+] "orphan continuation"
+```

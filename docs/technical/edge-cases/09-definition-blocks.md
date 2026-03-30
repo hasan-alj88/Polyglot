@@ -261,3 +261,15 @@ updated: 2026-03-30
    [Q] =Q.Custom
    [W] =W.Polyglot
 ```
+
+### EC-9.19: Discard `$*` in wrapper IO wiring
+
+<!-- @pipelines:Wrappers -->
+**EBNF ref:** `wrapper_io_line ::= "[=]" variable_id assignment_op value_expr`
+**What it tests:** Using `$*` (discard) in wrapper IO defeats the purpose. PGE01025 fires. See [[concepts/pipelines/wrappers|wrappers]].
+
+```polyglot
+[ ] ✗ PGE01025 — $* discards wrapper input
+[W] =W.DB.Connection
+   [=] $* << $connectionString
+```

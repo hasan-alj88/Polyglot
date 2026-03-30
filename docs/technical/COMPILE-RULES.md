@@ -51,6 +51,8 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01022 | Empty Error Namespace |
 | PGE01023 | Parameterless Macro |
 | PGE01024 | Incompatible Operation Marker |
+| PGE01025 | Discard in Wrapper IO |
+| PGE01026 | Orphan Continuation Line |
 
 ### 02 — Lifecycle & State
 
