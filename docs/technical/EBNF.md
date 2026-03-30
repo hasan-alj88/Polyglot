@@ -1120,7 +1120,6 @@ expand_io_line      ::= "[~]" io_param assignment_op value_expr ;
 | `~ForEach.Level` | `<level` | `>key`, `>item` |
 | `~ForEach.Dataframe` | `<Dataframe` | `>row` |
 | `~ForEach.Dataframe.Enumerate` | `<Dataframe` | `>index`, `>row` |
-| `~ForEach.Dataframe.Column` | `<Dataframe` | `>key`, `>column` |
 
 ### 12.2 Collect Operators (`*`)
 

@@ -32,6 +32,6 @@ The `>row` output is a compiler-synthesized struct from the `ColumnEnum` type pa
 ## Variants
 
 - [Enumerate](Dataframe/Enumerate.md) — adds positional `>index` output
-- [Column](Dataframe/Column.md) — iterates columns instead of rows
+- ~~Column~~ — **deprecated**. Use `=#.Column` pipeline instead (see [[#|stdlib/pipelines/#]])
 
 See also: [[collections#Expand Operators]]

@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
 Phase: No active phase
-Plan: 94-02 — Serial File Loading + Schema Validation Pipelines
-Status: Loop complete — ready for next plan (94-03) or commit + merge
-Last activity: 2026-03-30 — Unified Plan 94-02
+Plan: 94-03 — Expand/Collect Audit (issue #91)
+Status: All plans complete — ready for /paul:merge
+Last activity: 2026-03-30 — Unified Plan 94-03
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -49,7 +49,7 @@ GitHub: https://github.com/hasan-alj88/Polyglot/issues/94
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Plan 94-02 complete — next: 94-03 or commit + merge]
+  ✓        ✓        ✓        ○     [All 3 plans complete — ready for /paul:merge]
 ```
 
 ## Accumulated Context
@@ -113,6 +113,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Base parsers as compiler intrinsics | 2026-03-30 | =#.JSON/YAML/TOML.Parse are compiler-internal, not user-definable |
 | Validation pipelines are non-failable | 2026-03-30 | =#.Match/Validate/Describe/Coerce report via outputs (>errors, >dropped), not [!] errors |
 | <#type extends <# to pipeline IO | 2026-03-30 | Same mechanism as {M} macro type inputs, now available at runtime in {=} pipelines; works with #/##/### tiers |
+| Plan 94-03 — Expand/collect audit | 2026-03-30 | All operators compatible with macro-generated types; 2 stale Column references removed; no new operators needed |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -132,14 +133,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-30 (session 4)
-Stopped at: Plan 94-02 loop complete
-Next action: Commit 94-02 changes, then decide: Plan 94-03 (expand/collect audit #91) or /paul:merge
-Resume file: .paul/phases/94-schema-validation/94-02-SUMMARY.md
+Stopped at: All 3 plans complete (94-01/02/03)
+Next action: /paul:merge to main (closes #94, #93, #79, #91)
+Resume file: .paul/phases/94-schema-validation/94-03-SUMMARY.md
 Resume context:
 - Issue #94 active on branch design/issue-94-add-schema-runtime-validation-pipel
-- Plans 94-01 + 94-02 complete (macro redesign + validation pipelines)
-- Plan 94-03 (expand/collect audit, issue #91) — not yet designed, deferred from 94-01
-- After all plans: /paul:merge to main (closes #94, #93, #79)
+- Plans 94-01 (macro redesign) + 94-02 (validation pipelines) + 94-03 (expand/collect audit) ALL complete
+- Ready for /paul:merge to main
 
 ---
 *STATE.md — Updated after every significant action*
