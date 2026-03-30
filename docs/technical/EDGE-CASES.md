@@ -2391,14 +2391,16 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 | EC-24.8 | #Boolean — ##Scalar + ###Enum | Dual schema composition |
 | EC-24.9 | Enum inheritance via `<~` | Extending enum variants |
 | EC-24.10 | #None — minimal type | No fields, no schema |
-| EC-24.11 | #Array `<~` #Map parameterized inheritance | Schema property accumulation |
+| EC-24.11 | #Array via `{M}` macro with `<~` inheritance | Macro-generated definition with schema accumulation |
 | EC-24.12 | ##Contiguous vs ##Sparse override | Contradicting property override (PGW-905) |
 | EC-24.13 | 0D array | Dimension collapse to scalar |
 | EC-24.14 | Empty collections | Zero-element #Array and #Map |
 | EC-24.15 | Invalid key type | #Int as map key (PGE-924) |
 | EC-24.16 | #Serial — no ## schema constraints | Unlimited depth escape hatch (PGW-906 exemption) |
-| EC-24.17 | #Dataframe status | Stale stdlib entry, idiomatic replacement |
+| EC-24.17 | #Dataframe status | Row-oriented access via `$df<row<column` |
 | EC-24.18 | Stale %Property notation | stdlib types.md missing `##` prefix |
+| EC-24.19 | [M] merge behavior (identity rule) | Outer {#} names result, [M] fills body |
+| EC-24.20 | Macro dispatch ambiguity | Two overloads with identical signature = PGE-930 |
 
 ---
 
@@ -2640,40 +2642,39 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [r] $bad#string << ""
 ```
 
-### EC-24.11: #Array `<~` #Map parameterized inheritance
+### EC-24.11: #Array via `{M}` macro with `<~` inheritance
 
-**EBNF:** `inheritance ::= "[#]" "<~" type_ref "<" type_param` — parameterized inheritance.
-**What it tests:** `#Array <~ #Map` substitutes `#Map`'s `KeyType` with `#UnsignedInt`. #Array inherits ##Flat, ##Homogeneous, and ##Sparse from #Map, then overrides with ##Contiguous and ##Rectangular. Schema properties accumulate — later declarations override earlier ones. See [[types#Approved ## Schema Types]].
-**Cross-refs:** [[types]], [[STDLIB]]
+**EBNF:** `macro_def ::= "{M}" "#" dotted_name`, `macro_type_param ::= "[#]" "<#" name`, `schema_inheritance ::= "[#]" "<~" data_id` — macro-generated definition with parameterized inheritance.
+**What it tests:** `{M} #Array` macro takes `<#ValueType` (type input) and `<Dim` (value input). The macro body generates a `{#}` definition that inherits from `#Map` via `<~`, substituting `#UnsignedInt` for the key type. Schema properties accumulate — `##Contiguous` overrides inherited `##Sparse` properties. See [[types#Approved ## Schema Types]].
+**Cross-refs:** [[types]], [[STDLIB]], [[EBNF#4.3]]
 
 ```polyglot
-[ ] #Map defines base collection schema
-{#} #Map<KeyType<ValueType
-   [#] <KeyType << #KeyString
-   [#] <ValueType << #*
+[ ] {M} #Array — type macro with two parameters
+{M} #Array
+   [#] <#ValueType
       [<] << ##Scalar
-   [#] %##Alias << "map"
-   [#] %##Children.Type << KeyType
-   [#] << ##Flat
-   [#] << ##Homogeneous
-   [#] << ##Sparse
-   [:] :*#ValueType
+   [#] <Dim##Dimension <~ "1D"
+      [<] << ##Scalar
 
-[ ] #Array inherits #Map, substituting KeyType with #UnsignedInt
-{#} #Array<ValueType<Dim
-   [#] <~ #Map<#UnsignedInt<ValueType
-   [#] <ValueType << #*
-      [<] << ##Scalar
-   [#] <Dim << #Dimension
-      [<] << ##Scalar
-   [#] %##Alias << "array"
-   [ ] ##Contiguous overrides ##Sparse properties:
-   [ ]   %##Children.Gap: #True → #False
-   [ ]   %##Children.Ordered: (unset) → #True
-   [#] << ##Contiguous
-   [#] << ##Rectangular
-   [#] %##Depth.Max << Dim
-   [:] :*#ValueType
+   [r] $ArrayName##DataTypeString << "Array{$Dim}:{$ValueType%name}"
+   [r] $dim#RawString << =String.Lower"{$Dim}"
+
+   {#} #{$ArrayName}
+      [#] <~ #Map:#UnsignedInt:$ValueType
+      [#] %##Alias
+         [:] << "array:{$ValueType%name}:{$dim}"
+         [:] << "array{$dim}:{$ValueType%name}"
+         [:] << "Array{$Dim}:{$ValueType%name}"
+      [#] %##Children.Type << #UnsignedInt
+      [#] %##Children.Ordered << #True
+      [#] %##Children.Uniform << #True
+      [ ] ##Contiguous overrides ##Sparse properties:
+      [ ]   %##Children.Gap: #True → #False
+      [ ]   %##Children.Ordered: (unset) → #True
+      [#] << ##Contiguous
+      [#] << ##Rectangular
+      [#] %##Depth.Max << $Dim
+      [:] :*#$ValueType
 ```
 
 ### EC-24.12: ##Contiguous vs ##Sparse override
@@ -2738,7 +2739,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.15: Invalid key type (PGE-924)
 
 **EBNF:** `schema_property ::= "%##Children.Type" "<<" type_ref` — key type must inherit #KeyString.
-**What it tests:** `#Map<#Int<#String` — #Int inherits from #String, NOT from #KeyString. The `%##Children.Type` must inherit `#KeyString` to exclude syntax-reserved characters. Compiler raises PGE-924. See [[types#Layer 2c: #KeyString — Key Type for Tree Access]].
+**What it tests:** `#map:int:string` — ##Int inherits from #String, NOT from #KeyString. The `%##Children.Type` must inherit `#KeyString` to exclude syntax-reserved characters. Compiler raises PGE-924. See [[types#Layer 2c: #KeyString — Key Type for Tree Access]].
 **Cross-refs:** [[types]]
 
 ```polyglot
@@ -2784,26 +2785,27 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [:] :*#string
 ```
 
-### EC-24.17: #Dataframe status — RESOLVED
+### EC-24.17: #Dataframe row-oriented access — RESOLVED
 
-**EBNF:** `type_definition` — stdlib collection type promoted to authoritative spec.
-**What it tests:** ~~#Dataframe appears in stdlib `types.md` but NOT in the authoritative `syntax/types.md` type hierarchy.~~ RESOLVED: `#Dataframe<ColumnEnum<CellType` added as a column-oriented collection type. Columns are `###Enum` fixed fields from `ColumnEnum`; each holds `#Array<CellType>`. Uses `##EnumLeafs` schema property and `[.] .*Param` field expansion syntax. See [[types]], [[STDLIB]], [[collections]].
-**Cross-refs:** [[types]], [[STDLIB]], [[collections]]
+**EBNF:** `macro_def`, `child_access` — Dataframe is macro-generated, row-oriented (Array of Map).
+**What it tests:** #Dataframe is generated by `{M} #Dataframe`. Access is row-oriented: `$df<row<column` (not column-oriented). Each row is a `#Map` keyed by the column enum; the outer structure is an `#Array` of rows. See [[types]], [[STDLIB]], [[collections]].
+**Cross-refs:** [[types]], [[STDLIB]], [[collections]], [[EBNF#4.3]]
 
 ```polyglot
-[ ] RESOLVED — #Dataframe is now in both syntax/types.md and stdlib collections.md
-{#} #EmployeeColumns
+[ ] RESOLVED — #Dataframe is row-oriented (Array of Map)
+{#} #SalesColumns
    [#] << ##Scalar
    [#] << ###Enum
-   [.] .name
-   [.] .department
-   [.] .salary
+   [.] .product
+   [.] .price
+   [.] .quantity
 
-[r] $employees#dataframe:EmployeeColumns:string <~ {}
+[r] $sales#dataframe:SalesColumns:string <~ {}
 
-[ ] Column-oriented access: .column<row
-[r] $name#string << $employees.name<0
-[r] $dept#string << $employees.department<2
+[ ] Row-oriented access: $df<row<column
+[r] $name#string << $sales<0<product       [ ] row 0, column "product"
+[r] $price#string << $sales<2<price        [ ] row 2, column "price"
+[r] $row#map:SalesColumns:string << $sales<0   [ ] entire row as Map
 ```
 
 ### EC-24.18: Stale %Property notation
@@ -2835,6 +2837,61 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [#] %##Depth.Max << Dim
 ```
 
+### EC-24.19: [M] merge behavior (identity rule)
+
+**EBNF:** `macro_invoke ::= "[M]" "#" dotted_name` — macro invocation inside `{#}`.
+**What it tests:** When `[M] #String.Subtype` is invoked inside `{#} ##Int`, the outer `{#}` names the result and the macro fills the body. The macro's internal `{#}` resolves to the same name (identity). Any `[#]` lines after `[M]` in the outer `{#}` extend or override the macro's output. See [[EBNF#4.3]].
+**Cross-refs:** [[types]], [[EBNF]]
+
+```polyglot
+[ ] Outer {#} names the result — [M] fills the body
+{#} ##Int
+   [M] #String.Subtype
+      [#] <Name << "Int"
+      [#] <Alias << "int"
+         [<] !Alias.Clash << "integer"
+         [<] !Alias.Clash << "Integer"
+      [#] <Regex << "^-?[0-9]+$"
+
+[ ] Lines after [M] extend the macro output
+{#} ##Custom
+   [M] #String.Subtype
+      [#] <Name << "Custom"
+      [#] <Alias << "custom"
+      [#] <Regex << "^[A-Z]{3}$"
+   [ ] Additional schema property — extends macro output
+   [#] %##MaxLength << 3
+```
+
+### EC-24.20: Macro dispatch ambiguity (PGE-930)
+
+**EBNF:** `macro_def ::= "{M}" "#" dotted_name` — macro overloading by signature.
+**What it tests:** Two `{M}` macros with the same name AND identical parameter signature (same count and kind) is a compile error PGE-930. Dispatch is unambiguous when signatures differ by count or kind (`<#` type vs `<` value). See [[EBNF#4.3]].
+**Cross-refs:** [[types]], [[EBNF]]
+
+```polyglot
+[ ] Valid — different signatures
+{M} #Map
+   [#] <#KeyType
+   [#] <#ValueType
+   [ ] Signature: (<#, <#) — homogeneous
+
+{M} #Map
+   [#] <#KeyType
+   [ ] Signature: (<#) — heterogeneous
+
+[ ] Invalid — PGE-930: identical signatures
+{M} #Foo
+   [#] <#A
+   [#] <#B
+   [ ] Signature: (<#, <#)
+
+{M} #Foo
+   [#] <#X
+   [#] <#Y
+   [ ] Signature: (<#, <#) — CLASH with above → PGE-930
+```
+
 ### Potential Follow-up Issues
 
 Issues discovered during this audit that may warrant separate GitHub issues:
@@ -2842,7 +2899,7 @@ Issues discovered during this audit that may warrant separate GitHub issues:
 1. ~~**#Dimension regex correction**~~ — RESOLVED: regex corrected to `"^[0-9]+D$"` (EC-24.3).
 2. ~~**`<~` finality semantics**~~ — RESOLVED: PGE-927 added (EC-24.7).
 3. ~~**#None ###-classification**~~ — RESOLVED: `###None` added as third field type, PGE-421 added (EC-24.10).
-4. ~~**#Dataframe resolution**~~ — RESOLVED: promoted to authoritative spec as column-oriented `#Dataframe<ColumnEnum<CellType` with `##EnumLeafs` (EC-24.17).
+4. ~~**#Dataframe resolution**~~ — RESOLVED: promoted to authoritative spec as row-oriented `#Dataframe:ColumnEnum:CellType` (Array of Map) with `##EnumLeafs` (EC-24.17).
 5. ~~**0D array semantics**~~ — RESOLVED: 0D = scalar container, direct access, PGE-417 on index (EC-24.13).
 
 ---

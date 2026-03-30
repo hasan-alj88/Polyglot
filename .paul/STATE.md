@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
 Phase: No active phase
-Plan: —
-Status: Ready for next issue
-Last activity: 2026-03-29 — Merged issue #90 to main
+Plan: 94-01 — Ground Truths + Macro-for-Generics Redesign
+Status: Loop complete — ready for next plan (94-02/04)
+Last activity: 2026-03-29 — Unified Plan 94-01
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -49,7 +49,7 @@ GitHub: https://github.com/hasan-alj88/Polyglot/issues/94
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ○        ○        ○        ○     [Issue #94 active]
+  ✓        ✓        ✓        ○     [Plan 94-01 complete — next: 94-02/04]
 ```
 
 ## Accumulated Context
@@ -105,6 +105,10 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #89 — Add ~ForEach.Map and *Into.Map collection operators | 2026-03-28 | #Dict→#Map rename, ForEach/ and Into/ folder restructure, dot=folder convention |
 | Closed #92 — Edge-case audit for all datatype definitions | 2026-03-28 | 92-01 audit + restructure, 92-02 resolved 4 edge cases: PGE-927, PGE-421, ###None, 0D array |
 | Closed #90 — Add #Dataframe type + expand/collect operators | 2026-03-29 | Column-oriented #Dataframe<E<C, ##EnumLeafs, %##Leafs.Kind, #FieldKind, field expansion, 3 expanders + 1 collector, PGE-928/929/930 |
+| Plan 94-01 — Macro-for-generics redesign | 2026-03-29 | Replaced generic <param with {M} macros; {M}/{W} split; [M] invocation; scalars as ## schemas; row-oriented Dataframe; 9 ground truths; 12 files updated |
+| Dataframe uses ## composition not <~ inheritance | 2026-03-29 | Array ##Scalar constraint incompatible with Map elements; Dataframe composes ##Contiguous/##Rectangular/##Ordered directly |
+| [M] merge = identity rule | 2026-03-29 | Outer {#} names result, macro fills body, additional [#] lines extend |
+| =#.Column pipeline for column extraction | 2026-03-29 | Row-oriented Dataframe loses $df.column accessor; =#.Column replaces ~ForEach.Dataframe.Column |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -123,16 +127,16 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-29
-Stopped at: Plan 94-01 design complete in docs/draft.md — not yet applied
-Next action: Fresh analysis of docs/draft.md → /paul:plan → /paul:apply
-Resume file: .paul/HANDOFF-2026-03-29.md
+Last session: 2026-03-29 (session 3)
+Stopped at: Plan 94-01 loop complete
+Next action: /paul:plan for 94-02/04 (serial file loading + validation pipelines)
+Resume file: .paul/phases/94-schema-validation/94-01-PLAN.md
 Resume context:
-- Issue #94 active (also incorporates #91, #79) on branch design/issue-94-add-schema-runtime-validation-pipel
-- Major type system redesign: {M} macros replace generic {#} type parameters
-- Complete design in docs/draft.md — 9 ground truths, macro syntax, bootstrap layers, dispatch rules
-- No spec files modified yet — all changes pending in draft.md
-- Next: fresh-context analysis of draft.md, then formalize and apply Plan 94-01
+- Issue #94 active (also incorporates #93, #91, #79) on branch design/issue-94-add-schema-runtime-validation-pipel
+- 3 open design issues RESOLVED: Dataframe uses ## composition not inheritance, [M] merge = identity, =#.Column for column extraction
+- Plan 94-01 formalized: 3 tasks, 9 files, 7 acceptance criteria
+- After 94-01: Plan 94-02/04 (serial file loading + validation pipelines)
+- Will close #93, #79 when merged alongside #94
 
 ---
 *STATE.md — Updated after every significant action*

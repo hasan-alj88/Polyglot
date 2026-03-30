@@ -2,33 +2,24 @@
 audience: user
 type: specification
 updated: 2026-03-29
-status: stable
+status: deprecated
 ---
 
-# ~ForEach.Dataframe.Column — Expand Dataframe by Column
+# ~ForEach.Dataframe.Column — DEPRECATED
 
-Iterates over each column in a dataframe, producing a mini-pipeline per column. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
-
-No `[@]` import needed.
-
-`>key` is the `ColumnEnum` variant (the column name). `>column` is `#Array<CellType>` — the entire column as an array. Type-safe because all columns share the same `CellType` (homogeneous).
-
-## IO Signature
-
-| Input | Outputs |
-|-------|---------|
-| `<Dataframe` | `>key`, `>column` |
-
-## Usage
+**Deprecated:** With the row-oriented Dataframe redesign (Issue #94), column iteration is no longer an expander operation. Use the `=#.Column` pipeline to extract an entire column as an array, then `~ForEach.Array` to iterate it.
 
 ```polyglot
-[p] ~ForEach.Dataframe.Column
-   [~] <Dataframe << $sales
-   [~] >key >> $colName
-   [~] >column >> $colValues
-   [ ] $colName is #SalesColumns enum variant
-   [ ] $colValues is #array:string — all rows for this column
+[ ] Extract column, then iterate
+[r] =#.Column
+   [=] <data << $sales
+   [=] <column << .price
+   [=] >values >> $prices
+
+[p] ~ForEach.Array
+   [~] <Array << $prices
+   [~] >item >> $price
    ...
 ```
 
-See also: [[collections#Expand Operators]]
+See also: [[collections#Expand Operators]], [[stdlib/pipelines/#]]

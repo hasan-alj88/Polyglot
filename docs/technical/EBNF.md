@@ -43,6 +43,7 @@ file                ::= package_block { definition } ;
 definition          ::= data_def
                       | pipeline_def
                       | macro_def
+                      | wrapper_def
                       | queue_def
                       | error_def
                       | array_def
@@ -237,26 +238,20 @@ typed_field         ::= field_ref [ type_annotation ] ;
 typed_io_param      ::= io_param [ type_annotation ] ;
 ```
 
-### 4.3 Generic Type Parameters in {#} Definitions
+### 4.3 Type Macros, Wrappers, and {#} Schema Rules
 
 ```ebnf
-generic_param       ::= '<' name ;
-                      (* Type parameter input — e.g., <ValueType, <Dim *)
-
-generic_param_typed ::= '<' name '#' type_expr [ "<<" value_expr ] ;
-                      (* Type parameter with type annotation and optional default *)
-                      (* e.g., <Dim#Dimension << "1D" *)
-                      (* e.g., <KeyType << #KeyString *)
-
-generic_def_header  ::= data_id { ( generic_param | generic_param_typed ) } ;
-                      (* e.g., #Array<ValueType<Dim, #Map<KeyType<ValueType *)
+(* --- {#} schema rules (no generic type parameters) --- *)
 
 schema_inheritance  ::= "[#]" "<~" data_id ;
                       (* e.g., [#] <~ #String — inherit schema, can specialize *)
+                      (* e.g., [#] <~ #Map:#UnsignedInt:$ValueType — parameterized inheritance inside {M} *)
 
 schema_composition  ::= "[#]" "<<" schema_id ;
                       (* e.g., [#] << ##Flat — compose a schema into this type *)
-                      (* Multiple [#] << lines accumulate: one line, one schema *)
+                      (* Multiple [#] << lines accumulate: one line, one schema.
+                         Two schemas setting the same % property to the same value → agree (no error).
+                         Two schemas setting the same % property to different values → PGE-921. *)
 
 field_type_composition ::= "[#]" "<<" field_type_id ;
                       (* e.g., [#] << ###Enum — declare explicit field type *)
@@ -270,11 +265,70 @@ field_type_property ::= "[#]" "%###" dotted_name assignment_op expression ;
                       (* e.g., [#] %###Value — field-level metadata *)
 
 type_constraint     ::= "[<]" "<<" schema_id ;
-                      (* Nested under [#] <param — constrains the type parameter *)
+                      (* Nested under [#] <Param in {M} — constrains a macro parameter *)
                       (* e.g., [<] << ##Scalar — param must be scalar type *)
+
+(* --- {M} type macro definitions --- *)
+
+macro_def           ::= "{M}" '#' dotted_name NEWLINE
+                         { indent macro_type_body_line NEWLINE } ;
+                      (* e.g., {M} #Array, {M} #String.Subtype *)
+
+macro_type_body_line ::= macro_param
+                       | macro_type_param
+                       | nested_data_def
+                       | exec_line
+                       | comment_line ;
+
+macro_param         ::= "[#]" '<' name schema_id [ default_push value_expr ] NEWLINE
+                         { indent type_constraint NEWLINE } ;
+                      (* Value input — e.g., [#] <Name#RawString, [#] <Dim##Dimension <~ "1D" *)
+
+macro_type_param    ::= "[#]" "<#" name NEWLINE
+                         { indent type_constraint NEWLINE } ;
+                      (* Type-as-data-tree input — e.g., [#] <#ValueType *)
+                      (* The # definition itself is passed as data (all definitions are trees) *)
+
+nested_data_def     ::= "{#}" data_id NEWLINE
+                         { indent data_body_line NEWLINE } ;
+                      (* Macro body generates {#} definitions — e.g., {#} #{$ArrayName} *)
+
+(* --- [M] macro invocation inside {#} --- *)
+
+macro_invoke        ::= "[M]" '#' dotted_name NEWLINE
+                         { indent macro_arg NEWLINE } ;
+                      (* e.g., [M] #String.Subtype *)
+
+macro_arg           ::= "[#]" '<' name "<<" value_expr NEWLINE
+                         { indent macro_arg_fallback NEWLINE } ;
+                      (* e.g., [#] <Name << "Int" *)
+
+macro_arg_fallback  ::= "[<]" error_id "<<" value_expr ;
+                      (* e.g., [<] !Alias.Clash << "integer" — fallback on error *)
+
+(* --- {W} wrapper definitions --- *)
+
+wrapper_def         ::= "{W}" '=' dotted_name NEWLINE
+                         { indent wrapper_body_line NEWLINE } ;
+                      (* e.g., {W} =W.Polyglot, {W} =W.DB.Connection *)
+
+wrapper_body_line   ::= scope_setup
+                       | scope_cleanup
+                       | from_outer
+                       | to_outer
+                       | exec_line
+                       | comment_line ;
+                      (* Wrappers contain [\]/[/] scope and [{]/[}] IO — never {#} definitions *)
+
+(* --- Macro dispatch rule --- *)
+(* Macros overload by signature — ordered list of parameter count and kind:
+   <#ParamName  = type input  (a # definition as data tree)
+   <ParamName   = value input (a typed value)
+   Dispatch matches by parameter count AND parameter kind.
+   Two overloads with identical signature = compile error (PGE-930). *)
 ```
 
-**Rule:** Generic type parameters use `<` prefix (consistent with IO input semantics — the type is an "input" to the definition). Type parameters may include a `#type` annotation and a `<<` default value on the same line. Schema composition (`[#] << ##Name`) accumulates — each line adds one schema's properties. Schema properties (`[#] %##`) declare tree-level compile-time metadata. Field type properties (`[#] %###`) declare leaf-level metadata. Type constraints (`[<]`) restrict what types may bind to a parameter. Schema references (`##`) are only valid inside `{#}` definitions (PGE-926).
+**Rule:** Parameterized types use `{M}` type macros to generate `{#}` definitions at compile time. `{M}` defines type macros; `[M]` invokes them inside `{#}` blocks. `{W}` defines wrappers; `[W]` invokes them. `<~` in `{#}` means **only** inheritance — never macro invocation. Schema composition (`[#] << ##Name`) accumulates — each line adds one schema's properties. Schema properties (`[#] %##`) declare tree-level compile-time metadata. Field type properties (`[#] %###`) declare leaf-level metadata. Type constraints (`[<]`) restrict what types may bind to a macro parameter. Schema references (`##`) are only valid inside `{#}` definitions (PGE-926). Two macros with identical signatures (same name, same parameter count and kind) produce compile error PGE-930.
 
 ### 4.4 Tree Child Accessor
 
@@ -284,7 +338,7 @@ child_access        ::= variable_id '<' name { '<' name } ;
                       (* Chained: $cube<2<3<0 — branch 2, branch 3, leaf 0 *)
 ```
 
-**Rule:** The `<` character after a `$variable` is a tree child accessor. It navigates into flexible children declared with `[:]` in `{#}` definitions. Fixed fields still use `.` (`$user.name`). The parser distinguishes `<` by context — after a type name in a `{#}` header it is a type parameter definition; after a `$variable` it is child access.
+**Rule:** The `<` character after a `$variable` is a tree child accessor. It navigates into flexible children declared with `[:]` in `{#}` definitions. Fixed fields still use `.` (`$user.name`). The parser distinguishes `<` by context — after `[#]` in a `{M}` macro it is a parameter declaration; after a `$variable` it is child access.
 
 ---
 
@@ -506,7 +560,7 @@ import_line         ::= "[@]" '@' name final_push package_id ;
 ### 9.2 Data Definition
 
 ```ebnf
-data_def            ::= "{#}" generic_def_header NEWLINE
+data_def            ::= "{#}" data_id NEWLINE
                          { indent data_body_line NEWLINE } ;
 
 data_body_line      ::= schema_inheritance
@@ -514,13 +568,10 @@ data_body_line      ::= schema_inheritance
                       | field_type_composition
                       | schema_property
                       | field_type_property
-                      | type_param_line
+                      | macro_invoke
                       | data_field
                       | metadata_line
                       | comment_line ;
-
-type_param_line     ::= "[#]" ( generic_param | generic_param_typed ) NEWLINE
-                         { indent type_constraint NEWLINE } ;
 
 data_field          ::= enum_field | value_field | flex_data_field | typed_flex_wildcard | field_expansion ;
 
@@ -540,10 +591,10 @@ typed_flex_wildcard ::= "[:]" flex_sep "*" type_annotation ;
                          Absent wildcard → untyped (#serial). *)
 
 field_expansion    ::= "[.]" fixed_sep "*" type_param_ref type_annotation ;
-                      (* e.g., [.] .*ColumnEnum#Array<CellType — expands enum fields from type param.
-                         Type param must satisfy ##EnumLeafs (PGE-928).
+                      (* e.g., [.] .*ColumnEnum#$CellType — expands enum fields from macro parameter.
+                         Macro param must satisfy ##EnumLeafs (PGE-928).
                          Compiler stamps out one [.] per enum variant, each with annotated type.
-                         Used by #Dataframe to expand columns from ColumnEnum parameter. *)
+                         Used inside {M} macros to expand fields from type parameters. *)
 ```
 
 **Rules:**
@@ -633,7 +684,7 @@ wrapper_section     ::= indent "[W]" pipeline_ref NEWLINE
 wrapper_io_line     ::= "[=]" variable_id assignment_op value_expr ;
 ```
 
-**Rule:** `[W]` references a macro (`{M}`). Macro IO is wired using `[=]` with `$` variables. See §9.4 for macro definition syntax and wrapper IO wiring details.
+**Rule:** `[W]` references a wrapper (`{W}`). Wrapper IO is wired using `[=]` with `$` variables. See §9.4b for wrapper definition syntax and IO wiring details.
 
 **Examples:** `[W] =W.Polyglot`, `[W] =W.DB.Connection` with `[=] $connectionString << $connStr`
 
@@ -653,18 +704,26 @@ exec_line           ::= run_line
                       | comment_line ;
 ```
 
-### 9.4 Macro Definition
+### 9.4 Type Macro Definition (`{M}`)
 
 ```ebnf
-macro_def           ::= "{M}" '=' dotted_name NEWLINE
-                         { indent macro_body_line NEWLINE } ;
+(* Type macros generate {#} definitions at compile time.
+   See §4.3 for macro_def, macro_param, macro_type_param, macro_invoke grammar. *)
+```
 
-macro_body_line     ::= scope_setup
-                      | scope_cleanup
-                      | from_outer
-                      | to_outer
-                      | exec_line
-                      | comment_line ;
+**Rules:**
+- `{M} #Name` defines a type macro. `[M] #Name` invokes it inside a `{#}` block.
+- `[#] <Param` declares a value input parameter; `[#] <#Param` declares a type-as-data-tree input.
+- Macro body contains `{#}` definitions that use `{$var}` interpolation from parameters.
+- **[M] merge rule (identity):** The outer `{#}` names the result; the macro's internal `{#}` resolves to the same name. The macro fills the body. Any `[#]` lines after `[M]` in the outer `{#}` extend/override the macro's output.
+- Macros overload by signature (parameter count + kind). Two overloads with identical signature = PGE-930.
+- Type macros do NOT contain `[\]`, `[/]`, `[{]`, `[}]`, `[t]`, `[=]` IO, or `[Q]` — those belong to wrappers or pipelines.
+
+### 9.4b Wrapper Definition (`{W}`)
+
+```ebnf
+(* Wrappers provide setup/cleanup scope for pipelines.
+   See §4.3 for wrapper_def grammar. *)
 
 scope_setup         ::= "[\]" pipeline_ref NEWLINE
                          { indent exec_line NEWLINE }
@@ -681,13 +740,14 @@ to_outer            ::= "[}]" variable_id ;
 ```
 
 **Rules:**
-- `[{]` declares a macro input — a typed variable pulled from the calling pipeline's scope.
-- `[}]` declares a macro output — a variable exposed back to the calling pipeline's scope.
+- `{W} =W.Name` defines a wrapper. `[W] =W.Name` invokes it inside a pipeline.
+- `[{]` declares a wrapper input — a typed variable pulled from the calling pipeline's scope.
+- `[}]` declares a wrapper output — a variable exposed back to the calling pipeline's scope.
 - `[\]` runs before the pipeline execution body (setup). Can call a single pipeline or open a scope with multiple exec lines.
 - `[/]` runs after the pipeline execution body (cleanup). Same structure as `[\]`.
-- Macros do NOT contain `[t]`, `[=]` IO, or `[Q]` — those belong to the pipeline.
+- Wrappers do NOT contain `{#}` definitions, `[t]`, `[=]` IO, or `[Q]` — those belong to type macros or pipelines.
 - Execution order: `[t],[=]` → `[Q]` → `[\]` → Execution Body → `[/]`.
-- The wrapper unpacks the macro before and after the body like brackets.
+- The wrapper unpacks before and after the body like brackets.
 - **Rule (parallel fork):** `[p]` inside `[\]` with no subsequent `[*] *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `[*] *All` with `[*] << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
 - Variables produced in `[\]` (including by `[p]`) remain accessible in `[/]`.
 
@@ -700,7 +760,7 @@ wrapper_section     ::= indent "[W]" pipeline_ref NEWLINE
 wrapper_io_line     ::= "[=]" variable_id assignment_op value_expr ;
 ```
 
-At the `[W]` line, macro IO is wired using `[=]` with `$` variables (not `<`/`>` IO params, not `[{]`/`[}]`):
+At the `[W]` line, wrapper IO is wired using `[=]` with `$` variables (not `<`/`>` IO params, not `[{]`/`[}]`):
 
 ```
 [W] =W.DB.Connection

@@ -184,9 +184,9 @@ Pipeline-specific `[Q]` controls must not contradict the queue's `{Q}` defaults 
 
 ## Wrappers
 
-Wrappers invoke a macro (see [[blocks]] `{M}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE-107). The `[W]` line must reference a valid macro (PGE-108), and the IO wired at the `[W]` site must match the macro's `[{]`/`[}]` declarations (PGE-109).
+Wrappers invoke a wrapper definition (`{W}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE-107). The `[W]` line must reference a valid wrapper (PGE-108), and the IO wired at the `[W]` site must match the wrapper's `[{]`/`[}]` declarations (PGE-109).
 
-Macros (`{M}`) cannot contain `[t]`, `[Q]`, `[=]`, `[p]`, `[b]`, or `[*]` — these are pipeline-only elements (PGE-104). See [[blocks]] for macro structural constraints.
+`{W}` is a separate entity from `{M}` — wrappers are not macros. `{W}` defines wrappers (setup/cleanup scope with `[\]`/`[/]` and `[{]`/`[}]` IO), while `{M}` defines type macros (compile-time `{#}` generation). Wrappers (`{W}`) cannot contain `[t]`, `[Q]`, `[=]`, `[p]`, `[b]`, or `[*]` — these are pipeline-only elements (PGE-104). See [[blocks]] for wrapper structural constraints.
 
 - `[\]` — macro setup, runs before the execution body
 - `[/]` — macro cleanup, runs after the execution body
@@ -249,7 +249,7 @@ flowchart LR
 | Execution body `[p]` | Execution body `[*] *All` | ✓ — normal parallel pattern |
 
 ```polyglot
-{M} =W.Tracing
+{W} =W.Tracing
    [{] $traceId#string
    [}] $duration#string
 

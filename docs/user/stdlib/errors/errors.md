@@ -70,6 +70,9 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
 {!} !Validation
    [.] .Error;#Error
 
+{!} !Alias
+   [.] .Clash;#Error
+
 {!} !Permission
    [.] .File.Denied;#Error
    [.] .Web.Denied;#Error
@@ -83,7 +86,7 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
 
 ### `!Error` — User-Extensible Namespace
 
-`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Permission`) have Polyglot-defined fixed leaves.
+`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Alias`, `!Permission`) have Polyglot-defined fixed leaves.
 
 Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `[.]` for terminal leaves. Siblings at the same level must all use the same separator (sibling homogeneity rule).
 
@@ -129,3 +132,24 @@ Each stdlib pipeline declares the errors it can raise via `[=] !ErrorName` (see 
 =Math.Modulo
    [=] !Math.DivideByZero
 ```
+
+## `!Alias.Clash` — Compile Error
+
+`!Alias.Clash` is a compile error raised when an alias collides with an existing name in the target namespace. Aliases place definitions at multiple locations in the `%` metadata tree; when a target location is already occupied, this error fires.
+
+### `[<] !Alias.Clash` Fallback Chain
+
+In `{M}` type macros, the `[#] <Alias` parameter can provide a fallback chain of alternative alias values using `[<] !Alias.Clash`. The compiler tries each value in order until one succeeds:
+
+```polyglot
+[#] <Alias << "int"
+   [<] !Alias.Clash << "integer"
+   [<] !Alias.Clash << "Integer"
+```
+
+- First, the compiler tries `"int"` as the alias
+- If `"int"` clashes with an existing name in the target namespace, `!Alias.Clash` fires and the compiler tries `"integer"`
+- If `"integer"` also clashes, the compiler tries `"Integer"`
+- If all alternatives are exhausted, the compile error propagates (unrecoverable)
+
+This pattern is used in `{M} #String.Subtype` to provide robust alias resolution for scalar type definitions like `##Int`, `##Float`, etc.
