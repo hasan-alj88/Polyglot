@@ -95,7 +95,9 @@ type_constraint     ::= "[<]" "<<" schema_id ;
 (* --- {M} type macro definitions --- *)
 
 macro_def           ::= "{M}" '#' dotted_name NEWLINE
+                         indent ( macro_param | macro_type_param ) NEWLINE
                          { indent macro_type_body_line NEWLINE } ;
+                      (* At least one parameter required — parameterless {M} is PGE01023 *)
                       (* e.g., {M} #Array, {M} #String.Subtype *)
 
 macro_type_body_line ::= macro_param

@@ -87,7 +87,8 @@ error_name          ::= dotted_name ;
 ### 10.4 Data Load
 
 ```ebnf
-data_load           ::= "[#]" assignment_expr ;
+data_load           ::= "[#]" assign_target assignment_op ( pipeline_call | data_id ) ;
+                      (* Source must be a pipeline call or data reference, not a literal — PGE02011 *)
 ```
 
 **In execution:** `[#] $hire#NewHire << $payload` — deserialize serialized data into a typed structure.

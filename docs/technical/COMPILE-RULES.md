@@ -47,6 +47,13 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01018 | Tautological or Contradictory Trigger Condition |
 | PGE01019 | Macro Dispatch Ambiguity *(planned)* |
 | PGE01020 | Effectless Execution Expression |
+| PGE01021 | Empty Data Definition |
+| PGE01022 | Empty Error Namespace |
+| PGE01023 | Parameterless Macro |
+| PGE01024 | Incompatible Operation Marker |
+| PGE01025 | Discard in Wrapper IO |
+| PGE01026 | Orphan Continuation Line |
+| PGE01027 | Empty Foreign Code Block |
 
 ### 02 — Lifecycle & State
 
@@ -62,6 +69,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE02008 | Access After Release |
 | PGE02009 | Unreachable Code |
 | PGE02010 | Discard Default Assignment |
+| PGE02011 | Data Load Schema Mismatch |
 
 ### 03 — Parallelism
 
@@ -77,6 +85,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE03008 | Collect Operator IO Mismatch |
 | PGE03009 | Nested Expand Without Collect |
 | PGE03010 | Collector Without Expand |
+| PGE03011 | Orphaned Expand IO Marker |
 
 ### 04 — Types & Values
 
@@ -105,6 +114,8 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE04021 | Empty String on Non-None Type *(planned)* |
 | PGE04022 | Macro Type Constraint Violation *(planned)* |
 | PGE04023 | Macro Field Constraint Violation *(planned)* |
+| PGE04024 | Non-Value Comparison |
+| PGE04025 | Untyped Array |
 
 ### 05 — Data Definitions
 
@@ -134,6 +145,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE06011 | Duplicate Wildcard Catch-All |
 | PGE06012 | Unreachable Branch After Wildcard |
 | PGE06013 | Tautological or Contradictory Branch Condition |
+| PGE06014 | Wildcard-Only Match |
 
 ### 07 — Error Handling
 
@@ -162,6 +174,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE08009 | Uncaptured Required Output at Call Site |
 | PGE08010 | IO Direction Mismatch |
 | PGE08011 | Self-Assignment |
+| PGE08012 | Self-Chain Requires Numeric Indexing |
 
 ### 09 — Imports & Dependencies
 
@@ -209,6 +222,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE12001 | Undefined Metadata Field Access |
 | PGE12002 | Duplicate Alias |
 | PGE12003 | Invalid Inline Pipeline Argument |
+| PGE12004 | Empty Metadata Alias |
 
 ## Warning Code Reference (PGW)
 
@@ -217,7 +231,8 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | Code | Name |
 |------|------|
 | PGW01001 | Empty Execution Body |
-| PGW01002 | Empty Data Definition |
+| PGW01002 | Empty Data Definition *(superseded by PGE01021)* |
+| PGW01003 | No Definitions in File |
 | PGW02001 | Default Pull Across State Change |
 | PGW02002 | Unused Variable |
 | PGW02003 | Unpushed Output Port |
@@ -226,6 +241,7 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | PGW03001 | `[b]` Called Pipeline Has Discarded Outputs |
 | PGW03002 | Error Handler on Fire-and-Forget |
 | PGW04001 | Single-Platform Path |
+| PGW04002 | Leading Zeros in Literal |
 | PGW07001 | Error Handler on Non-Failable Call |
 | PGW07002 | Caller Overrides Pipeline Fallback |
 | PGW07003 | Missing Fallback Message |

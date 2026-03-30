@@ -75,3 +75,15 @@ updated: 2026-03-30
       [r] =Audit.Close
          [=] <token << $auditToken
 ```
+
+### EC-18.4: Zero-parameter macro — should be `{#}` instead
+
+**EBNF ref:** `macro_def` — requires at least one `macro_param` or `macro_type_param`
+**What it tests:** A `{M}` with no `[#]` parameters. PGE01023 fires. See [[concepts/macros|macros]].
+
+```polyglot
+[ ] ✗ PGE01023 — no parameters, use {#} instead
+{M} #Singleton
+   {#} #Singleton
+      [.] .instance#string << "only"
+```

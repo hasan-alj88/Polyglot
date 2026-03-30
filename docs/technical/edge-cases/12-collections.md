@@ -270,3 +270,39 @@ updated: 2026-03-30
 [r] =UseWinner
    [=] <x << $winner
 ```
+
+### EC-12.14: Collector outside expand/parallel scope
+
+<!-- @collections -->
+**EBNF ref:** `exec_line` includes `collect_line` at any scope
+**What it tests:** `*Into.Array` at pipeline top level with no `~ForEach` or `[p]` context. PGE03010 fires. See [[concepts/collections/expand|expand]].
+
+```polyglot
+[ ] ✗ PGE03010 — collector has no parallel source
+[r] *Into.Array
+   [*] <item << $someValue
+   [*] >Array >> $results
+```
+
+### EC-12.15: `[p]` on sequential collector — incompatible marker
+
+**EBNF ref:** `collect_line ::= ( "[r]" | "[p]" ) collect_invocation`
+**What it tests:** `*Into.Array` with `[p]` marker — PGE01024 fires because `*Into.Array` only declares `[r]` compatibility. See [[concepts/collections/expand|expand]].
+
+```polyglot
+[ ] ✗ PGE01024 — *Into.Array is not [p]-compatible
+[p] *Into.Array
+   [*] <item << $val
+   [*] >Array >> $arr
+```
+
+### EC-12.16: `[~]` expand IO outside expand context
+
+**EBNF ref:** `[~]` is a block element for expand IO
+**What it tests:** Orphaned `[~]` markers with no enclosing `~ForEach`. PGE03011 fires.
+
+```polyglot
+[ ] ✗ PGE03011 — [~] outside expand scope
+[~] <Array << $items
+[~] >item >> $item
+```

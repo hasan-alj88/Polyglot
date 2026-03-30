@@ -38,17 +38,20 @@ Progress:
 - Issue #94: [██████████] 100% (3/3 plans — also closes #93, #79, #91)
 - Issue #97: [██████████] 100% (1/1 plans)
 - Issue #98: [██████████] 100% (1/1 plans)
+- Issues #99-#106: [██████████] 100% (batch — 8 EBNF edge cases)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+**Batch: Issues #99–#106** — EBNF edge cases (design + test)
+Branch: `design/issue-99-106-ebnf-edge-cases`
+Status: All 8 issues complete — ready for merge
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ◀     [ready to merge]
 ```
 
 ## Accumulated Context
@@ -118,6 +121,13 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #97 — EBNF bare literals/non-pipeline identifiers | 2026-03-30 | Merged design/issue-97 to main |
 | Issue #98 — EBNF discard defaults and self-assignment | 2026-03-30 | PGE02010 (discard default), PGE08011 (self-assignment); 3 edge cases |
 | Closed #98 — EBNF discard defaults and self-assignment | 2026-03-30 | Merged design/issue-98 to main |
+| Issues #99-#106 — EBNF edge cases batch | 2026-03-30 | 8 issues, 26 edge cases, 16 new compile rules (PGE01021-27, PGE02011, PGE03011, PGE04024-25, PGE06014, PGE08012, PGE12004, PGW01003, PGW04002) |
+| Multiple triggers = AND semantics | 2026-03-30 | Multiple [t] lines use AND (all must fire); [⏐] for OR |
+| Operations declare allowed markers | 2026-03-30 | PGE01024 — each operation declares compatible block markers; compiler validates |
+| PGW01002 superseded by PGE01021 | 2026-03-30 | Empty {#} upgraded from warning to error; EBNF tightened |
+| Self-chains require numeric indexing | 2026-03-30 | PGE08012 — =A => =A valid but must use >0./<1. notation |
+| Array element type mandatory | 2026-03-30 | PGE04025 — untyped #array is compile error |
+| Inputs are always Final | 2026-03-30 | Input parameters reach Final before pipeline triggers; write = PGE02003 |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train

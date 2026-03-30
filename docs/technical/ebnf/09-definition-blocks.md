@@ -24,7 +24,9 @@ import_line         ::= "[@]" '@' name final_push package_id ;
 
 ```ebnf
 data_def            ::= "{#}" data_id NEWLINE
+                         indent data_body_line NEWLINE
                          { indent data_body_line NEWLINE } ;
+                      (* At least one body line required — empty {#} is PGE01021 *)
 
 data_body_line      ::= schema_inheritance
                       | schema_composition
@@ -92,6 +94,11 @@ trigger_section     ::= indent "[t]" trigger_ref NEWLINE ;
 
 trigger_ref         ::= pipeline_ref [ string_literal ] ;
 ```
+
+**Rules:**
+- `trigger_ref` must reference an operation that declares `[t]` marker compatibility (PGE01024). Stdlib trigger pipelines (`=T.*`) are the canonical trigger operations.
+- Multiple `[t]` lines in one pipeline have **AND** semantics — all triggers must fire before the pipeline executes.
+- For **OR** semantics (any trigger fires the pipeline), use `[|]` to scope alternative triggers.
 
 **Examples:** `[t] =T.Call`, `[t] =T.Daily"3AM"`, `[t] =T.Folder.NewFiles`
 
@@ -277,7 +284,9 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
 
 ```ebnf
 error_def           ::= "{!}" error_namespace_id NEWLINE
+                         indent error_leaf_line NEWLINE
                          { indent error_leaf_line NEWLINE } ;
+                      (* At least one leaf required — empty {!} is PGE01022 *)
 
 error_namespace_id  ::= '!' dotted_name ;
 
@@ -334,7 +343,9 @@ metadata_info       ::= fixed_sep "info" type_annotation NEWLINE
 
 (* Alias — binds short names to parent definition or field *)
 metadata_alias      ::= "%" "alias" NEWLINE
+                         indent flex_sep string_literal NEWLINE
                          { indent flex_sep string_literal NEWLINE } ;
+                      (* At least one alias name required — PGE12004 *)
 
 (* Live fields — Polyglot-managed, read-only, implicit *)
 metadata_live       ::= fixed_sep name ";" "live" type_expr ;

@@ -27,10 +27,14 @@ conditional_branch  ::= exec_line | comment_line ;
 
 ```ebnf
 match_line          ::= "[r]" value_expr ">>" assign_target NEWLINE
-                         indent { match_arm NEWLINE } ;
+                         indent match_value_arm NEWLINE
+                         { indent match_arm NEWLINE } ;
+                      (* At least one non-wildcard arm required — PGE06014 *)
 
-match_arm           ::= "[?]" match_value ">>" value_expr
+match_arm           ::= match_value_arm
                       | "[?]" "*" ">>" value_expr ;        (* wildcard catch-all *)
+
+match_value_arm     ::= "[?]" match_value ">>" value_expr ;
 
 match_value         ::= literal
                       | identifier
@@ -92,7 +96,8 @@ continuation_line   ::= "[+]" expression ;
 ### 11.6 Foreign Code Injection
 
 ```ebnf
-foreign_code_block  ::= foreign_code_header { foreign_code_line } ;
+foreign_code_block  ::= foreign_code_header foreign_code_line { foreign_code_line } ;
+                      (* At least one code line required — PGE01027 *)
 foreign_code_header ::= "[c]" "#Code:" language_name ":" version ;
 foreign_code_line   ::= "[c]" any_text ;
 language_name       ::= name ;

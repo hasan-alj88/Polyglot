@@ -177,3 +177,99 @@ updated: 2026-03-30
       [r] =Session.Close
          [=] <session << $session
 ```
+
+### EC-9.12: Empty pipeline body — no sections at all
+
+<!-- @pipelines -->
+**EBNF ref:** `pipeline_body` — trigger, queue, wrapper, execution sections
+**What it tests:** A `{=}` with no content. PGE01005 (missing trigger) fires first. See [[concepts/pipelines/INDEX|pipelines]].
+
+```polyglot
+[ ] ✗ PGE01005 — empty pipeline has no trigger
+{=} =EmptyPipeline
+```
+
+### EC-9.13: Empty `{#}` data definition — no fields
+
+**EBNF ref:** `data_def` — requires at least one `data_body_line`
+**What it tests:** A `{#}` with no fields. PGE01021 fires. See [[syntax/types/INDEX|types]].
+
+```polyglot
+[ ] ✗ PGE01021 — no fields
+{#} #EmptyRecord
+```
+
+### EC-9.14: Empty `{!}` error namespace — no leaves
+
+**EBNF ref:** `error_def` — requires at least one `error_leaf_line`
+**What it tests:** A `{!}` with no error leaves. PGE01022 fires. See [[concepts/errors|errors]].
+
+```polyglot
+[ ] ✗ PGE01022 — no error leaves
+{!} !EmptyErrors
+```
+
+### EC-9.15: File with only comments after `{@}`
+
+**EBNF ref:** `file ::= package_block { definition }`
+**What it tests:** A file that declares a package but defines nothing. PGW01003 fires. See [[syntax/packages|packages]].
+
+```polyglot
+[ ] ⚠ PGW01003 — no definitions in file
+{@} @Local:999.EmptyPackage:v1.0.0
+{ } This file defines nothing
+```
+
+### EC-9.16: Non-trigger pipeline used as `[t]` trigger
+
+<!-- @pipelines:Triggers -->
+**EBNF ref:** `trigger_ref ::= pipeline_ref [ string_literal ]`
+**What it tests:** Using a non-trigger operation (e.g., `=File.Text.Read`) with `[t]`. PGE01024 fires — operations declare allowed markers. See [[concepts/pipelines/INDEX|pipelines]].
+
+```polyglot
+[ ] ✗ PGE01024 — =File.Text.Read is not trigger-compatible
+{=} =Bad
+   [t] =File.Text.Read
+```
+
+### EC-9.17: Multiple `[t]` trigger lines — AND semantics
+
+<!-- @pipelines:Triggers -->
+**EBNF ref:** `trigger_io_section` — allows multiple `trigger_line` via `{ }` repetition
+**What it tests:** Multiple `[t]` lines use AND semantics — all triggers must fire. For OR, use `[|]`. See [[concepts/pipelines/INDEX|pipelines]].
+
+```polyglot
+[ ] ✓ AND — both triggers must fire
+{=} =DualTrigger
+   [t] =T.Daily"3AM"
+   [t] =T.Webhook"/api/ready"
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [r] =DoWork
+```
+
+### EC-9.18: Duplicate `[Q]` or `[W]` sections
+
+**EBNF ref:** `pipeline_body ::= ... queue_section wrapper_section ...`
+**What it tests:** Grammar enforces exactly one `[Q]` and one `[W]`. Duplicate sections are a parse error.
+
+```polyglot
+[ ] ✗ parse error — grammar requires single [Q] and [W]
+{=} =DuplicateQueue
+   [t] =T.Call
+   [Q] =Q.Default
+   [Q] =Q.Custom
+   [W] =W.Polyglot
+```
+
+### EC-9.19: Discard `$*` in wrapper IO wiring
+
+<!-- @pipelines:Wrappers -->
+**EBNF ref:** `wrapper_io_line ::= "[=]" variable_id assignment_op value_expr`
+**What it tests:** Using `$*` (discard) in wrapper IO defeats the purpose. PGE01025 fires. See [[concepts/pipelines/wrappers|wrappers]].
+
+```polyglot
+[ ] ✗ PGE01025 — $* discards wrapper input
+[W] =W.DB.Connection
+   [=] $* << $connectionString
+```

@@ -3,10 +3,11 @@ rule: "1.2w"
 code: PGW01002
 name: Empty Data Definition
 severity: warning
+superseded_by: PGE01021
 ---
 
-### Rule 1.2w — Empty Data Definition
-`PGW01002`
+### Rule 1.2w — Empty Data Definition *(superseded)*
+`PGW01002` → **Superseded by [PGE01021](../PGE/PGE01021-empty-data-definition.md)**
 
 **Statement:** A `{#}` data definition that contains no `[.]` fixed field or `[:]` flexible field declarations produces a warning. The definition is syntactically valid but defines a type with no structure — likely a stub or incomplete definition.
 **Rationale:** A data type with no fields cannot carry data. This is almost always an authoring oversight — the developer created the type but forgot to add fields. This is a warning rather than an error because the definition is structurally valid and may be intentional as a marker type.
@@ -58,4 +59,4 @@ severity: warning
 
 **Diagnostic:** "Empty data definition `#Name` — no `[.]` or `[:]` field declarations"
 
-**Open point:** None.
+**Open point:** Superseded by PGE01021 — empty `{#}` is now a compile error, not a warning. The EBNF grammar has been tightened to require at least one body line.
