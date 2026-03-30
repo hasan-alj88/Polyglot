@@ -36,7 +36,7 @@ Review in batches by section. Each edge case includes:
 | [11-control-flow.md](11-control-flow.md) | S11. Control Flow | EC-11.1--11.6 |
 | [12-collections.md](12-collections.md) | S12. Collection Operations | EC-12.1--12.16 |
 | [13-comments.md](13-comments.md) | S13. Comments | EC-13.1--13.3 |
-| [14-lifecycle.md](14-lifecycle.md) | S14. Variable Lifecycle | EC-14.1--14.4 |
+| [14-lifecycle.md](14-lifecycle.md) | S14. Variable Lifecycle | EC-14.1--14.7 |
 | [15-metadata-blocks.md](15-metadata-blocks.md) | S15. Metadata Blocks | EC-15.1--15.4 |
 | [16-trigger-io-wiring.md](16-trigger-io-wiring.md) | S16. Trigger IO Wiring | EC-16.1--16.3 |
 | [17-negation-operators.md](17-negation-operators.md) | S17. Negation Operators | EC-17.1--17.2 |
@@ -67,7 +67,7 @@ Review in batches by section. Each edge case includes:
 | S11 Control Flow | EC-11.1--11.3 | Conditional chains, error scoping, logical operators |
 | S12 Collections | EC-12.1--12.16 | All expand variants, all collect variants, direct output, multiple collectors, sync/race collectors, multi-wave, [*] <</>>/semantics, orphaned collectors/markers |
 | S13 Comments | EC-13.1--13.3 | Square, curly, multiline |
-| S14 Lifecycle | EC-14.1--14.4 | Default->Final, Final immutability, leaf-only, all-or-none |
+| S14 Lifecycle | EC-14.1--14.7 | Default->Final, Final immutability, leaf-only, all-or-none, Final-then-Default, input immutability, data load schema |
 | S15 Metadata Blocks | EC-15.1--15.4 | `[%]` user fields, alias, `.info#serial`, `%` live accessor |
 | S16 Trigger IO Wiring | EC-16.1--16.3 | Trigger outputs, multi-output wiring, mixed fill modes |
 | S17 Negation Operators | EC-17.1--17.2 | `<!?`, `>!?`, `<=!?`, `>=!?`, negation in compound logic |
@@ -79,4 +79,4 @@ Review in batches by section. Each edge case includes:
 | S23 Stress Tests | ST-1--ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, macro+timer |
 | S24 Datatype Definitions | EC-24.1--24.18 | Scalar regex boundaries, `<~` inheritance, ##/### composition, collection parameterized inheritance, %## property completeness |
 
-**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope = 118 edge cases across 24 sections.**
+**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle = 121 edge cases across 24 sections.**

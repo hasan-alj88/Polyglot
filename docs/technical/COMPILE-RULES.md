@@ -66,6 +66,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE02008 | Access After Release |
 | PGE02009 | Unreachable Code |
 | PGE02010 | Discard Default Assignment |
+| PGE02011 | Data Load Schema Mismatch |
 
 ### 03 — Parallelism
 
