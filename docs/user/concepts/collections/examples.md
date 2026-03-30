@@ -110,17 +110,17 @@ Parallel execution, expand/collect, and race collector rules enforced at compile
 
 | Code | Name | Section |
 |------|------|---------|
-| PGE-301 | No Push Across Parallel Boundaries | Parallel Boundaries |
-| PGE-302 | Parallel Output Must Be Collected | Discarding Parallel Output |
-| PGE-303 | Pull Isolation Until Collection | Parallel Boundaries |
-| PGE-304 | Section-Boundary Pairing | Parallel Boundaries |
-| PGE-305 | `[b]` Has No Collectible Output | Discarding Parallel Output |
-| PGE-306 | Race Collector Type Homogeneity | Race Collectors |
-| PGE-307 | Expand Operator Input Mismatch | Expand Operators |
-| PGE-308 | Collect Operator IO Mismatch | Collect Operators |
-| PGE-309 | Nested Expand Without Collect | Expand Operators |
-| PGE-311 | Collector Without Expand | Collect Operators |
-| PGE-922 | Unbounded Collection Nesting | Nested Collection Safety |
-| PGW-301 | `[b]` Called Pipeline Has Discarded Outputs | Discarding Parallel Output |
-| PGW-302 | Error Handler on Fire-and-Forget | Discarding Parallel Output |
-| PGW-906 | Unlimited Depth on User Type | Nested Collection Safety |
+| PGE03001 | No Push Across Parallel Boundaries | Parallel Boundaries |
+| PGE03002 | Parallel Output Must Be Collected | Discarding Parallel Output |
+| PGE03003 | Pull Isolation Until Collection | Parallel Boundaries |
+| PGE03004 | Section-Boundary Pairing | Parallel Boundaries |
+| PGE03005 | `[b]` Has No Collectible Output | Discarding Parallel Output |
+| PGE03006 | Race Collector Type Homogeneity | Race Collectors |
+| PGE03007 | Expand Operator Input Mismatch | Expand Operators |
+| PGE03008 | Collect Operator IO Mismatch | Collect Operators |
+| PGE03009 | Nested Expand Without Collect | Expand Operators |
+| PGE03010 | Collector Without Expand | Collect Operators |
+| PGE11002 | Unbounded Collection Nesting | Nested Collection Safety |
+| PGW03001 | `[b]` Called Pipeline Has Discarded Outputs | Discarding Parallel Output |
+| PGW03002 | Error Handler on Fire-and-Forget | Discarding Parallel Output |
+| PGW11003 | Unlimited Depth on User Type | Nested Collection Safety |

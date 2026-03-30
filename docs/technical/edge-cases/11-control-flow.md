@@ -90,7 +90,7 @@ updated: 2026-03-30
 
 **EBNF:** `match_arm ::= "[?]" match_value ">>" value_expr`
 
-**What it tests:** Enum match with all variants listed — no `*` required, same as verbose form (PGE-602).
+**What it tests:** Enum match with all variants listed — no `*` required, same as verbose form (PGE06002).
 
 ```polyglot
 [ ] All #Direction variants covered — no * needed

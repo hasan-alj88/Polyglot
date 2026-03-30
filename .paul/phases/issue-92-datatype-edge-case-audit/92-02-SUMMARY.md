@@ -10,8 +10,8 @@ requires:
 
 provides:
   - Resolved 4 edge cases with spec corrections and new compile rules
-  - PGE-927 (Final Field Override via Inheritance)
-  - PGE-421 (Empty String on Non-None Type)
+  - PGE11005 (Final Field Override via Inheritance)
+  - PGE04021 (Empty String on Non-None Type)
   - ###None as third field type
   - 0D array semantics
 
@@ -34,9 +34,9 @@ key-files:
 key-decisions:
   - "#Dimension regex stores D suffix: ^[0-9]+D$ not ^[0-9]+$"
   - "###None is third field type for nullable — empty string only valid for ###None types"
-  - "PGE-421 rejects empty string on non-###None types"
-  - "PGE-927 prevents overriding << final fields via <~ inheritance"
-  - "0D array = scalar container, direct access, PGE-417 on index"
+  - "PGE04021 rejects empty string on non-###None types"
+  - "PGE11005 prevents overriding << final fields via <~ inheritance"
+  - "0D array = scalar container, direct access, PGE04017 on index"
   - "#Dataframe status remains TBD"
 
 patterns-established:
@@ -64,17 +64,17 @@ completed: 2026-03-28
 |-----------|--------|-------|
 | AC-1: All 18 edge cases reviewed | Pass | 4 fixed, 13 clean, 1 TBD |
 | AC-2: #Dimension regex consistent | Pass | `"^[0-9]+D$"` in both files |
-| AC-3: PGE-927 in COMPILE-RULES.md | Pass | Index + detailed rule section |
+| AC-3: PGE11005 in COMPILE-RULES.md | Pass | Index + detailed rule section |
 | AC-4: ###None in types.md | Pass | Field types table, inference rules, hierarchy |
-| AC-5: PGE-421 in COMPILE-RULES.md | Pass | Index entry added |
+| AC-5: PGE04021 in COMPILE-RULES.md | Pass | Index entry added |
 | AC-6: 0D array semantics | Pass | Multidimensional Arrays section updated |
 | AC-7: EDGE-CASES.md updated | Pass | 4 edge cases marked RESOLVED |
 
 ## Accomplishments
 
 - Added `###None` as third `###` field type — nullable types where empty string `""` is the only valid value
-- Added PGE-927 (Final Field Override via Inheritance) — prevents child types from overriding `<<` final fields
-- Added PGE-421 (Empty String on Non-None Type) — enforces `###None` exclusivity for empty strings
+- Added PGE11005 (Final Field Override via Inheritance) — prevents child types from overriding `<<` final fields
+- Added PGE04021 (Empty String on Non-None Type) — enforces `###None` exclusivity for empty strings
 - Fixed #Dimension regex to `"^[0-9]+D$"` across authoritative spec and stdlib
 - Documented 0D array semantics: scalar container, direct access, no indexing
 
@@ -85,7 +85,7 @@ completed: 2026-03-28
 | `docs/user/syntax/types.md` | Modified | ###None field type, #Dimension regex, 0D array semantics, hierarchy |
 | `docs/user/stdlib/types/scalars.md` | Modified | #Dimension regex + examples |
 | `docs/user/stdlib/types/boolean.md` | Modified | #None definition with ###None |
-| `docs/technical/COMPILE-RULES.md` | Modified | PGE-927 + PGE-421 |
+| `docs/technical/COMPILE-RULES.md` | Modified | PGE11005 + PGE04021 |
 | `docs/technical/EDGE-CASES.md` | Modified | EC-24.3/7/10/13 marked RESOLVED |
 
 ## Decisions Made
@@ -93,9 +93,9 @@ completed: 2026-03-28
 | Decision | Rationale | Impact |
 |----------|-----------|--------|
 | #Dimension stores D suffix | User confirmed D is part of stored value, not syntax sugar | Regex `"^[0-9]+D$"` |
-| ###None as third field type | #None needs explicit classification; empty string must be opt-in | PGE-421 enforces |
-| PGE-927 for final inheritance | `<<` finality must extend through `<~` inheritance chain | Prevents silent overrides |
-| 0D = scalar container | Consistent with %##Depth.Max = 0; no indexing needed | PGE-417 on index attempt |
+| ###None as third field type | #None needs explicit classification; empty string must be opt-in | PGE04021 enforces |
+| PGE11005 for final inheritance | `<<` finality must extend through `<~` inheritance chain | Prevents silent overrides |
+| 0D = scalar container | Consistent with %##Depth.Max = 0; no indexing needed | PGE04017 on index attempt |
 | #Dataframe remains TBD | User deferred decision | No changes to stdlib |
 
 ## Deviations from Plan
@@ -112,10 +112,10 @@ None — reviewed all 18 edge cases as planned, applied fixes for the 4 that nee
 | EC-24.4 | #Eng exponent | Clean |
 | EC-24.5 | #KeyString excluded chars | Clean |
 | EC-24.6 | #NestedKeyString allows dot/colon | Clean |
-| EC-24.7 | `<~` inheritance finality | **Fixed** — PGE-927 |
+| EC-24.7 | `<~` inheritance finality | **Fixed** — PGE11005 |
 | EC-24.8 | #Boolean dual schema | Clean |
 | EC-24.9 | Enum inheritance | Clean |
-| EC-24.10 | #None minimal type | **Fixed** — ###None + PGE-421 |
+| EC-24.10 | #None minimal type | **Fixed** — ###None + PGE04021 |
 | EC-24.11 | Parameterized inheritance | Clean |
 | EC-24.12 | ##Contiguous vs ##Sparse | Clean |
 | EC-24.13 | 0D array | **Fixed** — semantics documented |

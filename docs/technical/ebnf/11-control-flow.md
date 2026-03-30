@@ -18,9 +18,9 @@ conditional_branch  ::= exec_line | comment_line ;
 
 (* Exhaustiveness: All [?] chains must cover every case.
    If conditions are not exhaustive, a catch-all [?] *? branch is mandatory.
-   PGE-601: Conditional must be exhaustive.
-   PGE-609: Every [?] line must include a comparison operator — no bare subjects.
-   PGE-610: Every [?] branch must contain at least one executable statement. *)
+   PGE06001: Conditional must be exhaustive.
+   PGE06009: Every [?] line must include a comparison operator — no bare subjects.
+   PGE06010: Every [?] branch must contain at least one executable statement. *)
 ```
 
 ### 11.1.1 Match (Conditional Assignment Sugar)
@@ -37,11 +37,11 @@ match_value         ::= literal
                       | cross_pkg_enum ;
 ```
 
-**Rule:** Match is syntactic sugar. `[r] $x >> $y` with indented `[?]` children desugars to a `[?]` chain where each arm becomes `[?] $x =? value` / `[r] $y << result`. All exhaustiveness rules (PGE-601 through PGE-613) apply to the desugared form. `[?] *` in match context desugars to `[?] *?`.
+**Rule:** Match is syntactic sugar. `[r] $x >> $y` with indented `[?]` children desugars to a `[?]` chain where each arm becomes `[?] $x =? value` / `[r] $y << result`. All exhaustiveness rules (PGE06001 through PGE06013) apply to the desugared form. `[?] *` in match context desugars to `[?] *?`.
 
 **Rule:** If a `[r] value_expr >> assign_target` line has no indented `[?]` children, it is a plain assignment — not a match header.
 
-**Rule:** Match arms are assignment-only. The source (`$x`) must be in Final state. The target (`$y`) receives the matched value. No side effects or complex logic in arms. PGE-609 does not apply to match arms (they use `value >> result` form, not `$var operator value`).
+**Rule:** Match arms are assignment-only. The source (`$x`) must be in Final state. The target (`$y`) receives the matched value. No side effects or complex logic in arms. PGE06009 does not apply to match arms (they use `value >> result` form, not `$var operator value`).
 
 ### 11.2 Error Handling
 
@@ -66,9 +66,9 @@ error_raise_line    ::= "[=]" fixed_field assignment_op value_expr          (* #
 raise_fallback_meta ::= "[>]" "%FallbackMessage" assignment_op string_literal ;
 ```
 
-**Rule:** `[!] >>` raises a declared error in the execution body. The raise block fills `#Error` fields (`.Message`, `.Info`, etc.) via `[=]` lines. Output fallbacks (`[=] >outputName << value`) set specific outputs to Final instead of Failed. `[>] %FallbackMessage` documents the author's intent for each fallback — omitting it triggers PGW-703; callers overriding it see PGW-702.
+**Rule:** `[!] >>` raises a declared error in the execution body. The raise block fills `#Error` fields (`.Message`, `.Info`, etc.) via `[=]` lines. Output fallbacks (`[=] >outputName << value`) set specific outputs to Final instead of Failed. `[>] %FallbackMessage` documents the author's intent for each fallback — omitting it triggers PGW07003; callers overriding it see PGW07002.
 
-**Rule:** `[!] >>` can only raise errors declared in the pipeline's `[=] !ErrorName` declarations. Raising an undeclared error is PGE-705.
+**Rule:** `[!] >>` can only raise errors declared in the pipeline's `[=] !ErrorName` declarations. Raising an undeclared error is PGE07005.
 
 ### 11.4 Logical Operators (in conditionals)
 

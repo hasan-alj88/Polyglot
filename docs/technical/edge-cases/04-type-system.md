@@ -76,21 +76,21 @@ updated: 2026-03-30
 [r] $weird#path << =Path"/tmp/{{backup}}/files"
 ```
 
-### EC-4.6: Single-platform path (PGW-408 / PGE-408)
+### EC-4.6: Single-platform path (PGW04001 / PGE04008)
 
 **What it tests:** Warning when only one OS subfield assigned; error when current OS subfield missing. See [[syntax/types/strings#Explicit Subfield Assignment]].
 
 ```polyglot
-[ ] PGW-408 — single platform, but matches current OS (Unix)
+[ ] PGW04001 — single platform, but matches current OS (Unix)
 [r] $dir#path
    [.] .Unix << "/tmp/MyApp"
 
-[ ] PGE-408 — .Unix missing, compiling on Unix
+[ ] PGE04008 — .Unix missing, compiling on Unix
 [r] $dir#path
    [.] .Windows << "C:\MyApp"
 
 [ ] suppressed warning
-[ ] Ignore PGW-408
+[ ] Ignore PGW04001
 [r] $dir#path
    [.] .Unix << "/tmp/MyApp"
 
@@ -100,12 +100,12 @@ updated: 2026-03-30
    [.] .Windows << "C:\MyApp"
 ```
 
-### EC-4.7: Plain string to `#path` type mismatch (PGE-401)
+### EC-4.7: Plain string to `#path` type mismatch (PGE04001)
 
 **What it tests:** Assigning a plain string to a `#path` variable is a type mismatch. See [[syntax/types/strings#Explicit Subfield Assignment]].
 
 ```polyglot
-[ ] PGE-401 — string != path, no implicit coercion
+[ ] PGE04001 — string != path, no implicit coercion
 [r] $dir#path << "/tmp/MyApp"
 
 [ ] correct — use =Path"..." instead
@@ -149,7 +149,7 @@ updated: 2026-03-30
 **What it tests:** Target type must match the inline pipeline's output type.
 
 ```polyglot
-[ ] PGE-401 — =Path returns #path, not #string
+[ ] PGE04001 — =Path returns #path, not #string
 [r] $name#string << =Path"/tmp"
 
 [ ] matching types
@@ -217,7 +217,7 @@ updated: 2026-03-30
 [r] $reg.plugins:myPlugin.method << "GET"
 ```
 
-### EC-4.14: Typed flexible wildcard — contradicting annotation (PGE-401)
+### EC-4.14: Typed flexible wildcard — contradicting annotation (PGE04001)
 
 **What it tests:** Explicit type annotation that contradicts the wildcard type is a compile error.
 
@@ -226,7 +226,7 @@ updated: 2026-03-30
    [.] .plugins
       [:] :*#Handler
 
-[ ] PGE-401 — :myPlugin is #Handler (from wildcard), not #string
+[ ] PGE04001 — :myPlugin is #Handler (from wildcard), not #string
 [r] $reg.plugins:myPlugin#string << "not a handler"
 ```
 
@@ -309,17 +309,17 @@ updated: 2026-03-30
 [=] <hyper#array:UserRecord:4D
 [r] $cell << $hyper.0.1.2.3
 
-[ ] PGE-417 — too many indices for :2D
+[ ] PGE04017 — too many indices for :2D
 [=] <matrix#array:float:2D
 [ ] [r] $val << $matrix.0.1.2                 <- 3 indices on :2D
 
-[ ] PGE-417 — too few indices for :3D
+[ ] PGE04017 — too few indices for :3D
 [=] <cube#array:int:3D
 [ ] [r] $val << $cube.2                        <- 1 index on :3D
 
-[ ] PGE-417 — :0D is not valid
+[ ] PGE04017 — :0D is not valid
 [ ] [=] <nothing#array:float:0D                <- dimension must be positive
 
-[ ] PGE-412 — nested array still banned
+[ ] PGE04013 — nested array still banned
 [ ] [=] >matrix#array:array.float              <- use #array:float:2D instead
 ```

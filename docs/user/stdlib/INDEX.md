@@ -8,7 +8,7 @@ status: complete
 # Standard Library — Namespace Registry
 
 <!-- @packages -->
-This is the authoritative list of all stdlib namespaces. Any top-level namespace listed here is **reserved** — user `[@]` import aliases must not shadow these names (PGE-913). See [[packages#Import Rules]].
+This is the authoritative list of all stdlib namespaces. Any top-level namespace listed here is **reserved** — user `[@]` import aliases must not shadow these names (PGE09012). See [[packages#Import Rules]].
 
 Standard library items do NOT require an `[@]` import — they are available in every `.pg` file by default.
 

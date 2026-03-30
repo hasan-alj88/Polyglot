@@ -47,9 +47,9 @@ Assign both subfields so code works cross-platform:
 
 At runtime, the Polyglot runtime resolves `$AppDir` to the correct subfield based on the current OS (see `=Sys.OS` in [[stdlib/INDEX|Standard Library]]).
 
-Assigning only one subfield triggers a portability warning (PGW-408). If the missing subfield is for the current OS, the compiler raises an error (PGE-408).
+Assigning only one subfield triggers a portability warning (PGW04001). If the missing subfield is for the current OS, the compiler raises an error (PGE04008).
 
-A plain string cannot be assigned to a `#path` variable — `[r] $dir#path << "/tmp"` is a type mismatch (PGE-401). Use `=Path"..."` instead.
+A plain string cannot be assigned to a `#path` variable — `[r] $dir#path << "/tmp"` is a type mismatch (PGE04001). Use `=Path"..."` instead.
 
 ### `=Path"..."` Inline Notation
 
@@ -107,6 +107,6 @@ The `"/inbox/"` argument is parsed as a path string — separators are normalize
 - `=Path` — stdlib pipeline for creating `#path` values from strings. See [[stdlib/pipelines/Path|=Path]]
 - `#OS` — stdlib enum with `.Unix` and `.Windows` variants. See [[stdlib/INDEX|Standard Library]]
 - `=Sys.OS` — stdlib pipeline that yields `>os#OS`. See [[stdlib/INDEX|Standard Library]]
-- PGE-407 — invalid path string (compile error)
-- PGE-408 — missing path platform subfield (compile error)
-- PGW-408 — single-platform path (warning)
+- PGE04007 — invalid path string (compile error)
+- PGE04008 — missing path platform subfield (compile error)
+- PGW04001 — single-platform path (warning)

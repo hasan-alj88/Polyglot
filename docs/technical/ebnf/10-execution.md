@@ -45,7 +45,7 @@ fallback_line       ::= "[>]" "<!" value_expr                   (* generic fallb
                       | "[<]" "<!" error_id value_expr ;         (* error-specific input fallback *)
 ```
 
-**Rule:** Fallback lines are indented under the `[=]` IO line they belong to — the output/input reference is inherited from the parent scope. `[>]` is used under output lines, `[<]` under input lines. A generic `<!` catches any unhandled error; `<!Error.Name` catches only the named error. Error-specific fallbacks take priority over the generic. Duplicate generic or duplicate error-specific fallbacks for the same error on the same output are PGE-703. When a fallback activates, `$var%sourceError` is set to the triggering error.
+**Rule:** Fallback lines are indented under the `[=]` IO line they belong to — the output/input reference is inherited from the parent scope. `[>]` is used under output lines, `[<]` under input lines. A generic `<!` catches any unhandled error; `<!Error.Name` catches only the named error. Error-specific fallbacks take priority over the generic. Duplicate generic or duplicate error-specific fallbacks for the same error on the same output are PGE07003. When a fallback activates, `$var%sourceError` is set to the triggering error.
 
 **Precedence:** `[!]` error blocks are checked before `<!` fallbacks. If `[!]` pushes a replacement value, the fallback is not evaluated.
 
@@ -81,7 +81,7 @@ error_name          ::= dotted_name ;
 - **Auto-wire:** When step N has exactly one output and step N+1 has exactly one input of the same type, the `chain_io_line` between them may be omitted.
 - Type annotations on `chain_io_param` are optional — types are inferred from pipeline definitions.
 - Errors reference the step that produces them: `!0.File.NotFound` or `!Read.File.NotFound`.
-- **Chain fallback:** In chains, fallback uses `<!` directly on `[=]` chain IO lines (not `[>]`/`[<]` block markers, since those cannot carry step references). Example: `[=] <0.content <! ""`. Same precedence and duplicate rules (PGE-703) apply.
+- **Chain fallback:** In chains, fallback uses `<!` directly on `[=]` chain IO lines (not `[>]`/`[<]` block markers, since those cannot carry step references). Example: `[=] <0.content <! ""`. Same precedence and duplicate rules (PGE07003) apply.
 
 ### 10.4 Data Load
 

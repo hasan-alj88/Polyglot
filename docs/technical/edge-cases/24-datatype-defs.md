@@ -23,15 +23,15 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 | EC-24.9 | Enum inheritance via `<~` | Extending enum variants |
 | EC-24.10 | #None — minimal type | No fields, no schema |
 | EC-24.11 | #Array via `{M}` macro with `<~` inheritance | Macro-generated definition with schema accumulation |
-| EC-24.12 | ##Contiguous vs ##Sparse override | Contradicting property override (PGW-905) |
+| EC-24.12 | ##Contiguous vs ##Sparse override | Contradicting property override (PGW11002) |
 | EC-24.13 | 0D array | Dimension collapse to scalar |
 | EC-24.14 | Empty collections | Zero-element #Array and #Map |
-| EC-24.15 | Invalid key type | #Int as map key (PGE-924) |
-| EC-24.16 | #Serial — no ## schema constraints | Unlimited depth escape hatch (PGW-906 exemption) |
+| EC-24.15 | Invalid key type | #Int as map key (PGE11004) |
+| EC-24.16 | #Serial — no ## schema constraints | Unlimited depth escape hatch (PGW11003 exemption) |
 | EC-24.17 | #Dataframe status | Row-oriented access via `$df<row<column` |
 | EC-24.18 | Stale %Property notation | stdlib types.md missing `##` prefix |
 | EC-24.19 | [M] merge behavior (identity rule) | Outer {#} names result, [M] fills body |
-| EC-24.20 | Macro dispatch ambiguity | Two overloads with identical signature = PGE-930 |
+| EC-24.20 | Macro dispatch ambiguity | Two overloads with identical signature = PGE01019 |
 
 ---
 
@@ -73,7 +73,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] negative zero matches regex
 [r] $negZero#int << -0
 
-[ ] PGE-410 — decimal point not in regex
+[ ] PGE04010 — decimal point not in regex
 [r] $bad#int << 3.14
 ```
 
@@ -117,10 +117,10 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [r] $micro#eng << "2.47e-6"
 [r] $tera#eng << "9.99e12"
 
-[ ] PGE-410 — exponent 4 is not a multiple of 3
+[ ] PGE04010 — exponent 4 is not a multiple of 3
 [r] $bad#eng << "1.5e4"
 
-[ ] PGE-410 — exponent 1 is not a multiple of 3
+[ ] PGE04010 — exponent 1 is not a multiple of 3
 [r] $bad2#eng << "3.0e1"
 ```
 
@@ -140,13 +140,13 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [r] $valid#key << "my-key"
 [r] $underscored#key << "my_key_123"
 
-[ ] PGE-410 — dot is reserved (fixed-field separator)
+[ ] PGE04010 — dot is reserved (fixed-field separator)
 [r] $dotted#key << "my.key"
 
-[ ] PGE-410 — colon is reserved (flexible-field separator)
+[ ] PGE04010 — colon is reserved (flexible-field separator)
 [r] $coloned#key << "my:key"
 
-[ ] PGE-410 — angle bracket is reserved
+[ ] PGE04010 — angle bracket is reserved
 [r] $angled#key << "my<key"
 ```
 
@@ -166,10 +166,10 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [r] $alias#nestedkey << "error.file.read"
 [r] $nested#nestedkey << "String:int"
 
-[ ] PGE-410 — angle bracket excluded
+[ ] PGE04010 — angle bracket excluded
 [r] $bad#nestedkey << "my<key"
 
-[ ] PGE-410 — whitespace excluded
+[ ] PGE04010 — whitespace excluded
 [r] $bad2#nestedkey << "my key"
 ```
 
@@ -178,7 +178,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **EBNF:** `inheritance ::= "[#]" "<~" type_ref` — schema inheritance with `<~` (overridable) vs `<<` (final).
 **What it tests:** #Int inherits `.string` and `.regex` from #String via `<~`, then sets `.regex` with `<<` (final). A user-defined `#PositiveInt <~ #Int` cannot override `.regex` — it is already final. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .regex]], [[variable-lifecycle]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[variable-lifecycle]]
-**Status:** RESOLVED — PGE-927 (Final Field Override via Inheritance) added to COMPILE-RULES.md.
+**Status:** RESOLVED — PGE11005 (Final Field Override via Inheritance) added to COMPILE-RULES.md.
 
 ```polyglot
 [ ] #String sets .regex with <~ (overridable default)
@@ -190,7 +190,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] <~ #String
    [.] .regex#RawString << "^-?[0-9]+$"
 
-[ ] PGE-927 — .regex is already << final in #Int
+[ ] PGE11005 — .regex is already << final in #Int
 {#} #PositiveInt
    [#] <~ #Int
    [.] .regex#RawString << "^[1-9][0-9]*$"
@@ -255,9 +255,9 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.10: #None — minimal type definition
 
 **EBNF:** `type_definition ::= "{#}" type_header { schema_line | field_line }` — zero fields, `###None` field type.
-**What it tests:** #None has no fields and uses `###None` — a third field type meaning "nullable." Empty string `""` is the only valid value. Only `###None` types accept empty string; all others reject it with PGE-421. See [[syntax/types/INDEX|types]], [[syntax/types/schema-properties#`###` Field Types — Leaf Content]].
+**What it tests:** #None has no fields and uses `###None` — a third field type meaning "nullable." Empty string `""` is the only valid value. Only `###None` types accept empty string; all others reject it with PGE04021. See [[syntax/types/INDEX|types]], [[syntax/types/schema-properties#`###` Field Types — Leaf Content]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[stdlib/INDEX|Standard Library]]
-**Status:** RESOLVED — `###None` added as third field type, PGE-421 added, #None definition updated with `[#] << ###None`.
+**Status:** RESOLVED — `###None` added as third field type, PGE04021 added, #None definition updated with `[#] << ###None`.
 
 ```polyglot
 {#} #None
@@ -269,7 +269,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] usage — signals absence
 [r] $result << #None
 
-[ ] PGE-421 — empty string on non-###None type
+[ ] PGE04021 — empty string on non-###None type
 [r] $bad#string << ""
 ```
 
@@ -311,7 +311,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.12: ##Contiguous vs ##Sparse override
 
 **EBNF:** `schema_line ::= "[#]" "<<" schema_ref` — contradicting schema compositions.
-**What it tests:** #Map applies `##Sparse` (`%##Children.Gap << #True`). #Array inherits then applies `##Contiguous` (`%##Children.Gap << #False`, `%##Children.Ordered << #True`). This directly contradicts the inherited `%##Children.Gap` — the compiler raises PGW-905 (contradicting override). This is intentional: #Array IS a contiguous #Map variant. See [[syntax/types/schema-properties#Schema Properties]].
+**What it tests:** #Map applies `##Sparse` (`%##Children.Gap << #True`). #Array inherits then applies `##Contiguous` (`%##Children.Gap << #False`, `%##Children.Ordered << #True`). This directly contradicts the inherited `%##Children.Gap` — the compiler raises PGW11002 (contradicting override). This is intentional: #Array IS a contiguous #Map variant. See [[syntax/types/schema-properties#Schema Properties]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
 ```polyglot
@@ -323,7 +323,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] %##Children.Ordered << #True
 
 [ ] #Array inherits ##Sparse from #Map, then overrides with ##Contiguous
-[ ] PGW-905 — %##Children.Gap contradicts inherited value
+[ ] PGW11002 — %##Children.Gap contradicts inherited value
 [ ] This is intentional — #Array is a contiguous specialization of #Map
 
 [r] $arr#array:int <~ {1, 2, 3}
@@ -334,9 +334,9 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.13: 0D array
 
 **EBNF:** `array_type ::= "array" ":" element_type [ ":" dimension ]` — dimension 0.
-**What it tests:** `$scalar#array:int:0D` — a 0D array is a typed scalar container holding exactly one element. Access is direct (no index). PGE-417 on any index attempt. See [[syntax/types/arrays#Multidimensional Arrays]].
+**What it tests:** `$scalar#array:int:0D` — a 0D array is a typed scalar container holding exactly one element. Access is direct (no index). PGE04017 on any index attempt. See [[syntax/types/arrays#Multidimensional Arrays]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
-**Status:** RESOLVED — 0D array semantics documented in types.md: direct access, no indexing, PGE-417 on index.
+**Status:** RESOLVED — 0D array semantics documented in types.md: direct access, no indexing, PGE04017 on index.
 
 ```polyglot
 [ ] 0D array — scalar container
@@ -346,7 +346,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] Holds exactly one element — access without index
 [r] $val#int << $scalar
 
-[ ] PGE-417 — no indices allowed on 0D
+[ ] PGE04017 — no indices allowed on 0D
 [r] $bad << $scalar:0
 ```
 
@@ -367,14 +367,14 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] Both are valid typed containers with no elements
 ```
 
-### EC-24.15: Invalid key type (PGE-924)
+### EC-24.15: Invalid key type (PGE11004)
 
 **EBNF:** `schema_property ::= "%##Children.Type" "<<" type_ref` — key type must inherit #KeyString.
-**What it tests:** `#map:int:string` — ##Int inherits from #String, NOT from #KeyString. The `%##Children.Type` must inherit `#KeyString` to exclude syntax-reserved characters. Compiler raises PGE-924. See [[syntax/types/basic-types#Layer 2c: #KeyString — Key Type for Tree Access]].
+**What it tests:** `#map:int:string` — ##Int inherits from #String, NOT from #KeyString. The `%##Children.Type` must inherit `#KeyString` to exclude syntax-reserved characters. Compiler raises PGE11004. See [[syntax/types/basic-types#Layer 2c: #KeyString — Key Type for Tree Access]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
 ```polyglot
-[ ] PGE-924 — #Int does not inherit #KeyString
+[ ] PGE11004 — #Int does not inherit #KeyString
 [ ] #Int.regex allows "-7" — the hyphen is fine, but dots/colons are
 [ ] not excluded by #Int's regex, only by #KeyString's
 [r] $bad#map:int:string <~ {}
@@ -393,11 +393,11 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.16: #Serial — no ## schema constraints
 
 **EBNF:** `type_definition` — `%##Depth.Max << -1` on a stdlib type.
-**What it tests:** #Serial uses `%##Depth.Max << -1` (unlimited depth). PGW-906 warns about unlimited depth on USER types, but #Serial is stdlib — it is the intentional escape hatch for schema-free data. Show that user types with `-1` get the warning but #Serial does not. See [[syntax/types/schema-properties#Schema Properties]].
+**What it tests:** #Serial uses `%##Depth.Max << -1` (unlimited depth). PGW11003 warns about unlimited depth on USER types, but #Serial is stdlib — it is the intentional escape hatch for schema-free data. Show that user types with `-1` get the warning but #Serial does not. See [[syntax/types/schema-properties#Schema Properties]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
 ```polyglot
-[ ] #Serial — stdlib, no PGW-906
+[ ] #Serial — stdlib, no PGW11003
 {#} #Serial
    [#] %##Alias << "serial"
    [#] %##Children.Gap << #True
@@ -405,7 +405,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] %##Depth.Max << -1
    [:] :*#*
 
-[ ] PGW-906 — user type with unlimited depth
+[ ] PGW11003 — user type with unlimited depth
 {#} #MyFreeform
    [#] %##Depth.Max << -1
    [:] :*#*
@@ -494,10 +494,10 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] %##MaxLength << 3
 ```
 
-### EC-24.20: Macro dispatch ambiguity (PGE-930)
+### EC-24.20: Macro dispatch ambiguity (PGE01019)
 
 **EBNF:** `macro_def ::= "{M}" "#" dotted_name` — macro overloading by signature.
-**What it tests:** Two `{M}` macros with the same name AND identical parameter signature (same count and kind) is a compile error PGE-930. Dispatch is unambiguous when signatures differ by count or kind (`<#` type vs `<` value). See [[technical/ebnf/04-type-system#4.3]].
+**What it tests:** Two `{M}` macros with the same name AND identical parameter signature (same count and kind) is a compile error PGE01019. Dispatch is unambiguous when signatures differ by count or kind (`<#` type vs `<` value). See [[technical/ebnf/04-type-system#4.3]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[technical/ebnf/INDEX|EBNF]]
 
 ```polyglot
@@ -511,7 +511,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] <#KeyType
    [ ] Signature: (<#) — heterogeneous
 
-[ ] Invalid — PGE-930: identical signatures
+[ ] Invalid — PGE01019: identical signatures
 {M} #Foo
    [#] <#A
    [#] <#B
@@ -520,7 +520,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 {M} #Foo
    [#] <#X
    [#] <#Y
-   [ ] Signature: (<#, <#) — CLASH with above -> PGE-930
+   [ ] Signature: (<#, <#) — CLASH with above -> PGE01019
 ```
 
 ### Potential Follow-up Issues
@@ -528,7 +528,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 Issues discovered during this audit that may warrant separate GitHub issues:
 
 1. ~~**#Dimension regex correction**~~ — RESOLVED: regex corrected to `"^[0-9]+D$"` (EC-24.3).
-2. ~~**`<~` finality semantics**~~ — RESOLVED: PGE-927 added (EC-24.7).
-3. ~~**#None ###-classification**~~ — RESOLVED: `###None` added as third field type, PGE-421 added (EC-24.10).
+2. ~~**`<~` finality semantics**~~ — RESOLVED: PGE11005 added (EC-24.7).
+3. ~~**#None ###-classification**~~ — RESOLVED: `###None` added as third field type, PGE04021 added (EC-24.10).
 4. ~~**#Dataframe resolution**~~ — RESOLVED: promoted to authoritative spec as row-oriented `#Dataframe:ColumnEnum:CellType` (Array of Map) with `##EnumLeafs` (EC-24.17).
-5. ~~**0D array semantics**~~ — RESOLVED: 0D = scalar container, direct access, PGE-417 on index (EC-24.13).
+5. ~~**0D array semantics**~~ — RESOLVED: 0D = scalar container, direct access, PGE04017 on index (EC-24.13).

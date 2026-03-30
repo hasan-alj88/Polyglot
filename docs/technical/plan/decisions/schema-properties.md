@@ -9,7 +9,7 @@
 <!-- @types -->
 <!-- @data-is-trees -->
 
-All Polyglot data is trees of `#String` leaves (which have `RawString` leaves). The existing `.regex;RawString` field on `#String` ([[syntax/types/basic-types#Numeric Types — #String Subtypes]]) constrains **leaf values** via regex. However, **structural constraints** — key patterns, ordering, depth limits, openness — were implicit in compiler rules (PGE-401, PGE-501, PGE-502) with no declarative representation.
+All Polyglot data is trees of `#String` leaves (which have `RawString` leaves). The existing `.regex;RawString` field on `#String` ([[syntax/types/basic-types#Numeric Types — #String Subtypes]]) constrains **leaf values** via regex. However, **structural constraints** — key patterns, ordering, depth limits, openness — were implicit in compiler rules (PGE04001, PGE05001, PGE05002) with no declarative representation.
 
 Collection types (`;array`, `;serial`, and the new `;dict`) need structural constraints that `.regex` cannot express. Rather than hardcoding each collection's rules in the compiler, we need a declarative mechanism.
 
@@ -51,7 +51,7 @@ Parameterized types use `{M}` type macros to generate `{#}` definitions at compi
       ...
 ```
 
-`[M]` invokes a macro inside a `{#}` block. `[#] << ##Schema` sets `%` properties — two schemas that agree on a property value produce no error; conflicting values produce PGE-921.
+`[M]` invokes a macro inside a `{#}` block. `[#] << ##Schema` sets `%` properties — two schemas that agree on a property value produce no error; conflicting values produce PGE11001.
 
 ### No `.schema` Field on `#String`
 

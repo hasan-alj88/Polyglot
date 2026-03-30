@@ -53,10 +53,10 @@ See [[syntax/types/strings#Path Type]] for full details including `=Path"..."`, 
 
 ### Error Codes
 
-- PGE-401 -- plain string assigned to `#path` (type mismatch)
-- PGE-407 -- invalid path string
-- PGE-408 -- missing path platform subfield
-- PGW-408 -- single-platform path (warning)
+- PGE04001 -- plain string assigned to `#path` (type mismatch)
+- PGE04007 -- invalid path string
+- PGE04008 -- missing path platform subfield
+- PGW04001 -- single-platform path (warning)
 
 ---
 

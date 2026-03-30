@@ -109,10 +109,10 @@ Dispatch matches by **parameter count AND parameter kind** (`<#` type vs `<` val
 `##` schemas are **not inheritance** — they are shorthand for setting `%` metadata properties. When a `{#}` definition composes multiple `##` schemas via `[#] <<`:
 
 - Two schemas setting the **same** `%` property to the **same** value → consistent (no error, they agree)
-- Two schemas setting the **same** `%` property to **different** values → **PGE-921** (schema property conflict)
+- Two schemas setting the **same** `%` property to **different** values → **PGE11001** (schema property conflict)
 - Schemas accumulate — each `[#] << ##Schema` adds its `%` properties to the definition's metadata
 
-Example: `[#] << ##Contiguous` sets `%##Children.Gap << #False` + `%##Children.Ordered << #True`. If another schema also sets `%##Children.Ordered << #True`, they agree. If it sets `%##Children.Ordered << #False`, PGE-921.
+Example: `[#] << ##Contiguous` sets `%##Children.Gap << #False` + `%##Children.Ordered << #True`. If another schema also sets `%##Children.Ordered << #True`, they agree. If it sets `%##Children.Ordered << #False`, PGE11001.
 
 ### `%name` Metadata Accessor
 
@@ -443,7 +443,7 @@ The `:` separator still binds positionally to macro inputs. Users don't see the 
 | `%Parent` | One level up from `%This` — access enclosing `{x}` from nested blocks |
 | Macro overloading | Multiple `{M}` with same name dispatch by signature |
 | Scalars are `##` schemas | `{#} ##Int` — regex constraints on `#String`, not structs |
-| `##` = property substitution | `[#] << ##Schema` sets `%` properties — NOT inheritance. Two schemas agree or PGE-921 |
+| `##` = property substitution | `[#] << ##Schema` sets `%` properties — NOT inheritance. Two schemas agree or PGE11001 |
 | `{#}` defines all tiers | `{#}` can define `#`, `##`, or `###` prefixed names |
 | Bootstrap layers | Layer 0 (hardcoded), Layer 1 (no pipelines), Layer 2 (full pipelines) |
 | Compile-time `=` pipelines | Layer 2 macros can invoke `=` pipelines during compilation |
@@ -480,9 +480,9 @@ The `:` separator still binds positionally to macro inputs. Users don't see the 
 
 | Rule | Impact |
 |------|--------|
-| PGE-921 | Clarify: applies to `##` schema composition conflicts (two schemas setting same `%` property to different values) |
-| PGE-928 | Field expansion constraint — moves from `[<]` under `[#]` to `[<]` under `[#] <Param` in `{M}` |
-| PGE-104 | Macro structural constraints — update for `{M}`/`{W}` split |
+| PGE11001 | Clarify: applies to `##` schema composition conflicts (two schemas setting same `%` property to different values) |
+| PGE04022 | Field expansion constraint — moves from `[<]` under `[#]` to `[<]` under `[#] <Param` in `{M}` |
+| PGE01004 | Macro structural constraints — update for `{M}`/`{W}` split |
 | New PGW-9XX | Namespace alias warning — alias creates placement in different namespace branch; compiler checks for clashes |
 | New rule | `{M} #Name` must contain `{#}` and must NOT contain `[\]`/`[/]` |
 | New rule | `{W} =W.Name` must contain `[\]`/`[/]` and must NOT contain `{#}` |
@@ -511,7 +511,7 @@ The `:` separator still binds positionally to macro inputs. Users don't see the 
 13. **Map semantics:** Key change (enum keys) documented; #Serial as alternative for arbitrary keys
 14. **#Boolean values:** All schema properties use `#True`/`#False`, not `true`/`false`
 15. **Flexible children:** All collection `{#}` include `[:] :*#Type` declarations
-16. **`##` composition:** Documented as property substitution (not inheritance); PGE-921 for conflicts
+16. **`##` composition:** Documented as property substitution (not inheritance); PGE11001 for conflicts
 17. **Alias system:** `!Alias.Clash` error + `[<]` fallback chain + PGW-9XX namespace warning
 18. **No contradictions:** Cross-check with EDGE-CASES.md, COMPILE-RULES.md
 

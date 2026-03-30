@@ -118,7 +118,7 @@ collect_io_line     ::= "[*]" io_param assignment_op value_expr   (* named param
 | `*Continue` | none | `>IsFailed#bool` via `[*] >IsFailed >> $var` | Inside `[!]` error block |
 | `*Ignore` | `[*] << $var...` | none | Parallel `[p]` discard |
 
-**Rule:** `*Continue` is an error recovery collector used inside `[!]` blocks. It signals the pipeline to continue after an error instead of terminating. Its single output `>IsFailed#bool` must be captured and handled — if the compiler cannot verify the output is checked, it emits PGW-205. Syntax: `[*] *Continue >IsFailed >> $fetchFailed`.
+**Rule:** `*Continue` is an error recovery collector used inside `[!]` blocks. It signals the pipeline to continue after an error instead of terminating. Its single output `>IsFailed#bool` must be captured and handled — if the compiler cannot verify the output is checked, it emits PGW02004. Syntax: `[*] *Continue >IsFailed >> $fetchFailed`.
 
 **Rule:** `*Ignore` is an explicit discard collector. It takes `[*] <<` wait inputs only and produces no outputs. Use for parallel output that exists for debugging but is intentionally unused. Prefer `$*` inline discard when the value is never needed.
 

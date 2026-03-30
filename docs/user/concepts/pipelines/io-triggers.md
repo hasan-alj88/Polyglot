@@ -20,12 +20,12 @@ There is no need to validate inputs with `[?]` checks — unfilled required inpu
 
 ## Triggers
 
-Every pipeline must have at least one `[t]` trigger — omitting it is a compile error (PGE-105).
+Every pipeline must have at least one `[t]` trigger — omitting it is a compile error (PGE01005).
 
 - `=T.Call` — invoked when called from another pipeline
 - Standard library triggers live under `=T.*` namespace — no `[@]` import needed (see [[packages#Usage]])
 - Triggers with arguments: `=T.Daily"3AM"`, `=T.Webhook"/path"`, `=T.Folder.NewFiles"/dir/"`
-If a trigger's boolean expression evaluates to the same value for all combinations of trigger states, it is a tautology or contradiction (PGE-118).
+If a trigger's boolean expression evaluates to the same value for all combinations of trigger states, it is a tautology or contradiction (PGE01018).
 
 - Triggers that produce outputs wire them to pipeline inputs via indented `[=]` IO lines:
 

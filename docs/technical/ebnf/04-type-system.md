@@ -43,7 +43,7 @@ serial_type         ::= "serial" ;
 type_param          ::= basic_type | dimension | user_type | wildcard_type ;
                       (* Nested type refs drop the # prefix within type context *)
 enum_type_param     ::= user_type ;
-                      (* Must resolve to a ###Enum type at compile time — PGE-928 if not *)
+                      (* Must resolve to a ###Enum type at compile time — PGE04022 if not *)
 dimension           ::= digit { digit } "D" ;
                       (* e.g., :2D, :3D — omitted defaults to 1D *)
 
@@ -75,7 +75,7 @@ schema_composition  ::= "[#]" "<<" schema_id ;
                       (* e.g., [#] << ##Flat — compose a schema into this type *)
                       (* Multiple [#] << lines accumulate: one line, one schema.
                          Two schemas setting the same % property to the same value → agree (no error).
-                         Two schemas setting the same % property to different values → PGE-921. *)
+                         Two schemas setting the same % property to different values → PGE11001. *)
 
 field_type_composition ::= "[#]" "<<" field_type_id ;
                       (* e.g., [#] << ###Enum — declare explicit field type *)
@@ -149,10 +149,10 @@ wrapper_body_line   ::= scope_setup
    <#ParamName  = type input  (a # definition as data tree)
    <ParamName   = value input (a typed value)
    Dispatch matches by parameter count AND parameter kind.
-   Two overloads with identical signature = compile error (PGE-930). *)
+   Two overloads with identical signature = compile error (PGE01019). *)
 ```
 
-**Rule:** Parameterized types use `{M}` type macros to generate `{#}` definitions at compile time. `{M}` defines type macros; `[M]` invokes them inside `{#}` blocks. `{W}` defines wrappers; `[W]` invokes them. `<~` in `{#}` means **only** inheritance — never macro invocation. Schema composition (`[#] << ##Name`) accumulates — each line adds one schema's properties. Schema properties (`[#] %##`) declare tree-level compile-time metadata. Field type properties (`[#] %###`) declare leaf-level metadata. Type constraints (`[<]`) restrict what types may bind to a macro parameter. Schema references (`##`) are only valid inside `{#}` definitions (PGE-926). Two macros with identical signatures (same name, same parameter count and kind) produce compile error PGE-930.
+**Rule:** Parameterized types use `{M}` type macros to generate `{#}` definitions at compile time. `{M}` defines type macros; `[M]` invokes them inside `{#}` blocks. `{W}` defines wrappers; `[W]` invokes them. `<~` in `{#}` means **only** inheritance — never macro invocation. Schema composition (`[#] << ##Name`) accumulates — each line adds one schema's properties. Schema properties (`[#] %##`) declare tree-level compile-time metadata. Field type properties (`[#] %###`) declare leaf-level metadata. Type constraints (`[<]`) restrict what types may bind to a macro parameter. Schema references (`##`) are only valid inside `{#}` definitions (PGE05006). Two macros with identical signatures (same name, same parameter count and kind) produce compile error PGE01019.
 
 ### 4.4 Tree Child Accessor
 

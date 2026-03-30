@@ -8,7 +8,7 @@ requires:
   - phase: issue-80-permission-block-marker
     provides: "_ prefix, [_] marker, permissions.md concept spec"
   - phase: issue-81-permission-ceiling
-    provides: "Package ceiling in {@}, pipeline-level [_], PGE-915/916"
+    provides: "Package ceiling in {@}, pipeline-level [_], PGE10001/916"
 provides:
   - "%_ root-level metadata tree branch for permissions"
   - "Full 8-category permission tree in metadata.md"

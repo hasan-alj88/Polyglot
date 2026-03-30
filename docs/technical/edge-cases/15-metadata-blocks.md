@@ -31,7 +31,7 @@ updated: 2026-03-30
 
 **EBNF:** `metadata_alias ::= "%" "alias" NEWLINE { indent flex_sep string_literal NEWLINE }`
 
-**What it tests:** `%alias` field makes a definition reachable via multiple shorthand names. Each alias is a `#NestedKeyString` — allows `.` and `:` for nested paths. All aliases must be globally unique (PGE-1002).
+**What it tests:** `%alias` field makes a definition reachable via multiple shorthand names. Each alias is a `#NestedKeyString` — allows `.` and `:` for nested paths. All aliases must be globally unique (PGE12002).
 
 ```polyglot
 {#} #SystemConfig

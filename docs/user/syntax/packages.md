@@ -46,7 +46,7 @@ Reference imported packages via their alias:
 - `@alias1=SomePipeline` — access pipeline from imported package. See [[concepts/pipelines/INDEX|pipelines]]
 - `@alias1#DataName.EnumField` — reference enum value cross-package. See [[syntax/types/structs#Enum Fields vs Value Fields]]
 
-Every `@alias` reference must resolve to a declared `[@]` import (PGE-901). The pipeline name after the alias must exist in the imported package (PGE-904). Referencing a deprecated pipeline emits a warning (PGW-901).
+Every `@alias` reference must resolve to a declared `[@]` import (PGE09001). The pipeline name after the alias must exist in the imported package (PGE09004). Referencing a deprecated pipeline emits a warning (PGW09001).
 
 **Note:** Standard library pipelines (`=File.*`, `=T.*`, `=Q.*`, `=W.*`) are built-in and do NOT require `[@]` import — see [[concepts/pipelines/io-triggers#Triggers]].
 
@@ -54,17 +54,17 @@ Every `@alias` reference must resolve to a declared `[@]` import (PGE-901). The 
 
 Each `[@]` import line declares an alias for a package address. The compiler enforces:
 
-- **Unique aliases** — each `@alias` name in a file must be unique (PGE-912). Two `[@]` lines with the same alias make resolution ambiguous.
-- **No stdlib shadowing** — an alias must not match a reserved stdlib namespace prefix: `File`, `Path`, `Math`, `Sys`, `T`, `Q`, `W` (PGE-913). See [[stdlib/INDEX|stdlib/INDEX.md]] for the full reserved list.
-- **Alias must be used** — an `[@]` import that is never referenced anywhere in the file is flagged as dead code (PGW-902). This typically indicates incomplete refactoring.
+- **Unique aliases** — each `@alias` name in a file must be unique (PGE09011). Two `[@]` lines with the same alias make resolution ambiguous.
+- **No stdlib shadowing** — an alias must not match a reserved stdlib namespace prefix: `File`, `Path`, `Math`, `Sys`, `T`, `Q`, `W` (PGE09012). See [[stdlib/INDEX|stdlib/INDEX.md]] for the full reserved list.
+- **Alias must be used** — an `[@]` import that is never referenced anywhere in the file is flagged as dead code (PGW09002). This typically indicates incomplete refactoring.
 
 ## Dependency Rules
 
-Package imports must form a directed acyclic graph. If Package A imports Package B and Package B imports Package A (directly or transitively), the cycle is a compile error (PGE-902). The compiler reports the full cycle path.
+Package imports must form a directed acyclic graph. If Package A imports Package B and Package B imports Package A (directly or transitively), the cycle is a compile error (PGE09002). The compiler reports the full cycle path.
 
-Within a package, pipeline calls must also be acyclic — Polyglot has no recursion mechanism. Self-calls and mutual call loops are compile errors (PGE-914). See [[concepts/pipelines/inline-calls#Call Site Rules]].
+Within a package, pipeline calls must also be acyclic — Polyglot has no recursion mechanism. Self-calls and mutual call loops are compile errors (PGE09013). See [[concepts/pipelines/inline-calls#Call Site Rules]].
 
-Pipeline references in `[r]`, `[p]`, or `[b]` calls must resolve to either a stdlib pipeline or a `{=}` definition within the same package (PGE-903). Cross-package pipelines must use the `@alias=Pipeline` form with a valid `[@]` import.
+Pipeline references in `[r]`, `[p]`, or `[b]` calls must resolve to either a stdlib pipeline or a `{=}` definition within the same package (PGE09003). Cross-package pipelines must use the `@alias=Pipeline` form with a valid `[@]` import.
 
 ## Multi-File Packages
 
@@ -89,11 +89,11 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
 
 ### Rules
 
-- **Same address** — every file in the package must declare the same `{@}` package name and version (PGE-905, PGE-906)
-- **Full mesh** — every file must reference all other files in the package. If file A references B and C, then B must reference A and C, and C must reference A and B (PGE-911)
-- **No duplicates** — a `{=}` pipeline name or `{#}` data name must be unique across all files in the package (PGE-907)
-- **No self-reference** — a file must not list itself (PGE-910)
-- **File must exist** — every referenced path must resolve to an existing `.pg` file (PGE-909)
+- **Same address** — every file in the package must declare the same `{@}` package name and version (PGE09005, PGE09006)
+- **Full mesh** — every file must reference all other files in the package. If file A references B and C, then B must reference A and C, and C must reference A and B (PGE09010)
+- **No duplicates** — a `{=}` pipeline name or `{#}` data name must be unique across all files in the package (PGE09007)
+- **No self-reference** — a file must not list itself (PGE09009)
+- **File must exist** — every referenced path must resolve to an existing `.pg` file (PGE09008)
 
 ### Folder Shorthand
 
@@ -173,29 +173,29 @@ The `{@}` block can declare `[_]` permission lines that set the **permission cei
 ### Ceiling Rules
 
 - **Ceiling, not grant** — `[_]` in `{@}` sets the maximum allowed permissions. Each `{=}` pipeline or `{M}` macro must explicitly request the permissions it needs. Nothing is inherited automatically. See [[permissions#Hierarchical Scoping]].
-- **No ceiling = no IO** — if `{@}` has no `[_]` lines, the entire package is pure computation. Any IO call in any pipeline is a compile error (PGE-915).
-- **Pipeline subset** — every `[_]` in a pipeline must fall within the package ceiling. A pipeline requesting `_File.read"/etc/shadow"` when the ceiling only allows `_File.read"/var/log/*"` is a compile error (PGE-915).
-- **Import ceiling** — the compiler checks each imported package's own `{@}` ceiling against the importer's ceiling. If the imported package declares permissions outside what the importer allows, it is a compile error (PGE-916). Each package declares its own ceiling independently; the compiler validates compatibility.
+- **No ceiling = no IO** — if `{@}` has no `[_]` lines, the entire package is pure computation. Any IO call in any pipeline is a compile error (PGE10001).
+- **Pipeline subset** — every `[_]` in a pipeline must fall within the package ceiling. A pipeline requesting `_File.read"/etc/shadow"` when the ceiling only allows `_File.read"/var/log/*"` is a compile error (PGE10001).
+- **Import ceiling** — the compiler checks each imported package's own `{@}` ceiling against the importer's ceiling. If the imported package declares permissions outside what the importer allows, it is a compile error (PGE10002). Each package declares its own ceiling independently; the compiler validates compatibility.
 - **Placement** — `[_]` lines go after `[@]` imports and before any `{=}`/`{#}`/`{M}` definitions in the `{@}` block.
 
 ## Compile Rules Reference
 
 | Code | Name | Section |
 |------|------|---------|
-| PGE-901 | Undefined Import Alias | [[#Usage]] |
-| PGE-902 | Circular Package Dependency | [[#Dependency Rules]] |
-| PGE-903 | Unresolved Pipeline Reference | [[#Dependency Rules]] |
-| PGE-904 | Unresolved Import Pipeline Reference | [[#Usage]] |
-| PGE-905 | Multi-File Version Mismatch | [[#Rules]] |
-| PGE-906 | Multi-File Package Name Mismatch | [[#Rules]] |
-| PGE-907 | Duplicate Definition | [[#Rules]] |
-| PGE-909 | Multi-File Reference Not Found | [[#Rules]] |
-| PGE-910 | Multi-File Self-Reference | [[#Rules]] |
-| PGE-911 | Asymmetric Multi-File Reference | [[#Rules]] |
-| PGE-912 | Duplicate Import Alias | [[#Import Rules]] |
-| PGE-913 | Import Alias Shadows Standard Library | [[#Import Rules]] |
-| PGE-914 | Circular Pipeline Call | [[#Dependency Rules]] |
-| PGE-915 | Pipeline Exceeds Package Permission Ceiling | [[#Permissions]] |
-| PGE-916 | Imported Package Exceeds Importer Permission Ceiling | [[#Permissions]] |
-| PGW-901 | Deprecated Pipeline Reference | [[#Usage]] |
-| PGW-902 | Unused Import | [[#Import Rules]] |
+| PGE09001 | Undefined Import Alias | [[#Usage]] |
+| PGE09002 | Circular Package Dependency | [[#Dependency Rules]] |
+| PGE09003 | Unresolved Pipeline Reference | [[#Dependency Rules]] |
+| PGE09004 | Unresolved Import Pipeline Reference | [[#Usage]] |
+| PGE09005 | Multi-File Version Mismatch | [[#Rules]] |
+| PGE09006 | Multi-File Package Name Mismatch | [[#Rules]] |
+| PGE09007 | Duplicate Definition | [[#Rules]] |
+| PGE09008 | Multi-File Reference Not Found | [[#Rules]] |
+| PGE09009 | Multi-File Self-Reference | [[#Rules]] |
+| PGE09010 | Asymmetric Multi-File Reference | [[#Rules]] |
+| PGE09011 | Duplicate Import Alias | [[#Import Rules]] |
+| PGE09012 | Import Alias Shadows Standard Library | [[#Import Rules]] |
+| PGE09013 | Circular Pipeline Call | [[#Dependency Rules]] |
+| PGE10001 | Pipeline Exceeds Package Permission Ceiling | [[#Permissions]] |
+| PGE10002 | Imported Package Exceeds Importer Permission Ceiling | [[#Permissions]] |
+| PGW09001 | Deprecated Pipeline Reference | [[#Usage]] |
+| PGW09002 | Unused Import | [[#Import Rules]] |

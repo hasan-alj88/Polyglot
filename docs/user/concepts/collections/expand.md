@@ -25,9 +25,9 @@ Variables declared inside a mini-pipeline are scoped to that iteration — they 
 | `~ForEach.Dataframe` | Each row (a Map of column values) | `<Dataframe`, `>row` |
 | `~ForEach.Dataframe.Enumerate` | Each row with row index | `<Dataframe`, `>index`, `>row` |
 
-The expand operator's IO must match its signature — `~ForEach.Array` requires `<Array` and `>item`, `~ForEach.Dataframe` requires `<Dataframe` and `>row` (PGE-307). Similarly, each collect operator's IO must match its contract (PGE-308).
+The expand operator's IO must match its signature — `~ForEach.Array` requires `<Array` and `>item`, `~ForEach.Dataframe` requires `<Dataframe` and `>row` (PGE03007). Similarly, each collect operator's IO must match its contract (PGE03008).
 
-Every expand scope must contain at least one [[concepts/collections/collect|collector]]. A nested expand without an inner collector is a compile error — inner items cannot flow to outer collectors (PGE-309). Conversely, a `*Into` or `*Agg` collector outside any expand scope is invalid (PGE-311).
+Every expand scope must contain at least one [[concepts/collections/collect|collector]]. A nested expand without an inner collector is a compile error — inner items cannot flow to outer collectors (PGE03009). Conversely, a `*Into` or `*Agg` collector outside any expand scope is invalid (PGE03010).
 
 ### `~ForEach.Level` — Level-Specific Iteration
 

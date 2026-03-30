@@ -201,8 +201,8 @@ When a fallback activates, the target variable becomes **Final** with the fallba
 ### Scoping Rules
 
 - `[>]` / `[<]` must be **indented under** an `[=]` IO line — they inherit the output/input reference
-- One generic `<!` per output — duplicates are PGE-703
-- One `<!Error.Name` per specific error per output — duplicates are PGE-703
+- One generic `<!` per output — duplicates are PGE07003
+- One `<!Error.Name` per specific error per output — duplicates are PGE07003
 - Fallback values can be any `value_expr`: literals, `$` variables, inline pipeline calls
 
 ### Chain Execution Exception

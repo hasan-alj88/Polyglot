@@ -96,14 +96,14 @@ Both calling forms work:
 
 When calling a pipeline (via `[r]`, `[p]`, `[b]`, or chain step), the compiler enforces IO wiring constraints:
 
-- **Assignment target** — the LHS of an assignment must be a variable, output port, or field path, not a value expression (PGE-807).
-- **Required inputs** — every required `<input` (no default) must be wired by the caller. Missing a required input is PGE-808.
-- **Required outputs** — every required `>output` must be captured or explicitly discarded with `$*`. Failing to capture is PGE-809.
-- **IO direction** — inputs use `<<`, outputs use `>>`. Reversing the direction operator is a compile error (PGE-810).
-- **IO name matching** — the parameter name at the call site must match a declared IO name on the target pipeline (PGE-110).
-- **Duplicate IO** — the same IO parameter cannot be wired twice in a single call (PGE-111).
+- **Assignment target** — the LHS of an assignment must be a variable, output port, or field path, not a value expression (PGE08007).
+- **Required inputs** — every required `<input` (no default) must be wired by the caller. Missing a required input is PGE08008.
+- **Required outputs** — every required `>output` must be captured or explicitly discarded with `$*`. Failing to capture is PGE08009.
+- **IO direction** — inputs use `<<`, outputs use `>>`. Reversing the direction operator is a compile error (PGE08010).
+- **IO name matching** — the parameter name at the call site must match a declared IO name on the target pipeline (PGE01010).
+- **Duplicate IO** — the same IO parameter cannot be wired twice in a single call (PGE01011).
 
-Inputs with defaults that are not addressed by the caller emit a warning (PGW-808). Outputs with defaults or fallbacks that are not captured emit a warning (PGW-809).
+Inputs with defaults that are not addressed by the caller emit a warning (PGW08002). Outputs with defaults or fallbacks that are not captured emit a warning (PGW08003).
 
 ## Compile Rules
 
@@ -111,37 +111,37 @@ Pipeline structure, chain execution, and call site rules enforced at compile tim
 
 | Code | Name | Section |
 |------|------|---------|
-| PGE-101 | Pipeline Section Misordering | Pipeline Structure |
-| PGE-102 | IO Before Trigger | Pipeline Structure |
-| PGE-104 | Macro Structural Constraints | Wrappers |
-| PGE-105 | Missing Pipeline Trigger | Triggers |
-| PGE-106 | Missing Pipeline Queue | Queue |
-| PGE-107 | Missing Pipeline Setup/Cleanup | Wrappers |
-| PGE-108 | Wrapper Must Reference Macro | Wrappers |
-| PGE-109 | Wrapper IO Mismatch | Wrappers |
-| PGE-110 | Pipeline IO Name Mismatch | Call Site Rules |
-| PGE-111 | Duplicate IO Parameter Name | Call Site Rules |
-| PGE-112 | Queue Definition Must Use #Queue: Prefix | Queue |
-| PGE-113 | Queue Control Contradicts Queue Default | Queue |
-| PGE-114 | Unresolved Queue Reference | Queue |
-| PGE-115 | Duplicate Metadata Field | Pipeline Metadata |
-| PGE-116 | Unmarked Execution Line | Execution Rules |
-| PGE-117 | Wrong Block Element Marker | Execution Rules |
-| PGE-118 | Tautological Trigger Condition | Triggers |
-| PGE-801 | Auto-Wire Type Mismatch | Auto-Wire |
-| PGE-802 | Auto-Wire Ambiguous Type | Auto-Wire |
-| PGE-803 | Auto-Wire Unmatched Parameter | Auto-Wire |
-| PGE-804 | Ambiguous Step Reference | Step Addressing |
-| PGE-805 | Unresolved Step Reference | Step Addressing |
-| PGE-806 | Non-Pipeline Step in Chain | Chain Execution |
-| PGE-807 | Invalid Assignment Target | Call Site Rules |
-| PGE-808 | Missing Required Input at Call Site | Call Site Rules |
-| PGE-809 | Uncaptured Required Output at Call Site | Call Site Rules |
-| PGE-810 | IO Direction Mismatch | Call Site Rules |
-| PGW-701 | Error Handler on Non-Failable Call | Error Handling |
-| PGW-801 | Auto-Wire Succeeded | Auto-Wire |
-| PGW-808 | Unaddressed Input With Default | Call Site Rules |
-| PGW-809 | Uncaptured Output With Default/Fallback | Call Site Rules |
+| PGE01001 | Pipeline Section Misordering | Pipeline Structure |
+| PGE01002 | IO Before Trigger | Pipeline Structure |
+| PGE01004 | Macro Structural Constraints | Wrappers |
+| PGE01005 | Missing Pipeline Trigger | Triggers |
+| PGE01006 | Missing Pipeline Queue | Queue |
+| PGE01007 | Missing Pipeline Setup/Cleanup | Wrappers |
+| PGE01008 | Wrapper Must Reference Macro | Wrappers |
+| PGE01009 | Wrapper IO Mismatch | Wrappers |
+| PGE01010 | Pipeline IO Name Mismatch | Call Site Rules |
+| PGE01011 | Duplicate IO Parameter Name | Call Site Rules |
+| PGE01012 | Queue Definition Must Use #Queue: Prefix | Queue |
+| PGE01013 | Queue Control Contradicts Queue Default | Queue |
+| PGE01014 | Unresolved Queue Reference | Queue |
+| PGE01015 | Duplicate Metadata Field | Pipeline Metadata |
+| PGE01016 | Unmarked Execution Line | Execution Rules |
+| PGE01017 | Wrong Block Element Marker | Execution Rules |
+| PGE01018 | Tautological Trigger Condition | Triggers |
+| PGE08001 | Auto-Wire Type Mismatch | Auto-Wire |
+| PGE08002 | Auto-Wire Ambiguous Type | Auto-Wire |
+| PGE08003 | Auto-Wire Unmatched Parameter | Auto-Wire |
+| PGE08004 | Ambiguous Step Reference | Step Addressing |
+| PGE08005 | Unresolved Step Reference | Step Addressing |
+| PGE08006 | Non-Pipeline Step in Chain | Chain Execution |
+| PGE08007 | Invalid Assignment Target | Call Site Rules |
+| PGE08008 | Missing Required Input at Call Site | Call Site Rules |
+| PGE08009 | Uncaptured Required Output at Call Site | Call Site Rules |
+| PGE08010 | IO Direction Mismatch | Call Site Rules |
+| PGW07001 | Error Handler on Non-Failable Call | Error Handling |
+| PGW08001 | Auto-Wire Succeeded | Auto-Wire |
+| PGW08002 | Unaddressed Input With Default | Call Site Rules |
+| PGW08003 | Uncaptured Output With Default/Fallback | Call Site Rules |
 
 ## See Also
 

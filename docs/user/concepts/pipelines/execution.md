@@ -12,7 +12,7 @@ The execution section contains `[r]`, `[p]`, `[b]`, `[s]`, `[?]` lines — see [
 
 ### Execution Rules
 
-Every line in the execution body must begin with a block element marker — `[r]`, `[p]`, `[b]`, `[?]`, `[s]`, or an expand operator (PGE-116). Use `[r]` for process steps and assignment, not `[=]` — the `[=]` marker is reserved for IO declarations (PGE-117).
+Every line in the execution body must begin with a block element marker — `[r]`, `[p]`, `[b]`, `[?]`, `[s]`, or an expand operator (PGE01016). Use `[r]` for process steps and assignment, not `[=]` — the `[=]` marker is reserved for IO declarations (PGE01017).
 
 ## See Also
 

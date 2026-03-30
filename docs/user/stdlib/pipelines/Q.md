@@ -10,7 +10,7 @@ status: complete
 <!-- @pipelines -->
 Queue pipelines manage the two-queue execution model: **Pending Queue** (pipelines awaiting dispatch) and **Active Queue** (pipelines currently executing). No `[@]` import needed. See [[concepts/pipelines/queue#Queue]] for queue usage rules.
 
-All `=Q.*` pipelines are used via `[Q]` — either in a `{Q}` queue definition (queue-level defaults) or in a pipeline's `[Q]` section (pipeline-specific controls). Controls in `{Q}` apply to all pipelines on that queue. Controls in `[Q]` are pipeline-specific. Contradictions raise PGE-113.
+All `=Q.*` pipelines are used via `[Q]` — either in a `{Q}` queue definition (queue-level defaults) or in a pipeline's `[Q]` section (pipeline-specific controls). Controls in `{Q}` apply to all pipelines on that queue. Controls in `[Q]` are pipeline-specific. Contradictions raise PGE01013.
 
 **PRIMITIVE** — Queue pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
 

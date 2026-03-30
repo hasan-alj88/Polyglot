@@ -54,8 +54,8 @@ Allowed only if the serial's fields satisfy the struct's schema. Extra fields in
 
 The compiler performs best-effort static analysis:
 - **Provably matches** — no handling needed
-- **Provably mismatches** — PGE-402 (schema mismatch)
-- **Cannot prove match** — user must handle with `[!]` + `*Continue >FallBack`. If absent → PGE-409
+- **Provably mismatches** — PGE04002 (schema mismatch)
+- **Cannot prove match** — user must handle with `[!]` + `*Continue >FallBack`. If absent → PGE04009
 
 ```polyglot
 {#} #UserRecord
@@ -72,7 +72,7 @@ The compiler performs best-effort static analysis:
       [*] *Continue >FallBack << $defaultUser
 ```
 
-See [TYPE-IDENTITY](../../technical/compile-rules/TYPE-IDENTITY.md) rules 5 and 6, [PGE-409](../../technical/compile-rules/PGE/PGE-409-unhandled-serial-struct-conversion.md).
+See [TYPE-IDENTITY](../../technical/compile-rules/TYPE-IDENTITY.md) rules 5 and 6, [PGE04009](../../technical/compile-rules/PGE/PGE04009-unhandled-serial-struct-conversion.md).
 
 ## See Also
 

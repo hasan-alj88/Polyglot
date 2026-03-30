@@ -44,11 +44,11 @@ Build dataframes using `*Into.Dataframe` collectors, not incremental assignment.
 
 When a collection type is used as another collection's value type (e.g., an array of arrays), the compiler requires explicit depth bounds.
 
-- **PGE-922** — A collection used as a value type without explicit `%##Depth.Max` is a compile error. Unbounded nesting must be declared intentionally.
-- **PGW-906** — Setting `%##Depth.Max << -1` (unlimited) on a user-defined type raises a warning. Only `#Serial` should use unlimited depth.
+- **PGE11002** — A collection used as a value type without explicit `%##Depth.Max` is a compile error. Unbounded nesting must be declared intentionally.
+- **PGW11003** — Setting `%##Depth.Max << -1` (unlimited) on a user-defined type raises a warning. Only `#Serial` should use unlimited depth.
 
 ```polyglot
-[ ] PGE-922: compile error — no depth bound on nested array
+[ ] PGE11002: compile error — no depth bound on nested array
 {#} #BadGrid
    [#] <~ #array:array:int
 

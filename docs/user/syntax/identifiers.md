@@ -52,7 +52,7 @@ The `%` accessor reads `live`-typed metadata that the runtime populates. Users c
 **Package addresses** use `::` to separate registry from package name, with `:` flexible throughout:
 - `@Local:999::PackageName:Sub:v1.0.0` — `:999` flexible registry ID, `::` registry separator, `:PackageName:Sub` flexible package name, `:v1.0.0` flexible version
 
-**Discard variable (`$*`)** — a reserved identifier that immediately releases any value pushed into it. Use `$*` when a pipeline produces output you intentionally do not need. `$*` satisfies PGE-302 (parallel output must be collected) without naming the variable. For debugging or later use, prefer `*Ignore` with a named variable instead — see [[concepts/collections/collect#*Ignore — Explicit Discard]].
+**Discard variable (`$*`)** — a reserved identifier that immediately releases any value pushed into it. Use `$*` when a pipeline produces output you intentionally do not need. `$*` satisfies PGE03002 (parallel output must be collected) without naming the variable. For debugging or later use, prefer `*Ignore` with a named variable instead — see [[concepts/collections/collect#*Ignore — Explicit Discard]].
 
 The prefix (`$`, `@`, `!`, `#`, `=`, `_`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[syntax/types/structs#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[concepts/collections/INDEX#Collection Types]].
 

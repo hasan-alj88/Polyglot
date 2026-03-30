@@ -8,14 +8,14 @@ updated: 2026-03-30
 
 ## Queue
 
-Every pipeline must declare a `[Q]` line — omitting it is a compile error (PGE-106). Polyglot uses a two-queue execution model:
+Every pipeline must declare a `[Q]` line — omitting it is a compile error (PGE01006). Polyglot uses a two-queue execution model:
 
 - **Pending Queue** — pipelines awaiting dispatch after all triggers fire. Strategies control ordering (FIFO, LIFO, Priority).
 - **Active Queue** — pipelines currently executing. Controls include pause, resume, and kill operations.
 
 ### Defining a Queue (`{Q}`)
 
-Custom queues are defined with `{Q}`, which both defines the queue struct and instantiates it. The identifier must use the `#Queue:` prefix (PGE-112). Queue-level defaults apply to all pipelines assigned to this queue.
+Custom queues are defined with `{Q}`, which both defines the queue struct and instantiates it. The identifier must use the `#Queue:` prefix (PGE01012). Queue-level defaults apply to all pipelines assigned to this queue.
 
 ```polyglot
 {Q} #Queue:GPUQueue
@@ -27,7 +27,7 @@ Custom queues are defined with `{Q}`, which both defines the queue struct and in
       [=] <ExecutionTime.MoreThan#string << "4h"
 ```
 
-`=Q.Default` is the only stdlib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first. Referencing an undefined queue is a compile error (PGE-114).
+`=Q.Default` is the only stdlib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first. Referencing an undefined queue is a compile error (PGE01014).
 
 ### Using a Queue (`[Q]`)
 
@@ -53,7 +53,7 @@ The `[Q]` line in a pipeline declares which queue it uses. It accepts optional `
 | `<maxConcurrent#int` | int | Max other pipelines running alongside |
 | `<retrigger;#RetriggerStrategy` | enum | Behavior on re-trigger while active |
 
-Pipeline-specific `[Q]` controls must not contradict the queue's `{Q}` defaults (PGE-113). See [[Q]] for the full stdlib queue pipeline catalog.
+Pipeline-specific `[Q]` controls must not contradict the queue's `{Q}` defaults (PGE01013). See [[Q]] for the full stdlib queue pipeline catalog.
 
 ## See Also
 

@@ -70,7 +70,7 @@ No new grammar needed. RE is declared via standard subfield assignment:
 
 ### Validation Timing
 
-- **Compile-time** — string literals and provable constants checked against RE (PGE-410)
+- **Compile-time** — string literals and provable constants checked against RE (PGE04010)
 - **Runtime** — dynamic values checked when pushed; failures handled with `[!]` error blocks
 - Literal numeric values (int/float) always match their RE by construction — no error handling needed
 

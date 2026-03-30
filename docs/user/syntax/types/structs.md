@@ -30,8 +30,8 @@ The `#` prefix is only used when **referencing** a struct outside of type annota
 
 Each level in a struct must be homogeneous in two ways (see [[identifiers#Serialization Rules]]):
 
-1. **Separator homogeneity** — all siblings at a level must be all fixed (`.`) or all flexible (`:`) — never mixed (PGE-501)
-2. **Kind homogeneity** — all siblings at a level must be all enum fields or all value fields — never mixed (PGE-502)
+1. **Separator homogeneity** — all siblings at a level must be all fixed (`.`) or all flexible (`:`) — never mixed (PGE05001)
+2. **Kind homogeneity** — all siblings at a level must be all enum fields or all value fields — never mixed (PGE05002)
 
 A field whose type is itself a struct defines the later levels. It is invalid to declare sub-levels after a field typed as a struct — the struct's definition already specifies those levels.
 
@@ -67,7 +67,7 @@ In `{#}` struct definitions, fields are either **enum fields** (`###Enum`) or **
 **Rules:**
 - No type annotation (`#type`) implies an **enum field** (`###Enum`)
 - Enum fields always use `[.]` fixed fields
-- All siblings at the same level must be the same kind — mixing raises PGE-925
+- All siblings at the same level must be the same kind — mixing raises PGE05005
 - Enum fields can nest value sub-fields
 
 ```polyglot

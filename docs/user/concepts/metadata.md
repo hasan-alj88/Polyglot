@@ -35,7 +35,7 @@ The `[%]` block element lives inside any `{x}` definition. One definition = one 
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `%alias` | `#Array.NestedKeyString` | Shorthand names — multiple aliases per definition. Each alias is a `#NestedKeyString` (allows `.` and `:` for nested paths). Must be globally unique (PGE-1002) |
+| `%alias` | `#Array.NestedKeyString` | Shorthand names — multiple aliases per definition. Each alias is a `#NestedKeyString` (allows `.` and `:` for nested paths). Must be globally unique (PGE12002) |
 | `:info` | `#serial` | Opens a flexible scope for custom key-value tooling data |
 
 ### Example
@@ -58,7 +58,7 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 
 ## Querying Runtime State with `%`
 
-`live` fields are populated by the Polyglot runtime automatically. Users read them via `%` but cannot push into them (PGE-206). See [[syntax/types/hierarchy#Live Type Modifier]].
+`live` fields are populated by the Polyglot runtime automatically. Users read them via `%` but cannot push into them (PGE02006). See [[syntax/types/hierarchy#Live Type Modifier]].
 
 ### Pipeline (`{=}`)
 
@@ -94,7 +94,7 @@ Live fields for macros are not yet defined.
 
 ## Rules
 
-- **PGE-206:** `live` fields are pull-only — any push is a compile error
+- **PGE02006:** `live` fields are pull-only — any push is a compile error
 - **Non-live** `[%]` fields follow normal [[variable-lifecycle]] rules
 - Prefer reactive patterns (error blocks, IO triggers) over polling `live` fields when possible. Use `%` when you genuinely need runtime introspection
 

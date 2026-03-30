@@ -91,7 +91,7 @@ Permissions operate at two levels: **package ceiling** and **definition request*
 
 ### Package Ceiling
 
-`[_]` lines in `{@}` set the maximum permissions any definition in the package may request. The package ceiling **allows but does not grant** — no definition inherits permissions automatically. See [[packages#Permissions]] for the full ceiling syntax and compile rules (PGE-915, PGE-916).
+`[_]` lines in `{@}` set the maximum permissions any definition in the package may request. The package ceiling **allows but does not grant** — no definition inherits permissions automatically. See [[packages#Permissions]] for the full ceiling syntax and compile rules (PGE10001, PGE10002).
 
 ```polyglot
 {@} LogAnalyzer

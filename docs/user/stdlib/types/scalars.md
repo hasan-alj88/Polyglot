@@ -127,7 +127,7 @@ Each `[M]` invocation passes `[#] <Name`, `[#] <Alias`, and `[#] <Regex` argumen
       [#] <Regex << "^[a-zA-Z_][a-zA-Z0-9_]*$"
 ```
 
-`##KeyString` excludes characters reserved by Polyglot syntax. Any type used as `%##Children.Type` must compose `##KeyString`; otherwise the compiler raises PGE-924.
+`##KeyString` excludes characters reserved by Polyglot syntax. Any type used as `%##Children.Type` must compose `##KeyString`; otherwise the compiler raises PGE11004.
 
 ## ##NestedKeyString
 

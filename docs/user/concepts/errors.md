@@ -56,11 +56,11 @@ A pipeline that can raise errors **must** declare them in its IO section using `
 ```
 
 Error declarations are mandatory — a pipeline without `[=] !...` is non-failable. The compiler uses this to enforce:
-- **PGE-705** — `[!] >>` raises an error not declared by the pipeline
-- **PGE-706** — `[=] !ErrorName` declared but never raised in the execution body
-- **PGW-701** — caller adds `[!]` handler on a non-failable pipeline call (dead code)
-- **PGW-704** — caller adds `[>] <!` fallback on output from a non-failable pipeline call (dead code)
-- **PGE-707** — caller does not address all declared errors (exhaustive handling required)
+- **PGE07005** — `[!] >>` raises an error not declared by the pipeline
+- **PGE07006** — `[=] !ErrorName` declared but never raised in the execution body
+- **PGW07001** — caller adds `[!]` handler on a non-failable pipeline call (dead code)
+- **PGW07004** — caller adds `[>] <!` fallback on output from a non-failable pipeline call (dead code)
+- **PGE07007** — caller does not address all declared errors (exhaustive handling required)
 
 ## Raising Errors (`[!] >>`)
 
@@ -97,24 +97,24 @@ Inside a `[!] >>` block, the author can push fallback values to specific outputs
    [ ] >validated not mentioned — goes Failed
 ```
 
-`[>] %FallbackMessage` documents **why** this fallback exists. It is displayed by PGW-702 when a caller overrides the fallback with `[>] <!`.
+`[>] %FallbackMessage` documents **why** this fallback exists. It is displayed by PGW07002 when a caller overrides the fallback with `[>] <!`.
 
 ### Fallback Warning Rules
 
 | Author fallback? | `%FallbackMessage`? | Caller `<!`? | Result |
 |-----------------|---------------------|-------------|--------|
-| Yes | Missing | — | **PGW-703** to author: missing message |
+| Yes | Missing | — | **PGW07003** to author: missing message |
 | Yes | `""` (suppressed) | Yes | Override silently — author allows it |
-| Yes | `"reason"` | Yes | **PGW-702** to caller: shows author's reason |
+| Yes | `"reason"` | Yes | **PGW07002** to caller: shows author's reason |
 | Yes | `"reason"` | No | Normal — caller uses author's fallback |
 | No | — | Yes | Normal `<!` behavior |
 
-- **PGW-702** — caller `[>] <!` overrides a pipeline-defined fallback that has `%FallbackMessage`. See [[compile-rules/PGW/PGW-702-caller-overrides-pipeline-fallback]].
-- **PGW-703** — author sets output fallback in `[!] >>` without `[>] %FallbackMessage`. Suppress with `%FallbackMessage << ""`. See [[compile-rules/PGW/PGW-703-missing-fallback-message]].
+- **PGW07002** — caller `[>] <!` overrides a pipeline-defined fallback that has `%FallbackMessage`. See [[compile-rules/PGW/PGW07002-caller-overrides-pipeline-fallback]].
+- **PGW07003** — author sets output fallback in `[!] >>` without `[>] %FallbackMessage`. Suppress with `%FallbackMessage << ""`. See [[compile-rules/PGW/PGW07003-missing-fallback-message]].
 
 ## Error Scoping
 
-`[!]` error blocks are scoped to the specific `[r]` call that can produce them (PGE-701), indented under the call (after its `[=]` IO lines). Under a single `[r]` call, no two `[!]` blocks may handle the same error name (PGE-704).
+`[!]` error blocks are scoped to the specific `[r]` call that can produce them (PGE07001), indented under the call (after its `[=]` IO lines). Under a single `[r]` call, no two `[!]` blocks may handle the same error name (PGE07004).
 
 ```polyglot
 [r] @FS=File.Text.Read
@@ -155,11 +155,11 @@ Four patterns for error handling:
 | `[!]` with `[*] *Continue >IsFailed >> $var` | Yes | May be Failed — handle via `$var` boolean |
 | `[>] <!` fallback on IO line | Yes | Always Final — fallback value used |
 
-If the compiler cannot guarantee the `>IsFailed` output is handled, it emits PGW-205.
+If the compiler cannot guarantee the `>IsFailed` output is handled, it emits PGW02004.
 
 ## Chain Error Addressing
 
-In chain execution (`[r] =A=>=B=>=C`), errors are prefixed with a step reference (PGE-702):
+In chain execution (`[r] =A=>=B=>=C`), errors are prefixed with a step reference (PGE07002):
 
 **Prefer numeric indices** — always unambiguous:
 
@@ -259,7 +259,7 @@ Fallback accepts any `value_expr` — not just literals:
    [>] <! =LoadCached"{$userId}"
 ```
 
-(Only ONE of the above per output — duplicates are PGE-703.)
+(Only ONE of the above per output — duplicates are PGE07003.)
 
 ### Precedence: `[!]` Before `<!`
 
@@ -328,7 +328,7 @@ When a fallback activates, the error that triggered it is accessible via `$var%s
 
 ### Compiler Rules
 
-- **PGE-703** — duplicate `<!` on same output for same error (or duplicate generic). See [[compile-rules/PGE/PGE-703-duplicate-fallback-assignment]].
+- **PGE07003** — duplicate `<!` on same output for same error (or duplicate generic). See [[compile-rules/PGE/PGE07003-duplicate-fallback-assignment]].
 
 ## Compile Rules
 
@@ -336,15 +336,15 @@ Error declaration, handling, and fallback rules enforced at compile time. See [[
 
 | Code | Name | Section |
 |------|------|---------|
-| PGE-701 | `[!]` Error Block Scoping | Error Scoping |
-| PGE-702 | Chain Error Scoping | Chain Error Addressing |
-| PGE-703 | Duplicate Fallback Assignment | Error Fallback Operators |
-| PGE-704 | Duplicate Error Handler | Error Scoping |
-| PGE-705 | Undeclared Error Raise | Raising Errors |
-| PGE-706 | Unused Error Declaration | Declaring Pipeline Errors |
-| PGE-707 | Error Handling Must Be Exhaustive | Declaring Pipeline Errors |
-| PGW-205 | Pipeline Terminates on Error | Error Recovery |
-| PGW-701 | Error Handler on Non-Failable Call | Declaring Pipeline Errors |
-| PGW-702 | Caller Overrides Pipeline Fallback | Output Fallback on Raise |
-| PGW-703 | Missing Fallback Message | Output Fallback on Raise |
-| PGW-704 | Fallback on Non-Failable IO | Error Fallback Operators |
+| PGE07001 | `[!]` Error Block Scoping | Error Scoping |
+| PGE07002 | Chain Error Scoping | Chain Error Addressing |
+| PGE07003 | Duplicate Fallback Assignment | Error Fallback Operators |
+| PGE07004 | Duplicate Error Handler | Error Scoping |
+| PGE07005 | Undeclared Error Raise | Raising Errors |
+| PGE07006 | Unused Error Declaration | Declaring Pipeline Errors |
+| PGE07007 | Error Handling Must Be Exhaustive | Declaring Pipeline Errors |
+| PGW02004 | Pipeline Terminates on Error | Error Recovery |
+| PGW07001 | Error Handler on Non-Failable Call | Declaring Pipeline Errors |
+| PGW07002 | Caller Overrides Pipeline Fallback | Output Fallback on Raise |
+| PGW07003 | Missing Fallback Message | Output Fallback on Raise |
+| PGW07004 | Fallback on Non-Failable IO | Error Fallback Operators |

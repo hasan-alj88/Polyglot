@@ -25,9 +25,9 @@ updated: 2026-03-30
 | `%##Leafs.Kind` | `#FieldKind` | Universal | Constrains what `###` field type all leafs must be |
 | `%##Alias` | `#NestedKeyString` | Universal | Lowercase shorthand name |
 
-Schema properties apply universally via `[#]`, or branch-wise via `[.]`/`[:]`. Conflict between universal and branch-wise scope raises PGE-921. If a `%##` property is redundant with an inherited value, the compiler raises PGW-904; if it contradicts, the override takes effect with PGW-905.
+Schema properties apply universally via `[#]`, or branch-wise via `[.]`/`[:]`. Conflict between universal and branch-wise scope raises PGE11001. If a `%##` property is redundant with an inherited value, the compiler raises PGW11001; if it contradicts, the override takes effect with PGW11002.
 
-Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Property}`, making them introspectable at compile time. Schema references (`##`) are only valid inside `{#}` type definitions — using them outside raises PGE-926.
+Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Property}`, making them introspectable at compile time. Schema references (`##`) are only valid inside `{#}` type definitions — using them outside raises PGE05006.
 
 ### %##Depth.Max — Inference Model
 
@@ -47,7 +47,7 @@ Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Proper
 
 This means structs like `#Person` (with `.name#string`, `.age#int`) are automatically depth 0 and CAN be used as array/dict elements. A struct with `[:] :*#Handler` has depth 1 and CANNOT.
 
-Collections used as value types require explicit `%##Depth.Max` — the compiler raises PGE-922 if depth is missing. Using `%##Depth.Max << -1` on a user-defined type triggers PGW-906 (only `#Serial` should use unlimited depth).
+Collections used as value types require explicit `%##Depth.Max` — the compiler raises PGE11002 if depth is missing. Using `%##Depth.Max << -1` on a user-defined type triggers PGW11003 (only `#Serial` should use unlimited depth).
 
 ### `###` Field Types — Leaf Content
 
@@ -59,14 +59,14 @@ The `###` prefix describes the nature of leaf content in a type's fields. There 
 | `###Enum` | Leaf is variant selector | Field has no `#type` — identity IS the value (active variant) |
 | `###None` | Leaf is nullable | No fields — empty string `""` is the only valid value |
 
-`###None` marks a type as nullable. A variable annotated with a `###None` type holds empty string `""` — it represents the absence of a value. Only types with `[#] << ###None` accept empty string; all other types reject `""` with **PGE-421**.
+`###None` marks a type as nullable. A variable annotated with a `###None` type holds empty string `""` — it represents the absence of a value. Only types with `[#] << ###None` accept empty string; all other types reject `""` with **PGE04021**.
 
 **Compiler inference:** The compiler infers `###Value` if fields have `#type` annotations, `###Enum` if fields have no `#type`, and `###None` if the type has zero fields and zero schema (explicit `[#] << ###None` is required — it cannot be inferred). Explicit `[#] << ###Value` or `[#] << ###Enum` declaration is optional but allowed.
 
 **Error codes:**
-- **PGE-421** — empty string `""` assigned to a non-`###None` type: only `###None` types accept empty string
-- **PGE-923** — explicit `###` contradicts fields: `###Value` on a type with untyped enum fields, `###Enum` on a type with typed value fields, or `###None` on a type with any fields
-- **PGE-925** — sibling fields mix typed (`#type`) and untyped (enum) declarations: all siblings must be the same `###` kind
+- **PGE04021** — empty string `""` assigned to a non-`###None` type: only `###None` types accept empty string
+- **PGE11003** — explicit `###` contradicts fields: `###Value` on a type with untyped enum fields, `###Enum` on a type with typed value fields, or `###None` on a type with any fields
+- **PGE05005** — sibling fields mix typed (`#type`) and untyped (enum) declarations: all siblings must be the same `###` kind
 
 Examples from the type hierarchy:
 

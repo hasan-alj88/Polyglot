@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 <!-- @io:Chain IO Addressing -->
 <!-- @operators -->
-Every step in a chain must be a pipeline reference — non-pipeline values are a compile error (PGE-806). Chain execution wires multiple pipelines in sequence on a single `[r]` line, with `=>` separating each step (no spaces — the chain is one continuous expression). IO lines under the chain address individual steps by **numeric index** (0-based) or **leaf name** (the last segment of the pipeline's dotted name).
+Every step in a chain must be a pipeline reference — non-pipeline values are a compile error (PGE08006). Chain execution wires multiple pipelines in sequence on a single `[r]` line, with `=>` separating each step (no spaces — the chain is one continuous expression). IO lines under the chain address individual steps by **numeric index** (0-based) or **leaf name** (the last segment of the pipeline's dotted name).
 
 ```polyglot
 [r] =Pipeline1=>=Pipeline2=>=Pipeline3
@@ -32,7 +32,7 @@ IO parameters in a chain are prefixed with a step reference and `.`:
 
 The direction convention is **caller-perspective**: `>` means data flows *toward* the step (its input), `<` means data flows *from* the step (its output). This is consistent with how `[=]` IO works in regular pipeline calls. See [[io#Chain IO Addressing]].
 
-**Leaf name alternative:** When pipeline names are long, use the leaf name (last segment) instead of numeric index. Leaf names must be unambiguous within the chain — duplicate leaf names require numeric indices. An ambiguous step reference is PGE-804; an unresolved step reference is PGE-805.
+**Leaf name alternative:** When pipeline names are long, use the leaf name (last segment) instead of numeric index. Leaf names must be unambiguous within the chain — duplicate leaf names require numeric indices. An ambiguous step reference is PGE08004; an unresolved step reference is PGE08005.
 
 ```polyglot
 [r] =File.List=>=Data.Transform.Rows=>=Report.Format
@@ -85,11 +85,11 @@ sequenceDiagram
     S0-->>S1: auto: name (string)
     S0-->>S1: auto: record (UserRecord)
     S0-->>S1: auto: count (int)
-    Note over S0,S1: PGE-802 if two outputs share a type with one input
+    Note over S0,S1: PGE08002 if two outputs share a type with one input
     S1->>P: [=] exit IO
 ```
 
-A type mismatch between auto-wired ports is PGE-801. When multiple ports could match, the wire is ambiguous (PGE-802). An unmatched parameter with no valid auto-wire candidate is PGE-803. Note that successful auto-wire emits a warning (PGW-801) — explicit `[=]` wiring is preferred.
+A type mismatch between auto-wired ports is PGE08001. When multiple ports could match, the wire is ambiguous (PGE08002). An unmatched parameter with no valid auto-wire candidate is PGE08003. Note that successful auto-wire emits a warning (PGW08001) — explicit `[=]` wiring is preferred.
 
 If any condition is not met, explicit `[=]` wiring is required.
 

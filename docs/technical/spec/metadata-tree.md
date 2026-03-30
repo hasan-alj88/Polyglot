@@ -261,7 +261,7 @@ Schema definitions are immutable compile-time templates. When a `{#}` type compo
 └── .###:Enum        ← leaf is variant selector (no #type annotation)
 ```
 
-The compiler infers `###Value` or `###Enum` from field declarations. Explicit `[#] << ###Value` or `[#] << ###Enum` is optional. A contradiction between explicit declaration and fields raises PGE-923.
+The compiler infers `###Value` or `###Enum` from field declarations. Explicit `[#] << ###Value` or `[#] << ###Enum` is optional. A contradiction between explicit declaration and fields raises PGE11003.
 
 ### Schema Properties in Type Definitions (`%##`)
 
@@ -288,7 +288,7 @@ Field-level metadata uses the `%###` prefix. The `###` classification describes 
 | `%###Value` | Types with `#type`-annotated fields | Leaves hold typed data |
 | `%###Enum` | Types with unannotated enum fields | Leaves are variant selectors |
 
-All siblings must be the same `###` kind — mixing typed and untyped fields among siblings raises PGE-925.
+All siblings must be the same `###` kind — mixing typed and untyped fields among siblings raises PGE05005.
 
 ### Complete Type Definition Example
 
@@ -308,7 +308,7 @@ All siblings must be the same `###` kind — mixing typed and untyped fields amo
 └── :*#ValueType               ← flexible children
 ```
 
-The `%##` properties are accumulated from composed schemas: `##Flat` provides `%##Depth.Max << 1`, `##Contiguous` provides `%##Children.Gap << #False` and `%##Children.Ordered << #True`, `##Rectangular` provides `%##Children.Regular << #True` and `%##Children.Uniform << #True`. Redundant properties raise PGW-904; contradicting overrides raise PGW-905.
+The `%##` properties are accumulated from composed schemas: `##Flat` provides `%##Depth.Max << 1`, `##Contiguous` provides `%##Children.Gap << #False` and `%##Children.Ordered << #True`, `##Rectangular` provides `%##Children.Regular << #True` and `%##Children.Uniform << #True`. Redundant properties raise PGW11001; contradicting overrides raise PGW11002.
 
 `#Boolean` definition template showing `###Enum`:
 

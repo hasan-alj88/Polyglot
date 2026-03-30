@@ -11,7 +11,7 @@ When pushing to a typed flexible field (`[:] :*#Type`), must the user explicitly
 **Inferred.** The compiler knows the type from the `[:] :*#Type` declaration — no explicit annotation needed. Stating the type explicitly is not required.
 
 - **Omitted** — compiler infers from `[:] :*#Type` declaration
-- **Stated and contradicts** — PGE-401 (type mismatch)
+- **Stated and contradicts** — PGE04001 (type mismatch)
 
 ```polyglot
 {#} #Registry
@@ -31,7 +31,7 @@ This documents how the compiler resolves types on flexible field paths — neede
 1. **Resolve the parent path** — when the compiler sees `$registry.plugins:myPlugin`, resolve `$registry.plugins` to the `#Registry.plugins` struct level
 2. **Check the level's field declarations** — find `[:] :*#Handler` at that level
 3. **Apply the wildcard type** — any new `:key` at that level inherits `#Handler`
-4. **Validate the pushed value** — the value being assigned must satisfy the `Handler` schema (PGE-402 if incomplete, PGE-401 if wrong type)
+4. **Validate the pushed value** — the value being assigned must satisfy the `Handler` schema (PGE04002 if incomplete, PGE04001 if wrong type)
 
 ### Multi-Level Resolution
 
@@ -67,5 +67,5 @@ Path: `$config.sections:auth:timeout.value`
 
 - [types.md §Typed Flexible Fields](../../user/syntax/types.md) — user-facing docs
 - [TYPE-IDENTITY.md](../compile-rules/TYPE-IDENTITY.md) — structural matching rules
-- PGE-401 — Type Mismatch
-- PGE-402 — Schema Mismatch
+- PGE04001 — Type Mismatch
+- PGE04002 — Schema Mismatch

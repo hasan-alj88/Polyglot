@@ -50,12 +50,12 @@ flex_data_field     ::= "[:]" flex_sep name type_annotation [ assignment_op valu
 typed_flex_wildcard ::= "[:]" flex_sep "*" type_annotation ;
                       (* e.g., [:] :*#Handler — every :key at this level is #Handler.
                          Compiler infers type on new keys; no explicit annotation needed.
-                         Contradicting annotation → PGE-401.
+                         Contradicting annotation → PGE04001.
                          Absent wildcard → untyped (#serial). *)
 
 field_expansion    ::= "[.]" fixed_sep "*" type_param_ref type_annotation ;
                       (* e.g., [.] .*ColumnEnum#$CellType — expands enum fields from macro parameter.
-                         Macro param must satisfy ##EnumLeafs (PGE-928).
+                         Macro param must satisfy ##EnumLeafs (PGE04022).
                          Compiler stamps out one [.] per enum variant, each with annotated type.
                          Used inside {M} macros to expand fields from type parameters. *)
 ```
@@ -127,7 +127,7 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
                          { indent queue_io_line NEWLINE } ;
 ```
 
-`[Q]` references either a stdlib queue (`=Q.Default`) or a user-defined queue (`#Queue:Name`). Nested `[Q]` lines declare pipeline-specific active queue controls (pause, resume, kill). These override or extend the queue's `{Q}` defaults for this pipeline only — contradictions raise PGE-113.
+`[Q]` references either a stdlib queue (`=Q.Default`) or a user-defined queue (`#Queue:Name`). Nested `[Q]` lines declare pipeline-specific active queue controls (pause, resume, kill). These override or extend the queue's `{Q}` defaults for this pipeline only — contradictions raise PGE01013.
 
 **Examples:**
 
@@ -184,7 +184,7 @@ exec_line           ::= run_line
 - `[#] <Param` declares a value input parameter; `[#] <#Param` declares a type-as-data-tree input.
 - Macro body contains `{#}` definitions that use `{$var}` interpolation from parameters.
 - **[M] merge rule (identity):** The outer `{#}` names the result; the macro's internal `{#}` resolves to the same name. The macro fills the body. Any `[#]` lines after `[M]` in the outer `{#}` extend/override the macro's output.
-- Macros overload by signature (parameter count + kind). Two overloads with identical signature = PGE-930.
+- Macros overload by signature (parameter count + kind). Two overloads with identical signature = PGE01019.
 - Type macros do NOT contain `[\]`, `[/]`, `[{]`, `[}]`, `[t]`, `[=]` IO, or `[Q]` — those belong to wrappers or pipelines.
 
 ### 9.4b Wrapper Definition (`{W}`)
@@ -257,7 +257,7 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
                          { indent queue_io_line NEWLINE } ;
 ```
 
-`{Q}` defines and instantiates a named queue. The identifier must use the `#Queue:` prefix (PGE-112). Fields set queue-level defaults (strategy, retrigger). Nested `[Q]` lines set default active controls that apply to all pipelines on this queue.
+`{Q}` defines and instantiates a named queue. The identifier must use the `#Queue:` prefix (PGE01012). Fields set queue-level defaults (strategy, retrigger). Nested `[Q]` lines set default active controls that apply to all pipelines on this queue.
 
 **Example:**
 
@@ -344,7 +344,7 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 - `[%]` appears inside any `{x}` definition (`{#}`, `{=}`, `{M}`).
 - One definition = one metadata set (class-level, not instance-level).
 - All top-level `[%]` fields use `.` fixed separator. Only `.info#serial` opens a `:` flexible scope underneath (sibling homogeneity preserved).
-- `[%] %alias` declares shorthand names for definitions or fields. Each `[:]` child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed. All aliases must be globally unique (PGE-1002).
+- `[%] %alias` declares shorthand names for definitions or fields. Each `[:]` child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed. All aliases must be globally unique (PGE12002).
 - Aliases participate in exhaustiveness checking when the variable carries the parent type annotation.
 - `live` fields are implicit on all `{=}`, `$`, and `{#}` definitions. The runtime populates them. Users read via `%` accessor (e.g., `=Pipeline%status`, `$var%state`) but never assign.
 - Prefer reactive alternatives (error blocks, IO triggers) over polling `live` fields when possible.

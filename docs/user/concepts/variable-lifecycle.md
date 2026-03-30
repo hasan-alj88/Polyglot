@@ -51,21 +51,21 @@ stateDiagram-v2
 
 ### Declared
 
-A variable enters the Declared stage when it appears in a block without an assignment operator. It exists but holds no value. Pulling (reading) from a Declared variable is a compile error (PGE-202).
+A variable enters the Declared stage when it appears in a block without an assignment operator. It exists but holds no value. Pulling (reading) from a Declared variable is a compile error (PGE02002).
 
 ### Default
 
-A variable enters the Default stage when assigned with a default assignment operator (`<~` or `~>`). A default-assigned variable allows **one more** push (which promotes it to Final). A second default assignment without a Final in between is a compile error (PGE-204).
+A variable enters the Default stage when assigned with a default assignment operator (`<~` or `~>`). A default-assigned variable allows **one more** push (which promotes it to Final). A second default assignment without a Final in between is a compile error (PGE02004).
 
 ### Final
 
 A variable enters the Final stage when assigned with a final assignment operator (`<<` or `>>`). Once final:
-- **No more pushes** are allowed — any further assignment is a compile error (PGE-203)
+- **No more pushes** are allowed — any further assignment is a compile error (PGE02003)
 - **Pulling** values is allowed unlimited times, as long as the variable is not released
 
 ### Failed
 
-A variable enters the Failed stage when the pipeline responsible for producing its value terminates with an error. A failed variable will never resolve — it cannot transition to any other stage (PGE-205). Downstream pipelines waiting on a failed variable will not fire. Inspect the source pipeline's error tree (see [[concepts/pipelines/metadata#Error Trees]]) for details on the failure.
+A variable enters the Failed stage when the pipeline responsible for producing its value terminates with an error. A failed variable will never resolve — it cannot transition to any other stage (PGE02005). Downstream pipelines waiting on a failed variable will not fire. Inspect the source pipeline's error tree (see [[concepts/pipelines/metadata#Error Trees]]) for details on the failure.
 
 **Fallback override:** If the IO line has a `<!` fallback declared (see [[errors#Error Fallback Operators]]), the variable bypasses the Failed stage entirely and becomes **Final** with the fallback value. The error that would have caused the Failed state is accessible via `$var%sourceError` metadata (see [[metadata#Variable (`$`)]]).
 
@@ -75,7 +75,7 @@ A variable is released when:
 - Its definition scope ends (block indentation returns to parent level)
 - It is collected via a `*` collection operator — see [[concepts/collections/collect#Collect Operators]]
 
-Any access to a Released variable is a compile error (PGE-208). Code that can only execute after a variable is released is flagged as unreachable (PGE-209).
+Any access to a Released variable is a compile error (PGE02008). Code that can only execute after a variable is released is flagged as unreachable (PGE02009).
 
 ## Querying Lifecycle State
 

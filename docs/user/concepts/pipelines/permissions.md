@@ -23,7 +23,7 @@ Pipelines can declare `[_]` permission lines after the `{=}` header (and `[%]` m
    [r] >summary << ...
 ```
 
-- **Subset of ceiling** — every `[_]` in a pipeline must fall within the package `{@}` ceiling (PGE-915). See [[packages#Permissions]] for ceiling rules.
+- **Subset of ceiling** — every `[_]` in a pipeline must fall within the package `{@}` ceiling (PGE10001). See [[packages#Permissions]] for ceiling rules.
 - **No `[_]` = pure computation** — a pipeline with no `[_]` lines cannot perform IO, even if the package has a ceiling. Any IO call is a compile error.
 - **Explicit request** — permissions are never inherited from the package. Each pipeline must declare what it needs.
 

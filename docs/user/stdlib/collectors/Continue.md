@@ -7,7 +7,7 @@ status: draft
 
 # *Continue — Error Recovery
 
-Used inside `[!]` error blocks to continue the pipeline with a fallback value. Without `*Continue`, an `[!]` block terminates the pipeline on error (PGE-205).
+Used inside `[!]` error blocks to continue the pipeline with a fallback value. Without `*Continue`, an `[!]` block terminates the pipeline on error (PGE02005).
 
 No `[@]` import needed.
 
@@ -41,8 +41,8 @@ Provides a boolean flag without replacing the failed value. Downstream can check
 
 ## Rules
 
-- `*Continue` is only valid inside `[!]` blocks (PGE-207)
+- `*Continue` is only valid inside `[!]` blocks (PGE02007)
 - `>FallBack` must match the type of the failed variable
-- When used for serial→struct conversion, `[!]` + `*Continue >FallBack` is mandatory if the compiler cannot prove the match (PGE-409)
+- When used for serial→struct conversion, `[!]` + `*Continue >FallBack` is mandatory if the compiler cannot prove the match (PGE04009)
 
-See also: [PGE-207](../../technical/compile-rules/PGE/PGE-207-continue-after-error.md), [PGE-409](../../technical/compile-rules/PGE/PGE-409-unhandled-serial-struct-conversion.md)
+See also: [PGE02007](../../technical/compile-rules/PGE/PGE02007-continue-after-error.md), [PGE04009](../../technical/compile-rules/PGE/PGE04009-unhandled-serial-struct-conversion.md)

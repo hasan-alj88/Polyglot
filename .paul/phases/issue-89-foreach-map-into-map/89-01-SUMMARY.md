@@ -34,8 +34,8 @@ key-files:
     - docs/user/stdlib/INDEX.md
     - docs/user/STDLIB.md
     - docs/technical/EBNF.md
-    - docs/technical/compile-rules/PGE/PGE-307-expand-operator-input-mismatch.md
-    - docs/technical/compile-rules/PGE/PGE-308-collect-operator-io-mismatch.md
+    - docs/technical/compile-rules/PGE/PGE03007-expand-operator-input-mismatch.md
+    - docs/technical/compile-rules/PGE/PGE03008-collect-operator-io-mismatch.md
     - docs/user/stdlib/types/types.md
     - docs/user/syntax/types.md
     - docs/technical/plan/decisions/schema-properties.md
@@ -76,7 +76,7 @@ completed: 2026-03-28
 | AC-4: Into.Map documented | Pass | IO: <key, <value, >Map; duplicate keys = runtime error |
 | AC-5: collections.md updated | Pass | Both tables + Map example with =Math.Multiply |
 | AC-6: EBNF grammar updated | Pass | Both productions + IO signature tables |
-| AC-7: Compile rule tables updated | Pass | PGE-307 and PGE-308 both have Map entries |
+| AC-7: Compile rule tables updated | Pass | PGE03007 and PGE03008 both have Map entries |
 | AC-8: INDEX.md links updated | Pass | Folder links, descriptions mention "maps" |
 
 ## Accomplishments
@@ -104,8 +104,8 @@ completed: 2026-03-28
 | `docs/technical/EBNF.md` | Modified | Added Map to grammar + IO tables |
 | `docs/user/stdlib/INDEX.md` | Modified | Updated links to folders |
 | `docs/user/STDLIB.md` | Modified | Updated links to folders |
-| `docs/technical/compile-rules/PGE/PGE-307-*.md` | Modified | Added ForEach.Map IO signature |
-| `docs/technical/compile-rules/PGE/PGE-308-*.md` | Modified | Added Into.Map IO signature |
+| `docs/technical/compile-rules/PGE/PGE03007-*.md` | Modified | Added ForEach.Map IO signature |
+| `docs/technical/compile-rules/PGE/PGE03008-*.md` | Modified | Added Into.Map IO signature |
 | `docs/user/stdlib/types/types.md` | Modified | #Dict → #Map rename |
 | `docs/user/syntax/types.md` | Modified | #Dict → #Map rename |
 | `docs/technical/plan/decisions/schema-properties.md` | Modified | #Dict → #Map rename |

@@ -44,10 +44,10 @@ A `0D` array is a scalar container — it holds exactly one element with no inde
 ```polyglot
 [r] $scalar#array:int:0D <~ {42}
 [r] $val#int << $scalar              [ ] direct access — no index
-[r] $bad << $scalar:0                [ ] ✗ PGE-417 — no indices on 0D
+[r] $bad << $scalar:0                [ ] ✗ PGE04017 — no indices on 0D
 ```
 
-The compiler enforces access depth — too many or too few indices triggers PGE-417. Nested array types (`#array:#array:X`) remain banned (PGE-412) — use `:ND` instead.
+The compiler enforces access depth — too many or too few indices triggers PGE04017. Nested array types (`#array:#array:X`) remain banned (PGE04013) — use `:ND` instead.
 
 ## See Also
 

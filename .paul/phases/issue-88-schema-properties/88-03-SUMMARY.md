@@ -16,7 +16,7 @@ completed: 2026-03-28
 3. **Schema Definition Templates (`%definition.##`)** — new section with full tree showing all 8 approved schemas (##Scalar, ##Flat, ##Deep, ##Homogeneous, ##Heterogeneous, ##Contiguous, ##Sparse, ##Rectangular) at their metadata paths
 4. **Field Type Definition Templates (`%definition.###`)** — new section documenting `###Value` and `###Enum` at `%definition.###:{FieldTypeName}`
 5. **Schema Properties in Type Definitions (`%##`)** — replaced old `%Key.*`/`%Ordered`/`%Depth.Max`/`%Alias` table with full 9-property `%##` prefix table
-6. **Field Type Properties (`%###`)** — new section documenting `%###Value` and `%###Enum` with PGE-925 reference
+6. **Field Type Properties (`%###`)** — new section documenting `%###Value` and `%###Enum` with PGE05005 reference
 7. **Complete Type Definition Examples** — `#Array` example showing all `%##` properties accumulated from composed schemas, `#Boolean` example showing `###Enum`
 8. **Alias Resolution** — updated from `%Alias` to `%##Alias`
 
@@ -25,17 +25,17 @@ completed: 2026-03-28
 Added 9 new rules in a "Schema Rules" section:
 
 **Errors (PGE):**
-- PGE-921 (Rule 9.21): Schema Property Scope Conflict — universal `[#]` vs branch-wise `[.]`/`[:]`
-- PGE-922 (Rule 9.22): Unbounded Collection Nesting — collection value type without `%##Depth.Max`
-- PGE-923 (Rule 9.23): Field Type Contradiction — explicit `###` mismatches field declarations
-- PGE-924 (Rule 9.24): Invalid Key Type — `%##Children.Type` not inheriting `#IndexString`
-- PGE-925 (Rule 9.25): Mixed Field Kinds — sibling fields mix typed and untyped
-- PGE-926 (Rule 9.26): Schema Outside Type Definition — `##` used outside `{#}`
+- PGE11001 (Rule 9.21): Schema Property Scope Conflict — universal `[#]` vs branch-wise `[.]`/`[:]`
+- PGE11002 (Rule 9.22): Unbounded Collection Nesting — collection value type without `%##Depth.Max`
+- PGE11003 (Rule 9.23): Field Type Contradiction — explicit `###` mismatches field declarations
+- PGE11004 (Rule 9.24): Invalid Key Type — `%##Children.Type` not inheriting `#IndexString`
+- PGE05005 (Rule 9.25): Mixed Field Kinds — sibling fields mix typed and untyped
+- PGE05006 (Rule 9.26): Schema Outside Type Definition — `##` used outside `{#}`
 
 **Warnings (PGW):**
-- PGW-904 (Rule 9.21w): Redundant Schema Property — `%##`/`%###` already inherited
-- PGW-905 (Rule 9.22w): Contradicting Schema Override — overrides inherited value
-- PGW-906 (Rule 9.23w): Unlimited Depth on User Type — `%##Depth.Max << -1` on non-Serial type
+- PGW11001 (Rule 9.21w): Redundant Schema Property — `%##`/`%###` already inherited
+- PGW11002 (Rule 9.22w): Contradicting Schema Override — overrides inherited value
+- PGW11003 (Rule 9.23w): Unlimited Depth on User Type — `%##Depth.Max << -1` on non-Serial type
 
 All rules include VALID, INVALID, and/or WARNING code examples matching the existing format.
 
@@ -57,7 +57,7 @@ All rules include VALID, INVALID, and/or WARNING code examples matching the exis
 ## Verification
 
 - metadata-tree.md: 5 occurrences of `%definition.##`, 29 occurrences of `%##`/`%###` properties
-- COMPILE-RULES.md: 32 occurrences of PGE-921 through PGE-926 and PGW-904 through PGW-906
+- COMPILE-RULES.md: 32 occurrences of PGE11001 through PGE05006 and PGW11001 through PGW11003
 - EBNF.md: 11 occurrences of new schema grammar productions
 - No changes to types.md, collections.md, data-is-trees.md, or draft.md
 

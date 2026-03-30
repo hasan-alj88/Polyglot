@@ -72,7 +72,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Audit scope: all documentation | 2026-03-14 | docs/audit/ rules apply to ALL documentation Claude writes, not just docs/ files |
 | Restructured v0.1 to 2 phases | 2026-03-14 | Dropped Language Spec, Compiler Architecture, Prior Art Research phases; Language Spec moves to v0.2 |
 | v0.2 milestone created with 4 phases | 2026-03-24 | Phases 9-12: Core Language & Type System, Operators & Control Flow, Pipelines & Concurrency, Package System & Stdlib |
-| Arithmetic uses =Math.* stdlib, not raw operators | 2026-03-24 | PGE-410 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
+| Arithmetic uses =Math.* stdlib, not raw operators | 2026-03-24 | PGE04010 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
 | Removed speculative stdlib items | 2026-03-24 | =T.Schedule/HTTP/File, =W.Rust/Node had zero usage; =T.Webhook confirmed from EDGE-CASES |
 | Closed #36 — Pipeline call cycle detection algorithm | 2026-03-24 | Merged feat/issue-36-pipeline-call-cycle-detection to main |
 | Closed #37 — Multidimensional array via :ND | 2026-03-24 | Unified array + tensor into ;array.<type>:<N>D; removed ;tensor concept |
@@ -83,9 +83,9 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #73 — Add match syntax for concise conditional assignment | 2026-03-24 | Merged feat/issue-73-add-match-syntax to main; reuses [?] in match context |
 | Issue #74 — Add [+], [|], [c] block markers | 2026-03-24 | [+] reassigned from OR to line continuation; [|] new OR marker; [c] foreign code injection; 11 files updated |
 | Issue #80 — Add _ permission prefix and [_] block marker | 2026-03-25 | Implicit-deny permission system; _ is 7th identifier prefix; [_] block marker; 8 permission categories; compile-time enforcement |
-| Issue #81 — Add package permission ceiling in {@} block | 2026-03-25 | Ceiling syntax in {@}; pipeline-level [_] in pipelines.md; PGE-915/916 compile rules; two separate rules for pipeline vs import ceiling |
+| Issue #81 — Add package permission ceiling in {@} block | 2026-03-25 | Ceiling syntax in {@}; pipeline-level [_] in pipelines.md; PGE10001/916 compile rules; two separate rules for pipeline vs import ceiling |
 | Issue #82 — Add %_ metadata tree branch for permissions | 2026-03-25 | %_ in all 3 tree files; 8 categories; ._ under %@ and %=; no instances; #86 created for . vs : audit |
-| Issue #83 — Add permission compile rules | 2026-03-25 | PGE-917/918/919/920 + PGW-903; issue's PGE-916 renumbered to PGE-920; extends 9.x range |
+| Issue #83 — Add permission compile rules | 2026-03-25 | PGE10003/918/919/920 + PGW10001; issue's PGE10002 renumbered to PGE10006; extends 9.x range |
 | Issue #84 — Add !Permission.* error tree | 2026-03-25 | 8 .Denied leaves; trimmed overlapping .NotFound/.Timeout; File IO pipeline associations; #87 created for multi-alias |
 | Issue #85 — Document stdlib pipeline permission declarations | 2026-03-25 | [_] permissions in all 7 stdlib pipeline files; Permission column in INDEX.md; completes #80-#85 chain |
 | Issue #86 — Audit fixed vs flexible field usage | 2026-03-25 | %_ all `.` fixed; %! namespaces `.` + new !Error with `:` children; %@ `::` separator + Company rename; path grammar updated |
@@ -98,10 +98,10 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #67 — Add Mermaid flowchart to pipelines.md parallel forking | 2026-03-26 | flowchart TD: [\] setup splits to sequential + [p] fork concurrent with body, [/] collects |
 | Closed #68, #69, #70, #71, #72 — Batch Mermaid diagrams | 2026-03-26 | Merged docs/issue-68-72-mermaid-batch to main |
 | Closed #88 — Add schema properties to {#} definitions | 2026-03-28 | Three-tier prefix (#/##/###), #Map/#Array/#Serial hierarchy, 9 compile rules, 26 design decisions |
-| Closed #87 — Support multiple [%] .alias declarations per definition | 2026-03-28 | #IndexString→#KeyString, #NestedKeyString, flexible %alias, PGE-1002 |
+| Closed #87 — Support multiple [%] .alias declarations per definition | 2026-03-28 | #IndexString→#KeyString, #NestedKeyString, flexible %alias, PGE12002 |
 | Closed #89 — Add ~ForEach.Map and *Into.Map collection operators | 2026-03-28 | #Dict→#Map rename, ForEach/ and Into/ folder restructure, dot=folder convention |
-| Closed #92 — Edge-case audit for all datatype definitions | 2026-03-28 | 92-01 audit + restructure, 92-02 resolved 4 edge cases: PGE-927, PGE-421, ###None, 0D array |
-| Closed #90 — Add #Dataframe type + expand/collect operators | 2026-03-29 | Column-oriented #Dataframe<E<C, ##EnumLeafs, %##Leafs.Kind, #FieldKind, field expansion, 3 expanders + 1 collector, PGE-928/929/930 |
+| Closed #92 — Edge-case audit for all datatype definitions | 2026-03-28 | 92-01 audit + restructure, 92-02 resolved 4 edge cases: PGE11005, PGE04021, ###None, 0D array |
+| Closed #90 — Add #Dataframe type + expand/collect operators | 2026-03-29 | Column-oriented #Dataframe<E<C, ##EnumLeafs, %##Leafs.Kind, #FieldKind, field expansion, 3 expanders + 1 collector, PGE04022/929/930 |
 | Plan 94-01 — Macro-for-generics redesign | 2026-03-29 | Replaced generic <param with {M} macros; {M}/{W} split; [M] invocation; scalars as ## schemas; row-oriented Dataframe; 9 ground truths; 12 files updated |
 | Dataframe uses ## composition not <~ inheritance | 2026-03-29 | Array ##Scalar constraint incompatible with Map elements; Dataframe composes ##Contiguous/##Rectangular/##Ordered directly |
 | [M] merge = identity rule | 2026-03-29 | Outer {#} names result, macro fills body, additional [#] lines extend |
@@ -116,7 +116,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
 - 9 stdlib files remain status: draft despite Stable content (Math, Path, Sys, ForEach, collectors, types)
-- EC-6.4 inconsistency: raw arithmetic in EDGE-CASES vs PGE-410
+- EC-6.4 inconsistency: raw arithmetic in EDGE-CASES vs PGE04010
 - ~30 technical/ files still use old package address format (migrate on touch)
 
 ### Blockers/Concerns

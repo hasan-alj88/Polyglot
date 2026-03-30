@@ -103,9 +103,9 @@ flowchart LR
 
 Parallel execution enforces strict variable isolation:
 
-- A variable inside a `[p]` scope cannot be pushed into from outside that scope (PGE-301)
-- A `[p]` output variable cannot be pulled before its `[*]` collector has executed (PGE-303)
-- A `[p]` parallel and its `[*]` collector must pair within valid section boundaries — same scope, or `[\]` setup to `[/]` cleanup. A `[p]` in setup cannot be collected in the execution body (PGE-304). See [[concepts/pipelines/wrappers#Parallel Forking in Setup]] for the pairing constraint.
+- A variable inside a `[p]` scope cannot be pushed into from outside that scope (PGE03001)
+- A `[p]` output variable cannot be pulled before its `[*]` collector has executed (PGE03003)
+- A `[p]` parallel and its `[*]` collector must pair within valid section boundaries — same scope, or `[\]` setup to `[/]` cleanup. A `[p]` in setup cannot be collected in the execution body (PGE03004). See [[concepts/pipelines/wrappers#Parallel Forking in Setup]] for the pairing constraint.
 
 ### `*All` — Sync Barrier
 
@@ -137,7 +137,7 @@ No type constraint on inputs.
 
 Wait for the Nth variable to become Final. The winner is stored in `[*] >>`; all other inputs are **cancelled**.
 
-All `[*] <<` inputs must be the **same type** (PGE-306). `[*] >>` output is required.
+All `[*] <<` inputs must be the **same type** (PGE03006). `[*] >>` output is required.
 
 `*First` and `*Second` are sugar for `*Nth` with `n=1` and `n=2`.
 
@@ -172,7 +172,7 @@ All `[*] <<` inputs must be the **same type** (PGE-306). `[*] >>` output is requ
 
 ### Discarding Parallel Output
 
-Two ways to intentionally discard output from a `[p]` parallel pipeline, both satisfying PGE-302:
+Two ways to intentionally discard output from a `[p]` parallel pipeline, both satisfying PGE03002:
 
 **`$*` — inline discard.** Use when you never need the value. No variable is created — the output is immediately released at the declaration site:
 
@@ -196,7 +196,7 @@ Two ways to intentionally discard output from a `[p]` parallel pipeline, both sa
 
 Prefer `$*` for clean discards. Prefer `*Ignore` when the variable may be needed later during development.
 
-**`[b]` — fire-and-forget parallel.** `[b]` has no collectible output (PGE-305). When `[b]` invokes a pipeline that declares outputs, those outputs are silently discarded — the compiler warns (PGW-301). An `[!]` error handler under a `[b]` call is unreachable dead code (PGW-302).
+**`[b]` — fire-and-forget parallel.** `[b]` has no collectible output (PGE03005). When `[b]` invokes a pipeline that declares outputs, those outputs are silently discarded — the compiler warns (PGW03001). An `[!]` error handler under a `[b]` call is unreachable dead code (PGW03002).
 
 ### Multi-Wave Parallel Pattern
 

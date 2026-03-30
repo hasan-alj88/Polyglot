@@ -23,7 +23,7 @@ key-files:
 
 key-decisions:
   - "No new spec files created — Phase 11 completed existing drafts only"
-  - "PGE-103 excluded from pipelines.md — belongs in blocks.md/packages.md"
+  - "PGE01003 excluded from pipelines.md — belongs in blocks.md/packages.md"
 
 completed: 2026-03-24
 ---
@@ -38,7 +38,7 @@ completed: 2026-03-24
 |-----------|--------|-------|
 | AC-1: pipelines.md complete with PGE-1xx + PGE-8xx | Pass | 27 PGE refs (101-118 minus 103, 801-810) + 4 PGW refs (701, 801, 808, 809); new Execution Rules and Call Site Rules subsections; compile rules table added |
 | AC-2: collections.md complete with PGE-3xx | Pass | 10 PGE refs (301-309, 311) + 2 PGW refs (301, 302); new Parallel Boundaries subsection; expand/collect validation notes; compile rules table added |
-| AC-3: errors.md complete with PGE-7xx | Pass | 7 PGE refs (701-707) + 5 PGW refs (205, 701-704); missing PGE-701/702/704 integrated inline; compile rules table added |
+| AC-3: errors.md complete with PGE-7xx | Pass | 7 PGE refs (701-707) + 5 PGW refs (205, 701-704); missing PGE07001/702/704 integrated inline; compile rules table added |
 
 ## Files Modified
 
@@ -46,7 +46,7 @@ completed: 2026-03-24
 |------|--------|---------|
 | docs/user/concepts/pipelines.md | Modified | Added PGE-1xx/8xx inline refs, Execution Rules subsection, Call Site Rules section, compile rules table; status → complete |
 | docs/user/concepts/collections.md | Modified | Added PGE-3xx inline refs, Parallel Boundaries subsection, expand/collect validation notes, compile rules table; status → complete |
-| docs/user/concepts/errors.md | Modified | Added PGE-701/702/704 inline refs, compile rules table; status → complete |
+| docs/user/concepts/errors.md | Modified | Added PGE07001/702/704 inline refs, compile rules table; status → complete |
 
 ## Deviations from Plan
 
@@ -60,7 +60,7 @@ None — plan executed exactly as written.
 - Phase 12 can reference pipelines.md for stdlib pipeline definitions and errors.md for error tree contracts
 
 **Concerns:**
-- EC-6.4 inconsistency (raw arithmetic in EDGE-CASES vs PGE-410) noted in Phase 10 — still unresolved in technical references
+- EC-6.4 inconsistency (raw arithmetic in EDGE-CASES vs PGE04010) noted in Phase 10 — still unresolved in technical references
 
 **Blockers:**
 - None

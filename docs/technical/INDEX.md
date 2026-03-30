@@ -33,7 +33,7 @@ Semantic constraints enforced at compile time — beyond what EBNF grammar captu
 
 **Numbering convention:**
 - Rules use `N.M` — category dot sequence (e.g., 3.5)
-- Errors use `PGE-NMM` — category hundred + sequence (e.g., PGE-305)
+- Errors use `PGE-NMM` — category hundred + sequence (e.g., PGE03005)
 - Warnings use `PGW-NMM` — same scheme, mirroring PGE ranges
 
 **Categories:**

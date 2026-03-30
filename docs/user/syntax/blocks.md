@@ -107,7 +107,7 @@ See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure a
 |--------|---------|
 | `[%]` | Definition metadata and aliases |
 
-`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{W}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE-1002).
+`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{W}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE12002).
 
 See [[metadata]] for the full metadata tree, field listings, `live` semantics, and access patterns.
 

@@ -42,7 +42,7 @@ What `#string` refers to is `#String` — a struct built on `RawString`:
 - `%##Alias << "string"` — lets users write `#string` (lowercase) as shorthand for `#String`
 - `[#] << ##Scalar` — applies the `##Scalar` schema (sets `%##Depth.Max << 0`, marking this as a scalar with no flexible children)
 
-A string literal (quoted text with `{$var}` interpolation) is always `#string`. When `.regex` is set, the string value must match the pattern — violations are caught at compile time for literals (PGE-410) and at runtime for dynamic values (handled with `[!]` error blocks).
+A string literal (quoted text with `{$var}` interpolation) is always `#string`. When `.regex` is set, the string value must match the pattern — violations are caught at compile time for literals (PGE04010) and at runtime for dynamic values (handled with `[!]` error blocks).
 
 ### Layer 2: Scalar Subtypes — `##` Schema Types
 
@@ -111,7 +111,7 @@ Literal numeric values always match their RE by construction — no error handli
    [.] .regex#RawString << "^[^\s.<>:]+$"
 ```
 
-Any type used as `%##Children.Type` (the key type for a collection's flexible children) must inherit from `#KeyString`. If it does not, the compiler raises PGE-924 — keys must exclude syntax-reserved characters to avoid compile ambiguity.
+Any type used as `%##Children.Type` (the key type for a collection's flexible children) must inherit from `#KeyString`. If it does not, the compiler raises PGE11004 — keys must exclude syntax-reserved characters to avoid compile ambiguity.
 
 ### Layer 2d: #NestedKeyString — Key Type for Alias Paths
 

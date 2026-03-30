@@ -10,7 +10,7 @@ requires:
 provides:
   - EBNF §4 rewritten for # type annotations with generic params, schema properties, constraints
   - metadata-tree updated for # annotations and schema property documentation
-  - 3 new compile rules (PGE-418/419/420) for type parameter constraints, duplicate keys, key gaps
+  - 3 new compile rules (PGE04018/419/420) for type parameter constraints, duplicate keys, key gaps
   - stdlib types.md with all 11 core type definitions
 affects: [75-04 spec-wide migration, COMPILE-RULES rule-by-rule writing]
 
@@ -56,7 +56,7 @@ completed: 2026-03-27
 |-----------|--------|-------|
 | AC-1: EBNF Type Annotation Grammar Uses # | Pass | §4 rewritten; dict_type, dataframe_type, generic_param, schema_property, type_constraint, wildcard_type all present; basic_type includes uint/sci/eng/dim; array uses flex_sep |
 | AC-2: Metadata Tree Updated for # Annotations | Pass | Alias resolution uses #; definition templates include schema property table + #Array example; field expansion uses # |
-| AC-3: New Compile Rules for Type System | Pass | PGE-418, PGE-419, PGE-420 added to error code reference table |
+| AC-3: New Compile Rules for Type System | Pass | PGE04018, PGE04019, PGE04020 added to error code reference table |
 | AC-4: Core Type Definitions in Stdlib | Pass | #String through #Dimension (7 scalar types) + #Array/#Dict/#Serial/#Dataframe (4 collections) = 11 definitions; existing entries updated ; → # |
 
 ## Accomplishments
@@ -64,7 +64,7 @@ completed: 2026-03-27
 - EBNF §4 fully rewritten with # type annotations, collection types (dict, dataframe), generic type parameters, schema properties, type constraints, and wildcard type
 - EBNF §4.3 added for generic type parameters in {#} definitions (schema_inheritance, schema_property, type_constraint productions)
 - metadata-tree.md: String Subtype Nesting updated with all 7 subtypes and # alias resolution; Definition Templates gains schema property table and #Array example tree; Field Expansion uses #
-- COMPILE-RULES.md: 3 new error codes (PGE-418 Type Parameter Constraint Violation, PGE-419 Duplicate Dictionary Key, PGE-420 Key Gap Violation)
+- COMPILE-RULES.md: 3 new error codes (PGE04018 Type Parameter Constraint Violation, PGE04019 Duplicate Dictionary Key, PGE04020 Key Gap Violation)
 - stdlib/types/types.md: type hierarchy section, 7 scalar definitions, 4 collection definitions, all existing entries migrated ; → #, status promoted to complete
 
 ## Files Created/Modified
@@ -73,7 +73,7 @@ completed: 2026-03-27
 |------|--------|---------|
 | `docs/technical/EBNF.md` | Modified | §4 rewritten for # annotations; §4.3 added for generics/schema/constraints; §5 [<] note updated |
 | `docs/technical/spec/metadata-tree.md` | Modified | String Subtype Nesting, Definition Templates, Field Expansion updated for # |
-| `docs/technical/COMPILE-RULES.md` | Modified | PGE-418, PGE-419, PGE-420 added to error code table |
+| `docs/technical/COMPILE-RULES.md` | Modified | PGE04018, PGE04019, PGE04020 added to error code table |
 | `docs/user/stdlib/types/types.md` | Modified | 11 core type defs added, hierarchy section, ; → # migration, status → complete |
 
 ## Decisions Made
@@ -100,7 +100,7 @@ None.
 
 **Concerns:**
 - ~120 remaining files still use ; annotations — Plan 75-04 needed for spec-wide migration
-- COMPILE-RULES rule bodies for PGE-418/419/420 still need writing (deferred to rule-by-rule effort)
+- COMPILE-RULES rule bodies for PGE04018/419/420 still need writing (deferred to rule-by-rule effort)
 - metadata-tree.md IO Port Nesting and Permission Branch sections still use ; (Plan 75-04 scope)
 
 **Blockers:**

@@ -20,7 +20,7 @@ completed: 2026-03-28
 4. **#Serial — Schema-Free Tree** — minimal `{#}` definition (no ## constraints), unlimited depth access
 5. **User-Defined Struct** — `{#} #Person` example, compiler inference of ##, `.` vs `<` accessor distinction
 6. **Idiomatic Dataframe Pattern** — #SalesRow + #SalesTable definitions, mixed `<` and `.` access (`$sales<0.product`), *Into.Array collector reference
-7. **Nested Collection Safety** — PGE-922 (unbounded nesting requires explicit %##Depth.Max), PGW-906 (unlimited depth warning on user types), code example showing correct vs incorrect nesting
+7. **Nested Collection Safety** — PGE11002 (unbounded nesting requires explicit %##Depth.Max), PGW11003 (unlimited depth warning on user types), code example showing correct vs incorrect nesting
 
 ### Renamed
 
@@ -32,7 +32,7 @@ completed: 2026-03-28
 - All expand/collect operator documentation preserved
 - All sync & race collector documentation preserved
 - All parallel boundaries and compile rules preserved
-- PGE-922 and PGW-906 added to the compile rules table
+- PGE11002 and PGW11003 added to the compile rules table
 
 ## Acceptance Criteria
 
@@ -49,7 +49,7 @@ completed: 2026-03-28
 - [x] `#Array<ValueType` present in collections.md
 - [x] `#Serial` present in collections.md
 - [x] `#SalesTable` present in collections.md
-- [x] `PGE-922` present in collections.md
+- [x] `PGE11002` present in collections.md
 - [x] `%##Depth.Max` present in collections.md
 - [x] Zero `#Dict` references remaining
 - [x] Mermaid diagrams preserved
