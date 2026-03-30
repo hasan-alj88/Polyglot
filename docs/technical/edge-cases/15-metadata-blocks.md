@@ -112,3 +112,15 @@ updated: 2026-03-30
 [ ] Data definition metadata (read-only counters)
 [r] $uses#int << #Config%usageCount
 ```
+
+### EC-15.5: Empty `%alias` declaration
+
+**EBNF ref:** `metadata_alias` — requires at least one `flex_sep string_literal`
+**What it tests:** `[%] %alias` with no `:` children. PGE12004 fires.
+
+```polyglot
+[ ] ✗ PGE12004 — empty alias declaration
+{#} #MyType
+   [%] %alias
+   [.] .field#string
+```

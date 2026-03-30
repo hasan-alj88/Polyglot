@@ -343,7 +343,9 @@ metadata_info       ::= fixed_sep "info" type_annotation NEWLINE
 
 (* Alias — binds short names to parent definition or field *)
 metadata_alias      ::= "%" "alias" NEWLINE
+                         indent flex_sep string_literal NEWLINE
                          { indent flex_sep string_literal NEWLINE } ;
+                      (* At least one alias name required — PGE12004 *)
 
 (* Live fields — Polyglot-managed, read-only, implicit *)
 metadata_live       ::= fixed_sep name ";" "live" type_expr ;

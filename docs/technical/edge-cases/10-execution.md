@@ -224,3 +224,33 @@ updated: 2026-03-30
    [W] =W.Polyglot
    [+] "orphan continuation"
 ```
+
+### EC-10.15: Self-chain — valid with numeric indexing
+
+<!-- @pipelines:Chains -->
+**EBNF ref:** `chain_call ::= pipeline_ref "=>" pipeline_ref { "=>" pipeline_ref }`
+**What it tests:** `=A => =A` is valid (runs twice) but requires numeric step indexing. PGE08012 fires without it.
+
+```polyglot
+[ ] ✓ self-chain with numeric indexing
+[r] =Process => =Process
+   [=] >0.input << $data
+   [=] <1.result >> >output
+```
+
+```polyglot
+[ ] ✗ PGE08012 — self-chain without indexing
+[r] =Process => =Process
+   [=] >input << $data
+   [=] <result >> >output
+```
+
+### EC-10.16: Empty foreign code block
+
+**EBNF ref:** `foreign_code_block` — requires at least one `foreign_code_line`
+**What it tests:** `[c]` header with no body lines. PGE01027 fires.
+
+```polyglot
+[ ] ✗ PGE01027 — empty foreign code block
+[c] #Code:Python:3
+```

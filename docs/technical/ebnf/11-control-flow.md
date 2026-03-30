@@ -96,7 +96,8 @@ continuation_line   ::= "[+]" expression ;
 ### 11.6 Foreign Code Injection
 
 ```ebnf
-foreign_code_block  ::= foreign_code_header { foreign_code_line } ;
+foreign_code_block  ::= foreign_code_header foreign_code_line { foreign_code_line } ;
+                      (* At least one code line required — PGE01027 *)
 foreign_code_header ::= "[c]" "#Code:" language_name ":" version ;
 foreign_code_line   ::= "[c]" any_text ;
 language_name       ::= name ;

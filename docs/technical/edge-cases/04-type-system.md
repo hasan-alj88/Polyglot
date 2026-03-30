@@ -323,3 +323,20 @@ updated: 2026-03-30
 [ ] PGE04013 — nested array still banned
 [ ] [=] >matrix#array:array.float              <- use #array:float:2D instead
 ```
+
+### EC-4.19: `{Array}` without element type
+
+**EBNF ref:** `array_def ::= "{Array}" variable_id type_annotation NEWLINE ...`
+**What it tests:** `#array` without element type specifier. PGE04025 fires — element type is mandatory. All elements must share the same schema.
+
+```polyglot
+[ ] ✗ PGE04025 — no element type
+{Array} $items#array
+   [r] $items << {1, "mixed", #Boolean.True}
+```
+
+```polyglot
+[ ] ✓ typed array
+{Array} $items#array.int
+   [r] $items << {1, 2, 3}
+```

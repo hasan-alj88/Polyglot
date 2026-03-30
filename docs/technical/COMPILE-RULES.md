@@ -53,6 +53,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01024 | Incompatible Operation Marker |
 | PGE01025 | Discard in Wrapper IO |
 | PGE01026 | Orphan Continuation Line |
+| PGE01027 | Empty Foreign Code Block |
 
 ### 02 — Lifecycle & State
 
@@ -114,6 +115,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE04022 | Macro Type Constraint Violation *(planned)* |
 | PGE04023 | Macro Field Constraint Violation *(planned)* |
 | PGE04024 | Non-Value Comparison |
+| PGE04025 | Untyped Array |
 
 ### 05 — Data Definitions
 
@@ -172,6 +174,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE08009 | Uncaptured Required Output at Call Site |
 | PGE08010 | IO Direction Mismatch |
 | PGE08011 | Self-Assignment |
+| PGE08012 | Self-Chain Requires Numeric Indexing |
 
 ### 09 — Imports & Dependencies
 
@@ -219,6 +222,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE12001 | Undefined Metadata Field Access |
 | PGE12002 | Duplicate Alias |
 | PGE12003 | Invalid Inline Pipeline Argument |
+| PGE12004 | Empty Metadata Alias |
 
 ## Warning Code Reference (PGW)
 
