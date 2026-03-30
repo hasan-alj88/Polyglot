@@ -61,3 +61,8 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/pipelines/wrappers|Wrappers]] — documents wrapper-macro relationship, references PGE-108
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-108

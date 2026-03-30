@@ -43,3 +43,8 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/collections/expand|Expand]] — documents collector-must-be-inside-expand constraint (references PGE-311)
+- [[concepts/collections/examples|Collection Examples]] — error table mapping PGE-311 to example scenarios

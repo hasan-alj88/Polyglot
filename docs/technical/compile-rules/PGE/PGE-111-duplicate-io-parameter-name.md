@@ -64,3 +64,7 @@ severity: error
 ```
 
 **Open point:** Parent-child overlap (`<person` + `<person.age` in the same IO section) is a separate concern — not covered by this rule.
+
+### See Also
+
+- [[concepts/pipelines/inline-calls|Inline Calls]] — documents duplicate IO wiring constraint, references PGE-111

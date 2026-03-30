@@ -85,4 +85,10 @@ severity: error
          [:] "FileDenied"              [ ] ✗ PGE-1002 — "FileDenied" already aliases !Permission.File.Denied
 ```
 
+### See Also
+
+- [[user/syntax/blocks|Blocks]] — references PGE-1002 in metadata alias uniqueness
+- [[user/concepts/metadata|Metadata]] — references PGE-1002 in `%alias` field description
+- [[technical/edge-cases/15-metadata-blocks|EC-15: Metadata Blocks]] — references PGE-1002
+
 **Open point:** None.

@@ -39,3 +39,7 @@ split_from: PGE-601
 **See also:**
 - [PGE-601 — Conditional Must Be Exhaustive](PGE-601-conditional-must-be-exhaustive.md) — parent rule
 - [PGE-602 — Enum Exhaustiveness](PGE-602-enum-exhaustiveness.md) — closed-set counterpart
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — string exhaustiveness rules reference PGE-606

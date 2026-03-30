@@ -186,7 +186,7 @@ In chain execution (`[r] =A=>=B=>=C`), errors are prefixed with a step reference
 [!] !0.File.NotFound
 ```
 
-See [[pipelines#Error Handling in Chains]] for the full chain execution context.
+See [[concepts/pipelines/chains#Error Handling in Chains]] for the full chain execution context.
 
 ## Standard Error Trees
 

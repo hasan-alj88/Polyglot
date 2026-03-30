@@ -60,4 +60,8 @@ severity: error
       [r] >data << "fallback 2"
 ```
 
+### See Also
+
+- [[user/concepts/errors|Errors]] — references PGE-704 in error scoping rules
+
 **Open point:** None.

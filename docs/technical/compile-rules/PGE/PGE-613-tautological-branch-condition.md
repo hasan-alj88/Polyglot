@@ -68,3 +68,7 @@ severity: error
 **Diagnostic:** `"Branch condition at line {N} is always {true|false} — {tautological condition matches all inputs|contradictory condition matches no inputs}"`
 
 **Open point:** None.
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — tautological/contradictory branch rules reference PGE-613

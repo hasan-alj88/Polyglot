@@ -113,3 +113,8 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/pipelines/wrappers|Wrappers]] — documents wrapper IO wiring contract, references PGE-109
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-109

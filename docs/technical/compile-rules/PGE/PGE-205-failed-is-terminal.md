@@ -62,3 +62,8 @@ Both produce a Final variable — downstream pipelines trigger normally.
 ```
 
 **Resolved — Failure propagation:** Failure propagates automatically up the call chain. An unhandled failure in a called pipeline causes the caller's output variable to enter Failed state, which propagates upward until an `[!]` handler intercepts it or the top-level pipeline terminates. `[!]` is the catch mechanism; `*Continue` (PGE-207) allows proceeding despite failure. PGW-205 warns when a pipeline terminates due to unhandled failure.
+
+### See Also
+
+- [[concepts/variable-lifecycle|Variable Lifecycle]] — defines Failed state and references PGE-205
+- [[stdlib/collectors/Continue|*Continue Collector]] — recovery mechanism that prevents pipeline termination on error

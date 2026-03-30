@@ -1,0 +1,126 @@
+---
+audience: user
+type: spec
+updated: 2026-03-30
+---
+
+<!-- @concepts/collections/INDEX -->
+
+## Example: Expand, Transform, and Collect
+
+Expand an array of integers in parallel, double each value, collect the doubled values into a new array, and compute the sum:
+
+```polyglot
+...
+{=} =DoubleAndSum
+[ ] Triggers, queue config, and wrapper assumed defined
+...
+[ ] Input: an array of integers
+[=] <numbers#array << $InputNumbers
+[ ] Output: doubled array and total sum
+[=] >doubled#array >> $DoubledNumbers
+[=] >total#int >> $TotalSum
+
+[ ] Expand — one mini-pipeline per item, run in parallel
+[p] ~ForEach.Array.Enumerate
+   [~] <Array << $InputNumbers
+   [~] >index >> $idx
+   [~] >item >> $num
+
+   [ ] Double the number inside mini-pipeline scope
+   [r] $doubled#int << $num * 2
+
+   [ ] Collect doubled values back into array (one level up)
+   [p] *Into.Array
+      [*] <item << $doubled
+      [*] >Array >> $DoubledNumbers
+
+   [ ] Also aggregate the sum (one level up)
+   [p] *Agg.Sum
+      [*] <number << $doubled
+      [*] >sum >> $TotalSum
+...
+```
+
+## Example: Expand Map, Transform, and Collect
+
+Expand a map of ticker->price pairs, multiply each price by 1.1 using `=Math.Multiply`, and collect into a new map:
+
+```polyglot
+...
+{=} =AdjustPrices
+[ ] Triggers, queue config, and wrapper assumed defined
+...
+[ ] Input: a map of ticker → price
+[=] <prices#map:string:float << $InputPrices
+[ ] Output: adjusted prices map
+[=] >adjusted#map:string:float >> $AdjustedPrices
+
+[ ] Expand — one mini-pipeline per key-value pair
+[p] ~ForEach.Map
+   [~] <Map << $InputPrices
+   [~] >key >> $ticker
+   [~] >item >> $price
+
+   [ ] Multiply the price by 1.1
+   [r] =Math.Multiply
+      [=] <a#float << $price
+      [=] <b#float << 1.1
+      [=] >result#float >> $newPrice
+
+   [ ] Collect back into map (one level up)
+   [r] *Into.Map
+      [*] <key << $ticker
+      [*] <value << $newPrice
+      [*] >Map >> $AdjustedPrices
+...
+```
+
+## Fallback in Expand Context
+
+<!-- @errors:Error Fallback Operators -->
+When a pipeline call inside an expand scope may error, use `[>] <!` fallback to provide a default value per iteration instead of failing the entire expand:
+
+```polyglot
+[p] ~ForEach.Array
+   [~] <Array << $files
+   [~] >item >> $file
+
+   [r] =File.Text.Read
+      [=] <path << $file
+      [=] >content >> $text
+         [>] <! ""
+
+   [r] *Into.Array
+      [*] <item << $text
+      [*] >Array >> $results
+```
+
+If any file fails to read, `$text` gets `""` for that iteration instead of entering the Failed state. The expand continues for all items. See [[errors#Error Fallback Operators]] for the full fallback model.
+
+## See Also
+
+- [[concepts/collections/expand|Expand Operators]] — `~ForEach` operator reference and IO signatures
+- [[concepts/collections/collect|Collect Operators]] — `*Into` and `*Agg` collector reference
+- [[concepts/pipelines/error-handling|Error Handling]] — `[!]` blocks and `<!` fallback operators
+
+## Compile Rules
+
+Parallel execution, expand/collect, and race collector rules enforced at compile time. See [[compile-rules/PGE/{code}|{code}]] for full definitions.
+
+| Code | Name | Section |
+|------|------|---------|
+| PGE-301 | No Push Across Parallel Boundaries | Parallel Boundaries |
+| PGE-302 | Parallel Output Must Be Collected | Discarding Parallel Output |
+| PGE-303 | Pull Isolation Until Collection | Parallel Boundaries |
+| PGE-304 | Section-Boundary Pairing | Parallel Boundaries |
+| PGE-305 | `[b]` Has No Collectible Output | Discarding Parallel Output |
+| PGE-306 | Race Collector Type Homogeneity | Race Collectors |
+| PGE-307 | Expand Operator Input Mismatch | Expand Operators |
+| PGE-308 | Collect Operator IO Mismatch | Collect Operators |
+| PGE-309 | Nested Expand Without Collect | Expand Operators |
+| PGE-311 | Collector Without Expand | Collect Operators |
+| PGE-922 | Unbounded Collection Nesting | Nested Collection Safety |
+| PGW-301 | `[b]` Called Pipeline Has Discarded Outputs | Discarding Parallel Output |
+| PGW-302 | Error Handler on Fire-and-Forget | Discarding Parallel Output |
+| PGW-906 | Unlimited Depth on User Type | Nested Collection Safety |

@@ -72,3 +72,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/variable-lifecycle|Variable Lifecycle]] — defines Released state and references PGE-208

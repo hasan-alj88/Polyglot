@@ -37,3 +37,8 @@ name: IO Before Trigger
       [=] <path << <filepath
       [=] >content >> >content
 ```
+
+### See Also
+
+- [[concepts/pipelines/INDEX|Pipelines Overview]] — references PGE-102 in IO declaration ordering
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-102

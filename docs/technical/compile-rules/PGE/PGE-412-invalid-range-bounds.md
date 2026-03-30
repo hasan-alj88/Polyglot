@@ -109,3 +109,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[syntax/operators|Operators]] — range bound ordering rules in conditionals

@@ -52,3 +52,8 @@ severity: error
 ```
 
 **Diagnostic:** `"Nested array type on {parameter} at line {N} — array is one-dimensional by default, use :ND for multidimensional data (e.g., #array:float:2D)"`
+
+### See Also
+
+- [[syntax/types/arrays|Array Types]] — nested array ban and `:ND` alternative
+- [[technical/edge-cases/04-type-system|EC-4.18: Multidimensional array — :ND dimension specifier]] — references PGE-412

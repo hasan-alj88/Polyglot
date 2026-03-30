@@ -71,3 +71,8 @@ severity: error
 **Diagnostic:** "Wrong marker `[=]` at line N — use `[r]` for process steps; `[=]` is only valid for IO declaration"
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/pipelines/execution|Execution]] — documents [=] vs [r] marker distinction, references PGE-117
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-117

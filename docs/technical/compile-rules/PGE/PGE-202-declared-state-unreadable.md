@@ -28,3 +28,7 @@ severity: error
 [r] =Greet
    [=] <who << >name        [ ] ✗ PGE-202 — >name is still Declared
 ```
+
+### See Also
+
+- [[concepts/variable-lifecycle|Variable Lifecycle]] — defines Declared state and references PGE-202

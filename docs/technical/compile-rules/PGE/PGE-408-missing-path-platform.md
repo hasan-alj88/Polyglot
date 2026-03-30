@@ -41,3 +41,9 @@ severity: error
 [r] $AppDir#path
    [.] .Unix << "/tmp/MyApp"             [ ] ✗ PGE-408 — .Windows missing, current OS is Windows
 ```
+
+### See Also
+
+- [[syntax/types/strings|String Types]] — missing path platform subfield references
+- [[stdlib/types/structs|Struct Types]] — `#path` platform subfield examples
+- [[technical/edge-cases/04-type-system|EC-4.6: Single-platform path]] — references PGE-408

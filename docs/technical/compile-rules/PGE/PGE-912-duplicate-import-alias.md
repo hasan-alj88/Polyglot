@@ -53,4 +53,8 @@ severity: error
    [@] @lib << @Local:999.SharedLib:v1.0.0      [ ] ✗ PGE-912 — duplicate alias @lib (even identical target)
 ```
 
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-912 in import rules
+
 **Open point:** None.

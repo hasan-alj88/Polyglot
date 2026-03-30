@@ -29,4 +29,4 @@ Row indices are auto-assigned (0, 1, 2...) like `*Into.Array`. The resulting dat
    [*] >Dataframe >> $result
 ```
 
-See also: [[collections#Collect Operators]]
+See also: [[concepts/collections/collect#Collect Operators]]

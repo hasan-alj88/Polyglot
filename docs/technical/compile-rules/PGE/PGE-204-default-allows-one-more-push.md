@@ -17,3 +17,7 @@ superseded_by: PGE-203
 - **Post-promotion push** (Default → Final → push): Already fired PGE-203
 
 See resolved design issue 008 (git history: `docs/technical/compiler_issues/008-pge203-pge204-overlap.md`) for rationale.
+
+### See Also
+
+- [[concepts/variable-lifecycle|Variable Lifecycle]] — references PGE-204 in Default state description

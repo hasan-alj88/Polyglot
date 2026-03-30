@@ -52,3 +52,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — compound condition overlap rules reference PGE-605

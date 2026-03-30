@@ -1,0 +1,179 @@
+---
+audience: developer
+type: reference
+updated: 2026-03-30
+---
+
+<!-- @edge-cases/INDEX -->
+
+## 9. Definition Blocks (S9)
+
+### EC-9.1: Package with multiple imports
+
+<!-- @packages -->
+**EBNF:** `package_block ::= "{@}" package_id NEWLINE { indent import_line NEWLINE }`
+
+**What it tests:** Multiple `[@]` imports in one package block. See [[packages]].
+
+```polyglot
+{@} @Local:001.App:v1.0.0
+   [@] @AD << @Local:001.ActiveDirectory:v2.0.0
+   [@] @Mail << @Local:001.EmailSystem:v1.2.0
+   [@] @HR << @Local:001.HRSystem:v2.1.0
+```
+
+### EC-9.2: Enum fields — pure enum (no value sub-fields)
+
+<!-- @types:Enum Fields -->
+**EBNF:** `enum_field ::= "[.]" fixed_sep name`
+
+**What it tests:** All-enum siblings, no `#type`, no assignment. See [[syntax/types/structs#Enum Fields vs Value Fields]].
+
+```polyglot
+{#} #Direction
+   [.] .North
+   [.] .South
+   [.] .East
+   [.] .West
+```
+
+### EC-9.3: Enum field with nested value sub-fields
+
+**EBNF:** `enum_field ::= "[.]" fixed_sep name NEWLINE { indent data_field NEWLINE }`
+
+**What it tests:** Enum variant carrying typed data underneath.
+
+```polyglot
+{#} #Status
+   [.] .Failed
+      [.] .reason#string <~ "unknown"
+      [.] .retries#int <~ 0
+   [.] .Success
+```
+
+### EC-9.4: Value field data definition — all siblings assigned
+
+<!-- @identifiers:Serialization Rules -->
+**EBNF:** `value_field ::= "[.]" fixed_sep name type_annotation [ assignment_op value_expr ]`
+
+**What it tests:** All-or-none assignment rule — all siblings have defaults. See [[identifiers#Serialization Rules]].
+
+```polyglot
+{#} #Config
+   [.] .timeout#int <~ 30
+   [.] .retries#int <~ 3
+   [.] .verbose#bool <~ #Boolean.False
+```
+
+### EC-9.5: Flexible-field data definition
+
+**EBNF:** `flex_data_field ::= "[:]" flex_sep name type_annotation [ assignment_op value_expr ]`
+
+**What it tests:** `[:]` with `:` separator for open-schema data.
+
+```polyglot
+{#} #Metadata
+   [:] :author#string <~ ""
+   [:] :version#string <~ "0.0.0"
+```
+
+### EC-9.6: Pipeline — mandatory structure ordering
+
+<!-- @pipelines -->
+**EBNF:** `pipeline_body ::= trigger_section [ io_section ] [ queue_section ] wrapper_section execution_section`
+
+**What it tests:** Correct order: trigger -> IO -> queue -> wrapper -> execution. See [[concepts/pipelines/INDEX|pipelines]].
+
+```polyglot
+{=} =Ordered
+   [t] =T.Call
+   [=] <input#string
+   [=] >output#string ~> ""
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [r] >output << <input
+```
+
+### EC-9.7: Pipeline — minimal (no IO, no queue)
+
+**What it tests:** IO and Queue are optional per EBNF.
+
+```polyglot
+{=} =Minimal
+   [t] =T.Call
+   [W] =W.Polyglot
+   [r] $x#int << 1
+```
+
+### EC-9.8: Trigger with string argument
+
+**EBNF:** `trigger_ref ::= pipeline_ref [ string_literal ]`
+
+**What it tests:** Triggers that take configuration strings.
+
+```polyglot
+[t] =T.Daily"3AM"
+[t] =T.Webhook"/api/onboarding"
+[t] =T.Folder.NewFiles"/inbox/"
+```
+
+### EC-9.9: IO as implicit triggers — all three modes
+
+<!-- @pipelines:IO as Implicit Triggers -->
+**What it tests:** Constant, default, and required IO. See [[concepts/pipelines/io-triggers#IO as Implicit Triggers]].
+
+```polyglot
+[=] <constant#string << "locked"
+[=] <fallback#string <~ "default"
+[=] <required#string
+```
+
+### EC-9.10: `[p]` in `[\]` — parallel fork outlives setup, collected in `[/]`
+
+<!-- @pipelines:Parallel Forking in Setup -->
+**EBNF:** `scope_setup ::= "[\]" NEWLINE { indent exec_line NEWLINE }` — `exec_line` includes `parallel_line`.
+
+**What it tests:** `[p]` at end of `[\]` with no `[*] *All` — forked path runs concurrently with body; `[/]` collects via `[*] *All` with `[*] <<` wait inputs. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
+
+```polyglot
+{M} =W.Tracing
+   [{] $traceId#string
+   [}] $duration#string
+   [\]
+      [r] =Tracer.Open
+         [=] <id << $traceId
+         [=] >session >> $session
+      [ ] No *All after [p] — timer runs concurrently with body
+      [p] =Tracer.StartTimer
+         [=] <session << $session
+         [=] >handle >> $timerHandle
+   [/]
+      [*] *All
+         [*] << $timerHandle
+      [r] =Tracer.StopTimer
+         [=] <handle << $timerHandle
+         [=] >elapsed >> $duration
+      [r] =Tracer.Close
+         [=] <session << $session
+```
+
+### EC-9.11: `[b]` in `[\]` — fire-and-forget, no collection in `[/]`
+
+**EBNF:** `scope_setup ::= "[\]" NEWLINE { indent exec_line NEWLINE }` — `exec_line` includes `background_line`.
+
+**What it tests:** `[b]` in setup fires and is never collected — no `[*] *All` in `[/]` for it.
+
+```polyglot
+{M} =W.AuditLog
+   [{] $userId#string
+   [\]
+      [r] =Session.Open
+         [=] <id << $userId
+         [=] >session >> $session
+      [ ] Fire audit event — no result needed, no collection
+      [b] =Audit.LogEntry
+         [=] <userId << $userId
+   [/]
+      [r] =Session.Close
+         [=] <session << $session
+```

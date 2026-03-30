@@ -55,3 +55,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — numeric range exhaustiveness rules reference PGE-603

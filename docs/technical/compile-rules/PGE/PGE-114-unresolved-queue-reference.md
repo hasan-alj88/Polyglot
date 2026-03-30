@@ -45,3 +45,8 @@ severity: error
 ```
 
 **Diagnostic:** "Pipeline `=RenderJob` references queue `#Queue:GPUQueue` which is not defined in this package or imported — define it with `{Q}` or import the package that contains it"
+
+### See Also
+
+- [[concepts/pipelines/queue|Queue]] — documents queue reference resolution, references PGE-114
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-114

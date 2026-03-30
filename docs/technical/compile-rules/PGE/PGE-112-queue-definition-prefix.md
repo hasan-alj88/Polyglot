@@ -34,3 +34,8 @@ severity: error
 ```
 
 **Diagnostic:** "Queue definition `{Q}` must use `#Queue:` prefix — got `#GPUQueue`, expected `#Queue:GPUQueue`"
+
+### See Also
+
+- [[concepts/pipelines/queue|Queue]] — documents #Queue: prefix requirement, references PGE-112
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-112

@@ -9,9 +9,9 @@
 <!-- @types -->
 <!-- @data-is-trees -->
 
-All Polyglot data is trees of `#String` leaves (which have `RawString` leaves). The existing `.re;RawString` field on `#String` ([[types#Numeric Types — #String Subtypes]]) constrains **leaf values** via regex. However, **structural constraints** — key patterns, ordering, depth limits, openness — were implicit in compiler rules (PGE-401, PGE-501, PGE-502) with no declarative representation.
+All Polyglot data is trees of `#String` leaves (which have `RawString` leaves). The existing `.regex;RawString` field on `#String` ([[syntax/types/basic-types#Numeric Types — #String Subtypes]]) constrains **leaf values** via regex. However, **structural constraints** — key patterns, ordering, depth limits, openness — were implicit in compiler rules (PGE-401, PGE-501, PGE-502) with no declarative representation.
 
-Collection types (`;array`, `;serial`, and the new `;dict`) need structural constraints that `.re` cannot express. Rather than hardcoding each collection's rules in the compiler, we need a declarative mechanism.
+Collection types (`;array`, `;serial`, and the new `;dict`) need structural constraints that `.regex` cannot express. Rather than hardcoding each collection's rules in the compiler, we need a declarative mechanism.
 
 ## Decisions
 
@@ -60,7 +60,7 @@ The `{#}` definition at `%definition.#:{Type}` IS the schema. No separate `.sche
 ```polyglot
 {#} #String
    [.] .string;RawString
-   [.] .re;RawString
+   [.] .regex;RawString
 ```
 
 Schema properties are part of the definition metadata, not part of string instances.
@@ -235,7 +235,7 @@ Depth counts flexible `:` levels only. Fixed `.` fields don't add depth. Compile
 
 Complete hierarchy defined in `docs/draft.md`:
 - Layer 0: RawString (compiler intrinsic)
-- Layer 1: #String (foundation — .string + .re)
+- Layer 1: #String (foundation — .string + .regex)
 - Layer 2: Scalars (#Int, #UnsignedInt, #Float, #Sci, #Eng, #Dimension)
 - Layer 2b: #Boolean (independent enum struct)
 - Layer 3: Collections (#Array, #Map, #Dataframe, #Serial)
@@ -243,15 +243,15 @@ Complete hierarchy defined in `docs/draft.md`:
 ## Supersedes
 
 - Issue #88 originally proposed `.schema;RawString` on `#String` — replaced by schema properties in `{#}` definitions
-- No changes to `#String` struct (`.string` + `.re` remain as-is)
+- No changes to `#String` struct (`.string` + `.regex` remain as-is)
 - `;` type annotation syntax — replaced by `#`
 - `%Open` schema property — removed (collections use `*` collectors)
 - Old array fixed `.` keys — replaced by flexible `:` keys
 
 ## Related
 
-- [[types#Numeric Types — #String Subtypes]] — `.re` field for value constraints
+- [[syntax/types/basic-types#Numeric Types — #String Subtypes]] — `.regex` field for value constraints
 - [[data-is-trees#Schema vs Instance]] — definition/instance split
 - [[metadata-tree|spec/metadata-tree]] — `%definition` template paths
-- Decision: [string-re-subfields](string-re-subfields.md) — `.re` as value schema
+- Decision: [string-re-subfields](string-re-subfields.md) — `.regex` as value schema
 - `docs/draft.md` — complete ground-up type hierarchy definitions

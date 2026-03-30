@@ -52,3 +52,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — numeric range overlap rules reference PGE-604

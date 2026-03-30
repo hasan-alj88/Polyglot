@@ -1,7 +1,7 @@
 ---
 type: audit-index
 scope: all-documentation
-updated: 2026-03-14
+updated: 2026-03-30
 ---
 
 # Audit — Claude's Documentation Ground Truth
@@ -20,6 +20,11 @@ updated: 2026-03-14
 | [[rules/conventions\|rules/conventions]] | Style, structure, formatting rules | Before writing any doc |
 | [[rules/checklist\|rules/checklist]] | Pre-publish quality checks | Before finalizing any doc |
 | [[reference/glossary\|reference/glossary]] | Authoritative term definitions | When using project terminology |
+| [[tracking/coverage-gaps\|tracking/coverage-gaps]] | Structural documentation gaps (UG/TG/MX/OR) | When logging or resolving coverage gaps |
+| [[tracking/inconsistencies\|tracking/inconsistencies]] | Contradictions between docs (IC) | When logging or fixing inconsistencies |
+| [[tracking/progress\|tracking/progress]] | What areas have been audited | Before starting audit of an area |
+| [[tracking/decisions\|tracking/decisions]] | Decisions made during auditing | When making or reviewing audit decisions |
+| [[rules/workflows\|rules/workflows]] | Fix, Sweep, Gate workflows for doc quality | Before starting any doc audit or fix work |
 
 ## Authority Chain
 

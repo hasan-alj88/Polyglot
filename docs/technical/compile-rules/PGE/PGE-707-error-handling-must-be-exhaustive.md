@@ -166,4 +166,8 @@ If any declared error is not addressed by at least one mechanism, PGE-707 fires.
 
 **Diagnostic:** "Unaddressed error `!ErrorName` from failable call `=PipelineName` at line N — add `[!] !ErrorName` handler, `[!] !*` wildcard, or `[>] <!` fallback"
 
+### See Also
+
+- [[user/concepts/errors|Errors]] — references PGE-707 in declaring pipeline errors
+
 **Open point:** None.

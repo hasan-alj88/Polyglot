@@ -88,3 +88,8 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/pipelines/INDEX|Pipelines Overview]] — documents metadata uniqueness constraint, references PGE-115
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-115

@@ -56,3 +56,8 @@ severity: error
 ```
 
 The reserved namespace list is maintained in [`docs/user/stdlib/INDEX.md`](../../../user/stdlib/INDEX.md). Any top-level namespace listed there is reserved. Current reserved prefixes: `File`, `Path`, `Sys`, `T`, `Q`, `W`.
+
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-913 in import rules
+- [[user/stdlib/INDEX|Stdlib INDEX]] — authoritative reserved namespace list, references PGE-913

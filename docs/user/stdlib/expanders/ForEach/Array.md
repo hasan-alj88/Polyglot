@@ -30,4 +30,4 @@ No `[@]` import needed.
 
 - [Enumerate](Array/Enumerate.md) — adds positional `>index` output
 
-See also: [[collections#Expand Operators]]
+See also: [[concepts/collections/expand#Expand Operators]]

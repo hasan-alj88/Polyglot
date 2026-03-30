@@ -54,4 +54,9 @@ severity: error
    [!] .Format!File.NotFound              [ ] ✗ PGE-805 — no step named "Format"
 ```
 
+### See Also
+
+- [[user/concepts/pipelines/chains|Chains]] — references PGE-805 in step addressing rules
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-805 in step addressing table
+
 **Open point:** None.

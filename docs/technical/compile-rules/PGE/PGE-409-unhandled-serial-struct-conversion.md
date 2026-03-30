@@ -95,3 +95,8 @@ severity: error
 - [PGE-207 — Continue After Error](PGE-207-continue-after-error.md) — `*Continue >FallBack` rules
 - [TYPE-IDENTITY](../TYPE-IDENTITY.md) — rule 6 (serial→struct)
 - [serial-to-struct-matching](../../brainstorming/serial-to-struct-matching.md) — decision rationale
+
+### See Also
+
+- [[syntax/types/conversions|Type Conversions]] — serial-to-struct conversion handling rules
+- [[stdlib/collectors/Continue|*Continue]] — `*Continue >FallBack` usage for unproven conversions

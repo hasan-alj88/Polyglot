@@ -61,3 +61,7 @@ severity: error
 [ ] ✗ PGE-206 — default-pushing into a live %status field
 [r] =Pipeline%status <~ #Running   [ ] ✗ PGE-206 — %status is live, cannot push
 ```
+
+### See Also
+
+- [[concepts/metadata|Metadata]] — documents `live` field pull-only semantics and references PGE-206

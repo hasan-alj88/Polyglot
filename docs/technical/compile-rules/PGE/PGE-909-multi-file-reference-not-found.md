@@ -50,4 +50,8 @@ severity: error
    [@] << "{.}\empty-dir"             [ ] ✗ PGE-909 — directory contains no .pg files
 ```
 
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-909 in multi-file package rules
+
 **Open point:** None.

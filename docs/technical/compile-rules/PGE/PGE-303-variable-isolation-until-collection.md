@@ -67,3 +67,8 @@ severity: error
 ```
 
 **Note:** `live` metadata (`$data%state`) **can** be inspected before collection. PGE-303 isolates user-assignable push/pull operations only. `live` fields are runtime-managed and read-only (PGE-206), so no data race is possible. See resolved design issue 003 (git history: `docs/technical/compiler_issues/003-metadata-access-before-collection.md`).
+
+### See Also
+
+- [[concepts/collections/collect|Collect]] — documents pull isolation constraint for `[p]` outputs (references PGE-303)
+- [[concepts/collections/examples|Collection Examples]] — error table mapping PGE-303 to example scenarios

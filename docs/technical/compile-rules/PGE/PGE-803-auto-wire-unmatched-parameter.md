@@ -25,3 +25,8 @@ severity: error
    [ ] ✗ PGE-803 — >count#int unmatched
    [=] <1.output#string >> >result
 ```
+
+### See Also
+
+- [[user/concepts/pipelines/chains|Chains]] — references PGE-803 in auto-wire rules
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-803 in auto-wire table

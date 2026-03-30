@@ -45,3 +45,8 @@ split_from: PGE-101
 ```
 
 **Diagnostic:** "Pipeline `=Process` has no setup/cleanup — add `[W]` or explicit `[\]/[/]`"
+
+### See Also
+
+- [[concepts/pipelines/wrappers|Wrappers]] — documents mandatory setup/cleanup requirement, references PGE-107
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-107

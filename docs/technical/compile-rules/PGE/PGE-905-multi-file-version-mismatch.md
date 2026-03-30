@@ -55,4 +55,8 @@ severity: error
    [@] << "{.}\file-02.pg"
 ```
 
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-905 in multi-file package rules
+
 **Open point:** None.

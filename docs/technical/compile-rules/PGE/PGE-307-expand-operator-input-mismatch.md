@@ -64,3 +64,8 @@ Missing or extra IO lines fire PGE-307.
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/collections/expand|Expand]] — documents expand operator IO signature requirements (references PGE-307)
+- [[concepts/collections/examples|Collection Examples]] — error table mapping PGE-307 to example scenarios

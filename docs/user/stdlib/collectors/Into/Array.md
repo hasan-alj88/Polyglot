@@ -27,4 +27,4 @@ No `[@]` import needed.
    [*] >Array >> $results
 ```
 
-See also: [[collections#Collect Operators]]
+See also: [[concepts/collections/collect#Collect Operators]]

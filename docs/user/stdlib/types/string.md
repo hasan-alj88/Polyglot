@@ -11,7 +11,7 @@ status: complete
 
 `#String` is the foundation type built on `RawString`. All scalar subtypes inherit from `#String` via `<~` (default schema inheritance). What users write as `#string` (lowercase) resolves here via alias.
 
-See [[types]] for the full type hierarchy and [[scalars]] for subtypes that specialize `.re`.
+See [[syntax/types/INDEX|types]] for the full type hierarchy and [[scalars]] for subtypes that specialize `.regex`.
 
 ## Definition
 
@@ -24,7 +24,9 @@ See [[types]] for the full type hierarchy and [[scalars]] for subtypes that spec
    [.] .string#RawString
    [ ] Regex constraint — default accepts all strings
    [ ] <~ allows subtypes to override once to specialize
-   [.] .re#RawString <~ ".*"
+   [.] .regex#RawString <~ ".*"
+   [%] %alias
+      [:] "re"
 ```
 
 ## Fields
@@ -32,7 +34,7 @@ See [[types]] for the full type hierarchy and [[scalars]] for subtypes that spec
 | Field | Type | Default | Purpose |
 |-------|------|---------|---------|
 | `.string` | `#RawString` | (none) | The raw string value |
-| `.re` | `#RawString` | `".*"` | Regex constraint; subtypes override with `<~` |
+| `.regex` | `#RawString` | `".*"` | Regex constraint; subtypes override with `<~`. Alias: `.re` |
 
 ## Schema Properties
 
@@ -41,20 +43,20 @@ See [[types]] for the full type hierarchy and [[scalars]] for subtypes that spec
 
 ## Subtype Inheritance via `<~`
 
-All scalar subtypes inherit `#String`'s schema using `[#] <~ #String` and override `.re` with a specific regex. The `<~` operator means "default schema, can be specialized further" -- consistent with assignment semantics where `<~` is an overridable default.
+All scalar subtypes inherit `#String`'s schema using `[#] <~ #String` and override `.regex` with a specific regex. The `<~` operator means "default schema, can be specialized further" -- consistent with assignment semantics where `<~` is an overridable default.
 
-Each subtype then sets `.re` with `<<` (final -- cannot be overridden further). See [[scalars]] for all subtypes.
+Each subtype then sets `.regex` with `<<` (final -- cannot be overridden further). See [[scalars]] for all subtypes.
 
-Users can define custom string subtypes with their own `.re`:
+Users can define custom string subtypes with their own `.regex`:
 
 ```polyglot
 {#} #emailAddress
    [#] <~ #String
-   [.] .re#RawString << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+   [.] .regex#RawString << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
 ## Related
 
 - [[scalars]] -- #Int, #Float, #Dimension, and other scalar subtypes
 - [[boolean]] -- #Boolean is NOT a #String subtype
-- [[types]] -- full type system specification
+- [[syntax/types/INDEX|types]] -- full type system specification

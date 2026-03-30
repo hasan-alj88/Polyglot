@@ -93,3 +93,9 @@ severity: error
    [*] << $a                          [ ] ✓ $a collected
                                       [ ] ✗ PGE-302 — $b not in any collector
 ```
+
+### See Also
+
+- [[concepts/collections/collect|Collect]] — documents collector requirement for `[p]` outputs (references PGE-302)
+- [[concepts/collections/examples|Collection Examples]] — error table mapping PGE-302 to example scenarios
+- [[syntax/identifiers|Identifiers]] — documents `$*` discard variable satisfying PGE-302

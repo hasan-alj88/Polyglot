@@ -108,4 +108,8 @@ severity: error
 
 **Diagnostic:** "Missing required input `<{name}` on {operator type} call to `={PipelineName}` at line {N} — input has no default and must be wired"
 
+### See Also
+
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-808 in call site rules
+
 **Open point:** None.

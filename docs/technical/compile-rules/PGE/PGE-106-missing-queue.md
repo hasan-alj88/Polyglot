@@ -33,3 +33,8 @@ split_from: PGE-101
 ```
 
 **Diagnostic:** "Pipeline `=Process` has no queue — add `[Q]` after `[t]`/`[=]` section"
+
+### See Also
+
+- [[concepts/pipelines/queue|Queue]] — documents mandatory queue requirement, references PGE-106
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-106

@@ -27,4 +27,4 @@ No `[@]` import needed.
    ...
 ```
 
-See also: [[collections#Expand Operators]]
+See also: [[concepts/collections/expand#Expand Operators]]

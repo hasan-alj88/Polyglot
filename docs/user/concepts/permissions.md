@@ -103,7 +103,7 @@ Permissions operate at two levels: **package ceiling** and **definition request*
 
 ### Definition Request
 
-Each `{=}` pipeline or `{M}` macro must explicitly request the permissions it needs. Requests can only **narrow** what the package ceiling allows — never widen. See [[pipelines#Permissions]] for placement within pipeline definitions.
+Each `{=}` pipeline or `{M}` macro must explicitly request the permissions it needs. Requests can only **narrow** what the package ceiling allows — never widen. See [[concepts/pipelines/permissions#Permissions]] for placement within pipeline definitions.
 
 ```polyglot
 {=} ProcessLogs

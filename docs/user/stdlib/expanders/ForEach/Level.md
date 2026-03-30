@@ -31,4 +31,4 @@ No `[@]` import needed.
 
 The `~` suffix on the input path marks the iteration point: `<level << #SomeData.SubField.~`
 
-See also: [[collections#Expand Operators]]
+See also: [[concepts/collections/expand#Expand Operators]]

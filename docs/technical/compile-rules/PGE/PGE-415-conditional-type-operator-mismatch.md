@@ -199,3 +199,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[syntax/operators|Operators]] — type-operator compatibility rules for conditionals

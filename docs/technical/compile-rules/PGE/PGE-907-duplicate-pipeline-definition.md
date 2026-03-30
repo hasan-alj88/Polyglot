@@ -122,4 +122,8 @@ severity: error
 
 **Diagnostic:** "Duplicate {definition type} `{name}` in package `{package}:{version}` — first defined in {file}:{line}, duplicate at {file}:{line}"
 
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-907 in multi-file package rules
+
 **Open point:** None.

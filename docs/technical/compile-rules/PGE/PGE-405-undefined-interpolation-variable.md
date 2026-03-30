@@ -41,3 +41,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[syntax/operators|Operators]] — string interpolation and undefined variable references

@@ -61,3 +61,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — wildcard catch-all rules reference PGE-611

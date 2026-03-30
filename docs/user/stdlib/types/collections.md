@@ -11,7 +11,7 @@ status: complete
 
 Polyglot provides four collection types: `#Map`, `#Array`, `#Dataframe`, and `#Serial`. All are available in every `.pg` file without `[@]` import.
 
-`#Map`, `#Array`, and `#Dataframe` are defined as `{M}` type macros that generate `{#}` definitions at compile time. `#Serial` is a plain `{#}` definition (no macro needed). See [[types]] for the full type hierarchy and schema property definitions.
+`#Map`, `#Array`, and `#Dataframe` are defined as `{M}` type macros that generate `{#}` definitions at compile time. `#Serial` is a plain `{#}` definition (no macro needed). See [[syntax/types/INDEX|types]] for the full type hierarchy and schema property definitions.
 
 ---
 
@@ -258,5 +258,5 @@ The `:` separator binds positionally to macro inputs. Users use the generated ty
 - [[scalars]] -- scalar subtypes (## schemas)
 - [[structs]] -- #path and #Queue struct types
 - [[enums]] -- #FieldKind enum (used by `%##Leafs.Kind`)
-- [[types]] -- full type system specification
+- [[syntax/types/INDEX|types]] -- full type system specification
 - [[macros]] -- {M} type macro definitions

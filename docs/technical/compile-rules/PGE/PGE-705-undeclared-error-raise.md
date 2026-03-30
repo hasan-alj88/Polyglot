@@ -57,4 +57,8 @@ severity: error
       [r] >validated << $name
 ```
 
+### See Also
+
+- [[user/concepts/errors|Errors]] — references PGE-705 in raising errors section
+
 **Open point:** None.

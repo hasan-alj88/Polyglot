@@ -79,3 +79,8 @@ The compiler statically infers whether a `=Path"..."` expression is provably cro
    [!] !PathPlatformMismatch
       [*] *Continue >FallBack << $defaultDir
 ```
+
+### See Also
+
+- [[syntax/types/strings|String Types]] — path validation error references
+- [[stdlib/types/structs|Struct Types]] — `#path` invalid path string examples

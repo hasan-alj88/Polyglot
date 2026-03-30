@@ -13,7 +13,7 @@ All Polyglot data is serialized strings. Every object — structs, pipelines, va
 
 ## All Data is Serialized Strings
 
-Polyglot has one true primitive: `RawString` — a sequence of literal raw characters (see [[types#RawString — The True Primitive]]). Everything else — `#String`, `int`, `float`, `#Boolean`, arrays, serials, user structs — is built on top of `RawString` through schemas that constrain how the string is interpreted.
+Polyglot has one true primitive: `RawString` — a sequence of literal raw characters (see [[syntax/types/basic-types#RawString — The True Primitive]]). Everything else — `#String`, `int`, `float`, `#Boolean`, arrays, serials, user structs — is built on top of `RawString` through schemas that constrain how the string is interpreted.
 
 This means every Polyglot object is ultimately a tree of strings with typed structure layered on top.
 
@@ -36,7 +36,7 @@ Types describe their tree structure through two additional prefix tiers beyond `
 
 Child nodes in a tree are accessed with the `<` operator: `$myMap<name`, `$matrix<0<1`. Fixed fields use `.` as before.
 
-See [[types#Three-Tier Prefix System]] for the full prefix table, [[types#Approved `##` Schema Types]] for all schema definitions, and [[types#The `<` Operator: Definition vs Access]] for accessor details.
+See [[syntax/types/prefix-system#Three-Tier Prefix System]] for the full prefix table, [[syntax/types/schema-properties#Approved ## Schema Types]] for all schema definitions, and [[syntax/types/prefix-system#The < Operator]] for accessor details.
 
 ## The Structured Tree
 
@@ -64,11 +64,11 @@ Each concept you have learned maps to a branch in the tree:
 
 | You learned | In | Tree branch | Instance example |
 |-------------|----|-------------|------------------|
-| Struct types | [[types#Struct Types]] | `%#` | `%#:UserRecord:0` |
-| Pipelines | [[pipelines]] | `%=` | `%=:ProcessData:0` |
+| Struct types | [[syntax/types/structs#Struct Types]] | `%#` | `%#:UserRecord:0` |
+| Pipelines | [[concepts/pipelines/INDEX|pipelines]] | `%=` | `%=:ProcessData:0` |
 | Variables | [[variable-lifecycle]] | `%$` | `%$:myVar:0` |
-| Expand operators | [[collections#Expand Operators]] | `%~` | `%~:ForEach.Array:0` |
-| Collect operators | [[collections#Collect Operators]] | `%*` | `%*:Into.Array:0` |
+| Expand operators | [[concepts/collections/expand#Expand Operators]] | `%~` | `%~:ForEach.Array:0` |
+| Collect operators | [[concepts/collections/collect#Collect Operators]] | `%*` | `%*:Into.Array:0` |
 | Error trees | [[errors]], `{!}` blocks | `%!` | `%!.File.NotFound` |
 | Packages | [[packages]] | `%@` | `%@:Local:999::MyPkg` |
 | Permissions | [[permissions]] | `%_` | `%_.File.read` |
@@ -143,15 +143,15 @@ Push atomically clears the previous field and sets the new one. Reading a non-ac
 
 ### String Subtypes — Nested Under `:String`
 
-`int` lives at `%#:String:int` — nested under `:String` at a flexible level. The alias `#int` in user code resolves to `#String.int`. Each subtype uses the `#String` schema with `.re` pre-filled:
+`int` lives at `%#:String:int` — nested under `:String` at a flexible level. The alias `#int` in user code resolves to `#String.int`. Each subtype uses the `#String` schema with `.regex` pre-filled:
 
 ```
-%#:String:int               ← .string#RawString + .re#RawString (re = "^-?[0-9]+$")
-%#:String:float             ← .string#RawString + .re#RawString (re = "^-?[0-9]+\.[0-9]+$")
-%#:String:emailAddress      ← user-defined: .re = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+%#:String:int               ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+$")
+%#:String:float             ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+\.[0-9]+$")
+%#:String:emailAddress      ← user-defined: .regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
-See [[types#Numeric Types — #String Subtypes]] for details.
+See [[syntax/types/basic-types#Numeric Types — #String Subtypes]] for details.
 
 ### IO Ports — Nested Typed Sections
 

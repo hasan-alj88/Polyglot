@@ -30,4 +30,4 @@ No `[@]` import needed.
    [*] >Map >> $adjustedPrices
 ```
 
-See also: [[collections#Collect Operators]]
+See also: [[concepts/collections/collect#Collect Operators]]

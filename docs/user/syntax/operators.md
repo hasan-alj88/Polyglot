@@ -13,7 +13,7 @@ status: complete
 
 ## Assignment Operators
 
-Directional — the arrow indicates data flow. Operators push and pull data across branches of the `%` metadata tree (see [[data-is-trees]]). See [[variable-lifecycle]] for lifecycle semantics, [[io]] for IO parameter context, [[pipelines#IO as Implicit Triggers]] for how assignment mode affects trigger behavior.
+Directional — the arrow indicates data flow. Operators push and pull data across branches of the `%` metadata tree (see [[data-is-trees]]). See [[variable-lifecycle]] for lifecycle semantics, [[io]] for IO parameter context, [[concepts/pipelines/io-triggers#IO as Implicit Triggers]] for how assignment mode affects trigger behavior.
 
 | Operator | Name | Direction | Usage |
 |----------|------|-----------|-------|
@@ -23,7 +23,7 @@ Directional — the arrow indicates data flow. Operators push and pull data acro
 | `~>` | Default | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
 | `<!` | Fallback (Error) | Right → left | `<! "fallback"`. See [[errors#Error Fallback Operators]] |
 | `!>` | Fallback (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
-| `=>` | Chain | Left → right | `=A=>=B=>=C`. See [[pipelines#Chain Execution]] |
+| `=>` | Chain | Left → right | `=A=>=B=>=C`. See [[concepts/pipelines/chains#Chain Execution]] |
 
 ## Comparison Operators
 
@@ -125,13 +125,13 @@ All accept `#int` and `#float` operands. When any input is `#float`, the output 
       [r] >result << 0
 ```
 
-For string building, use `{$var}` interpolation — not concatenation. See [[types#String Interpolation]] and [[PGE-405|PGE-405]] (undefined interpolation variable).
+For string building, use `{$var}` interpolation — not concatenation. See [[syntax/types/strings#String Interpolation]] and [[PGE-405|PGE-405]] (undefined interpolation variable).
 
 ## Collection Operators
 
-Prefixes, not identifiers. See [[collections]] for full semantics.
+Prefixes, not identifiers. See [[concepts/collections/INDEX|collections]] for full semantics.
 
 | Prefix | Operation | Usage |
 |--------|-----------|-------|
-| `~` | Expand (iterate) | `~ForEach.Array`. See [[collections#Expand Operators]] |
-| `*` | Collect (aggregate) | `*Into.Array`, `*Agg.Sum`. See [[collections#Collect Operators]] |
+| `~` | Expand (iterate) | `~ForEach.Array`. See [[concepts/collections/expand#Expand Operators]] |
+| `*` | Collect (aggregate) | `*Into.Array`, `*Agg.Sum`. See [[concepts/collections/collect#Collect Operators]] |

@@ -49,3 +49,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[syntax/operators|Operators]] — division and modulo by literal zero compile error

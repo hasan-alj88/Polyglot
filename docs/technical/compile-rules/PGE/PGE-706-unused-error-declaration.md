@@ -54,4 +54,8 @@ severity: error
       [r] >validated << $name
 ```
 
+### See Also
+
+- [[user/concepts/errors|Errors]] — references PGE-706 in declaring pipeline errors
+
 **Open point:** None.

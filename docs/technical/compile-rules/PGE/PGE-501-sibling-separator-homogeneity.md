@@ -52,3 +52,7 @@ severity: error
    [.] .name#string
    [:] :tag#string                     [ ] ✗ PGE-501 — : among . siblings
 ```
+
+### See Also
+
+- [[user/syntax/types/structs|Structs]] — field homogeneity rules reference PGE-501

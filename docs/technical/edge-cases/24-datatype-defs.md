@@ -12,7 +12,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 | Edge Case | Title | Tests |
 |-----------|-------|-------|
-| EC-24.1 | #String `.re` default | Empty string matches `".*"`, ##Scalar inherited |
+| EC-24.1 | #String `.regex` default | Empty string matches `".*"`, ##Scalar inherited |
 | EC-24.2 | #Int leading zeros and negative zero | `"007"` and `"-0"` both match regex |
 | EC-24.3 | #Dimension 0D | 0D allowed for scalars, regex discrepancies across specs |
 | EC-24.4 | #Eng exponent | Multiples-of-3 constraint on exponent |
@@ -35,10 +35,10 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ---
 
-### EC-24.1: #String `.re` default
+### EC-24.1: #String `.regex` default
 
 **EBNF:** `type_definition ::= "{#}" type_header { schema_line | field_line }` — field defaults via `<~`.
-**What it tests:** Empty string `""` matches `.re = ".*"` — the default regex accepts all strings, including empty. Verifies `##Scalar` is inherited via `[#] << ##Scalar`. See [[syntax/types/basic-types#Layer 1: #String — The Foundation Type]].
+**What it tests:** Empty string `""` matches `.regex = ".*"` — the default regex accepts all strings, including empty. Verifies `##Scalar` is inherited via `[#] << ##Scalar`. See [[syntax/types/basic-types#Layer 1: #String — The Foundation Type]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[variable-lifecycle]]
 
 ```polyglot
@@ -46,7 +46,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] << ##Scalar
    [#] %##Alias << "string"
    [.] .string#RawString
-   [.] .re#RawString <~ ".*"
+   [.] .regex#RawString <~ ".*"
 
 [ ] empty string matches ".*"
 [r] $empty#string << ""
@@ -57,15 +57,15 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.2: #Int leading zeros and negative zero
 
-**EBNF:** `type_definition` — `.re` regex `"^-?[0-9]+$"` accepts leading zeros and `-0`.
-**What it tests:** `"007"` and `"-0"` both match `#Int`'s regex. Leading zeros are valid serialized strings — Polyglot does not normalize numeric representations. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .re]].
+**EBNF:** `type_definition` — `.regex` regex `"^-?[0-9]+$"` accepts leading zeros and `-0`.
+**What it tests:** `"007"` and `"-0"` both match `#Int`'s regex. Leading zeros are valid serialized strings — Polyglot does not normalize numeric representations. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .regex]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
 ```polyglot
 {#} #Int
    [#] <~ #String
    [#] %##Alias << "int"
-   [.] .re#RawString << "^-?[0-9]+$"
+   [.] .regex#RawString << "^-?[0-9]+$"
 
 [ ] leading zeros match regex
 [r] $padded#int << 007
@@ -79,8 +79,8 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.3: #Dimension 0D
 
-**EBNF:** `type_definition` — `.re` for #Dimension and the `:ND` syntax sugar.
-**What it tests:** 0D is valid for scalars. The stored value includes the `D` suffix — `"2D"`, not `"2"`. Regex is `"^[0-9]+D$"`. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .re]].
+**EBNF:** `type_definition` — `.regex` for #Dimension and the `:ND` syntax sugar.
+**What it tests:** 0D is valid for scalars. The stored value includes the `D` suffix — `"2D"`, not `"2"`. Regex is `"^[0-9]+D$"`. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .regex]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[stdlib/INDEX|Standard Library]]
 **Status:** RESOLVED — regex corrected to `"^[0-9]+D$"` in both syntax/types.md and stdlib/types/scalars.md.
 
@@ -90,7 +90,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] <~ #String
    [#] %##Alias << "dim"
    [ ] Stored value includes D suffix
-   [.] .re#RawString << "^[0-9]+D$"
+   [.] .regex#RawString << "^[0-9]+D$"
 
 [ ] 0D means scalar dimension
 [r] $scalar#array:int:0D
@@ -102,15 +102,15 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.4: #Eng exponent
 
-**EBNF:** `type_definition` — `.re` enforces multiples-of-3 exponent.
-**What it tests:** `"1.5e4"` fails (4 is not a multiple of 3), `"1.5e3"` passes. The regex `(0|[369]|[1-9][0-9]*[0369])` constrains the exponent to 0, 3, 6, 9, ... See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .re]].
+**EBNF:** `type_definition` — `.regex` enforces multiples-of-3 exponent.
+**What it tests:** `"1.5e4"` fails (4 is not a multiple of 3), `"1.5e3"` passes. The regex `(0|[369]|[1-9][0-9]*[0369])` constrains the exponent to 0, 3, 6, 9, ... See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .regex]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
 ```polyglot
 {#} #Eng
    [#] <~ #String
    [#] %##Alias << "eng"
-   [.] .re#RawString << "^-?[1-9]\.[0-9]{0,2}[eE][+-]?(0|[369]|[1-9][0-9]*[0369])$"
+   [.] .regex#RawString << "^-?[1-9]\.[0-9]{0,2}[eE][+-]?(0|[369]|[1-9][0-9]*[0369])$"
 
 [ ] exponent is multiple of 3
 [r] $valid#eng << "1.5e3"
@@ -126,7 +126,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.5: #KeyString excluded chars
 
-**EBNF:** `type_definition` — `.re` excludes syntax-reserved characters.
+**EBNF:** `type_definition` — `.regex` excludes syntax-reserved characters.
 **What it tests:** `"my.key"` fails (dot is reserved for fixed-field navigation), `"my-key"` passes. Ensures tree path safety for `<` child access. See [[syntax/types/basic-types#Layer 2c: #KeyString — Key Type for Tree Access]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
@@ -134,7 +134,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 {#} #KeyString
    [#] <~ #String
    [#] %##Alias << "key"
-   [.] .re#RawString << "^[^\s.<>:]+$"
+   [.] .regex#RawString << "^[^\s.<>:]+$"
 
 [ ] hyphen allowed
 [r] $valid#key << "my-key"
@@ -152,7 +152,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.6: #NestedKeyString allows dot/colon
 
-**EBNF:** `type_definition` — `.re` allows `.` and `:` but excludes whitespace and angle brackets.
+**EBNF:** `type_definition` — `.regex` allows `.` and `:` but excludes whitespace and angle brackets.
 **What it tests:** `"error.file.read"` passes (dots allowed for alias paths), `"my<key"` fails. Used as element type for `%##Alias` paths. See [[syntax/types/basic-types#Layer 2d: #NestedKeyString — Key Type for Alias Paths]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
@@ -160,7 +160,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 {#} #NestedKeyString
    [#] <~ #String
    [#] %##Alias << "nestedkey"
-   [.] .re#RawString << "^[^\s<>]+$"
+   [.] .regex#RawString << "^[^\s<>]+$"
 
 [ ] dots and colons allowed for nested paths
 [r] $alias#nestedkey << "error.file.read"
@@ -176,24 +176,24 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.7: `<~` inheritance chain finality
 
 **EBNF:** `inheritance ::= "[#]" "<~" type_ref` — schema inheritance with `<~` (overridable) vs `<<` (final).
-**What it tests:** #Int inherits `.string` and `.re` from #String via `<~`, then sets `.re` with `<<` (final). A user-defined `#PositiveInt <~ #Int` cannot override `.re` — it is already final. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .re]], [[variable-lifecycle]].
+**What it tests:** #Int inherits `.string` and `.regex` from #String via `<~`, then sets `.regex` with `<<` (final). A user-defined `#PositiveInt <~ #Int` cannot override `.regex` — it is already final. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .regex]], [[variable-lifecycle]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[variable-lifecycle]]
 **Status:** RESOLVED — PGE-927 (Final Field Override via Inheritance) added to COMPILE-RULES.md.
 
 ```polyglot
-[ ] #String sets .re with <~ (overridable default)
+[ ] #String sets .regex with <~ (overridable default)
 {#} #String
-   [.] .re#RawString <~ ".*"
+   [.] .regex#RawString <~ ".*"
 
-[ ] #Int inherits and sets .re with << (final)
+[ ] #Int inherits and sets .regex with << (final)
 {#} #Int
    [#] <~ #String
-   [.] .re#RawString << "^-?[0-9]+$"
+   [.] .regex#RawString << "^-?[0-9]+$"
 
-[ ] PGE-927 — .re is already << final in #Int
+[ ] PGE-927 — .regex is already << final in #Int
 {#} #PositiveInt
    [#] <~ #Int
-   [.] .re#RawString << "^[1-9][0-9]*$"
+   [.] .regex#RawString << "^[1-9][0-9]*$"
 ```
 
 ### EC-24.8: #Boolean — ##Scalar + ###Enum
@@ -375,7 +375,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ```polyglot
 [ ] PGE-924 — #Int does not inherit #KeyString
-[ ] #Int.re allows "-7" — the hyphen is fine, but dots/colons are
+[ ] #Int.regex allows "-7" — the hyphen is fine, but dots/colons are
 [ ] not excluded by #Int's regex, only by #KeyString's
 [r] $bad#map:int:string <~ {}
 
@@ -385,7 +385,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] correct — custom key type inheriting #KeyString
 {#} #SafeKey
    [#] <~ #KeyString
-   [.] .re#RawString << "^[a-z][a-z0-9-]*$"
+   [.] .regex#RawString << "^[a-z][a-z0-9-]*$"
 
 [r] $custom#map:SafeKey:int <~ {}
 ```

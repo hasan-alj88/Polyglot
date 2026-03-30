@@ -42,4 +42,8 @@ severity: error
    [@] @a << @Local:999.A:v1.0.0      [ ] ✗ PGE-902 — B depends on A, creating cycle
 ```
 
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-902 in dependency rules
+
 **Open point:** None.

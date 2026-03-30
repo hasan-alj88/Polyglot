@@ -73,3 +73,8 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/pipelines/execution|Execution]] — documents block element marker requirement, references PGE-116
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-116

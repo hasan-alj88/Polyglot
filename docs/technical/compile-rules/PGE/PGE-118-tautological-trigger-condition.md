@@ -67,3 +67,8 @@ severity: error
 ```
 
 **Diagnostic:** `"Trigger condition on pipeline ={PipelineName} is always {true|false} — {tautological condition means trigger fires unconditionally|contradictory condition means pipeline can never trigger}"`
+
+### See Also
+
+- [[concepts/pipelines/io-triggers|IO & Triggers]] — documents trigger tautology/contradiction, references PGE-118
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-118

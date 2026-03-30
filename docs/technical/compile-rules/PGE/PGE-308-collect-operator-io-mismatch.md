@@ -75,3 +75,8 @@ Missing, extra, or misnamed IO lines fire PGE-308.
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/collections/expand|Expand]] — documents collect operator IO contract (references PGE-308)
+- [[concepts/collections/examples|Collection Examples]] — error table mapping PGE-308 to example scenarios

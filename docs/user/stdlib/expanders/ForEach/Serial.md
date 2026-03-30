@@ -27,4 +27,4 @@ No `[@]` import needed. No `.Enumerate` variant — Serial is unordered.
    ...
 ```
 
-See also: [[collections#Expand Operators]]
+See also: [[concepts/collections/expand#Expand Operators]]

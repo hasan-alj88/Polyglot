@@ -103,3 +103,7 @@ severity: error
 **Resolved — Data fields:** Final semantics apply uniformly. `{#}` data fields declared with `<<` are schema-level constants (Final by definition, immutable at runtime). Fields declared with `<~` follow the same Default → Final promotion rule as `$` variables.
 
 **Resolved — Conditional paths:** The compiler uses conservative (worst-case) analysis. If ANY conditional branch promotes a variable to Final, the compiler treats the variable as *possibly Final* after the block and rejects further pushes. The compiler does not perform path-sensitive analysis — it takes the union of all branch outcomes.
+
+### See Also
+
+- [[concepts/variable-lifecycle|Variable Lifecycle]] — defines Final state and references PGE-203

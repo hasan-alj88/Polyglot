@@ -44,3 +44,9 @@ severity: error
 ```
 
 **Diagnostic:** "Pipeline `=BatchJob` sets `maxInstances << 5` but queue `#Queue:BatchQueue` defines `maxInstances << 1` — remove the pipeline override or change the queue default"
+
+### See Also
+
+- [[concepts/pipelines/queue|Queue]] — documents queue control contradiction rule, references PGE-113
+- [[stdlib/pipelines/Q|=Q.* Stdlib Pipelines]] — references PGE-113 in queue control context
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-113

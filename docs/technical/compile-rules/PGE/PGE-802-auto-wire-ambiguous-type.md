@@ -24,3 +24,8 @@ severity: error
    [ ] ✗ PGE-802 — which #string output maps to <text?
    [=] <1.output#string >> >result
 ```
+
+### See Also
+
+- [[user/concepts/pipelines/chains|Chains]] — references PGE-802 in auto-wire rules
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-802 in auto-wire table

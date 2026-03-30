@@ -55,4 +55,4 @@ status: complete
 
 - [[string]] -- #String foundation type (separate type tree)
 - [[scalars]] -- scalar subtypes of #String
-- [[types]] -- full type system specification
+- [[syntax/types/INDEX|types]] -- full type system specification

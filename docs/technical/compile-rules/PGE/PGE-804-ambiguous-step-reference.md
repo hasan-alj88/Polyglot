@@ -61,3 +61,5 @@ severity: error
 
 **See also:**
 - [PGE-702 — Chain Error Scoping](PGE-702-chain-error-scoping.md) — chain error addressing syntax
+- [[user/concepts/pipelines/chains|Chains]] — references PGE-804 in step addressing rules
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-804 in step addressing table

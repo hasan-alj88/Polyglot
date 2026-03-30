@@ -26,3 +26,8 @@ Entry IO (first step's inputs) and exit IO (last step's outputs) always require 
    [ ] ✗ PGE-801 — int ≠ string, no matching type
    [=] <1.label#string >> >output
 ```
+
+### See Also
+
+- [[user/concepts/pipelines/chains|Chains]] — references PGE-801 in auto-wire rules
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-801 in auto-wire table

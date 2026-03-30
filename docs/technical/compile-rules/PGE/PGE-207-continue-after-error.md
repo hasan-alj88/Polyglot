@@ -72,3 +72,7 @@ split_from: PGE-205
 **See also:**
 - [PGE-205 — Failed Is Terminal](PGE-205-failed-is-terminal.md) — core Failed state semantics
 - [PGW-205 — Pipeline Terminates on Error](../PGW/PGW-205-failed-variable-usage.md) — warning when no recovery is provided
+
+### See Also
+
+- [[stdlib/collectors/Continue|*Continue Collector]] — user-facing documentation for `*Continue` with usage examples

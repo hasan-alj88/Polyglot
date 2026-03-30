@@ -28,10 +28,10 @@ Track structural coverage gaps between user documentation and technical document
 | GAP-002 | UG | permissions.md references permission model but no compile rules enforce it | user/concepts/permissions.md | technical/compile-rules/ | Medium | Resolved |
 | GAP-003 | MX | EBNF §9 Definition Blocks covers {=},{#},{M},{@} but user docs split across separate files without back-links | technical/ebnf/09-definition-blocks.md | user/ concept files | Medium | Resolved |
 | GAP-004 | TG | type-identity.md spec has no user-facing explanation of structural matching | technical/spec/type-identity.md | user/syntax/types/ | Medium | Resolved |
-| GAP-005 | MX | Compile-rule PGE files lack systematic links back to user docs and edge cases | technical/compile-rules/PGE/ | cross-refs | Low | Open |
-| GAP-006 | TG | String regex subfields decision (technical/plan/decisions/) has no user doc coverage | technical/plan/decisions/string-re-subfields.md | user/syntax/types/ | Low | Open |
+| GAP-005 | MX | Compile-rule PGE files lack systematic links back to user docs and edge cases | technical/compile-rules/PGE/ | cross-refs | Low | Resolved |
+| GAP-006 | TG | String regex subfields decision (technical/plan/decisions/) has no user doc coverage | technical/plan/decisions/string-re-subfields.md | user/syntax/types/ | Low | Resolved |
 | GAP-007 | IC | draft.md (now archived) references PGE-XXX placeholder codes not in COMPILE-RULES.md | archive/wip/draft.md | technical/COMPILE-RULES.md | Low | Moved → IC-008 |
-| GAP-008 | TG | EBNF §8 Expressions defines 16 expression types but no unified user doc covers them — concepts scattered across operators.md, line-structure.md, blocks.md | technical/ebnf/08-expressions.md | user/syntax/ (no expressions.md) | Medium | Open |
+| GAP-008 | TG | EBNF §8 Expressions defines 16 expression types but no unified user doc covers them — concepts scattered across operators.md, line-structure.md, blocks.md | technical/ebnf/08-expressions.md | user/syntax/ (no expressions.md) | Medium | Resolved |
 | GAP-009 | MX | PGE-104 (Macro Structural Constraints) has no "See also" back-link to user docs, though wrappers.md does reference PGE-104 forward | technical/compile-rules/PGE/PGE-104-macro-structural-constraints.md | cross-ref to user/concepts/pipelines/wrappers.md | Low | Resolved |
 | GAP-010 | MX | PGE-301 (No Push Across Parallel) has no "See also" back-link to user docs, though collections docs reference PGE-301 forward | technical/compile-rules/PGE/PGE-301-no-push-across-parallel.md | cross-ref to user/concepts/collections/ | Low | Resolved |
 
@@ -45,6 +45,9 @@ Track structural coverage gaps between user documentation and technical document
 | GAP-004 | TG | type-identity.md has no user-facing explanation | Added "Type Identity" section to user/syntax/types/conversions.md — structural matching, no implicit coercion, link to technical spec | 2026-03-30 |
 | GAP-009 | MX | PGE-104 missing back-link | Added "See Also" section with links to wrappers.md and macros.md | 2026-03-30 |
 | GAP-010 | MX | PGE-301 missing back-link | Added "See Also" section with link to collections/ | 2026-03-30 |
+| GAP-006 | TG | String regex subfields decision has no user doc | User coverage already exists in string.md + scalars.md + basic-types.md. Renamed field `.re` → `.regex` (alias `.re`) across all docs | 2026-03-30 |
+| GAP-008 | TG | EBNF §8 expressions not in user docs | Expressions are a grammar abstraction, not a user concept. All 16 types already covered by user docs organized by mental model: operators.md (assignment, comparison, arithmetic), blocks.md (structural elements), io.md (IO + expand/collect), collections/ (expand/collect semantics) | 2026-03-30 |
+| GAP-005 | MX | PGE files lack back-links | Added "See Also" sections to 90 PGE compile rule files with wikilinks to referencing user docs and edge cases | 2026-03-30 |
 
 ## Audit Process
 

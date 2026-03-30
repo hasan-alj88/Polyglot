@@ -18,13 +18,13 @@ Define top-level structures. Open a scope that continues with indentation.
 | Marker | Defines |
 |--------|---------|
 | `{@}` | Package declaration (mandatory, first in file). See [[packages]] |
-| `{#}` | Struct definition. See [[types#Enum Fields vs Value Fields]] |
-| `{=}` | Pipeline definition. See [[pipelines]] |
+| `{#}` | Struct definition. See [[syntax/types/structs#Enum Fields vs Value Fields]] |
+| `{=}` | Pipeline definition. See [[concepts/pipelines/INDEX|pipelines]] |
 | `{M}` | Type macro definition. See [[macros]] |
 | `{W}` | Wrapper definition. See [[wrappers]] |
-| `{Q}` | Queue definition. See [[pipelines#Queue]] |
+| `{Q}` | Queue definition. See [[concepts/pipelines/queue#Queue]] |
 | `{!}` | Error tree definition. See [[errors#Defining Custom Errors]] |
-| `{Array}` | Array collection definition. See [[collections]] |
+| `{Array}` | Array collection definition. See [[concepts/collections/INDEX|collections]] |
 | `{ }` | Comment. See [[comments]] |
 
 ## `[X]` — Block Elements
@@ -49,15 +49,15 @@ See [[permissions]] for inline/IO forms, permission categories, and hierarchical
 ### Data Flow
 
 <!-- @io -->
-See [[io]] for IO parameter patterns and [[collections]] for expand/collect semantics.
+See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collections]] for expand/collect semantics.
 
 | Marker | Meaning |
 |--------|---------|
 | `[=]` | Pipeline IO line. See [[io#IO Line Pattern]] |
-| `[~]` | Collection-expand IO line. See [[collections#Expand Operators]] |
-| `[*]` | Collection-collect IO line. See [[collections#Collect Operators]] |
-| `[*] <<` | Wait input — wait for variable to be Final (used inside `[*]` blocks). See [[collections#Sync & Race Collectors]] |
-| `[*] >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[collections#Sync & Race Collectors]] |
+| `[~]` | Collection-expand IO line. See [[concepts/collections/expand#Expand Operators]] |
+| `[*]` | Collection-collect IO line. See [[concepts/collections/collect#Collect Operators]] |
+| `[*] <<` | Wait input — wait for variable to be Final (used inside `[*]` blocks). See [[concepts/collections/collect#Sync & Race Collectors]] |
+| `[*] >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[concepts/collections/collect#Sync & Race Collectors]] |
 | `[>]` | Output fallback — scoped under `[=]` output line. See [[errors#Error Fallback Operators]] |
 | `[<]` | Input fallback — scoped under `[=]` input line. See [[errors#Error Fallback Operators]] |
 
@@ -74,16 +74,16 @@ See [[io]] for IO parameter patterns and [[collections]] for expand/collect sema
 ### Control Flow
 
 <!-- @pipelines -->
-See [[pipelines]] for trigger/queue/wrapper structure and error scoping rules.
+See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 
 | Marker | Meaning |
 |--------|---------|
 | `[?]` | Conditional switch flow; match arm (under `[r]` `>>` match). See [[conditionals#Match Syntax]] |
-| `[!]` | Error handling — scoped under `[r]` call. See [[pipelines#Error Handling]] |
+| `[!]` | Error handling — scoped under `[r]` call. See [[concepts/pipelines/error-handling#Error Handling]] |
 | `[!] >>` | Error raise — raises a declared error. See [[errors#Raising Errors]] |
-| `[t]` | Trigger. See [[pipelines#Triggers]] |
-| `[Q]` | Queue. See [[pipelines#Queue]] |
-| `[W]` | Wrapper. See [[pipelines#Wrappers]] |
+| `[t]` | Trigger. See [[concepts/pipelines/io-triggers#Triggers]] |
+| `[Q]` | Queue. See [[concepts/pipelines/queue#Queue]] |
+| `[W]` | Wrapper. See [[concepts/pipelines/wrappers#Wrappers]] |
 
 ### Scope
 

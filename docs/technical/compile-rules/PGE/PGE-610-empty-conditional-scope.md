@@ -53,3 +53,7 @@ severity: error
 **See also:**
 - [PGW-101 — Empty Execution Body](../PGW/PGW-101-empty-execution-body.md) — warning for empty pipeline body (different scope)
 - [PGE-601 — Conditional Must Be Exhaustive](PGE-601-conditional-must-be-exhaustive.md) — exhaustiveness rule
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — empty branch rules reference PGE-610

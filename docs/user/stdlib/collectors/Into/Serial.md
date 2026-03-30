@@ -28,4 +28,4 @@ No `[@]` import needed.
    [*] >Serial >> $result
 ```
 
-See also: [[collections#Collect Operators]]
+See also: [[concepts/collections/collect#Collect Operators]]

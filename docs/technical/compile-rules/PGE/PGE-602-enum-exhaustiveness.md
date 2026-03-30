@@ -165,3 +165,8 @@ When branching on an enum imported from another package, use the `@alias#EnumNam
 ---
 
 **Open point:** None.
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — enum exhaustiveness examples and PGE-602 error table
+- [[technical/edge-cases/11-control-flow|EC: Control Flow]] — references PGE-602 in enum match exhaustiveness test

@@ -58,3 +58,9 @@ severity: error
 ```
 
 **Diagnostic:** `"Array dimension access mismatch on {variable} at line {N} — {variable} is declared as :{M}D but accessed with {K} indices"`
+
+### See Also
+
+- [[syntax/types/arrays|Array Types]] — dimension access depth enforcement
+- [[technical/edge-cases/04-type-system|EC-4.18: Multidimensional array — :ND dimension specifier]] — references PGE-417
+- [[technical/edge-cases/24-datatype-defs|EC-24.13: 0D array]] — references PGE-417

@@ -70,3 +70,9 @@ severity: error
 ```
 
 **Note:** Type matching is schema-based, not name-based — per [TYPE-IDENTITY.md](../TYPE-IDENTITY.md). Two differently-named `{#}` types with identical field structures are the same type. See resolved design issue 005 (git history: `docs/technical/compiler_issues/005-race-type-matching-semantics.md`) for the design decision.
+
+### See Also
+
+- [[concepts/collections/collect|Collect]] — documents race collector type constraint (references PGE-306)
+- [[concepts/collections/examples|Collection Examples]] — error table mapping PGE-306 to example scenarios
+- [[technical/spec/type-identity|Type Identity]] — defines schema-based type matching used by PGE-306

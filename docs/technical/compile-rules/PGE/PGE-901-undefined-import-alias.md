@@ -42,4 +42,8 @@ severity: error
       [=] <input << $data
 ```
 
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-901 in import usage rules
+
 **Open point:** None.

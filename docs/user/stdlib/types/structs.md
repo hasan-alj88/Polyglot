@@ -49,7 +49,7 @@ Or use `=Path"..."` inline notation for automatic OS normalization:
 [r] $LogDir#path << =Path"/tmp/MyApp/logs"
 ```
 
-See [[types#Path Type]] for full details including `=Path"..."`, path roots, and shorthands.
+See [[syntax/types/strings#Path Type]] for full details including `=Path"..."`, path roots, and shorthands.
 
 ### Error Codes
 
@@ -85,5 +85,5 @@ See [[enums#QueueStrategy]] and [[enums#RetriggerStrategy]] for the enum definit
 ## Related
 
 - [[enums]] -- #OS, #QueueStrategy, #RetriggerStrategy, and other enums
-- [[collections]] -- #Map, #Array, #Serial collection types
-- [[types]] -- full type system specification
+- [[concepts/collections/INDEX|collections]] -- #Map, #Array, #Serial collection types
+- [[syntax/types/INDEX|types]] -- full type system specification

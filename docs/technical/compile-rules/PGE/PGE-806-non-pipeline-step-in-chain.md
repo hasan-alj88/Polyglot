@@ -98,4 +98,9 @@ severity: error
 
 **Diagnostic:** "Chain step at position N is an inline pipeline call `=Name\"...\"` — all chain steps must be pipeline references"
 
+### See Also
+
+- [[user/concepts/pipelines/chains|Chains]] — references PGE-806 in chain execution rules
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-806 in chain execution table
+
 **Open point:** None.

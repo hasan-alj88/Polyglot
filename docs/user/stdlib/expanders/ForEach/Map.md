@@ -27,4 +27,4 @@ No `[@]` import needed. No `.Enumerate` variant — Map is unordered (`%Ordered 
    ...
 ```
 
-See also: [[collections#Expand Operators]]
+See also: [[concepts/collections/expand#Expand Operators]]

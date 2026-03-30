@@ -57,3 +57,7 @@ severity: error
    [.] .Stopped
    [.] .uptime#int                     [ ] ✗ PGE-502 — value field among enum siblings
 ```
+
+### See Also
+
+- [[user/syntax/types/structs|Structs]] — field homogeneity rules reference PGE-502

@@ -78,3 +78,8 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/collections/expand|Expand]] — documents nested expand/collect pairing requirement (references PGE-309)
+- [[concepts/collections/examples|Collection Examples]] — error table mapping PGE-309 to example scenarios

@@ -92,4 +92,8 @@ severity: error
       [=] <input#string << $data
 ```
 
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-903 in dependency rules
+
 **Open point:** None.

@@ -57,4 +57,8 @@ severity: error
 
 **Diagnostic:** `"IO direction mismatch at line {N} — {<input|>output} <{name}> on call to ={PipelineName} uses {<<|>>} but {inputs accept << only|outputs provide >> only} at call sites"`
 
+### See Also
+
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-810 in call site rules
+
 **Open point:** None.

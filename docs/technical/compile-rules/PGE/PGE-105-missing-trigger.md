@@ -33,3 +33,8 @@ split_from: PGE-101
 ```
 
 **Diagnostic:** "Pipeline `=Process` has no trigger — add `[t]` before `[Q]`"
+
+### See Also
+
+- [[concepts/pipelines/io-triggers|IO & Triggers]] — documents mandatory trigger requirement, references PGE-105
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-105

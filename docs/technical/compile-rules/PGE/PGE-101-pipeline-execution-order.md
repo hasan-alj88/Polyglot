@@ -47,3 +47,8 @@ severity: error
 ```
 
 **Diagnostic:** "Pipeline `=Process` sections are misordered — expected `[t],[=]` → `[Q]` → setup → body → cleanup"
+
+### See Also
+
+- [[concepts/pipelines/INDEX|Pipelines Overview]] — references PGE-101 in pipeline section ordering
+- [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE-101

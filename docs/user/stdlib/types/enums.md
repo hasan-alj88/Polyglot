@@ -143,7 +143,7 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
    [.] .None
 ```
 
-Used by the `%##Leafs.Kind` schema property to constrain what `###` field type all leafs in a type must be. For example, `[#] %##Leafs.Kind << #FieldKind.Enum` requires all leafs to be `###Enum` (no type annotation). See [[types#Approved ## Schema Types]].
+Used by the `%##Leafs.Kind` schema property to constrain what `###` field type all leafs in a type must be. For example, `[#] %##Leafs.Kind << #FieldKind.Enum` requires all leafs to be `###Enum` (no type annotation). See [[syntax/types/schema-properties#Approved ## Schema Types]].
 
 ---
 
@@ -151,4 +151,4 @@ Used by the `%##Leafs.Kind` schema property to constrain what `###` field type a
 
 - [[boolean]] -- #Boolean enum type
 - [[structs]] -- #Queue struct (uses #QueueStrategy and #RetriggerStrategy)
-- [[types]] -- full type system specification
+- [[syntax/types/INDEX|types]] -- full type system specification

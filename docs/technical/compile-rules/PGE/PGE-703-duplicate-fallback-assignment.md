@@ -62,3 +62,5 @@ severity: error
 **See also:**
 - [PGE-701 — Error Block Scoping](PGE-701-error-block-scoping.md) — `[!]` block scoping rules
 - [PGE-702 — Chain Error Scoping](PGE-702-chain-error-scoping.md) — chain-specific error rules
+- [[user/syntax/io|IO]] — references PGE-703 in fallback duplicate rules
+- [[user/concepts/errors|Errors]] — references PGE-703 in error fallback operators

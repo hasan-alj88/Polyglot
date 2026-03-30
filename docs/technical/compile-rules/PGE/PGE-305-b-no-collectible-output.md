@@ -50,3 +50,8 @@ severity: error
 [*] *All
    [*] << $bgResult                  [ ] ✗ PGE-305 — $bgResult is from [b]
 ```
+
+### See Also
+
+- [[concepts/collections/collect|Collect]] — documents `[b]` fire-and-forget having no collectible output (references PGE-305)
+- [[concepts/collections/examples|Collection Examples]] — error table mapping PGE-305 to example scenarios

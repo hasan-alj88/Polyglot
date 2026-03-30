@@ -120,4 +120,8 @@ severity: error
 
 **Diagnostic:** "Circular pipeline call detected: `=A → =B → =C → =A` — Polyglot does not support recursion"
 
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-914 in dependency rules
+
 **Open point:** None.

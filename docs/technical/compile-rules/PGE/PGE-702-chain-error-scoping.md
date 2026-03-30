@@ -100,3 +100,4 @@ The handler **cannot** access other steps' IO (steps other than N).
 - [PGE-804 — Ambiguous Step Reference](PGE-804-ambiguous-step-reference.md) — disambiguation rules
 - [PGE-205 — Failed Is Terminal](PGE-205-failed-is-terminal.md) — recovery via replacement value
 - [PGE-207 — Continue After Error](PGE-207-continue-after-error.md) — `*Continue` fallback in chain errors
+- [[user/concepts/errors|Errors]] — references PGE-702 in chain error addressing

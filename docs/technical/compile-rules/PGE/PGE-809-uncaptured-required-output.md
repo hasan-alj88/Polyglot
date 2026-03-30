@@ -97,4 +97,8 @@ severity: error
 
 **Diagnostic:** "Uncaptured output `>{name}` on {operator type} call to `={PipelineName}` at line {N} — output has no fallback and must be wired (use `$*` to discard)"
 
+### See Also
+
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-809 in call site rules
+
 **Open point:** None.

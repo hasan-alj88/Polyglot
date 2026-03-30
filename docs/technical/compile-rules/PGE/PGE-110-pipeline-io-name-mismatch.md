@@ -84,3 +84,7 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/pipelines/inline-calls|Inline Calls]] — documents IO name matching rules, references PGE-110

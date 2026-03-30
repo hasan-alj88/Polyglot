@@ -77,3 +77,8 @@ severity: error
 **See also:**
 - [[PGE-601-conditional-must-be-exhaustive|PGE-601 — Conditional Must Be Exhaustive]] — parent exhaustiveness rule
 - [[operators|operators]] — full comparison operator list
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — missing comparison operator rule references PGE-609
+- [[user/syntax/operators|Operators]] — comparison operator requirement references PGE-609

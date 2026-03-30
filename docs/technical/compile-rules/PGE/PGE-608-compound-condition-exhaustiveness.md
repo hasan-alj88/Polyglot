@@ -66,3 +66,7 @@ If neither partition proof succeeds nor `*?` is present, PGE-608 fires.
 - [PGE-605 — Compound Condition Overlap](PGE-605-compound-condition-overlap.md) — overlap detection for compound conditions
 - [Compound Exhaustiveness Algorithm](../algorithms/compound-exhaustiveness.md) — partition refinement algorithm spec
 - [PGE-613 — Tautological or Contradictory Branch Condition](PGE-613-tautological-branch-condition.md) — prerequisite check
+
+### See Also
+
+- [[user/concepts/conditionals|Conditionals]] — compound condition exhaustiveness rules reference PGE-608

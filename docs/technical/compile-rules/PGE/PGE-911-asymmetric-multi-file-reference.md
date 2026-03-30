@@ -70,4 +70,8 @@ severity: error
    [ ] ✗ PGE-911 — file-03.pg does not reference file-02.pg
 ```
 
+### See Also
+
+- [[user/syntax/packages|Packages]] — references PGE-911 in multi-file package rules
+
 **Open point:** None.

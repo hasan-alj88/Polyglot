@@ -22,4 +22,4 @@ status: deprecated
    ...
 ```
 
-See also: [[collections#Expand Operators]], [[stdlib/pipelines/#]]
+See also: [[concepts/collections/expand#Expand Operators]], [[stdlib/pipelines/#]]

@@ -8,13 +8,13 @@ status: complete
 # =W — Wrappers
 
 <!-- @pipelines -->
-Wrappers are placed on `[W]` lines. Each wrapper references a Macro (`{M}`) that provides setup (`[\]`) and cleanup (`[/]`) around the pipeline execution body. Macro IO (`[{]` input, `[}]` output) is wired at the `[W]` line using `[=]` with `$` variables. See [[pipelines#Wrappers]] for wrapper usage rules.
+Wrappers are placed on `[W]` lines. Each wrapper references a Macro (`{M}`) that provides setup (`[\]`) and cleanup (`[/]`) around the pipeline execution body. Macro IO (`[{]` input, `[}]` output) is wired at the `[W]` line using `[=]` with `$` variables. See [[concepts/pipelines/wrappers#Wrappers]] for wrapper usage rules.
 
 Execution order: `[t],[=]` -> `[Q]` -> `[\]` -> Body -> `[/]`
 
 No `[@]` import needed.
 
-**PRIMITIVE** — Wrapper pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files. User-defined wrappers are created as `{M}` macros and referenced on `[W]` lines — see [[pipelines#Wrappers]].
+**PRIMITIVE** — Wrapper pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files. User-defined wrappers are created as `{M}` macros and referenced on `[W]` lines — see [[concepts/pipelines/wrappers#Wrappers]].
 
 ## Permissions
 

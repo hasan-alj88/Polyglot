@@ -349,24 +349,24 @@ Each rule follows this structure:
 **VALID:**
 ```polyglot
 {#} #String
-   [.] .re#RawString <~ ".*"
+   [.] .regex#RawString <~ ".*"
 
-[ ] ✓ .re is <~ (default) in #String — child CAN override
+[ ] ✓ .regex is <~ (default) in #String — child CAN override
 {#} #Int
    [#] <~ #String
-   [.] .re#RawString << "^-?[0-9]+$"
+   [.] .regex#RawString << "^-?[0-9]+$"
 ```
 
 **INVALID:**
 ```polyglot
 {#} #Int
    [#] <~ #String
-   [.] .re#RawString << "^-?[0-9]+$"
+   [.] .regex#RawString << "^-?[0-9]+$"
 
-[ ] ✗ PGE-927 — .re is already << final in #Int
+[ ] ✗ PGE-927 — .regex is already << final in #Int
 {#} #PositiveInt
    [#] <~ #Int
-   [.] .re#RawString << "^[1-9][0-9]*$"
+   [.] .regex#RawString << "^[1-9][0-9]*$"
 ```
 
 ### Rule 9.21w — Redundant Schema Property

@@ -9,21 +9,21 @@ status: complete
 
 <!-- @types -->
 
-Stdlib structs and enums available in every `.pg` file. No `[@]` import needed. For the full type system specification (annotations, schemas, generics), see [[types|user/syntax/types]].
+Stdlib structs and enums available in every `.pg` file. No `[@]` import needed. For the full type system specification (annotations, schemas, generics), see [[syntax/types/INDEX|types]].
 
 ## Type Hierarchy
 
 ```
 RawString (compiler intrinsic)
-└── #String (foundation — .string + .re) [##Scalar, ###Value]
-    ├── #Int (.re = signed integers)
-    ├── #UnsignedInt (.re = non-negative integers)
-    ├── #Float (.re = decimals)
-    ├── #Sci (.re = scientific notation)
-    ├── #Eng (.re = engineering notation)
-    ├── #Dimension (.re = dimension values — allows 0D)
-    ├── #KeyString (.re = syntax-safe keys)
-    ├── #NestedKeyString (.re = alias-safe paths)
+└── #String (foundation — .string + .regex) [##Scalar, ###Value]
+    ├── #Int (.regex = signed integers)
+    ├── #UnsignedInt (.regex = non-negative integers)
+    ├── #Float (.regex = decimals)
+    ├── #Sci (.regex = scientific notation)
+    ├── #Eng (.regex = engineering notation)
+    ├── #Dimension (.regex = dimension values — allows 0D)
+    ├── #KeyString (.regex = syntax-safe keys)
+    ├── #NestedKeyString (.regex = alias-safe paths)
     └── (user-defined: #emailAddress, #phoneNumber, etc.)
 
 #Boolean (independent enum struct — NOT #String) [##Scalar, ###Enum]
@@ -47,7 +47,7 @@ RawString (compiler intrinsic)
 
 ## Related
 
-- [[types|user/syntax/types]] — full type system specification (annotations, schemas, generics, `##`/`###` prefixes)
+- [[syntax/types/INDEX|types]] — full type system specification (annotations, schemas, generics, `##`/`###` prefixes)
 - [[data-is-trees|user/concepts/data-is-trees]] — how types relate to the unified tree
-- [[collections|user/concepts/collections]] — expand/collect operations on collections
-- [[EDGE-CASES#24. Datatype Definitions|technical/EDGE-CASES]] — edge cases for type definitions
+- [[concepts/collections/INDEX|collections]] — expand/collect operations on collections
+- [[technical/edge-cases/24-datatype-defs|Edge Cases: Datatype Definitions]] — edge cases for type definitions

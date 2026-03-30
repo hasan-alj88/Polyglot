@@ -257,7 +257,7 @@ Conditionals can switch on live metadata fields like pipeline `%status`:
       [r] $msg#string << "unknown state"
 ```
 
-See [[types#Live Type Modifier]] and [[pipelines#Querying Pipeline Status]] for metadata access patterns.
+See [[syntax/types/hierarchy#Live Type Modifier]] and [[concepts/pipelines/chains#Querying Pipeline Status]] for metadata access patterns.
 
 ## Wildcard Rules
 

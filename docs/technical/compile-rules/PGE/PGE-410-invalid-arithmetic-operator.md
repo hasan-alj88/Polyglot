@@ -50,3 +50,12 @@ severity: error
 ```
 
 **Open point:** None.
+
+### See Also
+
+- [[syntax/types/basic-types|Basic Types]] — regex validation catches invalid literals at compile time
+- [[syntax/operators|Operators]] — arithmetic through `=Math.*` stdlib pipelines
+- [[technical/edge-cases/24-datatype-defs|EC-24.2: #Int leading zeros and negative zero]] — references PGE-410
+- [[technical/edge-cases/24-datatype-defs|EC-24.4: #Eng exponent]] — references PGE-410
+- [[technical/edge-cases/24-datatype-defs|EC-24.5: #KeyString excluded chars]] — references PGE-410
+- [[technical/edge-cases/24-datatype-defs|EC-24.6: #NestedKeyString allows dot/colon]] — references PGE-410

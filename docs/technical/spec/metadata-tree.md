@@ -102,13 +102,13 @@ String subtypes live under `%#:String:*` at a flexible level:
 
 ```
 %#:String
-├── :int          ← .string#RawString + .re = "^-?[0-9]+$"
-├── :uint         ← .string#RawString + .re = "^[0-9]+$"
-├── :float        ← .string#RawString + .re = "^-?[0-9]+\.[0-9]+$"
-├── :sci          ← .string#RawString + .re = scientific notation
-├── :eng          ← .string#RawString + .re = engineering notation
-├── :dim          ← .string#RawString + .re = "^[1-9][0-9]*$"
-├── :emailAddress ← user-defined: .re = custom pattern
+├── :int          ← .string#RawString + .regex = "^-?[0-9]+$"
+├── :uint         ← .string#RawString + .regex = "^[0-9]+$"
+├── :float        ← .string#RawString + .regex = "^-?[0-9]+\.[0-9]+$"
+├── :sci          ← .string#RawString + .regex = scientific notation
+├── :eng          ← .string#RawString + .regex = engineering notation
+├── :dim          ← .string#RawString + .regex = "^[1-9][0-9]*$"
+├── :emailAddress ← user-defined: .regex = custom pattern
 └── :(any)        ← extensible — users define new subtypes
 ```
 
@@ -124,7 +124,7 @@ User code `#int` is an alias for `#Int`. The `%##Alias` schema property enables 
 | `#string` | `#String` | `%#:String` |
 | `#emailAddress` | `#String.emailAddress` | `%#:String:emailAddress` |
 
-All subtypes share the `#String` schema (`.string#RawString` + `.re#RawString`) with `.re` pre-filled per subtype.
+All subtypes share the `#String` schema (`.string#RawString` + `.regex#RawString`) with `.regex` pre-filled per subtype.
 
 ## Enum Instance Rules
 
@@ -331,10 +331,10 @@ Any field typed `#string` expands to the full `#String` struct in the tree:
 .description#string
   → .description
       .string#RawString     ← the raw value
-      .re#RawString          ← the regex constraint (default: ".*" = accept any)
+      .regex#RawString       ← the regex constraint (default: ".*" = accept any)
 ```
 
-This expansion applies recursively — `#array:string` expands each element's `.string` and `.re` subfields.
+This expansion applies recursively — `#array:string` expands each element's `.string` and `.regex` subfields.
 
 ## Related
 

@@ -64,3 +64,7 @@ severity: error
    [?] *?
       [r] =NoOp
 ```
+
+### See Also
+
+- [[user/concepts/errors|Errors]] — references PGE-701 in error scoping rules

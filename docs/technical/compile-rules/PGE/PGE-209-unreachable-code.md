@@ -100,3 +100,7 @@ severity: error
 **Diagnostic:** "Unreachable code at line N — all output ports reached Final; pipeline has terminated. Move post-finalization work to `[/]` cleanup"
 
 **Open point:** None.
+
+### See Also
+
+- [[concepts/variable-lifecycle|Variable Lifecycle]] — references PGE-209 for code after variable release

@@ -81,4 +81,8 @@ severity: error
 
 **Diagnostic:** "Invalid assignment target at line N — left-hand side must be a variable (`$`), output port (`>`), or field path, not a value expression"
 
+### See Also
+
+- [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE-807 in call site rules
+
 **Open point:** None.

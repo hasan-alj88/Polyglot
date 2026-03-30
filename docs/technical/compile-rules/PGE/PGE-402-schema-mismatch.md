@@ -68,3 +68,7 @@ severity: error
    [r] $conn.port << 8080
    [ ] .host and .protocol missing — ✗ PGE-402
 ```
+
+### See Also
+
+- [[syntax/types/conversions|Type Conversions]] — provable schema mismatch in serial-to-struct conversion
