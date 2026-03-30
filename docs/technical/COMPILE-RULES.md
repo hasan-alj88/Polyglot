@@ -81,6 +81,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE03008 | Collect Operator IO Mismatch |
 | PGE03009 | Nested Expand Without Collect |
 | PGE03010 | Collector Without Expand |
+| PGE03011 | Orphaned Expand IO Marker |
 
 ### 04 — Types & Values
 
