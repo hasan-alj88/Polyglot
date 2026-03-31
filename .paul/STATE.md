@@ -41,21 +41,18 @@ Progress:
 - Issues #99-#106: [██████████] 100% (batch — 8 EBNF edge cases)
 - Issue #107: [██████████] 100% (1/1 plans)
 - Issue #108: [██████████] 100% (1/1 plans)
+- Issue #109: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-Issue: #109 — Change [t] to [T] uppercase trigger element across all docs
-Branch: design/issue-109-uppercase-trigger-element
-Labels: design, docs
-Started: 2026-03-31
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/109
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [ready for merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -135,6 +132,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #99-#106 — EBNF edge cases batch | 2026-03-30 | Merged design/issue-99-106-ebnf-edge-cases to main |
 | Closed #107 — Document object type hierarchy | 2026-03-31 | Merged design/issue-107-object-type-hierarchy to main |
 | Closed #108 — Marker declaration syntax {=}[exe] | 2026-03-31 | Merged design/issue-108-marker-declaration-syntax to main; no warning for implicit default |
+| Closed #109 — [t] → [T] uppercase trigger element | 2026-03-31 | Merged design/issue-109; 339 replacements across 93 files; archive untouched |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
