@@ -96,14 +96,11 @@ continuation_line   ::= "[+]" expression ;
 ### 11.6 Foreign Code Injection
 
 ```ebnf
-foreign_code_block  ::= foreign_code_header foreign_code_line { foreign_code_line } ;
+foreign_code_block  ::= foreign_code_line { foreign_code_line } ;
                       (* At least one code line required — PGE01027 *)
-foreign_code_header ::= "[c]" "#Code:" language_name ":" version ;
-foreign_code_line   ::= "[c]" any_text ;
-language_name       ::= name ;
-version             ::= digit { ( digit | ":" ) } ;
+foreign_code_line   ::= "[C]" any_text ;
 ```
 
-**Rule:** The first `[c]` line declares the language via `#Code:<Language>:<Version>`. All body lines also get `[c]` prefix. Body content is raw text — not parsed as Polyglot. The block ends when a line without `[c]` appears.
+**Rule:** `[C]` lines embed foreign code passed to `=RT.*` runtime pipelines. Each `[C]` line is one line of foreign code — raw text, not parsed as Polyglot. The language is determined by which `=RT.*` pipeline is called (e.g., `=RT.Python.Script`, `=RT.JS.Script`). The block ends when a line without `[C]` appears.
 
 ---

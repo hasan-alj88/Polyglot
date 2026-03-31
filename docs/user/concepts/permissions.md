@@ -144,7 +144,7 @@ No runtime permission checks exist. If it compiles, the permissions are satisfie
 ## Foreign Code
 
 <!-- @blocks#Foreign Code -->
-Pipelines using `[c]` foreign code blocks ([[blocks#Foreign Code]]) interact with permissions as follows:
+Pipelines using `[C]` foreign code blocks ([[blocks#Foreign Code]]) interact with permissions as follows:
 
 - The pipeline must declare `[_]` permissions for the IO the foreign code will perform
 - The **compiler issues a warning** (not an error) that foreign code cannot be statically verified against declared permissions
@@ -152,14 +152,17 @@ Pipelines using `[c]` foreign code blocks ([[blocks#Foreign Code]]) interact wit
 - The **foreign runtime** (Python, Node, etc.) handles its own enforcement mechanisms if any
 
 ```polyglot
-{=} AnalyzeData
+{=} =AnalyzeData
    [_] _File.read"/data/*.csv"
-   [ ] compiler warning: [c] block cannot be statically verified
+   [ ] compiler warning: [C] block cannot be statically verified
    [T] =T.Manual
    [Q] =Q.Default
-   [W] =W.Python
-   [c] #Code:Python:3:14
-   [c] import pandas as pd
-   [c] df = pd.read_csv("/data/report.csv")
-   [c] result = df.describe()
+   [W] =W.Polyglot
+   [r] =RT.Python.Script
+      [=] <env << $env
+      [=] <script <<
+         [C] import pandas as pd
+         [C] df = pd.read_csv("/data/report.csv")
+         [C] result = df.describe()
+      [=] >stdout >> $output
 ```

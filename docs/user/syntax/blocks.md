@@ -175,15 +175,21 @@ The originating line keeps its normal block marker. Only continuation lines get 
 
 | Marker | Meaning |
 |--------|---------|
-| `[c]` | Foreign code injection — embed another language via `#Code:<Language>:<Version>` |
+| `[C]` | Inline foreign code — embed another language's code lines within an `=RT.*` pipeline call |
 
-The first `[c]` line declares the language. All body lines also get `[c]` prefix. Body content is raw text — not parsed as Polyglot. The block ends when a line without `[c]` appears.
+<!-- @concepts/pipelines/INDEX -->
+`[C]` is a block element (not a block type) for embedding foreign code lines passed to `=RT.*` runtime pipelines. Each `[C]` line is one line of foreign code — raw text, not parsed as Polyglot. The language is determined by which `=RT.*` pipeline is called (e.g., `=RT.Python.Script`, `=RT.JS.Script`). The block ends when a line without `[C]` appears.
+
+`[C]` lines are passed as the `<script` input to the `=RT.*` pipeline call:
 
 ```polyglot
-[c] #Code:Python:3:14
-[c] import pandas as pd
-[c] df = pd.read_csv("data.csv")
-[c] result = df.describe()
+[r] =RT.Python.Script
+   [=] <env << $env
+   [=] <script <<
+      [C] import pandas as pd
+      [C] df = pd.read_csv("data.csv")
+      [C] result = df.describe()
+   [=] >stdout >> $output
 ```
 
 ### Comments

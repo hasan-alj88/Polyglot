@@ -248,9 +248,12 @@ updated: 2026-03-30
 ### EC-10.16: Empty foreign code block
 
 **EBNF ref:** `foreign_code_block` — requires at least one `foreign_code_line`
-**What it tests:** `[c]` header with no body lines. PGE01027 fires.
+**What it tests:** `[C]` block with no code lines. PGE01027 fires.
 
 ```polyglot
 [ ] ✗ PGE01027 — empty foreign code block
-[c] #Code:Python:3
+[r] =RT.Python.Script
+   [=] <env << $env
+   [=] <script <<
+   [=] >stdout >> $output
 ```
