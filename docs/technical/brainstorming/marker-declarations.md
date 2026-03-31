@@ -3,6 +3,22 @@
 **Status:** Draft for review
 **Date:** 2026-03-31
 
+### Issue Tracking
+
+| Section | Issue |
+|---|---|
+| §0 Object Type Hierarchy | #107 |
+| §0 Marker Groups / `[exe]` | #108 |
+| Cross-cutting: `[t]`→`[T]` | #109 |
+| §1-§2 Base Pipelines / #BaseCode | #110 |
+| §4 Compiler Rules A-G | #111 |
+| §5 `[C]` Inline Code | #112 |
+| `{Q}` Dual-Purpose | #113 |
+| Metadata Tree `%T` | #114 |
+| §5 `=RT.*` Pipelines | #78 (existing) |
+| §5 `=W.RT` Wrapper | #76 (existing) |
+| §5 `!RT` Errors | #77 (existing) |
+
 ---
 
 ## 0. Object Type Hierarchy
