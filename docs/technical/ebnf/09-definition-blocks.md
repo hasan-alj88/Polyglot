@@ -378,6 +378,7 @@ comment_block       ::= "{ }" comment_text NEWLINE ;
 metadata_line       ::= "[%]" metadata_expr ;
 
 metadata_expr       ::= metadata_fixed
+                      | metadata_basecode
                       | metadata_info
                       | metadata_alias
                       | metadata_live ;
@@ -388,6 +389,10 @@ metadata_fixed      ::= fixed_sep "description" [ type_annotation ] assignment_o
                       | fixed_sep "version" [ type_annotation ] assignment_op string_literal
                       | fixed_sep "license" [ type_annotation ] assignment_op string_literal
                       | fixed_sep "deprecated" assignment_op data_id ;
+
+(* Base code field — links to native implementation *)
+metadata_basecode   ::= fixed_sep "baseCode" assignment_op
+                         "#BaseCode" "." IDENT { "." IDENT } ;
 
 (* Info field — serial type, opens flexible scope *)
 metadata_info       ::= fixed_sep "info" type_annotation NEWLINE
@@ -411,6 +416,7 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 - Aliases participate in exhaustiveness checking when the variable carries the parent type annotation.
 - `live` fields are implicit on all `{=}`, `$`, and `{#}` definitions. The runtime populates them. Users read via `%` accessor (e.g., `=Pipeline%status`, `$var%state`) but never assign.
 - Prefer reactive alternatives (error blocks, IO triggers) over polling `live` fields when possible.
+- `.baseCode` is a reserved `[%]` field linking a pipeline definition to its native implementation. Presence of `.baseCode` makes the definition a **base pipeline**: no execution body allowed (`[T]`/`[Q]`/`[W]`/`[r]`/`[p]`/`[b]`/`[s]` forbidden). Only `[=]` IO, `[!]` error declarations, and `[%]` metadata are permitted alongside `.baseCode`. For `{W}` base wrappers, `[{]`/`[}]`/`[\]`/`[/]` are also forbidden. The `#BaseCode` variant must exist and use the configured base language (PGE01028).
 
 ## Related User Documentation
 
