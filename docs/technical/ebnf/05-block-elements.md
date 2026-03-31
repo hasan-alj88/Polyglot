@@ -48,7 +48,7 @@ logical_elem        ::= "[&]" | "[|]" | "[-]" | "[^]" ;
 continuation_elem   ::= "[+]" ;
 
 (* Foreign Code *)
-foreign_code_elem   ::= "[c]" ;
+foreign_code_elem   ::= "[C]" ;
 
 (* Metadata *)
 metadata_elem       ::= "[%]" ;

@@ -46,14 +46,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #112 — Reconcile [C] inline code element with [c] foreign code
+Branch: design/issue-112-reconcile-c-inline-code
+Labels: docs, design
+Started: 2026-03-31
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/112
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [UNIFY complete, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -135,6 +139,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #108 — Marker declaration syntax {=}[exe] | 2026-03-31 | Merged design/issue-108-marker-declaration-syntax to main; no warning for implicit default |
 | Closed #109 — [t] → [T] uppercase trigger element | 2026-03-31 | Merged design/issue-109; 339 replacements across 93 files; archive untouched |
 | Closed #110 — Document base pipelines and #BaseCode enum | 2026-03-31 | Merged design/issue-110; BaseCode.md, EBNF .baseCode, metadata.md, INDEX.md Base vs Derived, PGE01028 |
+| Unified [c] → [C] uppercase foreign code element | 2026-03-31 | #112: [C] is block element for inline foreign code passed to =RT.*; #Code header removed; language from =RT.* pipeline |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
