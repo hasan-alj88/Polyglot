@@ -30,6 +30,9 @@ The `[%]` block element lives inside any `{x}` definition. One definition = one 
 | `.license` | `#string` | License identifier |
 | `.deprecated` | `#bool` | Deprecation flag |
 | `.deprecatedMessage` | `#string` | Reason for deprecation and suggested replacement |
+| `.baseCode` | `#BaseCode.*` | Links to native implementation. Present only on stdlib base pipelines — see [[concepts/pipelines/INDEX#Base vs Derived\|Base vs Derived]] |
+
+Pipelines with `.baseCode` are **base pipelines** — they have no execution body. The compiler resolves `.baseCode` to the native implementation. Pipelines without `.baseCode` are **derived pipelines** with full Polyglot execution bodies. See [[stdlib/types/BaseCode\|#BaseCode enum]] for the variant tree.
 
 ### Flexible Fields
 

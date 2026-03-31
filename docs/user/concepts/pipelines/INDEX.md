@@ -76,6 +76,57 @@ A marker declaration on `{=}` specifies the pipeline's invocation context — wh
 
 See [[technical/ebnf/09-definition-blocks#9.3|EBNF §9.3]] for the formal `marker_decl` grammar.
 
+## Base vs Derived
+
+<!-- @stdlib/types/BaseCode -->
+Every pipeline definition is either **base** or **derived**. The distinction determines whether execution is handled by native code or by a Polyglot body.
+
+| Property | Base | Derived |
+|----------|------|---------|
+| Execution body | None — bodyless | Full Polyglot body (`[T]`, `[Q]`, `[W]`, `[r]`/`[p]`/`[b]`) |
+| `.baseCode` metadata | Required — `[%] .baseCode << #BaseCode.*` | Forbidden |
+| Where defined | Stdlib `.pg` files | Stdlib or user `.pg` files |
+| Implementation | Native compiler code (Rust) | Polyglot pipelines |
+
+**Mutual exclusion:** `.baseCode` and an execution body cannot coexist. Violating this is a compile error (PGE01028).
+
+**Exception:** `{T}` triggers and `{Q}` queue pipelines are IO-only by design — they may be bodyless without `.baseCode` (they declare IO ports and metadata only).
+
+### Configuration
+
+The Polyglot config file selects the active base language:
+
+```
+base: Rust
+```
+
+All `.baseCode` references must use the configured language. Future base languages expand the `#BaseCode` enum without changing pipeline definitions.
+
+### Examples
+
+```polyglot
+{ } Base pipeline — bodyless, native implementation
+{=}[exe] =File.Text.Read
+   [%] .baseCode << #BaseCode.Rust.File.Text.Read
+   [=] <path#path
+   [=] >content#string
+   [=] !File.NotFound
+   [=] !File.PermissionDenied
+
+{ } Derived pipeline — full Polyglot body, no .baseCode
+{=} =ProcessData
+   [T] =T.Call
+   [=] <input#string
+   [=] >result#string
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [r] =File.Text.Read
+      [=] <path << $input
+      [=] >content >> $result
+```
+
+See [[stdlib/types/BaseCode|#BaseCode enum]] for the full variant tree and [[technical/ebnf/09-definition-blocks#9.9|EBNF §9.9]] for the formal `.baseCode` grammar.
+
 ## Sub-Pages
 
 | File | Covers |
