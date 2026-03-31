@@ -43,14 +43,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #108 — Document marker declaration syntax: {=}[exe] and subsets
+Branch: design/issue-108-marker-declaration-syntax
+Labels: design, docs
+Started: 2026-03-31
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/108
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [ready for merge]
 ```
 
 ## Accumulated Context

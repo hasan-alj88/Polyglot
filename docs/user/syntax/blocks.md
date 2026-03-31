@@ -19,7 +19,7 @@ Define top-level structures. Open a scope that continues with indentation.
 |--------|---------|
 | `{@}` | Package declaration (mandatory, first in file). See [[packages]] |
 | `{#}` | Struct definition. See [[syntax/types/structs#Enum Fields vs Value Fields]] |
-| `{=}` | Pipeline definition. See [[concepts/pipelines/INDEX|pipelines]] |
+| `{=}` | Pipeline definition. Supports marker declarations (`{=}[exe]`, subsets). See [[concepts/pipelines/INDEX\|pipelines]] |
 | `{T}` | Trigger pipeline definition (subtype of `{=}`). See [[concepts/pipelines/io-triggers#Trigger Definitions]] |
 | `{M}` | Type macro definition (subtype of `{#}`). See [[macros]] |
 | `{W}` | Wrapper definition (subtype of `{=}`). See [[wrappers]] |
@@ -27,6 +27,8 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
 | `{Array}` | Array collection definition. See [[concepts/collections/INDEX|collections]] |
 | `{ }` | Comment. See [[comments]] |
+
+**Marker declarations on `{=}`:** The `[exe]` marker declares the pipeline as an execution pipeline, invocable via `[r]`, `[p]`, or `[b]`. `{=}` without a marker defaults to `{=}[exe]` — no warning. Subsets like `{=}[b]` (background-only) or `{=}[rp]` (sequential/parallel only) restrict how the pipeline can be invoked. Subtypes (`{T}`, `{W}`, `{Q}`) have fixed implicit markers and cannot take `marker_decl`. See [[concepts/pipelines/INDEX#Marker Declarations|Marker Declarations]] for full details.
 
 ## `[X]` — Block Elements
 

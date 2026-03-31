@@ -71,8 +71,11 @@ field_expansion    ::= "[.]" fixed_sep "*" type_param_ref type_annotation ;
 ### 9.3 Pipeline Definition
 
 ```ebnf
-pipeline_def        ::= "{=}" pipeline_id NEWLINE
+pipeline_def        ::= "{=}" marker_decl? pipeline_id NEWLINE
                          pipeline_body ;
+
+marker_decl         ::= "[exe]" | "[b]" | "[r]" | "[p]"
+                       | "[rp]" | "[rb]" | "[pb]" ;
 
 pipeline_body       ::= { ( metadata_line | comment_line ) NEWLINE }
                          trigger_io_section
@@ -85,6 +88,24 @@ pipeline_body       ::= { ( metadata_line | comment_line ) NEWLINE }
 trigger_io_section  ::= { indent ( trigger_line | io_decl_line | error_decl_line | comment_line ) NEWLINE } ;
 
 error_decl_line     ::= "[=]" error_id ;
+```
+
+**Marker declarations:**
+- `{=}` without `marker_decl` defaults to `{=}[exe]` — no warning, no error.
+- `[exe]` = execution pipeline, invocable via `[r]` (sequential), `[p]` (parallel), or `[b]` (background).
+- Subsets restrict invocation: `{=}[b]` means background-only (no outputs allowed — fire-and-forget), `{=}[rp]` means sequential or parallel only (no background).
+- `{T}`, `{W}`, and `{Q}` already have implicit markers (`[T]`, `[W]`, `[Q]`) — they cannot take `marker_decl`.
+
+**Example** — background-only pipeline:
+
+```polyglot
+{=}[b] =LogEvent
+   [t] =T.Call
+   [=] <message#string
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [r] =File.Text.Append"{$logPath}"
+      [=] <text << $message
 ```
 
 ### 9.3.1 Trigger Section
