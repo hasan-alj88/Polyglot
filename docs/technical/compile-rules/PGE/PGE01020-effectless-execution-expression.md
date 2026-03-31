@@ -18,7 +18,7 @@ severity: error
 ```polyglot
 [ ] ✓ pipeline call under [r]
 {=} =Process
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -32,7 +32,7 @@ severity: error
 ```polyglot
 [ ] ✓ assignment under [r]
 {=} =Assign
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -43,7 +43,7 @@ severity: error
 ```polyglot
 [ ] ✓ parallel pipeline calls
 {=} =ParallelWork
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -58,7 +58,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01020 — bare literal under [r]
 {=} =BadLiteral
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] 42                                 [ ] ✗ PGE01020 — bare literal, no effect
@@ -67,7 +67,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01020 — bare string literal under [r]
 {=} =BadString
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] "orphaned string"                  [ ] ✗ PGE01020 — bare literal, no effect
@@ -76,7 +76,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01020 — non-pipeline identifiers under execution markers
 {=} =BadIdentifiers
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string

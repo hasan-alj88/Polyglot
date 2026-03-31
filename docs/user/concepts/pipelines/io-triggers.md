@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 `{T}` defines a trigger pipeline — a specialized subtype of `{=}` that contains only IO declarations. Triggers define event sources: they detect conditions and signal when a pipeline should fire. `{T}` is syntactic sugar for `{=}[T]`.
 
-Every trigger must output `>IsTriggered#bool`. Triggers can produce additional outputs that wire to the consuming pipeline's inputs via indented `[=]` IO lines under `[t]`.
+Every trigger must output `>IsTriggered#bool`. Triggers can produce additional outputs that wire to the consuming pipeline's inputs via indented `[=]` IO lines under `[T]`.
 
 **Base trigger** — simplest form (stdlib):
 
@@ -45,7 +45,7 @@ There is no need to validate inputs with `[?]` checks — unfilled required inpu
 
 ## Triggers
 
-Every pipeline must have at least one `[t]` trigger — omitting it is a compile error (PGE01005).
+Every pipeline must have at least one `[T]` trigger — omitting it is a compile error (PGE01005).
 
 - `=T.Call` — invoked when called from another pipeline
 - Standard library triggers live under `=T.*` namespace — no `[@]` import needed (see [[packages#Usage]])
@@ -56,7 +56,7 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
 
 ```polyglot
 [=] <NewFiles#array:path
-[t] =T.Folder.NewFiles"/inbox/"
+[T] =T.Folder.NewFiles"/inbox/"
    [=] >NewFiles >> <NewFiles
 ```
 

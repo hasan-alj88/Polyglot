@@ -135,7 +135,7 @@ updated: 2026-03-30
    [=] <InlineStringLiteral#string <~ ""
    [=] >key#string
    [=] >value#string
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [ ] ... parsing logic ...
@@ -164,7 +164,7 @@ updated: 2026-03-30
 {=} =Greeting
    [=] <InlineStringLiteral#string <~ ""
    [=] >message#string
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [?] $InlineStringLiteral =!? ""
@@ -188,7 +188,7 @@ updated: 2026-03-30
 {=} =NormalPipeline
    [=] <input#string
    [=] >output#string
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] >output << $input

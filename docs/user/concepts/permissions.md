@@ -19,7 +19,7 @@ A pipeline with no `[_]` declarations is **pure computation** — it can transfo
 
 ```polyglot
 {=} PureComputation
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [ ] no [_] lines — this pipeline cannot do IO
@@ -109,14 +109,14 @@ Each `{=}` pipeline or `{M}` macro must explicitly request the permissions it ne
 {=} ProcessLogs
    [_] _File.read"/var/log/app/*"
    [ ] narrower than ceiling — granted
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    ...
 
 {=} ComputeStats
    [ ] no [_] lines — pure computation, zero IO
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    ...
@@ -155,7 +155,7 @@ Pipelines using `[c]` foreign code blocks ([[blocks#Foreign Code]]) interact wit
 {=} AnalyzeData
    [_] _File.read"/data/*.csv"
    [ ] compiler warning: [c] block cannot be statically verified
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Python
    [c] #Code:Python:3:14

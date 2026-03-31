@@ -14,7 +14,7 @@ updated: 2026-03-31
 <!-- @pipelines:Wrappers -->
 **EBNF:** `wrapper_def ::= "{W}" pipeline_id NEWLINE { indent wrapper_body_line NEWLINE }` (§9.4b)
 
-**What it tests:** Complete `{W}` structure with all four scope markers. No `[t]`, `[Q]`, or `[=]` IO. See [[blocks#Scope]], [[concepts/pipelines/wrappers#Wrappers]].
+**What it tests:** Complete `{W}` structure with all four scope markers. No `[T]`, `[Q]`, or `[=]` IO. See [[blocks#Scope]], [[concepts/pipelines/wrappers#Wrappers]].
 
 ```polyglot
 {W} =W.DB.Transaction
@@ -44,7 +44,7 @@ updated: 2026-03-31
 ```polyglot
 {=} =Invoice.Save
    [=] <invoice#Invoice
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.DB.Transaction
       [=] $connectionString << $dbConnStr

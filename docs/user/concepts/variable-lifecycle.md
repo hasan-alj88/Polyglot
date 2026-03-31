@@ -114,7 +114,7 @@ All assignment operators are directional — the arrow indicates data flow direc
 ...
 {=} =Example1
 [ ] Daily trigger at 3AM
-[t] =DT.Daily"3AM"
+[T] =DT.Daily"3AM"
 [ ] Pipeline IO
 [=] <file#path <~ "\tmp\example1.txt"
 [=] >output#string ~> ""

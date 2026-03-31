@@ -20,7 +20,7 @@ severity: warning
 {=} =CustomPipeline
    [%] .description << "Does something"
    [ ] no .inlineFormat metadata
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -28,7 +28,7 @@ severity: warning
    [r] >out << $input
 
 {=} =Caller
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string

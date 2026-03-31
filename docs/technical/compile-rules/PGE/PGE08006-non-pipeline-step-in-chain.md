@@ -18,7 +18,7 @@ severity: error
 ```polyglot
 [ ] ✓ inline call as value in IO wiring — not in a chain
 {=} =UsePath
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -35,7 +35,7 @@ severity: error
 ```polyglot
 [ ] ✓ regular pipeline refs in chain — no inline args
 {=} =Pipeline
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -49,7 +49,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08006 — inline call as first step in chain
 {=} =BadFirst
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -60,7 +60,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08006 — inline call as middle step
 {=} =BadMiddle
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -73,7 +73,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08006 — inline call as last step
 {=} =BadLast
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -86,7 +86,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08006 — inline call with interpolation in chain
 {=} =BadInterp
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <dir#string

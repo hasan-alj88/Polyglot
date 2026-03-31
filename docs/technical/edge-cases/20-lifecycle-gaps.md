@@ -65,7 +65,7 @@ updated: 2026-03-30
    [=] <key#string
    [=] >result#string ~> "not_found"
    [=] >found#bool ~> #Boolean.False
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
 

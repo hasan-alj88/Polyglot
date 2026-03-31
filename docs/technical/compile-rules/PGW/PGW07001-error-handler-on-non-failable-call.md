@@ -20,7 +20,7 @@ severity: warning
 ```polyglot
 [ ] ✓ =ValidateUser declares [=] !Validation.Empty — handler is valid
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -37,7 +37,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW07001 — =DoNothing declares no errors — handler is dead code
 {=} =ProcessBad
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -51,7 +51,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW07001 — =Format declares no errors — handler is dead code
 {=} =ProcessAlsoBad
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string

@@ -22,7 +22,7 @@ severity: warning
    [@] @data << "com.example.data"
 
 {=} =Process
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -40,7 +40,7 @@ severity: warning
 {@} @LeafPackage
 
 {=} =Simple
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -56,7 +56,7 @@ severity: warning
    [@] @data << "com.example.data"      [ ] ⚠ PGW09002 — @data never used
 
 {=} =Process
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -73,7 +73,7 @@ severity: warning
    [@] @also << "com.example.other"     [ ] ⚠ PGW09002 — @also never used
 
 {=} =NoExternalCalls
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string

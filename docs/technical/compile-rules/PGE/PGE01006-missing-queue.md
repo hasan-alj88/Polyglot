@@ -17,7 +17,7 @@ split_from: PGE01001
 ```polyglot
 [ ] ✓ pipeline has a queue
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =DoWork
@@ -27,12 +27,12 @@ split_from: PGE01001
 ```polyglot
 [ ] ✗ PGE01006 — [Q] missing
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [W] =W.Polyglot
    [r] =DoWork
 ```
 
-**Diagnostic:** "Pipeline `=Process` has no queue — add `[Q]` after `[t]`/`[=]` section"
+**Diagnostic:** "Pipeline `=Process` has no queue — add `[Q]` after `[T]`/`[=]` section"
 
 ### See Also
 

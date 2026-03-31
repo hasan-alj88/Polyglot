@@ -18,7 +18,7 @@ updated: 2026-03-30
 ```polyglot
 {=} =Inbox.Monitor
    [=] <NewFiles#array:path
-   [t] =T.Folder.NewFiles"/inbox/"
+   [T] =T.Folder.NewFiles"/inbox/"
       [=] >NewFiles >> <NewFiles
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -27,13 +27,13 @@ updated: 2026-03-30
 
 ### EC-16.2: Multiple trigger outputs wired to multiple inputs
 
-**What it tests:** A trigger with two outputs, each wired to a declared input. Order of `[=]` declarations before `[t]` matters.
+**What it tests:** A trigger with two outputs, each wired to a declared input. Order of `[=]` declarations before `[T]` matters.
 
 ```polyglot
 {=} =Webhook.Receiver
    [=] <payload#serial
    [=] <headers#serial
-   [t] =T.Webhook"/api/v2/events"
+   [T] =T.Webhook"/api/v2/events"
       [=] >payload >> <payload
       [=] >headers >> <headers
    [Q] =Q.Default
@@ -49,7 +49,7 @@ updated: 2026-03-30
 {=} =File.Processor
    [=] <file#path
    [=] <options#serial <~ {}
-   [t] =T.Folder.NewFiles"/watch/"
+   [T] =T.Folder.NewFiles"/watch/"
       [=] >NewFiles >> <file
    [Q] =Q.Default
    [W] =W.Polyglot

@@ -24,7 +24,7 @@ severity: error
    [=] >validated#string
    [=] !Validation.Empty
    [=] !Validation.TooLong
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [?] $name =? ""
@@ -44,7 +44,7 @@ severity: error
    [=] <name#string
    [=] >validated#string
    [=] !Validation.Empty
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [?] $name =? ""

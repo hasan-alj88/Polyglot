@@ -18,7 +18,7 @@ severity: warning
 ```polyglot
 [ ] ✓ code after non-terminal conditional — reachable
 {=} =Process
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -40,7 +40,7 @@ severity: warning
 ```polyglot
 [ ] ✓ multiple outputs — only one is Final, code still reachable
 {=} =MultiOut
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -57,7 +57,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW02005 — statement after output is Final
 {=} =DeadAfterFinal
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -70,7 +70,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW02005 — code after every branch terminates
 {=} =DeadAfterExhaustive
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -87,7 +87,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW02005 — all outputs Final across multiple pushes
 {=} =MultiOutDead
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -106,7 +106,7 @@ severity: warning
 ```polyglot
 [ ] ✓ post-finalization work in [/] cleanup
 {=} =CorrectCleanup
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string

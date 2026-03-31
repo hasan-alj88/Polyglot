@@ -22,7 +22,7 @@ severity: error
    [@] @auth  << @Local:999.AuthLib:v1.0.0
 
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=Validate
@@ -39,7 +39,7 @@ severity: error
    [@] @utils << @Local:999.HelperLib:v2.0.0   [ ] ✗ PGE09011 — duplicate alias @utils
 
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=Validate                          [ ] ambiguous — which @utils?

@@ -26,7 +26,7 @@ severity: error
 
 {=} =ReadLogs
    [_] _File.read"/var/log/app/*"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $content << =File.Text.Read >> "/var/log/app/current.log"
@@ -37,7 +37,7 @@ severity: error
 [ ] ✗ PGE10003 — unknown category "Network"
 {=} =SendData
    [_] _Network.send"*"                       [ ] ✗ PGE10003 — _Network is not a known category
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $result << =Web.Request >> "https://api.example.com/data"
@@ -47,7 +47,7 @@ severity: error
 [ ] ✗ PGE10003 — unknown subfield "rename" under known category File
 {=} =RenameFile
    [_] _File.rename"/tmp/*"                   [ ] ✗ PGE10003 — _File.rename is not a known subfield
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $result << =File.Move >> "/tmp/old.txt"
@@ -57,7 +57,7 @@ severity: error
 [ ] ✗ PGE10003 — unknown subfield "delete" under known category Web
 {=} =CleanupEndpoint
    [_] _Web.delete"https://api.example.com/*" [ ] ✗ PGE10003 — _Web.delete is not a known subfield
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $result << =Web.Request >> "https://api.example.com/cleanup"

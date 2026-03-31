@@ -83,7 +83,7 @@ pipeline_body       ::= { ( metadata_line | comment_line ) NEWLINE }
                          wrapper_section
                          execution_section ;
 
-(* Trigger, IO, and error declarations form one section — order between [t], [=], and error decls is not strict.
+(* Trigger, IO, and error declarations form one section — order between [T], [=], and error decls is not strict.
    IO inputs are implicit triggers; some triggers produce inputs. Error declarations mark the pipeline as failable. *)
 trigger_io_section  ::= { indent ( trigger_line | io_decl_line | error_decl_line | comment_line ) NEWLINE } ;
 
@@ -100,7 +100,7 @@ error_decl_line     ::= "[=]" error_id ;
 
 ```polyglot
 {=}[b] =LogEvent
-   [t] =T.Call
+   [T] =T.Call
    [=] <message#string
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -111,17 +111,17 @@ error_decl_line     ::= "[=]" error_id ;
 ### 9.3.1 Trigger Section
 
 ```ebnf
-trigger_section     ::= indent "[t]" trigger_ref NEWLINE ;
+trigger_section     ::= indent "[T]" trigger_ref NEWLINE ;
 
 trigger_ref         ::= pipeline_ref [ string_literal ] ;
 ```
 
 **Rules:**
-- `trigger_ref` must reference an operation that declares `[t]` marker compatibility (PGE01024). Stdlib trigger pipelines (`=T.*`) are the canonical trigger operations.
-- Multiple `[t]` lines in one pipeline have **AND** semantics — all triggers must fire before the pipeline executes.
+- `trigger_ref` must reference an operation that declares `[T]` marker compatibility (PGE01024). Stdlib trigger pipelines (`=T.*`) are the canonical trigger operations.
+- Multiple `[T]` lines in one pipeline have **AND** semantics — all triggers must fire before the pipeline executes.
 - For **OR** semantics (any trigger fires the pipeline), use `[|]` to scope alternative triggers.
 
-**Examples:** `[t] =T.Call`, `[t] =T.Daily"3AM"`, `[t] =T.Folder.NewFiles`
+**Examples:** `[T] =T.Call`, `[T] =T.Daily"3AM"`, `[T] =T.Folder.NewFiles`
 
 ### 9.3.2 IO Section
 
@@ -213,7 +213,7 @@ exec_line           ::= run_line
 - Macro body contains `{#}` definitions that use `{$var}` interpolation from parameters.
 - **[M] merge rule (identity):** The outer `{#}` names the result; the macro's internal `{#}` resolves to the same name. The macro fills the body. Any `[#]` lines after `[M]` in the outer `{#}` extend/override the macro's output.
 - Macros overload by signature (parameter count + kind). Two overloads with identical signature = PGE01019.
-- Type macros do NOT contain `[\]`, `[/]`, `[{]`, `[}]`, `[t]`, `[=]` IO, or `[Q]` — those belong to wrappers or pipelines.
+- Type macros do NOT contain `[\]`, `[/]`, `[{]`, `[}]`, `[T]`, `[=]` IO, or `[Q]` — those belong to wrappers or pipelines.
 
 ### 9.4a Trigger Definition (`{T}`)
 
@@ -234,7 +234,7 @@ trigger_def_body    ::= { ( metadata_line | comment_line ) NEWLINE }
 - Trigger identifier must use the `=T.` prefix.
 - Must include `>IsTriggered#bool` output (mandatory). May include additional outputs.
 - No execution body, no `[Q]`, no `[W]` — triggers define event sources, not execution logic.
-- `[t]` invokes a trigger inside a pipeline (see §9.3.1).
+- `[T]` invokes a trigger inside a pipeline (see §9.3.1).
 
 **Example:**
 
@@ -272,8 +272,8 @@ to_outer            ::= "[}]" variable_id ;
 - `[}]` declares a wrapper output — a variable exposed back to the calling pipeline's scope.
 - `[\]` runs before the pipeline execution body (setup). Can call a single pipeline or open a scope with multiple exec lines.
 - `[/]` runs after the pipeline execution body (cleanup). Same structure as `[\]`.
-- Wrappers do NOT contain `{#}` definitions, `[t]`, `[=]` pipeline-level IO, or `[Q]` — those belong to pipelines. Type macros (`{M}`) are a separate construct for compile-time type generation.
-- Execution order: `[t],[=]` → `[Q]` → `[\]` → Execution Body → `[/]`.
+- Wrappers do NOT contain `{#}` definitions, `[T]`, `[=]` pipeline-level IO, or `[Q]` — those belong to pipelines. Type macros (`{M}`) are a separate construct for compile-time type generation.
+- Execution order: `[T],[=]` → `[Q]` → `[\]` → Execution Body → `[/]`.
 - The wrapper unpacks before and after the body like brackets.
 - **Rule (parallel fork):** `[p]` inside `[\]` with no subsequent `[*] *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `[*] *All` with `[*] << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
 - Variables produced in `[\]` (including by `[p]`) remain accessible in `[/]`.

@@ -37,7 +37,7 @@ severity: error
          [=] <handle << $txHandle
 
 {=} =ProcessData
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.DB.Transaction
       [=] $connStr << $connStr         [ ] ✓ matches [{] $connStr#string
@@ -62,7 +62,7 @@ severity: error
          [=] <handle << $txHandle
 
 {=} =ProcessData
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.DB.Transaction
       [=] $connStr << $connStr         [ ] ✓ provided
@@ -83,7 +83,7 @@ severity: error
       [r] =DoNothing
 
 {=} =UseSimple
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Simple
       [=] $input << $input
@@ -104,7 +104,7 @@ severity: error
       [r] =DoNothing
 
 {=} =UseSimple
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Simple
       [=] $input << $input

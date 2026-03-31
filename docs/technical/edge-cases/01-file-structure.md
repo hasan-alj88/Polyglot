@@ -24,11 +24,11 @@ updated: 2026-03-30
    [.] .Active
 
 {=} =First
-   [t] =T.Call
+   [T] =T.Call
    [W] =W.Polyglot
 
 {=} =Second
-   [t] =T.Call
+   [T] =T.Call
    [W] =W.Polyglot
 ```
 

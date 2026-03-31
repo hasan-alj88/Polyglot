@@ -21,7 +21,7 @@ severity: error
 | `[p]` | Yes | Parallel fork within `[\]` — runs concurrently with execution body |
 | `[b]` | Yes | Fire-and-forget within `[\]` — no collection possible |
 | `[*]` | Yes | Collectors within `[/]` — sync barrier for `[p]` forks started in `[\]` |
-| `[t]` | **No** | Triggers are pipeline-only |
+| `[T]` | **No** | Triggers are pipeline-only |
 | `[Q]` | **No** | Queues are pipeline-only |
 | `[=]` | **No** | Pipeline-level IO is pipeline-only |
 
@@ -121,13 +121,13 @@ severity: error
 
 **INVALID:**
 ```polyglot
-[ ] ✗ PGE01004 — [t] inside a wrapper
+[ ] ✗ PGE01004 — [T] inside a wrapper
 {W} =W.Bad
    [{] $input#string
    [}] $output#string
 
    [\]
-      [t] =T.Call    [ ] ✗ PGE01004 — triggers not allowed in wrappers
+      [T] =T.Call    [ ] ✗ PGE01004 — triggers not allowed in wrappers
 ```
 
 ```polyglot

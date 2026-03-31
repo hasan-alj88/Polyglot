@@ -33,7 +33,7 @@ data_flow_elem      ::= "[=]" | "[~]" | "[*]" | "[>]" | "[<]" ;
 execution_elem      ::= "[r]" | "[p]" | "[b]" | "[#]" ;
 
 (* Control Flow *)
-control_flow_elem   ::= "[?]" | "[!]" | "[t]" | "[Q]" | "[W]" ;
+control_flow_elem   ::= "[?]" | "[!]" | "[T]" | "[Q]" | "[W]" ;
 
 (* Scope *)
 scope_elem          ::= "[\]" | "[/]" | "[{]" | "[}]" ;

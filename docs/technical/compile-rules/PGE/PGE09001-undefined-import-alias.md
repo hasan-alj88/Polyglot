@@ -21,7 +21,7 @@ severity: error
    [@] @utils << @Local:999.Utilities:v1.0.0
 
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=Validate                [ ] ✓ @utils declared in [@]
@@ -35,7 +35,7 @@ severity: error
    [@] @utils << @Local:999.Utilities:v1.0.0
 
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @unknown=Validate              [ ] ✗ PGE09001 — @unknown not in any [@] declaration

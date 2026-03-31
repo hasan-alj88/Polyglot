@@ -22,7 +22,7 @@ severity: error
    [@] @fileUtils << @Local:999.FileHelpers:v1.0.0
 
 {=} =Main
-   [t] =T.Manual                                [ ] ✓ stdlib trigger — no conflict
+   [T] =T.Manual                                [ ] ✓ stdlib trigger — no conflict
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @triggers=OnSchedule                     [ ] ✓ unambiguous — @triggers is not a stdlib name
@@ -38,7 +38,7 @@ severity: error
    [@] @T << @Local:999.CustomTriggers:v1.0.0   [ ] ✗ PGE09012 — T is a reserved stdlib namespace
 
 {=} =Main
-   [t] =T.Manual                                [ ] ambiguous — stdlib =T or imported @T?
+   [T] =T.Manual                                [ ] ambiguous — stdlib =T or imported @T?
    [Q] =Q.Default
    [W] =W.Polyglot
 ```

@@ -17,7 +17,7 @@ split_from: PGE01001
 ```polyglot
 [ ] ✓ Form 1 — [W] provides setup/cleanup
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =DoWork
@@ -26,7 +26,7 @@ split_from: PGE01001
 ```polyglot
 [ ] ✓ Form 2 — explicit [\]/[/] inline
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [\]
       [r] =Setup.Init
@@ -39,7 +39,7 @@ split_from: PGE01001
 ```polyglot
 [ ] ✗ PGE01007 — no setup/cleanup (no [W] and no [\]/[/])
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [r] =DoWork
 ```

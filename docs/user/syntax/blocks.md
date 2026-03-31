@@ -84,7 +84,7 @@ See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure a
 | `[?]` | Conditional switch flow; match arm (under `[r]` `>>` match). See [[conditionals#Match Syntax]] |
 | `[!]` | Error handling — scoped under `[r]` call. See [[concepts/pipelines/error-handling#Error Handling]] |
 | `[!] >>` | Error raise — raises a declared error. See [[errors#Raising Errors]] |
-| `[t]` | Trigger. See [[concepts/pipelines/io-triggers#Triggers]] |
+| `[T]` | Trigger. See [[concepts/pipelines/io-triggers#Triggers]] |
 | `[Q]` | Queue. See [[concepts/pipelines/queue#Queue]] |
 | `[W]` | Wrapper. See [[concepts/pipelines/wrappers#Wrappers]] |
 

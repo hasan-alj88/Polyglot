@@ -19,7 +19,7 @@ severity: error
 {@} @Local:999.MyApp:v1.0.0
 
 {=} =Transform
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -28,7 +28,7 @@ severity: error
 
 [ ] ✓ =Transform is defined in the same package
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =Transform
@@ -39,7 +39,7 @@ severity: error
 ```polyglot
 [ ] ✓ stdlib pipelines are always available
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =File.Text.Read
@@ -53,7 +53,7 @@ severity: error
 
 [ ] ✗ PGE09003 — =Process not defined in this package and not stdlib
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =Process                            [ ] ✗ PGE09003 — no {=} =Process in package, not stdlib
@@ -65,7 +65,7 @@ severity: error
 
 [ ] ✗ PGE09003 — typo in pipeline name
 {=} =Transform
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -73,7 +73,7 @@ severity: error
    [r] >output << $input
 
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =Transfrom                          [ ] ✗ PGE09003 — typo: =Transfrom not found (did you mean =Transform?)
@@ -85,7 +85,7 @@ severity: error
 
 [ ] ✗ PGE09003 — cross-package pipeline without @alias
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =Validate                           [ ] ✗ PGE09003 — =Validate is in another package; use @alias=Validate with [@] import

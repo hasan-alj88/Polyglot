@@ -18,7 +18,7 @@ severity: error
 ```polyglot
 [ ] ✓ valid inclusive range — lo < hi
 {=} =Grade
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <score#int
@@ -35,7 +35,7 @@ severity: error
 ```polyglot
 [ ] ✓ single-point inclusive range — lo == hi is valid
 {=} =Exact
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <count#int
@@ -50,7 +50,7 @@ severity: error
 ```polyglot
 [ ] ✓ valid exclusive range — lo < hi with room between
 {=} =Between
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <temp#float
@@ -66,7 +66,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE04013 — inverted inclusive range
 {=} =BadInclusive
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <score#int
@@ -81,7 +81,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE04013 — empty exclusive range (lo == hi)
 {=} =BadExclusive
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <temp#float
@@ -96,7 +96,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE04013 — inverted mixed range
 {=} =BadMixed
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <value#int

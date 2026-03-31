@@ -18,7 +18,7 @@ updated: 2026-03-30
 | Registry | `[@]` | Package imports |
 | Data Flow | `[=]` `[~]` `[*]` | IO lines, expand IO, collect invocation |
 | Execution | `[r]` `[p]` `[b]` `[s]` | Run, parallel, background, serial load |
-| Control Flow | `[?]` `[!]` `[t]` `[Q]` `[W]` | Conditionals, errors, trigger, queue, wrapper |
+| Control Flow | `[?]` `[!]` `[T]` `[Q]` `[W]` | Conditionals, errors, trigger, queue, wrapper |
 | Data Access | `[.]` `[:]` | Data definitions |
 | Logical | `[&]` `[\|]` `[-]` `[^]` | Conditional compound logic |
 | Comment | `[ ]` | Inline comments |

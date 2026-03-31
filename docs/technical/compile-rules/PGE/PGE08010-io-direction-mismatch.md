@@ -25,7 +25,7 @@ severity: error
 ```polyglot
 [ ] ✓ pipeline body writes its own output port — allowed
 {=} =Compute
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <x#int

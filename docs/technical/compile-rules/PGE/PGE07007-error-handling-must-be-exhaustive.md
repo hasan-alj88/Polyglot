@@ -33,7 +33,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 ```polyglot
 [ ] ✓ all declared errors handled with specific [!] blocks
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -51,7 +51,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 ```polyglot
 [ ] ✓ [!] !* wildcard covers all errors — like [?] *? for conditionals
 {=} =ProcessWildcard
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -67,7 +67,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 ```polyglot
 [ ] ✓ generic [>] <! fallback addresses all errors
 {=} =ProcessFallback
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -82,7 +82,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 ```polyglot
 [ ] ✓ mixed — specific [!] + [!] !* wildcard for the rest
 {=} =ProcessMixed
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -101,7 +101,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 ```polyglot
 [ ] ✓ error-specific fallbacks cover each declared error
 {=} =ProcessSpecificFallbacks
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -118,7 +118,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 ```polyglot
 [ ] ✗ PGE07007 — no error handling on failable call
 {=} =ProcessNone
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -134,7 +134,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 ```polyglot
 [ ] ✗ PGE07007 — partial handling — !File.ReadError not addressed
 {=} =ProcessPartial
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -151,7 +151,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 ```polyglot
 [ ] ✗ PGE07007 — specific fallback covers one error but not the other
 {=} =ProcessPartialFallback
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string

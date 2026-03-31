@@ -83,7 +83,7 @@ updated: 2026-03-30
 ```polyglot
 [ ] ✗ PGE02003 — <inputName is Final, cannot reassign
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [=] <inputName#string
    [Q] =Q.Default
    [W] =W.Polyglot

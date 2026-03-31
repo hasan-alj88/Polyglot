@@ -29,7 +29,7 @@ If the source is non-failable, PGW07004 fires.
 ```polyglot
 [ ] ✓ =File.Text.Read declares errors — fallback on output is valid
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -44,7 +44,7 @@ If the source is non-failable, PGW07004 fires.
 ```polyglot
 [ ] ✓ error-specific fallback on failable call — valid
 {=} =ProcessSpecific
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -60,7 +60,7 @@ If the source is non-failable, PGW07004 fires.
 ```polyglot
 [ ] ✓ fallback on variable input from pipeline output — source may fail
 {=} =ProcessChain
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -79,7 +79,7 @@ If the source is non-failable, PGW07004 fires.
 ```polyglot
 [ ] ⚠ PGW07004 — =Format declares no errors — fallback on output is dead code
 {=} =ProcessBad
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -94,7 +94,7 @@ If the source is non-failable, PGW07004 fires.
 ```polyglot
 [ ] ⚠ PGW07004 — fallback on literal input source
 {=} =ProcessLiteral
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >result#string
@@ -108,7 +108,7 @@ If the source is non-failable, PGW07004 fires.
 ```polyglot
 [ ] ⚠ PGW07004 — fallback on Final constant input source
 {=} =ProcessConstant
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >greeting#string

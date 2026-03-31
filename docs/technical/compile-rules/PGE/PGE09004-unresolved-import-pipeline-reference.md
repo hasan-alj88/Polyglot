@@ -21,7 +21,7 @@ severity: error
 
 [ ] ✓ =Validate exists as {=} =Validate in @Local:999.Utilities:v1.0.0
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=Validate                    [ ] ✓ @utils resolves (PGE09001), =Validate found in package (PGE09004)
@@ -36,7 +36,7 @@ severity: error
 
 [ ] ✗ PGE09004 — =NonExistent not found in imported package
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=NonExistent                 [ ] ✗ PGE09004 — no {=} =NonExistent in @Local:999.Utilities:v1.0.0
@@ -49,7 +49,7 @@ severity: error
 
 [ ] ✗ PGE09004 — typo in pipeline name
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=Validte                     [ ] ✗ PGE09004 — typo: =Validte not found (did you mean =Validate?)
@@ -62,7 +62,7 @@ severity: error
 
 [ ] ✗ PGE09004 — pipeline was removed in newer version
 {=} =Main
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] @utils=OldPipeline                 [ ] ✗ PGE09004 — =OldPipeline no longer exists in @Local:999.Utilities:v1.0.0

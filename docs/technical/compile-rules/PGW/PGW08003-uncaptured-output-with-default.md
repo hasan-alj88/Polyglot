@@ -21,7 +21,7 @@ severity: warning
 ```polyglot
 [ ] ✓ output with default captured explicitly — no warning
 {=} =Lookup
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <key#string
@@ -33,7 +33,7 @@ severity: warning
    [r] >found << .True
 
 {=} =UseLookup
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -48,7 +48,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW08003 — >found not captured, has default .False
 {=} =UseLookupPartial
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -61,7 +61,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW08003 — >content not captured, has fallback "unavailable"
 {=} =ReadFile
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <path#string
@@ -75,7 +75,7 @@ severity: warning
    [r] >content << $content
 
 {=} =UseReadFile
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string

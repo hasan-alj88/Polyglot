@@ -18,7 +18,7 @@ severity: error
 ```polyglot
 [ ] ✓ linear call chain — no cycle
 {=} =Ingest
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >result#string
@@ -30,7 +30,7 @@ severity: error
       [=] >ok >> >result
 
 {=} =Transform
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -39,7 +39,7 @@ severity: error
    >> >clean
 
 {=} =Store
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <item#string
@@ -52,7 +52,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE09013 — self-call
 {=} =Recurse
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -65,7 +65,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE09013 — direct mutual recursion
 {=} =Ping
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <msg#string
@@ -75,7 +75,7 @@ severity: error
       [=] >out >> >out
 
 {=} =Pong
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <msg#string
@@ -88,7 +88,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE09013 — transitive cycle (A→B→C→A)
 {=} =StepA
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <in#string
@@ -98,7 +98,7 @@ severity: error
       [=] >out >> >out
 
 {=} =StepB
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <in#string
@@ -108,7 +108,7 @@ severity: error
       [=] >out >> >out
 
 {=} =StepC
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <in#string

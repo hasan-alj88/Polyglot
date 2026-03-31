@@ -49,7 +49,7 @@ A pipeline that can raise errors **must** declare them in its IO section using `
    [=] >status#string
    [=] !Validation.Empty
    [=] !Validation.TooLong
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    ...

@@ -23,7 +23,7 @@ severity: warning
    [=] >validated#string
    [=] >status#string
    [=] !Validation.Empty
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [?] $name =? ""
@@ -42,7 +42,7 @@ severity: warning
    [=] <name#string
    [=] >status#string
    [=] !Validation.Empty
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [?] $name =? ""
@@ -61,7 +61,7 @@ severity: warning
    [=] <name#string
    [=] >status#string
    [=] !Validation.Empty
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [?] $name =? ""

@@ -16,7 +16,7 @@ severity: error
 ```polyglot
 [ ] ✓ stdlib queue — always available
 {=} =SimpleJob
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =DoWork
@@ -28,7 +28,7 @@ severity: error
    [.] .strategy;#QueueStrategy << #FIFO
 
 {=} =BatchJob
-   [t] =T.Call
+   [T] =T.Call
    [Q] #Queue:WorkQueue
    [W] =W.Polyglot
    [r] =DoWork
@@ -38,7 +38,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01014 — #Queue:GPUQueue not defined or imported
 {=} =RenderJob
-   [t] =T.Call
+   [T] =T.Call
    [Q] #Queue:GPUQueue
    [W] =W.Polyglot
    [r] =DoWork

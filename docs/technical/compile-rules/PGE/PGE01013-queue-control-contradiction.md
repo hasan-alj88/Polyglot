@@ -20,7 +20,7 @@ severity: error
 
 [ ] ✓ pipeline adds controls not in {Q} — no contradiction
 {=} =BatchJob
-   [t] =T.Call
+   [T] =T.Call
    [Q] #Queue:BatchQueue
       [=] <maxConcurrent#int << 10
       [Q] =Q.Pause.Soft
@@ -36,7 +36,7 @@ severity: error
 
 [ ] ✗ PGE01013 — maxInstances contradicts queue default
 {=} =BatchJob
-   [t] =T.Call
+   [T] =T.Call
    [Q] #Queue:BatchQueue
       [=] <maxInstances#int << 5
    [W] =W.Polyglot
