@@ -39,21 +39,18 @@ Progress:
 - Issue #97: [██████████] 100% (1/1 plans)
 - Issue #98: [██████████] 100% (1/1 plans)
 - Issues #99-#106: [██████████] 100% (batch — 8 EBNF edge cases)
+- Issue #107: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-Issue: #107 — Document object type hierarchy: two base types {#} and {=}
-Branch: design/issue-107-object-type-hierarchy
-Labels: docs, design
-Started: 2026-03-31
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/107
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -131,6 +128,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Array element type mandatory | 2026-03-30 | PGE04025 — untyped #array is compile error |
 | Inputs are always Final | 2026-03-30 | Input parameters reach Final before pipeline triggers; write = PGE02003 |
 | Closed #99-#106 — EBNF edge cases batch | 2026-03-30 | Merged design/issue-99-106-ebnf-edge-cases to main |
+| Closed #107 — Document object type hierarchy | 2026-03-31 | Merged design/issue-107-object-type-hierarchy to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
