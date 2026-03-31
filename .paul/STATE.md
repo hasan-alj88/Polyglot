@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
 Phase: No active phase
-Plan: 110-01 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-03-31 — Issue #110 plan 01 complete
+Plan: —
+Status: Ready for next issue
+Last activity: 2026-03-31 — Merged issue #110 to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -42,21 +42,18 @@ Progress:
 - Issue #107: [██████████] 100% (1/1 plans)
 - Issue #108: [██████████] 100% (1/1 plans)
 - Issue #109: [██████████] 100% (1/1 plans)
+- Issue #110: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
-Issue: #110 — Document base pipelines and #BaseCode enum
-Branch: design/issue-110-base-pipelines-basecode-enum
-Labels: docs, design, stdlib
-Started: 2026-03-31
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/110
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [UNIFY complete, run MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -137,6 +134,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #107 — Document object type hierarchy | 2026-03-31 | Merged design/issue-107-object-type-hierarchy to main |
 | Closed #108 — Marker declaration syntax {=}[exe] | 2026-03-31 | Merged design/issue-108-marker-declaration-syntax to main; no warning for implicit default |
 | Closed #109 — [t] → [T] uppercase trigger element | 2026-03-31 | Merged design/issue-109; 339 replacements across 93 files; archive untouched |
+| Closed #110 — Document base pipelines and #BaseCode enum | 2026-03-31 | Merged design/issue-110; BaseCode.md, EBNF .baseCode, metadata.md, INDEX.md Base vs Derived, PGE01028 |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -156,11 +154,11 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-03-31 (session 8)
-Stopped at: Issue #110 UNIFY complete, ready for MERGE
-Next action: /paul:merge to merge issue #110 branch to main
+Stopped at: Issue #110 merged to main
+Next action: /paul:issues (pick next issue) or /paul:progress
 Resume context:
-- Issue #110 — 5 files: BaseCode.md, EBNF .baseCode, metadata.md, INDEX.md Base vs Derived, PGE01028
-- Branch: design/issue-110-base-pipelines-basecode-enum
+- Issue #110 closed — BaseCode.md, EBNF .baseCode, PGE01028, Base vs Derived section
+- No active issue
 
 ---
 *STATE.md — Updated after every significant action*
