@@ -8,21 +8,21 @@ severity: error
 ### Rule 1.9 — Wrapper IO Mismatch
 `PGE01009`
 
-**Statement:** The `[=]` wiring lines under a `[W]` wrapper must match the referenced macro's IO contract:
-1. **Completeness** — every required `[{]` input in the macro must have a corresponding `[=] ... <<` wiring line.
-2. **Type compatibility** — each wired value must be schema-compatible with the macro's declared `[{]` input or `[}]` output type (per PGE04001/PGE04002 rules).
-3. **No extra inputs** — a `[=] ... <<` line that does not match any `[{]` input in the macro is an error.
+**Statement:** The `[=]` wiring lines under a `[W]` wrapper must match the referenced wrapper's IO contract:
+1. **Completeness** — every required `[{]` input in the wrapper must have a corresponding `[=] ... <<` wiring line.
+2. **Type compatibility** — each wired value must be schema-compatible with the wrapper's declared `[{]` input or `[}]` output type (per PGE04001/PGE04002 rules).
+3. **No extra inputs** — a `[=] ... <<` line that does not match any `[{]` input in the wrapper is an error.
 4. **Output capture** — `[=] ... >>` lines must match `[}]` outputs. Capturing a nonexistent output is an error.
 
-**Rationale:** Macros define a typed IO contract via `[{]` and `[}]`. If the wrapper wiring doesn't satisfy this contract, the macro will receive missing or incompatible data at runtime. Compile-time validation ensures every macro invocation is correctly wired before execution.
-**Detection:** The compiler matches each `[=]` wiring line under `[W]` against the target macro's `[{]`/`[}]` declarations. Missing required inputs, extra inputs not in the macro, type mismatches, or nonexistent output captures trigger PGE01009.
+**Rationale:** Wrappers define a typed IO contract via `[{]` and `[}]`. If the wrapper wiring doesn't satisfy this contract, the wrapper will receive missing or incompatible data at runtime. Compile-time validation ensures every wrapper invocation is correctly wired before execution.
+**Detection:** The compiler matches each `[=]` wiring line under `[W]` against the target wrapper's `[{]`/`[}]` declarations. Missing required inputs, extra inputs not in the wrapper, type mismatches, or nonexistent output captures trigger PGE01009.
 
-**See also:** PGE01008 (wrapper must reference macro), PGE04001 (type mismatch), PGE04002 (schema mismatch)
+**See also:** PGE01008 (wrapper must reference wrapper definition), PGE04001 (type mismatch), PGE04002 (schema mismatch)
 
 **VALID:**
 ```polyglot
-[ ] ✓ all macro inputs provided, types match, output captured
-{M} =W.DB.Transaction
+[ ] ✓ all wrapper inputs provided, types match, output captured
+{W} =W.DB.Transaction
    [{] $connStr#string
    [{] $timeout#int
    [}] $txHandle#string
@@ -47,8 +47,8 @@ severity: error
 
 **INVALID:**
 ```polyglot
-[ ] ✗ PGE01009 — missing required macro input
-{M} =W.DB.Transaction
+[ ] ✗ PGE01009 — missing required wrapper input
+{W} =W.DB.Transaction
    [{] $connStr#string
    [{] $timeout#int
    [}] $txHandle#string
@@ -71,8 +71,8 @@ severity: error
 ```
 
 ```polyglot
-[ ] ✗ PGE01009 — extra input not in macro contract
-{M} =W.Simple
+[ ] ✗ PGE01009 — extra input not in wrapper contract
+{W} =W.Simple
    [{] $input#string
    [}] $output#string
    [\]
@@ -87,13 +87,13 @@ severity: error
    [Q] =Q.Default
    [W] =W.Simple
       [=] $input << $input
-      [=] $extra << $extra             [ ] ✗ PGE01009 — no [{] $extra in macro
+      [=] $extra << $extra             [ ] ✗ PGE01009 — no [{] $extra in wrapper
       [=] $output >> $output
 ```
 
 ```polyglot
 [ ] ✗ PGE01009 — capturing nonexistent output
-{M} =W.Simple
+{W} =W.Simple
    [{] $input#string
    [}] $output#string
    [\]
@@ -109,7 +109,7 @@ severity: error
    [W] =W.Simple
       [=] $input << $input
       [=] $output >> $output
-      [=] $missing >> $missing         [ ] ✗ PGE01009 — no [}] $missing in macro
+      [=] $missing >> $missing         [ ] ✗ PGE01009 — no [}] $missing in wrapper
 ```
 
 **Open point:** None.

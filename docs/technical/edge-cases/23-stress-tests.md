@@ -287,12 +287,12 @@ updated: 2026-03-30
          [ ] Disabled category — skip silently
 ```
 
-### ST-6: Macro with parallel timer in setup, body, and collect in cleanup
+### ST-6: Wrapper with parallel timer in setup, body, and collect in cleanup
 
 **What it tests:** The `[p]` in `[\]` with no `*All` — timer runs concurrently with body. `[/]` uses `*All` with `[*] <<` wait input to collect timer handle before stopping it. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
 
 ```polyglot
-{M} =W.Traced
+{W} =W.Traced
    [{] $operationId#string
    [}] $durationMs#int
    [}] $spanId#string

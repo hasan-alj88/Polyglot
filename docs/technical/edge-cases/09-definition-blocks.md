@@ -136,7 +136,7 @@ updated: 2026-03-30
 **What it tests:** `[p]` at end of `[\]` with no `[*] *All` — forked path runs concurrently with body; `[/]` collects via `[*] *All` with `[*] <<` wait inputs. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
 
 ```polyglot
-{M} =W.Tracing
+{W} =W.Tracing
    [{] $traceId#string
    [}] $duration#string
    [\]
@@ -164,7 +164,7 @@ updated: 2026-03-30
 **What it tests:** `[b]` in setup fires and is never collected — no `[*] *All` in `[/]` for it.
 
 ```polyglot
-{M} =W.AuditLog
+{W} =W.AuditLog
    [{] $userId#string
    [\]
       [r] =Session.Open

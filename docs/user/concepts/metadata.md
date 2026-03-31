@@ -1,7 +1,7 @@
 ---
 audience: user
 type: concept
-updated: 2026-03-30
+updated: 2026-03-31
 ---
 
 # Metadata
@@ -87,6 +87,24 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 | `#Name%files` | `#live.array:path` | Associated file paths |
 | `#Name%errors` | `#live.array:error` | Accumulated errors |
 | `#Name%usageCount` | `#live.int` | Usage count |
+
+### Wrapper (`{W}`)
+
+| Accessor | Type | Description |
+|----------|------|-------------|
+| `=W.Name%status` | `#live.#WrapperStatus` | Setup, Active, Cleanup, Complete, Failed |
+| `=W.Name%errors` | `#live.array:error` | Accumulated wrapper errors |
+| `=W.Name%setupDuration` | `#live.string` | Duration of setup phase |
+| `=W.Name%cleanupDuration` | `#live.string` | Duration of cleanup phase |
+
+### Queue (`{Q}`)
+
+| Accessor | Type | Description |
+|----------|------|-------------|
+| `#Queue:Name%pendingCount` | `#live.int` | Queued pipelines awaiting dispatch |
+| `#Queue:Name%activeCount` | `#live.int` | Currently executing pipeline instances |
+| `#Queue:Name%totalProcessed` | `#live.int` | Total pipelines processed |
+| `#Queue:Name%strategy` | `#live.#QueueStrategy` | Current queue strategy |
 
 ### Macro (`{M}`)
 

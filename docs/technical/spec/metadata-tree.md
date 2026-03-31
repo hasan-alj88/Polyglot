@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: spec
-updated: 2026-03-28
+updated: 2026-03-31
 status: complete
 ---
 
@@ -32,7 +32,7 @@ field_type_prop ::= "%" "###" property_name
 
 | Element | Rule |
 |---------|------|
-| `type_prefix` | One of: `#`, `##`, `###`, `=`, `~`, `*`, `$`, `M`, `!`, `@`, `_` |
+| `type_prefix` | One of: `#`, `##`, `###`, `=`, `W`, `Q`, `~`, `*`, `$`, `M`, `!`, `@`, `_` |
 | `ref` | Object name — flexible field (`:`) |
 | `instance` | Instance number — flexible field (`:`) |
 | `field` | Fixed field path (`.`) within the instance |
@@ -51,6 +51,8 @@ User code uses shorthand accessors that resolve to full instance paths:
 | `=MyPipeline%status` | `%=:MyPipeline:<current>.status` |
 | `$myVar%state` | `%$:myVar:<current>.state` |
 | `#Record%lastModified` | `%#:Record:<current>.lastModified` |
+| `=W.DB.Connection%status` | `%W:DB.Connection:<current>.status` |
+| `#Queue:GPUQueue%activeCount` | `%Q:GPUQueue:<current>.activeCount` |
 
 The `:<current>` segment is implicit — the runtime resolves it to the calling context's instance.
 
@@ -65,12 +67,14 @@ The `%` root has fixed branches for each object type prefix:
 | `%~` | Expanders | Flexible (`:name`) | All `~ForEach.*` expand operators |
 | `%*` | Collectors | Flexible (`:name`) | All `*Into.*`, `*Agg.*`, `*All`, `*First`, `*Nth` |
 | `%$` | Variables | Flexible (`:name`) | All `$`-prefixed variables |
+| `%W` | Wrappers | Flexible (`:name`) | All `{W}` wrapper definitions |
+| `%Q` | Queues | Flexible (`:name`) | All `{Q}` queue definitions |
 | `%M` | Macros | Flexible (`:name`) | All `{M}` macro definitions |
 | `%!` | Errors | Fixed (`.namespace`) | Polyglot-defined namespaces; `.Error` has flexible `:` children |
 | `%@` | Packages | Flexible (`:<registry>:<id>::<name>`) | All `@`-prefixed package addresses; `::` separates registry from name |
 | `%_` | Permissions | All fixed (`.`) | All `_`-prefixed permission declarations; no instances, no `:` levels |
 
-Plus `%definition` (fixed) for compile-time schema templates — including `%definition.#:{TypeName}` for type definitions, `%definition.##:{SchemaName}` for `##` schema definitions, and `%definition.###:{FieldTypeName}` for `###` field type definitions.
+Plus `%definition` (fixed) for compile-time schema templates — including `%definition.#:{TypeName}` for type definitions, `%definition.=:{PipelineName}` for pipeline definitions, `%definition.W:{WrapperName}` for wrapper definitions, `%definition.Q:{QueueName}` for queue definitions, `%definition.##:{SchemaName}` for `##` schema definitions, and `%definition.###:{FieldTypeName}` for `###` field type definitions.
 
 No `%Data` prefix exists — instance paths go directly to `%{type}:{ref}:{instance}.{fields}`.
 
@@ -80,6 +84,8 @@ No `%Data` prefix exists — instance paths go directly to `%{type}:{ref}:{insta
 
 An instance is created when:
 - A pipeline is triggered (`%=:Name:N` where N is the next sequential number)
+- A wrapper is invoked via `[W]` (`%W:Name:N`)
+- A queue dispatches a pipeline (`%Q:Name:N`)
 - A variable is declared (`%$:name:N`)
 - An expand/collect operator begins execution (`%~:Name:N`, `%*:Name:N`)
 
@@ -91,6 +97,8 @@ Instances use sequential zero-based numbering: `:0`, `:1`, `:2`, etc. Numbers ar
 
 Instances are released when:
 - A pipeline completes or fails (all stages resolved)
+- A wrapper completes cleanup or fails
+- A queue is destroyed (all assigned pipelines released)
 - A variable leaves scope ([[variable-lifecycle#Released]])
 - An operator finishes collection
 
@@ -164,6 +172,65 @@ The runtime enforces exactly one active enum field per instance:
 
 Parameter names within `.<` and `.>` are flexible — they follow the pipeline's `[=]` IO declarations.
 
+Wrappers use `.[{]` (inputs) and `.[}]` (outputs) instead of `.<`/`.>`:
+
+```
+%W:DB.Connection:0
+├── .[{]                     ← wrapper inputs
+│   └── .connectionString#string
+└── .[}]                     ← wrapper outputs
+    └── .dbConn
+```
+
+Parameter names within `.[{]` and `.[}]` are flexible — they follow the wrapper's `[{]`/`[}]` declarations.
+
+## Wrapper Branch
+
+`%W` stores wrapper definitions (`{W}`). Wrappers provide setup/cleanup scope around pipeline execution bodies. Each `[W]` invocation in a pipeline creates a new wrapper instance.
+
+### Structure
+
+```
+%W:DB.Connection:0
+├── .[{]                     ← inputs from calling pipeline
+│   └── .connectionString#string
+├── .[}]                     ← outputs exposed to calling pipeline
+│   └── .dbConn
+├── .setup                   ← [\] setup phase
+└── .cleanup                 ← [/] cleanup phase
+```
+
+### Key Properties
+
+- **Flexible instances** — each `[W]` invocation creates `%W:Name:N` with sequential numbering, like pipelines.
+- **IO via `[{]`/`[}]`** — wrapper inputs (`[{]`) and outputs (`[}]`) are fixed typed data sections, analogous to `.<`/`.>` in pipelines.
+- **Composite wrappers** — a `{W}` definition can contain `[W]` references to other wrappers inside `[\]` or `[/]`, creating nested wrapper instances.
+- **`live` fields** — wrapper instances report runtime state: `status`, `errors`, `setupDuration`. See [[metadata|user/concepts/metadata]].
+
+## Queue Branch
+
+`%Q` stores queue definitions (`{Q}`). Queues manage pipeline dispatch ordering and concurrency. Each queue dispatches pipelines and tracks active/pending counts.
+
+### Structure
+
+```
+%Q:GPUQueue:0
+├── .strategy#QueueStrategy        ← FIFO, LIFO, Priority
+├── .maxInstances#int              ← max parallel instances
+├── .retrigger#RetriggerStrategy   ← Disallow, Queue, Replace
+└── .controls                      ← active queue controls
+    ├── .pause
+    ├── .resume
+    └── .kill
+```
+
+### Key Properties
+
+- **Flexible instances** — each queue use creates `%Q:Name:N` with sequential numbering.
+- **Fields are fixed** — `.strategy`, `.maxInstances`, `.retrigger` are Polyglot-defined fixed fields.
+- **Active controls** — nested `[Q]` lines within the definition set default pause/resume/kill behavior.
+- **`live` fields** — queue instances report runtime state: `pendingCount`, `activeCount`, `totalProcessed`. See [[metadata|user/concepts/metadata]].
+
 ## Permission Branch
 
 `%_` stores permission declarations. Unlike other branches, `%_` has **no `:{instance}` level** and **no `:` flexible fields** — permissions are compile-time declarations with an entirely fixed schema. All categories and capabilities are Polyglot-defined, not user-extensible. See [[permissions]] for the full permission system.
@@ -220,6 +287,8 @@ Parameter names within `.<` and `.>` are flexible — they follow the pipeline's
 |-----------------|---------|
 | `%definition.#:UserRecord` | All `%#:UserRecord:N` instances have `.name#string`, `.age#int` |
 | `%definition.=:ProcessData` | All `%=:ProcessData:N` instances have the same IO ports and `live` fields |
+| `%definition.W:DB.Connection` | All `%W:DB.Connection:N` instances have the same `[{]`/`[}]` IO and scope structure |
+| `%definition.Q:GPUQueue` | All `%Q:GPUQueue:N` instances have the same fields and control defaults |
 
 Definitions are immutable at runtime — they are resolved entirely at compile time.
 

@@ -220,7 +220,7 @@ to_outer            ::= "[}]" variable_id ;
 - `[}]` declares a wrapper output — a variable exposed back to the calling pipeline's scope.
 - `[\]` runs before the pipeline execution body (setup). Can call a single pipeline or open a scope with multiple exec lines.
 - `[/]` runs after the pipeline execution body (cleanup). Same structure as `[\]`.
-- Wrappers do NOT contain `{#}` definitions, `[t]`, `[=]` IO, or `[Q]` — those belong to type macros or pipelines.
+- Wrappers do NOT contain `{#}` definitions, `[t]`, `[=]` pipeline-level IO, or `[Q]` — those belong to pipelines. Type macros (`{M}`) are a separate construct for compile-time type generation.
 - Execution order: `[t],[=]` → `[Q]` → `[\]` → Execution Body → `[/]`.
 - The wrapper unpacks before and after the body like brackets.
 - **Rule (parallel fork):** `[p]` inside `[\]` with no subsequent `[*] *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `[*] *All` with `[*] << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
@@ -239,11 +239,11 @@ At the `[W]` line, wrapper IO is wired using `[=]` with `$` variables (not `<`/`
 
 ```
 [W] =W.DB.Connection
-   [=] $connectionString << $connStr     (* macro input *)
-   [=] $dbConn >> $dbConn                (* macro output *)
+   [=] $connectionString << $connStr     (* wrapper input *)
+   [=] $dbConn >> $dbConn                (* wrapper output *)
 ```
 
-**Examples:** `[W] =W.Polyglot` (no IO, no-op macro), `[W] =W.DB.Transaction` (with IO wiring)
+**Examples:** `[W] =W.Polyglot` (no IO, no-op wrapper), `[W] =W.DB.Transaction` (with IO wiring)
 
 ### 9.5 Queue Definition
 

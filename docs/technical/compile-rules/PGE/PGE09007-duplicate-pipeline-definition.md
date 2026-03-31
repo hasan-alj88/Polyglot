@@ -97,10 +97,10 @@ severity: error
 ```
 
 ```polyglot
-[ ] ✗ PGE09007 — duplicate macro within same file
+[ ] ✗ PGE09007 — duplicate wrapper within same file
 {@} @Local:1000.MyApp:v1.0.0
 
-{M} =W.Setup
+{W} =W.Setup
    [{] $conn#string
    [}] $handle#string
    [\]
@@ -111,7 +111,7 @@ severity: error
       [r] =Disconnect
          [=] <handle << $handle
 
-{M} =W.Setup                                [ ] ✗ PGE09007 — =W.Setup already defined above
+{W} =W.Setup                                [ ] ✗ PGE09007 — =W.Setup already defined above
    [{] $input#string
    [}] $output#string
    [\]

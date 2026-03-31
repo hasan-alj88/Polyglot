@@ -1,23 +1,23 @@
 ---
 audience: user
 type: specification
-updated: 2026-03-30
+updated: 2026-03-31
 ---
 
 <!-- @concepts/pipelines/INDEX -->
 
 ## Wrappers
 
-Wrappers invoke a wrapper definition (`{W}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE01007). The `[W]` line must reference a valid wrapper (PGE01008), and the IO wired at the `[W]` site must match the wrapper's `[{]`/`[}]` declarations (PGE01009).
+Wrappers invoke a wrapper definition (`{W}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE01007). The `[W]` line must reference a valid `{W}` wrapper definition (PGE01008), and the IO wired at the `[W]` site must match the wrapper's `[{]`/`[}]` declarations (PGE01009).
 
-`{W}` is a separate entity from `{M}` — wrappers are not macros. `{W}` defines wrappers (setup/cleanup scope with `[\]`/`[/]` and `[{]`/`[}]` IO), while `{M}` defines type macros (compile-time `{#}` generation). Wrappers (`{W}`) cannot contain `[t]`, `[Q]`, `[=]`, `[p]`, `[b]`, or `[*]` — these are pipeline-only elements (PGE01004). See [[blocks]] for wrapper structural constraints.
+`{W}` is a separate entity from `{M}` — wrappers are not macros. `{W}` defines wrappers (setup/cleanup scope with `[\]`/`[/]` and `[{]`/`[}]` IO), while `{M}` defines type macros (compile-time `{#}` generation). Wrappers (`{W}`) cannot contain `[t]`, `[Q]`, or `[=]` pipeline-level IO — these are pipeline-only elements (PGE01004). See [[blocks]] for wrapper structural constraints.
 
-- `[\]` — macro setup, runs before the execution body
-- `[/]` — macro cleanup, runs after the execution body
-- `[{]` — macro input (typed variable from pipeline scope)
-- `[}]` — macro output (variable exposed back to pipeline scope)
+- `[\]` — wrapper setup, runs before the execution body
+- `[/]` — wrapper cleanup, runs after the execution body
+- `[{]` — wrapper input (typed variable from pipeline scope)
+- `[}]` — wrapper output (variable exposed back to pipeline scope)
 
-At the `[W]` usage site, macro IO is wired using `[=]` with `$` variables:
+At the `[W]` usage site, wrapper IO is wired using `[=]` with `$` variables:
 
 ```polyglot
 [W] =W.DB.Connection
@@ -25,7 +25,7 @@ At the `[W]` usage site, macro IO is wired using `[=]` with `$` variables:
    [=] $dbConn >> $dbConn
 ```
 
-After `[W]` wiring, the macro's `[}]` outputs (e.g., `$dbConn`) become available as `$` variables in the execution body.
+After `[W]` wiring, the wrapper's `[}]` outputs (e.g., `$dbConn`) become available as `$` variables in the execution body.
 
 Execution order: `[t],[=]` → `[Q]` → `[\]` → Execution Body → `[/]` (see [[concepts/pipelines/execution|execution]])
 
@@ -104,7 +104,7 @@ flowchart LR
 ```
 
 Common wrappers:
-- `[W] =W.Polyglot` — default, pure Polyglot Code (calls `=DoNothing` for setup/cleanup)
+- `[W] =W.Polyglot` — default, pure Polyglot Code (no-op: calls `=DoNothing` for setup/cleanup)
 - `[W] =W.DB.Transaction` — database connection + transaction lifecycle
 - `[W] =W.HTTP.Session` — HTTP client lifecycle
 
