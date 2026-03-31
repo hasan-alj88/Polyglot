@@ -9,7 +9,7 @@ status: complete
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{M}` at `%M`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!` (see [[data-is-trees]]).
+Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{T}` at `%T`, `{M}` at `%M`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!` (see [[data-is-trees]]).
 
 ## `{X}` — Definition Elements
 
@@ -20,10 +20,11 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{@}` | Package declaration (mandatory, first in file). See [[packages]] |
 | `{#}` | Struct definition. See [[syntax/types/structs#Enum Fields vs Value Fields]] |
 | `{=}` | Pipeline definition. See [[concepts/pipelines/INDEX|pipelines]] |
-| `{M}` | Type macro definition. See [[macros]] |
-| `{W}` | Wrapper definition. See [[wrappers]] |
-| `{Q}` | Queue definition. See [[concepts/pipelines/queue#Queue]] |
-| `{!}` | Error tree definition. See [[errors#Defining Custom Errors]] |
+| `{T}` | Trigger pipeline definition (subtype of `{=}`). See [[concepts/pipelines/io-triggers#Trigger Definitions]] |
+| `{M}` | Type macro definition (subtype of `{#}`). See [[macros]] |
+| `{W}` | Wrapper definition (subtype of `{=}`). See [[wrappers]] |
+| `{Q}` | Queue definition (dual: `{Q} #Name` = data subtype of `{#}`, `{Q} =Q.*` = pipeline subtype of `{=}`). See [[concepts/pipelines/queue#Queue]] |
+| `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
 | `{Array}` | Array collection definition. See [[concepts/collections/INDEX|collections]] |
 | `{ }` | Comment. See [[comments]] |
 
@@ -91,8 +92,8 @@ See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure a
 |--------|---------|
 | `[\]` | Setup |
 | `[/]` | Cleanup |
-| `[{]` | From outer scope (in Macros) |
-| `[}]` | To outer scope (in Macros) |
+| `[{]` | From outer scope (in Wrappers) |
+| `[}]` | To outer scope (in Wrappers) |
 
 ### Data Access
 

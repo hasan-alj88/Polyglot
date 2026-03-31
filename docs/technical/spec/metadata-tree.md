@@ -32,7 +32,7 @@ field_type_prop ::= "%" "###" property_name
 
 | Element | Rule |
 |---------|------|
-| `type_prefix` | One of: `#`, `##`, `###`, `=`, `W`, `Q`, `~`, `*`, `$`, `M`, `!`, `@`, `_` |
+| `type_prefix` | One of: `#`, `##`, `###`, `=`, `T`, `W`, `Q`, `~`, `*`, `$`, `M`, `!`, `@`, `_` |
 | `ref` | Object name — flexible field (`:`) |
 | `instance` | Instance number — flexible field (`:`) |
 | `field` | Fixed field path (`.`) within the instance |
@@ -64,6 +64,7 @@ The `%` root has fixed branches for each object type prefix:
 |--------|---------|------------|-------------|
 | `%#` | Structs | Flexible (`:type`) | All `{#}` type definitions |
 | `%=` | Pipelines | Flexible (`:name`) | All `{=}` pipeline definitions |
+| `%T` | Triggers | Flexible (`:name`) | All `{T}` trigger pipeline definitions |
 | `%~` | Expanders | Flexible (`:name`) | All `~ForEach.*` expand operators |
 | `%*` | Collectors | Flexible (`:name`) | All `*Into.*`, `*Agg.*`, `*All`, `*First`, `*Nth` |
 | `%$` | Variables | Flexible (`:name`) | All `$`-prefixed variables |
@@ -74,7 +75,7 @@ The `%` root has fixed branches for each object type prefix:
 | `%@` | Packages | Flexible (`:<registry>:<id>::<name>`) | All `@`-prefixed package addresses; `::` separates registry from name |
 | `%_` | Permissions | All fixed (`.`) | All `_`-prefixed permission declarations; no instances, no `:` levels |
 
-Plus `%definition` (fixed) for compile-time schema templates — including `%definition.#:{TypeName}` for type definitions, `%definition.=:{PipelineName}` for pipeline definitions, `%definition.W:{WrapperName}` for wrapper definitions, `%definition.Q:{QueueName}` for queue definitions, `%definition.##:{SchemaName}` for `##` schema definitions, and `%definition.###:{FieldTypeName}` for `###` field type definitions.
+Plus `%definition` (fixed) for compile-time schema templates — including `%definition.#:{TypeName}` for type definitions, `%definition.=:{PipelineName}` for pipeline definitions, `%definition.T:{TriggerName}` for trigger definitions, `%definition.W:{WrapperName}` for wrapper definitions, `%definition.Q:{QueueName}` for queue definitions, `%definition.##:{SchemaName}` for `##` schema definitions, and `%definition.###:{FieldTypeName}` for `###` field type definitions.
 
 No `%Data` prefix exists — instance paths go directly to `%{type}:{ref}:{instance}.{fields}`.
 
@@ -231,6 +232,28 @@ Parameter names within `.[{]` and `.[}]` are flexible — they follow the wrappe
 - **Active controls** — nested `[Q]` lines within the definition set default pause/resume/kill behavior.
 - **`live` fields** — queue instances report runtime state: `pendingCount`, `activeCount`, `totalProcessed`. See [[metadata|user/concepts/metadata]].
 
+## Trigger Branch
+
+`%T` stores trigger definitions (`{T}`). Triggers are specialized pipeline subtypes that define event sources with IO-only bodies. Each `[t]` invocation in a pipeline creates a new trigger instance.
+
+### Structure
+
+```
+%T:Folder.NewFiles:0
+├── .<                      ← input ports
+│   └── .path#path
+└── .>                      ← output ports
+    ├── .IsTriggered#bool   ← mandatory
+    └── .NewFiles#array:path
+```
+
+### Key Properties
+
+- **Flexible instances** — each trigger invocation creates `%T:Name:N` with sequential numbering, like pipelines.
+- **IO via `.<`/`.>`** — same as pipelines (not `.[{]`/`.[}]` like wrappers). Inputs are trigger configuration; outputs are trigger results.
+- **Mandatory output** — `>IsTriggered#bool` must exist on every trigger definition (compiler enforced).
+- **`live` fields** — trigger instances report runtime state: `status`, `lastFired`, `fireCount`. See [[metadata|user/concepts/metadata]].
+
 ## Permission Branch
 
 `%_` stores permission declarations. Unlike other branches, `%_` has **no `:{instance}` level** and **no `:` flexible fields** — permissions are compile-time declarations with an entirely fixed schema. All categories and capabilities are Polyglot-defined, not user-extensible. See [[permissions]] for the full permission system.
@@ -287,6 +310,7 @@ Parameter names within `.[{]` and `.[}]` are flexible — they follow the wrappe
 |-----------------|---------|
 | `%definition.#:UserRecord` | All `%#:UserRecord:N` instances have `.name#string`, `.age#int` |
 | `%definition.=:ProcessData` | All `%=:ProcessData:N` instances have the same IO ports and `live` fields |
+| `%definition.T:Folder.NewFiles` | All `%T:Folder.NewFiles:N` instances have the same IO ports and `live` fields |
 | `%definition.W:DB.Connection` | All `%W:DB.Connection:N` instances have the same `[{]`/`[}]` IO and scope structure |
 | `%definition.Q:GPUQueue` | All `%Q:GPUQueue:N` instances have the same fields and control defaults |
 

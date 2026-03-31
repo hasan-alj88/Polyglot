@@ -194,6 +194,37 @@ exec_line           ::= run_line
 - Macros overload by signature (parameter count + kind). Two overloads with identical signature = PGE01019.
 - Type macros do NOT contain `[\]`, `[/]`, `[{]`, `[}]`, `[t]`, `[=]` IO, or `[Q]` — those belong to wrappers or pipelines.
 
+### 9.4a Trigger Definition (`{T}`)
+
+```ebnf
+trigger_def         ::= "{T}" trigger_pipeline_id NEWLINE
+                         trigger_def_body ;
+
+trigger_pipeline_id ::= '=' 'T' '.' dotted_name ;
+
+trigger_def_body    ::= { ( metadata_line | comment_line ) NEWLINE }
+                         { indent ( io_decl_line | error_decl_line ) NEWLINE } ;
+                      (* Trigger definitions contain ONLY metadata, IO declarations,
+                         and error declarations. No execution body, no [Q], no [W]. *)
+```
+
+**Rules:**
+- `{T}` defines a trigger pipeline — a subtype of `{=}` constrained to IO-only bodies.
+- Trigger identifier must use the `=T.` prefix.
+- Must include `>IsTriggered#bool` output (mandatory). May include additional outputs.
+- No execution body, no `[Q]`, no `[W]` — triggers define event sources, not execution logic.
+- `[t]` invokes a trigger inside a pipeline (see §9.3.1).
+
+**Example:**
+
+```polyglot
+{T} =T.Folder.NewFiles
+   [%] .description << "Fires when new files appear in watched directory"
+   [=] <path#path
+   [=] >IsTriggered#bool
+   [=] >NewFiles#array:path
+```
+
 ### 9.4b Wrapper Definition (`{W}`)
 
 ```ebnf
@@ -368,6 +399,7 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 | §9.2 `{#}` Data | [[syntax/blocks\|blocks]], [[syntax/types/INDEX\|types]] |
 | §9.3 `{=}` Pipeline | [[concepts/pipelines/INDEX\|pipelines]] |
 | §9.4 `{M}` Macro | [[concepts/macros\|macros]], [[syntax/types/macro-types\|macro-types]] |
+| §9.4a `{T}` Trigger | [[concepts/pipelines/io-triggers\|io-triggers]] |
 | §9.4b `{W}` Wrapper | [[concepts/pipelines/wrappers\|wrappers]] |
 | §9.5 `{Q}` Queue | [[concepts/pipelines/INDEX\|pipelines]] |
 | §9.6 `{!}` Error | [[concepts/errors\|errors]] |

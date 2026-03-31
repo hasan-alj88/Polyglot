@@ -6,6 +6,31 @@ updated: 2026-03-30
 
 <!-- @concepts/pipelines/INDEX -->
 
+## Trigger Definitions
+
+`{T}` defines a trigger pipeline — a specialized subtype of `{=}` that contains only IO declarations. Triggers define event sources: they detect conditions and signal when a pipeline should fire. `{T}` is syntactic sugar for `{=}[T]`.
+
+Every trigger must output `>IsTriggered#bool`. Triggers can produce additional outputs that wire to the consuming pipeline's inputs via indented `[=]` IO lines under `[t]`.
+
+**Base trigger** — simplest form (stdlib):
+
+```polyglot
+{T} =T.Call
+   [=] >IsTriggered#bool
+```
+
+**Composed trigger** — with inputs and additional outputs:
+
+```polyglot
+{T} =T.Folder.NewFiles
+   [%] .description << "Fires when new files appear in watched directory"
+   [=] <path#path
+   [=] >IsTriggered#bool
+   [=] >NewFiles#array:path
+```
+
+Trigger definitions have no execution body, no `[Q]`, and no `[W]` — they are IO-only. Stdlib triggers (`=T.*`) are base pipelines backed by native code — see [[concepts/pipelines/INDEX|Pipeline Structure]] for the base vs derived distinction.
+
 ## IO as Implicit Triggers
 
 IO inputs act as implicit trigger gates based on their assignment operator:
@@ -40,3 +65,4 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
 - [[concepts/pipelines/INDEX|Pipeline Structure]] — full pipeline element ordering
 - [[concepts/pipelines/queue|Queue]] — queue configuration that follows triggers
 - [[concepts/pipelines/inline-calls|Inline Calls]] — trigger string argument syntax
+- [[technical/ebnf/09-definition-blocks#9.4a|EBNF §9.4a]] — formal trigger definition grammar
