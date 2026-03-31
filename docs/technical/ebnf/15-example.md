@@ -31,7 +31,7 @@ file
   │
   └─ pipeline_def           {=} =ProcessItems
        ├─ metadata              [%] .version << "1.0.0"
-       ├─ trigger               [t] =T.Call
+       ├─ trigger               [T] =T.Call
        ├─ io                    [=] <items#array:Record
        │                        [=] >total#int ~> 0
        ├─ error_decl            [=] !Processing.InvalidRecord

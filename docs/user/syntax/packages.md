@@ -119,7 +119,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [@] << "{.}\my-app-03.pg"
 
 {=} =LoadConfig
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >config#Config
@@ -133,7 +133,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [@] << "{.}\my-app-02.pg"
 
 {=} =RunServer
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <config#Config

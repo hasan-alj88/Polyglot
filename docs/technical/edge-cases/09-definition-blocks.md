@@ -86,7 +86,7 @@ updated: 2026-03-30
 
 ```polyglot
 {=} =Ordered
-   [t] =T.Call
+   [T] =T.Call
    [=] <input#string
    [=] >output#string ~> ""
    [Q] =Q.Default
@@ -100,7 +100,7 @@ updated: 2026-03-30
 
 ```polyglot
 {=} =Minimal
-   [t] =T.Call
+   [T] =T.Call
    [W] =W.Polyglot
    [r] $x#int << 1
 ```
@@ -112,9 +112,9 @@ updated: 2026-03-30
 **What it tests:** Triggers that take configuration strings.
 
 ```polyglot
-[t] =T.Daily"3AM"
-[t] =T.Webhook"/api/onboarding"
-[t] =T.Folder.NewFiles"/inbox/"
+[T] =T.Daily"3AM"
+[T] =T.Webhook"/api/onboarding"
+[T] =T.Folder.NewFiles"/inbox/"
 ```
 
 ### EC-9.9: IO as implicit triggers — all three modes
@@ -220,29 +220,29 @@ updated: 2026-03-30
 { } This file defines nothing
 ```
 
-### EC-9.16: Non-trigger pipeline used as `[t]` trigger
+### EC-9.16: Non-trigger pipeline used as `[T]` trigger
 
 <!-- @pipelines:Triggers -->
 **EBNF ref:** `trigger_ref ::= pipeline_ref [ string_literal ]`
-**What it tests:** Using a non-trigger operation (e.g., `=File.Text.Read`) with `[t]`. PGE01024 fires — operations declare allowed markers. See [[concepts/pipelines/INDEX|pipelines]].
+**What it tests:** Using a non-trigger operation (e.g., `=File.Text.Read`) with `[T]`. PGE01024 fires — operations declare allowed markers. See [[concepts/pipelines/INDEX|pipelines]].
 
 ```polyglot
 [ ] ✗ PGE01024 — =File.Text.Read is not trigger-compatible
 {=} =Bad
-   [t] =File.Text.Read
+   [T] =File.Text.Read
 ```
 
-### EC-9.17: Multiple `[t]` trigger lines — AND semantics
+### EC-9.17: Multiple `[T]` trigger lines — AND semantics
 
 <!-- @pipelines:Triggers -->
 **EBNF ref:** `trigger_io_section` — allows multiple `trigger_line` via `{ }` repetition
-**What it tests:** Multiple `[t]` lines use AND semantics — all triggers must fire. For OR, use `[|]`. See [[concepts/pipelines/INDEX|pipelines]].
+**What it tests:** Multiple `[T]` lines use AND semantics — all triggers must fire. For OR, use `[|]`. See [[concepts/pipelines/INDEX|pipelines]].
 
 ```polyglot
 [ ] ✓ AND — both triggers must fire
 {=} =DualTrigger
-   [t] =T.Daily"3AM"
-   [t] =T.Webhook"/api/ready"
+   [T] =T.Daily"3AM"
+   [T] =T.Webhook"/api/ready"
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =DoWork
@@ -256,7 +256,7 @@ updated: 2026-03-30
 ```polyglot
 [ ] ✗ parse error — grammar requires single [Q] and [W]
 {=} =DuplicateQueue
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [Q] =Q.Custom
    [W] =W.Polyglot

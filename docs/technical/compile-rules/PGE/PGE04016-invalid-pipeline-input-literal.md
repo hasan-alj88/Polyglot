@@ -18,7 +18,7 @@ severity: error
 ```polyglot
 [ ] ✓ pipeline author declares invalid values via %constraint
 {=} =Math.Divide
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <numerator#int

@@ -10,7 +10,7 @@ status: complete
 <!-- @pipelines -->
 Wrappers are placed on `[W]` lines. Each wrapper is a `{W}` definition that provides setup (`[\]`) and cleanup (`[/]`) around the pipeline execution body. Wrapper IO (`[{]` input, `[}]` output) is wired at the `[W]` line using `[=]` with `$` variables. See [[concepts/pipelines/wrappers#Wrappers]] for wrapper usage rules.
 
-Execution order: `[t],[=]` -> `[Q]` -> `[\]` -> Body -> `[/]`
+Execution order: `[T],[=]` -> `[Q]` -> `[\]` -> Body -> `[/]`
 
 No `[@]` import needed.
 

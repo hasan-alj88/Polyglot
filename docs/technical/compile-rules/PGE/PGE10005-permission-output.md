@@ -21,7 +21,7 @@ severity: error
    [_] _Web.request
       [_] <url#string << "https://api.example.com/*"    [ ] ✓ input direction
       [_] <method#string << "GET"                        [ ] ✓ input direction
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $response << =Web.Request >> "https://api.example.com/data"
@@ -31,7 +31,7 @@ severity: error
 [ ] ✓ inline form — no direction marker needed
 {=} =FileReader
    [_] _File.read"/var/log/*"                            [ ] ✓ inline form
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $content << =File.Text.Read >> "/var/log/app.log"
@@ -44,7 +44,7 @@ severity: error
    [_] _Web.request
       [_] <url#string << "https://api.example.com/*"
       [_] >result#string                                 [ ] ✗ PGE10005 — output direction in permission block
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $response << =Web.Request >> "https://api.example.com/data"
@@ -57,7 +57,7 @@ severity: error
       [_] <host#string << "localhost"
       [_] <port#int << "5432"
       [_] >connection#string                             [ ] ✗ PGE10005 — permissions are input-only
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $conn << =Database.Connect >> "localhost:5432"

@@ -17,7 +17,7 @@ severity: error
 **VALID:**
 ```polyglot
 {=} =Greet
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -32,7 +32,7 @@ severity: error
 
 ```polyglot
 {=} =Transform
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -48,7 +48,7 @@ severity: error
 **INVALID:**
 ```polyglot
 {=} =Greet
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -70,7 +70,7 @@ severity: error
 
 ```polyglot
 {=} =Process
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string

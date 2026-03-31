@@ -22,7 +22,7 @@ severity: error
 ```polyglot
 [ ] ✓ all required inputs wired — sequential pipeline call
 {=} =Greet
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -31,7 +31,7 @@ severity: error
    [r] >greeting << "Hello, {$title} {$name}!"
 
 {=} =UseGreet
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -44,7 +44,7 @@ severity: error
 ```polyglot
 [ ] ✓ all required inputs wired — parallel pipeline call
 {=} =BatchProcess
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <items#array:string
@@ -64,7 +64,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08008 — missing required input on sequential pipeline call
 {=} =Greet
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -73,7 +73,7 @@ severity: error
    [r] >greeting << "Hello, {$title} {$name}!"
 
 {=} =UseGreet
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -86,7 +86,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08008 — missing required input on parallel pipeline call
 {=} =Transform
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -95,7 +95,7 @@ severity: error
    [r] >result << $data
 
 {=} =BatchTransform
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string

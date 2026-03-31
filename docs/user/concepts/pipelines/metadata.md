@@ -20,7 +20,7 @@ Every failable pipeline **must** declare its errors with `[=] !ErrorName` in the
    [=] >validated#string
    [=] !Validation.Empty
    [=] !Validation.TooLong
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    ...

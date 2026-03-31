@@ -18,7 +18,7 @@ severity: warning
 ```polyglot
 [ ] ✓ variable assigned and consumed
 {=} =Process
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -32,7 +32,7 @@ severity: warning
 ```polyglot
 [ ] ✓ discard pattern — intentionally unused
 {=} =FireAndForget
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -46,7 +46,7 @@ severity: warning
 ```polyglot
 [ ] ✓ variable used in conditional
 {=} =Route
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <status#Status
@@ -65,7 +65,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW02002 — $unused assigned but never consumed
 {=} =Wasteful
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -82,7 +82,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW02002 — $temp assigned but never consumed
 {=} =DeadAssignment
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string

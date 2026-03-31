@@ -64,7 +64,7 @@ Since `<InlineStringLiteral#string` defaults to `""`, a pipeline can support bot
    [=] <InlineStringLiteral#string <~ ""
    [=] <name#string <~ ""
    [=] >message#string
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [?] $InlineStringLiteral =!? ""

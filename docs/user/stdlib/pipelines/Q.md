@@ -147,7 +147,7 @@ Active queue controls accept conditional parameters that specify when the contro
 {=} =GPU.RenderFrames
    [=] <frames#array:serial
    [=] >rendered#array:serial ~> {}
-   [t] =T.Call
+   [T] =T.Call
    [Q] #Queue:GPUQueue
       [ ] Pipeline-specific: pause/resume based on RAM
       [Q] =Q.Pause.Hard

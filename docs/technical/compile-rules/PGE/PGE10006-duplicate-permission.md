@@ -20,7 +20,7 @@ severity: error
 {=} =FileHandler
    [_] _File.read"/var/log/*"
    [_] _File.write"/tmp/reports/*"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $content << =File.Text.Read >> "/var/log/app.log"
@@ -35,7 +35,7 @@ severity: error
 
 {=} =LogReader
    [_] _File.read"/var/log/app/*"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $content << =File.Text.Read >> "/var/log/app/current.log"
@@ -47,7 +47,7 @@ severity: error
 {=} =DupReader
    [_] _File.read"/var/log/*"
    [_] _File.read"/tmp/*"                     [ ] ✗ PGE10006 — _File.read already declared in this scope
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $log << =File.Text.Read >> "/var/log/app.log"
@@ -70,7 +70,7 @@ severity: error
    [_] _Web.request                           [ ] ✗ PGE10006 — _Web.request already declared
       [_] <url#string << "https://other.example.com/*"
       [_] <method#string << "POST"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $resp << =Web.Request >> "https://api.example.com/data"

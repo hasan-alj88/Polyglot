@@ -17,7 +17,7 @@ updated: 2026-03-30
 
 ```polyglot
 {=} =Deep
-   [t] =T.Call
+   [T] =T.Call
    [W] =W.Polyglot
 
    [r] ~ForEach.Array

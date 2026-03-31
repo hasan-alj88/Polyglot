@@ -44,14 +44,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #109 — Change [t] to [T] uppercase trigger element across all docs
+Branch: design/issue-109-uppercase-trigger-element
+Labels: design, docs
+Started: 2026-03-31
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/109
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [ready for merge]
 ```
 
 ## Accumulated Context

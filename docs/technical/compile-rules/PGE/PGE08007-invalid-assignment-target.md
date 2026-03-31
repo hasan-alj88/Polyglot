@@ -23,7 +23,7 @@ severity: error
 ```polyglot
 [ ] ✓ variable on LHS — valid assignment target
 {=} =Store
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -40,7 +40,7 @@ severity: error
 ```polyglot
 [ ] ✓ inline call on RHS — value expressions are valid as sources
 {=} =MakePath
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#path
@@ -52,7 +52,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08007 — inline pipeline call as assignment target
 {=} =BadInline
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <value#string
@@ -62,7 +62,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08007 — inline call as default assignment target
 {=} =BadDefault
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <value#string
@@ -72,7 +72,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08007 — literal as assignment target
 {=} =BadLiteral
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <value#string

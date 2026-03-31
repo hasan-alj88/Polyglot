@@ -42,7 +42,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE07001 — [!] at pipeline level, not under [r]
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =File.Text.Read

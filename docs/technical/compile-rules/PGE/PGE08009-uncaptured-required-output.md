@@ -22,7 +22,7 @@ severity: error
 ```polyglot
 [ ] ✓ all outputs captured — sequential pipeline call
 {=} =Process
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -32,7 +32,7 @@ severity: error
    [r] >count << 1
 
 {=} =UseProcess
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -46,7 +46,7 @@ severity: error
 ```polyglot
 [ ] ✓ output captured into discard — intentionally unused
 {=} =UseProcessDiscard
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -59,7 +59,7 @@ severity: error
 ```polyglot
 [ ] ✓ fire-and-forget exempt from output capture
 {=} =FireAndForget
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -71,7 +71,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08009 — uncaptured output on sequential pipeline call
 {=} =UseProcessBad
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -84,7 +84,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE08009 — uncaptured output on parallel pipeline call
 {=} =BatchBad
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string

@@ -19,7 +19,7 @@ severity: warning
 ```polyglot
 [ ] ✓ No override — caller does not provide [>] <! on >status
 {=} =Caller
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -33,7 +33,7 @@ severity: warning
 ```polyglot
 [ ] ✓ Override allowed — author suppressed with %FallbackMessage << ""
 {=} =CallerOverrideOk
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -50,7 +50,7 @@ severity: warning
 [ ] ⚠ PGW07002 — caller overrides pipeline-defined fallback on >status
 [ ]   Author: "Pipeline returns invalid status on empty input"
 {=} =CallerOverrideBad
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string

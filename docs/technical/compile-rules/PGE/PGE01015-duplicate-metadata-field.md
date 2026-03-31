@@ -22,7 +22,7 @@ severity: error
    [%] .version << "1.0.0"
    [%] .authors << ["Alice", "Bob"]
    [%] .license << "MIT"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -36,7 +36,7 @@ severity: error
    [%] :info
       :team << "platform"
       :priority << "high"              [ ] ✓ different keys under :info
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -60,7 +60,7 @@ severity: error
 {=} =BadMeta
    [%] .description << "First description"
    [%] .description << "Second description"  [ ] ✗ PGE01015 — .description appears twice
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -72,7 +72,7 @@ severity: error
 {=} =AlsoBad
    [%] .version << "1.0.0"
    [%] .version << "2.0.0"              [ ] ✗ PGE01015 — .version appears twice
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string

@@ -19,7 +19,7 @@ severity: error
 [ ] ✓ permission declared matches IO call
 {=} =GoodPipe
    [_] _File.read"/var/log/*"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $data << =File.Text.Read >> "/var/log/app.log"
@@ -28,7 +28,7 @@ severity: error
 ```polyglot
 [ ] ✓ pure computation — no IO calls, no permissions needed
 {=} =PureCompute
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <a#int
@@ -41,7 +41,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE10004 — calls =File.Text.Read without _File.read permission
 {=} =BadPipe
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $data << =File.Text.Read >> "/var/log/app.log"  [ ] ✗ PGE10004 — undeclared _File.read
@@ -51,13 +51,13 @@ severity: error
 [ ] ✗ PGE10004 — transitive call: =Outer calls =Inner which calls IO
 {=} =Inner
    [_] _File.read"/var/log/*"
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $data << =File.Text.Read >> "/var/log/app.log"
 
 {=} =Outer
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $result << =Inner                               [ ] ✗ PGE10004 — =Outer calls =Inner which uses _File.read, but =Outer has no [_] _File.read

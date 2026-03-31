@@ -18,7 +18,7 @@ severity: warning
 ```polyglot
 {=} =Transform
    [%] .deprecated << false
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -36,7 +36,7 @@ severity: warning
 {=} =OldProcess
    [%] .deprecated << true
    [%] .deprecatedMessage << "Use =NewProcess instead"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -52,7 +52,7 @@ severity: warning
 ```polyglot
 {=} =LegacyFetch
    [%] .deprecated << true
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <url#string

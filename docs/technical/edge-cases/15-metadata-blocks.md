@@ -13,7 +13,7 @@ updated: 2026-03-30
 <!-- @blocks:Metadata -->
 **EBNF:** `metadata_line ::= "[%]" fixed_sep name [ type_annotation ] [ "<<" value_expr ]`
 
-**What it tests:** `[%]` lines appear before `[t]` (position 0). Fixed fields `.description`, `.version`, `.authors` assigned via `<<`. See [[blocks#Metadata]].
+**What it tests:** `[%]` lines appear before `[T]` (position 0). Fixed fields `.description`, `.version`, `.authors` assigned via `<<`. See [[blocks#Metadata]].
 
 ```polyglot
 {=} =Invoice.Process
@@ -21,7 +21,7 @@ updated: 2026-03-30
    [%] .version << "2.1.0"
    [%] .authors#array:string << {"alice@corp.com", "bob@corp.com"}
    [%] .license << "MIT"
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $done#bool << #Boolean.True
@@ -44,7 +44,7 @@ updated: 2026-03-30
 {=} =Provision.User
    [%] %alias
       [:] "ProvisionUser"
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $x#int << 1
@@ -76,7 +76,7 @@ updated: 2026-03-30
       [:] :owner << "platform-team"
       [:] :ticket << "INFRA-42"
       [:] :runbook << "https://wiki/runbooks/report"
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $x#int << 1

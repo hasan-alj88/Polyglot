@@ -23,7 +23,7 @@ severity: error
    [=] >validated#string
    [=] !Validation.Empty
    [=] !Validation.TooLong
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [?] $name =? ""
@@ -44,7 +44,7 @@ severity: error
    [=] >validated#string
    [=] !Validation.Empty
    [=] !Validation.TooLong                   [ ] ✗ PGE07006 — never raised in body
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [?] $name =? ""

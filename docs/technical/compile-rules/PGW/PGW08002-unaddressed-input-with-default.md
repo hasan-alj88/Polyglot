@@ -20,7 +20,7 @@ severity: warning
 ```polyglot
 [ ] ✓ default input explicitly wired — no warning
 {=} =Format
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <text#string
@@ -30,7 +30,7 @@ severity: warning
    [r] >formatted << "{$text} ({$locale})"
 
 {=} =UseFormat
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -44,7 +44,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW08002 — <locale not wired, using default "en-US"
 {=} =UseFormatDefault
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -57,7 +57,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW08002 — <timeout not wired on parallel pipeline call, using default 30
 {=} =Fetch
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <url#string
@@ -67,7 +67,7 @@ severity: warning
    [r] >body << "response"
 
 {=} =BatchFetch
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string

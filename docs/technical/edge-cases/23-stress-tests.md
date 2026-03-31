@@ -32,7 +32,7 @@ updated: 2026-03-30
    [=] <hire#NewHire
    [=] >report#string ~> "incomplete"
    [=] >success#bool ~> #Boolean.False
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
 
@@ -99,7 +99,7 @@ updated: 2026-03-30
    [=] <verified#bool
    [=] >tier#string ~> "unknown"
    [=] >action#string ~> "review"
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
 
@@ -154,7 +154,7 @@ updated: 2026-03-30
    [=] <query#string
    [=] >result#serial ~> {}
    [=] >source#string ~> "none"
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
 
@@ -200,7 +200,7 @@ updated: 2026-03-30
 {=} =Batch.Process
    [=] <items#array:serial
    [=] >summary#serial ~> {}
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.DB.Transaction
       [=] $connectionString << $dbConnStr
@@ -263,7 +263,7 @@ updated: 2026-03-30
 {=} =Tree.Flatten
    [=] <categories#array:serial
    [=] >flat#array:string ~> {}
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
 
@@ -326,7 +326,7 @@ updated: 2026-03-30
 {=} =Invoice.Parse
    [=] <raw#string
    [=] >invoice#serial ~> {}
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Traced
       [=] $operationId << "invoice.parse"

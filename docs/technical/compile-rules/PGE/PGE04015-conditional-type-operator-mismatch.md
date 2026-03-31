@@ -104,7 +104,7 @@ severity: error
 ```polyglot
 [ ] ✓ range operator on int subject
 {=} =CheckScore
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <score#int
@@ -121,7 +121,7 @@ severity: error
 ```polyglot
 [ ] ✓ enum match on enum subject
 {=} =RouteByStatus
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <status#Status
@@ -138,7 +138,7 @@ severity: error
 ```polyglot
 [ ] ✓ cross-numeric — int subject with float bounds
 {=} =CheckTemp
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <temp#int
@@ -156,7 +156,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE04015 — range operator on string subject
 {=} =BadRange
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <name#string
@@ -171,7 +171,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE04015 — enum match on int subject
 {=} =BadEnum
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <count#int
@@ -186,7 +186,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE04015 — string equality on int subject
 {=} =BadEquality
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <count#int

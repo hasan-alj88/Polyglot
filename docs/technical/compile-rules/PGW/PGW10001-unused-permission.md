@@ -20,7 +20,7 @@ severity: warning
 {=} =LogAnalyzer
    [_] _File.read"/var/log/*"
    [_] _File.write"/tmp/reports/*"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $content << =File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises _File.read
@@ -31,7 +31,7 @@ severity: warning
 ```polyglot
 [ ] ✓ pure computation — no permissions declared, no IO calls
 {=} =PureCompute
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <a#int
@@ -48,7 +48,7 @@ severity: warning
    [_] _Web.request                                            [ ] ⚠ PGW10001 — _Web.request never used
       [_] <url#string << "https://api.example.com/*"
       [_] <method#string << "GET"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] $content << =File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises _File.read
@@ -60,7 +60,7 @@ severity: warning
 {=} =OverDeclared
    [_] _File.read"/var/log/*"                                  [ ] ⚠ PGW10001 — _File.read never used
    [_] _System.env"APP_MODE"                                   [ ] ⚠ PGW10001 — _System.env never used
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string

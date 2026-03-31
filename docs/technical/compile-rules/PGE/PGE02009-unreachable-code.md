@@ -18,7 +18,7 @@ severity: error
 ```polyglot
 [ ] ✓ code between partial Final pushes — still reachable
 {=} =MultiStage
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -36,7 +36,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE02009 — code after single output pushed Final
 {=} =DeadAfterFinal
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -49,7 +49,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE02009 — code after exhaustive conditional terminates all outputs
 {=} =DeadAfterExhaustive
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -66,7 +66,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE02009 — multiple outputs, all Final
 {=} =MultiOutDead
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -85,7 +85,7 @@ severity: error
 ```polyglot
 [ ] ✓ post-finalization work in [/] cleanup
 {=} =CorrectCleanup
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string

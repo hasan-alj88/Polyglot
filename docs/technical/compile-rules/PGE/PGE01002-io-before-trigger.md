@@ -7,15 +7,15 @@ name: IO Before Trigger
 ### Rule 1.2 — IO Before Trigger
 `PGE01002`
 
-**Statement:** IO input declarations (`[=] <param`) must appear **before** any `[t]` trigger line that pushes into them. A trigger cannot reference an undeclared IO parameter.
-**Rationale:** The IO variable must exist before it can be assigned. `[W]` is macro invocation (setup/cleanup scope from `{M}`), not wiring — this rule applies to `[t]` only.
+**Statement:** IO input declarations (`[=] <param`) must appear **before** any `[T]` trigger line that pushes into them. A trigger cannot reference an undeclared IO parameter.
+**Rationale:** The IO variable must exist before it can be assigned. `[W]` is macro invocation (setup/cleanup scope from `{M}`), not wiring — this rule applies to `[T]` only.
 
 **VALID:**
 ```polyglot
-[ ] ✓ <filepath declared before [t] pushes into it
+[ ] ✓ <filepath declared before [T] pushes into it
 {=} =Process
    [=] <filepath#path
-   [t] =T.Folder.NewFiles"/inbox/"
+   [T] =T.Folder.NewFiles"/inbox/"
       [=] >NewFiles >> <filepath
    [Q] =Q.Default
    [W] =W.Polyglot
@@ -26,9 +26,9 @@ name: IO Before Trigger
 
 **INVALID:**
 ```polyglot
-[ ] ✗ PGE01002 — [t] pushes into <filepath before it is declared
+[ ] ✗ PGE01002 — [T] pushes into <filepath before it is declared
 {=} =Process
-   [t] =T.Folder.NewFiles"/inbox/"
+   [T] =T.Folder.NewFiles"/inbox/"
       [=] >NewFiles >> <filepath    [ ] ✗ PGE01002
    [=] <filepath#path
    [Q] =Q.Default

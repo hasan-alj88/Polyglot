@@ -21,7 +21,7 @@ severity: error
    [@] << "{.}\file-02.pg"
 
 {=} =LoadData
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >data#string
@@ -36,7 +36,7 @@ severity: error
    [@] << "{.}\file-01.pg"
 
 {=} =ProcessData
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string
@@ -57,7 +57,7 @@ severity: error
    [@] << "{.}\file-02.pg"
 
 {=} =Transform
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -69,7 +69,7 @@ severity: error
    [@] << "{.}\file-01.pg"
 
 {=} =Transform                              [ ] ✗ PGE09007 — =Transform already defined in file-01.pg
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string

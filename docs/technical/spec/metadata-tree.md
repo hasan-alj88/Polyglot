@@ -234,7 +234,7 @@ Parameter names within `.[{]` and `.[}]` are flexible — they follow the wrappe
 
 ## Trigger Branch
 
-`%T` stores trigger definitions (`{T}`). Triggers are specialized pipeline subtypes that define event sources with IO-only bodies. Each `[t]` invocation in a pipeline creates a new trigger instance.
+`%T` stores trigger definitions (`{T}`). Triggers are specialized pipeline subtypes that define event sources with IO-only bodies. Each `[T]` invocation in a pipeline creates a new trigger instance.
 
 ### Structure
 

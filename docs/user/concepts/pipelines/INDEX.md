@@ -19,7 +19,7 @@ Every pipeline definition `{=}` (see [[blocks]]) must contain these elements in 
 |-------|---------|--------|----------|
 | 0 | Metadata | `[%]` | Optional |
 | 1 | Permissions | `[_]` | Optional |
-| 2 | Trigger / IO / Errors | `[t]`, `[=]` | `[t]` mandatory, `[=]` optional |
+| 2 | Trigger / IO / Errors | `[T]`, `[=]` | `[T]` mandatory, `[=]` optional |
 | 3 | Queue | `[Q]` | Mandatory |
 | 4 | Wrapper | `[W]` | Mandatory |
 | 5 | Execution | `[r]`, `[p]`, `[b]`, `[s]`, `[?]` | Yes |
@@ -28,7 +28,7 @@ Misordering these sections is a compile error (PGE01001).
 
 **Metadata:** `[%]` lines declare description, version, authors, license, deprecation, and aliases. `.info#serial` holds custom metadata. Duplicate metadata field names are a compile error (PGE01015). See [[blocks#Metadata]].
 
-**Note:** `[t]` triggers, `[=]` IO declarations, and `[=] !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment (PGE01002). Error declarations (`[=] !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[t]` line and wire trigger outputs to pipeline inputs.
+**Note:** `[T]` triggers, `[=]` IO declarations, and `[=] !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment (PGE01002). Error declarations (`[=] !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[T]` line and wire trigger outputs to pipeline inputs.
 
 **Type inputs:** Pipelines can receive type definitions as data tree inputs using `[=] <#type` — the same `<#` syntax used in `{M}` macro type parameters. This extends GT-1 (all definitions are data trees) to runtime pipeline IO. See [[syntax/types/macro-types#`<#type` in Pipeline IO]] for details and [[#|stdlib/pipelines/#]] for the `=#.*` validation pipelines that use this pattern.
 
@@ -56,17 +56,17 @@ A marker declaration on `{=}` specifies the pipeline's invocation context — wh
 ```polyglot
 { } Default — same as {=}[exe]
 {=} =ProcessData
-   [t] =T.Call
+   [T] =T.Call
    ...
 
 { } Explicit execution marker — identical to above
 {=}[exe] =ProcessData
-   [t] =T.Call
+   [T] =T.Call
    ...
 
 { } Background-only — no outputs, fire-and-forget
 {=}[b] =LogEvent
-   [t] =T.Call
+   [T] =T.Call
    [=] <message#string
    [Q] =Q.Default
    [W] =W.Polyglot

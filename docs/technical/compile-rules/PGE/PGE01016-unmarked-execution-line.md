@@ -18,7 +18,7 @@ severity: error
 ```polyglot
 [ ] ✓ assignment under [r] marker
 {=} =Example
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -29,7 +29,7 @@ severity: error
 ```polyglot
 [ ] ✓ data load under [#] marker
 {=} =LoadConfig
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#Config
@@ -41,7 +41,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01016 — bare assignment without marker
 {=} =Bad
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -52,7 +52,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01016 — bare inline pipeline call without marker
 {=} =AlsoBad
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#path
@@ -62,7 +62,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01016 — bare pipeline call without marker
 {=} =NoPrefixCall
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string

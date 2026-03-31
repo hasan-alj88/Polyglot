@@ -97,7 +97,7 @@ These are equivalent to a built-in `$cfd` variable and are available in any path
 Trigger inline string arguments that contain file paths parse as path strings:
 
 ```polyglot
-[t] =T.Folder.NewFiles"/inbox/"
+[T] =T.Folder.NewFiles"/inbox/"
 ```
 
 The `"/inbox/"` argument is parsed as a path string — separators are normalized per OS, same as `=Path"..."`.

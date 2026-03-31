@@ -39,7 +39,7 @@ Example stdlib trigger declaration:
 ```polyglot
 [ ] ✓ inline argument matches declared format
 {=} =DailyReport
-   [t] =T.Daily"14:30"                 [ ] ✓ matches ^[0-9]{2}:[0-9]{2}$
+   [T] =T.Daily"14:30"                 [ ] ✓ matches ^[0-9]{2}:[0-9]{2}$
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -49,7 +49,7 @@ Example stdlib trigger declaration:
 ```polyglot
 [ ] ✓ inline argument matches second pattern
 {=} =PreciseReport
-   [t] =T.Daily"08:00:00"              [ ] ✓ matches ^[0-9]{2}:[0-9]{2}:[0-9]{2}$
+   [T] =T.Daily"08:00:00"              [ ] ✓ matches ^[0-9]{2}:[0-9]{2}:[0-9]{2}$
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -59,7 +59,7 @@ Example stdlib trigger declaration:
 ```polyglot
 [ ] ✓ pipeline with no .inlineFormat — no validation (see PGW12001)
 {=} =FlexibleCall
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -71,7 +71,7 @@ Example stdlib trigger declaration:
 ```polyglot
 [ ] ✗ PGE12002 — inline argument does not match any format pattern
 {=} =BadTrigger
-   [t] =T.Daily"not-a-time"            [ ] ✗ PGE12002 — no pattern matches
+   [T] =T.Daily"not-a-time"            [ ] ✗ PGE12002 — no pattern matches
    [Q] =Q.Default                      [ ]   Valid examples: "14:30", "08:00:00"
    [W] =W.Polyglot
    [=] >out#string
@@ -81,7 +81,7 @@ Example stdlib trigger declaration:
 ```polyglot
 [ ] ✗ PGE12002 — whitespace-only path for webhook
 {=} =BadWebhook
-   [t] =T.Webhook" "                   [ ] ✗ PGE12002 — no pattern matches
+   [T] =T.Webhook" "                   [ ] ✗ PGE12002 — no pattern matches
    [Q] =Q.Default                      [ ]   Valid examples: "/api/hook", "/ingest/v2"
    [W] =W.Polyglot
    [=] >out#string
@@ -91,7 +91,7 @@ Example stdlib trigger declaration:
 ```polyglot
 [ ] ✗ PGE12002 — wrong format for folder trigger
 {=} =BadFolder
-   [t] =T.Folder.NewFiles"not a path"  [ ] ✗ PGE12002 — no pattern matches
+   [T] =T.Folder.NewFiles"not a path"  [ ] ✗ PGE12002 — no pattern matches
    [Q] =Q.Default                      [ ]   Valid examples: "/data/inbox", "./uploads"
    [W] =W.Polyglot
    [=] >out#string

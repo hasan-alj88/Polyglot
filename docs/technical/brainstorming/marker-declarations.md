@@ -9,7 +9,7 @@
 |---|---|
 | §0 Object Type Hierarchy | #107 |
 | §0 Marker Groups / `[exe]` | #108 |
-| Cross-cutting: `[t]`→`[T]` | #109 |
+| Cross-cutting: `[T]`→`[T]` | #109 |
 | §1-§2 Base Pipelines / #BaseCode | #110 |
 | §4 Compiler Rules A-G | #111 |
 | §5 `[C]` Inline Code | #112 |

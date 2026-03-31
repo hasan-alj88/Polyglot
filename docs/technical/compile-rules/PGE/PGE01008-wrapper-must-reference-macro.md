@@ -29,7 +29,7 @@ severity: error
          [=] <handle << $txHandle
 
 {=} =ProcessData
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.DB.Transaction               [ ] ✓ references a {W} wrapper
       [=] $connStr << $connStr
@@ -40,12 +40,12 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01008 — wrapper references a {=} pipeline, not a {W} wrapper
 {=} =NotAWrapper
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [r] =DoSomething
 
 {=} =ProcessData
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =NotAWrapper                    [ ] ✗ PGE01008 — target is a pipeline, not a wrapper
       [=] $input << $input
@@ -54,7 +54,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01008 — wrapper references a nonexistent definition
 {=} =ProcessData
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.DoesNotExist                 [ ] ✗ PGE01008 — no definition found
       [=] $input << $input

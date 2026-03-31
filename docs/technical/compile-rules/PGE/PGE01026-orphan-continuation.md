@@ -24,7 +24,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01026 — [+] with no preceding expression
 {=} =Bad
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [+] "orphan continuation"

@@ -18,7 +18,7 @@ severity: warning
 ```polyglot
 [ ] ✓ all declared outputs are pushed
 {=} =Transform
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -34,7 +34,7 @@ severity: warning
 ```polyglot
 [ ] ✓ output pushed in all conditional branches
 {=} =Route
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <status#int
@@ -50,7 +50,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW02003 — >forgotten declared but never pushed
 {=} =Incomplete
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -62,7 +62,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW02003 — >count only pushed in one branch
 {=} =PartialPush
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <flag#bool
@@ -80,7 +80,7 @@ severity: warning
 ```polyglot
 [ ] ⚠ PGW02003 — >debug declared but no code references it
 {=} =Leftover
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string

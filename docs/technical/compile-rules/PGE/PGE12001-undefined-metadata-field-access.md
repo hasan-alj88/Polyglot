@@ -68,7 +68,7 @@ severity: error
 ```polyglot
 [ ] ✓ variable live metadata — %state exists for all $variables
 {=} =CheckState
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -83,7 +83,7 @@ severity: error
 ```polyglot
 [ ] ✓ pipeline live metadata — %status exists for all pipelines
 {=} =Monitor
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -98,7 +98,7 @@ severity: error
 [ ] ✓ user-declared metadata — %description exists when declared in [%]
 {=} =Documented
    [%] .description << "Handles payments"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -109,7 +109,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE12001 — $variable has no %description field
 {=} =BadAccess
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <count#int
@@ -120,7 +120,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE12001 — pipeline has no %memory field
 {=} =BadPipeline
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] >out#string
@@ -130,7 +130,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE12001 — %isSuccess is pipeline-only, not variable
 {=} =WrongScope
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string

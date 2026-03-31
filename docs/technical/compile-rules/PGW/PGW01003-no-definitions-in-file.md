@@ -18,7 +18,7 @@ severity: warning
 {@} @Local:001.App:v1.0.0
 
 {=} =Process
-   [t] =T.Call
+   [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =DoWork

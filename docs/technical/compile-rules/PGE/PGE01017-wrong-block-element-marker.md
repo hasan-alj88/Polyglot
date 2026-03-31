@@ -18,7 +18,7 @@ severity: error
 ```polyglot
 [ ] ✓ [=] for IO declaration, [r] for execution
 {=} =Process
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -32,7 +32,7 @@ severity: error
 ```polyglot
 [ ] ✓ [=] inside [r] call — wiring IO on called pipeline
 {=} =Caller
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -46,7 +46,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01017 — [=] used for standalone assignment in execution body
 {=} =Bad
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
@@ -57,7 +57,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01017 — [=] used for output push inside conditional
 {=} =AlsoBad
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <data#string

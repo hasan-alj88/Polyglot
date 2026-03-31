@@ -9,12 +9,12 @@ updated: 2026-03-30
 ## Permissions
 
 <!-- @permissions -->
-Pipelines can declare `[_]` permission lines after the `{=}` header (and `[%]` metadata, if present), before `[t]`, `[Q]`, `[W]`, and IO. The same applies to all `{x}` definitions (`{M}` macros, etc.). See [[permissions]] for the full permission system.
+Pipelines can declare `[_]` permission lines after the `{=}` header (and `[%]` metadata, if present), before `[T]`, `[Q]`, `[W]`, and IO. The same applies to all `{x}` definitions (`{M}` macros, etc.). See [[permissions]] for the full permission system.
 
 ```polyglot
 {=} =AnalyzeLogs
    [_] _File.read"/var/log/*.log"
-   [t] =T.Manual
+   [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <logPath#path
