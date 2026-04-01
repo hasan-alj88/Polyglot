@@ -29,6 +29,36 @@ Custom queues are defined with `{Q}`, which both defines the queue struct and in
 
 `=Q.Default` is the only stdlib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first. Referencing an undefined queue is a compile error (PGE01014).
 
+### Queue Pipeline Operations (`{Q} =Q.*`)
+
+<!-- @technical/brainstorming/marker-declarations -->
+
+`{Q}` is a **dual-purpose block** — the identifier prefix disambiguates its role:
+
+- **`{Q} #Queue:Name`** — data definition (subtype of `{#}`). Defines and instantiates a queue instance using the `#Queue` schema. Covered above.
+- **`{Q} =Q.*`** — pipeline operation (subtype of `{=}`, equivalent to `{=}[Q]`). Defines a queue control pipeline invocable via `[Q]`.
+
+Queue pipeline operations control the active queue — pause, resume, and kill behaviors. They are base pipelines backed by native code:
+
+```polyglot
+{Q} =Q.Default
+   [%] .baseCode << #BaseCode.Rust.Q.Default
+
+{Q} =Q.Pause.Hard
+   [%] .baseCode << #BaseCode.Rust.Q.Pause.Hard
+   [=] <condition#string
+
+{Q} =Q.Resume
+   [%] .baseCode << #BaseCode.Rust.Q.Resume
+   [=] <condition#string
+
+{Q} =Q.Kill.Graceful
+   [%] .baseCode << #BaseCode.Rust.Q.Kill.Graceful
+   [=] <condition#string
+```
+
+These stdlib queue pipelines do not require `[@]` import — they are built-in like all `=Q.*` pipelines.
+
 ### Using a Queue (`[Q]`)
 
 The `[Q]` line in a pipeline declares which queue it uses. It accepts optional `[=]` IO lines and nested `[Q]` lines for pipeline-specific active controls:
