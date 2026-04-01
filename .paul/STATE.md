@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: Issues #76-#78 (RT runtime execution) — COMPLETE
+Phase: Issues #76-#78 (RT runtime execution) — MERGED
 Plan: 76-01 complete (5/5 tasks, 6/6 AC pass)
-Status: Phase complete, ready for git commit + merge
-Last activity: 2026-04-01 — Phase transition (SUMMARY created, state updated)
+Status: Merged to main, issues ready to close
+Last activity: 2026-04-01 — Merged to main, branch deleted
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -63,7 +63,7 @@ GitHub:
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Phase complete, ready for commit + merge]
+  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
 ```
 
 ## Accumulated Context
@@ -173,14 +173,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-01 (session 12)
-Stopped at: Phase transition complete, ready for git commit + merge
-Next action: Commit phase, merge branch to main, close issues #76, #77, #78, delete draft.md
+Stopped at: Merged to main, issues ready to close
+Next action: Close issues #76, #77, #78 on GitHub (or pick next issue)
 Resume file: .paul/phases/issue-76-78-rt-runtime-execution/76-01-SUMMARY.md
 Resume context:
-- 2 new files: RT.md, rt.md; 7 edited files + STATE.md + SUMMARY.md
-- 13 design decisions documented in SUMMARY.md
+- Branch merged, draft.md deleted
 - =W.Python remains in brainstorming/ (out of scope, migrate on touch)
-- draft.md to be deleted after merge
 
 ---
 *STATE.md — Updated after every significant action*
