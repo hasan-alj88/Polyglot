@@ -32,6 +32,10 @@ RawString (compiler intrinsic)
 #Array:ValueType:Dim (macro-generated — contiguous, rectangular, N-dimensional — #Map variant)
 #Dataframe:ColumnEnum:CellType (macro-generated — row-oriented, Array of Map)
 #Serial (schema-free, unlimited depth)
+
+#Code:<Lang>.Output (runtime execution output — .stdout, .stderr, .return)
+#PyEnv (Python runtime environment handle)
+#RsEnv (Rust runtime environment handle)
 ```
 
 ## Category Index
@@ -44,6 +48,7 @@ RawString (compiler intrinsic)
 | Collections | [collections.md](collections.md) | #Map, #Array, #Dataframe, #Serial |
 | Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #FileAccess, #VarState |
 | Structs | [structs.md](structs.md) | #path, #Queue |
+| Runtime | [rt.md](rt.md) | #Code, #PyEnv, #RsEnv |
 
 ## Related
 

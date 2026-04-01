@@ -34,7 +34,7 @@ Wrappers that manage external resources require `[_]` permission declarations. S
 | `=W.Log.Context` | None | — |
 | `=W.Queue.Consumer` | `_IPC.receive` | IO |
 | `=W.Cache.Scope` | `_Database.read` | Inline |
-| `=W.Python` | `_System.process` | IO |
+| `=W.RT` | `_System.process` | IO |
 
 ```
 =W
@@ -105,9 +105,17 @@ Wrappers that manage external resources require `[_]` permission declarations. S
          [}] $cache
          [ ] Connects cache on setup, flushes + disconnects on cleanup.
 
-   .Python
-      [}] $pyRuntime#PyRT
-      [ ] Starts Python runtime on setup, stops on cleanup.
+   .RT
+      :Python
+         :3
+            :14
+               [}] $pyenv#PyEnv
+               [ ] Starts Python 3.14 runtime on setup, stops on cleanup.
+      :Rust
+         :1
+            :84
+               [}] $rsenv#RsEnv
+               [ ] Starts Rust 1.84 runtime on setup, stops on cleanup.
 ```
 
 NOTE: Retry/timeout/rate-limiting are `[Q]` queue strategies, not wrappers.
