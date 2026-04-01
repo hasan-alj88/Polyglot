@@ -23,7 +23,7 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{T}` | Trigger pipeline definition (subtype of `{=}`). See [[concepts/pipelines/io-triggers#Trigger Definitions]] |
 | `{M}` | Type macro definition (subtype of `{#}`). See [[macros]] |
 | `{W}` | Wrapper definition (subtype of `{=}`). See [[wrappers]] |
-| `{Q}` | Queue definition (dual: `{Q} #Name` = data subtype of `{#}`, `{Q} =Q.*` = pipeline subtype of `{=}`). See [[concepts/pipelines/queue#Queue]] |
+| `{Q}` | Queue — dual-purpose block. `{Q} #Queue:Name` defines a queue instance (subtype of `{#}`, data definition). `{Q} =Q.*` defines a queue pipeline operation (subtype of `{=}`, equivalent to `{=}[Q]`). The identifier prefix (`#` vs `=`) disambiguates. See [[concepts/pipelines/queue#Queue]] |
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
 | `{Array}` | Array collection definition. See [[concepts/collections/INDEX|collections]] |
 | `{ }` | Comment. See [[comments]] |

@@ -13,7 +13,7 @@ Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
 Phase: No active phase
 Plan: —
 Status: Ready for next issue
-Last activity: 2026-03-31 — Merged issue #112 to main
+Last activity: 2026-04-01 — Issue #113 complete
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -44,6 +44,7 @@ Progress:
 - Issue #109: [██████████] 100% (1/1 plans)
 - Issue #110: [██████████] 100% (1/1 plans)
 - Issue #112: [██████████] 100% (1/1 plans)
+- Issue #113: [██████████] 100% (1/1 plans)
 
 ## Active Issue
 
@@ -54,7 +55,7 @@ No active issue. Run /paul:work-issue <number> to start.
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -138,6 +139,8 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #110 — Document base pipelines and #BaseCode enum | 2026-03-31 | Merged design/issue-110; BaseCode.md, EBNF .baseCode, metadata.md, INDEX.md Base vs Derived, PGE01028 |
 | Unified [c] → [C] uppercase foreign code element | 2026-03-31 | #112: [C] is block element for inline foreign code passed to =RT.*; #Code header removed; language from =RT.* pipeline |
 | Closed #112 — Reconcile [C] inline code element | 2026-03-31 | Merged design/issue-112 to main; 6 files updated; EBNF simplified |
+| Closed #114 — %T trigger branch already done | 2026-04-01 | Already implemented by #107; closed as duplicate |
+| Closed #113 — Unify {Q} dual-purpose documentation | 2026-04-01 | blocks.md expanded, queue.md new section, EBNF §9.5 dual-purpose note; 3 files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -156,13 +159,13 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-03-31 (session 9)
-Stopped at: Issue #112 merged to main
-Next action: /paul:work-issue <number> (pick next issue) or /paul:progress
+Last session: 2026-04-01 (session 10)
+Stopped at: Issue #113 complete, ready for merge
+Next action: /paul:merge or /paul:work-issue <number>
 Resume context:
-- Issue #112 closed — [c] → [C] unification, EBNF simplified, PGE01027 updated
-- No active issue
-- Remaining: #111 (compiler rules), #113 ({Q} dual-purpose)
+- Issue #113 complete — {Q} dual-purpose unified across 3 files
+- Issue #114 closed as already done by #107
+- Remaining: #111 (compiler rules)
 
 ---
 *STATE.md — Updated after every significant action*
