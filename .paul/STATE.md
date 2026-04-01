@@ -13,7 +13,7 @@ Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
 Phase: No active phase
 Plan: —
 Status: Ready for next issue
-Last activity: 2026-04-01 — Issue #113 complete
+Last activity: 2026-04-01 — Merged issue #113 to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -55,7 +55,7 @@ No active issue. Run /paul:work-issue <number> to start.
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -160,11 +160,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-01 (session 10)
-Stopped at: Issue #113 complete, ready for merge
-Next action: /paul:merge or /paul:work-issue <number>
+Stopped at: Issue #113 merged to main
+Next action: /paul:work-issue <number> (pick next issue) or /paul:progress
 Resume context:
-- Issue #113 complete — {Q} dual-purpose unified across 3 files
+- Issue #113 closed — {Q} dual-purpose unified across 3 files
 - Issue #114 closed as already done by #107
+- No active issue
 - Remaining: #111 (compiler rules)
 
 ---
