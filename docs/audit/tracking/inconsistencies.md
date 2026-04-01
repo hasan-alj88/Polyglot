@@ -49,6 +49,6 @@ All 12 broken `[[STDLIB]]` references were rewritten to point to specific compon
 | IC-002 | Critical | metadata.md had `audience: developer` in user-facing path | Split per AD-005: rewrote as user-facing concept doc (`audience: user`); architectural content already covered by metadata-tree.md | 2026-03-30 |
 | IC-003 | High | `#Dimension` regex excluded 0D | Corrected regex to `^[0-9]+D$` in scalars.md (table + definition block), matching EC-24.3 resolution | 2026-03-30 |
 | IC-004 | High | 12 broken `[[STDLIB]]` wikilinks across 7 files | Rewrote each link to correct component: `[[stdlib/INDEX\|Standard Library]]`, `[[stdlib/pipelines/Path\|=Path]]`, `[[stdlib/types/boolean\|#Boolean]]`, `[[stdlib/INDEX#Pipeline Namespaces\|Wrappers]]` | 2026-03-30 |
-| IC-005 | Medium | Enums mislabeled as structs in structs.md | Already fixed — structs.md no longer lists enum types; confirmed via grep | 2026-03-30 |
+| IC-005 | Medium | Enums mislabeled as structs in structs.md | structs.md:17 now lists non-enum structs (`#path`, `#Queue`, `#DateTime`) with cross-refs to enums.md/boolean.md; type-identity.md:14 updated with consistent `#` prefix and `#Queue` added | 2026-04-01 |
 | IC-006 | Medium | Missing `@`-imports in index files | Added `@vision`, `@glossary`, `@audit/README` to both SPEC-INDEX.md and technical/INDEX.md | 2026-03-30 |
 | IC-007 | Low | TBD stub in metadata.md tree diagram | Tree diagram removed in AD-005 split; macro section now states "not yet defined" explicitly | 2026-03-30 |

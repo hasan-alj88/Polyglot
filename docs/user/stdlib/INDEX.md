@@ -34,6 +34,7 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 | `=T` | [pipelines/T.md](pipelines/T.md) | Triggers (call, manual, daily, folder, webhook) | Stable | Mixed |
 | `=Q` | [pipelines/Q.md](pipelines/Q.md) | Queue configurations (default, FIFO, LIFO, priority, pause, resume, kill) | Stable | None |
 | `=RT` | [pipelines/RT.md](pipelines/RT.md) | Runtime execution (Function, Script, CLI, Bind — inline and file modes) | Stable | `_System.process` |
+| `=DT` | [pipelines/DT.md](pipelines/DT.md) | DateTime construction, conversion, arithmetic, comparison, extraction, formatting | Stable | `_IO.Read` (Now) / None |
 | `=W` | [pipelines/W.md](pipelines/W.md) | Wrappers (Polyglot, DB, File, HTTP, SSH, Auth, Log, Queue, Cache, RT) | Stable | Mixed |
 
 ## Expander Operators (~)
@@ -61,6 +62,7 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 | `#Map`, `#Array`, `#Serial`, `#Dataframe` | [types/collections.md](types/collections.md) | Collection types | Stable |
 | `#OS`, `#PipelineStatus`, `#QueueStrategy`, `#RetriggerStrategy`, `#QueueState`, `#FileAccess`, `#VarState`, `#FieldKind` | [types/enums.md](types/enums.md) | Runtime enums | Stable |
 | `#path`, `#Queue` | [types/structs.md](types/structs.md) | Struct types | Stable |
+| `#DateTime` (`#dt`) | [types/datetime.md](types/datetime.md) | Date, time, calendar, timezone, duration types | Stable |
 | `#Code`, `#PyEnv`, `#RsEnv` | [types/rt.md](types/rt.md) | Runtime types | Stable |
 
 ## Error Namespaces (!)

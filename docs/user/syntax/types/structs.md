@@ -14,7 +14,7 @@ updated: 2026-03-30
 
 A **struct** is any type with a defined schema, declared with `{#}` (see [[blocks]]). The term "struct" refers to the type category — `{#}` is the declaration syntax. Every struct definition creates a schema template at `%definition.#:{StructName}` and instances at `%#:{StructName}:{n}` — see [[data-is-trees#Schema vs Instance]].
 
-Stdlib structs include `path`, `#Boolean`, `#OS`, `#PipelineStatus`, `#VarState`, and `#DateTime`. User-defined structs follow the same rules.
+Stdlib structs with value fields include `#path`, `#Queue`, and `#DateTime` (see [[stdlib/types/structs|stdlib structs]] and [[stdlib/types/datetime|datetime]]). Enum types (`#Boolean`, `#OS`, `#PipelineStatus`, `#VarState`) are also `{#}` structs but documented separately — see [[stdlib/types/enums|enums]] and [[stdlib/types/boolean|boolean]]. User-defined structs follow the same rules.
 
 In type annotations (after `#`), nested type refs drop the `#` prefix — the compiler knows `#` starts a type context:
 

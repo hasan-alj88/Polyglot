@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: specification
-updated: 2026-03-30
+updated: 2026-04-01
 status: draft
 ---
 
@@ -54,6 +54,11 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01025 | Discard in Wrapper IO |
 | PGE01026 | Orphan Continuation Line |
 | PGE01027 | Empty Foreign Code Block |
+| PGE01028 | Base-Derived Mutual Exclusion |
+| PGE01029 | Invalid Marker for Definition Type |
+| PGE01030 | Missing Pipeline Wrapper |
+| PGE01031 | Forbidden Element in Definition |
+| PGE01032 | Missing Trigger Boolean Output |
 
 ### 02 — Lifecycle & State
 
@@ -116,6 +121,9 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE04023 | Macro Field Constraint Violation *(planned)* |
 | PGE04024 | Non-Value Comparison |
 | PGE04025 | Untyped Array |
+| PGE04026 | Invalid IANA Timezone |
+| PGE04027 | Missing Required DateTime Subfield |
+| PGE04028 | Invalid Epoch Value |
 
 ### 05 — Data Definitions
 
