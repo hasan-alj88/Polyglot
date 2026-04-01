@@ -11,7 +11,7 @@ All Polyglot data is serialized strings. **"Same type" means "same schema"** —
 
 ## Terminology
 
-`{#}` declarations produce **structs** — the term for any type with a defined schema. All `{#}` types (user-defined and stdlib like `path`, `#Boolean`, `#OS`, `#DateTime`) are structs.
+`{#}` declarations produce **structs** — the term for any type with a defined schema. All `{#}` types (user-defined and stdlib like `#path`, `#Boolean`, `#OS`, `#Queue`, `#DateTime`) are structs.
 
 ## Rules
 

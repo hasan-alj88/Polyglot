@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: Issues #76-#78 (RT runtime execution) — MERGED
-Plan: 76-01 complete (5/5 tasks, 6/6 AC pass)
-Status: Merged to main, issues ready to close
-Last activity: 2026-04-01 — Merged to main, branch deleted
+Phase: Issues #95/#96 (doc audit inconsistencies) — COMPLETE
+Plan: 95-01, 95-02, 95-03 — all complete (8/8 tasks, 11/11 ACs)
+Status: Loop closed, ready for MERGE
+Last activity: 2026-04-01 — UNIFY complete, 3 SUMMARYs created
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -46,24 +46,24 @@ Progress:
 - Issue #112: [██████████] 100% (1/1 plans)
 - Issue #113: [██████████] 100% (1/1 plans)
 - Issues #76-#78: [██████████] 100% (1/1 plans — RT runtime execution)
+- Issues #95/#96: [██████████] 100% (3/3 plans — IC-005 fix, #DateTime types, =DT.* pipelines)
 
 ## Active Issue
 
-Issue: #76, #77, #78 — RT runtime execution (wrapper, errors, pipelines)
-Branch: design/issue-76-78-rt-runtime-execution
-Labels: design, stdlib
+Issue: #95, #96 — Documentation audit: inconsistencies and coverage gaps + metadata split
+Branch: docs/issue-95-96-doc-audit-inconsistencies
+Labels: docs, P2-high
 Started: 2026-04-01
 GitHub:
-- https://github.com/hasan-alj88/Polyglot/issues/76
-- https://github.com/hasan-alj88/Polyglot/issues/77
-- https://github.com/hasan-alj88/Polyglot/issues/78
+- https://github.com/hasan-alj88/Polyglot/issues/95
+- https://github.com/hasan-alj88/Polyglot/issues/96
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
+  ✓        ✓        ✓        ○     [Loop closed — ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -154,6 +154,11 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | .Inline/.File mode split for all =RT modes | 2026-04-01 | 7 total variants; .CLI inherently file-based (no .Inline) |
 | .CLI uses =W.Polyglot, not =W.RT | 2026-04-01 | No language runtime needed for compiled binaries |
 | Compiler validates Function/Script only | 2026-04-01 | <func name checked in .Function; <Bind names checked in .Script; .CLI and .Bind opaque |
+| IC-005 fix — enums mislabeled as structs | 2026-04-01 | structs.md lists #path/#Queue/#DateTime; type-identity.md adds #Queue; tracking corrected |
+| Formalized #DateTime as stdlib type | 2026-04-01 | 55 {#} types in datetime.md (22KB); multi-calendar, time units, cultural extensions |
+| #WeekSystem Option A restructure | 2026-04-01 | Enum fields with nested .config#BusinessWeek; fixes PGE05005 violation |
+| =DT.* stdlib pipelines | 2026-04-01 | 40 {=} pipelines in DT.md; construction, conversion, arithmetic, comparison, formatting, business |
+| PGE04026-04028 compile rules | 2026-04-01 | Invalid IANA timezone, missing DateTime epoch, out-of-range epoch |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -172,13 +177,10 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-01 (session 12)
-Stopped at: Merged to main, issues ready to close
-Next action: Close issues #76, #77, #78 on GitHub (or pick next issue)
-Resume file: .paul/phases/issue-76-78-rt-runtime-execution/76-01-SUMMARY.md
-Resume context:
-- Branch merged, draft.md deleted
-- =W.Python remains in brainstorming/ (out of scope, migrate on touch)
+Last session: 2026-04-01 (session 13)
+Stopped at: UNIFY complete, loop closed
+Next action: Run /paul:merge to commit and merge branch
+Resume file: .paul/phases/issue-95-96-doc-audit-inconsistencies/95-03-SUMMARY.md
 
 ---
 *STATE.md — Updated after every significant action*
