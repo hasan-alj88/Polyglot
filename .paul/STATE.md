@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: No active phase
-Plan: —
-Status: Ready for next issue
-Last activity: 2026-04-01 — Merged issue #113 to main
+Phase: Issues #76-#78 (RT runtime execution) — COMPLETE
+Plan: 76-01 complete (5/5 tasks, 6/6 AC pass)
+Status: Phase complete, ready for git commit + merge
+Last activity: 2026-04-01 — Phase transition (SUMMARY created, state updated)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -45,17 +45,25 @@ Progress:
 - Issue #110: [██████████] 100% (1/1 plans)
 - Issue #112: [██████████] 100% (1/1 plans)
 - Issue #113: [██████████] 100% (1/1 plans)
+- Issues #76-#78: [██████████] 100% (1/1 plans — RT runtime execution)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #76, #77, #78 — RT runtime execution (wrapper, errors, pipelines)
+Branch: design/issue-76-78-rt-runtime-execution
+Labels: design, stdlib
+Started: 2026-04-01
+GitHub:
+- https://github.com/hasan-alj88/Polyglot/issues/76
+- https://github.com/hasan-alj88/Polyglot/issues/77
+- https://github.com/hasan-alj88/Polyglot/issues/78
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Phase complete, ready for commit + merge]
 ```
 
 ## Accumulated Context
@@ -141,6 +149,11 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #112 — Reconcile [C] inline code element | 2026-03-31 | Merged design/issue-112 to main; 6 files updated; EBNF simplified |
 | Closed #114 — %T trigger branch already done | 2026-04-01 | Already implemented by #107; closed as duplicate |
 | Closed #113 — Unify {Q} dual-purpose documentation | 2026-04-01 | blocks.md expanded, queue.md new section, EBNF §9.5 dual-purpose note; 3 files |
+| Closed #76-#78 — RT runtime execution subsystem | 2026-04-01 | =W.RT wrapper, !RT errors, =RT.* pipelines (7 modes), #Code/#PyEnv/#RsEnv types; 2 new + 7 edited files |
+| Script vs Bind by binding origin | 2026-04-01 | Script: Polyglot injects vars (<Bind/>Bind); Bind: foreign code calls pull()/push() |
+| .Inline/.File mode split for all =RT modes | 2026-04-01 | 7 total variants; .CLI inherently file-based (no .Inline) |
+| .CLI uses =W.Polyglot, not =W.RT | 2026-04-01 | No language runtime needed for compiled binaries |
+| Compiler validates Function/Script only | 2026-04-01 | <func name checked in .Function; <Bind names checked in .Script; .CLI and .Bind opaque |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -159,14 +172,15 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-01 (session 10)
-Stopped at: Issue #113 merged to main
-Next action: /paul:work-issue <number> (pick next issue) or /paul:progress
+Last session: 2026-04-01 (session 12)
+Stopped at: Phase transition complete, ready for git commit + merge
+Next action: Commit phase, merge branch to main, close issues #76, #77, #78, delete draft.md
+Resume file: .paul/phases/issue-76-78-rt-runtime-execution/76-01-SUMMARY.md
 Resume context:
-- Issue #113 closed — {Q} dual-purpose unified across 3 files
-- Issue #114 closed as already done by #107
-- No active issue
-- Remaining: #111 (compiler rules)
+- 2 new files: RT.md, rt.md; 7 edited files + STATE.md + SUMMARY.md
+- 13 design decisions documented in SUMMARY.md
+- =W.Python remains in brainstorming/ (out of scope, migrate on touch)
+- draft.md to be deleted after merge
 
 ---
 *STATE.md — Updated after every significant action*

@@ -16,6 +16,7 @@ This document has been split into per-namespace files organized by identifier pr
 - [=T](stdlib/pipelines/T.md) — triggers
 - [=Q](stdlib/pipelines/Q.md) — queue configurations
 - [=Math](stdlib/pipelines/Math.md) — numeric operations (add, subtract, multiply, divide, etc.)
+- [=RT](stdlib/pipelines/RT.md) — runtime execution (Function, Script, CLI, Bind)
 - [=W](stdlib/pipelines/W.md) — wrappers
 
 ## Expanders (~ → `%~`)

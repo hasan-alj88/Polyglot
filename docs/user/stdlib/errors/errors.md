@@ -89,11 +89,17 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
    [.] .IPC.Denied;#Error
    [.] .Device.Denied;#Error
    [.] .Memory.Denied;#Error
+
+{!} !RT
+   [.] .CompileError;#Error
+   [.] .RuntimeError;#Error
+   [.] .Timeout;#Error
+   [.] .EnvironmentError;#Error
 ```
 
 ### `!Error` — User-Extensible Namespace
 
-`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`) have Polyglot-defined fixed leaves.
+`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) have Polyglot-defined fixed leaves.
 
 Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `[.]` for terminal leaves. Siblings at the same level must all use the same separator (sibling homogeneity rule).
 
@@ -163,6 +169,40 @@ Each stdlib pipeline declares the errors it can raise via `[=] !ErrorName` (see 
 
 =Math.Modulo
    [=] !Math.DivideByZero
+
+=RT.<Lang>.Function.Inline
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.Function.File
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.Script.Inline
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.Script.File
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.CLI
+   [=] !RT.RuntimeError
+   [=] !RT.Timeout
+
+=RT.<Lang>.Bind.Inline
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.Bind.File
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
 ```
 
 ## `!Alias.Clash` — Compile Error
