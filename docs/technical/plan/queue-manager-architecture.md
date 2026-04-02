@@ -90,12 +90,57 @@ Pipelines paused (soft or hard). Tracks pause type for resource accounting.
 
 ```
 "counter:instances"               HASH   {ProcessData: 3, GPU.Render: 1}
-"job:{jobId}"                     HASH   {pipeline, queue, status,
-                                          enqueued_at, dispatched_at,
-                                          started_at, suspended_at, pid}
 ```
 
-Queue definitions (`{Q}` schema fields) and job hierarchy (parent→children) are stored in **NoSQL**, not Redis. Redis only holds runtime state needed by the dispatch loop.
+### job:{jobId} (HASH)
+
+```
+pipeline:           string    — pipeline name
+queue:              string    — assigned Dispatch Queue
+status:             string    — current #QueueState variant
+params:             string    — serialized pipeline input parameters
+enqueued_at:        string    — ISO timestamp
+dispatched_at:      string?   — ISO timestamp
+started_at:         string?   — ISO timestamp
+suspended_at:       string?   — ISO timestamp
+pid:                int?      — OS process ID (from Runner ACK)
+confirmed_paused:   bool?     — Runner confirmed suspension
+```
+
+Job hierarchy (parentJobId, children) lives ONLY in NoSQL — not in Redis. For kill propagation, the Trigger Monitor reads the hierarchy from NoSQL, pre-computes the full descendant list, and sends individual `command.kill` signals for each.
+
+## NoSQL Schema (definitions)
+
+### Queue Definition (from `{Q} #Queue:Name`)
+
+```
+Stored at: %Queue.DispatchQueue:Name
+
+strategy:           #QueueStrategy     — FIFO | LIFO | Priority
+host:               #String            — target host (default: "localhost")
+maxInstances:       int                — queue-level default
+maxConcurrent:      int                — queue-level default
+resourceTags:       #Array:ResourceTag — default resource tags
+killPropagation:    #KillPropagation   — Cascade | Downgrade
+maxWaitTime:        string             — max queue wait time
+description:        string             — human-readable
+controls:           [Q] nested         — =Q.Pause.*, =Q.Resume.*, =Q.Kill.*
+```
+
+### Job Hierarchy (runtime tree)
+
+```
+Stored as: job tree rooted at pipeline instance
+
+{jobId}
+├── pipeline:       string             — pipeline name
+├── parentJobId:    string?            — parent (null for root)
+├── children:       [jobId, ...]       — sub-jobs
+├── marker:         string             — [r], [p], [b], [?]
+└── status:         #QueueState        — current state
+```
+
+Only the Trigger Monitor reads the hierarchy — to pre-compute kill lists and manage collector logic (`*First`/`*Nth`/`*All`). The Queue Manager never queries NoSQL for hierarchy data.
 
 ## Dispatch Coordinator
 
@@ -148,6 +193,312 @@ When a candidate passes all constraints:
 4. Return job ID for NATS dispatch signal
 
 All steps execute atomically within the Lua script.
+
+## Reactive Signal Table
+
+`f(signal, state) → (new_state, output_signals)`
+
+Every signal is a command from the Trigger Monitor (or ACK from Runner). The Queue Manager just obeys.
+
+### command.enqueue
+
+```
+Input:  {jobId, pipeline, queue, params, priority?, parentJobId?, marker?}
+
+State Write:
+    IF strategy == Priority:
+        ZADD queue:dispatch:{queue} {priority} {jobId}
+    ELSE:
+        RPUSH queue:dispatch:{queue} {jobId}
+    HSET job:{jobId} {pipeline, queue, status: "pending", enqueued_at}
+
+Output: state.queue.{queue}.enqueued {jobId, pipeline, queue_size}
+```
+
+### command.dispatch
+
+```
+Input:  {jobId}
+
+State Write:
+    pop {jobId} from its queue
+    SADD set:executing {jobId}
+    HINCRBY counter:instances {pipeline} 1
+    HSET job:{jobId} status "executing" dispatched_at {now}
+
+Output: state.job.{jobId}.executing {pipeline, queue}
+        state.executing.count {n}
+        control.{jobId}.start → Runner
+```
+
+### command.pause.soft
+
+```
+Input:  {jobId}
+
+State Write:
+    SREM set:executing {jobId}
+    HSET set:suspended {jobId} "soft"
+    HINCRBY counter:instances {pipeline} -1
+    HSET job:{jobId} status "suspended.soft" suspended_at {now}
+
+Output: state.job.{jobId}.suspended {type: "soft"}
+        state.executing.count {n}
+        control.{jobId}.pause.soft → Runner
+```
+
+### command.pause.hard
+
+```
+Input:  {jobId}
+
+State Write:
+    SREM set:executing {jobId}
+    HSET set:suspended {jobId} "hard"
+    HINCRBY counter:instances {pipeline} -1
+    HSET job:{jobId} status "suspended.hard" suspended_at {now}
+
+Output: state.job.{jobId}.suspended {type: "hard"}
+        state.executing.count {n}
+        control.{jobId}.pause.hard → Runner
+```
+
+### command.resume
+
+```
+Input:  {jobId}
+
+State Write:
+    HDEL set:suspended {jobId}
+    RPUSH queue:resume {jobId}
+    HSET job:{jobId} status "resuming"
+
+Output: state.job.{jobId}.resuming
+        state.queue.resume.size {n}
+```
+
+### command.kill.graceful
+
+```
+Input:  {jobId}
+
+State Write:
+    SREM set:executing {jobId}
+    RPUSH queue:teardown {jobId}
+    HINCRBY counter:instances {pipeline} -1
+    HSET job:{jobId} status "teardown"
+
+Output: state.job.{jobId}.teardown
+        state.executing.count {n}
+        control.{jobId}.kill.graceful → Runner
+```
+
+### command.kill.hard
+
+```
+Input:  {jobId}
+
+State Write:
+    SREM set:executing {jobId}
+    HINCRBY counter:instances {pipeline} -1
+    DEL job:{jobId}
+
+Output: state.job.{jobId}.killed
+        state.executing.count {n}
+        control.{jobId}.kill.hard → Runner
+```
+
+### command.priority.update
+
+```
+Input:  {jobId, score}
+
+State Write:
+    ZADD queue:dispatch:{queue} {score} {jobId}
+
+Output: state.queue.{queue}.updated {jobId, new_score}
+```
+
+### command.dequeue
+
+```
+Input:  {jobId, queue}
+
+State Write:
+    LREM/ZREM queue:dispatch:{queue} {jobId}
+    DEL job:{jobId}
+
+Output: state.queue.{queue}.dequeued {jobId}
+```
+
+Used by `=Q.Dispatch.Wait.TimeOut.Reassign` — Trigger Monitor sends `command.dequeue` followed by `command.enqueue` to move a job between queues.
+
+### command.queue.register
+
+```
+Input:  {name, strategy}
+
+State Write:
+    SADD queues:registered {name}
+    Read full definition from NoSQL (%Queue.DispatchQueue:{name})
+    Create Redis container (LIST or ZSET based on strategy)
+
+Output: state.queue.{name}.registered {strategy}
+```
+
+### runner.started (ACK)
+
+```
+Input:  {jobId, pid}
+
+State Write:
+    HSET job:{jobId} pid {pid} started_at {now}
+
+Output: state.job.{jobId}.running {pipeline, pid}
+```
+
+### runner.paused (ACK)
+
+```
+Input:  {jobId, type}
+
+State Write:
+    HSET job:{jobId} confirmed_paused true
+
+Output: state.job.{jobId}.confirmed_suspended {type}
+```
+
+### runner.completed
+
+```
+Input:  {jobId, result}
+
+State Write:
+    SREM set:executing {jobId}
+    HINCRBY counter:instances {pipeline} -1
+    DEL job:{jobId}
+
+Output: state.job.{jobId}.completed {pipeline, result}
+        state.executing.count {n}
+```
+
+### runner.failed
+
+```
+Input:  {jobId, error}
+
+State Write:
+    SREM set:executing {jobId}
+    HINCRBY counter:instances {pipeline} -1
+    DEL job:{jobId}
+
+Output: state.job.{jobId}.failed {pipeline, error}
+        state.executing.count {n}
+```
+
+## Signal Data Payloads
+
+### Command Signals (Trigger Monitor → Queue Manager)
+
+```
+command.enqueue
+{
+    jobId:          string    — unique job identifier
+    pipeline:       string    — pipeline name (e.g., "GPU.RenderFrames")
+    queue:          string    — target Dispatch Queue name
+    params:         serial    — pipeline input parameters
+    priority:       int?      — priority score (Priority queues only)
+    parentJobId:    string?   — parent job ID (for sub-jobs)
+    marker:         string?   — originating marker: [r], [p], [b], [?]
+}
+
+command.dispatch
+{
+    jobId:          string    — job to dispatch from queue to Executing Set
+}
+
+command.pause.soft  { jobId: string }
+command.pause.hard  { jobId: string }
+command.resume      { jobId: string }
+command.kill.graceful { jobId: string }
+command.kill.hard   { jobId: string }
+
+command.priority.update
+{
+    jobId:          string    — job to reprioritize
+    score:          int       — new priority score
+}
+
+command.dequeue
+{
+    jobId:          string    — job to remove from queue
+    queue:          string    — source queue
+}
+
+command.queue.register
+{
+    name:           string    — queue name (e.g., "GPUQueue")
+    strategy:       string    — FIFO | LIFO | Priority
+    Note: full definition read from NoSQL at registration time
+}
+
+command.drain   { queue: string }
+command.flush   { queue: string }
+```
+
+### State Signals (Queue Manager → Trigger Monitor)
+
+```
+state.job.{jobId}.executing     { jobId, pipeline, queue }
+state.job.{jobId}.suspended     { jobId, pipeline, type: "soft"|"hard" }
+state.job.{jobId}.resuming      { jobId, pipeline }
+state.job.{jobId}.teardown      { jobId, pipeline }
+state.job.{jobId}.completed     { jobId, pipeline, result? }
+state.job.{jobId}.failed        { jobId, pipeline, error }
+state.job.{jobId}.killed        { jobId, pipeline }
+state.job.{jobId}.running       { jobId, pipeline, pid }
+state.job.{jobId}.confirmed_suspended { jobId, type: "soft"|"hard" }
+
+state.executing.count           { count, members: string[] }
+
+state.queue.{queue}.enqueued    { jobId, pipeline, queue_size }
+state.queue.{queue}.dequeued    { jobId }
+state.queue.{queue}.updated     { jobId, new_score }
+state.queue.{queue}.registered  { name, strategy }
+state.queue.resume.size         { count }
+```
+
+### Control Signals (Queue Manager → Runner)
+
+```
+control.{jobId}.start           { jobId, pipeline, params }
+control.{jobId}.pause.soft      { jobId }
+control.{jobId}.pause.hard      { jobId }
+control.{jobId}.kill.graceful   { jobId }
+control.{jobId}.kill.hard       { jobId }
+```
+
+### Runner Signals (Runner → Trigger Monitor)
+
+```
+trigger.subjob
+{
+    parentJobId:    string    — parent job requesting sub-jobs
+    pipeline:       string    — pipeline name for sub-jobs
+    marker:         string    — [r], [p], [b], [?]
+    branches:       int       — number of parallel branches (for [p])
+    params:         serial[]  — parameters for each branch
+}
+```
+
+### ACK Signals (Runner → Queue Manager)
+
+```
+runner.started      { jobId, pid }
+runner.completed    { jobId, result? }
+runner.failed       { jobId, error }
+runner.paused       { jobId, type: "soft"|"hard" }
+```
 
 ## NATS Subject Namespace
 
@@ -295,6 +646,261 @@ When a pipeline hits a `[p]`, `[r]`, or `[b]` marker, the Runner sends a `trigge
 ```
 
 **Kill propagation:** When a parent job is killed, the Trigger Monitor pre-computes the full descendant list from NoSQL and sends individual `command.kill` signals for each descendant. The Queue Manager never queries NoSQL — it only processes the kill commands it receives. The queue's `#KillPropagation` setting (`#Cascade` or `#Downgrade`) determines whether sub-jobs receive the same kill type or a downgraded one.
+
+## Properties
+
+| Property | How Achieved |
+|----------|--------------|
+| **No decisions** | Queue Manager only reacts to command signals — never evaluates conditions |
+| **Deterministic** | Same command + same Redis state = same outcome, always |
+| **Reactive** | Every state change is triggered by a NATS signal |
+| **Faithful** | Queue ordering is preserved — Dispatch Coordinator never reorders a queue's strategy |
+| **Fair** | Two-tier RR: Tier 1 across Dispatch Queues, Tier 2 across Dispatch+Resume+Teardown — all peers |
+| **Atomic** | Each signal handler runs as one Redis Lua script |
+| **Testable** | Pure function — mock state, feed signal, assert output |
+| **Replayable** | Record signal log → replay → exact same state transitions |
+| **Optimizable** | Pre-compute, short-circuit, batch — all possible because deterministic |
+
+## Precomputation
+
+Because every signal handler is `f(signal, state) → (new_state, output_signals)` — a pure function — the Queue Manager can optimize without changing behavior.
+
+### 1. Constraint Pre-evaluation
+
+When a job is enqueued, the Queue Manager has all constraint data in Redis (`maxInstances`, `maxConcurrent`, `resourceTags`). It can precompute constraint results and cache them:
+
+```
+On enqueue(jobId):
+    constraint_result = check(maxInstances, maxConcurrent, resourceTags)
+    HSET job:{jobId} constraint_precomputed {pass|fail|reason}
+```
+
+When `command.dispatch` fires, the cached result is read instead of re-evaluated. Caches invalidate only when the Executing Set changes (job starts, completes, pauses, or resumes) — a known, finite set of events.
+
+Invalidation signal: any `state.executing.*` broadcast → recompute constraints for all waiting candidates.
+
+### 2. Short-circuit on State Broadcast
+
+When the Queue Manager broadcasts `state.executing.count`, the Trigger Monitor can short-circuit constraint checks:
+
+- If `executing_count < min(maxConcurrent)` across all waiting candidates → ALL pass maxConcurrent without per-candidate evaluation
+- If `instances[pipeline] < maxInstances` for a pipeline → ALL instances of that pipeline pass without checking each one
+- If no `#GPU` tagged job is executing → ALL GPU-tagged candidates pass resourceTag check
+
+This turns O(n) constraint checks into O(1) for common cases.
+
+### 3. Batch Dispatch
+
+The Trigger Monitor's simulated dispatch builds a list of all dispatchable candidates in one round-robin pass. The Queue Manager processes the batch atomically:
+
+```
+f(command.dispatch_batch, state) → (new_state, output_signals)
+─────────────────────────────────────────────────────────────────
+Input:  command.dispatch_batch {jobIds: [job1, job2, job3]}
+
+State Write (single Lua script):
+    FOR each jobId in jobIds:
+        pop jobId from its queue
+        SADD set:executing {jobId}
+        HINCRBY counter:instances {pipeline} 1
+        HSET job:{jobId} status "executing" dispatched_at {now}
+
+Output: state.dispatch_batch.completed {dispatched: [job1, job2, job3]}
+        state.executing.count {n}
+        control.{job1}.start → Runner
+        control.{job2}.start → Runner
+        control.{job3}.start → Runner
+```
+
+One Lua script, one atomic operation, N jobs dispatched. No intermediate state visible between individual dispatches.
+
+### What Does NOT Precompute
+
+The Queue Manager never precomputes **conditions** (RAM thresholds, CPU usage, time limits). Those live in `=Q.Pause.Hard.RAM.LessThan` and similar pipelines — the Trigger Monitor evaluates conditions and sends commands. The Queue Manager only precomputes state-derivable facts: constraint pass/fail, queue ordering, instance counts.
+
+## Sequence Diagrams
+
+### 1. Normal Dispatch Flow
+
+```mermaid
+sequenceDiagram
+    participant TM as Trigger Monitor
+    participant QM as Queue Manager
+    participant DC as Dispatch Coordinator
+    participant Redis
+    participant NoSQL
+    participant Runner
+
+    TM->>QM: command.enqueue {jobId, pipeline, queue}
+    QM->>Redis: RPUSH queue:dispatch:{queue} {jobId}
+    QM->>Redis: HSET job:{jobId} {pipeline, queue, status: "pending"}
+    QM-->>TM: state.queue.{queue}.enqueued {jobId, queue_size}
+
+    Note over DC: Dispatch cycle runs (periodic or on enqueue)
+    DC->>Redis: Peek all Dispatch Queues (round-robin)
+    DC->>NoSQL: Read constraints (maxInstances, maxConcurrent, resourceTags)
+    DC->>Redis: Read counter:instances, set:executing
+    Note over DC: Apply universal constraints per candidate
+    DC->>Redis: LPOP queue, SADD set:executing, HINCRBY counter:instances
+    QM-->>TM: state.job.{jobId}.executing
+    QM-->>TM: state.executing.count {n}
+    QM->>Runner: control.{jobId}.start {pipeline, params}
+
+    Runner-->>QM: runner.started {jobId, pid}
+    QM->>Redis: HSET job:{jobId} pid, started_at
+    QM-->>TM: state.job.{jobId}.running {pid}
+
+    Runner-->>QM: runner.completed {jobId, result}
+    QM->>Redis: SREM set:executing, HINCRBY counter:instances -1, DEL job
+    QM-->>TM: state.job.{jobId}.completed
+    QM-->>TM: state.executing.count {n}
+```
+
+### 2. Sub-job Creation (parallel branch)
+
+```mermaid
+sequenceDiagram
+    participant TM as Trigger Monitor
+    participant QM as Queue Manager
+    participant Redis
+    participant NoSQL
+    participant Runner as Runner (parent)
+    participant SubRunner as Runner (sub-job)
+
+    Note over Runner: Parent job hits [p] parallel branch
+    Runner->>TM: trigger.subjob {parentJobId, pipeline, marker: "[p]", branches: 3}
+    
+    loop For each parallel branch
+        TM->>NoSQL: Record job hierarchy (parent→child)
+        TM->>QM: command.enqueue {jobId: sub-1, pipeline, queue, parentJobId}
+        QM->>Redis: RPUSH queue:dispatch:{queue} {sub-1}
+        QM->>Redis: HSET job:{sub-1} {pipeline, queue, status: "pending"}
+    end
+
+    Note over QM: Dispatch Coordinator dispatches sub-jobs
+    QM->>SubRunner: control.{sub-1}.start
+    QM->>SubRunner: control.{sub-2}.start
+    QM->>SubRunner: control.{sub-3}.start
+
+    SubRunner-->>QM: runner.completed {sub-1}
+    SubRunner-->>QM: runner.completed {sub-2}
+    SubRunner-->>QM: runner.completed {sub-3}
+
+    QM-->>TM: state.job.{sub-1}.completed
+    QM-->>TM: state.job.{sub-2}.completed
+    QM-->>TM: state.job.{sub-3}.completed
+
+    Note over TM: Collector (*All) sees all sub-jobs done
+    TM->>Runner: control.{parentJobId}.subjobs.collected {results}
+    Note over Runner: Parent job continues to next marker
+```
+
+### 3. Kill Propagation (Cascade)
+
+```mermaid
+sequenceDiagram
+    participant TM as Trigger Monitor
+    participant QM as Queue Manager
+    participant Redis
+    participant NoSQL
+    participant Runner as Runner (parent)
+    participant SubRunner as Runner (sub-jobs)
+
+    Note over TM: Decision to kill parent job
+    TM->>NoSQL: Read job hierarchy → {sub-1, sub-2}
+    TM->>NoSQL: Read killPropagation → #Cascade
+
+    Note over TM: Cascade: same kill type to all descendants
+    TM->>QM: command.kill.graceful {jobId: parent}
+    TM->>QM: command.kill.graceful {jobId: sub-1}
+    TM->>QM: command.kill.graceful {jobId: sub-2}
+
+    QM->>Redis: SREM set:executing {parent}
+    QM->>Redis: RPUSH queue:teardown {parent}
+    QM->>Runner: control.{parent}.kill.graceful
+    
+    QM->>Redis: SREM set:executing {sub-1}
+    QM->>Redis: RPUSH queue:teardown {sub-1}
+    QM->>SubRunner: control.{sub-1}.kill.graceful
+
+    QM->>Redis: SREM set:executing {sub-2}
+    QM->>Redis: RPUSH queue:teardown {sub-2}
+    QM->>SubRunner: control.{sub-2}.kill.graceful
+
+    QM-->>TM: state.job.{parent}.teardown
+    QM-->>TM: state.job.{sub-1}.teardown
+    QM-->>TM: state.job.{sub-2}.teardown
+
+    SubRunner-->>QM: runner.completed {sub-1} (after [/] cleanup)
+    SubRunner-->>QM: runner.completed {sub-2}
+    Runner-->>QM: runner.completed {parent}
+```
+
+### 4. Dispatch Wait Timeout
+
+```mermaid
+sequenceDiagram
+    participant TM as Trigger Monitor
+    participant QM as Queue Manager
+    participant Redis
+    participant NoSQL
+
+    TM->>QM: command.enqueue {jobId, pipeline, queue}
+    QM->>Redis: RPUSH queue:dispatch:{queue} {jobId}
+    QM->>Redis: HSET job:{jobId} enqueued_at: {now}
+
+    Note over QM: Job waits in queue...
+
+    Note over TM: Trigger Monitor checks maxWaitTime periodically
+    TM->>Redis: Read job:{jobId} enqueued_at
+    TM->>NoSQL: Read queue maxWaitTime
+    Note over TM: enqueued_at + maxWaitTime < now → TIMEOUT
+
+    alt Default behavior: escalate priority
+        TM->>QM: command.priority.update {jobId, score: MAX}
+        QM->>Redis: ZADD queue:dispatch:{queue} MAX {jobId}
+        QM-->>TM: state.queue.{queue}.updated {jobId}
+    else =Q.Dispatch.Wait.TimeOut.Kill.Graceful
+        TM->>QM: command.kill.graceful {jobId}
+    else =Q.Dispatch.Wait.TimeOut.Reassign
+        TM->>QM: command.dequeue {jobId, from: queue}
+        TM->>QM: command.enqueue {jobId, pipeline, queue: other}
+    end
+```
+
+### 5. Pause / Resume Flow
+
+```mermaid
+sequenceDiagram
+    participant TM as Trigger Monitor
+    participant QM as Queue Manager
+    participant Redis
+    participant Runner
+
+    Note over TM: RAM drops below threshold → =Q.Pause.Hard.RAM.LessThan fires
+    TM->>QM: command.pause.hard {jobId}
+    QM->>Redis: SREM set:executing {jobId}
+    QM->>Redis: HSET set:suspended {jobId} "hard"
+    QM->>Redis: HINCRBY counter:instances {pipeline} -1
+    QM->>Runner: control.{jobId}.pause.hard
+    QM-->>TM: state.job.{jobId}.suspended {type: "hard"}
+    QM-->>TM: state.executing.count {n}
+
+    Runner-->>QM: runner.paused {jobId, type: "hard"}
+    QM->>Redis: HSET job:{jobId} confirmed_paused true
+    QM-->>TM: state.job.{jobId}.confirmed_suspended
+
+    Note over TM: RAM recovers → =Q.Resume.RAM.MoreThan fires
+    TM->>QM: command.resume {jobId}
+    QM->>Redis: HDEL set:suspended {jobId}
+    QM->>Redis: RPUSH queue:resume {jobId}
+    QM-->>TM: state.job.{jobId}.resuming
+
+    Note over QM: Dispatch Coordinator: Tier 2 RR includes Resume Queue
+    QM->>Redis: LPOP queue:resume, SADD set:executing, HINCRBY counter:instances
+    QM->>Runner: control.{jobId}.resume
+    QM-->>TM: state.job.{jobId}.executing
+```
 
 ## Design Rationale
 
