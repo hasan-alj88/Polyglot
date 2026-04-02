@@ -295,7 +295,10 @@ data alongside the fire signal.
 
 ## 4. Compiler Rules to Enforce
 
+> **Resolved:** All rules below have PGE codes assigned. See compile-rules/PGE/ files.
+
 ### Rule A: Marker group must be valid for definition type
+**PGE01029 — Invalid Marker for Definition Type**
 
 | Definition | Valid markers | Notes |
 |---|---|---|
@@ -316,68 +319,69 @@ data alongside the fire signal.
 
 **INVALID:**
 ```polyglot
-[ ] ✗ — {=} cannot declare [W] (use {W} instead)
+[ ] ✗ PGE01029 — {=} cannot declare [W] (use {W} instead)
 {=}[W] =Bad.Pipeline
 
-[ ] ✗ — {=} cannot declare [T] (use {T} instead)
+[ ] ✗ PGE01029 — {=} cannot declare [T] (use {T} instead)
 {=}[T] =Bad.Trigger
 
-[ ] ✗ — {W} cannot declare [exe] (it's already [W])
+[ ] ✗ PGE01029 — {W} cannot declare [exe] (it's already [W])
 {W}[exe] =W.Bad
 
-[ ] ✗ — {T} cannot declare [exe] (it's already [T])
+[ ] ✗ PGE01029 — {T} cannot declare [exe] (it's already [T])
 {T}[exe] =T.Bad
 
-[ ] ✗ — {#} cannot have markers
+[ ] ✗ PGE01029 — {#} cannot have markers
 {#}[exe] #Bad
 
-[ ] ✗ — {M} cannot have markers (subtype of {#})
+[ ] ✗ PGE01029 — {M} cannot have markers (subtype of {#})
 {M}[T] #Bad
 
-[ ] ✗ — {!} cannot have markers (subtype of {#})
+[ ] ✗ PGE01029 — {!} cannot have markers (subtype of {#})
 {!}[exe] !Bad
 ```
 
 ### Rule B: Required elements per marker group
+**PGE01005 (trigger), PGE01006 (queue), PGE01030 (wrapper)**
 
 ```polyglot
-[ ] ✗ — {=}[exe] requires [T], [Q], [W]
+[ ] ✗ PGE01005 — {=}[exe] requires [T]
 {=}[exe] =Bad.NoTrigger
    [Q] =Q.Default
    [W] =W.Polyglot
    [=] <input#string
-   [ ] missing [T] — error
 
-[ ] ✗ — {=}[exe] requires [Q]
+[ ] ✗ PGE01006 — {=}[exe] requires [Q]
 {=}[exe] =Bad.NoQueue
    [T] =T.Call
    [W] =W.Polyglot
    [=] <input#string
-   [ ] missing [Q] — error
 
-[ ] ✗ — {=}[exe] requires [W]
+[ ] ✗ PGE01030 — {=}[exe] requires [W]
 {=}[exe] =Bad.NoWrapper
    [T] =T.Call
    [Q] =Q.Default
    [=] <input#string
-   [ ] missing [W] — error
 ```
 
 ```polyglot
-[ ] ✗ — {W} requires [{] or [}] (at least one IO)
-{W} =W.Bad.NoIO
-   [\]
-      [r] =DoNothing
-   [/]
-      [r] =DoNothing
-   [ ] no [{] or [}] — error? or allow (=W.Polyglot has none)?
-```
-
-```polyglot
-[ ] ✓ — {T} needs only IO, no [Q]/[W]/body
+[ ] ✓ — {T} with only IO (simple trigger)
 {T} =T.Custom
    [=] <config#string
    [=] >IsTriggered#bool
+
+[ ] ✓ — {T} with full body ([Q]/[W] optional)
+{T} =T.Complex.SystemReady
+   [Q] =Q.Default
+   [W] =W.DB.Connection
+      [=] $connectionString << "postgres://..."
+      [=] $dbConn >> $dbConn
+   [=] <config#string
+   [=] >IsTriggered#bool
+   [r] =DB.Query
+      [=] <conn << $dbConn
+      [=] <sql << "SELECT ready FROM system"
+      [=] >rows >> $rows
 ```
 
 ```polyglot
@@ -387,39 +391,40 @@ data alongside the fire signal.
 ```
 
 ### Rule C: Forbidden elements per marker group
+**PGE01031 — Forbidden Element in Definition**
+
+> **Design decision:** `{T}` triggers may have execution body, `[Q]`, and `[W]`. These are optional.
+> The only constraint unique to `{T}` is `>IsTriggered#bool` (PGE01032).
 
 ```polyglot
-[ ] ✗ — {T} cannot have [Q]
-{T} =T.Bad
-   [Q] =Q.Default                  [ ] ✗ — triggers don't use queues
-
-[ ] ✗ — {T} cannot have [W]
-{T} =T.Bad
-   [W] =W.Polyglot                 [ ] ✗ — triggers don't use wrappers
-
-[ ] ✗ — {T} cannot have execution body
-{T} =T.Bad
-   [=] <config#string
-   [r] =SomeWork                   [ ] ✗ — triggers don't execute work
-
-[ ] ✗ — {Q} cannot have [T]
+[ ] ✗ PGE01031 — {Q} cannot have [T]
 {Q} =Q.Bad
    [T] =T.Call                     [ ] ✗ — queue ops don't have triggers
 
-[ ] ✗ — {W} cannot have [T]
+[ ] ✗ PGE01031 — {W} cannot have [T]
 {W} =W.Bad
    [T] =T.Call                     [ ] ✗ — wrappers don't have triggers
 
-[ ] ✗ — {W} cannot have [Q]
+[ ] ✗ PGE01031 — {W} cannot have [Q]
 {W} =W.Bad
    [Q] =Q.Default                  [ ] ✗ — wrappers don't use queues
 
-[ ] ✗ — {W} cannot have [=] pipeline IO
+[ ] ✗ PGE01031 — {W} cannot have [=] pipeline IO
 {W} =W.Bad
    [=] <input#string               [ ] ✗ — wrappers use [{]/[}], not [=] IO
+
+[ ] ✗ PGE01031 — {Q} cannot have execution body
+{Q} =Q.Bad
+   [=] <threshold#float
+   [r] =SomeWork                   [ ] ✗ — queue ops don't execute work
+
+[ ] ✗ PGE01031 — {Q} cannot have [W]
+{Q} =Q.Bad
+   [W] =W.Polyglot                 [ ] ✗ — queue ops don't use wrappers
 ```
 
 ### Rule D: Invocation must match declaration
+**PGE01024 — Incompatible Operation Marker** (existing)
 
 ```polyglot
 {T} =T.Custom
@@ -441,44 +446,26 @@ data alongside the fire signal.
 ```
 
 ```polyglot
-[ ] ✗ — [r] invokes a {T}-declared pipeline
-{=}[exe] =Bad
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =T.Custom                   [ ] ✗ — =T.Custom is {T}, not [r]
+[ ] ✗ PGE01024 — [r] invokes a {T}-declared pipeline
+[r] =T.Custom
 
-[ ] ✗ — [T] invokes an {=}[exe]-declared pipeline
-{=}[exe] =Bad
-   [T] =Worker                     [ ] ✗ — =Worker is {=}[exe], not {T}
+[ ] ✗ PGE01024 — [T] invokes an {=}[exe]-declared pipeline
+[T] =Worker
 
-[ ] ✗ — [p] invokes a {T}-declared pipeline
-{=}[exe] =Bad
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [p] =T.Daily                    [ ] ✗ — =T.Daily is {T}, not [p]
+[ ] ✗ PGE01024 — [p] invokes a {T}-declared pipeline
+[p] =T.Daily
 ```
 
-### Rule E: Implicit marker defaults and warnings
+### Rule E: Implicit marker defaults
+**No PGE code — compiler behavior only** (decided in #108: no warning)
 
 ```polyglot
-[ ] ⚠ — {=} without marker defaults to {=}[exe], warning emitted
+[ ] ✓ — {=} without marker defaults to {=}[exe], no diagnostic emitted
 {=} =Implicit.Exe
    [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =DoWork
-   [ ] ⚠ PGW — implicit [exe] marker, consider {=}[exe] for clarity
-
-[ ] ✓ — warning suppressed file-wide
-[ ] (file-wide directive TBD)
-{=} =Another.Implicit
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =DoWork
-   [ ] no warning — suppressed
 
 [ ] ✗ — {T} is NOT the default, must use {T} explicitly
 {=} =Bad.TriggerWithoutMarker
@@ -531,6 +518,7 @@ Note: `{=}` defaults to `{=}[exe]` — only execution gets the implicit default.
 ```
 
 ### Rule G: Trigger output constraint
+**PGE01032 — Missing Trigger Boolean Output**
 
 `>IsTriggered#bool` is mandatory. Additional outputs are allowed — they wire
 into the execution pipeline's inputs, supplying data alongside the fire signal.
@@ -542,14 +530,22 @@ into the execution pipeline's inputs, supplying data alongside the fire signal.
    [=] >IsTriggered#bool
    [=] >payload#serial
 
-[ ] ✗ — {T} missing >IsTriggered#bool
+[ ] ✓ — trigger with body still needs >IsTriggered#bool
+{T} =T.WithBody
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [=] >IsTriggered#bool
+   [r] =CheckCondition
+      [=] >ready >> >IsTriggered
+
+[ ] ✗ PGE01032 — {T} missing >IsTriggered#bool
 {T} =T.Bad.NoOutput
    [=] <config#string
-   [=] >payload#serial             [ ] ✗ — must include >IsTriggered#bool
+   [=] >payload#serial
 
-[ ] ✗ — {T} wrong output type for IsTriggered
+[ ] ✗ PGE01032 — >IsTriggered must be #bool, found #string
 {T} =T.Bad.WrongType
-   [=] >IsTriggered#string         [ ] ✗ — must be #bool, not #string
+   [=] >IsTriggered#string
 ```
 
 ---
