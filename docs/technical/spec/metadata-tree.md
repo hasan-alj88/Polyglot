@@ -217,8 +217,13 @@ Parameter names within `.[{]` and `.[}]` are flexible — they follow the wrappe
 ```
 %Q:GPUQueue:0
 ├── .strategy#QueueStrategy        ← FIFO, LIFO, Priority
-├── .maxInstances#int              ← max parallel instances
-├── .retrigger#RetriggerStrategy   ← Disallow, Queue, Replace
+├── .host#String                   ← target host (1 queue = 1 host)
+├── .maxInstances#UnsignedInt      ← max parallel instances per pipeline
+├── .maxConcurrent#UnsignedInt     ← max other pipelines alongside
+├── .resourceTags#Array:ResourceTag ← resource constraint tags
+├── .killPropagation#KillPropagation ← Cascade or Downgrade
+├── .maxWaitTime#String            ← max time before escalation
+├── .description#String            ← human-readable description
 └── .controls                      ← active queue controls
     ├── .pause
     ├── .resume
@@ -228,7 +233,8 @@ Parameter names within `.[{]` and `.[}]` are flexible — they follow the wrappe
 ### Key Properties
 
 - **Flexible instances** — each queue use creates `%Q:Name:N` with sequential numbering.
-- **Fields are fixed** — `.strategy`, `.maxInstances`, `.retrigger` are Polyglot-defined fixed fields.
+- **Fields are fixed** — all fields (`.strategy`, `.host`, `.maxInstances`, etc.) are Polyglot-defined fixed fields. `#RetriggerStrategy` is a trigger-level config, not a queue field.
+- **Host-based dispatch** — `.host` binds each queue to a specific host. 1 queue = 1 host. Offloading work to another host means switching queues (e.g., via `=Q.Reassign`).
 - **Active controls** — nested `[Q]` lines within the definition set default pause/resume/kill behavior.
 - **`live` fields** — queue instances report runtime state: `pendingCount`, `activeCount`, `totalProcessed`. See [[metadata|user/concepts/metadata]].
 

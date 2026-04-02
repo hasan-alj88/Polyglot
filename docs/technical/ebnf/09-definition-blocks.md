@@ -155,20 +155,19 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
                          { indent queue_io_line NEWLINE } ;
 ```
 
-`[Q]` references either a stdlib queue (`=Q.Default`) or a user-defined queue (`#Queue:Name`). Nested `[Q]` lines declare pipeline-specific active queue controls (pause, resume, kill). These override or extend the queue's `{Q}` defaults for this pipeline only — contradictions raise PGE01013.
+`[Q]` references either `=Q.Default` or `=Q.Assign"QueueName"` (for user-defined queues). Nested `[Q]` lines declare pipeline-specific active queue controls (pause, resume, kill). These override or extend the queue's `{Q}` defaults for this pipeline only — contradictions raise PGE01013.
 
 **Examples:**
 
 Simple: `[Q] =Q.Default`
 
-With IO and active controls:
+With active controls:
 ```polyglot
-[Q] #Queue:GPUQueue
-   [=] <maxConcurrent#int << 2
-   [Q] =Q.Pause.Hard
-      [=] <RAM.Available.LessThan#float << 3072.0
-   [Q] =Q.Resume
-      [=] <RAM.Available.MoreThan#float << 5120.0
+[Q] =Q.Assign"GPUQueue"
+   [Q] =Q.Pause.Hard.RAM.LessThan
+      [=] <mb << 3072.0
+   [Q] =Q.Resume.RAM.MoreThan
+      [=] <mb << 5120.0
 ```
 
 ### 9.3.4 Wrapper Section
@@ -316,18 +315,21 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
                          { indent queue_io_line NEWLINE } ;
 ```
 
-`{Q}` defines and instantiates a named queue. The identifier must use the `#Queue:` prefix (PGE01012). Fields set queue-level defaults (strategy, retrigger). Nested `[Q]` lines set default active controls that apply to all pipelines on this queue.
+`{Q}` defines and instantiates a named queue. The identifier must use the `#Queue:` prefix (PGE01012). Fields set queue-level defaults (strategy, host, maxInstances, maxConcurrent, resourceTags, killPropagation, maxWaitTime, description). Nested `[Q]` lines set default active controls that apply to all pipelines on this queue.
 
 **Example:**
 
 ```polyglot
 {Q} #Queue:GPUQueue
    [%] .description << "Queue for GPU-intensive work"
-   [.] .strategy#QueueStrategy << #LIFO
-   [.] .maxInstances#int << 1
-   [.] .retrigger#RetriggerStrategy << #Disallow
-   [Q] =Q.Kill.Graceful
-      [=] <ExecutionTime.MoreThan#string << "2h"
+   [.] .strategy;#QueueStrategy << #LIFO
+   [.] .host;#String << "gpu-server-01"
+   [.] .maxInstances;#UnsignedInt << 1
+   [.] .killPropagation;#KillPropagation << #Downgrade
+   [.] .resourceTags;#Array:ResourceTag << [#GPU]
+   [.] .maxWaitTime;#String << "30m"
+   [Q] =Q.Kill.Graceful.Time.MoreThan
+      [=] <duration << "4h"
 ```
 
 **Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `=Q.Default` is the stdlib-provided queue and does not require a `{Q}` definition.

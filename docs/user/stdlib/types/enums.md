@@ -35,13 +35,18 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
 ```polyglot
 {#} #PipelineStatus
    [%] .description << "Pipeline instance status"
-   [%] .version << "1.0.0"
+   [%] .version << "2.0.0"
    [#] << ##Scalar
    [#] << ###Enum
    [#] %##Alias << "pipelinestatus"
    [.] .AwaitTrigger
    [.] .Disabled
-   [.] .Running
+   [.] .Pending
+   [.] .Executing
+   [.] .SuspendedSoft
+   [.] .SuspendedHard
+   [.] .Teardown
+   [.] .Completed
    [.] .Failed
 ```
 
@@ -84,16 +89,63 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
 
 ```polyglot
 {#} #QueueState
-   [%] .description << "Active queue pipeline state"
-   [%] .version << "1.0.0"
+   [%] .description << "Pipeline state within queue system"
+   [%] .version << "2.0.0"
    [#] << ##Scalar
    [#] << ###Enum
    [#] %##Alias << "queuestate"
-   [.] .Running
-   [.] .SoftPaused
-   [.] .HardPaused
+   [.] .Pending
+   [.] .Executing
+   [.] .SuspendedSoft
+   [.] .SuspendedHard
+   [.] .Resuming
+   [.] .Teardown
+   [.] .Completed
+   [.] .Failed
    [.] .Killed
 ```
+
+---
+
+## #KillPropagation
+
+```polyglot
+{#} #KillPropagation
+   [%] .description << "How kill signals propagate from parent job to sub-jobs"
+   [%] .version << "1.0.0"
+   [#] << ##Scalar
+   [#] << ###Enum
+   [#] %##Alias << "killpropagation"
+   [.] .Cascade
+   [.] .Downgrade
+```
+
+| Variant | Behavior |
+|---------|----------|
+| `#Cascade` | Sub-jobs receive the same kill type as parent (hard→hard, graceful→graceful) |
+| `#Downgrade` | Hard kill on parent → graceful kill on sub-jobs (allows `[/]` cleanup) |
+
+Default: `#Cascade`. Orphan jobs are never permitted — every sub-job must be terminated when its parent is killed.
+
+---
+
+## #ResourceTag
+
+```polyglot
+{#} #ResourceTag
+   [%] .description << "Resource tag for pipeline dispatch constraints"
+   [%] .version << "1.0.0"
+   [#] << ##Scalar
+   [#] << ###Enum
+   [#] %##Alias << "resourcetag"
+   [.] .GPU
+   [.] .HighRAM
+   [.] .HighCPU
+   [.] .HighIO
+   [.] .Network
+```
+
+Used in `#Queue.resourceTags` for dispatch constraint checking. The Dispatch Coordinator enforces resource exclusion — e.g., only one `#GPU`-tagged pipeline executes at a time.
 
 ---
 
@@ -150,5 +202,5 @@ Used by the `%##Leafs.Kind` schema property to constrain what `###` field type a
 ## Related
 
 - [[boolean]] -- #Boolean enum type
-- [[structs]] -- #Queue struct (uses #QueueStrategy and #RetriggerStrategy)
+- [[structs]] -- #Queue struct (uses #QueueStrategy, #KillPropagation, #ResourceTag)
 - [[syntax/types/INDEX|types]] -- full type system specification

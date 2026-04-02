@@ -29,7 +29,7 @@ severity: error
 
 {=} =BatchJob
    [T] =T.Call
-   [Q] #Queue:WorkQueue
+   [Q] =Q.Assign"WorkQueue"
    [W] =W.Polyglot
    [r] =DoWork
 ```
@@ -39,7 +39,7 @@ severity: error
 [ ] ✗ PGE01014 — #Queue:GPUQueue not defined or imported
 {=} =RenderJob
    [T] =T.Call
-   [Q] #Queue:GPUQueue
+   [Q] =Q.Assign"GPUQueue"
    [W] =W.Polyglot
    [r] =DoWork
 ```

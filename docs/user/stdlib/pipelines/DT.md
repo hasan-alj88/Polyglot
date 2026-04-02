@@ -51,7 +51,7 @@ Returns the current instant from the system clock.
    [%] .version << "1.0.0"
    [T] =T.Manual
    [=] >dt#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _IO.Read
 ```
@@ -68,7 +68,7 @@ Converts epoch seconds to a `#dt` value.
    [T] =T.Manual
    [=] <epoch#int
    [=] >dt#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -85,7 +85,7 @@ Parses an ISO-8601 string into a `#dt` value. Called implicitly by `=DT"..."` in
    [T] =T.Manual
    [=] <iso#string
    [=] >dt#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -109,7 +109,7 @@ Constructs a `#dt` from explicit date-time components. Hour, minute, second, nan
    [=] <nano#int <~ 0
    [=] <zone#string <~ "UTC"
    [=] >dt#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -130,7 +130,7 @@ All `=DT.To.*` pipelines project a `#dt` value into a calendar-specific date str
    [T] =T.Manual
    [=] <source#dt
    [=] >gregorian#GregorianDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -148,7 +148,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [=] <source#dt
    [=] <authority#HijriAuthority <~ #HijriAuthority.UmmAlQura
    [=] >hijri#HijriDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -163,7 +163,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [T] =T.Manual
    [=] <source#dt
    [=] >hebrew#HebrewDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -178,7 +178,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [T] =T.Manual
    [=] <source#dt
    [=] >chinese#ChineseDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -193,7 +193,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [T] =T.Manual
    [=] <source#dt
    [=] >persian#PersianDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -208,7 +208,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [T] =T.Manual
    [=] <source#dt
    [=] >buddhist#BuddhistDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -226,7 +226,7 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
    [=] <source#dt
    [=] <era#HinduEra <~ #HinduEra.VikramSamvat
    [=] >hindu#HinduDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -241,7 +241,7 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
    [T] =T.Manual
    [=] <source#dt
    [=] >japanese#JapaneseDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -256,7 +256,7 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
    [T] =T.Manual
    [=] <source#dt
    [=] >ethiopian#EthiopianDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -271,7 +271,7 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
    [T] =T.Manual
    [=] <source#dt
    [=] >coptic#CopticDate
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -289,7 +289,7 @@ Projects a `#dt` into a user-supplied custom calendar.
    [=] <source#dt
    [=] <calendar#CustomCalendar
    [=] >date#Date
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -312,7 +312,7 @@ Converts to Chinese traditional time units (shichen/ke/fen).
    [T] =T.Manual
    [=] <source#dt
    [=] >time#ChineseTime
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -329,7 +329,7 @@ Converts to Hindu traditional time units (prahara/muhurta).
    [T] =T.Manual
    [=] <source#dt
    [=] >time#HinduTime
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -346,7 +346,7 @@ Converts to French Republican decimal time.
    [T] =T.Manual
    [=] <source#dt
    [=] >time#DecimalTime
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -368,7 +368,7 @@ Adds a `#Duration` (fixed time span) to a `#dt`.
    [=] <source#dt
    [=] <duration#Duration
    [=] >result#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -386,7 +386,7 @@ Adds a `#Period` (calendar-aware span such as "1 month") to a `#dt`.
    [=] <source#dt
    [=] <period#Period
    [=] >result#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -404,7 +404,7 @@ Subtracts two `#dt` values and returns the `#Duration` between them.
    [=] <a#dt
    [=] <b#dt
    [=] >result#Duration
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -426,7 +426,7 @@ Returns `-1`, `0`, or `1` as an `#int`.
    [=] <a#dt
    [=] <b#dt
    [=] >result#int
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -444,7 +444,7 @@ Returns `#bool` -- true when `a` is earlier than `b`.
    [=] <a#dt
    [=] <b#dt
    [=] >result#bool
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -462,7 +462,7 @@ Returns `#bool` -- true when `a` is later than `b`.
    [=] <a#dt
    [=] <b#dt
    [=] >result#bool
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -480,7 +480,7 @@ Returns `#bool` -- true when `source` falls within the given `#Interval`.
    [=] <source#dt
    [=] <interval#Interval
    [=] >result#bool
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -501,7 +501,7 @@ These pipelines extract individual components from a `#dt` value.
    [T] =T.Manual
    [=] <source#dt
    [=] >year#int
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -516,7 +516,7 @@ These pipelines extract individual components from a `#dt` value.
    [T] =T.Manual
    [=] <source#dt
    [=] >month#int
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -531,7 +531,7 @@ These pipelines extract individual components from a `#dt` value.
    [T] =T.Manual
    [=] <source#dt
    [=] >day#int
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -548,7 +548,7 @@ Returns a `#Weekday` enum value.
    [T] =T.Manual
    [=] <source#dt
    [=] >weekday#Weekday
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -566,7 +566,7 @@ Returns the week-of-year as `#int`. The `<system` input selects the week numberi
    [=] <source#dt
    [=] <system#WeekSystem <~ #WeekSystem.ISO
    [=] >week#int
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -583,7 +583,7 @@ Returns epoch seconds as `#int`.
    [T] =T.Manual
    [=] <source#dt
    [=] >epoch#int
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -600,7 +600,7 @@ Returns the `#Zone` attached to a `#dt` value.
    [T] =T.Manual
    [=] <source#dt
    [=] >zone#Zone
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -622,7 +622,7 @@ Replaces the timezone label on a `#dt` without converting the instant. The wall-
    [=] <source#dt
    [=] <iana#string
    [=] >result#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -640,7 +640,7 @@ Converts a `#dt` to a different timezone. The underlying instant stays the same;
    [=] <source#dt
    [=] <iana#string
    [=] >result#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -662,7 +662,7 @@ Formats a `#dt` using a pattern string (e.g. `"YYYY-MM-DD HH:mm:ss"`).
    [=] <source#dt
    [=] <pattern#string
    [=] >text#string
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -679,7 +679,7 @@ Formats a `#dt` as an ISO-8601 string.
    [T] =T.Manual
    [=] <source#dt
    [=] >text#string
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -697,7 +697,7 @@ Formats a `#dt` as a string in a specific calendar system's conventional format.
    [=] <source#dt
    [=] <system#CalendarSystem
    [=] >text#string
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -721,7 +721,7 @@ Returns `#bool` -- true when `source` falls on a work day.
    [=] <source#dt
    [=] <week#BusinessWeek
    [=] >result#bool
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -739,7 +739,7 @@ Returns the next work day as a `#dt`.
    [=] <source#dt
    [=] <week#BusinessWeek
    [=] >result#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```
@@ -758,7 +758,7 @@ Adds `N` work days to a `#dt`, skipping non-work days.
    [=] <days#int
    [=] <week#BusinessWeek
    [=] >result#dt
-   [Q] =Q.FIFO
+   [Q] =Q.Default
    [W] =W.Polyglot
    [_] _None
 ```

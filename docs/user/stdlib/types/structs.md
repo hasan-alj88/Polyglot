@@ -62,28 +62,40 @@ See [[syntax/types/strings#Path Type]] for full details including `=Path"..."`, 
 
 ## #Queue
 
-Queue configuration struct used in pipeline `[Q]` blocks.
+Queue configuration struct used in `{Q}` queue definitions. Each `{Q} #Queue:Name` creates a Dispatch Queue at metadata path `%Queue.DispatchQueue:Name`.
 
 ```polyglot
 {#} #Queue
-   [%] .description << "Queue configuration for pipeline execution"
-   [%] .version << "1.0.0"
+   [%] .description << "Queue configuration for pipeline dispatch"
+   [%] .version << "2.0.0"
    [#] << ##Scalar
-   [.] .strategy#QueueStrategy
-   [.] .retrigger#RetriggerStrategy
+   [.] .strategy;#QueueStrategy
+   [.] .host;#String
+   [.] .maxInstances;#UnsignedInt
+   [.] .maxConcurrent;#UnsignedInt
+   [.] .resourceTags;#Array:ResourceTag
+   [.] .killPropagation;#KillPropagation
+   [.] .maxWaitTime;#String
+   [.] .description;#String
 ```
 
 ### Fields
 
-| Field | Type | Purpose |
-|-------|------|---------|
-| `.strategy` | `#QueueStrategy` | Queue ordering: FIFO, LIFO, or Priority |
-| `.retrigger` | `#RetriggerStrategy` | Behavior on re-trigger while queued/running |
+| Field | Type | Purpose | Default |
+|-------|------|---------|---------|
+| `.strategy` | `#QueueStrategy` | FIFO, LIFO, Priority | (required) |
+| `.host` | `#String` | Target host for job execution (1 queue = 1 host) | `"localhost"` |
+| `.maxInstances` | `#UnsignedInt` | Max parallel instances per pipeline on this queue | unlimited |
+| `.maxConcurrent` | `#UnsignedInt` | Max other pipelines alongside (queue-level default) | unlimited |
+| `.resourceTags` | `#Array:ResourceTag` | Resource tags for constraint checking | empty |
+| `.killPropagation` | `#KillPropagation` | How kill signals propagate to sub-jobs | `#Cascade` |
+| `.maxWaitTime` | `#String` | Max time in queue before escalation (e.g., "30m") | unlimited |
+| `.description` | `#String` | Human-readable queue description | empty |
 
-See [[enums#QueueStrategy]] and [[enums#RetriggerStrategy]] for the enum definitions.
+See [[enums#QueueStrategy]], [[enums#KillPropagation]], [[enums#ResourceTag]] for enum definitions. `#RetriggerStrategy` is a trigger-level config — see [[concepts/pipelines/io-triggers|Triggers]].
 
 ## Related
 
-- [[enums]] -- #OS, #QueueStrategy, #RetriggerStrategy, and other enums
+- [[enums]] -- #OS, #QueueStrategy, #KillPropagation, #ResourceTag, and other enums
 - [[concepts/collections/INDEX|collections]] -- #Map, #Array, #Serial collection types
 - [[syntax/types/INDEX|types]] -- full type system specification

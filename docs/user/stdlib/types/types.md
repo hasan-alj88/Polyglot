@@ -46,7 +46,7 @@ RawString (compiler intrinsic)
 | Scalar subtypes | [scalars.md](scalars.md) | #Int, #UnsignedInt, #Float, #Sci, #Eng, #Dimension, #KeyString, #NestedKeyString |
 | Boolean | [boolean.md](boolean.md) | #Boolean, #None |
 | Collections | [collections.md](collections.md) | #Map, #Array, #Dataframe, #Serial |
-| Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #FileAccess, #VarState |
+| Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #KillPropagation, #ResourceTag, #FileAccess, #VarState, #FieldKind |
 | Structs | [structs.md](structs.md) | #path, #Queue |
 | Runtime | [rt.md](rt.md) | #Code, #PyEnv, #RsEnv |
 

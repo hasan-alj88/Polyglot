@@ -32,7 +32,7 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 | `=Math` | [pipelines/Math.md](pipelines/Math.md) | Numeric operations (add, subtract, multiply, divide, modulo, power, abs, negate) | Stable | None |
 | `=Sys` | [pipelines/Sys.md](pipelines/Sys.md) | System information (OS detection) | Stable | `_System.env` |
 | `=T` | [pipelines/T.md](pipelines/T.md) | Triggers (call, manual, daily, folder, webhook) | Stable | Mixed |
-| `=Q` | [pipelines/Q.md](pipelines/Q.md) | Queue configurations (default, FIFO, LIFO, priority, pause, resume, kill) | Stable | None |
+| `=Q` | [pipelines/Q.md](pipelines/Q.md) | Queue assignment, conditional controls (pause, resume, kill), dispatch timeout, admin operations | Stable | None |
 | `=RT` | [pipelines/RT.md](pipelines/RT.md) | Runtime execution (Function, Script, CLI, Bind — inline and file modes) | Stable | `_System.process` |
 | `=DT` | [pipelines/DT.md](pipelines/DT.md) | DateTime construction, conversion, arithmetic, comparison, extraction, formatting | Stable | `_IO.Read` (Now) / None |
 | `=W` | [pipelines/W.md](pipelines/W.md) | Wrappers (Polyglot, DB, File, HTTP, SSH, Auth, Log, Queue, Cache, RT) | Stable | Mixed |
@@ -60,7 +60,7 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 | `#Int`, `#UnsignedInt`, `#Float`, `#Sci`, `#Eng`, `#Dimension`, `#KeyString`, `#NestedKeyString` | [types/scalars.md](types/scalars.md) | Scalar subtypes | Stable |
 | `#Boolean`, `#None` | [types/boolean.md](types/boolean.md) | Boolean enum + absence type | Stable |
 | `#Map`, `#Array`, `#Serial`, `#Dataframe` | [types/collections.md](types/collections.md) | Collection types | Stable |
-| `#OS`, `#PipelineStatus`, `#QueueStrategy`, `#RetriggerStrategy`, `#QueueState`, `#FileAccess`, `#VarState`, `#FieldKind` | [types/enums.md](types/enums.md) | Runtime enums | Stable |
+| `#OS`, `#PipelineStatus`, `#QueueStrategy`, `#RetriggerStrategy`, `#QueueState`, `#KillPropagation`, `#ResourceTag`, `#FileAccess`, `#VarState`, `#FieldKind` | [types/enums.md](types/enums.md) | Runtime enums | Stable |
 | `#path`, `#Queue` | [types/structs.md](types/structs.md) | Struct types | Stable |
 | `#DateTime` (`#dt`) | [types/datetime.md](types/datetime.md) | Date, time, calendar, timezone, duration types | Stable |
 | `#Code`, `#PyEnv`, `#RsEnv` | [types/rt.md](types/rt.md) | Runtime types | Stable |
