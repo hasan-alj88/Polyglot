@@ -45,9 +45,25 @@ Authority: [[vision]]
 
 ```yaml
 ---
-audience: user | developer | ai
-type: spec | guide | reference | audit-rules
+audience: pg-coder | integrator | architect | designer | ai  # single value or YAML list
+type: spec | guide | reference | tutorial | audit-rules
 phase: NN (if part of a milestone phase)
 updated: YYYY-MM-DD
 ---
 ```
+
+Multi-audience documents use a YAML list. The first-listed audience drives the tone:
+
+```yaml
+audience: [pg-coder, integrator]  # tone follows pg-coder rules
+```
+
+## Document Type Definitions
+
+| Type | Purpose | Structure |
+|------|---------|-----------|
+| tutorial | Step-by-step, learning-oriented. Progressive difficulty, clear learning goal, working result at end | Goal -> setup -> steps -> result -> next steps |
+| guide | Task-oriented how-to. Solves a specific problem | Problem -> solution steps -> verification |
+| reference | Lookup-oriented factual. Complete and precise | Definition -> syntax -> parameters -> examples |
+| spec | Formal specification. Exhaustive and unambiguous | Problem -> design -> constraints -> behavior |
+| audit-rules | Documentation quality standards (internal) | Rule -> rationale -> examples |

@@ -14,8 +14,10 @@ updated: 2026-03-30
 
 | File | What it tells Claude | When to read |
 |------|---------------------|--------------|
-| [[audiences/user\|audiences/user]] | Tone, format, assumptions for user-facing docs | Before writing user docs |
-| [[audiences/developer\|audiences/developer]] | Tone, format, assumptions for developer docs | Before writing dev docs |
+| [[audiences/pg-coder\|audiences/pg-coder]] | Tone, format, assumptions for .pg code writers | Before writing pg-coder docs |
+| [[audiences/integrator\|audiences/integrator]] | Tone, format, assumptions for SDK/API integrators | Before writing integrator docs |
+| [[audiences/architect\|audiences/architect]] | Tone, format, assumptions for core architecture docs | Before writing architect docs |
+| [[audiences/designer\|audiences/designer]] | Tone, format, assumptions for language design docs | Before writing designer docs |
 | [[audiences/ai\|audiences/ai]] | Tone, format, assumptions for AI-facing docs | Before writing AI docs |
 | [[rules/conventions\|rules/conventions]] | Style, structure, formatting rules | Before writing any doc |
 | [[rules/checklist\|rules/checklist]] | Pre-publish quality checks | Before finalizing any doc |
@@ -24,6 +26,7 @@ updated: 2026-03-30
 | [[tracking/inconsistencies\|tracking/inconsistencies]] | Contradictions between docs (IC) | When logging or fixing inconsistencies |
 | [[tracking/progress\|tracking/progress]] | What areas have been audited | Before starting audit of an area |
 | [[tracking/decisions\|tracking/decisions]] | Decisions made during auditing | When making or reviewing audit decisions |
+| [[tracking/audience-migration\|tracking/audience-migration]] | Audience system migration progress | When continuing audience restructure work |
 | [[rules/workflows\|rules/workflows]] | Fix, Sweep, Gate workflows for doc quality | Before starting any doc audit or fix work |
 
 ## Authority Chain

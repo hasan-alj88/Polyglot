@@ -32,3 +32,4 @@ Track which documentation areas have been audited against [[rules/checklist]] an
 | Technical compile rules | technical/compile-rules/ | In Progress | IC-004 (wikilinks only) | 2026-03-30 |
 | Technical indexes | technical/INDEX.md | In Progress | IC-006 | 2026-03-30 |
 | Archive | archive/ | In Progress | IC-008 | 2026-03-30 |
+| Audience migration | audit/tracking/ | In Progress | See [[tracking/audience-migration]] | 2026-04-03 |
