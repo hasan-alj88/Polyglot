@@ -1,6 +1,6 @@
 ---
 type: spec-index
-audience: user
+audience: pg-coder
 updated: 2026-03-30
 ---
 
@@ -63,7 +63,7 @@ flowchart LR
 
 | File | Covers |
 |------|--------|
-| SCENARIOS.md | 500 real-world automation scenarios |
+| scenarios/INDEX.md | 500 real-world automation scenarios (6 thematic files) |
 
 ## For Contributors
 
