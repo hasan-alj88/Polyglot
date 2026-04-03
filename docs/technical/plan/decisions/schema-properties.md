@@ -252,6 +252,6 @@ Complete hierarchy defined in `docs/draft.md`:
 
 - [[syntax/types/basic-types#Numeric Types — #String Subtypes]] — `.regex` field for value constraints
 - [[data-is-trees#Schema vs Instance]] — definition/instance split
-- [[metadata-tree|spec/metadata-tree]] — `%definition` template paths
+- [[metadata-tree/INDEX|spec/metadata-tree]] — `%definition` template paths
 - Decision: [string-re-subfields](string-re-subfields.md) — `.regex` as value schema
 - `docs/draft.md` — complete ground-up type hierarchy definitions

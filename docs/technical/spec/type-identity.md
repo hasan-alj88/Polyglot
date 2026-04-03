@@ -68,5 +68,5 @@ All Polyglot data is serialized strings. **"Same type" means "same schema"** —
 
 ## Related
 
-- [[metadata-tree|spec/metadata-tree]] — the unified tree where all types live
+- [[metadata-tree/INDEX|spec/metadata-tree]] — the unified tree where all types live
 - [[data-is-trees|user/concepts/data-is-trees]] — user-facing overview of structural typing

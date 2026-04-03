@@ -1,6 +1,6 @@
 ---
 type: spec-index
-audience: developer
+audience: [architect, designer]
 updated: 2026-03-30
 ---
 
@@ -24,7 +24,7 @@ Internal specifications for Polyglot project contributors. These documents descr
 
 | File | Covers |
 |------|--------|
-| spec/metadata-tree.md | Complete `%` metadata tree: path grammar, branches, instance rules, enum semantics, field expansion |
+| spec/metadata-tree/ | Complete `%` metadata tree: path grammar, branches, instance rules, enum semantics, field expansion (split) |
 | spec/type-identity.md | Structural type matching rules (moved from compile-rules/) |
 
 ## Compiler Rules (compile-rules/)

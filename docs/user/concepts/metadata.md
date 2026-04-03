@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: concept
 updated: 2026-03-31
 ---
@@ -14,7 +14,7 @@ Every Polyglot object carries metadata — descriptive fields you declare and ru
 1. **`[%]` block element** — declare metadata inside `{#}`, `{=}`, or `{M}` definitions
 2. **`%` accessor** — query runtime state from any expression context
 
-For the full metadata tree architecture, path grammar, and instance rules, see [[metadata-tree|technical/spec/metadata-tree]].
+For the full metadata tree architecture, path grammar, and instance rules, see [[metadata-tree/INDEX|technical/spec/metadata-tree]].
 
 ## Declaring Metadata with `[%]`
 
@@ -122,7 +122,7 @@ Live fields for macros are not yet defined.
 ## Related
 
 - [[data-is-trees]] — conceptual overview of the unified tree
-- [[metadata-tree|technical/spec/metadata-tree]] — full tree architecture, path grammar, instance rules
+- [[metadata-tree/INDEX|technical/spec/metadata-tree]] — full tree architecture, path grammar, instance rules
 - [[enums]] — `#PipelineStatus`, `#VarState`, `#QueueStrategy` enum definitions
 - [[variable-lifecycle]] — lifecycle stages that `$name%state` reports
 - [[permissions]] — `[%]` metadata that precedes permission declarations

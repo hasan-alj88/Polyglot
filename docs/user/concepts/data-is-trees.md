@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: spec
 updated: 2026-03-28
 ---
@@ -183,4 +183,4 @@ The general path notation is:
 
 **Shorthand in code:** `=MyPipeline%status` reads `%=:MyPipeline:<current>.status` — the current instance is implicit.
 
-For the full field listings (which metadata each branch carries, `live` vs user-declared), see [[metadata]]. For the formal path grammar and instance rules, see [[metadata-tree|technical/spec/metadata-tree]].
+For the full field listings (which metadata each branch carries, `live` vs user-declared), see [[metadata]]. For the formal path grammar and instance rules, see [[metadata-tree/INDEX|technical/spec/metadata-tree]].
