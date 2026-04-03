@@ -72,7 +72,7 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
 
 ```polyglot
 {#} #RetriggerStrategy
-   [%] .description << "Behavior when pipeline is re-triggered while queued or running"
+   [%] .description << "Queue configuration for handling duplicate trigger conditions while pipeline is queued or running"
    [%] .version << "1.0.0"
    [#] << ##Scalar
    [#] << ###Enum

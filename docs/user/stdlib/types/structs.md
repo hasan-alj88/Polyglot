@@ -92,7 +92,7 @@ Queue configuration struct used in `{Q}` queue definitions. Each `{Q} #Queue:Nam
 | `.maxWaitTime` | `#String` | Max time in queue before escalation (e.g., "30m") | unlimited |
 | `.description` | `#String` | Human-readable queue description | empty |
 
-See [[enums#QueueStrategy]], [[enums#KillPropagation]], [[enums#ResourceTag]] for enum definitions. `#RetriggerStrategy` is a trigger-level config — see [[concepts/pipelines/io-triggers|Triggers]].
+See [[enums#QueueStrategy]], [[enums#KillPropagation]], [[enums#ResourceTag]] for enum definitions. `#RetriggerStrategy` is a queue configuration enforced by the Trigger Monitor — see [[concepts/pipelines/io-triggers#Retrigger Strategy|Triggers]].
 
 ## Related
 

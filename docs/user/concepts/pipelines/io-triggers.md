@@ -60,6 +60,24 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
    [=] >NewFiles >> <NewFiles
 ```
 
+## Retrigger Strategy
+
+When a pipeline's trigger conditions are met again while the pipeline is already queued or executing, `#RetriggerStrategy` controls what happens. It is a queue configuration — declared on `[Q]` — but the Trigger Monitor enforces it, deciding whether to send an enqueue signal.
+
+```polyglot
+[Q] =Q.Default
+   [=] <retrigger;#RetriggerStrategy << #Disallow
+```
+
+| Strategy | Behavior |
+|----------|----------|
+| `#Allow` | Enqueue another instance (default) |
+| `#Disallow` | Ignore trigger if pipeline is already queued or executing |
+| `#NoDuplicate` | Ignore trigger if same parameters are already queued |
+| `#QueueAfter` | Queue to run after current instance completes |
+
+The Trigger Monitor reads the `[Q]` retrigger policy before acting. The Queue Manager itself does not evaluate this — it only receives jobs that the Trigger Monitor has already approved.
+
 ## See Also
 
 - [[concepts/pipelines/INDEX|Pipeline Structure]] — full pipeline element ordering

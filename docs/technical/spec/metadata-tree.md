@@ -233,7 +233,7 @@ Parameter names within `.[{]` and `.[}]` are flexible — they follow the wrappe
 ### Key Properties
 
 - **Flexible instances** — each queue use creates `%Q:Name:N` with sequential numbering.
-- **Fields are fixed** — all fields (`.strategy`, `.host`, `.maxInstances`, etc.) are Polyglot-defined fixed fields. `#RetriggerStrategy` is a trigger-level config, not a queue field.
+- **Fields are fixed** — all fields (`.strategy`, `.host`, `.maxInstances`, etc.) are Polyglot-defined fixed fields. `#RetriggerStrategy` is a queue configuration enforced by the Trigger Monitor, not a queue metadata field.
 - **Host-based dispatch** — `.host` binds each queue to a specific host. 1 queue = 1 host. Offloading work to another host means switching queues (e.g., via `=Q.Reassign`).
 - **Active controls** — nested `[Q]` lines within the definition set default pause/resume/kill behavior.
 - **`live` fields** — queue instances report runtime state: `pendingCount`, `activeCount`, `totalProcessed`. See [[metadata|user/concepts/metadata]].
