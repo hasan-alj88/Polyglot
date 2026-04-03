@@ -1,3 +1,9 @@
+---
+audience: [pg-coder, integrator, architect, designer]
+type: reference
+updated: 2026-04-03
+---
+
 # The Polyglot Project
 
 Polyglot is an async-centric programming language and platform with two core pillars:
@@ -58,7 +64,7 @@ The project aims to provide a unified platform for developers to leverage the st
 
 - **Polyglot Service** — The runtime backbone, consisting of three components:
   - **Trigger Monitor** — Monitors events (file changes, schedules, HTTP webhooks, resource availability) that initiate automated tasks.
-  - **Queue Manager** — Manages the queue of tasks waiting to be executed, handling priority, dispatch conditions, and resource limits.
+  - **Queue Handler** — Reacts to signals from the Trigger Monitor, managing queue state and dispatching jobs to Runners. Never evaluates conditions or makes decisions.
   - **Runner** — Executes pipelines, managing the lifecycle of each task from dispatch to completion.
 
   The Polyglot service must be running in the background to handle execution of automated tasks and manage their interactions.

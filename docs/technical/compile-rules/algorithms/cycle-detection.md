@@ -2,7 +2,7 @@
 name: Pipeline Call Cycle Detection
 type: algorithm
 consumes: PGE09013
-audience: developer
+audience: designer
 updated: 2026-03-24
 ---
 

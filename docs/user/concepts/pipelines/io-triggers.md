@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
 updated: 2026-03-30
 ---
@@ -76,7 +76,7 @@ When a pipeline's trigger conditions are met again while the pipeline is already
 | `#NoDuplicate` | Ignore trigger if same parameters are already queued |
 | `#QueueAfter` | Queue to run after current instance completes |
 
-The Trigger Monitor reads the `[Q]` retrigger policy before acting. The Queue Manager itself does not evaluate this — it only receives jobs that the Trigger Monitor has already approved.
+The Trigger Monitor reads the `[Q]` retrigger policy before acting. The Queue Handler itself does not evaluate this — it only receives jobs that the Trigger Monitor has already approved.
 
 ## See Also
 

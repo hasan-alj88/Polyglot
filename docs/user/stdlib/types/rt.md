@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
 updated: 2026-04-01
 status: complete

@@ -1,5 +1,5 @@
 ---
-audience: developer
+audience: designer
 type: reference
 updated: 2026-03-31
 ---

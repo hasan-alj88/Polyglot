@@ -1,5 +1,5 @@
 ---
-audience: developer
+audience: designer
 type: specification
 updated: 2026-04-01
 status: draft

@@ -1,7 +1,8 @@
 ---
+audience: [pg-coder, integrator, architect, designer]
 type: master-index
 scope: all-documentation
-updated: 2026-03-30
+updated: 2026-04-03
 ---
 
 # Polyglot Documentation — Master Index
@@ -21,7 +22,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | Check formal grammar for a construct | [[technical/ebnf/INDEX]] |
 | Validate an edge case | [[technical/edge-cases/INDEX]] |
 | Understand the type system | [[user/syntax/types/INDEX]] |
-| Find a real-world automation scenario | [[user/SCENARIOS]] |
+| Find a real-world automation scenario | [[user/scenarios/INDEX]] |
 | Check documentation writing rules | [[audit/README]] |
 | See the product vision | [[vision]] |
 | Track documentation gaps | [[audit/tracking/coverage-gaps]] |
@@ -49,7 +50,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | [[user/syntax/]] | Syntax foundations: line structure, comments, identifiers, blocks, types, operators, IO, packages |
 | [[user/concepts/]] | Core concepts: variable lifecycle, collections, conditionals, pipelines, errors, permissions, metadata |
 | [[user/stdlib/]] | Standard library: pipelines, expanders, collectors, types, errors |
-| [[user/SCENARIOS]] | 500 real-world automation scenarios |
+| [[user/scenarios/INDEX]] | 500 real-world automation scenarios (split into 6 thematic files) |
 
 ### For Contributors (building Polyglot)
 
@@ -61,7 +62,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | [[technical/COMPILE-RULES]] | Error/warning code lookup (PGE-xxx, PGW-xxx) |
 | [[technical/compile-rules/PGE/]] | Individual error rule files (108 rules) |
 | [[technical/compile-rules/PGW/]] | Individual warning rule files (21 rules) |
-| [[technical/spec/metadata-tree]] | Formal `%` metadata tree specification |
+| [[technical/spec/metadata-tree/INDEX]] | Formal `%` metadata tree specification |
 | [[technical/spec/type-identity]] | Structural type matching rules |
 | [[technical/compile-rules/algorithms/]] | Algorithms: cycle detection, overlap detection, compound exhaustiveness |
 
@@ -174,7 +175,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | ebnf/01–15-*.md | developer | spec | Formal grammar by section |
 | edge-cases/INDEX.md | developer | reference | Edge case usage guide and coverage matrix |
 | edge-cases/01–24-*.md | developer | reference | Edge cases by grammar section |
-| spec/metadata-tree.md | developer | spec | Complete % metadata tree specification |
+| spec/metadata-tree/ | [architect, designer] | spec | Complete % metadata tree specification (split) |
 | spec/type-identity.md | developer | spec | Structural type matching rules |
 | compile-rules/PGE/*.md | developer | spec | Individual error rules (108 files) |
 | compile-rules/PGW/*.md | developer | spec | Individual warning rules (21 files) |
