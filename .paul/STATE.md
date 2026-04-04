@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #120 (doc fix) — COMPLETE
-Plan: 120-01 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-04 — Unified 120-01: pipeline-perspective terminology in 3 files
+Plan: Single documentation fix
+Status: Merged to main, issue closed
+Last activity: 2026-04-04 — Merged #120 to main, branch deleted
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -51,21 +51,18 @@ Progress:
 - Issue #116: [██████████] 100% (1/1 plans — PushLeft/PushRight operator rename)
 - Issue #117: [██████████] 100% (1/1 plans — int/float coercion wording fix)
 - Issue #119: [██████████] 100% (1/1 plans — ##Int schema vs #Int alias identity)
+- Issue #120: [██████████] 100% (1/1 plans — IO perspective terminology fix)
 
 ## Active Issue
 
-Issue: #120 — Docs: Chain IO reverses </'>' meaning without clear scoping rule
-Branch: docs/issue-120-chain-io-scoping-rule
-Labels: docs, P1-critical
-Started: 2026-04-04
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/120
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — ready for MERGE]
+  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
 ```
 
 ## Accumulated Context
@@ -165,6 +162,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #116 — PushLeft/PushRight operator rename | 2026-04-04 | Renamed 6 EBNF symbols + display names; eliminated Push/Pull ambiguity; merged to main |
 | Closed #117 — int/float coercion wording fix | 2026-04-04 | "interoperate freely" → "comparable without conversion"; merged to main |
 | Closed #119 — ##Int schema vs #Int alias identity | 2026-04-04 | Alias table now has Schema column; clarifies #Int is alias, ##Int is schema; merged to main |
+| Closed #120 — IO perspective terminology fix | 2026-04-04 | "caller perspective" → "pipeline perspective"; one-line scoping rule added; merged to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -184,9 +182,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-04
-Stopped at: UNIFY complete for 120-01
-Next action: /paul:merge to commit and merge to main
+Stopped at: Merged #120 to main, issue closed
+Next action: Pick next issue or push to origin
 Resume file: .paul/phases/issue-120-chain-io-scoping/120-01-SUMMARY.md
+Resume context:
+- Issue #120 complete and merged to main
+- Branch deleted, issue closed on GitHub
 
 ---
 *STATE.md — Updated after every significant action*
