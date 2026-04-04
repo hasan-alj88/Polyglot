@@ -14,20 +14,20 @@ severity: error
 
 **VALID:**
 ```polyglot
-[ ] ✓ Final push into discard — value explicitly thrown away
+[ ] ✓ PushLeft into discard — value explicitly thrown away
 [r] $*#string << "discarded"
 
-[ ] ✓ Final pull into discard via >>
+[ ] ✓ PushRight into discard via >>
 [r] =Compute
    [=] >result >> $*                    [ ] ✓ explicit discard of output
 ```
 
 **INVALID:**
 ```polyglot
-[ ] ✗ PGE02010 — default push into discard
+[ ] ✗ PGE02010 — DefaultPushLeft into discard
 [r] $*#string <~ "never used"           [ ] ✗ $* is immediate release, default is meaningless
 
-[ ] ✗ PGE02010 — default pull into discard
+[ ] ✗ PGE02010 — DefaultPushRight into discard
 [r] =Compute
    [=] >result ~> $*                    [ ] ✗ $* cannot hold a default value
 ```

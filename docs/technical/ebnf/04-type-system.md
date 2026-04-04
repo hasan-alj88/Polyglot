@@ -106,7 +106,7 @@ macro_type_body_line ::= macro_param
                        | exec_line
                        | comment_line ;
 
-macro_param         ::= "[#]" '<' name schema_id [ default_push value_expr ] NEWLINE
+macro_param         ::= "[#]" '<' name schema_id [ default_push_left value_expr ] NEWLINE
                          { indent type_constraint NEWLINE } ;
                       (* Value input — e.g., [#] <Name#RawString, [#] <Dim##Dimension <~ "1D" *)
 

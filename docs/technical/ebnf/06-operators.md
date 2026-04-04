@@ -11,15 +11,15 @@ updated: 2026-03-30
 ### 6.1 Assignment Operators
 
 ```ebnf
-final_push          ::= "<<" ;     (* right-to-left final assignment *)
-final_pull          ::= ">>" ;     (* left-to-right final assignment *)
-default_push        ::= "<~" ;     (* right-to-left default assignment *)
-default_pull        ::= "~>" ;     (* left-to-right default assignment *)
-fallback_push       ::= "<!" ;     (* right-to-left fallback — error recovery *)
-fallback_pull       ::= "!>" ;     (* left-to-right fallback — error recovery *)
+push_left           ::= "<<" ;     (* right-to-left final assignment *)
+push_right          ::= ">>" ;     (* left-to-right final assignment *)
+default_push_left   ::= "<~" ;     (* right-to-left default assignment *)
+default_push_right  ::= "~>" ;     (* left-to-right default assignment *)
+fallback_push_left  ::= "<!" ;     (* right-to-left fallback — error recovery *)
+fallback_push_right ::= "!>" ;     (* left-to-right fallback — error recovery *)
 
-assignment_op       ::= final_push | final_pull | default_push | default_pull
-                      | fallback_push | fallback_pull ;
+assignment_op       ::= push_left | push_right | default_push_left | default_push_right
+                      | fallback_push_left | fallback_push_right ;
 ```
 
 **Rule:** `<!` and `!>` are fallback assignment operators for error recovery. They provide a value when the source pipeline errors, preventing the target variable from entering the Failed state. Fallback operators only activate when an error occurs — they are not evaluated on the success path. See `[>]`/`[<]` block markers (§5) and fallback line syntax (§10.2).
