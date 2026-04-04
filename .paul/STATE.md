@@ -66,7 +66,7 @@ GitHub: https://github.com/hasan-alj88/Polyglot/issues/121
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ○        ○        ○        ○     [Issue #121 active]
+  ✓        ①        ○        ○     [121-01 done, 121-02 + 121-03 remain]
 ```
 
 ## Accumulated Context
@@ -186,12 +186,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-04
-Stopped at: Merged #120 to main, issue closed
-Next action: Pick next issue or push to origin
-Resume file: .paul/phases/issue-120-chain-io-scoping/120-01-SUMMARY.md
+Stopped at: 121-01 committed on branch docs/issue-121-base-pipeline-mandatory-markers
+Next action: /paul:plan for 121-02 (retire #BaseCode → #NativeKind, update PGE01028)
+Resume file: .paul/phases/issue-121-native-block/121-01-SUMMARY.md
 Resume context:
-- Issue #120 complete and merged to main
-- Branch deleted, issue closed on GitHub
+- Issue #121 in progress — 121-01 (core {N} design) complete and committed
+- Branch: docs/issue-121-base-pipeline-mandatory-markers
+- Remaining: 121-02 (retire BaseCode.md, create NativeKind.md, update PGE01028) + 121-03 (propagate {N} to stdlib examples)
+- Key design: {N} block, #NativeKind enum, %Native.* metadata — see 121-01-SUMMARY.md
 
 ---
 *STATE.md — Updated after every significant action*
