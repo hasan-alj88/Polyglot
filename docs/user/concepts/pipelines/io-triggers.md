@@ -29,7 +29,7 @@ Every trigger must output `>IsTriggered#bool`. Triggers can produce additional o
    [=] >NewFiles#array:path
 ```
 
-Trigger definitions have no execution body, no `[Q]`, and no `[W]` — they are IO-only. Stdlib triggers (`=T.*`) are base pipelines backed by native code — see [[concepts/pipelines/INDEX|Pipeline Structure]] for the base vs derived distinction.
+Trigger definitions have no execution body, no `[Q]`, and no `[W]` — they are IO-only. Stdlib triggers (`=T.*`) are native definitions backed by host language code — see [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived]] for the distinction.
 
 ## IO as Implicit Triggers
 

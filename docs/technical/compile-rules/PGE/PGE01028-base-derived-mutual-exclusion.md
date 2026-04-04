@@ -1,60 +1,66 @@
 ---
 rule: "1.28"
 code: PGE01028
-name: Base/Derived Pipeline Mutual Exclusion
+name: Native/Derived Block Mutual Exclusion
 severity: error
 ---
 
-### Rule 1.28 — Base/Derived Pipeline Mutual Exclusion
+### Rule 1.28 — Native/Derived Block Mutual Exclusion
 `PGE01028`
 
-**Statement:** Base and derived pipeline constraints are mutually exclusive. A definition with `.baseCode` metadata cannot have an execution body; a definition with an execution body cannot have `.baseCode`. A bodyless `{=}` pipeline without `.baseCode` is also an error (exception: `{T}` and `{Q}` are IO-only by design).
-**Rationale:** Base pipelines delegate to native code — a Polyglot body would conflict with the native implementation. Derived pipelines are pure Polyglot — `.baseCode` would create ambiguity about which implementation runs. Bodyless `{=}` without `.baseCode` is dead code with no implementation.
-**Detection:** The compiler checks for mutual exclusion between `.baseCode` metadata and execution body elements (`[T]`, `[Q]`, `[W]`, `[r]`, `[p]`, `[b]`, `[s]`, `[{]`, `[}]`, `[\]`, `[/]`). It also validates that `.baseCode` references an existing `#BaseCode` variant using the configured base language.
+**Statement:** Native `{N}` and derived `{=}` block types are mutually exclusive. A `{N}` definition cannot have an execution body; a `{=}` definition cannot have `%Native.*` metadata. A `{N}` definition without `%Native.Kind` is also an error (exception: `{T}` and `{Q}` are IO-only subtypes of `{=}` by design).
+**Rationale:** Native definitions delegate to host language code — a Polyglot execution body would conflict with the native implementation. Derived definitions are pure Polyglot — `%Native.*` metadata would create ambiguity about which implementation runs. A `{N}` block without `.Kind` has no subsystem role, making it unresolvable.
+**Detection:** The compiler checks for mutual exclusion between `{N}` block type and execution body elements (`[T]`, `[Q]`, `[W]`, `[r]`, `[p]`, `[b]`, `[s]`, `[{]`, `[}]`, `[\]`, `[/]`). It also validates that `{N}` blocks declare `%Native.Kind` with a valid `#NativeKind` variant and have a `.<Language>` field matching the configured base language.
 
 **Sub-conditions:**
 
 | Condition | Trigger | Error |
 |-----------|---------|-------|
-| a | `.baseCode` + execution body | Base pipeline cannot have execution body |
-| b | Execution body + `.baseCode` | Derived pipeline cannot have `.baseCode` |
-| c | No body + no `.baseCode` on `{=}` | Bodyless pipeline must be base (except `{T}`/`{Q}`) |
-| d | `.baseCode` references non-existent variant | Invalid `#BaseCode` variant |
-| e | `.baseCode` uses wrong base language | Config says `base: Rust` but code uses different prefix |
+| a | `{N}` + execution body | Native definition cannot have execution body |
+| b | `{=}` + `%Native.Kind` | Derived pipeline cannot have native metadata |
+| c | `{N}` without `%Native.Kind` | Native definition must declare Kind |
+| d | `%Native.Kind` references non-existent `#NativeKind` variant | Invalid `#NativeKind` variant |
+| e | `{N}` without `.<Language>` for configured base language | Config says `base: Rust` but `{N}` has no `.Rust` field |
 
 **VALID:**
 ```polyglot
-[ ] ✓ base execution pipeline — bodyless with .baseCode
-{=}[exe] =File.Text.Read
-   [%] .baseCode << #BaseCode.Rust.File.Text.Read
+[ ] ✓ native execution pipeline — {N} with %Native metadata, no body
+{N} =File.Text.Read
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileTextRead"
+   [%] .description << "Read text file contents"
    [=] <path#path
    [=] >content#string
    [=] !File.NotFound
    [=] !File.PermissionDenied
 
-[ ] ✓ derived execution pipeline — body without .baseCode
+[ ] ✓ derived execution pipeline — {=} with full Polyglot body
 {=} =ProcessData
    [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =DoWork
 
-[ ] ✓ base trigger — bodyless with .baseCode
-{T} =T.Call
-   [%] .baseCode << #BaseCode.Rust.T.Call
+[ ] ✓ native trigger — {N} with Trigger kind
+{N} =T.Call
+   [%] .Kind << #NativeKind.Trigger
+   [%] .Rust << "TriggerCall"
+   [%] .description << "Pipeline invoked by another pipeline"
    [=] >IsTriggered#bool
 
-[ ] ✓ derived trigger — IO-only, no body, no .baseCode (OK for {T})
+[ ] ✓ derived trigger — IO-only {T}, no body, no %Native (OK for {T})
 {T} =T.DailyWebhookReady
    [T] =T.Daily"3AM"
    [T] =T.Webhook"/api/ready"
    [=] >IsTriggered#bool
 
-[ ] ✓ base wrapper — bodyless with .baseCode
-{W} =W.Polyglot
-   [%] .baseCode << #BaseCode.Rust.W.Polyglot
+[ ] ✓ native wrapper — {N} with Wrapper kind
+{N} =W.Polyglot
+   [%] .Kind << #NativeKind.Wrapper
+   [%] .Rust << "WrapperPolyglot"
+   [%] .description << "Default Polyglot wrapper"
 
-[ ] ✓ derived wrapper — body without .baseCode
+[ ] ✓ derived wrapper — {W} with body, no %Native
 {W} =W.DB.Connection
    [{] $connectionString#string
    [}] $dbConn
@@ -65,44 +71,45 @@ severity: error
    [/]
       [r] =DB.Disconnect
          [=] <conn << $dbConn
+
+[ ] ✓ native intrinsic — compiler built-in, no host function needed
+{N} =DoNothing
+   [%] .Kind << #NativeKind.Intrinsic
+   [%] .description << "No-op pipeline"
 ```
 
 **INVALID:**
 ```polyglot
-[ ] ✗ PGE01028a — base pipeline cannot have execution body
-{=}[exe] =Bad.BaseWithBody
-   [%] .baseCode << #BaseCode.Rust.File.Text.Read
+[ ] ✗ PGE01028a — native definition cannot have execution body
+{N} =Bad.NativeWithBody
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "BadNativeWithBody"
    [=] <path#path
    [=] >content#string
    [r] =SomeWork
 
-[ ] ✗ PGE01028b — derived pipeline cannot have .baseCode
-{=}[exe] =Bad.DerivedWithBase
-   [%] .baseCode << #BaseCode.Rust.DoNothing
+[ ] ✗ PGE01028b — derived pipeline cannot have native metadata
+{=} =Bad.DerivedWithNative
+   [%] .Kind << #NativeKind.Execution
    [T] =T.Call
    [Q] =Q.Default
    [W] =W.Polyglot
    [r] =DoSomething
 
-[ ] ✗ PGE01028b — derived wrapper cannot have .baseCode
-{W} =W.Bad.DerivedWithBase
-   [%] .baseCode << #BaseCode.Rust.W.Polyglot
-   [{] $input#string
-   [\]
-      [r] =DoNothing
-
-[ ] ✗ PGE01028a — base wrapper cannot have [{]/[}]/[\]/[/]
-{W} =W.Bad.BaseWithBody
-   [%] .baseCode << #BaseCode.Rust.W.Polyglot
-   [{] $input#string
-
-[ ] ✗ PGE01028d — .baseCode references non-existent variant
-{=}[exe] =Bad.InvalidBase
-   [%] .baseCode << #BaseCode.Rust.NotARealThing
+[ ] ✗ PGE01028c — native definition must declare Kind
+{N} =Bad.NoKind
+   [%] .Rust << "BadNoKind"
    [=] <x#string
 
-[ ] ✗ PGE01028e — .baseCode uses wrong base language
-{=}[exe] =Bad.WrongBase
-   [%] .baseCode << #BaseCode.Go.File.Text.Read
-   [=] <path#path
+[ ] ✗ PGE01028d — invalid #NativeKind variant
+{N} =Bad.InvalidKind
+   [%] .Kind << #NativeKind.Storage
+   [%] .Rust << "BadInvalidKind"
+   [=] <x#string
+
+[ ] ✗ PGE01028e — missing language field for configured base
+{N} =Bad.NoLangField
+   [%] .Kind << #NativeKind.Execution
+   [%] .description << "No Rust field but config says base: Rust"
+   [=] <x#string
 ```

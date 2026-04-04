@@ -426,7 +426,6 @@ comment_block       ::= "{ }" comment_text NEWLINE ;
 metadata_line       ::= "[%]" metadata_expr ;
 
 metadata_expr       ::= metadata_fixed
-                      | metadata_basecode
                       | metadata_info
                       | metadata_alias
                       | metadata_live ;
@@ -437,10 +436,6 @@ metadata_fixed      ::= fixed_sep "description" [ type_annotation ] assignment_o
                       | fixed_sep "version" [ type_annotation ] assignment_op string_literal
                       | fixed_sep "license" [ type_annotation ] assignment_op string_literal
                       | fixed_sep "deprecated" assignment_op data_id ;
-
-(* Base code field — links to native implementation *)
-metadata_basecode   ::= fixed_sep "baseCode" assignment_op
-                         "#BaseCode" "." IDENT { "." IDENT } ;
 
 (* Info field — serial type, opens flexible scope *)
 metadata_info       ::= fixed_sep "info" type_annotation NEWLINE

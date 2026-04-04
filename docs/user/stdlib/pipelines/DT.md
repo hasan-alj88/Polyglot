@@ -11,7 +11,7 @@ status: complete
 
 DateTime pipelines for construction, calendar conversion, arithmetic, comparison, extraction, zone management, formatting, and business day operations. No `[@]` import needed.
 
-All `=DT.*` pipelines are base pipelines (compiler intrinsics). They operate on `#dt` (alias for `#DateTime`).
+All `=DT.*` pipelines are native definitions (`{N}` blocks). They operate on `#dt` (alias for `#DateTime`).
 
 **Inline notation:** `=DT"..."` and `=DateTime"..."` are sugar for `=DT.From.ISO`. This follows the `=Path"..."` precedent.
 
@@ -45,8 +45,9 @@ All `=DT.*` pipelines require no permissions (`[_] _None`) except `=DT.Now`, whi
 Returns the current instant from the system clock.
 
 ```polyglot
-{=} =DT.Now
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Now
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtNow"
    [%] .description << "Current instant from system clock"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -61,8 +62,9 @@ Returns the current instant from the system clock.
 Converts epoch seconds to a `#dt` value.
 
 ```polyglot
-{=} =DT.From.Epoch
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.From.Epoch
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFromEpoch"
    [%] .description << "Epoch seconds to DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -78,8 +80,9 @@ Converts epoch seconds to a `#dt` value.
 Parses an ISO-8601 string into a `#dt` value. Called implicitly by `=DT"..."` inline notation.
 
 ```polyglot
-{=} =DT.From.ISO
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.From.ISO
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFromIso"
    [%] .description << "ISO-8601 string to DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -95,8 +98,9 @@ Parses an ISO-8601 string into a `#dt` value. Called implicitly by `=DT"..."` in
 Constructs a `#dt` from explicit date-time components. Hour, minute, second, nanosecond default to `0`; zone defaults to `"UTC"`.
 
 ```polyglot
-{=} =DT.From.Parts
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.From.Parts
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFromParts"
    [%] .description << "Explicit components to DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -123,8 +127,9 @@ All `=DT.To.*` pipelines project a `#dt` value into a calendar-specific date str
 ### =DT.To.Gregorian
 
 ```polyglot
-{=} =DT.To.Gregorian
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Gregorian
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToGregorian"
    [%] .description << "DateTime to Gregorian date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -140,8 +145,9 @@ All `=DT.To.*` pipelines project a `#dt` value into a calendar-specific date str
 The `<authority` input selects the Hijri calendar authority. Defaults to `#HijriAuthority.UmmAlQura`.
 
 ```polyglot
-{=} =DT.To.Hijri
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Hijri
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToHijri"
    [%] .description << "DateTime to Hijri date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -156,8 +162,9 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
 ### =DT.To.Hebrew
 
 ```polyglot
-{=} =DT.To.Hebrew
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Hebrew
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToHebrew"
    [%] .description << "DateTime to Hebrew date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -171,8 +178,9 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
 ### =DT.To.Chinese
 
 ```polyglot
-{=} =DT.To.Chinese
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Chinese
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToChinese"
    [%] .description << "DateTime to Chinese date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -186,8 +194,9 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
 ### =DT.To.Persian
 
 ```polyglot
-{=} =DT.To.Persian
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Persian
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToPersian"
    [%] .description << "DateTime to Persian date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -201,8 +210,9 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
 ### =DT.To.Buddhist
 
 ```polyglot
-{=} =DT.To.Buddhist
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Buddhist
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToBuddhist"
    [%] .description << "DateTime to Buddhist date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -218,8 +228,9 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
 The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
 
 ```polyglot
-{=} =DT.To.Hindu
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Hindu
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToHindu"
    [%] .description << "DateTime to Hindu date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -234,8 +245,9 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
 ### =DT.To.Japanese
 
 ```polyglot
-{=} =DT.To.Japanese
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Japanese
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToJapanese"
    [%] .description << "DateTime to Japanese date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -249,8 +261,9 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
 ### =DT.To.Ethiopian
 
 ```polyglot
-{=} =DT.To.Ethiopian
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Ethiopian
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToEthiopian"
    [%] .description << "DateTime to Ethiopian date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -264,8 +277,9 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
 ### =DT.To.Coptic
 
 ```polyglot
-{=} =DT.To.Coptic
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Coptic
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToCoptic"
    [%] .description << "DateTime to Coptic date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -281,8 +295,9 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
 Projects a `#dt` into a user-supplied custom calendar.
 
 ```polyglot
-{=} =DT.To.Custom
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.Custom
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToCustom"
    [%] .description << "DateTime to custom calendar date"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -305,8 +320,9 @@ These pipelines convert a `#dt` into culture-specific time representations.
 Converts to Chinese traditional time units (shichen/ke/fen).
 
 ```polyglot
-{=} =DT.To.ChineseTime
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.ChineseTime
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToChineseTime"
    [%] .description << "DateTime to Chinese traditional time"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -322,8 +338,9 @@ Converts to Chinese traditional time units (shichen/ke/fen).
 Converts to Hindu traditional time units (prahara/muhurta).
 
 ```polyglot
-{=} =DT.To.HinduTime
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.HinduTime
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToHinduTime"
    [%] .description << "DateTime to Hindu traditional time"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -339,8 +356,9 @@ Converts to Hindu traditional time units (prahara/muhurta).
 Converts to French Republican decimal time.
 
 ```polyglot
-{=} =DT.To.DecimalTime
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.To.DecimalTime
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToDecimalTime"
    [%] .description << "DateTime to decimal time"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -360,8 +378,9 @@ Converts to French Republican decimal time.
 Adds a `#Duration` (fixed time span) to a `#dt`.
 
 ```polyglot
-{=} =DT.Add.Duration
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Add.Duration
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtAddDuration"
    [%] .description << "Add duration to DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -378,8 +397,9 @@ Adds a `#Duration` (fixed time span) to a `#dt`.
 Adds a `#Period` (calendar-aware span such as "1 month") to a `#dt`.
 
 ```polyglot
-{=} =DT.Add.Period
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Add.Period
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtAddPeriod"
    [%] .description << "Add calendar period to DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -396,8 +416,9 @@ Adds a `#Period` (calendar-aware span such as "1 month") to a `#dt`.
 Subtracts two `#dt` values and returns the `#Duration` between them.
 
 ```polyglot
-{=} =DT.Sub
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Sub
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtSub"
    [%] .description << "Subtract two DateTimes to get Duration"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -418,8 +439,9 @@ Subtracts two `#dt` values and returns the `#Duration` between them.
 Returns `-1`, `0`, or `1` as an `#int`.
 
 ```polyglot
-{=} =DT.Compare
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Compare
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtCompare"
    [%] .description << "Compare two DateTimes"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -436,8 +458,9 @@ Returns `-1`, `0`, or `1` as an `#int`.
 Returns `#bool` -- true when `a` is earlier than `b`.
 
 ```polyglot
-{=} =DT.IsBefore
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.IsBefore
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtIsBefore"
    [%] .description << "Check if DateTime is before another"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -454,8 +477,9 @@ Returns `#bool` -- true when `a` is earlier than `b`.
 Returns `#bool` -- true when `a` is later than `b`.
 
 ```polyglot
-{=} =DT.IsAfter
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.IsAfter
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtIsAfter"
    [%] .description << "Check if DateTime is after another"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -472,8 +496,9 @@ Returns `#bool` -- true when `a` is later than `b`.
 Returns `#bool` -- true when `source` falls within the given `#Interval`.
 
 ```polyglot
-{=} =DT.InInterval
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.InInterval
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtInInterval"
    [%] .description << "Check if DateTime is within interval"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -494,8 +519,9 @@ These pipelines extract individual components from a `#dt` value.
 ### =DT.Get.Year
 
 ```polyglot
-{=} =DT.Get.Year
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Get.Year
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetYear"
    [%] .description << "Extract year from DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -509,8 +535,9 @@ These pipelines extract individual components from a `#dt` value.
 ### =DT.Get.Month
 
 ```polyglot
-{=} =DT.Get.Month
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Get.Month
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetMonth"
    [%] .description << "Extract month from DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -524,8 +551,9 @@ These pipelines extract individual components from a `#dt` value.
 ### =DT.Get.Day
 
 ```polyglot
-{=} =DT.Get.Day
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Get.Day
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetDay"
    [%] .description << "Extract day from DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -541,8 +569,9 @@ These pipelines extract individual components from a `#dt` value.
 Returns a `#Weekday` enum value.
 
 ```polyglot
-{=} =DT.Get.Weekday
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Get.Weekday
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetWeekday"
    [%] .description << "Extract weekday from DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -558,8 +587,9 @@ Returns a `#Weekday` enum value.
 Returns the week-of-year as `#int`. The `<system` input selects the week numbering system; defaults to `#WeekSystem.ISO`.
 
 ```polyglot
-{=} =DT.Get.WeekNumber
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Get.WeekNumber
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetWeekNumber"
    [%] .description << "Extract week number from DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -576,8 +606,9 @@ Returns the week-of-year as `#int`. The `<system` input selects the week numberi
 Returns epoch seconds as `#int`.
 
 ```polyglot
-{=} =DT.Get.Epoch
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Get.Epoch
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetEpoch"
    [%] .description << "Extract epoch seconds from DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -593,8 +624,9 @@ Returns epoch seconds as `#int`.
 Returns the `#Zone` attached to a `#dt` value.
 
 ```polyglot
-{=} =DT.Get.Zone
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Get.Zone
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetZone"
    [%] .description << "Extract timezone from DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -614,8 +646,9 @@ Returns the `#Zone` attached to a `#dt` value.
 Replaces the timezone label on a `#dt` without converting the instant. The wall-clock reading stays the same; the underlying instant changes.
 
 ```polyglot
-{=} =DT.Zone.Set
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Zone.Set
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtZoneSet"
    [%] .description << "Set timezone on DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -632,8 +665,9 @@ Replaces the timezone label on a `#dt` without converting the instant. The wall-
 Converts a `#dt` to a different timezone. The underlying instant stays the same; the wall-clock reading changes.
 
 ```polyglot
-{=} =DT.Zone.Convert
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Zone.Convert
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtZoneConvert"
    [%] .description << "Convert DateTime to different timezone"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -654,8 +688,9 @@ Converts a `#dt` to a different timezone. The underlying instant stays the same;
 Formats a `#dt` using a pattern string (e.g. `"YYYY-MM-DD HH:mm:ss"`).
 
 ```polyglot
-{=} =DT.Format
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Format
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFormat"
    [%] .description << "Format DateTime with pattern"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -672,8 +707,9 @@ Formats a `#dt` using a pattern string (e.g. `"YYYY-MM-DD HH:mm:ss"`).
 Formats a `#dt` as an ISO-8601 string.
 
 ```polyglot
-{=} =DT.Format.ISO
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Format.ISO
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFormatIso"
    [%] .description << "Format DateTime as ISO-8601"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -689,8 +725,9 @@ Formats a `#dt` as an ISO-8601 string.
 Formats a `#dt` as a string in a specific calendar system's conventional format.
 
 ```polyglot
-{=} =DT.Format.Calendar
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Format.Calendar
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFormatCalendar"
    [%] .description << "Format DateTime in calendar system format"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -713,8 +750,9 @@ Business day pipelines require an explicit `#BusinessWeek` configuration. No reg
 Returns `#bool` -- true when `source` falls on a work day.
 
 ```polyglot
-{=} =DT.Business.IsWorkDay
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Business.IsWorkDay
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtBusinessIsWorkDay"
    [%] .description << "Check if DateTime is a work day"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -731,8 +769,9 @@ Returns `#bool` -- true when `source` falls on a work day.
 Returns the next work day as a `#dt`.
 
 ```polyglot
-{=} =DT.Business.NextWorkDay
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Business.NextWorkDay
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtBusinessNextWorkDay"
    [%] .description << "Find next work day"
    [%] .version << "1.0.0"
    [T] =T.Manual
@@ -749,8 +788,9 @@ Returns the next work day as a `#dt`.
 Adds `N` work days to a `#dt`, skipping non-work days.
 
 ```polyglot
-{=} =DT.Business.AddWorkDays
-   [ ] Base pipeline — compiler intrinsic
+{N} =DT.Business.AddWorkDays
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtBusinessAddWorkDays"
    [%] .description << "Add work days to DateTime"
    [%] .version << "1.0.0"
    [T] =T.Manual
