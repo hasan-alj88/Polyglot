@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: reference
-updated: 2026-04-03
+updated: 2026-04-04
 ---
 
 # Supporting Enums
@@ -15,7 +15,7 @@ updated: 2026-04-03
    [%] .description << "Date-time resolution level"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "precision"
    [.] .Year
    [.] .Month
@@ -37,7 +37,7 @@ updated: 2026-04-03
    [%] .description << "Recurrence frequency pattern"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "recurrencepattern"
    [.] .Daily
    [.] .Weekly
@@ -54,7 +54,7 @@ updated: 2026-04-03
    [%] .description << "Supported calendar system identifier"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "calendarsystem"
    [.] .Gregorian
    [.] .Hijri
@@ -76,7 +76,7 @@ updated: 2026-04-03
    [%] .description << "Day of the week"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "weekday"
    [.] .Monday
    [.] .Tuesday
@@ -96,7 +96,7 @@ Gregorian month names. Other calendars define their own month enums.
    [%] .description << "Gregorian calendar month"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "month"
    [.] .January
    [.] .February
@@ -119,7 +119,7 @@ Gregorian month names. Other calendars define their own month enums.
    [%] .description << "When a calendar day begins"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "dayboundary"
    [.] .Midnight
    [.] .Sunset
@@ -136,7 +136,7 @@ Each variant carries a `.config#BusinessWeek` sub-field that defines the week co
    [%] .description << "Week system standard"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "weeksystem"
    [.] .ISO
       [.] .config#BusinessWeek
@@ -157,7 +157,7 @@ All fields must be explicitly set by the user. No defaults are assumed for regio
    [%] .description << "Configurable work/off day schedule"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "businessweek"
    [.] .firstDay#Weekday
    [.] .workDays#array.Weekday
@@ -172,7 +172,7 @@ All fields must be explicitly set by the user. No defaults are assumed for regio
    [%] .description << "How a calendar organizes month lengths"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "monthstructure"
    [.] .Fixed
    [.] .Mixed

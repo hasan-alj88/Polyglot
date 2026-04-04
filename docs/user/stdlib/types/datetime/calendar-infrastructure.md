@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: reference
-updated: 2026-04-03
+updated: 2026-04-04
 ---
 
 # Calendar Infrastructure
@@ -17,7 +17,7 @@ Defines how any calendar maps from epoch. Every calendar is a projection of `.In
    [%] .description << "Epoch-to-calendar mapping definition"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "calendarprojection"
    [.] .epochOffset#int
    [.] .leapRule#LeapRule
@@ -33,7 +33,7 @@ Defines how any calendar maps from epoch. Every calendar is a projection of `.In
    [%] .description << "Leap year calculation method"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "leaprule"
    [.] .None
    [.] .FixedCycle

@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-29
+updated: 2026-04-04
 status: complete
 ---
 
@@ -202,7 +202,7 @@ Dataframe rows are accessed by index, columns by key: `$df<row<column`.
 ```polyglot
 {#} #SalesColumns
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [.] .product
    [.] .price
    [.] .quantity

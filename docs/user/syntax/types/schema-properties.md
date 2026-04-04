@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-30
+updated: 2026-04-04
 ---
 
 # Schema Properties
@@ -14,7 +14,7 @@ updated: 2026-03-30
 
 | Property | Type | Applies to | Meaning |
 |----------|------|-----------|---------|
-| `%##Depth.Max` | `#int` | Universal | Max tree depth (0=scalar, 1=flat, -1=unlimited) |
+| `%##Depth.Max` | `#int` | Universal | Max tree depth (0=atomic, 1=scalar/record, -1=unlimited) |
 | `%##Children.Type` | type ref | Branch nodes (depth > 0) | Data type of child keys |
 | `%##Children.Gap` | `#Boolean` | Branch nodes (depth > 0) | Gaps allowed in child keys? |
 | `%##Children.Uniform` | `#Boolean` | Branch nodes (depth > 0) | All children same schema? |
@@ -31,33 +31,38 @@ Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Proper
 
 ### %##Depth.Max — Inference Model
 
-`%##Depth.Max` describes how many levels of **flexible** (`:`) nesting a type supports. Fixed (`.`) fields define static schema structure and do NOT count as depth.
+`%##Depth.Max` describes the maximum tree depth of a type's instances. Both fixed (`.`) and flexible (`:`) fields contribute to depth — any field one level below the root is depth 1.
 
 | Value | Meaning | Examples |
 |-------|---------|---------|
-| `0` | Scalar/record — no flexible children | #String, #Int, #Boolean, #Person (all `.` fields) |
-| `1` | One level of flexible children | #Array (1D), #Map |
-| `N` | N levels of flexible nesting | #Array with `:ND` dimension |
-| `-1` | Unlimited flexible nesting | #Serial |
+| `0` | Atomic — no fields at all (`##Leaf`) | `RawString` |
+| `1` | Scalar/record — one level of fields | `#String`, `#Int`, `#Boolean`, `#Person`, `#Map`, `#Array` (1D) |
+| `N` | N levels of nesting | `#Array` with `:ND` dimension |
+| `-1` | Unlimited nesting | `#Serial` |
 
 **Compiler inference:** When a `{#}` definition does not explicitly set `%##Depth.Max`, the compiler infers it:
-- **All `.` fixed fields** → `%##Depth.Max = 0` (record/scalar)
-- **Has `:` flexible fields** → `%##Depth.Max` = count of nested `:` levels
+- **Has `.` fixed fields only** → `%##Depth.Max = 1` (record/scalar)
+- **Has `:` flexible fields** → `%##Depth.Max` = count of nested `:` levels (minimum 1)
+- **No fields at all** → `%##Depth.Max = 0` (atomic, requires explicit `##Leaf`)
 - **Explicit `[#] %##Depth.Max`** → overrides inference
 
-This means structs like `#Person` (with `.name#string`, `.age#int`) are automatically depth 0 and CAN be used as array/dict elements. A struct with `[:] :*#Handler` has depth 1 and CANNOT.
+This means structs like `#Person` (with `.name#string`, `.age#int`) are automatically depth 1 and CAN be used as array/dict elements. A struct with `[:] :*#Handler` has depth 1 and CANNOT be nested inside collections without explicit `%##Depth.Max`.
 
 Collections used as value types require explicit `%##Depth.Max` — the compiler raises PGE11002 if depth is missing. Using `%##Depth.Max << -1` on a user-defined type triggers PGW11003 (only `#Serial` should use unlimited depth).
 
 ### `###` Field Types — Leaf Content
 
-The `###` prefix describes the nature of leaf content in a type's fields. There are three field types:
+The `###` prefix describes the nature of leaf content in a type's fields. There are five field types — three general and two scalar-specific:
 
 | Field Type | Declaration | Meaning |
 |------------|-------------|---------|
 | `###Value` | Leaf holds typed data | Field has a `#type` annotation — inherits `#String` chain |
 | `###Enum` | Leaf is variant selector | Field has no `#type` — identity IS the value (active variant) |
 | `###None` | Leaf is nullable | No fields — empty string `""` is the only valid value |
+| `###ScalarValue` | Scalar typed data | Regex-validated string data — specifically `#String:*` family. Only valid with `##Scalar` |
+| `###ScalarEnum` | Scalar variant selector | Variant selector in a scalar type — `#Boolean`, `#BaseCode`. Only valid with `##Scalar` |
+
+`##Scalar` constrains leaf content to `###ScalarValue` or `###ScalarEnum` — no other `###` type is valid with `##Scalar`.
 
 `###None` marks a type as nullable. A variable annotated with a `###None` type holds empty string `""` — it represents the absence of a value. Only types with `[#] << ###None` accept empty string; all other types reject `""` with **PGE04021**.
 
@@ -72,14 +77,14 @@ Examples from the type hierarchy:
 
 ```polyglot
 {#} #Boolean
-   [#] << ###Enum
-   [ ] Matches — .True/.False have no #type annotation
+   [#] << ###ScalarEnum
+   [ ] Matches — .True/.False have no #type annotation; scalar enum type
    [.] .True
    [.] .False
 
 {#} #String
-   [#] << ###Value
-   [ ] Matches — .string#RawString has a #type annotation
+   [#] << ###ScalarValue
+   [ ] Matches — .string#RawString has a #type annotation; #String:* family
    [.] .string#RawString
    [.] .regex#RawString <~ ".*"
 
@@ -94,8 +99,11 @@ Examples from the type hierarchy:
 Schema types are `{#}` definitions that set `%##` properties to describe common tree shapes. Types compose schemas with `[#] <<` lines (one line, one expression — they accumulate):
 
 ```polyglot
-{#} ##Scalar
+{#} ##Leaf
    [#] %##Depth.Max << 0
+
+{#} ##Scalar
+   [#] %##Depth.Max << 1
 
 {#} ##Flat
    [#] %##Depth.Max << 1
@@ -124,6 +132,8 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
    [ ] All leaf fields must be ###Enum (no type annotation)
    [#] %##Leafs.Kind << #FieldKind.Enum
 ```
+
+`##Scalar` is specifically for the `#String:*` family and scalar enums. It constrains leaf content to `###ScalarValue` or `###ScalarEnum`. `##Leaf` is reserved for truly atomic types with no fields at all (`RawString`).
 
 A type composes multiple schemas to describe its full shape. For example, `#Array` uses `##Contiguous` and `##Rectangular` together. User-defined schemas are possible but not generally recommended.
 

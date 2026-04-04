@@ -359,7 +359,7 @@ Each rule follows this structure:
 **VALID:**
 ```polyglot
 {#} #Boolean
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [.] .True
    [.] .False
 ```

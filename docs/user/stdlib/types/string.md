@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-04
 status: complete
 ---
 
@@ -38,7 +38,7 @@ See [[syntax/types/INDEX|types]] for the full type hierarchy and [[scalars]] for
 
 ## Schema Properties
 
-- `[#] << ##Scalar` -- sets `%##Depth.Max << 0`, marking `#String` as a scalar with no flexible children
+- `[#] << ##Scalar` -- sets `%##Depth.Max << 1`, marking `#String` as a scalar
 - `%##Alias << "string"` -- lets users write `#string` (lowercase) as shorthand
 
 ## Subtype Inheritance via `<~`

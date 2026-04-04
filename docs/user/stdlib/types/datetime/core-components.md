@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: reference
-updated: 2026-04-03
+updated: 2026-04-04
 ---
 
 # Core Component Types
@@ -15,7 +15,7 @@ updated: 2026-04-03
    [%] .description << "Calendar date with year, month, day"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "date"
    [.] .year#int
    [.] .month#int
@@ -29,7 +29,7 @@ updated: 2026-04-03
    [%] .description << "Time of day with nanosecond precision"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "time"
    [.] .hour#int
    [.] .minute#int
@@ -44,7 +44,7 @@ updated: 2026-04-03
    [%] .description << "Timezone with IANA identifier, offset, and DST flag"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "zone"
    [.] .iana#string
    [.] .offset#ZoneOffset
@@ -58,7 +58,7 @@ updated: 2026-04-03
    [%] .description << "UTC offset in hours and minutes"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "zoneoffset"
    [.] .hours#int
    [.] .minutes#int
@@ -71,7 +71,7 @@ updated: 2026-04-03
    [%] .description << "Absolute time span in seconds and nanoseconds"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "duration"
    [.] .seconds#int
    [.] .nanos#int
@@ -84,7 +84,7 @@ updated: 2026-04-03
    [%] .description << "Calendar-relative time span in years, months, weeks, days"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "period"
    [.] .years#int
    [.] .months#int
@@ -99,7 +99,7 @@ updated: 2026-04-03
    [%] .description << "Start/end date-time range with inclusivity flags"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "interval"
    [.] .start#dt
    [.] .end#dt
@@ -114,7 +114,7 @@ updated: 2026-04-03
    [%] .description << "Repeating date-time pattern with optional end"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "recurrence"
    [.] .pattern#RecurrencePattern
    [.] .count#int <~ 0

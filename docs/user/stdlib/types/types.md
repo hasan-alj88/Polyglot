@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-04
 status: complete
 ---
 
@@ -14,8 +14,8 @@ Stdlib structs and enums available in every `.pg` file. No `[@]` import needed. 
 ## Type Hierarchy
 
 ```
-RawString (compiler intrinsic)
-└── #String (foundation — .string + .regex) [##Scalar, ###Value]
+RawString (compiler intrinsic) [##Leaf]
+└── #String (foundation — .string + .regex) [##Scalar, ###ScalarValue]
     ├── #Int (.regex = signed integers)
     ├── #UnsignedInt (.regex = non-negative integers)
     ├── #Float (.regex = decimals)
@@ -26,7 +26,7 @@ RawString (compiler intrinsic)
     ├── #NestedKeyString (.regex = alias-safe paths)
     └── (user-defined: #emailAddress, #phoneNumber, etc.)
 
-#Boolean (independent enum struct — NOT #String) [##Scalar, ###Enum]
+#Boolean (independent enum struct — NOT #String) [##Scalar, ###ScalarEnum]
 
 #Map:KeyType:ValueType (macro-generated — sparse, homogeneous key-value pairs)
 #Array:ValueType:Dim (macro-generated — contiguous, rectangular, N-dimensional — #Map variant)

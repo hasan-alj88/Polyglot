@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-30
+updated: 2026-04-04
 ---
 
 # Prefix System and Tree Access
@@ -15,8 +15,8 @@ The `#` character is not just for type annotations — it participates in a thre
 | Prefix | Name | Describes | Example |
 |--------|------|-----------|---------|
 | `#` | Type | Concrete data type | `#Array`, `#String`, `#Person` |
-| `##` | Schema | Tree shape — structure and constraints | `##Scalar`, `##Flat`, `##Contiguous` |
-| `###` | Field | Leaf content nature | `###Value`, `###Enum` |
+| `##` | Schema | Tree shape — structure and constraints | `##Scalar`, `##Flat`, `##Leaf`, `##Contiguous` |
+| `###` | Field | Leaf content nature | `###Value`, `###Enum`, `###ScalarValue`, `###ScalarEnum`, `###None` |
 
 - `#` = **what** — the concrete type a variable holds
 - `##` = **shape** — the tree structure: depth, keys, ordering, uniformity

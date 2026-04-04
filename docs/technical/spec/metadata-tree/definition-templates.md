@@ -1,7 +1,7 @@
 ---
 audience: [architect, designer]
 type: spec
-updated: 2026-04-03
+updated: 2026-04-04
 ---
 
 # Definition Templates
@@ -26,8 +26,10 @@ Definitions are immutable at runtime — they are resolved entirely at compile t
 
 ```
 %definition
-├── .##:Scalar
+├── .##:Leaf
 │   └── .%##Depth.Max          -> 0
+├── .##:Scalar
+│   └── .%##Depth.Max          -> 1
 ├── .##:Flat
 │   └── .%##Depth.Max          -> 1
 ├── .##:Deep
@@ -54,8 +56,10 @@ Schema definitions are immutable compile-time templates. When a `{#}` type compo
 
 ```
 %definition
-├── .###:Value       <- leaf holds typed data (has #type annotation)
-└── .###:Enum        <- leaf is variant selector (no #type annotation)
+├── .###:Value            <- leaf holds typed data (has #type annotation)
+├── .###:Enum             <- leaf is variant selector (no #type annotation)
+├── .###:ScalarValue      <- regex-validated string data (#String:* family, ##Scalar only)
+└── .###:ScalarEnum       <- variant selector in scalar type (#Boolean, #BaseCode, ##Scalar only)
 ```
 
 The compiler infers `###Value` or `###Enum` from field declarations. Explicit `[#] << ###Value` or `[#] << ###Enum` is optional. A contradiction between explicit declaration and fields raises PGE11003.
@@ -66,7 +70,7 @@ When a `{#}` definition includes `[#] %##Property` declarations or composes `##`
 
 | Property | Type | Meaning |
 |----------|------|---------|
-| `%##Depth.Max` | `#int` | Max tree depth (`0` = scalar, `1` = flat, `-1` = unlimited) |
+| `%##Depth.Max` | `#int` | Max tree depth (`0` = atomic, `1` = scalar/record, `-1` = unlimited) |
 | `%##Children.Type` | type ref | Data type of child keys (must inherit from `#KeyString`) |
 | `%##Children.Gap` | `#Boolean` | Gaps allowed in child keys? |
 | `%##Children.Uniform` | `#Boolean` | All children same schema? |
@@ -107,13 +111,13 @@ All siblings must be the same `###` kind — mixing typed and untyped fields amo
 
 The `%##` properties are accumulated from composed schemas: `##Flat` provides `%##Depth.Max << 1`, `##Contiguous` provides `%##Children.Gap << #False` and `%##Children.Ordered << #True`, `##Rectangular` provides `%##Children.Regular << #True` and `%##Children.Uniform << #True`. Redundant properties raise PGW11001; contradicting overrides raise PGW11002.
 
-`#Boolean` definition template showing `###Enum`:
+`#Boolean` definition template showing `###ScalarEnum`:
 
 ```
 %definition.#:Boolean
-├── .%##Depth.Max              -> 0 (from ##Scalar)
+├── .%##Depth.Max              -> 1 (from ##Scalar)
 ├── .%##Alias                  -> "bool"
-├── .%###Enum                  <- inferred from .True/.False (no #type)
+├── .%###ScalarEnum            <- inferred from .True/.False (no #type, ##Scalar context)
 ├── .True                      <- enum field
 └── .False                     <- enum field
 ```

@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-03-30
+updated: 2026-04-04
 ---
 
 <!-- @ebnf/INDEX -->
@@ -16,7 +16,7 @@ All identifiers require a prefix sigil. Field separators navigate within identif
 package_id          ::= '@' package_address ;
 data_id             ::= '#' dotted_name ;
 schema_id           ::= "##" name ;               (* e.g., ##Scalar, ##Flat, ##Contiguous *)
-field_type_id       ::= "###" name ;               (* e.g., ###Value, ###Enum *)
+field_type_id       ::= "###" name ;               (* e.g., ###Value, ###Enum, ###ScalarValue, ###ScalarEnum, ###None *)
 pipeline_id         ::= '=' dotted_name ;
 variable_id         ::= '$' field_path ;
 error_id            ::= '!' dotted_name ;

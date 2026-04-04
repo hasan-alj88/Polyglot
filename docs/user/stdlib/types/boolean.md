@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-04
 status: complete
 ---
 
@@ -18,7 +18,7 @@ status: complete
    [%] .description << "boolean type Enum"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "bool"
    [.] .True
    [.] .False
@@ -33,8 +33,8 @@ status: complete
 
 ### Schema Properties
 
-- `[#] << ##Scalar` -- sets `%##Depth.Max << 0`
-- `[#] << ###Enum` -- leaf content is variant selection, not typed data
+- `[#] << ##Scalar` -- sets `%##Depth.Max << 1`
+- `[#] << ###ScalarEnum` -- leaf content is variant selection, not typed data
 - `%##Alias << "bool"` -- shorthand `#bool`
 
 ---

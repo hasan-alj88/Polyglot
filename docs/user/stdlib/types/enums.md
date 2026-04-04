@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-04
 status: complete
 ---
 
@@ -9,7 +9,7 @@ status: complete
 
 <!-- @types -->
 
-Runtime and internal enum types available in every `.pg` file. All enums use `[#] << ##Scalar` (depth 0) and `[#] << ###Enum` (leaf content is variant selection).
+Runtime and internal enum types available in every `.pg` file. All enums use `[#] << ##Scalar` (depth 1) and `[#] << ###ScalarEnum` (leaf content is variant selection).
 
 See [[boolean]] for `#Boolean` (also an enum, documented separately).
 
@@ -22,7 +22,7 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
    [%] .description << "Operating system enum"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "os"
    [.] .Unix
    [.] .Windows
@@ -37,7 +37,7 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
    [%] .description << "Pipeline instance status"
    [%] .version << "2.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "pipelinestatus"
    [.] .AwaitTrigger
    [.] .Disabled
@@ -59,7 +59,7 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
    [%] .description << "Queue ordering strategy"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "queuestrategy"
    [.] .FIFO
    [.] .LIFO
@@ -75,7 +75,7 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
    [%] .description << "Queue configuration for handling duplicate trigger conditions while pipeline is queued or running"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "retriggerstrategy"
    [.] .Disallow
    [.] .Allow
@@ -92,7 +92,7 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
    [%] .description << "Pipeline state within queue system"
    [%] .version << "2.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "queuestate"
    [.] .Pending
    [.] .Executing
@@ -114,7 +114,7 @@ See [[boolean]] for `#Boolean` (also an enum, documented separately).
    [%] .description << "How kill signals propagate from parent job to sub-jobs"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "killpropagation"
    [.] .Cascade
    [.] .Downgrade
@@ -136,7 +136,7 @@ Default: `#Cascade`. Orphan jobs are never permitted — every sub-job must be t
    [%] .description << "Resource tag for pipeline dispatch constraints"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "resourcetag"
    [.] .GPU
    [.] .HighRAM
@@ -156,7 +156,7 @@ Used in `#Queue.resourceTags` for dispatch constraint checking. The Dispatch Coo
    [%] .description << "File access state"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "fileaccess"
    [.] .Available
    [.] .Locked
@@ -172,7 +172,7 @@ Used in `#Queue.resourceTags` for dispatch constraint checking. The Dispatch Coo
    [%] .description << "Variable lifecycle state"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "varstate"
    [.] .Declared
    [.] .Default
@@ -188,7 +188,7 @@ Used in `#Queue.resourceTags` for dispatch constraint checking. The Dispatch Coo
    [%] .description << "Leaf content field type classifier"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "fieldkind"
    [.] .Value
    [.] .Enum

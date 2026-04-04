@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: reference
-updated: 2026-04-03
+updated: 2026-04-04
 ---
 
 # Cultural Types
@@ -15,7 +15,7 @@ updated: 2026-04-03
    [%] .description << "Named holiday with optional recurrence"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "holiday"
    [.] .name#string
    [.] .date#Date
@@ -31,7 +31,7 @@ updated: 2026-04-03
    [%] .description << "Named observance with type classification"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "observance"
    [.] .name#string
    [.] .date#Date
@@ -47,7 +47,7 @@ updated: 2026-04-03
    [%] .description << "Classification of observance"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "observancetype"
    [.] .Religious
    [.] .National
@@ -62,7 +62,7 @@ updated: 2026-04-03
    [%] .description << "Named season with start and end dates"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "season"
    [.] .name#string
    [.] .start#Date
@@ -78,7 +78,7 @@ updated: 2026-04-03
    [%] .description << "Classification of season"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "seasontype"
    [.] .Astronomical
    [.] .Meteorological
