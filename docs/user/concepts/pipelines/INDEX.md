@@ -19,10 +19,12 @@ Every pipeline definition `{=}` (see [[blocks]]) must contain these elements in 
 |-------|---------|--------|----------|
 | 0 | Metadata | `[%]` | Optional |
 | 1 | Permissions | `[_]` | Optional |
-| 2 | Trigger / IO / Errors | `[T]`, `[=]` | `[T]` mandatory, `[=]` optional |
-| 3 | Queue | `[Q]` | Mandatory |
-| 4 | Wrapper | `[W]` | Mandatory |
-| 5 | Execution | `[r]`, `[p]`, `[b]`, `[s]`, `[?]` | Yes |
+| 2 | Trigger / IO / Errors | `[T]`, `[=]` | `[T]` mandatory†, `[=]` optional |
+| 3 | Queue | `[Q]` | Mandatory† |
+| 4 | Wrapper | `[W]` | Mandatory† |
+| 5 | Execution | `[r]`, `[p]`, `[b]`, `[s]`, `[?]` | Yes† |
+
+†Derived `{=}` pipelines only. Native `{N}` definitions contain only `[%]` metadata and `[=]` IO — no trigger, queue, wrapper, or execution body. See [[#Native vs Derived]].
 
 Misordering these sections is a compile error (PGE01001).
 
@@ -76,44 +78,84 @@ A marker declaration on `{=}` specifies the pipeline's invocation context — wh
 
 See [[technical/ebnf/09-definition-blocks#9.3|EBNF §9.3]] for the formal `marker_decl` grammar.
 
-## Base vs Derived
+## Native vs Derived
 
-<!-- @stdlib/types/BaseCode -->
-Every pipeline definition is either **base** or **derived**. The distinction determines whether execution is handled by native code or by a Polyglot body.
+<!-- @stdlib/types/NativeKind -->
+Every pipeline definition is either **native** or **derived**. The distinction determines whether execution is handled by the host language or by a Polyglot body.
 
-| Property | Base | Derived |
-|----------|------|---------|
-| Execution body | None — bodyless | Full Polyglot body (`[T]`, `[Q]`, `[W]`, `[r]`/`[p]`/`[b]`) |
-| `.baseCode` metadata | Required — `[%] .baseCode << #BaseCode.*` | Forbidden |
-| Where defined | Stdlib `.pg` files | Stdlib or user `.pg` files |
-| Implementation | Native compiler code (Rust) | Polyglot pipelines |
+| Property | Native `{N}` | Derived `{=}` |
+|----------|-------------|---------------|
+| Block type | `{N}` | `{=}` |
+| Execution body | None — `[%]` metadata + `[=]` IO only | Full Polyglot body (`[T]`, `[Q]`, `[W]`, `[r]`/`[p]`/`[b]`) |
+| Metadata scope | `%Native.*` (implicit) — `.Kind`, `.<Language>` | `%Pipeline.*` (implicit) — `.description`, `.version`, etc. |
+| Where defined | Stdlib `.pg` files only | Stdlib or user `.pg` files |
+| Implementation | Host language (e.g., Rust) | Polyglot pipelines |
+| User-extendable | No — compiler-controlled | Yes |
 
-**Mutual exclusion:** `.baseCode` and an execution body cannot coexist. Violating this is a compile error (PGE01028).
+**Mutual exclusion:** `{N}` and `{=}` are separate block types. A `{N}` definition cannot contain `[T]`, `[Q]`, `[W]`, or execution markers. A `{=}` definition cannot contain `%Native.*` metadata. Violating this is a compile error (PGE01028).
 
-**Exception:** `{T}` triggers and `{Q}` queue pipelines are IO-only by design — they may be bodyless without `.baseCode` (they declare IO ports and metadata only).
+**`{T}`, `{Q}`, `{W}` subtypes** are IO-only by design — they declare IO ports and metadata only, with no execution body. Like `{N}`, they are bodyless, but unlike `{N}` they are user-extendable subtypes of `{=}`.
+
+### `{N}` Metadata
+
+`[%]` under `{N}` implicitly scopes to `%Native.*` — all fixed `.` fields (non-user-extendable):
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `.Kind` | `#NativeKind` | What subsystem role: Trigger, Queue, Wrapper, Execution, Intrinsic |
+| `.<Language>` | `#string` | Native function name per supported language (`.Rust`, `.Cpp`, etc.) |
+| `.description` | `#string` | Human-readable description |
+
+### `#NativeKind` Enum
+
+```polyglot
+{#} #NativeKind
+   .Trigger
+   .Queue
+   .Wrapper
+   .Execution
+   .Intrinsic
+```
+
+| Kind | What it does | Examples |
+|------|-------------|---------|
+| `.Trigger` | Fires pipeline execution | `=T.Call`, `=T.Folder.NewFiles`, `=T.Webhook` |
+| `.Queue` | Manages job scheduling | `=Q.Default`, `=Q.Pause.Soft`, `=Q.Kill.Graceful` |
+| `.Wrapper` | Setup/cleanup around execution | `=W.Polyglot`, `=W.DB.Connection`, `=W.RT.Python:3:14` |
+| `.Execution` | Performs actual work (IO, compute) | `=File.Text.Read`, `=Math.Add`, `=DB.Query` |
+| `.Intrinsic` | Compiler-internal operations | `=#.JSON.Parse`, `=DT.Now`, `=#.Validate` |
 
 ### Configuration
 
-The Polyglot config file selects the active base language:
+The Polyglot config file selects the active host language:
 
 ```
 base: Rust
 ```
 
-All `.baseCode` references must use the configured language. Future base languages expand the `#BaseCode` enum without changing pipeline definitions.
+All `{N}` definitions must include a binding for the configured language. Future host languages add new `.<Language>` fields without changing pipeline definitions.
 
 ### Examples
 
 ```polyglot
-{ } Base pipeline — bodyless, native implementation
-{=}[exe] =File.Text.Read
-   [%] .baseCode << #BaseCode.Rust.File.Text.Read
+{ } Native definition — compiler primitive, no Polyglot body
+{N} =File.Text.Read
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileTextRead"
+   [%] .description << "Read text file contents"
    [=] <path#path
    [=] >content#string
    [=] !File.NotFound
    [=] !File.PermissionDenied
 
-{ } Derived pipeline — full Polyglot body, no .baseCode
+{ } Native trigger — fires when another pipeline calls this one
+{N} =T.Call
+   [%] .Kind << #NativeKind.Trigger
+   [%] .Rust << "TriggerCall"
+   [%] .description << "Pipeline invoked by another pipeline"
+   [=] >IsTriggered#bool
+
+{ } Derived pipeline — full Polyglot body, uses native definitions
 {=} =ProcessData
    [T] =T.Call
    [=] <input#string
@@ -125,7 +167,7 @@ All `.baseCode` references must use the configured language. Future base languag
       [=] >content >> $result
 ```
 
-See [[stdlib/types/BaseCode|#BaseCode enum]] for the full variant tree and [[technical/ebnf/09-definition-blocks#9.9|EBNF §9.9]] for the formal `.baseCode` grammar.
+See [[stdlib/types/NativeKind|#NativeKind enum]] for the full enum definition and [[technical/ebnf/09-definition-blocks#9.4c|EBNF §9.4c]] for the formal `{N}` grammar.
 
 ## Sub-Pages
 

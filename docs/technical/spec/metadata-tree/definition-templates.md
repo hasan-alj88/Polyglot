@@ -59,7 +59,7 @@ Schema definitions are immutable compile-time templates. When a `{#}` type compo
 ├── .###:Value            <- leaf holds typed data (has #type annotation)
 ├── .###:Enum             <- leaf is variant selector (no #type annotation)
 ├── .###:ScalarValue      <- regex-validated string data (#String:* family, ##Scalar only)
-└── .###:ScalarEnum       <- variant selector in scalar type (#Boolean, #BaseCode, ##Scalar only)
+└── .###:ScalarEnum       <- variant selector in scalar type (#Boolean, #NativeKind, ##Scalar only)
 ```
 
 The compiler infers `###Value` or `###Enum` from field declarations. Explicit `[#] << ###Value` or `[#] << ###Enum` is optional. A contradiction between explicit declaration and fields raises PGE11003.

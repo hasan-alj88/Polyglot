@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #120 (doc fix) — COMPLETE
-Plan: Single documentation fix
-Status: Merged to main, issue closed
-Last activity: 2026-04-04 — Merged #120 to main, branch deleted
+Phase: Issue #121 ({N} native block) — In Progress
+Plan: All 3 plans complete (121-01, 121-02, 121-03)
+Status: Issue #121 complete — ready for commit and merge
+Last activity: 2026-04-04 — Unified 121-03, phase transition complete
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -52,17 +52,22 @@ Progress:
 - Issue #117: [██████████] 100% (1/1 plans — int/float coercion wording fix)
 - Issue #119: [██████████] 100% (1/1 plans — ##Int schema vs #Int alias identity)
 - Issue #120: [██████████] 100% (1/1 plans — IO perspective terminology fix)
+- Issue #121: [██████████] 100% (3/3 plans — {N} native block type)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #121 — Docs: Bodyless base pipelines vs mandatory [T]/[Q]/[W] requirement
+Branch: docs/issue-121-base-pipeline-mandatory-markers
+Labels: docs, P1-critical
+Started: 2026-04-04
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/121
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [All 3 plans complete — issue #121 done]
 ```
 
 ## Accumulated Context
@@ -163,6 +168,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #117 — int/float coercion wording fix | 2026-04-04 | "interoperate freely" → "comparable without conversion"; merged to main |
 | Closed #119 — ##Int schema vs #Int alias identity | 2026-04-04 | Alias table now has Schema column; clarifies #Int is alias, ##Int is schema; merged to main |
 | Closed #120 — IO perspective terminology fix | 2026-04-04 | "caller perspective" → "pipeline perspective"; one-line scoping rule added; merged to main |
+| Issue #121 — {N} native block type | 2026-04-04 | {N} block, #NativeKind enum, NativeKind.md, PGE01028 rewritten, 44 stdlib defs converted, "base pipeline" → "native definition" |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -182,12 +188,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-04
-Stopped at: Merged #120 to main, issue closed
-Next action: Pick next issue or push to origin
-Resume file: .paul/phases/issue-120-chain-io-scoping/120-01-SUMMARY.md
+Stopped at: Issue #121 phase complete — transition done
+Next action: /paul:merge to commit and merge branch to main (closes #121)
+Resume file: .paul/phases/issue-121-native-block/121-03-SUMMARY.md
 Resume context:
-- Issue #120 complete and merged to main
-- Branch deleted, issue closed on GitHub
+- Issue #121 complete — all 3 plans done
+- Branch: docs/issue-121-base-pipeline-mandatory-markers — ready for commit + merge
+- 121-01: Core {N} design; 121-02: Retire BaseCode → NativeKind; 121-03: Propagate to stdlib
 
 ---
 *STATE.md — Updated after every significant action*

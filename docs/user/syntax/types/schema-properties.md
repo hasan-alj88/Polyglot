@@ -60,7 +60,7 @@ The `###` prefix describes the nature of leaf content in a type's fields. There 
 | `###Enum` | Leaf is variant selector | Field has no `#type` — identity IS the value (active variant) |
 | `###None` | Leaf is nullable | No fields — empty string `""` is the only valid value |
 | `###ScalarValue` | Scalar typed data | Regex-validated string data — specifically `#String:*` family. Only valid with `##Scalar` |
-| `###ScalarEnum` | Scalar variant selector | Variant selector in a scalar type — `#Boolean`, `#BaseCode`. Only valid with `##Scalar` |
+| `###ScalarEnum` | Scalar variant selector | Variant selector in a scalar type — `#Boolean`, `#NativeKind`. Only valid with `##Scalar` |
 
 `##Scalar` constrains leaf content to `###ScalarValue` or `###ScalarEnum` — no other `###` type is valid with `##Scalar`.
 

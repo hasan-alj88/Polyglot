@@ -43,22 +43,30 @@ Custom queues are defined with `{Q}`, which both defines the queue struct and in
 - **`{Q} #Queue:Name`** — data definition (subtype of `{#}`). Defines and instantiates a queue instance using the `#Queue` schema. Covered above.
 - **`{Q} =Q.*`** — pipeline operation (subtype of `{=}`, equivalent to `{=}[Q]`). Defines a queue control pipeline invocable via `[Q]`.
 
-Queue pipeline operations control the Executing Set — pause, resume, and kill behaviors. They are base pipelines backed by native code:
+Queue pipeline operations control the Executing Set — pause, resume, and kill behaviors. They are native definitions (`{N}` blocks) backed by host language code:
 
 ```polyglot
-{Q} =Q.Default
-   [%] .baseCode << #BaseCode.Rust.Q.Default
+{N} =Q.Default
+   [%] .Kind << #NativeKind.Queue
+   [%] .Rust << "QueueDefault"
+   [%] .description << "Default FIFO queue strategy"
 
-{Q} =Q.Pause.Hard
-   [%] .baseCode << #BaseCode.Rust.Q.Pause.Hard
+{N} =Q.Pause.Hard
+   [%] .Kind << #NativeKind.Queue
+   [%] .Rust << "QueuePauseHard"
+   [%] .description << "Hard pause — stop dispatching immediately"
    [=] <condition#string
 
-{Q} =Q.Resume
-   [%] .baseCode << #BaseCode.Rust.Q.Resume
+{N} =Q.Resume
+   [%] .Kind << #NativeKind.Queue
+   [%] .Rust << "QueueResume"
+   [%] .description << "Resume dispatching after pause"
    [=] <condition#string
 
-{Q} =Q.Kill.Graceful
-   [%] .baseCode << #BaseCode.Rust.Q.Kill.Graceful
+{N} =Q.Kill.Graceful
+   [%] .Kind << #NativeKind.Queue
+   [%] .Rust << "QueueKillGraceful"
+   [%] .description << "Graceful kill — wait for in-flight jobs"
    [=] <condition#string
 ```
 
