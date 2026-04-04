@@ -71,7 +71,7 @@ Any comparison operator can be negated by inserting `!` before `?`. This replace
 
 The comparison operator must match the subject variable's type ([[PGE04015|PGE04015]]):
 
-- **Numeric** (`#int`, `#float`): all comparison and range operators. Int and float interoperate freely.
+- **Numeric** (`#int`, `#float`): all comparison and range operators. Int and float share the same numeric domain — comparable without conversion.
 - **String** (`#string`): equality only (`=?`, `=!?`). Ordering and ranges are invalid.
 - **Bool** (`#bool`): equality only (`=?`, `=!?`).
 - **Enum**: equality with enum variants of the same type. Ordering, ranges, and cross-type matches are invalid.
