@@ -98,7 +98,7 @@ When every `[?]` arm performs the same operation — mapping one value to anothe
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
    [?] 500 >> "error"
-   [?] * >> "unknown"
+   [?] *? >> "unknown"
 ```
 
 This desugars to the verbose form shown in the Numeric Exhaustiveness example above. The two forms are equivalent.
@@ -108,7 +108,7 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
 1. The source variable (`$code`) must be in **Final** state — its value is fully resolved
 2. The target variable (`$status`) receives the matched result via push
 3. Arms are **assignment-only** — no side effects, pipeline calls, or nested logic
-4. `[?] *` is the wildcard catch-all (replaces `*?` from the verbose form — no comparison operator in match arms)
+4. `[?] *?` is the wildcard catch-all — same syntax in both verbose and match forms
 5. All exhaustiveness rules ([[PGE06001|PGE06001]] through [[PGE06013|PGE06013]]) apply to the desugared form
 6. [[PGE06009|PGE06009]] does not apply to match arms — they use `value >> result` form, not `$var operator value`
 
@@ -122,7 +122,7 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
    [?] #Direction.West >> "W"
 ```
 
-All variants of `#Direction` are listed, so no `*` is needed — same rule as the verbose form ([[PGE06002|PGE06002]]).
+All variants of `#Direction` are listed, so no `*?` is needed — same rule as the verbose form ([[PGE06002|PGE06002]]).
 
 **Not a match:** If `[r] $x >> $y` has no indented `[?]` children, it is a plain assignment — not a match header.
 

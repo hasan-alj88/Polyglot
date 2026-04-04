@@ -51,7 +51,7 @@ severity: error
 [r] $code >> $status#string
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
-   [?] * >> "unknown"
+   [?] *? >> "unknown"
 ```
 
 #### Invalid — Missing Comparison Operator

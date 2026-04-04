@@ -32,7 +32,7 @@ match_line          ::= "[r]" value_expr ">>" assign_target NEWLINE
                       (* At least one non-wildcard arm required — PGE06014 *)
 
 match_arm           ::= match_value_arm
-                      | "[?]" "*" ">>" value_expr ;        (* wildcard catch-all *)
+                      | "[?]" "*?" ">>" value_expr ;       (* wildcard catch-all *)
 
 match_value_arm     ::= "[?]" match_value ">>" value_expr ;
 
@@ -41,7 +41,7 @@ match_value         ::= literal
                       | cross_pkg_enum ;
 ```
 
-**Rule:** Match is syntactic sugar. `[r] $x >> $y` with indented `[?]` children desugars to a `[?]` chain where each arm becomes `[?] $x =? value` / `[r] $y << result`. All exhaustiveness rules (PGE06001 through PGE06013) apply to the desugared form. `[?] *` in match context desugars to `[?] *?`.
+**Rule:** Match is syntactic sugar. `[r] $x >> $y` with indented `[?]` children desugars to a `[?]` chain where each arm becomes `[?] $x =? value` / `[r] $y << result`. All exhaustiveness rules (PGE06001 through PGE06013) apply to the desugared form. Match arms use `*?` for the wildcard catch-all, same as verbose conditionals.
 
 **Rule:** If a `[r] value_expr >> assign_target` line has no indented `[?]` children, it is a plain assignment — not a match header.
 
