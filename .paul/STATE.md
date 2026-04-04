@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #120 (doc fix) — COMPLETE
-Plan: Single documentation fix
-Status: Merged to main, issue closed
-Last activity: 2026-04-04 — Merged #120 to main, branch deleted
+Phase: Issue #121 ({N} native block) — In Progress
+Plan: 121-01 (Core {N} Design) — executing
+Status: APPLY in progress, 121-01 tasks complete
+Last activity: 2026-04-04 — Applied 121-01: {N} block in blocks.md, INDEX.md, metadata.md, EBNF
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -55,14 +55,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #121 — Docs: Bodyless base pipelines vs mandatory [T]/[Q]/[W] requirement
+Branch: docs/issue-121-base-pipeline-mandatory-markers
+Labels: docs, P1-critical
+Started: 2026-04-04
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/121
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
+  ○        ○        ○        ○     [Issue #121 active]
 ```
 
 ## Accumulated Context

@@ -9,7 +9,7 @@ status: complete
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{T}` at `%T`, `{M}` at `%M`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!` (see [[data-is-trees]]).
+Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{T}` at `%T`, `{M}` at `%M`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{N}` at `%Native` (see [[data-is-trees]]).
 
 ## `{X}` — Definition Elements
 
@@ -25,10 +25,13 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{W}` | Wrapper definition (subtype of `{=}`). See [[wrappers]] |
 | `{Q}` | Queue — dual-purpose block. `{Q} #Queue:Name` defines a queue instance (subtype of `{#}`, data definition). `{Q} =Q.*` defines a queue pipeline operation (subtype of `{=}`, equivalent to `{=}[Q]`). The identifier prefix (`#` vs `=`) disambiguates. See [[concepts/pipelines/queue#Queue]] |
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
+| `{N}` | Native definition — compiler primitive with no Polyglot body. `[%]` metadata implicitly scopes to `%Native.*`. Non-user-extendable. See [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
 | `{Array}` | Array collection definition. See [[concepts/collections/INDEX|collections]] |
 | `{ }` | Comment. See [[comments]] |
 
 **Marker declarations on `{=}`:** The `[exe]` marker declares the pipeline as an execution pipeline, invocable via `[r]`, `[p]`, or `[b]`. `{=}` without a marker defaults to `{=}[exe]` — no warning. Subsets like `{=}[b]` (background-only) or `{=}[rp]` (sequential/parallel only) restrict how the pipeline can be invoked. Subtypes (`{T}`, `{W}`, `{Q}`) have fixed implicit markers and cannot take `marker_decl`. See [[concepts/pipelines/INDEX#Marker Declarations|Marker Declarations]] for full details.
+
+**Native definitions `{N}`:** Compiler primitives implemented in the host language (e.g., Rust). `{N}` blocks contain only `[%]` metadata and `[=]` IO declarations — no execution body, no `[T]`, `[Q]`, or `[W]`. The `[%]` metadata under `{N}` implicitly scopes to `%Native.*` with fixed fields: `.Kind` (`#NativeKind`), and per-language bindings (`.Rust`, `.Cpp`, etc.). See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived]].
 
 ## `[X]` — Block Elements
 

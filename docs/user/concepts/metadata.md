@@ -30,9 +30,7 @@ The `[%]` block element lives inside any `{x}` definition. One definition = one 
 | `.license` | `#string` | License identifier |
 | `.deprecated` | `#bool` | Deprecation flag |
 | `.deprecatedMessage` | `#string` | Reason for deprecation and suggested replacement |
-| `.baseCode` | `#BaseCode.*` | Links to native implementation. Present only on stdlib base pipelines — see [[concepts/pipelines/INDEX#Base vs Derived\|Base vs Derived]] |
-
-Pipelines with `.baseCode` are **base pipelines** — they have no execution body. The compiler resolves `.baseCode` to the native implementation. Pipelines without `.baseCode` are **derived pipelines** with full Polyglot execution bodies. See [[stdlib/types/BaseCode\|#BaseCode enum]] for the variant tree.
+Native definitions (`{N}`) use a separate metadata scope — `[%]` under `{N}` implicitly scopes to `%Native.*`. See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived]].
 
 ### Flexible Fields
 
@@ -112,6 +110,16 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 ### Macro (`{M}`)
 
 Live fields for macros are not yet defined.
+
+### Native (`{N}`)
+
+| Accessor | Type | Description |
+|----------|------|-------------|
+| `=Name%status` | `#live.#PipelineStatus` | AwaitTrigger, Disabled, Running, Failed |
+| `=Name%nativeKind` | `#live.#NativeKind` | Trigger, Queue, Wrapper, Execution, Intrinsic |
+| `=Name%invocationCount` | `#live.int` | Total times invoked |
+
+`[%]` metadata under `{N}` implicitly scopes to `%Native.*` — all fixed `.` fields. See [[concepts/pipelines/INDEX#Native vs Derived|{N} Metadata]].
 
 ## Rules
 

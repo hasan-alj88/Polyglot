@@ -296,6 +296,50 @@ At the `[W]` line, wrapper IO is wired using `[=]` with `$` variables (not `<`/`
 
 **Examples:** `[W] =W.Polyglot` (no IO, no-op wrapper), `[W] =W.DB.Transaction` (with IO wiring)
 
+### 9.4c Native Definition (`{N}`)
+
+```ebnf
+native_def          ::= "{N}" native_pipeline_id NEWLINE
+                         native_def_body ;
+
+native_pipeline_id  ::= '=' dotted_name ;
+
+native_def_body     ::= { ( native_metadata_line | comment_line ) NEWLINE }
+                         { indent ( io_decl_line | error_decl_line ) NEWLINE } ;
+                      (* Native definitions contain ONLY metadata and IO declarations.
+                         No [T], [Q], [W], or execution body. *)
+
+native_metadata_line ::= "[%]" '.' native_field assignment_op value_expr ;
+
+native_field        ::= "Kind"                   (* #NativeKind enum *)
+                      | language_name             (* e.g., "Rust", "Cpp" *)
+                      | "description" ;           (* human-readable description *)
+
+language_name       ::= upper_letter { letter } ; (* Rust, Cpp, etc. *)
+```
+
+**Rules:**
+- `{N}` defines a compiler-native pipeline — implemented in the host language, not Polyglot.
+- `[%]` metadata under `{N}` implicitly scopes to `%Native.*` — all fixed `.` fields.
+- `.Kind` is mandatory — must be one of `#NativeKind.Trigger`, `.Queue`, `.Wrapper`, `.Execution`, `.Intrinsic`.
+- At least one `.<Language>` binding is required — must match the configured host language.
+- No execution body (`[r]`, `[p]`, `[b]`, `[s]`, `[?]`), no `[T]`, no `[Q]`, no `[W]`.
+- `[=]` IO declarations define the public interface (inputs, outputs, errors) — same as any pipeline.
+- `{N}` definitions can only appear in stdlib `.pg` files — user `.pg` files cannot define native pipelines.
+
+**Example:**
+
+```polyglot
+{N} =File.Text.Read
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileTextRead"
+   [%] .description << "Read text file contents"
+   [=] <path#path
+   [=] >content#string
+   [=] !File.NotFound
+   [=] !File.PermissionDenied
+```
+
 ### 9.5 Queue Definition
 
 ```ebnf
@@ -420,7 +464,7 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 - Aliases participate in exhaustiveness checking when the variable carries the parent type annotation.
 - `live` fields are implicit on all `{=}`, `$`, and `{#}` definitions. The runtime populates them. Users read via `%` accessor (e.g., `=Pipeline%status`, `$var%state`) but never assign.
 - Prefer reactive alternatives (error blocks, IO triggers) over polling `live` fields when possible.
-- `.baseCode` is a reserved `[%]` field linking a pipeline definition to its native implementation. Presence of `.baseCode` makes the definition a **base pipeline**: no execution body allowed (`[T]`/`[Q]`/`[W]`/`[r]`/`[p]`/`[b]`/`[s]` forbidden). Only `[=]` IO, `[!]` error declarations, and `[%]` metadata are permitted alongside `.baseCode`. For `{W}` base wrappers, `[{]`/`[}]`/`[\]`/`[/]` are also forbidden. The `#BaseCode` variant must exist and use the configured base language (PGE01028).
+- Native definitions use `{N}` — a separate block type (see §9.4c). `{N}` metadata implicitly scopes to `%Native.*` with fixed fields `.Kind` (`#NativeKind`), `.<Language>` (native function binding), and `.description`. `{N}` and `{=}` are mutually exclusive block types — a definition cannot be both native and derived (PGE01028).
 
 ## Related User Documentation
 
@@ -432,6 +476,7 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 | §9.4 `{M}` Macro | [[concepts/macros\|macros]], [[syntax/types/macro-types\|macro-types]] |
 | §9.4a `{T}` Trigger | [[concepts/pipelines/io-triggers\|io-triggers]] |
 | §9.4b `{W}` Wrapper | [[concepts/pipelines/wrappers\|wrappers]] |
+| §9.4c `{N}` Native | [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
 | §9.5 `{Q}` Queue | [[concepts/pipelines/INDEX\|pipelines]] |
 | §9.6 `{!}` Error | [[concepts/errors\|errors]] |
 | §9.9 `[%]` Metadata | [[concepts/metadata\|metadata]] |
