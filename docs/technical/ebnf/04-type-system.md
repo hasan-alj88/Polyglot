@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-03-30
+updated: 2026-04-04
 ---
 
 <!-- @ebnf/INDEX -->
@@ -37,13 +37,13 @@ dict_type           ::= "dict" flex_sep type_param flex_sep type_param ;
                       (* e.g., #dict:string:int — key type : value type *)
 dataframe_type      ::= "dataframe" flex_sep enum_type_param flex_sep type_param ;
                       (* e.g., #dataframe:SalesColumns:string — column enum : cell value type.
-                         enum_type_param must resolve to a ###Enum type (##EnumLeafs). *)
+                         enum_type_param must resolve to a ###ScalarEnum type (##EnumLeafs). *)
 serial_type         ::= "serial" ;
 
 type_param          ::= basic_type | dimension | user_type | wildcard_type ;
                       (* Nested type refs drop the # prefix within type context *)
 enum_type_param     ::= user_type ;
-                      (* Must resolve to a ###Enum type at compile time — PGE04022 if not *)
+                      (* Must resolve to a ###ScalarEnum type at compile time — PGE04022 if not *)
 dimension           ::= digit { digit } "D" ;
                       (* e.g., :2D, :3D — omitted defaults to 1D *)
 
@@ -78,7 +78,7 @@ schema_composition  ::= "[#]" "<<" schema_id ;
                          Two schemas setting the same % property to different values → PGE11001. *)
 
 field_type_composition ::= "[#]" "<<" field_type_id ;
-                      (* e.g., [#] << ###Enum — declare explicit field type *)
+                      (* e.g., [#] << ###ScalarEnum — declare explicit field type *)
 
 schema_property     ::= "[#]" "%##" dotted_name assignment_op expression ;
                       (* e.g., [#] %##Children.Type << #UnsignedInt *)

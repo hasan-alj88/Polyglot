@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: reference
-updated: 2026-04-03
+updated: 2026-04-04
 ---
 
 # Non-Standard Time Units
@@ -17,7 +17,7 @@ Some calendars divide the day differently than hours/minutes/seconds. These all 
    [%] .description << "Chinese traditional time divisions"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "chinesetime"
    [.] .shichen#ChineseShichen
    [.] .ke#int
@@ -34,7 +34,7 @@ The twelve double-hours (shichen) that divide the Chinese day.
    [%] .description << "Chinese double-hour period"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "chineseshichen"
    [.] .Zi
    [.] .Chou
@@ -57,7 +57,7 @@ The twelve double-hours (shichen) that divide the Chinese day.
    [%] .description << "Hindu traditional time divisions"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "hindutime"
    [.] .prahara#int
    [.] .muhurta#int
@@ -75,7 +75,7 @@ French Republican decimal time system (10 hours/day, 100 minutes/hour, 100 secon
    [%] .description << "French Republican decimal time"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "decimaltime"
    [.] .hour#int
    [.] .minute#int
@@ -91,7 +91,7 @@ User-defined time division. Fixed fields define the basic unit; flexible fields 
    [%] .description << "User-defined time division"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "customtimeunit"
    [.] .name#string
    [.] .unitsPerDay#int

@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-30
+updated: 2026-04-04
 ---
 
 # Basic Types
@@ -27,6 +27,7 @@ What `#string` refers to is `#String` — a struct built on `RawString`:
 {#} #String
    [ ] #String and #string both resolve here
    [#] << ##Scalar
+   [#] << ###ScalarValue
    [#] %##Alias << "string"
    [ ] The actual string value
    [.] .string#RawString
@@ -40,7 +41,8 @@ What `#string` refers to is `#String` — a struct built on `RawString`:
 - `.string` — the raw string value
 - `.regex` — a regular expression constraint (alias: `.re`). Defaults to `".*"` (accept any string). Subtypes override with `<~` (default assignment — overridable once). See [[variable-lifecycle]]
 - `%##Alias << "string"` — lets users write `#string` (lowercase) as shorthand for `#String`
-- `[#] << ##Scalar` — applies the `##Scalar` schema (sets `%##Depth.Max << 0`, marking this as a scalar with no flexible children)
+- `[#] << ##Scalar` — applies the `##Scalar` schema (sets `%##Depth.Max << 1` — `#String` is a scalar type with fixed fields at one level of depth)
+- `[#] << ###ScalarValue` — marks leaf content as regex-validated string data (`#String:*` family)
 
 A string literal (quoted text with `{$var}` interpolation) is always `#string`. When `.regex` is set, the string value must match the pattern — violations are caught at compile time for literals (PGE04010) and at runtime for dynamic values (handled with `[!]` error blocks).
 
@@ -87,7 +89,7 @@ Each subtype is defined via macro invocation:
       [#] <Regex << "^[1-9][0-9]*D$"
 ```
 
-The `{M} #String.Subtype` macro generates the `[#] <~ #String` inheritance, `[#] << ##Scalar`, alias registration, and `.regex` override internally. See [[macro-types]] for the macro definition.
+The `{M} #String.Subtype` macro generates the `[#] <~ #String` inheritance, `[#] << ##Scalar`, `[#] << ###ScalarValue`, alias registration, and `.regex` override internally. See [[macro-types]] for the macro definition.
 
 Users can still define custom string subtypes with their own `.regex`:
 
@@ -136,7 +138,7 @@ Used as the element type for `%alias` — alias values may contain `.` and `:` t
 ```polyglot
 {#} #Boolean
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "bool"
    [.] .True
    [.] .False

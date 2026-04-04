@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-30
+updated: 2026-04-04
 ---
 
 # Type Hierarchy
@@ -39,8 +39,8 @@ In type annotations (after `#`), nested type refs drop the `#` prefix — the co
 ## Type Hierarchy Summary
 
 ```
-RawString (compiler intrinsic — Layer 0)
-└── #String (foundation — .string + .regex) [##Scalar, ###Value] (Layer 0)
+RawString (compiler intrinsic — Layer 0) [##Leaf]
+└── #String (foundation — .string + .regex) [##Scalar, ###ScalarValue] (Layer 0)
     ├── ##Int (.regex = signed integers) — macro-generated via {M} #String.Subtype (Layer 1)
     ├── ##UnsignedInt (.regex = non-negative integers) (Layer 1)
     ├── ##Float (.regex = decimals) (Layer 1)
@@ -53,7 +53,7 @@ RawString (compiler intrinsic — Layer 0)
     ├── ##DataTypeString (.regex = valid {x} definition names) (Layer 1)
     └── (user-defined: #emailAddress, #phoneNumber, etc.)
 
-#Boolean (independent enum struct — NOT #String) [##Scalar, ###Enum]
+#Boolean (independent enum struct — NOT #String) [##Scalar, ###ScalarEnum]
 #None (absence of value — empty string "") [##Scalar, ###None]
 
 #Map (sparse key-value pairs — macro-generated via {M} #Map) (Layer 2)

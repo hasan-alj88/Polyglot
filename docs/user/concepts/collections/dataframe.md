@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: spec
-updated: 2026-03-30
+updated: 2026-04-04
 ---
 
 <!-- @concepts/collections/INDEX -->
@@ -13,7 +13,7 @@ updated: 2026-03-30
 ```polyglot
 {#} #SalesColumns
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [.] .product
    [.] .price
    [.] .quantity

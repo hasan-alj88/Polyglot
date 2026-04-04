@@ -22,6 +22,8 @@ String subtypes live under `%#:String:*` at a flexible level:
 └── :(any)        <- extensible — users define new subtypes
 ```
 
+**Depth consistency:** `#String` composes `##Scalar` (`Depth.Max=1`). The subtypes `:int`, `:float`, etc. are one level of flexible nesting — consistent with `Depth.Max=1`. Each subtype's leaf fields (`.string`, `.regex`) are fixed and do not add further depth.
+
 ## Alias Resolution
 
 User code `#int` is an alias for `#Int`. The `%##Alias` schema property enables this — each subtype declares `[#] %##Alias << "int"` (lowercase shorthand). The compiler resolves:

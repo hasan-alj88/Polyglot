@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-30
+updated: 2026-04-04
 ---
 
 # Macro-Generated Types
@@ -129,7 +129,7 @@ To reference the enclosing macro from inside a nested `{#}`, use `%Parent` (one 
       [<] << ##Scalar
 ```
 
-The `[<]` constraint declares that any type passed as `ValueType` must satisfy `##Scalar` (`%##Depth.Max = 0`) — preventing nested collections like `#array:#array:#int`.
+The `[<]` constraint declares that any type passed as `ValueType` must satisfy `##Scalar` (`%##Depth.Max = 1`) — preventing nested collections like `#array:#array:#int`.
 
 ### `<#type` in Pipeline IO
 

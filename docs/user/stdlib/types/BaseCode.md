@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-31
+updated: 2026-04-04
 status: complete
 ---
 
@@ -23,7 +23,7 @@ See [[concepts/pipelines/INDEX#Base vs Derived|Base vs Derived pipelines]] for w
    [%] .description << "Native implementation registry for base pipelines"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [.] .Rust
       [.] .T
          [.] .Call

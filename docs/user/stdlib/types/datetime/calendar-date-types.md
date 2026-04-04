@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: reference
-updated: 2026-04-03
+updated: 2026-04-04
 ---
 
 # Calendar-Specific Date Types
@@ -15,7 +15,7 @@ updated: 2026-04-03
    [%] .description << "Gregorian calendar date"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "gregoriandate"
    [.] .year#int
    [.] .month#Month
@@ -31,7 +31,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Islamic Hijri calendar date"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "hijridate"
    [.] .year#int
    [.] .month#HijriMonth
@@ -48,7 +48,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Islamic Hijri calendar month"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "hijrimonth"
    [.] .Muharram
    [.] .Safar
@@ -73,7 +73,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Authority that determines Hijri month start"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "hijriauthority"
    [.] .UmmAlQura
    [.] .Local
@@ -92,7 +92,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Method for determining Hijri month start"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "hijrimethod"
    [.] .Tabular
    [.] .Astronomical
@@ -111,7 +111,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Hijri leap year calculation method"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "hijrileap"
    [.] .Tabular30
    [.] .UmmAlQura
@@ -126,7 +126,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Hebrew calendar date"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "hebrewdate"
    [.] .year#int
    [.] .month#HebrewMonth
@@ -140,7 +140,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Hebrew calendar month"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "hebrewmonth"
    [.] .Tishrei
    [.] .Cheshvan
@@ -164,7 +164,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Chinese calendar date with stem-branch cycle"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "chinesedate"
    [.] .year#int
    [.] .cycle#int
@@ -182,7 +182,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Chinese celestial stem in the sexagenary cycle"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "heavenlystem"
    [.] .Jia
    [.] .Yi
@@ -203,7 +203,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Chinese terrestrial branch in the sexagenary cycle"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "earthlybranch"
    [.] .Zi
    [.] .Chou
@@ -226,7 +226,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Persian (Solar Hijri) calendar date"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "persiandate"
    [.] .year#int
    [.] .month#PersianMonth
@@ -240,7 +240,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [%] .description << "Persian calendar month"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "persianmonth"
    [.] .Farvardin
    [.] .Ordibehesht
@@ -265,7 +265,7 @@ Uses Gregorian `#Month` for months (Buddhist Era = Gregorian + 543).
    [%] .description << "Buddhist calendar date"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "buddhistdate"
    [.] .year#int
    [.] .month#Month
@@ -279,7 +279,7 @@ Uses Gregorian `#Month` for months (Buddhist Era = Gregorian + 543).
    [%] .description << "Hindu calendar date with era and lunar fortnight"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "hindudate"
    [.] .year#int
    [.] .era#HinduEra
@@ -295,7 +295,7 @@ Uses Gregorian `#Month` for months (Buddhist Era = Gregorian + 543).
    [%] .description << "Hindu calendar era system"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "hinduera"
    [.] .VikramSamvat
    [.] .Saka
@@ -308,7 +308,7 @@ Uses Gregorian `#Month` for months (Buddhist Era = Gregorian + 543).
    [%] .description << "Hindu calendar month"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "hindumonth"
    [.] .Chaitra
    [.] .Vaishakha
@@ -331,7 +331,7 @@ Uses Gregorian `#Month` for months (Buddhist Era = Gregorian + 543).
    [%] .description << "Hindu lunar fortnight"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "paksha"
    [.] .Shukla
    [.] .Krishna
@@ -346,7 +346,7 @@ Uses Gregorian `#Month` for months.
    [%] .description << "Japanese calendar date with imperial era"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "japanesedate"
    [.] .year#int
    [.] .era#JapaneseEra
@@ -364,7 +364,7 @@ Known modern eras are fixed enum fields. Users can add older historical eras via
    [%] .description << "Japanese imperial era"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "japaneseera"
    [.] .Reiwa
    [.] .Heisei
@@ -381,7 +381,7 @@ Known modern eras are fixed enum fields. Users can add older historical eras via
    [%] .description << "Ethiopian calendar date"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "ethiopiandate"
    [.] .year#int
    [.] .month#EthiopianMonth
@@ -395,7 +395,7 @@ Known modern eras are fixed enum fields. Users can add older historical eras via
    [%] .description << "Ethiopian calendar month"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "ethiopianmonth"
    [.] .Meskerem
    [.] .Tikimt
@@ -419,7 +419,7 @@ Known modern eras are fixed enum fields. Users can add older historical eras via
    [%] .description << "Coptic calendar date"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "copticdate"
    [.] .year#int
    [.] .month#CopticMonth
@@ -433,7 +433,7 @@ Known modern eras are fixed enum fields. Users can add older historical eras via
    [%] .description << "Coptic calendar month"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Enum
+   [#] << ###ScalarEnum
    [#] %##Alias << "copticmonth"
    [.] .Thout
    [.] .Paopi
@@ -459,7 +459,7 @@ User-extensible calendar type. Fixed fields define the basic structure; flexible
    [%] .description << "User-defined calendar system"
    [%] .version << "1.0.0"
    [#] << ##Scalar
-   [#] << ###Value
+   [#] << ###ScalarValue
    [#] %##Alias << "customcalendar"
    [.] .name#string
    [.] .epochOffset#int
