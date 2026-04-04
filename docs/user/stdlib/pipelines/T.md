@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
 updated: 2026-03-25
 status: complete
@@ -8,7 +8,7 @@ status: complete
 # =T — Triggers
 
 <!-- @pipelines -->
-Triggers are placed on `[t]` lines inside `{=}` pipeline definitions. No `[@]` import needed. See [[pipelines#Triggers]] for trigger usage rules.
+Triggers are placed on `[T]` lines inside `{=}` pipeline definitions. No `[@]` import needed. See [[concepts/pipelines/io-triggers#Triggers]] for trigger usage rules.
 
 **PRIMITIVE** — Trigger pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
 

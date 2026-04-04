@@ -1,13 +1,13 @@
 ---
 name: Compound Condition Partition Refinement
 type: algorithm
-consumes: PGE-605, PGE-608
-prerequisite: PGE-613
+consumes: PGE06005, PGE06008
+prerequisite: PGE06013
 ---
 
 # Compound Condition Partition Refinement Algorithm
 
-Determines whether compound conditional branches (`[&]` AND, `[|]` OR, `[^]` XOR) are collectively exhaustive (PGE-608) and mutually exclusive (PGE-605).
+Determines whether compound conditional branches (`[&]` AND, `[|]` OR, `[^]` XOR) are collectively exhaustive (PGE06008) and mutually exclusive (PGE06005).
 
 ## Inputs
 
@@ -30,13 +30,13 @@ The algorithm classifies each tested variable's type as **closed** or **open**:
 
 ## Algorithm Steps
 
-### Step 0 — PGE-613 Pre-Check
+### Step 0 — PGE06013 Pre-Check
 
-Evaluate each branch's compound expression individually. If any single branch is always-True (tautology) or always-False (contradiction), PGE-613 fires. The partition algorithm does not run — all branches must be individually satisfiable.
+Evaluate each branch's compound expression individually. If any single branch is always-True (tautology) or always-False (contradiction), PGE06013 fires. The partition algorithm does not run — all branches must be individually satisfiable.
 
 ### Step 1 — Open-Type Short-Circuit
 
-If **any** variable in the compound condition has an open type → the entire compound is open-ended → `*?` is mandatory. Skip grid analysis. If `*?` is absent, PGE-608 fires.
+If **any** variable in the compound condition has an open type → the entire compound is open-ended → `*?` is mandatory. Skip grid analysis. If `*?` is absent, PGE06008 fires.
 
 ### Step 2 — Build Domain Partitions
 
@@ -78,9 +78,9 @@ Example: `$status =? .Active [|] $age >? 65` (OR)
 - `$age >? 65` covers: {(Active, >65), (Inactive, >65)}
 - OR union: {(Active, ≤18), (Active, 18-65), (Active, >65), (Inactive, >65)}
 
-### Step 5 — Check Overlap (PGE-605)
+### Step 5 — Check Overlap (PGE06005)
 
-Scan the grid. If any cell is covered by more than one branch → **PGE-605** fires.
+Scan the grid. If any cell is covered by more than one branch → **PGE06005** fires.
 
 The diagnostic must include:
 - The overlapping branch numbers
@@ -88,12 +88,12 @@ The diagnostic must include:
 
 Overlap is always an error, regardless of whether `*?` is present.
 
-### Step 6 — Check Exhaustiveness (PGE-608)
+### Step 6 — Check Exhaustiveness (PGE06008)
 
 Compute the union of all branch regions. If the union does not equal the full grid → not exhaustive.
 
 - If `*?` is present → exhaustive (wildcard covers remaining cells)
-- If `*?` is absent → **PGE-608** fires
+- If `*?` is absent → **PGE06008** fires
 
 The diagnostic must include the uncovered cells as counterexample.
 
@@ -125,6 +125,6 @@ Result: PASS
 
 ## See Also
 
-- [PGE-605 — Compound Condition Overlap](../PGE/PGE-605-compound-condition-overlap.md)
-- [PGE-608 — Compound Condition Exhaustiveness](../PGE/PGE-608-compound-condition-exhaustiveness.md)
-- [PGE-613 — Tautological or Contradictory Branch Condition](../PGE/PGE-613-tautological-branch-condition.md)
+- [PGE06005 — Compound Condition Overlap](../PGE/PGE06005-compound-condition-overlap.md)
+- [PGE06008 — Compound Condition Exhaustiveness](../PGE/PGE06008-compound-condition-exhaustiveness.md)
+- [PGE06013 — Tautological or Contradictory Branch Condition](../PGE/PGE06013-tautological-branch-condition.md)

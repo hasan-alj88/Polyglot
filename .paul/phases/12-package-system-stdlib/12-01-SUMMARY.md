@@ -27,8 +27,8 @@ key-decisions:
   - "Removed speculative =T.Schedule, =T.HTTP, =T.File — zero usage in specs or examples"
   - "Removed speculative =W.Rust, =W.Node — zero usage in specs or examples"
   - "Confirmed =T.Webhook as top-level (not nested under =T.HTTP) — matches EDGE-CASES usage"
-  - "Fixed PGE-908 reference to redirect (merged into PGE-907)"
-  - "Added PGE-912, PGE-913 to packages.md — existed as rule files but were not referenced in spec"
+  - "Fixed PGE09007 reference to redirect (merged into PGE09007)"
+  - "Added PGE09011, PGE09012 to packages.md — existed as rule files but were not referenced in spec"
 
 completed: 2026-03-24
 ---
@@ -50,7 +50,7 @@ completed: 2026-03-24
 
 | File | Change | Purpose |
 |------|--------|---------|
-| docs/user/syntax/packages.md | Modified | Added PGE-9xx inline refs, Import Rules section, Dependency Rules section, compile rules table; fixed PGE-908 ref; status → complete |
+| docs/user/syntax/packages.md | Modified | Added PGE-9xx inline refs, Import Rules section, Dependency Rules section, compile rules table; fixed PGE09007 ref; status → complete |
 | docs/user/stdlib/INDEX.md | Modified | Removed all (?) markers, updated descriptions and status columns, removed legend entry for (?), added !Math to error list; status → complete |
 | docs/user/stdlib/pipelines/T.md | Modified | Removed speculative =T.Schedule/HTTP/File, confirmed =T.Webhook as top-level, added =T.Manual, added PRIMITIVE note and cross-refs; status → complete |
 | docs/user/stdlib/pipelines/Q.md | Modified | Added cross-ref to pipelines spec; status → complete |
@@ -71,7 +71,7 @@ None — plan executed exactly as written.
 
 **Concerns:**
 - 9 stdlib files (Math, Path, Sys, ForEach, Into, Agg, Sync, Continue, types) remain at `status: draft` in frontmatter despite being marked "Stable" in INDEX.md — they were in the plan's DO NOT CHANGE boundaries
-- EC-6.4 inconsistency (raw arithmetic in EDGE-CASES vs PGE-410) noted in Phase 10 — still unresolved in technical references
+- EC-6.4 inconsistency (raw arithmetic in EDGE-CASES vs PGE04010) noted in Phase 10 — still unresolved in technical references
 
 **Blockers:**
 - None

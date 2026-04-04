@@ -1,7 +1,7 @@
 ---
-audience: user
+audience: pg-coder
 type: spec
-updated: 2026-03-25
+updated: 2026-03-28
 ---
 
 # Everything is a Tree
@@ -13,9 +13,30 @@ All Polyglot data is serialized strings. Every object — structs, pipelines, va
 
 ## All Data is Serialized Strings
 
-Polyglot has one true primitive: `RawString` — a sequence of literal raw characters (see [[types#RawString — The True Primitive]]). Everything else — `#String`, `int`, `float`, `#Boolean`, arrays, serials, user structs — is built on top of `RawString` through schemas that constrain how the string is interpreted.
+Polyglot has one true primitive: `RawString` — a sequence of literal raw characters (see [[syntax/types/basic-types#RawString — The True Primitive]]). Everything else — `#String`, `int`, `float`, `#Boolean`, arrays, serials, user structs — is built on top of `RawString` through schemas that constrain how the string is interpreted.
 
 This means every Polyglot object is ultimately a tree of strings with typed structure layered on top.
+
+## Leaf-Only Values
+
+A universal invariant governs every tree in Polyglot: a node is either a **branch** or a **leaf**, never both.
+
+- **Branch nodes** have children but no value — they exist purely for structure and navigation (namespace or enum grouping)
+- **Leaf nodes** hold a `RawString` value but have no children — they are the terminal data
+- A node CANNOT have both a value and children
+
+This is not a per-type property — it is a universal invariant that applies to every data tree. No `%` metadata flag controls it; the compiler enforces it unconditionally.
+
+## Tree Shape and Leaf Content
+
+Types describe their tree structure through two additional prefix tiers beyond `#`:
+
+- `##` **schemas** describe tree shape — depth, key types, ordering, uniformity (e.g., `##Scalar`, `##Flat`, `##Contiguous`)
+- `###` **field types** describe leaf content nature — `###Value` for typed data leaves, `###Enum` for variant selector leaves
+
+Child nodes in a tree are accessed with the `<` operator: `$myMap<name`, `$matrix<0<1`. Fixed fields use `.` as before.
+
+See [[syntax/types/prefix-system#Three-Tier Prefix System]] for the full prefix table, [[syntax/types/schema-properties#Approved ## Schema Types]] for all schema definitions, and [[syntax/types/prefix-system#The < Operator]] for accessor details.
 
 ## The Structured Tree
 
@@ -43,11 +64,11 @@ Each concept you have learned maps to a branch in the tree:
 
 | You learned | In | Tree branch | Instance example |
 |-------------|----|-------------|------------------|
-| Struct types | [[types#Struct Types]] | `%#` | `%#:UserRecord:0` |
-| Pipelines | [[pipelines]] | `%=` | `%=:ProcessData:0` |
+| Struct types | [[syntax/types/structs#Struct Types]] | `%#` | `%#:UserRecord:0` |
+| Pipelines | [[concepts/pipelines/INDEX|pipelines]] | `%=` | `%=:ProcessData:0` |
 | Variables | [[variable-lifecycle]] | `%$` | `%$:myVar:0` |
-| Expand operators | [[collections#Expand Operators]] | `%~` | `%~:ForEach.Array:0` |
-| Collect operators | [[collections#Collect Operators]] | `%*` | `%*:Into.Array:0` |
+| Expand operators | [[concepts/collections/expand#Expand Operators]] | `%~` | `%~:ForEach.Array:0` |
+| Collect operators | [[concepts/collections/collect#Collect Operators]] | `%*` | `%*:Into.Array:0` |
 | Error trees | [[errors]], `{!}` blocks | `%!` | `%!.File.NotFound` |
 | Packages | [[packages]] | `%@` | `%@:Local:999::MyPkg` |
 | Permissions | [[permissions]] | `%_` | `%_.File.read` |
@@ -122,15 +143,15 @@ Push atomically clears the previous field and sets the new one. Reading a non-ac
 
 ### String Subtypes — Nested Under `:String`
 
-`int` lives at `%#:String:int` — nested under `:String` at a flexible level. The alias `#int` in user code resolves to `#String.int`. Each subtype uses the `#String` schema with `.re` pre-filled:
+`int` lives at `%#:String:int` — nested under `:String` at a flexible level. The alias `#int` in user code resolves to `#String.int`. Each subtype uses the `#String` schema with `.regex` pre-filled:
 
 ```
-%#:String:int               ← .string#RawString + .re#RawString (re = "^-?[0-9]+$")
-%#:String:float             ← .string#RawString + .re#RawString (re = "^-?[0-9]+\.[0-9]+$")
-%#:String:emailAddress      ← user-defined: .re = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+%#:String:int               ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+$")
+%#:String:float             ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+\.[0-9]+$")
+%#:String:emailAddress      ← user-defined: .regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
-See [[types#Numeric Types — #String Subtypes]] for details.
+See [[syntax/types/basic-types#Numeric Types — #String Subtypes]] for details.
 
 ### IO Ports — Nested Typed Sections
 
@@ -162,4 +183,4 @@ The general path notation is:
 
 **Shorthand in code:** `=MyPipeline%status` reads `%=:MyPipeline:<current>.status` — the current instance is implicit.
 
-For the full field listings (which metadata each branch carries, `live` vs user-declared), see [[metadata]]. For the formal path grammar and instance rules, see [[metadata-tree|technical/spec/metadata-tree]].
+For the full field listings (which metadata each branch carries, `live` vs user-declared), see [[metadata]]. For the formal path grammar and instance rules, see [[metadata-tree/INDEX|technical/spec/metadata-tree]].

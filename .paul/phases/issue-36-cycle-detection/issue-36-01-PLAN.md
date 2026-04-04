@@ -11,10 +11,10 @@ autonomous: true
 
 <objective>
 ## Goal
-Write the algorithm specification document for pipeline call cycle detection (topological sort / DFS), covering intra-package `{=}` call graphs as required by PGE-914.
+Write the algorithm specification document for pipeline call cycle detection (topological sort / DFS), covering intra-package `{=}` call graphs as required by PGE09013.
 
 ## Purpose
-PGE-914 defines the compile rule but not the detection algorithm. Issue #36 requests a formal algorithm spec — inputs, steps, complexity, edge cases — matching the style of existing algorithm docs (overlap-detection.md, compound-exhaustiveness.md).
+PGE09013 defines the compile rule but not the detection algorithm. Issue #36 requests a formal algorithm spec — inputs, steps, complexity, edge cases — matching the style of existing algorithm docs (overlap-detection.md, compound-exhaustiveness.md).
 
 ## Output
 - `docs/technical/compile-rules/algorithms/cycle-detection.md` — complete algorithm specification
@@ -26,9 +26,9 @@ PGE-914 defines the compile rule but not the detection algorithm. Issue #36 requ
 @.paul/STATE.md
 
 ## Source Files
-@docs/technical/compile-rules/PGE/PGE-914-circular-pipeline-call.md
-@docs/technical/compile-rules/PGE/PGE-902-circular-package-dependency.md
-@docs/technical/compile-rules/PGE/PGE-414-recursive-data-definition.md
+@docs/technical/compile-rules/PGE/PGE09013-circular-pipeline-call.md
+@docs/technical/compile-rules/PGE/PGE09002-circular-package-dependency.md
+@docs/technical/compile-rules/PGE/PGE05004-recursive-data-definition.md
 @docs/technical/compile-rules/algorithms/overlap-detection.md (style reference)
 </context>
 
@@ -42,7 +42,7 @@ No specialized flows configured.
 ```gherkin
 Given the algorithms directory exists
 When the plan completes
-Then docs/technical/compile-rules/algorithms/cycle-detection.md exists with YAML frontmatter containing name, type: algorithm, and consumes: PGE-914
+Then docs/technical/compile-rules/algorithms/cycle-detection.md exists with YAML frontmatter containing name, type: algorithm, and consumes: PGE09013
 ```
 
 ## AC-2: Algorithm covers all edge cases from issue #36
@@ -56,14 +56,14 @@ Then it addresses: self-call, mutual recursion, transitive cycles, diamond (no c
 ```gherkin
 Given the algorithm specification
 When read by a compiler implementer
-Then it contains: Inputs section, step-by-step algorithm (graph construction + cycle detection), complexity analysis, and diagnostic message format matching PGE-914
+Then it contains: Inputs section, step-by-step algorithm (graph construction + cycle detection), complexity analysis, and diagnostic message format matching PGE09013
 ```
 
 ## AC-4: Cross-references to related rules
 ```gherkin
 Given the algorithm specification
 When checked for cross-references
-Then it links to PGE-914, PGE-902, and PGE-414 with relative paths
+Then it links to PGE09013, PGE09002, and PGE05004 with relative paths
 ```
 
 </acceptance_criteria>
@@ -79,18 +79,18 @@ Then it links to PGE-914, PGE-902, and PGE-414 with relative paths
     **Frontmatter:**
     - name: Pipeline Call Cycle Detection
     - type: algorithm
-    - consumes: PGE-914
+    - consumes: PGE09013
 
     **Sections to include:**
     1. **Introduction** — What this algorithm does, why cycles are errors (no recursion in Polyglot)
     2. **Inputs** — Package's {=} pipeline definitions and their [r]/[p]/[b] call sites
-    3. **Algorithm — Graph Construction** — Build directed adjacency list: nodes = {=} pipelines, edges = [r]/[p]/[b] references to same-package pipelines. Exclude cross-package calls (handled by PGE-902).
+    3. **Algorithm — Graph Construction** — Build directed adjacency list: nodes = {=} pipelines, edges = [r]/[p]/[b] references to same-package pipelines. Exclude cross-package calls (handled by PGE09002).
     4. **Algorithm — Cycle Detection (DFS three-color)** — White/gray/black marking. When gray node revisited = back edge = cycle. Recover cycle path from DFS stack.
     5. **Algorithm — Alternative (Kahn's topological sort)** — Brief description of Kahn's as alternative approach.
     6. **Edge Cases** — Table covering: self-call (single node self-edge), mutual recursion (2-node cycle), transitive cycle (3+ nodes), diamond DAG (valid, no cycle), multiple independent cycles (report all).
     7. **Complexity** — O(V + E) for DFS where V = pipeline count, E = call edge count.
-    8. **Diagnostic Output** — Format: "Circular pipeline call detected: =A -> =B -> =C -> =A — Polyglot does not support recursion" (matching PGE-914 diagnostic)
-    9. **See Also** — Links to PGE-914, PGE-902, PGE-414
+    8. **Diagnostic Output** — Format: "Circular pipeline call detected: =A -> =B -> =C -> =A — Polyglot does not support recursion" (matching PGE09013 diagnostic)
+    9. **See Also** — Links to PGE09013, PGE09002, PGE05004
 
     **Style rules:**
     - Follow docs/audit/ conventions (read audit README if uncertain)
@@ -99,10 +99,10 @@ Then it links to PGE-914, PGE-902, and PGE-414 with relative paths
   </action>
   <verify>
     - File exists at docs/technical/compile-rules/algorithms/cycle-detection.md
-    - Frontmatter has type: algorithm and consumes: PGE-914
+    - Frontmatter has type: algorithm and consumes: PGE09013
     - Contains sections: Inputs, Algorithm, Edge Cases, Complexity, See Also
     - All 5 edge cases from issue #36 addressed
-    - Cross-references use relative paths to PGE-914, PGE-902, PGE-414
+    - Cross-references use relative paths to PGE09013, PGE09002, PGE05004
   </verify>
   <done>AC-1, AC-2, AC-3, AC-4 satisfied</done>
 </task>
@@ -112,15 +112,15 @@ Then it links to PGE-914, PGE-902, and PGE-414 with relative paths
 <boundaries>
 
 ## DO NOT CHANGE
-- docs/technical/compile-rules/PGE/PGE-914-circular-pipeline-call.md (rule doc is stable)
-- docs/technical/compile-rules/PGE/PGE-902-circular-package-dependency.md
-- docs/technical/compile-rules/PGE/PGE-414-recursive-data-definition.md
+- docs/technical/compile-rules/PGE/PGE09013-circular-pipeline-call.md (rule doc is stable)
+- docs/technical/compile-rules/PGE/PGE09002-circular-package-dependency.md
+- docs/technical/compile-rules/PGE/PGE05004-recursive-data-definition.md
 - docs/technical/compile-rules/algorithms/overlap-detection.md
 - docs/technical/compile-rules/algorithms/compound-exhaustiveness.md
 
 ## SCOPE LIMITS
 - Algorithm specification only — no compiler implementation code
-- Intra-package cycles only — cross-package is PGE-902's domain
+- Intra-package cycles only — cross-package is PGE09002's domain
 - Do not modify existing compile rule documents
 - Do not add entries to COMPILE-RULES.md index (separate task if needed)
 
@@ -131,8 +131,8 @@ Before declaring plan complete:
 - [ ] cycle-detection.md exists with valid YAML frontmatter
 - [ ] Algorithm is complete: graph construction + DFS cycle detection
 - [ ] All 5 edge cases from issue #36 are addressed
-- [ ] Diagnostic output format matches PGE-914
-- [ ] Cross-references to PGE-914, PGE-902, PGE-414 use correct relative paths
+- [ ] Diagnostic output format matches PGE09013
+- [ ] Cross-references to PGE09013, PGE09002, PGE05004 use correct relative paths
 - [ ] Document follows existing algorithm doc style (overlap-detection.md)
 - [ ] All acceptance criteria met
 </verification>

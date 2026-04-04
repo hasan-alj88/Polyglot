@@ -1,7 +1,7 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
-updated: 2026-03-24
+updated: 2026-03-29
 status: complete
 ---
 
@@ -9,7 +9,7 @@ status: complete
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{M}` at `%M`, `{Q}` at `%Q`, `{!}` at `%!` (see [[data-is-trees]]).
+Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{T}` at `%T`, `{M}` at `%M`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!` (see [[data-is-trees]]).
 
 ## `{X}` — Definition Elements
 
@@ -18,13 +18,17 @@ Define top-level structures. Open a scope that continues with indentation.
 | Marker | Defines |
 |--------|---------|
 | `{@}` | Package declaration (mandatory, first in file). See [[packages]] |
-| `{#}` | Struct definition. See [[types#Enum Fields vs Value Fields]] |
-| `{=}` | Pipeline definition. See [[pipelines]] |
-| `{M}` | Macro definition |
-| `{Q}` | Queue definition. See [[pipelines#Queue]] |
-| `{!}` | Error tree definition. See [[errors#Defining Custom Errors]] |
-| `{Array}` | Array collection definition. See [[collections]] |
+| `{#}` | Struct definition. See [[syntax/types/structs#Enum Fields vs Value Fields]] |
+| `{=}` | Pipeline definition. Supports marker declarations (`{=}[exe]`, subsets). See [[concepts/pipelines/INDEX\|pipelines]] |
+| `{T}` | Trigger pipeline definition (subtype of `{=}`). See [[concepts/pipelines/io-triggers#Trigger Definitions]] |
+| `{M}` | Type macro definition (subtype of `{#}`). See [[macros]] |
+| `{W}` | Wrapper definition (subtype of `{=}`). See [[wrappers]] |
+| `{Q}` | Queue — dual-purpose block. `{Q} #Queue:Name` defines a queue instance (subtype of `{#}`, data definition). `{Q} =Q.*` defines a queue pipeline operation (subtype of `{=}`, equivalent to `{=}[Q]`). The identifier prefix (`#` vs `=`) disambiguates. See [[concepts/pipelines/queue#Queue]] |
+| `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
+| `{Array}` | Array collection definition. See [[concepts/collections/INDEX|collections]] |
 | `{ }` | Comment. See [[comments]] |
+
+**Marker declarations on `{=}`:** The `[exe]` marker declares the pipeline as an execution pipeline, invocable via `[r]`, `[p]`, or `[b]`. `{=}` without a marker defaults to `{=}[exe]` — no warning. Subsets like `{=}[b]` (background-only) or `{=}[rp]` (sequential/parallel only) restrict how the pipeline can be invoked. Subtypes (`{T}`, `{W}`, `{Q}`) have fixed implicit markers and cannot take `marker_decl`. See [[concepts/pipelines/INDEX#Marker Declarations|Marker Declarations]] for full details.
 
 ## `[X]` — Block Elements
 
@@ -48,15 +52,15 @@ See [[permissions]] for inline/IO forms, permission categories, and hierarchical
 ### Data Flow
 
 <!-- @io -->
-See [[io]] for IO parameter patterns and [[collections]] for expand/collect semantics.
+See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collections]] for expand/collect semantics.
 
 | Marker | Meaning |
 |--------|---------|
 | `[=]` | Pipeline IO line. See [[io#IO Line Pattern]] |
-| `[~]` | Collection-expand IO line. See [[collections#Expand Operators]] |
-| `[*]` | Collection-collect IO line. See [[collections#Collect Operators]] |
-| `[*] <<` | Wait input — wait for variable to be Final (used inside `[*]` blocks). See [[collections#Sync & Race Collectors]] |
-| `[*] >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[collections#Sync & Race Collectors]] |
+| `[~]` | Collection-expand IO line. See [[concepts/collections/expand#Expand Operators]] |
+| `[*]` | Collection-collect IO line. See [[concepts/collections/collect#Collect Operators]] |
+| `[*] <<` | Wait input — wait for variable to be Final (used inside `[*]` blocks). See [[concepts/collections/collect#Sync & Race Collectors]] |
+| `[*] >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[concepts/collections/collect#Sync & Race Collectors]] |
 | `[>]` | Output fallback — scoped under `[=]` output line. See [[errors#Error Fallback Operators]] |
 | `[<]` | Input fallback — scoped under `[=]` input line. See [[errors#Error Fallback Operators]] |
 
@@ -68,20 +72,21 @@ See [[io]] for IO parameter patterns and [[collections]] for expand/collect sema
 | `[p]` | Run/execute in parallel |
 | `[b]` | Run/execute in background (fire and forget) |
 | `[#]` | Load serialized data into typed structure |
+| `[M]` | Macro invocation — expand a `{M}` type macro inside a `{#}` block. See [[macros]] |
 
 ### Control Flow
 
 <!-- @pipelines -->
-See [[pipelines]] for trigger/queue/wrapper structure and error scoping rules.
+See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 
 | Marker | Meaning |
 |--------|---------|
 | `[?]` | Conditional switch flow; match arm (under `[r]` `>>` match). See [[conditionals#Match Syntax]] |
-| `[!]` | Error handling — scoped under `[r]` call. See [[pipelines#Error Handling]] |
+| `[!]` | Error handling — scoped under `[r]` call. See [[concepts/pipelines/error-handling#Error Handling]] |
 | `[!] >>` | Error raise — raises a declared error. See [[errors#Raising Errors]] |
-| `[t]` | Trigger. See [[pipelines#Triggers]] |
-| `[Q]` | Queue. See [[pipelines#Queue]] |
-| `[W]` | Wrapper. See [[pipelines#Wrappers]] |
+| `[T]` | Trigger. See [[concepts/pipelines/io-triggers#Triggers]] |
+| `[Q]` | Queue. See [[concepts/pipelines/queue#Queue]] |
+| `[W]` | Wrapper. See [[concepts/pipelines/wrappers#Wrappers]] |
 
 ### Scope
 
@@ -89,8 +94,8 @@ See [[pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 |--------|---------|
 | `[\]` | Setup |
 | `[/]` | Cleanup |
-| `[{]` | From outer scope (in Macros) |
-| `[}]` | To outer scope (in Macros) |
+| `[{]` | From outer scope (in Wrappers) |
+| `[}]` | To outer scope (in Wrappers) |
 
 ### Data Access
 
@@ -105,9 +110,43 @@ See [[pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 |--------|---------|
 | `[%]` | Definition metadata and aliases |
 
-`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Alias under a `[.]` field: `[%] .alias << #AliasName` resolves to the fully qualified path. Aliases preserve type prefix (`#` for data, `=` for pipelines).
+`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{W}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE12002).
 
 See [[metadata]] for the full metadata tree, field listings, `live` semantics, and access patterns.
+
+### Metadata Accessors
+
+<!-- @metadata -->
+
+`%This`, `%Parent`, and `%name` provide scoped access to definition metadata from within `{x}` blocks.
+
+| Accessor | Returns |
+|----------|---------|
+| `%This` | Innermost enclosing `{x}` definition block |
+| `%Parent` | One level up from `%This` |
+| `%name` | Definition name string from the `{x}` block header |
+| `%name.Last` | Splits `%name` by `.` and returns the last segment |
+
+`%name` examples:
+
+| Context | `%name` returns |
+|---------|----------------|
+| `{#} #ThisName` | `"ThisName"` |
+| `{M} #String.Subtype` | `"String.Subtype"` |
+| `{=} =Pipeline.Name` | `"Pipeline.Name"` |
+| `{W} =W.Polyglot` | `"W.Polyglot"` |
+
+`%name.Last` splits by `.` and returns the final segment — `{M} #String.Subtype` yields `%name.Last` = `"Subtype"`.
+
+`%This` scoping:
+
+| Context | `%This` refers to |
+|---------|-------------------|
+| Inside `{M} #String.Subtype` body (outside nested `{#}`) | The macro definition |
+| Inside `{#} ##{$Name}` nested within the macro | The `{#}` definition being generated |
+| Outside any `{x}` block | Compile error |
+
+To reference the enclosing macro from inside a nested `{#}`, use `%Parent` (one level up from `%This`).
 
 ### Logical
 
@@ -136,15 +175,21 @@ The originating line keeps its normal block marker. Only continuation lines get 
 
 | Marker | Meaning |
 |--------|---------|
-| `[c]` | Foreign code injection — embed another language via `#Code:<Language>:<Version>` |
+| `[C]` | Inline foreign code — embed another language's code lines within an `=RT.*` pipeline call |
 
-The first `[c]` line declares the language. All body lines also get `[c]` prefix. Body content is raw text — not parsed as Polyglot. The block ends when a line without `[c]` appears.
+<!-- @concepts/pipelines/INDEX -->
+`[C]` is a block element (not a block type) for embedding foreign code lines passed to `=RT.*` runtime pipelines. Each `[C]` line is one line of foreign code — raw text, not parsed as Polyglot. The language is determined by which `=RT.*` pipeline is called (e.g., `=RT.Python.Script.Inline`, `=RT.JS.Script.Inline`). The block ends when a line without `[C]` appears.
+
+`[C]` lines are passed as the `<code` input to the `=RT.*` pipeline call:
 
 ```polyglot
-[c] #Code:Python:3:14
-[c] import pandas as pd
-[c] df = pd.read_csv("data.csv")
-[c] result = df.describe()
+[r] =RT.Python.Script.Inline
+   [=] <env << $env
+   [=] >output#Code:Python.Output >> $output
+   [=] <code <<
+      [C] import pandas as pd
+      [C] df = pd.read_csv("data.csv")
+      [C] result = df.describe()
 ```
 
 ### Comments

@@ -22,13 +22,13 @@ What `;string` refers to in type annotations is `#String` — a struct built on 
 ```polyglot
 {#} #String
    [.] .string;RawString
-   [.] .re;RawString
+   [.] .regex;RawString
 ```
 
 - `.string` — the raw string value
-- `.re` — the regular expression constraint (defaults to `""`, accept any string)
+- `.regex` — the regular expression constraint (alias: `.re`). Defaults to `""`, accept any string.
 
-`.re` follows variable lifecycle: defaults to `""` via `<~`, can be pushed once to Final via `<<`. No concept of "mutable/immutable" — only lifecycle states.
+`.regex` follows variable lifecycle: defaults to `""` via `<~`, can be pushed once to Final via `<<`. No concept of "mutable/immutable" — only lifecycle states.
 
 ### int/float are #String Subtypes
 
@@ -37,8 +37,8 @@ What `;string` refers to in type annotations is `#String` — a struct built on 
 ```
 #String
    [:] :*  ← flexible level for subtypes
-      :int    (.re << "^-?[0-9]+$")
-      :float  (.re << "^-?[0-9]+\.[0-9]+$")
+      :int    (.regex << "^-?[0-9]+$")
+      :float  (.regex << "^-?[0-9]+\.[0-9]+$")
       :eng    (deferred)
       :sci    (deferred)
       :customName  ← user-defined
@@ -51,7 +51,7 @@ Users can define custom string subtypes:
 ```polyglot
 {#} #String.emailAddress
    [.] .string;RawString
-   [.] .re;RawString << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+   [.] .regex;RawString << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
 ### bool is NOT a #String Subtype
@@ -65,12 +65,12 @@ No new grammar needed. RE is declared via standard subfield assignment:
 ```polyglot
 {#} #Email
    [.] .address;string
-      [.] .re << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+      [.] .regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
 ### Validation Timing
 
-- **Compile-time** — string literals and provable constants checked against RE (PGE-410)
+- **Compile-time** — string literals and provable constants checked against RE (PGE04010)
 - **Runtime** — dynamic values checked when pushed; failures handled with `[!]` error blocks
 - Literal numeric values (int/float) always match their RE by construction — no error handling needed
 

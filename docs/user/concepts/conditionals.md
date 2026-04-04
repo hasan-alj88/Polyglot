@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
 updated: 2026-03-24
 status: complete
@@ -29,18 +29,18 @@ Sequential `[?]` blocks form a conditional chain. Each branch contains an explic
    [r] >result << "Failure"
 ```
 
-Every `[?]` line must include a comparison operator — bare lines like `[?] $variable` are invalid ([[PGE-609|PGE-609]]). Every branch must contain at least one executable statement; use `[r] =DoNothing` for intentionally empty branches ([[PGE-610|PGE-610]]).
+Every `[?]` line must include a comparison operator — bare lines like `[?] $variable` are invalid ([[PGE06009|PGE06009]]). Every branch must contain at least one executable statement; use `[r] =DoNothing` for intentionally empty branches ([[PGE06010|PGE06010]]).
 
 ## Exhaustiveness
 
-All conditional chains must be exhaustive — every possible value of the branched type must have a defined path ([[PGE-601|PGE-601]]). Exhaustiveness is proven in two ways:
+All conditional chains must be exhaustive — every possible value of the branched type must have a defined path ([[PGE06001|PGE06001]]). Exhaustiveness is proven in two ways:
 
 1. **Static proof** — the compiler verifies all values are covered (closed types)
 2. **`*?` catch-all** — required for open types where static proof is impossible
 
 ### Enum Exhaustiveness
 
-Enums are closed types. When all variants are listed, no `*?` is needed ([[PGE-602|PGE-602]]):
+Enums are closed types. When all variants are listed, no `*?` is needed ([[PGE06002|PGE06002]]):
 
 ```polyglot
 {#} #Direction
@@ -73,7 +73,7 @@ Partial coverage with `*?` covering the rest is also valid:
 
 ### Numeric Exhaustiveness
 
-Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the full domain or include `*?` ([[PGE-603|PGE-603]]). Overlapping ranges are flagged as warnings ([[PGE-604|PGE-604]]):
+Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the full domain or include `*?` ([[PGE06003|PGE06003]]). Overlapping ranges are flagged as warnings ([[PGE06004|PGE06004]]):
 
 ```polyglot
 [?] $code =? 200
@@ -109,8 +109,8 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
 2. The target variable (`$status`) receives the matched result via push
 3. Arms are **assignment-only** — no side effects, pipeline calls, or nested logic
 4. `[?] *` is the wildcard catch-all (replaces `*?` from the verbose form — no comparison operator in match arms)
-5. All exhaustiveness rules ([[PGE-601|PGE-601]] through [[PGE-613|PGE-613]]) apply to the desugared form
-6. [[PGE-609|PGE-609]] does not apply to match arms — they use `value >> result` form, not `$var operator value`
+5. All exhaustiveness rules ([[PGE06001|PGE06001]] through [[PGE06013|PGE06013]]) apply to the desugared form
+6. [[PGE06009|PGE06009]] does not apply to match arms — they use `value >> result` form, not `$var operator value`
 
 **Enum match — exhaustive without wildcard:**
 
@@ -122,13 +122,13 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
    [?] #Direction.West >> "W"
 ```
 
-All variants of `#Direction` are listed, so no `*` is needed — same rule as the verbose form ([[PGE-602|PGE-602]]).
+All variants of `#Direction` are listed, so no `*` is needed — same rule as the verbose form ([[PGE06002|PGE06002]]).
 
 **Not a match:** If `[r] $x >> $y` has no indented `[?]` children, it is a plain assignment — not a match header.
 
 ### String and Flexible Field Exhaustiveness
 
-Strings are open sets — `*?` is always required ([[PGE-606|PGE-606]]). Flexible fields (`:`) are also open — `*?` is always required ([[PGE-607|PGE-607]]).
+Strings are open sets — `*?` is always required ([[PGE06006|PGE06006]]). Flexible fields (`:`) are also open — `*?` is always required ([[PGE06007|PGE06007]]).
 
 ### Exhaustiveness Summary
 
@@ -215,7 +215,7 @@ Negate the preceding condition. For simple negation, prefer negation operators (
 
 ### Compound Exhaustiveness
 
-When logical operators combine conditions, the compiler evaluates whether the compound expression partitions the input space ([[PGE-608|PGE-608]]). If any variable is an open type, `*?` is required. Overlapping compound conditions are flagged ([[PGE-605|PGE-605]]). Tautological branches (always true) and contradictory branches (always false) are compile errors ([[PGE-613|PGE-613]]).
+When logical operators combine conditions, the compiler evaluates whether the compound expression partitions the input space ([[PGE06008|PGE06008]]). If any variable is an open type, `*?` is required. Overlapping compound conditions are flagged ([[PGE06005|PGE06005]]). Tautological branches (always true) and contradictory branches (always false) are compile errors ([[PGE06013|PGE06013]]).
 
 ## Nested Conditionals
 
@@ -257,28 +257,28 @@ Conditionals can switch on live metadata fields like pipeline `%status`:
       [r] $msg#string << "unknown state"
 ```
 
-See [[types#Live Type Modifier]] and [[pipelines#Querying Pipeline Status]] for metadata access patterns.
+See [[syntax/types/hierarchy#Live Type Modifier]] and [[concepts/pipelines/chains#Querying Pipeline Status]] for metadata access patterns.
 
 ## Wildcard Rules
 
-- Only one `*?` per chain ([[PGE-611|PGE-611]])
-- `*?` must be the last branch — branches after `*?` are unreachable dead code ([[PGE-612|PGE-612]])
+- Only one `*?` per chain ([[PGE06011|PGE06011]])
+- `*?` must be the last branch — branches after `*?` are unreachable dead code ([[PGE06012|PGE06012]])
 - `*?` catches everything the preceding branches did not
 
 ## Compile Rules Reference
 
 | Rule | Name | What it catches |
 |------|------|-----------------|
-| [[PGE-601\|PGE-601]] | Conditional Must Be Exhaustive | Missing coverage for any possible value |
-| [[PGE-602\|PGE-602]] | Enum Exhaustiveness | Missing enum variants without `*?` |
-| [[PGE-603\|PGE-603]] | Numeric Range Not Exhaustive | Incomplete numeric range coverage |
-| [[PGE-604\|PGE-604]] | Numeric Range Overlap | Overlapping range branches |
-| [[PGE-605\|PGE-605]] | Compound Condition Overlap | Overlapping compound expressions |
-| [[PGE-606\|PGE-606]] | String Exhaustiveness | Missing `*?` on string conditionals |
-| [[PGE-607\|PGE-607]] | Flexible Field Exhaustiveness | Missing `*?` on flexible field conditionals |
-| [[PGE-608\|PGE-608]] | Compound Condition Exhaustiveness | Incomplete compound condition coverage |
-| [[PGE-609\|PGE-609]] | Conditional Missing Comparison Operator | Bare `[?] $variable` without operator |
-| [[PGE-610\|PGE-610]] | Empty Conditional Scope | Branch with no executable statement |
-| [[PGE-611\|PGE-611]] | Duplicate Wildcard Catch-All | More than one `*?` in a chain |
-| [[PGE-612\|PGE-612]] | Unreachable Branch After Wildcard | Branches placed after `*?` |
-| [[PGE-613\|PGE-613]] | Tautological Branch Condition | Always-true or always-false compound expression |
+| [[PGE06001\|PGE06001]] | Conditional Must Be Exhaustive | Missing coverage for any possible value |
+| [[PGE06002\|PGE06002]] | Enum Exhaustiveness | Missing enum variants without `*?` |
+| [[PGE06003\|PGE06003]] | Numeric Range Not Exhaustive | Incomplete numeric range coverage |
+| [[PGE06004\|PGE06004]] | Numeric Range Overlap | Overlapping range branches |
+| [[PGE06005\|PGE06005]] | Compound Condition Overlap | Overlapping compound expressions |
+| [[PGE06006\|PGE06006]] | String Exhaustiveness | Missing `*?` on string conditionals |
+| [[PGE06007\|PGE06007]] | Flexible Field Exhaustiveness | Missing `*?` on flexible field conditionals |
+| [[PGE06008\|PGE06008]] | Compound Condition Exhaustiveness | Incomplete compound condition coverage |
+| [[PGE06009\|PGE06009]] | Conditional Missing Comparison Operator | Bare `[?] $variable` without operator |
+| [[PGE06010\|PGE06010]] | Empty Conditional Scope | Branch with no executable statement |
+| [[PGE06011\|PGE06011]] | Duplicate Wildcard Catch-All | More than one `*?` in a chain |
+| [[PGE06012\|PGE06012]] | Unreachable Branch After Wildcard | Branches placed after `*?` |
+| [[PGE06013\|PGE06013]] | Tautological Branch Condition | Always-true or always-false compound expression |

@@ -1,7 +1,7 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
-updated: 2026-03-25
+updated: 2026-03-30
 status: complete
 ---
 
@@ -24,6 +24,17 @@ Success is signalled by `!NoError`. Side-effect-only pipelines (Write, Append, C
       .Append
          <path#path
          <content#string
+   .Serial
+      .Read
+         <path#path
+         >data#serial
+      .Write
+         <path#path
+         <data#serial
+      .Read.Field
+         <path#path
+         <field#RawString
+         >value#serial
    .Copy
       <source#path
       <destination#path
@@ -40,6 +51,56 @@ Success is signalled by `!NoError`. Side-effect-only pipelines (Write, Append, C
       >files#array:path
 ```
 
+## Serial File IO
+
+`=File.Serial.*` pipelines load and save structured data files (JSON, YAML, TOML). Format is auto-detected from file extension. Internally delegates to `=#.JSON.Parse`, `=#.YAML.Parse`, or `=#.TOML.Parse` base parsers (see [[#|pipelines/#]]).
+
+### `=File.Serial.Read`
+
+Reads a file, detects format from extension (.json/.yaml/.toml), parses content, returns a `#serial` data tree.
+
+| IO | Type | Description |
+|----|------|-------------|
+| `<path` | `#path` | File path to read |
+| `>data` | `#serial` | Parsed data tree |
+
+| Error | When |
+|-------|------|
+| `!File.NotFound` | File doesn't exist at path |
+| `!File.ReadError` | File exists but can't be read (permissions, locked) |
+| `!File.ParseError` | File content isn't valid JSON/YAML/TOML |
+
+### `=File.Serial.Write`
+
+Serializes a `#serial` data tree to file. Detects target format from extension.
+
+| IO | Type | Description |
+|----|------|-------------|
+| `<path` | `#path` | File path to write |
+| `<data` | `#serial` | Data tree to serialize |
+
+| Error | When |
+|-------|------|
+| `!File.NotFound` | Parent directory doesn't exist |
+| `!File.WriteError` | Can't write to path (permissions, disk full) |
+
+### `=File.Serial.Read.Field`
+
+One-step field extraction: reads file, parses, and extracts a single field by tree path. Combines `=File.Serial.Read` + `=#.Field`.
+
+| IO | Type | Description |
+|----|------|-------------|
+| `<path` | `#path` | File path to read |
+| `<field` | `#RawString` | Tree path using `<` separator (e.g. `"database<host"`) |
+| `>value` | `#serial` | Extracted field value |
+
+| Error | When |
+|-------|------|
+| `!File.NotFound` | File doesn't exist |
+| `!File.ReadError` | Can't read file |
+| `!File.ParseError` | Invalid format |
+| `!Field.NotFound` | Field path doesn't exist in parsed data |
+
 ## Permissions
 
 <!-- @permissions -->
@@ -50,6 +111,9 @@ All `=File.*` pipelines perform filesystem IO and require `[_]` permission decla
 | `=File.Text.Read` | `_File.read` | Inline |
 | `=File.Text.Write` | `_File.write` | Inline |
 | `=File.Text.Append` | `_File.write` | Inline |
+| `=File.Serial.Read` | `_File.read` | Inline |
+| `=File.Serial.Write` | `_File.write` | Inline |
+| `=File.Serial.Read.Field` | `_File.read` | Inline |
 | `=File.Copy` | `_File.read` + `_File.write` | Inline |
 | `=File.Move` | `_File.read` + `_File.write` | Inline |
 | `=File.Delete` | `_File.delete` | Inline |
@@ -73,6 +137,24 @@ All `=File.*` pipelines perform filesystem IO and require `[_]` permission decla
    !NoError
    !File.NotFound
    !File.WriteError
+
+=File.Serial.Read
+   !NoError
+   !File.NotFound
+   !File.ReadError
+   !File.ParseError
+
+=File.Serial.Write
+   !NoError
+   !File.NotFound
+   !File.WriteError
+
+=File.Serial.Read.Field
+   !NoError
+   !File.NotFound
+   !File.ReadError
+   !File.ParseError
+   !Field.NotFound
 
 =File.Copy
    !NoError
@@ -102,6 +184,9 @@ All `=File.*` pipelines perform filesystem IO and require `[_]` permission decla
 | `=File.Text.Read` | Deferred |
 | `=File.Text.Write` | Deferred |
 | `=File.Text.Append` | Deferred |
+| `=File.Serial.Read` | Deferred |
+| `=File.Serial.Write` | Deferred |
+| `=File.Serial.Read.Field` | Deferred |
 | `=File.Copy` | Deferred |
 | `=File.Move` | Deferred |
 | `=File.Delete` | Deferred |

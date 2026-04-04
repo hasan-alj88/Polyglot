@@ -1,6 +1,6 @@
 # Brainstorm: #DateTime Full Data Tree
 
-> **PGE-501 FIX (2026-03-20):** `.Calendar`, `.Week`, `.TimeUnit`, and `.Cultural` now use entirely flexible (`:`) fields at their child level. Known entries (`:gregorian`, `:hijri`, etc.) are pre-declared with their types; users can add more keys. No `.`/`:` mixing.
+> **PGE05001 FIX (2026-03-20):** `.Calendar`, `.Week`, `.TimeUnit`, and `.Cultural` now use entirely flexible (`:`) fields at their child level. Known entries (`:gregorian`, `:hijri`, etc.) are pre-declared with their types; users can add more keys. No `.`/`:` mixing.
 
 ## Design Principles
 
@@ -8,8 +8,8 @@
 2. **Fixed (`.`) for universal structure** — year, month, day, hour, etc.
 3. **Flexible (`:`) for extensible parts** — user calendars, holidays, custom eras
 4. **Enum fields for finite sets** — calendar systems, weekday names, months
-5. **Schema matching** — serialized data must match target schema; mismatch is compile error (PGE-402)
-6. **No mixing `.`/`:` at same sibling level** (PGE-501)
+5. **Schema matching** — serialized data must match target schema; mismatch is compile error (PGE04002)
+6. **No mixing `.`/`:` at same sibling level** (PGE05001)
 7. **Calendars carry their own leap logic** — each calendar defines how it maps epoch to its units
 
 ## Top-Level Tree

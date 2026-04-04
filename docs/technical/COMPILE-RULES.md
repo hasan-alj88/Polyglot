@@ -1,7 +1,7 @@
 ---
-audience: developer
+audience: designer
 type: specification
-updated: 2026-03-27
+updated: 2026-04-01
 status: draft
 ---
 
@@ -14,151 +14,256 @@ Semantic and behavioral constraints enforced at compile time. These rules go bey
 - `INVALID` — rejected by compiler (error code shown)
 - `WARNING` — accepted with a diagnostic (warning code shown)
 - `[ ] ✓` — comment explaining why code is valid
-- `[ ] ✗ PGE-NNN` — comment marking where the error is triggered
-- `[ ] ⚠ PGW-NNN` — comment marking where the warning is emitted
+- `[ ] ✗ PGExxNNN` — comment marking where the error is triggered
+- `[ ] ⚠ PGWxxNNN` — comment marking where the warning is emitted
 
 ---
 
 ## Error Code Reference (PGE)
 
-Error codes use the `PGE-NNN` format. Ranges are grouped by semantic category — not by compiler phase — so codes stay stable as the compiler evolves.
+Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `NNN` is the sequential number (001–999). Categories are grouped by semantic domain — not by compiler phase — so codes stay stable as the compiler evolves.
 
-| Code | Rule | Name |
-|------|------|------|
-| PGE-101 | 1.1 | Pipeline Section Misordering |
-| PGE-102 | 1.2 | IO Before Trigger |
-| PGE-103 | 1.3 | One Package Declaration Per File |
-| PGE-104 | 1.4 | Macro Structural Constraints |
-| PGE-105 | 1.5 | Missing Pipeline Trigger |
-| PGE-106 | 1.6 | Missing Pipeline Queue |
-| PGE-107 | 1.7 | Missing Pipeline Setup/Cleanup |
-| PGE-108 | 1.8 | Wrapper Must Reference Macro |
-| PGE-109 | 1.9 | Wrapper IO Mismatch |
-| PGE-110 | 1.10 | Pipeline IO Name Mismatch |
-| PGE-111 | 1.11 | Duplicate IO Parameter Name |
-| PGE-112 | 1.12 | Queue Definition Must Use #Queue: Prefix |
-| PGE-113 | 1.13 | Queue Control Contradicts Queue Default |
-| PGE-114 | 1.14 | Unresolved Queue Reference |
-| PGE-115 | 1.15 | Duplicate Metadata Field |
-| PGE-116 | 1.16 | Unmarked Execution Line |
-| PGE-117 | 1.17 | Wrong Block Element Marker |
-| PGE-118 | 1.18 | Tautological or Contradictory Trigger Condition |
-| PGE-201 | 2.1 | Lifecycle Stages |
-| PGE-202 | 2.2 | Declared State Is Unreadable |
-| PGE-203 | 2.3 | Final Is Push-Once |
-| PGE-205 | 2.5 | Failed Is Terminal |
-| PGE-206 | 2.6 | `live` Metadata Fields Are Pull-Only |
-| PGE-207 | 2.7 | Continue After Error |
-| PGE-208 | 2.8 | Access After Release |
-| PGE-209 | 2.9 | Unreachable Code |
-| PGE-301 | 3.1 | No Push Across Parallel Boundaries |
-| PGE-302 | 3.2 | Parallel Output Must Be Collected |
-| PGE-303 | 3.3 | Pull Isolation Until Collection |
-| PGE-304 | 3.4 | Section-Boundary Pairing |
-| PGE-305 | 3.5 | `[b]` Has No Collectible Output |
-| PGE-306 | 3.6 | Race Collector Type Homogeneity |
-| PGE-307 | 3.7 | Expand Operator Input Mismatch |
-| PGE-308 | 3.8 | Collect Operator IO Mismatch |
-| PGE-309 | 3.9 | Nested Expand Without Collect |
-| PGE-311 | 3.11 | Collector Without Expand |
-| PGE-401 | 4.1 | Type Mismatch |
-| PGE-402 | 4.2 | Schema Mismatch |
-| PGE-403 | 4.3 | Leaf-Only Assignment |
-| PGE-404 | 4.4 | Fixed-Schema Keys Are Compile-Time Only |
-| PGE-405 | 4.5 | Undefined Interpolation Variable |
-| PGE-406 | 4.6 | Undefined Variable Reference |
-| PGE-407 | 4.7 | Invalid Path String |
-| PGE-408 | 4.8 | Missing Path Platform Subfield |
-| PGE-409 | 4.9 | Unhandled Serial→Struct Conversion |
-| PGE-410 | 4.10 | Invalid Arithmetic Operator |
-| PGE-411 | 4.11 | Negative Array Index Literal |
-| PGE-412 | 4.12 | Nested Array Type |
-| PGE-413 | 4.13 | Duplicate Data Field Name |
-| PGE-414 | 4.14 | Recursive Data Definition |
-| PGE-415 | 4.15 | Conditional Type-Operator Mismatch |
-| PGE-416 | 4.16 | Invalid Pipeline Input Literal |
-| PGE-417 | 4.17 | Array Dimension Access Mismatch |
-| PGE-418 | 4.18 | Type Parameter Constraint Violation |
-| PGE-419 | 4.19 | Duplicate Dictionary Key |
-| PGE-420 | 4.20 | Key Gap Violation |
-| PGE-501 | 5.1 | Sibling Separator Homogeneity |
-| PGE-502 | 5.2 | Sibling Kind Homogeneity |
-| PGE-601 | 6.1 | Conditional Must Be Exhaustive |
-| PGE-602 | 6.2 | Enum Exhaustiveness |
-| PGE-603 | 6.3 | Numeric Range Not Exhaustive |
-| PGE-604 | 6.4 | Numeric Range Overlap |
-| PGE-605 | 6.5 | Compound Condition Overlap |
-| PGE-606 | 6.6 | String Exhaustiveness |
-| PGE-607 | 6.7 | Flexible Field Exhaustiveness |
-| PGE-608 | 6.8 | Compound Condition Exhaustiveness |
-| PGE-609 | 6.9 | Conditional Missing Comparison Operator |
-| PGE-610 | 6.10 | Empty Conditional Scope |
-| PGE-611 | 6.11 | Duplicate Wildcard Catch-All |
-| PGE-612 | 6.12 | Unreachable Branch After Wildcard |
-| PGE-613 | 6.13 | Tautological or Contradictory Branch Condition |
-| PGE-701 | 7.1 | `[!]` Error Block Scoping |
-| PGE-702 | 7.2 | Chain Error Scoping |
-| PGE-703 | 7.3 | Duplicate Fallback Assignment |
-| PGE-704 | 7.4 | Duplicate Error Handler |
-| PGE-705 | 7.5 | Undeclared Error Raise |
-| PGE-706 | 7.6 | Unused Error Declaration |
-| PGE-707 | 7.7 | Error Handling Must Be Exhaustive |
-| PGE-801 | 8.1 | Auto-Wire Type Mismatch |
-| PGE-802 | 8.2 | Auto-Wire Ambiguous Type |
-| PGE-803 | 8.3 | Auto-Wire Unmatched Parameter |
-| PGE-804 | 8.4 | Ambiguous Step Reference |
-| PGE-805 | 8.5 | Unresolved Step Reference |
-| PGE-806 | 8.6 | Non-Pipeline Step in Chain |
-| PGE-807 | 8.7 | Invalid Assignment Target |
-| PGE-808 | 8.8 | Missing Required Input at Call Site |
-| PGE-809 | 8.9 | Uncaptured Required Output at Call Site |
-| PGE-810 | 8.10 | IO Direction Mismatch |
-| PGE-901 | 9.1 | Undefined Import Alias |
-| PGE-902 | 9.2 | Circular Package Dependency |
-| PGE-903 | 9.3 | Unresolved Pipeline Reference |
-| PGE-904 | 9.4 | Unresolved Import Pipeline Reference |
-| PGE-905 | 9.5 | Multi-File Version Mismatch |
-| PGE-906 | 9.6 | Multi-File Package Name Mismatch |
-| PGE-907 | 9.7 | Duplicate Definition |
-| PGE-909 | 9.9 | Multi-File Reference Not Found |
-| PGE-910 | 9.10 | Multi-File Self-Reference |
-| PGE-911 | 9.11 | Asymmetric Multi-File Reference |
-| PGE-914 | 9.14 | Circular Pipeline Call |
-| PGE-915 | 9.15 | Pipeline Exceeds Package Permission Ceiling |
-| PGE-916 | 9.16 | Imported Package Exceeds Importer Permission Ceiling |
-| PGE-917 | 9.17 | Unknown Permission Category |
-| PGE-918 | 9.18 | Undeclared Permission |
-| PGE-919 | 9.19 | Permission Output |
-| PGE-920 | 9.20 | Duplicate Permission |
-| PGE-1001 | 10.1 | Undefined Metadata Field Access |
+### 01 — Pipeline Structure
+
+| Code | Name |
+|------|------|
+| PGE01001 | Pipeline Section Misordering |
+| PGE01002 | IO Before Trigger |
+| PGE01003 | One Package Declaration Per File |
+| PGE01004 | Macro Structural Constraints |
+| PGE01005 | Missing Pipeline Trigger |
+| PGE01006 | Missing Pipeline Queue |
+| PGE01007 | Missing Pipeline Setup/Cleanup |
+| PGE01008 | Wrapper Must Reference Macro |
+| PGE01009 | Wrapper IO Mismatch |
+| PGE01010 | Pipeline IO Name Mismatch |
+| PGE01011 | Duplicate IO Parameter Name |
+| PGE01012 | Queue Definition Must Use #Queue: Prefix |
+| PGE01013 | Queue Control Contradicts Queue Default |
+| PGE01014 | Unresolved Queue Reference |
+| PGE01015 | Duplicate Metadata Field |
+| PGE01016 | Unmarked Execution Line |
+| PGE01017 | Wrong Block Element Marker |
+| PGE01018 | Tautological or Contradictory Trigger Condition |
+| PGE01019 | Macro Dispatch Ambiguity *(planned)* |
+| PGE01020 | Effectless Execution Expression |
+| PGE01021 | Empty Data Definition |
+| PGE01022 | Empty Error Namespace |
+| PGE01023 | Parameterless Macro |
+| PGE01024 | Incompatible Operation Marker |
+| PGE01025 | Discard in Wrapper IO |
+| PGE01026 | Orphan Continuation Line |
+| PGE01027 | Empty Foreign Code Block |
+| PGE01028 | Base-Derived Mutual Exclusion |
+| PGE01029 | Invalid Marker for Definition Type |
+| PGE01030 | Missing Pipeline Wrapper |
+| PGE01031 | Forbidden Element in Definition |
+| PGE01032 | Missing Trigger Boolean Output |
+
+### 02 — Lifecycle & State
+
+| Code | Name |
+|------|------|
+| PGE02001 | Lifecycle Stages |
+| PGE02002 | Declared State Is Unreadable |
+| PGE02003 | Final Is Push-Once |
+| PGE02004 | Default Allows One More Push *(retired → PGE02003)* |
+| PGE02005 | Failed Is Terminal |
+| PGE02006 | `live` Metadata Fields Are Pull-Only |
+| PGE02007 | Continue After Error |
+| PGE02008 | Access After Release |
+| PGE02009 | Unreachable Code |
+| PGE02010 | Discard Default Assignment |
+| PGE02011 | Data Load Schema Mismatch |
+
+### 03 — Parallelism
+
+| Code | Name |
+|------|------|
+| PGE03001 | No Push Across Parallel Boundaries |
+| PGE03002 | Parallel Output Must Be Collected |
+| PGE03003 | Pull Isolation Until Collection |
+| PGE03004 | Section-Boundary Pairing |
+| PGE03005 | `[b]` Has No Collectible Output |
+| PGE03006 | Race Collector Type Homogeneity |
+| PGE03007 | Expand Operator Input Mismatch |
+| PGE03008 | Collect Operator IO Mismatch |
+| PGE03009 | Nested Expand Without Collect |
+| PGE03010 | Collector Without Expand |
+| PGE03011 | Orphaned Expand IO Marker |
+
+### 04 — Types & Values
+
+| Code | Name |
+|------|------|
+| PGE04001 | Type Mismatch |
+| PGE04002 | Schema Mismatch |
+| PGE04003 | Leaf-Only Assignment |
+| PGE04004 | Fixed-Schema Keys Are Compile-Time Only |
+| PGE04005 | Undefined Interpolation Variable |
+| PGE04006 | Undefined Variable Reference |
+| PGE04007 | Invalid Path String |
+| PGE04008 | Missing Path Platform Subfield |
+| PGE04009 | Unhandled Serial→Struct Conversion |
+| PGE04010 | Invalid Arithmetic Operator |
+| PGE04011 | Negative Array Index Literal |
+| PGE04012 | Division by Literal Zero |
+| PGE04013 | Nested Array Type |
+| PGE04014 | Invalid Range Bounds |
+| PGE04015 | Conditional Type-Operator Mismatch |
+| PGE04016 | Invalid Pipeline Input Literal |
+| PGE04017 | Array Dimension Access Mismatch |
+| PGE04018 | Type Parameter Constraint Violation *(planned)* |
+| PGE04019 | Duplicate Dictionary Key *(planned)* |
+| PGE04020 | Key Gap Violation *(planned)* |
+| PGE04021 | Empty String on Non-None Type *(planned)* |
+| PGE04022 | Macro Type Constraint Violation *(planned)* |
+| PGE04023 | Macro Field Constraint Violation *(planned)* |
+| PGE04024 | Non-Value Comparison |
+| PGE04025 | Untyped Array |
+| PGE04026 | Invalid IANA Timezone |
+| PGE04027 | Missing Required DateTime Subfield |
+| PGE04028 | Invalid Epoch Value |
+
+### 05 — Data Definitions
+
+| Code | Name |
+|------|------|
+| PGE05001 | Sibling Separator Homogeneity |
+| PGE05002 | Sibling Kind Homogeneity |
+| PGE05003 | Duplicate Data Field Name |
+| PGE05004 | Recursive Data Definition |
+| PGE05005 | Mixed Field Kinds *(planned)* |
+| PGE05006 | Schema Outside Type Definition *(planned)* |
+
+### 06 — Conditionals
+
+| Code | Name |
+|------|------|
+| PGE06001 | Conditional Must Be Exhaustive |
+| PGE06002 | Enum Exhaustiveness |
+| PGE06003 | Numeric Range Not Exhaustive |
+| PGE06004 | Numeric Range Overlap |
+| PGE06005 | Compound Condition Overlap |
+| PGE06006 | String Exhaustiveness |
+| PGE06007 | Flexible Field Exhaustiveness |
+| PGE06008 | Compound Condition Exhaustiveness |
+| PGE06009 | Conditional Missing Comparison Operator |
+| PGE06010 | Empty Conditional Scope |
+| PGE06011 | Duplicate Wildcard Catch-All |
+| PGE06012 | Unreachable Branch After Wildcard |
+| PGE06013 | Tautological or Contradictory Branch Condition |
+| PGE06014 | Wildcard-Only Match |
+
+### 07 — Error Handling
+
+| Code | Name |
+|------|------|
+| PGE07001 | `[!]` Error Block Scoping |
+| PGE07002 | Chain Error Scoping |
+| PGE07003 | Duplicate Fallback Assignment |
+| PGE07004 | Duplicate Error Handler |
+| PGE07005 | Undeclared Error Raise |
+| PGE07006 | Unused Error Declaration |
+| PGE07007 | Error Handling Must Be Exhaustive |
+
+### 08 — Wiring & Calls
+
+| Code | Name |
+|------|------|
+| PGE08001 | Auto-Wire Type Mismatch |
+| PGE08002 | Auto-Wire Ambiguous Type |
+| PGE08003 | Auto-Wire Unmatched Parameter |
+| PGE08004 | Ambiguous Step Reference |
+| PGE08005 | Unresolved Step Reference |
+| PGE08006 | Non-Pipeline Step in Chain |
+| PGE08007 | Invalid Assignment Target |
+| PGE08008 | Missing Required Input at Call Site |
+| PGE08009 | Uncaptured Required Output at Call Site |
+| PGE08010 | IO Direction Mismatch |
+| PGE08011 | Self-Assignment |
+| PGE08012 | Self-Chain Requires Numeric Indexing |
+
+### 09 — Imports & Dependencies
+
+| Code | Name |
+|------|------|
+| PGE09001 | Undefined Import Alias |
+| PGE09002 | Circular Package Dependency |
+| PGE09003 | Unresolved Pipeline Reference |
+| PGE09004 | Unresolved Import Pipeline Reference |
+| PGE09005 | Multi-File Version Mismatch |
+| PGE09006 | Multi-File Package Name Mismatch |
+| PGE09007 | Duplicate Definition |
+| PGE09008 | Multi-File Reference Not Found |
+| PGE09009 | Multi-File Self-Reference |
+| PGE09010 | Asymmetric Multi-File Reference |
+| PGE09011 | Duplicate Import Alias |
+| PGE09012 | Import Alias Shadows Stdlib |
+| PGE09013 | Circular Pipeline Call |
+
+### 10 — Permissions
+
+| Code | Name |
+|------|------|
+| PGE10001 | Pipeline Exceeds Package Permission Ceiling *(planned)* |
+| PGE10002 | Imported Package Exceeds Importer Permission Ceiling *(planned)* |
+| PGE10003 | Unknown Permission Category |
+| PGE10004 | Undeclared Permission |
+| PGE10005 | Permission Output |
+| PGE10006 | Duplicate Permission |
+
+### 11 — Schema Properties
+
+| Code | Name |
+|------|------|
+| PGE11001 | Schema Property Scope Conflict *(planned)* |
+| PGE11002 | Unbounded Collection Nesting *(planned)* |
+| PGE11003 | Field Type Contradiction *(planned)* |
+| PGE11004 | Invalid Key Type *(planned)* |
+| PGE11005 | Final Field Override via Inheritance *(planned)* |
+
+### 12 — Metadata & Aliases
+
+| Code | Name |
+|------|------|
+| PGE12001 | Undefined Metadata Field Access |
+| PGE12002 | Duplicate Alias |
+| PGE12003 | Invalid Inline Pipeline Argument |
+| PGE12004 | Empty Metadata Alias |
 
 ## Warning Code Reference (PGW)
 
-Warning codes use the `PGW-NNN` format. Category ranges mirror PGE so a developer can immediately see which domain a warning relates to.
+Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a developer can immediately see which domain a warning relates to.
 
-| Code | Rule | Name |
-|------|------|------|
-| PGW-101 | 1.1 | Empty Execution Body |
-| PGW-102 | 1.2w | Empty Data Definition |
-| PGW-201 | 2.7 | Default Pull Across State Change |
-| PGW-202 | 2.2 | Unused Variable |
-| PGW-203 | 2.3 | Unpushed Output Port |
-| PGW-205 | 2.5 | Pipeline Terminates on Error |
-| PGW-301 | 3.5 | `[b]` Called Pipeline Has Discarded Outputs |
-| PGW-302 | 3.5w | Error Handler on Fire-and-Forget |
-| PGW-408 | 4.8 | Single-Platform Path |
-| PGW-801 | 8.1 | Auto-Wire Succeeded |
-| PGW-808 | 8.8w | Unaddressed Input With Default |
-| PGW-809 | 8.9w | Uncaptured Output With Default/Fallback |
-| PGW-701 | 7.1w | Error Handler on Non-Failable Call |
-| PGW-702 | 7.2w | Caller Overrides Pipeline Fallback |
-| PGW-703 | 7.3w | Missing Fallback Message |
-| PGW-704 | 7.4w | Fallback on Non-Failable IO |
-| PGW-901 | 9.1 | Deprecated Pipeline Reference |
-| PGW-902 | 9.2 | Unused Import |
-| PGW-903 | 9.3 | Unused Permission |
-| PGW-1001 | 2.9 | Unreachable Code |
-| PGW-1002 | 10.2 | Missing Inline Format Metadata |
+| Code | Name |
+|------|------|
+| PGW01001 | Empty Execution Body |
+| PGW01002 | Empty Data Definition *(superseded by PGE01021)* |
+| PGW01003 | No Definitions in File |
+| PGW02001 | Default Pull Across State Change |
+| PGW02002 | Unused Variable |
+| PGW02003 | Unpushed Output Port |
+| PGW02004 | Pipeline Terminates on Error |
+| PGW02005 | Unreachable Code |
+| PGW03001 | `[b]` Called Pipeline Has Discarded Outputs |
+| PGW03002 | Error Handler on Fire-and-Forget |
+| PGW04001 | Single-Platform Path |
+| PGW04002 | Leading Zeros in Literal |
+| PGW07001 | Error Handler on Non-Failable Call |
+| PGW07002 | Caller Overrides Pipeline Fallback |
+| PGW07003 | Missing Fallback Message |
+| PGW07004 | Fallback on Non-Failable IO |
+| PGW08001 | Auto-Wire Succeeded |
+| PGW08002 | Unaddressed Input With Default |
+| PGW08003 | Uncaptured Output With Default/Fallback |
+| PGW09001 | Deprecated Pipeline Reference |
+| PGW09002 | Unused Import |
+| PGW10001 | Unused Permission |
+| PGW11001 | Redundant Schema Property *(planned)* |
+| PGW11002 | Contradicting Schema Override *(planned)* |
+| PGW11003 | Unlimited Depth on User Type *(planned)* |
+| PGW12001 | Missing Inline Format Metadata |
 
 ---
 
@@ -168,7 +273,7 @@ Each rule follows this structure:
 
 ```
 ### Rule N.N — Name
-`PGE-NNN` or `PGW-NNN`
+`PGExxNNN` or `PGWxxNNN`
 
 **Statement:** What the compiler enforces.
 **Rationale:** Why this constraint exists.
@@ -180,15 +285,222 @@ Each rule follows this structure:
 
 **INVALID:**
 ​```polyglot
-(minimal example — triggers PGE-NNN)
+(minimal example — triggers PGExxNNN)
 ​```
 
 **WARNING:**
 ​```polyglot
-(minimal example — triggers PGW-NNN)
+(minimal example — triggers PGWxxNNN)
 ​```
 
 **Open point:** (kept until resolved; removed when confirmed)
+```
+
+---
+
+## Schema Rules
+
+### Rule 9.21 — Schema Property Scope Conflict
+`PGE11001`
+
+**Statement:** A `%##` schema property set universally via `[#]` cannot also be assigned branch-wise via `[.]` or `[:]` in the same type definition.
+
+**Rationale:** Universal properties apply to every branch uniformly. A branch-wise override would create an ambiguous structural invariant — the compiler cannot enforce both a universal constraint and a per-branch exception simultaneously.
+
+**VALID:**
+```polyglot
+{#} #MyCollection
+   [#] %##Children.Gap << #False
+   [:] :*#string
+```
+
+**INVALID:**
+```polyglot
+{#} #MyCollection
+   [#] %##Children.Gap << #False     [ ] ✗ PGE11001 — universal scope
+   [.] .items
+      [.] %##Children.Gap << #True   [ ] ✗ PGE11001 — branch-wise conflicts with universal
+```
+
+### Rule 9.22 — Unbounded Collection Nesting
+`PGE11002`
+
+**Statement:** A collection type used as a value type within another collection must have an explicit `%##Depth.Max`. Depth must be bounded.
+
+**Rationale:** Without a depth bound, nested collections can produce infinitely deep trees. The compiler requires an explicit limit so that tree traversal and memory allocation are predictable.
+
+**VALID:**
+```polyglot
+{#} #Matrix
+   [#] <~ #Array<#Array<#float
+   [#] %##Depth.Max << 2
+```
+
+**INVALID:**
+```polyglot
+{#} #Nested
+   [#] <~ #Array<#Array<#float     [ ] ✗ PGE11002 — no %##Depth.Max declared
+```
+
+**WARNING:**
+```polyglot
+{#} #FlexNested
+   [#] <~ #Array<#Array<#float
+   [#] %##Depth.Max << -1          [ ] ⚠ PGW11003 — unlimited depth on user type
+```
+
+### Rule 9.23 — Field Type Contradiction
+`PGE11003`
+
+**Statement:** An explicit `###Value` declaration on a type whose fields are untyped enum fields, or an explicit `###Enum` declaration on a type whose fields have `#type` annotations, is a contradiction.
+
+**Rationale:** The `###` classification must match the actual field declarations. Mismatches indicate a design error — the type's fields and its declared leaf nature disagree.
+
+**VALID:**
+```polyglot
+{#} #Boolean
+   [#] << ###ScalarEnum
+   [.] .True
+   [.] .False
+```
+
+**INVALID:**
+```polyglot
+{#} #BadEnum
+   [#] << ###Enum                 [ ] ✗ PGE11003 — declares ###Enum
+   [.] .name#string               [ ] ✗ PGE11003 — but fields have #type (value fields)
+```
+
+### Rule 9.24 — Invalid Key Type
+`PGE11004`
+
+**Statement:** `%##Children.Type` must be set to a type that inherits from `#KeyString`. Keys must exclude syntax-reserved characters (whitespace, `.`, `:`, `<`, `>`).
+
+**Rationale:** Tree child keys appear in accessor syntax (`$var<key`). Types that permit syntax-reserved characters in their values would create parse ambiguity.
+
+**VALID:**
+```polyglot
+{#} #NamedMap
+   [#] << ##Flat
+   [#] %##Children.Type << #KeyString
+```
+
+**INVALID:**
+```polyglot
+{#} #BadMap
+   [#] << ##Flat
+   [#] %##Children.Type << #string   [ ] ✗ PGE11004 — #string allows '.', ':', '<', '>'
+```
+
+### Rule 9.25 — Mixed Field Kinds
+`PGE05005`
+
+**Statement:** Sibling fields at the same level cannot mix typed (`#type` annotated) and untyped (enum) declarations. All siblings must be the same `###` kind.
+
+**Rationale:** A type's fields are either all value fields or all enum fields. Mixing creates ambiguity in the `###` classification and violates the leaf-only values invariant for enum branches.
+
+**VALID:**
+```polyglot
+{#} #Record
+   [.] .name#string
+   [.] .age#int
+```
+
+**INVALID:**
+```polyglot
+{#} #Mixed
+   [.] .Active                    [ ] ✗ PGE05005 — untyped enum field
+   [.] .count#int                 [ ] ✗ PGE05005 — typed value field at same level
+```
+
+### Rule 9.26 — Schema Outside Type Definition
+`PGE05006`
+
+**Statement:** `##` schema references are only valid inside `{#}` type definitions. Using `##` outside a `{#}` block is a compile error.
+
+**Rationale:** Schemas describe tree structure of data types. They have no meaning outside a type definition context.
+
+**VALID:**
+```polyglot
+{#} #MyType
+   [#] << ##Flat
+```
+
+**INVALID:**
+```polyglot
+{=} =MyPipeline
+   [r] $x << ##Flat               [ ] ✗ PGE05006 — ## used outside {#}
+```
+
+### Rule 9.27 — Final Field Override via Inheritance
+`PGE11005`
+
+**Statement:** If a parent type sets a field with `<<` (final), a child type inheriting via `<~` cannot redeclare that field. Any attempt to reassign a final-inherited field is a compile error.
+
+**Rationale:** `<<` means the value is sealed — no further pushes, including through inheritance. Without this rule, a child type could silently override a field the parent declared immutable, breaking the finality guarantee.
+
+**VALID:**
+```polyglot
+{#} #String
+   [.] .regex#RawString <~ ".*"
+
+[ ] ✓ .regex is <~ (default) in #String — child CAN override
+{#} #Int
+   [#] <~ #String
+   [.] .regex#RawString << "^-?[0-9]+$"
+```
+
+**INVALID:**
+```polyglot
+{#} #Int
+   [#] <~ #String
+   [.] .regex#RawString << "^-?[0-9]+$"
+
+[ ] ✗ PGE11005 — .regex is already << final in #Int
+{#} #PositiveInt
+   [#] <~ #Int
+   [.] .regex#RawString << "^[1-9][0-9]*$"
+```
+
+### Rule 9.21w — Redundant Schema Property
+`PGW11001`
+
+**Statement:** A `%##` or `%###` property that is already inherited from a parent type or composed schema is redundant. The compiler emits a warning.
+
+**Rationale:** Redundant declarations add noise. The inherited value already applies. If the intent is to override, the value must differ (see PGW11002).
+
+**WARNING:**
+```polyglot
+{#} #MyArray
+   [#] <~ #Array<#int
+   [#] %##Children.Gap << #False   [ ] ⚠ PGW11001 — already inherited from ##Contiguous via #Array
+```
+
+### Rule 9.22w — Contradicting Schema Override
+`PGW11002`
+
+**Statement:** A `%##` property that overrides an inherited value from a composed `##` schema emits a warning. The override takes effect, but the compiler flags it for verification.
+
+**Rationale:** Overriding inherited schema properties is allowed but unusual. The warning ensures the developer intended the override rather than accidentally contradicting the schema.
+
+**WARNING:**
+```polyglot
+{#} #SparseArray
+   [#] <~ #Array<#int
+   [#] %##Children.Gap << #True    [ ] ⚠ PGW11002 — overrides #False from ##Contiguous
+```
+
+### Rule 9.23w — Unlimited Depth on User Type
+`PGW11003`
+
+**Statement:** Setting `%##Depth.Max << -1` (unlimited depth) on a user-defined type emits a warning. Only `#Serial` should use unlimited depth.
+
+**Rationale:** Unlimited depth is a deliberate escape hatch for schema-free data. User-defined types should have bounded depth for predictable tree traversal and memory use.
+
+**WARNING:**
+```polyglot
+{#} #DeepTree
+   [#] %##Depth.Max << -1         [ ] ⚠ PGW11003 — unlimited depth on user type
 ```
 
 ---
@@ -197,7 +509,7 @@ Each rule follows this structure:
 
 Codes that have been merged into other rules or removed. Listed here so searches for the old code find the redirect.
 
-| Code | Former Rule | Name | Redirect |
-|------|-------------|------|----------|
-| PGE-204 | 2.4 | Default Allows Exactly One More Push | Merged into PGE-203 (Final Is Push-Once) |
-| PGE-908 | 9.8 | Duplicate Data Definition | Merged into PGE-907 (Duplicate Definition) |
+| Code | Name | Redirect |
+|------|------|----------|
+| PGE02004 | Default Allows Exactly One More Push | Merged into PGE02003 (Final Is Push-Once) |
+| PGE09007† | Duplicate Data Definition (formerly separate code) | Merged into PGE09007 (Duplicate Definition) |

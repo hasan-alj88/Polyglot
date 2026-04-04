@@ -21,11 +21,11 @@ key-files:
     - docs/technical/EDGE-CASES.md
     - docs/technical/compile-rules/algorithms/compound-exhaustiveness.md
     - docs/technical/compile-rules/algorithms/overlap-detection.md
-    - docs/technical/compile-rules/PGE/PGE-601-conditional-must-be-exhaustive.md
-    - docs/technical/compile-rules/PGE/PGE-605-compound-condition-overlap.md
-    - docs/technical/compile-rules/PGE/PGE-608-compound-condition-exhaustiveness.md
-    - docs/technical/compile-rules/PGE/PGE-613-tautological-branch-condition.md
-    - docs/technical/compile-rules/PGE/PGE-118-tautological-trigger-condition.md
+    - docs/technical/compile-rules/PGE/PGE06001-conditional-must-be-exhaustive.md
+    - docs/technical/compile-rules/PGE/PGE06005-compound-condition-overlap.md
+    - docs/technical/compile-rules/PGE/PGE06008-compound-condition-exhaustiveness.md
+    - docs/technical/compile-rules/PGE/PGE06013-tautological-branch-condition.md
+    - docs/technical/compile-rules/PGE/PGE01018-tautological-trigger-condition.md
 
 key-decisions:
   - "Use [\\|] only in markdown table cells, [|] everywhere else"
@@ -70,11 +70,11 @@ completed: 2026-03-24
 | `docs/technical/EDGE-CASES.md` | Modified | 4 OR references migrated |
 | `docs/technical/compile-rules/algorithms/compound-exhaustiveness.md` | Modified | 3 OR references migrated |
 | `docs/technical/compile-rules/algorithms/overlap-detection.md` | Modified | 2 OR references migrated (1 in table) |
-| `docs/technical/compile-rules/PGE/PGE-601` | Modified | 1 table reference migrated |
-| `docs/technical/compile-rules/PGE/PGE-605` | Modified | 1 statement reference migrated |
-| `docs/technical/compile-rules/PGE/PGE-608` | Modified | 1 statement reference migrated |
-| `docs/technical/compile-rules/PGE/PGE-613` | Modified | 3 references migrated (statement + 2 code examples) |
-| `docs/technical/compile-rules/PGE/PGE-118` | Modified | 2 references migrated (statement + code example) |
+| `docs/technical/compile-rules/PGE/PGE06001` | Modified | 1 table reference migrated |
+| `docs/technical/compile-rules/PGE/PGE06005` | Modified | 1 statement reference migrated |
+| `docs/technical/compile-rules/PGE/PGE06008` | Modified | 1 statement reference migrated |
+| `docs/technical/compile-rules/PGE/PGE06013` | Modified | 3 references migrated (statement + 2 code examples) |
+| `docs/technical/compile-rules/PGE/PGE01018` | Modified | 2 references migrated (statement + code example) |
 
 ## Decisions Made
 

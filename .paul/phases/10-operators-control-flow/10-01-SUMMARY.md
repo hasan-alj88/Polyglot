@@ -21,7 +21,7 @@ key-files:
     - docs/user/SPEC-INDEX.md
 
 key-decisions:
-  - "Arithmetic uses =Math.* stdlib pipelines, not raw operators (PGE-410 confirms)"
+  - "Arithmetic uses =Math.* stdlib pipelines, not raw operators (PGE04010 confirms)"
   - "conditionals.md placed in concepts/ not syntax/ — conditionals are behavioral, not lexical"
 
 completed: 2026-03-24
@@ -35,7 +35,7 @@ completed: 2026-03-24
 
 | Criterion | Status | Notes |
 |-----------|--------|-------|
-| AC-1: Operators spec complete with arithmetic and negation | Pass | Arithmetic section documents =Math.* pipeline model per PGE-410; negation operators expanded with examples; type-operator compatibility table added; PGE-405/410/411/412/415/601/609 all referenced |
+| AC-1: Operators spec complete with arithmetic and negation | Pass | Arithmetic section documents =Math.* pipeline model per PGE04010; negation operators expanded with examples; type-operator compatibility table added; PGE04005/410/411/412/415/601/609 all referenced |
 | AC-2: Conditionals spec covers exhaustiveness and logical operators | Pass | Full exhaustiveness rules by type (enum, numeric, string, flexible, compound); logical operators [&]/[+]/[-]/[^]; nested conditionals; metadata switching; all 13 PGE-6xx rules referenced |
 | AC-3: SPEC-INDEX updated | Pass | conditionals.md inserted as #10 in Phase 2: Core Concepts; all subsequent entries renumbered (11-16) |
 
@@ -51,9 +51,9 @@ completed: 2026-03-24
 
 ### Key Finding: Arithmetic Model
 
-The plan originally described arithmetic as "operators (+, -, *, / with type rules)". During execution, PGE-410 revealed that **raw arithmetic tokens are compile errors** — all arithmetic is performed through `=Math.*` stdlib pipelines. The Arithmetic section was written to reflect this authoritative compile rule rather than the EBNF grammar productions (which exist only for error detection purposes).
+The plan originally described arithmetic as "operators (+, -, *, / with type rules)". During execution, PGE04010 revealed that **raw arithmetic tokens are compile errors** — all arithmetic is performed through `=Math.*` stdlib pipelines. The Arithmetic section was written to reflect this authoritative compile rule rather than the EBNF grammar productions (which exist only for error detection purposes).
 
-**Impact:** More accurate spec. EC-6.4 in EDGE-CASES shows raw arithmetic syntax that conflicts with PGE-410 — this is a known inconsistency in the technical reference material.
+**Impact:** More accurate spec. EC-6.4 in EDGE-CASES shows raw arithmetic syntax that conflicts with PGE04010 — this is a known inconsistency in the technical reference material.
 
 ### Scope Note: Loops
 
@@ -67,7 +67,7 @@ The ROADMAP lists "Loops" in Phase 10 scope. Polyglot has no traditional loop co
 - Phase 11 can reference operators.md for pipeline body expressions and conditionals.md for branching
 
 **Concerns:**
-- EC-6.4 (arithmetic in assignment) uses raw `*`, `/`, `-` syntax that PGE-410 rejects — technical reference inconsistency worth noting for future EBNF audit
+- EC-6.4 (arithmetic in assignment) uses raw `*`, `/`, `-` syntax that PGE04010 rejects — technical reference inconsistency worth noting for future EBNF audit
 
 **Blockers:**
 - None

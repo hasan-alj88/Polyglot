@@ -44,10 +44,10 @@ completed: 2026-03-24
 
 | File | Change | Purpose |
 |------|--------|---------|
-| docs/user/syntax/types.md | Modified | Added PGE-502 ref, expanded Namespaced Types section, status → complete |
+| docs/user/syntax/types.md | Modified | Added PGE05002 ref, expanded Namespaced Types section, status → complete |
 | docs/user/syntax/blocks.md | Modified | Status → complete (content was comprehensive) |
 | docs/user/syntax/identifiers.md | Modified | Status → complete (content was comprehensive) |
-| docs/user/concepts/variable-lifecycle.md | Modified | Added PGE-202/203/204/205/208/209 refs, status → complete |
+| docs/user/concepts/variable-lifecycle.md | Modified | Added PGE02002/203/204/205/208/209 refs, status → complete |
 | docs/technical/spec/type-identity.md | Modified | Added status → complete |
 | docs/technical/spec/metadata-tree.md | Modified | Added status → complete |
 

@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
 updated: 2026-03-21
 status: complete
@@ -9,7 +9,7 @@ status: complete
 
 <!-- @types -->
 <!-- @packages -->
-ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address format, [[types]] for `#` type annotations:
+ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address format, [[syntax/types/INDEX|types]] for `#` type annotations:
 
 | Prefix | Type | Example |
 |--------|------|---------|
@@ -47,14 +47,14 @@ ALL identifiers are **serialized data**. Two field separators distinguish schema
 - `$myVar%state` — variable lifecycle state
 - `#Record%lastModified` — data type metadata
 
-The `%` accessor reads `live`-typed metadata that the runtime populates. Users cannot assign to `%` fields. See [[types#Live Type Modifier]].
+The `%` accessor reads `live`-typed metadata that the runtime populates. Users cannot assign to `%` fields. See [[syntax/types/hierarchy#Live Type Modifier]].
 
 **Package addresses** use `::` to separate registry from package name, with `:` flexible throughout:
 - `@Local:999::PackageName:Sub:v1.0.0` — `:999` flexible registry ID, `::` registry separator, `:PackageName:Sub` flexible package name, `:v1.0.0` flexible version
 
-**Discard variable (`$*`)** — a reserved identifier that immediately releases any value pushed into it. Use `$*` when a pipeline produces output you intentionally do not need. `$*` satisfies PGE-302 (parallel output must be collected) without naming the variable. For debugging or later use, prefer `*Ignore` with a named variable instead — see [[collections#*Ignore — Explicit Discard]].
+**Discard variable (`$*`)** — a reserved identifier that immediately releases any value pushed into it. Use `$*` when a pipeline produces output you intentionally do not need. `$*` satisfies PGE03002 (parallel output must be collected) without naming the variable. For debugging or later use, prefer `*Ignore` with a named variable instead — see [[concepts/collections/collect#*Ignore — Explicit Discard]].
 
-The prefix (`$`, `@`, `!`, `#`, `=`, `_`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[types#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[collections#Collection Types]].
+The prefix (`$`, `@`, `!`, `#`, `=`, `_`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[syntax/types/structs#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[concepts/collections/INDEX#Collection Types]].
 
 These serialized paths — `#Boolean.True`, `$user:name`, `=Pipeline%status` — are all branches on one unified tree. Every Polyglot object lives in the `%` metadata tree, organized by its prefix. After learning the core concepts, see [[data-is-trees]] for how everything connects.
 

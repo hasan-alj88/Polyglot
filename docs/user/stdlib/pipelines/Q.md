@@ -1,16 +1,16 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
-updated: 2026-03-25
+updated: 2026-04-02
 status: complete
 ---
 
 # =Q — Queue Pipelines
 
 <!-- @pipelines -->
-Queue pipelines manage the two-queue execution model: **Pending Queue** (pipelines awaiting dispatch) and **Active Queue** (pipelines currently executing). No `[@]` import needed. See [[pipelines#Queues]] for queue usage rules.
+Queue pipelines manage the multi-queue execution model: **Dispatch Queues** (pipelines awaiting dispatch, one per `{Q}` definition) and **Executing Set** (pipelines currently running). The **Dispatch Coordinator** reads from all Dispatch Queues simultaneously, faithfully honoring each queue's ordering and concurrency rules. No `[@]` import needed. See [[concepts/pipelines/queue#Queue]] for queue usage rules.
 
-All `=Q.*` pipelines are used via `[Q]` — either in a `{Q}` queue definition (queue-level defaults) or in a pipeline's `[Q]` section (pipeline-specific controls). Controls in `{Q}` apply to all pipelines on that queue. Controls in `[Q]` are pipeline-specific. Contradictions raise PGE-113.
+All `=Q.*` pipelines are used via `[Q]` — either in a `{Q}` queue definition (queue-level defaults) or in a pipeline's `[Q]` section (pipeline-specific controls). Controls in `{Q}` apply to all pipelines on that queue. Controls in `[Q]` are pipeline-specific. Contradictions raise PGE01013.
 
 **PRIMITIVE** — Queue pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
 
@@ -18,142 +18,154 @@ All `=Q.*` pipelines are used via `[Q]` — either in a `{Q}` queue definition (
 
 No permissions required. All operations are pure computation (queue scheduling and resource management). See [[permissions]].
 
-## Pending Queue Strategies
+## Queue Assignment
 
-Referenced by the top-level `[Q]` line in a pipeline definition. `=Q.Default` is the only stdlib-provided queue — custom queues require a `{Q}` definition first.
-
-All strategies accept optional IO parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `<maxInstances#int` | int | Max parallel instances of this pipeline |
-| `<maxConcurrent#int` | int | Max other pipelines running alongside |
-| `<retrigger;#RetriggerStrategy` | enum | Behavior on re-trigger while active |
+The `[Q]` line in a pipeline declares which queue it uses.
 
 ### =Q.Default
 
-Standard queue — FIFO ordering, no concurrency limits, allows retrigger. The only queue that does not require a `{Q}` definition.
+Standard queue — FIFO ordering, no constraints. The only queue that does not require a `{Q}` definition. Metadata path: `%Queue.DispatchQueue:Default`.
 
 ```polyglot
 [Q] =Q.Default
 ```
 
-### =Q.FIFO
+### =Q.Assign
 
-Explicit FIFO (first-in-first-out) ordering. Same behavior as Default but explicit. Requires `{Q}` with `.strategy;#QueueStrategy << #FIFO`.
+Assign a pipeline to a named queue. The string argument is the name of a `{Q}` defined queue. Referencing an undefined queue is a compile error (PGE01014).
 
-### =Q.LIFO
+```polyglot
+[Q] =Q.Assign"GPUQueue"
+```
 
-Last-in-first-out ordering. Most recently queued pipeline runs first. Requires `{Q}` with `.strategy;#QueueStrategy << #LIFO`.
-
-### =Q.Priority
-
-Priority-based ordering. Higher priority pipelines dispatch first. Requires `{Q}` with `.strategy;#QueueStrategy << #Priority`.
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `<priority#int` | int | Priority level (higher = dispatched first) |
+Queue strategy (FIFO, LIFO, Priority), constraints, and host are configured on the `{Q}` definition — not on the `[Q]` assignment line. See [[structs#Queue]] for the `#Queue` schema fields.
 
 ---
 
-## Active Queue Controls
+## Direct Commands (unconditional)
 
-Declared as nested `[Q]` lines inside a pipeline's `[Q]` section or inside a `{Q}` definition. These control running pipeline instances.
+Sent by the Trigger Monitor as explicit commands. No condition — immediate execution.
 
-### =Q.Pause.Soft
-
-Pause a running pipeline. Finishes current work, then suspends. Frees CPU/GPU.
-
-```polyglot
-[Q] =Q.Default
-   [Q] =Q.Pause.Soft
-      [=] <CPU.MoreThan#float << 90.0
-```
-
-### =Q.Pause.Hard
-
-Pause a running pipeline immediately. Frees CPU/GPU and RAM.
-
-```polyglot
-[Q] #Queue:GPUQueue
-   [Q] =Q.Pause.Hard
-      [=] <RAM.Available.LessThan#float << 3072.0
-```
-
-### =Q.Resume
-
-Resume a paused pipeline (soft or hard).
-
-```polyglot
-[Q] #Queue:GPUQueue
-   [Q] =Q.Resume
-      [=] <RAM.Available.MoreThan#float << 5120.0
-```
-
-### =Q.Kill.Graceful
-
-Finish current work, run `[/]` cleanup, then terminate.
-
-```polyglot
-[Q] =Q.Default
-   [Q] =Q.Kill.Graceful
-      [=] <ExecutionTime.MoreThan#string << "2h"
-```
-
-### =Q.Kill.Hard
-
-Immediate OS-level termination. No cleanup runs.
-
-```polyglot
-[Q] =Q.Default
-   [Q] =Q.Kill.Hard
-      [=] <ExecutionTime.MoreThan#string << "4h"
-```
+| Pipeline | Signal | Purpose |
+|----------|--------|---------|
+| `=Q.Pause.Soft` | command.pause.soft | Finish current work, then suspend. Frees CPU |
+| `=Q.Pause.Hard` | command.pause.hard | Immediate suspend. Frees CPU+RAM |
+| `=Q.Resume` | command.resume | Move from Suspended Set to Resume Queue |
+| `=Q.Kill.Graceful` | command.kill.graceful | Finish work + `[/]` cleanup, terminate |
+| `=Q.Kill.Hard` | command.kill.hard | Immediate OS kill, no cleanup |
 
 ---
 
-## Conditional Parameters
+## Conditional Pause — `=Q.Pause.{Soft\|Hard}.{Condition}`
 
-Active queue controls accept conditional parameters that specify when the control activates. These are resource-based or pipeline-state-based conditions.
+Pause when a resource condition is met. Used as nested `[Q]` lines in `{Q}` definitions or pipeline `[Q]` sections.
 
-### Resource Conditions
+| Pipeline | IO | Purpose |
+|----------|-----|---------|
+| `=Q.Pause.Soft.RAM.LessThan` | `<mb;#Float` | Soft pause when RAM drops below threshold |
+| `=Q.Pause.Soft.CPU.MoreThan` | `<percent;#Float` | Soft pause when CPU exceeds threshold |
+| `=Q.Pause.Soft.Disk.LessThan` | `<mb;#Float` | Soft pause when disk space drops below threshold |
+| `=Q.Pause.Soft.GPU.InUse` | (none) | Soft pause when GPU is occupied |
+| `=Q.Pause.Hard.RAM.LessThan` | `<mb;#Float` | Hard pause when RAM drops below threshold |
+| `=Q.Pause.Hard.CPU.MoreThan` | `<percent;#Float` | Hard pause when CPU exceeds threshold |
+| `=Q.Pause.Hard.Disk.LessThan` | `<mb;#Float` | Hard pause when disk space drops below threshold |
+| `=Q.Pause.Hard.GPU.InUse` | (none) | Hard pause when GPU is occupied |
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `<CPU.MoreThan#float` | float | CPU usage percentage threshold |
-| `<RAM.Available.LessThan#float` | float | RAM available in MB (below = trigger) |
-| `<RAM.Available.MoreThan#float` | float | RAM available in MB (above = trigger) |
-| `<ExecutionTime.MoreThan#string` | string | Execution time limit (e.g., "30m", "2h") |
+---
 
-### Pipeline State Conditions
+## Conditional Resume — `=Q.Resume.{Condition}`
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `<Pipeline.Triggered#string` | string | Activate when named pipeline is triggered |
-| `<Pipeline.Running#string` | string | Activate when named pipeline starts running |
+Resume when a resource condition recovers.
 
-### Example: Combined Controls
+| Pipeline | IO | Purpose |
+|----------|-----|---------|
+| `=Q.Resume.RAM.MoreThan` | `<mb;#Float` | Resume when RAM recovers above threshold |
+| `=Q.Resume.CPU.LessThan` | `<percent;#Float` | Resume when CPU drops below threshold |
+| `=Q.Resume.Disk.MoreThan` | `<mb;#Float` | Resume when disk space recovers |
+| `=Q.Resume.GPU.Free` | (none) | Resume when GPU becomes available |
+
+---
+
+## Conditional Kill — `=Q.Kill.{Graceful\|Hard}.{Condition}`
+
+Terminate jobs based on time, state, or resource conditions.
+
+| Pipeline | IO | Purpose |
+|----------|-----|---------|
+| `=Q.Kill.Graceful.Time.MoreThan` | `<duration;#String` | Graceful kill after execution time exceeds limit |
+| `=Q.Kill.Graceful.RAM.LessThan` | `<mb;#Float` | Graceful kill when RAM critically low |
+| `=Q.Kill.Graceful.Pipeline.Completed` | `<name;#String` | Graceful kill when named pipeline completes |
+| `=Q.Kill.Graceful.Pipeline.Failed` | `<name;#String` | Graceful kill when named pipeline fails |
+| `=Q.Kill.Hard.Time.MoreThan` | `<duration;#String` | Hard kill after execution time exceeds limit |
+| `=Q.Kill.Hard.RAM.LessThan` | `<mb;#Float` | Hard kill when RAM critically low |
+
+---
+
+## Dispatch Wait Timeout — `=Q.Dispatch.Wait.TimeOut.*`
+
+What happens when a job exceeds `.maxWaitTime` in the queue. Default behavior: escalate to max priority.
+
+| Pipeline | IO | Purpose |
+|----------|-----|---------|
+| `=Q.Dispatch.Wait.TimeOut` | (none) | Default — escalate to max priority |
+| `=Q.Dispatch.Wait.TimeOut.Kill.Graceful` | (none) | Graceful kill the waiting job |
+| `=Q.Dispatch.Wait.TimeOut.Kill.Hard` | (none) | Hard kill the waiting job |
+| `=Q.Dispatch.Wait.TimeOut.Reassign` | `<queue;#String` | Move job to a different queue |
+
+Used as nested `[Q]` line in queue definition:
+
+```polyglot
+{Q} #Queue:BatchQueue
+   [.] .strategy;#QueueStrategy << #FIFO
+   [.] .maxWaitTime;#String << "30m"
+   [ ] If wait exceeds 30m, move to faster queue
+   [Q] =Q.Dispatch.Wait.TimeOut.Reassign
+      [=] <queue << "ExpressQueue"
+```
+
+If no `=Q.Dispatch.Wait.TimeOut.*` is specified, the default is priority escalation.
+
+---
+
+## Queue Admin — `=Q.{Operation}`
+
+Queue-level operations. Target the queue itself, not individual jobs.
+
+| Pipeline | IO | Purpose |
+|----------|-----|---------|
+| `=Q.Drain` | `<queue;#String` | Stop accepting new jobs, finish existing |
+| `=Q.Flush` | `<queue;#String` | Remove all pending jobs from a queue |
+| `=Q.Priority.Update` | `<jobId;#String`, `<score;#Int` | Change a job's priority score |
+| `=Q.Reassign` | `<jobId;#String`, `<queue;#String` | Move a job to a different queue (enables host offloading) |
+
+---
+
+## Example: Full Queue Definition + Pipeline Assignment
 
 ```polyglot
 {Q} #Queue:GPUQueue
-   [%] .description << "Queue for GPU-intensive work"
    [.] .strategy;#QueueStrategy << #LIFO
-   [.] .maxInstances#int << 1
-   [.] .retrigger;#RetriggerStrategy << #Disallow
-   [ ] Queue-level default: kill after 4 hours
-   [Q] =Q.Kill.Graceful
-      [=] <ExecutionTime.MoreThan#string << "4h"
+   [.] .host;#String << "gpu-server-01"
+   [.] .maxInstances;#UnsignedInt << 1
+   [.] .killPropagation;#KillPropagation << #Downgrade
+   [.] .resourceTags;#Array:ResourceTag << [#GPU]
+   [.] .maxWaitTime;#String << "30m"
+   [.] .description;#String << "GPU-intensive work"
+   [ ] Pause when RAM drops below 3GB
+   [Q] =Q.Pause.Hard.RAM.LessThan
+      [=] <mb << 3072.0
+   [ ] Resume when RAM recovers above 5GB
+   [Q] =Q.Resume.RAM.MoreThan
+      [=] <mb << 5120.0
+   [ ] Kill after 4 hours
+   [Q] =Q.Kill.Graceful.Time.MoreThan
+      [=] <duration << "4h"
 
 {=} =GPU.RenderFrames
    [=] <frames#array:serial
    [=] >rendered#array:serial ~> {}
-   [t] =T.Call
-   [Q] #Queue:GPUQueue
-      [ ] Pipeline-specific: pause/resume based on RAM
-      [Q] =Q.Pause.Hard
-         [=] <RAM.Available.LessThan#float << 3072.0
-      [Q] =Q.Resume
-         [=] <RAM.Available.MoreThan#float << 5120.0
+   [T] =T.Call
+   [Q] =Q.Assign"GPUQueue"
    [W] =W.Polyglot
    [p] ~ForEach.Array
       [~] <Array << $frames

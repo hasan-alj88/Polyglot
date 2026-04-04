@@ -33,9 +33,9 @@ Run before finalizing any new or modified documentation.
 
 | ID | Check | Source |
 |----|-------|--------|
-| audience-declared | Single audience declared in frontmatter | [[conventions#frontmatter]] |
-| tone-match | Tone matches audience rules | [[audiences/user]] or [[audiences/developer]] or [[audiences/ai]] |
-| no-leak | Does not leak cross-audience concerns | Audience files |
+| audience-declared | One or more audiences from allowed set declared in frontmatter | [[conventions#frontmatter]] |
+| tone-match | Tone matches first-listed audience rules | [[audiences/pg-coder]] \| [[audiences/integrator]] \| [[audiences/architect]] \| [[audiences/designer]] \| [[audiences/ai]] |
+| no-leak | Does not expose concerns outside declared audience set | Audience files |
 
 ## Completeness Check
 

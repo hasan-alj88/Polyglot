@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
 updated: 2026-03-24
 status: complete
@@ -13,23 +13,23 @@ status: complete
 
 ## Assignment Operators
 
-Directional — the arrow indicates data flow. Operators push and pull data across branches of the `%` metadata tree (see [[data-is-trees]]). See [[variable-lifecycle]] for lifecycle semantics, [[io]] for IO parameter context, [[pipelines#IO as Implicit Triggers]] for how assignment mode affects trigger behavior.
+Directional — the arrow indicates data flow. Operators push and pull data across branches of the `%` metadata tree (see [[data-is-trees]]). See [[variable-lifecycle]] for lifecycle semantics, [[io]] for IO parameter context, [[concepts/pipelines/io-triggers#IO as Implicit Triggers]] for how assignment mode affects trigger behavior.
 
 | Operator | Name | Direction | Usage |
 |----------|------|-----------|-------|
-| `<<` | Push (Final) | Right → left | `$x << "value"`, `@alias << @pkg`. See [[variable-lifecycle#Final]] |
-| `>>` | Pull (Final) | Left → right | `>array >> $arr`. See [[variable-lifecycle#Final]] |
-| `<~` | Default | Right → left | `.field <~ "value"`. See [[variable-lifecycle#Default]] |
-| `~>` | Default | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
-| `<!` | Fallback (Error) | Right → left | `<! "fallback"`. See [[errors#Error Fallback Operators]] |
-| `!>` | Fallback (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
-| `=>` | Chain | Left → right | `=A=>=B=>=C`. See [[pipelines#Chain Execution]] |
+| `<<` | PushLeft (Final) | Right → left | `$x << "value"`, `@alias << @pkg`. See [[variable-lifecycle#Final]] |
+| `>>` | PushRight (Final) | Left → right | `>array >> $arr`. See [[variable-lifecycle#Final]] |
+| `<~` | DefaultPushLeft | Right → left | `.field <~ "value"`. See [[variable-lifecycle#Default]] |
+| `~>` | DefaultPushRight | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
+| `<!` | FallbackPushLeft (Error) | Right → left | `<! "fallback"`. See [[errors#Error Fallback Operators]] |
+| `!>` | FallbackPushRight (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
+| `=>` | Chain | Left → right | `=A=>=B=>=C`. See [[concepts/pipelines/chains#Chain Execution]] |
 
 ## Comparison Operators
 
 Used in `[?]` conditional blocks — see [[blocks#Control Flow]] and [[conditionals]] for exhaustiveness and logical operators.
 
-Every `[?]` arm must include a comparison operator — bare subject lines like `[?] $variable` are invalid ([[PGE-609|PGE-609]]). The operator must be compatible with the subject variable's type ([[PGE-415|PGE-415]]).
+Every `[?]` arm must include a comparison operator — bare subject lines like `[?] $variable` are invalid ([[PGE06009|PGE06009]]). The operator must be compatible with the subject variable's type ([[PGE04015|PGE04015]]).
 
 | Operator | Meaning |
 |----------|---------|
@@ -69,19 +69,19 @@ Any comparison operator can be negated by inserting `!` before `?`. This replace
 
 ### Type-Operator Compatibility
 
-The comparison operator must match the subject variable's type ([[PGE-415|PGE-415]]):
+The comparison operator must match the subject variable's type ([[PGE04015|PGE04015]]):
 
-- **Numeric** (`#int`, `#float`): all comparison and range operators. Int and float interoperate freely.
+- **Numeric** (`#int`, `#float`): all comparison and range operators. Int and float share the same numeric domain — comparable without conversion.
 - **String** (`#string`): equality only (`=?`, `=!?`). Ordering and ranges are invalid.
 - **Bool** (`#bool`): equality only (`=?`, `=!?`).
 - **Enum**: equality with enum variants of the same type. Ordering, ranges, and cross-type matches are invalid.
 - **Wildcard** (`*?`): always valid on any type.
 
-**Exhaustiveness rule:** All `[?]` conditional chains must be exhaustive. If the conditions do not cover every possible case, a `[?] *?` catch-all branch is mandatory. See [[conditionals]] for full exhaustiveness rules ([[PGE-601|PGE-601]]).
+**Exhaustiveness rule:** All `[?]` conditional chains must be exhaustive. If the conditions do not cover every possible case, a `[?] *?` catch-all branch is mandatory. See [[conditionals]] for full exhaustiveness rules ([[PGE06001|PGE06001]]).
 
 ## Range Operators
 
-Range checks use mathematical interval notation. The `?` prefix starts the range, then `[` (inclusive) or `(` (exclusive) for each bound. Ranges apply only to numeric types — `#int` and `#float` ([[PGE-415|PGE-415]]).
+Range checks use mathematical interval notation. The `?` prefix starts the range, then `[` (inclusive) or `(` (exclusive) for each bound. Ranges apply only to numeric types — `#int` and `#float` ([[PGE04015|PGE04015]]).
 
 | Syntax | Left bound | Right bound | Example |
 |--------|-----------|-------------|---------|
@@ -90,11 +90,11 @@ Range checks use mathematical interval notation. The `?` prefix starts the range
 | `?[lo,hi)` | Inclusive | Exclusive | `$val ?[1,10)` — 1 ≤ val < 10 |
 | `?(lo,hi]` | Exclusive | Inclusive | `$val ?(0,10]` — 0 < val ≤ 10 |
 
-The lower bound must not exceed the upper bound ([[PGE-412|PGE-412]]). For inclusive ranges `?[lo,hi]`, `lo > hi` is invalid. For exclusive ranges `?(lo,hi)`, `lo >= hi` is invalid (the range would be empty). Single-point inclusive `?[5,5]` is valid (matches exactly 5).
+The lower bound must not exceed the upper bound ([[PGE04013|PGE04013]]). For inclusive ranges `?[lo,hi]`, `lo > hi` is invalid. For exclusive ranges `?(lo,hi)`, `lo >= hi` is invalid (the range would be empty). Single-point inclusive `?[5,5]` is valid (matches exactly 5).
 
 ## Arithmetic
 
-Polyglot does not have raw arithmetic operators. Arithmetic is performed through `=Math.*` stdlib pipelines — raw tokens `+`, `-`, `*`, `/` in expression context are a compile error ([[PGE-410|PGE-410]]). This design keeps all operations inside the pipeline execution model (trigger → queue → wrapper → body) and avoids conflicts with existing operator meanings (`*` is a collector prefix).
+Polyglot does not have raw arithmetic operators. Arithmetic is performed through `=Math.*` stdlib pipelines — raw tokens `+`, `-`, `*`, `/` in expression context are a compile error ([[PGE04010|PGE04010]]). This design keeps all operations inside the pipeline execution model (trigger → queue → wrapper → body) and avoids conflicts with existing operator meanings (`*` is a collector prefix).
 
 | Operation | Stdlib Pipeline | Arity |
 |-----------|----------------|-------|
@@ -107,7 +107,7 @@ Polyglot does not have raw arithmetic operators. Arithmetic is performed through
 | Absolute value | `=Math.Abs` | exactly 1 |
 | Negate | `=Math.Negate` | exactly 1 |
 
-All accept `#int` and `#float` operands. When any input is `#float`, the output is `#float`. Division or modulo with a literal `0` divisor is a compile error ([[PGE-411|PGE-411]]).
+All accept `#int` and `#float` operands. When any input is `#float`, the output is `#float`. Division or modulo with a literal `0` divisor is a compile error ([[PGE04011|PGE04011]]).
 
 ```polyglot
 [ ] Addition
@@ -125,13 +125,13 @@ All accept `#int` and `#float` operands. When any input is `#float`, the output 
       [r] >result << 0
 ```
 
-For string building, use `{$var}` interpolation — not concatenation. See [[types#String Interpolation]] and [[PGE-405|PGE-405]] (undefined interpolation variable).
+For string building, use `{$var}` interpolation — not concatenation. See [[syntax/types/strings#String Interpolation]] and [[PGE04005|PGE04005]] (undefined interpolation variable).
 
 ## Collection Operators
 
-Prefixes, not identifiers. See [[collections]] for full semantics.
+Prefixes, not identifiers. See [[concepts/collections/INDEX|collections]] for full semantics.
 
 | Prefix | Operation | Usage |
 |--------|-----------|-------|
-| `~` | Expand (iterate) | `~ForEach.Array`. See [[collections#Expand Operators]] |
-| `*` | Collect (aggregate) | `*Into.Array`, `*Agg.Sum`. See [[collections#Collect Operators]] |
+| `~` | Expand (iterate) | `~ForEach.Array`. See [[concepts/collections/expand#Expand Operators]] |
+| `*` | Collect (aggregate) | `*Into.Array`, `*Agg.Sum`. See [[concepts/collections/collect#Collect Operators]] |

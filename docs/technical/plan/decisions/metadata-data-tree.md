@@ -37,7 +37,7 @@ Plus `%definition` (fixed) for compile-time schema templates.
 
 ### String Subtypes Nested with Alias
 
-`int` lives at `%#:String:int` (nested under `:String`). User code `;int` is an alias for `;String.int`. Subtypes use `#String` as their schema with `.re` pre-filled.
+`int` lives at `%#:String:int` (nested under `:String`). User code `;int` is an alias for `;String.int`. Subtypes use `#String` as their schema with `.regex` pre-filled.
 
 ### Enum Instances — Active-Field-Only
 
@@ -58,7 +58,7 @@ An enum instance collapses to ONE active field. `%#:Boolean:0.True` exists; `%#:
 
 ### `;string` Fields Expand to #String
 
-Any field typed `;string` expands to `.string;RawString` + `.re;RawString` in the tree (the full `#String` struct).
+Any field typed `;string` expands to `.string;RawString` + `.regex;RawString` in the tree (the full `#String` struct).
 
 ## Updated Files
 

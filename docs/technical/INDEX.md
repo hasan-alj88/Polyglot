@@ -1,10 +1,14 @@
 ---
 type: spec-index
-audience: developer
-updated: 2026-03-21
+audience: [architect, designer]
+updated: 2026-03-30
 ---
 
 # Polyglot Technical Documentation
+
+<!-- @vision:Core Philosophy -->
+<!-- @glossary:Polyglot Service -->
+<!-- @audit/README -->
 
 Internal specifications for Polyglot project contributors. These documents describe how Polyglot Code is parsed, validated, and processed.
 
@@ -12,15 +16,15 @@ Internal specifications for Polyglot project contributors. These documents descr
 
 | File | Covers |
 |------|--------|
-| EBNF.md | Complete formal grammar in Extended Backus-Naur Form |
-| EDGE-CASES.md | 42 edge cases organized by EBNF section for validation |
+| [[ebnf/INDEX\|ebnf/]] | Complete formal grammar in Extended Backus-Naur Form (15 section files) |
+| [[edge-cases/INDEX\|edge-cases/]] | 42+ edge cases organized by EBNF section for validation (24 section files) |
 | COMPILE-RULES.md | Error/warning code lookup tables, legend, and rule format template |
 
 ## Formal Specifications (spec/)
 
 | File | Covers |
 |------|--------|
-| spec/metadata-tree.md | Complete `%` metadata tree: path grammar, branches, instance rules, enum semantics, field expansion |
+| spec/metadata-tree/ | Complete `%` metadata tree: path grammar, branches, instance rules, enum semantics, field expansion (split) |
 | spec/type-identity.md | Structural type matching rules (moved from compile-rules/) |
 
 ## Compiler Rules (compile-rules/)
@@ -29,7 +33,7 @@ Semantic constraints enforced at compile time — beyond what EBNF grammar captu
 
 **Numbering convention:**
 - Rules use `N.M` — category dot sequence (e.g., 3.5)
-- Errors use `PGE-NMM` — category hundred + sequence (e.g., PGE-305)
+- Errors use `PGE-NMM` — category hundred + sequence (e.g., PGE03005)
 - Warnings use `PGW-NMM` — same scheme, mirroring PGE ranges
 
 **Categories:**

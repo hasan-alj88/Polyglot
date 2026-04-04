@@ -1,20 +1,20 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
-updated: 2026-03-25
+updated: 2026-03-31
 status: complete
 ---
 
 # =W — Wrappers
 
 <!-- @pipelines -->
-Wrappers are placed on `[W]` lines. Each wrapper references a Macro (`{M}`) that provides setup (`[\]`) and cleanup (`[/]`) around the pipeline execution body. Macro IO (`[{]` input, `[}]` output) is wired at the `[W]` line using `[=]` with `$` variables. See [[pipelines#Wrappers]] for wrapper usage rules.
+Wrappers are placed on `[W]` lines. Each wrapper is a `{W}` definition that provides setup (`[\]`) and cleanup (`[/]`) around the pipeline execution body. Wrapper IO (`[{]` input, `[}]` output) is wired at the `[W]` line using `[=]` with `$` variables. See [[concepts/pipelines/wrappers#Wrappers]] for wrapper usage rules.
 
-Execution order: `[t],[=]` -> `[Q]` -> `[\]` -> Body -> `[/]`
+Execution order: `[T],[=]` -> `[Q]` -> `[\]` -> Body -> `[/]`
 
 No `[@]` import needed.
 
-**PRIMITIVE** — Wrapper pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files. User-defined wrappers are created as `{M}` macros and referenced on `[W]` lines — see [[pipelines#Wrappers]].
+**PRIMITIVE** — Stdlib wrappers are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files. User-defined wrappers are created as `{W}` definitions and referenced on `[W]` lines — see [[concepts/pipelines/wrappers#Wrappers]].
 
 ## Permissions
 
@@ -34,7 +34,7 @@ Wrappers that manage external resources require `[_]` permission declarations. S
 | `=W.Log.Context` | None | — |
 | `=W.Queue.Consumer` | `_IPC.receive` | IO |
 | `=W.Cache.Scope` | `_Database.read` | Inline |
-| `=W.Python` | `_System.process` | IO |
+| `=W.RT` | `_System.process` | IO |
 
 ```
 =W
@@ -105,9 +105,17 @@ Wrappers that manage external resources require `[_]` permission declarations. S
          [}] $cache
          [ ] Connects cache on setup, flushes + disconnects on cleanup.
 
-   .Python
-      [}] $pyRuntime#PyRT
-      [ ] Starts Python runtime on setup, stops on cleanup.
+   .RT
+      :Python
+         :3
+            :14
+               [}] $pyenv#PyEnv
+               [ ] Starts Python 3.14 runtime on setup, stops on cleanup.
+      :Rust
+         :1
+            :84
+               [}] $rsenv#RsEnv
+               [ ] Starts Rust 1.84 runtime on setup, stops on cleanup.
 ```
 
 NOTE: Retry/timeout/rate-limiting are `[Q]` queue strategies, not wrappers.

@@ -1,7 +1,7 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
-updated: 2026-03-25
+updated: 2026-03-30
 status: complete
 ---
 
@@ -55,6 +55,7 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
    [.] .NotFound;#Error
    [.] .ReadError;#Error
    [.] .WriteError;#Error
+   [.] .ParseError;#Error
 
 {!} !No
    [.] .Input;#Error
@@ -68,7 +69,16 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
    [.] .DivideByZero;#Error
 
 {!} !Validation
-   [.] .Error;#Error
+   [.] .Schema;#Error
+   [.] .Type;#Error
+   [.] .Regex;#Error
+
+{!} !Field
+   [.] .NotFound;#Error
+   [.] .PathError;#Error
+
+{!} !Alias
+   [.] .Clash;#Error
 
 {!} !Permission
    [.] .File.Denied;#Error
@@ -79,11 +89,17 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
    [.] .IPC.Denied;#Error
    [.] .Device.Denied;#Error
    [.] .Memory.Denied;#Error
+
+{!} !RT
+   [.] .CompileError;#Error
+   [.] .RuntimeError;#Error
+   [.] .Timeout;#Error
+   [.] .EnvironmentError;#Error
 ```
 
 ### `!Error` — User-Extensible Namespace
 
-`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Permission`) have Polyglot-defined fixed leaves.
+`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) have Polyglot-defined fixed leaves.
 
 Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `[.]` for terminal leaves. Siblings at the same level must all use the same separator (sibling homogeneity rule).
 
@@ -105,7 +121,7 @@ Tree path: `%!.Error:MyApp:Auth.Expired` — `.Error` is Polyglot-defined (fixed
 
 ## Pipeline Error Associations
 
-Each stdlib pipeline declares the errors it can raise via `[=] !ErrorName` (see [[pipelines#Error Trees]]):
+Each stdlib pipeline declares the errors it can raise via `[=] !ErrorName` (see [[concepts/pipelines/metadata#Error Trees]]):
 
 ```
 =File.Text.Read
@@ -123,9 +139,89 @@ Each stdlib pipeline declares the errors it can raise via `[=] !ErrorName` (see 
    [=] !File.WriteError
    [=] !Permission.File.Denied
 
+=File.Serial.Read
+   [=] !File.NotFound
+   [=] !File.ReadError
+   [=] !File.ParseError
+   [=] !Permission.File.Denied
+
+=File.Serial.Write
+   [=] !File.NotFound
+   [=] !File.WriteError
+   [=] !Permission.File.Denied
+
+=File.Serial.Read.Field
+   [=] !File.NotFound
+   [=] !File.ReadError
+   [=] !File.ParseError
+   [=] !Field.NotFound
+   [=] !Permission.File.Denied
+
+=#.Field
+   [=] !Field.NotFound
+   [=] !Field.PathError
+
+=#.Column
+   [=] !Field.NotFound
+
 =Math.Divide
    [=] !Math.DivideByZero
 
 =Math.Modulo
    [=] !Math.DivideByZero
+
+=RT.<Lang>.Function.Inline
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.Function.File
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.Script.Inline
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.Script.File
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.CLI
+   [=] !RT.RuntimeError
+   [=] !RT.Timeout
+
+=RT.<Lang>.Bind.Inline
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
+
+=RT.<Lang>.Bind.File
+   [=] !RT.CompileError
+   [=] !RT.RuntimeError
+   [=] !RT.EnvironmentError
 ```
+
+## `!Alias.Clash` — Compile Error
+
+`!Alias.Clash` is a compile error raised when an alias collides with an existing name in the target namespace. Aliases place definitions at multiple locations in the `%` metadata tree; when a target location is already occupied, this error fires.
+
+### `[<] !Alias.Clash` Fallback Chain
+
+In `{M}` type macros, the `[#] <Alias` parameter can provide a fallback chain of alternative alias values using `[<] !Alias.Clash`. The compiler tries each value in order until one succeeds:
+
+```polyglot
+[#] <Alias << "int"
+   [<] !Alias.Clash << "integer"
+   [<] !Alias.Clash << "Integer"
+```
+
+- First, the compiler tries `"int"` as the alias
+- If `"int"` clashes with an existing name in the target namespace, `!Alias.Clash` fires and the compiler tries `"integer"`
+- If `"integer"` also clashes, the compiler tries `"Integer"`
+- If all alternatives are exhausted, the compile error propagates (unrecoverable)
+
+This pattern is used in `{M} #String.Subtype` to provide robust alias resolution for scalar type definitions like `##Int`, `##Float`, etc.

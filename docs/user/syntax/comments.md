@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
 updated: 2026-03-18
 status: draft
@@ -27,11 +27,11 @@ Place `[ ] Ignore PGW-NNN` on the line immediately above a statement that produc
 - One `Ignore` per warning. Multiple warnings on the same line need multiple `Ignore` comments.
 
 ```polyglot
-[ ] Ignore PGW-301
+[ ] Ignore PGW03001
 [b] =Audit.Log
    [=] <event << $event            [ ] no warning — suppressed
 
-[ ] Ignore PGW-201
+[ ] Ignore PGW02001
 [r] =LogStatus
-   [=] <status << >label           [ ] PGW-201 suppressed
+   [=] <status << >label           [ ] PGW02001 suppressed
 ```

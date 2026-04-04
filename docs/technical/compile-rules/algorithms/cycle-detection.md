@@ -1,16 +1,16 @@
 ---
 name: Pipeline Call Cycle Detection
 type: algorithm
-consumes: PGE-914
-audience: developer
+consumes: PGE09013
+audience: designer
 updated: 2026-03-24
 ---
 
 # Pipeline Call Cycle Detection Algorithm
 
-Detects circular call chains among `{=}` pipelines within the same package. Polyglot has no recursion — no base case construct, no call stack, no termination mechanism. A circular call graph executes forever and is always a compile error ([[PGE-914-circular-pipeline-call|PGE-914]]).
+Detects circular call chains among `{=}` pipelines within the same package. Polyglot has no recursion — no base case construct, no call stack, no termination mechanism. A circular call graph executes forever and is always a compile error ([[PGE09013-circular-pipeline-call|PGE09013]]).
 
-Cross-package cycles are excluded — those are caught by [[PGE-902-circular-package-dependency|PGE-902]] at the import level.
+Cross-package cycles are excluded — those are caught by [[PGE09002-circular-package-dependency|PGE09002]] at the import level.
 
 ## Inputs
 
@@ -42,7 +42,7 @@ function buildCallGraph(package):
 **Filtering rules:**
 - Include `[r]` (serial call), `[p]` (parallel call), and `[b]` (fire-and-forget call) references
 - Exclude calls to stdlib pipelines (`=T.*`, `=Q.*`, `=W.*`, `=Math.*`, etc.) — these are not user-defined
-- Exclude calls via `@alias=PipelineName` — these are cross-package, covered by [[PGE-902-circular-package-dependency|PGE-902]]
+- Exclude calls via `@alias=PipelineName` — these are cross-package, covered by [[PGE09002-circular-package-dependency|PGE09002]]
 
 ## Cycle Detection — DFS Three-Color Marking
 
@@ -161,11 +161,11 @@ function kahnsSort(nodes, edges):
 
 | Case | Graph Shape | Expected Result |
 |---|---|---|
-| Self-call | `=A → =A` (self-edge) | PGE-914: `=A → =A` |
-| Mutual recursion | `=A → =B`, `=B → =A` | PGE-914: `=A → =B → =A` |
-| Transitive cycle | `=A → =B → =C → =A` | PGE-914: `=A → =B → =C → =A` |
+| Self-call | `=A → =A` (self-edge) | PGE09013: `=A → =A` |
+| Mutual recursion | `=A → =B`, `=B → =A` | PGE09013: `=A → =B → =A` |
+| Transitive cycle | `=A → =B → =C → =A` | PGE09013: `=A → =B → =C → =A` |
 | Diamond (no cycle) | `=A → =B`, `=A → =C`, `=B → =D`, `=C → =D` | Valid — no cycle, `=D` reached by two acyclic paths |
-| Multiple independent cycles | `=A → =B → =A` and `=X → =Y → =X` | PGE-914 fires twice — report all cycles, not just first |
+| Multiple independent cycles | `=A → =B → =A` and `=X → =Y → =X` | PGE09013 fires twice — report all cycles, not just first |
 | Single node, no edges | `=A` (no calls) | Valid — trivially acyclic |
 | Linear chain | `=A → =B → =C` | Valid — DAG, no back edges |
 
@@ -187,7 +187,7 @@ In practice, V and E are small (packages typically contain fewer than 50 pipelin
 When a cycle is detected, the compiler emits:
 
 ```
-PGE-914: Circular pipeline call detected: =A → =B → =C → =A — Polyglot does not support recursion
+PGE09013: Circular pipeline call detected: =A → =B → =C → =A — Polyglot does not support recursion
 ```
 
 Format: the full cycle path with `→` separators, starting and ending at the same node.
@@ -196,6 +196,6 @@ If multiple cycles exist, each produces a separate diagnostic.
 
 ## See Also
 
-- [[PGE-914-circular-pipeline-call|PGE-914 — Circular Pipeline Call]] — the compile rule this algorithm implements
-- [[PGE-902-circular-package-dependency|PGE-902 — Circular Package Dependency]] — analogous cycle detection for cross-package import graphs
-- [[PGE-414-recursive-data-definition|PGE-414 — Recursive Data Definition]] — analogous cycle detection for `{#}` type-reference graphs
+- [[PGE09013-circular-pipeline-call|PGE09013 — Circular Pipeline Call]] — the compile rule this algorithm implements
+- [[PGE09002-circular-package-dependency|PGE09002 — Circular Package Dependency]] — analogous cycle detection for cross-package import graphs
+- [[PGE05004-recursive-data-definition|PGE05004 — Recursive Data Definition]] — analogous cycle detection for `{#}` type-reference graphs

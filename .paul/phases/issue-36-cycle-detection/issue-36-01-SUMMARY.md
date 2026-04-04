@@ -8,8 +8,8 @@ requires:
   - phase: none
     provides: n/a (standalone issue)
 provides:
-  - Algorithm specification for PGE-914 pipeline call cycle detection
-affects: [compiler-architecture, PGE-914-implementation]
+  - Algorithm specification for PGE09013 pipeline call cycle detection
+affects: [compiler-architecture, PGE09013-implementation]
 
 tech-stack:
   added: []
@@ -32,7 +32,7 @@ completed: 2026-03-24
 
 # Issue #36 Plan 01: Pipeline Call Cycle Detection Algorithm Summary
 
-**DFS three-color cycle detection algorithm spec for PGE-914, with Kahn's alternative, 7 edge cases, and O(V+E) complexity analysis.**
+**DFS three-color cycle detection algorithm spec for PGE09013, with Kahn's alternative, 7 edge cases, and O(V+E) complexity analysis.**
 
 ## Performance
 
@@ -45,10 +45,10 @@ completed: 2026-03-24
 
 | Criterion | Status | Notes |
 |-----------|--------|-------|
-| AC-1: Document exists with correct frontmatter | Pass | `type: algorithm`, `consumes: PGE-914` verified |
+| AC-1: Document exists with correct frontmatter | Pass | `type: algorithm`, `consumes: PGE09013` verified |
 | AC-2: All edge cases from issue #36 | Pass | 7 cases: self-call, mutual, transitive, diamond, multiple, single node, linear chain |
 | AC-3: Inputs, steps, complexity, diagnostic | Pass | All sections present with pseudocode |
-| AC-4: Cross-references to related rules | Pass | 12 cross-references to PGE-914/902/414 via wikilinks |
+| AC-4: Cross-references to related rules | Pass | 12 cross-references to PGE09013/902/414 via wikilinks |
 
 ## Accomplishments
 
@@ -61,7 +61,7 @@ completed: 2026-03-24
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/technical/compile-rules/algorithms/cycle-detection.md` | Created | Algorithm spec for PGE-914 cycle detection |
+| `docs/technical/compile-rules/algorithms/cycle-detection.md` | Created | Algorithm spec for PGE09013 cycle detection |
 
 ## Decisions Made
 

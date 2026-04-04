@@ -1,5 +1,5 @@
 ---
-audience: user
+audience: pg-coder
 type: specification
 updated: 2026-03-22
 status: draft
@@ -10,7 +10,7 @@ status: draft
 <!-- @operators -->
 <!-- @pipelines -->
 <!-- @identifiers -->
-Input and output parameters bind data into and out of operators. IO labels are [[identifiers#Serialized Identifiers]]. Assignment uses [[operators]] (`<<`, `>>`, `<~`, `~>`). For how IO assignment mode controls pipeline triggering, see [[pipelines#IO as Implicit Triggers]]. IO ports live as nested typed sections in the metadata tree at `%=:{name}:{instance}.<` (inputs) and `.>` (outputs) — see [[data-is-trees#IO Ports — Nested Typed Sections]].
+Input and output parameters bind data into and out of operators. IO labels are [[identifiers#Serialized Identifiers]]. Assignment uses [[operators]] (`<<`, `>>`, `<~`, `~>`). For how IO assignment mode controls pipeline triggering, see [[concepts/pipelines/io-triggers#IO as Implicit Triggers]]. IO ports live as nested typed sections in the metadata tree at `%=:{name}:{instance}.<` (inputs) and `.>` (outputs) — see [[data-is-trees#IO Ports — Nested Typed Sections]].
 
 ## IO Labels
 
@@ -56,7 +56,7 @@ IO inputs declared with `[=]` become `$`-prefixed variables in the execution bod
 [?] $incoming.level >? 5
 ```
 
-IO inputs with no assignment must be filled externally and are in Final state when the pipeline fires. See [[pipelines#IO as Implicit Triggers]], [[variable-lifecycle]].
+IO inputs with no assignment must be filled externally and are in Final state when the pipeline fires. See [[concepts/pipelines/io-triggers#IO as Implicit Triggers]], [[variable-lifecycle]].
 
 ## Error Declaration
 
@@ -75,7 +75,7 @@ Error declarations use the same `[=]` marker as inputs (`<`) and outputs (`>`). 
 ## Pipeline Call
 
 <!-- @pipelines:Error Handling -->
-Pipeline calls use `[r]` execution with `[=]` IO lines. Error blocks `[!]` scope under the call — see [[pipelines#Error Handling]]. For stdlib pipelines that need no import, see [[packages#Usage]].
+Pipeline calls use `[r]` execution with `[=]` IO lines. Error blocks `[!]` scope under the call — see [[concepts/pipelines/error-handling#Error Handling]]. For stdlib pipelines that need no import, see [[packages#Usage]].
 
 ```polyglot
 [r] =Pipeline.Name
@@ -86,7 +86,7 @@ Pipeline calls use `[r]` execution with `[=]` IO lines. Error blocks `[!]` scope
 ## Chain IO Addressing
 
 <!-- @pipelines:Chain Execution -->
-In chain execution (`[r] =A=>=B=>=C`), IO parameters are addressed by step reference — a numeric index (0-based) or pipeline leaf name, followed by `.` and the parameter name. See [[pipelines#Chain Execution]] for full chain semantics.
+In chain execution (`[r] =A=>=B=>=C`), IO parameters are addressed by step reference — a numeric index (0-based) or pipeline leaf name, followed by `.` and the parameter name. See [[concepts/pipelines/chains#Chain Execution]] for full chain semantics.
 
 The direction convention is **caller-perspective**:
 
@@ -105,14 +105,14 @@ The direction convention is **caller-perspective**:
 
 This reads: "from step 0's output, feed step 1's input." Both sides use the caller-perspective `<`/`>` convention.
 
-**Auto-wire:** When adjacent steps have exactly one output and one input of the same type, the `[=]` wire line can be omitted. See [[pipelines#Auto-Wire]].
+**Auto-wire:** When adjacent steps have exactly one output and one input of the same type, the `[=]` wire line can be omitted. See [[concepts/pipelines/chains#Auto-Wire]].
 
-**Error references** in chains also use step addressing: `!0.ErrorName` or `!LeafName.ErrorName`. See [[pipelines#Error Handling in Chains]].
+**Error references** in chains also use step addressing: `!0.ErrorName` or `!LeafName.ErrorName`. See [[concepts/pipelines/chains#Error Handling in Chains]].
 
 ## Collection Operators
 
 <!-- @collections -->
-Two operator prefixes for collection processing. For the full operator reference and semantics, see [[collections]].
+Two operator prefixes for collection processing. For the full operator reference and semantics, see [[concepts/collections/INDEX|collections]].
 
 | Prefix | Operation | Example |
 |--------|-----------|---------|
@@ -147,13 +147,13 @@ Inside `[*]` collector blocks, the `<<`/`>>` direction operators distinguish wai
 
 This is the same `<<`/`>>` direction convention used throughout the language:
 
-| Context | `<<` (input / pull) | `>>` (output / push) |
-|---------|---------------------|----------------------|
-| Pipeline IO `[=]` | `<input << $var` — pulls value, waits for Final | `>output >> $result` — pushes, makes Final |
-| Expand IO `[~]` | `<Array << $items` — pulls collection in | `>item >> $item` — pushes each item out |
+| Context | `<<` (input / push-left) | `>>` (output / push-right) |
+|---------|--------------------------|----------------------------|
+| Pipeline IO `[=]` | `<input << $var` — push-left value, waits for Final | `>output >> $result` — push-right, makes Final |
+| Expand IO `[~]` | `<Array << $items` — push-left collection in | `>item >> $item` — push-right each item out |
 | Collect IO `[*]` | `[*] << $var` — waits for Final, var stays accessible | `[*] >> $out` — receives collected value, inputs cancelled |
 
-See [[collections#Sync & Race Collectors]] for the collectors that use these forms.
+See [[concepts/collections/collect#Sync & Race Collectors]] for the collectors that use these forms.
 
 ### Direct Output Port Writing
 
@@ -201,8 +201,8 @@ When a fallback activates, the target variable becomes **Final** with the fallba
 ### Scoping Rules
 
 - `[>]` / `[<]` must be **indented under** an `[=]` IO line — they inherit the output/input reference
-- One generic `<!` per output — duplicates are PGE-703
-- One `<!Error.Name` per specific error per output — duplicates are PGE-703
+- One generic `<!` per output — duplicates are PGE07003
+- One `<!Error.Name` per specific error per output — duplicates are PGE07003
 - Fallback values can be any `value_expr`: literals, `$` variables, inline pipeline calls
 
 ### Chain Execution Exception

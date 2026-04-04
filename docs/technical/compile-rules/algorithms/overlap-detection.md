@@ -1,7 +1,7 @@
 ---
 name: Conditional Overlap Detection (Unified Dispatch)
 type: algorithm
-consumes: PGE-604, PGE-605
+consumes: PGE06004, PGE06005
 ---
 
 # Conditional Overlap Detection Algorithm
@@ -17,12 +17,12 @@ Detects when two or more `[?]` branches cover the same value, creating ambiguity
 
 | Variable Type | Overlap Method | Rule | Complexity |
 |---|---|---|---|
-| int / float | Interval intersection | PGE-604 | O(N²) pairwise |
-| Enum (`.` fixed fields) | Bit set AND | PGE-604 (enum) | O(N²) pairwise, O(1) per pair |
-| Bool (`#Boolean`) | Bit set AND | PGE-604 (enum) | O(N²) pairwise, O(1) per pair |
-| Compound (`[&]`/`[\|]`/`[^]`) | Grid cell coverage | PGE-605 | O(N × K^M) — see [compound algorithm](compound-exhaustiveness.md) |
-| String (`#String`) | Exact literal match | PGE-604 (string) | O(N²) pairwise |
-| Flexible field (`:`) | Exact literal match | PGE-604 (flexible) | O(N²) pairwise |
+| int / float | Interval intersection | PGE06004 | O(N²) pairwise |
+| Enum (`.` fixed fields) | Bit set AND | PGE06004 (enum) | O(N²) pairwise, O(1) per pair |
+| Bool (`#Boolean`) | Bit set AND | PGE06004 (enum) | O(N²) pairwise, O(1) per pair |
+| Compound (`[&]`/`[\|]`/`[^]`) | Grid cell coverage | PGE06005 | O(N × K^M) — see [compound algorithm](compound-exhaustiveness.md) |
+| String (`#String`) | Exact literal match | PGE06004 (string) | O(N²) pairwise |
+| Flexible field (`:`) | Exact literal match | PGE06004 (flexible) | O(N²) pairwise |
 
 N = number of branches, K = max partitions per variable, M = number of variables in compound.
 
@@ -78,7 +78,7 @@ Example:
 
 ### Step 4: Report
 
-If any pair has non-empty intersection → **PGE-604** with:
+If any pair has non-empty intersection → **PGE06004** with:
 - The two overlapping branch numbers
 - The overlapping interval as counterexample
 
@@ -108,14 +108,14 @@ If `overlap` is non-empty → branches share at least one variant.
 
 ### Step 3: Report
 
-If any pair has non-empty AND → **PGE-604** with:
+If any pair has non-empty AND → **PGE06004** with:
 - The two overlapping branch numbers
 - The shared variants as counterexample
 
 **Edge case — negation overlap:**
 - Branch 1: `$color =!? .Red` → {Green, Blue}
 - Branch 2: `$color =!? .Blue` → {Red, Green}
-- AND: {Green} → **PGE-604** — overlap at `.Green`
+- AND: {Green} → **PGE06004** — overlap at `.Green`
 
 ## Algorithm 3 — String/Flexible Exact Literal Match
 
@@ -129,15 +129,15 @@ For each branch with an `=?` comparison against a string literal, record the lit
 
 If two branches test the same literal value → overlap.
 
-Negation branches (`=!?`) on strings are not checked for overlap — the complement of a single string is effectively the entire domain minus one value, which always overlaps with any other branch. This is handled by the `*?` requirement (PGE-606/PGE-607).
+Negation branches (`=!?`) on strings are not checked for overlap — the complement of a single string is effectively the entire domain minus one value, which always overlaps with any other branch. This is handled by the `*?` requirement (PGE06006/PGE06007).
 
 ### Step 3: Report
 
-If duplicate literals found → **PGE-604** with the duplicate value.
+If duplicate literals found → **PGE06004** with the duplicate value.
 
 ## Algorithm 4 — Compound Condition Grid Cell Overlap
 
-Delegated to the [partition refinement algorithm](compound-exhaustiveness.md), Step 5. The grid is built from the Cartesian product of all tested variables, branches are mapped to cells, and any cell covered by more than one branch triggers **PGE-605**.
+Delegated to the [partition refinement algorithm](compound-exhaustiveness.md), Step 5. The grid is built from the Cartesian product of all tested variables, branches are mapped to cells, and any cell covered by more than one branch triggers **PGE06005**.
 
 ## Unified Entry Point
 
@@ -158,6 +158,6 @@ function checkOverlap(conditional):
 
 ## See Also
 
-- [PGE-604 — Numeric Range Overlap](../PGE/PGE-604-numeric-range-overlap.md)
-- [PGE-605 — Compound Condition Overlap](../PGE/PGE-605-compound-condition-overlap.md)
+- [PGE06004 — Numeric Range Overlap](../PGE/PGE06004-numeric-range-overlap.md)
+- [PGE06005 — Compound Condition Overlap](../PGE/PGE06005-compound-condition-overlap.md)
 - [Compound Exhaustiveness Algorithm](compound-exhaustiveness.md)
