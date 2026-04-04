@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #121 ({N} native block) — In Progress
-Plan: Complete — merged to main
-Status: Merged to main, issue closed
-Last activity: 2026-04-04 — Merged #121 to main, branch available for deletion
+Phase: Issue #122 (match wildcard *? vs *) — Complete
+Plan: 122-01 complete (1/1 plans)
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-04 — Loop closed, ready for commit and merge
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -53,17 +53,22 @@ Progress:
 - Issue #119: [██████████] 100% (1/1 plans — ##Int schema vs #Int alias identity)
 - Issue #120: [██████████] 100% (1/1 plans — IO perspective terminology fix)
 - Issue #121: [██████████] 100% (3/3 plans — {N} native block type)
+- Issue #122: [██████████] 100% (1/1 plans — *? wildcard standardization)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #122 — Docs: Match wildcard *? vs * — incomplete cross-reference
+Branch: docs/issue-122-match-wildcard-cross-reference
+Labels: docs, P1-critical
+Started: 2026-04-04
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/122
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
+  ✓        ✓        ✓        ○     [Loop closed — ready for commit + merge]
 ```
 
 ## Accumulated Context
@@ -165,6 +170,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #119 — ##Int schema vs #Int alias identity | 2026-04-04 | Alias table now has Schema column; clarifies #Int is alias, ##Int is schema; merged to main |
 | Closed #120 — IO perspective terminology fix | 2026-04-04 | "caller perspective" → "pipeline perspective"; one-line scoping rule added; merged to main |
 | Closed #121 — {N} native block type | 2026-04-04 | {N} block, #NativeKind enum, NativeKind.md, PGE01028 rewritten, 44 stdlib defs converted; merged to main |
+| Issue #122 — Standardize *? wildcard catch-all | 2026-04-04 | Bare `*` removed from match syntax; `*?` is the only wildcard form in both verbose and match conditionals; 5 files updated |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -184,12 +190,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-04
-Stopped at: Merged #121 to main, issue closed
-Next action: Pick next issue or push to origin
-Resume file: .paul/phases/issue-121-native-block/121-03-SUMMARY.md
+Stopped at: Loop closed for 122-01
+Next action: /paul:merge to commit and merge to main
+Resume file: .paul/phases/issue-122-match-wildcard/122-01-SUMMARY.md
 Resume context:
-- Issue #121 complete and merged to main
-- Branch docs/issue-121-base-pipeline-mandatory-markers available for deletion
+- Issue #122 complete — *? standardized across 5 files
+- Branch: docs/issue-122-match-wildcard-cross-reference
+- Ready for commit and merge
 
 ---
 *STATE.md — Updated after every significant action*

@@ -83,7 +83,7 @@ updated: 2026-03-30
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
    [?] 500 >> "error"
-   [?] * >> "unknown"
+   [?] *? >> "unknown"
 ```
 
 ### EC-11.5: Match — enum exhaustive (no wildcard needed)
@@ -93,7 +93,7 @@ updated: 2026-03-30
 **What it tests:** Enum match with all variants listed — no `*` required, same as verbose form (PGE06002).
 
 ```polyglot
-[ ] All #Direction variants covered — no * needed
+[ ] All #Direction variants covered — no *? needed
 [r] $dir >> $label#string
    [?] #Direction.North >> "N"
    [?] #Direction.South >> "S"
@@ -115,12 +115,12 @@ updated: 2026-03-30
 ### EC-11.7: Wildcard-only match — tautological
 
 **EBNF ref:** `match_line ::= "[r]" value_expr ">>" assign_target { match_arm }`
-**What it tests:** Match with only `[?] *` — always produces the same result. PGE06014 fires.
+**What it tests:** Match with only `[?] *?` — always produces the same result. PGE06014 fires.
 
 ```polyglot
 [ ] ✗ PGE06014 — wildcard-only match is tautological
 [r] $code >> $msg#string
-   [?] * >> "always this"
+   [?] *? >> "always this"
 ```
 
 ### EC-11.8: Variable as match arm value — must be Final
@@ -133,7 +133,7 @@ updated: 2026-03-30
 [r] $threshold#int << 100
 [r] $input >> $label#string
    [?] $threshold >> "at threshold"
-   [?] * >> "other"
+   [?] *? >> "other"
 ```
 
 ### EC-11.9: Pipeline identifier in comparison — non-value type
