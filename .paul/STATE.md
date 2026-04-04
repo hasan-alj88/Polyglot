@@ -9,11 +9,11 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 ## Current Position
 
-Milestone: v0.2 Language Specification — COMPLETE (Issue #88 extends it)
-Phase: Issues #95/#96 (doc audit inconsistencies) — COMPLETE
-Plan: 95-01, 95-02, 95-03 — all complete (8/8 tasks, 11/11 ACs)
-Status: Merged to main, issues closed
-Last activity: 2026-04-01 — Merged to main, branch deleted
+Milestone: v0.2 Language Specification — COMPLETE
+Phase: Issue #120 (doc fix) — COMPLETE
+Plan: 120-01 complete
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-04 — Unified 120-01: pipeline-perspective terminology in 3 files
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -50,17 +50,22 @@ Progress:
 - Issue #118: [██████████] 100% (2/2 plans — ##Leaf/##Scalar redesign + propagation)
 - Issue #116: [██████████] 100% (1/1 plans — PushLeft/PushRight operator rename)
 - Issue #117: [██████████] 100% (1/1 plans — int/float coercion wording fix)
+- Issue #119: [██████████] 100% (1/1 plans — ##Int schema vs #Int alias identity)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #120 — Docs: Chain IO reverses </'>' meaning without clear scoping rule
+Branch: docs/issue-120-chain-io-scoping-rule
+Labels: docs, P1-critical
+Started: 2026-04-04
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/120
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
+  ✓        ✓        ✓        ○     [Loop complete — ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -159,6 +164,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #118 — #String Depth.Max=0 contradiction | 2026-04-04 | ##Leaf new, ##Scalar Depth.Max=1, ###ScalarValue/###ScalarEnum; merged to main |
 | Closed #116 — PushLeft/PushRight operator rename | 2026-04-04 | Renamed 6 EBNF symbols + display names; eliminated Push/Pull ambiguity; merged to main |
 | Closed #117 — int/float coercion wording fix | 2026-04-04 | "interoperate freely" → "comparable without conversion"; merged to main |
+| Closed #119 — ##Int schema vs #Int alias identity | 2026-04-04 | Alias table now has Schema column; clarifies #Int is alias, ##Int is schema; merged to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -177,13 +183,10 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-04 (session 17)
-Stopped at: Merged #117 to main, issue closed
-Next action: Pick next issue or push to origin
-Resume file: .paul/phases/issue-117-int-float-coercion/117-01-SUMMARY.md
-Resume context:
-- Issue #117 complete and merged to main
-- Branch deleted, issue closed on GitHub
+Last session: 2026-04-04
+Stopped at: UNIFY complete for 120-01
+Next action: /paul:merge to commit and merge to main
+Resume file: .paul/phases/issue-120-chain-io-scoping/120-01-SUMMARY.md
 
 ---
 *STATE.md — Updated after every significant action*

@@ -88,7 +88,9 @@ Pipeline calls use `[r]` execution with `[=]` IO lines. Error blocks `[!]` scope
 <!-- @pipelines:Chain Execution -->
 In chain execution (`[r] =A=>=B=>=C`), IO parameters are addressed by step reference — a numeric index (0-based) or pipeline leaf name, followed by `.` and the parameter name. See [[concepts/pipelines/chains#Chain Execution]] for full chain semantics.
 
-The direction convention is **caller-perspective**:
+`<` and `>` always describe the port from the pipeline's own viewpoint — `<` marks the pipeline's input, `>` marks its output — whether in a definition, a call site, or a chain step reference.
+
+The direction convention is **pipeline-perspective**:
 
 | Prefix | Meaning | Example |
 |--------|---------|---------|
@@ -103,7 +105,7 @@ The direction convention is **caller-perspective**:
 [=] <0.outputResult >> <1.inputParam
 ```
 
-This reads: "from step 0's output, feed step 1's input." Both sides use the caller-perspective `<`/`>` convention.
+This reads: "from step 0's output, feed step 1's input." Both sides use the pipeline-perspective `<`/`>` convention.
 
 **Auto-wire:** When adjacent steps have exactly one output and one input of the same type, the `[=]` wire line can be omitted. See [[concepts/pipelines/chains#Auto-Wire]].
 
