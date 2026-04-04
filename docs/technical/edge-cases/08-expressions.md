@@ -52,17 +52,17 @@ updated: 2026-03-30
 **What it tests:** `$*` is immediately released — setting a default (`<~`/`~>`) implies the value persists for later override, which is meaningless for a discard. See [[technical/compile-rules/PGE/PGE02010-discard-default-assignment|PGE02010]].
 
 ```polyglot
-[ ] INVALID — default push into discard
+[ ] INVALID — DefaultPushLeft into discard
 [r] $*#string <~ "never used"           [ ] ✗ PGE02010 — discard cannot hold a default
 
-[ ] INVALID — default pull into discard
+[ ] INVALID — DefaultPushRight into discard
 [r] =Compute
    [=] >result ~> $*                    [ ] ✗ PGE02010 — discard cannot hold a default
 
-[ ] VALID — final push into discard
+[ ] VALID — PushLeft into discard
 [r] $*#string << "discarded"            [ ] ✓ final is the only valid discard operator
 
-[ ] VALID — final pull into discard
+[ ] VALID — PushRight into discard
 [r] =Compute
    [=] >result >> $*                    [ ] ✓ explicit discard of output
 ```

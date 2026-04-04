@@ -147,10 +147,10 @@ Inside `[*]` collector blocks, the `<<`/`>>` direction operators distinguish wai
 
 This is the same `<<`/`>>` direction convention used throughout the language:
 
-| Context | `<<` (input / pull) | `>>` (output / push) |
-|---------|---------------------|----------------------|
-| Pipeline IO `[=]` | `<input << $var` — pulls value, waits for Final | `>output >> $result` — pushes, makes Final |
-| Expand IO `[~]` | `<Array << $items` — pulls collection in | `>item >> $item` — pushes each item out |
+| Context | `<<` (input / push-left) | `>>` (output / push-right) |
+|---------|--------------------------|----------------------------|
+| Pipeline IO `[=]` | `<input << $var` — push-left value, waits for Final | `>output >> $result` — push-right, makes Final |
+| Expand IO `[~]` | `<Array << $items` — push-left collection in | `>item >> $item` — push-right each item out |
 | Collect IO `[*]` | `[*] << $var` — waits for Final, var stays accessible | `[*] >> $out` — receives collected value, inputs cancelled |
 
 See [[concepts/collections/collect#Sync & Race Collectors]] for the collectors that use these forms.

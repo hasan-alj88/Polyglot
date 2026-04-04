@@ -15,7 +15,7 @@ package_block       ::= "{@}" package_id NEWLINE
                          { indent import_line NEWLINE }
                          { indent comment_line NEWLINE } ;
 
-import_line         ::= "[@]" '@' name final_push package_id ;
+import_line         ::= "[@]" '@' name push_left package_id ;
 ```
 
 **Rule:** `{@}` must be the first block in every `.pg` file. Exactly one `{@}` per file — multiple `{@}` blocks are not allowed. Multiple `{#}` and `{=}` definitions are allowed.

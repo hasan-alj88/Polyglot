@@ -99,12 +99,12 @@ All assignment operators are directional — the arrow indicates data flow direc
 
 | Operator | Type | Direction | Example | Reading |
 |----------|------|-----------|---------|---------|
-| `<<` | Final (Push) | Right to left | `$x#int << 3` | "Final-push 3 into $x" |
-| `>>` | Final (Pull) | Left to right | `>array >> $arr` | "Final-push >array into $arr" |
-| `<~` | Default | Right to left | `.field#string <~ "value"` | "Default-assign \"value\" to .field" |
-| `~>` | Default | Left to right | `>output#string ~> ""` | "Default-assign >output to empty string" |
-| `<!` | Fallback (Error) | Right to left | `<! "fallback"` | "On error, fallback-push into output" |
-| `!>` | Fallback (Error) | Left to right | `"fallback" !> >output` | "On error, fallback-push outward" |
+| `<<` | Final (PushLeft) | Right to left | `$x#int << 3` | "PushLeft 3 into $x" |
+| `>>` | Final (PushRight) | Left to right | `>array >> $arr` | "PushRight >array into $arr" |
+| `<~` | DefaultPushLeft | Right to left | `.field#string <~ "value"` | "DefaultPushLeft \"value\" to .field" |
+| `~>` | DefaultPushRight | Left to right | `>output#string ~> ""` | "DefaultPushRight >output to empty string" |
+| `<!` | FallbackPushLeft (Error) | Right to left | `<! "fallback"` | "On error, FallbackPushLeft into output" |
+| `!>` | FallbackPushRight (Error) | Left to right | `"fallback" !> >output` | "On error, FallbackPushRight outward" |
 
 ## Examples
 

@@ -67,7 +67,7 @@ chain_io_param      ::= ( '<' | '>' ) step_ref fixed_sep name { field_separator 
                          [ type_annotation ] ;
 
 chain_io_line       ::= "[=]" chain_io_param assignment_op ( value_expr | chain_io_param )
-                      | "[=]" chain_io_param fallback_push value_expr ;
+                      | "[=]" chain_io_param fallback_push_left value_expr ;
 
 chain_error_block   ::= "[!]" '!' step_ref fixed_sep error_name NEWLINE
                          { indent exec_line NEWLINE } ;

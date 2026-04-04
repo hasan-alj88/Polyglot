@@ -48,17 +48,22 @@ Progress:
 - Issues #76-#78: [██████████] 100% (1/1 plans — RT runtime execution)
 - Issues #95/#96: [██████████] 100% (3/3 plans — IC-005 fix, #DateTime types, =DT.* pipelines)
 - Issue #118: [██████████] 100% (2/2 plans — ##Leaf/##Scalar redesign + propagation)
+- Issue #116: [██████████] 100% (1/1 plans — PushLeft/PushRight operator rename)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #116 — Docs: <</>>' direction reversal between Variable Lifecycle and IO docs
+Branch: docs/issue-116-direction-reversal-lifecycle-io
+Labels: docs, P1-critical
+Started: 2026-04-04
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/116
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
+  ✓        ✓        ✓        ○     [Issue #116 — ready for merge]
 ```
 
 ## Accumulated Context
@@ -155,6 +160,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | =DT.* stdlib pipelines | 2026-04-01 | 40 {=} pipelines in DT.md; construction, conversion, arithmetic, comparison, formatting, business |
 | PGE04026-04028 compile rules | 2026-04-01 | Invalid IANA timezone, missing DateTime epoch, out-of-range epoch |
 | Closed #118 — #String Depth.Max=0 contradiction | 2026-04-04 | ##Leaf new, ##Scalar Depth.Max=1, ###ScalarValue/###ScalarEnum; merged to main |
+| Issue #116 — PushLeft/PushRight operator rename | 2026-04-04 | Renamed 6 EBNF symbols + display names; eliminated Push/Pull ambiguity; 10 files updated |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -173,13 +179,14 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-04 (session 15)
-Stopped at: Merged #118 to main, issue closed
-Next action: Pick next issue or push to origin
-Resume file: .paul/phases/issue-118-string-depth-max/118-02-SUMMARY.md
+Last session: 2026-04-04 (session 16)
+Stopped at: Issue #116 UNIFY complete, ready for merge
+Next action: /paul:merge to merge branch and close issue
+Resume file: .paul/phases/issue-116-direction-reversal/116-01-SUMMARY.md
 Resume context:
-- Issue #118 complete and merged to main
-- Branch deleted, issue closed on GitHub
+- Issue #116 plan 01 complete — PushLeft/PushRight rename across 10 files
+- Branch: docs/issue-116-direction-reversal-lifecycle-io
+- All acceptance criteria pass, ready for commit + merge
 
 ---
 *STATE.md — Updated after every significant action*

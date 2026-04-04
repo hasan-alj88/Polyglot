@@ -35,8 +35,8 @@ expression          ::= assignment_expr
 
 ```ebnf
 (* Right-to-left: target << source  or  target <~ source *)
-assignment_expr     ::= assign_target ( final_push | default_push ) value_expr
-                      | value_expr ( final_pull | default_pull ) assign_target ;
+assignment_expr     ::= assign_target ( push_left | default_push_left ) value_expr
+                      | value_expr ( push_right | default_push_right ) assign_target ;
 
 assign_target       ::= typed_variable
                       | typed_field

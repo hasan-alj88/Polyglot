@@ -17,12 +17,12 @@ Directional — the arrow indicates data flow. Operators push and pull data acro
 
 | Operator | Name | Direction | Usage |
 |----------|------|-----------|-------|
-| `<<` | Push (Final) | Right → left | `$x << "value"`, `@alias << @pkg`. See [[variable-lifecycle#Final]] |
-| `>>` | Pull (Final) | Left → right | `>array >> $arr`. See [[variable-lifecycle#Final]] |
-| `<~` | Default | Right → left | `.field <~ "value"`. See [[variable-lifecycle#Default]] |
-| `~>` | Default | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
-| `<!` | Fallback (Error) | Right → left | `<! "fallback"`. See [[errors#Error Fallback Operators]] |
-| `!>` | Fallback (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
+| `<<` | PushLeft (Final) | Right → left | `$x << "value"`, `@alias << @pkg`. See [[variable-lifecycle#Final]] |
+| `>>` | PushRight (Final) | Left → right | `>array >> $arr`. See [[variable-lifecycle#Final]] |
+| `<~` | DefaultPushLeft | Right → left | `.field <~ "value"`. See [[variable-lifecycle#Default]] |
+| `~>` | DefaultPushRight | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
+| `<!` | FallbackPushLeft (Error) | Right → left | `<! "fallback"`. See [[errors#Error Fallback Operators]] |
+| `!>` | FallbackPushRight (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
 | `=>` | Chain | Left → right | `=A=>=B=>=C`. See [[concepts/pipelines/chains#Chain Execution]] |
 
 ## Comparison Operators
