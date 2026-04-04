@@ -28,13 +28,15 @@ String subtypes live under `%#:String:*` at a flexible level:
 
 User code `#int` is an alias for `#Int`. The `%##Alias` schema property enables this — each subtype declares `[#] %##Alias << "int"` (lowercase shorthand). The compiler resolves:
 
-| User writes | Compiler resolves to | Tree path |
-|-------------|---------------------|-----------|
-| `#int` | `#Int` | `%#:String:int` |
-| `#uint` | `#UnsignedInt` | `%#:String:uint` |
-| `#float` | `#Float` | `%#:String:float` |
-| `#string` | `#String` | `%#:String` |
-| `#emailAddress` | `#String.emailAddress` | `%#:String:emailAddress` |
+| User writes | Alias resolves to | Schema (validation) | Tree path (data) |
+|-------------|-------------------|---------------------|------------------|
+| `#int` | `#Int` | `##Int` | `%#:String:int` |
+| `#uint` | `#UnsignedInt` | `##UnsignedInt` | `%#:String:uint` |
+| `#float` | `#Float` | `##Float` | `%#:String:float` |
+| `#string` | `#String` | `#String` | `%#:String` |
+| `#emailAddress` | `#String.emailAddress` | `#String.emailAddress` | `%#:String:emailAddress` |
+
+**Key distinction:** The single-`#` names (`#Int`, `#Float`, etc.) are **user-facing aliases** — convenient shorthand you write in type annotations. The double-`##` names (`##Int`, `##Float`, etc.) are the **schema definitions** that specify regex constraints and live at `%##` on the metadata tree. Data instances validated by these schemas live at `%#:String:*` on the data tree.
 
 All subtypes share the `#String` schema (`.string#RawString` + `.regex#RawString`) with `.regex` pre-filled per subtype.
 
