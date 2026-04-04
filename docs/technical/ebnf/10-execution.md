@@ -76,8 +76,8 @@ error_name          ::= dotted_name ;
 ```
 
 **Rules:**
-- `>N.param` pushes into step N's input (caller perspective).
-- `<N.param` pulls from step N's output (caller perspective).
+- `>N.param` pushes into step N's input (pipeline perspective).
+- `<N.param` pulls from step N's output (pipeline perspective).
 - `step_leaf_name` is the final segment of a pipeline's dotted name and must be unambiguous within the chain.
 - **Auto-wire:** When step N has exactly one output and step N+1 has exactly one input of the same type, the `chain_io_line` between them may be omitted.
 - Type annotations on `chain_io_param` are optional — types are inferred from pipeline definitions.

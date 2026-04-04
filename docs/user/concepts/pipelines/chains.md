@@ -25,12 +25,12 @@ IO parameters in a chain are prefixed with a step reference and `.`:
 
 | Syntax | Meaning |
 |--------|---------|
-| `>N.param` | Push into step N's input (caller perspective) |
-| `<N.param` | Pull from step N's output (caller perspective) |
+| `>N.param` | Push into step N's input (pipeline perspective) |
+| `<N.param` | Pull from step N's output (pipeline perspective) |
 | `>LeafName.param` | Same as `>N` but using pipeline's leaf name |
 | `<LeafName.param` | Same as `<N` but using pipeline's leaf name |
 
-The direction convention is **caller-perspective**: `>` means data flows *toward* the step (its input), `<` means data flows *from* the step (its output). This is consistent with how `[=]` IO works in regular pipeline calls. See [[io#Chain IO Addressing]].
+The direction convention is **pipeline-perspective**: `<` and `>` describe the port from the step's own viewpoint — `<` marks the step's input, `>` marks its output. This is consistent with how `[=]` IO works in regular pipeline calls. See [[io#Chain IO Addressing]].
 
 **Leaf name alternative:** When pipeline names are long, use the leaf name (last segment) instead of numeric index. Leaf names must be unambiguous within the chain — duplicate leaf names require numeric indices. An ambiguous step reference is PGE08004; an unresolved step reference is PGE08005.
 
