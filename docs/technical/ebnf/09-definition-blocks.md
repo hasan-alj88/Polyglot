@@ -388,25 +388,40 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
 
 ```ebnf
 error_def           ::= "{!}" error_namespace_id NEWLINE
-                         indent error_leaf_line NEWLINE
-                         { indent error_leaf_line NEWLINE } ;
+                         indent error_body_line NEWLINE
+                         { indent error_body_line NEWLINE } ;
                       (* At least one leaf required — empty {!} is PGE01022 *)
 
 error_namespace_id  ::= '!' dotted_name ;
 
-error_leaf_line     ::= "[.]" fixed_field "#Error"
+error_body_line     ::= "[.]" fixed_field "#Error"       (* terminal leaf *)
+                      | "[:]" flexible_field              (* user-extensible branch — !Error only *)
                       | metadata_line
                       | comment_line ;
+                      (* Siblings at same level must use same separator — PGE05001 *)
 ```
 
-`{!}` defines a custom error tree. Each leaf is typed `#Error`. The namespace uses the `!` prefix. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`) are built-in.
+`{!}` defines an error tree. Each terminal leaf is typed `#Error`. The namespace uses the `!` prefix. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and use `[.]` fixed leaves only.
 
-**Example:**
+User-defined `{!} !Name` implicitly nests under `!Error` in the metadata tree, creating `!Error:Name.*`. Only `{!} !Error` allows `[:]` flexible children for user-extensible branches. All other `{!}` namespaces use `[.]` fixed leaves only.
+
+**Stdlib example** (runtime-defined, fixed leaves):
 ```polyglot
 {!} !Validation
-   [.] .Empty#Error
-   [.] .TooLong#Error
-   [.] .InvalidEmail#Error
+   [.] .Schema#Error
+   [.] .Type#Error
+   [.] .Regex#Error
+```
+
+**User example** (extensible branches under `!Error`):
+```polyglot
+{!} !Error
+   [:] :MyApp
+      [:] :Auth
+         [.] .Expired#Error
+         [.] .Invalid#Error
+      [:] :Data
+         [.] .Corrupt#Error
 ```
 
 ### 9.7 Array Definition

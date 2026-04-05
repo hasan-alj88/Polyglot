@@ -33,18 +33,19 @@ All errors — stdlib and user-defined — share the same struct:
 
 ## Defining Custom Errors (`{!}`)
 
-`{!}` defines an error tree. Each leaf is typed `;#Error`:
+All user-defined errors live under the `!Error` namespace. `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. Use `[:]` for extensible branches and `[.]` for terminal leaves (typed `;#Error`):
 
 ```polyglot
-{!} !Validation
-   [.] .Empty;#Error
-   [.] .TooLong;#Error
-   [.] .InvalidEmail;#Error
+{!} !Error
+   [:] :Validation
+      [.] .Empty;#Error
+      [.] .TooLong;#Error
+      [.] .InvalidEmail;#Error
 ```
 
-This creates `!Validation.Empty`, `!Validation.TooLong`, `!Validation.InvalidEmail` — all carrying the `#Error` struct.
+This creates `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail` — all carrying the `#Error` struct. Note: the stdlib `!Validation` namespace (shown in [[stdlib/errors/errors#Built-in Error Namespaces]]) is separate — it has fixed leaves defined by the runtime, not user code.
 
-`{!}` creates entries at `%!.Namespace.Error` in the metadata tree. See [[data-is-trees#How Concepts Connect]].
+`{!}` creates entries at `%!.Error:Name.*` in the metadata tree. See [[data-is-trees#How Concepts Connect]].
 
 ## Built-in Error Namespaces
 

@@ -27,16 +27,22 @@ flowchart LR
 
 ## Defining Custom Errors (`{!}`)
 
-Custom error trees are defined with `{!}` blocks (see [[blocks#Definition Elements]]). Each leaf is typed `#Error`:
+Custom errors are defined with `{!}` blocks (see [[blocks#Definition Elements]]). All user-defined errors live under the `!Error` namespace — `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. Use `[:]` for extensible branches and `[.]` for terminal leaves (typed `#Error`):
 
 ```polyglot
-{!} !Validation
-   [.] .Empty;#Error
-   [.] .TooLong;#Error
-   [.] .InvalidEmail;#Error
+{!} !Error
+   [:] :Validation
+      [.] .Empty;#Error
+      [.] .TooLong;#Error
+      [.] .InvalidEmail;#Error
+   [:] :Auth
+      [.] .Expired;#Error
+      [.] .InvalidToken;#Error
 ```
 
-This creates three error identifiers: `!Validation.Empty`, `!Validation.TooLong`, `!Validation.InvalidEmail`. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Permission`, `!Error`) are built-in and require no definition. `!Error` is the only namespace with user-extensible children (see [[stdlib/errors/errors#`!Error` — User-Extensible Namespace]]). See [[stdlib/errors/errors#Built-in Error Namespaces]] for the complete list.
+This creates five error identifiers under `!Error`: `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail`, `!Error:Auth.Expired`, `!Error:Auth.InvalidToken`. Tree paths use `:` for user-extensible branches and `.` for fixed leaves (e.g., `%!.Error:Validation.Empty`). Siblings at the same level must all use the same separator (PGE05001).
+
+Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and require no definition — they use fixed `.` leaves and are **not** user-extensible. `!Error` is the only namespace with user-extensible children (see [[stdlib/errors/errors#`!Error` — User-Extensible Namespace]]). See [[stdlib/errors/errors#Built-in Error Namespaces]] for the complete list.
 
 ## Declaring Pipeline Errors (`[=] !`)
 
@@ -190,17 +196,20 @@ See [[concepts/pipelines/chains#Error Handling in Chains]] for the full chain ex
 
 ## Standard Error Trees
 
-Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The stdlib defines seven root namespaces (defined as `{!}` blocks by the runtime):
+Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The stdlib defines nine root namespaces (defined as `{!}` blocks by the runtime, all with fixed `.` leaves):
 
 | Namespace | Covers |
 |-----------|--------|
-| `!File` | File system operations (NotFound, ReadError, WriteError, ...) |
-| `!No` | Missing resource errors (No.Input, No.Output, ...) |
-| `!Timeout` | Operation timeouts (Timeout.Connection, Timeout.Read, ...) |
-| `!Math` | Arithmetic errors (DivideByZero, ...) |
-| `!Validation` | Data validation failures |
+| `!File` | File system operations (NotFound, ReadError, WriteError, ParseError) |
+| `!No` | Missing resource errors (Input, Output) |
+| `!Timeout` | Operation timeouts (Connection, Read) |
+| `!Math` | Arithmetic errors (DivideByZero) |
+| `!Validation` | Data validation failures (Schema, Type, Regex) |
+| `!Field` | Field access errors (NotFound, PathError) |
+| `!Alias` | Alias resolution errors (Clash) |
 | `!Permission` | Runtime system denials when OS/system blocks a granted permission |
-| `!Error` | User-extensible namespace — the only one with `:` flexible children |
+| `!RT` | Runtime execution errors (CompileError, RuntimeError, Timeout, EnvironmentError) |
+| `!Error` | **User-extensible** — the only namespace with `:` flexible children |
 
 See [[stdlib/errors/errors]] for the complete error tree listings.
 
