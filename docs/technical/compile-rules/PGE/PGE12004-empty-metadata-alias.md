@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "12.4"
 code: PGE12004
 name: Empty Metadata Alias

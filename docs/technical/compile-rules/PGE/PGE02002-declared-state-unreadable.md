@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "2.2"
 code: PGE02002
 name: Declared State Is Unreadable

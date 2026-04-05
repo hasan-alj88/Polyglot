@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "8.11"
 code: PGE08011
 name: Self-Assignment

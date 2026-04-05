@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "7.2"
 code: PGE07002
 name: Chain Error Scoping

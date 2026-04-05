@@ -292,7 +292,7 @@ wrapper_io_line     ::= "[=]" variable_id assignment_op value_expr ;
 
 At the `[W]` line, wrapper IO is wired using `[=]` with `$` variables (not `<`/`>` IO params, not `[{]`/`[}]`):
 
-```
+```polyglot
 [W] =W.DB.Connection
    [=] $connectionString << $connStr     (* wrapper input *)
    [=] $dbConn >> $dbConn                (* wrapper output *)

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "10.2"
 code: PGW12001
 name: Missing Inline Format Metadata

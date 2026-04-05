@@ -11,7 +11,7 @@ updated: 2026-04-03
 
 ## Command Signals (Trigger Monitor → Queue Handler)
 
-```
+```yaml
 command.enqueue
 {
     jobId:          string    — unique job identifier (UID + hierarchy path)
@@ -82,7 +82,7 @@ command.flush   { queue: string }
 
 ## State Signals (Queue Handler → Trigger Monitor)
 
-```
+```text
 state.job.{jobId}.executing     { jobId, pipeline, queue }
 state.job.{jobId}.suspended     { jobId, pipeline, type: "soft"|"hard" }
 state.job.{jobId}.resuming      { jobId, pipeline }
@@ -108,7 +108,7 @@ state.queue.resume.size         { count }
 
 ## Control Signals (Queue Handler → Runner)
 
-```
+```text
 control.{jobId}.start           { jobId, pipeline, params }
 control.{jobId}.resume          { jobId }
 control.{jobId}.pause.soft      { jobId }
@@ -121,7 +121,7 @@ control.{jobId}.kill.hard       { jobId }
 
 All `runner.*` signals are published to both the Queue Handler and Trigger Monitor. Both subscribe independently — the QH reacts (state updates), the TM calculates (next decisions).
 
-```
+```text
 runner.started              { jobId, pid }
 runner.completed            { jobId, result? }
 runner.teardown_completed   { jobId, pipeline }
@@ -131,7 +131,7 @@ runner.paused               { jobId, type: "soft"|"hard" }
 
 ## Collector Signals (Trigger Monitor → Runner)
 
-```
+```polyglot
 collector.{jobId}.collected
 {
     jobId:          string    — parent job ID
@@ -145,7 +145,7 @@ collector.{jobId}.collected
 
 Only `trigger.subjob` is Trigger Monitor-exclusive (Runner → TM only):
 
-```
+```yaml
 trigger.subjob
 {
     parentJobId:    string    — parent job requesting sub-jobs

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "8.2"
 code: PGE08002
 name: Auto-Wire Ambiguous Type

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.32"
 code: PGE01032
 name: Missing Trigger Boolean Output

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.11"
 code: PGE06011
 name: Duplicate Wildcard Catch-All

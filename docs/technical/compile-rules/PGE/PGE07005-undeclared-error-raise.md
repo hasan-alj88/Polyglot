@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "7.5"
 code: PGE07005
 name: Undeclared Error Raise

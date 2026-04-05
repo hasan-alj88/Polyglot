@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.7"
 code: PGE06007
 name: Flexible Field Exhaustiveness

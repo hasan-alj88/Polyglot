@@ -10,7 +10,7 @@ updated: 2026-04-03
 
 ## Queue Definition (from `{Q} #Queue:Name`)
 
-```
+```polyglot
 Stored at: %Queue.DispatchQueue:Name
 
 strategy:           #QueueStrategy     — FIFO | LIFO | Priority
@@ -26,7 +26,7 @@ controls:           [Q] nested         — =Q.Pause.*, =Q.Resume.*, =Q.Kill.*
 
 ## Job Hierarchy (runtime tree)
 
-```
+```polyglot
 Stored as: job tree rooted at pipeline instance
 
 {jobId}

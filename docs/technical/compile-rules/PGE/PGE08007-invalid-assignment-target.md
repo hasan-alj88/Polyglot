@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "8.7"
 code: PGE08007
 name: Invalid Assignment Target

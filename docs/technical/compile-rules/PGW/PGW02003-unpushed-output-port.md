@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "2.3"
 code: PGW02003
 name: Unpushed Output Port

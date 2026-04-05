@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.18"
 code: PGE10004
 name: Undeclared Permission

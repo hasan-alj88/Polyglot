@@ -64,7 +64,7 @@ Only stdlib `{N}` definitions use `#NativeKind`. User-defined pipelines are alwa
 
 The Polyglot config file selects the active base language:
 
-```
+```yaml
 base: Rust
 ```
 

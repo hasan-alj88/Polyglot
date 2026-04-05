@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.4"
 code: PGE04004
 name: Fixed-Schema Keys Are Compile-Time Only

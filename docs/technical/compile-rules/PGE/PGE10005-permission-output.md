@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.19"
 code: PGE10005
 name: Invalid Permission Block Marker

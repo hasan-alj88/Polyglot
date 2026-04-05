@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.12"
 code: PGE06012
 name: Unreachable Branch After Wildcard

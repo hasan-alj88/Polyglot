@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.13"
 code: PGE05003
 name: Duplicate Data Field Name

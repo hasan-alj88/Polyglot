@@ -1,3 +1,9 @@
+---
+audience: developer
+type: brainstorming
+updated: 2026-04-05
+---
+
 # Brainstorm: String RE Subfield System
 
 **Status:** Decided (2026-03-20)

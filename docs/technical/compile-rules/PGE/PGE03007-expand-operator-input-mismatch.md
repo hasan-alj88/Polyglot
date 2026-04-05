@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.7"
 code: PGE03007
 name: Expand Operator Input Mismatch

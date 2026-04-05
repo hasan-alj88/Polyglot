@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.20"
 code: PGE01020
 name: Effectless Execution Expression

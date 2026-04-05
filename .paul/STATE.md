@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #136 — H4+ heading restructure
-Plan: 136-01 complete
+Phase: Issues #137 + #138 — Doc audit compliance
+Plan: 137-01 complete, 138-01 complete
 Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-05 — Created 136-01-SUMMARY.md, loop closed
+Last activity: 2026-04-05 — Both plans executed and unified
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -64,21 +64,22 @@ Progress:
 - Issue #140: [██████████] 100% (3/3 plans — {_} permission object block)
 - Issue #134: [██████████] 100% (1/1 plans — #Serial unconstrained fix)
 - Issue #135: [██████████] 100% (1/1 plans — !Error extensibility fix)
+- Issue #136: [██████████] 100% (1/1 plans — H4+ heading restructure)
 
 ## Active Issue
 
-Issue: #136 — Docs: H4+ headings used throughout despite audit rule banning them
-Branch: docs/issue-136-h4-headings-used-despite-audit-rule-banning-them
+Issue: #137 — Docs: Untagged code blocks despite audit requirement for language tags
+Branch: docs/issue-137-untagged-code-blocks-language-tags
 Labels: docs, P3-medium
 Started: 2026-04-05
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/136
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/137
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
+  ✓        ✓        ✓        ○     [Ready for merge]
 ```
 
 ## Accumulated Context
@@ -192,6 +193,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #133 — ##/### type_prefix list fix | 2026-04-05 | Removed ##/### from instance_path type_prefix row; already covered by schema_prop/field_type_prop grammar rules |
 | Closed #134 — #Serial schema-free contradiction | 2026-04-05 | "schema-free" → "unconstrained" across 12 files; completed #Serial definition with 3 missing properties (Ordered, Regular, Max) |
 | Closed #135 — !Error extensibility contradiction | 2026-04-05 | User {!} !Name implicitly creates !Error:Name.*; replaced misleading examples; stdlib table 7→10 namespaces; EBNF [:] grammar added |
+| Closed #136 — H4+ headings in PGE files | 2026-04-05 | Promoted heading levels in 8 PGE files (H3→H1, H4→H2, H5→H3); audit convention enforced |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -211,12 +213,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Plan 136-01 UNIFY complete
-Next action: Run /paul:merge to commit and merge
-Resume file: .paul/phases/136-h4-heading-restructure/136-01-SUMMARY.md
+Stopped at: UNIFY complete for #137 + #138
+Next action: /paul:merge to commit and merge to main
+Resume file: .paul/phases/137-untagged-code-blocks/137-01-SUMMARY.md
 Resume context:
-- Issue #136 on branch docs/issue-136-h4-headings-used-despite-audit-rule-banning-them
-- 8 PGE files restructured, loop closed, ready for commit and merge
+- Issues #137 + #138 executed on branch docs/issue-137-untagged-code-blocks-language-tags
+- 220 files changed: code block tags + audience frontmatter
+- Ready for commit and merge
 
 ---
 *STATE.md — Updated after every significant action*

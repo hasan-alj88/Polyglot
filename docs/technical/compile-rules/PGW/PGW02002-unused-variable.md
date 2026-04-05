@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "2.2"
 code: PGW02002
 name: Unused Variable

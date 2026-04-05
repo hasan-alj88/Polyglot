@@ -1,4 +1,5 @@
 ---
+audience: developer
 name: Conditional Overlap Detection (Unified Dispatch)
 type: algorithm
 consumes: PGE06004, PGE06005
@@ -51,7 +52,7 @@ Each branch's comparison operator or range notation maps to an interval `[lo, hi
 
 For each pair of branches (i, j), compute the intersection of their intervals:
 
-```
+```gherkin
 Given interval A = [a_lo, a_hi] and B = [b_lo, b_hi]:
   intersection_lo = max(a_lo, b_lo)
   intersection_hi = min(a_hi, b_hi)
@@ -100,7 +101,7 @@ The full variant set is known at compile time from the `{#}` definition.
 ### Step 2: Pairwise AND
 
 For each pair of branches (i, j):
-```
+```text
 overlap = bitset_i AND bitset_j
 ```
 
@@ -141,7 +142,7 @@ Delegated to the [partition refinement algorithm](compound-exhaustiveness.md), S
 
 ## Unified Entry Point
 
-```
+```text
 function checkOverlap(conditional):
     variable = conditional.branchedVariable
     branches = conditional.branches

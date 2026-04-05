@@ -1,3 +1,9 @@
+---
+audience: developer
+type: decision
+updated: 2026-04-05
+---
+
 # Decision: String RE Subfield System
 
 **Date:** 2026-03-20
@@ -34,7 +40,7 @@ What `;string` refers to in type annotations is `#String` — a struct built on 
 
 `int` and `float` are not separate struct types. They are flexible-level subtypes of `#String`:
 
-```
+```polyglot
 #String
    [:] :*  ← flexible level for subtypes
       :int    (.regex << "^-?[0-9]+$")

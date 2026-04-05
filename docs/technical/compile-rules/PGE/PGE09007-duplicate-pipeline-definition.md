@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.7"
 code: PGE09007
 name: Duplicate Definition

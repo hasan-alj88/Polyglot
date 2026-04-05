@@ -18,7 +18,7 @@ For a 1D array of length 3, the keys are `<0`, `<1`, `<2`.
 
 For a 3x4 2D array, the key tree is a Cartesian product:
 
-```
+```text
 <0 → <0, <1, <2, <3
 <1 → <0, <1, <2, <3
 <2 → <0, <1, <2, <3

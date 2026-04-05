@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.4"
 code: PGE09004
 name: Unresolved Import Pipeline Reference

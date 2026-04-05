@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "7.6"
 code: PGE07006
 name: Unused Error Declaration

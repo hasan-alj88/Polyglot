@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.14"
 code: PGE05004
 name: Recursive Data Definition

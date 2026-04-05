@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.5"
 code: PGE03005
 name: "[b] Has No Collectible Output"

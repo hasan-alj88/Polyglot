@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.6"
 code: PGE09006
 name: Multi-File Package Name Mismatch

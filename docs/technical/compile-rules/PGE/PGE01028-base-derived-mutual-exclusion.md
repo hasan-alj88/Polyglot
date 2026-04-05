@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.28"
 code: PGE01028
 name: Native/Derived Block Mutual Exclusion

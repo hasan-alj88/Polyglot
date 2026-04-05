@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "8.9w"
 code: PGW08003
 name: Uncaptured Output With Default/Fallback

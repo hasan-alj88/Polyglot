@@ -1,3 +1,9 @@
+---
+audience: developer
+type: decision
+updated: 2026-04-05
+---
+
 # Decision: Numeric RE Patterns
 
 **Date:** 2026-03-20

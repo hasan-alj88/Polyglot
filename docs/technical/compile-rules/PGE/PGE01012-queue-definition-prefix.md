@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.12"
 code: PGE01012
 name: Queue Definition Must Use #Queue: Prefix

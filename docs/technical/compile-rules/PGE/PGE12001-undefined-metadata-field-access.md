@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "10.1"
 code: PGE12001
 name: Undefined Metadata Field Access

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "8.12"
 code: PGE08012
 name: Self-Chain Requires Numeric Indexing

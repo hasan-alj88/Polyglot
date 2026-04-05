@@ -12,13 +12,13 @@ All inter-service communication flows through NATS subjects:
 
 ## Trigger Events (Trigger Sources → Trigger Monitor)
 
-```
+```text
 polyglot.trigger.fire.{pipeline}         — trigger condition met, TM evaluates and enqueues
 ```
 
 ## Lifecycle Control (Trigger Monitor → Queue Handler)
 
-```
+```text
 polyglot.command.enqueue                 — enqueue a job
 polyglot.command.pause.soft.{jobId}      — finish current work, then suspend
 polyglot.command.pause.hard.{jobId}      — suspend immediately
@@ -35,7 +35,7 @@ polyglot.command.queue.update            — update queue properties
 
 ## Control Signals (Queue Handler → Runner)
 
-```
+```text
 polyglot.queue.control.{jobId}.start         — begin execution
 polyglot.queue.control.{jobId}.resume        — resume from suspended state
 polyglot.queue.control.{jobId}.pause.soft    — finish current work, then suspend
@@ -46,7 +46,7 @@ polyglot.queue.control.{jobId}.kill.hard     — terminate immediately
 
 ## Runner Acknowledgments (Runner → Queue Handler + Trigger Monitor)
 
-```
+```text
 polyglot.runner.started.{jobId}              — job is now executing
 polyglot.runner.completed.{jobId}            — job finished successfully
 polyglot.runner.teardown_completed.{jobId}   — job finished [/] cleanup
@@ -56,20 +56,20 @@ polyglot.runner.paused.{jobId}               — job suspended (ACK)
 
 ## Collector Signals (Trigger Monitor → Runner)
 
-```
+```text
 polyglot.collector.{jobId}.collected     — sub-job results collected, parent continues
 ```
 
 ## Resource Monitoring (Resource Monitor → Trigger Monitor)
 
-```
+```text
 polyglot.resource.cpu                    — CPU usage metrics
 polyglot.resource.ram                    — RAM availability metrics
 ```
 
 ## Pipeline State (Queue Handler → any subscriber)
 
-```
+```text
 polyglot.state.{pipeline}.{event}        — state changes for cross-pipeline conditions
 ```
 

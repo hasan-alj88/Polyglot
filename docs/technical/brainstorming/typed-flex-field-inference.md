@@ -1,3 +1,9 @@
+---
+audience: developer
+type: brainstorming
+updated: 2026-04-05
+---
+
 # Brainstorm: Typed Flexible Field Inference
 
 **Status:** Decided (2026-03-20)

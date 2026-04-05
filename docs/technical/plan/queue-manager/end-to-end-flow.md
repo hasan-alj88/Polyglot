@@ -11,7 +11,7 @@ updated: 2026-04-03
 
 ## Normal Execution
 
-```
+```text
 1. Trigger Monitor detects event
    → NATS: publish "polyglot.trigger.fire.ProcessData"
    → TM evaluates retrigger policy, creates job ID, records hierarchy in NoSQL
@@ -39,7 +39,7 @@ updated: 2026-04-03
 
 ## Pause / Resume Flow
 
-```
+```polyglot
 1. Resource Monitor: RAM drops below threshold
    → NATS: publish "polyglot.resource.ram" {available: 2800}
 
@@ -79,7 +79,7 @@ updated: 2026-04-03
 
 ## Graceful Kill Flow
 
-```
+```polyglot
 1. Trigger Monitor evaluates =Q.Kill.Graceful condition → met for job:001
    → NATS: publish "command.kill.graceful" {jobId: job:001}
 
@@ -106,7 +106,7 @@ updated: 2026-04-03
 
 When a pipeline hits a `[p]`, `[r]`, or `[b]` marker, the Runner sends a `trigger.subjob` signal to the Trigger Monitor (not the Queue Handler). The Trigger Monitor creates job IDs, records parent→child relationships in NoSQL, and sends `command.enqueue` with `parentJobId` to the Queue Handler. Sub-jobs go through the normal dispatch flow.
 
-```
+```text
 1. Runner hits [p] marker in job:001
    → NATS: publish "trigger.subjob" {parentJobId: "job:001", pipeline, marker, params}
 
@@ -125,7 +125,7 @@ When a pipeline hits a `[p]`, `[r]`, or `[b]` marker, the Runner sends a `trigge
 
 ## Dispatch Wait Timeout
 
-```
+```polyglot
 1. Trigger Monitor checks maxWaitTime periodically
    → Read job enqueued_at from QH state signals
    → Read queue maxWaitTime from NoSQL

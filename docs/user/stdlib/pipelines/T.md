@@ -25,7 +25,7 @@ Most triggers require no permissions. IO-touching triggers require a `{_}` permi
 | `=T.Folder.NewFiles` | File.Read | File |
 | `=T.Webhook` | Web.Socket | Web |
 
-```
+```polyglot
 =T
    .Call
       [ ] Pipeline is invoked when called from another pipeline.

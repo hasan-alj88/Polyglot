@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.12"
 code: PGE04013
 name: Nested Array Type

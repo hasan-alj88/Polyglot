@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "2.5"
 code: PGW02004
 name: Pipeline Terminates on Error

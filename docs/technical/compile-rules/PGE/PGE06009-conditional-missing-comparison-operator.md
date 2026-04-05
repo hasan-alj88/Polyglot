@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.9"
 code: PGE06009
 name: Conditional Missing Comparison Operator

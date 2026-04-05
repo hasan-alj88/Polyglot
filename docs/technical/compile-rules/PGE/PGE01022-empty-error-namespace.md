@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.22"
 code: PGE01022
 name: Empty Error Namespace

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.18"
 code: PGE01018
 name: Tautological or Contradictory Trigger Condition

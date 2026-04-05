@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.6"
 code: PGE03006
 name: Race Collector Type Homogeneity

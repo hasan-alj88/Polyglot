@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.2"
 code: PGW09002
 name: Unused Import

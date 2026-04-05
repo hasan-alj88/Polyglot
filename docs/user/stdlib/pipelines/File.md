@@ -12,7 +12,7 @@ Stdlib pipelines for file system operations. No `[@]` import needed. See [[error
 
 Success is signalled by `!NoError`. Side-effect-only pipelines (Write, Append, Copy, Move, Delete) have no output — `!NoError` confirms completion.
 
-```
+```polyglot
 =File
    .Text
       .Read
@@ -122,7 +122,7 @@ All `=File.*` pipelines perform filesystem IO and require a `{_}` permission obj
 
 ## Errors
 
-```
+```polyglot
 =File.Text.Read
    !NoError
    !File.NotFound

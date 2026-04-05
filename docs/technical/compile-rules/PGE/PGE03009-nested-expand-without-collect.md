@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.9"
 code: PGE03009
 name: Nested Expand Without Collect

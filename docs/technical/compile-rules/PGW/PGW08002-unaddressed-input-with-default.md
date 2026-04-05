@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "8.8w"
 code: PGW08002
 name: Unaddressed Input With Default

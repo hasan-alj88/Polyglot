@@ -13,7 +13,7 @@ Stdlib structs and enums available in every `.pg` file. No `[@]` import needed. 
 
 ## Type Hierarchy
 
-```
+```polyglot
 RawString (compiler intrinsic) [##Leaf]
 └── #String (foundation — .string + .regex) [##Scalar, ###ScalarValue]
     ├── #Int (.regex = signed integers)

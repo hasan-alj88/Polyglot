@@ -16,7 +16,7 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 
 ### Structure
 
-```
+```polyglot
 %=:MyPipeline:0
 ├── .<                           <- input ports
 │   └── .data#Serial
@@ -48,7 +48,7 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 
 ### Structure
 
-```
+```polyglot
 %W:DB.Connection:0
 ├── .[{]                     <- inputs from calling pipeline
 │   └── .connectionString#string
@@ -71,7 +71,7 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 
 ### Structure
 
-```
+```polyglot
 %Q:GPUQueue:0
 ├── .strategy#QueueStrategy        <- FIFO, LIFO, Priority
 ├── .host#String                   <- target host (1 queue = 1 host)
@@ -101,7 +101,7 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 
 ### Structure
 
-```
+```polyglot
 %T:Folder.NewFiles:0
 ├── .<                      <- input ports
 │   └── .path#path
@@ -123,7 +123,7 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 
 ### Structure
 
-```
+```polyglot
 %_
 +-- :DataCeiling                       <- named {_} permission object
 |   +-- .intent                        #PermissionIntent (Ceiling | Grant)

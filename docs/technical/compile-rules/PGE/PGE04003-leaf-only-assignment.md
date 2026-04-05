@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.3"
 code: PGE04003
 name: Leaf-Only Assignment

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.1"
 code: PGE06001
 name: Conditional Must Be Exhaustive

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.12"
 code: PGE09011
 name: Duplicate Import Alias

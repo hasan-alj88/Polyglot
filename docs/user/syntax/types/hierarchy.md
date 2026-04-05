@@ -38,7 +38,7 @@ In type annotations (after `#`), nested type refs drop the `#` prefix — the co
 
 ## Type Hierarchy Summary
 
-```
+```polyglot
 RawString (compiler intrinsic — Layer 0) [##Leaf]
 └── #String (foundation — .string + .regex) [##Scalar, ###ScalarValue] (Layer 0)
     ├── ##Int (.regex = signed integers) — macro-generated via {M} #String.Subtype (Layer 1)

@@ -18,7 +18,7 @@ Math pipelines use positional (unnamed) IO — inputs and outputs are ordered, n
    [=] >> $total
 ```
 
-```
+```polyglot
 =Math
    .Add
       <<#int (variadic — 2+)
@@ -89,7 +89,7 @@ No permissions required. All operations are pure computation. See [[permissions]
 
 ## Errors
 
-```
+```polyglot
 =Math.Divide
    !Math.DivideByZero
 

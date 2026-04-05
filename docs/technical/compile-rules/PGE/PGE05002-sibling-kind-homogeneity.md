@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "5.2"
 code: PGE05002
 name: Sibling Kind Homogeneity

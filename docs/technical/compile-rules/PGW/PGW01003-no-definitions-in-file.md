@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.3w"
 code: PGW01003
 name: No Definitions in File

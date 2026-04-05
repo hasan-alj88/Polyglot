@@ -36,7 +36,7 @@ Wrappers that manage external resources require a `{_}` permission object granti
 | `=W.Cache.Scope` | Database.Read | Database |
 | `=W.RT` | System.Process | System |
 
-```
+```polyglot
 =W
    .Polyglot
       [ ] Pure Polyglot Code — no external runtime, no setup/cleanup.

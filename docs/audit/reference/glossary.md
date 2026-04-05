@@ -1,4 +1,5 @@
 ---
+audience: ai
 type: audit-reference
 scope: glossary
 updated: 2026-04-03

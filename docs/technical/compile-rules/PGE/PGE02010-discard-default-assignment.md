@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "2.10"
 code: PGE02010
 name: Discard Default Assignment

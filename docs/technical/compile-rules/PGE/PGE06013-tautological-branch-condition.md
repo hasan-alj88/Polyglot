@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.13"
 code: PGE06013
 name: Tautological or Contradictory Branch Condition

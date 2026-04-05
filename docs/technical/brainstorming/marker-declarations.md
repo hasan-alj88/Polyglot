@@ -1,3 +1,9 @@
+---
+audience: developer
+type: brainstorming
+updated: 2026-04-05
+---
+
 # Marker Declaration Syntax — Examples for Review
 
 **Status:** Draft for review
@@ -25,7 +31,7 @@
 
 Polyglot has two base object types. All others are subtypes:
 
-```
+```polyglot
 {#} — Data definition (base)
  ├── {!} — Error definition (subtype of {#})
  ├── {M} — Macro definition (subtype of {#}, compile-time type generation)
@@ -126,7 +132,7 @@ defined in stdlib `.pg` files with full interface (IO, errors, metadata) but
 
 Polyglot config file selects the active base language:
 
-```
+```yaml
 base: Rust
 ```
 

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.4"
 code: PGE03004
 name: Section-Boundary Pairing

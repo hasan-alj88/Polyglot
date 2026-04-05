@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.10"
 code: PGE09009
 name: Multi-File Self-Reference

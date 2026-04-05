@@ -13,7 +13,7 @@ Collector invocation uses `[r]` (sequential) or `[p]` (parallel) execution marke
 
 No `[@]` import needed.
 
-```
+```polyglot
 *Agg
    .Sum
       <number

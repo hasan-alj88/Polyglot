@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.15"
 code: PGE01015
 name: Duplicate Metadata Field

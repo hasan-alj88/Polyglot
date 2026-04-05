@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.16"
 code: PGE04016
 name: Invalid Pipeline Input Literal

@@ -10,7 +10,7 @@ updated: 2026-04-03
 
 String subtypes live under `%#:String:*` at a flexible level:
 
-```
+```polyglot
 %#:String
 ├── :int          <- .string#RawString + .regex = "^-?[0-9]+$"
 ├── :uint         <- .string#RawString + .regex = "^[0-9]+$"

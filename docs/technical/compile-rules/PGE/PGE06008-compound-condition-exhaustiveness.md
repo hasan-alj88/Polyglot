@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.8"
 code: PGE06008
 name: Compound Condition Exhaustiveness

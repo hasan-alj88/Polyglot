@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.20"
 code: PGE10006
 name: Duplicate Permission

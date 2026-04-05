@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.4"
 code: PGE01004
 name: Wrapper Structural Constraints

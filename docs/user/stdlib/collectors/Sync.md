@@ -11,7 +11,7 @@ Used outside expand scopes to collect variables from parallel `[p]` pipeline cal
 
 No `[@]` import needed.
 
-```
+```polyglot
 *All
    [ ] Wait for ALL listed variables to be Final.
    [ ] Uses [*] << only — no [*] >>. All variables stay accessible after.
@@ -43,7 +43,7 @@ No `[@]` import needed.
 
 ### Discarding Parallel Output
 
-```
+```polyglot
 $*
    [ ] Inline discard — no variable created. Output immediately released.
 

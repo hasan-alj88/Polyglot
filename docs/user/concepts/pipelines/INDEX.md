@@ -131,7 +131,7 @@ Every pipeline definition is either **native** or **derived**. The distinction d
 
 The Polyglot config file selects the active host language:
 
-```
+```yaml
 base: Rust
 ```
 

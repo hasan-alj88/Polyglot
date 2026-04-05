@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.13"
 code: PGE09012
 name: Import Alias Shadows Standard Library

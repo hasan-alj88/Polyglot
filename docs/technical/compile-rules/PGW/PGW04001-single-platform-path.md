@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.8"
 code: PGW04001
 name: Single-Platform Path

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.2w"
 code: PGW04002
 name: Leading Zeros in Literal

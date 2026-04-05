@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.3"
 code: PGE06003
 name: Numeric Range Not Exhaustive

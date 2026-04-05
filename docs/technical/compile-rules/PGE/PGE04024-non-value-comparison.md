@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.24"
 code: PGE04024
 name: Non-Value Comparison

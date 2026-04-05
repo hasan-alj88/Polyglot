@@ -124,7 +124,7 @@ Tree path: `%!.Error:MyApp:Auth.Expired` — `.Error` is Polyglot-defined (fixed
 
 Each stdlib pipeline declares the errors it can raise via `[=] !ErrorName` (see [[concepts/pipelines/metadata#Error Trees]]):
 
-```
+```polyglot
 =File.Text.Read
    [=] !File.NotFound
    [=] !File.ReadError

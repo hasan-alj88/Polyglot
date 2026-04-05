@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.7"
 code: PGE01007
 name: Missing Pipeline Setup/Cleanup

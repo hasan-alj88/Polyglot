@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.5"
 code: PGE01005
 name: Missing Pipeline Trigger
