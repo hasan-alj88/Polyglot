@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.2w"
 code: PGW01002
 name: Empty Data Definition

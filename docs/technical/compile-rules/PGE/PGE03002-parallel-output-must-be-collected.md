@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.2"
 code: PGE03002
 name: Parallel Output Must Be Collected

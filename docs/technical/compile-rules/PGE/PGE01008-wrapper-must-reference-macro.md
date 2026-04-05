@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.8"
 code: PGE01008
 name: Wrapper Must Reference Wrapper Definition

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.10"
 code: PGE06010
 name: Empty Conditional Scope

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "2.11"
 code: PGE02011
 name: Data Load Schema Mismatch

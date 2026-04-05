@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.6"
 code: PGE06006
 name: String Exhaustiveness

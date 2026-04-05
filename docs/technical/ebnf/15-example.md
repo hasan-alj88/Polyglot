@@ -8,7 +8,7 @@ updated: 2026-03-30
 
 ## 15. Complete File Example (Informative)
 
-```
+```polyglot
 file
   └─ package_block          {@ } @Local:999.MyPkg:v1.0.0
   │    └─ import_line          [@] @utils << @Community:user.Utils:v2.0.0

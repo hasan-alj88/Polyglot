@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "7.1w"
 code: PGW07001
 name: Error Handler on Non-Failable Call

@@ -15,7 +15,7 @@ Because every signal handler is `f(signal, state) → (new_state, output_signals
 
 When a job is enqueued, the Queue Handler has all constraint data in Redis (cached at queue registration). It can precompute constraint results and cache them:
 
-```
+```text
 On enqueue(jobId):
     constraint_result = check(scoped constraints from queue:config + job metadata)
     HSET job:{jobId} constraint_precomputed {pass|fail|reason}

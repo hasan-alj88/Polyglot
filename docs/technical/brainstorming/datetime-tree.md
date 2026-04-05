@@ -1,3 +1,9 @@
+---
+audience: developer
+type: brainstorming
+updated: 2026-04-05
+---
+
 # Brainstorm: #DateTime Full Data Tree
 
 > **PGE05001 FIX (2026-03-20):** `.Calendar`, `.Week`, `.TimeUnit`, and `.Cultural` now use entirely flexible (`:`) fields at their child level. Known entries (`:gregorian`, `:hijri`, etc.) are pre-declared with their types; users can add more keys. No `.`/`:` mixing.
@@ -14,7 +20,7 @@
 
 ## Top-Level Tree
 
-```
+```polyglot
 #DateTime
    .Instant                        — absolute point in time
       .epoch#int                   — Unix epoch seconds
@@ -69,7 +75,7 @@
 
 ## Supporting Enums
 
-```
+```polyglot
 #CalendarSystem
    .Gregorian
    .Hijri
@@ -142,7 +148,7 @@ Every calendar is a **projection** of `.Instant.epoch` (Unix epoch seconds).
 A calendar defines: epoch offset, month structure, leap rules, and time unit mapping.
 Converting between calendars always goes through epoch: CalendarA → epoch → CalendarB.
 
-```
+```polyglot
 #CalendarProjection     — how any calendar maps from epoch
    .epochOffset#int     — seconds offset from Unix epoch to calendar epoch
    .leapRule#LeapRule   — how this calendar handles leap cycles
@@ -167,7 +173,7 @@ Converting between calendars always goes through epoch: CalendarA → epoch → 
 
 ## Core Component Types
 
-```
+```polyglot
 #Date
    .year#int
    .month#int
@@ -224,7 +230,7 @@ Some calendars divide the day differently than hours/minutes/seconds.
 These all map back to epoch seconds — they're alternative projections of `.Instant`.
 
 ### Chinese Traditional Time
-```
+```polyglot
 #ChineseTime
    .shichen#ChineseShichen   — 2-hour double-hours (12/day)
    .ke#int                   — quarter-unit (classically 100/day = 14.4 min each)
@@ -247,7 +253,7 @@ These all map back to epoch seconds — they're alternative projections of `.Ins
 ```
 
 ### Hindu Traditional Time
-```
+```polyglot
 #HinduTime
    .prahara#int              — 3-hour watch (8/day, varies by season)
    .muhurta#int              — 48-minute unit (30/day)
@@ -257,7 +263,7 @@ These all map back to epoch seconds — they're alternative projections of `.Ins
 ```
 
 ### French Republican Decimal Time
-```
+```polyglot
 #DecimalTime
    .hour#int                 — 0-9 (10 hours/day)
    .minute#int               — 0-99 (100 minutes/hour)
@@ -265,7 +271,7 @@ These all map back to epoch seconds — they're alternative projections of `.Ins
 ```
 
 ### Custom Time Unit
-```
+```polyglot
 #CustomTimeUnit
    .name#string
    .unitsPerDay#int          — how many of this unit fit in a day
@@ -276,7 +282,7 @@ These all map back to epoch seconds — they're alternative projections of `.Ins
 ## Calendar-Specific Date Types
 
 ### Gregorian
-```
+```polyglot
 #GregorianDate
    .year#int
    .month#Month
@@ -289,7 +295,7 @@ The Hijri calendar is regional — month starts depend on moon sighting authorit
 Saudi uses Umm al-Qura (astronomical), Pakistan/India often differ by 1-2 days.
 The design supports regional authorities, multiple methods, and fully custom Hijri.
 
-```
+```polyglot
 #HijriDate
    .year#int
    .month#HijriMonth
@@ -336,7 +342,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ```
 
 ### Hebrew
-```
+```polyglot
 #HebrewDate
    .year#int
    .month#HebrewMonth
@@ -359,7 +365,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ```
 
 ### Chinese
-```
+```polyglot
 #ChineseDate
    .year#int
    .cycle#int            — 60-year cycle number
@@ -397,7 +403,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ```
 
 ### Persian
-```
+```polyglot
 #PersianDate
    .year#int
    .month#PersianMonth
@@ -419,7 +425,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ```
 
 ### Buddhist
-```
+```polyglot
 #BuddhistDate
    .year#int             — Buddhist Era (Gregorian + 543)
    .month#Month          — uses Gregorian months
@@ -427,7 +433,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ```
 
 ### Hindu
-```
+```polyglot
 #HinduDate
    .year#int
    .era#HinduEra
@@ -459,7 +465,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ```
 
 ### Japanese
-```
+```polyglot
 #JapaneseDate
    .year#int
    .era#JapaneseEra
@@ -477,7 +483,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ```
 
 ### Ethiopian
-```
+```polyglot
 #EthiopianDate
    .year#int
    .month#EthiopianMonth
@@ -500,7 +506,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ```
 
 ### Coptic
-```
+```polyglot
 #CopticDate
    .year#int
    .month#CopticMonth
@@ -523,7 +529,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 ```
 
 ### Custom Calendar
-```
+```polyglot
 #CustomCalendar        — user-extensible via :
    .name#string
    :months             — user-defined month names/counts
@@ -533,7 +539,7 @@ The design supports regional authorities, multiple methods, and fully custom Hij
 
 ## Cultural Types
 
-```
+```polyglot
 #Holiday
    .name#string
    .date#Date
@@ -587,7 +593,7 @@ All four extensible levels (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`) are 
 ## Alias
 
 `#DateTime` alias is `#dt` — use `#dt` in type annotations:
-```
+```polyglot
 [r] $now#dt
 [r] $deadline#dt
 ```
@@ -597,7 +603,7 @@ All four extensible levels (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`) are 
 All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 
 ### Construction
-```
+```polyglot
 =DT.Now                — current instant → #dt
 =DT.From.Epoch         — epoch seconds → #dt
    <epoch#int
@@ -615,7 +621,7 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 ```
 
 ### Calendar Conversion
-```
+```polyglot
 =DT.To.Gregorian       — #dt → #GregorianDate projection
    <source#dt
 =DT.To.Hijri           — #dt → #HijriDate projection
@@ -644,7 +650,7 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 ```
 
 ### Time Unit Conversion
-```
+```polyglot
 =DT.To.ChineseTime     — #dt → #ChineseTime (shichen/ke/fen)
    <source#dt
 =DT.To.HinduTime       — #dt → #HinduTime (prahara/muhurta)
@@ -654,7 +660,7 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 ```
 
 ### Arithmetic
-```
+```polyglot
 =DT.Add.Duration       — #dt + #Duration → #dt
    <source#dt
    <duration#Duration
@@ -667,7 +673,7 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 ```
 
 ### Comparison
-```
+```polyglot
 =DT.Compare            — #dt vs #dt → #int (-1, 0, 1)
    <a#dt
    <b#dt
@@ -683,7 +689,7 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 ```
 
 ### Extraction
-```
+```polyglot
 =DT.Get.Year           — #dt → year as #int
    <source#dt
 =DT.Get.Month          — #dt → month as #int
@@ -702,7 +708,7 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 ```
 
 ### Zone
-```
+```polyglot
 =DT.Zone.Set           — set timezone on #dt → #dt
    <source#dt
    <iana#string
@@ -712,7 +718,7 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 ```
 
 ### Formatting
-```
+```polyglot
 =DT.Format             — #dt → formatted string
    <source#dt
    <pattern#string     — e.g. "YYYY-MM-DD HH:mm:ss"
@@ -724,7 +730,7 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
 ```
 
 ### Business
-```
+```polyglot
 =DT.Business.IsWorkDay — #dt + #BusinessWeek → #bool
    <source#dt
    <week#BusinessWeek

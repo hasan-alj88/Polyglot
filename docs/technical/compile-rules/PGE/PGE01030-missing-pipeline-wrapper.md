@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.30"
 code: PGE01030
 name: Missing Pipeline Wrapper

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.26"
 code: PGE01026
 name: Orphan Continuation Line

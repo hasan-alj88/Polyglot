@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.5w"
 code: PGW03002
 name: Error Handler on Fire-and-Forget

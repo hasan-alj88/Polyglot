@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.6"
 code: PGE01006
 name: Missing Pipeline Queue

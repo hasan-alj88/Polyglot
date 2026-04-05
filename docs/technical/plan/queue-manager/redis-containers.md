@@ -18,7 +18,7 @@ Each `{Q}` definition creates a Dispatch Queue. The Redis data structure depends
 | LIFO | LIST | `RPUSH` | `LINDEX -1` (peek), `RPOP` (dispatch) |
 | Priority | SORTED SET | `ZADD` with priority score | `ZREVRANGE 0 0` (peek), `ZPOPMAX` (dispatch) |
 
-```
+```text
 "queue:dispatch:DefaultQueue"     LIST   [jobA, jobB, jobC]
 "queue:dispatch:GPUQueue"         LIST   [jobD, jobE]
 "queue:dispatch:BatchQueue"       ZSET   {jobF:99, jobG:50, jobH:10}
@@ -32,7 +32,7 @@ Single-slot virtual queue holding the one candidate selected by Tier 1 Selection
 
 Jobs moving from Suspended Set back to execution. Always FIFO (resume in unpause order). Participates as an equal peer in Tier 2 Dispatch RR.
 
-```
+```text
 "queue:resume"                    LIST   [jobX, jobY]
 ```
 
@@ -40,7 +40,7 @@ Jobs moving from Suspended Set back to execution. Always FIFO (resume in unpause
 
 Jobs that received a graceful kill. Waiting for a cleanup slot to be dispatched for `[/]` cleanup execution. Always FIFO.
 
-```
+```text
 "queue:teardown"                  LIST   [jobZ]
 ```
 
@@ -48,7 +48,7 @@ Jobs that received a graceful kill. Waiting for a cleanup slot to be dispatched 
 
 Jobs currently running. Used for constraint checks (scoped maxInstances, maxConcurrent, resourceTag).
 
-```
+```text
 "set:executing"                   SET    {jobA, jobD, jobF}
 ```
 
@@ -56,13 +56,13 @@ Jobs currently running. Used for constraint checks (scoped maxInstances, maxConc
 
 Jobs paused (soft or hard). Tracks pause type for resource accounting.
 
-```
+```text
 "set:suspended"                   HASH   {jobX: "soft", jobY: "hard"}
 ```
 
 ## Supporting State
 
-```
+```text
 "counter:instances"               HASH   {ProcessData: 3, GPU.Render: 1}
 "counter:instances:queue:{name}"  HASH   {ProcessData: 1}
 "counter:instances:host:{host}"   HASH   {ProcessData: 2}
@@ -74,7 +74,7 @@ Jobs paused (soft or hard). Tracks pause type for resource accounting.
 
 Pipeline-level constraints cached at first enqueue. Read by the Dispatch Coordinator during constraint checks.
 
-```
+```yaml
 maxInstancesAllQueues:    int?
 maxInstancesWithinHost:   int?
 maxConcurrentAllQueues:   int?
@@ -85,7 +85,7 @@ resourceTagWithinHost:    string[]?
 
 ## job:{jobId} (HASH)
 
-```
+```polyglot
 pipeline:           string    — pipeline name
 queue:              string    — assigned Dispatch Queue
 status:             string    — current #QueueState variant
@@ -113,7 +113,7 @@ The path doubles as the job's address in the hierarchy — parent/child relation
 
 Every job has a `status` field with one of these variants:
 
-```
+```polyglot
 #QueueState (7 variants)
 ├── #Pending              — in a Dispatch Queue, waiting for dispatch
 ├── #Executing            — in Executing Set, actively running

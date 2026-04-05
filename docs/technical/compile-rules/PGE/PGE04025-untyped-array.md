@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.25"
 code: PGE04025
 name: Untyped Array

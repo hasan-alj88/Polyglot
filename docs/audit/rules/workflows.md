@@ -1,4 +1,5 @@
 ---
+audience: ai
 type: audit-rules
 scope: documentation-workflows
 updated: 2026-03-30

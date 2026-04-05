@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.27"
 code: PGE01027
 name: Empty Foreign Code Block

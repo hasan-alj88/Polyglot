@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.11"
 code: PGE01011
 name: Duplicate IO Parameter Name

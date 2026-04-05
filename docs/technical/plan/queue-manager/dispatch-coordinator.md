@@ -27,7 +27,7 @@ The Dispatch Coordinator is not signal-driven — no external `command.dispatch`
 
 ## Two-Tier Round-Robin Dispatch
 
-```
+```text
 Tier 1 — Selection RR (across user Dispatch Queues):
    ┌─ Queue A (FIFO)
    ├─ Queue B (LIFO)
@@ -98,14 +98,14 @@ When a candidate passes all constraints, the Lua script dispatches based on the 
 5. Emit `control.{jobId}.kill.graceful → Runner`
 
 **Scoped counter increment** (on every dispatch):
-```
+```text
 HINCRBY counter:instances {pipeline} 1
 HINCRBY counter:instances:queue:{queue} {pipeline} 1
 HINCRBY counter:instances:host:{host} {pipeline} 1
 ```
 
 **Scoped counter decrement** (on every removal from Executing Set):
-```
+```text
 HINCRBY counter:instances {pipeline} -1
 HINCRBY counter:instances:queue:{queue} {pipeline} -1
 HINCRBY counter:instances:host:{host} {pipeline} -1

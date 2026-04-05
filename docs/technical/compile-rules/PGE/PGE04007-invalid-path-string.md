@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.7"
 code: PGE04007
 name: Invalid Path String

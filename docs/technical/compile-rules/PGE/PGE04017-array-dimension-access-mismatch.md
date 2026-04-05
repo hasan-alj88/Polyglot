@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.17"
 code: PGE04017
 name: Array Dimension Access Mismatch

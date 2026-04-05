@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.24"
 code: PGE01024
 name: Incompatible Operation Marker

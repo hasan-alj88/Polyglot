@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "2.5"
 code: PGE02005
 name: Failed Is Terminal

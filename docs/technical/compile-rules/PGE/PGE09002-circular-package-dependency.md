@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.2"
 code: PGE09002
 name: Circular Package Dependency

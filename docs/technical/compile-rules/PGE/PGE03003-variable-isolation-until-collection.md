@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.3"
 code: PGE03003
 name: Variable Isolation Until Collection

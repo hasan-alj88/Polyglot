@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "7.1"
 code: PGE07001
 name: Error Block Scoping

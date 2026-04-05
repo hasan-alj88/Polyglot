@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.11"
 code: PGE03010
 name: Collector Without Expand

@@ -1,4 +1,5 @@
 ---
+audience: ai
 type: audit-rules
 scope: writing-conventions
 updated: 2026-03-14

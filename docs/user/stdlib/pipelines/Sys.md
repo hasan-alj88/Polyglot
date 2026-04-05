@@ -18,7 +18,7 @@ System pipelines that read environment state require a `{_}` permission object g
 |----------|-------------------|----------|
 | `=Sys.OS` | System.Env | System |
 
-```
+```polyglot
 =Sys
    .OS
       >os#OS

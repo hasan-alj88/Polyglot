@@ -51,7 +51,7 @@ Call a named function in foreign code, pass arguments, get a return value. The c
 
 ### `.Function.Inline`
 
-```
+```polyglot
 =RT.<Lang>.Function.Inline
    <env#<Lang>Env             [ ] Runtime environment from =W.RT
    <func#string               [ ] Function name (compiler-validated)
@@ -99,7 +99,7 @@ Call a named function in foreign code, pass arguments, get a return value. The c
 
 ### `.Function.File`
 
-```
+```polyglot
 =RT.<Lang>.Function.File
    <env#<Lang>Env             [ ] Runtime environment from =W.RT
    <func#string               [ ] Function name (compiler-validated against file)
@@ -127,7 +127,7 @@ Run code without a named entry point. Optionally inject Polyglot data as named v
 
 ### `.Script.Inline`
 
-```
+```polyglot
 =RT.<Lang>.Script.Inline
    <env#<Lang>Env             [ ] Runtime environment from =W.RT
    <Bind#serial                [ ] Variable bindings injected as code variables (optional)
@@ -152,7 +152,7 @@ Run code without a named entry point. Optionally inject Polyglot data as named v
 
 ### `.Script.File`
 
-```
+```polyglot
 =RT.<Lang>.Script.File
    <env#<Lang>Env             [ ] Runtime environment from =W.RT
    <Bind#serial                [ ] Variable bindings (optional)
@@ -174,7 +174,7 @@ Run code without a named entry point. Optionally inject Polyglot data as named v
 
 Invoke a compiled binary with positional and keyword arguments. The OS runs the binary — no language runtime is needed. Use `[W] =W.Polyglot` (not `=W.RT`). No `<env` parameter.
 
-```
+```polyglot
 =RT.<Lang>.CLI
    <binary#path               [ ] Path to executable
    <arg#array.string           [ ] Positional arguments (optional)
@@ -215,7 +215,7 @@ Native code imports the polyglot lib and calls `pull()`/`push()` to interact wit
 
 ### `.Bind.Inline`
 
-```
+```polyglot
 =RT.<Lang>.Bind.Inline
    <env#<Lang>Env             [ ] Runtime environment from =W.RT
    >output#Code:<Lang>.Output  [ ] .stdout, .stderr capture
@@ -234,7 +234,7 @@ Native code imports the polyglot lib and calls `pull()`/`push()` to interact wit
 
 ### `.Bind.File`
 
-```
+```polyglot
 =RT.<Lang>.Bind.File
    <env#<Lang>Env             [ ] Runtime environment from =W.RT
    >output#Code:<Lang>.Output  [ ] .stdout, .stderr capture

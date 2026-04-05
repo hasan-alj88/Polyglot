@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.5"
 code: PGE06005
 name: Compound Condition Overlap

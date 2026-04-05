@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.3"
 code: PGE01003
 name: One Package Declaration Per File

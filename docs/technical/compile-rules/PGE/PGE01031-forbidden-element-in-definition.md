@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.31"
 code: PGE01031
 name: Forbidden Element in Definition

@@ -15,7 +15,7 @@ Every signal is a command from the Trigger Monitor (or ACK from Runner). The Que
 
 ## command.enqueue
 
-```
+```text
 Input:  {jobId, pipeline, queue, params, priority?, parentJobId?, marker?,
          pipelineConstraints?: {maxInstancesAllQueues?, maxInstancesWithinHost?,
                                 maxConcurrentAllQueues?, maxConcurrentWithinHost?,
@@ -40,7 +40,7 @@ Wake:   Dispatch Coordinator
 
 ## command.pause.soft
 
-```
+```text
 Input:  {jobId}
 
 State Write:
@@ -58,7 +58,7 @@ Wake:   Dispatch Coordinator (slot freed)
 
 ## command.pause.hard
 
-```
+```text
 Input:  {jobId}
 
 State Write:
@@ -76,7 +76,7 @@ Wake:   Dispatch Coordinator (slot freed)
 
 ## command.resume
 
-```
+```text
 Input:  {jobId}
 
 State Write:
@@ -92,7 +92,7 @@ Wake:   Dispatch Coordinator (item added to Resume Queue)
 
 ## command.kill.graceful
 
-```
+```text
 Input:  {jobId}
 
 State Write:
@@ -122,7 +122,7 @@ Wake:   Dispatch Coordinator (item added to Teardown Queue; slot freed if was ex
 
 ## command.kill.hard
 
-```
+```text
 Input:  {jobId}
 
 State Write:
@@ -152,7 +152,7 @@ Wake:   Dispatch Coordinator (slot freed if was executing)
 
 Only valid for Priority strategy queues.
 
-```
+```yaml
 Input:  {jobId, score}
 
 State Write:
@@ -165,7 +165,7 @@ Output: state.queue.{queue}.updated {jobId, new_score}
 
 Strategy-aware timeout escalation. Moves a job to the next-to-dispatch position in its queue.
 
-```
+```text
 Input:  {jobId, queue}
 
 State Write:
@@ -185,7 +185,7 @@ Output: state.queue.{queue}.escalated {jobId, strategy}
 
 Atomic queue transfer. Replaces the former `command.dequeue` + `command.enqueue` pair.
 
-```
+```text
 Input:  {jobId, fromQueue, toQueue, priority?}
 
 State Write (single Lua script):
@@ -206,7 +206,7 @@ Used by `=Q.Dispatch.Wait.TimeOut.Reassign` — the Trigger Monitor sends a sing
 
 ## command.queue.register
 
-```
+```text
 Input:  {name, strategy, host, maxInstancesWithinQueue, maxConcurrentWithinQueue,
          resourceTagWithinQueue, killPropagation, maxWaitTime, description}
 
@@ -222,7 +222,7 @@ The Trigger Monitor reads the full definition from NoSQL and sends all propertie
 
 ## command.queue.update
 
-```
+```yaml
 Input:  {name, ...changed fields}
 
 State Write:
@@ -237,7 +237,7 @@ Sent by the Trigger Monitor when queue properties change at runtime.
 
 Stop accepting new enqueues to a queue. Existing jobs continue to dispatch and complete normally.
 
-```
+```yaml
 Input:  {queue}
 
 State Write:
@@ -252,7 +252,7 @@ Subsequent `command.enqueue` to a draining queue is rejected.
 
 Hard kill the entire queue — equivalent to `command.kill.hard` for every job that belongs to this queue, regardless of current state. Fire alarm: everyone leaves immediately.
 
-```
+```text
 Input:  {queue}
 
 State Write:
@@ -283,7 +283,7 @@ Wake:   Dispatch Coordinator (slots freed)
 
 ## runner.started (ACK)
 
-```
+```yaml
 Input:  {jobId, pid}
 
 State Write:
@@ -294,7 +294,7 @@ Output: state.job.{jobId}.running {pipeline, pid}
 
 ## runner.paused (ACK)
 
-```
+```yaml
 Input:  {jobId, type}
 
 State Write:
@@ -307,7 +307,7 @@ Output: state.job.{jobId}.confirmed_suspended {type}
 
 Normal completion only — not for teardown jobs.
 
-```
+```text
 Input:  {jobId, result}
 
 State Write:
@@ -325,7 +325,7 @@ Wake:   Dispatch Coordinator (slot freed)
 
 Completion of `[/]` cleanup after graceful kill.
 
-```
+```text
 Input:  {jobId, pipeline}
 
 State Write:
@@ -341,7 +341,7 @@ Wake:   Dispatch Coordinator (slot freed)
 
 ## runner.failed
 
-```
+```text
 Input:  {jobId, error}
 
 State Write:

@@ -21,7 +21,7 @@ Cross-package cycles are excluded — those are caught by [[PGE09002-circular-pa
 
 Build a directed adjacency list representing the intra-package call graph.
 
-```
+```text
 function buildCallGraph(package):
     nodes = {}
     edges = {}
@@ -48,7 +48,7 @@ function buildCallGraph(package):
 
 The primary algorithm uses depth-first search with three-color marking. When a gray (in-progress) node is revisited, a back edge exists and a cycle is found.
 
-```
+```text
 function detectCycles(nodes, edges):
     color = {node: WHITE for node in nodes}
     parent = {}
@@ -99,7 +99,7 @@ A back edge (GRAY → GRAY) proves a cycle. The cycle path is recovered by walki
 
 Given pipelines: `=StepA → =StepB → =StepC → =StepA`
 
-```
+```polyglot
 DFS starts at =StepA (WHITE → GRAY)
   Visit =StepB (WHITE → GRAY)
     Visit =StepC (WHITE → GRAY)
@@ -116,7 +116,7 @@ Result: cycle [=StepA, =StepB, =StepC, =StepA]
 
 Given pipeline: `=Recurse` calls `=Recurse`
 
-```
+```polyglot
 DFS starts at =Recurse (WHITE → GRAY)
   Visit =Recurse — already GRAY → back edge (self-edge)
   Extract: =Recurse → =Recurse
@@ -129,7 +129,7 @@ Result: cycle [=Recurse, =Recurse]
 
 Kahn's algorithm provides an alternative approach. If the topological sort cannot consume all nodes, remaining nodes are part of at least one cycle.
 
-```
+```text
 function kahnsSort(nodes, edges):
     inDegree = {node: 0 for node in nodes}
     for each node in nodes:
@@ -186,7 +186,7 @@ In practice, V and E are small (packages typically contain fewer than 50 pipelin
 
 When a cycle is detected, the compiler emits:
 
-```
+```polyglot
 PGE09013: Circular pipeline call detected: =A → =B → =C → =A — Polyglot does not support recursion
 ```
 

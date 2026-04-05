@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.27"
 code: PGE04027
 name: Missing Required DateTime Subfield

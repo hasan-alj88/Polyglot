@@ -271,7 +271,7 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 
 Each rule follows this structure:
 
-```
+```markdown
 ### Rule N.N — Name
 `PGExxNNN` or `PGWxxNNN`
 

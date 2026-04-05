@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.14"
 code: PGE01014
 name: Unresolved Queue Reference

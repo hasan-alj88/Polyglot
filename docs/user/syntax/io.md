@@ -33,7 +33,7 @@ flowchart LR
 
 ## IO Line Pattern
 
-```
+```polyglot
 [operator-ref] <param << source
 [operator-ref] >param >> target
 ```
@@ -177,7 +177,7 @@ Fallback lines provide a value to use when a pipeline call errors, preventing th
 
 ### Fallback Line Pattern
 
-```
+```polyglot
 [>] <! value_expr
 [>] <!Error.Name value_expr
 ```

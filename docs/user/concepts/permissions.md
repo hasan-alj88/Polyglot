@@ -189,7 +189,7 @@ Permissions are **compile-time declarations** — they apply across all instance
 
 The `__Permission` descriptor defines the full structure of a permission object:
 
-```
+```polyglot
 __Permission
 +-- .target                    __PermissionTarget
 |   +-- .category              #PermissionCategory     <- enum: File, Web, Database, System, Crypto, IPC, Device, Memory
@@ -228,7 +228,7 @@ No runtime permission checks exist. If it compiles, the permissions are satisfie
 
 `{@}` must appear first in every `.pg` file (compiler-enforced). The recommended stylistic ordering for the remaining blocks is:
 
-```
+```polyglot
 {@}   <- mandatory first (compiler-enforced)
 {_}   <- permission objects (recommended second)
 {#}   <- data definitions

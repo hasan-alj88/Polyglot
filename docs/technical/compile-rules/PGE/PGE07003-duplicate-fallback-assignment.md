@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "7.3"
 code: PGE07003
 name: Duplicate Fallback Assignment

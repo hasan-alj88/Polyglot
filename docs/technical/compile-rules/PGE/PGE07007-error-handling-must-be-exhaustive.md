@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "7.7"
 code: PGE07007
 name: Error Handling Must Be Exhaustive

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.6"
 code: PGE04006
 name: Undefined Variable Reference

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.13"
 code: PGE01013
 name: Queue Control Contradicts Queue Default

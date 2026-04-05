@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "6.2"
 code: PGE06002
 name: Enum Exhaustiveness

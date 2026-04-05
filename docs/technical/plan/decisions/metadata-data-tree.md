@@ -1,3 +1,9 @@
+---
+audience: developer
+type: decision
+updated: 2026-04-05
+---
+
 # Decision: Metadata Data Tree
 
 **Date:** 2026-03-21

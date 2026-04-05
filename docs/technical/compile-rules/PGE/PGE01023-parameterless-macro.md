@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.23"
 code: PGE01023
 name: Parameterless Macro

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.2"
 code: PGE01002
 name: IO Before Trigger

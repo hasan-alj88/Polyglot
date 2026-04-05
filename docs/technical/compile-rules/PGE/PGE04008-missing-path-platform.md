@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.8"
 code: PGE04008
 name: Missing Path Platform Subfield

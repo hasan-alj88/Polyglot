@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.3"
 code: PGE09003
 name: Unresolved Pipeline Reference

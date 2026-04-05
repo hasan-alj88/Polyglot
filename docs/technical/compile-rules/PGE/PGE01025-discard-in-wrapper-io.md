@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.25"
 code: PGE01025
 name: Discard in Wrapper IO

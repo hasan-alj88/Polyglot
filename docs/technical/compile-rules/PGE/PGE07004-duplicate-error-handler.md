@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "7.4"
 code: PGE07004
 name: Duplicate Error Handler

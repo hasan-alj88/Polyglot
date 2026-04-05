@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.15"
 code: PGE04015
 name: Conditional Type-Operator Mismatch

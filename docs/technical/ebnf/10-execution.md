@@ -95,7 +95,7 @@ data_load           ::= "[#]" assign_target assignment_op ( pipeline_call | data
 
 **In `{#}` definitions:** `[#]` can load external serialized files:
 
-```
+```polyglot
 [#] #file1 << =Json.LoadFile"/config/appsettings.json"
 [#] #file2 << =Yaml.LoadFile"/config/appsettings.yaml"
 ```

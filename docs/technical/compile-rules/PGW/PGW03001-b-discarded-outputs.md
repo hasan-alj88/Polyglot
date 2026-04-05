@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "3.5"
 code: PGW03001
 name: "[b] Called Pipeline Has Discarded Outputs"

@@ -42,7 +42,7 @@ See [[syntax/types/prefix-system#Three-Tier Prefix System]] for the full prefix 
 
 The `%` root has fixed branches for every object type in Polyglot:
 
-```
+```polyglot
 %
 ├── #   Structs          — type definitions ({#} blocks)
 ├── =   Pipelines        — async workflows ({=} blocks)
@@ -81,7 +81,7 @@ The tree has two layers:
 - **Schema** (compile-time) — `%definition.{type}:{ref}` defines the structural template
 - **Instance** (runtime) — `%{type}:{ref}:{instance}.{fields}` holds actual values
 
-```
+```polyglot
 %definition.#:Boolean       ← schema: lists .True and .False as valid fields
 %#:Boolean:0                ← instance 0: has ONE active field (.True or .False)
 %#:Boolean:1                ← instance 1: independent, its own active field
@@ -136,7 +136,7 @@ graph TD
 
 An enum instance collapses to ONE active field. The definition lists all valid branches, but a specific instance has only the active one:
 
-```
+```polyglot
 %definition.#:Boolean       ← schema: .True, .False (both listed)
 %#:Boolean:0.True           ← instance 0: .True is active, .False does NOT exist
 ```
@@ -147,7 +147,7 @@ Push atomically clears the previous field and sets the new one. Reading a non-ac
 
 `int` lives at `%#:String:int` — nested under `:String` at a flexible level. The alias `#int` in user code resolves to `#String.int`. Each subtype uses the `#String` schema with `.regex` pre-filled:
 
-```
+```polyglot
 %#:String:int               ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+$")
 %#:String:float             ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+\.[0-9]+$")
 %#:String:emailAddress      ← user-defined: .regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
@@ -159,7 +159,7 @@ See [[syntax/types/basic-types#Numeric Types — #String Subtypes]] for details.
 
 Pipeline instances carry their IO as nested fixed sections:
 
-```
+```polyglot
 %=:ProcessData:0
 ├── .<                      ← input ports (fixed typed section)
 │   └── .filepath#path
@@ -171,7 +171,7 @@ Pipeline instances carry their IO as nested fixed sections:
 
 The general path notation is:
 
-```
+```text
 %{type}:{ref}:{instance}.{fields}
 ```
 

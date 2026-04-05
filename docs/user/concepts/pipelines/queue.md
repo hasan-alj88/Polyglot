@@ -128,7 +128,7 @@ The Dispatch Coordinator is event-driven — it wakes whenever queue state chang
 
 The Dispatch Coordinator uses a two-tier round-robin algorithm:
 
-```
+```text
 Tier 1 — Selection RR (across user Dispatch Queues):
    ┌─ Queue A (FIFO)
    ├─ Queue B (LIFO)

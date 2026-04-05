@@ -1,4 +1,5 @@
 ---
+audience: ai
 type: audit-index
 scope: all-documentation
 updated: 2026-03-30

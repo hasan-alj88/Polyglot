@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.2"
 code: PGE04002
 name: Schema Mismatch

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.9"
 code: PGE04009
 name: Unhandled Serial→Struct Conversion

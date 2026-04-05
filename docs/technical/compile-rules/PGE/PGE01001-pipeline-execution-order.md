@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.1"
 code: PGE01001
 name: Pipeline Section Misordering

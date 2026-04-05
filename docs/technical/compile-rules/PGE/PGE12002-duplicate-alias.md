@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "10.2"
 code: PGE12002
 name: Duplicate Alias

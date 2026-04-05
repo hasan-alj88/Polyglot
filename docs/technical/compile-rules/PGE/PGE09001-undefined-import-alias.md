@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.1"
 code: PGE09001
 name: Undefined Import Alias

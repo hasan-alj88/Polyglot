@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "1.21"
 code: PGE01021
 name: Empty Data Definition

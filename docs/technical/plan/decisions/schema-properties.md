@@ -1,3 +1,9 @@
+---
+audience: developer
+type: decision
+updated: 2026-04-05
+---
+
 # Decision: Schema Properties in `{#}` Definitions
 
 **Date:** 2026-03-26
@@ -154,7 +160,7 @@ Structs with `[.]` fixed fields are self-describing — their field declarations
 
 Schema properties become fields on the definition template:
 
-```
+```polyglot
 %definition.#:Array
 ├── .Key
 │   ├── .Type          → #Int

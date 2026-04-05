@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.5"
 code: PGE04005
 name: Undefined Interpolation Variable

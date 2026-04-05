@@ -1,4 +1,5 @@
 ---
+audience: developer
 name: Compound Condition Partition Refinement
 type: algorithm
 consumes: PGE06005, PGE06008
@@ -60,7 +61,7 @@ Compute the full space as the Cartesian product of all variable partitions.
 
 Example: `$status ∈ {Active, Inactive}` × `$age ∈ {(-∞,18], (18,65], (65,+∞)}`
 → 2 × 3 = 6 cells:
-```
+```polyglot
 {(Active, ≤18), (Active, 18-65), (Active, >65),
  (Inactive, ≤18), (Inactive, 18-65), (Inactive, >65)}
 ```
@@ -107,7 +108,7 @@ The diagnostic must include the uncovered cells as counterexample.
 
 ## Walkthrough — Test 5 (Numeric Range × Enum)
 
-```
+```polyglot
 Variables: $status ∈ {Active, Inactive}, $age#int
 Boundaries for $age: {18}
 Partitions: $status → {Active, Inactive}, $age → {(-∞,18], (18,+∞)}

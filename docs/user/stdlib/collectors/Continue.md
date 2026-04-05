@@ -11,7 +11,7 @@ Used inside `[!]` error blocks to continue the pipeline with a fallback value. W
 
 No `[@]` import needed.
 
-```
+```polyglot
 *Continue
    >FallBack           (required — the fallback value)
    >IsFailed           (optional — boolean flag for downstream checks)

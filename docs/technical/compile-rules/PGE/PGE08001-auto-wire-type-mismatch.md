@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "8.1"
 code: PGE08001
 name: Auto-Wire Type Mismatch

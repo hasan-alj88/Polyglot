@@ -1,4 +1,5 @@
 ---
+audience: ai
 type: audit-rules
 scope: quality-checklist
 updated: 2026-03-14

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.11"
 code: PGE04012
 name: Division by Literal Zero

@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "8.6"
 code: PGE08006
 name: Non-Pipeline Step in Chain

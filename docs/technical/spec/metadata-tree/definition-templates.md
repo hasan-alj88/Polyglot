@@ -24,7 +24,7 @@ Definitions are immutable at runtime — they are resolved entirely at compile t
 
 `##` schema types live at `%definition.##:{SchemaName}` in the metadata tree. Each schema defines tree-structure properties using the `%##` prefix:
 
-```
+```polyglot
 %definition
 ├── .##:Leaf
 │   └── .%##Depth.Max          -> 0
@@ -54,7 +54,7 @@ Schema definitions are immutable compile-time templates. When a `{#}` type compo
 
 `###` field types live at `%definition.###:{FieldTypeName}`:
 
-```
+```polyglot
 %definition
 ├── .###:Value            <- leaf holds typed data (has #type annotation)
 ├── .###:Enum             <- leaf is variant selector (no #type annotation)
@@ -95,7 +95,7 @@ All siblings must be the same `###` kind — mixing typed and untyped fields amo
 
 `#Array` definition template showing all metadata layers:
 
-```
+```polyglot
 %definition.#:Array
 ├── .%##Depth.Max              -> (from Dim parameter)
 ├── .%##Children
@@ -113,7 +113,7 @@ The `%##` properties are accumulated from composed schemas: `##Flat` provides `%
 
 `#Boolean` definition template showing `###ScalarEnum`:
 
-```
+```polyglot
 %definition.#:Boolean
 ├── .%##Depth.Max              -> 1 (from ##Scalar)
 ├── .%##Alias                  -> "bool"

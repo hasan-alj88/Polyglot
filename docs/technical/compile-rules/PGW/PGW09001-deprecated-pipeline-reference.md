@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "9.1"
 code: PGW09001
 name: Deprecated Pipeline Reference

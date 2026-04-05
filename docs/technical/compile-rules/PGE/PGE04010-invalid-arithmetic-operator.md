@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "4.10"
 code: PGE04010
 name: Invalid Arithmetic Operator

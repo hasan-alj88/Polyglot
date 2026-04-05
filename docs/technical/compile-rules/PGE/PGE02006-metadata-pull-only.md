@@ -1,4 +1,5 @@
 ---
+audience: developer
 rule: "2.6"
 code: PGE02006
 name: Live Metadata Fields Are Pull-Only
