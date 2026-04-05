@@ -5,7 +5,7 @@ name: Conditional Missing Comparison Operator
 severity: error
 ---
 
-### Rule 6.9 — Conditional Missing Comparison Operator
+# Rule 6.9 — Conditional Missing Comparison Operator
 `PGE06009`
 
 **Statement:** Every `[?]` line must follow the form `[?] $variable <operator> value` or `[?] *?`. A `[?]` line without a comparison operator is a syntax violation. **Exception:** `[?]` lines in match context (indented under `[r] $source >> $target`) use `[?] value >> result` form without a comparison operator — PGE06009 does not apply to match arms. See [[conditionals#Match Syntax]].
@@ -16,7 +16,7 @@ severity: error
 
 ---
 
-#### Valid Forms
+## Valid Forms
 
 ```polyglot
 [ ] ✓ Comparison with operator
@@ -54,7 +54,7 @@ severity: error
    [?] *? >> "unknown"
 ```
 
-#### Invalid — Missing Comparison Operator
+## Invalid — Missing Comparison Operator
 
 ```polyglot
 [ ] ✗ PGE06009 — bare variable, no comparison operator
@@ -78,7 +78,7 @@ severity: error
 - [[PGE06001-conditional-must-be-exhaustive|PGE06001 — Conditional Must Be Exhaustive]] — parent exhaustiveness rule
 - [[operators|operators]] — full comparison operator list
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — missing comparison operator rule references PGE06009
 - [[user/syntax/operators|Operators]] — comparison operator requirement references PGE06009

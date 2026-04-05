@@ -5,14 +5,14 @@ name: Chain Error Scoping
 severity: error
 ---
 
-### Rule 7.2 — Chain Error Scoping
+# Rule 7.2 — Chain Error Scoping
 `PGE07002`
 
 **Statement:** In chain execution (`[r] =A=>=B=>=C`), each step's `[!]` error handler is scoped to that step only — as if each step were a separate `[r]` call. Error references use the `.N!ErrorName` syntax: a step prefix (`.N` numeric or `.LeafName` name-based) followed by `!` and the error path. The `!` separates the step reference from the error name, eliminating dotted-path ambiguity. Name-based step references must be unambiguous per PGE08004. The handler sees only its step's IO and can provide a replacement value for the chain's output variable.
 **Rationale:** Chain steps are logically separate pipeline calls. Scoping error handlers to their producing step keeps error handling local and explicit. The `.N!Error` syntax mirrors how IO lines use `.N` for step addressing while clearly delimiting the step reference from the error path.
 **Detection:** The compiler checks that every `[!]` block under a chain `[r]` uses `.N!` or `.LeafName!` syntax. If a chain `[!]` uses the non-chain form (`!ErrorName` without step prefix), PGE07002 fires. If a name-based step reference is ambiguous, PGE08004 fires.
 
-#### Addressing syntax
+## Addressing syntax
 
 | Form | Example | When to use |
 |------|---------|-------------|
@@ -21,7 +21,7 @@ severity: error
 
 Non-chain `[r]` calls (single step) continue to use `[!] !ErrorName` — no step prefix needed.
 
-#### Scope
+## Scope
 
 The error handler for step N can:
 - Read step N's IO (inputs and outputs)

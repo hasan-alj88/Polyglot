@@ -5,7 +5,7 @@ name: Enum Exhaustiveness
 severity: error
 ---
 
-### Rule 6.2 — Enum Exhaustiveness
+# Rule 6.2 — Enum Exhaustiveness
 `PGE06002`
 
 **Statement:** When a `[?]` conditional branches on a `{#}` enum type, all declared enum variants must either appear as explicit branches or be covered by a `*?` catch-all. When **all** variants are explicitly listed, `*?` is optional — exhaustiveness is proven statically. When some variants are missing and no `*?` is present, PGE06002 fires.
@@ -14,7 +14,7 @@ severity: error
 
 ---
 
-#### Enum Types Subject to PGE06002
+## Enum Types Subject to PGE06002
 
 | Type | Example | Variants |
 |------|---------|----------|
@@ -24,7 +24,7 @@ severity: error
 
 ---
 
-#### User-Defined Enum
+## User-Defined Enum
 
 **VALID:**
 ```polyglot
@@ -75,7 +75,7 @@ severity: error
 
 ---
 
-#### `#Boolean` — System Enum
+## `#Boolean` — System Enum
 
 `#Boolean` is a system-provided enum with exactly two variants. PGE06002 treats it identically to any user-defined enum. When both variants are listed, `*?` is optional.
 
@@ -110,7 +110,7 @@ severity: error
 
 ---
 
-#### Nested Enum — Variants With Value Sub-Fields
+## Nested Enum — Variants With Value Sub-Fields
 
 When an enum variant contains value sub-fields, PGE06002 checks only the **top-level variants**. Sub-field values are accessed after matching the variant, not as part of the exhaustiveness check.
 
@@ -135,7 +135,7 @@ When an enum variant contains value sub-fields, PGE06002 checks only the **top-l
 
 ---
 
-#### Cross-Package Enum
+## Cross-Package Enum
 
 When branching on an enum imported from another package, use the `@alias#EnumName.Variant` form. PGE06002 resolves the enum definition across packages.
 
@@ -153,7 +153,7 @@ When branching on an enum imported from another package, use the `@alias#EnumNam
 
 ---
 
-#### PGE06002 vs PGE06001 Interaction
+## PGE06002 vs PGE06001 Interaction
 
 | Scenario | PGE06001 | PGE06002 | Result |
 |----------|---------|---------|--------|
@@ -166,7 +166,7 @@ When branching on an enum imported from another package, use the `@alias#EnumNam
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — enum exhaustiveness examples and PGE06002 error table
 - [[technical/edge-cases/11-control-flow|EC: Control Flow]] — references PGE06002 in enum match exhaustiveness test
