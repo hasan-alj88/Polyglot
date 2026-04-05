@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #126 ([=] IO marker scoping rule) — Complete
-Plan: Complete — merged to main
-Status: Merged to main, issue closed
-Last activity: 2026-04-05 — Issue #126 complete, loop closed
+Plan: 130-01 complete
+Status: UNIFY complete, ready for commit and merge
+Last activity: 2026-04-05 — Issue #130 UNIFY complete
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -61,18 +61,18 @@ Progress:
 
 ## Active Issue
 
-Issue: #129 — Docs: Match Syntax naming — 'Conditional Assignment Sugar' vs 'match header'
-Branch: docs/issue-129-match-syntax-naming-consistency
+Issue: #130 — Docs: Trigger Monitor vs Queue Handler decision-making contradiction
+Branch: docs/issue-130-tm-vs-qh-decision-making-contradiction
 Labels: docs, P2-high
 Started: 2026-04-05
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/129
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/130
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ○        ○        ○        ○     [Issue #129 active]
+  ✓        ✓        ✓        ○     [Ready for commit and merge]
 ```
 
 ## Accumulated Context
@@ -179,6 +179,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #124 — Queue Handler vs Dispatch Coordinator glossary | 2026-04-05 | Added DC glossary entry; narrowed QH "never makes decisions" to trigger/business logic scope |
 | Closed #125 — *All sync barrier vs collector terminology | 2026-04-05 | "sync barrier" → "collect-all" across 15 files; %* subcategorized (Data/Collect-all/Race) |
 | Closed #126 — [=] IO marker scoping rule | 2026-04-05 | Clarified [=]/[~]/[*] scope to parent operator via indentation; 4 files |
+| Closed #129 — Match Syntax naming consistency | 2026-04-05 | Unified to "Match Syntax"; dropped "Conditional Assignment Sugar"; added disambiguation to blocks.md |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -198,11 +199,11 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Merged #126 to main, issue closed
-Next action: Pick next issue or push to origin
+Stopped at: Issue #130 UNIFY complete
+Next action: /paul:merge to commit and merge to main
 Resume context:
-- Issue #126 complete and merged to main
-- Branch docs/issue-126-marker-io-queue-scoping-rule deleted
+- Issue #130 fix applied — vision.md QH wording updated
+- Branch docs/issue-130-tm-vs-qh-decision-making-contradiction ready for merge
 
 ---
 *STATE.md — Updated after every significant action*
