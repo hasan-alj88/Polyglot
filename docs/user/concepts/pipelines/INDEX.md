@@ -28,6 +28,8 @@ Every pipeline definition `{=}` (see [[blocks]]) must contain these elements in 
 
 Misordering these sections is a compile error (PGE01001).
 
+**IO marker scoping:** `[=]`, `[~]`, and `[*]` are IO markers that scope to their parent operator via indentation — they are not position-fixed elements. `[=]` appears at Order 2 for top-level pipeline IO, but also nests under `[Q]` (queue parameter wiring), `[W]` (wrapper IO wiring), and execution markers (`[r]`/`[p]`/`[b]`) as call-site IO. In every case `[=]` means the same thing: IO line for a pipeline reference (`=`). The parent operator determines the scope.
+
 **Metadata:** `[%]` lines declare description, version, authors, license, deprecation, and aliases. `.info#serial` holds custom metadata. Duplicate metadata field names are a compile error (PGE01015). See [[blocks#Metadata]].
 
 **Note:** `[T]` triggers, `[=]` IO declarations, and `[=] !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment (PGE01002). Error declarations (`[=] !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[T]` line and wire trigger outputs to pipeline inputs.

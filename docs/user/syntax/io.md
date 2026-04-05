@@ -43,7 +43,7 @@ The statement marker echoes the parent operator's prefix:
 - `[~]` — IO line for a collection-expand operator (`~`)
 - `[*]` — IO line for a collection-collect operator (`*`)
 
-**Indentation rule:** IO lines are indented one level under their parent operator to clearly show which IO belongs to which operation. This applies to all IO markers (`[=]`, `[~]`, `[*]`).
+**Scoping rule:** IO markers (`[=]`, `[~]`, `[*]`) always scope to their parent operator via indentation — they are not tied to a fixed structural position. `[=]` means "IO for a pipeline reference (`=`)" wherever it appears: top-level pipeline IO, nested under `[Q]` for queue parameters, under `[W]` for wrapper wiring, or under `[r]`/`[p]`/`[b]` for call-site IO. The same principle applies to `[~]` (expand operator IO) and `[*]` (collect operator IO).
 
 ## IO Inputs as Variables
 
