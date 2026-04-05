@@ -59,7 +59,7 @@ RawString (compiler intrinsic — Layer 0) [##Leaf]
 #Map (sparse key-value pairs — macro-generated via {M} #Map) (Layer 2)
 #Array (contiguous, rectangular, N-dimensional — macro-generated via {M} #Array) (Layer 2)
 #Dataframe (row-oriented table — array of maps, macro-generated via {M} #Dataframe) (Layer 2)
-#Serial (schema-free, unlimited depth — plain {#}, no macro)
+#Serial (unconstrained, unlimited depth — plain {#}, no macro)
 ```
 
 ## See Also

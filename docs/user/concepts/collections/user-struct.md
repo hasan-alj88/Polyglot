@@ -29,4 +29,4 @@ The `<` accessor is for flexible children only. Fixed fields (`.`) and flexible 
 
 - [[syntax/types/structs|Struct Types]] — struct definitions, enum vs value fields, and level rules
 - [[syntax/types/flexible-fields|Typed Flexible Fields]] — structs with `:` flexible levels
-- [[concepts/collections/serial|#Serial]] — schema-free alternative when struct shape is unknown
+- [[concepts/collections/serial|#Serial]] — unconstrained alternative when struct shape is unknown

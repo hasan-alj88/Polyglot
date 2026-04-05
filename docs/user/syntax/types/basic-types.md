@@ -150,7 +150,7 @@ Used as the element type for `%alias` — alias values may contain `.` and `:` t
 
 - `map` — sparse, homogeneous key-value pairs with `#KeyString` keys. Child access uses `<` operator (`$myMap<name`). See [[concepts/collections/INDEX|collections]].
 - `array` — contiguous, rectangular collection with typed elements and N-dimensional support. A `#Map` variant with `#UnsignedInt` keys. Child access uses `<` operator (`$myArray<0`). See [[concepts/collections/INDEX|collections]].
-- `serial` — schema-free. Any keys, any types, any depth. No compile-time validation of shape. Child access uses `<` operator (`$data<key`). See [[concepts/collections/INDEX|collections]].
+- `serial` — unconstrained. Any keys, any types, any depth. No compile-time validation of shape. Child access uses `<` operator (`$data<key`). See [[concepts/collections/INDEX|collections]].
 - `dataframe` — row-oriented table. A `#Dataframe` is an array of maps — each row is a `#Map`, the array holds rows. Row access uses `<` (array index), column access chains a second `<`: `$df<row<column`. See [[concepts/collections/INDEX|collections]].
 - struct (`{#}`) — defined schema. Compile-time enforced field names and types. See [[structs]].
 
