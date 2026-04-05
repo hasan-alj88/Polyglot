@@ -1,7 +1,7 @@
 ---
 audience: [architect, designer]
 type: spec
-updated: 2026-04-03
+updated: 2026-04-05
 ---
 
 # Object Type Branches
@@ -21,9 +21,9 @@ The `%` root has fixed branches for each object type prefix:
 | `%W` | Wrappers | Flexible (`:name`) | All `{W}` wrapper definitions |
 | `%Q` | Queues | Flexible (`:name`) | All `{Q}` queue definitions |
 | `%M` | Macros | Flexible (`:name`) | All `{M}` macro definitions |
-| `%!` | Errors | Fixed (`.namespace`) | Polyglot-defined namespaces; `.Error` has flexible `:` children |
-| `%@` | Packages | Flexible (`:<registry>:<id>::<name>`) | All `@`-prefixed package addresses; `::` separates registry from name |
-| `%_` | Permissions | All fixed (`.`) | All `_`-prefixed permission declarations; no instances, no `:` levels |
+| `%!` | Errors | Fixed (`.namespace`) | Polyglot-defined namespaces; `.Error` has flexible `:` children (uses `error_path`) |
+| `%@` | Packages | Flexible (`:<registry>:<id>::<name>`) | All `@`-prefixed package addresses; `::` separates registry from name (uses `package_path`) |
+| `%_` | Permissions | All fixed (`.`) | All `_`-prefixed permission declarations; no instances, no `:` levels (uses `permission_path`) |
 
 Plus `%definition` (fixed) for compile-time schema templates — including `%definition.#:{TypeName}` for type definitions, `%definition.=:{PipelineName}` for pipeline definitions, `%definition.T:{TriggerName}` for trigger definitions, `%definition.W:{WrapperName}` for wrapper definitions, `%definition.Q:{QueueName}` for queue definitions, `%definition.##:{SchemaName}` for `##` schema definitions, and `%definition.###:{FieldTypeName}` for `###` field type definitions.
 

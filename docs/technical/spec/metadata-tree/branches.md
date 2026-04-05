@@ -119,7 +119,7 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 
 ## Permission Branch
 
-`%_` stores permission declarations. Unlike other branches, `%_` has **no `:{instance}` level** and **no `:` flexible fields** — permissions are compile-time declarations with an entirely fixed schema. All categories and capabilities are Polyglot-defined, not user-extensible. See [[permissions]] for the full permission system.
+`%_` stores permission declarations. Unlike other branches, `%_` has **no `:{instance}` level** and **no `:` flexible fields** — permissions are compile-time declarations with an entirely fixed schema. All categories and capabilities are Polyglot-defined, not user-extensible. `%_` uses `permission_path` (not `instance_path`) — see [[path-grammar|Path Grammar]]. See [[permissions]] for the full permission system.
 
 ### Structure
 

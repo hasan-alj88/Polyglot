@@ -1,7 +1,7 @@
 ---
 audience: [architect, designer]
 type: spec
-updated: 2026-04-03
+updated: 2026-04-05
 ---
 
 # Path Grammar
@@ -25,15 +25,16 @@ field_type_prop ::= "%" "###" property_name
 
 | Element | Rule |
 |---------|------|
-| `type_prefix` | One of: `#`, `##`, `###`, `=`, `T`, `W`, `Q`, `~`, `*`, `$`, `M`, `!`, `@`, `_` |
-| `ref` | Object name — flexible field (`:`) |
-| `instance` | Instance number — flexible field (`:`) |
+| `type_prefix` | Follows `instance_path`: `#`, `##`, `###`, `=`, `T`, `W`, `Q`, `~`, `*`, `$`, `M` |
+| | Own grammar rule: `_` → `permission_path`, `!` → `error_path`, `@` → `package_path` |
+| `ref` | Object name — flexible field (`:`). Applies to `instance_path` prefixes only. |
+| `instance` | Instance number — flexible field (`:`). Applies to `instance_path` prefixes only. |
 | `field` | Fixed field path (`.`) within the instance |
 
-**Branch-specific rules:**
-- `%_` — all `.` fixed fields, no `:` anywhere. No ref or instance levels.
-- `%!` — `.` for Polyglot-defined namespaces and leaves. `.Error` children use `:` (user-extensible).
-- `%@` — `::` separates registry+ID from package name. `::` is treated as `:` in the tree.
+**Exception branch rules:**
+- `%_` uses `permission_path` — all `.` fixed fields, no `:` anywhere. No ref or instance levels.
+- `%!` uses `error_path` — `.` for Polyglot-defined namespaces and leaves. `.Error` children use `:` (user-extensible).
+- `%@` uses `package_path` — `::` separates registry+ID from package name. `::` is treated as `:` in the tree.
 
 ## Shorthand in User Code
 
