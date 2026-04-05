@@ -20,7 +20,8 @@ Source: [[vision]]
 | Trigger Monitor | Component that monitors events (file changes, schedules, webhooks, resource availability) that initiate automated tasks. Evaluates conditions and sends command signals — the decision-maker | Not a scheduler or cron |
 | Queue Handler | Component that reacts to signals from the Trigger Monitor, managing queue state and dispatching jobs to Runners. Never evaluates conditions or makes decisions | Not a manager or decision-maker — it only executes commands |
 | Runner | Component that executes pipelines, managing task lifecycle from dispatch to completion | Not a compiler |
-| Job | A single enqueued instance of a pipeline, identified by UID + hierarchy path. One pipeline can produce multiple concurrent jobs. Jobs have lifecycle state (`#QueueState`); pipelines have definitions | Not the pipeline definition itself |
+| Instance | The Nth concurrent run of the same pipeline definition, numbered sequentially (`:0`, `:1`, `:2`) in the metadata tree at `%=:Pipeline:N`. One definition can have many simultaneous instances; each instance contains its own jobs, IO state, and metadata values | Not a Job — an Instance is the whole pipeline run; Jobs are units of work within it |
+| Job | A unit of work within a pipeline instance, created at IO boundaries. Identified by UID + hierarchy path. Sequential `[r]` jobs chain on predecessor completion; parallel `[p]` jobs fork. Jobs have lifecycle state (`#QueueState`) and live at `%=:Pipeline:N.jobs:UID` in the metadata tree. See `#Job` type | Not the pipeline definition or Instance — a Job is a sub-unit within an Instance |
 | Pipeline | A chain of async tasks with defined data flow | Not a shell pipeline |
 | Fork | Conditional branching within a pipeline | Not a process fork |
 | Async-centric | Async as foundational design principle, not bolted on | Not "async-capable" or "async-supported" |

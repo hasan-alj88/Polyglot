@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #122 (match wildcard *? vs *) — Merged
+Phase: Issue #123 (Job vs Instance terminology) — Complete
 Plan: Complete — merged to main
 Status: Merged to main, issue closed
-Last activity: 2026-04-04 — Merged #122 to main, branch deleted
+Last activity: 2026-04-05 — Issue #123 complete, loop closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -54,17 +54,22 @@ Progress:
 - Issue #120: [██████████] 100% (1/1 plans — IO perspective terminology fix)
 - Issue #121: [██████████] 100% (3/3 plans — {N} native block type)
 - Issue #122: [██████████] 100% (1/1 plans — *? wildcard standardization)
+- Issue #123: [██████████] 100% (1/1 plans — Job vs Instance terminology)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #123 — Docs: Job vs Instance — undefined relationship between UID and sequential numbering
+Branch: docs/issue-123-job-vs-instance-undefined-relationship
+Labels: docs, P2-high
+Started: 2026-04-04
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/123
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
+  ✓        ✓        ✓        ○     [Loop complete — ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -167,6 +172,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #120 — IO perspective terminology fix | 2026-04-04 | "caller perspective" → "pipeline perspective"; one-line scoping rule added; merged to main |
 | Closed #121 — {N} native block type | 2026-04-04 | {N} block, #NativeKind enum, NativeKind.md, PGE01028 rewritten, 44 stdlib defs converted; merged to main |
 | Issue #122 — Standardize *? wildcard catch-all | 2026-04-04 | Bare `*` removed from match syntax; `*?` is the only wildcard form in both verbose and match conditionals; 5 files updated |
+| Issue #123 — Job vs Instance terminology | 2026-04-05 | {#} #Job struct (9 fields), glossary entries, Pipeline Branch %=:Pipeline:N.jobs:UID, data-is-trees clarification; Instance=sequential run, Job=UID-keyed work unit |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -185,13 +191,14 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-04
-Stopped at: Merged #122 to main, issue closed
-Next action: Pick next issue or push to origin
-Resume file: .paul/phases/issue-122-match-wildcard/122-01-SUMMARY.md
+Last session: 2026-04-05
+Stopped at: Issue #123 complete, loop closed
+Next action: /paul:merge to merge branch to main and close issue
+Resume file: .paul/phases/issue-123-job-vs-instance/123-01-SUMMARY.md
 Resume context:
-- Issue #122 complete and merged to main
-- Branch docs/issue-122-match-wildcard-cross-reference deleted
+- Issue #123 complete on branch docs/issue-123-job-vs-instance-undefined-relationship
+- All 3 tasks passed, SUMMARY created
+- Ready for /paul:merge
 
 ---
 *STATE.md — Updated after every significant action*
