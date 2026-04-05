@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #126 ([=] IO marker scoping rule) — Complete
-Plan: 130-01 complete
-Status: UNIFY complete, ready for commit and merge
-Last activity: 2026-04-05 — Issue #130 UNIFY complete
+Phase: Issue #131 (Permission branch %_ path grammar fix) — Ready for merge
+Plan: 01 complete — UNIFY done
+Status: Ready for commit and merge
+Last activity: 2026-04-05 — Issue #131 UNIFY complete
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -58,21 +58,23 @@ Progress:
 - Issue #124: [██████████] 100% (1/1 plans — QH vs DC glossary)
 - Issue #125: [██████████] 100% (1/1 plans — *All collect-all terminology)
 - Issue #126: [██████████] 100% (1/1 plans — [=] IO marker scoping rule)
+- Issue #129: [██████████] 100% (1/1 plans — Match Syntax naming consistency)
+- Issue #130: [██████████] 100% (1/1 plans — QH decision-making wording fix)
 
 ## Active Issue
 
-Issue: #130 — Docs: Trigger Monitor vs Queue Handler decision-making contradiction
-Branch: docs/issue-130-tm-vs-qh-decision-making-contradiction
+Issue: #131 — Docs: Permission branch %_ violates general path grammar :{ref}:{instance}
+Branch: docs/issue-131-permission-branch-path-grammar-violation
 Labels: docs, P2-high
 Started: 2026-04-05
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/130
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/131
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for commit and merge]
+  ✓        ✓        ✓        ○     [Issue #131 ready for merge]
 ```
 
 ## Accumulated Context
@@ -180,6 +182,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #125 — *All sync barrier vs collector terminology | 2026-04-05 | "sync barrier" → "collect-all" across 15 files; %* subcategorized (Data/Collect-all/Race) |
 | Closed #126 — [=] IO marker scoping rule | 2026-04-05 | Clarified [=]/[~]/[*] scope to parent operator via indentation; 4 files |
 | Closed #129 — Match Syntax naming consistency | 2026-04-05 | Unified to "Match Syntax"; dropped "Conditional Assignment Sugar"; added disambiguation to blocks.md |
+| Closed #130 — TM vs QH decision-making contradiction | 2026-04-05 | vision.md QH wording scoped to "trigger conditions or business logic"; glossary already correct |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -199,11 +202,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Issue #130 UNIFY complete
-Next action: /paul:merge to commit and merge to main
+Stopped at: Issue #131 UNIFY complete, ready for merge
+Next action: /paul:merge to commit and merge #131
 Resume context:
-- Issue #130 fix applied — vision.md QH wording updated
-- Branch docs/issue-130-tm-vs-qh-decision-making-contradiction ready for merge
+- Issue #131 changes applied to 3 metadata-tree files
+- SUMMARY at .paul/phases/issue-131-permission-path-grammar/01-SUMMARY.md
+- Issue #140 created for {_} permission object redesign
 
 ---
 *STATE.md — Updated after every significant action*
