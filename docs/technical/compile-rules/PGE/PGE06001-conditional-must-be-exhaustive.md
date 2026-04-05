@@ -5,7 +5,7 @@ name: Conditional Must Be Exhaustive
 severity: error
 ---
 
-### Rule 6.1 — Conditional Must Be Exhaustive
+# Rule 6.1 — Conditional Must Be Exhaustive
 `PGE06001`
 
 **Statement:** Every `[?]` conditional block must be exhaustive — every possible value of the branched type must have a defined path. Exhaustiveness is proven in two ways:
@@ -20,7 +20,7 @@ If neither static proof nor `*?` is present, PGE06001 fires.
 
 ---
 
-#### Exhaustiveness by Type
+## Exhaustiveness by Type
 
 | Type | Value Set | Rule | `*?` Required? |
 |------|-----------|------|----------------|
@@ -46,7 +46,7 @@ If neither static proof nor `*?` is present, PGE06001 fires.
 - [PGE06008 — Compound Condition Exhaustiveness](PGE06008-compound-condition-exhaustiveness.md)
 - [PGE06009 — Conditional Missing Comparison Operator](PGE06009-conditional-missing-comparison-operator.md)
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — exhaustiveness rules and PGE06001 error table
 - [[user/syntax/operators|Operators]] — exhaustiveness rule for `[?]` chains references PGE06001

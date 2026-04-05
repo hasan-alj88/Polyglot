@@ -5,7 +5,7 @@ name: Undefined Metadata Field Access
 severity: error
 ---
 
-### Rule 10.1 — Undefined Metadata Field Access
+# Rule 10.1 — Undefined Metadata Field Access
 `PGE12001`
 
 **Statement:** A metadata access expression (`$var%field`, `=Pipeline%field`, `#Data%field`) must reference a field that exists in the metadata schema for that object type. Each object type has a fixed set of valid metadata fields — accessing a field outside that schema is a compile error.
@@ -16,16 +16,16 @@ severity: error
 
 ---
 
-#### Valid Metadata Fields by Object Type
+## Valid Metadata Fields by Object Type
 
-##### Variable (`$`)
+### Variable (`$`)
 
 | Field | Type |
 |-------|------|
 | `%state` | `#live.#VarState` |
 | `%sourceError` | `#live.error` |
 
-##### Pipeline (`{=}`)
+### Pipeline (`{=}`)
 
 | Field | Type |
 |-------|------|
@@ -45,7 +45,7 @@ severity: error
 | `%alias` | — (user-declared `[%]`) |
 | `%info` | `#serial` (user-declared `[%]`) |
 
-##### Data (`{#}`)
+### Data (`{#}`)
 
 | Field | Type |
 |-------|------|

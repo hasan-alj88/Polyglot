@@ -5,7 +5,7 @@ name: Conditional Type-Operator Mismatch
 severity: error
 ---
 
-### Rule 4.15 — Conditional Type-Operator Mismatch
+# Rule 4.15 — Conditional Type-Operator Mismatch
 `PGE04015`
 
 **Statement:** The comparison operator in a `[?]` conditional branch must be compatible with the subject variable's type, and the operand type must be compatible with both the operator and the subject. Numerics (`#int` and `#float`) form one family and freely interoperate. All other types require exact type matching.
@@ -16,9 +16,9 @@ severity: error
 
 ---
 
-#### Compatibility Tables
+## Compatibility Tables
 
-##### Equality Operators (`=?`, `=!?`)
+### Equality Operators (`=?`, `=!?`)
 
 | Left (subject) | Operator | Right (operand) | Valid? |
 |----------------|----------|-----------------|--------|
@@ -43,7 +43,7 @@ severity: error
 
 *(Same table applies to `=!?`)*
 
-##### Ordering Operators (`>?`, `<?`, `>!?`, `<!?`)
+### Ordering Operators (`>?`, `<?`, `>!?`, `<!?`)
 
 | Left (subject) | Operator | Right (operand) | Valid? |
 |----------------|----------|-----------------|--------|
@@ -61,7 +61,7 @@ severity: error
 
 *(Same table applies to `<?`, `>!?`, `<!?`)*
 
-##### Range Operators (`?[lo,hi]`, `?(lo,hi)`, mixed)
+### Range Operators (`?[lo,hi]`, `?(lo,hi)`, mixed)
 
 | Subject | Operator | Lo bound | Hi bound | Valid? |
 |---------|----------|----------|----------|--------|
@@ -81,7 +81,7 @@ severity: error
 
 *(Same table applies to `?(,)` and mixed `?[,)` / `?(,]`)*
 
-##### Enum Match (`.Value`)
+### Enum Match (`.Value`)
 
 | Left (subject) | Operator | Right (operand) | Valid? |
 |----------------|----------|-----------------|--------|
@@ -92,7 +92,7 @@ severity: error
 | `#string` | `.Value` | any | no — PGE04015 |
 | `#bool` | `.Value` | any | no — PGE04015 |
 
-##### Wildcard (`*?`)
+### Wildcard (`*?`)
 
 | Left (subject) | Operator | Valid? |
 |----------------|----------|--------|
@@ -200,6 +200,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[syntax/operators|Operators]] — type-operator compatibility rules for conditionals

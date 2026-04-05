@@ -5,7 +5,7 @@ name: Invalid Inline Pipeline Argument
 severity: error
 ---
 
-### Rule 10.2 — Invalid Inline Pipeline Argument
+# Rule 10.2 — Invalid Inline Pipeline Argument
 `PGE12002`
 
 **Statement:** When an inline pipeline call `=Foo"arg"` targets a pipeline that declares `.inlineFormat#array:RawString` metadata, the inline string argument must match at least one of the declared regex patterns. If no pattern matches, the call is a compile error.
@@ -16,7 +16,7 @@ severity: error
 
 ---
 
-#### Metadata Declaration
+## Metadata Declaration
 
 Pipelines accepting inline arguments declare format expectations in `[%]`:
 
