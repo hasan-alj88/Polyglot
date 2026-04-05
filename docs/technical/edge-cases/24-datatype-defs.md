@@ -27,7 +27,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 | EC-24.13 | 0D array | Dimension collapse to scalar |
 | EC-24.14 | Empty collections | Zero-element #Array and #Map |
 | EC-24.15 | Invalid key type | #Int as map key (PGE11004) |
-| EC-24.16 | #Serial — no ## schema constraints | Unlimited depth escape hatch (PGW11003 exemption) |
+| EC-24.16 | #Serial — maximally permissive schemas | Unlimited depth escape hatch (PGW11003 exemption) |
 | EC-24.17 | #Dataframe status | Row-oriented access via `$df<row<column` |
 | EC-24.18 | Stale %Property notation | stdlib types.md missing `##` prefix |
 | EC-24.19 | [M] merge behavior (identity rule) | Outer {#} names result, [M] fills body |
@@ -390,19 +390,22 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [r] $custom#map:SafeKey:int <~ {}
 ```
 
-### EC-24.16: #Serial — no ## schema constraints
+### EC-24.16: #Serial — maximally permissive schemas
 
 **EBNF:** `type_definition` — `%##Depth.Max << -1` on a stdlib type.
-**What it tests:** #Serial uses `%##Depth.Max << -1` (unlimited depth). PGW11003 warns about unlimited depth on USER types, but #Serial is stdlib — it is the intentional escape hatch for schema-free data. Show that user types with `-1` get the warning but #Serial does not. See [[syntax/types/schema-properties#Schema Properties]].
+**What it tests:** #Serial uses maximally permissive schema properties to remove every structural constraint. PGW11003 warns about unlimited depth on USER types, but #Serial is stdlib — it is the intentional escape hatch for unconstrained data. Show that user types with `-1` get the warning but #Serial does not. See [[syntax/types/schema-properties#Schema Properties]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
 ```polyglot
 [ ] #Serial — stdlib, no PGW11003
 {#} #Serial
    [#] %##Alias << "serial"
-   [#] %##Children.Gap << #True
+   [#] << ##Deep
+   [#] << ##Sparse
+   [#] << ##Heterogeneous
    [#] %##Children.Ordered << #False
-   [#] %##Depth.Max << -1
+   [#] %##Children.Regular << #False
+   [#] %##Children.Max << -1
    [:] :*#*
 
 [ ] PGW11003 — user type with unlimited depth

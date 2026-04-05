@@ -31,7 +31,7 @@ RawString (compiler intrinsic) [##Leaf]
 #Map:KeyType:ValueType (macro-generated — sparse, homogeneous key-value pairs)
 #Array:ValueType:Dim (macro-generated — contiguous, rectangular, N-dimensional — #Map variant)
 #Dataframe:ColumnEnum:CellType (macro-generated — row-oriented, Array of Map)
-#Serial (schema-free, unlimited depth)
+#Serial (unconstrained, unlimited depth)
 
 #Code:<Lang>.Output (runtime execution output — .stdout, .stderr, .return)
 #PyEnv (Python runtime environment handle)

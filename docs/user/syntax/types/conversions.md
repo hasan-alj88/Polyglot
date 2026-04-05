@@ -77,5 +77,5 @@ See [TYPE-IDENTITY](../../technical/compile-rules/TYPE-IDENTITY.md) rules 5 and 
 ## See Also
 
 - [[syntax/types/structs|Struct Types]] — struct definitions and field rules
-- [[concepts/collections/serial|#Serial]] — schema-free tree type
+- [[concepts/collections/serial|#Serial]] — unconstrained tree type
 - [[concepts/pipelines/error-handling|Error Handling]] — `[!]` blocks for handling conversion failures

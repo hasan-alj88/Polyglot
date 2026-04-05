@@ -147,7 +147,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | collections/INDEX.md | user | spec | Collection hierarchy and types summary |
 | collections/map.md | user | spec | #Map base collection |
 | collections/array.md | user | spec | #Array map variant |
-| collections/serial.md | user | spec | #Serial schema-free tree |
+| collections/serial.md | user | spec | #Serial unconstrained tree |
 | collections/dataframe.md | user | spec | #Dataframe and nested safety |
 | collections/user-struct.md | user | spec | User-defined struct as collection |
 | collections/expand.md | user | spec | ~ expand operators |

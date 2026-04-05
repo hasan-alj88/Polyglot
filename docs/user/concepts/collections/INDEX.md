@@ -23,7 +23,7 @@ Every collection in Polyglot is a tree. `#Map` is the universal flat key-value c
 | `#Map:K:V` | Base collection (macro-generated) | `K` (`##EnumLeafs`) | Flat key-value |
 | `#Array:V:Dim` | `#Map` variant (macro-generated) | `#UnsignedInt` | Cartesian product of 0..n-1 per dimension |
 | `#Dataframe:E:C` | Row-oriented table (macro-generated) | `##EnumLeafs` columns | Array of Map — each row is a map |
-| `#Serial` | Schema-free tree | Any | Unlimited depth, no constraints |
+| `#Serial` | Unconstrained tree | Any | Unlimited depth, no constraints |
 
 User-defined structs (`{#}`) define fixed-field types with `.` accessor. Collections use `<` for flexible children. These two accessors can be combined: `$sales<0.product`.
 
@@ -39,7 +39,7 @@ Collections are **assembled at once** using collect operators (`*` prefix) — n
 |------|--------|
 | [[map]] | #Map base collection |
 | [[array]] | #Array map variant |
-| [[serial]] | #Serial schema-free tree |
+| [[serial]] | #Serial unconstrained tree |
 | [[user-struct]] | User-defined struct as collection |
 | [[dataframe]] | #Dataframe, nested safety |
 | [[expand]] | ~ expand operators |

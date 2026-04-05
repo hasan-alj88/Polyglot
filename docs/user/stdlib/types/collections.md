@@ -219,7 +219,7 @@ Dataframe rows are accessed by index, columns by key: `$df<row<column`.
 
 ## #Serial
 
-Schema-free collection with unlimited depth. Any keys, any types, any nesting. No compile-time validation of shape. Child access uses the `<` operator (`$data<key`). `#Serial` is a plain `{#}` definition — no macro needed.
+Unconstrained collection with unlimited depth. Any keys, any types, any nesting. No compile-time validation of shape. Child access uses the `<` operator (`$data<key`). `#Serial` is a plain `{#}` definition — no macro needed.
 
 ```polyglot
 {#} #Serial
@@ -227,17 +227,23 @@ Schema-free collection with unlimited depth. Any keys, any types, any nesting. N
    [#] << ##Deep
    [#] << ##Sparse
    [#] << ##Heterogeneous
+   [#] %##Children.Ordered << #False
+   [#] %##Children.Regular << #False
+   [#] %##Children.Max << -1
    [:] :*#*
 ```
 
 ### Schema Properties
 
-| Property | Value | Meaning |
-|----------|-------|---------|
-| `%##Alias` | `"serial"` | Shorthand `#serial` |
-| `##Deep` | `%##Depth.Max << -1` | Unlimited flexible nesting |
-| `##Sparse` | `%##Children.Gap << #True` | Gaps allowed |
-| `##Heterogeneous` | `%##Children.Uniform << #False` | Mixed value types |
+| Property | Value | Constraint Removed |
+|----------|-------|--------------------|
+| `%##Alias` | `"serial"` | — (shorthand `#serial`) |
+| `##Deep` | `%##Depth.Max << -1` | Depth limit |
+| `##Sparse` | `%##Children.Gap << #True` | No-gap requirement |
+| `##Heterogeneous` | `%##Children.Uniform << #False` | Same-schema requirement |
+| `%##Children.Ordered` | `#False` | Ordering requirement |
+| `%##Children.Regular` | `#False` | Regularity requirement |
+| `%##Children.Max` | `-1` | Max children limit |
 
 ---
 

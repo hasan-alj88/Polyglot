@@ -495,7 +495,7 @@ Each rule follows this structure:
 
 **Statement:** Setting `%##Depth.Max << -1` (unlimited depth) on a user-defined type emits a warning. Only `#Serial` should use unlimited depth.
 
-**Rationale:** Unlimited depth is a deliberate escape hatch for schema-free data. User-defined types should have bounded depth for predictable tree traversal and memory use.
+**Rationale:** Unlimited depth is a deliberate escape hatch for unconstrained data. User-defined types should have bounded depth for predictable tree traversal and memory use.
 
 **WARNING:**
 ```polyglot

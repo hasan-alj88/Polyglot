@@ -9,7 +9,7 @@ severity: error
 `PGE04009`
 
 **Statement:** When a `serial` value is pushed into a `struct`-typed target and the compiler cannot statically prove that the serial's fields satisfy the struct's schema, the push must be wrapped in `[!]` error handling with `*Continue >FallBack`. If the error handling is absent, the compiler raises PGE04009.
-**Rationale:** Murphy's Law — if a serial→struct conversion can fail, it will fail. Serial is schema-free; struct has a fixed schema. When the compiler cannot guarantee compatibility, the user must handle the mismatch explicitly. This ensures every uncertain conversion has a recovery path with a known-good fallback value. No warnings, no hoping for the best.
+**Rationale:** Murphy's Law — if a serial→struct conversion can fail, it will fail. Serial is unconstrained; struct has a fixed schema. When the compiler cannot guarantee compatibility, the user must handle the mismatch explicitly. This ensures every uncertain conversion has a recovery path with a known-good fallback value. No warnings, no hoping for the best.
 **Detection:** The compiler identifies every assignment where a `#serial` source flows into a `#StructType` target. If the serial's fields are all statically known and provably match → no action needed. If the serial's fields are all statically known and provably wrong → PGE04002. Otherwise (partial knowledge, dynamic origin, conditional fields), the compiler checks for an enclosing `[!]` block with `*Continue >FallBack`. Absent → PGE04009.
 
 **Three outcomes for serial→struct push:**

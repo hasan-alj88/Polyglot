@@ -6,13 +6,30 @@ updated: 2026-03-30
 
 <!-- @concepts/collections/INDEX -->
 
-## #Serial — Schema-Free Tree
+## #Serial — Unconstrained Tree
 
-`#Serial` has no `##` schema constraints at all. It accepts any compilable tree structure — depth, ordering, gaps, and uniformity are all unconstrained. This is the "raw tree" escape hatch.
+`#Serial` achieves its unconstrained nature by explicitly removing every structural constraint through schema properties:
+
+| Schema / Property | Constraint Removed | Effect |
+|---|---|---|
+| `##Deep` (`%##Depth.Max << -1`) | Depth limit | Unlimited nesting |
+| `##Sparse` (`%##Children.Gap << #True`) | No-gap requirement | Gaps allowed in child keys |
+| `##Heterogeneous` (`%##Children.Uniform << #False`) | Same-schema requirement | Children can be mixed types |
+| `%##Children.Ordered << #False` | Ordering requirement | No assumed key order |
+| `%##Children.Regular << #False` | Regularity requirement | Branches at same depth can have different child counts |
+| `%##Children.Max << -1` | Max children limit | Unlimited children per node |
+
+By removing all structural constraints, `#Serial` accepts any compilable tree shape. This is the "raw tree" escape hatch — it has schema properties, but every one is maximally permissive.
 
 ```polyglot
 {#} #Serial
    [#] %##Alias << "serial"
+   [#] << ##Deep
+   [#] << ##Sparse
+   [#] << ##Heterogeneous
+   [#] %##Children.Ordered << #False
+   [#] %##Children.Regular << #False
+   [#] %##Children.Max << -1
    [:] :*#*
 ```
 
