@@ -42,6 +42,28 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 - **Job hierarchy** — jobs form a parent/child tree within the instance. `.hierarchy` stores the dot-separated path (e.g., `ProcessData/job1/job3`). `.parent` references the parent job UID.
 - **`live` fields** — pipeline instances report runtime state: `status`, IO port values. See [[metadata|user/concepts/metadata]].
 
+### Job Positional Addressing
+
+Jobs within a pipeline instance are addressed positionally by marker type and index. This is the **compiler-internal canonical form** — not user-facing syntax. Users access jobs through `.jobs:UID` at runtime.
+
+```polyglot
+%=:ProcessData:0
+├── .r.0                        <- first [r] job (=FetchData)
+├── .p.0                        <- first [p] job (=Transform)
+├── .p.1                        <- second [p] job (=Validate)
+└── .r.1                        <- second [r] job (=Save)
+```
+
+Positional paths use the marker letter (`r`, `p`, `b`) and a zero-based index within that marker type. The compiler assigns positions in source order. These paths map to runtime `.jobs:UID` entries via the job's `.hierarchy` field.
+
+Nested sub-jobs extend the positional path:
+
+```polyglot
+%=:ProcessData:0.p.0            <- [p] =Transform
+%=:ProcessData:0.p.0.r.0        <- [r] inside =Transform's body
+%=:ProcessData:0.p.0.p.0        <- [p] inside =Transform's body
+```
+
 ## Wrapper Branch
 
 `%W` stores wrapper definitions (`{W}`). Wrappers provide setup/cleanup scope around pipeline execution bodies. Each `[W]` invocation in a pipeline creates a new wrapper instance.
