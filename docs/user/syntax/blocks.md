@@ -59,7 +59,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 
 | Marker | Meaning |
 |--------|---------|
-| `[=]` | Pipeline IO line. See [[io#IO Line Pattern]] |
+| `[=]` | Pipeline IO line — scopes to parent operator via indentation (top-level IO, `[Q]`, `[W]`, `[r]`/`[p]`/`[b]`). See [[io#IO Line Pattern]] |
 | `[~]` | Collection-expand IO line. See [[concepts/collections/expand#Expand Operators]] |
 | `[*]` | Collection-collect IO line. See [[concepts/collections/collect#Collect Operators]] |
 | `[*] <<` | Wait input — wait for variable to be Final (used inside `[*]` blocks). See [[concepts/collections/collect#Collect-All & Race Collectors]] |

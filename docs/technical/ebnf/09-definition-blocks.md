@@ -150,6 +150,8 @@ queue_section       ::= indent "[Q]" queue_ref NEWLINE
 queue_ref           ::= pipeline_ref | queue_id ;
 
 queue_io_line       ::= "[=]" typed_io_param assignment_op value_expr ;
+                      (* Same [=] IO marker as top-level io_line — scoped to the parent
+                         [Q] operator via indentation, not a different marker. *)
 
 queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
                          { indent queue_io_line NEWLINE } ;
@@ -177,6 +179,8 @@ wrapper_section     ::= indent "[W]" pipeline_ref NEWLINE
                          { indent wrapper_io_line NEWLINE } ;
 
 wrapper_io_line     ::= "[=]" variable_id assignment_op value_expr ;
+                      (* Same [=] IO marker as top-level io_line — scoped to the parent
+                         [W] operator via indentation, not a different marker. *)
 ```
 
 **Rule:** `[W]` references a wrapper (`{W}`). Wrapper IO is wired using `[=]` with `$` variables. See §9.4b for wrapper definition syntax and IO wiring details.
