@@ -60,14 +60,14 @@ flowchart LR
 | `*Agg.Min` | Minimum numeric value | `<number`, `>min` |
 | `*Agg.Concatenate` | Concatenated string | `<string`, `>result` |
 
-## Sync & Race Collectors
+## Collect-All & Race Collectors
 
 <!-- @io:Wait and Collect-Into Markers -->
-Sync and race collectors operate **outside** expand scopes — they work on variables produced by parallel `[p]` pipeline calls. They use `[*] <<` (wait input) and `[*] >>` (collect output) forms (see [[io#Wait and Collect IO]]).
+Collect-all and race collectors operate **outside** expand scopes — they work on variables produced by parallel `[p]` pipeline calls. They use `[*] <<` (wait input) and `[*] >>` (collect output) forms (see [[io#Wait and Collect IO]]).
 
 ```mermaid
 flowchart LR
-    subgraph sync ["*All — sync barrier"]
+    subgraph sync ["*All — collect all"]
         direction LR
         PA["[p] A → $a"]
         PB["[p] B → $b"]
@@ -107,7 +107,7 @@ Parallel execution enforces strict variable isolation:
 - A `[p]` output variable cannot be pulled before its `[*]` collector has executed (PGE03003)
 - A `[p]` parallel and its `[*]` collector must pair within valid section boundaries — same scope, or `[\]` setup to `[/]` cleanup. A `[p]` in setup cannot be collected in the execution body (PGE03004). See [[concepts/pipelines/wrappers#Parallel Forking in Setup]] for the pairing constraint.
 
-### `*All` — Sync Barrier
+### `*All` — Collect All
 
 Waits for ALL listed variables to become Final. Uses `[*] <<` only — no `[*] >>`. Variables stay accessible after.
 

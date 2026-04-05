@@ -155,7 +155,7 @@ This is the same `<<`/`>>` direction convention used throughout the language:
 | Expand IO `[~]` | `<Array << $items` — push-left collection in | `>item >> $item` — push-right each item out |
 | Collect IO `[*]` | `[*] << $var` — waits for Final, var stays accessible | `[*] >> $out` — receives collected value, inputs cancelled |
 
-See [[concepts/collections/collect#Sync & Race Collectors]] for the collectors that use these forms.
+See [[concepts/collections/collect#Collect-All & Race Collectors]] for the collectors that use these forms.
 
 ### Direct Output Port Writing
 

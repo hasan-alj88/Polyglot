@@ -5,9 +5,9 @@ updated: 2026-03-20
 status: draft
 ---
 
-# *All / *First / *Nth — Sync & Race Collectors
+# *All / *First / *Nth — Collect-All & Race Collectors
 
-Used outside expand scopes to synchronize or race variables from parallel `[p]` pipeline calls. Uses `[*] <<` (wait input) and `[*] >>` (collect output).
+Used outside expand scopes to collect variables from parallel `[p]` pipeline calls. Uses `[*] <<` (wait input) and `[*] >>` (collect output).
 
 No `[@]` import needed.
 
@@ -52,4 +52,4 @@ $*
    [*] << $unneededVar
 ```
 
-See also: [collections.md §Sync & Race Collectors](../concepts/collections.md)
+See also: [collections.md §Collect-All & Race Collectors](../concepts/collections.md)

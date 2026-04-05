@@ -20,7 +20,7 @@ severity: error
 | `[!]` | Yes | Error handlers scoped under `[r]` calls within `[\]` or `[/]` |
 | `[p]` | Yes | Parallel fork within `[\]` — runs concurrently with execution body |
 | `[b]` | Yes | Fire-and-forget within `[\]` — no collection possible |
-| `[*]` | Yes | Collectors within `[/]` — sync barrier for `[p]` forks started in `[\]` |
+| `[*]` | Yes | Collectors within `[/]` — collect `[p]` forks started in `[\]` |
 | `[T]` | **No** | Triggers are pipeline-only |
 | `[Q]` | **No** | Queues are pipeline-only |
 | `[=]` | **No** | Pipeline-level IO is pipeline-only |

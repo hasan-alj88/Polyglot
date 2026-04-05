@@ -25,7 +25,7 @@ This document has been split into per-namespace files organized by identifier pr
 ## Collectors (* → `%*`)
 - [*Into](stdlib/collectors/Into/) — collect into collection
 - [*Agg](stdlib/collectors/Agg.md) — reduce to single value
-- [*All / *First / *Nth](stdlib/collectors/Sync.md) — sync & race collectors
+- [*All / *First / *Nth](stdlib/collectors/Sync.md) — collect-all & race collectors
 - [*Continue](stdlib/collectors/Continue.md) — error recovery
 
 ## Types (# → `%#`)

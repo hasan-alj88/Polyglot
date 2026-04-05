@@ -140,7 +140,7 @@ updated: 2026-03-30
    [*] >result >> $concat
 ```
 
-### EC-12.9: `*All` — sync barrier with `[*] <<` only
+### EC-12.9: `*All` — collect all with `[*] <<` only
 
 **EBNF:** `sync_operator ::= "All"` ; `wait_input ::= "[*]" "<<" variable_ref`
 

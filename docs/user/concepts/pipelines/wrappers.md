@@ -114,4 +114,4 @@ See [[stdlib/INDEX#Pipeline Namespaces|Wrappers]] for the full wrapper catalog.
 
 - [[concepts/pipelines/execution|Execution]] — execution body that runs between setup and cleanup
 - [[concepts/pipelines/queue|Queue]] — `[Q]` queue that precedes the wrapper declaration
-- [[concepts/collections/collect|Collect Operators]] — `*All` sync barrier used in `[/]` cleanup for parallel forking
+- [[concepts/collections/collect|Collect Operators]] — `*All` collect-all used in `[/]` cleanup for parallel forking
