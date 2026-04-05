@@ -89,6 +89,8 @@ The tree has two layers:
 
 One definition can have many instances. A pipeline that runs three times concurrently has instances `:0`, `:1`, `:2` — each with its own metadata values.
 
+Each instance runs independently and contains its own **jobs** — the units of work created at IO boundaries within the pipeline. Jobs are identified by UID (not sequential numbers) and tracked at `%=:Pipeline:N.jobs:UID`. See [[glossary]] for the formal distinction between Instance and Job.
+
 The following diagram shows how schema definitions produce runtime instances across three key branches:
 
 ```mermaid
