@@ -25,7 +25,7 @@ field_type_prop ::= "%" "###" property_name
 
 | Element | Rule |
 |---------|------|
-| `type_prefix` | Follows `instance_path`: `#`, `##`, `###`, `=`, `T`, `W`, `Q`, `~`, `*`, `$`, `M` |
+| `type_prefix` | Follows `instance_path`: `#`, `=`, `T`, `W`, `Q`, `~`, `*`, `$`, `M` |
 | | Own grammar rule: `_` → `permission_path`, `!` → `error_path`, `@` → `package_path` |
 | `ref` | Object name — flexible field (`:`). Applies to `instance_path` prefixes only. |
 | `instance` | Instance number — flexible field (`:`). Applies to `instance_path` prefixes only. |
