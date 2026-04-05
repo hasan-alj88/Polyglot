@@ -65,7 +65,7 @@ Review in batches by section. Each edge case includes:
 | S9 Definitions | EC-9.1--9.19 | Package imports, enum/value fields, pipeline structure, triggers, IO modes, macro parallel fork, empty definitions, trigger anomalies, wrapper IO discard |
 | S10 Execution | EC-10.1--10.16 | Pipeline call + error, stdlib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr, orphan continuation, self-chain, foreign code |
 | S11 Control Flow | EC-11.1--11.9 | Conditional chains, error scoping, logical operators, match syntax, wildcard-only match, variable match, pipeline comparison |
-| S12 Collections | EC-12.1--12.16 | All expand variants, all collect variants, direct output, multiple collectors, sync/race collectors, multi-wave, [*] <</>>/semantics, orphaned collectors/markers |
+| S12 Collections | EC-12.1--12.16 | All expand variants, all collect variants, direct output, multiple collectors, collect-all/race collectors, multi-wave, [*] <</>>/semantics, orphaned collectors/markers |
 | S13 Comments | EC-13.1--13.3 | Square, curly, multiline |
 | S14 Lifecycle | EC-14.1--14.7 | Default->Final, Final immutability, leaf-only, all-or-none, Final-then-Default, input immutability, data load schema |
 | S15 Metadata Blocks | EC-15.1--15.5 | `[%]` user fields, alias, `.info#serial`, `%` live accessor, empty alias |

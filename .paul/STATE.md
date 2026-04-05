@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #123 (Job vs Instance terminology) — Complete
+Phase: Issue #124 (QH vs DC glossary) — Complete
 Plan: Complete — merged to main
 Status: Merged to main, issue closed
-Last activity: 2026-04-05 — Issue #123 complete, loop closed
+Last activity: 2026-04-05 — Issue #124 complete, loop closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -55,17 +55,22 @@ Progress:
 - Issue #121: [██████████] 100% (3/3 plans — {N} native block type)
 - Issue #122: [██████████] 100% (1/1 plans — *? wildcard standardization)
 - Issue #123: [██████████] 100% (1/1 plans — Job vs Instance terminology)
+- Issue #124: [██████████] 100% (1/1 plans — QH vs DC glossary)
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #125 — Docs: *All called 'Sync Barrier' in collect doc but 'Collector' in metadata spec
+Branch: docs/issue-125-all-sync-barrier-vs-collector
+Labels: docs, P2-high
+Started: 2026-04-05
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/125
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
+  ○        ○        ○        ○     [Issue #125 active]
 ```
 
 ## Accumulated Context
@@ -169,6 +174,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #121 — {N} native block type | 2026-04-04 | {N} block, #NativeKind enum, NativeKind.md, PGE01028 rewritten, 44 stdlib defs converted; merged to main |
 | Issue #122 — Standardize *? wildcard catch-all | 2026-04-04 | Bare `*` removed from match syntax; `*?` is the only wildcard form in both verbose and match conditionals; 5 files updated |
 | Issue #123 — Job vs Instance terminology | 2026-04-05 | {#} #Job struct (9 fields), glossary entries, Pipeline Branch %=:Pipeline:N.jobs:UID, data-is-trees clarification; Instance=sequential run, Job=UID-keyed work unit |
+| Closed #124 — Queue Handler vs Dispatch Coordinator glossary | 2026-04-05 | Added DC glossary entry; narrowed QH "never makes decisions" to trigger/business logic scope |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -188,12 +194,11 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Merged #123 to main, issue closed
+Stopped at: Merged #124 to main, issue closed
 Next action: Pick next issue or push to origin
-Resume file: .paul/phases/issue-123-job-vs-instance/123-01-SUMMARY.md
 Resume context:
-- Issue #123 complete and merged to main
-- Branch docs/issue-123-job-vs-instance-undefined-relationship deleted
+- Issue #124 complete and merged to main
+- Branch docs/issue-124-queue-handler-dispatch-coordinator-glossary deleted
 
 ---
 *STATE.md — Updated after every significant action*

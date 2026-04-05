@@ -16,7 +16,7 @@ The `%` root has fixed branches for each object type prefix:
 | `%=` | Pipelines | Flexible (`:name`) | All `{=}` pipeline definitions |
 | `%T` | Triggers | Flexible (`:name`) | All `{T}` trigger pipeline definitions |
 | `%~` | Expanders | Flexible (`:name`) | All `~ForEach.*` expand operators |
-| `%*` | Collectors | Flexible (`:name`) | All `*Into.*`, `*Agg.*`, `*All`, `*First`, `*Nth` |
+| `%*` | Collectors | Flexible (`:name`) | **Data:** `*Into.*`, `*Agg.*` · **Collect-all:** `*All` · **Race:** `*First`, `*Nth` |
 | `%$` | Variables | Flexible (`:name`) | All `$`-prefixed variables |
 | `%W` | Wrappers | Flexible (`:name`) | All `{W}` wrapper definitions |
 | `%Q` | Queues | Flexible (`:name`) | All `{Q}` queue definitions |

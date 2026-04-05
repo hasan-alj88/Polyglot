@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### ST-1: Full employee onboarding — imports, trigger, parallel, collect, errors, chain
 
-**What it tests:** Full production-grade pipeline combining package imports, `=T.Call` trigger, parallel execution, `*All` sync barrier, chain execution, and per-call error handling.
+**What it tests:** Full production-grade pipeline combining package imports, `=T.Call` trigger, parallel execution, `*All` collect-all, chain execution, and per-call error handling.
 
 ```polyglot
 {@} @Local:001.HR.Onboarding:v2.0.0

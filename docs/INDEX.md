@@ -151,7 +151,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | collections/dataframe.md | user | spec | #Dataframe and nested safety |
 | collections/user-struct.md | user | spec | User-defined struct as collection |
 | collections/expand.md | user | spec | ~ expand operators |
-| collections/collect.md | user | spec | * collect operators and sync/race |
+| collections/collect.md | user | spec | * collect operators and collect-all/race |
 | collections/examples.md | user | spec | Expand/transform/collect examples |
 
 ### docs/user/stdlib/

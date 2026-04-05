@@ -43,5 +43,5 @@ Collections are **assembled at once** using collect operators (`*` prefix) — n
 | [[user-struct]] | User-defined struct as collection |
 | [[dataframe]] | #Dataframe, nested safety |
 | [[expand]] | ~ expand operators |
-| [[collect]] | * collect operators, sync & race |
+| [[collect]] | * collect operators, collect-all & race |
 | [[examples]] | Expand/transform/collect examples, fallback |

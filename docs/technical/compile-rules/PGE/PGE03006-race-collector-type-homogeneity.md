@@ -8,7 +8,7 @@ severity: error
 ### Rule 3.6 — Race Collector Type Homogeneity
 `PGE03006`
 
-**Statement:** All `[*] <<` candidate inputs to `*First`, `*Second`, or `*Nth` race collectors must match the target variable's schema (per [TYPE-IDENTITY](../TYPE-IDENTITY.md)). Mixed-schema candidates are a compile error. The `[*] >>` output inherits the target schema. This rule does not apply to `*All` (sync barrier) — `*All` has no type constraint since it does not merge values into a single output.
+**Statement:** All `[*] <<` candidate inputs to `*First`, `*Second`, or `*Nth` race collectors must match the target variable's schema (per [TYPE-IDENTITY](../TYPE-IDENTITY.md)). Mixed-schema candidates are a compile error. The `[*] >>` output inherits the target schema. This rule does not apply to `*All` (collect-all) — `*All` has no type constraint since it does not merge values into a single output.
 **Rationale:** Race collectors pick a winner from competing parallels. The caller receives one value via `[*] >>` — if candidates have different schemas, the output type is ambiguous. Schema matching per PGE04001 eliminates runtime type confusion.
 **Detection:** The compiler resolves the target variable's schema, then compares each `[*] <<` input's schema against it per PGE04001. If any input's schema differs from the target, PGE03006 fires.
 
