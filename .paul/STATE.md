@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #140 ({_} permission object block) — All 3 plans complete
-Plan: 03 complete (compile rules + stdlib permission refs)
-Status: All plans complete — ready for /paul:merge
-Last activity: 2026-04-05 — Plan 03 APPLY + UNIFY complete (13 files)
+Phase: None — ready for next issue
+Plan: N/A
+Status: Issue #132 closed as duplicate of #131
+Last activity: 2026-04-05 — Issue #132 closed (already fixed by #131)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -61,21 +61,22 @@ Progress:
 - Issue #129: [██████████] 100% (1/1 plans — Match Syntax naming consistency)
 - Issue #130: [██████████] 100% (1/1 plans — QH decision-making wording fix)
 - Issue #131: [██████████] 100% (1/1 plans — %_ path grammar exception fix)
+- Issue #140: [██████████] 100% (3/3 plans — {_} permission object block)
 
 ## Active Issue
 
-Issue: #140 — Design: {_} permission object block with _/__/___ tier system
-Branch: design/issue-140-permission-object-block-tier-system
-Labels: design
+Issue: #133 — Docs: ## and ### listed as type_prefixes but absent from branch table
+Branch: docs/issue-133-type-prefixes-absent-from-branch-table
+Labels: docs, P2-high
 Started: 2026-04-05
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/140
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/133
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [All 3 plans complete — ready for MERGE]
+  ○        ○        ○        ○     [Issue #133 active]
 ```
 
 ## Accumulated Context
@@ -185,6 +186,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #129 — Match Syntax naming consistency | 2026-04-05 | Unified to "Match Syntax"; dropped "Conditional Assignment Sugar"; added disambiguation to blocks.md |
 | Closed #130 — TM vs QH decision-making contradiction | 2026-04-05 | vision.md QH wording scoped to "trigger conditions or business logic"; glossary already correct |
 | Closed #131 — Permission branch %_ path grammar fix | 2026-04-05 | Split type_prefix into standard (instance_path) and exception (_/!/@ with own grammar rules); created #140 for {_} redesign |
+| Closed #140 — {_} permission object block | 2026-04-05 | 3 plans: user docs (5), EBNF+metadata (6), compile rules+stdlib (13); {_} named objects replace inline [_]; _/__/___ tiers; Ceiling vs Grant intent; PGE10005 renamed |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -204,13 +206,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Plan 03 loop closed (PLAN ✓ APPLY ✓ UNIFY ✓)
-Next action: /paul:merge to merge branch to main and close issue #140
-Resume file: .paul/phases/issue-140-permission-object-block/03-SUMMARY.md
+Stopped at: Issue #140 merged and closed
+Next action: /paul:issues or /paul:work-issue <number>
+Resume file: N/A
 Resume context:
-- Issue #140 active on branch design/issue-140-permission-object-block-tier-system
-- All 3 plans complete: 01 (user docs), 02 (EBNF + metadata), 03 (compile rules + stdlib)
-- Total files modified: 25 across all 3 plans
+- Issue #140 merged to main, branch deleted, GitHub issue closed
+- Ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
