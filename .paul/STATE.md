@@ -58,18 +58,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #123 — Docs: Job vs Instance — undefined relationship between UID and sequential numbering
-Branch: docs/issue-123-job-vs-instance-undefined-relationship
-Labels: docs, P2-high
-Started: 2026-04-04
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/123
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — ready for MERGE]
+  ✓        ✓        ✓        ✓     [Loop complete — merged to main]
 ```
 
 ## Accumulated Context
@@ -192,13 +188,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Issue #123 complete, loop closed
-Next action: /paul:merge to merge branch to main and close issue
+Stopped at: Merged #123 to main, issue closed
+Next action: Pick next issue or push to origin
 Resume file: .paul/phases/issue-123-job-vs-instance/123-01-SUMMARY.md
 Resume context:
-- Issue #123 complete on branch docs/issue-123-job-vs-instance-undefined-relationship
-- All 3 tasks passed, SUMMARY created
-- Ready for /paul:merge
+- Issue #123 complete and merged to main
+- Branch docs/issue-123-job-vs-instance-undefined-relationship deleted
 
 ---
 *STATE.md — Updated after every significant action*
