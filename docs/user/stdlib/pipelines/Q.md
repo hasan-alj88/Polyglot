@@ -140,6 +140,18 @@ Queue-level operations. Target the queue itself, not individual jobs.
 
 ---
 
+## Job Addressing — `=Q.Job.*`
+
+Job-level addressing pipelines. Used to name and reference individual jobs or branches within a pipeline's execution tree.
+
+| Pipeline | IO | Purpose |
+|----------|-----|---------|
+| `=Q.Job.Branch` | (reserved) | Names a marker subtree as a branch group for external reference |
+
+`=Q.Job.Branch` is reserved for future branch-level operations beyond nested `[Q]` scoping. See [[concepts/pipelines/queue#Job-Level Queue Conditions]] for how nested `[Q]` under `[r]`/`[p]`/`[b]` markers scopes queue conditions to individual jobs.
+
+---
+
 ## Example: Full Queue Definition + Pipeline Assignment
 
 ```polyglot

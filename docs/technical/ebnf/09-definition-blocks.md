@@ -157,7 +157,9 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
                          { indent queue_io_line NEWLINE } ;
 ```
 
-`[Q]` references either `=Q.Default` or `=Q.Assign"QueueName"` (for user-defined queues). Nested `[Q]` lines declare pipeline-specific active queue controls (pause, resume, kill). These override or extend the queue's `{Q}` defaults for this pipeline only — contradictions raise PGE01013.
+`[Q]` references either `=Q.Default` or `=Q.Assign"QueueName"` (for user-defined queues). Nested `[Q]` lines declare pipeline-specific active queue controls (pause, resume, kill). These extend the queue's `{Q}` defaults for this pipeline only — contradictions raise PGE01013.
+
+**Dual context:** `[Q]` appears in two locations: (1) the pipeline header `queue_section` — scoped to all jobs in the pipeline; (2) nested under `[r]`/`[p]`/`[b]` execution markers via `queue_control_line` in `pipeline_call` (§10.2) — scoped to that specific job and its sub-jobs. Job-level `[Q]` extends pipeline-level `[Q]`, it does not replace it.
 
 **Examples:**
 

@@ -94,6 +94,43 @@ The `[Q]` line in a pipeline declares which queue it uses. It accepts optional `
 
 Pipeline-specific `[Q]` controls must not contradict the queue's `{Q}` defaults (PGE01013). See [[Q]] for the full stdlib queue pipeline catalog.
 
+### Job-Level Queue Conditions
+
+Pipelines break into **jobs** at IO boundaries — each `[r]`, `[p]`, or `[b]` marker creates a job. `[Q]` lines can be nested under these markers to scope queue conditions to that specific job and its sub-jobs (the branch subtree), rather than the entire pipeline.
+
+Pipeline-level `[Q]` applies to all jobs. Job-level `[Q]` **extends** the pipeline-level defaults for that branch only — it does not replace them. Contradictions between job-level and pipeline-level `[Q]` raise PGE01013.
+
+```polyglot
+{=} =ProcessData
+   [T] =T.Call
+   [=] <input#Serial
+   [=] >output#Serial
+   [ ] Pipeline-level: all jobs use default queue
+   [Q] =Q.Default
+   [W] =W.Polyglot
+   [r] =FetchData
+      [=] <in << $input
+      [=] >out >> $fetched
+   [p] =Transform
+      [=] << $fetched
+      [=] >> $transformed
+      [ ] Job-level: pause only this branch when RAM is low
+      [Q] =Q.Pause.Soft.RAM.LessThan
+         [=] <mb << 2048.0
+   [p] =Validate
+      [=] << $fetched
+      [=] >> $validated
+   [*] *All
+      [*] << $transformed
+      [*] << $validated
+      [*] >> $results
+   [r] =Save
+      [=] << $results
+      [=] >> $output
+```
+
+In this example, all jobs inherit `=Q.Default`. The `=Transform` branch additionally pauses when RAM drops below 2048 MB — this condition only affects that `[p]` branch and any sub-jobs it spawns, not the `=Validate` branch or the `[r]` jobs.
+
 ## Queue Handler Internals
 
 ### Queues vs Sets

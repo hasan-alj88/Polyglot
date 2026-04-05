@@ -28,6 +28,7 @@ exec_expr           ::= assignment_expr
 ```ebnf
 pipeline_call       ::= pipeline_ref NEWLINE
                          { indent call_io_line NEWLINE }
+                         { indent queue_control_line NEWLINE }
                          { indent error_block NEWLINE } ;
 
 pipeline_ref        ::= pipeline_id                    (* local: =Pipeline.Name *)
@@ -51,6 +52,16 @@ fallback_line       ::= "[>]" "<!" value_expr                   (* generic fallb
 **Precedence:** `[!]` error blocks are checked before `<!` fallbacks. If `[!]` pushes a replacement value, the fallback is not evaluated.
 
 **Rule:** Standard library pipelines (`=File.*`, `=T.*`, `=Q.*`, `=W.*`) are built-in and do not require `[@]` import. Only user/external packages need import.
+
+**Job-level `[Q]`:** `queue_control_line` (defined in §9.3.3) may appear nested under `[r]`, `[p]`, or `[b]` pipeline calls. This scopes queue conditions to that specific job and its sub-jobs, extending (not replacing) the pipeline-level `[Q]`. See [[concepts/pipelines/queue#Job-Level Queue Conditions]].
+
+```polyglot
+[p] =Transform
+   [=] << $fetched
+   [=] >> $transformed
+   [Q] =Q.Pause.Soft.RAM.LessThan
+      [=] <mb << 2048.0
+```
 
 ### 10.3 Chain Execution
 
