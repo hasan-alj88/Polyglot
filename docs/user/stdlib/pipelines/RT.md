@@ -17,11 +17,11 @@ No `[@]` import needed.
 ## Permissions
 
 <!-- @permissions -->
-All `=RT.*` pipelines require `[_] _System.process` permission in the `{@}` package block. See [[permissions]] for the permission system.
+All `=RT.*` pipelines require a `{_}` permission object granting System.Process. See [[permissions]] for the permission system.
 
-| Pipeline | Permission | Type |
-|----------|-----------|------|
-| `=RT.<Lang>.*` | `_System.process` | IO |
+| Pipeline | Required Capability | Category |
+|----------|-------------------|----------|
+| `=RT.<Lang>.*` | System.Process | System |
 
 ## Execution Modes
 
@@ -63,10 +63,19 @@ Call a named function in foreign code, pass arguments, get a return value. The c
 ```
 
 ```polyglot
+{_} _RuntimeCeiling
+   [.] .intent << #Ceiling
+   [.] .System.Process "*"
+
 {@} @Local:Example.PythonStats
-   [_] _System.process
+   [_] _RuntimeCeiling
+
+{_} _PythonGrant
+   [.] .intent << #Grant
+   [.] .System.Process "python3"
 
 {=} =CalculateStats
+   [_] _PythonGrant
    [=] <numbers#array.string
    [=] >result#Code:Python.Output
    [=] >stats#serial
@@ -174,10 +183,19 @@ Invoke a compiled binary with positional and keyword arguments. The OS runs the 
 ```
 
 ```polyglot
+{_} _BinaryCeiling
+   [.] .intent << #Ceiling
+   [.] .System.Process "*"
+
 {@} @Local:Example.RustBinary
-   [_] _System.process
+   [_] _BinaryCeiling
+
+{_} _ToolGrant
+   [.] .intent << #Grant
+   [.] .System.Process "mytool"
 
 {=} =RunRustTool
+   [_] _ToolGrant
    [=] <inputPath#path
    [=] >toolOutput#Code:Rust.Output
    [T] =T.Call

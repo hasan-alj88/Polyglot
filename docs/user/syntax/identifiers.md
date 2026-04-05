@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-21
+updated: 2026-04-05
 status: complete
 ---
 
@@ -18,10 +18,12 @@ ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address f
 | `=` | Pipelines | `=ProcessData`, `=Pipeline.Name` |
 | `$` | Variables | `$name`, `$result:status`, `$*` (discard) |
 | `!` | Errors | `!No.Input`, `!Timeout:Connection` |
-| `_` | Permissions | `_File.read`, `_Web.request` |
+| `_` | Permission object | `_DataCeiling`, `_ReportReader` |
+| `__` | Permission descriptor | `__Permission`, `__PermissionTarget` |
+| `___` | Permission constraint | `___Unix`, `___Sandboxed`, `___ReadOnly` |
 | `%` | Metadata accessor | `=Pipeline%status`, `$var%state` |
 
-**Permission identifiers (`_`)** — declare IO capabilities using `[_]` block elements. `_` prefixed identifiers use `.` fixed-field navigation for categories and subfields (`_File.read`, `_Database.connect`). No `[_]` declarations = pure computation, zero IO. See [[permissions]] for the full permission system.
+**Permission identifiers (`_`/`__`/`___`)** — use a three-tier prefix system mirroring `#`/`##`/`###`: `_` = permission object (named policy, e.g., `_DataCeiling`), `__` = permission descriptor (schema, e.g., `__Permission`), `___` = constraint descriptor (e.g., `___Unix`). `{_}` blocks define permission objects; `[_]` block elements reference them by name. No `[_]` references = pure computation, zero IO. See [[permissions]] for the full permission system.
 
 ## Serialized Identifiers
 

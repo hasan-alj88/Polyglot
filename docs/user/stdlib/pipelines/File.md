@@ -104,21 +104,21 @@ One-step field extraction: reads file, parses, and extracts a single field by tr
 ## Permissions
 
 <!-- @permissions -->
-All `=File.*` pipelines perform filesystem IO and require `[_]` permission declarations. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
+All `=File.*` pipelines perform filesystem IO and require a `{_}` permission object granting the listed capabilities. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
 
-| Pipeline | Permission | Type |
-|----------|-----------|------|
-| `=File.Text.Read` | `_File.read` | Inline |
-| `=File.Text.Write` | `_File.write` | Inline |
-| `=File.Text.Append` | `_File.write` | Inline |
-| `=File.Serial.Read` | `_File.read` | Inline |
-| `=File.Serial.Write` | `_File.write` | Inline |
-| `=File.Serial.Read.Field` | `_File.read` | Inline |
-| `=File.Copy` | `_File.read` + `_File.write` | Inline |
-| `=File.Move` | `_File.read` + `_File.write` | Inline |
-| `=File.Delete` | `_File.delete` | Inline |
-| `=File.Access` | `_File.read` | Inline |
-| `=File.List` | `_File.read` | Inline |
+| Pipeline | Required Capability | Category |
+|----------|-------------------|----------|
+| `=File.Text.Read` | File.Read | File |
+| `=File.Text.Write` | File.Write | File |
+| `=File.Text.Append` | File.Write | File |
+| `=File.Serial.Read` | File.Read | File |
+| `=File.Serial.Write` | File.Write | File |
+| `=File.Serial.Read.Field` | File.Read | File |
+| `=File.Copy` | File.Read + File.Write | File |
+| `=File.Move` | File.Read + File.Write | File |
+| `=File.Delete` | File.Delete | File |
+| `=File.Access` | File.Read | File |
+| `=File.List` | File.Read | File |
 
 ## Errors
 

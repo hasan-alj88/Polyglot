@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #131 (Permission branch %_ path grammar fix) — Ready for merge
-Plan: 01 complete — UNIFY done
-Status: Ready for commit and merge
-Last activity: 2026-04-05 — Issue #131 UNIFY complete
+Phase: Issue #140 ({_} permission object block) — All 3 plans complete
+Plan: 03 complete (compile rules + stdlib permission refs)
+Status: All plans complete — ready for /paul:merge
+Last activity: 2026-04-05 — Plan 03 APPLY + UNIFY complete (13 files)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -60,21 +60,22 @@ Progress:
 - Issue #126: [██████████] 100% (1/1 plans — [=] IO marker scoping rule)
 - Issue #129: [██████████] 100% (1/1 plans — Match Syntax naming consistency)
 - Issue #130: [██████████] 100% (1/1 plans — QH decision-making wording fix)
+- Issue #131: [██████████] 100% (1/1 plans — %_ path grammar exception fix)
 
 ## Active Issue
 
-Issue: #131 — Docs: Permission branch %_ violates general path grammar :{ref}:{instance}
-Branch: docs/issue-131-permission-branch-path-grammar-violation
-Labels: docs, P2-high
+Issue: #140 — Design: {_} permission object block with _/__/___ tier system
+Branch: design/issue-140-permission-object-block-tier-system
+Labels: design
 Started: 2026-04-05
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/131
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/140
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Issue #131 ready for merge]
+  ✓        ✓        ✓        ○     [All 3 plans complete — ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -183,6 +184,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #126 — [=] IO marker scoping rule | 2026-04-05 | Clarified [=]/[~]/[*] scope to parent operator via indentation; 4 files |
 | Closed #129 — Match Syntax naming consistency | 2026-04-05 | Unified to "Match Syntax"; dropped "Conditional Assignment Sugar"; added disambiguation to blocks.md |
 | Closed #130 — TM vs QH decision-making contradiction | 2026-04-05 | vision.md QH wording scoped to "trigger conditions or business logic"; glossary already correct |
+| Closed #131 — Permission branch %_ path grammar fix | 2026-04-05 | Split type_prefix into standard (instance_path) and exception (_/!/@ with own grammar rules); created #140 for {_} redesign |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -202,12 +204,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Issue #131 UNIFY complete, ready for merge
-Next action: /paul:merge to commit and merge #131
+Stopped at: Plan 03 loop closed (PLAN ✓ APPLY ✓ UNIFY ✓)
+Next action: /paul:merge to merge branch to main and close issue #140
+Resume file: .paul/phases/issue-140-permission-object-block/03-SUMMARY.md
 Resume context:
-- Issue #131 changes applied to 3 metadata-tree files
-- SUMMARY at .paul/phases/issue-131-permission-path-grammar/01-SUMMARY.md
-- Issue #140 created for {_} permission object redesign
+- Issue #140 active on branch design/issue-140-permission-object-block-tier-system
+- All 3 plans complete: 01 (user docs), 02 (EBNF + metadata), 03 (compile rules + stdlib)
+- Total files modified: 25 across all 3 plans
 
 ---
 *STATE.md — Updated after every significant action*

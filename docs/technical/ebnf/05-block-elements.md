@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-03-30
+updated: 2026-04-05
 ---
 
 <!-- @ebnf/INDEX -->
@@ -12,6 +12,7 @@ Block elements are square-bracket markers that begin each line within a block.
 
 ```ebnf
 block_element       ::= registry_elem
+                      | permission_elem
                       | data_flow_elem
                       | execution_elem
                       | control_flow_elem
@@ -25,6 +26,9 @@ block_element       ::= registry_elem
 
 (* Registry *)
 registry_elem       ::= "[@]" ;
+
+(* Permission *)
+permission_elem     ::= "[_]" ;
 
 (* Data Flow *)
 data_flow_elem      ::= "[=]" | "[~]" | "[*]" | "[>]" | "[<]" ;

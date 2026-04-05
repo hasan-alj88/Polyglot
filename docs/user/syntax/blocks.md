@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-29
+updated: 2026-04-05
 status: complete
 ---
 
@@ -9,7 +9,7 @@ status: complete
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{T}` at `%T`, `{M}` at `%M`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{N}` at `%Native` (see [[data-is-trees]]).
+Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{T}` at `%T`, `{M}` at `%M`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native` (see [[data-is-trees]]).
 
 ## `{X}` — Definition Elements
 
@@ -25,6 +25,7 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{W}` | Wrapper definition (subtype of `{=}`). See [[wrappers]] |
 | `{Q}` | Queue — dual-purpose block. `{Q} #Queue:Name` defines a queue instance (subtype of `{#}`, data definition). `{Q} =Q.*` defines a queue pipeline operation (subtype of `{=}`, equivalent to `{=}[Q]`). The identifier prefix (`#` vs `=`) disambiguates. See [[concepts/pipelines/queue#Queue]] |
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
+| `{_}` | Permission object — named, reusable permission policy with `#Ceiling` or `#Grant` intent. Uses `_`/`__`/`___` tier system mirroring `#`/`##`/`###`. See [[permissions]] |
 | `{N}` | Native definition — compiler primitive with no Polyglot body. `[%]` metadata implicitly scopes to `%Native.*`. Non-user-extendable. See [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
 | `{Array}` | Array collection definition. See [[concepts/collections/INDEX|collections]] |
 | `{ }` | Comment. See [[comments]] |
@@ -50,7 +51,7 @@ See [[permissions]] for inline/IO forms, permission categories, and hierarchical
 
 | Marker | Meaning |
 |--------|---------|
-| `[_]` | Permission declaration — declares IO capabilities (inline or IO form) |
+| `[_]` | Permission reference — references a named `{_}` permission object by name (e.g., `[_] _MyCeiling`) |
 
 ### Data Flow
 

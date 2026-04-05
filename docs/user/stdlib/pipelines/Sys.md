@@ -12,11 +12,11 @@ System information pipelines. No `[@]` import needed.
 ## Permissions
 
 <!-- @permissions -->
-System pipelines that read environment state require `[_]` permission declarations. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
+System pipelines that read environment state require a `{_}` permission object granting the listed capabilities. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
 
-| Pipeline | Permission | Type |
-|----------|-----------|------|
-| `=Sys.OS` | `_System.env` | Inline |
+| Pipeline | Required Capability | Category |
+|----------|-------------------|----------|
+| `=Sys.OS` | System.Env | System |
 
 ```
 =Sys

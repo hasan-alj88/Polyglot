@@ -119,50 +119,43 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 
 ## Permission Branch
 
-`%_` stores permission declarations. Unlike other branches, `%_` has **no `:{instance}` level** and **no `:` flexible fields** — permissions are compile-time declarations with an entirely fixed schema. All categories and capabilities are Polyglot-defined, not user-extensible. `%_` uses `permission_path` (not `instance_path`) — see [[path-grammar|Path Grammar]]. See [[permissions]] for the full permission system.
+`%_` stores named `{_}` permission objects. Unlike other branches, `%_` has **no `:{instance}` level** — permissions are compile-time declarations with no runtime instances. Object names use `:` (flexible), but all subfields use `.` (fixed). All categories and capabilities are Polyglot-defined, not user-extensible. `%_` uses `permission_path` (not `instance_path`) — see [[path-grammar|Path Grammar]]. See [[permissions]] for the full permission system.
 
 ### Structure
 
 ```
 %_
-├── .File
-│   ├── .read               #string  (glob pattern)
-│   ├── .write              #string
-│   ├── .execute            #string
-│   └── .delete             #string
-├── .Web
-│   ├── .request
-│   │   └── .<              (IO inputs)
-│   └── .socket
-│       └── .<
-├── .Database
-│   ├── .connect
-│   │   └── .<
-│   ├── .read               #string
-│   └── .write              #string
-├── .System
-│   ├── .env                #string
-│   ├── .process
-│   │   └── .<
-│   └── .signal             #string
-├── .Crypto
-│   ├── .key, .sign, .encrypt   #string
-├── .IPC
-│   ├── .send, .receive
-│   │   └── .<
-│   └── .subscribe          #string
-├── .Device
-│   ├── .camera, .microphone, .location, .bluetooth   #bool
-└── .Memory
-    ├── .allocate, .shared   #string
++-- :DataCeiling                       <- named {_} permission object
+|   +-- .intent                        #PermissionIntent (Ceiling | Grant)
+|   +-- .target                        __PermissionTarget
+|   |   +-- .category                  #PermissionCategory (File, Web, Database, System, Crypto, IPC, Device, Memory)
+|   |   +-- .capability                per-category enum (#FileCapability, #WebCapability, etc.)
+|   |   +-- .scope                     __PermissionScope
+|   |       +-- .pattern               #GlobPattern (ceiling) or specific value (grant)
+|   |       +-- .direction             #IODirection (Inbound, Outbound, Both)
+|   +-- .grant                         __PermissionGrant
+|   |   +-- .level                     #AccessLevel (Allow, Deny)
+|   |   +-- .authority                 #GrantAuthority (Package, Pipeline)
+|   |   +-- .intent                    #PermissionIntent (Ceiling, Grant)
+|   +-- .resource                      __ResourceDescriptor
+|   |   +-- .os                        #OSTarget (Any, Linux, Windows, MacOS)
+|   |   +-- .protocol                  #Protocol (File, TCP, UDP, HTTPS, IPC, SharedMemory, USB, Bluetooth)
+|   |   +-- .handle                    #HandleKind (Path, ConnectionString, Descriptor, Address, DeviceID)
+|   +-- .audit                         __PermissionAudit
+|       +-- .log                       #AuditLevel (None, OnUse, OnDeny, All)
+|       +-- .alert                     #AlertLevel (None, OnDeny, OnEscalation)
++-- :ReportReader                      <- another named {_} object
+    +-- ...
 ```
 
 ### Key Properties
 
-- **All fixed (`.`)** — every level uses `.` fixed-field navigation. No `:` flexible fields anywhere in `%_`. Permission categories and capabilities are predefined by Polyglot.
-- **No instances** — permissions are per-definition, resolved at compile time. No runtime metadata exists.
+- **Named objects** — each `{_}` definition creates a named entry under `%_` (e.g., `%_:DataCeiling`). Object names use `:` flexible navigation.
+- **Fixed subfields (`.`)** — all fields within a permission object use `.` fixed-field navigation. The `__Permission` schema is Polyglot-defined, not user-extensible.
+- **No instances** — permissions are per-definition, resolved at compile time. No `:{instance}` level exists. No runtime metadata.
 - **No `live` fields** — all permission data is static. The compiler resolves permissions entirely during compilation.
-- **Nested under `%@` and `%=`** — permissions also appear as `._` subsections under package (`%@:<address>._`) and pipeline (`%=:<name>:<instance>._`) branches, representing the package ceiling and pipeline-level declarations respectively.
-- **IO-form capabilities** — capabilities like `.request`, `.connect`, `.send` use `.<` for their IO input parameters, mirroring the IO form syntax in `[_]` declarations.
+- **Fully filled** — every `{_}` object must have all leaf fields assigned. Empty leaves are a compile error.
+- **Identifier tiers** — `_` = permission object, `__` = permission descriptor (schema), `___` = constraint descriptor. Mirrors `#`/`##`/`###`.
+- **Nested under `%@` and `%=`** — permissions also appear as `._` subsections under package (`%@:<address>._`) and pipeline (`%=:<name>:<instance>._`) branches, representing the package ceiling and pipeline-level grant references respectively.
 
 See also: [[io-ports|IO Port Nesting]], [[instance-lifecycle|Instance Lifecycle]], [[object-types|Object Type Branches]]

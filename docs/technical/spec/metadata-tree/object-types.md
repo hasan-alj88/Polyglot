@@ -23,7 +23,7 @@ The `%` root has fixed branches for each object type prefix:
 | `%M` | Macros | Flexible (`:name`) | All `{M}` macro definitions |
 | `%!` | Errors | Fixed (`.namespace`) | Polyglot-defined namespaces; `.Error` has flexible `:` children (uses `error_path`) |
 | `%@` | Packages | Flexible (`:<registry>:<id>::<name>`) | All `@`-prefixed package addresses; `::` separates registry from name (uses `package_path`) |
-| `%_` | Permissions | All fixed (`.`) | All `_`-prefixed permission declarations; no instances, no `:` levels (uses `permission_path`) |
+| `%_` | Permissions | Flexible (`:name`), then fixed (`.`) | Named `{_}` permission objects (`_`/`__`/`___` tiers); no instances, object names via `:`, subfields via `.` (uses `permission_path`) |
 
 Plus `%definition` (fixed) for compile-time schema templates — including `%definition.#:{TypeName}` for type definitions, `%definition.=:{PipelineName}` for pipeline definitions, `%definition.T:{TriggerName}` for trigger definitions, `%definition.W:{WrapperName}` for wrapper definitions, `%definition.Q:{QueueName}` for queue definitions, `%definition.##:{SchemaName}` for `##` schema definitions, and `%definition.###:{FieldTypeName}` for `###` field type definitions.
 
