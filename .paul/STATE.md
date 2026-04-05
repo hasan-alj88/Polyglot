@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #134 — #Serial schema-free contradiction — COMPLETE
-Plan: 134-01 complete (1/1)
+Phase: None — ready for next issue
+Plan: 135-01 complete (1/1 plans)
 Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-05 — Loop closed, SUMMARY created
+Last activity: 2026-04-05 — Plan 135-01 unified, SUMMARY created
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -62,21 +62,22 @@ Progress:
 - Issue #130: [██████████] 100% (1/1 plans — QH decision-making wording fix)
 - Issue #131: [██████████] 100% (1/1 plans — %_ path grammar exception fix)
 - Issue #140: [██████████] 100% (3/3 plans — {_} permission object block)
+- Issue #134: [██████████] 100% (1/1 plans — #Serial unconstrained fix)
 
 ## Active Issue
 
-Issue: #134 — Docs: #Serial described as 'schema-free' but has %##Depth.Max property
-Branch: docs/issue-134-serial-schema-free-contradiction
+Issue: #135 — Docs: !Error extensibility — 'only extensible namespace' vs custom {!} blocks
+Branch: docs/issue-135-error-extensibility-contradiction
 Labels: docs, P2-high
 Started: 2026-04-05
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/134
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/135
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, run /paul:merge]
+  ✓        ✓        ✓        ○     [Issue #135 active]
 ```
 
 ## Accumulated Context
@@ -188,6 +189,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #131 — Permission branch %_ path grammar fix | 2026-04-05 | Split type_prefix into standard (instance_path) and exception (_/!/@ with own grammar rules); created #140 for {_} redesign |
 | Closed #140 — {_} permission object block | 2026-04-05 | 3 plans: user docs (5), EBNF+metadata (6), compile rules+stdlib (13); {_} named objects replace inline [_]; _/__/___ tiers; Ceiling vs Grant intent; PGE10005 renamed |
 | Closed #133 — ##/### type_prefix list fix | 2026-04-05 | Removed ##/### from instance_path type_prefix row; already covered by schema_prop/field_type_prop grammar rules |
+| Closed #134 — #Serial schema-free contradiction | 2026-04-05 | "schema-free" → "unconstrained" across 12 files; completed #Serial definition with 3 missing properties (Ordered, Regular, Max) |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -207,13 +209,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Loop closed for 134-01
-Next action: Run /paul:merge to commit and merge
-Resume file: .paul/phases/134-serial-schema-free-contradiction/134-01-SUMMARY.md
+Stopped at: Plan 135-01 unified
+Next action: /paul:merge to commit and merge issue #135
+Resume file: .paul/phases/135-error-extensibility-contradiction/135-01-SUMMARY.md
 Resume context:
-- Issue #134 on branch docs/issue-134-serial-schema-free-contradiction
-- 12 files modified, all verification passed
-- Ready for commit and merge to main
+- Issue #135 active on branch docs/issue-135-error-extensibility-contradiction
+- All 3 tasks complete, 4/4 AC passed, 0 deviations
+- 3 files modified: concepts/errors.md, stdlib/errors/errors.md, ebnf/09-definition-blocks.md
+- Key change: user {!} !Name implicitly creates !Error:Name.* in metadata tree
 
 ---
 *STATE.md — Updated after every significant action*
