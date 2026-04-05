@@ -71,7 +71,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 
 | Marker | Meaning |
 |--------|---------|
-| `[r]` | Run/execute in series; match header (with `>>` and `[?]` children). See [[conditionals#Match Syntax]] |
+| `[r]` | Run/execute in series; match header (with `>>` and `[?]` children). Without `[?]` children, `[r] $x >> $y` is a plain assignment. See [[conditionals#Match Syntax]] |
 | `[p]` | Run/execute in parallel |
 | `[b]` | Run/execute in background (fire and forget) |
 | `[#]` | Load serialized data into typed structure |
