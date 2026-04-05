@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-04
+updated: 2026-04-05
 ---
 
 <!-- @ebnf/INDEX -->
@@ -20,6 +20,9 @@ field_type_id       ::= "###" name ;               (* e.g., ###Value, ###Enum, #
 pipeline_id         ::= '=' dotted_name ;
 variable_id         ::= '$' field_path ;
 error_id            ::= '!' dotted_name ;
+permission_id       ::= '_' name ;                 (* e.g., _DataCeiling, _ReportReader *)
+perm_descriptor_id  ::= "__" name ;                (* e.g., __Permission, __PermissionTarget *)
+perm_constraint_id  ::= "___" name ;               (* e.g., ___Unix, ___Sandboxed, ___ReadOnly *)
 
 identifier          ::= package_id
                       | data_id
@@ -27,7 +30,10 @@ identifier          ::= package_id
                       | field_type_id
                       | pipeline_id
                       | variable_id
-                      | error_id ;
+                      | error_id
+                      | permission_id
+                      | perm_descriptor_id
+                      | perm_constraint_id ;
 ```
 
 ### 3.2 Field Separators

@@ -29,12 +29,12 @@ All `=DT.*` pipelines are native definitions (`{N}` blocks). They operate on `#d
 
 <!-- @permissions -->
 
-All `=DT.*` pipelines require no permissions (`[_] _None`) except `=DT.Now`, which reads the system clock. See [[permissions]].
+All `=DT.*` pipelines are pure computation and require no `{_}` permission objects, except `=DT.Now` which reads the system clock. See [[permissions]].
 
-| Pipeline | Permission | Reason |
-|----------|-----------|--------|
-| `=DT.Now` | `_IO.Read` | Reads system clock |
-| All others | `_None` | Pure computation |
+| Pipeline | Required Capability | Category |
+|----------|-------------------|----------|
+| `=DT.Now` | System.Env | System |
+| All others | None | — |
 
 ---
 
@@ -54,7 +54,7 @@ Returns the current instant from the system clock.
    [=] >dt#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _IO.Read
+   [ ] Requires System.Env capability (reads system clock)
 ```
 
 ### =DT.From.Epoch
@@ -72,7 +72,7 @@ Converts epoch seconds to a `#dt` value.
    [=] >dt#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.From.ISO
@@ -90,7 +90,7 @@ Parses an ISO-8601 string into a `#dt` value. Called implicitly by `=DT"..."` in
    [=] >dt#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.From.Parts
@@ -115,7 +115,7 @@ Constructs a `#dt` from explicit date-time components. Hour, minute, second, nan
    [=] >dt#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ---
@@ -137,7 +137,7 @@ All `=DT.To.*` pipelines project a `#dt` value into a calendar-specific date str
    [=] >gregorian#GregorianDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Hijri
@@ -156,7 +156,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [=] >hijri#HijriDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Hebrew
@@ -172,7 +172,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [=] >hebrew#HebrewDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Chinese
@@ -188,7 +188,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [=] >chinese#ChineseDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Persian
@@ -204,7 +204,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [=] >persian#PersianDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Buddhist
@@ -220,7 +220,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
    [=] >buddhist#BuddhistDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Hindu
@@ -239,7 +239,7 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
    [=] >hindu#HinduDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Japanese
@@ -255,7 +255,7 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
    [=] >japanese#JapaneseDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Ethiopian
@@ -271,7 +271,7 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
    [=] >ethiopian#EthiopianDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Coptic
@@ -287,7 +287,7 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
    [=] >coptic#CopticDate
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.Custom
@@ -306,7 +306,7 @@ Projects a `#dt` into a user-supplied custom calendar.
    [=] >date#Date
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ---
@@ -330,7 +330,7 @@ Converts to Chinese traditional time units (shichen/ke/fen).
    [=] >time#ChineseTime
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.HinduTime
@@ -348,7 +348,7 @@ Converts to Hindu traditional time units (prahara/muhurta).
    [=] >time#HinduTime
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.To.DecimalTime
@@ -366,7 +366,7 @@ Converts to French Republican decimal time.
    [=] >time#DecimalTime
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ---
@@ -389,7 +389,7 @@ Adds a `#Duration` (fixed time span) to a `#dt`.
    [=] >result#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Add.Period
@@ -408,7 +408,7 @@ Adds a `#Period` (calendar-aware span such as "1 month") to a `#dt`.
    [=] >result#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Sub
@@ -427,7 +427,7 @@ Subtracts two `#dt` values and returns the `#Duration` between them.
    [=] >result#Duration
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ---
@@ -450,7 +450,7 @@ Returns `-1`, `0`, or `1` as an `#int`.
    [=] >result#int
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.IsBefore
@@ -469,7 +469,7 @@ Returns `#bool` -- true when `a` is earlier than `b`.
    [=] >result#bool
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.IsAfter
@@ -488,7 +488,7 @@ Returns `#bool` -- true when `a` is later than `b`.
    [=] >result#bool
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.InInterval
@@ -507,7 +507,7 @@ Returns `#bool` -- true when `source` falls within the given `#Interval`.
    [=] >result#bool
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ---
@@ -529,7 +529,7 @@ These pipelines extract individual components from a `#dt` value.
    [=] >year#int
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Get.Month
@@ -545,7 +545,7 @@ These pipelines extract individual components from a `#dt` value.
    [=] >month#int
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Get.Day
@@ -561,7 +561,7 @@ These pipelines extract individual components from a `#dt` value.
    [=] >day#int
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Get.Weekday
@@ -579,7 +579,7 @@ Returns a `#Weekday` enum value.
    [=] >weekday#Weekday
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Get.WeekNumber
@@ -598,7 +598,7 @@ Returns the week-of-year as `#int`. The `<system` input selects the week numberi
    [=] >week#int
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Get.Epoch
@@ -616,7 +616,7 @@ Returns epoch seconds as `#int`.
    [=] >epoch#int
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Get.Zone
@@ -634,7 +634,7 @@ Returns the `#Zone` attached to a `#dt` value.
    [=] >zone#Zone
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ---
@@ -657,7 +657,7 @@ Replaces the timezone label on a `#dt` without converting the instant. The wall-
    [=] >result#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Zone.Convert
@@ -676,7 +676,7 @@ Converts a `#dt` to a different timezone. The underlying instant stays the same;
    [=] >result#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ---
@@ -699,7 +699,7 @@ Formats a `#dt` using a pattern string (e.g. `"YYYY-MM-DD HH:mm:ss"`).
    [=] >text#string
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Format.ISO
@@ -717,7 +717,7 @@ Formats a `#dt` as an ISO-8601 string.
    [=] >text#string
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Format.Calendar
@@ -736,7 +736,7 @@ Formats a `#dt` as a string in a specific calendar system's conventional format.
    [=] >text#string
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ---
@@ -761,7 +761,7 @@ Returns `#bool` -- true when `source` falls on a work day.
    [=] >result#bool
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Business.NextWorkDay
@@ -780,7 +780,7 @@ Returns the next work day as a `#dt`.
    [=] >result#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ### =DT.Business.AddWorkDays
@@ -800,7 +800,7 @@ Adds `N` work days to a `#dt`, skipping non-work days.
    [=] >result#dt
    [Q] =Q.Default
    [W] =W.Polyglot
-   [_] _None
+
 ```
 
 ---
@@ -809,4 +809,4 @@ Adds `N` work days to a `#dt`, skipping non-work days.
 
 - [[stdlib/types/datetime|DateTime types]] -- `#dt`, `#Duration`, `#Period`, `#Interval`, calendar date structs
 - [[stdlib/pipelines/INDEX|Pipelines index]] -- full stdlib pipeline listing
-- [[permissions]] -- permission system for `[_]` declarations
+- [[permissions]] -- permission system for `{_}` permission objects

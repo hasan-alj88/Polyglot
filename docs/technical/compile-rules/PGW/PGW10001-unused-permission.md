@@ -8,28 +8,32 @@ severity: warning
 ### Rule 9.3 — Unused Permission
 `PGW10001`
 
-**Statement:** A `[_]` permission declared in a pipeline or macro that is never exercised by any IO call in its call graph is flagged with a warning. The permission is dead — it grants a capability that is never used.
-**Rationale:** Unused permissions indicate incomplete refactoring (an IO call was removed but the permission was left behind) or over-broad permission requests. While not a correctness error, unused permissions make a pipeline's declared IO footprint misleading — auditing permissions becomes harder when declarations do not match actual IO usage. This is analogous to PGW09002 (unused import).
-**Detection:** The compiler traces the call graph from each `{=}` pipeline or `{M}` macro definition. For each `[_]` declaration, it checks whether any call in the graph exercises that permission category and subfield. If no call matches a declared permission, PGW10001 fires on that `[_]` line.
+**Statement:** A `[_]` reference to a `{_}` permission object in a pipeline or macro that is never exercised by any IO call in its call graph is flagged with a warning. The reference is dead — the `{_}` object grants capabilities that are never used.
+**Rationale:** Unused permission references indicate incomplete refactoring (an IO call was removed but the `[_]` reference was left behind) or over-broad permission requests. While not a correctness error, unused references make a pipeline's declared IO footprint misleading — auditing permissions becomes harder when references do not match actual IO usage. This is analogous to PGW09002 (unused import).
+**Detection:** The compiler traces the call graph from each `{=}` pipeline or `{M}` macro definition. For each `[_] _ObjectName` reference, it resolves the `{_}` definition and checks whether any call in the graph exercises at least one capability granted by that object. If no call matches any capability in the referenced `{_}` object, PGW10001 fires on that `[_]` line.
 
 **See also:** PGW09002 (unused import — analogous pattern), PGE10004 (undeclared permission — the inverse: using IO without permission), [[permissions#Compile-Time Enforcement]]
 
 **VALID:**
 ```polyglot
-[ ] ✓ all declared permissions are exercised
+[ ] ✓ all referenced {_} objects have exercised capabilities
+{_} _LogIO
+   [.] .intent << #Grant
+   [.] .File.Read "/var/log/*"
+   [.] .File.Write "/tmp/reports/*"
+
 {=} =LogAnalyzer
-   [_] _File.read"/var/log/*"
-   [_] _File.write"/tmp/reports/*"
+   [_] _LogIO
    [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [r] $content << =File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises _File.read
-   [r] =File.Text.Write >> "/tmp/reports/summary.txt"          [ ] ✓ exercises _File.write
+   [r] $content << =File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises File.Read
+   [r] =File.Text.Write >> "/tmp/reports/summary.txt"          [ ] ✓ exercises File.Write
       [=] <content#string << $content
 ```
 
 ```polyglot
-[ ] ✓ pure computation — no permissions declared, no IO calls
+[ ] ✓ pure computation — no [_] references, no IO calls
 {=} =PureCompute
    [T] =T.Manual
    [Q] =Q.Default
@@ -42,24 +46,38 @@ severity: warning
 
 **WARNING:**
 ```polyglot
-[ ] ⚠ PGW10001 — _Web.request declared but never exercised
+[ ] ⚠ PGW10001 — _WebGrant referenced but never exercised
+{_} _FileGrant
+   [.] .intent << #Grant
+   [.] .File.Read "/var/log/*"
+
+{_} _WebGrant
+   [.] .intent << #Grant
+   [.] .Web.Request "https://api.example.com/*"
+
 {=} =PartialIO
-   [_] _File.read"/var/log/*"
-   [_] _Web.request                                            [ ] ⚠ PGW10001 — _Web.request never used
-      [_] <url#string << "https://api.example.com/*"
-      [_] <method#string << "GET"
+   [_] _FileGrant
+   [_] _WebGrant                                               [ ] ⚠ PGW10001 — _WebGrant never used
    [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot
-   [r] $content << =File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises _File.read
-   [ ] no Web.Request call — _Web.request is unused
+   [r] $content << =File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises File.Read from _FileGrant
+   [ ] no Web.Request call — _WebGrant is unused
 ```
 
 ```polyglot
-[ ] ⚠ PGW10001 — all permissions unused (pure computation despite declarations)
+[ ] ⚠ PGW10001 — all [_] references unused (pure computation despite references)
+{_} _FileGrant
+   [.] .intent << #Grant
+   [.] .File.Read "/var/log/*"
+
+{_} _SysGrant
+   [.] .intent << #Grant
+   [.] .System.Env "APP_MODE"
+
 {=} =OverDeclared
-   [_] _File.read"/var/log/*"                                  [ ] ⚠ PGW10001 — _File.read never used
-   [_] _System.env"APP_MODE"                                   [ ] ⚠ PGW10001 — _System.env never used
+   [_] _FileGrant                                              [ ] ⚠ PGW10001 — _FileGrant never used
+   [_] _SysGrant                                               [ ] ⚠ PGW10001 — _SysGrant never used
    [T] =T.Manual
    [Q] =Q.Default
    [W] =W.Polyglot

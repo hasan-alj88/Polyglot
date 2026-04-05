@@ -15,15 +15,15 @@ Triggers are placed on `[T]` lines inside `{=}` pipeline definitions. No `[@]` i
 ## Permissions
 
 <!-- @permissions -->
-Most triggers require no permissions. IO-touching triggers must declare `[_]` permissions. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
+Most triggers require no permissions. IO-touching triggers require a `{_}` permission object granting the listed capabilities. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
 
-| Pipeline | Permission | Type |
-|----------|-----------|------|
+| Pipeline | Required Capability | Category |
+|----------|-------------------|----------|
 | `=T.Call` | None | — |
 | `=T.Manual` | None | — |
 | `=T.Daily` | None | — |
-| `=T.Folder.NewFiles` | `_File.read` | Inline |
-| `=T.Webhook` | `_Web.socket` | IO |
+| `=T.Folder.NewFiles` | File.Read | File |
+| `=T.Webhook` | Web.Socket | Web |
 
 ```
 =T

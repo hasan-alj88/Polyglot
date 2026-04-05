@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-03-30
+updated: 2026-04-05
 ---
 
 <!-- @ebnf/INDEX -->
@@ -418,13 +418,37 @@ array_def           ::= "{Array}" variable_id type_annotation NEWLINE
 array_body_line     ::= exec_line | comment_line ;
 ```
 
-### 9.8 Comment Block (Definition Level)
+### 9.8 Permission Object Definition (`{_}`)
+
+```ebnf
+permission_object_def  ::= "{_}" permission_id NEWLINE
+                            indent "[.]" ".intent" push_left ( "#Ceiling" | "#Grant" ) NEWLINE
+                            { indent permission_field_line NEWLINE }
+                            { indent comment_line NEWLINE } ;
+
+permission_field_line  ::= "[.]" "." category_name "." capability_name string_literal ;
+
+category_name          ::= "File" | "Web" | "Database" | "System"
+                         | "Crypto" | "IPC" | "Device" | "Memory" ;
+```
+
+**Rules:**
+
+- `{_}` defines a named, reusable permission object. The name uses the `_` prefix (e.g., `_DataCeiling`, `_ReportReader`).
+- `.intent` must be the first field — either `#Ceiling` (allows glob patterns) or `#Grant` (requires specific narrow values).
+- Each `permission_field_line` declares a capability: `.Category.Capability "scope"`. The `category_name` must be one of the 8 predefined categories. Each category has a per-category capability enum (e.g., `#FileCapability`: Read, Write, Execute, Delete, Create).
+- **Fully filled** — every `{_}` object must have all leaf fields assigned. Empty leaves are a compile error.
+- **No instances** — permissions are compile-time declarations. No `:{instance}` level exists in `%_`.
+- **No inline declarations** — `[_]` in `{@}` and `{=}` always references a `{_}` object by name. Inline permission syntax is not valid.
+- **Identifier tiers:** `_` = permission object, `__` = permission descriptor (schema), `___` = constraint descriptor. Mirrors `#`/`##`/`###`.
+
+### 9.9 Comment Block (Definition Level)
 
 ```ebnf
 comment_block       ::= "{ }" comment_text NEWLINE ;
 ```
 
-### 9.9 Metadata Block
+### 9.10 Metadata Block
 
 ```ebnf
 metadata_line       ::= "[%]" metadata_expr ;
@@ -478,4 +502,5 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 | §9.4c `{N}` Native | [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
 | §9.5 `{Q}` Queue | [[concepts/pipelines/INDEX\|pipelines]] |
 | §9.6 `{!}` Error | [[concepts/errors\|errors]] |
-| §9.9 `[%]` Metadata | [[concepts/metadata\|metadata]] |
+| §9.8 `{_}` Permission | [[concepts/permissions\|permissions]] |
+| §9.10 `[%]` Metadata | [[concepts/metadata\|metadata]] |

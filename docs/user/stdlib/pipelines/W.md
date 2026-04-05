@@ -19,22 +19,22 @@ No `[@]` import needed.
 ## Permissions
 
 <!-- @permissions -->
-Wrappers that manage external resources require `[_]` permission declarations. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
+Wrappers that manage external resources require a `{_}` permission object granting the listed capabilities. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
 
-| Pipeline | Permission | Type |
-|----------|-----------|------|
+| Pipeline | Required Capability | Category |
+|----------|-------------------|----------|
 | `=W.Polyglot` | None | — |
-| `=W.DB.Connection` | `_Database.connect` | IO |
-| `=W.DB.Transaction` | `_Database.connect` | IO |
-| `=W.File.Lock` | `_File.read` | Inline |
-| `=W.File.TempDir` | `_File.write` | Inline |
-| `=W.HTTP.Session` | `_Web.request` | IO |
-| `=W.SSH.Session` | `_System.process` | IO |
-| `=W.Auth.Token` | `_Crypto.key` | Inline |
+| `=W.DB.Connection` | Database.Connect | Database |
+| `=W.DB.Transaction` | Database.Connect | Database |
+| `=W.File.Lock` | File.Read | File |
+| `=W.File.TempDir` | File.Write | File |
+| `=W.HTTP.Session` | Web.Request | Web |
+| `=W.SSH.Session` | System.Process | System |
+| `=W.Auth.Token` | Crypto.Key | Crypto |
 | `=W.Log.Context` | None | — |
-| `=W.Queue.Consumer` | `_IPC.receive` | IO |
-| `=W.Cache.Scope` | `_Database.read` | Inline |
-| `=W.RT` | `_System.process` | IO |
+| `=W.Queue.Consumer` | IPC.Receive | IPC |
+| `=W.Cache.Scope` | Database.Read | Database |
+| `=W.RT` | System.Process | System |
 
 ```
 =W

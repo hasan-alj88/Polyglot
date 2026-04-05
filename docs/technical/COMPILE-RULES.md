@@ -210,7 +210,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE10002 | Imported Package Exceeds Importer Permission Ceiling *(planned)* |
 | PGE10003 | Unknown Permission Category |
 | PGE10004 | Undeclared Permission |
-| PGE10005 | Permission Output |
+| PGE10005 | Invalid Permission Block Marker |
 | PGE10006 | Duplicate Permission |
 
 ### 11 — Schema Properties

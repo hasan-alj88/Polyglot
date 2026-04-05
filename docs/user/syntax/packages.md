@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-25
+updated: 2026-04-05
 status: complete
 ---
 
@@ -153,30 +153,32 @@ All three files share the `#Config` data type and can call each other's pipeline
 ## Permissions
 
 <!-- @permissions -->
-The `{@}` block can declare `[_]` permission lines that set the **permission ceiling** — the maximum IO permissions any definition in the package can request. See [[permissions]] for the full permission system, inline/IO forms, and permission categories.
+The `{@}` block uses `[_]` lines to reference `{_}` permission ceiling objects, setting the **permission ceiling** — the maximum IO permissions any definition in the package can request. See [[permissions]] for the full permission system, `{_}` object syntax, and per-category capability enums.
 
 ### Ceiling Syntax
 
-`[_]` lines go after `[@]` imports in the `{@}` block:
+`[_]` lines in `{@}` reference named `{_}` ceiling objects. The `{_}` objects are defined as standalone blocks (typically after `{@}`, before `{#}` and `{=}`):
 
 ```polyglot
 {@} @Local:999::LogAnalyzer:v1.0.0
    [@] @http << @Community:devops:HttpClient::HttpClient:v2.1.0
-   [_] _File.read"/var/log/*"
-   [_] _File.write"/tmp/reports/*"
-   [_] _Web.request
-      [_] <url#string << "https://alerts.internal/*"
-      [_] <method#string << "POST"
-   [_] _System.env"LOG_LEVEL"
+   [_] _LogCeiling
+
+{_} _LogCeiling
+   [.] .intent << #Ceiling
+   [.] .File.Read "/var/log/*"
+   [.] .File.Write "/tmp/reports/*"
+   [.] .Web.Request "https://alerts.internal/*"
+   [.] .System.Env "LOG_LEVEL"
 ```
 
 ### Ceiling Rules
 
-- **Ceiling, not grant** — `[_]` in `{@}` sets the maximum allowed permissions. Each `{=}` pipeline or `{M}` macro must explicitly request the permissions it needs. Nothing is inherited automatically. See [[permissions#Hierarchical Scoping]].
+- **Ceiling, not grant** — `[_]` in `{@}` references a `{_}` ceiling object. Each `{=}` pipeline or `{M}` macro must reference its own `{_}` grant objects. Nothing is inherited automatically. See [[permissions#Hierarchical Scoping]].
 - **No ceiling = no IO** — if `{@}` has no `[_]` lines, the entire package is pure computation. Any IO call in any pipeline is a compile error (PGE10001).
-- **Pipeline subset** — every `[_]` in a pipeline must fall within the package ceiling. A pipeline requesting `_File.read"/etc/shadow"` when the ceiling only allows `_File.read"/var/log/*"` is a compile error (PGE10001).
+- **Pipeline grant must be a subset of ceiling** — every `{_}` grant referenced by a pipeline must fall within the `{_}` ceiling. A grant requesting `.File.Read "/etc/shadow"` when the ceiling only allows `.File.Read "/var/log/*"` is a compile error (PGE10001).
 - **Import ceiling** — the compiler checks each imported package's own `{@}` ceiling against the importer's ceiling. If the imported package declares permissions outside what the importer allows, it is a compile error (PGE10002). Each package declares its own ceiling independently; the compiler validates compatibility.
-- **Placement** — `[_]` lines go after `[@]` imports and before any `{=}`/`{#}`/`{M}` definitions in the `{@}` block.
+- **Placement** — `[_]` lines go after `[@]` imports in the `{@}` block. `{_}` definition blocks follow `{@}`, before `{#}` and `{=}` definitions.
 
 ## Compile Rules Reference
 
