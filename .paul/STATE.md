@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #126 ([=] IO marker scoping rule) — Ready to merge
-Plan: Complete — 4 files updated
-Status: Applied, unified, ready for merge
-Last activity: 2026-04-05 — Issue #126 apply + unify complete
+Phase: Issue #126 ([=] IO marker scoping rule) — Complete
+Plan: Complete — merged to main
+Status: Merged to main, issue closed
+Last activity: 2026-04-05 — Issue #126 complete, loop closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -61,18 +61,18 @@ Progress:
 
 ## Active Issue
 
-Issue: #126 — Docs: [=] marker used for both Trigger IO and Queue IO without scoping rule
-Branch: docs/issue-126-marker-io-queue-scoping-rule
+Issue: #129 — Docs: Match Syntax naming — 'Conditional Assignment Sugar' vs 'match header'
+Branch: docs/issue-129-match-syntax-naming-consistency
 Labels: docs, P2-high
 Started: 2026-04-05
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/126
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/129
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Issue #126 ready to merge]
+  ○        ○        ○        ○     [Issue #129 active]
 ```
 
 ## Accumulated Context
@@ -178,6 +178,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #123 — Job vs Instance terminology | 2026-04-05 | {#} #Job struct (9 fields), glossary entries, Pipeline Branch %=:Pipeline:N.jobs:UID, data-is-trees clarification; Instance=sequential run, Job=UID-keyed work unit |
 | Closed #124 — Queue Handler vs Dispatch Coordinator glossary | 2026-04-05 | Added DC glossary entry; narrowed QH "never makes decisions" to trigger/business logic scope |
 | Closed #125 — *All sync barrier vs collector terminology | 2026-04-05 | "sync barrier" → "collect-all" across 15 files; %* subcategorized (Data/Collect-all/Race) |
+| Closed #126 — [=] IO marker scoping rule | 2026-04-05 | Clarified [=]/[~]/[*] scope to parent operator via indentation; 4 files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -197,11 +198,11 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Issue #126 unified, ready to merge
-Next action: /paul:merge to commit and merge branch
+Stopped at: Merged #126 to main, issue closed
+Next action: Pick next issue or push to origin
 Resume context:
-- Issue #126 changes applied to 4 files on branch docs/issue-126-marker-io-queue-scoping-rule
-- Clarified [=] IO marker scopes to parent operator via indentation
+- Issue #126 complete and merged to main
+- Branch docs/issue-126-marker-io-queue-scoping-rule deleted
 
 ---
 *STATE.md — Updated after every significant action*

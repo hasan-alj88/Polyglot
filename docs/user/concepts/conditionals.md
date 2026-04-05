@@ -86,7 +86,7 @@ Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the f
    [r] $status#string << "unknown"
 ```
 
-### Match Syntax (Conditional Assignment Sugar)
+### Match Syntax
 
 <!-- @EBNF:match_line -->
 

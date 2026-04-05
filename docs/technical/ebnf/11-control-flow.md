@@ -23,7 +23,7 @@ conditional_branch  ::= exec_line | comment_line ;
    PGE06010: Every [?] branch must contain at least one executable statement. *)
 ```
 
-### 11.1.1 Match (Conditional Assignment Sugar)
+### 11.1.1 Match Syntax
 
 ```ebnf
 match_line          ::= "[r]" value_expr ">>" assign_target NEWLINE
