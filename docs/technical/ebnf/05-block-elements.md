@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-05
+updated: 2026-04-06
 ---
 
 <!-- @ebnf/INDEX -->
@@ -35,6 +35,8 @@ data_flow_elem      ::= "[=]" | "[~]" | "[*]" | "[>]" | "[<]" ;
 
 (* Execution *)
 execution_elem      ::= "[r]" | "[p]" | "[b]" | "[#]" ;
+                      (* [#] is dual-context: execution element in {=} pipeline bodies,
+                         schema/type declaration element in {#} definition bodies — see §4.3, §9.2 *)
 
 (* Control Flow *)
 control_flow_elem   ::= "[?]" | "[!]" | "[T]" | "[Q]" | "[W]" ;
@@ -62,5 +64,7 @@ comment_elem        ::= "[ ]" ;
 ```
 
 **Rule:** `[>]` (output fallback) and `[<]` (input fallback) are scoped under `[=]` IO lines — they use the `<!` fallback operator to provide error-recovery values (see §10.2). `[<]` also appears nested under `[#] <param` in `{#}` definitions as a type parameter constraint block (see §4.3).
+
+**Rule:** `[#]` serves two contexts. In `{=}` pipeline execution bodies, `[#] <param` loads data parameters (execution element). In `{#}` definition bodies, `[#]` introduces schema composition (`[#] << ##Schema`), field type composition (`[#] << ###FieldType`), schema properties (`[#] %##Property`), and inheritance (`[#] <~ #Parent`) — see §4.3 for grammar rules and §9.2 `data_body_line` for how these integrate into data definitions.
 
 ---
