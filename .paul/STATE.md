@@ -78,14 +78,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #149 — Docs: PGE01001/PGE01002 pipeline ordering paradox with EBNF
+Branch: docs/issue-149-pipeline-ordering-paradox
+Labels: compiler, docs, P2-high, docs-inconsistency
+Started: 2026-04-06
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/149
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Loop closed, ready for merge]
 ```
 
 ## Accumulated Context
