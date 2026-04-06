@@ -229,7 +229,7 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 | 144 | PGE05001 separator homogeneity contradicts flexible-fields | 1 | P2-high | Done |
 | 150 | PGW01002/PGE01021 duplicate — warning vs error | 1 | P3-medium | Done |
 | 142 | Queue definition syntax ambiguous (#Queue: vs {Q}) | 2 | P2-high | Done |
-| 155 | Metadata path syntax gap user vs technical | 2 | P2-high | Pending |
+| 155 | Metadata path syntax gap user vs technical | 2 | P2-high | Done |
 | 153 | =#.Column undocumented prefix collision | 2 | P3-medium | Pending |
 | 156 | Array dimension :2D vs < access unmapped | 2 | P3-medium | Pending |
 | 145 | Wait/collect markers [<]/[>] vs [*] undocumented | 2 | P3-medium | Pending |
