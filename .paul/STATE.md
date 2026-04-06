@@ -68,8 +68,9 @@ Progress:
 - Issue #137: [██████████] 100% (1/1 plans — code block language tags)
 - Issue #138: [██████████] 100% (1/1 plans — audience frontmatter)
 - Issue #115: [██████████] 100% (1/1 plans — job hierarchy addressing)
-- Docs-Inconsistency Batch (#141-#159): [░░░░░░░░░░] 0% (0/19 issues)
-  - Group 1 (EBNF/Compiler): 0/5
+- Issue #158: [██████████] 100% (1/1 plans — [#] dual-role EBNF docs)
+- Docs-Inconsistency Batch (#141-#159): [█░░░░░░░░░] 5% (1/19 issues)
+  - Group 1 (EBNF/Compiler): 1/5
   - Group 2 (Syntax Gaps): 0/5
   - Group 3 (Naming): 0/6
   - Group 4 (Cross-Ref): 0/2
@@ -77,18 +78,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #158 — Docs: ## schema property prefix missing from EBNF Section 05
-Branch: docs/issue-158-schema-prefix-ebnf
-Labels: compiler, docs, P2-high, docs-inconsistency
-Started: 2026-04-06
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/158
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Issue #158 — ready to merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -225,8 +222,8 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-06
-Stopped at: Docs-inconsistency briefs prepared
-Next action: /paul:work-issue 158
+Stopped at: Issue #158 merged and closed
+Next action: /paul:work-issue 149
 Resume file: N/A
 Resume context:
 - 19 discussion briefs prepared in .paul/phases/{N}-{slug}/BRIEF.md
