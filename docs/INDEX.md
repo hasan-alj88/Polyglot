@@ -32,12 +32,17 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | Object | Prefix | User Concept | Stdlib Reference | EBNF Grammar | Edge Cases |
 |--------|--------|-------------|-----------------|-------------|------------|
 | Pipeline | `=` | [[user/concepts/pipelines/INDEX]] | [[user/stdlib/pipelines/]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
+| Queue | `{Q}` | [[user/concepts/pipelines/queue]] | [[user/stdlib/pipelines/Q]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
+| Trigger | `{T}` | [[user/concepts/pipelines/io-triggers]] | [[user/stdlib/pipelines/T]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
+| Wrapper | `{W}` | [[user/concepts/pipelines/wrappers]] | [[user/stdlib/pipelines/W]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 | Expander | `~` | [[user/concepts/collections/expand]] | [[user/stdlib/expanders/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |
 | Collector | `*` | [[user/concepts/collections/collect]] | [[user/stdlib/collectors/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |
 | Data / Type | `#` | [[user/syntax/types/INDEX]] | [[user/stdlib/types/]] | [[technical/ebnf/04-type-system]] | [[technical/edge-cases/04-type-system]] |
 | Metadata | `%` | [[user/concepts/metadata]] | — | [[technical/ebnf/05-block-elements]] | [[technical/edge-cases/15-metadata-blocks]] |
 | Macro | `{M}` | [[user/syntax/types/macro-types]] | — | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/18-macro-structure]] |
 | Error | `!` | [[user/concepts/errors]] | [[user/stdlib/errors/]] | [[technical/ebnf/11-control-flow]] | [[technical/edge-cases/11-control-flow]] |
+| Permission | `{_}` | [[user/concepts/permissions]] | — | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
+| Native | `{N}` | [[user/concepts/pipelines/INDEX]] | — | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 | Package | `@` | [[user/syntax/packages]] | — | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 
 ## By Audience
