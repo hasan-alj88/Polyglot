@@ -121,6 +121,44 @@ Live fields for macros are not yet defined.
 
 `[%]` metadata under `{N}` implicitly scopes to `%Native.*` — all fixed `.` fields. See [[concepts/pipelines/INDEX#Native vs Derived|{N} Metadata]].
 
+## Advanced: Full Metadata Paths
+
+The shorthand accessors shown above (`$name%state`, `=MyPipeline%status`) are syntactic sugar. The compiler resolves each to a full path in the `%` metadata tree.
+
+### Shorthand Resolution
+
+| You write | Compiler resolves to |
+|-----------|---------------------|
+| `$myVar%state` | `%$:myVar:<current>.state` |
+| `=MyPipeline%status` | `%=:MyPipeline:<current>.status` |
+| `#Record%lastModified` | `%#:Record:<current>.lastModified` |
+| `=W.DB.Connection%status` | `%W:DB.Connection:<current>.status` |
+| `#Queue:GPUQueue%activeCount` | `%Q:GPUQueue:<current>.activeCount` |
+
+The full path follows the pattern: `%{type}:{name}:{instance}.{field}`
+
+- **`%`** — metadata tree root
+- **`{type}`** — object type prefix (`$`, `=`, `#`, `W`, `Q`, `T`, `M`)
+- **`{name}`** — object reference name (flexible field, uses `:`)
+- **`{instance}`** — which instance (flexible field, uses `:`)
+- **`.{field}`** — fixed field within the instance
+
+### `:<current>` — Implicit Instance
+
+When you write `=MyPipeline%status`, the `:<current>` instance segment is implicit — the runtime resolves it to the instance executing in the current context. Most code never needs to specify an instance explicitly.
+
+### Instance Addressing with `:N`
+
+When a pipeline has multiple concurrent instances, you can target a specific one by instance number:
+
+```polyglot
+[r] $status << %=:MyPipeline:3.status
+```
+
+This reads the status of instance 3 of `=MyPipeline`. Explicit instance addressing is primarily useful for monitoring and debugging — normal pipeline code uses the implicit `:<current>` resolution.
+
+For the complete path grammar including job paths and marker addressing, see [[metadata-tree/path-grammar|Path Grammar]].
+
 ## Rules
 
 - **PGE02006:** `live` fields are pull-only — any push is a compile error
