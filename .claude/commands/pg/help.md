@@ -25,6 +25,7 @@ The `/pg:*` commands help you generate, validate, and iteratively improve Polygl
 |---------|---------|
 | `/pg:train [prompt]` | Training loop: generate → correct → learn |
 | `/pg:generate <desc>` | Generate Polyglot code from description |
+| `/pg:docs [section]` | Generate/update documentation PDF |
 | `/pg:help` | This reference |
 
 ---
@@ -93,5 +94,20 @@ When you create a new spec file (e.g., `docs/user/syntax/error-handling.md`):
 
 ---
 
-*Polyglot Agent v0.1 | 3 commands*
+## `/pg:docs` — Documentation PDF
+
+Generate the combined Polyglot documentation book (343 docs → single PDF).
+
+**Usage:**
+- `/pg:docs` — full book from all docs/
+- `/pg:docs user` — only user-facing documentation
+- `/pg:docs technical` — only technical documentation
+
+**Output:** `Polyglot-Documentation.pdf` in repo root.
+
+**Auto-generation:** A PostToolUse hook automatically regenerates the PDF after any `git commit` that touches `docs/`.
+
+---
+
+*Polyglot Agent v0.2 | 4 commands*
 </reference>

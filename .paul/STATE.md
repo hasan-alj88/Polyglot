@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #115 — Job hierarchy addressing syntax
-Plan: 115-01 complete
-Status: Loop closed, ready for MERGE
-Last activity: 2026-04-05 — UNIFY complete for 115-01
+Plan: N/A
+Status: Issue #115 merged to main
+Last activity: 2026-04-05 — Issue #115 merged (job hierarchy addressing syntax)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -67,21 +67,18 @@ Progress:
 - Issue #136: [██████████] 100% (1/1 plans — H4+ heading restructure)
 - Issue #137: [██████████] 100% (1/1 plans — code block language tags)
 - Issue #138: [██████████] 100% (1/1 plans — audience frontmatter)
+- Issue #115: [██████████] 100% (1/1 plans — job hierarchy addressing)
 
 ## Active Issue
 
-Issue: #115 — Design: Job hierarchy addressing syntax in Polyglot Code
-Branch: design/issue-115-job-hierarchy-addressing-syntax
-Labels: design
-Started: 2026-04-05
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/115
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -198,6 +195,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #136 — H4+ headings in PGE files | 2026-04-05 | Promoted heading levels in 8 PGE files (H3→H1, H4→H2, H5→H3); audit convention enforced |
 | Closed #137 — Untagged code blocks | 2026-04-05 | Added language tags to 168+ bare code fences across 46 files; polyglot/json/yaml/text/ebnf |
 | Closed #138 — Missing audience frontmatter | 2026-04-05 | Added audience field to 218 files + full frontmatter to 11 files; audit/→ai, technical/→developer |
+| Closed #115 — Job hierarchy addressing syntax | 2026-04-05 | Nested [Q] under markers, positional job paths, =Q.Job.Branch, EBNF grammar update; 6 docs files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -217,13 +215,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: UNIFY complete for 115-01
-Next action: /paul:merge to commit and merge issue #115
-Resume file: .paul/phases/115-job-hierarchy-addressing/115-01-SUMMARY.md
+Stopped at: Issue #115 merged and closed
+Next action: /paul:issues or /paul:work-issue <number>
+Resume file: N/A
 Resume context:
-- Issue #115 on branch design/issue-115-job-hierarchy-addressing-syntax
-- 6 files modified: queue.md, Q.md, branches.md, path-grammar.md, 09-definition-blocks.md, 10-execution.md
-- Ready for commit and merge to main
+- Issue #115 merged to main, branch deleted, GitHub issue closed
+- Ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
