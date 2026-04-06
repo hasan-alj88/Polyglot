@@ -202,5 +202,47 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 **Plans:** TBD (during /paul:plan)
 
 ---
+
+## Issue Batch: Docs-Inconsistency Audit (#141-#159)
+
+**Theme:** Resolve 19 documentation inconsistencies flagged by audit
+**Created:** 2026-04-06
+**Status:** Briefs prepared, 0 of 19 resolved
+
+### Group Order
+
+| Group | Theme | Issues | P2 | Status |
+|-------|-------|--------|----|--------|
+| 1 | EBNF / Compiler Rule Gaps | #158, #149, #146, #144, #150 | 3 | Pending |
+| 2 | Syntax Documentation Gaps | #142, #155, #153, #156, #145 | 2 | Pending |
+| 3 | Naming & Terminology | #151, #148, #143, #154, #141, #152 | 0 | Pending |
+| 4 | Cross-Reference Errors | #159, #157 | 0 | Pending |
+| 5 | Stdlib Classification | #147 | 0 | Pending |
+
+### Issue Index
+
+| # | Title | Group | Priority | Status |
+|---|-------|-------|----------|--------|
+| 158 | ## schema property prefix missing from EBNF Section 05 | 1 | P2-high | Pending |
+| 149 | PGE01001/PGE01002 pipeline ordering paradox | 1 | P2-high | Pending |
+| 146 | Semicolon (;) type annotation prefix missing | 1 | P2-high | Pending |
+| 144 | PGE05001 separator homogeneity contradicts flexible-fields | 1 | P2-high | Pending |
+| 150 | PGW01002/PGE01021 duplicate — warning vs error | 1 | P3-medium | Pending |
+| 142 | Queue definition syntax ambiguous (#Queue: vs {Q}) | 2 | P2-high | Pending |
+| 155 | Metadata path syntax gap user vs technical | 2 | P2-high | Pending |
+| 153 | =#.Column undocumented prefix collision | 2 | P3-medium | Pending |
+| 156 | Array dimension :2D vs < access unmapped | 2 | P3-medium | Pending |
+| 145 | Wait/collect markers [<]/[>] vs [*] undocumented | 2 | P3-medium | Pending |
+| 151 | Scalar subtypes ##Int/##Float vs int/float naming | 3 | P3-medium | Pending |
+| 148 | #Array vs #array case inconsistency | 3 | P3-medium | Pending |
+| 143 | #Boolean enum struct vs enum classification | 3 | P4-low | Pending |
+| 154 | *Agg shorthand not in glossary or vision | 3 | P4-low | Pending |
+| 141 | Trigger Monitor role contradicts glossary vs vision | 3 | P3-medium | Pending |
+| 152 | *Continue collector vs error recovery classification | 3 | P3-medium | Pending |
+| 159 | Audience routing sends wrong groups to wrong docs | 4 | P3-medium | Pending |
+| 157 | PGE04009 / *Continue / conversions.md circular ref | 4 | P3-medium | Pending |
+| 147 | ForEach.Level ~~ double-prefix violates single ~ rule | 5 | P3-medium | Pending |
+
+---
 *Roadmap created: 2026-02-27*
-*Last updated: 2026-03-24*
+*Last updated: 2026-04-06*

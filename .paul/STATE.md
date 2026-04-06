@@ -68,6 +68,12 @@ Progress:
 - Issue #137: [██████████] 100% (1/1 plans — code block language tags)
 - Issue #138: [██████████] 100% (1/1 plans — audience frontmatter)
 - Issue #115: [██████████] 100% (1/1 plans — job hierarchy addressing)
+- Docs-Inconsistency Batch (#141-#159): [░░░░░░░░░░] 0% (0/19 issues)
+  - Group 1 (EBNF/Compiler): 0/5
+  - Group 2 (Syntax Gaps): 0/5
+  - Group 3 (Naming): 0/6
+  - Group 4 (Cross-Ref): 0/2
+  - Group 5 (Stdlib): 0/1
 
 ## Active Issue
 
@@ -214,13 +220,16 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-05
-Stopped at: Issue #115 merged and closed
-Next action: /paul:issues or /paul:work-issue <number>
+Last session: 2026-04-06
+Stopped at: Docs-inconsistency briefs prepared
+Next action: /paul:work-issue 158
 Resume file: N/A
 Resume context:
-- Issue #115 merged to main, branch deleted, GitHub issue closed
-- Ready for next issue
+- 19 discussion briefs prepared in .paul/phases/{N}-{slug}/BRIEF.md
+- Work order: Group 1 first (#158, #149, #146, #144, #150), then Group 2, 3, 4, 5
+- Each issue: /paul:work-issue N → read BRIEF.md → /paul:plan → /paul:apply → /paul:unify → /paul:merge
+- ROADMAP.md has full issue index with status tracking
+- See ROADMAP.md "Issue Batch" section for group/priority breakdown
 
 ---
 *STATE.md — Updated after every significant action*
