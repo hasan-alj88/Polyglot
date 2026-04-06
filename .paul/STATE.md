@@ -73,27 +73,24 @@ Progress:
 - Issue #146: [██████████] 100% (1/1 plans — ; type annotation removal)
 - Issue #144: [██████████] 100% (1/1 plans — PGE05001 cross-references)
 - Issue #150: [██████████] 100% (1/1 plans — PGW01002 retired)
-- Docs-Inconsistency Batch (#141-#159): [██░░░░░░░░] 26% (5/19 issues)
+- Issue #142: [██████████] 100% (1/1 plans — Queue definition syntax)
+- Docs-Inconsistency Batch (#141-#159): [███░░░░░░░] 32% (6/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
-  - Group 2 (Syntax Gaps): 0/5
+  - Group 2 (Syntax Gaps): 1/5
   - Group 3 (Naming): 0/6
   - Group 4 (Cross-Ref): 0/2
   - Group 5 (Stdlib): 0/1
 
 ## Active Issue
 
-Issue: #142 — Docs: Queue definition syntax ambiguous (#Queue: vs {Q} block)
-Branch: docs/issue-142-queue-definition-syntax
-Labels: docs, P2-high, docs-inconsistency
-Started: 2026-04-06
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/142
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -215,6 +212,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #146 — Semicolon type annotation removal | 2026-04-06 | ; retired per #88; 136 replacements across 18 files; #RawString gets # prefix |
 | Closed #144 — PGE05001 separator homogeneity cross-references | 2026-04-06 | Cross-refs between PGE05001, flexible-fields.md, identifiers.md; per-level clarification |
 | Closed #150 — PGW01002 retired | 2026-04-06 | PGW01002 reduced to stub redirect; PGE01021 sole rule for empty {#}; Group 1 complete |
+| Closed #142 — Queue definition syntax ambiguous | 2026-04-06 | Added Queue + Trigger/Wrapper/Permission/Native rows to INDEX.md object table |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -234,13 +232,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-06
-Stopped at: Issue #142 plan 142-01 unified — ready for merge
-Next action: /paul:merge to commit and close issue #142
-Resume file: .paul/phases/142-queue-definition-syntax/142-01-SUMMARY.md
+Stopped at: Issue #142 merged and closed — 6/19 docs-inconsistency
+Next action: /paul:work-issue 155 (next Group 2 issue)
+Resume file: N/A
 Resume context:
-- Issue #142: Added Queue + 4 other missing rows to INDEX.md object table
-- Single file changed: docs/INDEX.md
-- Ready for commit and merge to main
+- Group 1 (EBNF/Compiler): 5/5 COMPLETE (#158, #149, #146, #144, #150)
+- Group 2 (Syntax Gaps): 1/5 (#142 done; next: #155, #153, #156, #145)
+- Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
+- ROADMAP.md has full issue index with status tracking
 
 ---
 *STATE.md — Updated after every significant action*
