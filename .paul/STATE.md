@@ -71,8 +71,9 @@ Progress:
 - Issue #158: [██████████] 100% (1/1 plans — [#] dual-role EBNF docs)
 - Issue #149: [██████████] 100% (1/1 plans — [=],[T] ordering paradox)
 - Issue #146: [██████████] 100% (1/1 plans — ; type annotation removal)
-- Docs-Inconsistency Batch (#141-#159): [█░░░░░░░░░] 15% (3/19 issues)
-  - Group 1 (EBNF/Compiler): 3/5
+- Issue #144: [██████████] 100% (1/1 plans — PGE05001 cross-references)
+- Docs-Inconsistency Batch (#141-#159): [██░░░░░░░░] 21% (4/19 issues)
+  - Group 1 (EBNF/Compiler): 4/5
   - Group 2 (Syntax Gaps): 0/5
   - Group 3 (Naming): 0/6
   - Group 4 (Cross-Ref): 0/2
@@ -80,18 +81,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #144 — Docs: PGE05001 separator homogeneity contradicts flexible-fields docs
-Branch: docs/issue-144-separator-homogeneity
-Labels: compiler, docs, P2-high, docs-inconsistency
-Started: 2026-04-06
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/144
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — ready for commit + merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -211,6 +208,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #115 — Job hierarchy addressing syntax | 2026-04-05 | Nested [Q] under markers, positional job paths, =Q.Job.Branch, EBNF grammar update; 6 docs files |
 | Closed #149 — PGE01001/PGE01002 pipeline ordering paradox | 2026-04-06 | [=] IO before [T] triggers is positional rule; EBNF enforces ordered production; 7 files |
 | Closed #146 — Semicolon type annotation removal | 2026-04-06 | ; retired per #88; 136 replacements across 18 files; #RawString gets # prefix |
+| Closed #144 — PGE05001 separator homogeneity cross-references | 2026-04-06 | Cross-refs between PGE05001, flexible-fields.md, identifiers.md; per-level clarification |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -230,13 +228,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-06
-Stopped at: Plan 144-01 unified — loop complete
-Next action: /paul:merge (commit + merge to main, close #144)
-Resume file: .paul/phases/144-separator-homogeneity/144-01-SUMMARY.md
+Stopped at: Issue #144 merged and closed
+Next action: /paul:work-issue 150
+Resume file: N/A
 Resume context:
-- Issue #144 loop complete on branch docs/issue-144-separator-homogeneity
-- 3 files modified with cross-references, ready for commit
-- After #144: one more Group 1 issue (#150), then Groups 2-5
+- 19 discussion briefs prepared in .paul/phases/{N}-{slug}/BRIEF.md
+- Work order: Group 1 (#158✓, #149✓, #146✓, #144✓, #150), then Group 2, 3, 4, 5
+- Each issue: /paul:work-issue N → read BRIEF.md → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 
 ---

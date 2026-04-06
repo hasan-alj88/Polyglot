@@ -226,7 +226,7 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 | 158 | ## schema property prefix missing from EBNF Section 05 | 1 | P2-high | Done |
 | 149 | PGE01001/PGE01002 pipeline ordering paradox | 1 | P2-high | Done |
 | 146 | Semicolon (;) type annotation prefix missing | 1 | P2-high | Done |
-| 144 | PGE05001 separator homogeneity contradicts flexible-fields | 1 | P2-high | Pending |
+| 144 | PGE05001 separator homogeneity contradicts flexible-fields | 1 | P2-high | Done |
 | 150 | PGW01002/PGE01021 duplicate — warning vs error | 1 | P3-medium | Pending |
 | 142 | Queue definition syntax ambiguous (#Queue: vs {Q}) | 2 | P2-high | Pending |
 | 155 | Metadata path syntax gap user vs technical | 2 | P2-high | Pending |
