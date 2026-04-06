@@ -83,14 +83,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #155 — Docs: Metadata path syntax gap between user and technical docs
+Branch: docs/issue-155-metadata-path-syntax-gap
+Labels: docs, P2-high, docs-inconsistency
+Started: 2026-04-06
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/155
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for merge]
 ```
 
 ## Accumulated Context
