@@ -69,8 +69,9 @@ Progress:
 - Issue #138: [██████████] 100% (1/1 plans — audience frontmatter)
 - Issue #115: [██████████] 100% (1/1 plans — job hierarchy addressing)
 - Issue #158: [██████████] 100% (1/1 plans — [#] dual-role EBNF docs)
-- Docs-Inconsistency Batch (#141-#159): [█░░░░░░░░░] 5% (1/19 issues)
-  - Group 1 (EBNF/Compiler): 1/5
+- Issue #149: [██████████] 100% (1/1 plans — [=],[T] ordering paradox)
+- Docs-Inconsistency Batch (#141-#159): [█░░░░░░░░░] 10% (2/19 issues)
+  - Group 1 (EBNF/Compiler): 2/5
   - Group 2 (Syntax Gaps): 0/5
   - Group 3 (Naming): 0/6
   - Group 4 (Cross-Ref): 0/2
@@ -78,18 +79,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #149 — Docs: PGE01001/PGE01002 pipeline ordering paradox with EBNF
-Branch: docs/issue-149-pipeline-ordering-paradox
-Labels: compiler, docs, P2-high, docs-inconsistency
-Started: 2026-04-06
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/149
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -207,6 +204,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #137 — Untagged code blocks | 2026-04-05 | Added language tags to 168+ bare code fences across 46 files; polyglot/json/yaml/text/ebnf |
 | Closed #138 — Missing audience frontmatter | 2026-04-05 | Added audience field to 218 files + full frontmatter to 11 files; audit/→ai, technical/→developer |
 | Closed #115 — Job hierarchy addressing syntax | 2026-04-05 | Nested [Q] under markers, positional job paths, =Q.Job.Branch, EBNF grammar update; 6 docs files |
+| Closed #149 — PGE01001/PGE01002 pipeline ordering paradox | 2026-04-06 | [=] IO before [T] triggers is positional rule; EBNF enforces ordered production; 7 files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
