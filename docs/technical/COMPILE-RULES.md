@@ -239,7 +239,7 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | Code | Name |
 |------|------|
 | PGW01001 | Empty Execution Body |
-| PGW01002 | Empty Data Definition *(superseded by PGE01021)* |
+| PGW01002 | *(Retired — see PGE01021)* |
 | PGW01003 | No Definitions in File |
 | PGW02001 | Default Pull Across State Change |
 | PGW02002 | Unused Variable |
