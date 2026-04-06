@@ -77,14 +77,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #158 — Docs: ## schema property prefix missing from EBNF Section 05
+Branch: docs/issue-158-schema-prefix-ebnf
+Labels: compiler, docs, P2-high, docs-inconsistency
+Started: 2026-04-06
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/158
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Issue #158 — ready to merge]
 ```
 
 ## Accumulated Context
