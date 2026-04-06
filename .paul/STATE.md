@@ -82,14 +82,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #142 — Docs: Queue definition syntax ambiguous (#Queue: vs {Q} block)
+Branch: docs/issue-142-queue-definition-syntax
+Labels: docs, P2-high, docs-inconsistency
+Started: 2026-04-06
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/142
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for merge]
 ```
 
 ## Accumulated Context
@@ -230,14 +234,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-06
-Stopped at: Issue #150 merged and closed — Group 1 complete
-Next action: /paul:work-issue 142 (first Group 2 issue)
-Resume file: N/A
+Stopped at: Issue #142 plan 142-01 unified — ready for merge
+Next action: /paul:merge to commit and close issue #142
+Resume file: .paul/phases/142-queue-definition-syntax/142-01-SUMMARY.md
 Resume context:
-- Group 1 (EBNF/Compiler): 5/5 COMPLETE (#158, #149, #146, #144, #150)
-- Next: Group 2 (Syntax Gaps): #142, #155, #153, #156, #145
-- Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
-- ROADMAP.md has full issue index with status tracking
+- Issue #142: Added Queue + 4 other missing rows to INDEX.md object table
+- Single file changed: docs/INDEX.md
+- Ready for commit and merge to main
 
 ---
 *STATE.md — Updated after every significant action*
