@@ -27,11 +27,11 @@ At the `[W]` usage site, wrapper IO is wired using `[=]` with `$` variables:
 
 After `[W]` wiring, the wrapper's `[}]` outputs (e.g., `$dbConn`) become available as `$` variables in the execution body.
 
-Execution order: `[T],[=]` → `[Q]` → `[\]` → Execution Body → `[/]` (see [[concepts/pipelines/execution|execution]])
+Execution order: `[=],[T]` → `[Q]` → `[\]` → Execution Body → `[/]` (see [[concepts/pipelines/execution|execution]])
 
 ```mermaid
 flowchart LR
-    TIO["[T],[=]\nTrigger/IO"]
+    TIO["[=],[T]\nIO/Trigger"]
     Q["[Q]\nQueue"]
     S["[\\]\nSetup"]
     EB["Execution\nBody"]
