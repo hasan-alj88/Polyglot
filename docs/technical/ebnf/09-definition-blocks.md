@@ -83,9 +83,11 @@ pipeline_body       ::= { ( metadata_line | comment_line ) NEWLINE }
                          wrapper_section
                          execution_section ;
 
-(* Trigger, IO, and error declarations form one section — order between [T], [=], and error decls is not strict.
-   IO inputs are implicit triggers; some triggers produce inputs. Error declarations mark the pipeline as failable. *)
-trigger_io_section  ::= { indent ( trigger_line | io_decl_line | error_decl_line | comment_line ) NEWLINE } ;
+(* Trigger, IO, and error declarations form one section — order IS strict: [=] IO declarations and error
+   declarations come first, then [T] trigger lines (PGE01002). IO inputs are implicit triggers; some triggers
+   produce inputs. Error declarations mark the pipeline as failable. *)
+trigger_io_section  ::= { indent ( io_decl_line | error_decl_line | comment_line ) NEWLINE }
+                         { indent ( trigger_line | comment_line ) NEWLINE } ;
 
 error_decl_line     ::= "[=]" error_id ;
 ```
@@ -278,7 +280,7 @@ to_outer            ::= "[}]" variable_id ;
 - `[\]` runs before the pipeline execution body (setup). Can call a single pipeline or open a scope with multiple exec lines.
 - `[/]` runs after the pipeline execution body (cleanup). Same structure as `[\]`.
 - Wrappers do NOT contain `{#}` definitions, `[T]`, `[=]` pipeline-level IO, or `[Q]` — those belong to pipelines. Type macros (`{M}`) are a separate construct for compile-time type generation.
-- Execution order: `[T],[=]` → `[Q]` → `[\]` → Execution Body → `[/]`.
+- Execution order: `[=],[T]` → `[Q]` → `[\]` → Execution Body → `[/]`.
 - The wrapper unpacks before and after the body like brackets.
 - **Rule (parallel fork):** `[p]` inside `[\]` with no subsequent `[*] *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `[*] *All` with `[*] << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
 - Variables produced in `[\]` (including by `[p]`) remain accessible in `[/]`.
