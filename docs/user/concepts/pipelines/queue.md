@@ -19,14 +19,14 @@ Custom queues are defined with `{Q}`, which both defines the queue struct and in
 
 ```polyglot
 {Q} #Queue:GPUQueue
-   [.] .strategy;#QueueStrategy << #LIFO
-   [.] .host;#String << "gpu-server-01"
-   [.] .maxInstancesWithinQueue;#UnsignedInt << 1
-   [.] .maxConcurrentWithinQueue;#UnsignedInt << 4
-   [.] .resourceTagWithinQueue;#Array:ResourceTag << [#GPU]
-   [.] .killPropagation;#KillPropagation << #Downgrade
-   [.] .maxWaitTime;#String << "30m"
-   [.] .description;#String << "GPU-intensive work"
+   [.] .strategy#QueueStrategy << #LIFO
+   [.] .host#String << "gpu-server-01"
+   [.] .maxInstancesWithinQueue#UnsignedInt << 1
+   [.] .maxConcurrentWithinQueue#UnsignedInt << 4
+   [.] .resourceTagWithinQueue#Array:ResourceTag << [#GPU]
+   [.] .killPropagation#KillPropagation << #Downgrade
+   [.] .maxWaitTime#String << "30m"
+   [.] .description#String << "GPU-intensive work"
    [ ] Queue-level default: kill after 4 hours
    [Q] =Q.Kill.Graceful.Time.MoreThan
       [=] <duration << "4h"
@@ -82,9 +82,9 @@ The `[Q]` line in a pipeline declares which queue it uses. It accepts optional `
 
 ```polyglot
 [Q] =Q.Assign"GPUQueue"
-   [=] <maxInstancesAllQueues;#UnsignedInt << 3
-   [=] <maxConcurrentAllQueues;#UnsignedInt << 10
-   [=] <maxConcurrentWithinHost;#UnsignedInt << 5
+   [=] <maxInstancesAllQueues#UnsignedInt << 3
+   [=] <maxConcurrentAllQueues#UnsignedInt << 10
+   [=] <maxConcurrentWithinHost#UnsignedInt << 5
    [ ] Pipeline-specific: pause/resume based on RAM
    [Q] =Q.Pause.Hard.RAM.LessThan
       [=] <mb << 3072.0

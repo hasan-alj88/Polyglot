@@ -17,7 +17,7 @@ severity: error
 ```polyglot
 [ ] ✓ correct prefix
 {Q} #Queue:GPUQueue
-   [.] .strategy;#QueueStrategy << #LIFO
+   [.] .strategy#QueueStrategy << #LIFO
    [.] .maxInstances#int << 1
 ```
 
@@ -25,13 +25,13 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01012 — missing #Queue: prefix
 {Q} #GPUQueue
-   [.] .strategy;#QueueStrategy << #LIFO
+   [.] .strategy#QueueStrategy << #LIFO
 ```
 
 ```polyglot
 [ ] ✗ PGE01012 — wrong prefix
 {Q} =Q.MyQueue
-   [.] .strategy;#QueueStrategy << #LIFO
+   [.] .strategy#QueueStrategy << #LIFO
 ```
 
 **Diagnostic:** "Queue definition `{Q}` must use `#Queue:` prefix — got `#GPUQueue`, expected `#Queue:GPUQueue`"

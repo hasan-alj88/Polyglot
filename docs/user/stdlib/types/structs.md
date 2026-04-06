@@ -69,14 +69,14 @@ Queue configuration struct used in `{Q}` queue definitions. Each `{Q} #Queue:Nam
    [%] .description << "Queue configuration for pipeline dispatch"
    [%] .version << "2.0.0"
    [#] << ##Scalar
-   [.] .strategy;#QueueStrategy
-   [.] .host;#String
-   [.] .maxInstances;#UnsignedInt
-   [.] .maxConcurrent;#UnsignedInt
-   [.] .resourceTags;#Array:ResourceTag
-   [.] .killPropagation;#KillPropagation
-   [.] .maxWaitTime;#String
-   [.] .description;#String
+   [.] .strategy#QueueStrategy
+   [.] .host#String
+   [.] .maxInstances#UnsignedInt
+   [.] .maxConcurrent#UnsignedInt
+   [.] .resourceTags#Array:ResourceTag
+   [.] .killPropagation#KillPropagation
+   [.] .maxWaitTime#String
+   [.] .description#String
 ```
 
 ### Fields
@@ -105,15 +105,15 @@ Job state is stored at `%=:Pipeline:N.jobs:UID` in the metadata tree. See [[glos
    [%] .description << "Runtime job state within a pipeline instance"
    [%] .version << "1.0.0"
    [#] << ##Flat
-   [.] .PID;#String
-   [.] .status;#QueueState
-   [.] .pipeline;#String
-   [.] .queue;#String
-   [.] .parent;#String
-   [.] .hasChildren;#Boolean
-   [.] .hierarchy;#String
-   [.] .marker;#String
-   [.] .killPropagation;#KillPropagation
+   [.] .PID#String
+   [.] .status#QueueState
+   [.] .pipeline#String
+   [.] .queue#String
+   [.] .parent#String
+   [.] .hasChildren#Boolean
+   [.] .hierarchy#String
+   [.] .marker#String
+   [.] .killPropagation#KillPropagation
 ```
 
 ### Fields

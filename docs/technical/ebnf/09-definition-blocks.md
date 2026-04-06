@@ -374,12 +374,12 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
 ```polyglot
 {Q} #Queue:GPUQueue
    [%] .description << "Queue for GPU-intensive work"
-   [.] .strategy;#QueueStrategy << #LIFO
-   [.] .host;#String << "gpu-server-01"
-   [.] .maxInstances;#UnsignedInt << 1
-   [.] .killPropagation;#KillPropagation << #Downgrade
-   [.] .resourceTags;#Array:ResourceTag << [#GPU]
-   [.] .maxWaitTime;#String << "30m"
+   [.] .strategy#QueueStrategy << #LIFO
+   [.] .host#String << "gpu-server-01"
+   [.] .maxInstances#UnsignedInt << 1
+   [.] .killPropagation#KillPropagation << #Downgrade
+   [.] .resourceTags#Array:ResourceTag << [#GPU]
+   [.] .maxWaitTime#String << "30m"
    [Q] =Q.Kill.Graceful.Time.MoreThan
       [=] <duration << "4h"
 ```

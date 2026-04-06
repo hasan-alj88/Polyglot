@@ -66,7 +66,7 @@ When a pipeline's trigger conditions are met again while the pipeline is already
 
 ```polyglot
 [Q] =Q.Default
-   [=] <retrigger;#RetriggerStrategy << #Disallow
+   [=] <retrigger#RetriggerStrategy << #Disallow
 ```
 
 | Strategy | Behavior |

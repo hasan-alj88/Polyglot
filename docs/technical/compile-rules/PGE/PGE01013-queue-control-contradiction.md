@@ -16,7 +16,7 @@ severity: error
 **VALID:**
 ```polyglot
 {Q} #Queue:BatchQueue
-   [.] .strategy;#QueueStrategy << #FIFO
+   [.] .strategy#QueueStrategy << #FIFO
    [.] .maxInstances#int << 5
 
 [ ] ✓ pipeline adds controls not in {Q} — no contradiction

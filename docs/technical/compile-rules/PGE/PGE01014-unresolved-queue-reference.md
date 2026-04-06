@@ -26,7 +26,7 @@ severity: error
 ```polyglot
 [ ] ✓ user-defined queue in same file
 {Q} #Queue:WorkQueue
-   [.] .strategy;#QueueStrategy << #FIFO
+   [.] .strategy#QueueStrategy << #FIFO
 
 {=} =BatchJob
    [T] =T.Call

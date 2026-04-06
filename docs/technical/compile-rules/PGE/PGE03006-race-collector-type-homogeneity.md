@@ -31,7 +31,7 @@ severity: error
 ```polyglot
 [ ] ✓ *All has no type constraint — mixed types allowed
 [p] =Fetch.Profile
-   [=] >profile;#UserProfile >> $profile
+   [=] >profile#UserProfile >> $profile
 
 [p] =Fetch.Count
    [=] >count#int >> $count

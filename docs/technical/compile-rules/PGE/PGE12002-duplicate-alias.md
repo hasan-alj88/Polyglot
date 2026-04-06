@@ -43,7 +43,7 @@ severity: error
 [ ] ✓ nested key alias with dot separators
 {!} !Permission
    [.] .File
-      [.] .Denied;#Error
+      [.] .Denied#Error
          [%] %alias
             [:] "File.Permission.Denied"
             [:] "FileDenied"
@@ -76,12 +76,12 @@ severity: error
 [ ] ✗ PGE12002 — nested alias collides with another definition's alias
 {!} !Permission
    [.] .File
-      [.] .Denied;#Error
+      [.] .Denied#Error
          [%] %alias
             [:] "FileDenied"
 
 {!} !Error
-   [.] .FileDenied;#Error
+   [.] .FileDenied#Error
       [%] %alias
          [:] "FileDenied"              [ ] ✗ PGE12002 — "FileDenied" already aliases !Permission.File.Denied
 ```
