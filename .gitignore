@@ -42,6 +42,8 @@ ENV/
 # Build artifacts
 dist/
 build/
+.docs-build/
+Polyglot-Documentation.pdf
 
 # Test coverage
 coverage/
