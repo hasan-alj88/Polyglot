@@ -84,14 +84,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #153 — Docs: =#.Column creates undocumented prefix collision (= + #)
+Branch: docs/issue-153-column-prefix-collision
+Labels: docs, design, P3-medium, docs-inconsistency
+Started: 2026-04-06
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/153
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for merge]
 ```
 
 ## Accumulated Context
