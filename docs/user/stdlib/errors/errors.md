@@ -33,14 +33,14 @@ All errors — stdlib and user-defined — share the same struct:
 
 ## Defining Custom Errors (`{!}`)
 
-All user-defined errors live under the `!Error` namespace. `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. Use `[:]` for extensible branches and `[.]` for terminal leaves (typed `;#Error`):
+All user-defined errors live under the `!Error` namespace. `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. Use `[:]` for extensible branches and `[.]` for terminal leaves (typed `#Error`):
 
 ```polyglot
 {!} !Error
    [:] :Validation
-      [.] .Empty;#Error
-      [.] .TooLong;#Error
-      [.] .InvalidEmail;#Error
+      [.] .Empty#Error
+      [.] .TooLong#Error
+      [.] .InvalidEmail#Error
 ```
 
 This creates `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail` — all carrying the `#Error` struct. Note: the stdlib `!Validation` namespace (shown in [[stdlib/errors/errors#Built-in Error Namespaces]]) is separate — it has fixed leaves defined by the runtime, not user code.
@@ -53,49 +53,49 @@ No `[@]` import needed. Stdlib errors are defined as `{!}` blocks by the runtime
 
 ```polyglot
 {!} !File
-   [.] .NotFound;#Error
-   [.] .ReadError;#Error
-   [.] .WriteError;#Error
-   [.] .ParseError;#Error
+   [.] .NotFound#Error
+   [.] .ReadError#Error
+   [.] .WriteError#Error
+   [.] .ParseError#Error
 
 {!} !No
-   [.] .Input;#Error
-   [.] .Output;#Error
+   [.] .Input#Error
+   [.] .Output#Error
 
 {!} !Timeout
-   [.] .Connection;#Error
-   [.] .Read;#Error
+   [.] .Connection#Error
+   [.] .Read#Error
 
 {!} !Math
-   [.] .DivideByZero;#Error
+   [.] .DivideByZero#Error
 
 {!} !Validation
-   [.] .Schema;#Error
-   [.] .Type;#Error
-   [.] .Regex;#Error
+   [.] .Schema#Error
+   [.] .Type#Error
+   [.] .Regex#Error
 
 {!} !Field
-   [.] .NotFound;#Error
-   [.] .PathError;#Error
+   [.] .NotFound#Error
+   [.] .PathError#Error
 
 {!} !Alias
-   [.] .Clash;#Error
+   [.] .Clash#Error
 
 {!} !Permission
-   [.] .File.Denied;#Error
-   [.] .Web.Denied;#Error
-   [.] .Database.Denied;#Error
-   [.] .System.Denied;#Error
-   [.] .Crypto.Denied;#Error
-   [.] .IPC.Denied;#Error
-   [.] .Device.Denied;#Error
-   [.] .Memory.Denied;#Error
+   [.] .File.Denied#Error
+   [.] .Web.Denied#Error
+   [.] .Database.Denied#Error
+   [.] .System.Denied#Error
+   [.] .Crypto.Denied#Error
+   [.] .IPC.Denied#Error
+   [.] .Device.Denied#Error
+   [.] .Memory.Denied#Error
 
 {!} !RT
-   [.] .CompileError;#Error
-   [.] .RuntimeError;#Error
-   [.] .Timeout;#Error
-   [.] .EnvironmentError;#Error
+   [.] .CompileError#Error
+   [.] .RuntimeError#Error
+   [.] .Timeout#Error
+   [.] .EnvironmentError#Error
 ```
 
 ### `!Error` — User-Extensible Namespace
@@ -108,12 +108,12 @@ Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `
 {!} !Error
    [:] :MyApp
       [:] :Auth
-         [.] .Expired;#Error
-         [.] .Invalid;#Error
+         [.] .Expired#Error
+         [.] .Invalid#Error
       [:] :Data
-         [.] .Corrupt;#Error
-         [.] .Missing;#Error
-      [:] :GeneralFailure;#Error
+         [.] .Corrupt#Error
+         [.] .Missing#Error
+      [:] :GeneralFailure#Error
 ```
 
 This creates `!Error:MyApp:Auth.Expired`, `!Error:MyApp:Auth.Invalid`, `!Error:MyApp:Data.Corrupt`, `!Error:MyApp:Data.Missing`, and `!Error:MyApp:GeneralFailure`.

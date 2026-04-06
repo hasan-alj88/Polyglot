@@ -57,7 +57,7 @@ updated: 2026-03-30
 ```polyglot
 {!} !Permission
    [.] .File
-      [.] .Denied;#Error
+      [.] .Denied#Error
          [%] %alias
             [:] "File.Permission.Denied"
             [:] "FileDenied"

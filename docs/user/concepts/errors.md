@@ -32,12 +32,12 @@ Custom errors are defined with `{!}` blocks (see [[blocks#Definition Elements]])
 ```polyglot
 {!} !Error
    [:] :Validation
-      [.] .Empty;#Error
-      [.] .TooLong;#Error
-      [.] .InvalidEmail;#Error
+      [.] .Empty#Error
+      [.] .TooLong#Error
+      [.] .InvalidEmail#Error
    [:] :Auth
-      [.] .Expired;#Error
-      [.] .InvalidToken;#Error
+      [.] .Expired#Error
+      [.] .InvalidToken#Error
 ```
 
 This creates five error identifiers under `!Error`: `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail`, `!Error:Auth.Expired`, `!Error:Auth.InvalidToken`. Tree paths use `:` for user-extensible branches and `.` for fixed leaves (e.g., `%!.Error:Validation.Empty`). Siblings at the same level must all use the same separator (PGE05001).

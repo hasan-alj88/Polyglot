@@ -62,13 +62,13 @@ Pause when a resource condition is met. Used as nested `[Q]` lines in `{Q}` defi
 
 | Pipeline | IO | Purpose |
 |----------|-----|---------|
-| `=Q.Pause.Soft.RAM.LessThan` | `<mb;#Float` | Soft pause when RAM drops below threshold |
-| `=Q.Pause.Soft.CPU.MoreThan` | `<percent;#Float` | Soft pause when CPU exceeds threshold |
-| `=Q.Pause.Soft.Disk.LessThan` | `<mb;#Float` | Soft pause when disk space drops below threshold |
+| `=Q.Pause.Soft.RAM.LessThan` | `<mb#Float` | Soft pause when RAM drops below threshold |
+| `=Q.Pause.Soft.CPU.MoreThan` | `<percent#Float` | Soft pause when CPU exceeds threshold |
+| `=Q.Pause.Soft.Disk.LessThan` | `<mb#Float` | Soft pause when disk space drops below threshold |
 | `=Q.Pause.Soft.GPU.InUse` | (none) | Soft pause when GPU is occupied |
-| `=Q.Pause.Hard.RAM.LessThan` | `<mb;#Float` | Hard pause when RAM drops below threshold |
-| `=Q.Pause.Hard.CPU.MoreThan` | `<percent;#Float` | Hard pause when CPU exceeds threshold |
-| `=Q.Pause.Hard.Disk.LessThan` | `<mb;#Float` | Hard pause when disk space drops below threshold |
+| `=Q.Pause.Hard.RAM.LessThan` | `<mb#Float` | Hard pause when RAM drops below threshold |
+| `=Q.Pause.Hard.CPU.MoreThan` | `<percent#Float` | Hard pause when CPU exceeds threshold |
+| `=Q.Pause.Hard.Disk.LessThan` | `<mb#Float` | Hard pause when disk space drops below threshold |
 | `=Q.Pause.Hard.GPU.InUse` | (none) | Hard pause when GPU is occupied |
 
 ---
@@ -79,9 +79,9 @@ Resume when a resource condition recovers.
 
 | Pipeline | IO | Purpose |
 |----------|-----|---------|
-| `=Q.Resume.RAM.MoreThan` | `<mb;#Float` | Resume when RAM recovers above threshold |
-| `=Q.Resume.CPU.LessThan` | `<percent;#Float` | Resume when CPU drops below threshold |
-| `=Q.Resume.Disk.MoreThan` | `<mb;#Float` | Resume when disk space recovers |
+| `=Q.Resume.RAM.MoreThan` | `<mb#Float` | Resume when RAM recovers above threshold |
+| `=Q.Resume.CPU.LessThan` | `<percent#Float` | Resume when CPU drops below threshold |
+| `=Q.Resume.Disk.MoreThan` | `<mb#Float` | Resume when disk space recovers |
 | `=Q.Resume.GPU.Free` | (none) | Resume when GPU becomes available |
 
 ---
@@ -92,12 +92,12 @@ Terminate jobs based on time, state, or resource conditions.
 
 | Pipeline | IO | Purpose |
 |----------|-----|---------|
-| `=Q.Kill.Graceful.Time.MoreThan` | `<duration;#String` | Graceful kill after execution time exceeds limit |
-| `=Q.Kill.Graceful.RAM.LessThan` | `<mb;#Float` | Graceful kill when RAM critically low |
-| `=Q.Kill.Graceful.Pipeline.Completed` | `<name;#String` | Graceful kill when named pipeline completes |
-| `=Q.Kill.Graceful.Pipeline.Failed` | `<name;#String` | Graceful kill when named pipeline fails |
-| `=Q.Kill.Hard.Time.MoreThan` | `<duration;#String` | Hard kill after execution time exceeds limit |
-| `=Q.Kill.Hard.RAM.LessThan` | `<mb;#Float` | Hard kill when RAM critically low |
+| `=Q.Kill.Graceful.Time.MoreThan` | `<duration#String` | Graceful kill after execution time exceeds limit |
+| `=Q.Kill.Graceful.RAM.LessThan` | `<mb#Float` | Graceful kill when RAM critically low |
+| `=Q.Kill.Graceful.Pipeline.Completed` | `<name#String` | Graceful kill when named pipeline completes |
+| `=Q.Kill.Graceful.Pipeline.Failed` | `<name#String` | Graceful kill when named pipeline fails |
+| `=Q.Kill.Hard.Time.MoreThan` | `<duration#String` | Hard kill after execution time exceeds limit |
+| `=Q.Kill.Hard.RAM.LessThan` | `<mb#Float` | Hard kill when RAM critically low |
 
 ---
 
@@ -110,14 +110,14 @@ What happens when a job exceeds `.maxWaitTime` in the queue. Default behavior: e
 | `=Q.Dispatch.Wait.TimeOut` | (none) | Default — escalate to max priority |
 | `=Q.Dispatch.Wait.TimeOut.Kill.Graceful` | (none) | Graceful kill the waiting job |
 | `=Q.Dispatch.Wait.TimeOut.Kill.Hard` | (none) | Hard kill the waiting job |
-| `=Q.Dispatch.Wait.TimeOut.Reassign` | `<queue;#String` | Move job to a different queue |
+| `=Q.Dispatch.Wait.TimeOut.Reassign` | `<queue#String` | Move job to a different queue |
 
 Used as nested `[Q]` line in queue definition:
 
 ```polyglot
 {Q} #Queue:BatchQueue
-   [.] .strategy;#QueueStrategy << #FIFO
-   [.] .maxWaitTime;#String << "30m"
+   [.] .strategy#QueueStrategy << #FIFO
+   [.] .maxWaitTime#String << "30m"
    [ ] If wait exceeds 30m, move to faster queue
    [Q] =Q.Dispatch.Wait.TimeOut.Reassign
       [=] <queue << "ExpressQueue"
@@ -133,10 +133,10 @@ Queue-level operations. Target the queue itself, not individual jobs.
 
 | Pipeline | IO | Purpose |
 |----------|-----|---------|
-| `=Q.Drain` | `<queue;#String` | Stop accepting new jobs, finish existing |
-| `=Q.Flush` | `<queue;#String` | Remove all pending jobs from a queue |
-| `=Q.Priority.Update` | `<jobId;#String`, `<score;#Int` | Change a job's priority score |
-| `=Q.Reassign` | `<jobId;#String`, `<queue;#String` | Move a job to a different queue (enables host offloading) |
+| `=Q.Drain` | `<queue#String` | Stop accepting new jobs, finish existing |
+| `=Q.Flush` | `<queue#String` | Remove all pending jobs from a queue |
+| `=Q.Priority.Update` | `<jobId#String`, `<score#Int` | Change a job's priority score |
+| `=Q.Reassign` | `<jobId#String`, `<queue#String` | Move a job to a different queue (enables host offloading) |
 
 ---
 
@@ -156,13 +156,13 @@ Job-level addressing pipelines. Used to name and reference individual jobs or br
 
 ```polyglot
 {Q} #Queue:GPUQueue
-   [.] .strategy;#QueueStrategy << #LIFO
-   [.] .host;#String << "gpu-server-01"
-   [.] .maxInstances;#UnsignedInt << 1
-   [.] .killPropagation;#KillPropagation << #Downgrade
-   [.] .resourceTags;#Array:ResourceTag << [#GPU]
-   [.] .maxWaitTime;#String << "30m"
-   [.] .description;#String << "GPU-intensive work"
+   [.] .strategy#QueueStrategy << #LIFO
+   [.] .host#String << "gpu-server-01"
+   [.] .maxInstances#UnsignedInt << 1
+   [.] .killPropagation#KillPropagation << #Downgrade
+   [.] .resourceTags#Array:ResourceTag << [#GPU]
+   [.] .maxWaitTime#String << "30m"
+   [.] .description#String << "GPU-intensive work"
    [ ] Pause when RAM drops below 3GB
    [Q] =Q.Pause.Hard.RAM.LessThan
       [=] <mb << 3072.0

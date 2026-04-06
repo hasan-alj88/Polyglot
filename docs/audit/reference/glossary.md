@@ -31,7 +31,7 @@ Source: [[vision]]
 | Async-Centric Automation | Pillar 2: first-class parallelism, concurrency, race condition handling | Not traditional async/await |
 | Integration Evolution | Phase 1: orchestration (FFI/pybind); Phase 2: variable-level | Not a one-time migration |
 | RawString | The only true primitive type — literal raw characters, no interpolation, no substitution. Compiler intrinsic | Not `string` (`#String`), which is a struct with `.string` and `.regex` subfields |
-| #String | Struct type for `;string` — contains `.string;RawString` (value) and `.regex;RawString` (RE constraint; alias: `.re`). `int`/`float` are flexible subtypes of `#String` | Not the primitive — `RawString` is the primitive |
+| #String | Struct type for `#string` — contains `.string#RawString` (value) and `.regex#RawString` (RE constraint; alias: `.re`). `int`/`float` are flexible subtypes of `#String` | Not the primitive — `RawString` is the primitive |
 | .pg files | Polyglot source files written in Polyglot Code | Not configuration files |
 
 ## Adding Terms

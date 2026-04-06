@@ -62,9 +62,9 @@ An enum instance collapses to ONE active field. `%#:Boolean:0.True` exists; `%#:
 
 `%definition.X:{ref}` ensures all `%X:{ref}:{n}` instances share the same structure.
 
-### `;string` Fields Expand to #String
+### `#string` Fields Expand to #String
 
-Any field typed `;string` expands to `.string;RawString` + `.regex;RawString` in the tree (the full `#String` struct).
+Any field typed `#string` expands to `.string#RawString` + `.regex#RawString` in the tree (the full `#String` struct).
 
 ## Updated Files
 

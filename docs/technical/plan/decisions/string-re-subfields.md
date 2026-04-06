@@ -23,12 +23,12 @@ All Polyglot data is serialized strings. `int` and `float` were already describe
 
 ### #String is a Struct
 
-What `;string` refers to in type annotations is `#String` — a struct built on `RawString`:
+What `#string` refers to in type annotations is `#String` — a struct built on `RawString`:
 
 ```polyglot
 {#} #String
-   [.] .string;RawString
-   [.] .regex;RawString
+   [.] .string#RawString
+   [.] .regex#RawString
 ```
 
 - `.string` — the raw string value
@@ -56,8 +56,8 @@ Users can define custom string subtypes:
 
 ```polyglot
 {#} #String.emailAddress
-   [.] .string;RawString
-   [.] .regex;RawString << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+   [.] .string#RawString
+   [.] .regex#RawString << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
 ### bool is NOT a #String Subtype
@@ -70,7 +70,7 @@ No new grammar needed. RE is declared via standard subfield assignment:
 
 ```polyglot
 {#} #Email
-   [.] .address;string
+   [.] .address#string
       [.] .regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 

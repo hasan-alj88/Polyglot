@@ -79,14 +79,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #146 — Docs: Semicolon (;) type annotation prefix missing from identifier rules
+Branch: docs/issue-146-semicolon-type-annotation
+Labels: docs, P2-high, docs-inconsistency
+Started: 2026-04-06
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/146
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Loop closed, ready for merge]
 ```
 
 ## Accumulated Context

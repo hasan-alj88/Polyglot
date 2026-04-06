@@ -71,9 +71,9 @@ Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same ty
    [.] .total#float
 
 [r] =Fetch.User
-   [=] >user;#UserRecord >> $user
+   [=] >user#UserRecord >> $user
 [r] =Process.Order
-   [=] <order;#OrderRecord << $user  [ ] ✗ PGE04001 — schemas differ (name+age ≠ orderId+total)
+   [=] <order#OrderRecord << $user  [ ] ✗ PGE04001 — schemas differ (name+age ≠ orderId+total)
 ```
 
 ```polyglot
@@ -87,9 +87,9 @@ Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same ty
    [.] .email#string
 
 [r] =Fetch.Profile
-   [=] >profile;#UserProfile >> $profile
+   [=] >profile#UserProfile >> $profile
 [r] =Send.Email
-   [=] <contact;#ContactInfo << $profile [ ] ✓ same schema — name#string + email#string
+   [=] <contact#ContactInfo << $profile [ ] ✓ same schema — name#string + email#string
 ```
 
 ```polyglot
