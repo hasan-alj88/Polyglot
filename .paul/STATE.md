@@ -72,8 +72,9 @@ Progress:
 - Issue #149: [██████████] 100% (1/1 plans — [=],[T] ordering paradox)
 - Issue #146: [██████████] 100% (1/1 plans — ; type annotation removal)
 - Issue #144: [██████████] 100% (1/1 plans — PGE05001 cross-references)
-- Docs-Inconsistency Batch (#141-#159): [██░░░░░░░░] 21% (4/19 issues)
-  - Group 1 (EBNF/Compiler): 4/5
+- Issue #150: [██████████] 100% (1/1 plans — PGW01002 retired)
+- Docs-Inconsistency Batch (#141-#159): [██░░░░░░░░] 26% (5/19 issues)
+  - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 0/5
   - Group 3 (Naming): 0/6
   - Group 4 (Cross-Ref): 0/2
@@ -81,18 +82,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #150 — Docs: PGW01002 and PGE01021 duplicate — warning vs error ambiguity
-Branch: docs/issue-150-pgw01002-retired
-Labels: compiler, docs, P3-medium, docs-inconsistency
-Started: 2026-04-06
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/150
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — ready for commit + merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -213,6 +210,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #149 — PGE01001/PGE01002 pipeline ordering paradox | 2026-04-06 | [=] IO before [T] triggers is positional rule; EBNF enforces ordered production; 7 files |
 | Closed #146 — Semicolon type annotation removal | 2026-04-06 | ; retired per #88; 136 replacements across 18 files; #RawString gets # prefix |
 | Closed #144 — PGE05001 separator homogeneity cross-references | 2026-04-06 | Cross-refs between PGE05001, flexible-fields.md, identifiers.md; per-level clarification |
+| Closed #150 — PGW01002 retired | 2026-04-06 | PGW01002 reduced to stub redirect; PGE01021 sole rule for empty {#}; Group 1 complete |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -232,13 +230,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-06
-Stopped at: Issue #144 merged and closed
-Next action: /paul:work-issue 150
+Stopped at: Issue #150 merged and closed — Group 1 complete
+Next action: /paul:work-issue 142 (first Group 2 issue)
 Resume file: N/A
 Resume context:
-- 19 discussion briefs prepared in .paul/phases/{N}-{slug}/BRIEF.md
-- Work order: Group 1 (#158✓, #149✓, #146✓, #144✓, #150), then Group 2, 3, 4, 5
-- Each issue: /paul:work-issue N → read BRIEF.md → /paul:plan → /paul:apply → /paul:unify → /paul:merge
+- Group 1 (EBNF/Compiler): 5/5 COMPLETE (#158, #149, #146, #144, #150)
+- Next: Group 2 (Syntax Gaps): #142, #155, #153, #156, #145
+- Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 
 ---
