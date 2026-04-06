@@ -57,3 +57,4 @@ severity: error
 ### See Also
 
 - [[user/syntax/types/structs|Structs]] — field homogeneity rules reference PGE05001
+- [[user/syntax/types/flexible-fields|Typed Flexible Fields]] — structs with both fixed and flexible levels

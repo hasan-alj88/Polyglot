@@ -62,7 +62,7 @@ These serialized paths — `#Boolean.True`, `$user:name`, `=Pipeline%status` —
 
 ## Serialization Rules
 
-1. **Sibling homogeneity** — all siblings at the same level must use the same separator. No mixing `.` and `:` among siblings.
+1. **Sibling homogeneity** — all siblings at the same level must use the same separator. No mixing `.` and `:` among siblings. Different nesting levels may use different separators — see [[technical/compile-rules/PGE/PGE05001-sibling-separator-homogeneity|PGE05001]].
 
 ```polyglot
 [ ] VALID:   $user:name, $user:age        [ ] all flexible
