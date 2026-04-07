@@ -76,27 +76,24 @@ Progress:
 - Issue #142: [██████████] 100% (1/1 plans — Queue definition syntax)
 - Issue #155: [██████████] 100% (1/1 plans — Metadata path syntax gap)
 - Issue #153: [██████████] 100% (1/1 plans — =#.* namespace documented)
-- Docs-Inconsistency Batch (#141-#159): [████░░░░░░] 42% (8/19 issues)
+- Issue #156: [██████████] 100% (1/1 plans — array access : → <)
+- Docs-Inconsistency Batch (#141-#159): [████░░░░░░] 47% (9/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
-  - Group 2 (Syntax Gaps): 3/5
+  - Group 2 (Syntax Gaps): 4/5
   - Group 3 (Naming): 0/6
   - Group 4 (Cross-Ref): 0/2
   - Group 5 (Stdlib): 0/1
 
 ## Active Issue
 
-Issue: #156 — Array dimension :2D vs < access unmapped
-Branch: docs/issue-156-array-dimension-access
-Labels: docs, P3-medium, docs-inconsistency
-Started: 2026-04-06
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/156
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -221,6 +218,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #142 — Queue definition syntax ambiguous | 2026-04-06 | Added Queue + Trigger/Wrapper/Permission/Native rows to INDEX.md object table |
 | Closed #155 — Metadata path syntax gap | 2026-04-06 | Advanced Metadata Paths section in metadata.md; shorthand resolution, :<current>, :N addressing |
 | Closed #153 — =#.Column prefix collision | 2026-04-06 | Documented =#.* as valid stdlib namespace in identifiers.md and #.md |
+| Closed #156 — Array dimension :2D vs < access | 2026-04-07 | Fixed : to < in access examples; added :ND vs < bridging note |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -240,12 +238,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-06
-Stopped at: Issue #153 merged and closed — 8/19 docs-inconsistency
-Next action: /paul:work-issue 156 (next Group 2 issue)
+Stopped at: Issue #156 merged and closed — 9/19 docs-inconsistency
+Next action: /paul:work-issue 145 (last Group 2 issue)
 Resume file: N/A
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
-- Group 2 (Syntax Gaps): 3/5 (#142, #155, #153 done; next: #156, #145)
+- Group 2 (Syntax Gaps): 4/5 (#142, #155, #153, #156 done; next: #145)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 
