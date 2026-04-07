@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #115 — Job hierarchy addressing syntax
 Plan: N/A
-Status: Issue #151 merged to main
-Last activity: 2026-04-07 — Issue #151 merged (scalar subtype naming convention)
+Status: Issue #148 merged to main
+Last activity: 2026-04-07 — Issue #148 merged (#Array/#array case consistency)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -79,27 +79,24 @@ Progress:
 - Issue #156: [██████████] 100% (1/1 plans — array access : → <)
 - Issue #145: [██████████] 100% (1/1 plans — [>]/[<] vs [*] <</ >> disambiguation)
 - Issue #151: [██████████] 100% (1/1 plans — scalar subtype naming convention)
-- Docs-Inconsistency Batch (#141-#159): [█████░░░░░] 58% (11/19 issues)
+- Issue #148: [██████████] 100% (1/1 plans — #Array/#array case consistency)
+- Docs-Inconsistency Batch (#141-#159): [██████░░░░] 63% (12/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
-  - Group 3 (Naming): 1/6
+  - Group 3 (Naming): 2/6
   - Group 4 (Cross-Ref): 0/2
   - Group 5 (Stdlib): 0/1
 
 ## Active Issue
 
-Issue: #148 — Docs: #Array vs #array — case inconsistency across docs
-Branch: docs/issue-148-array-case-inconsistency
-Labels: docs, P3-medium, docs-inconsistency
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/148
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for commit + merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -227,6 +224,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #156 — Array dimension :2D vs < access | 2026-04-07 | Fixed : to < in access examples; added :ND vs < bridging note |
 | Closed #145 — Wait/collect markers disambiguation | 2026-04-07 | [>]/[<] renamed to IO parameter handling; positional implicit IO documented; disambiguation note added |
 | Closed #151 — Scalar subtype naming convention | 2026-04-07 | Three-level naming (##schema, #alias, :treepath) documented in scalars.md, basic-types.md, string-subtypes.md |
+| Closed #148 — #Array vs #array case inconsistency | 2026-04-07 | Documented #array as alias for #Array; standardized annotations to lowercase |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -246,13 +244,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #151 merged and closed — 11/19 docs-inconsistency, Group 3: 1/6
-Next action: /paul:work-issue 148 (next Group 3 issue — Naming)
+Stopped at: Issue #148 merged and closed — 12/19 docs-inconsistency, Group 3: 2/6
+Next action: /paul:work-issue 143 (next Group 3 issue — Naming)
 Resume file: N/A
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
 - Group 2 (Syntax Gaps): 5/5 COMPLETE
-- Group 3 (Naming): 1/6 (#151 done; next: #148, #143, #154, #141, #152)
+- Group 3 (Naming): 2/6 (#151, #148 done; next: #143, #154, #141, #152)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 
