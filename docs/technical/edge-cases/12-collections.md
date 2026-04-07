@@ -53,11 +53,11 @@ updated: 2026-03-30
    [~] >item >> $v
 ```
 
-### EC-12.4: ForEach.Level — tilde suffix marks iteration point
+### EC-12.4: ForEach.Level — `.~` level iteration marker
 
-**EBNF:** Special input syntax `<level << #SomeData.SubField.~`
+**EBNF:** `level_input` production in §12.1 — `<level << #SomeData.SubField.~`
 
-**What it tests:** The `~` suffix on the input path. See [[concepts/collections/expand#ForEach.Level]].
+**What it tests:** The `.~` level iteration marker on the input path — analogous to `.*` wildcard, `.~` means "expand siblings at this level." See [[concepts/collections/expand#ForEach.Level]].
 
 ```polyglot
 [r] ~ForEach.Level
