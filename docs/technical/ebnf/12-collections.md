@@ -92,7 +92,9 @@ collect_io_line     ::= "[*]" io_param assignment_op value_expr   (* named param
 
 **Rule:** Collector outputs can write directly to a pipeline output port: `[*] >result >> >pipelineOutput`.
 
-**Rule:** `[*] <<` = wait input — waits for variable to be Final; variable stays accessible after. `[*] >>` = collect output — in race collectors, losing inputs are cancelled; only the `>>` output survives.
+**Rule:** `[*] <<` = wait input — waits for variable to be Final; variable stays accessible after. `[*] >>` = collect output — in race collectors, losing inputs are cancelled; only the `>>` output survives. These are distinct from `[>]`/`[<]` IO parameter handling markers (see §5).
+
+**Rule:** `[*] << $var` lines map to positional implicit input parameters (`<args.0`, `<args.1`, ...) — the compiler infers each parameter's type from the referenced variable. For single-output collectors (`*First`, `*Second`), the output type is also inferred from the input type.
 
 **Rule:** `*All` uses `[*] <<` only (no `[*] >>`). `*First`/`*Second`/`*Nth` require both `[*] <<` inputs and `[*] >>` output.
 

@@ -113,6 +113,8 @@ Waits for ALL listed variables to become Final. Uses `[*] <<` only — no `[*] >
 
 No type constraint on inputs.
 
+**Positional implicit IO:** Each `[*] << $var` line maps to a positional input parameter (`<args.0`, `<args.1`, ...) inferred by the compiler from the variable's type.
+
 ```polyglot
 [p] =Fetch.Profile
    [=] <id << $userId
@@ -140,6 +142,8 @@ Wait for the Nth variable to become Final. The winner is stored in `[*] >>`; all
 All `[*] <<` inputs must be the **same type** (PGE03006). `[*] >>` output is required.
 
 `*First` and `*Second` are sugar for `*Nth` with `n=1` and `n=2`.
+
+**Positional implicit IO:** Like `*All`, each `[*] << $var` maps to a positional input (`<args.0`, `<args.1`, ...). For single-output collectors (`*First`, `*Second`), the compiler infers the output type from the input type — the `[*] >> $winner` declaration is explicit but its type is implicit.
 
 ```polyglot
 [p] =Search.EngineA

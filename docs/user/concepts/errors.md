@@ -228,7 +228,7 @@ Query a variable's state via `$varName%state` — this reads from `%$:{name}:{in
 <!-- @operators -->
 <!-- @io:Fallback IO -->
 <!-- @blocks:Data Flow -->
-The `<!` and `!>` operators (see [[operators#Assignment Operators]]) provide inline fallback values on IO lines, preventing variables from entering the Failed state. Fallback lines use the `[>]` / `[<]` block markers (see [[blocks#Data Flow]]) scoped under `[=]` IO lines (see [[io#Fallback IO]]).
+The `<!` and `!>` operators (see [[operators#Assignment Operators]]) provide inline fallback values on IO lines, preventing variables from entering the Failed state. Fallback lines use the `[>]` / `[<]` IO parameter handling markers (see [[blocks#Data Flow]]) scoped under `[=]` IO lines (see [[io#IO Parameter Handling]]).
 
 ### Generic Fallback
 
