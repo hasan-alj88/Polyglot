@@ -67,14 +67,15 @@ The handler **cannot** access other steps' IO (steps other than N).
 ```
 
 ```polyglot
-[ ] ✓ error handler with *Continue fallback
+[ ] ✓ error handler with <! fallback
 [r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path#path << $path
    [=] <1.rows#string >> >content
+      [>] <! ""                       [ ] catch-all fallback
    [!] .0!File.NotFound
       [r] =LogError
          [=] <msg << "file not found"
-      [*] *Continue >FallBack << ""
+      [r] >content << ""
 ```
 
 **INVALID:**
@@ -100,5 +101,5 @@ The handler **cannot** access other steps' IO (steps other than N).
 - [PGE07001 — Error Block Scoping](PGE07001-error-block-scoping.md) — basic `[!]` must be under `[r]`
 - [PGE08004 — Ambiguous Step Reference](PGE08004-ambiguous-step-reference.md) — disambiguation rules
 - [PGE02005 — Failed Is Terminal](PGE02005-failed-is-terminal.md) — recovery via replacement value
-- [PGE02007 — Continue After Error](PGE02007-continue-after-error.md) — `*Continue` fallback in chain errors
+- [PGE02005 — Failed Must Resolve](PGE02005-failed-is-terminal.md) — compiler-enforced error handling
 - [[user/concepts/errors|Errors]] — references PGE07002 in chain error addressing

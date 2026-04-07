@@ -70,7 +70,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE02004 | Default Allows One More Push *(retired → PGE02003)* |
 | PGE02005 | Failed Is Terminal |
 | PGE02006 | `live` Metadata Fields Are Pull-Only |
-| PGE02007 | Continue After Error |
+| PGE02007 | *(retired — `*Continue` removed; use `[!]` + `<!`/`>!` fallback)* |
 | PGE02008 | Access After Release |
 | PGE02009 | Unreachable Code |
 | PGE02010 | Discard Default Assignment |

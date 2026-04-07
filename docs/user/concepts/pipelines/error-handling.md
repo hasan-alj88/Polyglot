@@ -23,9 +23,8 @@ updated: 2026-03-30
 | Pattern | Pipeline continues? | Variable state |
 |---------|-------------------|---------------|
 | `[!]` pushes replacement (`<<`/`>>`) | Yes | Always Final |
-| `[!]` without replacement (default) | No — ends on error | Never Failed |
-| `[!]` with `[*] *Continue >IsFailed >> $var` | Yes | May be Failed — handle via `$var` boolean |
 | `[>] <!` fallback on IO line | Yes | Always Final — fallback value used |
+| `[>] <!ErrorName` specific error fallback | Yes | Always Final — targeted fallback |
 
 For simple "on error, use this value" cases, use `[>] <!` fallback under the `[=]` output line:
 
@@ -37,7 +36,7 @@ For simple "on error, use this value" cases, use `[>] <!` fallback under the `[=
       [>] <!File.NotFound "file not found"
 ```
 
-`[!]` blocks run first; `<!` catches what `[!]` didn't handle. For the full error model — chain error addressing, `*Continue` recovery patterns, fallback operators, standard error trees, and the Failed state — see [[errors]]. Errors live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]).
+`[!]` blocks run first; `<!` catches what `[!]` didn't handle. The compiler enforces exhaustive error handling (PGE02005) — every failable call must have either an `[!]` block or `<!`/`>!` fallback. For the full error model — chain error addressing, fallback operators, standard error trees, and the Failed state — see [[errors]]. Errors live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
 ## See Also
 

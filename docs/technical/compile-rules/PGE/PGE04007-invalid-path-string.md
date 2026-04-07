@@ -60,7 +60,7 @@ The compiler statically infers whether a `=Path"..."` expression is provably cro
 - **Provably cross-platform** — contains `{.}`, `{..}`, or interpolates a `$var#path` that has both `.Unix` and `.Windows` defined → no handling needed
 - **Potentially single-OS** — contains only literal strings or interpolates variables without dual-OS proof → compiler raises PGE04007, forcing the user to either:
   1. Define explicit dual-OS subfields (`.Unix` + `.Windows`)
-  2. Handle with `[!]` + `*Continue >FallBack`
+  2. Handle with `[!]` block or `<!` fallback
 
 ```polyglot
 [ ] ✓ provably cross-platform — {.} is dual-OS
@@ -75,10 +75,11 @@ The compiler statically infers whether a `=Path"..."` expression is provably cro
 [ ] ✗ PGE04007 — literal string, no dual-OS proof
 [r] $dir#path << =Path"/tmp/MyApp"
 
-[ ] ✓ handled — fallback for single-OS path
+[ ] ✓ handled — <! fallback for single-OS path
 [r] $dir#path << =Path"/tmp/MyApp"
+   [>] <! $defaultDir                 [ ] catch-all fallback
    [!] !PathPlatformMismatch
-      [*] *Continue >FallBack << $defaultDir
+      [r] >dir << $defaultDir
 ```
 
 ### See Also

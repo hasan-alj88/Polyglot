@@ -26,7 +26,6 @@ This document has been split into per-namespace files organized by identifier pr
 - [*Into](stdlib/collectors/Into/) — collect into collection
 - [*Agg](stdlib/collectors/Agg.md) — reduce to single value
 - [*All / *First / *Nth](stdlib/collectors/Sync.md) — collect-all & race collectors
-- [*Continue](stdlib/collectors/Continue.md) — error recovery
 
 ## Types (# → `%#`)
 - [Built-in types](stdlib/types/types.md) — type index
