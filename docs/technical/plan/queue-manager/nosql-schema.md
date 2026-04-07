@@ -17,7 +17,7 @@ strategy:           #QueueStrategy     — FIFO | LIFO | Priority
 host:               #String            — target host (default: "localhost")
 maxInstancesWithinQueue: int           — queue-level instance limit
 maxConcurrentWithinQueue: int          — queue-level concurrency limit
-resourceTagWithinQueue: #Array:ResourceTag — queue-level resource tags
+resourceTagWithinQueue: #array:ResourceTag — queue-level resource tags
 killPropagation:    #KillPropagation   — Cascade | Downgrade
 maxWaitTime:        string             — max queue wait time
 description:        string             — human-readable

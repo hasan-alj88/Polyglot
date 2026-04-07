@@ -73,7 +73,7 @@ Queue configuration struct used in `{Q}` queue definitions. Each `{Q} #Queue:Nam
    [.] .host#String
    [.] .maxInstances#UnsignedInt
    [.] .maxConcurrent#UnsignedInt
-   [.] .resourceTags#Array:ResourceTag
+   [.] .resourceTags#array:ResourceTag
    [.] .killPropagation#KillPropagation
    [.] .maxWaitTime#String
    [.] .description#String
@@ -87,7 +87,7 @@ Queue configuration struct used in `{Q}` queue definitions. Each `{Q} #Queue:Nam
 | `.host` | `#String` | Target host for job execution (1 queue = 1 host) | `"localhost"` |
 | `.maxInstances` | `#UnsignedInt` | Max parallel instances per pipeline on this queue | unlimited |
 | `.maxConcurrent` | `#UnsignedInt` | Max other pipelines alongside (queue-level default) | unlimited |
-| `.resourceTags` | `#Array:ResourceTag` | Resource tags for constraint checking | empty |
+| `.resourceTags` | `#array:ResourceTag` | Resource tags for constraint checking | empty |
 | `.killPropagation` | `#KillPropagation` | How kill signals propagate to sub-jobs | `#Cascade` |
 | `.maxWaitTime` | `#String` | Max time in queue before escalation (e.g., "30m") | unlimited |
 | `.description` | `#String` | Human-readable queue description | empty |

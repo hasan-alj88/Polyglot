@@ -378,7 +378,7 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
    [.] .host#String << "gpu-server-01"
    [.] .maxInstances#UnsignedInt << 1
    [.] .killPropagation#KillPropagation << #Downgrade
-   [.] .resourceTags#Array:ResourceTag << [#GPU]
+   [.] .resourceTags#array:ResourceTag << [#GPU]
    [.] .maxWaitTime#String << "30m"
    [Q] =Q.Kill.Graceful.Time.MoreThan
       [=] <duration << "4h"

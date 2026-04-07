@@ -99,7 +99,7 @@ Nested sub-jobs extend the positional path:
 ├── .host#String                   <- target host (1 queue = 1 host)
 ├── .maxInstances#UnsignedInt      <- max parallel instances per pipeline
 ├── .maxConcurrent#UnsignedInt     <- max other pipelines alongside
-├── .resourceTags#Array:ResourceTag <- resource constraint tags
+├── .resourceTags#array:ResourceTag <- resource constraint tags
 ├── .killPropagation#KillPropagation <- Cascade or Downgrade
 ├── .maxWaitTime#String            <- max time before escalation
 ├── .description#String            <- human-readable description
