@@ -82,10 +82,11 @@ Progress:
 - Issue #148: [██████████] 100% (1/1 plans — #Array/#array case consistency)
 - Issue #143: [██████████] 100% (1/1 plans — ##Enum schema classification)
 - Issue #154: [██████████] 100% (1/1 plans — *Agg glossary entry)
-- Docs-Inconsistency Batch (#141-#159): [███████░░░] 73% (14/19 issues)
+- Issue #141: closed as not-a-bug (TM monitoring schedules ≠ being a scheduler)
+- Docs-Inconsistency Batch (#141-#159): [████████░░] 78% (15/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
-  - Group 3 (Naming): 4/6
+  - Group 3 (Naming): 5/6
   - Group 4 (Cross-Ref): 0/2
   - Group 5 (Stdlib): 0/1
 
@@ -229,6 +230,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #148 — #Array vs #array case inconsistency | 2026-04-07 | Documented #array as alias for #Array; standardized annotations to lowercase |
 | Closed #143 — #Boolean enum struct vs enum classification | 2026-04-07 | Introduced ##Enum schema; replaced "enum struct" terminology across 10 files |
 | Closed #154 — *Agg glossary entry and alias wording | 2026-04-07 | Added *Agg to glossary; Agg.md says "alias" not "NOT *Aggregate" |
+| Closed #141 — not a bug | 2026-04-07 | TM monitors trigger conditions incl. timing; "not a scheduler" is correct |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -248,13 +250,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #154 merged and closed — 14/19 docs-inconsistency, Group 3: 4/6
-Next action: /paul:work-issue 141 (next Group 3 issue — Naming)
+Stopped at: Issue #141 closed as not-a-bug — 15/19 docs-inconsistency, Group 3: 5/6
+Next action: /paul:work-issue 152 (last Group 3 issue — Naming)
 Resume file: N/A
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
 - Group 2 (Syntax Gaps): 5/5 COMPLETE
-- Group 3 (Naming): 4/6 (#151, #148, #143, #154 done; next: #141, #152)
+- Group 3 (Naming): 5/6 (#151, #148, #143, #154 done, #141 not-a-bug; next: #152)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 

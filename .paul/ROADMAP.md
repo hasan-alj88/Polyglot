@@ -237,7 +237,7 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 | 148 | #Array vs #array case inconsistency | 3 | P3-medium | Done |
 | 143 | #Boolean enum struct vs enum classification | 3 | P4-low | Done |
 | 154 | *Agg shorthand not in glossary or vision | 3 | P4-low | Done |
-| 141 | Trigger Monitor role contradicts glossary vs vision | 3 | P3-medium | Pending |
+| 141 | Trigger Monitor role contradicts glossary vs vision | 3 | P3-medium | Closed (not a bug) |
 | 152 | *Continue collector vs error recovery classification | 3 | P3-medium | Pending |
 | 159 | Audience routing sends wrong groups to wrong docs | 4 | P3-medium | Pending |
 | 157 | PGE04009 / *Continue / conversions.md circular ref | 4 | P3-medium | Pending |
