@@ -87,14 +87,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #151 — Scalar subtypes ##Int/##Float vs int/float naming conflict
+Branch: docs/issue-151-scalar-naming-conflict
+Labels: docs, P3-medium, docs-inconsistency
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/151
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Issue #151 ready for merge]
 ```
 
 ## Accumulated Context
