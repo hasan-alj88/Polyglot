@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:File.Move"
+metadata_instance: "%=:File.Move:N"
 ---
 
 # =File.Move
@@ -41,6 +43,13 @@ None. Success is signalled by `!NoError`.
 ## Permissions
 
 Requires `File.Read` + `File.Write` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:File.Move` | Compile-time pipeline template |
+| Instance | `%=:File.Move:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

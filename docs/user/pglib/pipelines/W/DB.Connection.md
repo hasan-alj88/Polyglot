@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:DB.Connection"
+metadata_instance: "%W:DB.Connection:N"
 ---
 
 # =W.DB.Connection
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 Database.Connect
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:DB.Connection` | Compile-time pipeline template |
+| Instance | `%W:DB.Connection:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

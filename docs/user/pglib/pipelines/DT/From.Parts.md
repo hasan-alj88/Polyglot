@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.From.Parts"
+metadata_instance: "%=:DT.From.Parts:N"
 ---
 
 # =DT.From.Parts
@@ -53,6 +55,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.From.Parts` | Compile-time pipeline template |
+| Instance | `%=:DT.From.Parts:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

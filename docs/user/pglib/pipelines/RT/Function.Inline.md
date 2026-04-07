@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:RT.<Lang>.Function.Inline"
+metadata_instance: "%=:RT.<Lang>.Function.Inline:N"
 ---
 
 # =RT.\<Lang\>.Function.Inline
@@ -90,6 +92,13 @@ None.
 ## Permissions
 
 Requires `System.Process` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:RT.<Lang>.Function.Inline` | Compile-time pipeline template |
+| Instance | `%=:RT.<Lang>.Function.Inline:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

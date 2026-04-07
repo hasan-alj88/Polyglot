@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #163 — Add metadata paths to all type definitions and operation files
-Plan: 163-03 created, awaiting approval
-Status: PLAN created — recommend fresh session for APPLY
-Last activity: 2026-04-07 — Native dispatch config docs aligned (3 files)
+Plan: 163-03 complete — all 3 plans done
+Status: Phase COMPLETE — ready for MERGE
+Last activity: 2026-04-07 — UNIFY complete, phase done (3/3 plans)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -90,6 +90,7 @@ Progress:
 - Issue #160: [██████████] 100% (1/1 plans — DT.md split into DT/ folder + pipeline doc template)
 - Issue #161: [██████████] 100% (5/5 plans — all pglib docs split into per-operator files)
 - Issue #162: [██████████] 100% (1/1 plans — native dispatch config docs aligned)
+- Issue #163: [██████████] 100% (3/3 plans — metadata paths for types + operations)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -110,7 +111,7 @@ GitHub: https://github.com/hasan-alj88/Polyglot/issues/163
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ○        ○        ○     [Plan 163-03 created, awaiting approval]
+  ✓        ✓        ✓        ○     [Loop complete — phase done, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -249,6 +250,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #160 — Split DT.md into DT/ folder | 2026-04-07 | 40 pipelines (not 37); .version metadata removed (EBNF violation); pipeline doc template established |
 | Closed #161 — Split all pglib docs per operator | 2026-04-07 | Merged docs/issue-161-split-pglib-docs-per-operator to main; 125 files, 5 plans |
 | Closed #162 — Native dispatch config docs | 2026-04-07 | Merged docs/issue-162-native-dispatch-config-update to main; 3 files, 1 plan |
+| Issue #163 — Metadata paths for types + operations | 2026-04-07 | 3 plans: type file split (163-01), schema/field-type files (163-02), 109 pipeline metadata (163-03); ready for merge |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -268,14 +270,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Plan 163-03 created, session paused at context limit
-Next action: /paul:resume → approve 163-03 → /paul:apply
-Resume file: .paul/HANDOFF-2026-04-07.md
+Stopped at: Phase complete, ready for MERGE
+Next action: /paul:merge (commit + merge branch to main, close #163)
+Resume file: .paul/phases/163-add-metadata-paths-types-operations/163-03-SUMMARY.md
 Resume context:
-- Issue #163 in progress: 2/3 plans complete (types done, pipelines remain)
-- 163-01: Split types into per-type files + metadata (20 new, 7 modified) — DONE
-- 163-02: Permission enums + schemas + field-types (~28 new files) — DONE
-- 163-03: Add metadata to 109 pipeline operation files — PLANNED, not yet executed
+- Issue #163: ALL 3 plans complete
+- 163-01: Split types into per-type files + metadata — DONE
+- 163-02: Permission enums + schemas + field-types — DONE
+- 163-03: Add metadata to 109 pipeline operation files — DONE
 - Branch: docs/issue-163-add-metadata-paths-to-type-and-operation-files
 
 ---

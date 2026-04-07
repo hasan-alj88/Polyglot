@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
+metadata_definition: "%definition.=:Math.Modulo"
+metadata_instance: "%=:Math.Modulo:N"
 ---
 
 # =Math.Modulo
@@ -40,6 +42,13 @@ Returns the remainder of dividing the dividend by the divisor. Accepts exactly t
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:Math.Modulo` | Compile-time pipeline template |
+| Instance | `%=:Math.Modulo:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

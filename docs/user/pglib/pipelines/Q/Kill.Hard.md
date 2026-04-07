@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.Q:Kill.Hard"
+metadata_instance: "%Q:Kill.Hard:N"
 ---
 
 # =Q.Kill.Hard
@@ -42,6 +44,13 @@ Terminate jobs based on time or resource conditions.
 ## Permissions
 
 None — pure computation (queue scheduling and resource management).
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.Q:Kill.Hard` | Compile-time pipeline template |
+| Instance | `%Q:Kill.Hard:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

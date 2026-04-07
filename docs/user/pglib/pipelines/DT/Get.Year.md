@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Get.Year"
+metadata_instance: "%=:DT.Get.Year:N"
 ---
 
 # =DT.Get.Year
@@ -39,6 +41,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Get.Year` | Compile-time pipeline template |
+| Instance | `%=:DT.Get.Year:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

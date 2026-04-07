@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Format.Calendar"
+metadata_instance: "%=:DT.Format.Calendar:N"
 ---
 
 # =DT.Format.Calendar
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Format.Calendar` | Compile-time pipeline template |
+| Instance | `%=:DT.Format.Calendar:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

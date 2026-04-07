@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:Queue.Consumer"
+metadata_instance: "%W:Queue.Consumer:N"
 ---
 
 # =W.Queue.Consumer
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 IPC.Receive
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:Queue.Consumer` | Compile-time pipeline template |
+| Instance | `%W:Queue.Consumer:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

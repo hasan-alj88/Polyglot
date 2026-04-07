@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.Q:Job.Branch"
+metadata_instance: "%Q:Job.Branch:N"
 ---
 
 # =Q.Job.Branch
@@ -33,6 +35,13 @@ None.
 ## Permissions
 
 None — pure computation (queue scheduling and resource management).
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.Q:Job.Branch` | Compile-time pipeline template |
+| Instance | `%Q:Job.Branch:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

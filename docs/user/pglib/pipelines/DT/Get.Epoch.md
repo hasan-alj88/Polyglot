@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Get.Epoch"
+metadata_instance: "%=:DT.Get.Epoch:N"
 ---
 
 # =DT.Get.Epoch
@@ -39,6 +41,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Get.Epoch` | Compile-time pipeline template |
+| Instance | `%=:DT.Get.Epoch:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

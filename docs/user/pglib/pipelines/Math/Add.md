@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
+metadata_definition: "%definition.=:Math.Add"
+metadata_instance: "%=:Math.Add:N"
 ---
 
 # =Math.Add
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:Math.Add` | Compile-time pipeline template |
+| Instance | `%=:Math.Add:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

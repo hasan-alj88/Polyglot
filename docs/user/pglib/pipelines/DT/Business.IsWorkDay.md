@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Business.IsWorkDay"
+metadata_instance: "%=:DT.Business.IsWorkDay:N"
 ---
 
 # =DT.Business.IsWorkDay
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Business.IsWorkDay` | Compile-time pipeline template |
+| Instance | `%=:DT.Business.IsWorkDay:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

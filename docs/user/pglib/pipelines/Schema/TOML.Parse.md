@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:#.TOML.Parse"
+metadata_instance: "%=:#.TOML.Parse:N"
 ---
 
 # =#.TOML.Parse
@@ -39,6 +41,13 @@ None -- invalid input handled by calling pipeline (e.g. `=File.Serial.Read` rais
 ## Permissions
 
 None -- pure computation.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:#.TOML.Parse` | Compile-time pipeline template |
+| Instance | `%=:#.TOML.Parse:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

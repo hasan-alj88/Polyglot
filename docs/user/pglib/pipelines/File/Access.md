@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:File.Access"
+metadata_instance: "%=:File.Access:N"
 ---
 
 # =File.Access
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 Requires `File.Read` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:File.Access` | Compile-time pipeline template |
+| Instance | `%=:File.Access:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

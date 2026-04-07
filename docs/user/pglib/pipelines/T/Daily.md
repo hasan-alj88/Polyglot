@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.T:Daily"
+metadata_instance: "%T:Daily:N"
 ---
 
 # =T.Daily
@@ -37,6 +39,13 @@ None.
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.T:Daily` | Compile-time pipeline template |
+| Instance | `%T:Daily:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

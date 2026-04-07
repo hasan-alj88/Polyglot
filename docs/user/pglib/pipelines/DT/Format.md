@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Format"
+metadata_instance: "%=:DT.Format:N"
 ---
 
 # =DT.Format
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Format` | Compile-time pipeline template |
+| Instance | `%=:DT.Format:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

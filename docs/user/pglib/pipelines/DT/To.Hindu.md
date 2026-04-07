@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.To.Hindu"
+metadata_instance: "%=:DT.To.Hindu:N"
 ---
 
 # =DT.To.Hindu
@@ -43,6 +45,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.To.Hindu` | Compile-time pipeline template |
+| Instance | `%=:DT.To.Hindu:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

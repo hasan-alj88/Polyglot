@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
+metadata_definition: "%definition.=:Math.Negate"
+metadata_instance: "%=:Math.Negate:N"
 ---
 
 # =Math.Negate
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:Math.Negate` | Compile-time pipeline template |
+| Instance | `%=:Math.Negate:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

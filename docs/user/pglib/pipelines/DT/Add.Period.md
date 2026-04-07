@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Add.Period"
+metadata_instance: "%=:DT.Add.Period:N"
 ---
 
 # =DT.Add.Period
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Add.Period` | Compile-time pipeline template |
+| Instance | `%=:DT.Add.Period:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

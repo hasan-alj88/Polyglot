@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:RT.<Lang>.CLI"
+metadata_instance: "%=:RT.<Lang>.CLI:N"
 ---
 
 # =RT.\<Lang\>.CLI
@@ -76,6 +78,13 @@ None.
 ## Permissions
 
 Requires `System.Process` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:RT.<Lang>.CLI` | Compile-time pipeline template |
+| Instance | `%=:RT.<Lang>.CLI:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

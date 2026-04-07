@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-03-25
 status: draft
+metadata_definition: "%definition.=:Path"
+metadata_instance: "%=:Path:N"
 ---
 
 # =Path — Cross-Platform Path Creation
@@ -28,3 +30,11 @@ No permissions required. All operations are pure computation. See [[permissions]
 - `{{` and `}}` produce literal brace characters
 
 See also: [types.md §Path Type](../syntax/types.md)
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:Path` | Compile-time pipeline template |
+| Instance | `%=:Path:N` | Runtime pipeline instance (N = instance number) |
+

@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.IsAfter"
+metadata_instance: "%=:DT.IsAfter:N"
 ---
 
 # =DT.IsAfter
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.IsAfter` | Compile-time pipeline template |
+| Instance | `%=:DT.IsAfter:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:Cache.Scope"
+metadata_instance: "%W:Cache.Scope:N"
 ---
 
 # =W.Cache.Scope
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 Database.Read
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:Cache.Scope` | Compile-time pipeline template |
+| Instance | `%W:Cache.Scope:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

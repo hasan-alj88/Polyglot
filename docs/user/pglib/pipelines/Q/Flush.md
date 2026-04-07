@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.Q:Flush"
+metadata_instance: "%Q:Flush:N"
 ---
 
 # =Q.Flush
@@ -36,6 +38,13 @@ None.
 ## Permissions
 
 None — pure computation (queue scheduling and resource management).
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.Q:Flush` | Compile-time pipeline template |
+| Instance | `%Q:Flush:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

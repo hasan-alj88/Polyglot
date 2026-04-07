@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
+metadata_definition: "%definition.=:Math.Multiply"
+metadata_instance: "%=:Math.Multiply:N"
 ---
 
 # =Math.Multiply
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:Math.Multiply` | Compile-time pipeline template |
+| Instance | `%=:Math.Multiply:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:#.Coerce"
+metadata_instance: "%=:#.Coerce:N"
 ---
 
 # =#.Coerce
@@ -43,6 +45,13 @@ None -- always succeeds.
 ## Permissions
 
 None -- pure computation.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:#.Coerce` | Compile-time pipeline template |
+| Instance | `%=:#.Coerce:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

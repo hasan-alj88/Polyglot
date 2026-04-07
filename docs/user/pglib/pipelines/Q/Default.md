@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.Q:Default"
+metadata_instance: "%Q:Default:N"
 ---
 
 # =Q.Default
@@ -35,6 +37,13 @@ None.
 ## Permissions
 
 None — pure computation (queue scheduling and resource management).
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.Q:Default` | Compile-time pipeline template |
+| Instance | `%Q:Default:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

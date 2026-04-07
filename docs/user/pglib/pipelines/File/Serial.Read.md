@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:File.Serial.Read"
+metadata_instance: "%=:File.Serial.Read:N"
 ---
 
 # =File.Serial.Read
@@ -43,6 +45,13 @@ Read and parse a structured data file. Format is auto-detected from file extensi
 ## Permissions
 
 Requires `File.Read` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:File.Serial.Read` | Compile-time pipeline template |
+| Instance | `%=:File.Serial.Read:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

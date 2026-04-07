@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:Log.Context"
+metadata_instance: "%W:Log.Context:N"
 ---
 
 # =W.Log.Context
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 None — pure computation.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:Log.Context` | Compile-time pipeline template |
+| Instance | `%W:Log.Context:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

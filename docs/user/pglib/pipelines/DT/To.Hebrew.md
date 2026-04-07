@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.To.Hebrew"
+metadata_instance: "%=:DT.To.Hebrew:N"
 ---
 
 # =DT.To.Hebrew
@@ -39,6 +41,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.To.Hebrew` | Compile-time pipeline template |
+| Instance | `%=:DT.To.Hebrew:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:#.Field"
+metadata_instance: "%=:#.Field:N"
 ---
 
 # =#.Field
@@ -54,6 +56,13 @@ User picks based on needs:
 ## Permissions
 
 None -- pure computation.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:#.Field` | Compile-time pipeline template |
+| Instance | `%=:#.Field:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

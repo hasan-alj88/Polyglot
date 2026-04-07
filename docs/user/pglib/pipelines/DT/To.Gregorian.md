@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.To.Gregorian"
+metadata_instance: "%=:DT.To.Gregorian:N"
 ---
 
 # =DT.To.Gregorian
@@ -39,6 +41,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.To.Gregorian` | Compile-time pipeline template |
+| Instance | `%=:DT.To.Gregorian:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

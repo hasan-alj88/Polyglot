@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:File.Delete"
+metadata_instance: "%=:File.Delete:N"
 ---
 
 # =File.Delete
@@ -39,6 +41,13 @@ None. Success is signalled by `!NoError`.
 ## Permissions
 
 Requires `File.Delete` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:File.Delete` | Compile-time pipeline template |
+| Instance | `%=:File.Delete:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.To.Buddhist"
+metadata_instance: "%=:DT.To.Buddhist:N"
 ---
 
 # =DT.To.Buddhist
@@ -39,6 +41,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.To.Buddhist` | Compile-time pipeline template |
+| Instance | `%=:DT.To.Buddhist:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
