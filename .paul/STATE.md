@@ -98,18 +98,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #161 — Split all pglib docs into 1-file-per-operator with doc template
-Branch: docs/issue-161-split-pglib-docs-per-operator
-Labels: docs, pglib
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/161
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Plan 161-05 complete — issue #161 ready for merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -246,6 +242,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #157 — PGE04009 circular reference | 2026-04-07 | Already broken by #152; fixed backtick typos, clarified cross-ref authority |
 | Closed #147 — ForEach.Level .~ tilde suffix | 2026-04-07 | Formalized .~ as EBNF level_input production; aligned prose in 4 files |
 | Issue #160 — Split DT.md into DT/ folder | 2026-04-07 | 40 pipelines (not 37); .version metadata removed (EBNF violation); pipeline doc template established |
+| Closed #161 — Split all pglib docs per operator | 2026-04-07 | Merged docs/issue-161-split-pglib-docs-per-operator to main; 125 files, 5 plans |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -265,13 +262,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: All 5 plans complete for issue #161
-Next action: /paul:merge to merge branch to main and close issue #161
+Stopped at: Issue #161 merged to main
+Next action: /paul:work-issue (pick next issue)
 Resume file: .paul/phases/161-split-pglib-docs-per-operator/161-05-SUMMARY.md
 Resume context:
-- Issue #161: ALL 5 PLANS COMPLETE — ready for merge
-- Branch: docs/issue-161-split-pglib-docs-per-operator
-- Total: ~100 files created/modified across collectors, expanders, pipelines
+- Issue #161 complete: all pglib docs split into per-operator files (125 files, 5 plans)
+- Issue #162: Update docs for per-operation native dispatch config (open)
 
 ---
 *STATE.md — Updated after every significant action*
