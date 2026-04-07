@@ -62,15 +62,24 @@ Only pglib `{N}` definitions use `#NativeKind`. User-defined pipelines are alway
 
 ## Configuration
 
-The Polyglot config file selects the active base language:
+The Polyglot service configuration file selects which host language implements each native operation using **subsystem defaults with per-operation overrides**:
 
 ```yaml
-base: Rust
+native:
+  defaults:
+    tm: Rust           # default for all Trigger operations
+    qh: Rust           # default for all Queue operations
+    runner: Rust       # default for all Execution + Wrapper operations
+    pgcompiler: Rust   # compiler implementation language
+
+  overrides:
+    "Math.Add": Go     # override specific operations by pipeline name
+    "DB.Query": Go
 ```
 
-The compiler validates that every `{N}` definition has a `.<Language>` field matching the configured base language. If a definition has `.Go` but the config says `base: Rust`, that is a compile error (PGE01028e).
+The compiler resolves each `{N}` definition's language by checking `overrides` first, then falling back to the `defaults` entry for the operation's subsystem (determined by `#NativeKind`). Every `{N}` definition must have a `.<Language>` field matching its resolved language — missing it is a compile error (PGE01028e).
 
-Future base languages (e.g., `.Go`, `.Cpp`) can be added by extending the `.<Language>` fields on existing `{N}` definitions — no pipeline names or #NativeKind variants need to change.
+Future host languages (e.g., `.Go`, `.Cpp`) can be added by extending the `.<Language>` fields on existing `{N}` definitions — no pipeline names or #NativeKind variants need to change. See [[technical/spec/native-dispatch|native-dispatch]] for the full configuration spec.
 
 ---
 

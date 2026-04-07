@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #115 — Job hierarchy addressing syntax
-Plan: N/A
-Status: Issue #143 merged to main
-Last activity: 2026-04-07 — Native dispatch spec, lib/ scaffold, stdlib→pglib rename
+Phase: Issue #162 — Update docs for per-operation native dispatch config
+Plan: 162-01 complete
+Status: UNIFY complete — ready for MERGE
+Last activity: 2026-04-07 — Unified 162-01 (3 files updated)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -98,14 +98,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #162 — Update docs for per-operation native dispatch config
+Branch: docs/issue-162-native-dispatch-config-update
+Labels: docs, pglib
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/162
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for commit + merge]
 ```
 
 ## Accumulated Context
@@ -262,12 +266,11 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #161 merged to main
-Next action: /paul:work-issue (pick next issue)
-Resume file: .paul/phases/161-split-pglib-docs-per-operator/161-05-SUMMARY.md
+Stopped at: Plan 162-01 unified
+Next action: /paul:merge to commit and merge to main
+Resume file: .paul/phases/162-native-dispatch-config-update/162-01-SUMMARY.md
 Resume context:
-- Issue #161 complete: all pglib docs split into per-operator files (125 files, 5 plans)
-- Issue #162: Update docs for per-operation native dispatch config (open)
+- Issue #162 active: Update 3 files from old `base: Rust` to new native dispatch YAML config
 
 ---
 *STATE.md — Updated after every significant action*

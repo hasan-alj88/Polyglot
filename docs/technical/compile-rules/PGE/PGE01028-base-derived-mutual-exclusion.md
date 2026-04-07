@@ -11,7 +11,7 @@ severity: error
 
 **Statement:** Native `{N}` and derived `{=}` block types are mutually exclusive. A `{N}` definition cannot have an execution body; a `{=}` definition cannot have `%Native.*` metadata. A `{N}` definition without `%Native.Kind` is also an error (exception: `{T}` and `{Q}` are IO-only subtypes of `{=}` by design).
 **Rationale:** Native definitions delegate to host language code — a Polyglot execution body would conflict with the native implementation. Derived definitions are pure Polyglot — `%Native.*` metadata would create ambiguity about which implementation runs. A `{N}` block without `.Kind` has no subsystem role, making it unresolvable.
-**Detection:** The compiler checks for mutual exclusion between `{N}` block type and execution body elements (`[T]`, `[Q]`, `[W]`, `[r]`, `[p]`, `[b]`, `[s]`, `[{]`, `[}]`, `[\]`, `[/]`). It also validates that `{N}` blocks declare `%Native.Kind` with a valid `#NativeKind` variant and have a `.<Language>` field matching the configured base language.
+**Detection:** The compiler checks for mutual exclusion between `{N}` block type and execution body elements (`[T]`, `[Q]`, `[W]`, `[r]`, `[p]`, `[b]`, `[s]`, `[{]`, `[}]`, `[\]`, `[/]`). It also validates that `{N}` blocks declare `%Native.Kind` with a valid `#NativeKind` variant and have a `.<Language>` field matching the language resolved for the operation's subsystem (via `native.defaults` or `native.overrides` in the service config).
 
 **Sub-conditions:**
 
@@ -21,7 +21,7 @@ severity: error
 | b | `{=}` + `%Native.Kind` | Derived pipeline cannot have native metadata |
 | c | `{N}` without `%Native.Kind` | Native definition must declare Kind |
 | d | `%Native.Kind` references non-existent `#NativeKind` variant | Invalid `#NativeKind` variant |
-| e | `{N}` without `.<Language>` for configured base language | Config says `base: Rust` but `{N}` has no `.Rust` field |
+| e | `{N}` without `.<Language>` for resolved subsystem language | Config resolves `Rust` for this operation but `{N}` has no `.Rust` field |
 
 **VALID:**
 ```polyglot
@@ -108,9 +108,9 @@ severity: error
    [%] .Rust << "BadInvalidKind"
    [=] <x#string
 
-[ ] ✗ PGE01028e — missing language field for configured base
+[ ] ✗ PGE01028e — missing language field for resolved subsystem language
 {N} =Bad.NoLangField
    [%] .Kind << #NativeKind.Execution
-   [%] .description << "No Rust field but config says base: Rust"
+   [%] .description << "No .Rust field but config resolves Rust for this operation"
    [=] <x#string
 ```
