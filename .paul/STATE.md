@@ -87,6 +87,7 @@ Progress:
 - Issue #159: [██████████] 100% (1/1 plans — audience routing fix)
 - Issue #157: [██████████] 100% (cleanup — circular ref already broken by #152)
 - Issue #147: [██████████] 100% (1/1 plans — .~ level iteration marker formalized)
+- Issue #160: [██████████] 100% (1/1 plans — DT.md split into DT/ folder + pipeline doc template)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -96,18 +97,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #160 — Split DT.md into DT/ folder with pipeline doc template
-Branch: docs/issue-160-split-dt-pipeline-template
-Labels: docs, pglib
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/160
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for commit + merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -263,15 +260,15 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #160 UNIFY complete, ready for commit + merge
-Next action: /paul:merge to commit and merge docs/issue-160-split-dt-pipeline-template to main
+Stopped at: Issue #160 merged to main, #161 and #162 open
+Next action: /paul:work-issue 161 (apply pipeline doc template to all pglib pipeline files)
 Resume file: .paul/phases/160-split-dt-pipeline-template/160-01-SUMMARY.md
 Resume context:
-- DT.md split into DT/ folder (41 files: INDEX + 40 pipelines)
-- Pipeline doc template established (6 sections per file)
-- .version metadata removed (EBNF §9.4c compliance)
-- 4 wikilinks updated
-- Issues #161 (template all pipelines) and #162 (native config) created
+- Issue #160 complete: DT.md split into DT/ folder (41 files)
+- Pipeline doc template pattern established (6 sections per file)
+- Issue #161: Apply template to remaining pipeline files (File, Math, Q, T, W, #, RT, Sys, Path)
+- Issue #162: Update docs for per-operation native dispatch config
+- Also committed: native dispatch spec, lib/ scaffold, stdlib→pglib rename
 
 ---
 *STATE.md — Updated after every significant action*
