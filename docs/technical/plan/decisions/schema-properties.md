@@ -243,7 +243,7 @@ Complete hierarchy defined in `docs/draft.md`:
 - Layer 0: RawString (compiler intrinsic)
 - Layer 1: #String (foundation — .string + .regex)
 - Layer 2: Scalars (#Int, #UnsignedInt, #Float, #Sci, #Eng, #Dimension)
-- Layer 2b: #Boolean (independent enum struct)
+- Layer 2b: #Boolean (##Enum type)
 - Layer 3: Collections (#Array, #Map, #Dataframe, #Serial)
 
 ## Supersedes

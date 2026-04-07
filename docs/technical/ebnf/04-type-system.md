@@ -26,7 +26,7 @@ basic_type          ::= "RawString" | "string" | "int" | "uint" | "float"
                       (* RawString: compiler intrinsic, literal raw chars, no interpolation.
                          string (#String): struct with .string#RawString + .regex#RawString.
                          int, uint, float, sci, eng, dim: #String subtypes with pre-set .regex patterns.
-                         bool (#Boolean): separate enum struct, not a #String subtype.
+                         bool (#Boolean): ##Enum type, not a #String subtype.
                          path (#path): struct with .Unix#string + .Windows#string. *)
 
 collection_type     ::= array_type | dict_type | dataframe_type | serial_type ;

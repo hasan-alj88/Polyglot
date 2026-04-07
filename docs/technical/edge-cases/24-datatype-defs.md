@@ -19,7 +19,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 | EC-24.5 | #KeyString excluded chars | Dot excluded, hyphen allowed |
 | EC-24.6 | #NestedKeyString allows dot/colon | Alias paths with separators |
 | EC-24.7 | `<~` inheritance chain finality | `<<` final prevents further override |
-| EC-24.8 | #Boolean — ##Scalar + ###Enum | Dual schema composition |
+| EC-24.8 | #Boolean — ##Enum + ##Scalar + ###ScalarEnum | Dual schema composition |
 | EC-24.9 | Enum inheritance via `<~` | Extending enum variants |
 | EC-24.10 | #None — minimal type | No fields, no schema |
 | EC-24.11 | #Array via `{M}` macro with `<~` inheritance | Macro-generated definition with schema accumulation |
@@ -196,14 +196,15 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .regex#RawString << "^[1-9][0-9]*$"
 ```
 
-### EC-24.8: #Boolean — ##Scalar + ###Enum
+### EC-24.8: #Boolean — ##Enum + ##Scalar + ###ScalarEnum
 
 **EBNF:** `schema_line ::= "[#]" "<<" schema_ref` — multiple schema compositions accumulate.
-**What it tests:** #Boolean composes both `##Scalar` (depth 1) and `###ScalarEnum` (leaf content is variant selector). A type can be both scalar AND enum. Can a user define a custom enum with the same pattern? Yes — `###ScalarEnum` and `##Scalar` are orthogonal. See [[syntax/types/basic-types#Layer 2b: #Boolean — Independent Enum Struct]], [[syntax/types/schema-properties#`###` Field Types — Leaf Content]].
+**What it tests:** #Boolean composes `##Enum` (enum classification), `##Scalar` (depth 1), and `###ScalarEnum` (leaf content is variant selector). A type can be both scalar AND enum. Can a user define a custom enum with the same pattern? Yes — `###ScalarEnum` and `##Scalar` are orthogonal. See [[syntax/types/basic-types#Layer 2b: #Boolean — Independent ##Enum Type]], [[syntax/types/schema-properties#`###` Field Types — Leaf Content]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
 ```polyglot
 {#} #Boolean
+   [#] << ##Enum
    [#] << ##Scalar
    [#] << ###ScalarEnum
    [#] %##Alias << "bool"
@@ -212,6 +213,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 [ ] user-defined enum with same pattern
 {#} #TrafficLight
+   [#] << ##Enum
    [#] << ##Scalar
    [#] << ###ScalarEnum
    [.] .Red
