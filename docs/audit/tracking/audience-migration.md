@@ -49,7 +49,7 @@ Migration from 3-audience (user/developer/ai) to 5-audience system (pg-coder/int
 |------|------|---------------|--------|
 | user/SCENARIOS.md | 54KB | user/scenarios/ | Complete |
 | technical/plan/queue-manager-architecture.md | 45KB | technical/plan/queue-manager/ | Complete |
-| user/stdlib/types/datetime.md | 22KB | user/stdlib/types/datetime/ | Complete |
+| user/pglib/types/datetime.md | 22KB | user/pglib/types/datetime/ | Complete |
 | technical/spec/metadata-tree.md | 21KB | technical/spec/metadata-tree/ | Complete |
 | technical/edge-cases/24-datatype-defs.md | 21KB | — | Skipped (under 50KB, single H2) |
 

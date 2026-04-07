@@ -1,0 +1,25 @@
+# Polyglot Native Dispatch Configuration
+# Selects which host language implements each native operation.
+#
+# Resolution order:
+#   1. Check overrides for exact pipeline name
+#   2. Fall back to defaults for the operation's subsystem
+#   3. No default = startup error
+#
+# See docs/technical/spec/native-dispatch.md for full spec.
+
+native:
+  # Subsystem defaults — one language per subsystem
+  defaults:
+    tm: Rust              # Trigger Monitor operations (=T.*)
+    qh: Rust              # Queue Handler operations (=Q.*)
+    runner: Rust           # Runner operations (=File.*, =Math.*, =DB.*, =DT.*, =W.*)
+    pgcompiler: Rust       # Compiler: lexer, parser, compile rules
+
+  # Per-operation overrides — pipeline name without = prefix
+  # Uncomment to override specific operations:
+  overrides: {}
+    # "Math.Add": Go
+    # "DB.Query": Go
+    # "T.Webhook": Go
+    # "W.RT.Python": Python

@@ -67,7 +67,7 @@ Theme: Draft the complete Polyglot language specification from scratch using `/p
 | 9 | Core Language & Type System | 1 | Complete | 2026-03-24 |
 | 10 | Operators & Control Flow | 1 | Complete | 2026-03-24 |
 | 11 | Pipelines & Concurrency | 1 | Complete | 2026-03-24 |
-| 12 | Package System & Stdlib | 1 | Complete | 2026-03-24 |
+| 12 | Package System & pglib | 1 | Complete | 2026-03-24 |
 
 ### Phase 9: Core Language & Type System
 
@@ -120,18 +120,18 @@ Theme: Draft the complete Polyglot language specification from scratch using `/p
 
 **Plans:** TBD (during /paul:plan)
 
-### Phase 12: Package System & Stdlib
+### Phase 12: Package System & pglib
 
-**Goal:** Draft specification for packages, imports, multi-file projects, stdlib confirmations, and canonical examples
+**Goal:** Draft specification for packages, imports, multi-file projects, pglib confirmations, and canonical examples
 
-**Depends on:** Phase 11 (pipeline spec needed for stdlib pipeline definitions)
+**Depends on:** Phase 11 (pipeline spec needed for pglib pipeline definitions)
 
-**Research:** Likely — stdlib confirmations (issues #26, #28) and COMPILE-RULES PGE-9xx
+**Research:** Likely — pglib confirmations (issues #26, #28) and COMPILE-RULES PGE-9xx
 
 **Scope:**
 - Package declarations and imports
 - Multi-file project rules
-- Stdlib confirmation (=T.*, =W.* speculative pipelines)
+- pglib confirmation (=T.*, =W.* speculative pipelines)
 - Canonical examples for all language features
 
 **Plans:** TBD (during /paul:plan)
@@ -217,7 +217,7 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 | 2 | Syntax Documentation Gaps | #142, #155, #153, #156, #145 | 2 | Pending |
 | 3 | Naming & Terminology | #151, #148, #143, #154, #141, #152 | 0 | Pending |
 | 4 | Cross-Reference Errors | #159, #157 | 0 | Pending |
-| 5 | Stdlib Classification | #147 | 0 | Pending |
+| 5 | pglib Classification | #147 | 0 | Pending |
 
 ### Issue Index
 

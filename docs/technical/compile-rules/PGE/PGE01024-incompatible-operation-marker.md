@@ -10,7 +10,7 @@ severity: error
 `PGE01024`
 
 **Statement:** Each operation (pipeline, collection, expander, error) declares which block element markers it is compatible with. Using an operation with an incompatible marker is a compile error. For example, `[T]` only accepts operations that declare `[T]` compatibility (trigger pipelines like `=T.*`), `[r]` accepts general pipeline calls, `[p]` accepts parallelizable operations, etc.
-**Rationale:** Operations have specific roles — trigger pipelines (`=T.*`) handle event initiation, collection operators (`*Into.*`) aggregate expanded data, expanders (`~ForEach.*`) fan out, etc. Using an operation outside its intended context is a semantic error that the compiler must catch. Each stdlib operation declares its allowed markers as part of its definition.
+**Rationale:** Operations have specific roles — trigger pipelines (`=T.*`) handle event initiation, collection operators (`*Into.*`) aggregate expanded data, expanders (`~ForEach.*`) fan out, etc. Using an operation outside its intended context is a semantic error that the compiler must catch. Each pglib operation declares its allowed markers as part of its definition.
 **Detection:** The compiler checks the operation's declared marker compatibility against the marker it is invoked with. If the operation does not declare the marker as allowed, PGE01024 fires.
 
 **Marker compatibility examples:**
@@ -54,4 +54,4 @@ severity: error
 
 **Diagnostic:** "Operation `=Name` is not compatible with `[marker]` — check allowed markers"
 
-**Open point:** Stdlib pipeline files need `[_]`-style marker compatibility declarations added. Tracked as future work.
+**Open point:** pglib pipeline files need `[_]`-style marker compatibility declarations added. Tracked as future work.

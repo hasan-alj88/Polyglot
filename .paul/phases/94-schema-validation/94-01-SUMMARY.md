@@ -18,16 +18,16 @@ key-files:
   modified:
     - docs/user/syntax/types.md
     - docs/user/syntax/blocks.md
-    - docs/user/stdlib/types/collections.md
-    - docs/user/stdlib/types/scalars.md
+    - docs/user/pglib/types/collections.md
+    - docs/user/pglib/types/scalars.md
     - docs/user/concepts/pipelines.md
     - docs/technical/EBNF.md
     - docs/technical/EDGE-CASES.md
     - docs/technical/plan/decisions/schema-properties.md
-    - docs/user/stdlib/errors/errors.md
+    - docs/user/pglib/errors/errors.md
     - docs/user/concepts/collections.md
-    - docs/user/stdlib/types/types.md
-    - docs/user/stdlib/expanders/ForEach/Dataframe/Column.md
+    - docs/user/pglib/types/types.md
+    - docs/user/pglib/expanders/ForEach/Dataframe/Column.md
 
 key-decisions:
   - "Dataframe uses ## composition, not <~ inheritance from Array"
@@ -63,8 +63,8 @@ completed: 2026-03-29
 
 ### Scope Additions
 1. **docs/user/concepts/collections.md** — Had `{#} #Map<KeyType<ValueType` and column-oriented Dataframe examples
-2. **docs/user/stdlib/types/types.md** — Had `#Map<KeyType<ValueType` in type hierarchy listing
-3. **docs/user/stdlib/expanders/ForEach/Dataframe/Column.md** — Deprecated (row-oriented Dataframe breaks column expander)
+2. **docs/user/pglib/types/types.md** — Had `#Map<KeyType<ValueType` in type hierarchy listing
+3. **docs/user/pglib/expanders/ForEach/Dataframe/Column.md** — Deprecated (row-oriented Dataframe breaks column expander)
 
 ### Deferred
 - COMPILE-RULES.md lines 242, 249, 255, 382 still use `#Array<#Array<#float` syntax — update on next touch

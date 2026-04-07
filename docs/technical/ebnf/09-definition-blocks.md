@@ -119,7 +119,7 @@ trigger_ref         ::= pipeline_ref [ string_literal ] ;
 ```
 
 **Rules:**
-- `trigger_ref` must reference an operation that declares `[T]` marker compatibility (PGE01024). Stdlib trigger pipelines (`=T.*`) are the canonical trigger operations.
+- `trigger_ref` must reference an operation that declares `[T]` marker compatibility (PGE01024). pglib trigger pipelines (`=T.*`) are the canonical trigger operations.
 - Multiple `[T]` lines in one pipeline have **AND** semantics — all triggers must fire before the pipeline executes.
 - For **OR** semantics (any trigger fires the pipeline), use `[|]` to scope alternative triggers.
 
@@ -333,7 +333,7 @@ language_name       ::= upper_letter { letter } ; (* Rust, Cpp, etc. *)
 - At least one `.<Language>` binding is required — must match the configured host language.
 - No execution body (`[r]`, `[p]`, `[b]`, `[s]`, `[?]`), no `[T]`, no `[Q]`, no `[W]`.
 - `[=]` IO declarations define the public interface (inputs, outputs, errors) — same as any pipeline.
-- `{N}` definitions can only appear in stdlib `.pg` files — user `.pg` files cannot define native pipelines.
+- `{N}` definitions can only appear in pglib `.pg` files — user `.pg` files cannot define native pipelines.
 
 **Example:**
 
@@ -384,7 +384,7 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
       [=] <duration << "4h"
 ```
 
-**Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `=Q.Default` is the stdlib-provided queue and does not require a `{Q}` definition.
+**Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `=Q.Default` is the pglib-provided queue and does not require a `{Q}` definition.
 
 **Dual-purpose:** `{Q}` serves two roles based on the identifier prefix. The grammar above covers the **data definition** form (`{Q} #Queue:Name`). The **pipeline operation** form (`{Q} =Q.*`) is syntactic sugar for `{=}[Q]` and follows the pipeline definition grammar in §9.3 — it defines a queue control pipeline invocable via `[Q]`. Examples: `{Q} =Q.Default`, `{Q} =Q.Pause.Hard`, `{Q} =Q.Kill.Graceful`.
 
@@ -405,11 +405,11 @@ error_body_line     ::= "[.]" fixed_field "#Error"       (* terminal leaf *)
                       (* Siblings at same level must use same separator — PGE05001 *)
 ```
 
-`{!}` defines an error tree. Each terminal leaf is typed `#Error`. The namespace uses the `!` prefix. Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and use `[.]` fixed leaves only.
+`{!}` defines an error tree. Each terminal leaf is typed `#Error`. The namespace uses the `!` prefix. pglib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and use `[.]` fixed leaves only.
 
 User-defined `{!} !Name` implicitly nests under `!Error` in the metadata tree, creating `!Error:Name.*`. Only `{!} !Error` allows `[:]` flexible children for user-extensible branches. All other `{!}` namespaces use `[.]` fixed leaves only.
 
-**Stdlib example** (runtime-defined, fixed leaves):
+**pglib example** (runtime-defined, fixed leaves):
 ```polyglot
 {!} !Validation
    [.] .Schema#Error

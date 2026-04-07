@@ -16,8 +16,8 @@ The Array type appears in two casings: `#Array` (PascalCase, the formal type/mac
 |------|-------------|
 | `docs/technical/spec/metadata-tree/branches.md` | Line 102: `.resourceTags#Array:ResourceTag` uses PascalCase `#Array` in a field annotation where lowercase `#array` is the convention |
 | `docs/technical/COMPILE-RULES.md` | Lines 335, 342, 348: `#Array<#Array<#float` uses PascalCase `#Array` in inheritance syntax |
-| `docs/user/stdlib/types/types.md` | Line 32: `#Array:ValueType:Dim` uses PascalCase in type hierarchy display |
-| `docs/user/stdlib/types/collections.md` | Uses both `#Array` (section headers, macro defs) and `#array` (usage examples) — correct but potentially confusing without explanation |
+| `docs/user/pglib/types/types.md` | Line 32: `#Array:ValueType:Dim` uses PascalCase in type hierarchy display |
+| `docs/user/pglib/types/collections.md` | Uses both `#Array` (section headers, macro defs) and `#array` (usage examples) — correct but potentially confusing without explanation |
 | `docs/technical/spec/metadata-tree/field-expansion.md` | Line 20: `#array:string` uses lowercase — correct for annotation context |
 
 ## Example
@@ -27,7 +27,7 @@ The Array type appears in two casings: `#Array` (PascalCase, the formal type/mac
 **Source B** (`docs/user/syntax/types/arrays.md`, line ~28):
 > [=] <items#array:string              [ ] 1D array (default)
 
-**Source C** (`docs/user/stdlib/types/collections.md`, line ~105):
+**Source C** (`docs/user/pglib/types/collections.md`, line ~105):
 > [#] %##Alias
 >    [:] << "array:{$ValueType%name}:{$dim}"
 

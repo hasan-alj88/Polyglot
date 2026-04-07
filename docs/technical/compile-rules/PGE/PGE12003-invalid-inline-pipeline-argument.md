@@ -26,7 +26,7 @@ Pipelines accepting inline arguments declare format expectations in `[%]`:
 | `.inlineFormat` | `#array:RawString` | Regex patterns — argument must match at least one |
 | `.inlineExamples` | `#array:RawString` | Valid example strings shown in error messages |
 
-Example stdlib trigger declaration:
+Example pglib trigger declaration:
 ```polyglot
 {=} =T.Daily
    [%] .description << "Triggers daily at specified time"

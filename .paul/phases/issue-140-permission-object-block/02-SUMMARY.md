@@ -73,7 +73,7 @@ completed: 2026-04-05
 
 ## Next Phase Readiness
 
-**Ready:** Plan 03 (compile rules + stdlib) can proceed
+**Ready:** Plan 03 (compile rules + pglib) can proceed
 **Concerns:** None
 **Blockers:** None
 

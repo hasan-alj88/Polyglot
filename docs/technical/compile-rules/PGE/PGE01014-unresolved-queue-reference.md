@@ -9,13 +9,13 @@ severity: error
 ### Rule 1.14 — Unresolved Queue Reference
 `PGE01014`
 
-**Statement:** A pipeline's `[Q]` line must reference either the stdlib `=Q.Default` or a `{Q}` definition that exists in the current package or is imported via `[@]`. Referencing a queue that does not exist is a compile error.
+**Statement:** A pipeline's `[Q]` line must reference either the pglib `=Q.Default` or a `{Q}` definition that exists in the current package or is imported via `[@]`. Referencing a queue that does not exist is a compile error.
 **Rationale:** The runtime must locate and instantiate the queue before dispatching pipelines to it. An unresolved reference means the queue cannot be created.
-**Detection:** The compiler resolves the `[Q]` reference against: (1) stdlib queues (`=Q.Default`), (2) `{Q}` definitions in the current file/package, (3) `{Q}` definitions from imported packages.
+**Detection:** The compiler resolves the `[Q]` reference against: (1) pglib queues (`=Q.Default`), (2) `{Q}` definitions in the current file/package, (3) `{Q}` definitions from imported packages.
 
 **VALID:**
 ```polyglot
-[ ] ✓ stdlib queue — always available
+[ ] ✓ pglib queue — always available
 {=} =SimpleJob
    [T] =T.Call
    [Q] =Q.Default

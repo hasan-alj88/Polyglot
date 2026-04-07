@@ -42,7 +42,7 @@ Developers who write Polyglot code (.pg files). They author pipelines, define da
 ## ALWAYS
 
 - Show canonical .pg examples for every language feature
-- Link to [[SPEC-INDEX]] and [[stdlib/INDEX]] for reference
+- Link to [[SPEC-INDEX]] and [[pglib/INDEX]] for reference
 - Include edge cases and error states
 - Provide "try-it" sections where the reader can modify and experiment
 - Cross-reference related features via [[wikilinks]]

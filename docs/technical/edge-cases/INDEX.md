@@ -63,7 +63,7 @@ Review in batches by section. Each edge case includes:
 | S7 IO | EC-7.1 | `input_param` with field separators |
 | S8 Expressions | EC-8.1--8.6 | `inline_data`, empty `{}`, chained arithmetic, discard default restriction, self-assignment detection |
 | S9 Definitions | EC-9.1--9.19 | Package imports, enum/value fields, pipeline structure, triggers, IO modes, macro parallel fork, empty definitions, trigger anomalies, wrapper IO discard |
-| S10 Execution | EC-10.1--10.16 | Pipeline call + error, stdlib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr, orphan continuation, self-chain, foreign code |
+| S10 Execution | EC-10.1--10.16 | Pipeline call + error, pglib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr, orphan continuation, self-chain, foreign code |
 | S11 Control Flow | EC-11.1--11.9 | Conditional chains, error scoping, logical operators, match syntax, wildcard-only match, variable match, pipeline comparison |
 | S12 Collections | EC-12.1--12.16 | All expand variants, all collect variants, direct output, multiple collectors, collect-all/race collectors, multi-wave, [*] <</>>/semantics, orphaned collectors/markers |
 | S13 Comments | EC-13.1--13.3 | Square, curly, multiline |

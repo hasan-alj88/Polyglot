@@ -50,7 +50,7 @@ The `%` root has fixed branches for every object type in Polyglot:
 ├── *   Collectors        — collect operators (*Into.*, *Agg.*, *All, *First)
 ├── $   Variables         — runtime data ($name, $result)
 ├── M   Macros            — reusable logic ({M} blocks)
-├── !   Errors            — error trees ({!} blocks, stdlib !File.*, !No.*, etc.)
+├── !   Errors            — error trees ({!} blocks, pglib !File.*, !No.*, etc.)
 ├── @   Packages          — package addresses (@Local:999::MyPkg)
 ├── _   Permissions       — IO capability declarations ([_] blocks)
 └── definition            — compile-time schema templates

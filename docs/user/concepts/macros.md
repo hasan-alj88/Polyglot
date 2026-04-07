@@ -26,14 +26,14 @@ A `{#}` block invokes a macro with `[M]`:
 
 The `[M] #String.Subtype` line runs the macro and fills the type definition. The result is a fully formed `{#}` block — identical to writing one by hand.
 
-## Stdlib Macros
+## pglib Macros
 
 | Macro | Generates | See |
 |-------|-----------|-----|
-| `#String.Subtype` | Scalar subtypes (`##Int`, `##Float`, `##Dimension`, etc.) | [[stdlib/types/scalars\|Scalars]] |
+| `#String.Subtype` | Scalar subtypes (`##Int`, `##Float`, `##Dimension`, etc.) | [[pglib/types/scalars\|Scalars]] |
 | `#Array` | Array types for all dimension/element combinations | [[syntax/types/arrays\|Arrays]] |
-| `#Map` | Map types keyed by string subtypes | [[stdlib/types/collections\|Collections]] |
-| `#Dataframe` | Dataframe types with row/column structure | [[stdlib/types/collections\|Collections]] |
+| `#Map` | Map types keyed by string subtypes | [[pglib/types/collections\|Collections]] |
+| `#Dataframe` | Dataframe types with row/column structure | [[pglib/types/collections\|Collections]] |
 
 ## Related
 

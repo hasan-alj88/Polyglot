@@ -73,7 +73,7 @@ Schema properties are part of the definition metadata, not part of string instan
 
 ### Built-In Collection Definitions
 
-`#Array`, `#Map`, and `#Serial` are **stdlib-provided** `{#}` definitions. Users can create custom collection types using the same `[#] %` mechanism.
+`#Array`, `#Map`, and `#Serial` are **pglib-provided** `{#}` definitions. Users can create custom collection types using the same `[#] %` mechanism.
 
 ## Collection Type Definitions
 

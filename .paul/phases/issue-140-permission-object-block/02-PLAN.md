@@ -194,7 +194,7 @@ Then they see updated description reflecting named {_} permission objects with _
 ## SCOPE LIMITS
 - This plan covers EBNF grammar and metadata tree only
 - No compile rule updates (Plan 03)
-- No stdlib permission reference updates (Plan 03)
+- No pglib permission reference updates (Plan 03)
 - No user-facing documentation changes (Plan 01 complete)
 
 </boundaries>

@@ -171,7 +171,7 @@ Then they find _/__/___ tier documentation parallel to #/##/###
 - docs/technical/ (technical spec updates are Plan 02)
 - docs/technical/compile-rules/ (compile rule updates are Plan 03)
 - docs/technical/ebnf/ (EBNF grammar updates are Plan 02)
-- docs/user/stdlib/ (stdlib updates are Plan 03)
+- docs/user/pglib/ (pglib updates are Plan 03)
 - .paul/ files other than STATE.md
 
 ## SCOPE LIMITS
@@ -179,7 +179,7 @@ Then they find _/__/___ tier documentation parallel to #/##/###
 - No EBNF grammar changes (Plan 02)
 - No compile rule updates (Plan 03)
 - No metadata-tree changes (Plan 02)
-- No stdlib pipeline permission reference updates (Plan 03)
+- No pglib pipeline permission reference updates (Plan 03)
 
 </boundaries>
 

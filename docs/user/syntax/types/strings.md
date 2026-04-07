@@ -27,7 +27,7 @@ For literal curly braces inside strings, use `{{` and `}}`.
 
 ## Path Type
 
-`path` is a stdlib struct with OS-specific subfields:
+`path` is a pglib struct with OS-specific subfields:
 
 ```polyglot
 {#} #path
@@ -45,7 +45,7 @@ Assign both subfields so code works cross-platform:
    [.] .Windows << "C:\MyApp"
 ```
 
-At runtime, the Polyglot runtime resolves `$AppDir` to the correct subfield based on the current OS (see `=Sys.OS` in [[stdlib/INDEX|Standard Library]]).
+At runtime, the Polyglot runtime resolves `$AppDir` to the correct subfield based on the current OS (see `=Sys.OS` in [[pglib/INDEX|Standard Library]]).
 
 Assigning only one subfield triggers a portability warning (PGW04001). If the missing subfield is for the current OS, the compiler raises an error (PGE04008).
 
@@ -53,7 +53,7 @@ A plain string cannot be assigned to a `#path` variable — `[r] $dir#path << "/
 
 ### `=Path"..."` Inline Notation
 
-`=Path"..."` is an inline pipeline call ([[stdlib/pipelines/Path|=Path]], [[concepts/pipelines/inline-calls#Inline Pipeline Calls]]) that creates a `#path` value from a string:
+`=Path"..."` is an inline pipeline call ([[pglib/pipelines/Path|=Path]], [[concepts/pipelines/inline-calls#Inline Pipeline Calls]]) that creates a `#path` value from a string:
 
 ```polyglot
 [r] $LogDir#path << =Path"/tmp/MyApp/logs"
@@ -104,9 +104,9 @@ The `"/inbox/"` argument is parsed as a path string — separators are normalize
 
 ### Related
 
-- `=Path` — stdlib pipeline for creating `#path` values from strings. See [[stdlib/pipelines/Path|=Path]]
-- `#OS` — stdlib enum with `.Unix` and `.Windows` variants. See [[stdlib/INDEX|Standard Library]]
-- `=Sys.OS` — stdlib pipeline that yields `>os#OS`. See [[stdlib/INDEX|Standard Library]]
+- `=Path` — pglib pipeline for creating `#path` values from strings. See [[pglib/pipelines/Path|=Path]]
+- `#OS` — pglib enum with `.Unix` and `.Windows` variants. See [[pglib/INDEX|Standard Library]]
+- `=Sys.OS` — pglib pipeline that yields `>os#OS`. See [[pglib/INDEX|Standard Library]]
 - PGE04007 — invalid path string (compile error)
 - PGE04008 — missing path platform subfield (compile error)
 - PGW04001 — single-platform path (warning)

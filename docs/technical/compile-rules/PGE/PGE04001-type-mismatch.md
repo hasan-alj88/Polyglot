@@ -103,6 +103,6 @@ Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same ty
 ### See Also
 
 - [[syntax/types/strings|String Types]] — plain string to `#path` type mismatch
-- [[stdlib/types/structs|Struct Types]] — `#path` type mismatch examples
+- [[pglib/types/structs|Struct Types]] — `#path` type mismatch examples
 - [[technical/edge-cases/04-type-system|EC-4.7: Plain string to #path type mismatch]] — references PGE04001
 - [[technical/edge-cases/04-type-system|EC-4.14: Typed flexible wildcard — contradicting annotation]] — references PGE04001

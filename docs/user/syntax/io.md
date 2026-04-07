@@ -75,7 +75,7 @@ Error declarations use the same `[=]` marker as inputs (`<`) and outputs (`>`). 
 ## Pipeline Call
 
 <!-- @pipelines:Error Handling -->
-Pipeline calls use `[r]` execution with `[=]` IO lines. Error blocks `[!]` scope under the call — see [[concepts/pipelines/error-handling#Error Handling]]. For stdlib pipelines that need no import, see [[packages#Usage]].
+Pipeline calls use `[r]` execution with `[=]` IO lines. Error blocks `[!]` scope under the call — see [[concepts/pipelines/error-handling#Error Handling]]. For pglib pipelines that need no import, see [[packages#Usage]].
 
 ```polyglot
 [r] =Pipeline.Name

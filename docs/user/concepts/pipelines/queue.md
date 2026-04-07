@@ -32,7 +32,7 @@ Custom queues are defined with `{Q}`, which both defines the queue struct and in
       [=] <duration << "4h"
 ```
 
-`=Q.Default` is the only stdlib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first. Referencing an undefined queue is a compile error (PGE01014).
+`=Q.Default` is the only pglib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first. Referencing an undefined queue is a compile error (PGE01014).
 
 ### Queue Pipeline Operations (`{Q} =Q.*`)
 
@@ -70,7 +70,7 @@ Queue pipeline operations control the Executing Set — pause, resume, and kill 
    [=] <condition#string
 ```
 
-These stdlib queue pipelines do not require `[@]` import — they are built-in like all `=Q.*` pipelines.
+These pglib queue pipelines do not require `[@]` import — they are built-in like all `=Q.*` pipelines.
 
 ### Using a Queue (`[Q]`)
 
@@ -92,7 +92,7 @@ The `[Q]` line in a pipeline declares which queue it uses. It accepts optional `
       [=] <mb << 5120.0
 ```
 
-Pipeline-specific `[Q]` controls must not contradict the queue's `{Q}` defaults (PGE01013). See [[Q]] for the full stdlib queue pipeline catalog.
+Pipeline-specific `[Q]` controls must not contradict the queue's `{Q}` defaults (PGE01013). See [[Q]] for the full pglib queue pipeline catalog.
 
 ### Job-Level Queue Conditions
 

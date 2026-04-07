@@ -85,4 +85,4 @@ The compiler statically infers whether a `=Path"..."` expression is provably cro
 ### See Also
 
 - [[syntax/types/strings|String Types]] — path validation error references
-- [[stdlib/types/structs|Struct Types]] — `#path` invalid path string examples
+- [[pglib/types/structs|Struct Types]] — `#path` invalid path string examples

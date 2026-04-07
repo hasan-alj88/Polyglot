@@ -9,7 +9,7 @@ severity: error
 ### Rule 4.10 — Invalid Arithmetic Operator
 `PGE04010`
 
-**Statement:** Raw arithmetic tokens (`+`, `-`, `*`, `/`, `%`) are not valid operators in Polyglot Code. Arithmetic is performed through `=Math.*` stdlib pipelines. The compiler rejects arithmetic tokens and suggests the equivalent stdlib pipeline.
+**Statement:** Raw arithmetic tokens (`+`, `-`, `*`, `/`, `%`) are not valid operators in Polyglot Code. Arithmetic is performed through `=Math.*` pglib pipelines. The compiler rejects arithmetic tokens and suggests the equivalent pglib pipeline.
 **Rationale:** Polyglot Code uses pipelines for all operations, including arithmetic. Raw operators would bypass the pipeline execution model (trigger → queue → wrapper → body), break the metadata tree (`%=` tracking), and conflict with existing operator meanings (`*` is a collector prefix, `-` has no defined role).
 **Detection:** The parser encounters an arithmetic token in an expression context (not inside a string literal). PGE04010 fires with a suggestion message pointing to the `=Math.*` equivalent.
 
@@ -23,11 +23,11 @@ severity: error
 | `/` | Use `=Math.Divide` |
 | `%` | Use `=Math.Modulo` |
 
-**See also:** [=Math stdlib](../../../user/stdlib/pipelines/Math.md)
+**See also:** [=Math pglib](../../../user/pglib/pipelines/Math.md)
 
 **VALID:**
 ```polyglot
-[ ] ✓ arithmetic through stdlib pipelines
+[ ] ✓ arithmetic through pglib pipelines
 [r] =Math.Add
    [=] << $price
    [=] << $tax
@@ -55,7 +55,7 @@ severity: error
 ### See Also
 
 - [[syntax/types/basic-types|Basic Types]] — regex validation catches invalid literals at compile time
-- [[syntax/operators|Operators]] — arithmetic through `=Math.*` stdlib pipelines
+- [[syntax/operators|Operators]] — arithmetic through `=Math.*` pglib pipelines
 - [[technical/edge-cases/24-datatype-defs|EC-24.2: #Int leading zeros and negative zero]] — references PGE04010
 - [[technical/edge-cases/24-datatype-defs|EC-24.4: #Eng exponent]] — references PGE04010
 - [[technical/edge-cases/24-datatype-defs|EC-24.5: #KeyString excluded chars]] — references PGE04010

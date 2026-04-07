@@ -35,7 +35,7 @@ pipeline_ref        ::= pipeline_id                    (* local: =Pipeline.Name 
                       | cross_pkg_pipeline ;            (* imported: @alias=Pipeline.Name *)
 
 (* All pipeline references use the = prefix — no exceptions.
-   Stdlib pipelines (=File.*, =T.*, =Q.*, =W.*) are pipeline_id: =File.Text.Read, =T.Call, etc.
+   pglib pipelines (=File.*, =T.*, =Q.*, =W.*) are pipeline_id: =File.Text.Read, =T.Call, etc.
    All Polyglot identifiers have a prefix; pipelines always use =. *)
 
 call_io_line        ::= "[=]" io_param assignment_op value_expr

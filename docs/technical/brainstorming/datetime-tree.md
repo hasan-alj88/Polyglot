@@ -598,9 +598,9 @@ All four extensible levels (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`) are 
 [r] $deadline#dt
 ```
 
-## Stdlib Pipelines — =DT.*
+## pglib Pipelines — =DT.*
 
-All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (stdlib).
+All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (pglib).
 
 ### Construction
 ```polyglot

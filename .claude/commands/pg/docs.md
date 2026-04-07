@@ -26,7 +26,7 @@ Output: Polyglot-Documentation.pdf (repo root)
 
 The script:
 - Combines all docs/ markdown into one PDF via Pandoc + Typst
-- Orders content by canonical section (Vision → Syntax → Concepts → Stdlib → etc.)
+- Orders content by canonical section (Vision → Syntax → Concepts → pglib → etc.)
 - Includes title page, table of contents, part dividers
 - Strips YAML frontmatter, HTML comments, and deduplicates Typst labels
 </context>

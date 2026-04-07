@@ -41,7 +41,7 @@ function buildCallGraph(package):
 
 **Filtering rules:**
 - Include `[r]` (serial call), `[p]` (parallel call), and `[b]` (fire-and-forget call) references
-- Exclude calls to stdlib pipelines (`=T.*`, `=Q.*`, `=W.*`, `=Math.*`, etc.) — these are not user-defined
+- Exclude calls to pglib pipelines (`=T.*`, `=Q.*`, `=W.*`, `=Math.*`, etc.) — these are not user-defined
 - Exclude calls via `@alias=PipelineName` — these are cross-package, covered by [[PGE09002-circular-package-dependency|PGE09002]]
 
 ## Cycle Detection — DFS Three-Color Marking

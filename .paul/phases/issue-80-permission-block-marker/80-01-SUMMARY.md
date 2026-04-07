@@ -5,7 +5,7 @@ subsystem: language-spec
 tags: [permissions, identifiers, blocks, implicit-deny, security]
 
 requires:
-  - phase: 12-package-system-stdlib
+  - phase: 12-package-system-pglib
     provides: existing identifiers.md and blocks.md spec files
 provides:
   - "_ permission identifier prefix in identifiers.md"
