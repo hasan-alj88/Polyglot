@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #115 — Job hierarchy addressing syntax
 Plan: N/A
-Status: Issue #148 merged to main
-Last activity: 2026-04-07 — Issue #148 merged (#Array/#array case consistency)
+Status: Issue #143 merged to main
+Last activity: 2026-04-07 — Issue #143 merged (##Enum schema classification)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -80,27 +80,24 @@ Progress:
 - Issue #145: [██████████] 100% (1/1 plans — [>]/[<] vs [*] <</ >> disambiguation)
 - Issue #151: [██████████] 100% (1/1 plans — scalar subtype naming convention)
 - Issue #148: [██████████] 100% (1/1 plans — #Array/#array case consistency)
-- Docs-Inconsistency Batch (#141-#159): [██████░░░░] 63% (12/19 issues)
+- Issue #143: [██████████] 100% (1/1 plans — ##Enum schema classification)
+- Docs-Inconsistency Batch (#141-#159): [██████░░░░] 68% (13/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
-  - Group 3 (Naming): 2/6
+  - Group 3 (Naming): 3/6
   - Group 4 (Cross-Ref): 0/2
   - Group 5 (Stdlib): 0/1
 
 ## Active Issue
 
-Issue: #143 — Docs: #Boolean classified as 'enum struct' vs 'enum' inconsistently
-Branch: docs/issue-143-boolean-classification
-Labels: docs, P4-low, docs-inconsistency
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/143
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for commit + merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -229,6 +226,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #145 — Wait/collect markers disambiguation | 2026-04-07 | [>]/[<] renamed to IO parameter handling; positional implicit IO documented; disambiguation note added |
 | Closed #151 — Scalar subtype naming convention | 2026-04-07 | Three-level naming (##schema, #alias, :treepath) documented in scalars.md, basic-types.md, string-subtypes.md |
 | Closed #148 — #Array vs #array case inconsistency | 2026-04-07 | Documented #array as alias for #Array; standardized annotations to lowercase |
+| Closed #143 — #Boolean enum struct vs enum classification | 2026-04-07 | Introduced ##Enum schema; replaced "enum struct" terminology across 10 files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -248,13 +246,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #148 merged and closed — 12/19 docs-inconsistency, Group 3: 2/6
-Next action: /paul:work-issue 143 (next Group 3 issue — Naming)
+Stopped at: Issue #143 merged and closed — 13/19 docs-inconsistency, Group 3: 3/6
+Next action: /paul:work-issue 154 (next Group 3 issue — Naming)
 Resume file: N/A
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
 - Group 2 (Syntax Gaps): 5/5 COMPLETE
-- Group 3 (Naming): 2/6 (#151, #148 done; next: #143, #154, #141, #152)
+- Group 3 (Naming): 3/6 (#151, #148, #143 done; next: #154, #141, #152)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 

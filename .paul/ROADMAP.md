@@ -235,7 +235,7 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 | 145 | Wait/collect markers [<]/[>] vs [*] undocumented | 2 | P3-medium | Done |
 | 151 | Scalar subtypes ##Int/##Float vs int/float naming | 3 | P3-medium | Done |
 | 148 | #Array vs #array case inconsistency | 3 | P3-medium | Done |
-| 143 | #Boolean enum struct vs enum classification | 3 | P4-low | Pending |
+| 143 | #Boolean enum struct vs enum classification | 3 | P4-low | Done |
 | 154 | *Agg shorthand not in glossary or vision | 3 | P4-low | Pending |
 | 141 | Trigger Monitor role contradicts glossary vs vision | 3 | P3-medium | Pending |
 | 152 | *Continue collector vs error recovery classification | 3 | P3-medium | Pending |
