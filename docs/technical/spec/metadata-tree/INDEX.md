@@ -14,6 +14,7 @@ This document formally specifies the `%` metadata tree — the unified structure
 
 ## Sections
 
+- [[FULL-TREE|Full Tree]] — complete `%` tree in ASCII art with all branches, definitions, instances, and aliases
 - [[path-grammar|Path Grammar]] — path grammar, shorthand accessors, and resolution rules
 - [[object-types|Object Type Branches]] — fixed branches for each object type prefix
 - [[instance-lifecycle|Instance Lifecycle]] — creation, numbering, and release of instances

@@ -1,0 +1,51 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: complete
+metadata_definition: "%definition.#:PyEnv"
+metadata_instance: "%#:PyEnv:N"
+---
+
+# #PyEnv Struct
+
+<!-- @types -->
+
+Runtime environment handle produced by `=W.RT:Python:*` wrapper setup.
+
+---
+
+## Definition
+
+```polyglot
+{#} #PyEnv
+   [.] .version#string
+   [.] .handle#RawString
+```
+
+---
+
+## Fields
+
+| Field | Type | Purpose |
+|-------|------|---------|
+| `.version` | `#string` | Python version string (e.g., `"3.14"`) |
+| `.handle` | `#RawString` | Opaque runtime handle used by `=RT.Python.*` pipelines |
+
+---
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:PyEnv` | Compile-time type template |
+| Instance | `%#:PyEnv:N` | Runtime instance (N = instance number) |
+
+---
+
+## Related
+
+- [[rt]] — runtime types overview
+- [[pglib/pipelines/RT/INDEX|=RT.*]] — runtime execution pipelines
+- [[pglib/pipelines/W/INDEX|=W.*]] — wrapper pipelines
+- [[syntax/types/INDEX|types]] — full type system specification

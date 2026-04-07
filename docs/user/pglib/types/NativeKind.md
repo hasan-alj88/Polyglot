@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-04
 status: complete
+metadata_definition: "%definition.#:NativeKind"
+metadata_instance: "%#:NativeKind:N"
 ---
 
 # #NativeKind Enum
@@ -82,6 +84,13 @@ The compiler resolves each `{N}` definition's language by checking `overrides` f
 Future host languages (e.g., `.Go`, `.Cpp`) can be added by extending the `.<Language>` fields on existing `{N}` definitions — no pipeline names or #NativeKind variants need to change. See [[technical/spec/native-dispatch|native-dispatch]] for the full configuration spec.
 
 ---
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:NativeKind` | Compile-time type template |
+| Instance | `%#:NativeKind:0` | Runtime instance (enum — one active field) |
 
 ## Related
 

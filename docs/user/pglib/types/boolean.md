@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-04
 status: complete
+metadata_definition: "%definition.#:Boolean"
+metadata_instance: "%#:Boolean:N"
 ---
 
 # #Boolean and #None
@@ -51,6 +53,15 @@ status: complete
    [#] << ##Scalar
    [#] << ###None
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:Boolean` | Compile-time type template |
+| Instance | `%#:Boolean:0` | Runtime instance (enum — one active field) |
+
+`#None` also lives here: definition at `%definition.#:None`, instance at `%#:None:0`.
 
 ## Related
 

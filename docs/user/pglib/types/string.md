@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-04
 status: complete
+metadata_definition: "%definition.#:String"
+metadata_instance: "%#:String:N"
 ---
 
 # #String — Foundation Type
@@ -54,6 +56,15 @@ Users can define custom string subtypes with their own `.regex`:
    [#] <~ #String
    [.] .regex#RawString << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:String` | Compile-time type template |
+| Instance | `%#:String:N` | Runtime instance (N = instance number) |
+
+String subtypes nest under the instance path: `%#:String:int`, `%#:String:float`, `%#:String:uint`, etc. See [[metadata-tree/string-subtypes]] for full resolution.
 
 ## Related
 
