@@ -1,0 +1,47 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: complete
+---
+
+# =File.Text.Append
+
+Append text content to the end of an existing file.
+
+## Definition
+
+```polyglot
+{N} =File.Text.Append
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileTextAppend"
+   [%] .description << "Append text to file"
+   [=] <path#path
+   [=] <content#string
+```
+
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<path` | `#path` | Path to the file to append to |
+| `<content` | `#string` | Text content to append |
+
+## Outputs
+
+None. Success is signalled by `!NoError`.
+
+## Errors
+
+| Error | When |
+|-------|------|
+| `!File.NotFound` | File does not exist at path |
+| `!File.WriteError` | Cannot write to path (permissions, disk full) |
+
+## Permissions
+
+Requires `File.Write` capability.
+
+## Related
+
+- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]

@@ -157,7 +157,7 @@ The `<#type` input works with any tier of the prefix system:
 | `##` schema | `<#Scalar` | The `##Scalar` schema's property declarations |
 | `###` property | `<#Enum` | The `###Enum` field property definition |
 
-This is the same mechanism as `[#] <#ParamName` in `{M}` macros (GT-1: all definitions are data trees), now available at runtime via `{=}` pipelines. See [[#\|pglib/pipelines/#]] for `=#.Match`, `=#.Validate`, `=#.Describe`, `=#.Coerce` — the validation pipelines that use this pattern.
+This is the same mechanism as `[#] <#ParamName` in `{M}` macros (GT-1: all definitions are data trees), now available at runtime via `{=}` pipelines. See [[pglib/pipelines/Schema/INDEX|=#.* Schema Pipelines]] for `=#.Match`, `=#.Validate`, `=#.Describe`, `=#.Coerce` — the validation pipelines that use this pattern.
 
 ## See Also
 

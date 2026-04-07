@@ -1,23 +1,17 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Map — Expand Map
+# ~ForEach.Map
 
 Iterates over each key-value pair in a `#Map`. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
 
-No `[@]` import needed. No `.Enumerate` variant — Map is unordered (`%Ordered = #False`), so a positional index would be misleading.
+No `.Enumerate` variant -- Map is unordered (`%Ordered = #False`), so a positional index would be misleading.
 
-## IO Signature
-
-| Input | Outputs |
-|-------|---------|
-| `<Map` | `>key`, `>item` |
-
-## Usage
+## Syntax
 
 ```polyglot
 [p] ~ForEach.Map
@@ -27,4 +21,28 @@ No `[@]` import needed. No `.Enumerate` variant — Map is unordered (`%Ordered 
    ...
 ```
 
-See also: [[concepts/collections/expand#Expand Operators]]
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<Map` | `#Map` | Map to iterate |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>key` | `#KeyString` | Current map key |
+| `>item` | value type | Current map value |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[concepts/collections/expand|Expand Operators]]

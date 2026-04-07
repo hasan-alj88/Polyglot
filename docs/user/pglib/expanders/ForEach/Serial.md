@@ -1,23 +1,17 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Serial — Expand Serial
+# ~ForEach.Serial
 
 Iterates over all key-item pairs in a serial at all levels. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
 
-No `[@]` import needed. No `.Enumerate` variant — Serial is unordered.
+No `.Enumerate` variant -- Serial is unordered.
 
-## IO Signature
-
-| Input | Outputs |
-|-------|---------|
-| `<Serial` | `>key`, `>item` |
-
-## Usage
+## Syntax
 
 ```polyglot
 [r] ~ForEach.Serial
@@ -27,4 +21,28 @@ No `[@]` import needed. No `.Enumerate` variant — Serial is unordered.
    ...
 ```
 
-See also: [[concepts/collections/expand#Expand Operators]]
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<Serial` | `#Serial` | Serial to iterate |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>key` | `#KeyString` | Current key |
+| `>item` | any | Current value |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[concepts/collections/expand|Expand Operators]]

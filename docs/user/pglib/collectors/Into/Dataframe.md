@@ -1,27 +1,17 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-29
+updated: 2026-04-07
 status: stable
 ---
 
-# *Into.Dataframe — Collect into Dataframe
+# *Into.Dataframe
 
 Gathers row outputs from mini-pipelines back into a single `#Dataframe`, accessible one level up from the expand scope. Each `<row` must match the compiler-synthesized row struct (all fields typed as `CellType`).
 
-Collector invocation uses `[r]` (sequential) or `[p]` (parallel) execution markers. Collector IO lines use `[*]`.
+Row indices are auto-assigned (0, 1, 2...) like `*Into.Array`. The resulting dataframe is `##Rectangular` -- all columns have equal row count.
 
-No `[@]` import needed.
-
-Row indices are auto-assigned (0, 1, 2...) like `*Into.Array`. The resulting dataframe is `##Rectangular` — all columns have equal row count.
-
-## IO Signature
-
-| Input | Output |
-|-------|--------|
-| `<row` | `>Dataframe` |
-
-## Usage
+## Syntax
 
 ```polyglot
 [r] *Into.Dataframe
@@ -29,4 +19,27 @@ Row indices are auto-assigned (0, 1, 2...) like `*Into.Array`. The resulting dat
    [*] >Dataframe >> $result
 ```
 
-See also: [[concepts/collections/collect#Collect Operators]]
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<row` | row struct | Row matching compiler-synthesized struct |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>Dataframe` | `#Dataframe` | Collected dataframe of all rows |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/collectors/Into/INDEX|*Into Data Collectors]]
+- [[concepts/collections/collect|Collect Operators]]

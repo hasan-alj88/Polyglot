@@ -1,0 +1,48 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: complete
+---
+
+# =File.Text.Read
+
+Read the full text content of a file at the given path.
+
+## Definition
+
+```polyglot
+{N} =File.Text.Read
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileTextRead"
+   [%] .description << "Read text file contents"
+   [=] <path#path
+   [=] >content#string
+```
+
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<path` | `#path` | Path to the file to read |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>content` | `#string` | Full text content of the file |
+
+## Errors
+
+| Error | When |
+|-------|------|
+| `!File.NotFound` | File does not exist at path |
+| `!File.ReadError` | File exists but cannot be read (permissions, locked) |
+
+## Permissions
+
+Requires `File.Read` capability.
+
+## Related
+
+- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]

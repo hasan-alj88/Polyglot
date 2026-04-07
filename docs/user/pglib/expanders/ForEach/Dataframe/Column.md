@@ -22,4 +22,4 @@ status: deprecated
    ...
 ```
 
-See also: [[concepts/collections/expand#Expand Operators]], [[pglib/pipelines/#]]
+See also: [[concepts/collections/expand#Expand Operators]], [[pglib/pipelines/Schema/INDEX]]

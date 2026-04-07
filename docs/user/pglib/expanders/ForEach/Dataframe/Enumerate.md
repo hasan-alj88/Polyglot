@@ -1,23 +1,15 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-29
+updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Dataframe.Enumerate — Expand Dataframe with Row Index
+# ~ForEach.Dataframe.Enumerate
 
 Iterates over each row in a dataframe with its positional index. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
 
-No `[@]` import needed.
-
-## IO Signature
-
-| Input | Outputs |
-|-------|---------|
-| `<Dataframe` | `>index`, `>row` |
-
-## Usage
+## Syntax
 
 ```polyglot
 [p] ~ForEach.Dataframe.Enumerate
@@ -27,4 +19,29 @@ No `[@]` import needed.
    ...
 ```
 
-See also: [[concepts/collections/expand#Expand Operators]]
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<Dataframe` | `#Dataframe` | Dataframe to iterate |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>index` | `#int` | Zero-based row index |
+| `>row` | row struct | Compiler-synthesized struct with column fields |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/expanders/ForEach/Dataframe|~ForEach.Dataframe]] -- base variant without index
+- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[concepts/collections/expand|Expand Operators]]
