@@ -157,6 +157,8 @@ This is the same `<<`/`>>` direction convention used throughout the language:
 
 See [[concepts/collections/collect#Collect-All & Race Collectors]] for the collectors that use these forms.
 
+> **Disambiguation:** `[*] <<` / `[*] >>` (collector IO) and `[>]` / `[<]` (IO parameter handling) are distinct marker sets. `[*] <<` / `[*] >>` appear inside `[*]` collector blocks for wait/race semantics. `[>]` / `[<]` appear under `[=]` IO lines for parameter handling (e.g., error fallback). See [[#IO Parameter Handling]].
+
 ### Direct Output Port Writing
 
 Collector outputs can write directly to a pipeline output port using the `>` prefix:
@@ -169,11 +171,11 @@ Collector outputs can write directly to a pipeline output port using the `>` pre
 
 The target output port reaches **Final** state after the collector writes to it — no other push to that port is allowed. See [[variable-lifecycle#Final]].
 
-## Fallback IO
+## IO Parameter Handling
 
 <!-- @errors:Error Fallback Operators -->
 <!-- @operators -->
-Fallback lines provide a value to use when a pipeline call errors, preventing the variable from entering the Failed state. Fallback uses the `<!` / `!>` operators (see [[operators#Assignment Operators]]) and new `[>]` / `[<]` block markers (see [[blocks#Data Flow]]).
+The `[>]` (output) and `[<]` (input) block markers handle IO parameters scoped under `[=]` IO lines (see [[blocks#Data Flow]]). Currently, fallback is the primary use case: providing a value when a pipeline call errors, preventing the variable from entering the Failed state. Fallback uses the `<!` / `!>` operators (see [[operators#Assignment Operators]]).
 
 ### Fallback Line Pattern
 

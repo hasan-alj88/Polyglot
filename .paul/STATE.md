@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #115 — Job hierarchy addressing syntax
 Plan: N/A
-Status: Issue #115 merged to main
-Last activity: 2026-04-05 — Issue #115 merged (job hierarchy addressing syntax)
+Status: Issue #145 unified — ready for merge
+Last activity: 2026-04-07 — Issue #145 unified (wait/collect markers disambiguation)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -86,14 +86,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #145 — Wait/collect markers [<]/[>] vs [*]<</>> undocumented relationship
+Branch: docs/issue-145-wait-collect-markers
+Labels: docs, P3-medium, docs-inconsistency
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/145
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Issue #145 ready for merge]
 ```
 
 ## Accumulated Context
@@ -237,13 +241,13 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-06
-Stopped at: Issue #156 merged and closed — 9/19 docs-inconsistency
-Next action: /paul:work-issue 145 (last Group 2 issue)
-Resume file: N/A
+Last session: 2026-04-07
+Stopped at: Issue #145 unified — ready for merge
+Next action: /paul:merge (commit and merge #145 to main)
+Resume file: .paul/phases/145-wait-collect-markers/145-01-SUMMARY.md
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
-- Group 2 (Syntax Gaps): 4/5 (#142, #155, #153, #156 done; next: #145)
+- Group 2 (Syntax Gaps): 4/5 done, #145 ready for merge (completes Group 2)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 

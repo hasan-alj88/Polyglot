@@ -65,8 +65,8 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `[*]` | Collection-collect IO line. See [[concepts/collections/collect#Collect Operators]] |
 | `[*] <<` | Wait input — wait for variable to be Final (used inside `[*]` blocks). See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `[*] >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
-| `[>]` | Output fallback — scoped under `[=]` output line. See [[errors#Error Fallback Operators]] |
-| `[<]` | Input fallback — scoped under `[=]` input line. See [[errors#Error Fallback Operators]] |
+| `[>]` | Output parameter handling — scoped under `[=]` output line. See [[io#IO Parameter Handling]] |
+| `[<]` | Input parameter handling — scoped under `[=]` input line. See [[io#IO Parameter Handling]] |
 
 ### Execution
 
