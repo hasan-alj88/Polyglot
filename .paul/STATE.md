@@ -86,27 +86,24 @@ Progress:
 - Issue #152: [██████████] 100% (3/3 plans — *Continue removal + compiler-enforced errors)
 - Issue #159: [██████████] 100% (1/1 plans — audience routing fix)
 - Issue #157: [██████████] 100% (cleanup — circular ref already broken by #152)
-- Docs-Inconsistency Batch (#141-#159): [█████████░] 95% (18/19 issues)
+- Issue #147: [██████████] 100% (1/1 plans — .~ level iteration marker formalized)
+- Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
   - Group 3 (Naming): 6/6 COMPLETE
   - Group 4 (Cross-Ref): 2/2 COMPLETE
-  - Group 5 (Stdlib): 0/1
+  - Group 5 (Stdlib): 1/1 COMPLETE
 
 ## Active Issue
 
-Issue: #147 — ForEach.Level uses ~~ double-prefix, violating single ~ rule
-Branch: docs/issue-147-foreach-level-tilde-suffix
-Labels: docs, stdlib, P3-medium, docs-inconsistency
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/147
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ○        ○        ○        ○     [Issue #147 active]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -241,6 +238,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #152 — *Continue removed, compiler-enforced error handling | 2026-04-07 | ALL errors must be handled; Failed state remains as runtime trigger; <!/> ! replaces *Continue |
 | Closed #159 — Audience routing fix | 2026-04-07 | Split "For Contributors" into Designer/Architect sections in 3 index files |
 | Closed #157 — PGE04009 circular reference | 2026-04-07 | Already broken by #152; fixed backtick typos, clarified cross-ref authority |
+| Closed #147 — ForEach.Level .~ tilde suffix | 2026-04-07 | Formalized .~ as EBNF level_input production; aligned prose in 4 files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -260,15 +258,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #157 merged — 18/19 docs-inconsistency, Group 4: 2/2 COMPLETE
-Next action: /paul:work-issue 147 (Group 5 — Stdlib, last issue)
+Stopped at: Issue #147 merged — 19/19 docs-inconsistency batch COMPLETE
+Next action: Docs-Inconsistency Batch complete. Next milestone TBD.
 Resume file: N/A
 Resume context:
-- Group 1 (EBNF/Compiler): 5/5 COMPLETE
-- Group 2 (Syntax Gaps): 5/5 COMPLETE
-- Group 3 (Naming): 6/6 COMPLETE
-- Group 4 (Cross-Ref): 2/2 COMPLETE
-- Group 5 (Stdlib): 0/1 (#147)
+- Docs-Inconsistency Batch (#141-#159): ALL 19 ISSUES COMPLETE
+- All 5 groups resolved (EBNF/Compiler, Syntax Gaps, Naming, Cross-Ref, Stdlib)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 

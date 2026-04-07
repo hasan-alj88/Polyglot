@@ -241,7 +241,7 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 | 152 | *Continue collector vs error recovery classification | 3 | P3-medium | Done |
 | 159 | Audience routing sends wrong groups to wrong docs | 4 | P3-medium | Done |
 | 157 | PGE04009 / *Continue / conversions.md circular ref | 4 | P3-medium | Done |
-| 147 | ForEach.Level ~~ double-prefix violates single ~ rule | 5 | P3-medium | Pending |
+| 147 | ForEach.Level ~~ double-prefix violates single ~ rule | 5 | P3-medium | Done |
 
 ---
 *Roadmap created: 2026-02-27*
