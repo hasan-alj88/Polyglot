@@ -85,11 +85,12 @@ Progress:
 - Issue #141: closed as not-a-bug (TM monitoring schedules ≠ being a scheduler)
 - Issue #152: [██████████] 100% (3/3 plans — *Continue removal + compiler-enforced errors)
 - Issue #159: [██████████] 100% (1/1 plans — audience routing fix)
-- Docs-Inconsistency Batch (#141-#159): [█████████░] 89% (17/19 issues)
+- Issue #157: [██████████] 100% (cleanup — circular ref already broken by #152)
+- Docs-Inconsistency Batch (#141-#159): [█████████░] 95% (18/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
   - Group 3 (Naming): 6/6 COMPLETE
-  - Group 4 (Cross-Ref): 1/2
+  - Group 4 (Cross-Ref): 2/2 COMPLETE
   - Group 5 (Stdlib): 0/1
 
 ## Active Issue
@@ -235,6 +236,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #141 — not a bug | 2026-04-07 | TM monitors trigger conditions incl. timing; "not a scheduler" is correct |
 | Closed #152 — *Continue removed, compiler-enforced error handling | 2026-04-07 | ALL errors must be handled; Failed state remains as runtime trigger; <!/> ! replaces *Continue |
 | Closed #159 — Audience routing fix | 2026-04-07 | Split "For Contributors" into Designer/Architect sections in 3 index files |
+| Closed #157 — PGE04009 circular reference | 2026-04-07 | Already broken by #152; fixed backtick typos, clarified cross-ref authority |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -254,14 +256,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #159 merged — 17/19 docs-inconsistency, Group 4: 1/2
-Next action: /paul:work-issue 157 (second Group 4 issue — Cross-Ref)
+Stopped at: Issue #157 merged — 18/19 docs-inconsistency, Group 4: 2/2 COMPLETE
+Next action: /paul:work-issue 147 (Group 5 — Stdlib, last issue)
 Resume file: N/A
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
 - Group 2 (Syntax Gaps): 5/5 COMPLETE
 - Group 3 (Naming): 6/6 COMPLETE
-- Group 4 (Cross-Ref): 1/2 (#159 done, #157 pending)
+- Group 4 (Cross-Ref): 2/2 COMPLETE
 - Group 5 (Stdlib): 0/1 (#147)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
