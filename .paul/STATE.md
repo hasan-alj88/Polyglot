@@ -84,27 +84,24 @@ Progress:
 - Issue #154: [██████████] 100% (1/1 plans — *Agg glossary entry)
 - Issue #141: closed as not-a-bug (TM monitoring schedules ≠ being a scheduler)
 - Issue #152: [██████████] 100% (3/3 plans — *Continue removal + compiler-enforced errors)
-- Docs-Inconsistency Batch (#141-#159): [████████░░] 84% (16/19 issues)
+- Issue #159: [██████████] 100% (1/1 plans — audience routing fix)
+- Docs-Inconsistency Batch (#141-#159): [█████████░] 89% (17/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
   - Group 3 (Naming): 6/6 COMPLETE
-  - Group 4 (Cross-Ref): 0/2
+  - Group 4 (Cross-Ref): 1/2
   - Group 5 (Stdlib): 0/1
 
 ## Active Issue
 
-Issue: #159 — Docs: Audience routing sends Architects to syntax docs, Designers to runtime docs
-Branch: docs/issue-159-audience-routing-fix
-Labels: docs, P3-medium, docs-inconsistency
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/159
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -237,6 +234,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #154 — *Agg glossary entry and alias wording | 2026-04-07 | Added *Agg to glossary; Agg.md says "alias" not "NOT *Aggregate" |
 | Closed #141 — not a bug | 2026-04-07 | TM monitors trigger conditions incl. timing; "not a scheduler" is correct |
 | Closed #152 — *Continue removed, compiler-enforced error handling | 2026-04-07 | ALL errors must be handled; Failed state remains as runtime trigger; <!/> ! replaces *Continue |
+| Closed #159 — Audience routing fix | 2026-04-07 | Split "For Contributors" into Designer/Architect sections in 3 index files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -256,14 +254,14 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #152 merged — 16/19 docs-inconsistency, Group 3: 6/6 COMPLETE
-Next action: /paul:work-issue 159 (first Group 4 issue — Cross-Ref)
+Stopped at: Issue #159 merged — 17/19 docs-inconsistency, Group 4: 1/2
+Next action: /paul:work-issue 157 (second Group 4 issue — Cross-Ref)
 Resume file: N/A
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
 - Group 2 (Syntax Gaps): 5/5 COMPLETE
 - Group 3 (Naming): 6/6 COMPLETE
-- Group 4 (Cross-Ref): 0/2 (#159, #157)
+- Group 4 (Cross-Ref): 1/2 (#159 done, #157 pending)
 - Group 5 (Stdlib): 0/1 (#147)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
