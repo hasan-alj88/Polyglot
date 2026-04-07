@@ -71,11 +71,11 @@ The handler **cannot** access other steps' IO (steps other than N).
 [r] =File.Text.Read=>=Text.Parse.CSV
    [=] >0.path#path << $path
    [=] <1.rows#string >> >content
+      [>] <! ""                       [ ] catch-all fallback
    [!] .0!File.NotFound
       [r] =LogError
          [=] <msg << "file not found"
       [r] >content << ""
-   [>] <! ""                          [ ] catch-all fallback
 ```
 
 **INVALID:**

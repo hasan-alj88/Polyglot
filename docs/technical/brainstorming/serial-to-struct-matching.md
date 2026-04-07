@@ -29,9 +29,9 @@ No warnings. Either the compiler can prove it's safe (no handling needed), prove
 ```polyglot
 [ ] ✓ Handled — <! provides fallback
 [r] $record#UserRecord << $someSerial
+   [>] <! $defaultRecord              [ ] catch-all fallback
    [!] !SchemaMismatch
       [r] >record << $defaultRecord
-   [>] <! $defaultRecord              [ ] catch-all fallback
 ```
 
 ```polyglot

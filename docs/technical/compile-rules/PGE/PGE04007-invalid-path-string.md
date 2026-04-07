@@ -77,9 +77,9 @@ The compiler statically infers whether a `=Path"..."` expression is provably cro
 
 [ ] ✓ handled — <! fallback for single-OS path
 [r] $dir#path << =Path"/tmp/MyApp"
+   [>] <! $defaultDir                 [ ] catch-all fallback
    [!] !PathPlatformMismatch
       [r] >dir << $defaultDir
-   [>] <! $defaultDir                 [ ] catch-all fallback
 ```
 
 ### See Also

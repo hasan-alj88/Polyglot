@@ -68,9 +68,9 @@ The compiler performs best-effort static analysis:
    [r] $defaultUser.age << 0
 
 [r] $user#UserRecord << $dynamicSerial
+   [>] <! $defaultUser                [ ] catch-all fallback
    [!] !SchemaMismatch
       [r] >user << $defaultUser
-   [>] <! $defaultUser                [ ] catch-all fallback
 ```
 
 See [TYPE-IDENTITY](../../technical/compile-rules/TYPE-IDENTITY.md) rules 5 and 6, [PGE04009](../../technical/compile-rules/PGE/PGE04009-unhandled-serial-struct-conversion.md).

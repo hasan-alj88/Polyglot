@@ -45,9 +45,9 @@ severity: error
    [r] $defaultUser.age << 0
 
 [r] $user#UserRecord << $dynamicSerial
+   [>] <! $defaultUser                [ ] catch-all fallback
    [!] !SchemaMismatch
       [r] >user << $defaultUser
-   [>] <! $defaultUser                [ ] catch-all fallback
 ```
 
 ```polyglot
