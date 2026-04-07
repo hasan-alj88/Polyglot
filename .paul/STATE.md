@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #163 — Add metadata paths to all type definitions and operation files
-Plan: 163-03 complete — all 3 plans done
-Status: Phase COMPLETE — ready for MERGE
-Last activity: 2026-04-07 — UNIFY complete, phase done (3/3 plans)
+Plan: N/A
+Status: No active issue
+Last activity: 2026-04-07 — Issue #163 merged to main (closes #163)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -100,18 +100,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #163 — Add metadata paths to all type definitions and operation files
-Branch: docs/issue-163-add-metadata-paths-to-type-and-operation-files
-Labels: documentation
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/163
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — phase done, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -250,7 +246,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #160 — Split DT.md into DT/ folder | 2026-04-07 | 40 pipelines (not 37); .version metadata removed (EBNF violation); pipeline doc template established |
 | Closed #161 — Split all pglib docs per operator | 2026-04-07 | Merged docs/issue-161-split-pglib-docs-per-operator to main; 125 files, 5 plans |
 | Closed #162 — Native dispatch config docs | 2026-04-07 | Merged docs/issue-162-native-dispatch-config-update to main; 3 files, 1 plan |
-| Issue #163 — Metadata paths for types + operations | 2026-04-07 | 3 plans: type file split (163-01), schema/field-type files (163-02), 109 pipeline metadata (163-03); ready for merge |
+| Closed #163 — Metadata paths for types + operations | 2026-04-07 | 3 plans: type file split (163-01), schema/field-type files (163-02), 109 pipeline metadata (163-03); merged to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -270,15 +266,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Phase complete, ready for MERGE
-Next action: /paul:merge (commit + merge branch to main, close #163)
-Resume file: .paul/phases/163-add-metadata-paths-types-operations/163-03-SUMMARY.md
+Stopped at: Issue #163 merged to main
+Next action: /paul:issues or /paul:progress
+Resume file: .paul/ROADMAP.md
 Resume context:
-- Issue #163: ALL 3 plans complete
-- 163-01: Split types into per-type files + metadata — DONE
-- 163-02: Permission enums + schemas + field-types — DONE
-- 163-03: Add metadata to 109 pipeline operation files — DONE
-- Branch: docs/issue-163-add-metadata-paths-to-type-and-operation-files
+- Issue #163 CLOSED and merged to main
+- No active issue — pick next work
 
 ---
 *STATE.md — Updated after every significant action*
