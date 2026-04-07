@@ -81,27 +81,24 @@ Progress:
 - Issue #151: [██████████] 100% (1/1 plans — scalar subtype naming convention)
 - Issue #148: [██████████] 100% (1/1 plans — #Array/#array case consistency)
 - Issue #143: [██████████] 100% (1/1 plans — ##Enum schema classification)
-- Docs-Inconsistency Batch (#141-#159): [██████░░░░] 68% (13/19 issues)
+- Issue #154: [██████████] 100% (1/1 plans — *Agg glossary entry)
+- Docs-Inconsistency Batch (#141-#159): [███████░░░] 73% (14/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
-  - Group 3 (Naming): 3/6
+  - Group 3 (Naming): 4/6
   - Group 4 (Cross-Ref): 0/2
   - Group 5 (Stdlib): 0/1
 
 ## Active Issue
 
-Issue: #154 — Docs: *Agg shorthand not mentioned in glossary or vision
-Branch: docs/issue-154-agg-shorthand-glossary
-Labels: docs, P4-low, docs-inconsistency
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/154
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for commit & merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -231,7 +228,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #151 — Scalar subtype naming convention | 2026-04-07 | Three-level naming (##schema, #alias, :treepath) documented in scalars.md, basic-types.md, string-subtypes.md |
 | Closed #148 — #Array vs #array case inconsistency | 2026-04-07 | Documented #array as alias for #Array; standardized annotations to lowercase |
 | Closed #143 — #Boolean enum struct vs enum classification | 2026-04-07 | Introduced ##Enum schema; replaced "enum struct" terminology across 10 files |
-| *Agg is alias of *Aggregate (not invalid) | 2026-04-07 | Glossary + Agg.md wording reflects alias, not error |
+| Closed #154 — *Agg glossary entry and alias wording | 2026-04-07 | Added *Agg to glossary; Agg.md says "alias" not "NOT *Aggregate" |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -251,13 +248,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #143 merged and closed — 13/19 docs-inconsistency, Group 3: 3/6
-Next action: /paul:work-issue 154 (next Group 3 issue — Naming)
+Stopped at: Issue #154 merged and closed — 14/19 docs-inconsistency, Group 3: 4/6
+Next action: /paul:work-issue 141 (next Group 3 issue — Naming)
 Resume file: N/A
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
 - Group 2 (Syntax Gaps): 5/5 COMPLETE
-- Group 3 (Naming): 3/6 (#151, #148, #143 done; next: #154, #141, #152)
+- Group 3 (Naming): 4/6 (#151, #148, #143, #154 done; next: #141, #152)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 
