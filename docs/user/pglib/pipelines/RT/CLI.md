@@ -1,0 +1,82 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: complete
+---
+
+# =RT.\<Lang\>.CLI
+
+Invoke a compiled binary. No language runtime needed — uses `=W.Polyglot`, not `=W.RT`. No `<env` parameter.
+
+## Definition
+
+```polyglot
+{N} =RT.<Lang>.CLI
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "RtCli"
+   [%] .description << "Invoke compiled binary."
+   [=] <binary#path
+   [=] <arg#array.string
+   [=] <kwarg#map:string:string
+   [=] >output#Code:<Lang>.Output
+```
+
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<binary` | `#path` | Path to executable |
+| `<arg` | `#array.string` | Positional arguments (optional) |
+| `<kwarg` | `#map:string:string` | CLI flags (optional) |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>output` | `#Code:<Lang>.Output` | Console capture (`.stdout`, `.stderr`) |
+
+## Notes
+
+Uses `=W.Polyglot`, not `=W.RT` — no language runtime needed for compiled binaries.
+
+## Example
+
+```polyglot
+{_} _BinaryCeiling
+   [.] .intent << #Ceiling
+   [.] .System.Process "*"
+
+{@} @Local:Example.RustBinary
+   [_] _BinaryCeiling
+
+{_} _ToolGrant
+   [.] .intent << #Grant
+   [.] .System.Process "mytool"
+
+{=} =RunRustTool
+   [_] _ToolGrant
+   [=] <inputPath#path
+   [=] >toolOutput#Code:Rust.Output
+   [T] =T.Call
+   [Q] =Q.Default
+   [W] =W.Polyglot
+
+   [r] =RT.Rust.CLI
+      [=] <binary#path << =Path"/usr/local/bin/mytool"
+      [=] <arg#array.string << ["{$inputPath}"]
+      [=] <kwarg#map:string:string << {"--format": "json", "--verbose": "true"}
+      [=] >output#Code:Rust.Output >> >toolOutput
+```
+
+## Errors
+
+None.
+
+## Permissions
+
+Requires `System.Process` capability.
+
+## Related
+
+- [[pglib/pipelines/RT/INDEX|=RT.* Runtime Execution]]

@@ -88,6 +88,7 @@ Progress:
 - Issue #157: [██████████] 100% (cleanup — circular ref already broken by #152)
 - Issue #147: [██████████] 100% (1/1 plans — .~ level iteration marker formalized)
 - Issue #160: [██████████] 100% (1/1 plans — DT.md split into DT/ folder + pipeline doc template)
+- Issue #161: [██████████] 100% (5/5 plans — all pglib docs split into per-operator files)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -97,14 +98,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #161 — Split all pglib docs into 1-file-per-operator with doc template
+Branch: docs/issue-161-split-pglib-docs-per-operator
+Labels: docs, pglib
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/161
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Plan 161-05 complete — issue #161 ready for merge]
 ```
 
 ## Accumulated Context
@@ -260,15 +265,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #160 merged to main, #161 and #162 open
-Next action: /paul:work-issue 161 (apply pipeline doc template to all pglib pipeline files)
-Resume file: .paul/phases/160-split-dt-pipeline-template/160-01-SUMMARY.md
+Stopped at: All 5 plans complete for issue #161
+Next action: /paul:merge to merge branch to main and close issue #161
+Resume file: .paul/phases/161-split-pglib-docs-per-operator/161-05-SUMMARY.md
 Resume context:
-- Issue #160 complete: DT.md split into DT/ folder (41 files)
-- Pipeline doc template pattern established (6 sections per file)
-- Issue #161: Apply template to remaining pipeline files (File, Math, Q, T, W, #, RT, Sys, Path)
-- Issue #162: Update docs for per-operation native dispatch config
-- Also committed: native dispatch spec, lib/ scaffold, stdlib→pglib rename
+- Issue #161: ALL 5 PLANS COMPLETE — ready for merge
+- Branch: docs/issue-161-split-pglib-docs-per-operator
+- Total: ~100 files created/modified across collectors, expanders, pipelines
 
 ---
 *STATE.md — Updated after every significant action*

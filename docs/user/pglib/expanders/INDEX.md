@@ -1,0 +1,24 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: stable
+---
+
+# Expander Operators (~)
+
+Expanders iterate over collection elements, producing a mini-pipeline per item. Each mini-pipeline runs independently and feeds results into a collector.
+
+All expanders use the `~` prefix. Invocation uses `[p]` (parallel) or `[r]` (sequential) execution markers. Expander IO lines use `[~]`.
+
+No `[@]` import needed.
+
+## ForEach
+
+- [[pglib/expanders/ForEach/INDEX|~ForEach.*]] -- iterate Array, Map, Serial, Level, or Dataframe
+
+## Related
+
+- [[pglib/INDEX|pglib Namespace Registry]]
+- [[pglib/collectors/INDEX|Collector Operators]] -- pair with expanders to collect results
+- [[concepts/collections/expand|Expand Operators]] -- conceptual overview

@@ -1,0 +1,46 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: stable
+---
+
+# =Math.Power
+
+Raises the base to the power of the exponent. Accepts exactly two inputs in positional order. When any input is `#float`, the output is `#float`.
+
+## Definition
+
+```polyglot
+{N} =Math.Power
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "MathPower"
+   [%] .description << "Binary exponentiation (base raised to exponent)"
+   [=] <<#int (exactly 2 — base, exponent)
+   [=] >>#int
+```
+
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| (positional 1) | `#int` or `#float` | Base |
+| (positional 2) | `#int` or `#float` | Exponent |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| (positional) | `#int` or `#float` | Result (base ^ exponent) |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/pipelines/Math/INDEX|=Math.* Numeric Pipelines]]

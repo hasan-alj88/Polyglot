@@ -1,11 +1,11 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-25
+updated: 2026-04-07
 status: complete
 ---
 
-# =T — Triggers
+# =T.* Trigger Pipelines
 
 <!-- @pipelines -->
 Triggers are placed on `[T]` lines inside `{=}` pipeline definitions. No `[@]` import needed. See [[concepts/pipelines/io-triggers#Triggers]] for trigger usage rules.
@@ -25,30 +25,17 @@ Most triggers require no permissions. IO-touching triggers require a `{_}` permi
 | `=T.Folder.NewFiles` | File.Read | File |
 | `=T.Webhook` | Web.Socket | Web |
 
-```polyglot
-=T
-   .Call
-      [ ] Pipeline is invoked when called from another pipeline.
-      [ ] No additional parameters.
+## Pipeline Listing
 
-   .Manual
-      [ ] Pipeline is invoked manually (e.g., from CLI or test harness).
-      [ ] No additional parameters.
+| Pipeline | Description |
+|----------|-------------|
+| [[pglib/pipelines/T/Call\|=T.Call]] | Pipeline invoked when called from another pipeline |
+| [[pglib/pipelines/T/Manual\|=T.Manual]] | Pipeline invoked manually (CLI or test harness) |
+| [[pglib/pipelines/T/Daily\|=T.Daily]] | Fires once per day at specified time |
+| [[pglib/pipelines/T/Folder.NewFiles\|=T.Folder.NewFiles]] | Fires when new files appear in folder |
+| [[pglib/pipelines/T/Webhook\|=T.Webhook]] | Fires on incoming HTTP request |
 
-   .Daily
-      <InlineStringLiteral#string <~ ""
-      [ ] Fires once per day at the specified time.
-      [ ] Time string provided via inline call: =T.Daily"3AM"
+## Related
 
-   .Folder
-      .NewFiles
-         <Folder#path
-         >NewFiles#array:path
-         [ ] Fires when new files appear in the specified folder.
-         [ ] Inline path: =T.Folder.NewFiles"/inbox/"
-
-   .Webhook
-      <InlineStringLiteral#string <~ ""
-      [ ] Fires on an incoming HTTP request to the specified endpoint.
-      [ ] Inline path: =T.Webhook"/api/onboarding"
-```
+- [[concepts/pipelines/io-triggers]]
+- [[pglib/INDEX]]

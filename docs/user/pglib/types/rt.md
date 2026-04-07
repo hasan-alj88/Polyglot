@@ -67,6 +67,6 @@ Runtime environment handle produced by `=W.RT:Rust:*` wrapper setup.
 
 ## Related
 
-- [[pglib/pipelines/RT|=RT]] — runtime execution pipelines that consume these types
-- [[pglib/pipelines/W|=W]] — `=W.RT` wrapper that produces `#PyEnv`/`#RsEnv`
+- [[pglib/pipelines/RT/INDEX|=RT]] — runtime execution pipelines that consume these types
+- [[pglib/pipelines/W/INDEX|=W]] — `=W.RT` wrapper that produces `#PyEnv`/`#RsEnv`
 - [[pglib/errors/errors|errors]] — `!RT` error namespace for runtime failures

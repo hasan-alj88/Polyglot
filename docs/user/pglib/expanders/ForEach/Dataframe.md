@@ -1,25 +1,17 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-29
+updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Dataframe — Expand Dataframe by Row
+# ~ForEach.Dataframe
 
 Iterates over each row in a dataframe, producing a mini-pipeline per row. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
 
-No `[@]` import needed.
-
 The `>row` output is a compiler-synthesized struct from the `ColumnEnum` type parameter, where each field is typed as `CellType`. For example, if `ColumnEnum` is `#SalesColumns` (`.product`, `.price`, `.quantity`) and `CellType` is `#string`, then `$row` has `.product#string`, `.price#string`, `.quantity#string`.
 
-## IO Signature
-
-| Input | Output |
-|-------|--------|
-| `<Dataframe` | `>row` |
-
-## Usage
+## Syntax
 
 ```polyglot
 [p] ~ForEach.Dataframe
@@ -29,9 +21,32 @@ The `>row` output is a compiler-synthesized struct from the `ColumnEnum` type pa
    ...
 ```
 
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<Dataframe` | `#Dataframe` | Dataframe to iterate by row |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>row` | row struct | Compiler-synthesized struct with column fields |
+
 ## Variants
 
-- [Enumerate](Dataframe/Enumerate.md) — adds positional `>index` output
-- ~~Column~~ — **deprecated**. Use `=#.Column` pipeline instead (see [[#|pglib/pipelines/#]])
+- [[pglib/expanders/ForEach/Dataframe/Enumerate|~ForEach.Dataframe.Enumerate]] -- adds positional `>index` output
+- ~~Column~~ -- **deprecated**. Use `=#.Column` pipeline instead.
 
-See also: [[concepts/collections/expand#Expand Operators]]
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[concepts/collections/expand|Expand Operators]]

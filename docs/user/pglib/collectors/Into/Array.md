@@ -1,25 +1,15 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-07
 status: stable
 ---
 
-# *Into.Array — Collect into Array
+# *Into.Array
 
 Gathers outputs from mini-pipelines back into a single array, accessible one level up from the expand scope.
 
-Collector invocation uses `[r]` (sequential) or `[p]` (parallel) execution markers. Collector IO lines use `[*]`.
-
-No `[@]` import needed.
-
-## IO Signature
-
-| Input | Output |
-|-------|--------|
-| `<item` | `>Array` |
-
-## Usage
+## Syntax
 
 ```polyglot
 [r] *Into.Array
@@ -27,4 +17,27 @@ No `[@]` import needed.
    [*] >Array >> $results
 ```
 
-See also: [[concepts/collections/collect#Collect Operators]]
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<item` | any | Item to append to result array |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>Array` | `#Array` | Collected array of all items |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/collectors/Into/INDEX|*Into Data Collectors]]
+- [[concepts/collections/collect|Collect Operators]]

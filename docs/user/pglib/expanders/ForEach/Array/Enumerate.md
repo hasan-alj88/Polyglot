@@ -1,23 +1,15 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Array.Enumerate — Expand Array with Index
+# ~ForEach.Array.Enumerate
 
 Iterates over each item in an array with its positional index. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
 
-No `[@]` import needed.
-
-## IO Signature
-
-| Input | Outputs |
-|-------|---------|
-| `<Array` | `>index`, `>item` |
-
-## Usage
+## Syntax
 
 ```polyglot
 [p] ~ForEach.Array.Enumerate
@@ -27,4 +19,29 @@ No `[@]` import needed.
    ...
 ```
 
-See also: [[concepts/collections/expand#Expand Operators]]
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<Array` | `#Array` | Array to iterate |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>index` | `#int` | Zero-based positional index |
+| `>item` | element type | Current array element |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/expanders/ForEach/Array|~ForEach.Array]] -- base variant without index
+- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[concepts/collections/expand|Expand Operators]]

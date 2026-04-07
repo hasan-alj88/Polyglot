@@ -1,23 +1,15 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Array — Expand Array
+# ~ForEach.Array
 
 Iterates over each item in an array, producing a mini-pipeline per item. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
 
-No `[@]` import needed.
-
-## IO Signature
-
-| Input | Output |
-|-------|--------|
-| `<Array` | `>item` |
-
-## Usage
+## Syntax
 
 ```polyglot
 [p] ~ForEach.Array
@@ -26,8 +18,31 @@ No `[@]` import needed.
    ...
 ```
 
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<Array` | `#Array` | Array to iterate |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>item` | element type | Current array element |
+
 ## Variants
 
-- [Enumerate](Array/Enumerate.md) — adds positional `>index` output
+- [[pglib/expanders/ForEach/Array/Enumerate|~ForEach.Array.Enumerate]] -- adds positional `>index` output
 
-See also: [[concepts/collections/expand#Expand Operators]]
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[concepts/collections/expand|Expand Operators]]

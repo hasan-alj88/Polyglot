@@ -36,7 +36,7 @@ Row access uses `<` (array index), column access uses a second `<` (map key):
 [r] $row#map:SalesColumns:string << $sales<0
 ```
 
-For entire-column extraction, use `=#.Column` pipeline (see [[pglib/pipelines/#]]).
+For entire-column extraction, use `=#.Column` pipeline (see [[pglib/pipelines/Schema/INDEX]]).
 
 Build dataframes using `*Into.Dataframe` collectors, not incremental assignment.
 

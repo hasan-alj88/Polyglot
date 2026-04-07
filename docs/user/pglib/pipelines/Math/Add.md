@@ -1,0 +1,45 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: stable
+---
+
+# =Math.Add
+
+Adds two or more numeric values. Accepts variadic input (2 or more operands). When any input is `#float`, the output is `#float`.
+
+## Definition
+
+```polyglot
+{N} =Math.Add
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "MathAdd"
+   [%] .description << "Variadic addition of two or more numeric values"
+   [=] <<#int (variadic — 2+)
+   [=] >>#int
+```
+
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| (positional) | `#int` or `#float` | Operands to add (2 or more) |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| (positional) | `#int` or `#float` | Sum of all inputs |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/pipelines/Math/INDEX|=Math.* Numeric Pipelines]]

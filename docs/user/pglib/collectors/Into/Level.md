@@ -1,25 +1,15 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-28
+updated: 2026-04-07
 status: stable
 ---
 
-# *Into.Level — Collect into Serialized Siblings
+# *Into.Level
 
 Gathers key-value outputs from mini-pipelines into serialized siblings at a specific level, accessible one level up from the expand scope.
 
-Collector invocation uses `[r]` (sequential) or `[p]` (parallel) execution markers. Collector IO lines use `[*]`.
-
-No `[@]` import needed.
-
-## IO Signature
-
-| Inputs | Output |
-|--------|--------|
-| `<key`, `<value` | `>Serial` |
-
-## Usage
+## Syntax
 
 ```polyglot
 [r] *Into.Level
@@ -28,4 +18,28 @@ No `[@]` import needed.
    [*] >Serial >> $result
 ```
 
-See also: [[concepts/collections/collect#Collect Operators]]
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<key` | `#KeyString` | Level key |
+| `<value` | any | Value for key |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>Serial` | `#Serial` | Collected serial at target level |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[pglib/collectors/Into/INDEX|*Into Data Collectors]]
+- [[concepts/collections/collect|Collect Operators]]
