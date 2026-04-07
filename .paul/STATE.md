@@ -90,14 +90,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #154 — Docs: *Agg shorthand not mentioned in glossary or vision
+Branch: docs/issue-154-agg-shorthand-glossary
+Labels: docs, P4-low, docs-inconsistency
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/154
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for commit & merge]
 ```
 
 ## Accumulated Context
@@ -227,6 +231,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #151 — Scalar subtype naming convention | 2026-04-07 | Three-level naming (##schema, #alias, :treepath) documented in scalars.md, basic-types.md, string-subtypes.md |
 | Closed #148 — #Array vs #array case inconsistency | 2026-04-07 | Documented #array as alias for #Array; standardized annotations to lowercase |
 | Closed #143 — #Boolean enum struct vs enum classification | 2026-04-07 | Introduced ##Enum schema; replaced "enum struct" terminology across 10 files |
+| *Agg is alias of *Aggregate (not invalid) | 2026-04-07 | Glossary + Agg.md wording reflects alias, not error |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
