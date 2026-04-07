@@ -2,29 +2,25 @@
 audience: developer
 rule: "2.5"
 code: PGE02005
-name: Failed Is Terminal
+name: Failed Must Resolve
 severity: error
 ---
 
-# Rule 2.5 — Failed Is Terminal
+# Rule 2.5 — Failed Must Resolve
 `PGE02005`
 
-**Statement:** A variable in Failed state will never resolve. It cannot transition to any other stage — no push can target a Failed variable. Any downstream pipeline waiting on a Failed variable will not fire (IO implicit trigger gate). Attempting to push into a Failed variable is a compile error when statically detectable; otherwise a runtime error.
-**Rationale:** Failed means the producing pipeline errored. Allowing recovery pushes into a Failed variable would mask the error and create inconsistent state. The caller must handle the failure explicitly via `[!]` error blocks, not by overwriting the variable.
-**Detection:** At any push statement that targets a variable whose producing `[r]` call has an `[!]` error path that does not itself provide a replacement value or `*Continue` fallback. At runtime, if the producing pipeline fails and a downstream pipeline attempts to pull, the runtime fires PGE02005.
+**Statement:** A variable in Failed state cannot proceed to the next job or task. The compiler enforces exhaustive error handling: every failable call must have an `[!]` error block or `<!`/`>!` fallback operators on its IO lines. If neither is present, the compiler emits PGE02005. At runtime, the Failed state triggers the declared fallback, resolving the variable to Final before downstream code executes.
+**Rationale:** Failed means the producing pipeline errored. The compiler performs static analysis to account for all possible states, including Failed. By enforcing exhaustive handling at compile time, no Failed variable ever reaches downstream code unresolved.
+**Detection:** At compile time: for each `[r]` call that can produce an error, verify that either (1) an `[!]` block provides a replacement value, or (2) `<!`/`>!` fallback operators are declared on the IO lines. If neither exists, emit PGE02005.
 
-## Default behavior: `[!]` ends the pipeline
+## Error handling mechanisms
 
-When an `[!]` error handler does NOT push a replacement value into the output variable and does NOT use `[*] *Continue`, the pipeline **terminates on error**. No downstream code runs. This is the safe default — Failed state never reaches downstream code. The compiler emits PGW02004 to alert the developer about this termination behavior.
+Two ways to handle Failed state:
 
-## Recovery options
+1. **`[!]` block replacement** — push a value inside `[!]`: `[r] >var << "fallback"`. Variable becomes Final.
+2. **`<!`/`>!` fallback operators** — declare fallback values on IO lines under `[>]`/`[<]` markers. `<! "value"` catches all errors; `<!ErrorName "value"` catches a specific error. Variable bypasses Failed and becomes Final with the fallback value.
 
-Two ways to prevent termination:
-
-1. **Direct replacement** — push a value inside `[!]`: `[r] >var << "fallback"`. Variable becomes Final.
-2. **`*Continue` fallback** — use `[*] *Continue >FallBack << "value"` inside `[!]`. See [PGE02007 — Continue After Error](PGE02007-continue-after-error.md).
-
-Both produce a Final variable — downstream pipelines trigger normally.
+Both produce a Final variable — downstream jobs trigger normally.
 
 **VALID:**
 ```polyglot
@@ -39,32 +35,38 @@ Both produce a Final variable — downstream pipelines trigger normally.
 ```
 
 ```polyglot
-[ ] ✓ [!] without replacement — pipeline ends on error (default)
+[ ] ✓ <! fallback on IO line — compiler satisfied
 [=] >data#string
 [r] =Fetch
    [=] >payload >> >data
-   [!] !FetchError
-      [r] =LogError
-         [=] <msg << "fetch failed"
-      [ ] pipeline ends here on error — default behavior (PGW02004 warns)
+   [>] <! "default"                [ ] ✓ fallback value → Final on any error
 [r] =Process
-   [=] <input << >data             [ ] ✓ safe — only reachable if >data is Final
+   [=] <input << >data             [ ] ✓ >data always Final
+```
+
+```polyglot
+[ ] ✓ <!ErrorName — specific error fallback
+[=] >data#string
+[r] =Fetch
+   [=] >payload >> >data
+   [>] <!FetchError "unavailable"  [ ] ✓ fallback for FetchError
+   [>] <! ""                       [ ] ✓ catch-all for other errors
+[r] =Process
+   [=] <input << >data             [ ] ✓ >data always Final
 ```
 
 **INVALID:**
 ```polyglot
-[ ] ✗ PGE02005 — pushing into a variable that may be Failed
+[ ] ✗ PGE02005 — no error handling for failable call
 [=] >result#string
 [r] =Compute
    [=] >value >> >result
-   [!] !ComputeError
-      [ ] no replacement, no *Continue — >result is Failed
-[r] >result << "override"          [ ] ✗ PGE02005 — >result may be Failed, cannot push
+   [ ] ✗ PGE02005 — no [!] block and no <!/> ! fallback; Failed state unresolved
+[r] >result << "override"          [ ] ✗ unreachable — compiler rejects
 ```
 
-**Resolved — Failure propagation:** Failure propagates automatically up the call chain. An unhandled failure in a called pipeline causes the caller's output variable to enter Failed state, which propagates upward until an `[!]` handler intercepts it or the top-level pipeline terminates. `[!]` is the catch mechanism; `*Continue` (PGE02007) allows proceeding despite failure. PGW02004 warns when a pipeline terminates due to unhandled failure.
+**Failure propagation:** Failure propagates automatically up the call chain. An unhandled failure in a called pipeline causes the caller's output variable to enter Failed state, which propagates upward until an `[!]` handler or `<!`/`>!` fallback intercepts it.
 
 ## See Also
 
 - [[concepts/variable-lifecycle|Variable Lifecycle]] — defines Failed state and references PGE02005
-- [[stdlib/collectors/Continue|*Continue Collector]] — recovery mechanism that prevents pipeline termination on error

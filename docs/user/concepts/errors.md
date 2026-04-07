@@ -20,7 +20,7 @@ flowchart LR
     DEC["[=] ! Declare\npipeline errors"]
     RAISE["[!] >> Raise\nerror in body"]
     HANDLE["[!] Handle\nat call site"]
-    RECOVER["Recover\n*Continue / <! fallback"]
+    RECOVER["Recover\n[!] replacement / <! fallback"]
 
     DEF --> DEC --> RAISE --> HANDLE --> RECOVER
 ```
@@ -132,11 +132,19 @@ Inside a `[!] >>` block, the author can push fallback values to specific outputs
       [r] >content << "Error: could not read file"
 ```
 
-By default, if an `[!]` handler does **not** push a replacement value into the output variable, the pipeline **terminates on error**. No downstream code runs. This is the safe default.
+The compiler enforces exhaustive error handling (PGE02005): every failable call must have either an `[!]` block that provides a replacement value, or `<!`/`>!` fallback operators on its IO lines. If neither is present, the compiler emits PGE02005.
 
 ## Error Recovery
 
-To continue after an error, place `[*] *Continue` inside the `[!]` block. `*Continue` is a collector that produces a boolean `>IsFailed` output:
+Three patterns for error handling:
+
+| Pattern | Pipeline continues? | Variable state |
+|---------|-------------------|---------------|
+| `[!]` pushes replacement (`<<`/`>>`) | Yes | Always Final |
+| `[>] <!` fallback on IO line | Yes | Always Final — fallback value used |
+| `[>] <!ErrorName` specific error fallback | Yes | Always Final — targeted fallback |
+
+**`[!]` block replacement:**
 
 ```polyglot
 [r] =Fetch
@@ -144,24 +152,29 @@ To continue after an error, place `[*] *Continue` inside the `[!]` block. `*Cont
    [!] !FetchError
       [r] =LogError
          [=] <msg << "fetch failed"
-      [*] *Continue >IsFailed >> $fetchFailed
-[?] $fetchFailed =? true
-   [r] =HandleMissing
-[?] *?
-   [r] =Process
-      [=] <input << >data
+      [r] >data << ""              [ ] replacement → Final
+[r] =Process
+   [=] <input << >data             [ ] ✓ always Final
 ```
 
-Four patterns for error handling:
+**`<!` fallback on IO line:**
 
-| Pattern | Pipeline continues? | Variable state |
-|---------|-------------------|---------------|
-| `[!]` pushes replacement (`<<`/`>>`) | Yes | Always Final |
-| `[!]` without replacement (default) | No — ends on error | Never Failed |
-| `[!]` with `[*] *Continue >IsFailed >> $var` | Yes | May be Failed — handle via `$var` boolean |
-| `[>] <!` fallback on IO line | Yes | Always Final — fallback value used |
+```polyglot
+[r] =Fetch
+   [=] >payload >> >data
+   [>] <! "default"                [ ] catch-all fallback → Final
+[r] =Process
+   [=] <input << >data             [ ] ✓ always Final
+```
 
-If the compiler cannot guarantee the `>IsFailed` output is handled, it emits PGW02004.
+**`<!ErrorName` specific error fallback:**
+
+```polyglot
+[r] =Fetch
+   [=] >payload >> >data
+   [>] <!FetchError "unavailable"  [ ] specific fallback
+   [>] <! ""                       [ ] catch-all for remaining errors
+```
 
 ## Chain Error Addressing
 
