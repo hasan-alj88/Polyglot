@@ -7,7 +7,7 @@ status: stable
 
 # ~ForEach.Level — Expand Level
 
-Unlike `~ForEach.Serial` which iterates all keys, `~ForEach.Level` iterates only the siblings at a specific level of a serialized structure. The `~` suffix on the input path marks the iteration point.
+Unlike `~ForEach.Serial` which iterates all keys, `~ForEach.Level` iterates only the siblings at a specific level of a serialized structure. The `.~` suffix on the input path marks the level iteration point — analogous to `.*` wildcard, `.~` means "expand siblings at this level."
 
 The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
 
@@ -29,6 +29,6 @@ No `[@]` import needed.
    ...
 ```
 
-The `~` suffix on the input path marks the iteration point: `<level << #SomeData.SubField.~`
+The `.~` suffix on the input path marks the level iteration point: `<level << #SomeData.SubField.~`
 
 See also: [[concepts/collections/expand#Expand Operators]]

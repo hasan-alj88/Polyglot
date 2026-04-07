@@ -95,14 +95,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #147 — ForEach.Level uses ~~ double-prefix, violating single ~ rule
+Branch: docs/issue-147-foreach-level-tilde-suffix
+Labels: docs, stdlib, P3-medium, docs-inconsistency
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/147
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ○        ○        ○        ○     [Issue #147 active]
 ```
 
 ## Accumulated Context

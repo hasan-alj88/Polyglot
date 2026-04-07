@@ -27,13 +27,16 @@ expand_operator     ::= "ForEach.Array"
                       | "ForEach.Dataframe.Column" ;
 
 expand_io_line      ::= "[~]" io_param assignment_op value_expr ;
+
+level_input         ::= "<level" assignment_op type_path ".~" ;
+                        (* .~ marks the level iteration point, analogous to .* wildcard *)
 ```
 
 **Execution marker on expand controls parallelism:**
 - `[r]` — mini-pipelines run sequentially.
 - `[p]` — mini-pipelines run in parallel.
 
-**`~ForEach.Level` special input syntax:** The `~` suffix on input marks the iteration point: `<level << #SomeData.SubField.~`
+**`~ForEach.Level` level iteration marker:** The `.~` suffix on the input path marks the level iteration point — analogous to `.*` wildcard, `.~` means "expand siblings at this level." Grammar: `level_input` production above. Example: `<level << #SomeData.SubField.~`
 
 ### Expand IO Signatures
 
@@ -43,7 +46,7 @@ expand_io_line      ::= "[~]" io_param assignment_op value_expr ;
 | `~ForEach.Array.Enumerate` | `<Array` | `>index`, `>item` |
 | `~ForEach.Map` | `<Map` | `>key`, `>item` |
 | `~ForEach.Serial` | `<Serial` | `>key`, `>item` |
-| `~ForEach.Level` | `<level` | `>key`, `>item` |
+| `~ForEach.Level` | `<level` (`.~` suffix) | `>key`, `>item` |
 | `~ForEach.Dataframe` | `<Dataframe` | `>row` |
 | `~ForEach.Dataframe.Enumerate` | `<Dataframe` | `>index`, `>row` |
 

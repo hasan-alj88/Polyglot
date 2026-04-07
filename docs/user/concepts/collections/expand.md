@@ -21,7 +21,7 @@ Variables declared inside a mini-pipeline are scoped to that iteration — they 
 | `~ForEach.Array.Enumerate` | Each item with index | `<Array`, `>index`, `>item` |
 | `~ForEach.Map` | Each key-value pair in a map | `<Map`, `>key`, `>item` |
 | `~ForEach.Serial` | All key-item pairs in a serial (all levels) | `<Serial`, `>key`, `>item` |
-| `~ForEach.Level` | Siblings at a specified level only | `<level`, `>key`, `>item` |
+| `~ForEach.Level` | Siblings at a specified level only | `<level` (`.~` suffix), `>key`, `>item` |
 | `~ForEach.Dataframe` | Each row (a Map of column values) | `<Dataframe`, `>row` |
 | `~ForEach.Dataframe.Enumerate` | Each row with row index | `<Dataframe`, `>index`, `>row` |
 
@@ -31,7 +31,7 @@ Every expand scope must contain at least one [[concepts/collections/collect|coll
 
 ### `~ForEach.Level` — Level-Specific Iteration
 
-Unlike `~ForEach.Serial` which iterates all keys, `~ForEach.Level` iterates only the siblings at a specific level of a serialized structure. The `~` suffix on the input path marks the iteration point:
+Unlike `~ForEach.Serial` which iterates all keys, `~ForEach.Level` iterates only the siblings at a specific level of a serialized structure. The `.~` suffix on the input path marks the level iteration point — analogous to `.*` wildcard, `.~` means "expand siblings at this level":
 
 ```polyglot
 [r] ~ForEach.Level
