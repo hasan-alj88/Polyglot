@@ -50,7 +50,6 @@ All stdlib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 | `*Into` | [collectors/Into/](collectors/Into/) | Collect into collection (array, map, serial, level) | Stable |
 | `*Agg` | [collectors/Agg.md](collectors/Agg.md) | Reduce to single value (sum, count, average, max, min, concatenate) | Stable |
 | `*All` / `*First` / `*Nth` | [collectors/Sync.md](collectors/Sync.md) | Collect-all and race collectors | Stable |
-| `*Continue` | [collectors/Continue.md](collectors/Continue.md) | Error recovery with fallback value | Stable |
 
 ## Built-in Types (#)
 
