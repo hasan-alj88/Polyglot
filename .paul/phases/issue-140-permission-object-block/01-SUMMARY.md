@@ -125,7 +125,7 @@ No required skills configured — all clear.
 **Concerns:**
 - Technical spec files (metadata-tree branches.md, object-types.md, path-grammar.md) still reference old flat %_ structure — Plan 02 needed
 - Compile rules (PGE10003-10006) not yet updated — Plan 03 needed
-- Stdlib pipeline permission references still use old inline [_] syntax — Plan 03 needed
+- pglib pipeline permission references still use old inline [_] syntax — Plan 03 needed
 
 **Blockers:**
 - None

@@ -1,0 +1,50 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: complete
+---
+
+# =DT.Business.AddWorkDays
+
+Adds `N` work days to a `#dt`, skipping non-work days. Requires an explicit `#BusinessWeek` configuration. No regional defaults are assumed -- all fields (`.firstDay`, `.workDays`, `.offDays`, `.hoursPerDay`) must be set by the user.
+
+## Definition
+
+```polyglot
+{N} =DT.Business.AddWorkDays
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtBusinessAddWorkDays"
+   [%] .description << "Add work days to DateTime"
+   [=] <source#dt
+   [=] <days#int
+   [=] <week#BusinessWeek
+   [=] >result#dt
+```
+
+## Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `<source` | `#dt` | --- | Starting DateTime |
+| `<days` | `#int` | --- | Number of work days to add |
+| `<week` | `#BusinessWeek` | --- | Business week configuration |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>result` | `#dt` | DateTime after adding N work days |
+
+## Errors
+
+None. Pure computation pipeline.
+
+## Permissions
+
+None required.
+
+## Related
+
+- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/types/datetime|DateTime types]]

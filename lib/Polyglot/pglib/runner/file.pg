@@ -1,0 +1,104 @@
+{@} @pglib.runner.file
+
+{ } Runner native operations — File IO
+
+{N} =File.Text.Read
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileTextRead"
+   [%] .description << "Read text file contents"
+   [=] <path#path
+   [=] >content#string
+   [=] !File.NotFound
+   [=] !File.PermissionDenied
+
+{N} =File.Text.Write
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileTextWrite"
+   [%] .description << "Write text to file"
+   [=] <path#path
+   [=] <content#string
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{N} =File.Text.Append
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileTextAppend"
+   [%] .description << "Append text to file"
+   [=] <path#path
+   [=] <content#string
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{N} =File.Serial.Read
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileSerialRead"
+   [%] .description << "Read and parse structured data file (JSON/YAML/TOML)"
+   [=] <path#path
+   [=] >data#serial
+   [=] !File.NotFound
+   [=] !File.ReadError
+   [=] !File.ParseError
+
+{N} =File.Serial.Write
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileSerialWrite"
+   [%] .description << "Serialize and write structured data to file"
+   [=] <path#path
+   [=] <data#serial
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{N} =File.Serial.Read.Field
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileSerialReadField"
+   [%] .description << "Read file, parse, extract single field by path"
+   [=] <path#path
+   [=] <field#RawString
+   [=] >value#serial
+   [=] !File.NotFound
+   [=] !File.ReadError
+   [=] !File.ParseError
+   [=] !Field.NotFound
+
+{N} =File.Copy
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileCopy"
+   [%] .description << "Copy file from source to destination"
+   [=] <source#path
+   [=] <destination#path
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{N} =File.Move
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileMove"
+   [%] .description << "Move file from source to destination"
+   [=] <source#path
+   [=] <destination#path
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{N} =File.Delete
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileDelete"
+   [%] .description << "Delete file at path"
+   [=] <path#path
+   [=] !File.NotFound
+   [=] !File.PermissionDenied
+
+{N} =File.Access
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileAccess"
+   [%] .description << "Check file access permissions"
+   [=] <path#path
+   [=] >access#FileAccess
+   [=] !File.NotFound
+
+{N} =File.List
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileList"
+   [%] .description << "List files in directory"
+   [=] <folder#path
+   [=] >files#array:path
+   [=] !File.NotFound
+   [=] !File.PermissionDenied

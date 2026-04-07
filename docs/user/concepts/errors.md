@@ -10,9 +10,9 @@ updated: 2026-03-25
 <!-- @pipelines:Error Handling -->
 <!-- @variable-lifecycle:Failed -->
 <!-- @data-is-trees -->
-<!-- @stdlib/errors/errors -->
+<!-- @pglib/errors/errors -->
 
-Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Polyglot objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[stdlib/errors/errors#`#Error` Struct]]).
+Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Polyglot objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[pglib/errors/errors#`#Error` Struct]]).
 
 ```mermaid
 flowchart LR
@@ -42,7 +42,7 @@ Custom errors are defined with `{!}` blocks (see [[blocks#Definition Elements]])
 
 This creates five error identifiers under `!Error`: `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail`, `!Error:Auth.Expired`, `!Error:Auth.InvalidToken`. Tree paths use `:` for user-extensible branches and `.` for fixed leaves (e.g., `%!.Error:Validation.Empty`). Siblings at the same level must all use the same separator (PGE05001).
 
-Stdlib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and require no definition — they use fixed `.` leaves and are **not** user-extensible. `!Error` is the only namespace with user-extensible children (see [[stdlib/errors/errors#`!Error` — User-Extensible Namespace]]). See [[stdlib/errors/errors#Built-in Error Namespaces]] for the complete list.
+pglib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and require no definition — they use fixed `.` leaves and are **not** user-extensible. `!Error` is the only namespace with user-extensible children (see [[pglib/errors/errors#`!Error` — User-Extensible Namespace]]). See [[pglib/errors/errors#Built-in Error Namespaces]] for the complete list.
 
 ## Declaring Pipeline Errors (`[=] !`)
 
@@ -209,7 +209,7 @@ See [[concepts/pipelines/chains#Error Handling in Chains]] for the full chain ex
 
 ## Standard Error Trees
 
-Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The stdlib defines nine root namespaces (defined as `{!}` blocks by the runtime, all with fixed `.` leaves):
+Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The pglib defines nine root namespaces (defined as `{!}` blocks by the runtime, all with fixed `.` leaves):
 
 | Namespace | Covers |
 |-----------|--------|
@@ -224,7 +224,7 @@ Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a str
 | `!RT` | Runtime execution errors (CompileError, RuntimeError, Timeout, EnvironmentError) |
 | `!Error` | **User-extensible** — the only namespace with `:` flexible children |
 
-See [[stdlib/errors/errors]] for the complete error tree listings.
+See [[pglib/errors/errors]] for the complete error tree listings.
 
 ## Failed State
 

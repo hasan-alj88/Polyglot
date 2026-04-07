@@ -6,7 +6,7 @@ tags: [types, compile-rules, edge-cases, regex, ###None]
 
 requires:
   - phase: 92-01
-    provides: 18 edge cases documented in EDGE-CASES.md §24, stdlib type files split
+    provides: 18 edge cases documented in EDGE-CASES.md §24, pglib type files split
 
 provides:
   - Resolved 4 edge cases with spec corrections and new compile rules
@@ -26,8 +26,8 @@ key-files:
     - .paul/phases/issue-92-datatype-edge-case-audit/92-02-PLAN.md
   modified:
     - docs/user/syntax/types.md
-    - docs/user/stdlib/types/scalars.md
-    - docs/user/stdlib/types/boolean.md
+    - docs/user/pglib/types/scalars.md
+    - docs/user/pglib/types/boolean.md
     - docs/technical/COMPILE-RULES.md
     - docs/technical/EDGE-CASES.md
 
@@ -75,7 +75,7 @@ completed: 2026-03-28
 - Added `###None` as third `###` field type — nullable types where empty string `""` is the only valid value
 - Added PGE11005 (Final Field Override via Inheritance) — prevents child types from overriding `<<` final fields
 - Added PGE04021 (Empty String on Non-None Type) — enforces `###None` exclusivity for empty strings
-- Fixed #Dimension regex to `"^[0-9]+D$"` across authoritative spec and stdlib
+- Fixed #Dimension regex to `"^[0-9]+D$"` across authoritative spec and pglib
 - Documented 0D array semantics: scalar container, direct access, no indexing
 
 ## Files Created/Modified
@@ -83,8 +83,8 @@ completed: 2026-03-28
 | File | Change | Purpose |
 |------|--------|---------|
 | `docs/user/syntax/types.md` | Modified | ###None field type, #Dimension regex, 0D array semantics, hierarchy |
-| `docs/user/stdlib/types/scalars.md` | Modified | #Dimension regex + examples |
-| `docs/user/stdlib/types/boolean.md` | Modified | #None definition with ###None |
+| `docs/user/pglib/types/scalars.md` | Modified | #Dimension regex + examples |
+| `docs/user/pglib/types/boolean.md` | Modified | #None definition with ###None |
 | `docs/technical/COMPILE-RULES.md` | Modified | PGE11005 + PGE04021 |
 | `docs/technical/EDGE-CASES.md` | Modified | EC-24.3/7/10/13 marked RESOLVED |
 
@@ -96,7 +96,7 @@ completed: 2026-03-28
 | ###None as third field type | #None needs explicit classification; empty string must be opt-in | PGE04021 enforces |
 | PGE11005 for final inheritance | `<<` finality must extend through `<~` inheritance chain | Prevents silent overrides |
 | 0D = scalar container | Consistent with %##Depth.Max = 0; no indexing needed | PGE04017 on index attempt |
-| #Dataframe remains TBD | User deferred decision | No changes to stdlib |
+| #Dataframe remains TBD | User deferred decision | No changes to pglib |
 
 ## Deviations from Plan
 

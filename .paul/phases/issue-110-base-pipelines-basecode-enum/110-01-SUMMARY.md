@@ -2,7 +2,7 @@
 phase: issue-110-base-pipelines-basecode-enum
 plan: 01
 subsystem: docs
-tags: [base-pipeline, derived-pipeline, baseCode, stdlib, compile-rule]
+tags: [base-pipeline, derived-pipeline, baseCode, pglib, compile-rule]
 
 requires: []
 provides:
@@ -14,7 +14,7 @@ affects: [issue-111-compiler-rules]
 
 key-files:
   created:
-    - docs/user/stdlib/types/BaseCode.md
+    - docs/user/pglib/types/BaseCode.md
     - docs/technical/compile-rules/PGE/PGE01028-base-derived-mutual-exclusion.md
   modified:
     - docs/technical/ebnf/09-definition-blocks.md
@@ -55,7 +55,7 @@ completed: 2026-03-31
 
 ## Accomplishments
 
-- Created `#BaseCode` enum type doc with full Rust variant tree mirroring all stdlib pipeline names
+- Created `#BaseCode` enum type doc with full Rust variant tree mirroring all pglib pipeline names
 - Added `metadata_basecode` production to EBNF §9.9 grammar with base pipeline constraint rules
 - Added `.baseCode` to metadata.md Fixed Fields with base/derived explanation note
 - Created comprehensive "Base vs Derived" section in pipelines INDEX.md with comparison table and examples
@@ -65,7 +65,7 @@ completed: 2026-03-31
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/stdlib/types/BaseCode.md` | Created | `#BaseCode` enum definition, variant tree, config, usage |
+| `docs/user/pglib/types/BaseCode.md` | Created | `#BaseCode` enum definition, variant tree, config, usage |
 | `docs/technical/ebnf/09-definition-blocks.md` | Modified | `metadata_basecode` production + `.baseCode` rules in §9.9 |
 | `docs/user/concepts/metadata.md` | Modified | `.baseCode` row in Fixed Fields + base/derived note |
 | `docs/user/concepts/pipelines/INDEX.md` | Modified | "Base vs Derived" section with table, examples, cross-refs |
@@ -90,11 +90,11 @@ None.
 
 **Ready:**
 - Base/derived distinction fully documented — foundation for compiler rules (#111)
-- `#BaseCode` enum available for stdlib pipeline files (future issue)
+- `#BaseCode` enum available for pglib pipeline files (future issue)
 - PGE01028 ready for compiler implementation
 
 **Concerns:**
-- Stdlib pipeline `.pg` files don't yet declare `[%] .baseCode` — separate issue needed
+- pglib pipeline `.pg` files don't yet declare `[%] .baseCode` — separate issue needed
 
 **Blockers:**
 - None

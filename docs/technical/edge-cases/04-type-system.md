@@ -53,7 +53,7 @@ updated: 2026-03-30
 
 ### EC-4.5: `=Path"..."` inline path creation
 
-**What it tests:** `=Path"..."` inline pipeline call creating `#path` values. See [[syntax/types/strings#=Path Inline Notation]], [[stdlib/pipelines/Path|=Path]].
+**What it tests:** `=Path"..."` inline pipeline call creating `#path` values. See [[syntax/types/strings#=Path Inline Notation]], [[pglib/pipelines/Path|=Path]].
 
 ```polyglot
 [ ] Basic usage

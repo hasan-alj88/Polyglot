@@ -1,0 +1,44 @@
+{@} @pglib.errors
+
+{ } Built-in error namespaces
+
+{!} !File
+   [.] .NotFound#Error
+   [.] .ReadError#Error
+   [.] .WriteError#Error
+   [.] .ParseError#Error
+   [.] .PermissionDenied#Error
+
+{!} !Field
+   [.] .NotFound#Error
+   [.] .PathError#Error
+
+{!} !Math
+   [.] .DivisionByZero#Error
+   [.] .Overflow#Error
+
+{!} !No
+   [.] .Error#Error
+
+{!} !Timeout
+   [.] .Exceeded#Error
+
+{!} !Validation
+   [.] .Schema#Error
+   [.] .Type#Error
+   [.] .Regex#Error
+
+{!} !Permission
+   [.] .Denied#Error
+   [.] .Missing#Error
+
+{!} !Alias
+   [.] .NotFound#Error
+   [.] .Duplicate#Error
+
+{!} !RT
+   [.] .NativeUndeclaredError#Error
+   [.] .NativeCrash#Error
+   [.] .NativeTimeout#Error
+   [.] .SerializationError#Error
+   [.] .DeserializationError#Error

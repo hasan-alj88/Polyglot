@@ -8,22 +8,22 @@ requires:
   - phase: issue-121-native-block/01
     provides: "{N} block type, #NativeKind enum in INDEX.md/blocks.md/metadata.md/EBNF"
 provides:
-  - "NativeKind.md stdlib type file (replaces BaseCode.md)"
+  - "NativeKind.md pglib type file (replaces BaseCode.md)"
   - "PGE01028 rewritten for {N} vs {=} mutual exclusion"
   - "EBNF metadata_basecode rule removed"
   - "Cross-references updated: schema-properties.md, definition-templates.md"
-affects: ["121-03 (stdlib propagation)"]
+affects: ["121-03 (pglib propagation)"]
 
 key-files:
   created:
-    - docs/user/stdlib/types/NativeKind.md
+    - docs/user/pglib/types/NativeKind.md
   modified:
     - docs/technical/compile-rules/PGE/PGE01028-base-derived-mutual-exclusion.md
     - docs/technical/ebnf/09-definition-blocks.md
     - docs/user/syntax/types/schema-properties.md
     - docs/technical/spec/metadata-tree/definition-templates.md
   deleted:
-    - docs/user/stdlib/types/BaseCode.md
+    - docs/user/pglib/types/BaseCode.md
 
 key-decisions:
   - "PGE01028 sub-condition (c) now enforces %Native.Kind presence on {N}, not .baseCode on {=}"
@@ -60,12 +60,12 @@ None — plan executed exactly as written.
 ## Next Phase Readiness
 
 **Ready:**
-- #NativeKind type file established as stdlib reference
+- #NativeKind type file established as pglib reference
 - PGE01028 enforces {N} block semantics
 - All core + cross-ref files aligned on #NativeKind
 
 **Remaining plans:**
-- 121-03: Propagate {N} to stdlib pipeline definitions (replace {=}[exe] + .baseCode examples with {N} syntax)
+- 121-03: Propagate {N} to pglib pipeline definitions (replace {=}[exe] + .baseCode examples with {N} syntax)
 
 ---
 *Phase: issue-121-native-block, Plan: 02*

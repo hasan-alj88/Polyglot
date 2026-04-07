@@ -13,7 +13,7 @@ provides:
   - pipelines.md promoted to status: complete (PGE-1xx, PGE-8xx compile rules)
   - collections.md promoted to status: complete (PGE-3xx compile rules)
   - errors.md promoted to status: complete (PGE-7xx compile rules)
-affects: [12-package-system-stdlib]
+affects: [12-package-system-pglib]
 
 key-files:
   modified:
@@ -56,8 +56,8 @@ None — plan executed exactly as written.
 
 **Ready:**
 - All pipeline, concurrency, and error semantics fully specified
-- Compile rule cross-references in place for Phase 12 (Package System & Stdlib)
-- Phase 12 can reference pipelines.md for stdlib pipeline definitions and errors.md for error tree contracts
+- Compile rule cross-references in place for Phase 12 (Package System & pglib)
+- Phase 12 can reference pipelines.md for pglib pipeline definitions and errors.md for error tree contracts
 
 **Concerns:**
 - EC-6.4 inconsistency (raw arithmetic in EDGE-CASES vs PGE04010) noted in Phase 10 — still unresolved in technical references

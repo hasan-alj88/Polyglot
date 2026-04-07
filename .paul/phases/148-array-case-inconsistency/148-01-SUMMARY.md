@@ -16,7 +16,7 @@ key-files:
     - docs/user/syntax/types/arrays.md
     - docs/technical/spec/metadata-tree/branches.md
     - docs/technical/ebnf/09-definition-blocks.md
-    - docs/user/stdlib/types/structs.md
+    - docs/user/pglib/types/structs.md
     - docs/user/concepts/pipelines/queue.md
     - docs/technical/plan/queue-manager/nosql-schema.md
 
@@ -52,7 +52,7 @@ completed: 2026-04-07
 | docs/user/syntax/types/arrays.md | Modified | Added Alias section documenting #array/#Array convention |
 | docs/technical/spec/metadata-tree/branches.md | Modified | `.resourceTags#Array` → `#array` |
 | docs/technical/ebnf/09-definition-blocks.md | Modified | `.resourceTags#Array` → `#array` |
-| docs/user/stdlib/types/structs.md | Modified | `.resourceTags#Array` → `#array` in code + table |
+| docs/user/pglib/types/structs.md | Modified | `.resourceTags#Array` → `#array` in code + table |
 | docs/user/concepts/pipelines/queue.md | Modified | `.resourceTagWithinQueue#Array` → `#array` |
 | docs/technical/plan/queue-manager/nosql-schema.md | Modified | `#Array:ResourceTag` → `#array:ResourceTag` |
 

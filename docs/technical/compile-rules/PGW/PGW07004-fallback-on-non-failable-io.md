@@ -16,7 +16,7 @@ severity: warning
 
 **Rationale:** Fallback values on non-failable sources give a false impression that the source can fail. This misleads developers into thinking error recovery is needed where none exists. Unlike PGW07001 (which flags dead `[!]` handler blocks), this rule targets dead `<!` fallback values on IO lines — a subtler form of dead error-handling code.
 **Detection:** The compiler checks each `<!` fallback line. It determines whether the source can fail:
-- For output IO (`>output >> $var` with `<! value`): resolve the parent `[r]` call. If the called pipeline has no `[=] !...` error declarations (and is not a stdlib failable pipeline), the source is non-failable.
+- For output IO (`>output >> $var` with `<! value`): resolve the parent `[r]` call. If the called pipeline has no `[=] !...` error declarations (and is not a pglib failable pipeline), the source is non-failable.
 - For input IO (`<input << source` with `<! value`): if the source is a literal or a variable that is already Final via `<<` assignment, the source is non-failable.
 If the source is non-failable, PGW07004 fires.
 

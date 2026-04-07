@@ -14,11 +14,11 @@ All 4 tasks completed. All 6 acceptance criteria met. Zero deviations.
 
 ## Tasks Completed
 
-### Task 1: Stdlib scalar enum types — ###Enum → ###ScalarEnum
+### Task 1: pglib scalar enum types — ###Enum → ###ScalarEnum
 - Updated 7 files: boolean.md, enums.md, BaseCode.md, supporting-enums.md, calendar-infrastructure.md, cultural-types.md, non-standard-time.md
 - Also updated calendar-date-types.md (14 enum types) — overlapped with Task 2
 
-### Task 2: Stdlib scalar value types — ###Value → ###ScalarValue
+### Task 2: pglib scalar value types — ###Value → ###ScalarValue
 - Updated 5 files: string.md, scalars.md, structs.md, core-components.md, calendar-date-types.md
 - Also updated supporting-enums.md (#BusinessWeek), cultural-types.md (#Holiday, #Observance, #Season), non-standard-time.md (#ChineseTime, #HinduTime, #DecimalTime, #CustomTimeUnit), calendar-infrastructure.md (#CalendarProjection)
 - string.md: "Depth.Max << 0" → "Depth.Max << 1" in explanatory text
@@ -50,21 +50,21 @@ All 4 tasks completed. All 6 acceptance criteria met. Zero deviations.
 
 ## Files Modified (27 total)
 
-1. docs/user/stdlib/types/boolean.md
-2. docs/user/stdlib/types/enums.md
-3. docs/user/stdlib/types/BaseCode.md
-4. docs/user/stdlib/types/string.md
-5. docs/user/stdlib/types/scalars.md
-6. docs/user/stdlib/types/structs.md
-7. docs/user/stdlib/types/types.md
-8. docs/user/stdlib/types/collections.md
-9. docs/user/stdlib/types/datetime/main-type.md (not modified — ###Value retained, non-scalar)
-10. docs/user/stdlib/types/datetime/core-components.md
-11. docs/user/stdlib/types/datetime/calendar-date-types.md
-12. docs/user/stdlib/types/datetime/calendar-infrastructure.md
-13. docs/user/stdlib/types/datetime/cultural-types.md
-14. docs/user/stdlib/types/datetime/non-standard-time.md
-15. docs/user/stdlib/types/datetime/supporting-enums.md
+1. docs/user/pglib/types/boolean.md
+2. docs/user/pglib/types/enums.md
+3. docs/user/pglib/types/BaseCode.md
+4. docs/user/pglib/types/string.md
+5. docs/user/pglib/types/scalars.md
+6. docs/user/pglib/types/structs.md
+7. docs/user/pglib/types/types.md
+8. docs/user/pglib/types/collections.md
+9. docs/user/pglib/types/datetime/main-type.md (not modified — ###Value retained, non-scalar)
+10. docs/user/pglib/types/datetime/core-components.md
+11. docs/user/pglib/types/datetime/calendar-date-types.md
+12. docs/user/pglib/types/datetime/calendar-infrastructure.md
+13. docs/user/pglib/types/datetime/cultural-types.md
+14. docs/user/pglib/types/datetime/non-standard-time.md
+15. docs/user/pglib/types/datetime/supporting-enums.md
 16. docs/user/syntax/types/hierarchy.md
 17. docs/user/syntax/types/prefix-system.md
 18. docs/user/syntax/types/macro-types.md

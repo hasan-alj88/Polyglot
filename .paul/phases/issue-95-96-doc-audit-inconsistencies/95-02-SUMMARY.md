@@ -2,7 +2,7 @@
 phase: issue-95-96-doc-audit-inconsistencies
 plan: 02
 subsystem: docs
-tags: [datetime, stdlib, types, calendar, multi-calendar]
+tags: [datetime, pglib, types, calendar, multi-calendar]
 requires:
   - phase: none
     provides: n/a
@@ -10,9 +10,9 @@ provides:
   - 55 {#} type definitions for #DateTime ecosystem
   - #WeekSystem PGE05005 fix (Option A)
   - Complete multi-calendar type system
-affects: [95-03, future stdlib work]
+affects: [95-03, future pglib work]
 key-files:
-  created: [docs/user/stdlib/types/datetime.md]
+  created: [docs/user/pglib/types/datetime.md]
 key-decisions:
   - "#WeekSystem uses Option A: enum fields with nested .config#BusinessWeek"
   - "#DateTime is NOT ##Scalar (multi-level struct)"
@@ -40,7 +40,7 @@ completed: 2026-04-01
 
 | File | Change | Purpose |
 |------|--------|---------|
-| docs/user/stdlib/types/datetime.md | Created | 55 {#} type definitions — main #DateTime, core components, enums, calendar dates, time units, cultural types |
+| docs/user/pglib/types/datetime.md | Created | 55 {#} type definitions — main #DateTime, core components, enums, calendar dates, time units, cultural types |
 
 ## Type Categories
 

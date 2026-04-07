@@ -40,7 +40,7 @@ Track structural coverage gaps between user documentation and technical document
 
 | ID | Cat | Description | Resolution | Date |
 |----|-----|-------------|------------|------|
-| GAP-001 | TG | Macro {M} has no user concept doc | Created user/concepts/macros.md — brief consumer-focused intro, stdlib macro list, links to syntax/types/macro-types.md for full reference | 2026-03-30 |
+| GAP-001 | TG | Macro {M} has no user concept doc | Created user/concepts/macros.md — brief consumer-focused intro, pglib macro list, links to syntax/types/macro-types.md for full reference | 2026-03-30 |
 | GAP-002 | UG | permissions.md references permission model but no compile rules enforce it | PGE10003, PGE10004, PGE10005, PGE10006 now enforce permission model | 2026-03-30 |
 | GAP-003 | MX | EBNF §9 missing back-links to user docs | Added "Related User Documentation" table to 09-definition-blocks.md mapping all §9 subsections to user concept/syntax files | 2026-03-30 |
 | GAP-004 | TG | type-identity.md has no user-facing explanation | Added "Type Identity" section to user/syntax/types/conversions.md — structural matching, no implicit coercion, link to technical spec | 2026-03-30 |
@@ -54,6 +54,6 @@ Track structural coverage gaps between user documentation and technical document
 
 1. When splitting a file, check: does every H2 section have both a user doc AND a technical doc?
 2. When adding a new compile rule, check: does the user doc mention this constraint?
-3. When adding a new stdlib pipeline, check: does an edge case exist for it?
+3. When adding a new pglib pipeline, check: does an edge case exist for it?
 4. Run coverage check: for each EBNF section, verify a user doc section covers the same concept
 5. Update this file whenever a gap is discovered or resolved

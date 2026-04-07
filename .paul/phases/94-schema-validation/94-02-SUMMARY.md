@@ -2,7 +2,7 @@
 phase: 94-schema-validation
 plan: 02
 subsystem: spec
-tags: [stdlib, pipelines, validation, schema, file-io, errors]
+tags: [pglib, pipelines, validation, schema, file-io, errors]
 
 provides:
   - "=File.Serial.Read/Write/Read.Field pipelines"
@@ -16,11 +16,11 @@ affects: [94-03 expand/collect audit]
 
 key-files:
   created:
-    - docs/user/stdlib/pipelines/#.md
+    - docs/user/pglib/pipelines/#.md
   modified:
-    - docs/user/stdlib/pipelines/File.md
-    - docs/user/stdlib/errors/errors.md
-    - docs/user/stdlib/INDEX.md
+    - docs/user/pglib/pipelines/File.md
+    - docs/user/pglib/errors/errors.md
+    - docs/user/pglib/INDEX.md
     - docs/user/syntax/types.md
     - docs/user/concepts/pipelines.md
     - docs/technical/EBNF.md
@@ -63,10 +63,10 @@ None — plan executed exactly as written.
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/stdlib/pipelines/#.md` | Created | 10 pipelines: 3 base parsers, 4 validation, 2 field/column extraction |
-| `docs/user/stdlib/pipelines/File.md` | Modified | Added =File.Serial.* branch (3 pipelines), permissions, errors, implementation status |
-| `docs/user/stdlib/errors/errors.md` | Modified | Added !File.ParseError, replaced !Validation.Error with .Schema/.Type/.Regex, added !Field namespace, 5 new pipeline error associations |
-| `docs/user/stdlib/INDEX.md` | Modified | Added =# row, updated =File description, updated error prefix list |
+| `docs/user/pglib/pipelines/#.md` | Created | 10 pipelines: 3 base parsers, 4 validation, 2 field/column extraction |
+| `docs/user/pglib/pipelines/File.md` | Modified | Added =File.Serial.* branch (3 pipelines), permissions, errors, implementation status |
+| `docs/user/pglib/errors/errors.md` | Modified | Added !File.ParseError, replaced !Validation.Error with .Schema/.Type/.Regex, added !Field namespace, 5 new pipeline error associations |
+| `docs/user/pglib/INDEX.md` | Modified | Added =# row, updated =File description, updated error prefix list |
 | `docs/user/syntax/types.md` | Modified | Added "<#type in Pipeline IO" subsection with tier table and example |
 | `docs/user/concepts/pipelines.md` | Modified | Added <#type cross-reference paragraph in IO section |
 | `docs/technical/EBNF.md` | Modified | Added type_input_line production to io_section grammar |

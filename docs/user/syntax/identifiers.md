@@ -25,7 +25,7 @@ ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address f
 
 **Permission identifiers (`_`/`__`/`___`)** — use a three-tier prefix system mirroring `#`/`##`/`###`: `_` = permission object (named policy, e.g., `_DataCeiling`), `__` = permission descriptor (schema, e.g., `__Permission`), `___` = constraint descriptor (e.g., `___Unix`). `{_}` blocks define permission objects; `[_]` block elements reference them by name. No `[_]` references = pure computation, zero IO. See [[permissions]] for the full permission system.
 
-**Stdlib pipeline namespaces** — stdlib pipelines use dotted names after the `=` prefix. The first segment indicates the subsystem: `=W.*` (wrappers), `=Q.*` (queues), `=T.*` (triggers), `=#.*` (schema validation/extraction), `=RT.*` (runtime execution), `=File.*` (file operations), `=Math.*` (arithmetic), `=DT.*` (datetime). The `=#.*` namespace uses `#` as a name segment referring to schema operations — `=#.Column` is a pipeline named `#.Column`, not a compound `=` + `#` prefix. See [[stdlib/pipelines/#|=# Schema Pipelines]].
+**pglib pipeline namespaces** — pglib pipelines use dotted names after the `=` prefix. The first segment indicates the subsystem: `=W.*` (wrappers), `=Q.*` (queues), `=T.*` (triggers), `=#.*` (schema validation/extraction), `=RT.*` (runtime execution), `=File.*` (file operations), `=Math.*` (arithmetic), `=DT.*` (datetime). The `=#.*` namespace uses `#` as a name segment referring to schema operations — `=#.Column` is a pipeline named `#.Column`, not a compound `=` + `#` prefix. See [[pglib/pipelines/#|=# Schema Pipelines]].
 
 ## Serialized Identifiers
 

@@ -10,7 +10,7 @@ requires:
 provides:
   - Rewritten types.md with ground-up type hierarchy and # annotations
   - Updated collections.md with #Dict, #Dataframe, array : keys
-affects: [75-03 technical spec, 75-04 spec-wide migration, EBNF, compile-rules, stdlib types]
+affects: [75-03 technical spec, 75-04 spec-wide migration, EBNF, compile-rules, pglib types]
 
 tech-stack:
   added: []
@@ -75,7 +75,7 @@ completed: 2026-03-27
 
 | Decision | Rationale | Impact |
 |----------|-----------|--------|
-| Full {#} definitions inline in types.md | Single source of truth for type hierarchy | Readers see complete definitions without jumping to stdlib |
+| Full {#} definitions inline in types.md | Single source of truth for type hierarchy | Readers see complete definitions without jumping to pglib |
 | Type Hierarchy Summary section added | Quick reference for the full inheritance tree | aids navigation and understanding |
 | #Dict/#Dataframe as inline sections in collections.md | Small enough to not warrant separate files | Keeps collection docs consolidated |
 
@@ -96,7 +96,7 @@ None.
 
 **Concerns:**
 - ~120 remaining files still use ; annotations — Plan 75-04 needed
-- stdlib/types/types.md missing core type definitions (#String, #Int, #Array, #Dict, etc.) — include in Plan 75-03
+- pglib/types/types.md missing core type definitions (#String, #Int, #Array, #Dict, etc.) — include in Plan 75-03
 - type-identity.md still uses ; annotations and old array . syntax
 
 **Blockers:**

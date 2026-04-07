@@ -13,7 +13,7 @@ severity: error
 **Rationale:** When the compiler encounters `@utils=Pipeline`, it must resolve `@utils` to exactly one imported package. Two `[@]` lines declaring `@utils` pointing to different packages make this resolution impossible. Since all objects live in a serialized tree, duplicate alias names at the same level create conflicting paths.
 **Detection:** The compiler collects all `[@]` alias names from the `{@}` block. If any alias name appears more than once, PGE09011 fires on the second (and subsequent) declaration(s), reporting the conflicting alias and both target packages.
 
-**See also:** PGE09001 (undefined import alias), PGE09012 (alias shadows stdlib namespace)
+**See also:** PGE09001 (undefined import alias), PGE09012 (alias shadows pglib namespace)
 
 **VALID:**
 ```polyglot

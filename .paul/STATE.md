@@ -13,7 +13,7 @@ Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #115 — Job hierarchy addressing syntax
 Plan: N/A
 Status: Issue #143 merged to main
-Last activity: 2026-04-07 — Issue #143 merged (##Enum schema classification)
+Last activity: 2026-04-07 — Native dispatch spec, lib/ scaffold, stdlib→pglib rename
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -92,18 +92,22 @@ Progress:
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
   - Group 3 (Naming): 6/6 COMPLETE
   - Group 4 (Cross-Ref): 2/2 COMPLETE
-  - Group 5 (Stdlib): 1/1 COMPLETE
+  - Group 5 (pglib): 1/1 COMPLETE
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #160 — Split DT.md into DT/ folder with pipeline doc template
+Branch: docs/issue-160-split-dt-pipeline-template
+Labels: docs, pglib
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/160
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for commit + merge]
 ```
 
 ## Accumulated Context
@@ -128,9 +132,9 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Dual smart referencing | 2026-03-14 | @-imports (Claude mandatory reads) + [[wikilinks]] (Obsidian navigation) on all cross-references |
 | Audit scope: all documentation | 2026-03-14 | docs/audit/ rules apply to ALL documentation Claude writes, not just docs/ files |
 | Restructured v0.1 to 2 phases | 2026-03-14 | Dropped Language Spec, Compiler Architecture, Prior Art Research phases; Language Spec moves to v0.2 |
-| v0.2 milestone created with 4 phases | 2026-03-24 | Phases 9-12: Core Language & Type System, Operators & Control Flow, Pipelines & Concurrency, Package System & Stdlib |
-| Arithmetic uses =Math.* stdlib, not raw operators | 2026-03-24 | PGE04010 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
-| Removed speculative stdlib items | 2026-03-24 | =T.Schedule/HTTP/File, =W.Rust/Node had zero usage; =T.Webhook confirmed from EDGE-CASES |
+| v0.2 milestone created with 4 phases | 2026-03-24 | Phases 9-12: Core Language & Type System, Operators & Control Flow, Pipelines & Concurrency, Package System & pglib |
+| Arithmetic uses =Math.* pglib, not raw operators | 2026-03-24 | PGE04010 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
+| Removed speculative pglib items | 2026-03-24 | =T.Schedule/HTTP/File, =W.Rust/Node had zero usage; =T.Webhook confirmed from EDGE-CASES |
 | Closed #36 — Pipeline call cycle detection algorithm | 2026-03-24 | Merged feat/issue-36-pipeline-call-cycle-detection to main |
 | Closed #37 — Multidimensional array via :ND | 2026-03-24 | Unified array + tensor into ;array.<type>:<N>D; removed ;tensor concept |
 | Closed #58 — Chain operator >> to => | 2026-03-24 | Chains use => with no spaces (=A=>=B=>=C); IO >> and [!] >> unchanged |
@@ -144,7 +148,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #82 — Add %_ metadata tree branch for permissions | 2026-03-25 | %_ in all 3 tree files; 8 categories; ._ under %@ and %=; no instances; #86 created for . vs : audit |
 | Issue #83 — Add permission compile rules | 2026-03-25 | PGE10003/918/919/920 + PGW10001; issue's PGE10002 renumbered to PGE10006; extends 9.x range |
 | Issue #84 — Add !Permission.* error tree | 2026-03-25 | 8 .Denied leaves; trimmed overlapping .NotFound/.Timeout; File IO pipeline associations; #87 created for multi-alias |
-| Issue #85 — Document stdlib pipeline permission declarations | 2026-03-25 | [_] permissions in all 7 stdlib pipeline files; Permission column in INDEX.md; completes #80-#85 chain |
+| Issue #85 — Document pglib pipeline permission declarations | 2026-03-25 | [_] permissions in all 7 pglib pipeline files; Permission column in INDEX.md; completes #80-#85 chain |
 | Issue #86 — Audit fixed vs flexible field usage | 2026-03-25 | %_ all `.` fixed; %! namespaces `.` + new !Error with `:` children; %@ `::` separator + Company rename; path grammar updated |
 | Issue #64 — Add Mermaid tree diagram to data-is-trees.md | 2026-03-25 | graph TD diagram showing %definition schema → instances for #Boolean, =ProcessData, $myVar |
 | Issue #65 — Add Mermaid flowchart to SPEC-INDEX.md | 2026-03-25 | flowchart LR showing 5-phase learning path with file counts |
@@ -195,16 +199,16 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | .CLI uses =W.Polyglot, not =W.RT | 2026-04-01 | No language runtime needed for compiled binaries |
 | Compiler validates Function/Script only | 2026-04-01 | <func name checked in .Function; <Bind names checked in .Script; .CLI and .Bind opaque |
 | IC-005 fix — enums mislabeled as structs | 2026-04-01 | structs.md lists #path/#Queue/#DateTime; type-identity.md adds #Queue; tracking corrected |
-| Formalized #DateTime as stdlib type | 2026-04-01 | 55 {#} types in datetime.md (22KB); multi-calendar, time units, cultural extensions |
+| Formalized #DateTime as pglib type | 2026-04-01 | 55 {#} types in datetime.md (22KB); multi-calendar, time units, cultural extensions |
 | #WeekSystem Option A restructure | 2026-04-01 | Enum fields with nested .config#BusinessWeek; fixes PGE05005 violation |
-| =DT.* stdlib pipelines | 2026-04-01 | 40 {=} pipelines in DT.md; construction, conversion, arithmetic, comparison, formatting, business |
+| =DT.* pglib pipelines | 2026-04-01 | 40 {=} pipelines in DT.md; construction, conversion, arithmetic, comparison, formatting, business |
 | PGE04026-04028 compile rules | 2026-04-01 | Invalid IANA timezone, missing DateTime epoch, out-of-range epoch |
 | Closed #118 — #String Depth.Max=0 contradiction | 2026-04-04 | ##Leaf new, ##Scalar Depth.Max=1, ###ScalarValue/###ScalarEnum; merged to main |
 | Closed #116 — PushLeft/PushRight operator rename | 2026-04-04 | Renamed 6 EBNF symbols + display names; eliminated Push/Pull ambiguity; merged to main |
 | Closed #117 — int/float coercion wording fix | 2026-04-04 | "interoperate freely" → "comparable without conversion"; merged to main |
 | Closed #119 — ##Int schema vs #Int alias identity | 2026-04-04 | Alias table now has Schema column; clarifies #Int is alias, ##Int is schema; merged to main |
 | Closed #120 — IO perspective terminology fix | 2026-04-04 | "caller perspective" → "pipeline perspective"; one-line scoping rule added; merged to main |
-| Closed #121 — {N} native block type | 2026-04-04 | {N} block, #NativeKind enum, NativeKind.md, PGE01028 rewritten, 44 stdlib defs converted; merged to main |
+| Closed #121 — {N} native block type | 2026-04-04 | {N} block, #NativeKind enum, NativeKind.md, PGE01028 rewritten, 44 pglib defs converted; merged to main |
 | Issue #122 — Standardize *? wildcard catch-all | 2026-04-04 | Bare `*` removed from match syntax; `*?` is the only wildcard form in both verbose and match conditionals; 5 files updated |
 | Issue #123 — Job vs Instance terminology | 2026-04-05 | {#} #Job struct (9 fields), glossary entries, Pipeline Branch %=:Pipeline:N.jobs:UID, data-is-trees clarification; Instance=sequential run, Job=UID-keyed work unit |
 | Closed #124 — Queue Handler vs Dispatch Coordinator glossary | 2026-04-05 | Added DC glossary entry; narrowed QH "never makes decisions" to trigger/business logic scope |
@@ -213,10 +217,10 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #129 — Match Syntax naming consistency | 2026-04-05 | Unified to "Match Syntax"; dropped "Conditional Assignment Sugar"; added disambiguation to blocks.md |
 | Closed #130 — TM vs QH decision-making contradiction | 2026-04-05 | vision.md QH wording scoped to "trigger conditions or business logic"; glossary already correct |
 | Closed #131 — Permission branch %_ path grammar fix | 2026-04-05 | Split type_prefix into standard (instance_path) and exception (_/!/@ with own grammar rules); created #140 for {_} redesign |
-| Closed #140 — {_} permission object block | 2026-04-05 | 3 plans: user docs (5), EBNF+metadata (6), compile rules+stdlib (13); {_} named objects replace inline [_]; _/__/___ tiers; Ceiling vs Grant intent; PGE10005 renamed |
+| Closed #140 — {_} permission object block | 2026-04-05 | 3 plans: user docs (5), EBNF+metadata (6), compile rules+pglib (13); {_} named objects replace inline [_]; _/__/___ tiers; Ceiling vs Grant intent; PGE10005 renamed |
 | Closed #133 — ##/### type_prefix list fix | 2026-04-05 | Removed ##/### from instance_path type_prefix row; already covered by schema_prop/field_type_prop grammar rules |
 | Closed #134 — #Serial schema-free contradiction | 2026-04-05 | "schema-free" → "unconstrained" across 12 files; completed #Serial definition with 3 missing properties (Ordered, Regular, Max) |
-| Closed #135 — !Error extensibility contradiction | 2026-04-05 | User {!} !Name implicitly creates !Error:Name.*; replaced misleading examples; stdlib table 7→10 namespaces; EBNF [:] grammar added |
+| Closed #135 — !Error extensibility contradiction | 2026-04-05 | User {!} !Name implicitly creates !Error:Name.*; replaced misleading examples; pglib table 7→10 namespaces; EBNF [:] grammar added |
 | Closed #136 — H4+ headings in PGE files | 2026-04-05 | Promoted heading levels in 8 PGE files (H3→H1, H4→H2, H5→H3); audit convention enforced |
 | Closed #137 — Untagged code blocks | 2026-04-05 | Added language tags to 168+ bare code fences across 46 files; polyglot/json/yaml/text/ebnf |
 | Closed #138 — Missing audience frontmatter | 2026-04-05 | Added audience field to 218 files + full frontmatter to 11 files; audit/→ai, technical/→developer |
@@ -227,7 +231,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #150 — PGW01002 retired | 2026-04-06 | PGW01002 reduced to stub redirect; PGE01021 sole rule for empty {#}; Group 1 complete |
 | Closed #142 — Queue definition syntax ambiguous | 2026-04-06 | Added Queue + Trigger/Wrapper/Permission/Native rows to INDEX.md object table |
 | Closed #155 — Metadata path syntax gap | 2026-04-06 | Advanced Metadata Paths section in metadata.md; shorthand resolution, :<current>, :N addressing |
-| Closed #153 — =#.Column prefix collision | 2026-04-06 | Documented =#.* as valid stdlib namespace in identifiers.md and #.md |
+| Closed #153 — =#.Column prefix collision | 2026-04-06 | Documented =#.* as valid pglib namespace in identifiers.md and #.md |
 | Closed #156 — Array dimension :2D vs < access | 2026-04-07 | Fixed : to < in access examples; added :ND vs < bridging note |
 | Closed #145 — Wait/collect markers disambiguation | 2026-04-07 | [>]/[<] renamed to IO parameter handling; positional implicit IO documented; disambiguation note added |
 | Closed #151 — Scalar subtype naming convention | 2026-04-07 | Three-level naming (##schema, #alias, :treepath) documented in scalars.md, basic-types.md, string-subtypes.md |
@@ -239,10 +243,11 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #159 — Audience routing fix | 2026-04-07 | Split "For Contributors" into Designer/Architect sections in 3 index files |
 | Closed #157 — PGE04009 circular reference | 2026-04-07 | Already broken by #152; fixed backtick typos, clarified cross-ref authority |
 | Closed #147 — ForEach.Level .~ tilde suffix | 2026-04-07 | Formalized .~ as EBNF level_input production; aligned prose in 4 files |
+| Issue #160 — Split DT.md into DT/ folder | 2026-04-07 | 40 pipelines (not 37); .version metadata removed (EBNF violation); pipeline doc template established |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
-- 9 stdlib files remain status: draft despite Stable content (Math, Path, Sys, ForEach, collectors, types)
+- 9 pglib files remain status: draft despite Stable content (Math, Path, Sys, ForEach, collectors, types)
 - EC-6.4 inconsistency: raw arithmetic in EDGE-CASES vs PGE04010
 - ~30 technical/ files still use old package address format (migrate on touch)
 
@@ -258,14 +263,15 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #147 merged — 19/19 docs-inconsistency batch COMPLETE
-Next action: Docs-Inconsistency Batch complete. Next milestone TBD.
-Resume file: N/A
+Stopped at: Issue #160 UNIFY complete, ready for commit + merge
+Next action: /paul:merge to commit and merge docs/issue-160-split-dt-pipeline-template to main
+Resume file: .paul/phases/160-split-dt-pipeline-template/160-01-SUMMARY.md
 Resume context:
-- Docs-Inconsistency Batch (#141-#159): ALL 19 ISSUES COMPLETE
-- All 5 groups resolved (EBNF/Compiler, Syntax Gaps, Naming, Cross-Ref, Stdlib)
-- Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
-- ROADMAP.md has full issue index with status tracking
+- DT.md split into DT/ folder (41 files: INDEX + 40 pipelines)
+- Pipeline doc template established (6 sections per file)
+- .version metadata removed (EBNF §9.4c compliance)
+- 4 wikilinks updated
+- Issues #161 (template all pipelines) and #162 (native config) created
 
 ---
 *STATE.md — Updated after every significant action*

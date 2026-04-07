@@ -49,5 +49,5 @@ severity: error
 ### See Also
 
 - [[concepts/pipelines/queue|Queue]] — documents queue control contradiction rule, references PGE01013
-- [[stdlib/pipelines/Q|=Q.* Stdlib Pipelines]] — references PGE01013 in queue control context
+- [[pglib/pipelines/Q|=Q.* pglib Pipelines]] — references PGE01013 in queue control context
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01013

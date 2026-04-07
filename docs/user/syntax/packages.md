@@ -55,7 +55,7 @@ Every `@alias` reference must resolve to a declared `[@]` import (PGE09001). The
 Each `[@]` import line declares an alias for a package address. The compiler enforces:
 
 - **Unique aliases** — each `@alias` name in a file must be unique (PGE09011). Two `[@]` lines with the same alias make resolution ambiguous.
-- **No stdlib shadowing** — an alias must not match a reserved stdlib namespace prefix: `File`, `Path`, `Math`, `Sys`, `T`, `Q`, `W` (PGE09012). See [[stdlib/INDEX|stdlib/INDEX.md]] for the full reserved list.
+- **No pglib shadowing** — an alias must not match a reserved pglib namespace prefix: `File`, `Path`, `Math`, `Sys`, `T`, `Q`, `W` (PGE09012). See [[pglib/INDEX|pglib/INDEX.md]] for the full reserved list.
 - **Alias must be used** — an `[@]` import that is never referenced anywhere in the file is flagged as dead code (PGW09002). This typically indicates incomplete refactoring.
 
 ## Dependency Rules
@@ -64,7 +64,7 @@ Package imports must form a directed acyclic graph. If Package A imports Package
 
 Within a package, pipeline calls must also be acyclic — Polyglot has no recursion mechanism. Self-calls and mutual call loops are compile errors (PGE09013). See [[concepts/pipelines/inline-calls#Call Site Rules]].
 
-Pipeline references in `[r]`, `[p]`, or `[b]` calls must resolve to either a stdlib pipeline or a `{=}` definition within the same package (PGE09003). Cross-package pipelines must use the `@alias=Pipeline` form with a valid `[@]` import.
+Pipeline references in `[r]`, `[p]`, or `[b]` calls must resolve to either a pglib pipeline or a `{=}` definition within the same package (PGE09003). Cross-package pipelines must use the `@alias=Pipeline` form with a valid `[@]` import.
 
 ## Multi-File Packages
 

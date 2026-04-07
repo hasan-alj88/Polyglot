@@ -17,7 +17,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | I need to... | Go to |
 |-------------|-------|
 | Learn the language from scratch | [[user/SPEC-INDEX]] |
-| Look up a stdlib pipeline/expander/collector | [[user/stdlib/INDEX]] |
+| Look up a pglib pipeline/expander/collector | [[user/pglib/INDEX]] |
 | Find a compile error code (PGE/PGW) | [[technical/COMPILE-RULES]] → [[technical/compile-rules/PGE/]] |
 | Check formal grammar for a construct | [[technical/ebnf/INDEX]] |
 | Validate an edge case | [[technical/edge-cases/INDEX]] |
@@ -29,18 +29,18 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 
 ## By Polyglot Object
 
-| Object | Prefix | User Concept | Stdlib Reference | EBNF Grammar | Edge Cases |
+| Object | Prefix | User Concept | pglib Reference | EBNF Grammar | Edge Cases |
 |--------|--------|-------------|-----------------|-------------|------------|
-| Pipeline | `=` | [[user/concepts/pipelines/INDEX]] | [[user/stdlib/pipelines/]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
-| Queue | `{Q}` | [[user/concepts/pipelines/queue]] | [[user/stdlib/pipelines/Q]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
-| Trigger | `{T}` | [[user/concepts/pipelines/io-triggers]] | [[user/stdlib/pipelines/T]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
-| Wrapper | `{W}` | [[user/concepts/pipelines/wrappers]] | [[user/stdlib/pipelines/W]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
-| Expander | `~` | [[user/concepts/collections/expand]] | [[user/stdlib/expanders/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |
-| Collector | `*` | [[user/concepts/collections/collect]] | [[user/stdlib/collectors/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |
-| Data / Type | `#` | [[user/syntax/types/INDEX]] | [[user/stdlib/types/]] | [[technical/ebnf/04-type-system]] | [[technical/edge-cases/04-type-system]] |
+| Pipeline | `=` | [[user/concepts/pipelines/INDEX]] | [[user/pglib/pipelines/]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
+| Queue | `{Q}` | [[user/concepts/pipelines/queue]] | [[user/pglib/pipelines/Q]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
+| Trigger | `{T}` | [[user/concepts/pipelines/io-triggers]] | [[user/pglib/pipelines/T]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
+| Wrapper | `{W}` | [[user/concepts/pipelines/wrappers]] | [[user/pglib/pipelines/W]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
+| Expander | `~` | [[user/concepts/collections/expand]] | [[user/pglib/expanders/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |
+| Collector | `*` | [[user/concepts/collections/collect]] | [[user/pglib/collectors/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |
+| Data / Type | `#` | [[user/syntax/types/INDEX]] | [[user/pglib/types/]] | [[technical/ebnf/04-type-system]] | [[technical/edge-cases/04-type-system]] |
 | Metadata | `%` | [[user/concepts/metadata]] | — | [[technical/ebnf/05-block-elements]] | [[technical/edge-cases/15-metadata-blocks]] |
 | Macro | `{M}` | [[user/syntax/types/macro-types]] | — | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/18-macro-structure]] |
-| Error | `!` | [[user/concepts/errors]] | [[user/stdlib/errors/]] | [[technical/ebnf/11-control-flow]] | [[technical/edge-cases/11-control-flow]] |
+| Error | `!` | [[user/concepts/errors]] | [[user/pglib/errors/]] | [[technical/ebnf/11-control-flow]] | [[technical/edge-cases/11-control-flow]] |
 | Permission | `{_}` | [[user/concepts/permissions]] | — | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 | Native | `{N}` | [[user/concepts/pipelines/INDEX]] | — | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 | Package | `@` | [[user/syntax/packages]] | — | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
@@ -54,7 +54,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | [[user/SPEC-INDEX]] | 5-phase learning progression (16 files → practice) |
 | [[user/syntax/]] | Syntax foundations: line structure, comments, identifiers, blocks, types, operators, IO, packages |
 | [[user/concepts/]] | Core concepts: variable lifecycle, collections, conditionals, pipelines, errors, permissions, metadata |
-| [[user/stdlib/]] | Standard library: pipelines, expanders, collectors, types, errors |
+| [[user/pglib/]] | Standard library: pipelines, expanders, collectors, types, errors |
 | [[user/scenarios/INDEX]] | 500 real-world automation scenarios (split into 6 thematic files) |
 
 ### For Designers (language syntax & semantics)
@@ -169,11 +169,11 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | collections/collect.md | user | spec | * collect operators and collect-all/race |
 | collections/examples.md | user | spec | Expand/transform/collect examples |
 
-### docs/user/stdlib/
+### docs/user/pglib/
 
 | File | Audience | Type | Description |
 |------|----------|------|-------------|
-| INDEX.md | user | reference | Namespace registry for all stdlib |
+| INDEX.md | user | reference | Namespace registry for all pglib |
 | pipelines/*.md | user | reference | =File, =Path, =Sys, =T, =Q, =Math, =W, =# |
 | expanders/ForEach/*.md | user | reference | ~ForEach variants (Array, Map, Serial, Level, Dataframe) |
 | collectors/*.md | user | reference | *Into variants, *Agg, *Sync |

@@ -18,9 +18,9 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - docs/user/stdlib/types/structs.md
-    - docs/user/stdlib/errors/errors.md
-    - docs/user/stdlib/pipelines/Q.md
+    - docs/user/pglib/types/structs.md
+    - docs/user/pglib/errors/errors.md
+    - docs/user/pglib/pipelines/Q.md
     - docs/user/concepts/pipelines/queue.md
     - docs/user/concepts/pipelines/io-triggers.md
     - docs/user/concepts/errors.md
@@ -80,9 +80,9 @@ completed: 2026-04-06
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/stdlib/types/structs.md` | Modified | 17 `;#` replacements in #Queue, #Job structs |
-| `docs/user/stdlib/errors/errors.md` | Modified | 36 `;#Error` → `#Error` in error tree |
-| `docs/user/stdlib/pipelines/Q.md` | Modified | 29 replacements in IO params and queue configs |
+| `docs/user/pglib/types/structs.md` | Modified | 17 `;#` replacements in #Queue, #Job structs |
+| `docs/user/pglib/errors/errors.md` | Modified | 36 `;#Error` → `#Error` in error tree |
+| `docs/user/pglib/pipelines/Q.md` | Modified | 29 replacements in IO params and queue configs |
 | `docs/user/concepts/pipelines/queue.md` | Modified | 11 replacements in queue config examples |
 | `docs/user/concepts/errors.md` | Modified | 5 replacements in error examples |
 | `docs/user/concepts/pipelines/io-triggers.md` | Modified | 1 replacement |

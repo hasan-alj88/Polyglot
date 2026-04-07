@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ## Alias
 
-`#array` is a lowercase alias for `#Array`, following the same convention as `#int`/`#Int` and `#string`/`#String`. In type annotations, use lowercase `#array`; in prose or definition references, use PascalCase `#Array`. The alias is registered via `%##Alias` in the `{M} #Array` macro (see [[stdlib/types/collections|Collection Types]]).
+`#array` is a lowercase alias for `#Array`, following the same convention as `#int`/`#Int` and `#string`/`#String`. In type annotations, use lowercase `#array`; in prose or definition references, use PascalCase `#Array`. The alias is registered via `%##Alias` in the `{M} #Array` macro (see [[pglib/types/collections|Collection Types]]).
 
 ## Element-Typed Arrays
 

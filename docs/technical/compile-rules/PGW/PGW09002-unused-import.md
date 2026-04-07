@@ -37,7 +37,7 @@ severity: warning
 ```
 
 ```polyglot
-[ ] ✓ no imports — leaf package using only stdlib
+[ ] ✓ no imports — leaf package using only pglib
 {@} @LeafPackage
 
 {=} =Simple

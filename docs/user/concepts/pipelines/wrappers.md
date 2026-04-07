@@ -108,7 +108,7 @@ Common wrappers:
 - `[W] =W.DB.Transaction` — database connection + transaction lifecycle
 - `[W] =W.HTTP.Session` — HTTP client lifecycle
 
-See [[stdlib/INDEX#Pipeline Namespaces|Wrappers]] for the full wrapper catalog.
+See [[pglib/INDEX#Pipeline Namespaces|Wrappers]] for the full wrapper catalog.
 
 ## See Also
 
