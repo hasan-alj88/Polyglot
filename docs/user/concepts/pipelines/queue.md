@@ -23,7 +23,7 @@ Custom queues are defined with `{Q}`, which both defines the queue struct and in
    [.] .host#String << "gpu-server-01"
    [.] .maxInstancesWithinQueue#UnsignedInt << 1
    [.] .maxConcurrentWithinQueue#UnsignedInt << 4
-   [.] .resourceTagWithinQueue#Array:ResourceTag << [#GPU]
+   [.] .resourceTagWithinQueue#array:ResourceTag << [#GPU]
    [.] .killPropagation#KillPropagation << #Downgrade
    [.] .maxWaitTime#String << "30m"
    [.] .description#String << "GPU-intensive work"
