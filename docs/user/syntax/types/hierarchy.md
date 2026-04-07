@@ -53,7 +53,7 @@ RawString (compiler intrinsic — Layer 0) [##Leaf]
     ├── ##DataTypeString (.regex = valid {x} definition names) (Layer 1)
     └── (user-defined: #emailAddress, #phoneNumber, etc.)
 
-#Boolean (independent enum struct — NOT #String) [##Scalar, ###ScalarEnum]
+#Boolean (##Enum type — NOT #String) [##Enum, ##Scalar, ###ScalarEnum]
 #None (absence of value — empty string "") [##Scalar, ###None]
 
 #Map (sparse key-value pairs — macro-generated via {M} #Map) (Layer 2)

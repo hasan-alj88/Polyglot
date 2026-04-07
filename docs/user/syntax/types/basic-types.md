@@ -133,12 +133,13 @@ Used as the element type for `%alias` — alias values may contain `.` and `:` t
 
 > **Note:** The full metadata path for `int` is `%#:String:int` — String subtypes are nested under `:String` at a flexible level. `#int` is an alias for `#String:int`. See [[data-is-trees#String Subtypes — Nested Under `:String`]] for how subtypes connect to the unified tree, and [[metadata#String Subtypes in the Tree]] for the complete type registry structure.
 
-### Layer 2b: #Boolean — Independent Enum Struct
+### Layer 2b: #Boolean — Independent `##Enum` Type
 
-`#Boolean` is intentionally NOT a `#String` subtype. Booleans are enum fields (no `#type`), not string values with regex. `.True` and `.False` are enum fields — exactly one is active at a time. This is a separate type tree from `#String`.
+`#Boolean` is intentionally NOT a `#String` subtype. It is a `##Enum` type — a struct whose fields are all enum fields (no `#type` annotation). `.True` and `.False` are enum fields — exactly one is active at a time. This is a separate type tree from `#String`.
 
 ```polyglot
 {#} #Boolean
+   [#] << ##Enum
    [#] << ##Scalar
    [#] << ###ScalarEnum
    [#] %##Alias << "bool"

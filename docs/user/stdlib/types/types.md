@@ -26,7 +26,7 @@ RawString (compiler intrinsic) [##Leaf]
     ├── #NestedKeyString (.regex = alias-safe paths)
     └── (user-defined: #emailAddress, #phoneNumber, etc.)
 
-#Boolean (independent enum struct — NOT #String) [##Scalar, ###ScalarEnum]
+#Boolean (##Enum type — NOT #String) [##Enum, ##Scalar, ###ScalarEnum]
 
 #Map:KeyType:ValueType (macro-generated — sparse, homogeneous key-value pairs)
 #Array:ValueType:Dim (macro-generated — contiguous, rectangular, N-dimensional — #Map variant)

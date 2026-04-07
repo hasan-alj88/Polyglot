@@ -14,7 +14,7 @@ updated: 2026-04-05
 1. **RawString** is the true primitive (compiler intrinsic) — literal raw chars, no interpolation
 2. **#String** is a struct: `.string#RawString` + `.regex#RawString`
 3. **int/float** are flexible subtypes of `#String` with pre-set `.regex` patterns
-4. **bool** (`#Boolean`) is a separate enum struct, NOT a `#String` subtype
+4. **bool** (`#Boolean`) is a ##Enum type, NOT a `#String` subtype
 5. **RE declaration** uses standard subfield assignment — no new grammar
 6. **Validation** — compile-time for literals (PGE04010), runtime for dynamic values
 7. **RawString literals** — `=RawString"..."` or `=rs"..."`

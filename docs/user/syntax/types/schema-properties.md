@@ -77,8 +77,9 @@ Examples from the type hierarchy:
 
 ```polyglot
 {#} #Boolean
+   [#] << ##Enum
    [#] << ###ScalarEnum
-   [ ] Matches — .True/.False have no #type annotation; scalar enum type
+   [ ] Matches — .True/.False have no #type annotation; ##Enum + scalar enum type
    [.] .True
    [.] .False
 
@@ -131,7 +132,14 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
 {#} ##EnumLeafs
    [ ] All leaf fields must be ###Enum (no type annotation)
    [#] %##Leafs.Kind << #FieldKind.Enum
+
+{#} ##Enum
+   [ ] Classifies struct types whose fields are all enum fields
+   [#] << ##Flat
+   [#] %##Leafs.Kind << #FieldKind.Enum
 ```
+
+`##Enum` classifies struct types whose fields are all enum fields (no `#type` annotation) — `#Boolean`, `#QueueStrategy`, `#KillPropagation`, `#OS`, etc. It composes `##Flat` (depth 1) with the enum leaf constraint. `##EnumLeafs` is the macro-parameter constraint form used in `{M}` type inputs.
 
 `##Scalar` is specifically for the `#String:*` family and scalar enums. It constrains leaf content to `###ScalarValue` or `###ScalarEnum`. `##Leaf` is reserved for truly atomic types with no fields at all (`RawString`).
 
