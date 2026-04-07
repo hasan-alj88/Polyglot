@@ -129,13 +129,21 @@ Every pipeline definition is either **native** or **derived**. The distinction d
 
 ### Configuration
 
-The Polyglot config file selects the active host language:
+The Polyglot service configuration file selects which host language implements each native operation using **subsystem defaults with per-operation overrides**:
 
 ```yaml
-base: Rust
+native:
+  defaults:
+    tm: Rust           # default for all Trigger operations
+    qh: Rust           # default for all Queue operations
+    runner: Rust       # default for all Execution + Wrapper operations
+    pgcompiler: Rust   # compiler implementation language
+
+  overrides:
+    "Math.Add": Go     # override specific operations by pipeline name
 ```
 
-All `{N}` definitions must include a binding for the configured language. Future host languages add new `.<Language>` fields without changing pipeline definitions.
+All `{N}` definitions must include a `.<Language>` binding for the language resolved for their subsystem. Future host languages add new `.<Language>` fields without changing pipeline definitions. See [[technical/spec/native-dispatch|native-dispatch]] for the full configuration spec.
 
 ### Examples
 
