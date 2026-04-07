@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Get.Weekday"
+metadata_instance: "%=:DT.Get.Weekday:N"
 ---
 
 # =DT.Get.Weekday
@@ -39,6 +41,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Get.Weekday` | Compile-time pipeline template |
+| Instance | `%=:DT.Get.Weekday:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

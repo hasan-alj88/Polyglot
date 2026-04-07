@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.T:Webhook"
+metadata_instance: "%T:Webhook:N"
 ---
 
 # =T.Webhook
@@ -37,6 +39,13 @@ None.
 ## Permissions
 
 Web.Socket
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.T:Webhook` | Compile-time pipeline template |
+| Instance | `%T:Webhook:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

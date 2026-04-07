@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Business.NextWorkDay"
+metadata_instance: "%=:DT.Business.NextWorkDay:N"
 ---
 
 # =DT.Business.NextWorkDay
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Business.NextWorkDay` | Compile-time pipeline template |
+| Instance | `%=:DT.Business.NextWorkDay:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

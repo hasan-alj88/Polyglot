@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
+metadata_definition: "%definition.=:Math.Divide"
+metadata_instance: "%=:Math.Divide:N"
 ---
 
 # =Math.Divide
@@ -49,6 +51,13 @@ Divides the dividend by the divisor. Accepts exactly two inputs in positional or
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:Math.Divide` | Compile-time pipeline template |
+| Instance | `%=:Math.Divide:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

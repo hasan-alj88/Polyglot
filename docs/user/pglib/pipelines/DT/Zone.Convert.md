@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Zone.Convert"
+metadata_instance: "%=:DT.Zone.Convert:N"
 ---
 
 # =DT.Zone.Convert
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Zone.Convert` | Compile-time pipeline template |
+| Instance | `%=:DT.Zone.Convert:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

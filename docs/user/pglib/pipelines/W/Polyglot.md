@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:Polyglot"
+metadata_instance: "%W:Polyglot:N"
 ---
 
 # =W.Polyglot
@@ -35,6 +37,13 @@ None.
 ## Permissions
 
 None — pure computation.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:Polyglot` | Compile-time pipeline template |
+| Instance | `%W:Polyglot:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

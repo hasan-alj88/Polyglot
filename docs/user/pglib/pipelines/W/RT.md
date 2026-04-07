@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:RT"
+metadata_instance: "%W:RT:N"
 ---
 
 # =W.RT
@@ -56,6 +58,13 @@ None.
 ## Permissions
 
 System.Process
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:RT` | Compile-time pipeline template |
+| Instance | `%W:RT:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

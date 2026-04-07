@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Business.AddWorkDays"
+metadata_instance: "%=:DT.Business.AddWorkDays:N"
 ---
 
 # =DT.Business.AddWorkDays
@@ -43,6 +45,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Business.AddWorkDays` | Compile-time pipeline template |
+| Instance | `%=:DT.Business.AddWorkDays:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

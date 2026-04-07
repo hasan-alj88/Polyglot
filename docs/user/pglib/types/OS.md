@@ -1,0 +1,47 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: complete
+metadata_definition: "%definition.#:OS"
+metadata_instance: "%#:OS:N"
+---
+
+# #OS Enum
+
+<!-- @types -->
+
+Runtime `##Enum` type available in every `.pg` file. Uses `[#] << ##Enum` (enum classification), `[#] << ##Scalar` (depth 1), and `[#] << ###ScalarEnum` (leaf content is variant selection).
+
+---
+
+## Definition
+
+```polyglot
+{#} #OS
+   [%] .description << "Operating system enum"
+   [%] .version << "1.0.0"
+   [#] << ##Enum
+   [#] << ##Scalar
+   [#] << ###ScalarEnum
+   [#] %##Alias << "os"
+   [.] .Unix
+   [.] .Windows
+```
+
+---
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:OS` | Compile-time type template |
+| Instance | `%#:OS:0` | Runtime instance (enum — one active field) |
+
+---
+
+## Related
+
+- [[enums]] — other pglib enum types
+- [[NativeKind]] — native kind enum
+- [[syntax/types/INDEX|types]] — full type system specification

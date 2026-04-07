@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:File.Copy"
+metadata_instance: "%=:File.Copy:N"
 ---
 
 # =File.Copy
@@ -41,6 +43,13 @@ None. Success is signalled by `!NoError`.
 ## Permissions
 
 Requires `File.Read` + `File.Write` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:File.Copy` | Compile-time pipeline template |
+| Instance | `%=:File.Copy:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

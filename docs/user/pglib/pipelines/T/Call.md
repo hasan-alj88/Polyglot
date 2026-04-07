@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.T:Call"
+metadata_instance: "%T:Call:N"
 ---
 
 # =T.Call
@@ -36,6 +38,13 @@ None.
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.T:Call` | Compile-time pipeline template |
+| Instance | `%T:Call:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

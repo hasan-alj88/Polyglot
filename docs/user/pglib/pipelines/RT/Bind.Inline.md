@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:RT.<Lang>.Bind.Inline"
+metadata_instance: "%=:RT.<Lang>.Bind.Inline:N"
 ---
 
 # =RT.\<Lang\>.Bind.Inline
@@ -57,6 +59,13 @@ None.
 ## Permissions
 
 Requires `System.Process` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:RT.<Lang>.Bind.Inline` | Compile-time pipeline template |
+| Instance | `%=:RT.<Lang>.Bind.Inline:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

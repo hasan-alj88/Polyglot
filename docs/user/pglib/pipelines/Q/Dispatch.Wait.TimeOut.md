@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.Q:Dispatch.Wait.TimeOut"
+metadata_instance: "%Q:Dispatch.Wait.TimeOut:N"
 ---
 
 # =Q.Dispatch.Wait.TimeOut
@@ -57,6 +59,13 @@ Used as nested `[Q]` line in a queue definition:
 ## Permissions
 
 None — pure computation (queue scheduling and resource management).
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.Q:Dispatch.Wait.TimeOut` | Compile-time pipeline template |
+| Instance | `%Q:Dispatch.Wait.TimeOut:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

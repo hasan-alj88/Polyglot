@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Compare"
+metadata_instance: "%=:DT.Compare:N"
 ---
 
 # =DT.Compare
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Compare` | Compile-time pipeline template |
+| Instance | `%=:DT.Compare:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

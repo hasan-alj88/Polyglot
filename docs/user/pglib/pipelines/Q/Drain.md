@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.Q:Drain"
+metadata_instance: "%Q:Drain:N"
 ---
 
 # =Q.Drain
@@ -36,6 +38,13 @@ None.
 ## Permissions
 
 None — pure computation (queue scheduling and resource management).
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.Q:Drain` | Compile-time pipeline template |
+| Instance | `%Q:Drain:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

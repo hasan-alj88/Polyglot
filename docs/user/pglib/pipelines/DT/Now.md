@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Now"
+metadata_instance: "%=:DT.Now:N"
 ---
 
 # =DT.Now
@@ -37,6 +39,13 @@ None.
 ## Permissions
 
 Requires `System.Env` capability -- reads system clock.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Now` | Compile-time pipeline template |
+| Instance | `%=:DT.Now:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

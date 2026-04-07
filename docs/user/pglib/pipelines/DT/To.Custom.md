@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.To.Custom"
+metadata_instance: "%=:DT.To.Custom:N"
 ---
 
 # =DT.To.Custom
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.To.Custom` | Compile-time pipeline template |
+| Instance | `%=:DT.To.Custom:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:SSH.Session"
+metadata_instance: "%W:SSH.Session:N"
 ---
 
 # =W.SSH.Session
@@ -41,6 +43,13 @@ None.
 ## Permissions
 
 System.Process
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:SSH.Session` | Compile-time pipeline template |
+| Instance | `%W:SSH.Session:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

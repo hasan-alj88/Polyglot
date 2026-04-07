@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.T:Folder.NewFiles"
+metadata_instance: "%T:Folder.NewFiles:N"
 ---
 
 # =T.Folder.NewFiles
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 File.Read
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.T:Folder.NewFiles` | Compile-time pipeline template |
+| Instance | `%T:Folder.NewFiles:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
+metadata_definition: "%definition.=:Math.Abs"
+metadata_instance: "%=:Math.Abs:N"
 ---
 
 # =Math.Abs
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:Math.Abs` | Compile-time pipeline template |
+| Instance | `%=:Math.Abs:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

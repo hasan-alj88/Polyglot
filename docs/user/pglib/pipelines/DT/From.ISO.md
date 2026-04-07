@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.From.ISO"
+metadata_instance: "%=:DT.From.ISO:N"
 ---
 
 # =DT.From.ISO
@@ -39,6 +41,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.From.ISO` | Compile-time pipeline template |
+| Instance | `%=:DT.From.ISO:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

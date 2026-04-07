@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:#.Match"
+metadata_instance: "%=:#.Match:N"
 ---
 
 # =#.Match
@@ -41,6 +43,13 @@ None -- always succeeds.
 ## Permissions
 
 None -- pure computation.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:#.Match` | Compile-time pipeline template |
+| Instance | `%=:#.Match:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

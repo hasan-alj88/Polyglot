@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:#.JSON.Parse"
+metadata_instance: "%=:#.JSON.Parse:N"
 ---
 
 # =#.JSON.Parse
@@ -39,6 +41,13 @@ None -- invalid input handled by calling pipeline (e.g. `=File.Serial.Read` rais
 ## Permissions
 
 None -- pure computation.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:#.JSON.Parse` | Compile-time pipeline template |
+| Instance | `%=:#.JSON.Parse:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Zone.Set"
+metadata_instance: "%=:DT.Zone.Set:N"
 ---
 
 # =DT.Zone.Set
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Zone.Set` | Compile-time pipeline template |
+| Instance | `%=:DT.Zone.Set:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

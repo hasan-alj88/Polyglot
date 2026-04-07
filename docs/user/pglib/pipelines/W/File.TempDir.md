@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:File.TempDir"
+metadata_instance: "%W:File.TempDir:N"
 ---
 
 # =W.File.TempDir
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 File.Write
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:File.TempDir` | Compile-time pipeline template |
+| Instance | `%W:File.TempDir:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

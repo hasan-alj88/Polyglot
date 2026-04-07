@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.To.HinduTime"
+metadata_instance: "%=:DT.To.HinduTime:N"
 ---
 
 # =DT.To.HinduTime
@@ -39,6 +41,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.To.HinduTime` | Compile-time pipeline template |
+| Instance | `%=:DT.To.HinduTime:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

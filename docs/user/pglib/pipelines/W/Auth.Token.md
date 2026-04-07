@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:Auth.Token"
+metadata_instance: "%W:Auth.Token:N"
 ---
 
 # =W.Auth.Token
@@ -41,6 +43,13 @@ None.
 ## Permissions
 
 Crypto.Key
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:Auth.Token` | Compile-time pipeline template |
+| Instance | `%W:Auth.Token:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

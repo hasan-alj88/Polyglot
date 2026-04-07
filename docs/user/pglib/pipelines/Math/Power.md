@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
+metadata_definition: "%definition.=:Math.Power"
+metadata_instance: "%=:Math.Power:N"
 ---
 
 # =Math.Power
@@ -40,6 +42,13 @@ None.
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:Math.Power` | Compile-time pipeline template |
+| Instance | `%=:Math.Power:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

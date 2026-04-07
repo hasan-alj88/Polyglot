@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:#.Column"
+metadata_instance: "%=:#.Column:N"
 ---
 
 # =#.Column
@@ -43,6 +45,13 @@ Extracts all values for a given column across all rows of a row-oriented Datafra
 ## Permissions
 
 None -- pure computation.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:#.Column` | Compile-time pipeline template |
+| Instance | `%=:#.Column:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

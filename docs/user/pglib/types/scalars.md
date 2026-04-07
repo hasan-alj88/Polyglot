@@ -1,8 +1,10 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-04
+updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.##:Int"
+metadata_instance: "%#:String:int"
 ---
 
 # Scalar Subtypes
@@ -174,6 +176,23 @@ Each `[M]` invocation passes `[#] <Name`, `[#] <Alias`, and `[#] <Regex` argumen
 ```
 
 `##DataTypeString` validates `{x}` definition name format — uppercase-initial segments separated by `:`. Used by collection type macros to compute generated type names.
+
+## Metadata
+
+Each scalar subtype has a ## schema definition and appears as an instance under #String:
+
+| Subtype | Definition Path | Instance Path |
+|---------|----------------|---------------|
+| `##Int` | `%definition.##:Int` | `%#:String:int` |
+| `##UnsignedInt` | `%definition.##:UnsignedInt` | `%#:String:uint` |
+| `##Float` | `%definition.##:Float` | `%#:String:float` |
+| `##Sci` | `%definition.##:Sci` | `%#:String:sci` |
+| `##Eng` | `%definition.##:Eng` | `%#:String:eng` |
+| `##Dimension` | `%definition.##:Dimension` | `%#:String:dim` |
+| `##KeyString` | `%definition.##:KeyString` | `%#:String:key` |
+| `##NestedKeyString` | `%definition.##:NestedKeyString` | `%#:String:nestedkey` |
+| `##CommaSeparatedList` | `%definition.##:CommaSeparatedList` | `%#:String:csvlist` |
+| `##DataTypeString` | `%definition.##:DataTypeString` | `%#:String:dtstring` |
 
 ## Related
 

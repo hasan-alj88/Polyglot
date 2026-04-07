@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
+metadata_definition: "%definition.=:Math.Subtract"
+metadata_instance: "%=:Math.Subtract:N"
 ---
 
 # =Math.Subtract
@@ -40,6 +42,13 @@ None.
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:Math.Subtract` | Compile-time pipeline template |
+| Instance | `%=:Math.Subtract:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

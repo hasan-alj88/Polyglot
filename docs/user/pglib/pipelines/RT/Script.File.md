@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:RT.<Lang>.Script.File"
+metadata_instance: "%=:RT.<Lang>.Script.File:N"
 ---
 
 # =RT.\<Lang\>.Script.File
@@ -60,6 +62,13 @@ None.
 ## Permissions
 
 Requires `System.Process` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:RT.<Lang>.Script.File` | Compile-time pipeline template |
+| Instance | `%=:RT.<Lang>.Script.File:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

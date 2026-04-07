@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.Add.Duration"
+metadata_instance: "%=:DT.Add.Duration:N"
 ---
 
 # =DT.Add.Duration
@@ -41,6 +43,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.Add.Duration` | Compile-time pipeline template |
+| Instance | `%=:DT.Add.Duration:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

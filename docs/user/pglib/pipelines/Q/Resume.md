@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.Q:Resume"
+metadata_instance: "%Q:Resume:N"
 ---
 
 # =Q.Resume
@@ -44,6 +46,13 @@ Resume when a resource condition recovers. Used as nested `[Q]` lines in `{Q}` d
 ## Permissions
 
 None — pure computation (queue scheduling and resource management).
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.Q:Resume` | Compile-time pipeline template |
+| Instance | `%Q:Resume:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

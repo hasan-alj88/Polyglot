@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.Q:Pause.Hard"
+metadata_instance: "%Q:Pause.Hard:N"
 ---
 
 # =Q.Pause.Hard
@@ -44,6 +46,13 @@ Pause when a resource condition is met. Used as nested `[Q]` lines in `{Q}` defi
 ## Permissions
 
 None — pure computation (queue scheduling and resource management).
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.Q:Pause.Hard` | Compile-time pipeline template |
+| Instance | `%Q:Pause.Hard:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

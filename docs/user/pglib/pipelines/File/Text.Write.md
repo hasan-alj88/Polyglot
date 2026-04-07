@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:File.Text.Write"
+metadata_instance: "%=:File.Text.Write:N"
 ---
 
 # =File.Text.Write
@@ -41,6 +43,13 @@ None. Success is signalled by `!NoError`.
 ## Permissions
 
 Requires `File.Write` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:File.Text.Write` | Compile-time pipeline template |
+| Instance | `%=:File.Text.Write:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

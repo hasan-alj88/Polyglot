@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:File.Serial.Read.Field"
+metadata_instance: "%=:File.Serial.Read.Field:N"
 ---
 
 # =File.Serial.Read.Field
@@ -48,6 +50,13 @@ The `<field` input uses `<` as the path separator (e.g. `"database<host"` extrac
 ## Permissions
 
 Requires `File.Read` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:File.Serial.Read.Field` | Compile-time pipeline template |
+| Instance | `%=:File.Serial.Read.Field:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

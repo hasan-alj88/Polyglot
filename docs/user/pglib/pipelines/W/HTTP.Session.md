@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:HTTP.Session"
+metadata_instance: "%W:HTTP.Session:N"
 ---
 
 # =W.HTTP.Session
@@ -41,6 +43,13 @@ None.
 ## Permissions
 
 Web.Request
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:HTTP.Session` | Compile-time pipeline template |
+| Instance | `%W:HTTP.Session:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

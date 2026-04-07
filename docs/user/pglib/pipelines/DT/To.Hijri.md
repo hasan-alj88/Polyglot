@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:DT.To.Hijri"
+metadata_instance: "%=:DT.To.Hijri:N"
 ---
 
 # =DT.To.Hijri
@@ -43,6 +45,13 @@ None. Pure computation pipeline.
 ## Permissions
 
 None required.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:DT.To.Hijri` | Compile-time pipeline template |
+| Instance | `%=:DT.To.Hijri:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

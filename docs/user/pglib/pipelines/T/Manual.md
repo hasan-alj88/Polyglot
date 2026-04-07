@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.T:Manual"
+metadata_instance: "%T:Manual:N"
 ---
 
 # =T.Manual
@@ -36,6 +38,13 @@ None.
 ## Permissions
 
 None.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.T:Manual` | Compile-time pipeline template |
+| Instance | `%T:Manual:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

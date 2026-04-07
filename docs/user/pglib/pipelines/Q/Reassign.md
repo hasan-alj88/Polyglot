@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.Q:Reassign"
+metadata_instance: "%Q:Reassign:N"
 ---
 
 # =Q.Reassign
@@ -38,6 +40,13 @@ None.
 ## Permissions
 
 None — pure computation (queue scheduling and resource management).
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.Q:Reassign` | Compile-time pipeline template |
+| Instance | `%Q:Reassign:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

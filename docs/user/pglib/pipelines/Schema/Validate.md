@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.=:#.Validate"
+metadata_instance: "%=:#.Validate:N"
 ---
 
 # =#.Validate
@@ -43,6 +45,13 @@ None -- always succeeds. Validation failures are reported via `>errors`, not `[!
 ## Permissions
 
 None -- pure computation.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.=:#.Validate` | Compile-time pipeline template |
+| Instance | `%=:#.Validate:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

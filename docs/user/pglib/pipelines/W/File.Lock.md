@@ -3,6 +3,8 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
+metadata_definition: "%definition.W:File.Lock"
+metadata_instance: "%W:File.Lock:N"
 ---
 
 # =W.File.Lock
@@ -39,6 +41,13 @@ None.
 ## Permissions
 
 File.Read
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.W:File.Lock` | Compile-time pipeline template |
+| Instance | `%W:File.Lock:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
