@@ -89,14 +89,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #143 — Docs: #Boolean classified as 'enum struct' vs 'enum' inconsistently
+Branch: docs/issue-143-boolean-classification
+Labels: docs, P4-low, docs-inconsistency
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/143
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for commit + merge]
 ```
 
 ## Accumulated Context
