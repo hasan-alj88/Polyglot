@@ -7,7 +7,7 @@ status: draft
 
 # *Agg — Reduce to Single Value
 
-Aggregation collectors that reduce mini-pipeline outputs to a single value. The namespace is `*Agg`, NOT `*Aggregate`.
+Aggregation collectors that reduce mini-pipeline outputs to a single value. The namespace is `*Agg` — the canonical shorthand alias for `*Aggregate`. Always use `*Agg` in code.
 
 Collector invocation uses `[r]` (sequential) or `[p]` (parallel) execution markers. Collector IO lines use `[*]`.
 
