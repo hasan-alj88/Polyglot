@@ -92,14 +92,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #152 — Docs: *Continue classified as collector but functionally is error recovery
+Branch: docs/issue-152-continue-collector-classification
+Labels: docs, stdlib, P3-medium, docs-inconsistency
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/152
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for commit & merge]
 ```
 
 ## Accumulated Context
@@ -231,6 +235,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #143 — #Boolean enum struct vs enum classification | 2026-04-07 | Introduced ##Enum schema; replaced "enum struct" terminology across 10 files |
 | Closed #154 — *Agg glossary entry and alias wording | 2026-04-07 | Added *Agg to glossary; Agg.md says "alias" not "NOT *Aggregate" |
 | Closed #141 — not a bug | 2026-04-07 | TM monitors trigger conditions incl. timing; "not a scheduler" is correct |
+| Closed #152 — *Continue removed, compiler-enforced error handling | 2026-04-07 | ALL errors must be handled; Failed state remains as runtime trigger; <!/> ! replaces *Continue |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
