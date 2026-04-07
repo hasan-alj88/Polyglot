@@ -83,27 +83,24 @@ Progress:
 - Issue #143: [██████████] 100% (1/1 plans — ##Enum schema classification)
 - Issue #154: [██████████] 100% (1/1 plans — *Agg glossary entry)
 - Issue #141: closed as not-a-bug (TM monitoring schedules ≠ being a scheduler)
-- Docs-Inconsistency Batch (#141-#159): [████████░░] 78% (15/19 issues)
+- Issue #152: [██████████] 100% (3/3 plans — *Continue removal + compiler-enforced errors)
+- Docs-Inconsistency Batch (#141-#159): [████████░░] 84% (16/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
-  - Group 3 (Naming): 5/6
+  - Group 3 (Naming): 6/6 COMPLETE
   - Group 4 (Cross-Ref): 0/2
   - Group 5 (Stdlib): 0/1
 
 ## Active Issue
 
-Issue: #152 — Docs: *Continue classified as collector but functionally is error recovery
-Branch: docs/issue-152-continue-collector-classification
-Labels: docs, stdlib, P3-medium, docs-inconsistency
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/152
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for commit & merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -255,13 +252,15 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #141 closed as not-a-bug — 15/19 docs-inconsistency, Group 3: 5/6
-Next action: /paul:work-issue 152 (last Group 3 issue — Naming)
+Stopped at: Issue #152 merged — 16/19 docs-inconsistency, Group 3: 6/6 COMPLETE
+Next action: /paul:work-issue 159 (first Group 4 issue — Cross-Ref)
 Resume file: N/A
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
 - Group 2 (Syntax Gaps): 5/5 COMPLETE
-- Group 3 (Naming): 5/6 (#151, #148, #143, #154 done, #141 not-a-bug; next: #152)
+- Group 3 (Naming): 6/6 COMPLETE
+- Group 4 (Cross-Ref): 0/2 (#159, #157)
+- Group 5 (Stdlib): 0/1 (#147)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 
