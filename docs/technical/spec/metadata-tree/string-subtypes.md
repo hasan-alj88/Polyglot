@@ -36,7 +36,7 @@ User code `#int` is an alias for `#Int`. The `%##Alias` schema property enables 
 | `#string` | `#String` | `#String` | `%#:String` |
 | `#emailAddress` | `#String.emailAddress` | `#String.emailAddress` | `%#:String:emailAddress` |
 
-**Key distinction:** The single-`#` names (`#Int`, `#Float`, etc.) are **user-facing aliases** — convenient shorthand you write in type annotations. The double-`##` names (`##Int`, `##Float`, etc.) are the **schema definitions** that specify regex constraints and live at `%##` on the metadata tree. Data instances validated by these schemas live at `%#:String:*` on the data tree.
+**Key distinction (canonical reference):** The single-`#` names (`#Int`, `#Float`, etc.) are **user-facing aliases** — convenient shorthand you write in type annotations. The double-`##` names (`##Int`, `##Float`, etc.) are **schema descriptors** — metadata the compiler enforces on `#String`. `##` describes `#` the way `###` describes leaf fields; a `#` struct can compose multiple `##` schemas as long as they don't contradict. The colon-prefixed names (`:int`, `:float`, etc.) are **metadata tree paths** — flexible-level keys under `%#:String`. Data instances validated by these schemas live at `%#:String:*` on the data tree.
 
 All subtypes share the `#String` schema (`.string#RawString` + `.regex#RawString`) with `.regex` pre-filled per subtype.
 
