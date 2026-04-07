@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #115 — Job hierarchy addressing syntax
 Plan: N/A
-Status: Issue #145 unified — ready for merge
-Last activity: 2026-04-07 — Issue #145 unified (wait/collect markers disambiguation)
+Status: Issue #145 merged to main
+Last activity: 2026-04-07 — Issue #145 merged (wait/collect markers disambiguation)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -77,27 +77,24 @@ Progress:
 - Issue #155: [██████████] 100% (1/1 plans — Metadata path syntax gap)
 - Issue #153: [██████████] 100% (1/1 plans — =#.* namespace documented)
 - Issue #156: [██████████] 100% (1/1 plans — array access : → <)
-- Docs-Inconsistency Batch (#141-#159): [████░░░░░░] 47% (9/19 issues)
+- Issue #145: [██████████] 100% (1/1 plans — [>]/[<] vs [*] <</ >> disambiguation)
+- Docs-Inconsistency Batch (#141-#159): [█████░░░░░] 53% (10/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
-  - Group 2 (Syntax Gaps): 4/5
+  - Group 2 (Syntax Gaps): 5/5 COMPLETE
   - Group 3 (Naming): 0/6
   - Group 4 (Cross-Ref): 0/2
   - Group 5 (Stdlib): 0/1
 
 ## Active Issue
 
-Issue: #145 — Wait/collect markers [<]/[>] vs [*]<</>> undocumented relationship
-Branch: docs/issue-145-wait-collect-markers
-Labels: docs, P3-medium, docs-inconsistency
-Started: 2026-04-07
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/145
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Issue #145 ready for merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -223,6 +220,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #155 — Metadata path syntax gap | 2026-04-06 | Advanced Metadata Paths section in metadata.md; shorthand resolution, :<current>, :N addressing |
 | Closed #153 — =#.Column prefix collision | 2026-04-06 | Documented =#.* as valid stdlib namespace in identifiers.md and #.md |
 | Closed #156 — Array dimension :2D vs < access | 2026-04-07 | Fixed : to < in access examples; added :ND vs < bridging note |
+| Closed #145 — Wait/collect markers disambiguation | 2026-04-07 | [>]/[<] renamed to IO parameter handling; positional implicit IO documented; disambiguation note added |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -242,12 +240,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Issue #145 unified — ready for merge
-Next action: /paul:merge (commit and merge #145 to main)
-Resume file: .paul/phases/145-wait-collect-markers/145-01-SUMMARY.md
+Stopped at: Issue #145 merged and closed — 10/19 docs-inconsistency, Group 2 COMPLETE
+Next action: /paul:work-issue 151 (first Group 3 issue — Naming)
+Resume file: N/A
 Resume context:
 - Group 1 (EBNF/Compiler): 5/5 COMPLETE
-- Group 2 (Syntax Gaps): 4/5 done, #145 ready for merge (completes Group 2)
+- Group 2 (Syntax Gaps): 5/5 COMPLETE
+- Group 3 (Naming): 0/6 (next: #151, #148, #143, #154, #141, #152)
 - Each issue: /paul:work-issue N → /paul:plan → /paul:apply → /paul:unify → /paul:merge
 - ROADMAP.md has full issue index with status tracking
 

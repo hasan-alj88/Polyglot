@@ -232,7 +232,7 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 | 155 | Metadata path syntax gap user vs technical | 2 | P2-high | Done |
 | 153 | =#.Column undocumented prefix collision | 2 | P3-medium | Done |
 | 156 | Array dimension :2D vs < access unmapped | 2 | P3-medium | Done |
-| 145 | Wait/collect markers [<]/[>] vs [*] undocumented | 2 | P3-medium | Pending |
+| 145 | Wait/collect markers [<]/[>] vs [*] undocumented | 2 | P3-medium | Done |
 | 151 | Scalar subtypes ##Int/##Float vs int/float naming | 3 | P3-medium | Pending |
 | 148 | #Array vs #array case inconsistency | 3 | P3-medium | Pending |
 | 143 | #Boolean enum struct vs enum classification | 3 | P4-low | Pending |
