@@ -12,7 +12,33 @@ updated: 2026-03-30
 
 Internal specifications for Polyglot project contributors. These documents describe how Polyglot Code is parsed, validated, and processed.
 
-## Specifications (docs/technical/)
+## For Designers (Language Syntax & Semantics)
+
+Designers own grammar, type system, compile rules, and edge cases. See [[audiences/designer]] for writing rules.
+
+| Area | Path | Content |
+|------|------|---------|
+| Formal Grammar | [[ebnf/INDEX\|ebnf/]] | Complete EBNF grammar (15 section files) |
+| Edge Cases | [[edge-cases/INDEX\|edge-cases/]] | 42+ edge cases organized by EBNF section (24 files) |
+| Compile Rules | COMPILE-RULES.md | Error/warning code lookup tables and rule format |
+| Error Rules | compile-rules/PGE/ | Individual error rules (108 files) |
+| Warning Rules | compile-rules/PGW/ | Individual warning rules (21 files) |
+| Algorithms | compile-rules/algorithms/ | Cycle detection, overlap detection, compound exhaustiveness |
+| Type Identity | spec/type-identity.md | Structural type matching rules |
+
+## For Architects (Runtime & Service Architecture)
+
+Architects own runtime execution, metadata, and service design. See [[audiences/architect]] for writing rules.
+
+| Area | Path | Content |
+|------|------|---------|
+| Metadata Tree | spec/metadata-tree/ | Complete `%` tree: path grammar, branches, instance rules, enum semantics, field expansion |
+
+---
+
+## Complete File Listing
+
+### Specifications (docs/technical/)
 
 | File | Covers |
 |------|--------|

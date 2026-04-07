@@ -65,9 +65,13 @@ flowchart LR
 |------|--------|
 | scenarios/INDEX.md | 500 real-world automation scenarios (6 thematic files) |
 
-## For Contributors
+## For Designers
 
-See [[technical/INDEX|docs/technical/INDEX.md]] for internal specifications (EBNF grammar, edge cases, compiler rules, metadata tree spec).
+See [[technical/INDEX|docs/technical/INDEX.md]] — Designer section for EBNF grammar, edge cases, and compile rules.
+
+## For Architects
+
+See [[technical/INDEX|docs/technical/INDEX.md]] — Architect section for runtime architecture and metadata tree specs.
 
 ## Adding New Spec Files
 

@@ -93,14 +93,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #159 — Docs: Audience routing sends Architects to syntax docs, Designers to runtime docs
+Branch: docs/issue-159-audience-routing-fix
+Labels: docs, P3-medium, docs-inconsistency
+Started: 2026-04-07
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/159
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for MERGE]
 ```
 
 ## Accumulated Context

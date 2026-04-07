@@ -57,19 +57,29 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | [[user/stdlib/]] | Standard library: pipelines, expanders, collectors, types, errors |
 | [[user/scenarios/INDEX]] | 500 real-world automation scenarios (split into 6 thematic files) |
 
-### For Contributors (building Polyglot)
+### For Designers (language syntax & semantics)
 
 | Path | Content |
 |------|---------|
-| [[technical/INDEX]] | Technical documentation index |
 | [[technical/ebnf/INDEX]] | Formal EBNF grammar (15 sections) |
 | [[technical/edge-cases/INDEX]] | 42+ edge cases organized by grammar section |
 | [[technical/COMPILE-RULES]] | Error/warning code lookup (PGE-xxx, PGW-xxx) |
 | [[technical/compile-rules/PGE/]] | Individual error rule files (108 rules) |
 | [[technical/compile-rules/PGW/]] | Individual warning rule files (21 rules) |
-| [[technical/spec/metadata-tree/INDEX]] | Formal `%` metadata tree specification |
 | [[technical/spec/type-identity]] | Structural type matching rules |
 | [[technical/compile-rules/algorithms/]] | Algorithms: cycle detection, overlap detection, compound exhaustiveness |
+
+### For Architects (runtime & service architecture)
+
+| Path | Content |
+|------|---------|
+| [[technical/spec/metadata-tree/INDEX]] | Formal `%` metadata tree specification |
+
+### For all Contributors
+
+| Path | Content |
+|------|---------|
+| [[technical/INDEX]] | Complete technical documentation index (all areas) |
 
 ### For Documentation Authors
 
