@@ -40,5 +40,5 @@ severity: error
 
 ### See Also
 
-- [[stdlib/types/datetime|DateTime Types]] — `#DateTime.Instant.epoch` definition
-- [[stdlib/pipelines/DT|=DT.* Pipelines]] — `=DT.From.Parts` for human-readable construction
+- [[pglib/types/datetime|DateTime Types]] — `#DateTime.Instant.epoch` definition
+- [[pglib/pipelines/DT/From.Parts|=DT.From.Parts]] — human-readable DateTime construction

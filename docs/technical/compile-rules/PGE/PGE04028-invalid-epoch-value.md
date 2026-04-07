@@ -35,5 +35,5 @@ severity: error
 
 ### See Also
 
-- [[stdlib/types/datetime|DateTime Types]] — `#DateTime.Instant` definition
-- [[stdlib/pipelines/DT|=DT.* Pipelines]] — `=DT.From.Epoch` pipeline
+- [[pglib/types/datetime|DateTime Types]] — `#DateTime.Instant` definition
+- [[pglib/pipelines/DT/From.Epoch|=DT.From.Epoch]] — epoch-to-DateTime pipeline

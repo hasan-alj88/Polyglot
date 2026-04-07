@@ -1,0 +1,46 @@
+---
+audience: pg-coder
+type: specification
+updated: 2026-04-07
+status: complete
+---
+
+# =DT.Get.Day
+
+Extracts the day component from a `#dt` value.
+
+## Definition
+
+```polyglot
+{N} =DT.Get.Day
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetDay"
+   [%] .description << "Extract day from DateTime"
+   [=] <source#dt
+   [=] >day#int
+```
+
+## Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `<source` | `#dt` | --- | DateTime to extract from |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>day` | `#int` | Day component |
+
+## Errors
+
+None. Pure computation pipeline.
+
+## Permissions
+
+None required.
+
+## Related
+
+- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/types/datetime|DateTime types]]

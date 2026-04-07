@@ -46,5 +46,5 @@ severity: error
 
 ### See Also
 
-- [[stdlib/types/datetime|DateTime Types]] — `#Zone` definition
-- [[stdlib/pipelines/DT|=DT.* Pipelines]] — `=DT.Zone.Set`, `=DT.Zone.Convert`
+- [[pglib/types/datetime|DateTime Types]] — `#Zone` definition
+- [[pglib/pipelines/DT/Zone.Set|=DT.Zone.Set]], [[pglib/pipelines/DT/Zone.Convert|=DT.Zone.Convert]] — timezone pipelines
