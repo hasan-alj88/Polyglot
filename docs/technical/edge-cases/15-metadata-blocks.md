@@ -16,15 +16,15 @@ updated: 2026-03-30
 **What it tests:** `[%]` lines appear before `[T]` (position 0). Fixed fields `.description`, `.version`, `.authors` assigned via `<<`. See [[blocks#Metadata]].
 
 ```polyglot
-{=} =Invoice.Process
+{-} -Invoice.Process
    [%] .description << "Processes incoming invoices and routes to accounting"
    [%] .version << "2.1.0"
    [%] .authors#array:string << {"alice@corp.com", "bob@corp.com"}
    [%] .license << "MIT"
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] $done#bool << #Boolean.True
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] $done#bool << #Boolean.True
 ```
 
 ### EC-15.2: `[%]` %alias field — multiple aliases per definition
@@ -41,13 +41,13 @@ updated: 2026-03-30
    [.] .timeout#int <~ 30
    [.] .retries#int <~ 3
 
-{=} =Provision.User
+{-} -Provision.User
    [%] %alias
       [:] "ProvisionUser"
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] $x#int << 1
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] $x#int << 1
 ```
 
 ### EC-15.2b: `[%]` %alias with nested key path
@@ -70,16 +70,16 @@ updated: 2026-03-30
 **What it tests:** `.info#serial` opens a `:` flexible scope for arbitrary tooling metadata. See [[blocks#Metadata]].
 
 ```polyglot
-{=} =Report.Generate
+{-} -Report.Generate
    [%] .description << "Generates monthly report"
    [%] .info#serial
       [:] :owner << "platform-team"
       [:] :ticket << "INFRA-42"
       [:] :runbook << "https://wiki/runbooks/report"
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] $x#int << 1
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] $x#int << 1
 ```
 
 ### EC-15.4: `live` metadata accessor — `%` on pipeline, variable, data
@@ -91,26 +91,26 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] Pipeline live fields
-[?] =Invoice.Process%status
+[?] -Invoice.Process%status
    [?] #AwaitTrigger
-      [r] $ready#bool << #Boolean.True
+      [-] $ready#bool << #Boolean.True
    [?] #Running
-      [r] $ready#bool << #Boolean.False
+      [-] $ready#bool << #Boolean.False
    [?] #Failed
-      [b] =Audit.Log
-         [=] <event << "pipeline_failed"
+      [b] -Audit.Log
+         (-) <event << "pipeline_failed"
    [?] *?
-      [r] $ready#bool << #Boolean.False
+      [-] $ready#bool << #Boolean.False
 
 [ ] Variable lifecycle state
 [?] $myVar%state
    [?] #Ready
-      [r] $safe#bool << #Boolean.True
+      [-] $safe#bool << #Boolean.True
    [?] *?
-      [r] $safe#bool << #Boolean.False
+      [-] $safe#bool << #Boolean.False
 
 [ ] Data definition metadata (read-only counters)
-[r] $uses#int << #Config%usageCount
+[-] $uses#int << #Config%usageCount
 ```
 
 ### EC-15.5: Empty `%alias` declaration

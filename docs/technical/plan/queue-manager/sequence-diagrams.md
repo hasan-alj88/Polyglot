@@ -58,8 +58,8 @@ sequenceDiagram
     participant Runner as Runner (parent)
     participant SubRunner as Runner (sub-job)
 
-    Note over Runner: Parent job hits [p] parallel branch
-    Runner->>TM: trigger.subjob {parentJobId, pipeline, marker: "[p]", branches: 3}
+    Note over Runner: Parent job hits [=] parallel branch
+    Runner->>TM: trigger.subjob {parentJobId, pipeline, marker: "[=]", branches: 3}
     
     loop For each parallel branch
         TM->>NoSQL: Record job hierarchy (parent→child)
@@ -153,9 +153,9 @@ sequenceDiagram
         TM->>QH: command.dispatch.escalate {jobId, queue}
         QH->>Redis: Move job to next-to-dispatch position (strategy-dependent)
         QH-->>TM: state.queue.{queue}.escalated {jobId}
-    else =Q.Dispatch.Wait.TimeOut.Kill.Graceful
+    else -Q.Dispatch.Wait.TimeOut.Kill.Graceful
         TM->>QH: command.kill.graceful {jobId}
-    else =Q.Dispatch.Wait.TimeOut.Reassign
+    else -Q.Dispatch.Wait.TimeOut.Reassign
         TM->>QH: command.reassign {jobId, from: queue, to: other}
     end
 ```
@@ -169,7 +169,7 @@ sequenceDiagram
     participant Redis
     participant Runner
 
-    Note over TM: RAM drops below threshold → =Q.Pause.Hard.RAM.LessThan fires
+    Note over TM: RAM drops below threshold → -Q.Pause.Hard.RAM.LessThan fires
     TM->>QH: command.pause.hard {jobId}
     QH->>Redis: SREM set:executing {jobId}
     QH->>Redis: HSET set:suspended {jobId} "hard"
@@ -183,7 +183,7 @@ sequenceDiagram
     QH->>Redis: HSET job:{jobId} confirmed_paused true
     QH-->>TM: state.job.{jobId}.confirmed_suspended
 
-    Note over TM: RAM recovers → =Q.Resume.RAM.MoreThan fires
+    Note over TM: RAM recovers → -Q.Resume.RAM.MoreThan fires
     TM->>QH: command.resume {jobId}
     QH->>Redis: HDEL set:suspended {jobId}
     QH->>Redis: RPUSH queue:resume {jobId}

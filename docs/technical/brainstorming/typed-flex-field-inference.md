@@ -25,7 +25,7 @@ When pushing to a typed flexible field (`[:] :*#Type`), must the user explicitly
       [:] :*#Handler
 
 [ ] compiler infers :myPlugin is #Handler from [:] :*#Handler
-[r] $registry.plugins:myPlugin << ...
+[-] $registry.plugins:myPlugin << ...
 ```
 
 ## Compiler Inference Mechanism

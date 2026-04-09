@@ -11,7 +11,7 @@ updated: 2026-04-03
 `.<` (inputs) and `.>` (outputs) are fixed typed data sections within each pipeline, expander, and collector instance:
 
 ```polyglot
-%=:ProcessData:0
+%-:ProcessData:0
 ├── .<                      <- input ports
 │   ├── .filepath#path
 │   └── .options#serial
@@ -19,7 +19,7 @@ updated: 2026-04-03
     └── .content#string
 ```
 
-Parameter names within `.<` and `.>` are flexible — they follow the pipeline's `[=]` IO declarations.
+Parameter names within `.<` and `.>` are flexible — they follow the pipeline's `(-)` IO declarations.
 
 Wrappers use `.[{]` (inputs) and `.[}]` (outputs) instead of `.<`/`.>`:
 

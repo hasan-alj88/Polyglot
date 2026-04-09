@@ -9,18 +9,18 @@ status: redirect
 
 This document has been split into per-namespace files organized by identifier prefix. Each folder maps to a branch on the `%` metadata tree (see [[data-is-trees]]). See [pglib/INDEX.md](pglib/INDEX.md) for the full registry.
 
-## Pipeline Namespaces (= → `%=`)
-- [=File](pglib/pipelines/File.md) — file operations
-- [=Path](pglib/pipelines/Path.md) — cross-platform path creation
-- [=Sys](pglib/pipelines/Sys.md) — system information
-- [=T](pglib/pipelines/T.md) — triggers
-- [=Q](pglib/pipelines/Q.md) — queue configurations
-- [=Math](pglib/pipelines/Math.md) — numeric operations (add, subtract, multiply, divide, etc.)
-- [=RT](pglib/pipelines/RT.md) — runtime execution (Function, Script, CLI, Bind)
-- [=W](pglib/pipelines/W.md) — wrappers
+## Pipeline Namespaces (= → `%-`)
+- [-File](pglib/pipelines/File.md) — file operations
+- [-Path](pglib/pipelines/Path.md) — cross-platform path creation
+- [-Sys](pglib/pipelines/Sys.md) — system information
+- [-T](pglib/pipelines/T.md) — triggers
+- [-Q](pglib/pipelines/Q.md) — queue configurations
+- [-Math](pglib/pipelines/Math.md) — numeric operations (add, subtract, multiply, divide, etc.)
+- [-RT](pglib/pipelines/RT.md) — runtime execution (Function, Script, CLI, Bind)
+- [-W](pglib/pipelines/W.md) — wrappers
 
 ## Expanders (~ → `%~`)
-- [~ForEach](pglib/expanders/ForEach/) — expand operators
+- [=ForEach](pglib/expanders/ForEach/) — expand operators
 
 ## Collectors (* → `%*`)
 - [*Into](pglib/collectors/Into/) — collect into collection

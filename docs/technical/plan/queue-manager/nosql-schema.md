@@ -21,7 +21,7 @@ resourceTagWithinQueue: #array:ResourceTag — queue-level resource tags
 killPropagation:    #KillPropagation   — Cascade | Downgrade
 maxWaitTime:        string             — max queue wait time
 description:        string             — human-readable
-controls:           [Q] nested         — =Q.Pause.*, =Q.Resume.*, =Q.Kill.*
+controls:           [Q] nested         — -Q.Pause.*, -Q.Resume.*, -Q.Kill.*
 ```
 
 ## Job Hierarchy (runtime tree)
@@ -33,7 +33,7 @@ Stored as: job tree rooted at pipeline instance
 ├── pipeline:       string             — pipeline name
 ├── parentJobId:    string?            — parent (null for root)
 ├── children:       [jobId, ...]       — sub-jobs
-├── marker:         string             — [r], [p], [b], [?]
+├── marker:         string             — [-], [=], [b], [?]
 └── status:         #QueueState        — current state
 ```
 

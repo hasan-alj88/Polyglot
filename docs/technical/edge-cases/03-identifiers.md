@@ -56,8 +56,8 @@ updated: 2026-03-30
 **What it tests:** Calling an imported pipeline. See [[packages#Usage]].
 
 ```polyglot
-[r] @Mail=Mailbox.Provision
-[=] <email << $email
+[-] @Mail-Mailbox.Provision
+(-) <email << $email
 ```
 
 ### EC-3.6: Flexible-field variable paths
@@ -68,8 +68,8 @@ updated: 2026-03-30
 **What it tests:** Variables with `:` flexible field separators. See [[identifiers#Serialized Identifiers]].
 
 ```polyglot
-[r] $config:timeout:value#int << 30
-[r] $user:name#string << "Alice"
+[-] $config:timeout:value#int << 30
+[-] $user:name#string << "Alice"
 ```
 
 ### EC-3.7: Sibling homogeneity violation (INVALID)
@@ -81,6 +81,6 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] INVALID — mixed separators at same sibling level
-[r] $point.x << 10
-[r] $point:y << 20
+[-] $point.x << 10
+[-] $point:y << 20
 ```

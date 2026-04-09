@@ -13,9 +13,9 @@ The `%` root has fixed branches for each object type prefix:
 | Branch | Objects | Name level | Description |
 |--------|---------|------------|-------------|
 | `%#` | Structs | Flexible (`:type`) | All `{#}` type definitions |
-| `%=` | Pipelines | Flexible (`:name`) | All `{=}` pipeline definitions |
+| `%-` | Pipelines | Flexible (`:name`) | All `{-}` pipeline definitions |
 | `%T` | Triggers | Flexible (`:name`) | All `{T}` trigger pipeline definitions |
-| `%~` | Expanders | Flexible (`:name`) | All `~ForEach.*` expand operators |
+| `%~` | Expanders | Flexible (`:name`) | All `=ForEach.*` expand operators |
 | `%*` | Collectors | Flexible (`:name`) | **Data:** `*Into.*`, `*Agg.*` · **Collect-all:** `*All` · **Race:** `*First`, `*Nth` |
 | `%$` | Variables | Flexible (`:name`) | All `$`-prefixed variables |
 | `%W` | Wrappers | Flexible (`:name`) | All `{W}` wrapper definitions |

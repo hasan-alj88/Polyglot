@@ -16,9 +16,9 @@ updated: 2026-03-30
 **What it tests:** `array.string`, `array.int`, `array.path` — dot separates array from element type. See [[syntax/types/arrays#Element-Typed Arrays]].
 
 ```polyglot
-[=] <names#array:string
-[=] <scores#array:int
-[=] <files#array:path
+(-) <names#array:string
+(-) <scores#array:int
+(-) <files#array:path
 ```
 
 ### EC-4.2: Element-typed array — user-defined type (no # prefix)
@@ -28,7 +28,7 @@ updated: 2026-03-30
 **What it tests:** `array.UserRecord` not `array.#UserRecord`. See [[syntax/types/basic-types#User-Defined Types]].
 
 ```polyglot
-[=] <users#array:UserRecord
+(-) <users#array:UserRecord
 ```
 
 ### EC-4.3: Serial type
@@ -38,7 +38,7 @@ updated: 2026-03-30
 **What it tests:** `serial` as a type annotation on IO parameters. See [[syntax/types/basic-types#Basic Types]], [[concepts/collections/INDEX#Collection Hierarchy]].
 
 ```polyglot
-[=] <payload#serial
+(-) <payload#serial
 ```
 
 ### EC-4.4: User-defined type reference
@@ -48,32 +48,32 @@ updated: 2026-03-30
 **What it tests:** `#DataName` as type annotation. See [[syntax/types/basic-types#User-Defined Types]].
 
 ```polyglot
-[r] $hire#NewHire << <payload
+[-] $hire#NewHire << <payload
 ```
 
-### EC-4.5: `=Path"..."` inline path creation
+### EC-4.5: `-Path"..."` inline path creation
 
-**What it tests:** `=Path"..."` inline pipeline call creating `#path` values. See [[syntax/types/strings#=Path Inline Notation]], [[pglib/pipelines/Path|=Path]].
+**What it tests:** `-Path"..."` inline pipeline call creating `#path` values. See [[syntax/types/strings#-Path Inline Notation]], [[pglib/pipelines/Path|-Path]].
 
 ```polyglot
 [ ] Basic usage
-[r] $dir#path << =Path"/tmp/MyApp"
+[-] $dir#path << -Path"/tmp/MyApp"
 
 [ ] With {.} shorthand
-[r] $logDir#path << =Path"{.}/logs"
+[-] $logDir#path << -Path"{.}/logs"
 
 [ ] Separator equivalence — both resolve identically
-[r] $a#path << =Path"{.}\MyApp\logs"
-[r] $b#path << =Path"{.}/MyApp/logs"
+[-] $a#path << -Path"{.}\MyApp\logs"
+[-] $b#path << -Path"{.}/MyApp/logs"
 
 [ ] Interpolation with user-defined path variable
-[r] $root#path
+[-] $root#path
    [.] .Unix << "/opt"
    [.] .Windows << "D:"
-[r] $appDir#path << =Path"{$root}/MyApp"
+[-] $appDir#path << -Path"{$root}/MyApp"
 
 [ ] Literal braces in path string
-[r] $weird#path << =Path"/tmp/{{backup}}/files"
+[-] $weird#path << -Path"/tmp/{{backup}}/files"
 ```
 
 ### EC-4.6: Single-platform path (PGW04001 / PGE04008)
@@ -82,20 +82,20 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] PGW04001 — single platform, but matches current OS (Unix)
-[r] $dir#path
+[-] $dir#path
    [.] .Unix << "/tmp/MyApp"
 
 [ ] PGE04008 — .Unix missing, compiling on Unix
-[r] $dir#path
+[-] $dir#path
    [.] .Windows << "C:\MyApp"
 
 [ ] suppressed warning
 [ ] Ignore PGW04001
-[r] $dir#path
+[-] $dir#path
    [.] .Unix << "/tmp/MyApp"
 
 [ ] no warning — both platforms
-[r] $dir#path
+[-] $dir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
 ```
@@ -106,10 +106,10 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] PGE04001 — string != path, no implicit coercion
-[r] $dir#path << "/tmp/MyApp"
+[-] $dir#path << "/tmp/MyApp"
 
-[ ] correct — use =Path"..." instead
-[r] $dir#path << =Path"/tmp/MyApp"
+[ ] correct — use -Path"..." instead
+[-] $dir#path << -Path"/tmp/MyApp"
 ```
 
 ### EC-4.8: Inline pipeline call — single output
@@ -119,11 +119,11 @@ updated: 2026-03-30
 **What it tests:** An inline pipeline call with one output evaluates to that output's type directly.
 
 ```polyglot
-[ ] =Path has one output >result#path — value is #path
-[r] $dir#path << =Path"/tmp/MyApp"
+[ ] -Path has one output >result#path — value is #path
+[-] $dir#path << -Path"/tmp/MyApp"
 
 [ ] inline call as comparison operand
-[?] $dir =? =Path"/expected"
+[?] $dir =? -Path"/expected"
 ```
 
 ### EC-4.9: Inline pipeline call — multiple outputs
@@ -131,17 +131,17 @@ updated: 2026-03-30
 **What it tests:** An inline pipeline call with multiple outputs evaluates to `#serial` with output parameter names as keys.
 
 ```polyglot
-{=} =ParsePair
-   [=] <InlineStringLiteral#string <~ ""
-   [=] >key#string
-   [=] >value#string
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
+{-} -ParsePair
+   (-) <InlineStringLiteral#string <~ ""
+   (-) >key#string
+   (-) >value#string
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
    [ ] ... parsing logic ...
 
 [ ] multiple outputs -> #serial with keys "key" and "value"
-[r] $result#serial << =ParsePair"name=Alice"
+[-] $result#serial << -ParsePair"name-Alice"
 ```
 
 ### EC-4.10: Inline pipeline call — type mismatch
@@ -149,11 +149,11 @@ updated: 2026-03-30
 **What it tests:** Target type must match the inline pipeline's output type.
 
 ```polyglot
-[ ] PGE04001 — =Path returns #path, not #string
-[r] $name#string << =Path"/tmp"
+[ ] PGE04001 — -Path returns #path, not #string
+[-] $name#string << -Path"/tmp"
 
 [ ] matching types
-[r] $dir#path << =Path"/tmp"
+[-] $dir#path << -Path"/tmp"
 ```
 
 ### EC-4.11: Inline pipeline call — user-defined pipeline
@@ -161,23 +161,23 @@ updated: 2026-03-30
 **What it tests:** User-defined pipelines can accept inline calls by declaring `<InlineStringLiteral#string`.
 
 ```polyglot
-{=} =Greeting
-   [=] <InlineStringLiteral#string <~ ""
-   [=] >message#string
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
+{-} -Greeting
+   (-) <InlineStringLiteral#string <~ ""
+   (-) >message#string
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
    [?] $InlineStringLiteral =!? ""
-      [r] >message << "Hello {$InlineStringLiteral}"
+      [-] >message << "Hello {$InlineStringLiteral}"
    [?] *?
-      [r] >message << "Hello World"
+      [-] >message << "Hello World"
 
 [ ] inline call
-[r] $msg#string << =Greeting"Alice"
+[-] $msg#string << -Greeting"Alice"
 
 [ ] normal call — $InlineStringLiteral is "" (default)
-[r] =Greeting
-   [=] >message >> $msg
+[-] -Greeting
+   (-) >message >> $msg
 ```
 
 ### EC-4.12: Pipeline without `<InlineStringLiteral#string` called inline
@@ -185,16 +185,16 @@ updated: 2026-03-30
 **What it tests:** Calling a pipeline inline when it has not declared the reserved parameter.
 
 ```polyglot
-{=} =NormalPipeline
-   [=] <input#string
-   [=] >output#string
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] >output << $input
+{-} -NormalPipeline
+   (-) <input#string
+   (-) >output#string
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] >output << $input
 
-[ ] compile error — =NormalPipeline has no <InlineStringLiteral#string
-[r] $result#string << =NormalPipeline"test"
+[ ] compile error — -NormalPipeline has no <InlineStringLiteral#string
+[-] $result#string << -NormalPipeline"test"
 ```
 
 ### EC-4.13: Typed flexible wildcard — basic inference
@@ -213,8 +213,8 @@ updated: 2026-03-30
       [:] :*#Handler
 
 [ ] compiler infers :myPlugin is #Handler
-[r] $reg.plugins:myPlugin.endpoint << "/api/data"
-[r] $reg.plugins:myPlugin.method << "GET"
+[-] $reg.plugins:myPlugin.endpoint << "/api/data"
+[-] $reg.plugins:myPlugin.method << "GET"
 ```
 
 ### EC-4.14: Typed flexible wildcard — contradicting annotation (PGE04001)
@@ -227,7 +227,7 @@ updated: 2026-03-30
       [:] :*#Handler
 
 [ ] PGE04001 — :myPlugin is #Handler (from wildcard), not #string
-[r] $reg.plugins:myPlugin#string << "not a handler"
+[-] $reg.plugins:myPlugin#string << "not a handler"
 ```
 
 ### EC-4.15: Typed flexible wildcard — multi-level resolution
@@ -247,8 +247,8 @@ updated: 2026-03-30
       [:] :*#Section
 
 [ ] :auth -> #Section, :timeout -> #Setting, .value -> #string
-[r] $cfg.sections:auth:timeout.value << "30s"
-[r] $cfg.sections:auth:timeout.default << "60s"
+[-] $cfg.sections:auth:timeout.value << "30s"
+[-] $cfg.sections:auth:timeout.default << "60s"
 ```
 
 ### EC-4.16: Typed flexible wildcard — untyped level (no wildcard)
@@ -262,11 +262,11 @@ updated: 2026-03-30
       [:] :key2#int
 
 [ ] individually declared flex fields — matched by name
-[r] $cfg.data:key1 << "hello"
-[r] $cfg.data:key2 << 42
+[-] $cfg.data:key1 << "hello"
+[-] $cfg.data:key2 << 42
 
 [ ] :unknown has no wildcard, no individual declaration — treated as #serial
-[r] $cfg.data:unknown << "anything"
+[-] $cfg.data:unknown << "anything"
 ```
 
 ### EC-4.17: Typed flexible wildcard — individual override before wildcard fallback
@@ -280,10 +280,10 @@ updated: 2026-03-30
       [:] :*#Handler
 
 [ ] :default matches the named declaration -> #SpecialHandler
-[r] $reg.entries:default.specialField << "value"
+[-] $reg.entries:default.specialField << "value"
 
 [ ] :other falls back to wildcard -> #Handler
-[r] $reg.entries:other.endpoint << "/api"
+[-] $reg.entries:other.endpoint << "/api"
 ```
 
 ### EC-4.18: Multidimensional array — `:ND` dimension specifier
@@ -294,34 +294,34 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] 1D array — default (no :ND specified)
-[=] <items#array:string
-[r] $first << $items.0
+(-) <items#array:string
+[-] $first << $items.0
 
 [ ] 2D matrix — :2D dimension specifier
-[=] <matrix#array:float:2D
-[r] $val << $matrix.0.1
+(-) <matrix#array:float:2D
+[-] $val << $matrix.0.1
 
 [ ] 3D cube — :3D dimension specifier
-[=] <cube#array:int:3D
-[r] $val << $cube.2.3.0
+(-) <cube#array:int:3D
+[-] $val << $cube.2.3.0
 
 [ ] 4D with user-defined element type
-[=] <hyper#array:UserRecord:4D
-[r] $cell << $hyper.0.1.2.3
+(-) <hyper#array:UserRecord:4D
+[-] $cell << $hyper.0.1.2.3
 
 [ ] PGE04017 — too many indices for :2D
-[=] <matrix#array:float:2D
-[ ] [r] $val << $matrix.0.1.2                 <- 3 indices on :2D
+(-) <matrix#array:float:2D
+[ ] [-] $val << $matrix.0.1.2                 <- 3 indices on :2D
 
 [ ] PGE04017 — too few indices for :3D
-[=] <cube#array:int:3D
-[ ] [r] $val << $cube.2                        <- 1 index on :3D
+(-) <cube#array:int:3D
+[ ] [-] $val << $cube.2                        <- 1 index on :3D
 
 [ ] PGE04017 — :0D is not valid
-[ ] [=] <nothing#array:float:0D                <- dimension must be positive
+[ ] (-) <nothing#array:float:0D                <- dimension must be positive
 
 [ ] PGE04013 — nested array still banned
-[ ] [=] >matrix#array:array.float              <- use #array:float:2D instead
+[ ] (-) >matrix#array:array.float              <- use #array:float:2D instead
 ```
 
 ### EC-4.19: `{Array}` without element type
@@ -332,11 +332,11 @@ updated: 2026-03-30
 ```polyglot
 [ ] ✗ PGE04025 — no element type
 {Array} $items#array
-   [r] $items << {1, "mixed", #Boolean.True}
+   [-] $items << {1, "mixed", #Boolean.True}
 ```
 
 ```polyglot
 [ ] ✓ typed array
 {Array} $items#array.int
-   [r] $items << {1, 2, 3}
+   [-] $items << {1, 2, 3}
 ```

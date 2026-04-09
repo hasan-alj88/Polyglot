@@ -16,20 +16,20 @@ updated: 2026-03-30
 **What it tests:** 4+ levels of indentation (package -> pipeline -> expand -> conditional -> error). See [[line-structure]].
 
 ```polyglot
-{=} =Deep
-   [T] =T.Call
-   [W] =W.Polyglot
+{-} -Deep
+   [T] -T.Call
+   [W] -W.Polyglot
 
-   [r] ~ForEach.Array
-   [~] <Array << $items
-   [~] >item >> $item
+   [-] =ForEach.Array
+   (=) <Array << $items
+   (=) >item >> $item
 
       [?] $item >? 0
-         [r] =SomeCall
-         [=] <val << $item
-         [=] >out >> $result
+         [-] -SomeCall
+         (-) <val << $item
+         (-) >out >> $result
             [!] !Some.Error
-               [r] $result << -1
+               [-] $result << -1
 ```
 
 ### EC-2.2: Bool literals
@@ -40,8 +40,8 @@ updated: 2026-03-30
 **What it tests:** Bool values are `#Boolean.True` / `#Boolean.False` (not `true`/`false`). See [[syntax/types/INDEX|types]].
 
 ```polyglot
-[r] $flag#bool << #Boolean.True
-[=] >enabled#bool ~> #Boolean.False
+[-] $flag#bool << #Boolean.True
+(-) >enabled#bool ~> #Boolean.False
 ```
 
 ### EC-2.3: Negative numeric literals
@@ -51,8 +51,8 @@ updated: 2026-03-30
 **What it tests:** Negative integers and floats as literal values.
 
 ```polyglot
-[r] $offset#int << -1
-[r] $threshold#float << -0.5
+[-] $offset#int << -1
+[-] $threshold#float << -0.5
 ```
 
 ### EC-2.4: Empty string literal
@@ -72,7 +72,7 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] ✓ empty inline string — pipeline responsibility
-[r] $p#path << =Path""
+[-] $p#path << -Path""
 ```
 
 ### EC-2.6: Leading zeros in int/float literals
@@ -82,8 +82,8 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] ⚠ PGW04002 — leading zeros
-[r] $x#int << 007
-[r] $y#float << 00.50
+[-] $x#int << 007
+[-] $y#float << 00.50
 ```
 
 ### EC-2.7: Negative zero
@@ -93,6 +93,6 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] ✓ negative zero — normalized at runtime
-[r] $x#int << -0
-[r] $y#float << -0.0
+[-] $x#int << -0
+[-] $y#float << -0.0
 ```
