@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-08
 status: complete
 ---
 
@@ -25,6 +25,8 @@ See [[boolean]] for `#Boolean` (also a `##Enum` type, documented separately).
 | `#FileAccess` | File access state | [[FileAccess]] |
 | `#VarState` | Variable lifecycle state | [[VarState]] |
 | `#FieldKind` | Leaf content field type classifier | [[FieldKind]] |
+| `#FlexKind` | Branch flexibility classifier | [[FlexKind]] |
+| `#ActiveKind` | Branch activation classifier | [[ActiveKind]] |
 
 ## Permission Enums
 

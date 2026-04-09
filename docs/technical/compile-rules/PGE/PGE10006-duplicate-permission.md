@@ -10,12 +10,12 @@ severity: error
 `PGE10006`
 
 **Statement:** Duplicate permission declarations are a compile error in two scopes:
-1. **Duplicate `[_]` reference** — the same `{_}` object name referenced more than once within a single `{@}` ceiling or `{=}`/`{M}` definition.
+1. **Duplicate `[_]` reference** — the same `{_}` object name referenced more than once within a single `{@}` ceiling or `{=}` definition.
 2. **Duplicate capability in `{_}`** — the same `Category.Capability` declared more than once within a single `{_}` permission object block.
 
 PGE10006 fires on the second (and subsequent) declaration(s).
 **Rationale:** Duplicate `[_]` references are meaningless — referencing the same object twice grants no additional capability. Duplicate capabilities within a `{_}` block are ambiguous — if two `.File.Read` lines specify different scope patterns, which applies? Even if identical, duplicates indicate copy-paste errors or incomplete refactoring. Like PGE09011 (duplicate import alias), duplicate declarations create resolution ambiguity.
-**Detection:** The compiler collects all `[_]` references within each block scope (`{@}` or `{=}`/`{M}`). If the same `_ObjectName` appears more than once, PGE10006 fires. Separately, within each `{_}` block, the compiler checks all `[.] .Category.Capability` field lines. If the same Category.Capability pair appears more than once, PGE10006 fires on the second occurrence.
+**Detection:** The compiler collects all `[_]` references within each block scope (`{@}` or `{=}`). If the same `_ObjectName` appears more than once, PGE10006 fires. Separately, within each `{_}` block, the compiler checks all `[.] .Category.Capability` field lines. If the same Category.Capability pair appears more than once, PGE10006 fires on the second occurrence.
 
 **See also:** PGE09011 (duplicate import alias — analogous pattern), PGE10001 (pipeline exceeds ceiling), PGE10003 (unknown permission category), [[permissions]]
 

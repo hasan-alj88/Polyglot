@@ -15,7 +15,7 @@ The `=#` namespace groups schema-related pipelines. The `=` is the pipeline pref
 
 pglib pipelines for schema validation, field extraction, format parsing, and dataframe column extraction. No `[@]` import needed. See [[errors#Pipeline Error Associations]] for error contracts.
 
-Types are data trees (GT-1). The `<#type` syntax passes a type definition's `%` metadata tree as pipeline input -- extending `<#` from `{M}` macro type inputs to `{=}` pipeline IO. Works with any tier: `#Config` (struct), `##Scalar` (schema), `###Enum` (property). See [[syntax/types/macro-types#<#type in Pipeline IO]].
+Types are data trees (GT-1). The `<#type` syntax passes a type definition's `%` metadata tree as pipeline input -- extending `<#` from `{#}` generic type inputs to `{=}` pipeline IO. Works with any tier: `#Config` (struct), `##Scalar` (schema), `###Enum` (property). See [[syntax/types/generic-types#<#type in Pipeline IO]].
 
 ## Native Parsers (Compiler Intrinsics)
 
@@ -53,5 +53,5 @@ Types are data trees (GT-1). The `<#type` syntax passes a type definition's `%` 
 
 - [[pglib/pipelines/INDEX|pglib Pipeline Index]]
 - [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
-- [[syntax/types/macro-types#<#type in Pipeline IO|<#type in Pipeline IO]]
+- [[syntax/types/generic-types#<#type in Pipeline IO|<#type in Pipeline IO]]
 - [[errors#Pipeline Error Associations|Pipeline Error Associations]]

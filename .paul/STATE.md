@@ -12,8 +12,8 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 Milestone: v0.2 Language Specification — COMPLETE
 Phase: Issue #163 — Add metadata paths to all type definitions and operation files
 Plan: N/A
-Status: No active issue
-Last activity: 2026-04-07 — Issue #163 merged to main (closes #163)
+Status: All 5 plans complete (unified) — ready for merge
+Last activity: 2026-04-09 — Plan 272-05 unified (technical docs — EBNF, compile rules, metadata tree)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -100,14 +100,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #272 — Parameterized ## schemas replace {M} macros
+Branch: design/issue-272-parameterized-schemas-replace-m-macros
+Labels: design
+Started: 2026-04-08
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/272
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Plan 272-05 unified — 5/5 plans complete]
 ```
 
 ## Accumulated Context
@@ -265,13 +269,15 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-07
-Stopped at: Issue #163 merged to main
-Next action: /paul:issues or /paul:progress
-Resume file: .paul/ROADMAP.md
+Last session: 2026-04-09
+Stopped at: All 5 plans unified — ready for merge
+Next action: /paul:merge (commit changes and merge branch to main)
+Resume file: .paul/phases/issue-272-parameterized-schemas/272-05-SUMMARY.md
 Resume context:
-- Issue #163 CLOSED and merged to main
-- No active issue — pick next work
+- Issue #272 all 5 plans complete on branch design/issue-272-parameterized-schemas-replace-m-macros
+- Plans 272-01 through 272-05 all applied and unified
+- Deferred: serial.md has stale %##Children.* refs from plans 01-04
+- Ready for commit + merge to main
 
 ---
 *STATE.md — Updated after every significant action*

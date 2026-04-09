@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-04
+updated: 2026-04-08
 status: complete
 ---
 
@@ -28,10 +28,14 @@ RawString (compiler intrinsic) [##Leaf]
 
 #Boolean (##Enum type — NOT #String) [##Enum, ##Scalar, ###ScalarEnum]
 
-#Map:KeyType:ValueType (macro-generated — sparse, homogeneous key-value pairs)
-#Array:ValueType:Dim (macro-generated — contiguous, rectangular, N-dimensional — #Map variant)
-#Dataframe:ColumnEnum:CellType (macro-generated — row-oriented, Array of Map)
+#Map:KeyType:ValueType (generic — sparse, flexible key-value pairs)
+#Array:ValueType:Dim (generic — contiguous, rectangular, N-dimensional)
+#Dataframe:ColumnEnum:CellType (generic — row-oriented, Array of Map)
 #Serial (unconstrained, unlimited depth)
+
+#FlexKind (##Enum — branch flexibility classifier)
+#ActiveKind (##Enum — branch activation classifier)
+#Bound (##Int + ##Inf — numeric value or infinity)
 
 #Code:<Lang>.Output (runtime execution output — .stdout, .stderr, .return)
 #PyEnv (Python runtime environment handle)
@@ -45,9 +49,10 @@ RawString (compiler intrinsic) [##Leaf]
 | Foundation | [string.md](string.md) | #String |
 | Scalar subtypes | [scalars.md](scalars.md) | #Int, #UnsignedInt, #Float, #Sci, #Eng, #Dimension, #KeyString, #NestedKeyString |
 | Boolean | [boolean.md](boolean.md) | #Boolean, #None |
-| Collections | [collections.md](collections.md) | #Map, #Array, #Dataframe, #Serial |
-| Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #KillPropagation, #ResourceTag, #FileAccess, #VarState, #FieldKind |
+| Collections | [collections.md](collections.md) | #Map, #Array, #Dataframe, #Set, #Serial |
+| Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #KillPropagation, #ResourceTag, #FileAccess, #VarState, #FieldKind, #FlexKind, #ActiveKind |
 | Structs | [structs.md](structs.md) | #path, #Queue |
+| Schema types | [Bound.md](Bound.md) | #Bound |
 | Runtime | [rt.md](rt.md) | #Code, #PyEnv, #RsEnv |
 
 ## Related

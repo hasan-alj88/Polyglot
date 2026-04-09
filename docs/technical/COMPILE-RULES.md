@@ -30,11 +30,11 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01001 | Pipeline Section Misordering |
 | PGE01002 | IO Before Trigger |
 | PGE01003 | One Package Declaration Per File |
-| PGE01004 | Macro Structural Constraints |
+| PGE01004 | Definition Structural Constraints |
 | PGE01005 | Missing Pipeline Trigger |
 | PGE01006 | Missing Pipeline Queue |
 | PGE01007 | Missing Pipeline Setup/Cleanup |
-| PGE01008 | Wrapper Must Reference Macro |
+| PGE01008 | Wrapper Must Reference Wrapper Definition |
 | PGE01009 | Wrapper IO Mismatch |
 | PGE01010 | Pipeline IO Name Mismatch |
 | PGE01011 | Duplicate IO Parameter Name |
@@ -45,11 +45,11 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01016 | Unmarked Execution Line |
 | PGE01017 | Wrong Block Element Marker |
 | PGE01018 | Tautological or Contradictory Trigger Condition |
-| PGE01019 | Macro Dispatch Ambiguity *(planned)* |
+| PGE01019 | *(Retired — macros removed; see #272)* |
 | PGE01020 | Effectless Execution Expression |
 | PGE01021 | Empty Data Definition |
 | PGE01022 | Empty Error Namespace |
-| PGE01023 | Parameterless Macro |
+| PGE01023 | *(Retired — macros removed; see #272)* |
 | PGE01024 | Incompatible Operation Marker |
 | PGE01025 | Discard in Wrapper IO |
 | PGE01026 | Orphan Continuation Line |
@@ -117,8 +117,8 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE04019 | Duplicate Dictionary Key *(planned)* |
 | PGE04020 | Key Gap Violation *(planned)* |
 | PGE04021 | Empty String on Non-None Type *(planned)* |
-| PGE04022 | Macro Type Constraint Violation *(planned)* |
-| PGE04023 | Macro Field Constraint Violation *(planned)* |
+| PGE04022 | Generic Type Constraint Violation *(planned)* |
+| PGE04023 | Generic Field Constraint Violation *(planned)* |
 | PGE04024 | Non-Value Comparison |
 | PGE04025 | Untyped Array |
 | PGE04026 | Invalid IANA Timezone |
@@ -310,16 +310,16 @@ Each rule follows this structure:
 **VALID:**
 ```polyglot
 {#} #MyCollection
-   [#] %##Children.Gap << #False
+   [#] %##Gap << #False
    [:] :*#string
 ```
 
 **INVALID:**
 ```polyglot
 {#} #MyCollection
-   [#] %##Children.Gap << #False     [ ] ✗ PGE11001 — universal scope
+   [#] %##Gap << #False     [ ] ✗ PGE11001 — universal scope
    [.] .items
-      [.] %##Children.Gap << #True   [ ] ✗ PGE11001 — branch-wise conflicts with universal
+      [.] %##Gap << #True   [ ] ✗ PGE11001 — branch-wise conflicts with universal
 ```
 
 ### Rule 9.22 — Unbounded Collection Nesting
@@ -332,21 +332,22 @@ Each rule follows this structure:
 **VALID:**
 ```polyglot
 {#} #Matrix
-   [#] <~ #Array<#Array<#float
+   [#] << ##Rectangular
+      [#] <Dim << "2D"
    [#] %##Depth.Max << 2
 ```
 
 **INVALID:**
 ```polyglot
 {#} #Nested
-   [#] <~ #Array<#Array<#float     [ ] ✗ PGE11002 — no %##Depth.Max declared
+   [#] << ##Rectangular              [ ] ✗ PGE11002 — no %##Depth.Max declared
 ```
 
 **WARNING:**
 ```polyglot
 {#} #FlexNested
-   [#] <~ #Array<#Array<#float
-   [#] %##Depth.Max << -1          [ ] ⚠ PGW11003 — unlimited depth on user type
+   [#] << ##Rectangular
+   [#] %##Depth.Max << .Inf          [ ] ⚠ PGW11003 — unlimited depth on user type
 ```
 
 ### Rule 9.23 — Field Type Contradiction
@@ -374,7 +375,7 @@ Each rule follows this structure:
 ### Rule 9.24 — Invalid Key Type
 `PGE11004`
 
-**Statement:** `%##Children.Type` must be set to a type that inherits from `#KeyString`. Keys must exclude syntax-reserved characters (whitespace, `.`, `:`, `<`, `>`).
+**Statement:** `%##Key` must be set to a type that inherits from `#KeyString`. Keys must exclude syntax-reserved characters (whitespace, `.`, `:`, `<`, `>`).
 
 **Rationale:** Tree child keys appear in accessor syntax (`$var<key`). Types that permit syntax-reserved characters in their values would create parse ambiguity.
 
@@ -382,14 +383,14 @@ Each rule follows this structure:
 ```polyglot
 {#} #NamedMap
    [#] << ##Flat
-   [#] %##Children.Type << #KeyString
+   [#] %##Key << #KeyString
 ```
 
 **INVALID:**
 ```polyglot
 {#} #BadMap
    [#] << ##Flat
-   [#] %##Children.Type << #string   [ ] ✗ PGE11004 — #string allows '.', ':', '<', '>'
+   [#] %##Key << #string   [ ] ✗ PGE11004 — #string allows '.', ':', '<', '>'
 ```
 
 ### Rule 9.25 — Mixed Field Kinds
@@ -472,8 +473,9 @@ Each rule follows this structure:
 **WARNING:**
 ```polyglot
 {#} #MyArray
-   [#] <~ #Array<#int
-   [#] %##Children.Gap << #False   [ ] ⚠ PGW11001 — already inherited from ##Contiguous via #Array
+   [#] << ##Array
+      [#] <#ValueType << #int
+   [#] %##Gap << #False                [ ] ⚠ PGW11001 — already set by ##Contiguous via ##Array
 ```
 
 ### Rule 9.22w — Contradicting Schema Override
@@ -486,21 +488,22 @@ Each rule follows this structure:
 **WARNING:**
 ```polyglot
 {#} #SparseArray
-   [#] <~ #Array<#int
-   [#] %##Children.Gap << #True    [ ] ⚠ PGW11002 — overrides #False from ##Contiguous
+   [#] << ##Array
+      [#] <#ValueType << #int
+   [#] %##Gap << #True                 [ ] ⚠ PGW11002 — overrides #False from ##Contiguous
 ```
 
 ### Rule 9.23w — Unlimited Depth on User Type
 `PGW11003`
 
-**Statement:** Setting `%##Depth.Max << -1` (unlimited depth) on a user-defined type emits a warning. Only `#Serial` should use unlimited depth.
+**Statement:** Setting `%##Depth.Max << .Inf` (unlimited depth via `##Inf`) on a user-defined type emits a warning. Only `#Serial` should use unlimited depth.
 
 **Rationale:** Unlimited depth is a deliberate escape hatch for unconstrained data. User-defined types should have bounded depth for predictable tree traversal and memory use.
 
 **WARNING:**
 ```polyglot
 {#} #DeepTree
-   [#] %##Depth.Max << -1         [ ] ⚠ PGW11003 — unlimited depth on user type
+   [#] %##Depth.Max << .Inf         [ ] ⚠ PGW11003 — unlimited depth on user type
 ```
 
 ---

@@ -10,7 +10,7 @@ updated: 2026-03-31
 
 Wrappers invoke a wrapper definition (`{W}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE01007). The `[W]` line must reference a valid `{W}` wrapper definition (PGE01008), and the IO wired at the `[W]` site must match the wrapper's `[{]`/`[}]` declarations (PGE01009).
 
-`{W}` is a separate entity from `{M}` — wrappers are not macros. `{W}` defines wrappers (setup/cleanup scope with `[\]`/`[/]` and `[{]`/`[}]` IO), while `{M}` defines type macros (compile-time `{#}` generation). Wrappers (`{W}`) cannot contain `[T]`, `[Q]`, or `[=]` pipeline-level IO — these are pipeline-only elements (PGE01004). See [[blocks]] for wrapper structural constraints.
+Wrappers (`{W}`) cannot contain `[T]`, `[Q]`, or `[=]` pipeline-level IO — these are pipeline-only elements (PGE01004). See [[blocks]] for wrapper structural constraints.
 
 - `[\]` — wrapper setup, runs before the execution body
 - `[/]` — wrapper cleanup, runs after the execution body

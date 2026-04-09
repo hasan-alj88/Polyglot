@@ -49,7 +49,6 @@ The `%` root has fixed branches for every object type in Polyglot:
 ├── ~   Expanders         — expand operators (~ForEach.*)
 ├── *   Collectors        — collect operators (*Into.*, *Agg.*, *All, *First)
 ├── $   Variables         — runtime data ($name, $result)
-├── M   Macros            — reusable logic ({M} blocks)
 ├── !   Errors            — error trees ({!} blocks, pglib !File.*, !No.*, etc.)
 ├── @   Packages          — package addresses (@Local:999::MyPkg)
 ├── _   Permissions       — IO capability declarations ([_] blocks)
@@ -72,7 +71,6 @@ Each concept you have learned maps to a branch in the tree:
 | Error trees | [[errors]], `{!}` blocks | `%!` | `%!.File.NotFound` |
 | Packages | [[packages]] | `%@` | `%@:Local:999::MyPkg` |
 | Permissions | [[permissions]] | `%_` | `%_.File.read` |
-| Macros | [[blocks]] `{M}` | `%M` | `%M:W.Tracing:0` |
 
 ## Schema vs Instance
 
@@ -178,7 +176,7 @@ The general path notation is:
 | Segment | Meaning |
 |---------|---------|
 | `%` | Tree root — the metadata accessor |
-| `{type}` | Object type prefix (`#`, `=`, `$`, `~`, `*`, `M`, `!`, `@`, `_`) |
+| `{type}` | Object type prefix (`#`, `=`, `$`, `~`, `*`, `!`, `@`, `_`) |
 | `:{ref}` | Object name (flexible field) |
 | `:{instance}` | Instance number (flexible field) |
 | `.{fields}` | Fixed field path within the instance |

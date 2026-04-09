@@ -35,7 +35,6 @@ The `%` root has fixed branches for each object type prefix:
 | `%~` | Expanders | Flexible (`:name`) |
 | `%*` | Collectors | Flexible (`:name`) |
 | `%$` | Variables | Flexible (`:name`) |
-| `%M` | Macros | Flexible (`:name`) |
 | `%!` | Errors | Flexible (`:namespace`) |
 | `%@` | Packages | Flexible (`:address`) |
 

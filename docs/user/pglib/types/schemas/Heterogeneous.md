@@ -1,40 +1,15 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
-status: complete
-metadata_definition: "%definition.##:Heterogeneous"
+updated: 2026-04-08
+status: retired
 ---
 
-# ##Heterogeneous Schema
+# ##Heterogeneous — RETIRED
 
-<!-- @types -->
+`##Heterogeneous` has been retired. Child type uniformity is now expressed through `%###Type`:
 
-`##Heterogeneous` allows children to have different types. Each child can carry a distinct type annotation.
+- `%###Type << #SomeType` — all leaves must be that type (replaces ##Homogeneous)
+- `%###Type` absent — each leaf declares its own type per-field (replaces ##Heterogeneous)
 
-## Property
-
-| Property | Value | Meaning |
-|----------|-------|---------|
-| `%##Children.Uniform` | `#False` | Children can have different types |
-
-## Used By
-
-- `#Map` (heterogeneous variant)
-- `#Serial`
-
-## Metadata
-
-| Path | Pattern | Description |
-|------|---------|-------------|
-| Definition | `%definition.##:Heterogeneous` | Schema definition template |
-
-Schemas are compile-time metadata constraints — they have no runtime instances.
-
-## Related
-
-- [[schemas/INDEX|## Schema Types]] -- all schema definitions
-- [[schemas/Homogeneous|##Homogeneous]] -- opposite: uniform child types
-- [[schemas/Deep|##Deep]] -- unlimited depth (also used by #Serial)
-- [[concepts/collections/INDEX|collections]] -- collection types using ##Heterogeneous
-- [[syntax/types/INDEX|types]] -- full type system specification
+See [[syntax/types/schema-properties|Schema Properties]] for the full property reference.

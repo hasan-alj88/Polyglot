@@ -93,16 +93,34 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |
 |   +-- .##                                     Schema definitions
 |   |   |                                       → [[definition-templates#Schema Definition Templates]]
-|   |   +-- :Leaf                               %definition.##:Leaf           .%##Depth.Max -> 0
-|   |   +-- :Scalar                             %definition.##:Scalar         .%##Depth.Max -> 1
-|   |   +-- :Flat                               %definition.##:Flat           .%##Depth.Max -> 1
-|   |   +-- :Deep                               %definition.##:Deep           .%##Depth.Max -> -1
-|   |   +-- :Homogeneous                        %definition.##:Homogeneous    .%##Children.Uniform -> #True
-|   |   +-- :Heterogeneous                      %definition.##:Heterogeneous  .%##Children.Uniform -> #False
-|   |   +-- :Contiguous                         %definition.##:Contiguous     .%##Children.Gap -> #False, .Ordered -> #True
-|   |   +-- :Sparse                             %definition.##:Sparse         .%##Children.Gap -> #True
-|   |   +-- :Rectangular                        %definition.##:Rectangular    .%##Children.Regular -> #True, .Uniform -> #True
-|   |   +-- :Enum                               %definition.##:Enum           (enum classification)
+|   |   |
+|   |   |   Depth schemas
+|   |   +-- :Leaf                               %definition.##:Leaf           %##Depth.Max -> 0
+|   |   +-- :Scalar                             %definition.##:Scalar         %##Depth.Max -> 1
+|   |   +-- :Flat                               %definition.##:Flat           %##Depth.Max -> 1
+|   |   +-- :Deep                               %definition.##:Deep           %##Depth.Max -> .Inf
+|   |   |
+|   |   |   Value schemas
+|   |   +-- :Inf                                %definition.##:Inf            composable .Inf variant
+|   |   |
+|   |   |   Structure schemas
+|   |   +-- :Contiguous                         %definition.##:Contiguous     %##Gap -> #False, %##Ordered -> #True
+|   |   +-- :Sparse                             %definition.##:Sparse         %##Gap -> #True
+|   |   +-- :Rectangular                        %definition.##:Rectangular    %##Regular -> #True, %##Propagate -> #True
+|   |   +-- :Sorted                             %definition.##:Sorted         %##Sorted -> #True, %##Ordered -> #True
+|   |   |
+|   |   |   Classification schemas
+|   |   +-- :Enum                               %definition.##:Enum           ##Flat + %##Active -> .One + %###Kind -> .Enum
+|   |   |
+|   |   |   Parameterized schemas
+|   |   +-- :Fields                             %definition.##:Fields         <#Type(##Enum) → stamps variants as [.] fields
+|   |   +-- :Nullable                           %definition.##:Nullable       <#ValueType → .OK.Value OR .None
+|   |   +-- :Result                             %definition.##:Result         <#OkType, <#ErrType → .OK OR .Err
+|   |   +-- :String                             %definition.##:String         <regex → .string + .regex
+|   |   +-- :Map                                %definition.##:Map            <#KeyType, <#ValueType → flat sparse flexible
+|   |   +-- :Array                              %definition.##:Array          <#ValueType, <Dim → contiguous rectangular
+|   |   +-- :Set                                %definition.##:Set            <#ValueType → sparse + %###Unique
+|   |   +-- :Dataframe                          %definition.##:Dataframe      <#Columns, <#CellType → array of maps
 |   |
 |   +-- .###                                    Field type definitions
 |       |                                       → [[definition-templates#Field Type Definition Templates]]
@@ -110,6 +128,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |       +-- :Enum                               %definition.###:Enum           leaf is variant selector
 |       +-- :ScalarValue                        %definition.###:ScalarValue    regex-validated string
 |       +-- :ScalarEnum                         %definition.###:ScalarEnum     variant selector in scalar
+|       +-- :None                               %definition.###:None           nullable (empty string "")
 |
 +-- #   Structs (instances)                     RUNTIME INSTANCES
 |   |                                           → [[object-types#%# Branch]]
@@ -241,11 +260,6 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |       +-- .pendingCount#live.int               → [[metadata#Queue]]
 |       +-- .activeCount#live.int
 |       +-- .totalProcessed#live.int
-|
-+-- M   Macros (instances)
-|   |
-|   +-- :(name):N                               %M:{name}:N
-|       +-- (live fields not yet defined)
 |
 +-- !   Errors                                  FIXED NAMESPACES (no instances)
 |   |                                           → [[pglib/errors/errors]]

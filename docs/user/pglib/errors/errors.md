@@ -212,7 +212,7 @@ Each pglib pipeline declares the errors it can raise via `[=] !ErrorName` (see [
 
 ### `[<] !Alias.Clash` Fallback Chain
 
-In `{M}` type macros, the `[#] <Alias` parameter can provide a fallback chain of alternative alias values using `[<] !Alias.Clash`. The compiler tries each value in order until one succeeds:
+In `{#}` generic type definitions, the `[#] <Alias` parameter can provide a fallback chain of alternative alias values using `[<] !Alias.Clash`. The compiler tries each value in order until one succeeds:
 
 ```polyglot
 [#] <Alias << "int"
@@ -225,4 +225,4 @@ In `{M}` type macros, the `[#] <Alias` parameter can provide a fallback chain of
 - If `"integer"` also clashes, the compiler tries `"Integer"`
 - If all alternatives are exhausted, the compile error propagates (unrecoverable)
 
-This pattern is used in `{M} #String.Subtype` to provide robust alias resolution for scalar type definitions like `##Int`, `##Float`, etc.
+This pattern provides robust alias resolution for scalar type definitions like `##Int`, `##Float`, etc.

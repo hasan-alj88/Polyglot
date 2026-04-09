@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:Array"
 metadata_instance: "%#:Array:N"
@@ -10,48 +10,24 @@ metadata_instance: "%#:Array:N"
 # #Array Collection
 
 <!-- @types -->
-<!-- @macros -->
 
-Contiguous, rectangular collection with typed elements and N-dimensional support. `#Array` inherits from `#Map` with `#UnsignedInt` keys.
+Contiguous, rectangular collection with typed elements and N-dimensional support. `#Array` is a generic type with `[#] <param` inputs.
 
 ---
 
 ## Definition
 
 ```polyglot
-{M} #Array
-   [ ] First input: a DataType — <# means type input (all definitions are data trees)
+{#} #Array
    [#] <#ValueType
-      [<] << ##Scalar
-   [ ] Optional second input: a Dimension (defaults to 1D)
    [#] <Dim##Dimension <~ "1D"
-      [<] << ##Scalar
-
-   [ ] Direct substitution via {} inside double quotes — implicit inline pipeline
-   [ ] ##DataTypeString: new pglib schema for valid {x} definition names
-   [r] $ArrayName##DataTypeString << "Array{$Dim}:{$ValueType%name}"
-   [r] $dim#RawString << =String.Lower"{$Dim}"
-
-   {#} #{$ArrayName}
-      [#] <~ #Map:#UnsignedInt:$ValueType
-      [#] %##Alias
-         [:] << "array:{$ValueType%name}:{$dim}"
-         [:] << "array{$dim}:{$ValueType%name}"
-         [:] << "Array{$Dim}:{$ValueType%name}"
-      [#] %##Children.Type << #UnsignedInt
-      [#] %##Children.Ordered << #True
-      [#] %##Children.Uniform << #True
-      [#] << ##Contiguous
-      [#] << ##Rectangular
-      [#] %##Depth.Max << $Dim
-      [:] :*#$ValueType
+   [#] << ##Array
+      [#] <#ValueType << <#ValueType
+      [#] <Dim << <Dim
+   [#] %##Alias << "array"
 ```
 
----
-
-## Inheritance from #Map
-
-`#Array` inherits from `#Map:#UnsignedInt:$ValueType` via the `<~` operator. This means arrays are maps with integer keys (`:0`, `:1`, `:2`, ...) and additional constraints for contiguity, ordering, and rectangular shape.
+The `<#ValueType` parameter sets the element type. The `<Dim` parameter sets the dimension (defaults to `"1D"`). The `##Array` parameterized schema provides the structural constraints: contiguous, rectangular, propagated to all levels.
 
 ---
 
@@ -59,10 +35,26 @@ Contiguous, rectangular collection with typed elements and N-dimensional support
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `%##Children.Type` | `#UnsignedInt` | Integer indices `:0`, `:1`, `:2` ... |
-| `##Contiguous` | `%##Children.Gap << #False`, `%##Children.Ordered << #True` | No gaps, insertion order preserved |
-| `##Rectangular` | `%##Children.Regular << #True`, `%##Children.Uniform << #True` | Regular shape, uniform types |
-| `%##Depth.Max` | `$Dim` | Equals dimension parameter value |
+| `%##Gap` | `#False` (via ##Contiguous) | No gaps in indices |
+| `%##Ordered` | `#True` (via ##Contiguous) | Insertion order preserved |
+| `%##Regular` | `#True` (via ##Rectangular) | Same child count per dimension |
+| `%##Depth.Max` | `<Dim` (via ##Rectangular) | Dimension count |
+| `%##Propagate` | `#True` (via ##Rectangular) | Properties apply to all levels |
+| `%##Flexible` | `#FlexKind.Range` (via ##Rectangular) | Compiler-generated indices |
+| `%##Key` | `#UnsignedInt` | Integer indices |
+| `%###Type` | `<#ValueType` | Element type constraint |
+
+---
+
+## Usage
+
+```polyglot
+[ ] #array:int → ValueType=Int, Dim=1D (default)
+[r] $scores#array:int <~ {}
+
+[ ] #array:float:2D → ValueType=Float, Dim=2D
+[r] $matrix#array:float:2D <~ {}
+```
 
 ---
 
@@ -77,8 +69,7 @@ Contiguous, rectangular collection with typed elements and N-dimensional support
 
 ## Related
 
-- [[collections]] — collection type overview
-- [[Map]] — parent type (#Array inherits from #Map)
-- [[scalars]] — scalar schema classifications
-- [[syntax/types/INDEX|types]] — full type system specification
-- [[macros]] — macro system
+- [[collections]] -- collection type overview
+- [[Map]] -- base key-value collection
+- [[schemas/Array|##Array]] -- parameterized schema
+- [[syntax/types/INDEX|types]] -- full type system specification

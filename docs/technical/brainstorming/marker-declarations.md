@@ -34,7 +34,6 @@ Polyglot has two base object types. All others are subtypes:
 ```polyglot
 {#} — Data definition (base)
  ├── {!} — Error definition (subtype of {#})
- ├── {M} — Macro definition (subtype of {#}, compile-time type generation)
  └── {Q} #Name — Queue data definition (subtype of {#}, uses #Queue schema)
 
 {=} — Pipeline definition (base)
@@ -48,7 +47,7 @@ Polyglot has two base object types. All others are subtypes:
 - `{Q} #QueueName` → data definition (kind of `{#}`, uses `#Queue` schema)
 - `{Q} =Q.*` → pipeline operation (kind of `{=}[Q]`)
 
-Similarly, `{!}` and `{M}` are specialized `{#}` data types.
+Similarly, `{!}` is a specialized `{#}` data type.
 
 ### Marker Groups
 
@@ -313,7 +312,7 @@ data alongside the fire signal.
 | `{W}` | (implicit `[W]`) | `{W}` = `{=}[W]` |
 | `{Q} =Q.*` | (implicit `[Q]`) | `{Q} =Q.*` = `{=}[Q]` |
 | `{Q} #Name` | (none — data) | `{Q} #Name` = kind of `{#}` |
-| `{#}` | (none — data, not callable) | `{!}`, `{M}` inherit this |
+| `{#}` | (none — data, not callable) | `{!}` inherits this |
 
 **VALID:**
 ```polyglot
@@ -339,9 +338,6 @@ data alongside the fire signal.
 
 [ ] ✗ PGE01029 — {#} cannot have markers
 {#}[exe] #Bad
-
-[ ] ✗ PGE01029 — {M} cannot have markers (subtype of {#})
-{M}[T] #Bad
 
 [ ] ✗ PGE01029 — {!} cannot have markers (subtype of {#})
 {!}[exe] !Bad
@@ -707,5 +703,5 @@ Three variants:
 
 ## 7. Open Questions
 
-1. **{M} macros** — do they need markers? They're invoked via `[M]` inside `{#}`. As a `{#}` subtype, they inherit "no markers." But could be `{M}[M]` for consistency.
+1. ~~**{M} macros**~~ — Retired in Issue #272. Macros replaced by generic `{#}` definitions.
 2. **File-wide warning suppression** — what syntax for suppressing the `{=}` implicit `[exe]` warning?

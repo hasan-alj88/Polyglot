@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-08
 status: complete
 metadata_definition: "%definition.##:Contiguous"
 ---
@@ -16,13 +16,13 @@ metadata_definition: "%definition.##:Contiguous"
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `%##Children.Gap` | `#False` | No gaps allowed in child keys |
-| `%##Children.Ordered` | `#True` | Insertion order preserved |
+| `%##Gap` | `#False` | No gaps allowed in child keys |
+| `%##Ordered` | `#True` | Insertion order preserved |
 
 ## Used By
 
-- `#Array`
-- `#Dataframe`
+- `#Array` (via `##Array`)
+- `#Dataframe` (via `##Dataframe`)
 
 ## Metadata
 
@@ -30,12 +30,10 @@ metadata_definition: "%definition.##:Contiguous"
 |------|---------|-------------|
 | Definition | `%definition.##:Contiguous` | Schema definition template |
 
-Schemas are compile-time metadata constraints — they have no runtime instances.
+Schemas are compile-time metadata constraints -- they have no runtime instances.
 
 ## Related
 
 - [[schemas/INDEX|## Schema Types]] -- all schema definitions
 - [[schemas/Sparse|##Sparse]] -- opposite: gaps allowed
-- [[schemas/Rectangular|##Rectangular]] -- regular shape with uniform types
-- [[concepts/collections/INDEX|collections]] -- collection types using ##Contiguous
-- [[syntax/types/INDEX|types]] -- full type system specification
+- [[schemas/Rectangular|##Rectangular]] -- regular shape (often paired with Contiguous)

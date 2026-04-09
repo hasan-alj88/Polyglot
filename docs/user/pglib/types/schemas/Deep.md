@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-08
 status: complete
 metadata_definition: "%definition.##:Deep"
 ---
@@ -16,7 +16,7 @@ metadata_definition: "%definition.##:Deep"
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `%##Depth.Max` | `-1` | Unlimited nesting depth |
+| `%##Depth.Max` | `.Inf` | Unlimited nesting depth |
 
 ## Used By
 
@@ -28,11 +28,10 @@ metadata_definition: "%definition.##:Deep"
 |------|---------|-------------|
 | Definition | `%definition.##:Deep` | Schema definition template |
 
-Schemas are compile-time metadata constraints — they have no runtime instances.
+Schemas are compile-time metadata constraints -- they have no runtime instances.
 
 ## Related
 
 - [[schemas/INDEX|## Schema Types]] -- all schema definitions
 - [[schemas/Flat|##Flat]] -- depth 1 (one level of flexible children)
-- [[schemas/Heterogeneous|##Heterogeneous]] -- mixed child types (also used by #Serial)
-- [[syntax/types/INDEX|types]] -- full type system specification
+- [[schemas/Scalar|##Scalar]] -- depth 1 (one level of fixed children)

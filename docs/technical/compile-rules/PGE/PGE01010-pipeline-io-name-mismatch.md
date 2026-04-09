@@ -13,7 +13,7 @@ severity: error
 **Rationale:** Typos and stale parameter names silently fail at runtime. Catching name mismatches at compile time prevents wiring bugs and makes refactoring safe — renaming a pipeline parameter immediately surfaces all call sites that need updating.
 **Detection:** The compiler resolves the target pipeline definition, enumerates its declared `<input` and `>output` parameters, and checks each `[=]` line's parameter name against that list. Any name not found in the declaration triggers PGE01010.
 
-**See also:** PGE01009 (wrapper IO mismatch — same concept for `[W]` wrappers and `{M}` macros), PGE04001 (type mismatch — types match but names assumed correct), PGE08005 (unresolved step reference — same concept for chain step names)
+**See also:** PGE01009 (wrapper IO mismatch — same concept for `[W]` wrappers), PGE04001 (type mismatch — types match but names assumed correct), PGE08005 (unresolved step reference — same concept for chain step names)
 
 **VALID:**
 ```polyglot

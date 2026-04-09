@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:Map"
 metadata_instance: "%#:Map:N"
@@ -10,59 +10,24 @@ metadata_instance: "%#:Map:N"
 # #Map Collection
 
 <!-- @types -->
-<!-- @macros -->
 
-Sparse key-value pairs. `#Map` has two `{M}` macro overloads dispatched by signature. Child access uses the `<` operator (`$myMap<key`).
+Sparse key-value pairs. `#Map` is a generic type with `[#] <param` inputs. Child access uses the `<` operator (`$myMap<key`).
 
 ---
 
 ## Definition
 
-### Homogeneous Variant
-
-Dispatched by signature `(<#, <#)` — all values share the same type.
-
 ```polyglot
-{ } Homogeneous variant — dispatched by signature (<#, <#)
-{M} #Map
+{#} #Map
    [#] <#KeyType
-      [<] << ##EnumLeafs
-   [#] <#ValueType
-      [<] << ##Scalar
-
-   [r] $UniformMapName##DataTypeString << "Map:{$KeyType%name}:{$ValueType%name}"
-   {#} #{$UniformMapName}
-      [#] %##Alias
-         [:] << "map:{$KeyType%name}:{$ValueType%name}"
-         [:] << "Map:{$KeyType%name}:{$ValueType%name}"
-      [#] %##Children.Type << $KeyType
-      [#] << ##Flat
-      [#] << ##Homogeneous
-      [#] << ##Sparse
-      [:] :*#$ValueType
+   [#] <#ValueType <~ #
+   [#] << ##Map
+      [#] <#KeyType << <#KeyType
+      [#] <#ValueType << <#ValueType
+   [#] %##Alias << "map"
 ```
 
-### Heterogeneous Variant
-
-Dispatched by signature `(<#)` — values can be mixed types.
-
-```polyglot
-{ } Heterogeneous variant — dispatched by signature (<#)
-{M} #Map
-   [#] <#KeyType
-      [<] << ##EnumLeafs
-
-   [r] $MapName##DataTypeString << "Map:{$KeyType%name}"
-   {#} #{$MapName}
-      [#] %##Alias
-         [:] << "map:{$KeyType%name}"
-         [:] << "Map:{$KeyType%name}"
-      [#] %##Children.Type << $KeyType
-      [#] << ##Flat
-      [#] << ##Heterogeneous
-      [#] << ##Sparse
-      [:] :*#*
-```
+The `<#KeyType` parameter sets the key type. The `<#ValueType` parameter sets the value type (defaults to `#` -- any type). The `##Map` parameterized schema provides the structural constraints: flat, sparse, flexible.
 
 ---
 
@@ -70,11 +35,25 @@ Dispatched by signature `(<#)` — values can be mixed types.
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `%##Children.Type` | `$KeyType` | Key type from enum parameter |
-| `##Flat` | `%##Depth.Max << 1` | One level of flexible children |
-| `##Homogeneous` | `%##Children.Uniform << #True` | All values same type (homogeneous variant) |
-| `##Heterogeneous` | `%##Children.Uniform << #False` | Mixed value types (heterogeneous variant) |
-| `##Sparse` | `%##Children.Gap << #True` | Gaps allowed in keys |
+| `%##Depth.Max` | `1` (via ##Flat) | One level of flexible children |
+| `%##Gap` | `#True` (via ##Sparse) | Gaps allowed in keys |
+| `%##Flexible` | `#FlexKind.Flexible` | User adds/removes entries |
+| `%##Key` | `<#KeyType` | Key type from parameter |
+| `%###Type` | `<#ValueType` | Value type constraint |
+
+---
+
+## Usage
+
+The `:` separator binds positionally to `[#] <param` declarations:
+
+```polyglot
+[ ] #map:string:int → KeyType=String, ValueType=Int
+[r] $lookup#map:string:int <~ {}
+
+[ ] #map:string → KeyType=String, ValueType=# (default, any type)
+[r] $config#map:string <~ {}
+```
 
 ---
 
@@ -89,8 +68,7 @@ Dispatched by signature `(<#)` — values can be mixed types.
 
 ## Related
 
-- [[collections]] — collection type overview
-- [[Array]] — contiguous ordered collection (inherits from #Map)
-- [[scalars]] — scalar schema classifications
-- [[syntax/types/INDEX|types]] — full type system specification
-- [[macros]] — macro system
+- [[collections]] -- collection type overview
+- [[Array]] -- contiguous ordered collection (composes ##Array)
+- [[schemas/Map|##Map]] -- parameterized schema
+- [[syntax/types/INDEX|types]] -- full type system specification

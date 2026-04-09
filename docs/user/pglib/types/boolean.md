@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-04
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:Boolean"
 metadata_instance: "%#:Boolean:N"
@@ -36,6 +36,7 @@ metadata_instance: "%#:Boolean:N"
 
 ### Schema Properties
 
+- `[#] << ##Enum` -- classifies as enum: `%##Active << #ActiveKind.One`, `%###Kind << #FieldKind.Enum`
 - `[#] << ##Scalar` -- sets `%##Depth.Max << 1`
 - `[#] << ###ScalarEnum` -- leaf content is variant selection, not typed data
 - `%##Alias << "bool"` -- shorthand `#bool`

@@ -11,8 +11,8 @@ severity: error
 
 <!-- @brainstorming:marker-declarations §4 Rule A -->
 
-**Statement:** Only `{=}` accepts an explicit marker declaration, and only `[exe]`. Sugar types (`{T}`, `{W}`, `{Q}`) already have implicit markers (`[T]`, `[W]`, `[Q]`) and cannot take additional markers. Data types (`{#}`, `{!}`, `{M}`) cannot have markers at all.
-**Rationale:** Each definition type has a fixed role in the type hierarchy. `{T}` is syntactic sugar for `{=}[T]` — attaching `[exe]` or `[W]` to it would create a contradictory declaration. Data types (`{#}` and its subtypes `{!}`, `{M}`) are not callable and have no execution semantics, so markers are meaningless.
+**Statement:** Only `{=}` accepts an explicit marker declaration, and only `[exe]`. Sugar types (`{T}`, `{W}`, `{Q}`) already have implicit markers (`[T]`, `[W]`, `[Q]`) and cannot take additional markers. Data types (`{#}`, `{!}`) cannot have markers at all.
+**Rationale:** Each definition type has a fixed role in the type hierarchy. `{T}` is syntactic sugar for `{=}[T]` — attaching `[exe]` or `[W]` to it would create a contradictory declaration. Data types (`{#}` and its subtype `{!}`) are not callable and have no execution semantics, so markers are meaningless.
 **Detection:** The compiler checks the definition block type against any `marker_decl` on the definition line. If the type does not permit markers, or the marker is not `[exe]`, PGE01029 fires.
 
 **Valid markers per definition type:**
@@ -26,7 +26,6 @@ severity: error
 | `{Q} #Name` | none — data type | Kind of `{#}`, not callable |
 | `{#}` | none — data type | Not callable, no markers |
 | `{!}` | none — subtype of `{#}` | Inherits "no markers" |
-| `{M}` | none — subtype of `{#}` | Inherits "no markers" |
 
 **Note:** `{=}` without an explicit marker is treated as `{=}[exe]`. No diagnostic is emitted (decided in #108).
 
@@ -55,9 +54,6 @@ severity: error
 
 [ ] ✗ PGE01029 — {!} inherits {#} — no markers allowed
 {!}[exe] !Bad
-
-[ ] ✗ PGE01029 — {M} inherits {#} — no markers allowed
-{M}[T] #Bad
 ```
 
 **Diagnostic:** "Definition `{X}` does not accept marker `[Y]` — [reason per type]"

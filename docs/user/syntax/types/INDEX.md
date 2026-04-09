@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-04
+updated: 2026-04-08
 status: complete
 ---
 
@@ -19,11 +19,12 @@ These axioms define Polyglot's data model. All type system design follows from t
 2. **GT-2: ALL data has a `%` metadata address** — both compile-time and runtime data lives on the unified metadata tree (future: backed by NoSQL DB)
 3. **GT-3: `##` schemas are data trees that describe tree structure and constraints** — shape, depth, key patterns, ordering, uniformity, regex patterns. A `#` struct may have multiple `##` schema specifications. `##` schemas are NOT structs — they describe properties of structs
 4. **GT-4: `#RawString` is the only primitive** — its limitations match the compiler host language; currently assumed theoretically unlimited
-5. **GT-5: `#String` extends `#RawString` with regex enforcement** — from it derive all `##Scalar` types (`##Int`, `##Float`, `##Dimension`, `##KeyString`, etc.)
+5. **GT-5: `#String` extends `#RawString` with regex enforcement** — from it derive all `##Scalar` types (`#Int`, `#Float`, `#Dimension`, `#KeyString`, etc.)
 6. **GT-6: Not all tree properties can be expressed via regex** — hence `%` metadata properties (`##` schemas) describe tree shapes the compiler can identify and enforce
 7. **GT-7: `#`, `##`, `###` are user-friendly aliases for `%` metadata** — users should never need to use `%` directly; the prefix tiers are the user-facing alternative
 8. **GT-8: `{x}` = compile-time definitions; `=` pipelines = runtime definitions** — clean separation
-9. **GT-9: `{M}` macros replace generic type parameters** — parameterized types use macros to generate `{#}` definitions at compile time
+9. **GT-9: `##` schemas can be parameterized** — parameterized schemas use `[#] <param` inputs to generate structural constraints at compose time
+10. **GT-10: `#` types can be generic** — generic types use `[#] <param` inputs with `:` positional binding; compiler resolves all params to produce fully realized types
 
 ## Type Annotation
 
@@ -70,7 +71,7 @@ Each special character has one job:
 | [[prefix-system]] | Three-tier prefix system, < operator |
 | [[basic-types]] | RawString, #String, int, float, scalars |
 | [[schema-properties]] | ## schema properties |
-| [[macro-types]] | {M} macro-generated types |
+| [[generic-types]] | Generic types and parameterized schemas |
 | [[arrays]] | Element-typed and multidimensional arrays |
 | [[structs]] | Struct types, inline data, enum vs value fields |
 | [[flexible-fields]] | Typed flexible fields |

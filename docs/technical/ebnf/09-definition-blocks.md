@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-05
+updated: 2026-04-09
 ---
 
 <!-- @ebnf/INDEX -->
@@ -28,12 +28,12 @@ data_def            ::= "{#}" data_id NEWLINE
                          { indent data_body_line NEWLINE } ;
                       (* At least one body line required — empty {#} is PGE01021 *)
 
-data_body_line      ::= schema_inheritance
-                      | schema_composition
+data_body_line      ::= schema_composition
                       | field_type_composition
                       | schema_property
                       | field_type_property
-                      | macro_invoke
+                      | generic_param
+                      | value_param
                       | data_field
                       | metadata_line
                       | comment_line ;
@@ -56,10 +56,10 @@ typed_flex_wildcard ::= "[:]" flex_sep "*" type_annotation ;
                          Absent wildcard → untyped (#serial). *)
 
 field_expansion    ::= "[.]" fixed_sep "*" type_param_ref type_annotation ;
-                      (* e.g., [.] .*ColumnEnum#$CellType — expands enum fields from macro parameter.
-                         Macro param must satisfy ##EnumLeafs (PGE04022).
+                      (* e.g., [.] .*<#Columns#$CellType — expands enum fields from generic type parameter.
+                         Type parameter must satisfy ##Enum with ###ScalarEnum leaves (PGE04022).
                          Compiler stamps out one [.] per enum variant, each with annotated type.
-                         Used inside {M} macros to expand fields from type parameters. *)
+                         Used inside generic {#} definitions to expand fields from type parameters. *)
 ```
 
 **Rules:**
@@ -133,7 +133,7 @@ io_section          ::= { indent ( io_decl_line | type_input_line ) NEWLINE } ;
 io_decl_line        ::= "[=]" typed_io_param [ assignment_op value_expr ] ;
 
 type_input_line     ::= "[=]" "<#" identifier ;
-                      (* Type definition as data tree input — extends <# from {M} macros to {=} pipeline IO.
+                      (* Type definition as data tree input — same <# syntax as {#} generic params.
                          The pipeline receives the type's % metadata tree. Works with #, ##, ### tiers.
                          Example: [=] <#type -- any type definition; [=] <#Config -- specific type *)
 ```
@@ -187,7 +187,7 @@ wrapper_io_line     ::= "[=]" variable_id assignment_op value_expr ;
                          [W] operator via indentation, not a different marker. *)
 ```
 
-**Rule:** `[W]` references a wrapper (`{W}`). Wrapper IO is wired using `[=]` with `$` variables. See §9.4b for wrapper definition syntax and IO wiring details.
+**Rule:** `[W]` references a wrapper (`{W}`). Wrapper IO is wired using `[=]` with `$` variables. See §9.5 for wrapper definition syntax and IO wiring details.
 
 **Examples:** `[W] =W.Polyglot`, `[W] =W.DB.Connection` with `[=] $connectionString << $connStr`
 
@@ -207,22 +207,7 @@ exec_line           ::= run_line
                       | comment_line ;
 ```
 
-### 9.4 Type Macro Definition (`{M}`)
-
-```ebnf
-(* Type macros generate {#} definitions at compile time.
-   See §4.3 for macro_def, macro_param, macro_type_param, macro_invoke grammar. *)
-```
-
-**Rules:**
-- `{M} #Name` defines a type macro. `[M] #Name` invokes it inside a `{#}` block.
-- `[#] <Param` declares a value input parameter; `[#] <#Param` declares a type-as-data-tree input.
-- Macro body contains `{#}` definitions that use `{$var}` interpolation from parameters.
-- **[M] merge rule (identity):** The outer `{#}` names the result; the macro's internal `{#}` resolves to the same name. The macro fills the body. Any `[#]` lines after `[M]` in the outer `{#}` extend/override the macro's output.
-- Macros overload by signature (parameter count + kind). Two overloads with identical signature = PGE01019.
-- Type macros do NOT contain `[\]`, `[/]`, `[{]`, `[}]`, `[T]`, `[=]` IO, or `[Q]` — those belong to wrappers or pipelines.
-
-### 9.4a Trigger Definition (`{T}`)
+### 9.4 Trigger Definition (`{T}`)
 
 ```ebnf
 trigger_def         ::= "{T}" trigger_pipeline_id NEWLINE
@@ -253,7 +238,7 @@ trigger_def_body    ::= { ( metadata_line | comment_line ) NEWLINE }
    [=] >NewFiles#array:path
 ```
 
-### 9.4b Wrapper Definition (`{W}`)
+### 9.5 Wrapper Definition (`{W}`)
 
 ```ebnf
 (* Wrappers provide setup/cleanup scope for pipelines.
@@ -279,7 +264,7 @@ to_outer            ::= "[}]" variable_id ;
 - `[}]` declares a wrapper output — a variable exposed back to the calling pipeline's scope.
 - `[\]` runs before the pipeline execution body (setup). Can call a single pipeline or open a scope with multiple exec lines.
 - `[/]` runs after the pipeline execution body (cleanup). Same structure as `[\]`.
-- Wrappers do NOT contain `{#}` definitions, `[T]`, `[=]` pipeline-level IO, or `[Q]` — those belong to pipelines. Type macros (`{M}`) are a separate construct for compile-time type generation.
+- Wrappers do NOT contain `{#}` definitions, `[T]`, `[=]` pipeline-level IO, or `[Q]` — those belong to pipelines.
 - Execution order: `[=],[T]` → `[Q]` → `[\]` → Execution Body → `[/]`.
 - The wrapper unpacks before and after the body like brackets.
 - **Rule (parallel fork):** `[p]` inside `[\]` with no subsequent `[*] *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `[*] *All` with `[*] << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
@@ -304,7 +289,7 @@ At the `[W]` line, wrapper IO is wired using `[=]` with `$` variables (not `<`/`
 
 **Examples:** `[W] =W.Polyglot` (no IO, no-op wrapper), `[W] =W.DB.Transaction` (with IO wiring)
 
-### 9.4c Native Definition (`{N}`)
+### 9.6 Native Definition (`{N}`)
 
 ```ebnf
 native_def          ::= "{N}" native_pipeline_id NEWLINE
@@ -348,7 +333,7 @@ language_name       ::= upper_letter { letter } ; (* Rust, Cpp, etc. *)
    [=] !File.PermissionDenied
 ```
 
-### 9.5 Queue Definition
+### 9.7 Queue Definition
 
 ```ebnf
 queue_def           ::= "{Q}" queue_id NEWLINE
@@ -388,7 +373,7 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
 
 **Dual-purpose:** `{Q}` serves two roles based on the identifier prefix. The grammar above covers the **data definition** form (`{Q} #Queue:Name`). The **pipeline operation** form (`{Q} =Q.*`) is syntactic sugar for `{=}[Q]` and follows the pipeline definition grammar in §9.3 — it defines a queue control pipeline invocable via `[Q]`. Examples: `{Q} =Q.Default`, `{Q} =Q.Pause.Hard`, `{Q} =Q.Kill.Graceful`.
 
-### 9.6 Error Definition
+### 9.8 Error Definition
 
 ```ebnf
 error_def           ::= "{!}" error_namespace_id NEWLINE
@@ -428,7 +413,7 @@ User-defined `{!} !Name` implicitly nests under `!Error` in the metadata tree, c
          [.] .Corrupt#Error
 ```
 
-### 9.7 Array Definition
+### 9.9 Array Definition
 
 ```ebnf
 array_def           ::= "{Array}" variable_id type_annotation NEWLINE
@@ -437,7 +422,7 @@ array_def           ::= "{Array}" variable_id type_annotation NEWLINE
 array_body_line     ::= exec_line | comment_line ;
 ```
 
-### 9.8 Permission Object Definition (`{_}`)
+### 9.10 Permission Object Definition (`{_}`)
 
 ```ebnf
 permission_object_def  ::= "{_}" permission_id NEWLINE
@@ -461,13 +446,13 @@ category_name          ::= "File" | "Web" | "Database" | "System"
 - **No inline declarations** — `[_]` in `{@}` and `{=}` always references a `{_}` object by name. Inline permission syntax is not valid.
 - **Identifier tiers:** `_` = permission object, `__` = permission descriptor (schema), `___` = constraint descriptor. Mirrors `#`/`##`/`###`.
 
-### 9.9 Comment Block (Definition Level)
+### 9.11 Comment Block (Definition Level)
 
 ```ebnf
 comment_block       ::= "{ }" comment_text NEWLINE ;
 ```
 
-### 9.10 Metadata Block
+### 9.12 Metadata Block
 
 ```ebnf
 metadata_line       ::= "[%]" metadata_expr ;
@@ -499,14 +484,14 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 ```
 
 **Rules:**
-- `[%]` appears inside any `{x}` definition (`{#}`, `{=}`, `{M}`).
+- `[%]` appears inside any `{x}` definition (`{#}`, `{=}`, `{T}`, `{W}`, `{N}`).
 - One definition = one metadata set (class-level, not instance-level).
 - All top-level `[%]` fields use `.` fixed separator. Only `.info#serial` opens a `:` flexible scope underneath (sibling homogeneity preserved).
 - `[%] %alias` declares shorthand names for definitions or fields. Each `[:]` child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed. All aliases must be globally unique (PGE12002).
 - Aliases participate in exhaustiveness checking when the variable carries the parent type annotation.
 - `live` fields are implicit on all `{=}`, `$`, and `{#}` definitions. The runtime populates them. Users read via `%` accessor (e.g., `=Pipeline%status`, `$var%state`) but never assign.
 - Prefer reactive alternatives (error blocks, IO triggers) over polling `live` fields when possible.
-- Native definitions use `{N}` — a separate block type (see §9.4c). `{N}` metadata implicitly scopes to `%Native.*` with fixed fields `.Kind` (`#NativeKind`), `.<Language>` (native function binding), and `.description`. `{N}` and `{=}` are mutually exclusive block types — a definition cannot be both native and derived (PGE01028).
+- Native definitions use `{N}` — a separate block type (see §9.6). `{N}` metadata implicitly scopes to `%Native.*` with fixed fields `.Kind` (`#NativeKind`), `.<Language>` (native function binding), and `.description`. `{N}` and `{=}` are mutually exclusive block types — a definition cannot be both native and derived (PGE01028).
 
 ## Related User Documentation
 
@@ -515,11 +500,10 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 | §9.1 `{@}` Package | [[syntax/packages\|packages]] |
 | §9.2 `{#}` Data | [[syntax/blocks\|blocks]], [[syntax/types/INDEX\|types]] |
 | §9.3 `{=}` Pipeline | [[concepts/pipelines/INDEX\|pipelines]] |
-| §9.4 `{M}` Macro | [[concepts/macros\|macros]], [[syntax/types/macro-types\|macro-types]] |
-| §9.4a `{T}` Trigger | [[concepts/pipelines/io-triggers\|io-triggers]] |
-| §9.4b `{W}` Wrapper | [[concepts/pipelines/wrappers\|wrappers]] |
-| §9.4c `{N}` Native | [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
-| §9.5 `{Q}` Queue | [[concepts/pipelines/INDEX\|pipelines]] |
-| §9.6 `{!}` Error | [[concepts/errors\|errors]] |
-| §9.8 `{_}` Permission | [[concepts/permissions\|permissions]] |
-| §9.10 `[%]` Metadata | [[concepts/metadata\|metadata]] |
+| §9.4 `{T}` Trigger | [[concepts/pipelines/io-triggers\|io-triggers]] |
+| §9.5 `{W}` Wrapper | [[concepts/pipelines/wrappers\|wrappers]] |
+| §9.6 `{N}` Native | [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
+| §9.7 `{Q}` Queue | [[concepts/pipelines/INDEX\|pipelines]] |
+| §9.8 `{!}` Error | [[concepts/errors\|errors]] |
+| §9.10 `{_}` Permission | [[concepts/permissions\|permissions]] |
+| §9.12 `[%]` Metadata | [[concepts/metadata\|metadata]] |

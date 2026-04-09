@@ -1,28 +1,43 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-08
 status: complete
 metadata_definition: "%definition.##:Rectangular"
 ---
 
-# ##Rectangular Schema
+# ##Rectangular Schema (Parameterized)
 
 <!-- @types -->
 
-`##Rectangular` enforces a regular shape where all rows (or equivalent dimensions) have the same length, and all elements share a uniform type.
+`##Rectangular` enforces a regular shape where all sub-branches at each level have the same child count. It is parameterized with `<Dim` to set depth and propagation scope.
 
-## Properties
+## Definition
+
+```polyglot
+{#} ##Rectangular
+   [#] <Dim <~ "1D"
+   [#] %##Regular << #True
+   [#] %##Depth.Max << <Dim
+   [#] %##Flexible << #FlexKind.Range
+   [#] %##Propagate << #True
+```
+
+## Properties Set
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `%##Children.Regular` | `#True` | Regular shape (all dimensions equal) |
-| `%##Children.Uniform` | `#True` | All elements share the same type |
+| `%##Regular` | `#True` | Same child count at each level |
+| `%##Depth.Max` | `<Dim` | Dimension count from parameter |
+| `%##Flexible` | `#FlexKind.Range` | Compiler-generated indices |
+| `%##Propagate` | `#True` | Properties apply recursively to all levels |
+
+When `%##Propagate` is `#True`, the properties set by `##Rectangular` apply to every level down to `%##Depth.Max`. Use `%##Level.N` for per-level overrides.
 
 ## Used By
 
-- `#Array`
-- `#Dataframe`
+- `#Array` (via `##Array`)
+- `#Dataframe` (via `##Dataframe`)
 
 ## Metadata
 
@@ -30,12 +45,11 @@ metadata_definition: "%definition.##:Rectangular"
 |------|---------|-------------|
 | Definition | `%definition.##:Rectangular` | Schema definition template |
 
-Schemas are compile-time metadata constraints — they have no runtime instances.
+Schemas are compile-time metadata constraints -- they have no runtime instances.
 
 ## Related
 
 - [[schemas/INDEX|## Schema Types]] -- all schema definitions
-- [[schemas/Homogeneous|##Homogeneous]] -- uniform types (subset of Rectangular)
 - [[schemas/Contiguous|##Contiguous]] -- no gaps, ordered (often paired with Rectangular)
-- [[concepts/collections/INDEX|collections]] -- collection types using ##Rectangular
-- [[syntax/types/INDEX|types]] -- full type system specification
+- [[schemas/Array|##Array]] -- array schema composing ##Rectangular
+- [[FlexKind]] -- `#FlexKind` enum used by `%##Flexible`

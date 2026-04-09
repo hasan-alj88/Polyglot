@@ -34,7 +34,7 @@ Misordering these sections is a compile error (PGE01001).
 
 **Note:** `[T]` triggers, `[=]` IO declarations, and `[=] !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment (PGE01002). Error declarations (`[=] !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `=T.Folder.NewFiles`), its `[=]` IO lines are indented under the `[T]` line and wire trigger outputs to pipeline inputs.
 
-**Type inputs:** Pipelines can receive type definitions as data tree inputs using `[=] <#type` — the same `<#` syntax used in `{M}` macro type parameters. This extends GT-1 (all definitions are data trees) to runtime pipeline IO. See [[syntax/types/macro-types#`<#type` in Pipeline IO]] for details and [[pglib/pipelines/Schema/INDEX|=#.* Schema Pipelines]] for the `=#.*` validation pipelines that use this pattern.
+**Type inputs:** Pipelines can receive type definitions as data tree inputs using `[=] <#type` — the same `<#` syntax used in `{#}` generic type parameters. This extends GT-1 (all definitions are data trees) to runtime pipeline IO. See [[syntax/types/generic-types#`<#type` in Pipeline IO]] for details and [[pglib/pipelines/Schema/INDEX|=#.* Schema Pipelines]] for the `=#.*` validation pipelines that use this pattern.
 
 ## Marker Declarations
 

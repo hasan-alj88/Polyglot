@@ -11,7 +11,7 @@ updated: 2026-03-31
 
 Every Polyglot object carries metadata — descriptive fields you declare and runtime fields the system manages. You interact with metadata through two mechanisms:
 
-1. **`[%]` block element** — declare metadata inside `{#}`, `{=}`, or `{M}` definitions
+1. **`[%]` block element** — declare metadata inside `{#}`, `{=}`, or other `{x}` definitions
 2. **`%` accessor** — query runtime state from any expression context
 
 For the full metadata tree architecture, path grammar, and instance rules, see [[metadata-tree/INDEX|technical/spec/metadata-tree]].
@@ -107,10 +107,6 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 | `#Queue:Name%totalProcessed` | `#live.int` | Total pipelines processed |
 | `#Queue:Name%strategy` | `#live.#QueueStrategy` | Current queue strategy |
 
-### Macro (`{M}`)
-
-Live fields for macros are not yet defined.
-
 ### Native (`{N}`)
 
 | Accessor | Type | Description |
@@ -138,7 +134,7 @@ The shorthand accessors shown above (`$name%state`, `=MyPipeline%status`) are sy
 The full path follows the pattern: `%{type}:{name}:{instance}.{field}`
 
 - **`%`** — metadata tree root
-- **`{type}`** — object type prefix (`$`, `=`, `#`, `W`, `Q`, `T`, `M`)
+- **`{type}`** — object type prefix (`$`, `=`, `#`, `W`, `Q`, `T`)
 - **`{name}`** — object reference name (flexible field, uses `:`)
 - **`{instance}`** — which instance (flexible field, uses `:`)
 - **`.{field}`** — fixed field within the instance

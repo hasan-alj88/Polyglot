@@ -1,40 +1,15 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
-status: complete
-metadata_definition: "%definition.##:Homogeneous"
+updated: 2026-04-08
+status: retired
 ---
 
-# ##Homogeneous Schema
+# ##Homogeneous — RETIRED
 
-<!-- @types -->
+`##Homogeneous` has been retired. Child type uniformity is now expressed through `%###Type`:
 
-`##Homogeneous` requires all children to have the same type. The compiler enforces uniform typing across every child element.
+- `%###Type << #SomeType` — all leaves must be that type (replaces ##Homogeneous)
+- `%###Type` absent — each leaf declares its own type per-field (replaces ##Heterogeneous)
 
-## Property
-
-| Property | Value | Meaning |
-|----------|-------|---------|
-| `%##Children.Uniform` | `#True` | All children must have same type |
-
-## Used By
-
-- `#Map` (homogeneous variant)
-- `#Array`
-
-## Metadata
-
-| Path | Pattern | Description |
-|------|---------|-------------|
-| Definition | `%definition.##:Homogeneous` | Schema definition template |
-
-Schemas are compile-time metadata constraints — they have no runtime instances.
-
-## Related
-
-- [[schemas/INDEX|## Schema Types]] -- all schema definitions
-- [[schemas/Heterogeneous|##Heterogeneous]] -- opposite: mixed child types
-- [[schemas/Rectangular|##Rectangular]] -- combines uniform types with regular shape
-- [[concepts/collections/INDEX|collections]] -- collection types using ##Homogeneous
-- [[syntax/types/INDEX|types]] -- full type system specification
+See [[syntax/types/schema-properties|Schema Properties]] for the full property reference.

@@ -216,7 +216,7 @@ All fields use `.` fixed-field navigation — permission schemas are Polyglot-de
 
 All permission checks are **static analysis** — resolved at compile time, not runtime. The compiler verifies:
 
-1. **Grant within ceiling** — every `[_]` grant in a `{=}`/`{M}` must reference a `{_}` object whose capabilities fall within the `{@}` package ceiling (PGE10001)
+1. **Grant within ceiling** — every `[_]` grant in a `{=}` must reference a `{_}` object whose capabilities fall within the `{@}` package ceiling (PGE10001)
 2. **Import ceiling compatibility** — imported package ceilings must fall within the importer's ceiling (PGE10002)
 3. **Pure computation enforced** — any IO call in a pipeline with no `[_]` lines is a compile error
 4. **Fully filled** — every `{_}` object must have all leaf fields assigned (no empty leaves)
