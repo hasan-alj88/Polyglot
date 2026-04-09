@@ -174,7 +174,7 @@ The `{@}` block uses `[_]` lines to reference `{_}` permission ceiling objects, 
 
 ### Ceiling Rules
 
-- **Ceiling, not grant** — `[_]` in `{@}` references a `{_}` ceiling object. Each `{=}` pipeline or `{M}` macro must reference its own `{_}` grant objects. Nothing is inherited automatically. See [[permissions#Hierarchical Scoping]].
+- **Ceiling, not grant** — `[_]` in `{@}` references a `{_}` ceiling object. Each `{=}` pipeline must reference its own `{_}` grant objects. Nothing is inherited automatically. See [[permissions#Hierarchical Scoping]].
 - **No ceiling = no IO** — if `{@}` has no `[_]` lines, the entire package is pure computation. Any IO call in any pipeline is a compile error (PGE10001).
 - **Pipeline grant must be a subset of ceiling** — every `{_}` grant referenced by a pipeline must fall within the `{_}` ceiling. A grant requesting `.File.Read "/etc/shadow"` when the ceiling only allows `.File.Read "/var/log/*"` is a compile error (PGE10001).
 - **Import ceiling** — the compiler checks each imported package's own `{@}` ceiling against the importer's ceiling. If the imported package declares permissions outside what the importer allows, it is a compile error (PGE10002). Each package declares its own ceiling independently; the compiler validates compatibility.

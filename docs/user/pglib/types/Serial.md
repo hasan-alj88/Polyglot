@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:Serial"
 metadata_instance: "%#:Serial:N"
@@ -11,7 +11,7 @@ metadata_instance: "%#:Serial:N"
 
 <!-- @types -->
 
-Unconstrained collection with unlimited depth. Any keys, any types, any nesting. No compile-time validation of shape. Child access uses the `<` operator (`$data<key`). `#Serial` is a plain `{#}` definition — no macro needed.
+Unconstrained collection with unlimited depth. Any keys, any types, any nesting. No compile-time validation of shape. Child access uses the `<` operator (`$data<key`). `#Serial` is a plain `{#}` definition -- no generic parameters needed.
 
 ---
 
@@ -22,10 +22,9 @@ Unconstrained collection with unlimited depth. Any keys, any types, any nesting.
    [#] %##Alias << "serial"
    [#] << ##Deep
    [#] << ##Sparse
-   [#] << ##Heterogeneous
-   [#] %##Children.Ordered << #False
-   [#] %##Children.Regular << #False
-   [#] %##Children.Max << -1
+   [#] %##Ordered << #False
+   [#] %##Regular << #False
+   [#] %##Count << .Inf
    [:] :*#*
 ```
 
@@ -35,13 +34,12 @@ Unconstrained collection with unlimited depth. Any keys, any types, any nesting.
 
 | Property | Value | Constraint Removed |
 |----------|-------|--------------------|
-| `%##Alias` | `"serial"` | — (shorthand `#serial`) |
-| `##Deep` | `%##Depth.Max << -1` | Depth limit |
-| `##Sparse` | `%##Children.Gap << #True` | No-gap requirement |
-| `##Heterogeneous` | `%##Children.Uniform << #False` | Same-schema requirement |
-| `%##Children.Ordered` | `#False` | Ordering requirement |
-| `%##Children.Regular` | `#False` | Regularity requirement |
-| `%##Children.Max` | `-1` | Max children limit |
+| `%##Alias` | `"serial"` | -- (shorthand `#serial`) |
+| `##Deep` | `%##Depth.Max << .Inf` | Depth limit |
+| `##Sparse` | `%##Gap << #True` | No-gap requirement |
+| `%##Ordered` | `#False` | Ordering requirement |
+| `%##Regular` | `#False` | Regularity requirement |
+| `%##Count` | `.Inf` | Max children limit |
 
 ---
 
@@ -56,6 +54,6 @@ Unconstrained collection with unlimited depth. Any keys, any types, any nesting.
 
 ## Related
 
-- [[collections]] — collection type overview
-- [[Map]] — structured key-value alternative
-- [[syntax/types/INDEX|types]] — full type system specification
+- [[collections]] -- collection type overview
+- [[Map]] -- structured key-value alternative
+- [[syntax/types/INDEX|types]] -- full type system specification

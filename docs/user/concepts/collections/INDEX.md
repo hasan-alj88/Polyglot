@@ -2,7 +2,7 @@
 audience: pg-coder
 type: spec
 status: complete
-updated: 2026-03-30
+updated: 2026-04-09
 ---
 
 <!-- @concepts/collections/INDEX -->
@@ -20,9 +20,10 @@ Every collection in Polyglot is a tree. `#Map` is the universal flat key-value c
 
 | Type | Is a | Key type | Key structure |
 |------|------|----------|--------------|
-| `#Map:K:V` | Base collection (macro-generated) | `K` (`##EnumLeafs`) | Flat key-value |
-| `#Array:V:Dim` | `#Map` variant (macro-generated) | `#UnsignedInt` | Cartesian product of 0..n-1 per dimension |
-| `#Dataframe:E:C` | Row-oriented table (macro-generated) | `##EnumLeafs` columns | Array of Map — each row is a map |
+| `#Map:K:V` | Base collection (generic) | `K` (any key type) | Flat key-value |
+| `#Array:V:Dim` | Contiguous collection (generic) | `#UnsignedInt` | Cartesian product of 0..n-1 per dimension |
+| `#Dataframe:E:C` | Row-oriented table (generic) | `##Enum` columns | Array of Map -- each row is a map |
+| `#Set:V` | Unique value collection (generic) | (sparse) | No duplicates |
 | `#Serial` | Unconstrained tree | Any | Unlimited depth, no constraints |
 
 User-defined structs (`{#}`) define fixed-field types with `.` accessor. Collections use `<` for flexible children. These two accessors can be combined: `$sales<0.product`.

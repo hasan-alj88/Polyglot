@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 ---
 
@@ -9,33 +9,34 @@ status: complete
 
 <!-- @types -->
 
-Polyglot provides four collection types: `#Map`, `#Array`, `#Dataframe`, and `#Serial`. All are available in every `.pg` file without `[@]` import.
+Polyglot provides five collection types: `#Map`, `#Array`, `#Dataframe`, `#Set`, and `#Serial`. All are available in every `.pg` file without `[@]` import.
 
-`#Map`, `#Array`, and `#Dataframe` are defined as `{M}` type macros that generate `{#}` definitions at compile time. `#Serial` is a plain `{#}` definition (no macro needed). See [[syntax/types/INDEX|types]] for the full type hierarchy and schema property definitions.
+`#Map`, `#Array`, `#Dataframe`, and `#Set` are generic types with `[#] <param` inputs that compose parameterized `##` schemas. `#Serial` is a plain `{#}` definition (no parameters needed). See [[syntax/types/INDEX|types]] for the full type hierarchy and schema property definitions.
 
 | Type | Description | File |
 |------|-------------|------|
-| `#Map` | Sparse key-value pairs (macro, two overloads) | [[Map]] |
-| `#Array` | Contiguous rectangular collection (macro, inherits #Map) | [[Array]] |
-| `#Dataframe` | Row-oriented table (macro, two overloads) | [[Dataframe]] |
+| `#Map` | Sparse key-value pairs (generic) | [[Map]] |
+| `#Array` | Contiguous rectangular collection (generic) | [[Array]] |
+| `#Dataframe` | Row-oriented table (generic) | [[Dataframe]] |
+| `#Set` | Collection of unique values (generic) | [[Set]] |
 | `#Serial` | Unconstrained collection, unlimited depth | [[Serial]] |
 
 ## Usage
 
-The `:` separator binds positionally to macro inputs. Users use the generated type names directly:
+The `:` separator binds positionally to `[#] <param` inputs. Users use the type names directly:
 
 ```polyglot
 [r] $scores#array:int <~ {...}
 [r] $lookup#map:string:int <~ {...}
 [r] $matrix#array:float:2D <~ {...}
 [r] $sales#dataframe:SalesColumns:string <~ {}
+[r] $tags#set:string <~ {}
 ```
 
 ## Related
 
 - [[string]] -- #String foundation type
-- [[scalars]] -- scalar subtypes (## schemas)
+- [[scalars]] -- scalar subtypes
 - [[structs]] -- #path and #Queue struct types
-- [[enums]] -- #FieldKind enum (used by `%##Leafs.Kind`)
+- [[enums]] -- enum types
 - [[syntax/types/INDEX|types]] -- full type system specification
-- [[macros]] -- {M} type macro definitions

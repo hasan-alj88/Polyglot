@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-30
+updated: 2026-04-09
 ---
 
 # Arrays
@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ## Alias
 
-`#array` is a lowercase alias for `#Array`, following the same convention as `#int`/`#Int` and `#string`/`#String`. In type annotations, use lowercase `#array`; in prose or definition references, use PascalCase `#Array`. The alias is registered via `%##Alias` in the `{M} #Array` macro (see [[pglib/types/collections|Collection Types]]).
+`#array` is a lowercase alias for `#Array`, following the same convention as `#int`/`#Int` and `#string`/`#String`. In type annotations, use lowercase `#array`; in prose or definition references, use PascalCase `#Array`. The alias is registered via `%##Alias` in the `#Array` generic type definition (see [[pglib/types/collections|Collection Types]]).
 
 ## Element-Typed Arrays
 
@@ -58,5 +58,5 @@ The compiler enforces access depth — too many or too few indices triggers PGE0
 ## See Also
 
 - [[syntax/types/INDEX|Type System Overview]] — ground truths and type annotation rules
-- [[concepts/collections/array|#Array Collection]] — macro generation, cartesian keys, and collection access
+- [[concepts/collections/array|#Array Collection]] -- generic type, cartesian keys, and collection access
 - [[syntax/types/schema-properties|Schema Properties]] — `%##Depth.Max` and dimensional constraints

@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-04
+updated: 2026-04-09
 ---
 
 <!-- @ebnf/INDEX -->
@@ -37,7 +37,7 @@ dict_type           ::= "dict" flex_sep type_param flex_sep type_param ;
                       (* e.g., #dict:string:int — key type : value type *)
 dataframe_type      ::= "dataframe" flex_sep enum_type_param flex_sep type_param ;
                       (* e.g., #dataframe:SalesColumns:string — column enum : cell value type.
-                         enum_type_param must resolve to a ###ScalarEnum type (##EnumLeafs). *)
+                         enum_type_param must resolve to a ###ScalarEnum type (PGE04022 if not). *)
 serial_type         ::= "serial" ;
 
 type_param          ::= basic_type | dimension | user_type | wildcard_type ;
@@ -62,14 +62,10 @@ typed_field         ::= field_ref [ type_annotation ] ;
 typed_io_param      ::= io_param [ type_annotation ] ;
 ```
 
-### 4.3 Type Macros, Wrappers, and {#} Schema Rules
+### 4.3 Generic Types, Wrappers, and {#} Schema Rules
 
 ```ebnf
-(* --- {#} schema rules (no generic type parameters) --- *)
-
-schema_inheritance  ::= "[#]" "<~" data_id ;
-                      (* e.g., [#] <~ #String — inherit schema, can specialize *)
-                      (* e.g., [#] <~ #Map:#UnsignedInt:$ValueType — parameterized inheritance inside {M} *)
+(* --- {#} schema and generic type rules --- *)
 
 schema_composition  ::= "[#]" "<<" schema_id ;
                       (* e.g., [#] << ##Flat — compose a schema into this type *)
@@ -81,56 +77,39 @@ field_type_composition ::= "[#]" "<<" field_type_id ;
                       (* e.g., [#] << ###ScalarEnum — declare explicit field type *)
 
 schema_property     ::= "[#]" "%##" dotted_name assignment_op expression ;
-                      (* e.g., [#] %##Children.Type << #UnsignedInt *)
+                      (* e.g., [#] %##Flexible << #FlexKind.Fixed *)
                       (* e.g., [#] %##Alias << "int" *)
                       (* e.g., [#] %##Depth.Max << 0 *)
+                      (* e.g., [#] %##Count << #Bound.Inf *)
 
 field_type_property ::= "[#]" "%###" dotted_name assignment_op expression ;
-                      (* e.g., [#] %###Value — field-level metadata *)
+                      (* e.g., [#] %###Kind << #FieldKind.Enum — field-level metadata *)
+                      (* e.g., [#] %###Type << #string — all leaves share this type *)
 
-type_constraint     ::= "[<]" "<<" schema_id ;
-                      (* Nested under [#] <Param in {M} — constrains a macro parameter *)
-                      (* e.g., [<] << ##Scalar — param must be scalar type *)
-
-(* --- {M} type macro definitions --- *)
-
-macro_def           ::= "{M}" '#' dotted_name NEWLINE
-                         indent ( macro_param | macro_type_param ) NEWLINE
-                         { indent macro_type_body_line NEWLINE } ;
-                      (* At least one parameter required — parameterless {M} is PGE01023 *)
-                      (* e.g., {M} #Array, {M} #String.Subtype *)
-
-macro_type_body_line ::= macro_param
-                       | macro_type_param
-                       | nested_data_def
-                       | exec_line
-                       | comment_line ;
-
-macro_param         ::= "[#]" '<' name schema_id [ default_push_left value_expr ] NEWLINE
-                         { indent type_constraint NEWLINE } ;
-                      (* Value input — e.g., [#] <Name#RawString, [#] <Dim##Dimension <~ "1D" *)
-
-macro_type_param    ::= "[#]" "<#" name NEWLINE
-                         { indent type_constraint NEWLINE } ;
-                      (* Type-as-data-tree input — e.g., [#] <#ValueType *)
+generic_param       ::= "[#]" '<#' name NEWLINE
+                         { indent param_constraint NEWLINE } ;
+                      (* Type parameter input — e.g., [#] <#KeyType, [#] <#ValueType *)
                       (* The # definition itself is passed as data (all definitions are trees) *)
 
-nested_data_def     ::= "{#}" data_id NEWLINE
-                         { indent data_body_line NEWLINE } ;
-                      (* Macro body generates {#} definitions — e.g., {#} #{$ArrayName} *)
+value_param         ::= "[#]" '<' name schema_id [ default_push_left value_expr ] NEWLINE
+                         { indent param_constraint NEWLINE } ;
+                      (* Value input parameter — e.g., [#] <Dim##Dimension <~ "1D" *)
+                      (* e.g., [#] <regex#RawString *)
 
-(* --- [M] macro invocation inside {#} --- *)
+param_constraint    ::= "[<]" "<<" schema_id ;
+                      (* Nested under [#] <param — constrains what types may bind *)
+                      (* e.g., [<] << ##Scalar — param must satisfy ##Scalar *)
 
-macro_invoke        ::= "[M]" '#' dotted_name NEWLINE
-                         { indent macro_arg NEWLINE } ;
-                      (* e.g., [M] #String.Subtype *)
+(* --- Schema parameterization inside [#] << --- *)
 
-macro_arg           ::= "[#]" '<' name "<<" value_expr NEWLINE
-                         { indent macro_arg_fallback NEWLINE } ;
-                      (* e.g., [#] <Name << "Int" *)
-
-macro_arg_fallback  ::= "[<]" error_id "<<" value_expr ;
-                      (* e.g., [<] !Alias.Clash << "integer" — fallback on error *)
+schema_param_bind   ::= "[#]" "<<" schema_id NEWLINE
+                         { indent "[#]" '<#' name "<<" type_ref NEWLINE }
+                         { indent "[#]" '<' name "<<" value_expr NEWLINE } ;
+                      (* e.g., [#] << ##Array
+                                   [#] <#ValueType << <#ValueType
+                                   [#] <Dim << <Dim
+                         Positional binding: : separator in type annotations resolves params left-to-right.
+                         e.g., #array:float:2D → ValueType=Float, Dim=2D *)
 
 (* --- {W} wrapper definitions --- *)
 
@@ -145,16 +124,15 @@ wrapper_body_line   ::= scope_setup
                        | exec_line
                        | comment_line ;
                       (* Wrappers contain [\]/[/] scope and [{]/[}] IO — never {#} definitions *)
-
-(* --- Macro dispatch rule --- *)
-(* Macros overload by signature — ordered list of parameter count and kind:
-   <#ParamName  = type input  (a # definition as data tree)
-   <ParamName   = value input (a typed value)
-   Dispatch matches by parameter count AND parameter kind.
-   Two overloads with identical signature = compile error (PGE01019). *)
 ```
 
-**Rule:** Parameterized types use `{M}` type macros to generate `{#}` definitions at compile time. `{M}` defines type macros; `[M]` invokes them inside `{#}` blocks. `{W}` defines wrappers; `[W]` invokes them. `<~` in `{#}` means **only** inheritance — never macro invocation. Schema composition (`[#] << ##Name`) accumulates — each line adds one schema's properties. Schema properties (`[#] %##`) declare tree-level compile-time metadata. Field type properties (`[#] %###`) declare leaf-level metadata. Type constraints (`[<]`) restrict what types may bind to a macro parameter. Schema references (`##`) are only valid inside `{#}` definitions (PGE05006). Two macros with identical signatures (same name, same parameter count and kind) produce compile error PGE01019.
+**Rule:** Parameterized types use generic `{#}` definitions with `[#] <#param` type inputs and `[#] <param` value inputs. The `:` separator in type annotations binds positionally to declared parameters (e.g., `#array:float:2D` → ValueType=Float, Dim=2D). Default values use `<~`; missing required params = compile error. `{W}` defines wrappers; `[W]` invokes them. Schema composition (`[#] << ##Name`) accumulates — each line adds one schema's properties. Parameterized schemas accept their own `[#] <#param` / `[#] <param` bindings nested under the `[#] <<` line. Schema properties (`[#] %##`) declare branch-level compile-time metadata. Field type properties (`[#] %###`) declare leaf-level metadata. Param constraints (`[<]`) restrict what types may bind to a parameter. Schema references (`##`) are only valid inside `{#}` definitions (PGE05006).
+
+**Named `##` schemas:** ##Leaf, ##Scalar, ##Flat, ##Deep (depth); ##Inf (value); ##Contiguous, ##Sparse, ##Rectangular, ##Sorted (structure); ##Enum (classification); ##Fields, ##Nullable, ##Result, ##String, ##Map, ##Array, ##Set, ##Dataframe (parameterized).
+
+**`%##` properties (branch-level):** %##Flexible (#FlexKind), %##Key (type ref), %##Range (range expr), %##Schema (list of ##), %##Active (#ActiveKind), %##Ordered (#Boolean), %##Sorted (#Boolean), %##Gap (#Boolean), %##Regular (#Boolean), %##Count (#Bound), %##Count.Min (#uint), %##Propagate (#Boolean), %##Level.N (scope), %##Depth.Max (#Bound), %##Alias (#NestedKeyString).
+
+**`%###` properties (leaf-level):** %###Kind (#FieldKind), %###Type (type ref), %###Unique (#Boolean).
 
 ### 4.4 Tree Child Accessor
 
@@ -164,6 +142,6 @@ child_access        ::= variable_id '<' name { '<' name } ;
                       (* Chained: $cube<2<3<0 — branch 2, branch 3, leaf 0 *)
 ```
 
-**Rule:** The `<` character after a `$variable` is a tree child accessor. It navigates into flexible children declared with `[:]` in `{#}` definitions. Fixed fields still use `.` (`$user.name`). The parser distinguishes `<` by context — after `[#]` in a `{M}` macro it is a parameter declaration; after a `$variable` it is child access.
+**Rule:** The `<` character after a `$variable` is a tree child accessor. It navigates into flexible children declared with `[:]` in `{#}` definitions. Fixed fields still use `.` (`$user.name`). The parser distinguishes `<` by context — after `[#]` in a `{#}` definition it is a parameter declaration; after a `$variable` it is child access.
 
 ---

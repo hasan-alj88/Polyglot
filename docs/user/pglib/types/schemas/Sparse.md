@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-08
 status: complete
 metadata_definition: "%definition.##:Sparse"
 ---
@@ -16,11 +16,12 @@ metadata_definition: "%definition.##:Sparse"
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `%##Children.Gap` | `#True` | Gaps allowed in child keys |
+| `%##Gap` | `#True` | Gaps allowed in child keys |
 
 ## Used By
 
-- `#Map`
+- `#Map` (via `##Map`)
+- `#Set` (via `##Set`)
 - `#Serial`
 
 ## Metadata
@@ -29,11 +30,9 @@ metadata_definition: "%definition.##:Sparse"
 |------|---------|-------------|
 | Definition | `%definition.##:Sparse` | Schema definition template |
 
-Schemas are compile-time metadata constraints — they have no runtime instances.
+Schemas are compile-time metadata constraints -- they have no runtime instances.
 
 ## Related
 
 - [[schemas/INDEX|## Schema Types]] -- all schema definitions
 - [[schemas/Contiguous|##Contiguous]] -- opposite: no gaps, ordered
-- [[concepts/collections/INDEX|collections]] -- collection types using ##Sparse
-- [[syntax/types/INDEX|types]] -- full type system specification

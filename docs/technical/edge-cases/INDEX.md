@@ -40,7 +40,7 @@ Review in batches by section. Each edge case includes:
 | [15-metadata-blocks.md](15-metadata-blocks.md) | S15. Metadata Blocks | EC-15.1--15.5 |
 | [16-trigger-io-wiring.md](16-trigger-io-wiring.md) | S16. Trigger IO Wiring | EC-16.1--16.3 |
 | [17-negation-operators.md](17-negation-operators.md) | S17. Negation Operators | EC-17.1--17.2 |
-| [18-macro-structure.md](18-macro-structure.md) | S18. Macro Structure | EC-18.1--18.4 |
+| [18-macro-structure.md](18-macro-structure.md) | S18. Wrapper Structure | EC-18.1--18.4 |
 | [19-collections-gaps.md](19-collections-gaps.md) | S19. Collections -- Gaps | EC-19.1--19.4 |
 | [20-lifecycle-gaps.md](20-lifecycle-gaps.md) | S20. Variable Lifecycle -- Gaps | EC-20.1--20.3 |
 | [21-registry-type.md](21-registry-type.md) | S21. Third Registry Type | EC-21.1 |
@@ -71,12 +71,12 @@ Review in batches by section. Each edge case includes:
 | S15 Metadata Blocks | EC-15.1--15.5 | `[%]` user fields, alias, `.info#serial`, `%` live accessor, empty alias |
 | S16 Trigger IO Wiring | EC-16.1--16.3 | Trigger outputs, multi-output wiring, mixed fill modes |
 | S17 Negation Operators | EC-17.1--17.2 | `<!?`, `>!?`, `<=!?`, `>=!?`, negation in compound logic |
-| S18 Macro Structure | EC-18.1--18.4 | `{M}` full structure, `[W]` usage wiring, no-output macro, zero-param macro |
+| S18 Wrapper Structure | EC-18.1--18.4 | `{W}` full structure, `[W]` usage wiring, no-output wrapper, zero-param macro (retired) |
 | S19 Collections -- Gaps | EC-19.1--19.4 | `*Into.Serial`, `*Into.Level`, `*Second`, `[b]` collector |
 | S20 Lifecycle -- Gaps | EC-20.1--20.3 | Declared state, Released state, `~>` on output params |
 | S21 Third Registry Type | EC-21.1 | `Registry` address format |
 | S22 Control Flow -- Gaps | EC-22.1--22.4 | `*?` exhaustiveness, nested conditionals, `%status` switch, `[^]` XOR |
 | S23 Stress Tests | ST-1--ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, macro+timer |
-| S24 Datatype Definitions | EC-24.1--24.18 | Scalar regex boundaries, `<~` inheritance, ##/### composition, collection parameterized inheritance, %## property completeness |
+| S24 Datatype Definitions | EC-24.1--24.20 | Scalar regex boundaries, `<~` inheritance, ##/### composition, generic type parameters, %## property completeness |
 
 **Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle + 3 literals + 3 control-flow + 2 scope + 4 cross-concern = 133 edge cases across 24 sections.**

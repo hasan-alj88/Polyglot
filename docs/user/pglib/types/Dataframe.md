@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:Dataframe"
 metadata_instance: "%#:Dataframe:N"
@@ -10,65 +10,24 @@ metadata_instance: "%#:Dataframe:N"
 # #Dataframe Collection
 
 <!-- @types -->
-<!-- @macros -->
 
-Row-oriented table. Dataframe is an `#Array` of `#Map` — each row is a map, the array holds rows. Access: `$df<row<column`. `#Dataframe` has two `{M}` macro overloads dispatched by signature.
+Row-oriented table. `#Dataframe` is a generic type -- an `#Array` of `#Map`. Each row is a map keyed by column names. Access: `$df<row<column`.
 
 ---
 
 ## Definition
 
-### Compile-Time Safe Variant
-
-Dispatched by signature `(<#, <#)` — column names and cell type known at compile time.
-
 ```polyglot
-{ } Compile-time safe Dataframe — dispatched by signature (<#, <#)
-{ } Dataframe = Array of Map — each row is a Map, array holds rows
-{M} #Dataframe
-   [#] <#ColumnEnum
-      [<] << ##EnumLeafs
-   [#] <#CellType
-      [<] << ##Scalar
-
-   [r] $DfName##DataTypeString << "Dataframe:{$ColumnEnum%name}:{$CellType%name}"
-   {#} #{$DfName}
-      [#] %##Alias
-         [:] << "dataframe:{$ColumnEnum%name}:{$CellType%name}"
-         [:] << "Dataframe:{$ColumnEnum%name}:{$CellType%name}"
-      [#] << ##Contiguous
-      [#] << ##Rectangular
-      [#] << ##Ordered
-      [:] :*#Map:$ColumnEnum:$CellType
+{#} #Dataframe
+   [#] <#Columns << ##Enum
+   [#] <#CellType <~ #
+   [#] << ##Dataframe
+      [#] <#Columns << <#Columns
+      [#] <#CellType << <#CellType
+   [#] %##Alias << "dataframe"
 ```
 
-### Runtime Flexible Variant
-
-Dispatched by signature `(<, <)` — column names provided as strings. Needs `=#.Validate` at runtime for schema enforcement.
-
-```polyglot
-{ } Runtime flexible Dataframe — dispatched by signature (<, <)
-{ } Needs =#.Validate at runtime for schema enforcement
-{ } Dataframe = Array of Map — each row is a string-keyed map
-{M} #Dataframe
-   [#] <Columns##CommaSeparatedList
-   [#] <DataFrameName##DataTypeString
-
-   [ ] Dynamically generate an Enum from the column names
-   [r] $uid##DataTypeString << =UID""
-   {#} #DataFrameColumns{$uid}
-      [ ] Generates an Enum from the column name list
-      [#] << =#list.into.Enum"{$Columns}"
-
-   {#} #{$DataFrameName}
-      [#] %##Alias
-         [:] << "dataframe:{$Columns%name}"
-         [:] << "DataFrame:{$Columns%name}"
-      [#] << ##Contiguous
-      [#] << ##Rectangular
-      [#] << ##Ordered
-      [:] :*#Map:#String:#String
-```
+The `<#Columns` parameter must satisfy `##Enum` -- column names come from an enum type. The `<#CellType` parameter sets the cell value type (defaults to `#` -- any type). The `##Dataframe` parameterized schema provides the structural constraints: contiguous rows, rectangular shape.
 
 ---
 
@@ -76,18 +35,20 @@ Dispatched by signature `(<, <)` — column names provided as strings. Needs `=#
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `##Contiguous` | `%##Children.Gap << #False` | No gaps in row indices |
-| `##Rectangular` | `%##Children.Regular << #True` | Every row has the same columns |
-| `##Ordered` | `%##Children.Ordered << #True` | Row order preserved |
+| `%##Gap` | `#False` (via ##Contiguous) | No gaps in row indices |
+| `%##Ordered` | `#True` (via ##Contiguous) | Row order preserved |
+| `%##Regular` | `#True` (via ##Rectangular) | Every row has same column count |
+| `%##Key` | `#UnsignedInt` | Integer row indices |
 
 ---
 
 ## Dataframe Access Pattern
 
-Access uses double `<` — first for row index, second for column name:
+Access uses double `<` -- first for row index, second for column name:
 
 ```polyglot
 {#} #SalesColumns
+   [#] << ##Enum
    [#] << ##Scalar
    [#] << ###ScalarEnum
    [.] .product
@@ -115,9 +76,8 @@ Access uses double `<` — first for row index, second for column name:
 
 ## Related
 
-- [[collections]] — collection type overview
-- [[Map]] — row type (each row is a #Map)
-- [[Array]] — parent structure (#Dataframe is an #Array of #Map)
-- [[scalars]] — scalar schema classifications
-- [[syntax/types/INDEX|types]] — full type system specification
-- [[macros]] — macro system
+- [[collections]] -- collection type overview
+- [[Map]] -- row type (each row is a #Map)
+- [[Array]] -- parent structure (#Dataframe is an #Array of #Map)
+- [[schemas/Dataframe|##Dataframe]] -- parameterized schema
+- [[syntax/types/INDEX|types]] -- full type system specification

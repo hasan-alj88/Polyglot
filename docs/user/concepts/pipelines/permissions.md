@@ -9,7 +9,7 @@ updated: 2026-04-05
 ## Permissions
 
 <!-- @permissions -->
-Pipelines declare permissions by referencing named `{_}` grant objects via `[_]` lines. `[_]` lines go after the `{=}` header (and `[%]` metadata, if present), before `[T]`, `[Q]`, `[W]`, and IO. The same applies to all `{x}` definitions (`{M}` macros, etc.). See [[permissions]] for the full permission system, `{_}` object syntax, and the Ceiling vs Grant model.
+Pipelines declare permissions by referencing named `{_}` grant objects via `[_]` lines. `[_]` lines go after the `{=}` header (and `[%]` metadata, if present), before `[T]`, `[Q]`, `[W]`, and IO. See [[permissions]] for the full permission system, `{_}` object syntax, and the Ceiling vs Grant model.
 
 ```polyglot
 {_} _LogGrant

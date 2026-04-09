@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-04
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:String"
 metadata_instance: "%#:String:N"
@@ -43,18 +43,18 @@ See [[syntax/types/INDEX|types]] for the full type hierarchy and [[scalars]] for
 - `[#] << ##Scalar` -- sets `%##Depth.Max << 1`, marking `#String` as a scalar
 - `%##Alias << "string"` -- lets users write `#string` (lowercase) as shorthand
 
-## Subtype Inheritance via `<~`
+## Scalar Subtypes via `##String`
 
-All scalar subtypes inherit `#String`'s schema using `[#] <~ #String` and override `.regex` with a specific regex. The `<~` operator means "default schema, can be specialized further" -- consistent with assignment semantics where `<~` is an overridable default.
+All scalar subtypes compose the `##String` parameterized schema with a specific `<regex` parameter. The schema inherits `#String`'s structure (`.string` + `.regex` fields) and overrides `.regex` with the specified pattern.
 
-Each subtype then sets `.regex` with `<<` (final -- cannot be overridden further). See [[scalars]] for all subtypes.
+See [[scalars]] for all subtypes and [[schemas/String|##String]] for the parameterized schema definition.
 
 Users can define custom string subtypes with their own `.regex`:
 
 ```polyglot
 {#} #emailAddress
-   [#] <~ #String
-   [.] .regex#RawString << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+   [#] << ##String
+      [#] <regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
 ## Metadata

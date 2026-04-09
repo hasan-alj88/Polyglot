@@ -1,18 +1,20 @@
 ---
 audience: designer
 type: reference
-updated: 2026-03-31
+updated: 2026-04-09
 ---
 
 <!-- @edge-cases/INDEX -->
 
-## 18. Wrapper & Macro Structure (S18)
+## 18. Wrapper Structure (S18)
+
+> **Note:** This section was originally "Wrapper & Macro Structure." The `{M}` macro block type was retired in Issue #272 (parameterized ## schemas replace macros). EC-18.4 (zero-parameter macro) is retired — see PGE01023 redirect stub. Wrapper edge cases remain unchanged.
 
 ### EC-18.1: Minimal wrapper — `[{]` input, `[}]` output, `[\]` setup, `[/]` cleanup
 
 <!-- @blocks:Scope -->
 <!-- @pipelines:Wrappers -->
-**EBNF:** `wrapper_def ::= "{W}" pipeline_id NEWLINE { indent wrapper_body_line NEWLINE }` (§9.4b)
+**EBNF:** `wrapper_def ::= "{W}" pipeline_id NEWLINE { indent wrapper_body_line NEWLINE }` (§9.5)
 
 **What it tests:** Complete `{W}` structure with all four scope markers. No `[T]`, `[Q]`, or `[=]` IO. See [[blocks#Scope]], [[concepts/pipelines/wrappers#Wrappers]].
 
@@ -76,14 +78,6 @@ updated: 2026-03-31
          [=] <token << $auditToken
 ```
 
-### EC-18.4: Zero-parameter macro — should be `{#}` instead
+### EC-18.4: *(Retired)* Zero-parameter macro
 
-**EBNF ref:** `macro_def` (§9.4) — requires at least one `macro_param` or `macro_type_param`
-**What it tests:** A `{M}` with no `[#]` parameters. PGE01023 fires. See [[concepts/macros|macros]].
-
-```polyglot
-[ ] ✗ PGE01023 — no parameters, use {#} instead
-{M} #Singleton
-   {#} #Singleton
-      [.] .instance#string << "only"
-```
+**Status:** Retired — `{M}` macro block type removed in Issue #272. See [[compile-rules/PGE/PGE01023-parameterless-macro|PGE01023 redirect stub]].

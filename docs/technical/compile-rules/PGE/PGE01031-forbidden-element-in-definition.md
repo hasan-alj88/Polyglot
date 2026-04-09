@@ -26,7 +26,6 @@ severity: error
 | `{Q} #Name` | — | `[.]`/`[:]` fields, `[#]` | All pipeline elements |
 | `{#}` | — | `[.]`/`[:]` fields, `[#]`, `[%]` | All pipeline elements |
 | `{!}` | — | `[.]`/`[:]` fields | All pipeline elements |
-| `{M}` | `[{]`/`[}]` (macro IO) | `[{]`/`[}]`, `[.]`/`[:]` fields | `[T]`, `[Q]`, `[W]`, `[=]`, `[\]`/`[/]` |
 
 **Note:** `{T}` triggers may have execution body, `[Q]`, and `[W]`. These are optional (not required like in `{=}[exe]`). The only structural requirement unique to `{T}` is `>IsTriggered#bool` (see PGE01032).
 
@@ -93,5 +92,5 @@ severity: error
 
 - [[PGE01029-invalid-marker-for-definition-type|PGE01029]] — invalid markers on definition line (complementary rule)
 - [[PGE01032-missing-trigger-boolean-output|PGE01032]] — `{T}` required output constraint
-- [[PGE01004-macro-structural-constraints|PGE01004]] — `{M}` macro structural rules
+- [[PGE01004-macro-structural-constraints|PGE01004]] — definition structural constraints
 - [[marker-declarations|Marker Declarations Brainstorming]] — §4 Rule C, valid/invalid examples

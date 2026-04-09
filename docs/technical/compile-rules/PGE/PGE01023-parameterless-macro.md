@@ -2,40 +2,18 @@
 audience: developer
 rule: "1.23"
 code: PGE01023
-name: Parameterless Macro
-severity: error
+name: "Retired — Parameterless Macro"
+severity: retired
+redirect: "#272"
 ---
 
-### Rule 1.23 — Parameterless Macro
+### Rule 1.23 — Parameterless Macro (RETIRED)
 `PGE01023`
 
-**Statement:** A `{M}` type macro must declare at least one parameter (`[#] <param` or `[#] <#TypeParam`). A macro with no parameters is a compile error.
-**Rationale:** Macros exist to generate type definitions parameterized by inputs. A macro with no parameters always produces the same output — it should be a plain `{#}` data definition instead. The EBNF requires at least one parameter line.
-**Detection:** The compiler checks that each `{M}` block contains at least one `[#]` parameter declaration (value or type parameter).
+**Status:** Retired as of Issue #272 — Parameterized ## schemas replace {M} macros.
 
-**VALID:**
-```polyglot
-[ ] ✓ macro with value parameter
-{M} #Array
-   [#] <ElementType#RawString
-   {#} #Array
-      [.] .elements;array.{$ElementType}
-```
+**Original purpose:** Enforced that `{M}` type macros declared at least one parameter. Macros with no parameters should have been plain `{#}` definitions.
 
-```polyglot
-[ ] ✓ macro with type parameter
-{M} #TypedContainer
-   [#] <#ContentType
-   {#} #TypedContainer
-      [.] .content;{$ContentType}
-```
+**Why retired:** The `{M}` block type has been removed entirely. Parameterized types now use generic `{#}` definitions with `[#] <#param` type inputs and `[#] <param` value inputs. The concept of a "parameterless macro" no longer applies.
 
-**INVALID:**
-```polyglot
-[ ] ✗ PGE01023 — no parameters, should be a plain {#}
-{M} #Singleton
-   {#} #Singleton
-      [.] .instance#string << "only"
-```
-
-**Diagnostic:** "Macro `#Name` has no parameters — use `{#}` for constant type definitions"
+**See also:** [[09-definition-blocks|EBNF §9.2]] — `{#}` data definitions with generic parameters.

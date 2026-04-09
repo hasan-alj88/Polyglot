@@ -13,7 +13,6 @@ file                ::= package_block { definition } ;
 
 definition          ::= data_def
                       | pipeline_def
-                      | macro_def
                       | wrapper_def
                       | queue_def
                       | error_def

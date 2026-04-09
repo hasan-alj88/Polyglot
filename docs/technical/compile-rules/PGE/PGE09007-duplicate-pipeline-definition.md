@@ -9,9 +9,9 @@ severity: error
 ### Rule 9.7 — Duplicate Definition
 `PGE09007`
 
-**Statement:** Every named definition — `{=}` pipeline, `{#}` data type, or `{M}` macro — must have a unique name within the same package and version. If two or more definitions share the same name (across files or within a single file), PGE09007 fires on each duplicate.
-**Rationale:** Definition names are the unit of reference for calls (`[r]`/`[p]`/`[b]`), type annotations (`#TypeName`), and macro wrappers (`[W]`). Duplicate names create ambiguity the compiler cannot resolve — it would not know which definition a reference intends.
-**Detection:** After loading all files in the package, the compiler builds a map of all `{=}`, `{#}`, and `{M}` names to their source files. If any name maps to more than one definition, PGE09007 fires on each duplicate (all definitions after the first occurrence). The diagnostic includes the definition type and the file where the original was defined.
+**Statement:** Every named definition — `{=}` pipeline, `{#}` data type, `{W}` wrapper, `{T}` trigger, `{Q}` queue, or `{!}` error namespace — must have a unique name within the same package and version. If two or more definitions share the same name (across files or within a single file), PGE09007 fires on each duplicate.
+**Rationale:** Definition names are the unit of reference for calls (`[r]`/`[p]`/`[b]`), type annotations (`#TypeName`), and wrappers (`[W]`). Duplicate names create ambiguity the compiler cannot resolve — it would not know which definition a reference intends.
+**Detection:** After loading all files in the package, the compiler builds a map of all definition names to their source files. If any name maps to more than one definition, PGE09007 fires on each duplicate (all definitions after the first occurrence). The diagnostic includes the definition type and the file where the original was defined.
 
 **See also:** PGE09003 (unresolved pipeline reference), PGE09011 (duplicate import alias — analogous for `[@]` aliases)
 

@@ -33,10 +33,10 @@ The `<` character is a tree child accessor. It reads a child from a data tree by
 | `$var<key` | Tree child access | `$myArray<0`, `$myMap<name` |
 | `$var<key<subkey` | Chained access for nested trees | `$matrix<0<1`, `$df<0<product` |
 
-The `<` operator also appears inside `{M}` macro definitions as a parameter input marker (`[#] <Param`). See [[macro-types]] for details.
+The `<` operator also appears inside `{#}` generic type definitions as a parameter input marker (`[#] <Param`). See [[generic-types]] for details.
 
 ## See Also
 
 - [[syntax/types/INDEX|Type System Overview]] — ground truths and type annotation rules
 - [[syntax/types/schema-properties|Schema Properties]] — `##` and `###` property definitions
-- [[syntax/types/macro-types|Macro-Generated Types]] — `<` as macro parameter input marker
+- [[syntax/types/generic-types|Generic Types]] — `<` as generic parameter input marker

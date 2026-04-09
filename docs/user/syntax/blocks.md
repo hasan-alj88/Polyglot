@@ -9,7 +9,7 @@ status: complete
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{T}` at `%T`, `{M}` at `%M`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native` (see [[data-is-trees]]).
+Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{=}` at `%=`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native` (see [[data-is-trees]]).
 
 ## `{X}` — Definition Elements
 
@@ -21,7 +21,6 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{#}` | Struct definition. See [[syntax/types/structs#Enum Fields vs Value Fields]] |
 | `{=}` | Pipeline definition. Supports marker declarations (`{=}[exe]`, subsets). See [[concepts/pipelines/INDEX\|pipelines]] |
 | `{T}` | Trigger pipeline definition (subtype of `{=}`). See [[concepts/pipelines/io-triggers#Trigger Definitions]] |
-| `{M}` | Type macro definition (subtype of `{#}`). See [[macros]] |
 | `{W}` | Wrapper definition (subtype of `{=}`). See [[wrappers]] |
 | `{Q}` | Queue — dual-purpose block. `{Q} #Queue:Name` defines a queue instance (subtype of `{#}`, data definition). `{Q} =Q.*` defines a queue pipeline operation (subtype of `{=}`, equivalent to `{=}[Q]`). The identifier prefix (`#` vs `=`) disambiguates. See [[concepts/pipelines/queue#Queue]] |
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
@@ -76,7 +75,6 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `[p]` | Run/execute in parallel |
 | `[b]` | Run/execute in background (fire and forget) |
 | `[#]` | Load serialized data into typed structure |
-| `[M]` | Macro invocation — expand a `{M}` type macro inside a `{#}` block. See [[macros]] |
 
 ### Control Flow
 
@@ -114,7 +112,7 @@ See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure a
 |--------|---------|
 | `[%]` | Definition metadata and aliases |
 
-`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{M}`, `{W}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE12002).
+`[%]` lives inside any `{x}` definition (`{#}`, `{=}`, `{W}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE12002).
 
 See [[metadata]] for the full metadata tree, field listings, `live` semantics, and access patterns.
 
@@ -136,21 +134,20 @@ See [[metadata]] for the full metadata tree, field listings, `live` semantics, a
 | Context | `%name` returns |
 |---------|----------------|
 | `{#} #ThisName` | `"ThisName"` |
-| `{M} #String.Subtype` | `"String.Subtype"` |
 | `{=} =Pipeline.Name` | `"Pipeline.Name"` |
 | `{W} =W.Polyglot` | `"W.Polyglot"` |
 
-`%name.Last` splits by `.` and returns the final segment — `{M} #String.Subtype` yields `%name.Last` = `"Subtype"`.
+`%name.Last` splits by `.` and returns the final segment — `{=} =Pipeline.Name` yields `%name.Last` = `"Name"`.
 
 `%This` scoping:
 
 | Context | `%This` refers to |
 |---------|-------------------|
-| Inside `{M} #String.Subtype` body (outside nested `{#}`) | The macro definition |
-| Inside `{#} ##{$Name}` nested within the macro | The `{#}` definition being generated |
+| Inside `{#} #MyType` | The type definition |
+| Inside `{=} =MyPipeline` | The pipeline definition |
 | Outside any `{x}` block | Compile error |
 
-To reference the enclosing macro from inside a nested `{#}`, use `%Parent` (one level up from `%This`).
+`%Parent` refers to one level up from `%This` — useful inside nested definition contexts.
 
 ### Logical
 
