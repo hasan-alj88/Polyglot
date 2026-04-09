@@ -429,8 +429,8 @@ Each rule follows this structure:
 
 **INVALID:**
 ```polyglot
-{=} =MyPipeline
-   [r] $x << ##Flat               [ ] ✗ PGE05006 — ## used outside {#}
+{-} -MyPipeline
+   [-] $x << ##Flat               [ ] ✗ PGE05006 — ## used outside {#}
 ```
 
 ### Rule 9.27 — Final Field Override via Inheritance

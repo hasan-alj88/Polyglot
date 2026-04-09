@@ -18,27 +18,27 @@ updated: 2026-03-30
 ```polyglot
 [ ] Not less than — equivalent to >=
 [?] $age <!? 18
-   [r] $eligible#bool << #Boolean.True
+   [-] $eligible#bool << #Boolean.True
 [?] *?
-   [r] $eligible#bool << #Boolean.False
+   [-] $eligible#bool << #Boolean.False
 
 [ ] Not greater than — equivalent to <=
 [?] $score >!? 100
-   [r] $capped#bool << #Boolean.True
+   [-] $capped#bool << #Boolean.True
 [?] *?
-   [r] $capped#bool << #Boolean.False
+   [-] $capped#bool << #Boolean.False
 
 [ ] Not less-or-equal — equivalent to >
 [?] $priority <=!? 3
-   [r] $urgent#bool << #Boolean.True
+   [-] $urgent#bool << #Boolean.True
 [?] *?
-   [r] $urgent#bool << #Boolean.False
+   [-] $urgent#bool << #Boolean.False
 
 [ ] Not greater-or-equal — equivalent to <
 [?] $retries >=!? 5
-   [r] $giveUp#bool << #Boolean.True
+   [-] $giveUp#bool << #Boolean.True
 [?] *?
-   [r] $giveUp#bool << #Boolean.False
+   [-] $giveUp#bool << #Boolean.False
 ```
 
 ### EC-17.2: Negation in compound logical condition
@@ -50,7 +50,7 @@ updated: 2026-03-30
 [?] $active =? #Boolean.True
 [&] $banned =!? #Boolean.True
 [&] $age <!? 13
-   [r] $allowed#bool << #Boolean.True
+   [-] $allowed#bool << #Boolean.True
 [?] *?
-   [r] $allowed#bool << #Boolean.False
+   [-] $allowed#bool << #Boolean.False
 ```

@@ -18,7 +18,7 @@ updated: 2026-04-04
    [.] .price
    [.] .quantity
 
-[r] $sales#dataframe:SalesColumns:string <~ {}
+[-] $sales#dataframe:SalesColumns:string <~ {}
 ```
 
 ### Access
@@ -27,16 +27,16 @@ Row access uses `<` (array index), column access uses a second `<` (map key):
 
 ```polyglot
 [ ] Row 0, column "product"
-[r] $name#string << $sales<0<product
+[-] $name#string << $sales<0<product
 
 [ ] Row 2, column "price"
-[r] $price#string << $sales<2<price
+[-] $price#string << $sales<2<price
 
 [ ] Entire row as Map
-[r] $row#map:SalesColumns:string << $sales<0
+[-] $row#map:SalesColumns:string << $sales<0
 ```
 
-For entire-column extraction, use `=#.Column` pipeline (see [[pglib/pipelines/Schema/INDEX]]).
+For entire-column extraction, use `-#.Column` pipeline (see [[pglib/pipelines/Schema/INDEX]]).
 
 Build dataframes using `*Into.Dataframe` collectors, not incremental assignment.
 

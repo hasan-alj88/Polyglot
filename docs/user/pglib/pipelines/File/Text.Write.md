@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.Text.Write"
-metadata_instance: "%=:File.Text.Write:N"
+metadata_definition: "%definition.-:File.Text.Write"
+metadata_instance: "%-:File.Text.Write:N"
 ---
 
-# =File.Text.Write
+# -File.Text.Write
 
 Write text content to a file, replacing any existing content.
 
 ## Definition
 
 ```polyglot
-{N} =File.Text.Write
+{N} -File.Text.Write
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextWrite"
    [%] .description << "Write text to file"
-   [=] <path#path
-   [=] <content#string
+   (-) <path#path
+   (-) <content#string
 ```
 
 ## Inputs
@@ -48,9 +48,9 @@ Requires `File.Write` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.Text.Write` | Compile-time pipeline template |
-| Instance | `%=:File.Text.Write:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.Text.Write` | Compile-time pipeline template |
+| Instance | `%-:File.Text.Write:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]

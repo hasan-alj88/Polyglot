@@ -9,37 +9,37 @@ severity: error
 ### Rule 6.10 — Empty Conditional Scope
 `PGE06010`
 
-**Statement:** Every `[?]` branch must contain at least one executable statement (`[r]`, `[p]`, `[b]`, or nested `[?]`). A `[?]` branch with only comments or no body at all is a compile error. Use `[r] =DoNothing` to explicitly mark an intentionally empty branch.
-**Rationale:** An empty conditional branch is almost always an authoring mistake — the developer intended to add logic but forgot. Unlike an empty pipeline body (PGW01001, warning), a conditional branch is a targeted decision point: if the developer wrote the condition, they intended an action. Requiring `=DoNothing` makes the "do nothing" intent explicit and self-documenting.
+**Statement:** Every `[?]` branch must contain at least one executable statement (`[-]`, `[=]`, `[b]`, or nested `[?]`). A `[?]` branch with only comments or no body at all is a compile error. Use `[-] -DoNothing` to explicitly mark an intentionally empty branch.
+**Rationale:** An empty conditional branch is almost always an authoring mistake — the developer intended to add logic but forgot. Unlike an empty pipeline body (PGW01001, warning), a conditional branch is a targeted decision point: if the developer wrote the condition, they intended an action. Requiring `-DoNothing` makes the "do nothing" intent explicit and self-documenting.
 **Detection:** The compiler checks the body of every `[?]` branch (including `[?] *?` catch-all). If no executable statement is found, PGE06010 fires.
 
 **VALID:**
 ```polyglot
 [ ] ✓ each branch has an executable statement
 [?] $age =? #FileAge.Old
-   [r] =File.Delete
-      [=] <path << $file
+   [-] -File.Delete
+      (-) <path << $file
 [?] $age =? #FileAge.Unknown
-   [r] =DoNothing
+   [-] -DoNothing
 [?] *?
-   [r] =DoNothing
+   [-] -DoNothing
 ```
 
 ```polyglot
 [ ] ✓ comments alongside executable statement are fine
 [?] $status =? #PipelineStatus.Running
    [ ] Pipeline is still running — wait
-   [r] =DoNothing
+   [-] -DoNothing
 [?] *?
-   [r] =HandleComplete
+   [-] -HandleComplete
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE06010 — catch-all branch has only a comment, no executable
 [?] $age =? #FileAge.Old
-   [r] =File.Delete
-      [=] <path << $file
+   [-] -File.Delete
+      (-) <path << $file
 [?] *?
    [ ] File is not old enough — skip
 ```
@@ -48,7 +48,7 @@ severity: error
 [ ] ✗ PGE06010 — branch is completely empty
 [?] $mode =? "debug"
 [?] *?
-   [r] =Process
+   [-] -Process
 ```
 
 **See also:**

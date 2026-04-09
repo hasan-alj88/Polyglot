@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.To.DecimalTime"
-metadata_instance: "%=:DT.To.DecimalTime:N"
+metadata_definition: "%definition.-:DT.To.DecimalTime"
+metadata_instance: "%-:DT.To.DecimalTime:N"
 ---
 
-# =DT.To.DecimalTime
+# -DT.To.DecimalTime
 
 Converts a `#dt` to French Republican decimal time. These pipelines convert a `#dt` into culture-specific time representations.
 
 ## Definition
 
 ```polyglot
-{N} =DT.To.DecimalTime
+{N} -DT.To.DecimalTime
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToDecimalTime"
    [%] .description << "DateTime to decimal time"
-   [=] <source#dt
-   [=] >time#DecimalTime
+   (-) <source#dt
+   (-) >time#DecimalTime
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.To.DecimalTime` | Compile-time pipeline template |
-| Instance | `%=:DT.To.DecimalTime:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.To.DecimalTime` | Compile-time pipeline template |
+| Instance | `%-:DT.To.DecimalTime:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

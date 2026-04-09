@@ -16,8 +16,8 @@ updated: 2026-03-30
 **What it tests:** Non-empty inline data with mixed types. See [[syntax/types/structs#Inline Data Shorthand]].
 
 ```polyglot
-[r] $nums#array << {1, 2, 3, 4, 5}
-[r] $services#array:string << {"AD", "Email", "Slack"}
+[-] $nums#array << {1, 2, 3, 4, 5}
+[-] $services#array:string << {"AD", "Email", "Slack"}
 ```
 
 ### EC-8.2: Inline data — empty collection
@@ -27,7 +27,7 @@ updated: 2026-03-30
 **What it tests:** Empty `{}` as valid collection initializer.
 
 ```polyglot
-[=] >results#array:string ~> {}
+(-) >results#array:string ~> {}
 ```
 
 ### EC-8.3: String interpolation
@@ -38,10 +38,10 @@ updated: 2026-03-30
 **What it tests:** Variable interpolation inside string literals using `{$var}` syntax. See [[syntax/types/strings#String Interpolation]].
 
 ```polyglot
-[r] $msg#string << "Hello {$first} {$last}!"
-[r] $path#string << "/users/{$userId}/profile"
+[-] $msg#string << "Hello {$first} {$last}!"
+[-] $path#string << "/users/{$userId}/profile"
 [ ] Escaped literal braces
-[r] $json#string << "{{\"key\": \"{$val}\"}}"
+[-] $json#string << "{{\"key\": \"{$val}\"}}"
 ```
 
 ### EC-8.4: Default assignment to discard (INVALID)
@@ -53,18 +53,18 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] INVALID — DefaultPushLeft into discard
-[r] $*#string <~ "never used"           [ ] ✗ PGE02010 — discard cannot hold a default
+[-] $*#string <~ "never used"           [ ] ✗ PGE02010 — discard cannot hold a default
 
 [ ] INVALID — DefaultPushRight into discard
-[r] =Compute
-   [=] >result ~> $*                    [ ] ✗ PGE02010 — discard cannot hold a default
+[-] -Compute
+   (-) >result ~> $*                    [ ] ✗ PGE02010 — discard cannot hold a default
 
 [ ] VALID — PushLeft into discard
-[r] $*#string << "discarded"            [ ] ✓ final is the only valid discard operator
+[-] $*#string << "discarded"            [ ] ✓ final is the only valid discard operator
 
 [ ] VALID — PushRight into discard
-[r] =Compute
-   [=] >result >> $*                    [ ] ✓ explicit discard of output
+[-] -Compute
+   (-) >result >> $*                    [ ] ✓ explicit discard of output
 ```
 
 ### EC-8.5: Self-assignment via output params (INVALID)
@@ -76,13 +76,13 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] INVALID — same output param on both sides
-[=] >result#string
-[r] >result << >result                  [ ] ✗ PGE08011 — self-assignment, no state change
+(-) >result#string
+[-] >result << >result                  [ ] ✗ PGE08011 — self-assignment, no state change
 
 [ ] VALID — different output ports (cross-port wiring)
-[=] >out1#string
-[=] >out2#string
-[r] >out1 << >out2                      [ ] ✓ different ports, valid wiring
+(-) >out1#string
+(-) >out2#string
+[-] >out1 << >out2                      [ ] ✓ different ports, valid wiring
 ```
 
 ### EC-8.6: Variable self-assignment (INVALID)
@@ -94,8 +94,8 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] INVALID — same variable on both sides
-[r] $name#string << $name               [ ] ✗ PGE08011 — self-assignment, no-op
+[-] $name#string << $name               [ ] ✗ PGE08011 — self-assignment, no-op
 
 [ ] VALID — different variables
-[r] $a#string << $b                     [ ] ✓ different variables, valid assignment
+[-] $a#string << $b                     [ ] ✓ different variables, valid assignment
 ```

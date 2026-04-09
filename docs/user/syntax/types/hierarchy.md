@@ -12,7 +12,7 @@ updated: 2026-04-09
 
 `live` is a type modifier reserved for `[%]` metadata fields managed by the Polyglot runtime. Users can read `live` fields via the `%` accessor but never assign to them. The type uses dot notation: `#live.#PipelineStatus`, `#live.int`, `#live.array:error`.
 
-`live` fields are **implicit** on every `{=}` pipeline, `$` variable, and `{#}` struct. They do not need to be declared -- the runtime populates them automatically and updates them in real-time.
+`live` fields are **implicit** on every `{-}` pipeline, `$` variable, and `{#}` struct. They do not need to be declared -- the runtime populates them automatically and updates them in real-time.
 
 See [[metadata]] for the full metadata tree, all `live` field listings, and access patterns.
 
@@ -22,16 +22,16 @@ Types use dot notation for namespaces -- these are fixed schema fields. Namespac
 
 ```polyglot
 [ ] Direct type annotation -- most common
-[r] $score#int <~ 0
+[-] $score#int <~ 0
 
 [ ] Fully qualified -- equivalent to the above
-[r] $score#String:int <~ 0
+[-] $score#String:int <~ 0
 
 [ ] Struct enum field -- must use # outside type annotations
-[r] $severity << #Severity.Critical
+[-] $severity << #Severity.Critical
 
 [ ] Cross-package reference -- @alias#DataName.Field
-[r] $status << @alerts#Severity.Error
+[-] $status << @alerts#Severity.Error
 ```
 
 In type annotations (after `#`), nested type refs drop the `#` prefix -- the compiler knows `#` starts a type context. Outside annotations, struct references keep the `#` prefix. See [[identifiers#Serialized Identifiers]] for the full prefix rules.

@@ -9,9 +9,9 @@ severity: error
 ### Rule 9.3 — Unresolved Pipeline Reference
 `PGE09003`
 
-**Statement:** Every `=Pipeline` reference in an `[r]` or `[p]` call must resolve to either a pglib pipeline or a `{=}` definition within the same package. If the reference matches neither, it is a compile error. Cross-package pipelines must use `@alias=Pipeline` syntax with a valid `[@]` import (see PGE09001). This rule does not apply to `@alias=Pipeline` references — those are validated by PGE09001 (alias resolution) and then by the imported package's own definitions.
+**Statement:** Every `-Pipeline` reference in an `[-]` or `[=]` call must resolve to either a pglib pipeline or a `{-}` definition within the same package. If the reference matches neither, it is a compile error. Cross-package pipelines must use `@alias-Pipeline` syntax with a valid `[@]` import (see PGE09001). This rule does not apply to `@alias-Pipeline` references — those are validated by PGE09001 (alias resolution) and then by the imported package's own definitions.
 **Rationale:** Calling a pipeline that doesn't exist is always a bug — a typo, a deleted definition, or a missing import. Catching unresolved references at compile time prevents runtime lookup failures.
-**Detection:** The compiler collects all `{=}` definitions in the current package and the pglib pipeline set. When an `[r]` or `[p]` call references `=Name` (without an `@` alias prefix), the compiler checks the name against both sets. If no match is found, PGE09003 fires.
+**Detection:** The compiler collects all `{-}` definitions in the current package and the pglib pipeline set. When an `[-]` or `[=]` call references `-Name` (without an `@` alias prefix), the compiler checks the name against both sets. If no match is found, PGE09003 fires.
 
 **See also:** PGE09001 (undefined import alias — validates `@alias` prefix), PGE01010 (pipeline IO name mismatch — validated after the pipeline reference resolves)
 
@@ -19,78 +19,78 @@ severity: error
 ```polyglot
 {@} @Local:999.MyApp:v1.0.0
 
-{=} =Transform
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >output#string
-   [r] >output << $input
+{-} -Transform
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >output#string
+   [-] >output << $input
 
-[ ] ✓ =Transform is defined in the same package
-{=} =Main
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =Transform
-      [=] <input#string << "hello"
-      [=] >output#string >> $result
+[ ] ✓ -Transform is defined in the same package
+{-} -Main
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -Transform
+      (-) <input#string << "hello"
+      (-) >output#string >> $result
 ```
 
 ```polyglot
 [ ] ✓ pglib pipelines are always available
-{=} =Main
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =File.Text.Read
-      [=] <path#path << $filePath
-      [=] >content#string >> $text
+{-} -Main
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -File.Text.Read
+      (-) <path#path << $filePath
+      (-) >content#string >> $text
 ```
 
 **INVALID:**
 ```polyglot
 {@} @Local:999.MyApp:v1.0.0
 
-[ ] ✗ PGE09003 — =Process not defined in this package and not pglib
-{=} =Main
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =Process                            [ ] ✗ PGE09003 — no {=} =Process in package, not pglib
-      [=] <data#string << $input
+[ ] ✗ PGE09003 — -Process not defined in this package and not pglib
+{-} -Main
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -Process                            [ ] ✗ PGE09003 — no {-} -Process in package, not pglib
+      (-) <data#string << $input
 ```
 
 ```polyglot
 {@} @Local:999.MyApp:v1.0.0
 
 [ ] ✗ PGE09003 — typo in pipeline name
-{=} =Transform
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >output#string
-   [r] >output << $input
+{-} -Transform
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >output#string
+   [-] >output << $input
 
-{=} =Main
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =Transfrom                          [ ] ✗ PGE09003 — typo: =Transfrom not found (did you mean =Transform?)
-      [=] <input#string << "hello"
+{-} -Main
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -Transfrom                          [ ] ✗ PGE09003 — typo: -Transfrom not found (did you mean -Transform?)
+      (-) <input#string << "hello"
 ```
 
 ```polyglot
 {@} @Local:999.MyApp:v1.0.0
 
 [ ] ✗ PGE09003 — cross-package pipeline without @alias
-{=} =Main
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =Validate                           [ ] ✗ PGE09003 — =Validate is in another package; use @alias=Validate with [@] import
-      [=] <input#string << $data
+{-} -Main
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -Validate                           [ ] ✗ PGE09003 — -Validate is in another package; use @alias-Validate with [@] import
+      (-) <input#string << $data
 ```
 
 ### See Also

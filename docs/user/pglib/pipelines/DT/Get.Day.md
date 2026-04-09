@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.Get.Day"
-metadata_instance: "%=:DT.Get.Day:N"
+metadata_definition: "%definition.-:DT.Get.Day"
+metadata_instance: "%-:DT.Get.Day:N"
 ---
 
-# =DT.Get.Day
+# -DT.Get.Day
 
 Extracts the day component from a `#dt` value.
 
 ## Definition
 
 ```polyglot
-{N} =DT.Get.Day
+{N} -DT.Get.Day
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtGetDay"
    [%] .description << "Extract day from DateTime"
-   [=] <source#dt
-   [=] >day#int
+   (-) <source#dt
+   (-) >day#int
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.Get.Day` | Compile-time pipeline template |
-| Instance | `%=:DT.Get.Day:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.Get.Day` | Compile-time pipeline template |
+| Instance | `%-:DT.Get.Day:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

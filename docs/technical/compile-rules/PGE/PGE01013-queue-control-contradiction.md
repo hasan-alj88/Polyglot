@@ -20,14 +20,14 @@ severity: error
    [.] .maxInstances#int << 5
 
 [ ] ✓ pipeline adds controls not in {Q} — no contradiction
-{=} =BatchJob
-   [T] =T.Call
-   [Q] =Q.Assign"BatchQueue"
-      [=] <maxConcurrent#int << 10
-      [Q] =Q.Pause.Soft
-         [=] <CPU.MoreThan#float << 90.0
-   [W] =W.Polyglot
-   [r] =DoWork
+{-} -BatchJob
+   [T] -T.Call
+   [Q] -Q.Assign"BatchQueue"
+      (-) <maxConcurrent#int << 10
+      [Q] -Q.Pause.Soft
+         (-) <CPU.MoreThan#float << 90.0
+   [W] -W.Polyglot
+   [-] -DoWork
 ```
 
 **INVALID:**
@@ -36,18 +36,18 @@ severity: error
    [.] .maxInstances#int << 1
 
 [ ] ✗ PGE01013 — maxInstances contradicts queue default
-{=} =BatchJob
-   [T] =T.Call
-   [Q] =Q.Assign"BatchQueue"
-      [=] <maxInstances#int << 5
-   [W] =W.Polyglot
-   [r] =DoWork
+{-} -BatchJob
+   [T] -T.Call
+   [Q] -Q.Assign"BatchQueue"
+      (-) <maxInstances#int << 5
+   [W] -W.Polyglot
+   [-] -DoWork
 ```
 
-**Diagnostic:** "Pipeline `=BatchJob` sets `maxInstances << 5` but queue `#Queue:BatchQueue` defines `maxInstances << 1` — remove the pipeline override or change the queue default"
+**Diagnostic:** "Pipeline `-BatchJob` sets `maxInstances << 5` but queue `#Queue:BatchQueue` defines `maxInstances << 1` — remove the pipeline override or change the queue default"
 
 ### See Also
 
 - [[concepts/pipelines/queue|Queue]] — documents queue control contradiction rule, references PGE01013
-- [[pglib/pipelines/Q|=Q.* pglib Pipelines]] — references PGE01013 in queue control context
+- [[pglib/pipelines/Q|-Q.* pglib Pipelines]] — references PGE01013 in queue control context
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01013

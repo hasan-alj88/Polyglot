@@ -16,29 +16,29 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ Different output ports — cross-port wiring
-[=] >out1#string
-[=] >out2#string
-[r] >out1 << >out2                      [ ] ✓ different ports, valid wiring
+(-) >out1#string
+(-) >out2#string
+[-] >out1 << >out2                      [ ] ✓ different ports, valid wiring
 
 [ ] ✓ Different variables
-[r] $a#string << $b                     [ ] ✓ different variables, valid assignment
+[-] $a#string << $b                     [ ] ✓ different variables, valid assignment
 
 [ ] ✓ Output port from called pipeline to local output port
-[r] =Compute
-   [=] >result >> >localOut             [ ] ✓ different scopes — called pipeline output to local
+[-] -Compute
+   (-) >result >> >localOut             [ ] ✓ different scopes — called pipeline output to local
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE08011 — same output param on both sides
-[=] >result#string
-[r] >result << >result                  [ ] ✗ PGE08011 — self-assignment, no state change
+(-) >result#string
+[-] >result << >result                  [ ] ✗ PGE08011 — self-assignment, no state change
 
 [ ] ✗ PGE08011 — same variable on both sides
-[r] $name#string << $name               [ ] ✗ PGE08011 — self-assignment, no-op
+[-] $name#string << $name               [ ] ✗ PGE08011 — self-assignment, no-op
 
 [ ] ✗ PGE08011 — self-assignment with default operator
-[r] $count#int <~ $count                [ ] ✗ PGE08011 — still a no-op regardless of operator
+[-] $count#int <~ $count                [ ] ✗ PGE08011 — still a no-op regardless of operator
 ```
 
 **Diagnostic:** "Self-assignment of `{identifier}` — target and source are the same identifier, producing no state change"

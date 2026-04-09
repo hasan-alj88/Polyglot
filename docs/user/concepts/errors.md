@@ -17,7 +17,7 @@ Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the me
 ```mermaid
 flowchart LR
     DEF["{!} Define\ncustom error tree"]
-    DEC["[=] ! Declare\npipeline errors"]
+    DEC["(-) ! Declare\npipeline errors"]
     RAISE["[!] >> Raise\nerror in body"]
     HANDLE["[!] Handle\nat call site"]
     RECOVER["Recover\n[!] replacement / <! fallback"]
@@ -44,47 +44,47 @@ This creates five error identifiers under `!Error`: `!Error:Validation.Empty`, `
 
 pglib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and require no definition — they use fixed `.` leaves and are **not** user-extensible. `!Error` is the only namespace with user-extensible children (see [[pglib/errors/errors#`!Error` — User-Extensible Namespace]]). See [[pglib/errors/errors#Built-in Error Namespaces]] for the complete list.
 
-## Declaring Pipeline Errors (`[=] !`)
+## Declaring Pipeline Errors (`(-) !`)
 
-A pipeline that can raise errors **must** declare them in its IO section using `[=] !ErrorName`:
+A pipeline that can raise errors **must** declare them in its IO section using `(-) !ErrorName`:
 
 ```polyglot
-{=} =ValidateUser
-   [=] <name#string
-   [=] >validated#string
-   [=] >status#string
-   [=] !Validation.Empty
-   [=] !Validation.TooLong
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
+{-} -ValidateUser
+   (-) <name#string
+   (-) >validated#string
+   (-) >status#string
+   (-) !Validation.Empty
+   (-) !Validation.TooLong
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
    ...
 ```
 
-Error declarations are mandatory — a pipeline without `[=] !...` is non-failable. The compiler uses this to enforce:
+Error declarations are mandatory — a pipeline without `(-) !...` is non-failable. The compiler uses this to enforce:
 - **PGE07005** — `[!] >>` raises an error not declared by the pipeline
-- **PGE07006** — `[=] !ErrorName` declared but never raised in the execution body
+- **PGE07006** — `(-) !ErrorName` declared but never raised in the execution body
 - **PGW07001** — caller adds `[!]` handler on a non-failable pipeline call (dead code)
-- **PGW07004** — caller adds `[>] <!` fallback on output from a non-failable pipeline call (dead code)
+- **PGW07004** — caller adds `(>) <!` fallback on output from a non-failable pipeline call (dead code)
 - **PGE07007** — caller does not address all declared errors (exhaustive handling required)
 
 ## Raising Errors (`[!] >>`)
 
-In the execution body, `[!] >> !ErrorName` raises a declared error. The raise block fills `#Error` fields with `[=]` lines:
+In the execution body, `[!] >> !ErrorName` raises a declared error. The raise block fills `#Error` fields with `(-)` lines:
 
 ```polyglot
 [?] $name =? ""
    [!] >> !Validation.Empty
-      [=] .Message << "Name is required"
-      [=] .Info:field << "name"
+      (-) .Message << "Name is required"
+      (-) .Info:field << "name"
 [?] $name.length >? 100
    [!] >> !Validation.TooLong
-      [=] .Message << "Name exceeds 100 characters"
-      [=] .Info:field << "name"
-      [=] .Info:maxLength << 100
+      (-) .Message << "Name exceeds 100 characters"
+      (-) .Info:field << "name"
+      (-) .Info:maxLength << 100
 [?] *?
-   [r] >validated << $name
-   [r] >status << "ok"
+   [-] >validated << $name
+   [-] >status << "ok"
 ```
 
 `.Name` is auto-filled by the runtime (e.g., `"Validation.Empty"`). `.Message` and `.Info` are set at the raise site.
@@ -97,13 +97,13 @@ Inside a `[!] >>` block, the author can push fallback values to specific outputs
 
 ```polyglot
 [!] >> !Validation.Empty
-   [=] .Message << "Name is required"
-   [=] >status << "invalid"
-      [>] %FallbackMessage << "Pipeline returns invalid status on empty input"
+   (-) .Message << "Name is required"
+   (-) >status << "invalid"
+      (>) %FallbackMessage << "Pipeline returns invalid status on empty input"
    [ ] >validated not mentioned — goes Failed
 ```
 
-`[>] %FallbackMessage` documents **why** this fallback exists. It is displayed by PGW07002 when a caller overrides the fallback with `[>] <!`.
+`(>) %FallbackMessage` documents **why** this fallback exists. It is displayed by PGW07002 when a caller overrides the fallback with `(>) <!`.
 
 ### Fallback Warning Rules
 
@@ -115,21 +115,21 @@ Inside a `[!] >>` block, the author can push fallback values to specific outputs
 | Yes | `"reason"` | No | Normal — caller uses author's fallback |
 | No | — | Yes | Normal `<!` behavior |
 
-- **PGW07002** — caller `[>] <!` overrides a pipeline-defined fallback that has `%FallbackMessage`. See [[compile-rules/PGW/PGW07002-caller-overrides-pipeline-fallback]].
-- **PGW07003** — author sets output fallback in `[!] >>` without `[>] %FallbackMessage`. Suppress with `%FallbackMessage << ""`. See [[compile-rules/PGW/PGW07003-missing-fallback-message]].
+- **PGW07002** — caller `(>) <!` overrides a pipeline-defined fallback that has `%FallbackMessage`. See [[compile-rules/PGW/PGW07002-caller-overrides-pipeline-fallback]].
+- **PGW07003** — author sets output fallback in `[!] >>` without `(>) %FallbackMessage`. Suppress with `%FallbackMessage << ""`. See [[compile-rules/PGW/PGW07003-missing-fallback-message]].
 
 ## Error Scoping
 
-`[!]` error blocks are scoped to the specific `[r]` call that can produce them (PGE07001), indented under the call (after its `[=]` IO lines). Under a single `[r]` call, no two `[!]` blocks may handle the same error name (PGE07004).
+`[!]` error blocks are scoped to the specific `[-]` call that can produce them (PGE07001), indented under the call (after its `(-)` IO lines). Under a single `[-]` call, no two `[!]` blocks may handle the same error name (PGE07004).
 
 ```polyglot
-[r] @FS=File.Text.Read
-   [=] <path << <filepath
-   [=] >content >> >content
+[-] @FS-File.Text.Read
+   (-) <path << <filepath
+   (-) >content >> >content
    [!] !File.NotFound
-      [r] >content << "Error: file not found"
+      [-] >content << "Error: file not found"
    [!] !File.ReadError
-      [r] >content << "Error: could not read file"
+      [-] >content << "Error: could not read file"
 ```
 
 The compiler enforces exhaustive error handling (PGE02005): every failable call must have either an `[!]` block that provides a replacement value, or `<!`/`>!` fallback operators on its IO lines. If neither is present, the compiler emits PGE02005.
@@ -141,55 +141,55 @@ Three patterns for error handling:
 | Pattern | Pipeline continues? | Variable state |
 |---------|-------------------|---------------|
 | `[!]` pushes replacement (`<<`/`>>`) | Yes | Always Final |
-| `[>] <!` fallback on IO line | Yes | Always Final — fallback value used |
-| `[>] <!ErrorName` specific error fallback | Yes | Always Final — targeted fallback |
+| `(>) <!` fallback on IO line | Yes | Always Final — fallback value used |
+| `(>) <!ErrorName` specific error fallback | Yes | Always Final — targeted fallback |
 
 **`[!]` block replacement:**
 
 ```polyglot
-[r] =Fetch
-   [=] >payload >> >data
+[-] -Fetch
+   (-) >payload >> >data
    [!] !FetchError
-      [r] =LogError
-         [=] <msg << "fetch failed"
-      [r] >data << ""              [ ] replacement → Final
-[r] =Process
-   [=] <input << >data             [ ] ✓ always Final
+      [-] -LogError
+         (-) <msg << "fetch failed"
+      [-] >data << ""              [ ] replacement → Final
+[-] -Process
+   (-) <input << >data             [ ] ✓ always Final
 ```
 
 **`<!` fallback on IO line:**
 
 ```polyglot
-[r] =Fetch
-   [=] >payload >> >data
-   [>] <! "default"                [ ] catch-all fallback → Final
-[r] =Process
-   [=] <input << >data             [ ] ✓ always Final
+[-] -Fetch
+   (-) >payload >> >data
+   (>) <! "default"                [ ] catch-all fallback → Final
+[-] -Process
+   (-) <input << >data             [ ] ✓ always Final
 ```
 
 **`<!ErrorName` specific error fallback:**
 
 ```polyglot
-[r] =Fetch
-   [=] >payload >> >data
-   [>] <!FetchError "unavailable"  [ ] specific fallback
-   [>] <! ""                       [ ] catch-all for remaining errors
+[-] -Fetch
+   (-) >payload >> >data
+   (>) <!FetchError "unavailable"  [ ] specific fallback
+   (>) <! ""                       [ ] catch-all for remaining errors
 ```
 
 ## Chain Error Addressing
 
-In chain execution (`[r] =A=>=B=>=C`), errors are prefixed with a step reference (PGE07002):
+In chain execution (`[-] -A->-B->-C`), errors are prefixed with a step reference (PGE07002):
 
 **Prefer numeric indices** — always unambiguous:
 
 ```polyglot
-[r] =File.Text.Read=>=Text.Parse.CSV
-   [=] >0.path#path << $path
-   [=] <1.rows#string >> >content
+[-] -File.Text.Read->-Text.Parse.CSV
+   (-) >0.path#path << $path
+   (-) <1.rows#string >> >content
    [!] !0.File.NotFound
-      [r] >content << "Error: file not found"
+      [-] >content << "Error: file not found"
    [!] !1.Parse.InvalidFormat
-      [r] >content << "Error: invalid CSV"
+      [-] >content << "Error: invalid CSV"
 ```
 
 **Leaf name ambiguity:** When a leaf name shares a segment with the error name, extend the step reference by one level up to disambiguate:
@@ -209,7 +209,7 @@ See [[concepts/pipelines/chains#Error Handling in Chains]] for the full chain ex
 
 ## Standard Error Trees
 
-Every pipeline exposes an error tree via `[=] !ErrorName` declarations — a structured list of every error it can raise. The pglib defines nine root namespaces (defined as `{!}` blocks by the runtime, all with fixed `.` leaves):
+Every pipeline exposes an error tree via `(-) !ErrorName` declarations — a structured list of every error it can raise. The pglib defines nine root namespaces (defined as `{!}` blocks by the runtime, all with fixed `.` leaves):
 
 | Namespace | Covers |
 |-----------|--------|
@@ -241,32 +241,32 @@ Query a variable's state via `$varName%state` — this reads from `%$:{name}:{in
 <!-- @operators -->
 <!-- @io:Fallback IO -->
 <!-- @blocks:Data Flow -->
-The `<!` and `!>` operators (see [[operators#Assignment Operators]]) provide inline fallback values on IO lines, preventing variables from entering the Failed state. Fallback lines use the `[>]` / `[<]` IO parameter handling markers (see [[blocks#Data Flow]]) scoped under `[=]` IO lines (see [[io#IO Parameter Handling]]).
+The `<!` and `!>` operators (see [[operators#Assignment Operators]]) provide inline fallback values on IO lines, preventing variables from entering the Failed state. Fallback lines use the `(>)` / `(<)` IO parameter handling markers (see [[blocks#Data Flow]]) scoped under `(-)` IO lines (see [[io#IO Parameter Handling]]).
 
 ### Generic Fallback
 
-A `[>] <! value` line catches **any** error not handled by an `[!]` block:
+A `(>) <! value` line catches **any** error not handled by an `[!]` block:
 
 ```polyglot
-[r] =File.Text.Read
-   [=] <path << $file
-   [=] >content >> $out
-      [>] <! "generic fallback"
+[-] -File.Text.Read
+   (-) <path << $file
+   (-) >content >> $out
+      (>) <! "generic fallback"
 ```
 
-If `=File.Text.Read` errors (any error), `$out` becomes Final with `"generic fallback"` instead of entering the Failed state.
+If `-File.Text.Read` errors (any error), `$out` becomes Final with `"generic fallback"` instead of entering the Failed state.
 
 ### Error-Specific Fallback
 
 `<!Error.Name` fuses the error name into the operator, providing a fallback only for that specific error:
 
 ```polyglot
-[r] =File.Text.Read
-   [=] <path << $file
-   [=] >content >> $out
-      [>] <! "generic fallback"
-      [>] <!File.NotFound "file not found"
-      [>] <!File.ReadError "read error"
+[-] -File.Text.Read
+   (-) <path << $file
+   (-) >content >> $out
+      (>) <! "generic fallback"
+      (>) <!File.NotFound "file not found"
+      (>) <!File.ReadError "read error"
 ```
 
 Error-specific fallbacks take priority over the generic fallback.
@@ -276,9 +276,9 @@ Error-specific fallbacks take priority over the generic fallback.
 Fallback accepts any `value_expr` — not just literals:
 
 ```polyglot
-[=] >profile >> $profile
-   [>] <! $defaultProfile
-   [>] <! =LoadCached"{$userId}"
+(-) >profile >> $profile
+   (>) <! $defaultProfile
+   (>) <! -LoadCached"{$userId}"
 ```
 
 (Only ONE of the above per output — duplicates are PGE07003.)
@@ -293,8 +293,8 @@ flowchart TD
     M{"[!] block matches?"}
     R{"Pushes replacement?"}
     F1["Variable Final\n(done)"]
-    S{"Error-specific\nfallback on [>] line?"}
-    G{"Generic fallback\non [>] line?"}
+    S{"Error-specific\nfallback on (>) line?"}
+    G{"Generic fallback\non (>) line?"}
     F2["Variable Final\n(fallback value)"]
     F3["Variable Final\n(fallback value)"]
     T["Pipeline terminates /\nvariable Failed"]
@@ -314,27 +314,27 @@ flowchart TD
 2. `[!]` blocks check — if a matching `[!]` exists, its body runs first
 3. If `[!]` pushed a replacement value → variable is Final, done
 4. If `[!]` did NOT push a replacement (or no `[!]` matched):
-   - Error-specific `<!Error.Name` on `[>]` line → variable is Final with that value
-   - Generic `<!` on `[>]` line → variable is Final with that value
+   - Error-specific `<!Error.Name` on `(>)` line → variable is Final with that value
+   - Generic `<!` on `(>)` line → variable is Final with that value
    - No fallback exists → existing behavior (pipeline terminates or variable is Failed)
 5. When any fallback activates: `$var%sourceError` is set to the error that occurred
 
 ```polyglot
-[r] =File.Text.Read
-   [=] <path << $file
-   [=] >content >> $out
-      [>] <! "last resort"
+[-] -File.Text.Read
+   (-) <path << $file
+   (-) >content >> $out
+      (>) <! "last resort"
    [!] !File.NotFound
       [ ] Complex recovery — [!] handles this fully
-      [r] =LogMissing
-         [=] <path << $file
-      [r] >content << "logged and handled"
+      [-] -LogMissing
+         (-) <path << $file
+      [-] >content << "logged and handled"
    [!] !File.ReadError
       [ ] Simple fallback inside [!]
-      [=] >content <! "read error"
+      (-) >content <! "read error"
 ```
 
-Here `!File.NotFound` is fully handled by `[!]` (it pushes a replacement). `!File.ReadError` uses `<!` inside its `[!]` block. Any other error falls through to the generic `[>] <! "last resort"`.
+Here `!File.NotFound` is fully handled by `[!]` (it pushes a replacement). `!File.ReadError` uses `<!` inside its `[!]` block. Any other error falls through to the generic `(>) <! "last resort"`.
 
 ### Metadata Exposure
 
@@ -342,8 +342,8 @@ When a fallback activates, the error that triggered it is accessible via `$var%s
 
 ```polyglot
 [?] $content%sourceError =!? !NoError
-   [r] =LogWarning
-      [=] <msg << "Used fallback for {$file}: {$content%sourceError}"
+   [-] -LogWarning
+      (-) <msg << "Used fallback for {$file}: {$content%sourceError}"
 [?] *?
    [ ] Normal path — no error occurred
 ```

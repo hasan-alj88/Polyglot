@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:File.Lock"
 metadata_instance: "%W:File.Lock:N"
 ---
 
-# =W.File.Lock
+# -W.File.Lock
 
 Acquires file lock on setup, releases on cleanup.
 
 ## Definition
 
 ```polyglot
-{N} =W.File.Lock
+{N} -W.File.Lock
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WFileLock"
    [%] .description << "Acquires file lock on setup, releases on cleanup."
@@ -51,5 +51,5 @@ File.Read
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
-- [[pglib/pipelines/W/File.TempDir|=W.File.TempDir]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]
+- [[pglib/pipelines/W/File.TempDir|-W.File.TempDir]]

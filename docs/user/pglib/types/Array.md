@@ -50,10 +50,10 @@ The `<#ValueType` parameter sets the element type. The `<Dim` parameter sets the
 
 ```polyglot
 [ ] #array:int → ValueType=Int, Dim=1D (default)
-[r] $scores#array:int <~ {}
+[-] $scores#array:int <~ {}
 
 [ ] #array:float:2D → ValueType=Float, Dim=2D
-[r] $matrix#array:float:2D <~ {}
+[-] $matrix#array:float:2D <~ {}
 ```
 
 ---

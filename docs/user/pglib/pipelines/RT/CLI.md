@@ -3,25 +3,25 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:RT.<Lang>.CLI"
-metadata_instance: "%=:RT.<Lang>.CLI:N"
+metadata_definition: "%definition.-:RT.<Lang>.CLI"
+metadata_instance: "%-:RT.<Lang>.CLI:N"
 ---
 
-# =RT.\<Lang\>.CLI
+# -RT.\<Lang\>.CLI
 
-Invoke a compiled binary. No language runtime needed — uses `=W.Polyglot`, not `=W.RT`. No `<env` parameter.
+Invoke a compiled binary. No language runtime needed — uses `-W.Polyglot`, not `-W.RT`. No `<env` parameter.
 
 ## Definition
 
 ```polyglot
-{N} =RT.<Lang>.CLI
+{N} -RT.<Lang>.CLI
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RtCli"
    [%] .description << "Invoke compiled binary."
-   [=] <binary#path
-   [=] <arg#array.string
-   [=] <kwarg#map:string:string
-   [=] >output#Code:<Lang>.Output
+   (-) <binary#path
+   (-) <arg#array.string
+   (-) <kwarg#map:string:string
+   (-) >output#Code:<Lang>.Output
 ```
 
 ## Inputs
@@ -40,7 +40,7 @@ Invoke a compiled binary. No language runtime needed — uses `=W.Polyglot`, not
 
 ## Notes
 
-Uses `=W.Polyglot`, not `=W.RT` — no language runtime needed for compiled binaries.
+Uses `-W.Polyglot`, not `-W.RT` — no language runtime needed for compiled binaries.
 
 ## Example
 
@@ -56,19 +56,19 @@ Uses `=W.Polyglot`, not `=W.RT` — no language runtime needed for compiled bina
    [.] .intent << #Grant
    [.] .System.Process "mytool"
 
-{=} =RunRustTool
+{-} =RunRustTool
    [_] _ToolGrant
-   [=] <inputPath#path
-   [=] >toolOutput#Code:Rust.Output
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
+   (-) <inputPath#path
+   (-) >toolOutput#Code:Rust.Output
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
 
-   [r] =RT.Rust.CLI
-      [=] <binary#path << =Path"/usr/local/bin/mytool"
-      [=] <arg#array.string << ["{$inputPath}"]
-      [=] <kwarg#map:string:string << {"--format": "json", "--verbose": "true"}
-      [=] >output#Code:Rust.Output >> >toolOutput
+   [-] -RT.Rust.CLI
+      (-) <binary#path << -Path"/usr/local/bin/mytool"
+      (-) <arg#array.string << ["{$inputPath}"]
+      (-) <kwarg#map:string:string << {"--format": "json", "--verbose": "true"}
+      (-) >output#Code:Rust.Output >> >toolOutput
 ```
 
 ## Errors
@@ -83,9 +83,9 @@ Requires `System.Process` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:RT.<Lang>.CLI` | Compile-time pipeline template |
-| Instance | `%=:RT.<Lang>.CLI:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:RT.<Lang>.CLI` | Compile-time pipeline template |
+| Instance | `%-:RT.<Lang>.CLI:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/RT/INDEX|=RT.* Runtime Execution]]
+- [[pglib/pipelines/RT/INDEX|-RT.* Runtime Execution]]

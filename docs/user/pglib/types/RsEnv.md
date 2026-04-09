@@ -11,7 +11,7 @@ metadata_instance: "%#:RsEnv:N"
 
 <!-- @types -->
 
-Runtime environment handle produced by `=W.RT:Rust:*` wrapper setup.
+Runtime environment handle produced by `-W.RT:Rust:*` wrapper setup.
 
 ---
 
@@ -30,7 +30,7 @@ Runtime environment handle produced by `=W.RT:Rust:*` wrapper setup.
 | Field | Type | Purpose |
 |-------|------|---------|
 | `.version` | `#string` | Rust version string (e.g., `"1.84"`) |
-| `.handle` | `#RawString` | Opaque runtime handle used by `=RT.Rust.*` pipelines |
+| `.handle` | `#RawString` | Opaque runtime handle used by `-RT.Rust.*` pipelines |
 
 ---
 
@@ -46,6 +46,6 @@ Runtime environment handle produced by `=W.RT:Rust:*` wrapper setup.
 ## Related
 
 - [[rt]] — runtime types overview
-- [[pglib/pipelines/RT/INDEX|=RT.*]] — runtime execution pipelines
-- [[pglib/pipelines/W/INDEX|=W.*]] — wrapper pipelines
+- [[pglib/pipelines/RT/INDEX|-RT.*]] — runtime execution pipelines
+- [[pglib/pipelines/W/INDEX|-W.*]] — wrapper pipelines
 - [[syntax/types/INDEX|types]] — full type system specification

@@ -12,9 +12,9 @@ Reduces mini-pipeline numeric outputs to the maximum value.
 ## Syntax
 
 ```polyglot
-[r] *Agg.Max
-   [*] <number << $value
-   [*] >max >> $highest
+[-] *Agg.Max
+   (*) <number << $value
+   (*) >max >> $highest
 ```
 
 ## Inputs

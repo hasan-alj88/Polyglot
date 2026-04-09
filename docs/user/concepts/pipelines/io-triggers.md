@@ -8,28 +8,28 @@ updated: 2026-03-30
 
 ## Trigger Definitions
 
-`{T}` defines a trigger pipeline — a specialized subtype of `{=}` that contains only IO declarations. Triggers define event sources: they detect conditions and signal when a pipeline should fire. `{T}` is syntactic sugar for `{=}[T]`.
+`{T}` defines a trigger pipeline — a specialized subtype of `{-}` that contains only IO declarations. Triggers define event sources: they detect conditions and signal when a pipeline should fire. `{T}` is syntactic sugar for `{-}[T]`.
 
-Every trigger must output `>IsTriggered#bool`. Triggers can produce additional outputs that wire to the consuming pipeline's inputs via indented `[=]` IO lines under `[T]`.
+Every trigger must output `>IsTriggered#bool`. Triggers can produce additional outputs that wire to the consuming pipeline's inputs via indented `(-)` IO lines under `[T]`.
 
 **Base trigger** — simplest form (pglib):
 
 ```polyglot
-{T} =T.Call
-   [=] >IsTriggered#bool
+{T} -T.Call
+   (-) >IsTriggered#bool
 ```
 
 **Composed trigger** — with inputs and additional outputs:
 
 ```polyglot
-{T} =T.Folder.NewFiles
+{T} -T.Folder.NewFiles
    [%] .description << "Fires when new files appear in watched directory"
-   [=] <path#path
-   [=] >IsTriggered#bool
-   [=] >NewFiles#array:path
+   (-) <path#path
+   (-) >IsTriggered#bool
+   (-) >NewFiles#array:path
 ```
 
-Trigger definitions have no execution body, no `[Q]`, and no `[W]` — they are IO-only. pglib triggers (`=T.*`) are native definitions backed by host language code — see [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived]] for the distinction.
+Trigger definitions have no execution body, no `[Q]`, and no `[W]` — they are IO-only. pglib triggers (`-T.*`) are native definitions backed by host language code — see [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived]] for the distinction.
 
 ## IO as Implicit Triggers
 
@@ -47,17 +47,17 @@ There is no need to validate inputs with `[?]` checks — unfilled required inpu
 
 Every pipeline must have at least one `[T]` trigger — omitting it is a compile error (PGE01005).
 
-- `=T.Call` — invoked when called from another pipeline
-- Standard library triggers live under `=T.*` namespace — no `[@]` import needed (see [[packages#Usage]])
-- Triggers with arguments: `=T.Daily"3AM"`, `=T.Webhook"/path"`, `=T.Folder.NewFiles"/dir/"`
+- `-T.Call` — invoked when called from another pipeline
+- Standard library triggers live under `-T.*` namespace — no `[@]` import needed (see [[packages#Usage]])
+- Triggers with arguments: `-T.Daily"3AM"`, `-T.Webhook"/path"`, `-T.Folder.NewFiles"/dir/"`
 If a trigger's boolean expression evaluates to the same value for all combinations of trigger states, it is a tautology or contradiction (PGE01018).
 
-- Triggers that produce outputs wire them to pipeline inputs via indented `[=]` IO lines:
+- Triggers that produce outputs wire them to pipeline inputs via indented `(-)` IO lines:
 
 ```polyglot
-[=] <NewFiles#array:path
-[T] =T.Folder.NewFiles"/inbox/"
-   [=] >NewFiles >> <NewFiles
+(-) <NewFiles#array:path
+[T] -T.Folder.NewFiles"/inbox/"
+   (-) >NewFiles >> <NewFiles
 ```
 
 ## Retrigger Strategy
@@ -65,8 +65,8 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
 When a pipeline's trigger conditions are met again while the pipeline is already queued or executing, `#RetriggerStrategy` controls what happens. It is a queue configuration — declared on `[Q]` — but the Trigger Monitor enforces it, deciding whether to send an enqueue signal.
 
 ```polyglot
-[Q] =Q.Default
-   [=] <retrigger#RetriggerStrategy << #Disallow
+[Q] -Q.Default
+   (-) <retrigger#RetriggerStrategy << #Disallow
 ```
 
 | Strategy | Behavior |

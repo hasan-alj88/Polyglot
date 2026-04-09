@@ -23,7 +23,7 @@ Directional — the arrow indicates data flow. Operators push and pull data acro
 | `~>` | DefaultPushRight | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
 | `<!` | FallbackPushLeft (Error) | Right → left | `<! "fallback"`. See [[errors#Error Fallback Operators]] |
 | `!>` | FallbackPushRight (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
-| `=>` | Chain | Left → right | `=A=>=B=>=C`. See [[concepts/pipelines/chains#Chain Execution]] |
+| `->` | Chain | Left → right | `-A->-B->-C`. See [[concepts/pipelines/chains#Chain Execution]] |
 
 ## Comparison Operators
 
@@ -56,15 +56,15 @@ Any comparison operator can be negated by inserting `!` before `?`. This replace
 ```polyglot
 [ ] Not less than — age is at least 18
 [?] $age <!? 18
-   [r] $eligible#bool << #Boolean.True
+   [-] $eligible#bool << #Boolean.True
 [?] *?
-   [r] $eligible#bool << #Boolean.False
+   [-] $eligible#bool << #Boolean.False
 
 [ ] Not greater than — score capped at 100
 [?] $score >!? 100
-   [r] $capped#bool << #Boolean.True
+   [-] $capped#bool << #Boolean.True
 [?] *?
-   [r] $capped#bool << #Boolean.False
+   [-] $capped#bool << #Boolean.False
 ```
 
 ### Type-Operator Compatibility
@@ -94,35 +94,35 @@ The lower bound must not exceed the upper bound ([[PGE04013|PGE04013]]). For inc
 
 ## Arithmetic
 
-Polyglot does not have raw arithmetic operators. Arithmetic is performed through `=Math.*` pglib pipelines — raw tokens `+`, `-`, `*`, `/` in expression context are a compile error ([[PGE04010|PGE04010]]). This design keeps all operations inside the pipeline execution model (trigger → queue → wrapper → body) and avoids conflicts with existing operator meanings (`*` is a collector prefix).
+Polyglot does not have raw arithmetic operators. Arithmetic is performed through `-Math.*` pglib pipelines — raw tokens `+`, `-`, `*`, `/` in expression context are a compile error ([[PGE04010|PGE04010]]). This design keeps all operations inside the pipeline execution model (trigger → queue → wrapper → body) and avoids conflicts with existing operator meanings (`*` is a collector prefix).
 
 | Operation | pglib Pipeline | Arity |
 |-----------|----------------|-------|
-| Addition | `=Math.Add` | variadic (2+) |
-| Subtraction | `=Math.Subtract` | exactly 2 |
-| Multiplication | `=Math.Multiply` | variadic (2+) |
-| Division | `=Math.Divide` | exactly 2 |
-| Modulo | `=Math.Modulo` | exactly 2 |
-| Power | `=Math.Power` | exactly 2 |
-| Absolute value | `=Math.Abs` | exactly 1 |
-| Negate | `=Math.Negate` | exactly 1 |
+| Addition | `-Math.Add` | variadic (2+) |
+| Subtraction | `-Math.Subtract` | exactly 2 |
+| Multiplication | `-Math.Multiply` | variadic (2+) |
+| Division | `-Math.Divide` | exactly 2 |
+| Modulo | `-Math.Modulo` | exactly 2 |
+| Power | `-Math.Power` | exactly 2 |
+| Absolute value | `-Math.Abs` | exactly 1 |
+| Negate | `-Math.Negate` | exactly 1 |
 
 All accept `#int` and `#float` operands. When any input is `#float`, the output is `#float`. Division or modulo with a literal `0` divisor is a compile error ([[PGE04011|PGE04011]]).
 
 ```polyglot
 [ ] Addition
-[r] =Math.Add
-   [=] << $price
-   [=] << $tax
-   [=] >> $total
+[-] -Math.Add
+   (-) << $price
+   (-) << $tax
+   (-) >> $total
 
 [ ] Division with error handling
-[r] =Math.Divide
-   [=] << $numerator
-   [=] << $denominator
-   [=] >> $result
+[-] -Math.Divide
+   (-) << $numerator
+   (-) << $denominator
+   (-) >> $result
    [!] !Math.DivideByZero
-      [r] >result << 0
+      [-] >result << 0
 ```
 
 For string building, use `{$var}` interpolation — not concatenation. See [[syntax/types/strings#String Interpolation]] and [[PGE04005|PGE04005]] (undefined interpolation variable).
@@ -133,5 +133,5 @@ Prefixes, not identifiers. See [[concepts/collections/INDEX|collections]] for fu
 
 | Prefix | Operation | Usage |
 |--------|-----------|-------|
-| `~` | Expand (iterate) | `~ForEach.Array`. See [[concepts/collections/expand#Expand Operators]] |
+| `=ForEach` | Expand (iterate) | `=ForEach.Array`. See [[concepts/collections/expand#Expand Operators]] |
 | `*` | Collect (aggregate) | `*Into.Array`, `*Agg.Sum`. See [[concepts/collections/collect#Collect Operators]] |

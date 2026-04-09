@@ -49,10 +49,10 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .regex#RawString <~ ".*"
 
 [ ] empty string matches ".*"
-[r] $empty#string << ""
+[-] $empty#string << ""
 
 [ ] any content matches ".*"
-[r] $anything#string << "hello world 123 !@#"
+[-] $anything#string << "hello world 123 !@#"
 ```
 
 ### EC-24.2: #Int leading zeros and negative zero
@@ -68,13 +68,13 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .regex#RawString << "^-?[0-9]+$"
 
 [ ] leading zeros match regex
-[r] $padded#int << 007
+[-] $padded#int << 007
 
 [ ] negative zero matches regex
-[r] $negZero#int << -0
+[-] $negZero#int << -0
 
 [ ] PGE04010 — decimal point not in regex
-[r] $bad#int << 3.14
+[-] $bad#int << 3.14
 ```
 
 ### EC-24.3: #Dimension 0D
@@ -93,11 +93,11 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .regex#RawString << "^[0-9]+D$"
 
 [ ] 0D means scalar dimension
-[r] $scalar#array:int:0D
+[-] $scalar#array:int:0D
 
 [ ] standard dimensions
-[r] $vector#array:float:1D
-[r] $matrix#array:float:2D
+[-] $vector#array:float:1D
+[-] $matrix#array:float:2D
 ```
 
 ### EC-24.4: #Eng exponent
@@ -113,15 +113,15 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .regex#RawString << "^-?[1-9]\.[0-9]{0,2}[eE][+-]?(0|[369]|[1-9][0-9]*[0369])$"
 
 [ ] exponent is multiple of 3
-[r] $valid#eng << "1.5e3"
-[r] $micro#eng << "2.47e-6"
-[r] $tera#eng << "9.99e12"
+[-] $valid#eng << "1.5e3"
+[-] $micro#eng << "2.47e-6"
+[-] $tera#eng << "9.99e12"
 
 [ ] PGE04010 — exponent 4 is not a multiple of 3
-[r] $bad#eng << "1.5e4"
+[-] $bad#eng << "1.5e4"
 
 [ ] PGE04010 — exponent 1 is not a multiple of 3
-[r] $bad2#eng << "3.0e1"
+[-] $bad2#eng << "3.0e1"
 ```
 
 ### EC-24.5: #KeyString excluded chars
@@ -137,17 +137,17 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .regex#RawString << "^[^\s.<>:]+$"
 
 [ ] hyphen allowed
-[r] $valid#key << "my-key"
-[r] $underscored#key << "my_key_123"
+[-] $valid#key << "my-key"
+[-] $underscored#key << "my_key_123"
 
 [ ] PGE04010 — dot is reserved (fixed-field separator)
-[r] $dotted#key << "my.key"
+[-] $dotted#key << "my.key"
 
 [ ] PGE04010 — colon is reserved (flexible-field separator)
-[r] $coloned#key << "my:key"
+[-] $coloned#key << "my:key"
 
 [ ] PGE04010 — angle bracket is reserved
-[r] $angled#key << "my<key"
+[-] $angled#key << "my<key"
 ```
 
 ### EC-24.6: #NestedKeyString allows dot/colon
@@ -163,14 +163,14 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .regex#RawString << "^[^\s<>]+$"
 
 [ ] dots and colons allowed for nested paths
-[r] $alias#nestedkey << "error.file.read"
-[r] $nested#nestedkey << "String:int"
+[-] $alias#nestedkey << "error.file.read"
+[-] $nested#nestedkey << "String:int"
 
 [ ] PGE04010 — angle bracket excluded
-[r] $bad#nestedkey << "my<key"
+[-] $bad#nestedkey << "my<key"
 
 [ ] PGE04010 — whitespace excluded
-[r] $bad2#nestedkey << "my key"
+[-] $bad2#nestedkey << "my key"
 ```
 
 ### EC-24.7: `<~` inheritance chain finality
@@ -221,7 +221,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .Green
 
 [ ] usage
-[r] $light << #TrafficLight.Red
+[-] $light << #TrafficLight.Red
 ```
 
 ### EC-24.9: Enum inheritance via `<~`
@@ -245,13 +245,13 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .Maintenance
 
 [ ] inherited variants still accessible
-[r] $status << #MyStatus.Running
+[-] $status << #MyStatus.Running
 
 [ ] new variant accessible
-[r] $status << #MyStatus.Degraded
+[-] $status << #MyStatus.Degraded
 
 [ ] parent type does not gain child's variants
-[r] $bad << #PipelineStatus.Degraded
+[-] $bad << #PipelineStatus.Degraded
 ```
 
 ### EC-24.10: #None — minimal type definition
@@ -269,16 +269,16 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] << ###None
 
 [ ] usage — signals absence
-[r] $result << #None
+[-] $result << #None
 
 [ ] PGE04021 — empty string on non-###None type
-[r] $bad#string << ""
+[-] $bad#string << ""
 ```
 
 ### EC-24.11: #Array as generic `{#}` with `[#] <#param`
 
 **EBNF:** `generic_param ::= "[#]" "<#" name`, `value_param ::= "[#]" "<" name schema_id`, `schema_param_bind` — generic type definition with parameterized schema composition.
-**What it tests:** `{#} #Array` is a generic type with `<#ValueType` (type input) and `<Dim` (value input with default "1D"). Schema properties accumulate from `##Contiguous` and `##Rectangular`. The `:` separator in type annotations binds positionally: `#array:float:2D` → ValueType=Float, Dim=2D. See [[syntax/types/schema-properties#Approved ## Schema Types]].
+**What it tests:** `{#} #Array` is a generic type with `<#ValueType` (type input) and `<Dim` (value input with default "1D"). Schema properties accumulate from `##Contiguous` and `##Rectangular`. The `:` separator in type annotations binds positionally: `#array:float:2D` → ValueType-Float, Dim=2D. See [[syntax/types/schema-properties#Approved ## Schema Types]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]], [[technical/ebnf/04-type-system#4.3]]
 
 ```polyglot
@@ -314,7 +314,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] PGW11002 — %##Gap contradicts if ##Sparse also composed
 [ ] This is intentional — #Array is a contiguous specialization
 
-[r] $arr#array:int <~ {1, 2, 3}
+[-] $arr#array:int <~ {1, 2, 3}
 [ ] no gaps — contiguous enforced
 [ ] ordered — indices 0, 1, 2
 ```
@@ -328,14 +328,14 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ```polyglot
 [ ] 0D array — scalar container
-[r] $scalar#array:int:0D <~ {42}
+[-] $scalar#array:int:0D <~ {42}
 
 [ ] %##Depth.Max = 0 — no flexible nesting
 [ ] Holds exactly one element — access without index
-[r] $val#int << $scalar
+[-] $val#int << $scalar
 
 [ ] PGE04017 — no indices allowed on 0D
-[r] $bad << $scalar:0
+[-] $bad << $scalar:0
 ```
 
 ### EC-24.14: Empty collections
@@ -346,10 +346,10 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ```polyglot
 [ ] empty array — zero elements, valid
-[r] $empty#array:int <~ {}
+[-] $empty#array:int <~ {}
 
 [ ] empty map — zero entries, valid
-[r] $emptyMap#map:string:int <~ {}
+[-] $emptyMap#map:string:int <~ {}
 
 [ ] %##Count.Min is not set — defaults to 0
 [ ] Both are valid typed containers with no elements
@@ -365,17 +365,17 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] PGE11004 — #Int does not inherit #KeyString
 [ ] #Int.regex allows "-7" — the hyphen is fine, but dots/colons are
 [ ] not excluded by #Int's regex, only by #KeyString's
-[r] $bad#map:int:string <~ {}
+[-] $bad#map:int:string <~ {}
 
 [ ] correct — #KeyString (default) excludes reserved chars
-[r] $good#map:string:int <~ {}
+[-] $good#map:string:int <~ {}
 
 [ ] correct — custom key type inheriting #KeyString
 {#} #SafeKey
    [#] <~ #KeyString
    [.] .regex#RawString << "^[a-z][a-z0-9-]*$"
 
-[r] $custom#map:SafeKey:int <~ {}
+[-] $custom#map:SafeKey:int <~ {}
 ```
 
 ### EC-24.16: #Serial — maximally permissive schemas
@@ -421,12 +421,12 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [.] .price
    [.] .quantity
 
-[r] $sales#dataframe:SalesColumns:string <~ {}
+[-] $sales#dataframe:SalesColumns:string <~ {}
 
 [ ] Row-oriented access: $df<row<column
-[r] $name#string << $sales<0<product       [ ] row 0, column "product"
-[r] $price#string << $sales<2<price        [ ] row 2, column "price"
-[r] $row#map:SalesColumns:string << $sales<0   [ ] entire row as Map
+[-] $name#string << $sales<0<product       [ ] row 0, column "product"
+[-] $price#string << $sales<2<price        [ ] row 2, column "price"
+[-] $row#map:SalesColumns:string << $sales<0   [ ] entire row as Map
 ```
 
 ### EC-24.18: Stale %Property notation

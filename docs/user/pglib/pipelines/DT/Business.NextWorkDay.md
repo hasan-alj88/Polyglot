@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.Business.NextWorkDay"
-metadata_instance: "%=:DT.Business.NextWorkDay:N"
+metadata_definition: "%definition.-:DT.Business.NextWorkDay"
+metadata_instance: "%-:DT.Business.NextWorkDay:N"
 ---
 
-# =DT.Business.NextWorkDay
+# -DT.Business.NextWorkDay
 
 Returns the next work day as a `#dt`. Requires an explicit `#BusinessWeek` configuration. No regional defaults are assumed -- all fields (`.firstDay`, `.workDays`, `.offDays`, `.hoursPerDay`) must be set by the user.
 
 ## Definition
 
 ```polyglot
-{N} =DT.Business.NextWorkDay
+{N} -DT.Business.NextWorkDay
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtBusinessNextWorkDay"
    [%] .description << "Find next work day"
-   [=] <source#dt
-   [=] <week#BusinessWeek
-   [=] >result#dt
+   (-) <source#dt
+   (-) <week#BusinessWeek
+   (-) >result#dt
 ```
 
 ## Inputs
@@ -48,10 +48,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.Business.NextWorkDay` | Compile-time pipeline template |
-| Instance | `%=:DT.Business.NextWorkDay:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.Business.NextWorkDay` | Compile-time pipeline template |
+| Instance | `%-:DT.Business.NextWorkDay:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.Copy"
-metadata_instance: "%=:File.Copy:N"
+metadata_definition: "%definition.-:File.Copy"
+metadata_instance: "%-:File.Copy:N"
 ---
 
-# =File.Copy
+# -File.Copy
 
 Copy a file from one path to another.
 
 ## Definition
 
 ```polyglot
-{N} =File.Copy
+{N} -File.Copy
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileCopy"
    [%] .description << "Copy file"
-   [=] <source#path
-   [=] <destination#path
+   (-) <source#path
+   (-) <destination#path
 ```
 
 ## Inputs
@@ -48,10 +48,10 @@ Requires `File.Read` + `File.Write` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.Copy` | Compile-time pipeline template |
-| Instance | `%=:File.Copy:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.Copy` | Compile-time pipeline template |
+| Instance | `%-:File.Copy:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
-- [[pglib/pipelines/File/Move|=File.Move]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[pglib/pipelines/File/Move|-File.Move]]

@@ -10,7 +10,7 @@ severity: warning
 `PGW03002`
 
 **Statement:** An `[!]` error handler block scoped under a `[b]` (fire-and-forget) call is unreachable dead code. `[b]` calls run detached from the prime pipeline — the caller does not wait for completion and cannot receive errors. Any `[!]` handler under `[b]` will never execute.
-**Rationale:** `[b]` is explicitly fire-and-forget: no output, no error propagation. Adding `[!]` handlers suggests the developer expects to catch errors, which is impossible with `[b]`. Either the call should use `[r]` (synchronous, can handle errors) or `[p]` (parallel, can collect and handle errors), or the error handling should be removed. Note that `[b]` on a failable pipeline is valid — the called pipeline handles its own errors internally, and `[b]` exempts the caller from PGE07007 exhaustive handling.
+**Rationale:** `[b]` is explicitly fire-and-forget: no output, no error propagation. Adding `[!]` handlers suggests the developer expects to catch errors, which is impossible with `[b]`. Either the call should use `[-]` (synchronous, can handle errors) or `[=]` (parallel, can collect and handle errors), or the error handling should be removed. Note that `[b]` on a failable pipeline is valid — the called pipeline handles its own errors internally, and `[b]` exempts the caller from PGE07007 exhaustive handling.
 **Detection:** The compiler checks each `[!]` block's parent call marker. If the parent is `[b]`, PGW03002 fires.
 
 **See also:**
@@ -22,55 +22,55 @@ severity: warning
 **VALID:**
 ```polyglot
 [ ] ✓ [b] with no error handler — correct fire-and-forget
-[b] =Audit.Log
-   [=] <event << $event
+[b] -Audit.Log
+   (-) <event << $event
 ```
 
 ```polyglot
 [ ] ✓ [b] on failable pipeline — valid, errors handled internally by called pipeline
-[b] =File.Text.Write
-   [=] <path << $logPath
-   [=] <content << $event
+[b] -File.Text.Write
+   (-) <path << $logPath
+   (-) <content << $event
 ```
 
 ```polyglot
-[ ] ✓ [r] with error handler — synchronous call can handle errors
-[r] =File.Text.Write
-   [=] <path << $logPath
-   [=] <content << $event
+[ ] ✓ [-] with error handler — synchronous call can handle errors
+[-] -File.Text.Write
+   (-) <path << $logPath
+   (-) <content << $event
    [!] !File.NotFound
-      [r] =Fallback.Log
-         [=] <msg << "log path missing"
+      [-] -Fallback.Log
+         (-) <msg << "log path missing"
    [!] !File.WriteError
-      [r] =Fallback.Log
-         [=] <msg << "log write failed"
+      [-] -Fallback.Log
+         (-) <msg << "log write failed"
 ```
 
 **WARNING:**
 ```polyglot
 [ ] ⚠ PGW03002 — [!] handler under [b] is dead code
-[b] =File.Text.Write
-   [=] <path << $logPath
-   [=] <content << $event
+[b] -File.Text.Write
+   (-) <path << $logPath
+   (-) <content << $event
    [!] !File.NotFound                    [ ] ⚠ PGW03002 — [b] cannot propagate errors
-      [r] =Fallback.Log
-         [=] <msg << "log path missing"
+      [-] -Fallback.Log
+         (-) <msg << "log path missing"
    [!] !File.WriteError                  [ ] ⚠ PGW03002 — [b] cannot propagate errors
-      [r] =Fallback.Log
-         [=] <msg << "log write failed"
+      [-] -Fallback.Log
+         (-) <msg << "log write failed"
 ```
 
 ```polyglot
 [ ] ⚠ PGW03002 — wildcard [!] !* under [b] is also dead code
-[b] =Notify.Admin
-   [=] <msg << "alert: system overload"
+[b] -Notify.Admin
+   (-) <msg << "alert: system overload"
    [!] !*                                [ ] ⚠ PGW03002 — [b] cannot propagate errors
-      [r] =Fallback.Log
-         [=] <msg << "notification failed"
+      [-] -Fallback.Log
+         (-) <msg << "notification failed"
 ```
 
-**Fix:** Remove the `[!]` handlers if the call is truly fire-and-forget. If error handling is needed, change `[b]` to `[r]` (synchronous) or `[p]` (parallel with collection).
+**Fix:** Remove the `[!]` handlers if the call is truly fire-and-forget. If error handling is needed, change `[b]` to `[-]` (synchronous) or `[=]` (parallel with collection).
 
-**Diagnostic:** "Error handler `[!]` at line N under fire-and-forget `[b]` call — `[b]` cannot propagate errors to the caller. Remove handler or use `[r]`/`[p]`"
+**Diagnostic:** "Error handler `[!]` at line N under fire-and-forget `[b]` call — `[b]` cannot propagate errors to the caller. Remove handler or use `[-]`/`[=]`"
 
 **Open point:** None.

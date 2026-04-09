@@ -11,7 +11,7 @@ severity: warning
 
 **Statement:** A `[_]` reference to a `{_}` permission object in a pipeline that is never exercised by any IO call in its call graph is flagged with a warning. The reference is dead — the `{_}` object grants capabilities that are never used.
 **Rationale:** Unused permission references indicate incomplete refactoring (an IO call was removed but the `[_]` reference was left behind) or over-broad permission requests. While not a correctness error, unused references make a pipeline's declared IO footprint misleading — auditing permissions becomes harder when references do not match actual IO usage. This is analogous to PGW09002 (unused import).
-**Detection:** The compiler traces the call graph from each `{=}` pipeline definition. For each `[_] _ObjectName` reference, it resolves the `{_}` definition and checks whether any call in the graph exercises at least one capability granted by that object. If no call matches any capability in the referenced `{_}` object, PGW10001 fires on that `[_]` line.
+**Detection:** The compiler traces the call graph from each `{-}` pipeline definition. For each `[_] _ObjectName` reference, it resolves the `{_}` definition and checks whether any call in the graph exercises at least one capability granted by that object. If no call matches any capability in the referenced `{_}` object, PGW10001 fires on that `[_]` line.
 
 **See also:** PGW09002 (unused import — analogous pattern), PGE10004 (undeclared permission — the inverse: using IO without permission), [[permissions#Compile-Time Enforcement]]
 
@@ -23,26 +23,26 @@ severity: warning
    [.] .File.Read "/var/log/*"
    [.] .File.Write "/tmp/reports/*"
 
-{=} =LogAnalyzer
+{-} -LogAnalyzer
    [_] _LogIO
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] $content << =File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises File.Read
-   [r] =File.Text.Write >> "/tmp/reports/summary.txt"          [ ] ✓ exercises File.Write
-      [=] <content#string << $content
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] $content << -File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises File.Read
+   [-] -File.Text.Write >> "/tmp/reports/summary.txt"          [ ] ✓ exercises File.Write
+      (-) <content#string << $content
 ```
 
 ```polyglot
 [ ] ✓ pure computation — no [_] references, no IO calls
-{=} =PureCompute
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <a#int
-   [=] <b#int
-   [=] >sum#int
-   [r] >sum << =Math.Add $a $b
+{-} -PureCompute
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <a#int
+   (-) <b#int
+   (-) >sum#int
+   [-] >sum << -Math.Add $a $b
 ```
 
 **WARNING:**
@@ -56,13 +56,13 @@ severity: warning
    [.] .intent << #Grant
    [.] .Web.Request "https://api.example.com/*"
 
-{=} =PartialIO
+{-} -PartialIO
    [_] _FileGrant
    [_] _WebGrant                                               [ ] ⚠ PGW10001 — _WebGrant never used
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] $content << =File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises File.Read from _FileGrant
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] $content << -File.Text.Read >> "/var/log/app.log"       [ ] ✓ exercises File.Read from _FileGrant
    [ ] no Web.Request call — _WebGrant is unused
 ```
 
@@ -76,15 +76,15 @@ severity: warning
    [.] .intent << #Grant
    [.] .System.Env "APP_MODE"
 
-{=} =OverDeclared
+{-} -OverDeclared
    [_] _FileGrant                                              [ ] ⚠ PGW10001 — _FileGrant never used
    [_] _SysGrant                                               [ ] ⚠ PGW10001 — _SysGrant never used
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >output#string
-   [r] >output << $input                                       [ ] no IO calls at all
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >output#string
+   [-] >output << $input                                       [ ] no IO calls at all
 ```
 
 **Open point:** None.

@@ -3,22 +3,22 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.Delete"
-metadata_instance: "%=:File.Delete:N"
+metadata_definition: "%definition.-:File.Delete"
+metadata_instance: "%-:File.Delete:N"
 ---
 
-# =File.Delete
+# -File.Delete
 
 Delete a file at the given path.
 
 ## Definition
 
 ```polyglot
-{N} =File.Delete
+{N} -File.Delete
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileDelete"
    [%] .description << "Delete file"
-   [=] <path#path
+   (-) <path#path
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ Requires `File.Delete` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.Delete` | Compile-time pipeline template |
-| Instance | `%=:File.Delete:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.Delete` | Compile-time pipeline template |
+| Instance | `%-:File.Delete:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
-- [[pglib/pipelines/File/Move|=File.Move]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[pglib/pipelines/File/Move|-File.Move]]

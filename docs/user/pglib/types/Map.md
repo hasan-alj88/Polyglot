@@ -49,10 +49,10 @@ The `:` separator binds positionally to `[#] <param` declarations:
 
 ```polyglot
 [ ] #map:string:int → KeyType=String, ValueType=Int
-[r] $lookup#map:string:int <~ {}
+[-] $lookup#map:string:int <~ {}
 
-[ ] #map:string → KeyType=String, ValueType=# (default, any type)
-[r] $config#map:string <~ {}
+[ ] #map:string → KeyType=String, ValueType-# (default, any type)
+[-] $config#map:string <~ {}
 ```
 
 ---

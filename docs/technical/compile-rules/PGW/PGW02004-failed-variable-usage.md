@@ -18,50 +18,50 @@ severity: warning
 **WARNING:**
 ```polyglot
 [ ] ⚠ PGW02004 — partial error coverage
-[=] >data#string
-[r] =Fetch
-   [=] >payload >> >data
+(-) >data#string
+[-] -Fetch
+   (-) >payload >> >data
    [!] !FetchError
-      [r] =LogError
-         [=] <msg << "fetch failed"
-      [r] >data << ""              [ ] ✓ handles FetchError
-   [ ] ⚠ PGW02004 — other errors from =Fetch not handled
+      [-] -LogError
+         (-) <msg << "fetch failed"
+      [-] >data << ""              [ ] ✓ handles FetchError
+   [ ] ⚠ PGW02004 — other errors from -Fetch not handled
 ```
 
 ```polyglot
 [ ] ⚠ PGW02004 suppressed via comment
-[=] >data#string
-[r] =Fetch
-   [=] >payload >> >data
+(-) >data#string
+[-] -Fetch
+   (-) >payload >> >data
    [ ] Ignore PGW02004
    [!] !FetchError
-      [r] =LogError
-         [=] <msg << "fetch failed"
-      [r] >data << ""
+      [-] -LogError
+         (-) <msg << "fetch failed"
+      [-] >data << ""
       [ ] warning suppressed — developer intends partial handling
-   [>] <! ""                       [ ] catch-all fallback for remaining errors
+   (>) <! ""                       [ ] catch-all fallback for remaining errors
 ```
 
 **VALID (no warning):**
 ```polyglot
 [ ] ✓ [!] pushes replacement — no warning
-[=] >data#string
-[r] =Fetch
-   [=] >payload >> >data
+(-) >data#string
+[-] -Fetch
+   (-) >payload >> >data
    [!] !FetchError
-      [r] >data << ""              [ ] replacement value → Final
-[r] =Process
-   [=] <input << >data             [ ] ✓ always Final
+      [-] >data << ""              [ ] replacement value → Final
+[-] -Process
+   (-) <input << >data             [ ] ✓ always Final
 ```
 
 ```polyglot
 [ ] ✓ <! catch-all fallback — no warning
-[=] >data#string
-[r] =Fetch
-   [=] >payload >> >data
-   [>] <! ""                       [ ] catch-all fallback → Final on any error
-[r] =Process
-   [=] <input << >data             [ ] ✓ always Final
+(-) >data#string
+[-] -Fetch
+   (-) >payload >> >data
+   (>) <! ""                       [ ] catch-all fallback → Final on any error
+[-] -Process
+   (-) <input << >data             [ ] ✓ always Final
 ```
 
 **See also:**

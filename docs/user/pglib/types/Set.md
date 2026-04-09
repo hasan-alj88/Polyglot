@@ -44,10 +44,10 @@ The `<#ValueType` parameter sets the element type. The `##Set` parameterized sch
 
 ```polyglot
 [ ] #set:string → ValueType=String
-[r] $tags#set:string <~ {}
+[-] $tags#set:string <~ {}
 
 [ ] #set:int → ValueType=Int
-[r] $ids#set:int <~ {}
+[-] $ids#set:int <~ {}
 ```
 
 ---

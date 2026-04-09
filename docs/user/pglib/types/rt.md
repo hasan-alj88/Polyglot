@@ -9,7 +9,7 @@ status: complete
 
 <!-- @types -->
 
-Types used by `=RT.*` runtime execution pipelines and `=W.RT` wrappers. No `[@]` import needed.
+Types used by `-RT.*` runtime execution pipelines and `-W.RT` wrappers. No `[@]` import needed.
 
 | Type | Description | File |
 |------|-------------|------|
@@ -19,6 +19,6 @@ Types used by `=RT.*` runtime execution pipelines and `=W.RT` wrappers. No `[@]`
 
 ## Related
 
-- [[pglib/pipelines/RT/INDEX|=RT]] -- runtime execution pipelines that consume these types
-- [[pglib/pipelines/W/INDEX|=W]] -- `=W.RT` wrapper that produces `#PyEnv`/`#RsEnv`
+- [[pglib/pipelines/RT/INDEX|-RT]] -- runtime execution pipelines that consume these types
+- [[pglib/pipelines/W/INDEX|-W]] -- `-W.RT` wrapper that produces `#PyEnv`/`#RsEnv`
 - [[pglib/errors/errors|errors]] -- `!RT` error namespace for runtime failures

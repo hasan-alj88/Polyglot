@@ -23,12 +23,12 @@ If neither partition proof succeeds nor `*?` is present, PGE06008 fires.
 [ ] ✓ all closed types — partition algorithm proves exhaustiveness, no *? needed
 [?] $age >? 18
    [&] $hasLicense =? #Boolean.True
-      [r] =Allow.Drive
+      [-] -Allow.Drive
 [?] $age >? 18
    [&] $hasLicense =? #Boolean.False
-      [r] =Deny.NoLicense
+      [-] -Deny.NoLicense
 [?] $age <=? 18
-   [r] =Deny.Underage
+   [-] -Deny.Underage
 [ ] Grid: {≤18,T}, {≤18,F}, {>18,T}, {>18,F} — all 4 cells covered
 ```
 
@@ -36,9 +36,9 @@ If neither partition proof succeeds nor `*?` is present, PGE06008 fires.
 [ ] ✓ open type present — *? covers the open domain
 [?] $name =? "admin"
    [&] $role =? .Admin
-      [r] =GrantSuper
+      [-] -GrantSuper
 [?] *?
-   [r] =GrantNormal
+   [-] -GrantNormal
 ```
 
 **INVALID:**
@@ -46,9 +46,9 @@ If neither partition proof succeeds nor `*?` is present, PGE06008 fires.
 [ ] ✗ PGE06008 — closed types, partition proof fails, no *?
 [?] $age >? 18
    [&] $hasLicense =? #Boolean.True
-      [r] =Allow.Drive
+      [-] -Allow.Drive
 [?] $age <=? 18
-   [r] =Deny.Minor
+   [-] -Deny.Minor
 [ ] ✗ PGE06008 — cell {>18, False} not covered by any branch
 ```
 
@@ -56,9 +56,9 @@ If neither partition proof succeeds nor `*?` is present, PGE06008 fires.
 [ ] ✗ PGE06008 — open type without *?
 [?] $name =? "admin"
    [&] $role =? .Admin
-      [r] =GrantSuper
+      [-] -GrantSuper
 [?] $name =? "user"
-   [r] =GrantNormal
+   [-] -GrantNormal
 [ ] ✗ PGE06008 — $name is string (open type), *? required
 ```
 

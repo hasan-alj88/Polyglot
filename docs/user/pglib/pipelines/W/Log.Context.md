@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:Log.Context"
 metadata_instance: "%W:Log.Context:N"
 ---
 
-# =W.Log.Context
+# -W.Log.Context
 
 Opens structured log scope on setup, closes on cleanup.
 
 ## Definition
 
 ```polyglot
-{N} =W.Log.Context
+{N} -W.Log.Context
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WLogContext"
    [%] .description << "Opens structured log scope on setup, closes on cleanup."
@@ -51,4 +51,4 @@ None — pure computation.
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]

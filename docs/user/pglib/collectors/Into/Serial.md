@@ -12,10 +12,10 @@ Gathers key-value outputs from mini-pipelines back into a single serial, accessi
 ## Syntax
 
 ```polyglot
-[r] *Into.Serial
-   [*] <key << $key
-   [*] <value << $value
-   [*] >Serial >> $result
+[-] *Into.Serial
+   (*) <key << $key
+   (*) <value << $value
+   (*) >Serial >> $result
 ```
 
 ## Inputs

@@ -16,6 +16,6 @@ updated: 2026-03-30
 **What it tests:** Dot-navigated IO parameters. See [[io]].
 
 ```polyglot
-[=] <config.timeout#int << 30
-[=] >result.status#string >> $status
+(-) <config.timeout#int << 30
+(-) >result.status#string >> $status
 ```

@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:#.Describe"
-metadata_instance: "%=:#.Describe:N"
+metadata_definition: "%definition.-:#.Describe"
+metadata_instance: "%-:#.Describe:N"
 ---
 
-# =#.Describe
+# -#.Describe
 
 Schema introspection -- returns a type's full schema (properties, fields, constraints) as a `#serial` data tree. Useful for runtime reflection.
 
 ## Definition
 
 ```polyglot
-{N} =#.Describe
+{N} -#.Describe
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaDescribe"
    [%] .description << "Schema introspection"
-   [=] <#type
-   [=] >schema#serial
+   (-) <#type
+   (-) >schema#serial
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None -- pure computation.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:#.Describe` | Compile-time pipeline template |
-| Instance | `%=:#.Describe:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:#.Describe` | Compile-time pipeline template |
+| Instance | `%-:#.Describe:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Schema/INDEX|=# Schema Validation & Field Extraction]]
-- [[pglib/pipelines/Schema/Validate|=#.Validate]]
+- [[pglib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[pglib/pipelines/Schema/Validate|-#.Validate]]

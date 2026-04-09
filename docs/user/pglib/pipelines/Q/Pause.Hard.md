@@ -7,14 +7,14 @@ metadata_definition: "%definition.Q:Pause.Hard"
 metadata_instance: "%Q:Pause.Hard:N"
 ---
 
-# =Q.Pause.Hard
+# -Q.Pause.Hard
 
 Direct command: immediate suspend. Frees CPU+RAM. Signal: `command.pause.hard`.
 
 ## Definition
 
 ```polyglot
-{N} =Q.Pause.Hard
+{N} -Q.Pause.Hard
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QPauseHard"
    [%] .description << "Immediate suspend. Frees CPU+RAM."
@@ -38,10 +38,10 @@ Pause when a resource condition is met. Used as nested `[Q]` lines in `{Q}` defi
 
 | Pipeline | IO | Purpose |
 |----------|-----|---------|
-| `=Q.Pause.Hard.RAM.LessThan` | `<mb#Float` | Hard pause when RAM drops below threshold |
-| `=Q.Pause.Hard.CPU.MoreThan` | `<percent#Float` | Hard pause when CPU exceeds threshold |
-| `=Q.Pause.Hard.Disk.LessThan` | `<mb#Float` | Hard pause when disk space drops below threshold |
-| `=Q.Pause.Hard.GPU.InUse` | (none) | Hard pause when GPU is occupied |
+| `-Q.Pause.Hard.RAM.LessThan` | `<mb#Float` | Hard pause when RAM drops below threshold |
+| `-Q.Pause.Hard.CPU.MoreThan` | `<percent#Float` | Hard pause when CPU exceeds threshold |
+| `-Q.Pause.Hard.Disk.LessThan` | `<mb#Float` | Hard pause when disk space drops below threshold |
+| `-Q.Pause.Hard.GPU.InUse` | (none) | Hard pause when GPU is occupied |
 
 ## Permissions
 
@@ -56,6 +56,6 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[pglib/pipelines/Q/Pause.Soft|=Q.Pause.Soft]]
-- [[pglib/pipelines/Q/Resume|=Q.Resume]]
-- [[pglib/pipelines/Q/INDEX|=Q.* Queue Pipelines]]
+- [[pglib/pipelines/Q/Pause.Soft|-Q.Pause.Soft]]
+- [[pglib/pipelines/Q/Resume|-Q.Resume]]
+- [[pglib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

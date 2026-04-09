@@ -11,7 +11,7 @@ metadata_instance: "%#:PyEnv:N"
 
 <!-- @types -->
 
-Runtime environment handle produced by `=W.RT:Python:*` wrapper setup.
+Runtime environment handle produced by `-W.RT:Python:*` wrapper setup.
 
 ---
 
@@ -30,7 +30,7 @@ Runtime environment handle produced by `=W.RT:Python:*` wrapper setup.
 | Field | Type | Purpose |
 |-------|------|---------|
 | `.version` | `#string` | Python version string (e.g., `"3.14"`) |
-| `.handle` | `#RawString` | Opaque runtime handle used by `=RT.Python.*` pipelines |
+| `.handle` | `#RawString` | Opaque runtime handle used by `-RT.Python.*` pipelines |
 
 ---
 
@@ -46,6 +46,6 @@ Runtime environment handle produced by `=W.RT:Python:*` wrapper setup.
 ## Related
 
 - [[rt]] — runtime types overview
-- [[pglib/pipelines/RT/INDEX|=RT.*]] — runtime execution pipelines
-- [[pglib/pipelines/W/INDEX|=W.*]] — wrapper pipelines
+- [[pglib/pipelines/RT/INDEX|-RT.*]] — runtime execution pipelines
+- [[pglib/pipelines/W/INDEX|-W.*]] — wrapper pipelines
 - [[syntax/types/INDEX|types]] — full type system specification

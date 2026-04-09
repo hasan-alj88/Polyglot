@@ -14,9 +14,9 @@ updated: 2026-03-30
 **What it tests:** Default allows exactly one promotion to Final. See [[variable-lifecycle]].
 
 ```polyglot
-[=] >output#string ~> "fallback"
+(-) >output#string ~> "fallback"
 [ ] ... later in execution ...
-[r] >output << "actual value"
+[-] >output << "actual value"
 ```
 
 ### EC-14.2: Final — no further assignment (INVALID if reassigned)
@@ -24,9 +24,9 @@ updated: 2026-03-30
 **What it tests:** Once `<<` or `>>` is used, no more assignments.
 
 ```polyglot
-[r] $x#int << 42
+[-] $x#int << 42
 [ ] INVALID: $x is Final, cannot reassign
-[ ] [r] $x << 99   <- would be rejected
+[ ] [-] $x << 99   <- would be rejected
 ```
 
 ### EC-14.3: Leaf-only assignment
@@ -36,12 +36,12 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] VALID — assign to leaf
-[r] $user:name << "Alice"
-[r] $user:age << 30
+[-] $user:name << "Alice"
+[-] $user:age << 30
 
 [ ] INVALID — assign to branch that has children
-[ ] [r] $user << "Alice"
-[ ]    [r] $user:name << "Alice"
+[ ] [-] $user << "Alice"
+[ ]    [-] $user:name << "Alice"
 ```
 
 ### EC-14.4: Sibling kind homogeneity
@@ -72,8 +72,8 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] ✗ PGE02003 — $x is Final, cannot re-default
-[r] $x#int << 5
-[r] $x#int <~ 3
+[-] $x#int << 5
+[-] $x#int <~ 3
 ```
 
 ### EC-14.6: Writing to input parameter in execution body
@@ -82,12 +82,12 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] ✗ PGE02003 — <inputName is Final, cannot reassign
-{=} =Process
-   [T] =T.Call
-   [=] <inputName#string
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] <inputName << "overwritten"
+{-} -Process
+   [T] -T.Call
+   (-) <inputName#string
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] <inputName << "overwritten"
 ```
 
 ### EC-14.7: Data load with plain literal — schema mismatch

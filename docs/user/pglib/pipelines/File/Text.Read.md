@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.Text.Read"
-metadata_instance: "%=:File.Text.Read:N"
+metadata_definition: "%definition.-:File.Text.Read"
+metadata_instance: "%-:File.Text.Read:N"
 ---
 
-# =File.Text.Read
+# -File.Text.Read
 
 Read the full text content of a file at the given path.
 
 ## Definition
 
 ```polyglot
-{N} =File.Text.Read
+{N} -File.Text.Read
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextRead"
    [%] .description << "Read text file contents"
-   [=] <path#path
-   [=] >content#string
+   (-) <path#path
+   (-) >content#string
 ```
 
 ## Inputs
@@ -49,9 +49,9 @@ Requires `File.Read` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.Text.Read` | Compile-time pipeline template |
-| Instance | `%=:File.Text.Read:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.Text.Read` | Compile-time pipeline template |
+| Instance | `%-:File.Text.Read:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]

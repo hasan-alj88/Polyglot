@@ -18,7 +18,7 @@ The native dispatch layer bridges Polyglot's runtime and host-language functions
 | Term | Definition |
 |------|-----------|
 | Native pipeline | A `{N}` definition — implemented in a host language, not Polyglot Code |
-| Derived pipeline | A `{=}` definition — full Polyglot execution body |
+| Derived pipeline | A `{-}` definition — full Polyglot execution body |
 | Host language | The programming language implementing a native function (Rust, Go, etc.) |
 | Native registry | Compile-time lookup table mapping pipeline names to native function bindings |
 | Wire format | JSON — the serialization format for data crossing the native boundary |
@@ -50,17 +50,17 @@ Each subsystem owns the full dispatch cycle for its operations:
 
 ```text
 Trigger Monitor
-   → dispatches =T.Call, =T.Daily, =T.Folder.NewFiles, =T.Webhook, ...
+   → dispatches -T.Call, -T.Daily, -T.Folder.NewFiles, -T.Webhook, ...
    → evaluates trigger conditions
    → emits NATS signals on trigger fire
 
 Queue Handler
-   → dispatches =Q.Default, =Q.Pause.Hard, =Q.Kill.Graceful, ...
+   → dispatches -Q.Default, -Q.Pause.Hard, -Q.Kill.Graceful, ...
    → manages queue strategy and active controls
 
 Runner
-   → dispatches =File.Text.Read, =Math.Add, =DB.Query, ... (Execution)
-   → dispatches =W.Polyglot, =W.DB.Connection, ... (Wrapper — at [\] and [/] boundaries)
+   → dispatches -File.Text.Read, -Math.Add, -DB.Query, ... (Execution)
+   → dispatches -W.Polyglot, -W.DB.Connection, ... (Wrapper — at [\] and [/] boundaries)
 
 PGCompiler
    → not runtime dispatch — reads {N} definitions at compile time
@@ -109,7 +109,7 @@ native:
     "DB.Query": Go
 ```
 
-This configuration runs most operations in Rust, but dispatches `=Math.Add` and `=DB.Query` to Go implementations.
+This configuration runs most operations in Rust, but dispatches `-Math.Add` and `-DB.Query` to Go implementations.
 
 ### Validation
 
@@ -128,15 +128,15 @@ The compiler scans all pglib `.pg` files, collects `{N}` definitions, and emits 
 For each `{N}` definition, the compiler extracts:
 
 ```text
-{N} =File.Text.Read
+{N} -File.Text.Read
    [%] .Kind << #NativeKind.Execution       → kind
    [%] .Rust << "FileTextRead"              → bindings["Rust"]
    [%] .Go << "file_text_read"              → bindings["Go"]  (if present)
    [%] .description << "Read text file..."  → description
-   [=] <path#path                           → inputs
-   [=] >content#string                      → outputs
-   [=] !File.NotFound                       → errors
-   [=] !File.PermissionDenied               → errors
+   (-) <path#path                           → inputs
+   (-) >content#string                      → outputs
+   (-) !File.NotFound                       → errors
+   (-) !File.PermissionDenied               → errors
 ```
 
 ### Registry Entry Schema
@@ -411,7 +411,7 @@ def file_text_read(request: str) -> str:
 
 ### Error Reporting
 
-Native functions report errors by returning an error envelope. The `error.id` must match one of the `[=] !` error declarations in the `{N}` definition.
+Native functions report errors by returning an error envelope. The `error.id` must match one of the `(-) !` error declarations in the `{N}` definition.
 
 | Scenario | Behavior |
 |----------|----------|
@@ -430,13 +430,13 @@ Each `#NativeKind` variant routes to a specific subsystem and dispatch context.
 ### Execution
 
 **Dispatched by:** Runner
-**When:** Pipeline body encounters `[r]`, `[p]`, or `[b]` call to a `{N}` Execution pipeline
-**Examples:** `=File.Text.Read`, `=Math.Add`, `=DB.Query`, `=DT.Now`
+**When:** Pipeline body encounters `[-]`, `[=]`, or `[b]` call to a `{N}` Execution pipeline
+**Examples:** `-File.Text.Read`, `-Math.Add`, `-DB.Query`, `-DT.Now`
 
 ```text
 Runner receives job.start signal
    → Runner executes pipeline body
-   → Body contains: [r] =File.Text.Read
+   → Body contains: [-] -File.Text.Read
    → Runner dispatches to native: FileTextRead(JSON)
    → Result flows back into pipeline variables
 ```
@@ -445,11 +445,11 @@ Runner receives job.start signal
 
 **Dispatched by:** Trigger Monitor
 **When:** TM evaluates trigger conditions for a pipeline
-**Examples:** `=T.Call`, `=T.Daily`, `=T.Folder.NewFiles`, `=T.Webhook`
+**Examples:** `-T.Call`, `-T.Daily`, `-T.Folder.NewFiles`, `-T.Webhook`
 
 ```text
 Trigger Monitor evaluates pipeline triggers
-   → Pipeline declares: [T] =T.Daily"3AM"
+   → Pipeline declares: [T] -T.Daily"3AM"
    → TM dispatches to native: TriggerDaily(JSON)
    → Native returns: { IsTriggered: true/false }
    → If triggered: TM emits command.enqueue via NATS
@@ -461,11 +461,11 @@ Trigger natives receive trigger configuration as input and return `>IsTriggered#
 
 **Dispatched by:** Queue Handler
 **When:** QH evaluates queue control conditions (pause, resume, kill)
-**Examples:** `=Q.Default`, `=Q.Pause.Hard.RAM.LessThan`, `=Q.Resume.RAM.MoreThan`, `=Q.Kill.Graceful`
+**Examples:** `-Q.Default`, `-Q.Pause.Hard.RAM.LessThan`, `-Q.Resume.RAM.MoreThan`, `-Q.Kill.Graceful`
 
 ```text
 Trigger Monitor evaluates resource condition
-   → Condition met for =Q.Pause.Hard.RAM.LessThan
+   → Condition met for -Q.Pause.Hard.RAM.LessThan
    → TM sends command.pause.hard to QH via NATS
    → QH dispatches native queue control function
 ```
@@ -474,11 +474,11 @@ Trigger Monitor evaluates resource condition
 
 **Dispatched by:** Runner
 **When:** Runner enters `[\]` setup or `[/]` cleanup phase of a wrapper
-**Examples:** `=W.Polyglot`, `=W.DB.Connection`, `=W.RT.Python`
+**Examples:** `-W.Polyglot`, `-W.DB.Connection`, `-W.RT.Python`
 
 ```text
 Runner starts pipeline execution
-   → Pipeline declares: [W] =W.DB.Connection
+   → Pipeline declares: [W] -W.DB.Connection
    → Runner dispatches wrapper setup: WrapperDBConnectionSetup(JSON)
    → ... pipeline body executes ...
    → Runner dispatches wrapper cleanup: WrapperDBConnectionCleanup(JSON)
@@ -490,7 +490,7 @@ Wrapper natives expose `[{]` inputs and `[}]` outputs through the standard seria
 
 **Dispatched by:** Nobody — compiler-inlined
 **When:** Never dispatched at runtime
-**Examples:** `=DoNothing`, `=#.JSON.Parse`, `=#.Validate`
+**Examples:** `-DoNothing`, `-#.JSON.Parse`, `-#.Validate`
 
 Intrinsic operations have no `.<Language>` binding. The compiler recognizes them by name and emits specialized behavior directly into the compiled output. The native dispatch layer never sees them.
 
@@ -500,19 +500,19 @@ See [[#Intrinsic Catalog]] for the full list.
 
 Intrinsics are `{N}` definitions with `#NativeKind.Intrinsic`. They have no host-language function — the compiler inlines their behavior.
 
-### =DoNothing
+### -DoNothing
 
-No-op pipeline. Produces no output, performs no action. Used as an explicit empty branch (`[r] =DoNothing` in `[?]` conditionals) and as the default wrapper body (`=W.Polyglot` calls `=DoNothing` for setup/cleanup).
+No-op pipeline. Produces no output, performs no action. Used as an explicit empty branch (`[-] -DoNothing` in `[?]` conditionals) and as the default wrapper body (`-W.Polyglot` calls `-DoNothing` for setup/cleanup).
 
 ```polyglot
-{N} =DoNothing
+{N} -DoNothing
    [%] .Kind << #NativeKind.Intrinsic
    [%] .description << "No-op pipeline"
 ```
 
 **Compiler behavior:** Emits no instructions. The job completes immediately with no output.
 
-### =#.JSON.Parse
+### -#.JSON.Parse
 
 Parses JSON text into a `#serial` data tree.
 
@@ -523,19 +523,19 @@ Parses JSON text into a `#serial` data tree.
 
 **Compiler behavior:** Emits the built-in JSON parser. No errors — invalid input handled by the calling pipeline.
 
-### =#.YAML.Parse
+### -#.YAML.Parse
 
-Parses YAML text into a `#serial` data tree. Same IO as `=#.JSON.Parse`.
+Parses YAML text into a `#serial` data tree. Same IO as `-#.JSON.Parse`.
 
 **Compiler behavior:** Emits the built-in YAML parser.
 
-### =#.TOML.Parse
+### -#.TOML.Parse
 
-Parses TOML text into a `#serial` data tree. Same IO as `=#.JSON.Parse`.
+Parses TOML text into a `#serial` data tree. Same IO as `-#.JSON.Parse`.
 
 **Compiler behavior:** Emits the built-in TOML parser.
 
-### =#.Match
+### -#.Match
 
 Boolean schema check — does data match a type?
 
@@ -547,7 +547,7 @@ Boolean schema check — does data match a type?
 
 **Compiler behavior:** Emits structural comparison against the type's metadata tree.
 
-### =#.Validate
+### -#.Validate
 
 Detailed validation — checks data against type, reports mismatches.
 
@@ -560,7 +560,7 @@ Detailed validation — checks data against type, reports mismatches.
 
 **Compiler behavior:** Emits structural validation with error collection.
 
-### =#.Describe
+### -#.Describe
 
 Schema introspection — returns a type's schema as a data tree.
 
@@ -571,7 +571,7 @@ Schema introspection — returns a type's schema as a data tree.
 
 **Compiler behavior:** Emits metadata tree traversal for the given type.
 
-### =#.Coerce
+### -#.Coerce
 
 Best-effort type conversion — keeps matching fields, reports dropped fields.
 
@@ -584,7 +584,7 @@ Best-effort type conversion — keeps matching fields, reports dropped fields.
 
 **Compiler behavior:** Emits structural filtering against target type schema.
 
-### =#.Field
+### -#.Field
 
 Extracts a single field from a data tree by path.
 
@@ -598,7 +598,7 @@ Errors: `!Field.NotFound`, `!Field.PathError`
 
 **Compiler behavior:** Emits tree path traversal with error handling.
 
-### =#.Column
+### -#.Column
 
 Extracts all values for a column in a Dataframe.
 
@@ -657,7 +657,7 @@ The `integrator/` folder contains the bidirectional SDK for each language:
 - Receive pipeline results
 
 **Polyglot → Host (callback direction):**
-- Register native functions callable by `=RT.*` runtime pipelines
+- Register native functions callable by `-RT.*` runtime pipelines
 - Receive serialized inputs from Polyglot
 - Return serialized outputs to Polyglot
 
@@ -684,7 +684,7 @@ The JSON wire format ensures all languages use the same boundary protocol. No ch
 | Missing binding | `{N}` has no `.<Language>` for configured language | Startup error (PGE01028e at compile time) | Add `.<Language>` field to `{N}` definition |
 | Serialization failure | Polyglot variable cannot be encoded to JSON | Runtime fatal: `!RT.SerializationError` | Bug in serializer — fix type mapping |
 | Deserialization failure | Native output JSON cannot be parsed to Polyglot types | Runtime fatal: `!RT.DeserializationError` | Native function returned malformed JSON |
-| Undeclared error | Native function returns error not in `[=] !` declarations | Runtime fatal: `!RT.NativeUndeclaredError` | Fix native function to only return declared errors |
+| Undeclared error | Native function returns error not in `(-) !` declarations | Runtime fatal: `!RT.NativeUndeclaredError` | Fix native function to only return declared errors |
 | Native crash | Host function panics, segfaults, or throws unhandled exception | Runtime fatal: `!RT.NativeCrash` | Fix native function implementation |
 | Timeout | Native function exceeds execution time limit | Runtime fatal: `!RT.NativeTimeout` | Fix native function or increase timeout |
 
@@ -770,4 +770,4 @@ Runner                 Native Function       Error Handler
 | [[spec/type-identity\|Type Identity]] | "All data is serialized strings" foundation |
 | [[spec/metadata-tree/branches\|Metadata Tree Branches]] | Pipeline/job structure |
 | [[queue-manager/end-to-end-flow\|End-to-End Flow]] | Where native dispatch fits in execution |
-| [[pglib/pipelines/#\|=#.* Pipelines]] | Intrinsic catalog source |
+| [[pglib/pipelines/#\|-#.* Pipelines]] | Intrinsic catalog source |

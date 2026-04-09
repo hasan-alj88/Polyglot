@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.Add.Duration"
-metadata_instance: "%=:DT.Add.Duration:N"
+metadata_definition: "%definition.-:DT.Add.Duration"
+metadata_instance: "%-:DT.Add.Duration:N"
 ---
 
-# =DT.Add.Duration
+# -DT.Add.Duration
 
 Adds a `#Duration` (fixed time span) to a `#dt`.
 
 ## Definition
 
 ```polyglot
-{N} =DT.Add.Duration
+{N} -DT.Add.Duration
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtAddDuration"
    [%] .description << "Add duration to DateTime"
-   [=] <source#dt
-   [=] <duration#Duration
-   [=] >result#dt
+   (-) <source#dt
+   (-) <duration#Duration
+   (-) >result#dt
 ```
 
 ## Inputs
@@ -48,10 +48,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.Add.Duration` | Compile-time pipeline template |
-| Instance | `%=:DT.Add.Duration:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.Add.Duration` | Compile-time pipeline template |
+| Instance | `%-:DT.Add.Duration:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

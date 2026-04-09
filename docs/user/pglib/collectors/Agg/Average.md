@@ -12,9 +12,9 @@ Reduces mini-pipeline numeric outputs to their arithmetic mean.
 ## Syntax
 
 ```polyglot
-[r] *Agg.Average
-   [*] <number << $value
-   [*] >average >> $mean
+[-] *Agg.Average
+   (*) <number << $value
+   (*) >average >> $mean
 ```
 
 ## Inputs

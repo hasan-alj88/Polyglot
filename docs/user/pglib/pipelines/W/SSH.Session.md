@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:SSH.Session"
 metadata_instance: "%W:SSH.Session:N"
 ---
 
-# =W.SSH.Session
+# -W.SSH.Session
 
 Connects SSH on setup, disconnects on cleanup.
 
 ## Definition
 
 ```polyglot
-{N} =W.SSH.Session
+{N} -W.SSH.Session
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WSshSession"
    [%] .description << "Connects SSH on setup, disconnects on cleanup."
@@ -53,4 +53,4 @@ System.Process
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]

@@ -48,10 +48,10 @@ User code uses shorthand accessors that resolve to full instance paths:
 
 | Shorthand | Resolves to |
 |-----------|-------------|
-| `=MyPipeline%status` | `%=:MyPipeline:<current>.status` |
+| `-MyPipeline%status` | `%-:MyPipeline:<current>.status` |
 | `$myVar%state` | `%$:myVar:<current>.state` |
 | `#Record%lastModified` | `%#:Record:<current>.lastModified` |
-| `=W.DB.Connection%status` | `%W:DB.Connection:<current>.status` |
+| `-W.DB.Connection%status` | `%W:DB.Connection:<current>.status` |
 | `#Queue:GPUQueue%activeCount` | `%Q:GPUQueue:<current>.activeCount` |
 
 The `:<current>` segment is implicit — the runtime resolves it to the calling context's instance.

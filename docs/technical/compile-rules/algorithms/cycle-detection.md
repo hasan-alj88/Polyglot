@@ -8,14 +8,14 @@ updated: 2026-03-24
 
 # Pipeline Call Cycle Detection Algorithm
 
-Detects circular call chains among `{=}` pipelines within the same package. Polyglot has no recursion — no base case construct, no call stack, no termination mechanism. A circular call graph executes forever and is always a compile error ([[PGE09013-circular-pipeline-call|PGE09013]]).
+Detects circular call chains among `{-}` pipelines within the same package. Polyglot has no recursion — no base case construct, no call stack, no termination mechanism. A circular call graph executes forever and is always a compile error ([[PGE09013-circular-pipeline-call|PGE09013]]).
 
 Cross-package cycles are excluded — those are caught by [[PGE09002-circular-package-dependency|PGE09002]] at the import level.
 
 ## Inputs
 
-- All `{=}` pipeline definitions in a single package
-- All `[r]`/`[p]`/`[b]` call sites within those pipelines that reference same-package pipelines
+- All `{-}` pipeline definitions in a single package
+- All `[-]`/`[=]`/`[b]` call sites within those pipelines that reference same-package pipelines
 
 ## Graph Construction
 
@@ -31,7 +31,7 @@ function buildCallGraph(package):
         edges[P.name] = []
 
     for each pipeline P in package:
-        for each call site C in P (where C is [r], [p], or [b]):
+        for each call site C in P (where C is [-], [=], or [b]):
             target = C.referencedPipeline
             if target in nodes:              // same-package only
                 edges[P.name].append(target)
@@ -40,9 +40,9 @@ function buildCallGraph(package):
 ```
 
 **Filtering rules:**
-- Include `[r]` (serial call), `[p]` (parallel call), and `[b]` (fire-and-forget call) references
-- Exclude calls to pglib pipelines (`=T.*`, `=Q.*`, `=W.*`, `=Math.*`, etc.) — these are not user-defined
-- Exclude calls via `@alias=PipelineName` — these are cross-package, covered by [[PGE09002-circular-package-dependency|PGE09002]]
+- Include `[-]` (serial call), `[=]` (parallel call), and `[b]` (fire-and-forget call) references
+- Exclude calls to pglib pipelines (`-T.*`, `-Q.*`, `-W.*`, `-Math.*`, etc.) — these are not user-defined
+- Exclude calls via `@alias-PipelineName` — these are cross-package, covered by [[PGE09002-circular-package-dependency|PGE09002]]
 
 ## Cycle Detection — DFS Three-Color Marking
 
@@ -97,32 +97,32 @@ A back edge (GRAY → GRAY) proves a cycle. The cycle path is recovered by walki
 
 ### Worked Example — Transitive Cycle
 
-Given pipelines: `=StepA → =StepB → =StepC → =StepA`
+Given pipelines: `-StepA → -StepB → -StepC → -StepA`
 
 ```polyglot
-DFS starts at =StepA (WHITE → GRAY)
-  Visit =StepB (WHITE → GRAY)
-    Visit =StepC (WHITE → GRAY)
-      Visit =StepA — already GRAY → back edge found
-      Extract: =StepA → =StepB → =StepC → =StepA
-    =StepC → BLACK
-  =StepB → BLACK
-=StepA → BLACK
+DFS starts at -StepA (WHITE → GRAY)
+  Visit -StepB (WHITE → GRAY)
+    Visit -StepC (WHITE → GRAY)
+      Visit -StepA — already GRAY → back edge found
+      Extract: -StepA → -StepB → -StepC → -StepA
+    -StepC → BLACK
+  -StepB → BLACK
+-StepA → BLACK
 
-Result: cycle [=StepA, =StepB, =StepC, =StepA]
+Result: cycle [-StepA, -StepB, -StepC, -StepA]
 ```
 
 ### Worked Example — Self-Call
 
-Given pipeline: `=Recurse` calls `=Recurse`
+Given pipeline: `-Recurse` calls `-Recurse`
 
 ```polyglot
-DFS starts at =Recurse (WHITE → GRAY)
-  Visit =Recurse — already GRAY → back edge (self-edge)
-  Extract: =Recurse → =Recurse
-=Recurse → BLACK
+DFS starts at -Recurse (WHITE → GRAY)
+  Visit -Recurse — already GRAY → back edge (self-edge)
+  Extract: -Recurse → -Recurse
+-Recurse → BLACK
 
-Result: cycle [=Recurse, =Recurse]
+Result: cycle [-Recurse, -Recurse]
 ```
 
 ## Alternative — Kahn's Topological Sort
@@ -161,13 +161,13 @@ function kahnsSort(nodes, edges):
 
 | Case | Graph Shape | Expected Result |
 |---|---|---|
-| Self-call | `=A → =A` (self-edge) | PGE09013: `=A → =A` |
-| Mutual recursion | `=A → =B`, `=B → =A` | PGE09013: `=A → =B → =A` |
-| Transitive cycle | `=A → =B → =C → =A` | PGE09013: `=A → =B → =C → =A` |
-| Diamond (no cycle) | `=A → =B`, `=A → =C`, `=B → =D`, `=C → =D` | Valid — no cycle, `=D` reached by two acyclic paths |
-| Multiple independent cycles | `=A → =B → =A` and `=X → =Y → =X` | PGE09013 fires twice — report all cycles, not just first |
-| Single node, no edges | `=A` (no calls) | Valid — trivially acyclic |
-| Linear chain | `=A → =B → =C` | Valid — DAG, no back edges |
+| Self-call | `-A → -A` (self-edge) | PGE09013: `-A → -A` |
+| Mutual recursion | `-A → -B`, `-B → -A` | PGE09013: `-A → -B → -A` |
+| Transitive cycle | `-A → -B → -C → -A` | PGE09013: `-A → -B → -C → -A` |
+| Diamond (no cycle) | `-A → -B`, `-A → -C`, `-B → -D`, `-C → -D` | Valid — no cycle, `-D` reached by two acyclic paths |
+| Multiple independent cycles | `-A → -B → -A` and `-X → -Y → -X` | PGE09013 fires twice — report all cycles, not just first |
+| Single node, no edges | `-A` (no calls) | Valid — trivially acyclic |
+| Linear chain | `-A → -B → -C` | Valid — DAG, no back edges |
 
 **Multiple cycles:** The DFS traversal visits all nodes. Each back edge discovery produces one cycle. The algorithm naturally reports all cycles in a single pass — it does not stop at the first cycle found.
 
@@ -178,7 +178,7 @@ function kahnsSort(nodes, edges):
 | Time | O(V + E) — each node and edge visited once |
 | Space | O(V) — color array, parent map, DFS stack |
 
-Where V = number of `{=}` pipelines in the package and E = number of intra-package `[r]`/`[p]`/`[b]` call edges.
+Where V = number of `{-}` pipelines in the package and E = number of intra-package `[-]`/`[=]`/`[b]` call edges.
 
 In practice, V and E are small (packages typically contain fewer than 50 pipelines), so performance is not a concern.
 
@@ -187,7 +187,7 @@ In practice, V and E are small (packages typically contain fewer than 50 pipelin
 When a cycle is detected, the compiler emits:
 
 ```polyglot
-PGE09013: Circular pipeline call detected: =A → =B → =C → =A — Polyglot does not support recursion
+PGE09013: Circular pipeline call detected: -A → -B → -C → -A — Polyglot does not support recursion
 ```
 
 Format: the full cycle path with `→` separators, starting and ending at the same node.

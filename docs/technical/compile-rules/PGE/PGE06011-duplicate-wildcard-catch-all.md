@@ -19,46 +19,46 @@ severity: error
 ```polyglot
 [ ] ✓ single wildcard catch-all
 [?] $status =? "active"
-   [r] =HandleActive
+   [-] -HandleActive
 [?] $status =? "inactive"
-   [r] =HandleInactive
+   [-] -HandleInactive
 [?] *?
-   [r] =HandleUnknown
+   [-] -HandleUnknown
 ```
 
 ```polyglot
 [ ] ✓ no wildcard needed — enum is statically exhaustive
 [?] $severity =? #Severity.Critical
-   [r] =AlertCritical
+   [-] -AlertCritical
 [?] $severity =? #Severity.Error
-   [r] =AlertError
+   [-] -AlertError
 [?] $severity =? #Severity.Info
-   [r] =LogInfo
+   [-] -LogInfo
 [?] $severity =? #Severity.Other
-   [r] =LogOther
+   [-] -LogOther
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE06011 — two wildcard catch-alls
 [?] $status =? "active"
-   [r] =HandleActive
+   [-] -HandleActive
 [?] *?
-   [r] =HandleUnknown
+   [-] -HandleUnknown
 [?] *?                                       [ ] ✗ PGE06011 — second *? is unreachable
-   [r] =NeverReached
+   [-] -NeverReached
 ```
 
 ```polyglot
 [ ] ✗ PGE06011 — wildcard duplicated even with branches between
 [?] $code >? 200
-   [r] =HandleHigh
+   [-] -HandleHigh
 [?] *?
-   [r] =HandleLow
+   [-] -HandleLow
 [?] $code =? 0
-   [r] =HandleZero
+   [-] -HandleZero
 [?] *?                                       [ ] ✗ PGE06011 — second *? is unreachable
-   [r] =NeverReached
+   [-] -NeverReached
 ```
 
 **Open point:** None.

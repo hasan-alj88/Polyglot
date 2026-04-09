@@ -16,21 +16,21 @@ severity: warning
 **VALID:**
 ```polyglot
 [ ] ✓ no leading zeros
-[r] $x#int << 7
-[r] $y#float << 0.50
-[r] $z#int << 0
+[-] $x#int << 7
+[-] $y#float << 0.50
+[-] $z#int << 0
 ```
 
 **WARNING:**
 ```polyglot
 [ ] ⚠ PGW04002 — leading zeros in int literal
-[r] $x#int << 007
+[-] $x#int << 007
 
 [ ] ⚠ PGW04002 — leading zeros in float literal
-[r] $y#float << 00.50
+[-] $y#float << 00.50
 
 [ ] ⚠ PGW04002 — multiple leading zeros
-[r] $z#int << 0042
+[-] $z#int << 0042
 ```
 
 **Diagnostic:** "Literal `007` has leading zeros — Polyglot uses decimal only (not octal)"

@@ -42,18 +42,18 @@ Cross-platform file system path with OS-specific subfields. At runtime, the Poly
 Assign both platform subfields explicitly:
 
 ```polyglot
-[r] $AppDir#path
+[-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
 ```
 
-Use the `=Path"..."` inline notation for common paths:
+Use the `-Path"..."` inline notation for common paths:
 
 ```polyglot
-[r] $LogDir#path << =Path"/tmp/MyApp/logs"
+[-] $LogDir#path << -Path"/tmp/MyApp/logs"
 ```
 
-See [[syntax/types/strings#Path Type]] for full details including `=Path"..."`, path roots, and shorthands.
+See [[syntax/types/strings#Path Type]] for full details including `-Path"..."`, path roots, and shorthands.
 
 ---
 

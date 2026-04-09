@@ -24,18 +24,18 @@ severity: error
 [ ] ✓ compound condition is satisfiable — not tautological or contradictory
 [?] $age >? 18
    [&] $hasLicense =? #Boolean.True
-      [r] =Allow.Drive
+      [-] -Allow.Drive
 [?] *?
-   [r] =Deny
+   [-] -Deny
 ```
 
 ```polyglot
 [ ] ✓ OR is satisfiable — some inputs match, some don't
 [?] $status =? .Active
    [|] $role =? .Admin
-      [r] =GrantAccess
+      [-] -GrantAccess
 [?] *?
-   [r] =DenyAccess
+   [-] -DenyAccess
 ```
 
 **INVALID:**
@@ -43,27 +43,27 @@ severity: error
 [ ] ✗ PGE06013 — contradictory branch (always False)
 [?] $a =? .X
    [&] $a =!? .X                              [ ] ✗ PGE06013 — A AND NOT A = always False
-      [r] =NeverReached
+      [-] -NeverReached
 [?] *?
-   [r] =Default
+   [-] -Default
 ```
 
 ```polyglot
 [ ] ✗ PGE06013 — tautological branch (always True)
 [?] $a =? .X
    [|] $a =!? .X                              [ ] ✗ PGE06013 — A OR NOT A = always True
-      [r] =AlwaysReached
+      [-] -AlwaysReached
 [?] $a =? .Y
-   [r] =NeverReached                           [ ] unreachable due to tautological branch above
+   [-] -NeverReached                           [ ] unreachable due to tautological branch above
 ```
 
 ```polyglot
 [ ] ✗ PGE06013 — XOR of identical conditions (always False)
 [?] $status =? .Active
    [^] $status =? .Active                     [ ] ✗ PGE06013 — A XOR A = always False
-      [r] =NeverReached
+      [-] -NeverReached
 [?] *?
-   [r] =Default
+   [-] -Default
 ```
 
 **Diagnostic:** `"Branch condition at line {N} is always {true|false} — {tautological condition matches all inputs|contradictory condition matches no inputs}"`

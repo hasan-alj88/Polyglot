@@ -23,26 +23,26 @@ updated: 2026-03-30
 
 [ ] ...in pipeline execution...
 [?] $status =? #Status.Ok
-   [r] >result << "Success"
+   [-] >result << "Success"
 
 [?] $status =? #Status.Warn
-   [r] >result << "Warning"
+   [-] >result << "Warning"
 
 [?] $status =? #Status.Fail
-   [r] >result << "Failure"
+   [-] >result << "Failure"
 ```
 
-### EC-11.2: Error block — scoped under [r], not pipeline-level
+### EC-11.2: Error block — scoped under [-], not pipeline-level
 
-**What it tests:** `[!]` indentation must be under the specific `[r]` call, after its `[=]` IO lines. See [[concepts/pipelines/error-handling#Error Handling]].
+**What it tests:** `[!]` indentation must be under the specific `[-]` call, after its `(-)` IO lines. See [[concepts/pipelines/error-handling#Error Handling]].
 
 ```polyglot
 [ ] CORRECT — error scoped under call
-[r] =SomeCall
-[=] <in << $val
-[=] >out >> $result
+[-] -SomeCall
+(-) <in << $val
+(-) >out >> $result
    [!] !Some.Error
-      [r] $result << "fallback"
+      [-] $result << "fallback"
 
 [ ] WRONG — error at pipeline level (NOT valid)
 ```
@@ -57,29 +57,29 @@ updated: 2026-03-30
 [ ] AND: both conditions must be true
 [?] $age >=? 18
 [&] $verified =? #Boolean.True
-   [r] $access << #AccessLevel.Granted
+   [-] $access << #AccessLevel.Granted
 
 [ ] OR: either condition
 [?] $role =? #Role.Admin
 [|] $role =? #Role.Superuser
-   [r] $elevated << #Boolean.True
+   [-] $elevated << #Boolean.True
 
 [ ] Negation: insert ! before ? in comparison operator
 [ ] <!? means "not less than", >=!? means "not greater-or-equal"
 [?] $banned =? #Boolean.False
 [&] $age <!? 13
-   [r] $allowed << #Boolean.True
+   [-] $allowed << #Boolean.True
 ```
 
 ### EC-11.4: Match — numeric value mapping
 
-**EBNF:** `match_line ::= "[r]" value_expr ">>" assign_target { match_arm }`
+**EBNF:** `match_line ::= "[-]" value_expr ">>" assign_target { match_arm }`
 
 **What it tests:** Match syntax as sugar for repeated `[?]` conditional assignment. Source must be Final, arms are assignment-only.
 
 ```polyglot
 [ ] Match: maps $code to $status via value >> result arms
-[r] $code >> $status#string
+[-] $code >> $status#string
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
    [?] 500 >> "error"
@@ -94,7 +94,7 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] All #Direction variants covered — no *? needed
-[r] $dir >> $label#string
+[-] $dir >> $label#string
    [?] #Direction.North >> "N"
    [?] #Direction.South >> "S"
    [?] #Direction.East >> "E"
@@ -103,23 +103,23 @@ updated: 2026-03-30
 
 ### EC-11.6: Match header without arms — plain assignment
 
-**EBNF:** `run_line ::= "[r]" exec_expr`
+**EBNF:** `run_line ::= "[-]" exec_expr`
 
-**What it tests:** `[r] $x >> $y` without indented `[?]` children is a plain assignment, not a match header.
+**What it tests:** `[-] $x >> $y` without indented `[?]` children is a plain assignment, not a match header.
 
 ```polyglot
 [ ] No [?] children — this is a plain assignment, not a match
-[r] $source >> $target#string
+[-] $source >> $target#string
 ```
 
 ### EC-11.7: Wildcard-only match — tautological
 
-**EBNF ref:** `match_line ::= "[r]" value_expr ">>" assign_target { match_arm }`
+**EBNF ref:** `match_line ::= "[-]" value_expr ">>" assign_target { match_arm }`
 **What it tests:** Match with only `[?] *?` — always produces the same result. PGE06014 fires.
 
 ```polyglot
 [ ] ✗ PGE06014 — wildcard-only match is tautological
-[r] $code >> $msg#string
+[-] $code >> $msg#string
    [?] *? >> "always this"
 ```
 
@@ -130,8 +130,8 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] ✓ Final variable as match value
-[r] $threshold#int << 100
-[r] $input >> $label#string
+[-] $threshold#int << 100
+[-] $input >> $label#string
    [?] $threshold >> "at threshold"
    [?] *? >> "other"
 ```
@@ -143,6 +143,6 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] ✗ PGE04024 — pipeline identifiers cannot be compared
-[?] =Pipeline.A =? =Pipeline.B
-   [r] $same << #Boolean.True
+[?] -Pipeline.A =? -Pipeline.B
+   [-] $same << #Boolean.True
 ```

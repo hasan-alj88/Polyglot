@@ -14,9 +14,9 @@ Row indices are auto-assigned (0, 1, 2...) like `*Into.Array`. The resulting dat
 ## Syntax
 
 ```polyglot
-[r] *Into.Dataframe
-   [*] <row << $filteredRow
-   [*] >Dataframe >> $result
+[-] *Into.Dataframe
+   (*) <row << $filteredRow
+   (*) >Dataframe >> $result
 ```
 
 ## Inputs

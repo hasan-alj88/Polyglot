@@ -39,12 +39,12 @@ Always allowed. A struct's fixed (`.`) fields are converted to flexible (`:`) fi
    [.] .name#string
    [.] .age#int
 
-[r] $user#UserRecord
-   [r] $user.name << "Alice"
-   [r] $user.age << 30
+[-] $user#UserRecord
+   [-] $user.name << "Alice"
+   [-] $user.age << 30
 
 [ ] struct → serial is always safe
-[r] $data#serial << $user
+[-] $data#serial << $user
 [ ] $data now has :name and :age as flexible fields
 ```
 
@@ -63,14 +63,14 @@ The compiler performs best-effort static analysis:
    [.] .age#int
 
 [ ] handled — <! provides fallback if serial doesn't match
-[r] $defaultUser#UserRecord
-   [r] $defaultUser.name << "Unknown"
-   [r] $defaultUser.age << 0
+[-] $defaultUser#UserRecord
+   [-] $defaultUser.name << "Unknown"
+   [-] $defaultUser.age << 0
 
-[r] $user#UserRecord << $dynamicSerial
-   [>] <! $defaultUser                [ ] catch-all fallback
+[-] $user#UserRecord << $dynamicSerial
+   (>) <! $defaultUser                [ ] catch-all fallback
    [!] !SchemaMismatch
-      [r] >user << $defaultUser
+      [-] >user << $defaultUser
 ```
 
 See [TYPE-IDENTITY](../../technical/compile-rules/TYPE-IDENTITY.md) rules 5 and 6, [PGE04009](../../technical/compile-rules/PGE/PGE04009-unhandled-serial-struct-conversion.md).

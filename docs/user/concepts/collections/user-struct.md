@@ -19,8 +19,8 @@ User-defined structs declare fixed fields with `[.]`. The `##` schema is optiona
 Fixed fields use the `.` accessor:
 
 ```polyglot
-[r] $userName#string << $user.name
-[r] $userAge#int << $user.age
+[-] $userName#string << $user.name
+[-] $userAge#int << $user.age
 ```
 
 The `<` accessor is for flexible children only. Fixed fields (`.`) and flexible children (`:`) are distinct — a struct with only `[.]` fields has no flexible children to access via `<`.

@@ -18,23 +18,23 @@ updated: 2026-03-30
 ```polyglot
 [ ] VALID — open set needs *?
 [?] $code =? 200
-   [r] $status#string << "ok"
+   [-] $status#string << "ok"
 [?] $code =? 404
-   [r] $status#string << "not_found"
+   [-] $status#string << "not_found"
 [?] $code =? 500
-   [r] $status#string << "error"
+   [-] $status#string << "error"
 [?] *?
-   [r] $status#string << "unknown"
+   [-] $status#string << "unknown"
 
 [ ] VALID — exhaustive enum: all variants covered, no *? needed
 [?] $dir =? #Direction.North
-   [r] $label#string << "N"
+   [-] $label#string << "N"
 [?] $dir =? #Direction.South
-   [r] $label#string << "S"
+   [-] $label#string << "S"
 [?] $dir =? #Direction.East
-   [r] $label#string << "E"
+   [-] $label#string << "E"
 [?] $dir =? #Direction.West
-   [r] $label#string << "W"
+   [-] $label#string << "W"
 ```
 
 ### EC-22.2: Nested conditionals inside a branch
@@ -44,15 +44,15 @@ updated: 2026-03-30
 ```polyglot
 [?] $role =? #Role.Admin
    [?] $region =? #Region.EU
-      [r] $policy#string << "GDPR"
+      [-] $policy#string << "GDPR"
    [?] $region =? #Region.US
-      [r] $policy#string << "CCPA"
+      [-] $policy#string << "CCPA"
    [?] *?
-      [r] $policy#string << "Global"
+      [-] $policy#string << "Global"
 [?] $role =? #Role.User
-   [r] $policy#string << "Standard"
+   [-] $policy#string << "Standard"
 [?] *?
-   [r] $policy#string << "None"
+   [-] $policy#string << "None"
 ```
 
 ### EC-22.3: Switching on pipeline `%status` — nested enum switch
@@ -60,19 +60,19 @@ updated: 2026-03-30
 **What it tests:** `[?]` on a live metadata field; inner `[?]` checks enum variants. All branches plus `*?`. See [[syntax/types/hierarchy#Live Type Modifier]], [[concepts/pipelines/chains#Querying Pipeline Status]].
 
 ```polyglot
-[?] =DataSync%status
+[?] -DataSync%status
    [?] #AwaitTrigger
-      [r] $msg#string << "idle"
+      [-] $msg#string << "idle"
    [?] #Running
-      [r] $msg#string << "in progress — instances: {$count}"
+      [-] $msg#string << "in progress — instances: {$count}"
    [?] #Failed
-      [r] $msg#string << "failed — check errors"
-      [b] =Alert.Send
-         [=] <msg << "DataSync failed"
+      [-] $msg#string << "failed — check errors"
+      [b] -Alert.Send
+         (-) <msg << "DataSync failed"
    [?] #Disabled
-      [r] $msg#string << "pipeline disabled"
+      [-] $msg#string << "pipeline disabled"
    [?] *?
-      [r] $msg#string << "unknown state"
+      [-] $msg#string << "unknown state"
 ```
 
 ### EC-22.4: `[^]` XOR logical operator
@@ -84,7 +84,7 @@ updated: 2026-03-30
 [ ] Exactly one of $isAdmin or $isSudo — not both, not neither
 [?] $isAdmin =? #Boolean.True
 [^] $isSudo =? #Boolean.True
-   [r] $elevated#bool << #Boolean.True
+   [-] $elevated#bool << #Boolean.True
 [?] *?
-   [r] $elevated#bool << #Boolean.False
+   [-] $elevated#bool << #Boolean.False
 ```

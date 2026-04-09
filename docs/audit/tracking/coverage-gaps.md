@@ -27,7 +27,7 @@ Track structural coverage gaps between user documentation and technical document
 |----|-----|-------------|--------|-----------|----------|--------|
 | GAP-001 | TG | Macro {M} has edge cases (§18) but no dedicated user concept doc | edge-cases/18-macro-structure.md | user/concepts/ | High | Resolved |
 | GAP-002 | UG | permissions.md references permission model but no compile rules enforce it | user/concepts/permissions.md | technical/compile-rules/ | Medium | Resolved |
-| GAP-003 | MX | EBNF §9 Definition Blocks covers {=},{#},{M},{@} but user docs split across separate files without back-links | technical/ebnf/09-definition-blocks.md | user/ concept files | Medium | Resolved |
+| GAP-003 | MX | EBNF §9 Definition Blocks covers {-},{#},{M},{@} but user docs split across separate files without back-links | technical/ebnf/09-definition-blocks.md | user/ concept files | Medium | Resolved |
 | GAP-004 | TG | type-identity.md spec has no user-facing explanation of structural matching | technical/spec/type-identity.md | user/syntax/types/ | Medium | Resolved |
 | GAP-005 | MX | Compile-rule PGE files lack systematic links back to user docs and edge cases | technical/compile-rules/PGE/ | cross-refs | Low | Resolved |
 | GAP-006 | TG | String regex subfields decision (technical/plan/decisions/) has no user doc coverage | technical/plan/decisions/string-re-subfields.md | user/syntax/types/ | Low | Resolved |

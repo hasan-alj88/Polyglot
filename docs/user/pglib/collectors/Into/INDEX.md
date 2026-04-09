@@ -9,7 +9,7 @@ status: stable
 
 Data collectors gather mini-pipeline outputs back into a collection type, accessible one level up from the expand scope.
 
-Collector invocation uses `[r]` (sequential) or `[p]` (parallel) execution markers. Collector IO lines use `[*]`.
+Collector invocation uses `[-]` (sequential) or `[=]` (parallel) execution markers. Collector IO lines use `(*)`.
 
 No `[@]` import needed.
 

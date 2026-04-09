@@ -18,30 +18,30 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ each fixed field appears once
-{=} =Payments
+{-} -Payments
    [%] .description << "Processes payments"
    [%] .version << "1.0.0"
    [%] .authors << ["Alice", "Bob"]
    [%] .license << "MIT"
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] >out#string
-   [r] >out << "done"
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) >out#string
+   [-] >out << "done"
 ```
 
 ```polyglot
 [ ] ✓ flexible :info fields can have multiple distinct keys
-{=} =Tagged
+{-} -Tagged
    [%] .description << "Tagged pipeline"
    [%] :info
       :team << "platform"
       :priority << "high"              [ ] ✓ different keys under :info
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] >out#string
-   [r] >out << "done"
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) >out#string
+   [-] >out << "done"
 ```
 
 ```polyglot
@@ -58,26 +58,26 @@ severity: error
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE01015 — duplicate .description
-{=} =BadMeta
+{-} -BadMeta
    [%] .description << "First description"
    [%] .description << "Second description"  [ ] ✗ PGE01015 — .description appears twice
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] >out#string
-   [r] >out << "done"
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) >out#string
+   [-] >out << "done"
 ```
 
 ```polyglot
 [ ] ✗ PGE01015 — duplicate .version
-{=} =AlsoBad
+{-} -AlsoBad
    [%] .version << "1.0.0"
    [%] .version << "2.0.0"              [ ] ✗ PGE01015 — .version appears twice
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] >out#string
-   [r] >out << "done"
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) >out#string
+   [-] >out << "done"
 ```
 
 ```polyglot

@@ -22,9 +22,9 @@ severity: error
    [.] .age#int
 
 [ ] ✓ all required fields assigned
-[r] $user#UserRecord
-   [r] $user.name << "Alice"
-   [r] $user.age << 30
+[-] $user#UserRecord
+   [-] $user.name << "Alice"
+   [-] $user.age << 30
 ```
 
 ```polyglot
@@ -33,7 +33,7 @@ severity: error
    [.] .retries#int <~ 3
 
 [ ] ✓ defaults satisfy all fields — no explicit assignment needed
-[r] $cfg#Config
+[-] $cfg#Config
 ```
 
 ```polyglot
@@ -42,8 +42,8 @@ severity: error
    [.] .method#string <~ "GET"
 
 [ ] ✓ .method has default, only .url requires assignment
-[r] $req#Request
-   [r] $req.url << "https://example.com"
+[-] $req#Request
+   [-] $req.url << "https://example.com"
 ```
 
 **INVALID:**
@@ -53,8 +53,8 @@ severity: error
    [.] .age#int
 
 [ ] ✗ PGE04002 — missing required field .age (no default, never assigned)
-[r] $user#UserRecord
-   [r] $user.name << "Alice"
+[-] $user#UserRecord
+   [-] $user.name << "Alice"
    [ ] .age has no default and is never assigned — ✗ PGE04002
 ```
 
@@ -65,8 +65,8 @@ severity: error
    [.] .protocol#string
 
 [ ] ✗ PGE04002 — .host and .protocol never assigned
-[r] $conn#Connection
-   [r] $conn.port << 8080
+[-] $conn#Connection
+   [-] $conn.port << 8080
    [ ] .host and .protocol missing — ✗ PGE04002
 ```
 

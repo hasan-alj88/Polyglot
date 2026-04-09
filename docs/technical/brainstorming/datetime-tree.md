@@ -594,22 +594,22 @@ All four extensible levels (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`) are 
 
 `#DateTime` alias is `#dt` — use `#dt` in type annotations:
 ```polyglot
-[r] $now#dt
-[r] $deadline#dt
+[-] $now#dt
+[-] $deadline#dt
 ```
 
-## pglib Pipelines — =DT.*
+## pglib Pipelines — -DT.*
 
-All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (pglib).
+All `-DT.*` pipelines yield `#dt` objects. No `[@]` import needed (pglib).
 
 ### Construction
 ```polyglot
-=DT.Now                — current instant → #dt
-=DT.From.Epoch         — epoch seconds → #dt
+-DT.Now                — current instant → #dt
+-DT.From.Epoch         — epoch seconds → #dt
    <epoch#int
-=DT.From.ISO           — ISO-8601 string → #dt (same as DT"..." literal)
+-DT.From.ISO           — ISO-8601 string → #dt (same as DT"..." literal)
    <iso#string
-=DT.From.Parts         — explicit components → #dt
+-DT.From.Parts         — explicit components → #dt
    <year#int
    <month#int
    <day#int
@@ -622,122 +622,122 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (pglib).
 
 ### Calendar Conversion
 ```polyglot
-=DT.To.Gregorian       — #dt → #GregorianDate projection
+-DT.To.Gregorian       — #dt → #GregorianDate projection
    <source#dt
-=DT.To.Hijri           — #dt → #HijriDate projection
+-DT.To.Hijri           — #dt → #HijriDate projection
    <source#dt
    <authority#HijriAuthority <~ #HijriAuthority.UmmAlQura
-=DT.To.Hebrew          — #dt → #HebrewDate projection
+-DT.To.Hebrew          — #dt → #HebrewDate projection
    <source#dt
-=DT.To.Chinese         — #dt → #ChineseDate projection
+-DT.To.Chinese         — #dt → #ChineseDate projection
    <source#dt
-=DT.To.Persian         — #dt → #PersianDate projection
+-DT.To.Persian         — #dt → #PersianDate projection
    <source#dt
-=DT.To.Buddhist        — #dt → #BuddhistDate projection
+-DT.To.Buddhist        — #dt → #BuddhistDate projection
    <source#dt
-=DT.To.Hindu           — #dt → #HinduDate projection
+-DT.To.Hindu           — #dt → #HinduDate projection
    <source#dt
    <era#HinduEra <~ #HinduEra.VikramSamvat
-=DT.To.Japanese        — #dt → #JapaneseDate projection
+-DT.To.Japanese        — #dt → #JapaneseDate projection
    <source#dt
-=DT.To.Ethiopian       — #dt → #EthiopianDate projection
+-DT.To.Ethiopian       — #dt → #EthiopianDate projection
    <source#dt
-=DT.To.Coptic          — #dt → #CopticDate projection
+-DT.To.Coptic          — #dt → #CopticDate projection
    <source#dt
-=DT.To.Custom          — #dt → custom calendar projection
+-DT.To.Custom          — #dt → custom calendar projection
    <source#dt
    <calendar#CustomCalendar
 ```
 
 ### Time Unit Conversion
 ```polyglot
-=DT.To.ChineseTime     — #dt → #ChineseTime (shichen/ke/fen)
+-DT.To.ChineseTime     — #dt → #ChineseTime (shichen/ke/fen)
    <source#dt
-=DT.To.HinduTime       — #dt → #HinduTime (prahara/muhurta)
+-DT.To.HinduTime       — #dt → #HinduTime (prahara/muhurta)
    <source#dt
-=DT.To.DecimalTime     — #dt → #DecimalTime (French Republican)
+-DT.To.DecimalTime     — #dt → #DecimalTime (French Republican)
    <source#dt
 ```
 
 ### Arithmetic
 ```polyglot
-=DT.Add.Duration       — #dt + #Duration → #dt
+-DT.Add.Duration       — #dt + #Duration → #dt
    <source#dt
    <duration#Duration
-=DT.Add.Period         — #dt + #Period → #dt (calendar-aware)
+-DT.Add.Period         — #dt + #Period → #dt (calendar-aware)
    <source#dt
    <period#Period
-=DT.Sub                — #dt - #dt → #Duration
+-DT.Sub                — #dt - #dt → #Duration
    <a#dt
    <b#dt
 ```
 
 ### Comparison
 ```polyglot
-=DT.Compare            — #dt vs #dt → #int (-1, 0, 1)
+-DT.Compare            — #dt vs #dt → #int (-1, 0, 1)
    <a#dt
    <b#dt
-=DT.IsBefore           — #dt < #dt → #bool
+-DT.IsBefore           — #dt < #dt → #bool
    <a#dt
    <b#dt
-=DT.IsAfter            — #dt > #dt → #bool
+-DT.IsAfter            — #dt > #dt → #bool
    <a#dt
    <b#dt
-=DT.InInterval         — #dt within #Interval → #bool
+-DT.InInterval         — #dt within #Interval → #bool
    <source#dt
    <interval#Interval
 ```
 
 ### Extraction
 ```polyglot
-=DT.Get.Year           — #dt → year as #int
+-DT.Get.Year           — #dt → year as #int
    <source#dt
-=DT.Get.Month          — #dt → month as #int
+-DT.Get.Month          — #dt → month as #int
    <source#dt
-=DT.Get.Day            — #dt → day as #int
+-DT.Get.Day            — #dt → day as #int
    <source#dt
-=DT.Get.Weekday        — #dt → #Weekday
+-DT.Get.Weekday        — #dt → #Weekday
    <source#dt
-=DT.Get.WeekNumber     — #dt → week-of-year as #int
+-DT.Get.WeekNumber     — #dt → week-of-year as #int
    <source#dt
    <system#WeekSystem <~ #WeekSystem.ISO
-=DT.Get.Epoch          — #dt → epoch seconds as #int
+-DT.Get.Epoch          — #dt → epoch seconds as #int
    <source#dt
-=DT.Get.Zone           — #dt → #Zone
+-DT.Get.Zone           — #dt → #Zone
    <source#dt
 ```
 
 ### Zone
 ```polyglot
-=DT.Zone.Set           — set timezone on #dt → #dt
+-DT.Zone.Set           — set timezone on #dt → #dt
    <source#dt
    <iana#string
-=DT.Zone.Convert       — convert #dt to different timezone → #dt
+-DT.Zone.Convert       — convert #dt to different timezone → #dt
    <source#dt
    <iana#string
 ```
 
 ### Formatting
 ```polyglot
-=DT.Format             — #dt → formatted string
+-DT.Format             — #dt → formatted string
    <source#dt
    <pattern#string     — e.g. "YYYY-MM-DD HH:mm:ss"
-=DT.Format.ISO         — #dt → ISO-8601 string
+-DT.Format.ISO         — #dt → ISO-8601 string
    <source#dt
-=DT.Format.Calendar    — #dt → string in specific calendar format
+-DT.Format.Calendar    — #dt → string in specific calendar format
    <source#dt
    <system#CalendarSystem
 ```
 
 ### Business
 ```polyglot
-=DT.Business.IsWorkDay — #dt + #BusinessWeek → #bool
+-DT.Business.IsWorkDay — #dt + #BusinessWeek → #bool
    <source#dt
    <week#BusinessWeek
-=DT.Business.NextWorkDay — next work day → #dt
+-DT.Business.NextWorkDay — next work day → #dt
    <source#dt
    <week#BusinessWeek
-=DT.Business.AddWorkDays — add N work days → #dt
+-DT.Business.AddWorkDays — add N work days → #dt
    <source#dt
    <days#int
    <week#BusinessWeek
@@ -747,19 +747,19 @@ All `=DT.*` pipelines yield `#dt` objects. No `[@]` import needed (pglib).
 
 ### Q1 — DateTime inline notation (Decided 2026-03-20)
 
-`=DateTime"..."` is the full inline pipeline call. `=DT"..."` is its alias (matching `#dt` alias for `#DateTime`). Both are sugar for `=DT.From.ISO`:
+`-DateTime"..."` is the full inline pipeline call. `-DT"..."` is its alias (matching `#dt` alias for `#DateTime`). Both are sugar for `-DT.From.ISO`:
 
 ```polyglot
 [ ] These three are equivalent:
-[r] $deadline#dt << =DateTime"2026-03-20T12:00:00Z"
-[r] $deadline#dt << =DT"2026-03-20T12:00:00Z"
-[r] $deadline#dt
-   [r] =DT.From.ISO
-      [=] <iso << "2026-03-20T12:00:00Z"
-      [=] >dt >> $deadline
+[-] $deadline#dt << -DateTime"2026-03-20T12:00:00Z"
+[-] $deadline#dt << -DT"2026-03-20T12:00:00Z"
+[-] $deadline#dt
+   [-] -DT.From.ISO
+      (-) <iso << "2026-03-20T12:00:00Z"
+      (-) >dt >> $deadline
 ```
 
-Follows the `=Path"..."` precedent exactly.
+Follows the `-Path"..."` precedent exactly.
 
 ### Q2 — BusinessWeek defaults per WeekSystem (Decided 2026-03-20)
 
@@ -767,4 +767,4 @@ No defaults. `#BusinessWeek` fields (`.firstDay`, `.workDays`, `.offDays`, `.hou
 
 ### Q3 — Projection caching (Decided 2026-03-20)
 
-No caching. `=DT.To.*` pipelines recompute each call. Users store results in a `$variable` if they need the value again — explicit over implicit.
+No caching. `-DT.To.*` pipelines recompute each call. Users store results in a `$variable` if they need the value again — explicit over implicit.

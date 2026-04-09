@@ -3,22 +3,22 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.Now"
-metadata_instance: "%=:DT.Now:N"
+metadata_definition: "%definition.-:DT.Now"
+metadata_instance: "%-:DT.Now:N"
 ---
 
-# =DT.Now
+# -DT.Now
 
 Returns the current instant from the system clock.
 
 ## Definition
 
 ```polyglot
-{N} =DT.Now
+{N} -DT.Now
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtNow"
    [%] .description << "Current instant from system clock"
-   [=] >dt#dt
+   (-) >dt#dt
    [ ] Requires System.Env capability (reads system clock)
 ```
 
@@ -44,10 +44,10 @@ Requires `System.Env` capability -- reads system clock.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.Now` | Compile-time pipeline template |
-| Instance | `%=:DT.Now:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.Now` | Compile-time pipeline template |
+| Instance | `%-:DT.Now:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

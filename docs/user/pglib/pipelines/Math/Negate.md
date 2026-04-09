@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
-metadata_definition: "%definition.=:Math.Negate"
-metadata_instance: "%=:Math.Negate:N"
+metadata_definition: "%definition.-:Math.Negate"
+metadata_instance: "%-:Math.Negate:N"
 ---
 
-# =Math.Negate
+# -Math.Negate
 
 Returns the arithmetic negation of the input (multiplies by −1). Accepts exactly one input. When the input is `#float`, the output is `#float`.
 
 ## Definition
 
 ```polyglot
-{N} =Math.Negate
+{N} -Math.Negate
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathNegate"
    [%] .description << "Arithmetic negation of a numeric value"
-   [=] <<#int (exactly 1)
-   [=] >>#int
+   (-) <<#int (exactly 1)
+   (-) >>#int
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:Math.Negate` | Compile-time pipeline template |
-| Instance | `%=:Math.Negate:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:Math.Negate` | Compile-time pipeline template |
+| Instance | `%-:Math.Negate:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Math/INDEX|=Math.* Numeric Pipelines]]
-- [[pglib/pipelines/Math/Abs|=Math.Abs]]
+- [[pglib/pipelines/Math/INDEX|-Math.* Numeric Pipelines]]
+- [[pglib/pipelines/Math/Abs|-Math.Abs]]

@@ -5,19 +5,19 @@ updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Serial
+# =ForEach.Serial
 
-Iterates over all key-item pairs in a serial at all levels. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
+Iterates over all key-item pairs in a serial at all levels. The execution marker on the expand line controls parallelism: `[=]` for parallel, `[-]` for sequential.
 
 No `.Enumerate` variant -- Serial is unordered.
 
 ## Syntax
 
 ```polyglot
-[r] ~ForEach.Serial
-   [~] <Serial << $data
-   [~] >key >> $key
-   [~] >item >> $item
+[-] =ForEach.Serial
+   (=) <Serial << $data
+   (=) >key >> $key
+   (=) >item >> $item
    ...
 ```
 
@@ -44,5 +44,5 @@ None.
 
 ## Related
 
-- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[pglib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]

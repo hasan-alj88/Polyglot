@@ -35,10 +35,10 @@ severity: error
 
 ```polyglot
 [ ] ✓ unique field pushes on a struct variable
-[r] $user#UserRecord
-   [r] $user.name << "Alice"
-   [r] $user.age << 30
-   [r] $user.email << "alice@example.com"
+[-] $user#UserRecord
+   [-] $user.name << "Alice"
+   [-] $user.age << 30
+   [-] $user.email << "alice@example.com"
 ```
 
 **INVALID:**
@@ -52,10 +52,10 @@ severity: error
 
 ```polyglot
 [ ] ✗ PGE05003 — duplicate field push on struct variable
-[r] $user#UserRecord
-   [r] $user.name << "Alice"
-   [r] $user.name << "Bob"                   [ ] ✗ PGE05003 — .name pushed twice
-   [r] $user.age << 30
+[-] $user#UserRecord
+   [-] $user.name << "Alice"
+   [-] $user.name << "Bob"                   [ ] ✗ PGE05003 — .name pushed twice
+   [-] $user.age << 30
 ```
 
 ```polyglot

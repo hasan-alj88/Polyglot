@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.Compare"
-metadata_instance: "%=:DT.Compare:N"
+metadata_definition: "%definition.-:DT.Compare"
+metadata_instance: "%-:DT.Compare:N"
 ---
 
-# =DT.Compare
+# -DT.Compare
 
 Compares two `#dt` values. Returns `-1`, `0`, or `1` as an `#int`.
 
 ## Definition
 
 ```polyglot
-{N} =DT.Compare
+{N} -DT.Compare
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtCompare"
    [%] .description << "Compare two DateTimes"
-   [=] <a#dt
-   [=] <b#dt
-   [=] >result#int
+   (-) <a#dt
+   (-) <b#dt
+   (-) >result#int
 ```
 
 ## Inputs
@@ -48,10 +48,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.Compare` | Compile-time pipeline template |
-| Instance | `%=:DT.Compare:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.Compare` | Compile-time pipeline template |
+| Instance | `%-:DT.Compare:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

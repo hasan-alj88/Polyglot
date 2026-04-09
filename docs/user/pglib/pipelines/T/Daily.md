@@ -7,14 +7,14 @@ metadata_definition: "%definition.T:Daily"
 metadata_instance: "%T:Daily:N"
 ---
 
-# =T.Daily
+# -T.Daily
 
-Fires once per day at the specified time. Time string provided via inline call: `=T.Daily"3AM"`.
+Fires once per day at the specified time. Time string provided via inline call: `-T.Daily"3AM"`.
 
 ## Definition
 
 ```polyglot
-{N} =T.Daily
+{N} -T.Daily
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TDaily"
    [%] .description << "Fires once per day at the specified time."
@@ -25,7 +25,7 @@ Fires once per day at the specified time. Time string provided via inline call: 
 
 | Name | Type | Description |
 |------|------|-------------|
-| `InlineStringLiteral` | `#string` | Time of day to fire (e.g. `"3AM"`). Provided inline: `=T.Daily"3AM"`. Defaults to `""`. |
+| `InlineStringLiteral` | `#string` | Time of day to fire (e.g. `"3AM"`). Provided inline: `-T.Daily"3AM"`. Defaults to `""`. |
 
 ## Outputs
 
@@ -49,4 +49,4 @@ None.
 
 ## Related
 
-- [[pglib/pipelines/T/INDEX|=T.* Trigger Pipelines]]
+- [[pglib/pipelines/T/INDEX|-T.* Trigger Pipelines]]

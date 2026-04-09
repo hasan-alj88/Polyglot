@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:DB.Transaction"
 metadata_instance: "%W:DB.Transaction:N"
 ---
 
-# =W.DB.Transaction
+# -W.DB.Transaction
 
 Opens connection + begins transaction on setup. Commits transaction + closes connection on cleanup. If execution body errors, transaction rolls back.
 
 ## Definition
 
 ```polyglot
-{N} =W.DB.Transaction
+{N} -W.DB.Transaction
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WDbTransaction"
    [%] .description << "Opens connection + begins transaction on setup. Commits + closes on cleanup."
@@ -53,5 +53,5 @@ Database.Connect
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
-- [[pglib/pipelines/W/DB.Connection|=W.DB.Connection]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]
+- [[pglib/pipelines/W/DB.Connection|-W.DB.Connection]]

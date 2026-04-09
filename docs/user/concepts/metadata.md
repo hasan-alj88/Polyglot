@@ -11,7 +11,7 @@ updated: 2026-03-31
 
 Every Polyglot object carries metadata — descriptive fields you declare and runtime fields the system manages. You interact with metadata through two mechanisms:
 
-1. **`[%]` block element** — declare metadata inside `{#}`, `{=}`, or other `{x}` definitions
+1. **`[%]` block element** — declare metadata inside `{#}`, `{-}`, or other `{x}` definitions
 2. **`%` accessor** — query runtime state from any expression context
 
 For the full metadata tree architecture, path grammar, and instance rules, see [[metadata-tree/INDEX|technical/spec/metadata-tree]].
@@ -42,7 +42,7 @@ Native definitions (`{N}`) use a separate metadata scope — `[%]` under `{N}` i
 ### Example
 
 ```polyglot
-{= =MyPipeline}
+{- -MyPipeline}
    [%] .description << "Processes incoming invoices"
    [%] .version << "2.1.0"
    [%] .authors << ["Alice", "Bob"]
@@ -61,17 +61,17 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 
 `live` fields are populated by the Polyglot runtime automatically. Users read them via `%` but cannot push into them (PGE02006). See [[syntax/types/hierarchy#Live Type Modifier]].
 
-### Pipeline (`{=}`)
+### Pipeline (`{-}`)
 
 | Accessor | Type | Description |
 |----------|------|-------------|
-| `=Name%status` | `#live.#PipelineStatus` | AwaitTrigger, Disabled, Running, Failed |
-| `=Name%errors` | `#live.array:error` | Accumulated errors |
-| `=Name%isSuccess` | `#live.#Boolean` | Last run completed without error |
-| `=Name%instanceCount` | `#live.int` | Number of active instances |
-| `=Name%lastRun` | `#live.string` | Timestamp of last execution |
-| `=Name%duration` | `#live.string` | Duration of current/last run |
-| `=Name%triggerCount` | `#live.int` | Total times triggered |
+| `-Name%status` | `#live.#PipelineStatus` | AwaitTrigger, Disabled, Running, Failed |
+| `-Name%errors` | `#live.array:error` | Accumulated errors |
+| `-Name%isSuccess` | `#live.#Boolean` | Last run completed without error |
+| `-Name%instanceCount` | `#live.int` | Number of active instances |
+| `-Name%lastRun` | `#live.string` | Timestamp of last execution |
+| `-Name%duration` | `#live.string` | Duration of current/last run |
+| `-Name%triggerCount` | `#live.int` | Total times triggered |
 
 ### Variable (`$`)
 
@@ -93,10 +93,10 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 
 | Accessor | Type | Description |
 |----------|------|-------------|
-| `=W.Name%status` | `#live.#WrapperStatus` | Setup, Active, Cleanup, Complete, Failed |
-| `=W.Name%errors` | `#live.array:error` | Accumulated wrapper errors |
-| `=W.Name%setupDuration` | `#live.string` | Duration of setup phase |
-| `=W.Name%cleanupDuration` | `#live.string` | Duration of cleanup phase |
+| `-W.Name%status` | `#live.#WrapperStatus` | Setup, Active, Cleanup, Complete, Failed |
+| `-W.Name%errors` | `#live.array:error` | Accumulated wrapper errors |
+| `-W.Name%setupDuration` | `#live.string` | Duration of setup phase |
+| `-W.Name%cleanupDuration` | `#live.string` | Duration of cleanup phase |
 
 ### Queue (`{Q}`)
 
@@ -111,47 +111,47 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 
 | Accessor | Type | Description |
 |----------|------|-------------|
-| `=Name%status` | `#live.#PipelineStatus` | AwaitTrigger, Disabled, Running, Failed |
-| `=Name%nativeKind` | `#live.#NativeKind` | Trigger, Queue, Wrapper, Execution, Intrinsic |
-| `=Name%invocationCount` | `#live.int` | Total times invoked |
+| `-Name%status` | `#live.#PipelineStatus` | AwaitTrigger, Disabled, Running, Failed |
+| `-Name%nativeKind` | `#live.#NativeKind` | Trigger, Queue, Wrapper, Execution, Intrinsic |
+| `-Name%invocationCount` | `#live.int` | Total times invoked |
 
 `[%]` metadata under `{N}` implicitly scopes to `%Native.*` — all fixed `.` fields. See [[concepts/pipelines/INDEX#Native vs Derived|{N} Metadata]].
 
 ## Advanced: Full Metadata Paths
 
-The shorthand accessors shown above (`$name%state`, `=MyPipeline%status`) are syntactic sugar. The compiler resolves each to a full path in the `%` metadata tree.
+The shorthand accessors shown above (`$name%state`, `-MyPipeline%status`) are syntactic sugar. The compiler resolves each to a full path in the `%` metadata tree.
 
 ### Shorthand Resolution
 
 | You write | Compiler resolves to |
 |-----------|---------------------|
 | `$myVar%state` | `%$:myVar:<current>.state` |
-| `=MyPipeline%status` | `%=:MyPipeline:<current>.status` |
+| `-MyPipeline%status` | `%-:MyPipeline:<current>.status` |
 | `#Record%lastModified` | `%#:Record:<current>.lastModified` |
-| `=W.DB.Connection%status` | `%W:DB.Connection:<current>.status` |
+| `-W.DB.Connection%status` | `%W:DB.Connection:<current>.status` |
 | `#Queue:GPUQueue%activeCount` | `%Q:GPUQueue:<current>.activeCount` |
 
 The full path follows the pattern: `%{type}:{name}:{instance}.{field}`
 
 - **`%`** — metadata tree root
-- **`{type}`** — object type prefix (`$`, `=`, `#`, `W`, `Q`, `T`)
+- **`{type}`** — object type prefix (`$`, `-`, `#`, `W`, `Q`, `T`)
 - **`{name}`** — object reference name (flexible field, uses `:`)
 - **`{instance}`** — which instance (flexible field, uses `:`)
 - **`.{field}`** — fixed field within the instance
 
 ### `:<current>` — Implicit Instance
 
-When you write `=MyPipeline%status`, the `:<current>` instance segment is implicit — the runtime resolves it to the instance executing in the current context. Most code never needs to specify an instance explicitly.
+When you write `-MyPipeline%status`, the `:<current>` instance segment is implicit — the runtime resolves it to the instance executing in the current context. Most code never needs to specify an instance explicitly.
 
 ### Instance Addressing with `:N`
 
 When a pipeline has multiple concurrent instances, you can target a specific one by instance number:
 
 ```polyglot
-[r] $status << %=:MyPipeline:3.status
+[-] $status << %-:MyPipeline:3.status
 ```
 
-This reads the status of instance 3 of `=MyPipeline`. Explicit instance addressing is primarily useful for monitoring and debugging — normal pipeline code uses the implicit `:<current>` resolution.
+This reads the status of instance 3 of `-MyPipeline`. Explicit instance addressing is primarily useful for monitoring and debugging — normal pipeline code uses the implicit `:<current>` resolution.
 
 For the complete path grammar including job paths and marker addressing, see [[metadata-tree/path-grammar|Path Grammar]].
 

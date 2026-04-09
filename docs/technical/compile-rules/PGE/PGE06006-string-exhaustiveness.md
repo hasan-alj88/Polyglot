@@ -19,11 +19,11 @@ split_from: PGE06001
 [ ] ✓ string conditional — known values + *? catch-all
 [?] $status
    [?] "active"
-      [r] =Process.Active
+      [-] -Process.Active
    [?] "paused"
-      [r] =Process.Paused
+      [-] -Process.Paused
    [?] *?
-      [r] =Process.Unknown
+      [-] -Process.Unknown
 ```
 
 **INVALID:**
@@ -31,9 +31,9 @@ split_from: PGE06001
 [ ] ✗ PGE06006 — string without *?, no static proof possible
 [?] $status
    [?] "active"
-      [r] =Process.Active
+      [-] -Process.Active
    [?] "paused"
-      [r] =Process.Paused
+      [-] -Process.Paused
    [ ] ✗ PGE06006 — missing *?, string is open type
 ```
 

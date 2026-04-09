@@ -7,14 +7,14 @@ metadata_definition: "%definition.T:Manual"
 metadata_instance: "%T:Manual:N"
 ---
 
-# =T.Manual
+# -T.Manual
 
 Pipeline invoked manually (e.g., from CLI or test harness). No additional parameters.
 
 ## Definition
 
 ```polyglot
-{N} =T.Manual
+{N} -T.Manual
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TManual"
    [%] .description << "Pipeline is invoked manually (e.g., from CLI or test harness)."
@@ -48,4 +48,4 @@ None.
 
 ## Related
 
-- [[pglib/pipelines/T/INDEX|=T.* Trigger Pipelines]]
+- [[pglib/pipelines/T/INDEX|-T.* Trigger Pipelines]]

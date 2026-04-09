@@ -18,7 +18,7 @@ package_block       ::= "{@}" package_id NEWLINE
 import_line         ::= "[@]" '@' name push_left package_id ;
 ```
 
-**Rule:** `{@}` must be the first block in every `.pg` file. Exactly one `{@}` per file — multiple `{@}` blocks are not allowed. Multiple `{#}` and `{=}` definitions are allowed.
+**Rule:** `{@}` must be the first block in every `.pg` file. Exactly one `{@}` per file — multiple `{@}` blocks are not allowed. Multiple `{#}` and `{-}` definitions are allowed.
 
 ### 9.2 Data Definition
 
@@ -71,11 +71,11 @@ field_expansion    ::= "[.]" fixed_sep "*" type_param_ref type_annotation ;
 ### 9.3 Pipeline Definition
 
 ```ebnf
-pipeline_def        ::= "{=}" marker_decl? pipeline_id NEWLINE
+pipeline_def        ::= "{-}" marker_decl? pipeline_id NEWLINE
                          pipeline_body ;
 
-marker_decl         ::= "[exe]" | "[b]" | "[r]" | "[p]"
-                       | "[rp]" | "[rb]" | "[pb]" ;
+marker_decl         ::= "[exe]" | "[b]" | "[-]" | "[=]"
+                       | "[-=]" | "[-b]" | "[=b]" ;
 
 pipeline_body       ::= { ( metadata_line | comment_line ) NEWLINE }
                          trigger_io_section
@@ -83,31 +83,31 @@ pipeline_body       ::= { ( metadata_line | comment_line ) NEWLINE }
                          wrapper_section
                          execution_section ;
 
-(* Trigger, IO, and error declarations form one section — order IS strict: [=] IO declarations and error
+(* Trigger, IO, and error declarations form one section — order IS strict: (-) IO declarations and error
    declarations come first, then [T] trigger lines (PGE01002). IO inputs are implicit triggers; some triggers
    produce inputs. Error declarations mark the pipeline as failable. *)
 trigger_io_section  ::= { indent ( io_decl_line | error_decl_line | comment_line ) NEWLINE }
                          { indent ( trigger_line | comment_line ) NEWLINE } ;
 
-error_decl_line     ::= "[=]" error_id ;
+error_decl_line     ::= "(-)" error_id ;
 ```
 
 **Marker declarations:**
-- `{=}` without `marker_decl` defaults to `{=}[exe]` — no warning, no error.
-- `[exe]` = execution pipeline, invocable via `[r]` (sequential), `[p]` (parallel), or `[b]` (background).
-- Subsets restrict invocation: `{=}[b]` means background-only (no outputs allowed — fire-and-forget), `{=}[rp]` means sequential or parallel only (no background).
+- `{-}` without `marker_decl` defaults to `{-}[exe]` — no warning, no error.
+- `[exe]` = execution pipeline, invocable via `[-]` (sequential), `[=]` (parallel), or `[b]` (background).
+- Subsets restrict invocation: `{-}[b]` means background-only (no outputs allowed — fire-and-forget), `{-}[-=]` means sequential or parallel only (no background).
 - `{T}`, `{W}`, and `{Q}` already have implicit markers (`[T]`, `[W]`, `[Q]`) — they cannot take `marker_decl`.
 
 **Example** — background-only pipeline:
 
 ```polyglot
-{=}[b] =LogEvent
-   [T] =T.Call
-   [=] <message#string
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =File.Text.Append"{$logPath}"
-      [=] <text << $message
+{-}[b] -LogEvent
+   [T] -T.Call
+   (-) <message#string
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -File.Text.Append"{$logPath}"
+      (-) <text << $message
 ```
 
 ### 9.3.1 Trigger Section
@@ -119,23 +119,23 @@ trigger_ref         ::= pipeline_ref [ string_literal ] ;
 ```
 
 **Rules:**
-- `trigger_ref` must reference an operation that declares `[T]` marker compatibility (PGE01024). pglib trigger pipelines (`=T.*`) are the canonical trigger operations.
+- `trigger_ref` must reference an operation that declares `[T]` marker compatibility (PGE01024). pglib trigger pipelines (`-T.*`) are the canonical trigger operations.
 - Multiple `[T]` lines in one pipeline have **AND** semantics — all triggers must fire before the pipeline executes.
-- For **OR** semantics (any trigger fires the pipeline), use `[|]` to scope alternative triggers.
+- For **OR** semantics (any trigger fires the pipeline), use `[+]` to scope alternative triggers.
 
-**Examples:** `[T] =T.Call`, `[T] =T.Daily"3AM"`, `[T] =T.Folder.NewFiles`
+**Examples:** `[T] -T.Call`, `[T] -T.Daily"3AM"`, `[T] -T.Folder.NewFiles`
 
 ### 9.3.2 IO Section
 
 ```ebnf
 io_section          ::= { indent ( io_decl_line | type_input_line ) NEWLINE } ;
 
-io_decl_line        ::= "[=]" typed_io_param [ assignment_op value_expr ] ;
+io_decl_line        ::= "(-)" typed_io_param [ assignment_op value_expr ] ;
 
-type_input_line     ::= "[=]" "<#" identifier ;
+type_input_line     ::= "(-)" "<#" identifier ;
                       (* Type definition as data tree input — same <# syntax as {#} generic params.
                          The pipeline receives the type's % metadata tree. Works with #, ##, ### tiers.
-                         Example: [=] <#type -- any type definition; [=] <#Config -- specific type *)
+                         Example: (-) <#type -- any type definition; (-) <#Config -- specific type *)
 ```
 
 **IO as implicit triggers:**
@@ -151,29 +151,29 @@ queue_section       ::= indent "[Q]" queue_ref NEWLINE
 
 queue_ref           ::= pipeline_ref | queue_id ;
 
-queue_io_line       ::= "[=]" typed_io_param assignment_op value_expr ;
-                      (* Same [=] IO marker as top-level io_line — scoped to the parent
+queue_io_line       ::= "(-)" typed_io_param assignment_op value_expr ;
+                      (* Same (-) IO bracket as top-level io_line — scoped to the parent
                          [Q] operator via indentation, not a different marker. *)
 
 queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
                          { indent queue_io_line NEWLINE } ;
 ```
 
-`[Q]` references either `=Q.Default` or `=Q.Assign"QueueName"` (for user-defined queues). Nested `[Q]` lines declare pipeline-specific active queue controls (pause, resume, kill). These extend the queue's `{Q}` defaults for this pipeline only — contradictions raise PGE01013.
+`[Q]` references either `-Q.Default` or `-Q.Assign"QueueName"` (for user-defined queues). Nested `[Q]` lines declare pipeline-specific active queue controls (pause, resume, kill). These extend the queue's `{Q}` defaults for this pipeline only — contradictions raise PGE01013.
 
-**Dual context:** `[Q]` appears in two locations: (1) the pipeline header `queue_section` — scoped to all jobs in the pipeline; (2) nested under `[r]`/`[p]`/`[b]` execution markers via `queue_control_line` in `pipeline_call` (§10.2) — scoped to that specific job and its sub-jobs. Job-level `[Q]` extends pipeline-level `[Q]`, it does not replace it.
+**Dual context:** `[Q]` appears in two locations: (1) the pipeline header `queue_section` — scoped to all jobs in the pipeline; (2) nested under `[-]`/`[=]`/`[b]` execution markers via `queue_control_line` in `pipeline_call` (§10.2) — scoped to that specific job and its sub-jobs. Job-level `[Q]` extends pipeline-level `[Q]`, it does not replace it.
 
 **Examples:**
 
-Simple: `[Q] =Q.Default`
+Simple: `[Q] -Q.Default`
 
 With active controls:
 ```polyglot
-[Q] =Q.Assign"GPUQueue"
-   [Q] =Q.Pause.Hard.RAM.LessThan
-      [=] <mb << 3072.0
-   [Q] =Q.Resume.RAM.MoreThan
-      [=] <mb << 5120.0
+[Q] -Q.Assign"GPUQueue"
+   [Q] -Q.Pause.Hard.RAM.LessThan
+      (-) <mb << 3072.0
+   [Q] -Q.Resume.RAM.MoreThan
+      (-) <mb << 5120.0
 ```
 
 ### 9.3.4 Wrapper Section
@@ -182,14 +182,14 @@ With active controls:
 wrapper_section     ::= indent "[W]" pipeline_ref NEWLINE
                          { indent wrapper_io_line NEWLINE } ;
 
-wrapper_io_line     ::= "[=]" variable_id assignment_op value_expr ;
-                      (* Same [=] IO marker as top-level io_line — scoped to the parent
+wrapper_io_line     ::= "(-)" variable_id assignment_op value_expr ;
+                      (* Same (-) IO bracket as top-level io_line — scoped to the parent
                          [W] operator via indentation, not a different marker. *)
 ```
 
-**Rule:** `[W]` references a wrapper (`{W}`). Wrapper IO is wired using `[=]` with `$` variables. See §9.5 for wrapper definition syntax and IO wiring details.
+**Rule:** `[W]` references a wrapper (`{W}`). Wrapper IO is wired using `(-)` with `$` variables. See §9.5 for wrapper definition syntax and IO wiring details.
 
-**Examples:** `[W] =W.Polyglot`, `[W] =W.DB.Connection` with `[=] $connectionString << $connStr`
+**Examples:** `[W] -W.Polyglot`, `[W] -W.DB.Connection` with `(-) $connectionString << $connStr`
 
 ### 9.3.5 Execution Section
 
@@ -213,7 +213,7 @@ exec_line           ::= run_line
 trigger_def         ::= "{T}" trigger_pipeline_id NEWLINE
                          trigger_def_body ;
 
-trigger_pipeline_id ::= '=' 'T' '.' dotted_name ;
+trigger_pipeline_id ::= '-' 'T' '.' dotted_name ;
 
 trigger_def_body    ::= { ( metadata_line | comment_line ) NEWLINE }
                          { indent ( io_decl_line | error_decl_line ) NEWLINE } ;
@@ -222,8 +222,8 @@ trigger_def_body    ::= { ( metadata_line | comment_line ) NEWLINE }
 ```
 
 **Rules:**
-- `{T}` defines a trigger pipeline — a subtype of `{=}` constrained to IO-only bodies.
-- Trigger identifier must use the `=T.` prefix.
+- `{T}` defines a trigger pipeline — a subtype of `{-}` constrained to IO-only bodies.
+- Trigger identifier must use the `-T.` prefix.
 - Must include `>IsTriggered#bool` output (mandatory). May include additional outputs.
 - No execution body, no `[Q]`, no `[W]` — triggers define event sources, not execution logic.
 - `[T]` invokes a trigger inside a pipeline (see §9.3.1).
@@ -231,11 +231,11 @@ trigger_def_body    ::= { ( metadata_line | comment_line ) NEWLINE }
 **Example:**
 
 ```polyglot
-{T} =T.Folder.NewFiles
+{T} -T.Folder.NewFiles
    [%] .description << "Fires when new files appear in watched directory"
-   [=] <path#path
-   [=] >IsTriggered#bool
-   [=] >NewFiles#array:path
+   (-) <path#path
+   (-) >IsTriggered#bool
+   (-) >NewFiles#array:path
 ```
 
 ### 9.5 Wrapper Definition (`{W}`)
@@ -259,16 +259,16 @@ to_outer            ::= "[}]" variable_id ;
 ```
 
 **Rules:**
-- `{W} =W.Name` defines a wrapper. `[W] =W.Name` invokes it inside a pipeline.
+- `{W} -W.Name` defines a wrapper. `[W] -W.Name` invokes it inside a pipeline.
 - `[{]` declares a wrapper input — a typed variable pulled from the calling pipeline's scope.
 - `[}]` declares a wrapper output — a variable exposed back to the calling pipeline's scope.
 - `[\]` runs before the pipeline execution body (setup). Can call a single pipeline or open a scope with multiple exec lines.
 - `[/]` runs after the pipeline execution body (cleanup). Same structure as `[\]`.
-- Wrappers do NOT contain `{#}` definitions, `[T]`, `[=]` pipeline-level IO, or `[Q]` — those belong to pipelines.
-- Execution order: `[=],[T]` → `[Q]` → `[\]` → Execution Body → `[/]`.
+- Wrappers do NOT contain `{#}` definitions, `[T]`, `(-)` pipeline-level IO, or `[Q]` — those belong to pipelines.
+- Execution order: `(-)`/`[T]` → `[Q]` → `[\]` → Execution Body → `[/]`.
 - The wrapper unpacks before and after the body like brackets.
-- **Rule (parallel fork):** `[p]` inside `[\]` with no subsequent `[*] *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `[*] *All` with `[*] << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
-- Variables produced in `[\]` (including by `[p]`) remain accessible in `[/]`.
+- **Rule (parallel fork):** `[=]` inside `[\]` with no subsequent `(*) *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `(*) *All` with `(*) << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
+- Variables produced in `[\]` (including by `[=]`) remain accessible in `[/]`.
 
 **Wrapper IO wiring at `[W]` usage site:**
 
@@ -276,18 +276,18 @@ to_outer            ::= "[}]" variable_id ;
 wrapper_section     ::= indent "[W]" pipeline_ref NEWLINE
                          { indent wrapper_io_line NEWLINE } ;
 
-wrapper_io_line     ::= "[=]" variable_id assignment_op value_expr ;
+wrapper_io_line     ::= "(-)" variable_id assignment_op value_expr ;
 ```
 
-At the `[W]` line, wrapper IO is wired using `[=]` with `$` variables (not `<`/`>` IO params, not `[{]`/`[}]`):
+At the `[W]` line, wrapper IO is wired using `(-)` with `$` variables (not `<`/`>` IO params, not `[{]`/`[}]`):
 
 ```polyglot
-[W] =W.DB.Connection
-   [=] $connectionString << $connStr     (* wrapper input *)
-   [=] $dbConn >> $dbConn                (* wrapper output *)
+[W] -W.DB.Connection
+   (-) $connectionString << $connStr     (* wrapper input *)
+   (-) $dbConn >> $dbConn                (* wrapper output *)
 ```
 
-**Examples:** `[W] =W.Polyglot` (no IO, no-op wrapper), `[W] =W.DB.Transaction` (with IO wiring)
+**Examples:** `[W] -W.Polyglot` (no IO, no-op wrapper), `[W] -W.DB.Transaction` (with IO wiring)
 
 ### 9.6 Native Definition (`{N}`)
 
@@ -295,7 +295,7 @@ At the `[W]` line, wrapper IO is wired using `[=]` with `$` variables (not `<`/`
 native_def          ::= "{N}" native_pipeline_id NEWLINE
                          native_def_body ;
 
-native_pipeline_id  ::= '=' dotted_name ;
+native_pipeline_id  ::= '-' dotted_name ;
 
 native_def_body     ::= { ( native_metadata_line | comment_line ) NEWLINE }
                          { indent ( io_decl_line | error_decl_line ) NEWLINE } ;
@@ -316,21 +316,21 @@ language_name       ::= upper_letter { letter } ; (* Rust, Cpp, etc. *)
 - `[%]` metadata under `{N}` implicitly scopes to `%Native.*` — all fixed `.` fields.
 - `.Kind` is mandatory — must be one of `#NativeKind.Trigger`, `.Queue`, `.Wrapper`, `.Execution`, `.Intrinsic`.
 - At least one `.<Language>` binding is required — must match the configured host language.
-- No execution body (`[r]`, `[p]`, `[b]`, `[s]`, `[?]`), no `[T]`, no `[Q]`, no `[W]`.
-- `[=]` IO declarations define the public interface (inputs, outputs, errors) — same as any pipeline.
+- No execution body (`[-]`, `[=]`, `[b]`, `[?]`), no `[T]`, no `[Q]`, no `[W]`.
+- `(-)` IO declarations define the public interface (inputs, outputs, errors) — same as any pipeline.
 - `{N}` definitions can only appear in pglib `.pg` files — user `.pg` files cannot define native pipelines.
 
 **Example:**
 
 ```polyglot
-{N} =File.Text.Read
+{N} -File.Text.Read
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextRead"
    [%] .description << "Read text file contents"
-   [=] <path#path
-   [=] >content#string
-   [=] !File.NotFound
-   [=] !File.PermissionDenied
+   (-) <path#path
+   (-) >content#string
+   (-) !File.NotFound
+   (-) !File.PermissionDenied
 ```
 
 ### 9.7 Queue Definition
@@ -365,13 +365,13 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
    [.] .killPropagation#KillPropagation << #Downgrade
    [.] .resourceTags#array:ResourceTag << [#GPU]
    [.] .maxWaitTime#String << "30m"
-   [Q] =Q.Kill.Graceful.Time.MoreThan
-      [=] <duration << "4h"
+   [Q] -Q.Kill.Graceful.Time.MoreThan
+      (-) <duration << "4h"
 ```
 
-**Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `=Q.Default` is the pglib-provided queue and does not require a `{Q}` definition.
+**Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `-Q.Default` is the pglib-provided queue and does not require a `{Q}` definition.
 
-**Dual-purpose:** `{Q}` serves two roles based on the identifier prefix. The grammar above covers the **data definition** form (`{Q} #Queue:Name`). The **pipeline operation** form (`{Q} =Q.*`) is syntactic sugar for `{=}[Q]` and follows the pipeline definition grammar in §9.3 — it defines a queue control pipeline invocable via `[Q]`. Examples: `{Q} =Q.Default`, `{Q} =Q.Pause.Hard`, `{Q} =Q.Kill.Graceful`.
+**Dual-purpose:** `{Q}` serves two roles based on the identifier prefix. The grammar above covers the **data definition** form (`{Q} #Queue:Name`). The **pipeline operation** form (`{Q} -Q.*`) is syntactic sugar for `{-}[Q]` and follows the pipeline definition grammar in §9.3 — it defines a queue control pipeline invocable via `[Q]`. Examples: `{Q} -Q.Default`, `{Q} -Q.Pause.Hard`, `{Q} -Q.Kill.Graceful`.
 
 ### 9.8 Error Definition
 
@@ -443,7 +443,7 @@ category_name          ::= "File" | "Web" | "Database" | "System"
 - Each `permission_field_line` declares a capability: `.Category.Capability "scope"`. The `category_name` must be one of the 8 predefined categories. Each category has a per-category capability enum (e.g., `#FileCapability`: Read, Write, Execute, Delete, Create).
 - **Fully filled** — every `{_}` object must have all leaf fields assigned. Empty leaves are a compile error.
 - **No instances** — permissions are compile-time declarations. No `:{instance}` level exists in `%_`.
-- **No inline declarations** — `[_]` in `{@}` and `{=}` always references a `{_}` object by name. Inline permission syntax is not valid.
+- **No inline declarations** — `[_]` in `{@}` and `{-}` always references a `{_}` object by name. Inline permission syntax is not valid.
 - **Identifier tiers:** `_` = permission object, `__` = permission descriptor (schema), `___` = constraint descriptor. Mirrors `#`/`##`/`###`.
 
 ### 9.11 Comment Block (Definition Level)
@@ -484,14 +484,14 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 ```
 
 **Rules:**
-- `[%]` appears inside any `{x}` definition (`{#}`, `{=}`, `{T}`, `{W}`, `{N}`).
+- `[%]` appears inside any `{x}` definition (`{#}`, `{-}`, `{T}`, `{W}`, `{N}`).
 - One definition = one metadata set (class-level, not instance-level).
 - All top-level `[%]` fields use `.` fixed separator. Only `.info#serial` opens a `:` flexible scope underneath (sibling homogeneity preserved).
 - `[%] %alias` declares shorthand names for definitions or fields. Each `[:]` child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed. All aliases must be globally unique (PGE12002).
 - Aliases participate in exhaustiveness checking when the variable carries the parent type annotation.
-- `live` fields are implicit on all `{=}`, `$`, and `{#}` definitions. The runtime populates them. Users read via `%` accessor (e.g., `=Pipeline%status`, `$var%state`) but never assign.
+- `live` fields are implicit on all `{-}`, `$`, and `{#}` definitions. The runtime populates them. Users read via `%` accessor (e.g., `-Pipeline%status`, `$var%state`) but never assign.
 - Prefer reactive alternatives (error blocks, IO triggers) over polling `live` fields when possible.
-- Native definitions use `{N}` — a separate block type (see §9.6). `{N}` metadata implicitly scopes to `%Native.*` with fixed fields `.Kind` (`#NativeKind`), `.<Language>` (native function binding), and `.description`. `{N}` and `{=}` are mutually exclusive block types — a definition cannot be both native and derived (PGE01028).
+- Native definitions use `{N}` — a separate block type (see §9.6). `{N}` metadata implicitly scopes to `%Native.*` with fixed fields `.Kind` (`#NativeKind`), `.<Language>` (native function binding), and `.description`. `{N}` and `{-}` are mutually exclusive block types — a definition cannot be both native and derived (PGE01028).
 
 ## Related User Documentation
 
@@ -499,7 +499,7 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 |---------|----------|
 | §9.1 `{@}` Package | [[syntax/packages\|packages]] |
 | §9.2 `{#}` Data | [[syntax/blocks\|blocks]], [[syntax/types/INDEX\|types]] |
-| §9.3 `{=}` Pipeline | [[concepts/pipelines/INDEX\|pipelines]] |
+| §9.3 `{-}` Pipeline | [[concepts/pipelines/INDEX\|pipelines]] |
 | §9.4 `{T}` Trigger | [[concepts/pipelines/io-triggers\|io-triggers]] |
 | §9.5 `{W}` Wrapper | [[concepts/pipelines/wrappers\|wrappers]] |
 | §9.6 `{N}` Native | [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |

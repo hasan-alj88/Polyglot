@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:RT"
 metadata_instance: "%W:RT:N"
 ---
 
-# =W.RT
+# -W.RT
 
-Starts language runtime on setup, stops on cleanup. Uses version-specific paths (e.g., `=W.RT:Python:3:14`).
+Starts language runtime on setup, stops on cleanup. Uses version-specific paths (e.g., `-W.RT:Python:3:14`).
 
 ## Definition
 
 ```polyglot
-{N} =W.RT
+{N} -W.RT
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WRt"
    [%] .description << "Starts language runtime on setup, stops on cleanup."
@@ -25,7 +25,7 @@ Starts language runtime on setup, stops on cleanup. Uses version-specific paths 
 Runtime versions are selected via colon-separated paths:
 
 ```polyglot
-=W.RT
+-W.RT
    :Python
       :3
          :14
@@ -68,4 +68,4 @@ System.Process
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]

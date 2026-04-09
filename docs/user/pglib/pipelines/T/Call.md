@@ -7,14 +7,14 @@ metadata_definition: "%definition.T:Call"
 metadata_instance: "%T:Call:N"
 ---
 
-# =T.Call
+# -T.Call
 
 Pipeline invoked when called from another pipeline. No additional parameters.
 
 ## Definition
 
 ```polyglot
-{N} =T.Call
+{N} -T.Call
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TCall"
    [%] .description << "Pipeline is invoked when called from another pipeline."
@@ -48,4 +48,4 @@ None.
 
 ## Related
 
-- [[pglib/pipelines/T/INDEX|=T.* Trigger Pipelines]]
+- [[pglib/pipelines/T/INDEX|-T.* Trigger Pipelines]]

@@ -18,25 +18,25 @@ severity: warning
 **WARNING:**
 ```polyglot
 [ ] compiling on Unix:
-[r] $AppDir#path
+[-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"             [ ] ⚠ PGW04001 — only .Unix assigned, not portable
 ```
 
 ```polyglot
 [ ] ✓ suppressed — developer acknowledges single-platform
 [ ] Ignore PGW04001
-[r] $AppDir#path
+[-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"             [ ] no warning — suppressed
 ```
 
 ```polyglot
 [ ] ✓ no warning — both platforms assigned
-[r] $AppDir#path
+[-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
 ```
 
 ```polyglot
-[ ] ✓ no warning — =Path"..." with cross-platform interpolation
-[r] $AppDir#path << =Path"{.}/MyApp"
+[ ] ✓ no warning — -Path"..." with cross-platform interpolation
+[-] $AppDir#path << -Path"{.}/MyApp"
 ```

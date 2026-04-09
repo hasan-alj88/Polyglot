@@ -14,10 +14,10 @@ Gathers key-value outputs from mini-pipelines back into a single `#Map`, accessi
 ## Syntax
 
 ```polyglot
-[r] *Into.Map
-   [*] <key << $ticker
-   [*] <value << $adjusted
-   [*] >Map >> $adjustedPrices
+[-] *Into.Map
+   (*) <key << $ticker
+   (*) <value << $adjusted
+   (*) >Map >> $adjustedPrices
 ```
 
 ## Inputs

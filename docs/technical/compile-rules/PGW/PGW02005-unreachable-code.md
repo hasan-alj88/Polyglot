@@ -18,87 +18,87 @@ severity: warning
 **VALID:**
 ```polyglot
 [ ] ✓ code after non-terminal conditional — reachable
-{=} =Process
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >output#string
+{-} -Process
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >output#string
    [?] $input =? "fast"
-      [r] =ProcessFast
-         [=] <data << $input
-         [=] >result >> $fast
+      [-] -ProcessFast
+         (-) <data << $input
+         (-) >result >> $fast
    [?] *?
-      [r] =ProcessSlow
-         [=] <data << $input
-         [=] >result >> $slow
+      [-] -ProcessSlow
+         (-) <data << $input
+         (-) >result >> $slow
    [ ] ✓ reachable — conditional didn't push >output Final
-   [r] =Log
-      [=] <msg << "processing complete"
-   [r] >output << $fast
+   [-] -Log
+      (-) <msg << "processing complete"
+   [-] >output << $fast
 ```
 
 ```polyglot
 [ ] ✓ multiple outputs — only one is Final, code still reachable
-{=} =MultiOut
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >main#string
-   [=] >log#string
-   [r] >main << $input                          [ ] >main is Final
+{-} -MultiOut
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >main#string
+   (-) >log#string
+   [-] >main << $input                          [ ] >main is Final
    [ ] ✓ reachable — >log is still open
-   [r] =Format
-      [=] <msg << "processed: {$input}"
-      [=] >result >> >log                      [ ] >log is now Final
+   [-] -Format
+      (-) <msg << "processed: {$input}"
+      (-) >result >> >log                      [ ] >log is now Final
 ```
 
 **WARNING:**
 ```polyglot
 [ ] ⚠ PGW02005 — statement after output is Final
-{=} =DeadAfterFinal
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >result#string
-   [r] >result << $input                        [ ] >result is now Final
-   [r] =Log                                    [ ] ⚠ PGW02005 — unreachable
-      [=] <msg << "this never runs"
+{-} -DeadAfterFinal
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >result#string
+   [-] >result << $input                        [ ] >result is now Final
+   [-] -Log                                    [ ] ⚠ PGW02005 — unreachable
+      (-) <msg << "this never runs"
 ```
 
 ```polyglot
 [ ] ⚠ PGW02005 — code after every branch terminates
-{=} =DeadAfterExhaustive
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <data#string
-   [=] >output#string
+{-} -DeadAfterExhaustive
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <data#string
+   (-) >output#string
    [?] $data =? "ok"
-      [r] >output << $data
+      [-] >output << $data
    [?] *?
-      [r] >output << "error"
+      [-] >output << "error"
    [ ] >output is Final in all paths
-   [r] =Log                                    [ ] ⚠ PGW02005 — unreachable
-      [=] <msg << "dead code"
+   [-] -Log                                    [ ] ⚠ PGW02005 — unreachable
+      (-) <msg << "dead code"
 ```
 
 ```polyglot
 [ ] ⚠ PGW02005 — all outputs Final across multiple pushes
-{=} =MultiOutDead
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >main#string
-   [=] >log#string
-   [r] >main << $input                          [ ] >main is Final
-   [r] >log << "done"                           [ ] >log is Final
+{-} -MultiOutDead
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >main#string
+   (-) >log#string
+   [-] >main << $input                          [ ] >main is Final
+   [-] >log << "done"                           [ ] >log is Final
    [ ] all output ports are now Final
-   [r] =Cleanup                                [ ] ⚠ PGW02005 — unreachable
-      [=] <data << $input
+   [-] -Cleanup                                [ ] ⚠ PGW02005 — unreachable
+      (-) <data << $input
 ```
 
 **Fix:** If post-finalization work is needed (logging, cleanup, resource release), move it to the `[/]` cleanup section. Cleanup executes after all output ports are finalized (or after the execution scope ends if the pipeline has no outputs).
@@ -106,17 +106,17 @@ severity: warning
 **VALID (fix):**
 ```polyglot
 [ ] ✓ post-finalization work in [/] cleanup
-{=} =CorrectCleanup
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >result#string
-   [r] >result << $input                       [ ] >result is Final
+{-} -CorrectCleanup
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >result#string
+   [-] >result << $input                       [ ] >result is Final
    [ ] ✓ no dead code — cleanup handles post-finalization work
    [/] cleanup
-      [r] =Log
-         [=] <msg << "processing complete"
+      [-] -Log
+         (-) <msg << "processing complete"
 ```
 
 **Diagnostic:** "Unreachable code after line N — all output ports are Final. Move post-finalization work to `[/]` cleanup"

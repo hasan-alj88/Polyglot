@@ -9,7 +9,7 @@ severity: error
 ### Rule 4.8 — Missing Path Platform Subfield
 `PGE04008`
 
-**Statement:** A `#path` variable that uses explicit subfield assignment (`.Unix`, `.Windows`) must include the subfield for the current compilation OS. If the current OS subfield is absent, the compiler raises PGE04008. This applies only to explicit subfield assignment — `=Path"..."` inline calls handle platform resolution differently (see [[pglib/pipelines/Path|=Path]]).
+**Statement:** A `#path` variable that uses explicit subfield assignment (`.Unix`, `.Windows`) must include the subfield for the current compilation OS. If the current OS subfield is absent, the compiler raises PGE04008. This applies only to explicit subfield assignment — `-Path"..."` inline calls handle platform resolution differently (see [[pglib/pipelines/Path|-Path]]).
 **Rationale:** A path that cannot resolve on the current OS is unusable. Catching this at compile time prevents runtime failures when the code attempts to use a path with no value for the host platform.
 **Detection:** The compiler checks each `#path` variable with explicit `.Unix` or `.Windows` subfield assignment. If the subfield for the current compilation target is missing, PGE04008 fires.
 
@@ -17,7 +17,7 @@ severity: error
 
 **VALID:**
 ```polyglot
-[r] $AppDir#path
+[-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
 
@@ -25,21 +25,21 @@ severity: error
 ```
 
 ```polyglot
-[r] $LogDir#path << =Path"{.}/logs"
+[-] $LogDir#path << -Path"{.}/logs"
 
-[ ] ✓ =Path"..." resolves separators per OS — no explicit subfields needed
+[ ] ✓ -Path"..." resolves separators per OS — no explicit subfields needed
 ```
 
 **INVALID:**
 ```polyglot
 [ ] compiling on Unix:
-[r] $AppDir#path
+[-] $AppDir#path
    [.] .Windows << "C:\MyApp"            [ ] ✗ PGE04008 — .Unix missing, current OS is Unix
 ```
 
 ```polyglot
 [ ] compiling on Windows:
-[r] $AppDir#path
+[-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"             [ ] ✗ PGE04008 — .Windows missing, current OS is Windows
 ```
 

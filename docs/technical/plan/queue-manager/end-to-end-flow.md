@@ -43,7 +43,7 @@ updated: 2026-04-03
 1. Resource Monitor: RAM drops below threshold
    → NATS: publish "polyglot.resource.ram" {available: 2800}
 
-2. Trigger Monitor evaluates =Q.Pause.Hard.RAM.LessThan → condition met for job:001
+2. Trigger Monitor evaluates -Q.Pause.Hard.RAM.LessThan → condition met for job:001
    → NATS: publish "command.pause.hard" {jobId: job:001}
 
 3. Queue Handler receives command.pause.hard
@@ -62,7 +62,7 @@ updated: 2026-04-03
 6. RAM recovers above threshold
    → NATS: publish "polyglot.resource.ram" {available: 5500}
 
-7. Trigger Monitor evaluates =Q.Resume.RAM.MoreThan → condition met for job:001
+7. Trigger Monitor evaluates -Q.Resume.RAM.MoreThan → condition met for job:001
    → NATS: publish "command.resume" {jobId: job:001}
 
 8. Queue Handler receives command.resume
@@ -80,7 +80,7 @@ updated: 2026-04-03
 ## Graceful Kill Flow
 
 ```polyglot
-1. Trigger Monitor evaluates =Q.Kill.Graceful condition → met for job:001
+1. Trigger Monitor evaluates -Q.Kill.Graceful condition → met for job:001
    → NATS: publish "command.kill.graceful" {jobId: job:001}
 
 2. Queue Handler receives command.kill.graceful (job status: executing)
@@ -104,10 +104,10 @@ updated: 2026-04-03
 
 ## Sub-Job Flow
 
-When a pipeline hits a `[p]`, `[r]`, or `[b]` marker, the Runner sends a `trigger.subjob` signal to the Trigger Monitor (not the Queue Handler). The Trigger Monitor creates job IDs, records parent→child relationships in NoSQL, and sends `command.enqueue` with `parentJobId` to the Queue Handler. Sub-jobs go through the normal dispatch flow.
+When a pipeline hits a `[=]`, `[-]`, or `[b]` marker, the Runner sends a `trigger.subjob` signal to the Trigger Monitor (not the Queue Handler). The Trigger Monitor creates job IDs, records parent→child relationships in NoSQL, and sends `command.enqueue` with `parentJobId` to the Queue Handler. Sub-jobs go through the normal dispatch flow.
 
 ```text
-1. Runner hits [p] marker in job:001
+1. Runner hits [=] marker in job:001
    → NATS: publish "trigger.subjob" {parentJobId: "job:001", pipeline, marker, params}
 
 2. Trigger Monitor creates sub-job
@@ -135,10 +135,10 @@ When a pipeline hits a `[p]`, `[r]`, or `[b]` marker, the Runner sends a `trigge
    → NATS: publish "command.dispatch.escalate" {jobId, queue}
    → QH moves job to next-to-dispatch position (strategy-dependent)
 
-3. Alternative: =Q.Dispatch.Wait.TimeOut.Kill.Graceful
+3. Alternative: -Q.Dispatch.Wait.TimeOut.Kill.Graceful
    → NATS: publish "command.kill.graceful" {jobId}
 
-4. Alternative: =Q.Dispatch.Wait.TimeOut.Reassign
+4. Alternative: -Q.Dispatch.Wait.TimeOut.Reassign
    → NATS: publish "command.reassign" {jobId, fromQueue, toQueue}
 ```
 

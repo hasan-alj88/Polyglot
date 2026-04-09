@@ -183,9 +183,9 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |
 +-- =   Pipelines (instances)                   → [[branches#Pipeline Branch]]
 |   |
-|   +-- :(name):N                               %=:{name}:N
+|   +-- :(name):N                               %-:{name}:N
 |       +-- .<                                   input ports  → [[io-ports]]
-|       |   +-- .(port)#type                     (from [=] IO declaration)
+|       |   +-- .(port)#type                     (from (-) IO declaration)
 |       +-- .>                                   output ports
 |       |   +-- .(port)#type
 |       +-- .jobs                                job instances (UID-keyed)
@@ -216,7 +216,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   +-- .<                                   input (collection)
 |   |   +-- .>                                   output (individual items)
 |   |
-|   +-- Examples: ForEach.Array, ForEach.Map, ForEach.Serial, ForEach.Dataframe, ForEach.Level (.~)
+|   +-- Examples: ForEach.Array, ForEach.Map, ForEach.Serial, ForEach.Dataframe, ForEach.Level (.=)
 |
 +-- *   Collectors (instances)
 |   |
@@ -334,7 +334,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 
 | Pattern | Example |
 |---------|---------|
-| `%type:ref:instance.field` | `%=:ProcessData:0.status` |
+| `%type:ref:instance.field` | `%-:ProcessData:0.status` |
 | `%definition.type:ref` | `%definition.#:Boolean` |
 | `%definition.##:schema` | `%definition.##:Leaf` |
 | `%definition.###:fieldtype` | `%definition.###:Value` |
@@ -342,7 +342,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 | `%!.Error:user:path.leaf` | `%!.Error:MyApp:Auth.Expired` |
 | `%@:registry:id::name` | `%@:Local:999::MyPkg` |
 | `%_:name.field` | `%_:DataCeiling.intent` |
-| Shorthand: `=Name%field` | resolves to `%=:Name:<current>.field` |
+| Shorthand: `-Name%field` | resolves to `%-:Name:<current>.field` |
 
 ## Related
 

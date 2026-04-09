@@ -12,9 +12,9 @@ Reduces mini-pipeline numeric outputs to their sum.
 ## Syntax
 
 ```polyglot
-[r] *Agg.Sum
-   [*] <number << $value
-   [*] >sum >> $total
+[-] *Agg.Sum
+   (*) <number << $value
+   (*) >sum >> $total
 ```
 
 ## Inputs

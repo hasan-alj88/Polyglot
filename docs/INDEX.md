@@ -174,8 +174,8 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | File | Audience | Type | Description |
 |------|----------|------|-------------|
 | INDEX.md | user | reference | Namespace registry for all pglib |
-| pipelines/*.md | user | reference | =File, =Path, =Sys, =T, =Q, =Math, =W, =# |
-| expanders/ForEach/*.md | user | reference | ~ForEach variants (Array, Map, Serial, Level, Dataframe) |
+| pipelines/*.md | user | reference | -File, -Path, -Sys, -T, -Q, -Math, -W, -# |
+| expanders/ForEach/*.md | user | reference | =ForEach variants (Array, Map, Serial, Level, Dataframe) |
 | collectors/*.md | user | reference | *Into variants, *Agg, *Sync |
 | types/*.md | user | reference | #String, scalars, boolean, collections, enums, structs |
 | errors/errors.md | user | reference | Error namespaces |

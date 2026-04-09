@@ -30,17 +30,17 @@ For a 3x4 2D array, the key tree is a Cartesian product:
 
 ```polyglot
 [ ] 1D array access
-[r] $first << $myArray<0
+[-] $first << $myArray<0
 
 [ ] 2D matrix access — branch 1, leaf 2
-[r] $cell << $matrix<1<2
+[-] $cell << $matrix<1<2
 
 [ ] 3D cube access
-[r] $voxel << $cube<2<3<0
+[-] $voxel << $cube<2<3<0
 ```
 
 ## See Also
 
 - [[syntax/types/arrays|Array Type Annotations]] — element-typed and multidimensional array syntax
-- [[concepts/collections/expand|Expand Operators]] — `~ForEach.Array` iteration
+- [[concepts/collections/expand|Expand Operators]] — `=ForEach.Array` iteration
 - [[concepts/collections/collect|Collect Operators]] — `*Into.Array` collection

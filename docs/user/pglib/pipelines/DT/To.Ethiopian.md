@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.To.Ethiopian"
-metadata_instance: "%=:DT.To.Ethiopian:N"
+metadata_definition: "%definition.-:DT.To.Ethiopian"
+metadata_instance: "%-:DT.To.Ethiopian:N"
 ---
 
-# =DT.To.Ethiopian
+# -DT.To.Ethiopian
 
 Projects a `#dt` value into an Ethiopian date structure. Projections are not cached -- store results in a `$variable` if you need the value again.
 
 ## Definition
 
 ```polyglot
-{N} =DT.To.Ethiopian
+{N} -DT.To.Ethiopian
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToEthiopian"
    [%] .description << "DateTime to Ethiopian date"
-   [=] <source#dt
-   [=] >ethiopian#EthiopianDate
+   (-) <source#dt
+   (-) >ethiopian#EthiopianDate
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.To.Ethiopian` | Compile-time pipeline template |
-| Instance | `%=:DT.To.Ethiopian:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.To.Ethiopian` | Compile-time pipeline template |
+| Instance | `%-:DT.To.Ethiopian:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

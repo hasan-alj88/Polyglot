@@ -16,8 +16,8 @@ updated: 2026-03-30
 | Category | Elements | Where tested |
 |----------|----------|-------------|
 | Registry | `[@]` | Package imports |
-| Data Flow | `[=]` `[~]` `[*]` | IO lines, expand IO, collect invocation |
-| Execution | `[r]` `[p]` `[b]` `[s]` | Run, parallel, background, serial load |
+| Data Flow | `(-)` `(=)` `(*)` | IO lines, expand IO, collect invocation |
+| Execution | `[-]` `[=]` `[b]` `[s]` | Run, parallel, background, serial load |
 | Control Flow | `[?]` `[!]` `[T]` `[Q]` `[W]` | Conditionals, errors, trigger, queue, wrapper |
 | Data Access | `[.]` `[:]` | Data definitions |
 | Logical | `[&]` `[\|]` `[-]` `[^]` | Conditional compound logic |
@@ -31,6 +31,6 @@ updated: 2026-03-30
 **What it tests:** Fire-and-forget execution. See [[blocks#Execution]].
 
 ```polyglot
-[b] =Logging.SendMetric
-   [=] <event << "user_created"
+[b] -Logging.SendMetric
+   (-) <event << "user_created"
 ```

@@ -16,9 +16,9 @@ updated: 2026-03-30
 
 ```polyglot
 [.] .name#string <~ "default"
-[=] >count#int ~> 0
-[r] $x#int << 42
-[=] >item >> $result
+(-) >count#int ~> 0
+[-] $x#int << 42
+(-) >item >> $result
 ```
 
 ### EC-6.2: All comparison operators
@@ -60,8 +60,8 @@ updated: 2026-03-30
 **What it tests:** `+`, `-`, `*`, `/` used in assignments.
 
 ```polyglot
-[r] $total#int << $price * $quantity
-[r] $name#string << "{$first} {$last}"
-[r] $avg#float << $sum / $count
-[r] $diff#int << $a - $b
+[-] $total#int << $price * $quantity
+[-] $name#string << "{$first} {$last}"
+[-] $avg#float << $sum / $count
+[-] $diff#int << $a - $b
 ```

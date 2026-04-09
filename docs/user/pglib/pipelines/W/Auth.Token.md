@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:Auth.Token"
 metadata_instance: "%W:Auth.Token:N"
 ---
 
-# =W.Auth.Token
+# -W.Auth.Token
 
 Acquires OAuth token on setup, revokes on cleanup.
 
 ## Definition
 
 ```polyglot
-{N} =W.Auth.Token
+{N} -W.Auth.Token
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WAuthToken"
    [%] .description << "Acquires OAuth token on setup, revokes on cleanup."
@@ -53,4 +53,4 @@ Crypto.Key
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]

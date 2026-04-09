@@ -12,9 +12,9 @@ Reduces mini-pipeline string outputs by joining them into a single string.
 ## Syntax
 
 ```polyglot
-[r] *Agg.Concatenate
-   [*] <string << $fragment
-   [*] >result >> $combined
+[-] *Agg.Concatenate
+   (*) <string << $fragment
+   (*) >result >> $combined
 ```
 
 ## Inputs

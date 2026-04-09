@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:Queue.Consumer"
 metadata_instance: "%W:Queue.Consumer:N"
 ---
 
-# =W.Queue.Consumer
+# -W.Queue.Consumer
 
 Connects to message queue on setup, disconnects on cleanup.
 
 ## Definition
 
 ```polyglot
-{N} =W.Queue.Consumer
+{N} -W.Queue.Consumer
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WQueueConsumer"
    [%] .description << "Connects to message queue on setup, disconnects on cleanup."
@@ -51,4 +51,4 @@ IPC.Receive
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]

@@ -10,42 +10,42 @@ split_from: PGE01001
 ### Rule 1.7 — Missing Pipeline Setup/Cleanup
 `PGE01007`
 
-**Statement:** Every `{=}` pipeline must have setup and cleanup — either via a `[W]` wrapper (which provides both) or via explicit `[\]` and `[/]` sections. A pipeline with neither is a compile error.
-**Rationale:** Setup/cleanup ensures resources are acquired before the execution body runs and released after — preventing resource leaks and undefined state. Even pipelines that need no resources must declare `[W] =W.Polyglot` (which calls `=DoNothing` for both).
-**Detection:** The compiler checks that every `{=}` block contains either `[W]` or both `[\]` and `[/]`.
+**Statement:** Every `{-}` pipeline must have setup and cleanup — either via a `[W]` wrapper (which provides both) or via explicit `[\]` and `[/]` sections. A pipeline with neither is a compile error.
+**Rationale:** Setup/cleanup ensures resources are acquired before the execution body runs and released after — preventing resource leaks and undefined state. Even pipelines that need no resources must declare `[W] -W.Polyglot` (which calls `-DoNothing` for both).
+**Detection:** The compiler checks that every `{-}` block contains either `[W]` or both `[\]` and `[/]`.
 
 **VALID:**
 ```polyglot
 [ ] ✓ Form 1 — [W] provides setup/cleanup
-{=} =Process
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =DoWork
+{-} -Process
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -DoWork
 ```
 
 ```polyglot
 [ ] ✓ Form 2 — explicit [\]/[/] inline
-{=} =Process
-   [T] =T.Call
-   [Q] =Q.Default
+{-} -Process
+   [T] -T.Call
+   [Q] -Q.Default
    [\]
-      [r] =Setup.Init
-   [r] =DoWork
+      [-] -Setup.Init
+   [-] -DoWork
    [/]
-      [r] =Setup.Teardown
+      [-] -Setup.Teardown
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE01007 — no setup/cleanup (no [W] and no [\]/[/])
-{=} =Process
-   [T] =T.Call
-   [Q] =Q.Default
-   [r] =DoWork
+{-} -Process
+   [T] -T.Call
+   [Q] -Q.Default
+   [-] -DoWork
 ```
 
-**Diagnostic:** "Pipeline `=Process` has no setup/cleanup — add `[W]` or explicit `[\]/[/]`"
+**Diagnostic:** "Pipeline `-Process` has no setup/cleanup — add `[W]` or explicit `[\]/[/]`"
 
 ### See Also
 

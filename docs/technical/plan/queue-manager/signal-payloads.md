@@ -20,7 +20,7 @@ command.enqueue
     params:         serial    — pipeline input parameters
     priority:       int?      — priority score (Priority queues only)
     parentJobId:    string?   — parent job ID (for sub-jobs)
-    marker:         string?   — originating marker: [r], [p], [b], [?]
+    marker:         string?   — originating marker: [-], [=], [b], [?]
     pipelineConstraints: {    — pipeline-level constraints (cached on first enqueue)
         maxInstancesAllQueues:    int?
         maxInstancesWithinHost:   int?
@@ -136,7 +136,7 @@ collector.{jobId}.collected
 {
     jobId:          string    — parent job ID
     results:        serial[]  — collected sub-job results
-    marker:         string    — originating marker: [p], [b]
+    marker:         string    — originating marker: [=], [b]
     collector:      string    — *All, *First, *Nth
 }
 ```
@@ -150,8 +150,8 @@ trigger.subjob
 {
     parentJobId:    string    — parent job requesting sub-jobs
     pipeline:       string    — pipeline name for sub-jobs
-    marker:         string    — [r], [p], [b], [?]
-    branches:       int       — number of parallel branches (for [p])
+    marker:         string    — [-], [=], [b], [?]
+    branches:       int       — number of parallel branches (for [=])
     params:         serial[]  — parameters for each branch
 }
 ```

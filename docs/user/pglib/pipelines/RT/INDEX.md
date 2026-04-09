@@ -5,25 +5,25 @@ updated: 2026-04-07
 status: complete
 ---
 
-# =RT — Runtime Execution
+# -RT — Runtime Execution
 
 <!-- @pipelines -->
-Runtime execution pipelines run foreign code (Python, Rust, etc.) within Polyglot pipelines. Each `=RT.<Lang>.*` pipeline takes a language-specific environment handle from `=W.RT` and executes code in that runtime.
+Runtime execution pipelines run foreign code (Python, Rust, etc.) within Polyglot pipelines. Each `-RT.<Lang>.*` pipeline takes a language-specific environment handle from `-W.RT` and executes code in that runtime.
 
 No `[@]` import needed.
 
 **PRIMITIVE** — pglib runtime pipelines are direct language runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
 
-`<Lang>` is a placeholder for the target language (Python, Rust, etc.). The actual pipeline name uses the concrete language: `=RT.Python.Function.Inline`, `=RT.Rust.CLI`, etc.
+`<Lang>` is a placeholder for the target language (Python, Rust, etc.). The actual pipeline name uses the concrete language: `-RT.Python.Function.Inline`, `-RT.Rust.CLI`, etc.
 
 ## Permissions
 
 <!-- @permissions -->
-All `=RT.*` pipelines require a `{_}` permission object granting System.Process. See [[permissions]] for the permission system.
+All `-RT.*` pipelines require a `{_}` permission object granting System.Process. See [[permissions]] for the permission system.
 
 | Pipeline | Required Capability | Category |
 |----------|-------------------|----------|
-| `=RT.<Lang>.*` | System.Process | System |
+| `-RT.<Lang>.*` | System.Process | System |
 
 ## Categories
 
@@ -31,28 +31,28 @@ All `=RT.*` pipelines require a `{_}` permission object granting System.Process.
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/RT/Function.Inline\|=RT.\<Lang\>.Function.Inline]] | Call a named function in inline foreign code |
-| [[pglib/pipelines/RT/Function.File\|=RT.\<Lang\>.Function.File]] | Call a named function in a source file |
+| [[pglib/pipelines/RT/Function.Inline\|-RT.\<Lang\>.Function.Inline]] | Call a named function in inline foreign code |
+| [[pglib/pipelines/RT/Function.File\|-RT.\<Lang\>.Function.File]] | Call a named function in a source file |
 
 ### Script Execution
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/RT/Script.Inline\|=RT.\<Lang\>.Script.Inline]] | Run inline code with variable bindings |
-| [[pglib/pipelines/RT/Script.File\|=RT.\<Lang\>.Script.File]] | Run source file with variable bindings |
+| [[pglib/pipelines/RT/Script.Inline\|-RT.\<Lang\>.Script.Inline]] | Run inline code with variable bindings |
+| [[pglib/pipelines/RT/Script.File\|-RT.\<Lang\>.Script.File]] | Run source file with variable bindings |
 
 ### Binary Invocation
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/RT/CLI\|=RT.\<Lang\>.CLI]] | Invoke compiled binary |
+| [[pglib/pipelines/RT/CLI\|-RT.\<Lang\>.CLI]] | Invoke compiled binary |
 
 ### Native Binding
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/RT/Bind.Inline\|=RT.\<Lang\>.Bind.Inline]] | Native code imports polyglot lib (inline) |
-| [[pglib/pipelines/RT/Bind.File\|=RT.\<Lang\>.Bind.File]] | Native code imports polyglot lib (file) |
+| [[pglib/pipelines/RT/Bind.Inline\|-RT.\<Lang\>.Bind.Inline]] | Native code imports polyglot lib (inline) |
+| [[pglib/pipelines/RT/Bind.File\|-RT.\<Lang\>.Bind.File]] | Native code imports polyglot lib (file) |
 
 ## `.Script` vs `.Bind` — Binding Origin
 
@@ -88,7 +88,7 @@ A pipeline may declare multiple `[W]` wrappers (e.g., one Python + one Rust). Se
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W]] — `=W.RT` wrapper that manages runtime environments
+- [[pglib/pipelines/W/INDEX|-W]] — `-W.RT` wrapper that manages runtime environments
 - [[pglib/types/rt|Runtime types]] — `#Code`, `#PyEnv`, `#RsEnv`
 - [[pglib/errors/errors|errors]] — `!RT` error namespace
 - [[syntax/blocks|blocks]] — `[C]` inline foreign code element

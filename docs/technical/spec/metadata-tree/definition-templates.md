@@ -13,7 +13,7 @@ updated: 2026-04-04
 | Definition path | Ensures |
 |-----------------|---------|
 | `%definition.#:UserRecord` | All `%#:UserRecord:N` instances have `.name#string`, `.age#int` |
-| `%definition.=:ProcessData` | All `%=:ProcessData:N` instances have the same IO ports and `live` fields |
+| `%definition.=:ProcessData` | All `%-:ProcessData:N` instances have the same IO ports and `live` fields |
 | `%definition.T:Folder.NewFiles` | All `%T:Folder.NewFiles:N` instances have the same IO ports and `live` fields |
 | `%definition.W:DB.Connection` | All `%W:DB.Connection:N` instances have the same `[{]`/`[}]` IO and scope structure |
 | `%definition.Q:GPUQueue` | All `%Q:GPUQueue:N` instances have the same fields and control defaults |

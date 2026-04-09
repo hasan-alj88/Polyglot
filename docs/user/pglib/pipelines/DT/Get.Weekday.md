@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.Get.Weekday"
-metadata_instance: "%=:DT.Get.Weekday:N"
+metadata_definition: "%definition.-:DT.Get.Weekday"
+metadata_instance: "%-:DT.Get.Weekday:N"
 ---
 
-# =DT.Get.Weekday
+# -DT.Get.Weekday
 
 Returns a `#Weekday` enum value from a `#dt`.
 
 ## Definition
 
 ```polyglot
-{N} =DT.Get.Weekday
+{N} -DT.Get.Weekday
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtGetWeekday"
    [%] .description << "Extract weekday from DateTime"
-   [=] <source#dt
-   [=] >weekday#Weekday
+   (-) <source#dt
+   (-) >weekday#Weekday
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.Get.Weekday` | Compile-time pipeline template |
-| Instance | `%=:DT.Get.Weekday:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.Get.Weekday` | Compile-time pipeline template |
+| Instance | `%-:DT.Get.Weekday:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

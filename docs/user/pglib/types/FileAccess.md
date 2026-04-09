@@ -44,5 +44,5 @@ Runtime `##Enum` type available in every `.pg` file. Uses `[#] << ##Enum` (enum 
 ## Related
 
 - [[enums]] — other pglib enum types
-- [[pglib/pipelines/File/INDEX|=File.*]] — file operations
+- [[pglib/pipelines/File/INDEX|-File.*]] — file operations
 - [[syntax/types/INDEX|types]] — full type system specification

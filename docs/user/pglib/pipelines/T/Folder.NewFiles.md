@@ -7,14 +7,14 @@ metadata_definition: "%definition.T:Folder.NewFiles"
 metadata_instance: "%T:Folder.NewFiles:N"
 ---
 
-# =T.Folder.NewFiles
+# -T.Folder.NewFiles
 
-Fires when new files appear in the specified folder. Folder path provided via inline call: `=T.Folder.NewFiles"/inbox/"`.
+Fires when new files appear in the specified folder. Folder path provided via inline call: `-T.Folder.NewFiles"/inbox/"`.
 
 ## Definition
 
 ```polyglot
-{N} =T.Folder.NewFiles
+{N} -T.Folder.NewFiles
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TFolderNewFiles"
    [%] .description << "Fires when new files appear in the specified folder."
@@ -26,7 +26,7 @@ Fires when new files appear in the specified folder. Folder path provided via in
 
 | Name | Type | Description |
 |------|------|-------------|
-| `Folder` | `#path` | Path to the folder to watch. Provided inline: `=T.Folder.NewFiles"/inbox/"`. |
+| `Folder` | `#path` | Path to the folder to watch. Provided inline: `-T.Folder.NewFiles"/inbox/"`. |
 
 ## Outputs
 
@@ -51,4 +51,4 @@ File.Read
 
 ## Related
 
-- [[pglib/pipelines/T/INDEX|=T.* Trigger Pipelines]]
+- [[pglib/pipelines/T/INDEX|-T.* Trigger Pipelines]]

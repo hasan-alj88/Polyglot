@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.To.Chinese"
-metadata_instance: "%=:DT.To.Chinese:N"
+metadata_definition: "%definition.-:DT.To.Chinese"
+metadata_instance: "%-:DT.To.Chinese:N"
 ---
 
-# =DT.To.Chinese
+# -DT.To.Chinese
 
 Projects a `#dt` value into a Chinese date structure. Projections are not cached -- store results in a `$variable` if you need the value again.
 
 ## Definition
 
 ```polyglot
-{N} =DT.To.Chinese
+{N} -DT.To.Chinese
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToChinese"
    [%] .description << "DateTime to Chinese date"
-   [=] <source#dt
-   [=] >chinese#ChineseDate
+   (-) <source#dt
+   (-) >chinese#ChineseDate
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.To.Chinese` | Compile-time pipeline template |
-| Instance | `%=:DT.To.Chinese:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.To.Chinese` | Compile-time pipeline template |
+| Instance | `%-:DT.To.Chinese:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

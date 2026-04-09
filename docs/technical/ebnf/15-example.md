@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-03-30
+updated: 2026-04-09
 ---
 
 <!-- @ebnf/INDEX -->
@@ -29,23 +29,23 @@ file
   ├─ error_def              {!} !Processing
   │    └─ leaf                 [.] .InvalidRecord#Error
   │
-  └─ pipeline_def           {=} =ProcessItems
+  └─ pipeline_def           {-} -ProcessItems
        ├─ metadata              [%] .version << "1.0.0"
-       ├─ trigger               [T] =T.Call
-       ├─ io                    [=] <items#array:Record
-       │                        [=] >total#int ~> 0
-       ├─ error_decl            [=] !Processing.InvalidRecord
-       ├─ queue                 [Q] =Q.Default
-       ├─ wrapper               [W] =W.Polyglot
+       ├─ trigger               [T] -T.Call
+       ├─ io                    (-) <items#array:Record
+       │                        (-) >total#int ~> 0
+       ├─ error_decl            (-) !Processing.InvalidRecord
+       ├─ queue                 [Q] -Q.Default
+       ├─ wrapper               [W] -W.Polyglot
        └─ execution
-            ├─ expand            [p] ~ForEach.Array
-            │   ├─ io            [~] <Array << $items
-            │   └─ io            [~] >item >> $rec
-            │      └─ collect    [r] *Agg.Sum
-            │          ├─ io     [*] <number << $rec.count
-            │          └─ io     [*] >sum >> >total
-            └─ run               [r] @utils=Report.Generate
-                ├─ io            [=] <total << $total
+            ├─ expand            [=] =ForEach.Array
+            │   ├─ io            (=) <Array << $items
+            │   └─ io            (=) >item >> $rec
+            │      └─ collect    [-] *Agg.Sum
+            │          ├─ io     (*) <number << $rec.count
+            │          └─ io     (*) >sum >> >total
+            └─ run               [-] @utils-Report.Generate
+                ├─ io            (-) <total << $total
                 └─ error         [!] !Report.Failed
-                                    [r] >total << -1
+                                    [-] >total << -1
 ```

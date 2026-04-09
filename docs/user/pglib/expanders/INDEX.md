@@ -5,17 +5,17 @@ updated: 2026-04-07
 status: stable
 ---
 
-# Expander Operators (~)
+# Expander Operators (=)
 
 Expanders iterate over collection elements, producing a mini-pipeline per item. Each mini-pipeline runs independently and feeds results into a collector.
 
-All expanders use the `~` prefix. Invocation uses `[p]` (parallel) or `[r]` (sequential) execution markers. Expander IO lines use `[~]`.
+All expanders use the `=` prefix. Invocation uses `[=]` (parallel) or `[-]` (sequential) execution markers. Expander IO lines use `(=)`.
 
 No `[@]` import needed.
 
 ## ForEach
 
-- [[pglib/expanders/ForEach/INDEX|~ForEach.*]] -- iterate Array, Map, Serial, Level, or Dataframe
+- [[pglib/expanders/ForEach/INDEX|=ForEach.*]] -- iterate Array, Map, Serial, Level, or Dataframe
 
 ## Related
 

@@ -12,9 +12,9 @@ Reduces mini-pipeline numeric outputs to the minimum value.
 ## Syntax
 
 ```polyglot
-[r] *Agg.Min
-   [*] <number << $value
-   [*] >min >> $lowest
+[-] *Agg.Min
+   (*) <number << $value
+   (*) >min >> $lowest
 ```
 
 ## Inputs

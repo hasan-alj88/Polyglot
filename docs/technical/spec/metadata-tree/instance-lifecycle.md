@@ -11,7 +11,7 @@ updated: 2026-04-03
 ## Creation
 
 An instance is created when:
-- A pipeline is triggered (`%=:Name:N` where N is the next sequential number)
+- A pipeline is triggered (`%-:Name:N` where N is the next sequential number)
 - A wrapper is invoked via `[W]` (`%W:Name:N`)
 - A queue dispatches a pipeline (`%Q:Name:N`)
 - A variable is declared (`%$:name:N`)

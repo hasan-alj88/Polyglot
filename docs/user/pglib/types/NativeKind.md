@@ -14,7 +14,7 @@ metadata_instance: "%#:NativeKind:N"
 
 `#NativeKind` classifies which subsystem role a native `{N}` definition fulfills. Every `{N}` block must declare `[%] .Kind << #NativeKind.<variant>` — omitting it is a compile error (PGE01028c).
 
-See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] for when `{N}` blocks are used and how they differ from derived `{=}` pipelines.
+See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] for when `{N}` blocks are used and how they differ from derived `{-}` pipelines.
 
 ---
 
@@ -35,11 +35,11 @@ See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] f
 
 | Variant | Role | Example |
 |---------|------|---------|
-| `.Trigger` | Event source — fires pipeline execution | `=T.Call`, `=T.Daily`, `=T.Webhook` |
-| `.Queue` | Queue strategy — controls dispatch ordering | `=Q.Default`, `=Q.Pause.Hard` |
-| `.Wrapper` | Resource lifecycle — setup/teardown around body | `=W.Polyglot`, `=W.RT` |
-| `.Execution` | Data operation — reads, writes, transforms | `=File.Text.Read`, `=DB.Query`, `=Math.Add` |
-| `.Intrinsic` | Compiler built-in — no backing host function | `=DoNothing`, `=#.JSON.Parse` |
+| `.Trigger` | Event source — fires pipeline execution | `-T.Call`, `-T.Daily`, `-T.Webhook` |
+| `.Queue` | Queue strategy — controls dispatch ordering | `-Q.Default`, `-Q.Pause.Hard` |
+| `.Wrapper` | Resource lifecycle — setup/teardown around body | `-W.Polyglot`, `-W.RT` |
+| `.Execution` | Data operation — reads, writes, transforms | `-File.Text.Read`, `=DB.Query`, `-Math.Add` |
+| `.Intrinsic` | Compiler built-in — no backing host function | `-DoNothing`, `-#.JSON.Parse` |
 
 ---
 
@@ -48,17 +48,17 @@ See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] f
 Native definitions declare `.Kind` in their `[%]` metadata along with a `.<Language>` field naming the host function:
 
 ```polyglot
-{N} =File.Text.Read
+{N} -File.Text.Read
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextRead"
    [%] .description << "Read text file contents"
-   [=] <path#path
-   [=] >content#string
-   [=] !File.NotFound
-   [=] !File.PermissionDenied
+   (-) <path#path
+   (-) >content#string
+   (-) !File.NotFound
+   (-) !File.PermissionDenied
 ```
 
-Only pglib `{N}` definitions use `#NativeKind`. User-defined pipelines are always **derived** `{=}` — they have full Polyglot execution bodies and no `%Native.*` metadata.
+Only pglib `{N}` definitions use `#NativeKind`. User-defined pipelines are always **derived** `{-}` — they have full Polyglot execution bodies and no `%Native.*` metadata.
 
 ---
 

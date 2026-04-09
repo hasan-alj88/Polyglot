@@ -7,15 +7,15 @@ status: stable
 
 # *First
 
-Sugar for `*Nth` with n=1. Takes the first arriving value; all other inputs are cancelled. All `[*] <<` inputs must be the same type.
+Sugar for `*Nth` with n=1. Takes the first arriving value; all other inputs are cancelled. All `(*) <<` inputs must be the same type.
 
 ## Syntax
 
 ```polyglot
-[*] *First
-   [*] << $candidateA
-   [*] << $candidateB
-   [*] >> $winner
+(*) *First
+   (*) << $candidateA
+   (*) << $candidateB
+   (*) >> $winner
 ```
 
 ## Inputs

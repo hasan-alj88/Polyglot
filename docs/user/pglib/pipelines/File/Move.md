@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.Move"
-metadata_instance: "%=:File.Move:N"
+metadata_definition: "%definition.-:File.Move"
+metadata_instance: "%-:File.Move:N"
 ---
 
-# =File.Move
+# -File.Move
 
 Move or rename a file.
 
 ## Definition
 
 ```polyglot
-{N} =File.Move
+{N} -File.Move
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileMove"
    [%] .description << "Move/rename file"
-   [=] <source#path
-   [=] <destination#path
+   (-) <source#path
+   (-) <destination#path
 ```
 
 ## Inputs
@@ -48,11 +48,11 @@ Requires `File.Read` + `File.Write` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.Move` | Compile-time pipeline template |
-| Instance | `%=:File.Move:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.Move` | Compile-time pipeline template |
+| Instance | `%-:File.Move:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
-- [[pglib/pipelines/File/Copy|=File.Copy]]
-- [[pglib/pipelines/File/Delete|=File.Delete]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[pglib/pipelines/File/Copy|-File.Copy]]
+- [[pglib/pipelines/File/Delete|-File.Delete]]

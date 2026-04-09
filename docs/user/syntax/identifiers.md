@@ -15,17 +15,17 @@ ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address f
 |--------|------|---------|
 | `@` | Packages | `@Local:999::MyPackage:Sub:v1.0.0` |
 | `#` | Struct definitions | `#UserRecord`, `#Boolean.True` |
-| `=` | Pipelines | `=ProcessData`, `=Pipeline.Name` |
+| `-` | Pipelines | `-ProcessData`, `-Pipeline.Name` |
 | `$` | Variables | `$name`, `$result:status`, `$*` (discard) |
 | `!` | Errors | `!No.Input`, `!Timeout:Connection` |
 | `_` | Permission object | `_DataCeiling`, `_ReportReader` |
 | `__` | Permission descriptor | `__Permission`, `__PermissionTarget` |
 | `___` | Permission constraint | `___Unix`, `___Sandboxed`, `___ReadOnly` |
-| `%` | Metadata accessor | `=Pipeline%status`, `$var%state` |
+| `%` | Metadata accessor | `-Pipeline%status`, `$var%state` |
 
 **Permission identifiers (`_`/`__`/`___`)** — use a three-tier prefix system mirroring `#`/`##`/`###`: `_` = permission object (named policy, e.g., `_DataCeiling`), `__` = permission descriptor (schema, e.g., `__Permission`), `___` = constraint descriptor (e.g., `___Unix`). `{_}` blocks define permission objects; `[_]` block elements reference them by name. No `[_]` references = pure computation, zero IO. See [[permissions]] for the full permission system.
 
-**pglib pipeline namespaces** — pglib pipelines use dotted names after the `=` prefix. The first segment indicates the subsystem: `=W.*` (wrappers), `=Q.*` (queues), `=T.*` (triggers), `=#.*` (schema validation/extraction), `=RT.*` (runtime execution), `=File.*` (file operations), `=Math.*` (arithmetic), `=DT.*` (datetime). The `=#.*` namespace uses `#` as a name segment referring to schema operations — `=#.Column` is a pipeline named `#.Column`, not a compound `=` + `#` prefix. See [[pglib/pipelines/Schema/INDEX|=# Schema Pipelines]].
+**pglib pipeline namespaces** — pglib pipelines use dotted names after the `-` prefix. The first segment indicates the subsystem: `-W.*` (wrappers), `-Q.*` (queues), `-T.*` (triggers), `-#.*` (schema validation/extraction), `-RT.*` (runtime execution), `-File.*` (file operations), `-Math.*` (arithmetic), `-DT.*` (datetime). The `-#.*` namespace uses `#` as a name segment referring to schema operations — `-#.Column` is a pipeline named `#.Column`, not a compound `-` + `#` prefix. See [[pglib/pipelines/Schema/INDEX|-# Schema Pipelines]].
 
 ## Serialized Identifiers
 
@@ -35,7 +35,7 @@ ALL identifiers are **serialized data**. Two field separators distinguish schema
 |-----------|--------|---------|---------|
 | `.` | Fixed | Predefined keys (schema-defined) | `#Boolean.True` — only `{True, False}` |
 | `:` | Flexible | User-defined keys (open schema) | `$user:name` — any field name |
-| `%` | Metadata | Read-only runtime metadata | `=Pipeline%status` — live pipeline status |
+| `%` | Metadata | Read-only runtime metadata | `-Pipeline%status` — live pipeline status |
 
 **Fixed fields (`.`)** — keys predefined by either:
 - **Polyglot standard** — built-in types, errors, enums (`#Boolean.True`, `pg.string`, `!No.Input`)
@@ -47,7 +47,7 @@ ALL identifiers are **serialized data**. Two field separators distinguish schema
 - `$result:data:items` — arbitrary depth
 
 **Metadata fields (`%`)** — Polyglot-managed, read-only:
-- `=ProcessInvoice%status` — pipeline instance status
+- `-ProcessInvoice%status` — pipeline instance status
 - `$myVar%state` — variable lifecycle state
 - `#Record%lastModified` — data type metadata
 
@@ -58,9 +58,9 @@ The `%` accessor reads `live`-typed metadata that the runtime populates. Users c
 
 **Discard variable (`$*`)** — a reserved identifier that immediately releases any value pushed into it. Use `$*` when a pipeline produces output you intentionally do not need. `$*` satisfies PGE03002 (parallel output must be collected) without naming the variable. For debugging or later use, prefer `*Ignore` with a named variable instead — see [[concepts/collections/collect#*Ignore — Explicit Discard]].
 
-The prefix (`$`, `@`, `!`, `#`, `=`, `_`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[syntax/types/structs#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[concepts/collections/INDEX#Collection Types]].
+The prefix (`$`, `@`, `!`, `#`, `-`, `_`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[syntax/types/structs#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[concepts/collections/INDEX#Collection Types]].
 
-These serialized paths — `#Boolean.True`, `$user:name`, `=Pipeline%status` — are all branches on one unified tree. Every Polyglot object lives in the `%` metadata tree, organized by its prefix. After learning the core concepts, see [[data-is-trees]] for how everything connects.
+These serialized paths — `#Boolean.True`, `$user:name`, `-Pipeline%status` — are all branches on one unified tree. Every Polyglot object lives in the `%` metadata tree, organized by its prefix. After learning the core concepts, see [[data-is-trees]] for how everything connects.
 
 ## Serialization Rules
 
@@ -98,9 +98,9 @@ These serialized paths — `#Boolean.True`, `$user:name`, `=Pipeline%status` —
 
 ```polyglot
 [ ] VALID:   assign to leaf
-[r] $user:name << "Alice"
+[-] $user:name << "Alice"
 
 [ ] INVALID: assign to branch that has children
-[r] $user << "Alice"
-   [r] $user:name << "Alice"
+[-] $user << "Alice"
+   [-] $user:name << "Alice"
 ```
