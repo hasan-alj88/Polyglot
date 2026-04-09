@@ -18,27 +18,27 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ interpolated variable is in scope
-[=] >name#string
-[r] >name << "Alice"
-[r] >output << "Hello, {$name}!"     [ ] ✓ $name is declared and in scope
+(-) >name#string
+[-] >name << "Alice"
+[-] >output << "Hello, {$name}!"     [ ] ✓ $name is declared and in scope
 ```
 
 ```polyglot
 [ ] ✓ interpolating non-string type — valid (all data is serialized strings)
-[=] >count#int
-[r] >count << 42
-[r] >output << "Total: {$count}"     [ ] ✓ $count is int but interpolation is valid
+(-) >count#int
+[-] >count << 42
+[-] >output << "Total: {$count}"     [ ] ✓ $count is int but interpolation is valid
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE04005 — undefined variable in interpolation
-[r] >output << "Hello, {$userName}!" [ ] ✗ PGE04005 — $userName not declared
+[-] >output << "Hello, {$userName}!" [ ] ✗ PGE04005 — $userName not declared
 ```
 
 ```polyglot
 [ ] ✗ PGE04005 — nested interpolation not supported
-[r] >output << "Value: {$items{$index}}" [ ] ✗ PGE04005 — nested interpolation
+[-] >output << "Value: {$items{$index}}" [ ] ✗ PGE04005 — nested interpolation
 ```
 
 **Open point:** None.

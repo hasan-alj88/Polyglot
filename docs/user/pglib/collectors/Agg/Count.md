@@ -12,9 +12,9 @@ Reduces mini-pipeline outputs to a count of items received.
 ## Syntax
 
 ```polyglot
-[r] *Agg.Count
-   [*] <item << $value
-   [*] >count >> $total
+[-] *Agg.Count
+   (*) <item << $value
+   (*) >count >> $total
 ```
 
 ## Inputs

@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.Add.Period"
-metadata_instance: "%=:DT.Add.Period:N"
+metadata_definition: "%definition.-:DT.Add.Period"
+metadata_instance: "%-:DT.Add.Period:N"
 ---
 
-# =DT.Add.Period
+# -DT.Add.Period
 
 Adds a `#Period` (calendar-aware span such as "1 month") to a `#dt`.
 
 ## Definition
 
 ```polyglot
-{N} =DT.Add.Period
+{N} -DT.Add.Period
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtAddPeriod"
    [%] .description << "Add calendar period to DateTime"
-   [=] <source#dt
-   [=] <period#Period
-   [=] >result#dt
+   (-) <source#dt
+   (-) <period#Period
+   (-) >result#dt
 ```
 
 ## Inputs
@@ -48,10 +48,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.Add.Period` | Compile-time pipeline template |
-| Instance | `%=:DT.Add.Period:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.Add.Period` | Compile-time pipeline template |
+| Instance | `%-:DT.Add.Period:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:HTTP.Session"
 metadata_instance: "%W:HTTP.Session:N"
 ---
 
-# =W.HTTP.Session
+# -W.HTTP.Session
 
 Creates HTTP client on setup, closes on cleanup.
 
 ## Definition
 
 ```polyglot
-{N} =W.HTTP.Session
+{N} -W.HTTP.Session
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WHttpSession"
    [%] .description << "Creates HTTP client on setup, closes on cleanup."
@@ -53,4 +53,4 @@ Web.Request
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]

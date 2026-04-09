@@ -7,19 +7,19 @@ metadata_definition: "%definition.Q:Priority.Update"
 metadata_instance: "%Q:Priority.Update:N"
 ---
 
-# =Q.Priority.Update
+# -Q.Priority.Update
 
 Change a job's priority score.
 
 ## Definition
 
 ```polyglot
-{N} =Q.Priority.Update
+{N} -Q.Priority.Update
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QPriorityUpdate"
    [%] .description << "Change a job's priority score."
-   [=] <jobId#String
-   [=] <score#Int
+   (-) <jobId#String
+   (-) <score#Int
 ```
 
 ## Inputs
@@ -50,4 +50,4 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[pglib/pipelines/Q/INDEX|=Q.* Queue Pipelines]]
+- [[pglib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

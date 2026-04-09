@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:#.Column"
-metadata_instance: "%=:#.Column:N"
+metadata_definition: "%definition.-:#.Column"
+metadata_instance: "%-:#.Column:N"
 ---
 
-# =#.Column
+# -#.Column
 
 Extracts all values for a given column across all rows of a row-oriented Dataframe, returning them as an array. Solves the column access pattern that row-oriented storage doesn't natively provide.
 
 ## Definition
 
 ```polyglot
-{N} =#.Column
+{N} -#.Column
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaColumn"
    [%] .description << "Extract column values from row-oriented Dataframe"
-   [=] <data#dataframe
-   [=] <column#enum
-   [=] >values#array
+   (-) <data#dataframe
+   (-) <column#enum
+   (-) >values#array
 ```
 
 ## Inputs
@@ -50,12 +50,12 @@ None -- pure computation.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:#.Column` | Compile-time pipeline template |
-| Instance | `%=:#.Column:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:#.Column` | Compile-time pipeline template |
+| Instance | `%-:#.Column:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Schema/INDEX|=# Schema Validation & Field Extraction]]
-- [[pglib/pipelines/Schema/Field|=#.Field]]
+- [[pglib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[pglib/pipelines/Schema/Field|-#.Field]]
 - [[concepts/collections/expand#Expand Operators]]
 - [[syntax/types/macro-types#Macro-Generated Types]]

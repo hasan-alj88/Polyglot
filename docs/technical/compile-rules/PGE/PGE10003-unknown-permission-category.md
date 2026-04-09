@@ -31,12 +31,12 @@ severity: error
 {@} @Local:999.MyApp:v1.0.0
    [_] _LogAccess
 
-{=} =ReadLogs
+{-} -ReadLogs
    [_] _AppGrant
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] $content << =File.Text.Read >> "/var/log/app/current.log"
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] $content << -File.Text.Read >> "/var/log/app/current.log"
 ```
 
 **INVALID:**

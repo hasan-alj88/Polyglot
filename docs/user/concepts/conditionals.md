@@ -20,16 +20,16 @@ Sequential `[?]` blocks form a conditional chain. Each branch contains an explic
 
 ```polyglot
 [?] $status =? #Status.Ok
-   [r] >result << "Success"
+   [-] >result << "Success"
 
 [?] $status =? #Status.Warn
-   [r] >result << "Warning"
+   [-] >result << "Warning"
 
 [?] $status =? #Status.Fail
-   [r] >result << "Failure"
+   [-] >result << "Failure"
 ```
 
-Every `[?]` line must include a comparison operator — bare lines like `[?] $variable` are invalid ([[PGE06009|PGE06009]]). Every branch must contain at least one executable statement; use `[r] =DoNothing` for intentionally empty branches ([[PGE06010|PGE06010]]).
+Every `[?]` line must include a comparison operator — bare lines like `[?] $variable` are invalid ([[PGE06009|PGE06009]]). Every branch must contain at least one executable statement; use `[-] -DoNothing` for intentionally empty branches ([[PGE06010|PGE06010]]).
 
 ## Exhaustiveness
 
@@ -51,22 +51,22 @@ Enums are closed types. When all variants are listed, no `*?` is needed ([[PGE06
 
 [ ] All variants covered — no *? needed
 [?] $dir =? #Direction.North
-   [r] $label#string << "N"
+   [-] $label#string << "N"
 [?] $dir =? #Direction.South
-   [r] $label#string << "S"
+   [-] $label#string << "S"
 [?] $dir =? #Direction.East
-   [r] $label#string << "E"
+   [-] $label#string << "E"
 [?] $dir =? #Direction.West
-   [r] $label#string << "W"
+   [-] $label#string << "W"
 ```
 
 Partial coverage with `*?` covering the rest is also valid:
 
 ```polyglot
 [?] $dir =? #Direction.North
-   [r] $label#string << "N"
+   [-] $label#string << "N"
 [?] *?
-   [r] $label#string << "other"
+   [-] $label#string << "other"
 ```
 
 `#Boolean` follows the same rule — list both `#Boolean.True` and `#Boolean.False`, or use `*?`.
@@ -77,24 +77,24 @@ Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the f
 
 ```polyglot
 [?] $code =? 200
-   [r] $status#string << "ok"
+   [-] $status#string << "ok"
 [?] $code =? 404
-   [r] $status#string << "not_found"
+   [-] $status#string << "not_found"
 [?] $code =? 500
-   [r] $status#string << "error"
+   [-] $status#string << "error"
 [?] *?
-   [r] $status#string << "unknown"
+   [-] $status#string << "unknown"
 ```
 
 ### Match Syntax
 
 <!-- @EBNF:match_line -->
 
-When every `[?]` arm performs the same operation — mapping one value to another — use match syntax. Match nests `[?]` arms under a `[r] $source >> $target` header:
+When every `[?]` arm performs the same operation — mapping one value to another — use match syntax. Match nests `[?]` arms under a `[-] $source >> $target` header:
 
 ```polyglot
 [ ] Match form — equivalent to the [?] chain above
-[r] $code >> $status#string
+[-] $code >> $status#string
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
    [?] 500 >> "error"
@@ -115,7 +115,7 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
 **Enum match — exhaustive without wildcard:**
 
 ```polyglot
-[r] $dir >> $label#string
+[-] $dir >> $label#string
    [?] #Direction.North >> "N"
    [?] #Direction.South >> "S"
    [?] #Direction.East >> "E"
@@ -124,7 +124,7 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
 
 All variants of `#Direction` are listed, so no `*?` is needed — same rule as the verbose form ([[PGE06002|PGE06002]]).
 
-**Not a match:** If `[r] $x >> $y` has no indented `[?]` children, it is a plain assignment — not a match header.
+**Not a match:** If `[-] $x >> $y` has no indented `[?]` children, it is a plain assignment — not a match header.
 
 ### String and Flexible Field Exhaustiveness
 
@@ -180,9 +180,9 @@ Both conditions must hold:
 ```polyglot
 [?] $age >=? 18
 [&] $verified =? #Boolean.True
-   [r] $access << #AccessLevel.Granted
+   [-] $access << #AccessLevel.Granted
 [?] *?
-   [r] $access << #AccessLevel.Denied
+   [-] $access << #AccessLevel.Denied
 ```
 
 ### `[|]` — OR
@@ -192,9 +192,9 @@ At least one condition holds:
 ```polyglot
 [?] $role =? #Role.Admin
 [|] $role =? #Role.Superuser
-   [r] $elevated#bool << #Boolean.True
+   [-] $elevated#bool << #Boolean.True
 [?] *?
-   [r] $elevated#bool << #Boolean.False
+   [-] $elevated#bool << #Boolean.False
 ```
 
 ### `[^]` — XOR
@@ -204,9 +204,9 @@ Exactly one of two conditions holds — not both, not neither:
 ```polyglot
 [?] $isAdmin =? #Boolean.True
 [^] $isSudo =? #Boolean.True
-   [r] $elevated#bool << #Boolean.True
+   [-] $elevated#bool << #Boolean.True
 [?] *?
-   [r] $elevated#bool << #Boolean.False
+   [-] $elevated#bool << #Boolean.False
 ```
 
 ### `[-]` — NOT
@@ -224,15 +224,15 @@ A `[?]` branch can contain inner `[?]` chains. Each nesting level is independent
 ```polyglot
 [?] $role =? #Role.Admin
    [?] $region =? #Region.EU
-      [r] $policy#string << "GDPR"
+      [-] $policy#string << "GDPR"
    [?] $region =? #Region.US
-      [r] $policy#string << "CCPA"
+      [-] $policy#string << "CCPA"
    [?] *?
-      [r] $policy#string << "Global"
+      [-] $policy#string << "Global"
 [?] $role =? #Role.User
-   [r] $policy#string << "Standard"
+   [-] $policy#string << "Standard"
 [?] *?
-   [r] $policy#string << "None"
+   [-] $policy#string << "None"
 ```
 
 The outer chain branches on `$role`. Inside the Admin branch, a separate chain branches on `$region` — this inner chain has its own `*?` because `#Region` may have more than EU and US variants.
@@ -242,19 +242,19 @@ The outer chain branches on `$role`. Inside the Admin branch, a separate chain b
 Conditionals can switch on live metadata fields like pipeline `%status`:
 
 ```polyglot
-[?] =DataSync%status
+[?] -DataSync%status
    [?] #AwaitTrigger
-      [r] $msg#string << "idle"
+      [-] $msg#string << "idle"
    [?] #Running
-      [r] $msg#string << "in progress"
+      [-] $msg#string << "in progress"
    [?] #Failed
-      [r] $msg#string << "failed"
-      [b] =Alert.Send
-         [=] <msg << "DataSync failed"
+      [-] $msg#string << "failed"
+      [b] -Alert.Send
+         (-) <msg << "DataSync failed"
    [?] #Disabled
-      [r] $msg#string << "pipeline disabled"
+      [-] $msg#string << "pipeline disabled"
    [?] *?
-      [r] $msg#string << "unknown state"
+      [-] $msg#string << "unknown state"
 ```
 
 See [[syntax/types/hierarchy#Live Type Modifier]] and [[concepts/pipelines/chains#Querying Pipeline Status]] for metadata access patterns.

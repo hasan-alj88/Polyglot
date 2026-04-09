@@ -5,19 +5,19 @@ updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Map
+# =ForEach.Map
 
-Iterates over each key-value pair in a `#Map`. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
+Iterates over each key-value pair in a `#Map`. The execution marker on the expand line controls parallelism: `[=]` for parallel, `[-]` for sequential.
 
 No `.Enumerate` variant -- Map is unordered (`%Ordered = #False`), so a positional index would be misleading.
 
 ## Syntax
 
 ```polyglot
-[p] ~ForEach.Map
-   [~] <Map << $prices
-   [~] >key >> $ticker
-   [~] >item >> $price
+[=] =ForEach.Map
+   (=) <Map << $prices
+   (=) >key >> $ticker
+   (=) >item >> $price
    ...
 ```
 
@@ -44,5 +44,5 @@ None.
 
 ## Related
 
-- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[pglib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]

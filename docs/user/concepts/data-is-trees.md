@@ -45,8 +45,8 @@ The `%` root has fixed branches for every object type in Polyglot:
 ```polyglot
 %
 ├── #   Structs          — type definitions ({#} blocks)
-├── =   Pipelines        — async workflows ({=} blocks)
-├── ~   Expanders         — expand operators (~ForEach.*)
+├── -   Pipelines        — async workflows ({-} blocks)
+├── ~   Expanders         — expand operators (=ForEach.*)
 ├── *   Collectors        — collect operators (*Into.*, *Agg.*, *All, *First)
 ├── $   Variables         — runtime data ($name, $result)
 ├── !   Errors            — error trees ({!} blocks, pglib !File.*, !No.*, etc.)
@@ -55,7 +55,7 @@ The `%` root has fixed branches for every object type in Polyglot:
 └── definition            — compile-time schema templates
 ```
 
-Most branches use flexible (`:`) fields for their instances — `%#:Boolean`, `%=:MyPipeline`, `%$:myVar`. Exceptions: `%_` uses only `.` fixed fields (Polyglot-defined permissions), `%!` uses `.` for Polyglot-defined namespaces (with `:` under `.Error` for user extensions), and `%definition` stores compile-time structural templates.
+Most branches use flexible (`:`) fields for their instances — `%#:Boolean`, `%-:MyPipeline`, `%$:myVar`. Exceptions: `%_` uses only `.` fixed fields (Polyglot-defined permissions), `%!` uses `.` for Polyglot-defined namespaces (with `:` under `.Error` for user extensions), and `%definition` stores compile-time structural templates.
 
 ## How Concepts Connect
 
@@ -64,7 +64,7 @@ Each concept you have learned maps to a branch in the tree:
 | You learned | In | Tree branch | Instance example |
 |-------------|----|-------------|------------------|
 | Struct types | [[syntax/types/structs#Struct Types]] | `%#` | `%#:UserRecord:0` |
-| Pipelines | [[concepts/pipelines/INDEX|pipelines]] | `%=` | `%=:ProcessData:0` |
+| Pipelines | [[concepts/pipelines/INDEX|pipelines]] | `%-` | `%-:ProcessData:0` |
 | Variables | [[variable-lifecycle]] | `%$` | `%$:myVar:0` |
 | Expand operators | [[concepts/collections/expand#Expand Operators]] | `%~` | `%~:ForEach.Array:0` |
 | Collect operators | [[concepts/collections/collect#Collect Operators]] | `%*` | `%*:Into.Array:0` |
@@ -87,7 +87,7 @@ The tree has two layers:
 
 One definition can have many instances. A pipeline that runs three times concurrently has instances `:0`, `:1`, `:2` — each with its own metadata values.
 
-Each instance runs independently and contains its own **jobs** — the units of work created at IO boundaries within the pipeline. Jobs are identified by UID (not sequential numbers) and tracked at `%=:Pipeline:N.jobs:UID`. See [[glossary]] for the formal distinction between Instance and Job.
+Each instance runs independently and contains its own **jobs** — the units of work created at IO boundaries within the pipeline. Jobs are identified by UID (not sequential numbers) and tracked at `%-:Pipeline:N.jobs:UID`. See [[glossary]] for the formal distinction between Instance and Job.
 
 The following diagram shows how schema definitions produce runtime instances across three key branches:
 
@@ -98,14 +98,14 @@ graph TD
     subgraph schema ["Schema Layer (compile-time)"]
         def["%definition"]
         defBool[".#:Boolean"]
-        defPipe[".=:ProcessData"]
+        defPipe[".-:ProcessData"]
         defVar[".$:myVar"]
     end
 
     subgraph instances ["Instance Layer (runtime)"]
         bool0["%#:Boolean:0"]
         bool1["%#:Boolean:1"]
-        pipe0["%=:ProcessData:0"]
+        pipe0["%-:ProcessData:0"]
         var0["%$:myVar:0"]
     end
 
@@ -125,7 +125,7 @@ graph TD
 | Path | Reads |
 |------|-------|
 | `%definition.#:UserRecord` | The schema for `#UserRecord` — field names, types, structure |
-| `%=:ProcessData:0.status` | Instance 0 of `=ProcessData` — its current `live` status |
+| `%-:ProcessData:0.status` | Instance 0 of `-ProcessData` — its current `live` status |
 | `%$:myVar:0.state` | Instance 0 of `$myVar` — its lifecycle state (Declared, Default, Final, Failed, Released) |
 
 ## Key Tree Rules
@@ -158,7 +158,7 @@ See [[syntax/types/basic-types#Numeric Types — #String Subtypes]] for details.
 Pipeline instances carry their IO as nested fixed sections:
 
 ```polyglot
-%=:ProcessData:0
+%-:ProcessData:0
 ├── .<                      ← input ports (fixed typed section)
 │   └── .filepath#path
 └── .>                      ← output ports (fixed typed section)
@@ -181,6 +181,6 @@ The general path notation is:
 | `:{instance}` | Instance number (flexible field) |
 | `.{fields}` | Fixed field path within the instance |
 
-**Shorthand in code:** `=MyPipeline%status` reads `%=:MyPipeline:<current>.status` — the current instance is implicit.
+**Shorthand in code:** `-MyPipeline%status` reads `%-:MyPipeline:<current>.status` — the current instance is implicit.
 
 For the full field listings (which metadata each branch carries, `live` vs user-declared), see [[metadata]]. For the formal path grammar and instance rules, see [[metadata-tree/INDEX|technical/spec/metadata-tree]].

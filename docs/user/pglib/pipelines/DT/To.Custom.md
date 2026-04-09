@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.To.Custom"
-metadata_instance: "%=:DT.To.Custom:N"
+metadata_definition: "%definition.-:DT.To.Custom"
+metadata_instance: "%-:DT.To.Custom:N"
 ---
 
-# =DT.To.Custom
+# -DT.To.Custom
 
 Projects a `#dt` into a user-supplied custom calendar. Projections are not cached -- store results in a `$variable` if you need the value again.
 
 ## Definition
 
 ```polyglot
-{N} =DT.To.Custom
+{N} -DT.To.Custom
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToCustom"
    [%] .description << "DateTime to custom calendar date"
-   [=] <source#dt
-   [=] <calendar#CustomCalendar
-   [=] >date#Date
+   (-) <source#dt
+   (-) <calendar#CustomCalendar
+   (-) >date#Date
 ```
 
 ## Inputs
@@ -48,10 +48,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.To.Custom` | Compile-time pipeline template |
-| Instance | `%=:DT.To.Custom:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.To.Custom` | Compile-time pipeline template |
+| Instance | `%-:DT.To.Custom:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

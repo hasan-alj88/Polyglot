@@ -5,17 +5,17 @@ updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Dataframe.Enumerate
+# =ForEach.Dataframe.Enumerate
 
-Iterates over each row in a dataframe with its positional index. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
+Iterates over each row in a dataframe with its positional index. The execution marker on the expand line controls parallelism: `[=]` for parallel, `[-]` for sequential.
 
 ## Syntax
 
 ```polyglot
-[p] ~ForEach.Dataframe.Enumerate
-   [~] <Dataframe << $sales
-   [~] >index >> $idx
-   [~] >row >> $row
+[=] =ForEach.Dataframe.Enumerate
+   (=) <Dataframe << $sales
+   (=) >index >> $idx
+   (=) >row >> $row
    ...
 ```
 
@@ -42,6 +42,6 @@ None.
 
 ## Related
 
-- [[pglib/expanders/ForEach/Dataframe|~ForEach.Dataframe]] -- base variant without index
-- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[pglib/expanders/ForEach/Dataframe|=ForEach.Dataframe]] -- base variant without index
+- [[pglib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]

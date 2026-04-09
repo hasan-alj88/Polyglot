@@ -16,21 +16,21 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ PushLeft into discard — value explicitly thrown away
-[r] $*#string << "discarded"
+[-] $*#string << "discarded"
 
 [ ] ✓ PushRight into discard via >>
-[r] =Compute
-   [=] >result >> $*                    [ ] ✓ explicit discard of output
+[-] -Compute
+   (-) >result >> $*                    [ ] ✓ explicit discard of output
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE02010 — DefaultPushLeft into discard
-[r] $*#string <~ "never used"           [ ] ✗ $* is immediate release, default is meaningless
+[-] $*#string <~ "never used"           [ ] ✗ $* is immediate release, default is meaningless
 
 [ ] ✗ PGE02010 — DefaultPushRight into discard
-[r] =Compute
-   [=] >result ~> $*                    [ ] ✗ $* cannot hold a default value
+[-] -Compute
+   (-) >result ~> $*                    [ ] ✗ $* cannot hold a default value
 ```
 
 **Diagnostic:** "Discard `$*` does not support default assignment `<~`/`~>` — use final `<<`/`>>` instead (value is immediately released)"

@@ -5,16 +5,16 @@ updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Array
+# =ForEach.Array
 
-Iterates over each item in an array, producing a mini-pipeline per item. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
+Iterates over each item in an array, producing a mini-pipeline per item. The execution marker on the expand line controls parallelism: `[=]` for parallel, `[-]` for sequential.
 
 ## Syntax
 
 ```polyglot
-[p] ~ForEach.Array
-   [~] <Array << $myArray
-   [~] >item >> $item
+[=] =ForEach.Array
+   (=) <Array << $myArray
+   (=) >item >> $item
    ...
 ```
 
@@ -32,7 +32,7 @@ Iterates over each item in an array, producing a mini-pipeline per item. The exe
 
 ## Variants
 
-- [[pglib/expanders/ForEach/Array/Enumerate|~ForEach.Array.Enumerate]] -- adds positional `>index` output
+- [[pglib/expanders/ForEach/Array/Enumerate|=ForEach.Array.Enumerate]] -- adds positional `>index` output
 
 ## Errors
 
@@ -44,5 +44,5 @@ None.
 
 ## Related
 
-- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[pglib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]

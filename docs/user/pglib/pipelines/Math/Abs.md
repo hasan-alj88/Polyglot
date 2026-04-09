@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
-metadata_definition: "%definition.=:Math.Abs"
-metadata_instance: "%=:Math.Abs:N"
+metadata_definition: "%definition.-:Math.Abs"
+metadata_instance: "%-:Math.Abs:N"
 ---
 
-# =Math.Abs
+# -Math.Abs
 
 Returns the absolute value of the input. Accepts exactly one input. When the input is `#float`, the output is `#float`.
 
 ## Definition
 
 ```polyglot
-{N} =Math.Abs
+{N} -Math.Abs
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathAbs"
    [%] .description << "Absolute value of a numeric value"
-   [=] <<#int (exactly 1)
-   [=] >>#int
+   (-) <<#int (exactly 1)
+   (-) >>#int
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:Math.Abs` | Compile-time pipeline template |
-| Instance | `%=:Math.Abs:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:Math.Abs` | Compile-time pipeline template |
+| Instance | `%-:Math.Abs:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Math/INDEX|=Math.* Numeric Pipelines]]
-- [[pglib/pipelines/Math/Negate|=Math.Negate]]
+- [[pglib/pipelines/Math/INDEX|-Math.* Numeric Pipelines]]
+- [[pglib/pipelines/Math/Negate|-Math.Negate]]

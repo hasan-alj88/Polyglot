@@ -18,12 +18,12 @@ This follows the Cisco ACL model: if you don't explicitly allow it, it's denied.
 A pipeline with no `[_]` references is **pure computation** — it can transform data, run conditionals, and call other pipelines, but cannot touch the outside world. Any IO call without a matching permission is a compile error.
 
 ```polyglot
-{=} PureComputation
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
+{-} PureComputation
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
    [ ] no [_] lines — this pipeline cannot do IO
-   [r] $result#int << =Math.Add $a $b
+   [-] $result#int << -Math.Add $a $b
 ```
 
 ## {_} Permission Objects
@@ -52,7 +52,7 @@ Every `{_}` object declares an `.intent` field — either `#Ceiling` or `#Grant`
 | `#Grant` | Specific permissions a pipeline **requests** | Narrow, specific values only (`"data/reports/q1.csv"`) |
 
 - **Ceiling** — referenced by `{@}` packages via `[_]`. Sets the upper bound. Allows but does not grant.
-- **Grant** — referenced by `{=}` pipelines via `[_]`. Requests specific capabilities within the ceiling.
+- **Grant** — referenced by `{-}` pipelines via `[_]`. Requests specific capabilities within the ceiling.
 - **Compiler validates: Grant must be a subset of Ceiling** — every grant value must fall within a ceiling pattern. A grant requesting `"data/secret.csv"` when the ceiling only allows `"data/reports/*"` is a compile error (PGE10001).
 - **Narrowing allowed, expanding NOT** — a grant can request less than the ceiling allows, but never more.
 
@@ -62,7 +62,7 @@ Every `{_}` object must be **fully filled** — every leaf field must have a val
 
 ### No Inline Declarations
 
-`[_]` in `{@}` and `{=}` always references a `{_}` object **by name** — no inline permission declarations. All permission policies are defined as standalone `{_}` blocks.
+`[_]` in `{@}` and `{-}` always references a `{_}` object **by name** — no inline permission declarations. All permission policies are defined as standalone `{_}` blocks.
 
 ```polyglot
 { } VALID — reference by name
@@ -144,7 +144,7 @@ Permissions operate at two levels: **package ceiling** and **pipeline grant**.
 
 ### Pipeline Grant
 
-Each `{=}` pipeline must explicitly reference `{_}` grant objects for the permissions it needs. Grants can only **narrow** what the package ceiling allows — never widen. See [[concepts/pipelines/permissions#Permissions]] for placement within pipeline definitions.
+Each `{-}` pipeline must explicitly reference `{_}` grant objects for the permissions it needs. Grants can only **narrow** what the package ceiling allows — never widen. See [[concepts/pipelines/permissions#Permissions]] for placement within pipeline definitions.
 
 ```polyglot
 {_} _LogFileGrant
@@ -156,22 +156,22 @@ Each `{=}` pipeline must explicitly reference `{_}` grant objects for the permis
    [.] .File.Read "/var/log/app/*.log"
    [.] .Web.Request "https://alerts.internal/notify"
 
-{=} =ProcessLogs
+{-} -ProcessLogs
    [_] _LogFileGrant
    [ ] narrower than ceiling — granted
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
    ...
 
-{=} =ComputeStats
+{-} -ComputeStats
    [ ] no [_] lines — pure computation, zero IO
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
    ...
 
-{=} =SneakyPipeline
+{-} -SneakyPipeline
    [_] _AlertGrant
    [ ] grant references Web.Request — valid only if ceiling includes it
    ...
@@ -183,7 +183,7 @@ Permissions are never inherited. Every definition must reference the `{_}` grant
 
 ## No Instances
 
-Permissions are **compile-time declarations** — they apply across all instances of a pipeline. There are no per-instance permissions. If `=ProcessLogs` has `[_] _LogFileGrant`, every instance of `=ProcessLogs` shares that grant. The `%_` metadata tree branch has no `:{instance}` level (see [[data-is-trees]]).
+Permissions are **compile-time declarations** — they apply across all instances of a pipeline. There are no per-instance permissions. If `-ProcessLogs` has `[_] _LogFileGrant`, every instance of `-ProcessLogs` shares that grant. The `%_` metadata tree branch has no `:{instance}` level (see [[data-is-trees]]).
 
 ## __Permission Schema
 
@@ -216,7 +216,7 @@ All fields use `.` fixed-field navigation — permission schemas are Polyglot-de
 
 All permission checks are **static analysis** — resolved at compile time, not runtime. The compiler verifies:
 
-1. **Grant within ceiling** — every `[_]` grant in a `{=}` must reference a `{_}` object whose capabilities fall within the `{@}` package ceiling (PGE10001)
+1. **Grant within ceiling** — every `[_]` grant in a `{-}` must reference a `{_}` object whose capabilities fall within the `{@}` package ceiling (PGE10001)
 2. **Import ceiling compatibility** — imported package ceilings must fall within the importer's ceiling (PGE10002)
 3. **Pure computation enforced** — any IO call in a pipeline with no `[_]` lines is a compile error
 4. **Fully filled** — every `{_}` object must have all leaf fields assigned (no empty leaves)
@@ -232,7 +232,7 @@ No runtime permission checks exist. If it compiles, the permissions are satisfie
 {@}   <- mandatory first (compiler-enforced)
 {_}   <- permission objects (recommended second)
 {#}   <- data definitions
-{=}   <- pipelines
+{-}   <- pipelines
 ```
 
 ## Complete Example
@@ -267,22 +267,22 @@ A full package showing the ceiling-to-grant flow:
    [.] .rows#int
 
 { } Pipelines
-{=} =ReadReports
+{-} -ReadReports
    [_] _ReportReader
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] >reports#array.Report
-   [r] >reports << =File.Serial.CSV.Parse "data/reports/q1.csv"
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) >reports#array.Report
+   [-] >reports << -File.Serial.CSV.Parse "data/reports/q1.csv"
 
-{=} =WriteOutput
+{-} -WriteOutput
    [_] _OutputWriter
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <data#Report
-   [=] >result#string
-   [r] >result << =File.Serial.JSON.Serialize $data >> "output/summary.json"
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <data#Report
+   (-) >result#string
+   [-] >result << -File.Serial.JSON.Serialize $data >> "output/summary.json"
 ```
 
 ## Foreign Code
@@ -300,17 +300,17 @@ Pipelines using `[C]` foreign code blocks ([[blocks#Foreign Code]]) interact wit
    [.] .intent << #Grant
    [.] .File.Read "data/report.csv"
 
-{=} =AnalyzeData
+{-} -AnalyzeData
    [_] _AnalyzeGrant
    [ ] compiler warning: [C] block cannot be statically verified
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =RT.Python.Script
-      [=] <env << $env
-      [=] <script <<
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -RT.Python.Script
+      (-) <env << $env
+      (-) <script <<
          [C] import pandas as pd
          [C] df = pd.read_csv("data/report.csv")
          [C] result = df.describe()
-      [=] >stdout >> $output
+      (-) >stdout >> $output
 ```

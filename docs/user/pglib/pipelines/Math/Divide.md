@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
-metadata_definition: "%definition.=:Math.Divide"
-metadata_instance: "%=:Math.Divide:N"
+metadata_definition: "%definition.-:Math.Divide"
+metadata_instance: "%-:Math.Divide:N"
 ---
 
-# =Math.Divide
+# -Math.Divide
 
 Divides the dividend by the divisor. Accepts exactly two inputs in positional order. When any input is `#float`, the output is `#float`. Raises `!Math.DivideByZero` if the divisor is zero.
 
 ## Definition
 
 ```polyglot
-{N} =Math.Divide
+{N} -Math.Divide
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathDivide"
    [%] .description << "Binary division (dividend divided by divisor)"
-   [=] <<#int (exactly 2 — dividend, divisor)
-   [=] >>#int
+   (-) <<#int (exactly 2 — dividend, divisor)
+   (-) >>#int
 ```
 
 ## Inputs
@@ -40,12 +40,12 @@ Divides the dividend by the divisor. Accepts exactly two inputs in positional or
 `!Math.DivideByZero` — raised when the divisor is zero.
 
 ```polyglot
-[r] =Math.Divide
-   [=] << $numerator
-   [=] << $denominator
-   [=] >> $result
+[-] -Math.Divide
+   (-) << $numerator
+   (-) << $denominator
+   (-) >> $result
    [!] !Math.DivideByZero
-      [r] >result << 0
+      [-] >result << 0
 ```
 
 ## Permissions
@@ -56,10 +56,10 @@ None.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:Math.Divide` | Compile-time pipeline template |
-| Instance | `%=:Math.Divide:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:Math.Divide` | Compile-time pipeline template |
+| Instance | `%-:Math.Divide:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Math/INDEX|=Math.* Numeric Pipelines]]
-- [[pglib/pipelines/Math/Modulo|=Math.Modulo]]
+- [[pglib/pipelines/Math/INDEX|-Math.* Numeric Pipelines]]
+- [[pglib/pipelines/Math/Modulo|-Math.Modulo]]

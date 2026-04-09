@@ -30,7 +30,7 @@ severity: error
 
 ```polyglot
 [ ] ✗ PGE01012 — wrong prefix
-{Q} =Q.MyQueue
+{Q} -Q.MyQueue
    [.] .strategy#QueueStrategy << #LIFO
 ```
 

@@ -14,8 +14,8 @@ For inline discard without creating a variable, use `$*` instead.
 ## Syntax
 
 ```polyglot
-[*] *Ignore
-   [*] << $unneededVar
+(*) *Ignore
+   (*) << $unneededVar
 ```
 
 ## Inputs

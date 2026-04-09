@@ -28,10 +28,10 @@ severity: error
    [.] .age#int
 
 [ ] ✓ statically provable — all serial fields known and match
-[r] $data#serial
-   [r] $data:name << "Alice"
-   [r] $data:age << 30
-[r] $user#UserRecord << $data
+[-] $data#serial
+   [-] $data:name << "Alice"
+   [-] $data:age << 30
+[-] $user#UserRecord << $data
 ```
 
 ```polyglot
@@ -40,14 +40,14 @@ severity: error
    [.] .age#int
 
 [ ] ✓ dynamic serial — handled with [!] + <! fallback
-[r] $defaultUser#UserRecord
-   [r] $defaultUser.name << "Unknown"
-   [r] $defaultUser.age << 0
+[-] $defaultUser#UserRecord
+   [-] $defaultUser.name << "Unknown"
+   [-] $defaultUser.age << 0
 
-[r] $user#UserRecord << $dynamicSerial
-   [>] <! $defaultUser                [ ] catch-all fallback
+[-] $user#UserRecord << $dynamicSerial
+   (>) <! $defaultUser                [ ] catch-all fallback
    [!] !SchemaMismatch
-      [r] >user << $defaultUser
+      [-] >user << $defaultUser
 ```
 
 ```polyglot
@@ -56,11 +56,11 @@ severity: error
    [.] .retries#int
 
 [ ] ✓ extra fields in serial are allowed — superset is fine
-[r] $raw#serial
-   [r] $raw:timeout << 30
-   [r] $raw:retries << 3
-   [r] $raw:debug << "true"
-[r] $cfg#Config << $raw              [ ] ✓ :debug ignored, schema satisfied
+[-] $raw#serial
+   [-] $raw:timeout << 30
+   [-] $raw:retries << 3
+   [-] $raw:debug << "true"
+[-] $cfg#Config << $raw              [ ] ✓ :debug ignored, schema satisfied
 ```
 
 **INVALID:**
@@ -70,7 +70,7 @@ severity: error
    [.] .age#int
 
 [ ] ✗ PGE04009 — dynamic serial pushed to struct without error handling
-[r] $user#UserRecord << $dynamicSerial
+[-] $user#UserRecord << $dynamicSerial
 ```
 
 ```polyglot
@@ -79,13 +79,13 @@ severity: error
    [.] .age#int
 
 [ ] ✗ PGE04009 — conditionally built serial, compiler cannot prove completeness
-[r] $data#serial
-   [r] $data:name << "Alice"
+[-] $data#serial
+   [-] $data:name << "Alice"
    [?] $hasAge =? true
-      [r] $data:age << 30
+      [-] $data:age << 30
    [?] *?
       [ ] .age not assigned in this branch
-[r] $user#UserRecord << $data        [ ] ✗ PGE04009 — .age may be missing
+[-] $user#UserRecord << $data        [ ] ✗ PGE04009 — .age may be missing
 ```
 
 **Partial matching rules:**

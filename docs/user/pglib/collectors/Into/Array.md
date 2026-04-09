@@ -12,9 +12,9 @@ Gathers outputs from mini-pipelines back into a single array, accessible one lev
 ## Syntax
 
 ```polyglot
-[r] *Into.Array
-   [*] <item << $doubled
-   [*] >Array >> $results
+[-] *Into.Array
+   (*) <item << $doubled
+   (*) >Array >> $results
 ```
 
 ## Inputs

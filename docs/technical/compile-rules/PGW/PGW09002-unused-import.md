@@ -9,7 +9,7 @@ severity: warning
 ### Rule 9.2 — Unused Import
 `PGW09002`
 
-**Statement:** An `[@]` import alias declared in the `{@}` package block that is never referenced by any `@alias=Pipeline` or `@alias#Data` expression in the file is flagged with a warning. The import is dead code.
+**Statement:** An `[@]` import alias declared in the `{@}` package block that is never referenced by any `@alias-Pipeline` or `@alias#Data` expression in the file is flagged with a warning. The import is dead code.
 **Rationale:** Unused imports add clutter and may indicate incomplete refactoring — a pipeline call was removed but the import was left behind. Flagging unused imports keeps the dependency graph clean and makes it clear which external packages are actually used.
 **Detection:** The compiler collects all `[@]` alias declarations from the `{@}` block, then scans all expressions in the file for `@alias` references. Any alias with zero references is flagged.
 
@@ -22,31 +22,31 @@ severity: warning
    [@] @auth << "com.example.auth"
    [@] @data << "com.example.data"
 
-{=} =Process
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >out#string
-   [r] @auth=Validate                   [ ] ✓ @auth used
-      [=] <token << $input
-      [=] >ok >> $valid
-   [r] @data=Store                      [ ] ✓ @data used
-      [=] <item << $valid
-      [=] >result >> >out
+{-} -Process
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >out#string
+   [-] @auth-Validate                   [ ] ✓ @auth used
+      (-) <token << $input
+      (-) >ok >> $valid
+   [-] @data-Store                      [ ] ✓ @data used
+      (-) <item << $valid
+      (-) >result >> >out
 ```
 
 ```polyglot
 [ ] ✓ no imports — leaf package using only pglib
 {@} @LeafPackage
 
-{=} =Simple
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >out#string
-   [r] >out << $input
+{-} -Simple
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >out#string
+   [-] >out << $input
 ```
 
 **WARNING:**
@@ -56,15 +56,15 @@ severity: warning
    [@] @auth << "com.example.auth"
    [@] @data << "com.example.data"      [ ] ⚠ PGW09002 — @data never used
 
-{=} =Process
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >out#string
-   [r] @auth=Validate
-      [=] <token << $input
-      [=] >ok >> >out
+{-} -Process
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >out#string
+   [-] @auth-Validate
+      (-) <token << $input
+      (-) >ok >> >out
 ```
 
 ```polyglot
@@ -73,13 +73,13 @@ severity: warning
    [@] @old << "com.example.legacy"     [ ] ⚠ PGW09002 — @old never used
    [@] @also << "com.example.other"     [ ] ⚠ PGW09002 — @also never used
 
-{=} =NoExternalCalls
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >out#string
-   [r] >out << $input
+{-} -NoExternalCalls
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >out#string
+   [-] >out << $input
 ```
 
 **Open point:** None.

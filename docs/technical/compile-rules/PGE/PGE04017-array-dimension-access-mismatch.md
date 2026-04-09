@@ -18,44 +18,44 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ 1D access — single index on default 1D array
-[=] <items#array:string
-[r] $first << $items.0
+(-) <items#array:string
+[-] $first << $items.0
 ```
 
 ```polyglot
 [ ] ✓ 2D access — two indices on :2D array
-[=] <matrix#array:float:2D
-[r] $val << $matrix.0.1
+(-) <matrix#array:float:2D
+[-] $val << $matrix.0.1
 ```
 
 ```polyglot
 [ ] ✓ 3D access — three indices on :3D array
-[=] <cube#array:int:3D
-[r] $val << $cube.2.3.0
+(-) <cube#array:int:3D
+[-] $val << $cube.2.3.0
 ```
 
 ```polyglot
 [ ] ✓ user-defined element type with :2D
-[=] <grid#array:UserRecord:2D
-[r] $cell << $grid.1.2
+(-) <grid#array:UserRecord:2D
+[-] $cell << $grid.1.2
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE04017 — too many indices for :2D array
-[=] <matrix#array:float:2D
-[r] $val << $matrix.0.1.2                    [ ] ✗ 3 indices on :2D — expected 2
+(-) <matrix#array:float:2D
+[-] $val << $matrix.0.1.2                    [ ] ✗ 3 indices on :2D — expected 2
 ```
 
 ```polyglot
 [ ] ✗ PGE04017 — too few indices for :3D array
-[=] <cube#array:int:3D
-[r] $val << $cube.2                           [ ] ✗ 1 index on :3D — expected 3
+(-) <cube#array:int:3D
+[-] $val << $cube.2                           [ ] ✗ 1 index on :3D — expected 3
 ```
 
 ```polyglot
 [ ] ✗ PGE04017 — :0D is not a valid dimension
-[=] <nothing#array:float:0D                  [ ] ✗ dimension must be positive integer
+(-) <nothing#array:float:0D                  [ ] ✗ dimension must be positive integer
 ```
 
 **Diagnostic:** `"Array dimension access mismatch on {variable} at line {N} — {variable} is declared as :{M}D but accessed with {K} indices"`

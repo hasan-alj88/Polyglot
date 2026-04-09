@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:Cache.Scope"
 metadata_instance: "%W:Cache.Scope:N"
 ---
 
-# =W.Cache.Scope
+# -W.Cache.Scope
 
 Connects cache on setup, flushes + disconnects on cleanup.
 
 ## Definition
 
 ```polyglot
-{N} =W.Cache.Scope
+{N} -W.Cache.Scope
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WCacheScope"
    [%] .description << "Connects cache on setup, flushes + disconnects on cleanup."
@@ -51,4 +51,4 @@ Database.Read
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]

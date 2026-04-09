@@ -7,18 +7,18 @@ metadata_definition: "%definition.W:Polyglot"
 metadata_instance: "%W:Polyglot:N"
 ---
 
-# =W.Polyglot
+# -W.Polyglot
 
 Pure Polyglot Code — no external runtime, no setup/cleanup.
 
 ## Definition
 
 ```polyglot
-{N} =W.Polyglot
+{N} -W.Polyglot
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WPolyglot"
    [%] .description << "Pure Polyglot Code — no external runtime, no setup/cleanup."
-   [ ] Calls =DoNothing for both [\] and [/].
+   [ ] Calls -DoNothing for both [\] and [/].
    [ ] Every pipeline requires [W]; this no-op confirms intent.
 ```
 
@@ -47,4 +47,4 @@ None — pure computation.
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]

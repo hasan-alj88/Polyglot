@@ -17,7 +17,7 @@ severity: error
 ```polyglot
 [ ] ✓ typed array — element type specified
 {Array} $items#array.int
-   [r] $items << {1, 2, 3}
+   [-] $items << {1, 2, 3}
 
 [ ] ✓ array of user type
 {Array} $users#array.#UserRecord
@@ -27,7 +27,7 @@ severity: error
 ```polyglot
 [ ] ✗ PGE04025 — no element type
 {Array} $items#array
-   [r] $items << {1, "mixed", #Boolean.True}
+   [-] $items << {1, "mixed", #Boolean.True}
 ```
 
 **Diagnostic:** "Array `$name` requires an element type — use `#array.type` notation"

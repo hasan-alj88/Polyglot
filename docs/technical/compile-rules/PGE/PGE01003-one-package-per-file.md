@@ -17,14 +17,14 @@ name: One Package Declaration Per File
 {@}
    .address #string << "Registry:com.example.MyPkg:1.0.0"
 
-{=} =MyPipeline
+{-} -MyPipeline
    ...
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE01003 — no {@} block
-{=} =MyPipeline    [ ] ✗ PGE01003 — file has no package declaration
+{-} -MyPipeline    [ ] ✗ PGE01003 — file has no package declaration
    ...
 ```
 
@@ -33,7 +33,7 @@ name: One Package Declaration Per File
 {@}
    .address #string << "Registry:com.example.MyPkg:1.0.0"
 
-{=} =MyPipeline
+{-} -MyPipeline
    ...
 
 {@}                [ ] ✗ PGE01003 — second package declaration

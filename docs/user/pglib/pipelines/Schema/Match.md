@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:#.Match"
-metadata_instance: "%=:#.Match:N"
+metadata_definition: "%definition.-:#.Match"
+metadata_instance: "%-:#.Match:N"
 ---
 
-# =#.Match
+# -#.Match
 
 Boolean schema check -- does this data match this type? Returns `#True`/`#False`, no side effects.
 
 ## Definition
 
 ```polyglot
-{N} =#.Match
+{N} -#.Match
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaMatch"
    [%] .description << "Boolean schema check"
-   [=] <data#serial
-   [=] <#type
-   [=] >match#bool
+   (-) <data#serial
+   (-) <#type
+   (-) >match#bool
 ```
 
 ## Inputs
@@ -48,11 +48,11 @@ None -- pure computation.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:#.Match` | Compile-time pipeline template |
-| Instance | `%=:#.Match:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:#.Match` | Compile-time pipeline template |
+| Instance | `%-:#.Match:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Schema/INDEX|=# Schema Validation & Field Extraction]]
-- [[pglib/pipelines/Schema/Validate|=#.Validate]]
-- [[pglib/pipelines/Schema/Coerce|=#.Coerce]]
+- [[pglib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[pglib/pipelines/Schema/Validate|-#.Validate]]
+- [[pglib/pipelines/Schema/Coerce|-#.Coerce]]

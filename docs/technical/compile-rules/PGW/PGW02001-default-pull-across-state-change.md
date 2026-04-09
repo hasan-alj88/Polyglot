@@ -16,37 +16,37 @@ severity: warning
 **VALID:**
 ```polyglot
 [ ] ✓ Default pulled once, then promoted — no second pull before promotion
-[=] >label#string
-[r] >label <~ "pending"           [ ] Default
-[r] >label << "confirmed"         [ ] Final
-[r] =Display
-   [=] <text << >label            [ ] ✓ only pull is after Final — no warning
+(-) >label#string
+[-] >label <~ "pending"           [ ] Default
+[-] >label << "confirmed"         [ ] Final
+[-] -Display
+   (-) <text << >label            [ ] ✓ only pull is after Final — no warning
 ```
 
 ```polyglot
 [ ] ✓ Default pulled once, never promoted — consistent value
-[=] >fallback#string
-[r] >fallback <~ "N/A"            [ ] Default
-[r] =Display
-   [=] <text << >fallback         [ ] ✓ pull 1 — Default value
-[r] =Log
-   [=] <msg << >fallback          [ ] ✓ pull 2 — still Default, same value, no warning
+(-) >fallback#string
+[-] >fallback <~ "N/A"            [ ] Default
+[-] -Display
+   (-) <text << >fallback         [ ] ✓ pull 1 — Default value
+[-] -Log
+   (-) <msg << >fallback          [ ] ✓ pull 2 — still Default, same value, no warning
 ```
 
 **WARNING:**
 ```polyglot
 [ ] ⚠ PGW02001 — two pulls straddle the Default→Final transition
-[=] >label#string
-[r] >label <~ "pending"           [ ] Default
+(-) >label#string
+[-] >label <~ "pending"           [ ] Default
 
 [ ] first pull — sees "pending"
-[r] =LogStatus
-   [=] <status << >label
+[-] -LogStatus
+   (-) <status << >label
 
 [ ] push promotes to Final
-[r] >label << "confirmed"         [ ] Final
+[-] >label << "confirmed"         [ ] Final
 
 [ ] second pull — sees "confirmed" — PGW02001 warning
-[r] =LogStatus
-   [=] <status << >label          [ ] ⚠ PGW02001 — value differs from first pull
+[-] -LogStatus
+   (-) <status << >label          [ ] ⚠ PGW02001 — value differs from first pull
 ```

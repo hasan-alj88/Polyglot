@@ -8,25 +8,25 @@ updated: 2026-03-30
 
 ## Pipeline Metadata
 
-Every pipeline carries implicit `live` metadata fields populated by the Polyglot runtime. Pipeline metadata lives at `%=:{name}:{instance}` in the unified tree — see [[data-is-trees#How Concepts Connect]]. Query built-in metadata via the `%` accessor instead of creating custom booleans. See [[metadata]] for the full metadata tree, field listings, and access patterns.
+Every pipeline carries implicit `live` metadata fields populated by the Polyglot runtime. Pipeline metadata lives at `%-:{name}:{instance}` in the unified tree — see [[data-is-trees#How Concepts Connect]]. Query built-in metadata via the `%` accessor instead of creating custom booleans. See [[metadata]] for the full metadata tree, field listings, and access patterns.
 
 ### Error Trees
 
-Every failable pipeline **must** declare its errors with `[=] !ErrorName` in the IO section. This is the pipeline's error tree — a structured list of every error it can raise:
+Every failable pipeline **must** declare its errors with `(-) !ErrorName` in the IO section. This is the pipeline's error tree — a structured list of every error it can raise:
 
 ```polyglot
-{=} =ValidateUser
-   [=] <name#string
-   [=] >validated#string
-   [=] !Validation.Empty
-   [=] !Validation.TooLong
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
+{-} -ValidateUser
+   (-) <name#string
+   (-) >validated#string
+   (-) !Validation.Empty
+   (-) !Validation.TooLong
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
    ...
 ```
 
-Error declarations are mandatory for failable pipelines. A pipeline without `[=] !...` is non-failable — the compiler warns (PGW07001) if a caller adds `[!]` handlers on it. Errors are raised in the execution body with `[!] >> !ErrorName` (see [[errors#Raising Errors]]). Custom error types are defined with `{!}` blocks (see [[errors#Defining Custom Errors]]). For pglib pipeline error trees, see [[pglib/errors/errors#Pipeline Error Associations]].
+Error declarations are mandatory for failable pipelines. A pipeline without `(-) !...` is non-failable — the compiler warns (PGW07001) if a caller adds `[!]` handlers on it. Errors are raised in the execution body with `[!] >> !ErrorName` (see [[errors#Raising Errors]]). Custom error types are defined with `{!}` blocks (see [[errors#Defining Custom Errors]]). For pglib pipeline error trees, see [[pglib/errors/errors#Pipeline Error Associations]].
 
 ## See Also
 

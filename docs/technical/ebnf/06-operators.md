@@ -22,7 +22,7 @@ assignment_op       ::= push_left | push_right | default_push_left | default_pus
                       | fallback_push_left | fallback_push_right ;
 ```
 
-**Rule:** `<!` and `!>` are fallback assignment operators for error recovery. They provide a value when the source pipeline errors, preventing the target variable from entering the Failed state. Fallback operators only activate when an error occurs — they are not evaluated on the success path. See `[>]`/`[<]` block markers (§5) and fallback line syntax (§10.2).
+**Rule:** `<!` and `!>` are fallback assignment operators for error recovery. They provide a value when the source pipeline errors, preventing the target variable from entering the Failed state. Fallback operators only activate when an error occurs — they are not evaluated on the success path. See `(>)`/`(<)` IO brackets (§5) and fallback line syntax (§10.2).
 
 ### 6.2 Comparison Operators
 

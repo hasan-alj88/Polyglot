@@ -17,7 +17,7 @@ package_id          ::= '@' package_address ;
 data_id             ::= '#' dotted_name ;
 schema_id           ::= "##" name ;               (* e.g., ##Scalar, ##Flat, ##Contiguous *)
 field_type_id       ::= "###" name ;               (* e.g., ###Value, ###Enum, ###ScalarValue, ###ScalarEnum, ###None *)
-pipeline_id         ::= '=' dotted_name ;
+pipeline_id         ::= '-' dotted_name ;
 variable_id         ::= '$' field_path ;
 error_id            ::= '!' dotted_name ;
 permission_id       ::= '_' name ;                 (* e.g., _DataCeiling, _ReportReader *)
@@ -89,7 +89,7 @@ version             ::= 'v' digit '.' digit '.' digit [ '.' digit ] ;
 
 ```ebnf
 cross_pkg_data      ::= '@' name data_id ;            (* @alias#DataName *)
-cross_pkg_pipeline  ::= '@' name pipeline_id ;         (* @alias=PipelineName *)
+cross_pkg_pipeline  ::= '@' name pipeline_id ;         (* @alias-PipelineName *)
 cross_pkg_enum      ::= '@' name '#' dotted_name ;     (* @alias#DataName.EnumField *)
 ```
 

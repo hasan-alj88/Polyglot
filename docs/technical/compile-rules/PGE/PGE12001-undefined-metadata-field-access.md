@@ -9,7 +9,7 @@ severity: error
 # Rule 10.1 — Undefined Metadata Field Access
 `PGE12001`
 
-**Statement:** A metadata access expression (`$var%field`, `=Pipeline%field`, `#Data%field`) must reference a field that exists in the metadata schema for that object type. Each object type has a fixed set of valid metadata fields — accessing a field outside that schema is a compile error.
+**Statement:** A metadata access expression (`$var%field`, `-Pipeline%field`, `#Data%field`) must reference a field that exists in the metadata schema for that object type. Each object type has a fixed set of valid metadata fields — accessing a field outside that schema is a compile error.
 **Rationale:** The `%` tree has a well-defined schema per object type. An invalid field access like `$count%description` (variables have no `.description` metadata) is always a logic error. Catching this at compile time prevents silent empty reads or undefined behavior at runtime.
 **Detection:** The compiler resolves the object type from the `%` access expression and checks field existence. Fixed metadata fields (`%state`, `%status`, etc.) and user-declared `[%]` fields are a direct schema lookup. The `%info` field (`#serial`) requires fetching from the metadata tree to confirm the subfield path exists. Any field reference not found is rejected.
 
@@ -26,7 +26,7 @@ severity: error
 | `%state` | `#live.#VarState` |
 | `%sourceError` | `#live.error` |
 
-### Pipeline (`{=}`)
+### Pipeline (`{-}`)
 
 | Field | Type |
 |-------|------|
@@ -68,79 +68,79 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ variable live metadata — %state exists for all $variables
-{=} =CheckState
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >out#string
+{-} -CheckState
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >out#string
    [?] $input%state
       [?] =? .Final
-         [r] >out << $input
+         [-] >out << $input
       [?] *?
-         [r] >out << "not ready"
+         [-] >out << "not ready"
 ```
 
 ```polyglot
 [ ] ✓ pipeline live metadata — %status exists for all pipelines
-{=} =Monitor
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] >out#string
-   [?] =Worker%status
+{-} -Monitor
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) >out#string
+   [?] -Worker%status
       [?] =? .Running
-         [r] >out << "active"
+         [-] >out << "active"
       [?] *?
-         [r] >out << "idle"
+         [-] >out << "idle"
 ```
 
 ```polyglot
 [ ] ✓ user-declared metadata — %description exists when declared in [%]
-{=} =Documented
+{-} -Documented
    [%] .description << "Handles payments"
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] >out#string
-   [r] >out << =Documented%description
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) >out#string
+   [-] >out << -Documented%description
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE12001 — $variable has no %description field
-{=} =BadAccess
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <count#int
-   [=] >out#string
-   [r] >out << $count%description       [ ] ✗ PGE12001 — $var has no .description
+{-} -BadAccess
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <count#int
+   (-) >out#string
+   [-] >out << $count%description       [ ] ✗ PGE12001 — $var has no .description
 ```
 
 ```polyglot
 [ ] ✗ PGE12001 — pipeline has no %memory field
-{=} =BadPipeline
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] >out#string
-   [r] >out << =Worker%memory           [ ] ✗ PGE12001 — no .memory in pipeline schema
+{-} -BadPipeline
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) >out#string
+   [-] >out << -Worker%memory           [ ] ✗ PGE12001 — no .memory in pipeline schema
 ```
 
 ```polyglot
 [ ] ✗ PGE12001 — %isSuccess is pipeline-only, not variable
-{=} =WrongScope
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <data#string
-   [=] >out#string
+{-} -WrongScope
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <data#string
+   (-) >out#string
    [?] $data%isSuccess                  [ ] ✗ PGE12001 — .isSuccess is pipeline metadata
       [?] =? .True
-         [r] >out << "ok"
+         [-] >out << "ok"
       [?] *?
-         [r] >out << "fail"
+         [-] >out << "fail"
 ```
 
 **Open point:** None.

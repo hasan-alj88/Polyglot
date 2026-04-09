@@ -28,10 +28,10 @@ Place `[ ] Ignore PGW-NNN` on the line immediately above a statement that produc
 
 ```polyglot
 [ ] Ignore PGW03001
-[b] =Audit.Log
-   [=] <event << $event            [ ] no warning — suppressed
+[b] -Audit.Log
+   (-) <event << $event            [ ] no warning — suppressed
 
 [ ] Ignore PGW02001
-[r] =LogStatus
-   [=] <status << >label           [ ] PGW02001 suppressed
+[-] -LogStatus
+   (-) <status << >label           [ ] PGW02001 suppressed
 ```

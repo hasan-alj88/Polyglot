@@ -7,18 +7,18 @@ metadata_definition: "%definition.Q:Drain"
 metadata_instance: "%Q:Drain:N"
 ---
 
-# =Q.Drain
+# -Q.Drain
 
 Stop accepting new jobs, finish existing.
 
 ## Definition
 
 ```polyglot
-{N} =Q.Drain
+{N} -Q.Drain
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QDrain"
    [%] .description << "Stop accepting new jobs, finish existing."
-   [=] <queue#String
+   (-) <queue#String
 ```
 
 ## Inputs
@@ -48,5 +48,5 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[pglib/pipelines/Q/Flush|=Q.Flush]]
-- [[pglib/pipelines/Q/INDEX|=Q.* Queue Pipelines]]
+- [[pglib/pipelines/Q/Flush|-Q.Flush]]
+- [[pglib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

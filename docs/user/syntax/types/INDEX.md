@@ -22,7 +22,7 @@ These axioms define Polyglot's data model. All type system design follows from t
 5. **GT-5: `#String` extends `#RawString` with regex enforcement** — from it derive all `##Scalar` types (`#Int`, `#Float`, `#Dimension`, `#KeyString`, etc.)
 6. **GT-6: Not all tree properties can be expressed via regex** — hence `%` metadata properties (`##` schemas) describe tree shapes the compiler can identify and enforce
 7. **GT-7: `#`, `##`, `###` are user-friendly aliases for `%` metadata** — users should never need to use `%` directly; the prefix tiers are the user-facing alternative
-8. **GT-8: `{x}` = compile-time definitions; `=` pipelines = runtime definitions** — clean separation
+8. **GT-8: `{x}` = compile-time definitions; `-` pipelines = runtime definitions** — clean separation
 9. **GT-9: `##` schemas can be parameterized** — parameterized schemas use `[#] <param` inputs to generate structural constraints at compose time
 10. **GT-10: `#` types can be generic** — generic types use `[#] <param` inputs with `:` positional binding; compiler resolves all params to produce fully realized types
 
@@ -31,16 +31,16 @@ These axioms define Polyglot's data model. All type system design follows from t
 Types are annotated on variables using the `#` character. The `#` starts a **type context** — it signals "what type this holds." See [[identifiers]] for prefix rules and [[variable-lifecycle]] for how typed variables move through lifecycle stages:
 
 ```polyglot
-[r] $IntValue#int <~ 42
-[r] $StringValue#string <~ "Hello World"
-[r] $ArrayValue#array <~ {1, 2, 3, 4, 5}
+[-] $IntValue#int <~ 42
+[-] $StringValue#string <~ "Hello World"
+[-] $ArrayValue#array <~ {1, 2, 3, 4, 5}
 ```
 
 Each special character has one job:
 
 | Character | Role |
 |-----------|------|
-| `@#=$!_` | Identity (what it is) |
+| `@#-$!_` | Identity (what it is) |
 | `.` `:` | Navigation (fixed/flexible fields) |
 | `#` (after identifier) | Annotation (what type it holds) |
 
@@ -50,16 +50,16 @@ Each special character has one job:
 
 ```polyglot
 [ ] #int resolves to #Int via alias
-[r] $score#int <~ 0
+[-] $score#int <~ 0
 
 [ ] :Person resolves to #Person — no # needed after the first
-[r] $users#array:Person
+[-] $users#array:Person
 
 [ ] :string → #String, :int → #Int
-[r] $map#dict:string:int
+[-] $map#dict:string:int
 
 [ ] :float → #Float, :2D → #Dimension (value 2)
-[r] $matrix#array:float:2D
+[-] $matrix#array:float:2D
 ```
 
 **Rule:** `#` always starts the type context. After the first `#`, type parameters separated by `:` drop the prefix.

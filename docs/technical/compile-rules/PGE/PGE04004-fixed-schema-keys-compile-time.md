@@ -20,17 +20,17 @@ severity: error
    [.] .age#int
 
 [ ] ✓ accessing only declared fixed fields
-[r] $user#UserRecord
-   [r] $user.name << "Alice"
-   [r] $user.age << 30
+[-] $user#UserRecord
+   [-] $user.name << "Alice"
+   [-] $user.age << 30
 ```
 
 ```polyglot
 [ ] ✓ flexible fields — adding keys at runtime is allowed
-[r] $meta#serial
-   [r] $meta:source << "api"
-   [r] $meta:timestamp << "2026-03-18"
-   [r] $meta:custom_tag << "urgent"     [ ] ✓ new : key added dynamically
+[-] $meta#serial
+   [-] $meta:source << "api"
+   [-] $meta:timestamp << "2026-03-18"
+   [-] $meta:custom_tag << "urgent"     [ ] ✓ new : key added dynamically
 ```
 
 ```polyglot
@@ -39,10 +39,10 @@ severity: error
    [.] .info#serial
 
 [ ] ✓ fixed level frozen, but :info opens a flexible level
-[r] $cfg#Config
-   [r] $cfg.timeout << 30
-   [r] $cfg.info:author << "admin"      [ ] ✓ : level under .info is flexible
-   [r] $cfg.info:version << "1.0"       [ ] ✓ new : key is fine
+[-] $cfg#Config
+   [-] $cfg.timeout << 30
+   [-] $cfg.info:author << "admin"      [ ] ✓ : level under .info is flexible
+   [-] $cfg.info:version << "1.0"       [ ] ✓ new : key is fine
 ```
 
 **INVALID:**
@@ -52,10 +52,10 @@ severity: error
    [.] .age#int
 
 [ ] ✗ PGE04004 — .email not declared in fixed schema
-[r] $user#UserRecord
-   [r] $user.name << "Alice"
-   [r] $user.age << 30
-   [r] $user.email << "alice@example.com" [ ] ✗ PGE04004 — fixed schema is closed
+[-] $user#UserRecord
+   [-] $user.name << "Alice"
+   [-] $user.age << 30
+   [-] $user.email << "alice@example.com" [ ] ✗ PGE04004 — fixed schema is closed
 ```
 
 ```polyglot
@@ -64,8 +64,8 @@ severity: error
    [.] .y#float
 
 [ ] ✗ PGE04004 — cannot add .z to a fixed schema at runtime
-[r] $p#Point
-   [r] $p.x << 1.0
-   [r] $p.y << 2.0
-   [r] $p.z << 3.0                       [ ] ✗ PGE04004 — .z not in #Point
+[-] $p#Point
+   [-] $p.x << 1.0
+   [-] $p.y << 2.0
+   [-] $p.z << 3.0                       [ ] ✗ PGE04004 — .z not in #Point
 ```

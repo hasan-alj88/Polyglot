@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.Format.Calendar"
-metadata_instance: "%=:DT.Format.Calendar:N"
+metadata_definition: "%definition.-:DT.Format.Calendar"
+metadata_instance: "%-:DT.Format.Calendar:N"
 ---
 
-# =DT.Format.Calendar
+# -DT.Format.Calendar
 
 Formats a `#dt` as a string in a specific calendar system's conventional format.
 
 ## Definition
 
 ```polyglot
-{N} =DT.Format.Calendar
+{N} -DT.Format.Calendar
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtFormatCalendar"
    [%] .description << "Format DateTime in calendar system format"
-   [=] <source#dt
-   [=] <system#CalendarSystem
-   [=] >text#string
+   (-) <source#dt
+   (-) <system#CalendarSystem
+   (-) >text#string
 ```
 
 ## Inputs
@@ -48,10 +48,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.Format.Calendar` | Compile-time pipeline template |
-| Instance | `%=:DT.Format.Calendar:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.Format.Calendar` | Compile-time pipeline template |
+| Instance | `%-:DT.Format.Calendar:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

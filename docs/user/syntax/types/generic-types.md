@@ -101,18 +101,18 @@ When a `{#}` type composes a parameterized `##` schema via `[#] << ##Schema`, it
 | `[#] <ParamName##Type` | Value input parameter declaration | `{#}` generic type |
 | `[#] <ParamName <~ "default"` | Parameter with default value | `{#}` generic type |
 
-## `[<]` Parameter Constraints
+## `(<)` Parameter Constraints
 
-`[<]` blocks nested under `[#] <Param` declarations constrain parameters via `%` schema properties:
+`(<)` blocks nested under `[#] <Param` declarations constrain parameters via `%` schema properties:
 
 ```polyglot
 {#} #Array
    [#] <#ValueType
-      [<] << ##Scalar
+      (<) << ##Scalar
    [#] <Dim##Dimension <~ "1D"
 ```
 
-The `[<]` constraint declares that any type passed as `ValueType` must satisfy `##Scalar` (`%##Depth.Max = 1`) — preventing nested collections like `#array:#array:#int`.
+The `(<)` constraint declares that any type passed as `ValueType` must satisfy `##Scalar` (`%##Depth.Max = 1`) — preventing nested collections like `#array:#array:#int`.
 
 ## Bootstrap Layers
 
@@ -121,8 +121,8 @@ Generic types are compiled in a staged sequence:
 | Layer | What | Capabilities | Cannot Use |
 |-------|------|-------------|------------|
 | 0 -- Hardcoded | `#RawString`, `#String`, generic engine | Compiler intrinsics -- not defined in Polyglot code | N/A |
-| 1 -- Self-hosted | `##String` schema, all `##Scalar` types | `{$var}` interpolation, `{%This}` metadata access | `[r] =Pipeline` calls |
-| 2 -- Full generics | `#Array`, `#Map`, `#Dataframe`, `#Set` | `=String.Lower`, `=UID`, `=#list.into.Enum` -- full pipeline execution | N/A |
+| 1 -- Self-hosted | `##String` schema, all `##Scalar` types | `{$var}` interpolation, `{%This}` metadata access | `[-] -Pipeline` calls |
+| 2 -- Full generics | `#Array`, `#Map`, `#Dataframe`, `#Set` | `-String.Lower`, `-UID`, `-#list.into.Enum` -- full pipeline execution | N/A |
 
 Layer 1 types bootstrap without a pipeline engine (string substitution only). Layer 2 types run after scalar types exist. `##CommaSeparatedList` (Layer 1) breaks the circular dependency that `#Array1D:String` (Layer 2) would create.
 
@@ -133,7 +133,7 @@ Layer 1 types bootstrap without a pipeline engine (string substitution only). La
 | Context | `%This` refers to |
 |---------|-------------------|
 | Inside `{#} #MyType` | The type definition |
-| Inside `{=} =MyPipeline` | The pipeline definition |
+| Inside `{-} -MyPipeline` | The pipeline definition |
 | Outside any `{x}` block | Compile error |
 
 `%name` returns the definition name string from the `{x}` block header:
@@ -141,8 +141,8 @@ Layer 1 types bootstrap without a pipeline engine (string substitution only). La
 | Context | `%name` returns |
 |---------|----------------|
 | `{#} #ThisName` | `"ThisName"` |
-| `{=} =Pipeline.Name` | `"Pipeline.Name"` |
-| `{W} =W.Polyglot` | `"W.Polyglot"` |
+| `{-} -Pipeline.Name` | `"Pipeline.Name"` |
+| `{W} -W.Polyglot` | `"W.Polyglot"` |
 
 `%name.Last` splits by `.` and returns the last segment.
 
@@ -154,20 +154,20 @@ Layer 1 types bootstrap without a pipeline engine (string substitution only). La
 
 ## `<#type` in Pipeline IO
 
-The `<#` syntax extends from `{#}` generic type inputs to `{=}` pipeline IO declarations. A pipeline can receive a type definition's `%` metadata tree as input using `[=] <#type`:
+The `<#` syntax extends from `{#}` generic type inputs to `{-}` pipeline IO declarations. A pipeline can receive a type definition's `%` metadata tree as input using `(-) <#type`:
 
 ```polyglot
-{=} =ValidateConfig
-   [=] <data#serial
-   [=] <#type
-   [=] >valid#bool
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =#.Validate
-      [=] <data << $data
-      [=] <#type << <#type
-      [=] >valid >> >valid
+{-} -ValidateConfig
+   (-) <data#serial
+   (-) <#type
+   (-) >valid#bool
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -#.Validate
+      (-) <data << $data
+      (-) <#type << <#type
+      (-) >valid >> >valid
 ```
 
 The `<#type` input works with any tier of the prefix system:
@@ -178,7 +178,7 @@ The `<#type` input works with any tier of the prefix system:
 | `##` schema | `<#Scalar` | The `##Scalar` schema's property declarations |
 | `###` property | `<#Enum` | The `###Enum` field property definition |
 
-This is the same mechanism as `[#] <#ParamName` in `{#}` generic types (GT-1: all definitions are data trees), now available at runtime via `{=}` pipelines. See [[pglib/pipelines/Schema/INDEX|=#.* Schema Pipelines]] for `=#.Match`, `=#.Validate`, `=#.Describe`, `=#.Coerce` — the validation pipelines that use this pattern.
+This is the same mechanism as `[#] <#ParamName` in `{#}` generic types (GT-1: all definitions are data trees), now available at runtime via `{-}` pipelines. See [[pglib/pipelines/Schema/INDEX|-#.* Schema Pipelines]] for `-#.Match`, `-#.Validate`, `-#.Describe`, `-#.Coerce` — the validation pipelines that use this pattern.
 
 ## See Also
 

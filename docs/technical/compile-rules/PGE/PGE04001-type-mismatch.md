@@ -9,7 +9,7 @@ severity: error
 ### Rule 4.1 — Type Mismatch
 `PGE04001`
 
-**Statement:** Pushing a value into a variable or parameter whose declared type differs from the value's type is a compile error. This applies to all assignment operators (`<<`, `>>`, `<~`, `~>`), IO wiring (`[=]`), collector output (`[*] >>`), and race collector inputs (`[*] <<`). There are no implicit coercions — `int` does not auto-promote to `float`, `string` does not coerce to `path`, etc.
+**Statement:** Pushing a value into a variable or parameter whose declared type differs from the value's type is a compile error. This applies to all assignment operators (`<<`, `>>`, `<~`, `~>`), IO wiring (`(-)`), collector output (`(*) >>`), and race collector inputs (`(*) <<`). There are no implicit coercions — `int` does not auto-promote to `float`, `string` does not coerce to `path`, etc.
 
 Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same type" means "same schema" (structural matching, not nominal).
 
@@ -21,43 +21,43 @@ Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same ty
 **VALID:**
 ```polyglot
 [ ] ✓ matching basic types
-[=] <name#string
-[r] =Greet
-   [=] <input#string << <name       [ ] string → string ✓
-   [=] >output#string >> $greeting
+(-) <name#string
+[-] -Greet
+   (-) <input#string << <name       [ ] string → string ✓
+   (-) >output#string >> $greeting
 ```
 
 ```polyglot
 [ ] ✓ matching element-typed arrays
-[r] =Fetch.Names
-   [=] >list#array:string >> $names
-[r] =Process.Names
-   [=] <items#array:string << $names [ ] array.string → array.string ✓
+[-] -Fetch.Names
+   (-) >list#array:string >> $names
+[-] -Process.Names
+   (-) <items#array:string << $names [ ] array.string → array.string ✓
 ```
 
 ```polyglot
 [ ] ✓ matching user-defined types
-[r] =Fetch.User
-   [=] >user#UserRecord >> $user
-[r] =Save.User
-   [=] <record#UserRecord << $user   [ ] UserRecord → UserRecord ✓
+[-] -Fetch.User
+   (-) >user#UserRecord >> $user
+[-] -Save.User
+   (-) <record#UserRecord << $user   [ ] UserRecord → UserRecord ✓
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE04001 — int pushed into string
-[r] =Compute
-   [=] >count#int >> $count
-[r] =Label
-   [=] <text#string << $count        [ ] ✗ PGE04001 — int ≠ string
+[-] -Compute
+   (-) >count#int >> $count
+[-] -Label
+   (-) <text#string << $count        [ ] ✗ PGE04001 — int ≠ string
 ```
 
 ```polyglot
 [ ] ✗ PGE04001 — array.int pushed into array.string
-[r] =Fetch.Scores
-   [=] >scores#array:int >> $scores
-[r] =Display
-   [=] <names#array:string << $scores [ ] ✗ PGE04001 — array.int ≠ array.string
+[-] -Fetch.Scores
+   (-) >scores#array:int >> $scores
+[-] -Display
+   (-) <names#array:string << $scores [ ] ✗ PGE04001 — array.int ≠ array.string
 ```
 
 ```polyglot
@@ -70,10 +70,10 @@ Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same ty
    [.] .orderId#string
    [.] .total#float
 
-[r] =Fetch.User
-   [=] >user#UserRecord >> $user
-[r] =Process.Order
-   [=] <order#OrderRecord << $user  [ ] ✗ PGE04001 — schemas differ (name+age ≠ orderId+total)
+[-] -Fetch.User
+   (-) >user#UserRecord >> $user
+[-] -Process.Order
+   (-) <order#OrderRecord << $user  [ ] ✗ PGE04001 — schemas differ (name+age ≠ orderId+total)
 ```
 
 ```polyglot
@@ -86,18 +86,18 @@ Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same ty
    [.] .name#string
    [.] .email#string
 
-[r] =Fetch.Profile
-   [=] >profile#UserProfile >> $profile
-[r] =Send.Email
-   [=] <contact#ContactInfo << $profile [ ] ✓ same schema — name#string + email#string
+[-] -Fetch.Profile
+   (-) >profile#UserProfile >> $profile
+[-] -Send.Email
+   (-) <contact#ContactInfo << $profile [ ] ✓ same schema — name#string + email#string
 ```
 
 ```polyglot
 [ ] ✗ PGE04001 — no implicit int → float coercion
-[r] =Count.Items
-   [=] >total#int >> $total
-[r] =Divide
-   [=] <numerator#float << $total    [ ] ✗ PGE04001 — int ≠ float
+[-] -Count.Items
+   (-) >total#int >> $total
+[-] -Divide
+   (-) <numerator#float << $total    [ ] ✗ PGE04001 — int ≠ float
 ```
 
 ### See Also

@@ -18,95 +18,95 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ valid inclusive range — lo < hi
-{=} =Grade
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <score#int
-   [=] >label#string
+{-} -Grade
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <score#int
+   (-) >label#string
    [?] $score
       [?] ?[0,59]
-         [r] >label << "fail"
+         [-] >label << "fail"
       [?] ?[60,100]
-         [r] >label << "pass"
+         [-] >label << "pass"
       [?] *?
-         [r] >label << "unknown"
+         [-] >label << "unknown"
 ```
 
 ```polyglot
 [ ] ✓ single-point inclusive range — lo == hi is valid
-{=} =Exact
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <count#int
-   [=] >out#string
+{-} -Exact
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <count#int
+   (-) >out#string
    [?] $count
       [?] ?[5,5]                        [ ] ✓ matches exactly 5
-         [r] >out << "five"
+         [-] >out << "five"
       [?] *?
-         [r] >out << "other"
+         [-] >out << "other"
 ```
 
 ```polyglot
 [ ] ✓ valid exclusive range — lo < hi with room between
-{=} =Between
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <temp#float
-   [=] >out#string
+{-} -Between
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <temp#float
+   (-) >out#string
    [?] $temp
       [?] ?(0.0,100.0)
-         [r] >out << "in range"
+         [-] >out << "in range"
       [?] *?
-         [r] >out << "out of range"
+         [-] >out << "out of range"
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE04013 — inverted inclusive range
-{=} =BadInclusive
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <score#int
-   [=] >out#string
+{-} -BadInclusive
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <score#int
+   (-) >out#string
    [?] $score
       [?] ?[100,0]                      [ ] ✗ PGE04013 — lo (100) > hi (0)
-         [r] >out << "impossible"
+         [-] >out << "impossible"
       [?] *?
-         [r] >out << "always here"
+         [-] >out << "always here"
 ```
 
 ```polyglot
 [ ] ✗ PGE04013 — empty exclusive range (lo == hi)
-{=} =BadExclusive
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <temp#float
-   [=] >out#string
+{-} -BadExclusive
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <temp#float
+   (-) >out#string
    [?] $temp
       [?] ?(5.0,5.0)                   [ ] ✗ PGE04013 — lo (5.0) >= hi (5.0) for exclusive
-         [r] >out << "impossible"
+         [-] >out << "impossible"
       [?] *?
-         [r] >out << "always here"
+         [-] >out << "always here"
 ```
 
 ```polyglot
 [ ] ✗ PGE04013 — inverted mixed range
-{=} =BadMixed
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <value#int
-   [=] >out#string
+{-} -BadMixed
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <value#int
+   (-) >out#string
    [?] $value
       [?] ?[10,3)                       [ ] ✗ PGE04013 — lo (10) > hi (3)
-         [r] >out << "impossible"
+         [-] >out << "impossible"
       [?] *?
-         [r] >out << "always here"
+         [-] >out << "always here"
 ```
 
 **Open point:** None.

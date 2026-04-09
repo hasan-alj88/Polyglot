@@ -7,18 +7,18 @@ metadata_definition: "%definition.Q:Flush"
 metadata_instance: "%Q:Flush:N"
 ---
 
-# =Q.Flush
+# -Q.Flush
 
 Remove all pending jobs from a queue.
 
 ## Definition
 
 ```polyglot
-{N} =Q.Flush
+{N} -Q.Flush
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QFlush"
    [%] .description << "Remove all pending jobs from a queue."
-   [=] <queue#String
+   (-) <queue#String
 ```
 
 ## Inputs
@@ -48,5 +48,5 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[pglib/pipelines/Q/Drain|=Q.Drain]]
-- [[pglib/pipelines/Q/INDEX|=Q.* Queue Pipelines]]
+- [[pglib/pipelines/Q/Drain|-Q.Drain]]
+- [[pglib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

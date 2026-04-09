@@ -3,33 +3,33 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:RT.<Lang>.Script.Inline"
-metadata_instance: "%=:RT.<Lang>.Script.Inline:N"
+metadata_definition: "%definition.-:RT.<Lang>.Script.Inline"
+metadata_instance: "%-:RT.<Lang>.Script.Inline:N"
 ---
 
-# =RT.\<Lang\>.Script.Inline
+# -RT.\<Lang\>.Script.Inline
 
 Run inline code with variable bindings.
 
 ## Definition
 
 ```polyglot
-{N} =RT.<Lang>.Script.Inline
+{N} -RT.<Lang>.Script.Inline
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RtScriptInline"
    [%] .description << "Run inline code with variable bindings."
-   [=] <env#<Lang>Env
-   [=] <Bind#serial
-   [=] >Bind#serial
-   [=] >output#Code:<Lang>.Output
-   [=] <code#string
+   (-) <env#<Lang>Env
+   (-) <Bind#serial
+   (-) >Bind#serial
+   (-) >output#Code:<Lang>.Output
+   (-) <code#string
 ```
 
 ## Inputs
 
 | Name | Type | Description |
 |------|------|-------------|
-| `<env` | `#<Lang>Env` | Runtime environment from `=W.RT` |
+| `<env` | `#<Lang>Env` | Runtime environment from `-W.RT` |
 | `<Bind` | `#serial` | Variable bindings injected as code variables (optional) |
 | `<code` | `#string` | Inline code via `[C]` blocks |
 
@@ -51,12 +51,12 @@ Polyglot-controlled binding — `<Bind` injects vars, `>Bind` captures final sta
 ## Example
 
 ```polyglot
-[r] =RT.Python.Script.Inline
-   [=] <env#PyEnv << $pyenv
-   [=] <Bind#serial << {"target_dir": $targetDir, "deleted_count": 0}
-   [=] >output#Code:Python.Output >> >log
-   [=] >Bind#serial >> >state
-   [=] <code#string <<
+[-] -RT.Python.Script.Inline
+   (-) <env#PyEnv << $pyenv
+   (-) <Bind#serial << {"target_dir": $targetDir, "deleted_count": 0}
+   (-) >output#Code:Python.Output >> >log
+   (-) >Bind#serial >> >state
+   (-) <code#string <<
       [C] import os, glob
       [C] files = glob.glob(target_dir + "/stale_*.log")
       [C] for f in files:
@@ -76,9 +76,9 @@ Requires `System.Process` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:RT.<Lang>.Script.Inline` | Compile-time pipeline template |
-| Instance | `%=:RT.<Lang>.Script.Inline:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:RT.<Lang>.Script.Inline` | Compile-time pipeline template |
+| Instance | `%-:RT.<Lang>.Script.Inline:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/RT/INDEX|=RT.* Runtime Execution]]
+- [[pglib/pipelines/RT/INDEX|-RT.* Runtime Execution]]

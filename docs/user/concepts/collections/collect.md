@@ -11,23 +11,23 @@ updated: 2026-03-30
 <!-- @io:Direct Output Port Writing -->
 Collect operators gather outputs from mini-pipelines back into a single value, accessible **one level up** from the [[concepts/collections/expand|expand]] scope. Multiple collectors can operate within the same expand scope.
 
-Collector invocation uses an execution marker (`[r]` sequential, `[p]` parallel) — just like expand operators. Collector IO lines use `[*]` (matching the `*` operator prefix) — see [[io#IO Line Pattern]]. Collectors can write directly to pipeline output ports — see [[io#Direct Output Port Writing]].
+Collector invocation uses an execution marker (`[-]` sequential, `[=]` parallel) — just like expand operators. Collector IO lines use `(*)` (matching the `*` operator prefix) — see [[io#IO Line Pattern]]. Collectors can write directly to pipeline output ports — see [[io#Direct Output Port Writing]].
 
-Use `[r]` when collectors have dependencies between them, `[p]` when they are independent.
+Use `[-]` when collectors have dependencies between them, `[=]` when they are independent.
 
 ```mermaid
 flowchart LR
     SRC["Source Collection"]
-    EXP["~ForEach.Array — expand"]
+    EXP["=ForEach.Array — expand"]
 
-    subgraph scope ["Per-item scope ([p] = parallel, [r] = sequential)"]
+    subgraph scope ["Per-item scope ([=] = parallel, [-] = sequential)"]
         I1["item 0"]
         I2["item 1"]
         I3["item N"]
     end
 
-    C1["[*] *Into.Array"]
-    C2["[*] *Agg.Sum"]
+    C1["(*) *Into.Array"]
+    C2["(*) *Agg.Sum"]
     R1["Result array — one level up"]
     R2["Result value — one level up"]
 
@@ -63,16 +63,16 @@ flowchart LR
 ## Collect-All & Race Collectors
 
 <!-- @io:Wait and Collect-Into Markers -->
-Collect-all and race collectors operate **outside** expand scopes — they work on variables produced by parallel `[p]` pipeline calls. They use `[*] <<` (wait input) and `[*] >>` (collect output) forms (see [[io#Wait and Collect IO]]).
+Collect-all and race collectors operate **outside** expand scopes — they work on variables produced by parallel `[=]` pipeline calls. They use `(*) <<` (wait input) and `(*) >>` (collect output) forms (see [[io#Wait and Collect IO]]).
 
 ```mermaid
 flowchart LR
     subgraph sync ["*All — collect all"]
         direction LR
-        PA["[p] A → $a"]
-        PB["[p] B → $b"]
-        PC["[p] C → $c"]
-        ALL["[*] *All\n<< $a, << $b, << $c"]
+        PA["[=] A → $a"]
+        PB["[=] B → $b"]
+        PC["[=] C → $c"]
+        ALL["(*) *All\n<< $a, << $b, << $c"]
         AFTER["All variables\naccessible after"]
 
         PA --> ALL
@@ -83,10 +83,10 @@ flowchart LR
 
     subgraph race ["*First — race"]
         direction LR
-        RA["[p] A → $a"]
-        RB["[p] B → $b"]
-        RC["[p] C → $c"]
-        FIRST["[*] *First\n>> $fastest"]
+        RA["[=] A → $a"]
+        RB["[=] B → $b"]
+        RC["[=] C → $c"]
+        FIRST["(*) *First\n>> $fastest"]
         WIN["Winner proceeds"]
 
         RA --> FIRST
@@ -103,130 +103,132 @@ flowchart LR
 
 Parallel execution enforces strict variable isolation:
 
-- A variable inside a `[p]` scope cannot be pushed into from outside that scope (PGE03001)
-- A `[p]` output variable cannot be pulled before its `[*]` collector has executed (PGE03003)
-- A `[p]` parallel and its `[*]` collector must pair within valid section boundaries — same scope, or `[\]` setup to `[/]` cleanup. A `[p]` in setup cannot be collected in the execution body (PGE03004). See [[concepts/pipelines/wrappers#Parallel Forking in Setup]] for the pairing constraint.
+- A variable inside a `[=]` scope cannot be pushed into from outside that scope (PGE03001)
+- A `[=]` output variable cannot be pulled before its `(*)` collector has executed (PGE03003)
+- A `[=]` parallel and its `(*)` collector must pair within valid section boundaries — same scope, or `[\]` setup to `[/]` cleanup. A `[=]` in setup cannot be collected in the execution body (PGE03004). See [[concepts/pipelines/wrappers#Parallel Forking in Setup]] for the pairing constraint.
 
 ### `*All` — Collect All
 
-Waits for ALL listed variables to become Final. Uses `[*] <<` only — no `[*] >>`. Variables stay accessible after.
+Waits for ALL listed variables to become Final. Uses `(*) <<` only — no `(*) >>`. Variables stay accessible after.
 
 No type constraint on inputs.
 
-**Positional implicit IO:** Each `[*] << $var` line maps to a positional input parameter (`<args.0`, `<args.1`, ...) inferred by the compiler from the variable's type.
+**Positional implicit IO:** Each `(*) << $var` line maps to a positional input parameter (`<args.0`, `<args.1`, ...) inferred by the compiler from the variable's type.
 
 ```polyglot
-[p] =Fetch.Profile
-   [=] <id << $userId
-   [=] >profile >> $profile
+[=] -Fetch.Profile
+   (-) <id << $userId
+   (-) >profile >> $profile
 
-[p] =Fetch.History
-   [=] <id << $userId
-   [=] >history >> $history
+[=] -Fetch.History
+   (-) <id << $userId
+   (-) >history >> $history
 
 [ ] Wait for both — $profile and $history stay accessible after
-[*] *All
-   [*] << $profile
-   [*] << $history
+(*) *All
+   (*) << $profile
+   (*) << $history
 
 [ ] Both variables available here
-[r] =Report.Generate
-   [=] <profile << $profile
-   [=] <history << $history
+[-] -Report.Generate
+   (-) <profile << $profile
+   (-) <history << $history
 ```
 
 ### `*First` / `*Second` / `*Nth` — Race Collectors
 
-Wait for the Nth variable to become Final. The winner is stored in `[*] >>`; all other inputs are **cancelled**.
+Wait for the Nth variable to become Final. The winner is stored in `(*) >>`; all other inputs are **cancelled**.
 
-All `[*] <<` inputs must be the **same type** (PGE03006). `[*] >>` output is required.
+All `(*) <<` inputs must be the **same type** (PGE03006). `(*) >>` output is required.
 
 `*First` and `*Second` are sugar for `*Nth` with `n=1` and `n=2`.
 
-**Positional implicit IO:** Like `*All`, each `[*] << $var` maps to a positional input (`<args.0`, `<args.1`, ...). For single-output collectors (`*First`, `*Second`), the compiler infers the output type from the input type — the `[*] >> $winner` declaration is explicit but its type is implicit.
+**Positional implicit IO:** Like `*All`, each `(*) << $var` maps to a positional input (`<args.0`, `<args.1`, ...). For single-output collectors (`*First`, `*Second`), the compiler infers the output type from the input type — the `(*) >> $winner` declaration is explicit but its type is implicit.
 
 ```polyglot
-[p] =Search.EngineA
-   [=] <query << $query
-   [=] >result >> $resultA
+[=] -Search.EngineA
+   (-) <query << $query
+   (-) >result >> $resultA
 
-[p] =Search.EngineB
-   [=] <query << $query
-   [=] >result >> $resultB
+[=] -Search.EngineB
+   (-) <query << $query
+   (-) >result >> $resultB
 
-[p] =Search.EngineC
-   [=] <query << $query
-   [=] >result >> $resultC
+[=] -Search.EngineC
+   (-) <query << $query
+   (-) >result >> $resultC
 
 [ ] Take the first to arrive — other two are cancelled
-[*] *First
-   [*] << $resultA
-   [*] << $resultB
-   [*] << $resultC
-   [*] >> $fastest
+(*) *First
+   (*) << $resultA
+   (*) << $resultB
+   (*) << $resultC
+   (*) >> $fastest
 
 [ ] *Nth — generic form; take the 2nd to arrive
-[*] *Nth
-   [*] <n#int << 2
-   [*] << $resultA
-   [*] << $resultB
-   [*] << $resultC
-   [*] >> $backup
+(*) *Nth
+   (*) <n#int << 2
+   (*) << $resultA
+   (*) << $resultB
+   (*) << $resultC
+   (*) >> $backup
 ```
 
 ### Discarding Parallel Output
 
-Two ways to intentionally discard output from a `[p]` parallel pipeline, both satisfying PGE03002:
+Two ways to intentionally discard output from a `[=]` parallel pipeline, both satisfying PGE03002:
 
 **`$*` — inline discard.** Use when you never need the value. No variable is created — the output is immediately released at the declaration site:
 
 ```polyglot
-[p] =Audit.Log
-   [=] <event << $event
-   [=] >auditId >> $*              [ ] discarded inline — no variable created
+[=] -Audit.Log
+   (-) <event << $event
+   (-) >auditId >> $*              [ ] discarded inline — no variable created
 ```
 
 **`*Ignore` — explicit collector discard.** Use when you want a named variable for debugging or future code changes. The variable exists but is explicitly released:
 
 ```polyglot
-[p] =Audit.Log
-   [=] <event << $event
-   [=] >auditId >> $auditId
+[=] -Audit.Log
+   (-) <event << $event
+   (-) >auditId >> $auditId
 
 [ ] We triggered the audit but don't need the ID
-[*] *Ignore
-   [*] << $auditId
+(*) *Ignore
+   (*) << $auditId
 ```
 
 Prefer `$*` for clean discards. Prefer `*Ignore` when the variable may be needed later during development.
 
 **`[b]` — fire-and-forget parallel.** `[b]` has no collectible output (PGE03005). When `[b]` invokes a pipeline that declares outputs, those outputs are silently discarded — the compiler warns (PGW03001). An `[!]` error handler under a `[b]` call is unreachable dead code (PGW03002).
 
+
+
 ### Multi-Wave Parallel Pattern
 
-Multiple `[*] *All` barriers create sequential waves of parallel work:
+Multiple `(*) *All` barriers create sequential waves of parallel work:
 
 ```polyglot
 [ ] Wave 1
-[p] =Fetch.A ...
-[p] =Fetch.B ...
-[*] *All
-   [*] << $a
-   [*] << $b
+[=] -Fetch.A ...
+[=] -Fetch.B ...
+(*) *All
+   (*) << $a
+   (*) << $b
 
 [ ] Wave 2 — uses $a and $b
-[p] =Enrich.A ...
-[p] =Enrich.B ...
-[*] *All
-   [*] << $enrichedA
-   [*] << $enrichedB
+[=] -Enrich.A ...
+[=] -Enrich.B ...
+(*) *All
+   (*) << $enrichedA
+   (*) << $enrichedB
 
 [ ] Sequential final step
-[r] =Assemble ...
+[-] -Assemble ...
 ```
 
 ## See Also
 
 - [[concepts/collections/expand|Expand Operators]] — `~` operators that produce items for collectors
-- [[concepts/pipelines/wrappers|Wrappers]] — parallel forking in setup with `[*] *All` in cleanup
+- [[concepts/pipelines/wrappers|Wrappers]] — parallel forking in setup with `(*) *All` in cleanup
 - [[concepts/collections/examples|Examples]] — complete expand/transform/collect patterns

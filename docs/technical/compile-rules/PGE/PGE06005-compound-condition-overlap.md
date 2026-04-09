@@ -20,12 +20,12 @@ severity: error
 [ ] ✓ non-overlapping compound conditions — no cell covered twice
 [?] $age >? 18
    [&] $hasLicense =? #Boolean.True
-      [r] =Allow.Drive
+      [-] -Allow.Drive
 [?] $age >? 18
    [&] $hasLicense =? #Boolean.False
-      [r] =Deny.NoLicense
+      [-] -Deny.NoLicense
 [?] $age <=? 18
-   [r] =Deny.Underage
+   [-] -Deny.Underage
 [ ] Grid: {≤18,T}, {≤18,F}, {>18,T}, {>18,F} — each cell covered by exactly one branch
 ```
 
@@ -33,11 +33,11 @@ severity: error
 ```polyglot
 [ ] ✗ PGE06005 — branches overlap on cell {>18}
 [?] $age >? 18
-   [r] =Adult
+   [-] -Adult
 [?] $age >? 15
-   [r] =Teen                          [ ] ✗ PGE06005 — {>18} covered by both branches
+   [-] -Teen                          [ ] ✗ PGE06005 — {>18} covered by both branches
 [?] $age <=? 15
-   [r] =Child
+   [-] -Child
 [ ] Partitions for $age: {≤15, 16..18, >18}
 [ ] Branch 1 covers {>18}, Branch 2 covers {16..18, >18} — overlap at {>18}
 ```
@@ -45,11 +45,11 @@ severity: error
 ```polyglot
 [ ] ✗ PGE06005 — *? does not fix overlap
 [?] $age >? 18
-   [r] =Adult
+   [-] -Adult
 [?] $age >? 15
-   [r] =Teen                          [ ] ✗ PGE06005 — still overlaps at {>18}
+   [-] -Teen                          [ ] ✗ PGE06005 — still overlaps at {>18}
 [?] *?
-   [r] =Other                         [ ] *? does not resolve overlap
+   [-] -Other                         [ ] *? does not resolve overlap
 ```
 
 **Open point:** None.

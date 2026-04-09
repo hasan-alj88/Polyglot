@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.To.ChineseTime"
-metadata_instance: "%=:DT.To.ChineseTime:N"
+metadata_definition: "%definition.-:DT.To.ChineseTime"
+metadata_instance: "%-:DT.To.ChineseTime:N"
 ---
 
-# =DT.To.ChineseTime
+# -DT.To.ChineseTime
 
 Converts a `#dt` into Chinese traditional time units (shichen/ke/fen). These pipelines convert a `#dt` into culture-specific time representations.
 
 ## Definition
 
 ```polyglot
-{N} =DT.To.ChineseTime
+{N} -DT.To.ChineseTime
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToChineseTime"
    [%] .description << "DateTime to Chinese traditional time"
-   [=] <source#dt
-   [=] >time#ChineseTime
+   (-) <source#dt
+   (-) >time#ChineseTime
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.To.ChineseTime` | Compile-time pipeline template |
-| Instance | `%=:DT.To.ChineseTime:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.To.ChineseTime` | Compile-time pipeline template |
+| Instance | `%-:DT.To.ChineseTime:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

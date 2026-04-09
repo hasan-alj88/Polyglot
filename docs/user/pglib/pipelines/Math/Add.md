@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: stable
-metadata_definition: "%definition.=:Math.Add"
-metadata_instance: "%=:Math.Add:N"
+metadata_definition: "%definition.-:Math.Add"
+metadata_instance: "%-:Math.Add:N"
 ---
 
-# =Math.Add
+# -Math.Add
 
 Adds two or more numeric values. Accepts variadic input (2 or more operands). When any input is `#float`, the output is `#float`.
 
 ## Definition
 
 ```polyglot
-{N} =Math.Add
+{N} -Math.Add
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathAdd"
    [%] .description << "Variadic addition of two or more numeric values"
-   [=] <<#int (variadic — 2+)
-   [=] >>#int
+   (-) <<#int (variadic — 2+)
+   (-) >>#int
 ```
 
 ## Inputs
@@ -46,9 +46,9 @@ None.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:Math.Add` | Compile-time pipeline template |
-| Instance | `%=:Math.Add:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:Math.Add` | Compile-time pipeline template |
+| Instance | `%-:Math.Add:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Math/INDEX|=Math.* Numeric Pipelines]]
+- [[pglib/pipelines/Math/INDEX|-Math.* Numeric Pipelines]]

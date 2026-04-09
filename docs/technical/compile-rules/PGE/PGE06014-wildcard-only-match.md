@@ -16,7 +16,7 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ match with non-wildcard arm before wildcard
-[r] $code >> $msg#string
+[-] $code >> $msg#string
    [?] 200 >> "OK"
    [?] 404 >> "Not Found"
    [?] *? >> "Unknown"
@@ -25,7 +25,7 @@ severity: error
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE06014 — wildcard-only match is tautological
-[r] $code >> $msg#string
+[-] $code >> $msg#string
    [?] *? >> "always this"
 ```
 

@@ -38,22 +38,22 @@ severity: error
 [ ] ✓ all variants listed — exhaustive, no *? needed
 [?] $level#Severity
    [?] #Severity.Critical
-      [r] =Alert.Page
+      [-] -Alert.Page
    [?] #Severity.Error
-      [r] =Alert.Email
+      [-] -Alert.Email
    [?] #Severity.Warning
-      [r] =Log.Warning
+      [-] -Log.Warning
    [?] #Severity.Info
-      [r] =Log.Info
+      [-] -Log.Info
 ```
 
 ```polyglot
 [ ] ✓ partial coverage + *? covers the rest
 [?] $level#Severity
    [?] #Severity.Critical
-      [r] =Alert.Page
+      [-] -Alert.Page
    [?] *?
-      [r] =Log.Default           [ ] ✓ *? covers Error, Warning, Info
+      [-] -Log.Default           [ ] ✓ *? covers Error, Warning, Info
 ```
 
 **INVALID:**
@@ -67,9 +67,9 @@ severity: error
 [ ] ✗ PGE06002 — .Warning and .Info not covered, no *?
 [?] $level#Severity
    [?] #Severity.Critical
-      [r] =Alert.Page
+      [-] -Alert.Page
    [?] #Severity.Error
-      [r] =Alert.Email
+      [-] -Alert.Email
    [ ] ✗ PGE06002 — .Warning, .Info unhandled
    [ ] also ✗ PGE06001 — not exhaustive, no *?
 ```
@@ -85,18 +85,18 @@ severity: error
 [ ] ✓ both variants listed — no *? needed
 [?] $isActive#bool
    [?] #Boolean.True
-      [r] =Handle.Active
+      [-] -Handle.Active
    [?] #Boolean.False
-      [r] =Handle.Inactive
+      [-] -Handle.Inactive
 ```
 
 ```polyglot
 [ ] ✓ one variant + *? covers the other
 [?] $isActive#bool
    [?] #Boolean.True
-      [r] =Handle.Active
+      [-] -Handle.Active
    [?] *?
-      [r] =Handle.NotActive    [ ] ✓ *? covers #Boolean.False
+      [-] -Handle.NotActive    [ ] ✓ *? covers #Boolean.False
 ```
 
 **INVALID:**
@@ -104,7 +104,7 @@ severity: error
 [ ] ✗ PGE06002 — #Boolean.False not covered, no *?
 [?] $isActive#bool
    [?] #Boolean.True
-      [r] =Handle.Active
+      [-] -Handle.Active
    [ ] ✗ PGE06002 — #Boolean.False unhandled
    [ ] also ✗ PGE06001 — not exhaustive, no *?
 ```
@@ -127,11 +127,11 @@ When an enum variant contains value sub-fields, PGE06002 checks only the **top-l
 [ ] ✓ both top-level variants — exhaustive, no *? needed
 [?] $outcome#Result
    [?] #Result.Success
-      [r] =Log.Success
-         [=] <msg << $outcome.message
+      [-] -Log.Success
+         (-) <msg << $outcome.message
    [?] #Result.Failed
-      [r] =Log.Failure
-         [=] <reason << $outcome.reason
+      [-] -Log.Failure
+         (-) <reason << $outcome.reason
 ```
 
 ---
@@ -145,11 +145,11 @@ When branching on an enum imported from another package, use the `@alias#EnumNam
 [ ] ✓ imported enum — all variants covered, no *? needed
 [?] $status;@models#OrderStatus
    [?] @models#OrderStatus.Pending
-      [r] =Process.Queue
+      [-] -Process.Queue
    [?] @models#OrderStatus.Shipped
-      [r] =Process.Track
+      [-] -Process.Track
    [?] @models#OrderStatus.Delivered
-      [r] =Process.Archive
+      [-] -Process.Archive
 ```
 
 ---

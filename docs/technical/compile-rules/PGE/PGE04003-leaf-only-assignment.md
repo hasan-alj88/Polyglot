@@ -20,16 +20,16 @@ severity: error
    [.] .age#int
 
 [ ] ✓ assigning to leaf fields individually
-[r] $user#UserRecord
-   [r] $user.name << "Alice"
-   [r] $user.age << 30
+[-] $user#UserRecord
+   [-] $user.name << "Alice"
+   [-] $user.age << 30
 ```
 
 ```polyglot
 [ ] ✓ flexible leaf fields
-[r] $config#serial
-   [r] $config:timeout << 30
-   [r] $config:retries << 3
+[-] $config#serial
+   [-] $config:timeout << 30
+   [-] $config:retries << 3
 ```
 
 **INVALID:**
@@ -39,10 +39,10 @@ severity: error
    [.] .age#int
 
 [ ] ✗ PGE04003 — assigning to branch node $user which has children .name, .age
-[r] $user#UserRecord
-   [r] $user << "Alice"            [ ] ✗ PGE04003 — $user is a branch, not a leaf
-   [r] $user.name << "Alice"
-   [r] $user.age << 30
+[-] $user#UserRecord
+   [-] $user << "Alice"            [ ] ✗ PGE04003 — $user is a branch, not a leaf
+   [-] $user.name << "Alice"
+   [-] $user.age << 30
 ```
 
 ```polyglot
@@ -55,7 +55,7 @@ severity: error
    [.] .address#Address
 
 [ ] ✗ PGE04003 — .address is a branch (has .city, .zip children)
-[r] $p#Person
-   [r] $p.name << "Bob"
-   [r] $p.address << "123 Main St"  [ ] ✗ PGE04003 — must assign .address.city and .address.zip
+[-] $p#Person
+   [-] $p.name << "Bob"
+   [-] $p.address << "123 Main St"  [ ] ✗ PGE04003 — must assign .address.city and .address.zip
 ```

@@ -9,22 +9,22 @@ updated: 2026-04-05
 ## Permissions
 
 <!-- @permissions -->
-Pipelines declare permissions by referencing named `{_}` grant objects via `[_]` lines. `[_]` lines go after the `{=}` header (and `[%]` metadata, if present), before `[T]`, `[Q]`, `[W]`, and IO. See [[permissions]] for the full permission system, `{_}` object syntax, and the Ceiling vs Grant model.
+Pipelines declare permissions by referencing named `{_}` grant objects via `[_]` lines. `[_]` lines go after the `{-}` header (and `[%]` metadata, if present), before `[T]`, `[Q]`, `[W]`, and IO. See [[permissions]] for the full permission system, `{_}` object syntax, and the Ceiling vs Grant model.
 
 ```polyglot
 {_} _LogGrant
    [.] .intent << #Grant
    [.] .File.Read "/var/log/app/*.log"
 
-{=} =AnalyzeLogs
+{-} -AnalyzeLogs
    [_] _LogGrant
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <logPath#path
-   [=] >summary#string
-   [r] $content << =File.Text.Read >> "{$logPath}"
-   [r] >summary << ...
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <logPath#path
+   (-) >summary#string
+   [-] $content << -File.Text.Read >> "{$logPath}"
+   [-] >summary << ...
 ```
 
 - **Grant must be a subset of ceiling** — every `{_}` grant referenced by a pipeline must fall within the package `{@}` ceiling (PGE10001). See [[packages#Permissions]] for ceiling rules.

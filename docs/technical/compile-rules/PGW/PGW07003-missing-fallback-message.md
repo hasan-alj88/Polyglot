@@ -9,9 +9,9 @@ severity: warning
 ### Rule 7.3w — Missing Fallback Message
 `PGW07003`
 
-**Statement:** When a pipeline author defines an output fallback inside a `[!] >>` raise block (`[=] >output << value`) but does not include a `[>] %FallbackMessage` line, the compiler emits a warning. Without a message, callers can silently override the fallback without understanding the author's intent. Suppress the warning with `[>] %FallbackMessage << ""` to explicitly allow silent overrides.
-**Rationale:** Pipeline-defined fallbacks represent deliberate design decisions. If the author does not document why the fallback exists, callers who override it via `[>] <!` will not receive PGW07002, losing the safety net. This warning ensures authors either document their fallback reasoning or explicitly opt out.
-**Detection:** The compiler checks each `[=] >output << value` line inside `[!] >>` raise blocks. If no `[>] %FallbackMessage` line follows (indented under the output fallback), PGW07003 fires.
+**Statement:** When a pipeline author defines an output fallback inside a `[!] >>` raise block (`(-) >output << value`) but does not include a `(>) %FallbackMessage` line, the compiler emits a warning. Without a message, callers can silently override the fallback without understanding the author's intent. Suppress the warning with `(>) %FallbackMessage << ""` to explicitly allow silent overrides.
+**Rationale:** Pipeline-defined fallbacks represent deliberate design decisions. If the author does not document why the fallback exists, callers who override it via `(>) <!` will not receive PGW07002, losing the safety net. This warning ensures authors either document their fallback reasoning or explicitly opt out.
+**Detection:** The compiler checks each `(-) >output << value` line inside `[!] >>` raise blocks. If no `(>) %FallbackMessage` line follows (indented under the output fallback), PGW07003 fires.
 
 **See also:**
 - [PGW07002 — Caller Overrides Pipeline Fallback](PGW07002-caller-overrides-pipeline-fallback.md) — caller-side warning when overriding documented fallbacks
@@ -19,58 +19,58 @@ severity: warning
 **VALID:**
 ```polyglot
 [ ] ✓ Fallback with %FallbackMessage — documented intent
-{=} =ValidateUser
-   [=] <name#string
-   [=] >validated#string
-   [=] >status#string
-   [=] !Validation.Empty
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
+{-} -ValidateUser
+   (-) <name#string
+   (-) >validated#string
+   (-) >status#string
+   (-) !Validation.Empty
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty
-         [=] .Message << "Name is required"
-         [=] >status << "invalid"
-            [>] %FallbackMessage << "Pipeline returns invalid status on empty input"
+         (-) .Message << "Name is required"
+         (-) >status << "invalid"
+            (>) %FallbackMessage << "Pipeline returns invalid status on empty input"
    [?] *?
-      [r] >validated << $name
-      [r] >status << "ok"
+      [-] >validated << $name
+      [-] >status << "ok"
 ```
 
 ```polyglot
 [ ] ✓ Fallback with empty %FallbackMessage — intentionally allows silent override
-{=} =ValidateUserPermissive
-   [=] <name#string
-   [=] >status#string
-   [=] !Validation.Empty
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
+{-} -ValidateUserPermissive
+   (-) <name#string
+   (-) >status#string
+   (-) !Validation.Empty
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty
-         [=] .Message << "Name is required"
-         [=] >status << "invalid"
-            [>] %FallbackMessage << ""
+         (-) .Message << "Name is required"
+         (-) >status << "invalid"
+            (>) %FallbackMessage << ""
    [?] *?
-      [r] >status << "ok"
+      [-] >status << "ok"
 ```
 
 **WARNING:**
 ```polyglot
 [ ] ⚠ PGW07003 — output fallback without %FallbackMessage
-{=} =ValidateUserBad
-   [=] <name#string
-   [=] >status#string
-   [=] !Validation.Empty
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
+{-} -ValidateUserBad
+   (-) <name#string
+   (-) >status#string
+   (-) !Validation.Empty
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty
-         [=] .Message << "Name is required"
-         [=] >status << "invalid"             [ ] ⚠ PGW07003 — missing %FallbackMessage
+         (-) .Message << "Name is required"
+         (-) >status << "invalid"             [ ] ⚠ PGW07003 — missing %FallbackMessage
    [?] *?
-      [r] >status << "ok"
+      [-] >status << "ok"
 ```
 
 **Open point:** None.

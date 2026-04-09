@@ -11,7 +11,7 @@ metadata_instance: "%#:Code:N"
 
 <!-- @types -->
 
-Runtime execution output type. Output struct for all `=RT.*` pipeline modes. Language is a flexible field (`:Python`, `:Rust`, etc.), `.Output` is fixed.
+Runtime execution output type. Output struct for all `-RT.*` pipeline modes. Language is a flexible field (`:Python`, `:Rust`, etc.), `.Output` is fixed.
 
 ---
 
@@ -55,6 +55,6 @@ Runtime execution output type. Output struct for all `=RT.*` pipeline modes. Lan
 ## Related
 
 - [[rt]] — runtime types overview
-- [[pglib/pipelines/RT/INDEX|=RT.*]] — runtime execution pipelines
-- [[pglib/pipelines/W/INDEX|=W.*]] — wrapper pipelines
+- [[pglib/pipelines/RT/INDEX|-RT.*]] — runtime execution pipelines
+- [[pglib/pipelines/W/INDEX|-W.*]] — wrapper pipelines
 - [[syntax/types/INDEX|types]] — full type system specification

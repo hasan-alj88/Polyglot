@@ -9,7 +9,7 @@ status: complete
 
 <!-- @identifiers -->
 <!-- @blocks -->
-Mandatory first block in every `.pg` file — exactly one `{@}` per file. Multiple `{#}` and `{=}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses use `::` to separate the registry from the package name, with `:` (flexible) separators throughout. Packages live at `%@` in the metadata tree (see [[data-is-trees#How Concepts Connect]]).
+Mandatory first block in every `.pg` file — exactly one `{@}` per file. Multiple `{#}` and `{-}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses use `::` to separate the registry from the package name, with `:` (flexible) separators throughout. Packages live at `%@` in the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
 ```polyglot
 { } Package declaration block
@@ -43,12 +43,12 @@ Package addresses use `:` for flexible (user-defined) levels and `::` as a regis
 
 Reference imported packages via their alias:
 - `@alias1#SomeData` — access data from imported package. See [[syntax/types/basic-types#User-Defined Types]]
-- `@alias1=SomePipeline` — access pipeline from imported package. See [[concepts/pipelines/INDEX|pipelines]]
+- `@alias1-SomePipeline` — access pipeline from imported package. See [[concepts/pipelines/INDEX|pipelines]]
 - `@alias1#DataName.EnumField` — reference enum value cross-package. See [[syntax/types/structs#Enum Fields vs Value Fields]]
 
 Every `@alias` reference must resolve to a declared `[@]` import (PGE09001). The pipeline name after the alias must exist in the imported package (PGE09004). Referencing a deprecated pipeline emits a warning (PGW09001).
 
-**Note:** Standard library pipelines (`=File.*`, `=T.*`, `=Q.*`, `=W.*`) are built-in and do NOT require `[@]` import — see [[concepts/pipelines/io-triggers#Triggers]].
+**Note:** Standard library pipelines (`-File.*`, `-T.*`, `-Q.*`, `-W.*`) are built-in and do NOT require `[@]` import — see [[concepts/pipelines/io-triggers#Triggers]].
 
 ## Import Rules
 
@@ -64,7 +64,7 @@ Package imports must form a directed acyclic graph. If Package A imports Package
 
 Within a package, pipeline calls must also be acyclic — Polyglot has no recursion mechanism. Self-calls and mutual call loops are compile errors (PGE09013). See [[concepts/pipelines/inline-calls#Call Site Rules]].
 
-Pipeline references in `[r]`, `[p]`, or `[b]` calls must resolve to either a pglib pipeline or a `{=}` definition within the same package (PGE09003). Cross-package pipelines must use the `@alias=Pipeline` form with a valid `[@]` import.
+Pipeline references in `[-]`, `[=]`, or `[b]` calls must resolve to either a pglib pipeline or a `{-}` definition within the same package (PGE09003). Cross-package pipelines must use the `@alias-Pipeline` form with a valid `[@]` import.
 
 ## Multi-File Packages
 
@@ -91,7 +91,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
 
 - **Same address** — every file in the package must declare the same `{@}` package name and version (PGE09005, PGE09006)
 - **Full mesh** — every file must reference all other files in the package. If file A references B and C, then B must reference A and C, and C must reference A and B (PGE09010)
-- **No duplicates** — a `{=}` pipeline name or `{#}` data name must be unique across all files in the package (PGE09007)
+- **No duplicates** — a `{-}` pipeline name or `{#}` data name must be unique across all files in the package (PGE09007)
 - **No self-reference** — a file must not list itself (PGE09009)
 - **File must exist** — every referenced path must resolve to an existing `.pg` file (PGE09008)
 
@@ -118,12 +118,12 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [@] << "{.}\my-app-01.pg"
    [@] << "{.}\my-app-03.pg"
 
-{=} =LoadConfig
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] >config#Config
-   [r] >config << ...
+{-} -LoadConfig
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) >config#Config
+   [-] >config << ...
 ```
 
 **my-app-03.pg:**
@@ -132,15 +132,15 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [@] << "{.}\my-app-01.pg"
    [@] << "{.}\my-app-02.pg"
 
-{=} =RunServer
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <config#Config
-   [r] ...
+{-} -RunServer
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <config#Config
+   [-] ...
 ```
 
-All three files share the `#Config` data type and can call each other's pipelines as if they were in one file. A file can also reference imports and sibling files together:
+All three files share the `#Config` data type and can each other's pipelines as if they were in one file. A file can also reference imports and sibling files together:
 
 ```polyglot
 {@} @Local:1000::MyApp:v1.0.0
@@ -157,7 +157,7 @@ The `{@}` block uses `[_]` lines to reference `{_}` permission ceiling objects, 
 
 ### Ceiling Syntax
 
-`[_]` lines in `{@}` reference named `{_}` ceiling objects. The `{_}` objects are defined as standalone blocks (typically after `{@}`, before `{#}` and `{=}`):
+`[_]` lines in `{@}` reference named `{_}` ceiling objects. The `{_}` objects are defined as standalone blocks (typically after `{@}`, before `{#}` and `{-}`):
 
 ```polyglot
 {@} @Local:999::LogAnalyzer:v1.0.0
@@ -174,11 +174,11 @@ The `{@}` block uses `[_]` lines to reference `{_}` permission ceiling objects, 
 
 ### Ceiling Rules
 
-- **Ceiling, not grant** — `[_]` in `{@}` references a `{_}` ceiling object. Each `{=}` pipeline must reference its own `{_}` grant objects. Nothing is inherited automatically. See [[permissions#Hierarchical Scoping]].
+- **Ceiling, not grant** — `[_]` in `{@}` references a `{_}` ceiling object. Each `{-}` pipeline must reference its own `{_}` grant objects. Nothing is inherited automatically. See [[permissions#Hierarchical Scoping]].
 - **No ceiling = no IO** — if `{@}` has no `[_]` lines, the entire package is pure computation. Any IO call in any pipeline is a compile error (PGE10001).
 - **Pipeline grant must be a subset of ceiling** — every `{_}` grant referenced by a pipeline must fall within the `{_}` ceiling. A grant requesting `.File.Read "/etc/shadow"` when the ceiling only allows `.File.Read "/var/log/*"` is a compile error (PGE10001).
 - **Import ceiling** — the compiler checks each imported package's own `{@}` ceiling against the importer's ceiling. If the imported package declares permissions outside what the importer allows, it is a compile error (PGE10002). Each package declares its own ceiling independently; the compiler validates compatibility.
-- **Placement** — `[_]` lines go after `[@]` imports in the `{@}` block. `{_}` definition blocks follow `{@}`, before `{#}` and `{=}` definitions.
+- **Placement** — `[_]` lines go after `[@]` imports in the `{@}` block. `{_}` definition blocks follow `{@}`, before `{#}` and `{-}` definitions.
 
 ## Compile Rules Reference
 

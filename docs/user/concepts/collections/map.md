@@ -25,13 +25,13 @@ See [[pglib/types/Map|#Map]] for the full definition and [[syntax/types/generic-
 Use `<` to access flexible children by key:
 
 ```polyglot
-[r] $ages#map:string:int << ...
-[r] $aliceAge#int << $ages<alice
-[r] $bobAge#int << $ages<bob
+[-] $ages#map:string:int << ...
+[-] $aliceAge#int << $ages<alice
+[-] $bobAge#int << $ages<bob
 ```
 
 ## See Also
 
-- [[concepts/collections/expand|Expand Operators]] — `~ForEach.Map` iteration over key-value pairs
+- [[concepts/collections/expand|Expand Operators]] — `=ForEach.Map` iteration over key-value pairs
 - [[concepts/collections/collect|Collect Operators]] — `*Into.Map` collection
 - [[syntax/types/flexible-fields|Typed Flexible Fields]] — typed `:` fields in struct definitions

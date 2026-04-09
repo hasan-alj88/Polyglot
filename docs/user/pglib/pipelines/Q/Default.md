@@ -7,14 +7,14 @@ metadata_definition: "%definition.Q:Default"
 metadata_instance: "%Q:Default:N"
 ---
 
-# =Q.Default
+# -Q.Default
 
 Standard FIFO queue, no constraints. The only queue that does not require a `{Q}` definition.
 
 ## Definition
 
 ```polyglot
-{N} =Q.Default
+{N} -Q.Default
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QDefault"
    [%] .description << "Standard FIFO queue, no constraints."
@@ -47,4 +47,4 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[pglib/pipelines/Q/INDEX|=Q.* Queue Pipelines]]
+- [[pglib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

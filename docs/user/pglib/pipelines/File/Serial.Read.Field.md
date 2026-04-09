@@ -3,26 +3,26 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.Serial.Read.Field"
-metadata_instance: "%=:File.Serial.Read.Field:N"
+metadata_definition: "%definition.-:File.Serial.Read.Field"
+metadata_instance: "%-:File.Serial.Read.Field:N"
 ---
 
-# =File.Serial.Read.Field
+# -File.Serial.Read.Field
 
-One-step field extraction: reads a structured data file, parses it, and extracts a single field by tree path. Combines `=File.Serial.Read` + `=#.Field` into a single pipeline.
+One-step field extraction: reads a structured data file, parses it, and extracts a single field by tree path. Combines `-File.Serial.Read` + `-#.Field` into a single pipeline.
 
 The `<field` input uses `<` as the path separator (e.g. `"database<host"` extracts the `host` field under `database`).
 
 ## Definition
 
 ```polyglot
-{N} =File.Serial.Read.Field
+{N} -File.Serial.Read.Field
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileSerialReadField"
    [%] .description << "One-step field extraction: reads file, parses, extracts single field by tree path"
-   [=] <path#path
-   [=] <field#RawString
-   [=] >value#serial
+   (-) <path#path
+   (-) <field#RawString
+   (-) >value#serial
 ```
 
 ## Inputs
@@ -55,11 +55,11 @@ Requires `File.Read` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.Serial.Read.Field` | Compile-time pipeline template |
-| Instance | `%=:File.Serial.Read.Field:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.Serial.Read.Field` | Compile-time pipeline template |
+| Instance | `%-:File.Serial.Read.Field:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
-- [[pglib/pipelines/File/Serial.Read|=File.Serial.Read]]
-- [[pglib/pipelines/Schema/INDEX|=# Base Parsers]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[pglib/pipelines/File/Serial.Read|-File.Serial.Read]]
+- [[pglib/pipelines/Schema/INDEX|-# Base Parsers]]

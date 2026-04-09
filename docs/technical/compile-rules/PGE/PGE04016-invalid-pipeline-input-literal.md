@@ -18,51 +18,51 @@ severity: error
 **Declaring constraints (pipeline definition):**
 ```polyglot
 [ ] ✓ pipeline author declares invalid values via %constraint
-{=} =Math.Divide
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <numerator#int
-   [=] <denominator#int
-      [<] %constraint#array:RawString << {"0"}
-   [=] >result#float
-   [r] >result << $numerator / $denominator
+{-} -Math.Divide
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <numerator#int
+   (-) <denominator#int
+      (<) %constraint#array:RawString << {"0"}
+   (-) >result#float
+   [-] >result << $numerator / $denominator
 ```
 
 **VALID:**
 ```polyglot
 [ ] ✓ literal does not match any constraint
-[r] =Math.Divide
-   [=] <numerator << $total
-   [=] <denominator << 2
-   [=] >result >> $half
+[-] -Math.Divide
+   (-) <numerator << $total
+   (-) <denominator << 2
+   (-) >result >> $half
 ```
 
 ```polyglot
 [ ] ✓ variable input — cannot be checked at compile time, use fallback for safety
-[r] =Math.Divide
-   [=] <numerator << $total
-   [=] <denominator << $divisor
-   [=] >result >> $half
+[-] -Math.Divide
+   (-) <numerator << $total
+   (-) <denominator << $divisor
+   (-) >result >> $half
    [!] !DivisionByZero
-      [>] <! 0
+      (>) <! 0
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE04016 — literal matches constraint
-[r] =Math.Divide
-   [=] <numerator << $total
-   [=] <denominator << 0                      [ ] ✗ PGE04016 — 0 is in constraint set {"0"}
-   [=] >result >> $result
+[-] -Math.Divide
+   (-) <numerator << $total
+   (-) <denominator << 0                      [ ] ✗ PGE04016 — 0 is in constraint set {"0"}
+   (-) >result >> $result
 ```
 
 ```polyglot
 [ ] ✗ PGE04016 — literal matches constraint
-[r] =Math.Modulo
-   [=] <numerator << $total
-   [=] <denominator << 0                      [ ] ✗ PGE04016 — modulo by zero
-   [=] >result >> $remainder
+[-] -Math.Modulo
+   (-) <numerator << $total
+   (-) <denominator << 0                      [ ] ✗ PGE04016 — modulo by zero
+   (-) >result >> $remainder
 ```
 
 **Diagnostic:** `"Invalid literal value {value} for input <{name} on call to ={PipelineName} at line {N} — value is in the constraint set {constraints}"`

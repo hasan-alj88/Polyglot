@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:#.Field"
-metadata_instance: "%=:#.Field:N"
+metadata_definition: "%definition.-:#.Field"
+metadata_instance: "%-:#.Field:N"
 ---
 
-# =#.Field
+# -#.Field
 
 Extracts a single field from a `#serial` data tree by path. Like tree access (`$data<key<subkey`) but with error handling for missing paths.
 
 ## Definition
 
 ```polyglot
-{N} =#.Field
+{N} -#.Field
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaField"
    [%] .description << "Extract single field from data tree by path"
-   [=] <data#serial
-   [=] <path#RawString
-   [=] >value#serial
+   (-) <data#serial
+   (-) <path#RawString
+   (-) >value#serial
 ```
 
 ## Inputs
@@ -50,8 +50,8 @@ User picks based on needs:
 | Approach | When to use |
 |----------|-------------|
 | `$data<database<host` | Direct tree access -- fast, no error handling on missing field |
-| `=#.Field` | Safe extraction -- error handling with `[!]` fallback chains |
-| `=File.Serial.Read.Field` | Single step from file to field -- combines read + parse + extract |
+| `-#.Field` | Safe extraction -- error handling with `[!]` fallback chains |
+| `-File.Serial.Read.Field` | Single step from file to field -- combines read + parse + extract |
 
 ## Permissions
 
@@ -61,11 +61,11 @@ None -- pure computation.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:#.Field` | Compile-time pipeline template |
-| Instance | `%=:#.Field:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:#.Field` | Compile-time pipeline template |
+| Instance | `%-:#.Field:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Schema/INDEX|=# Schema Validation & Field Extraction]]
-- [[pglib/pipelines/Schema/Column|=#.Column]]
-- [[pglib/pipelines/File/Serial.Read.Field|=File.Serial.Read.Field]]
+- [[pglib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[pglib/pipelines/Schema/Column|-#.Column]]
+- [[pglib/pipelines/File/Serial.Read.Field|-File.Serial.Read.Field]]

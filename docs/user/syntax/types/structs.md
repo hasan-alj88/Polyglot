@@ -19,9 +19,9 @@ pglib structs with value fields include `#path`, `#Queue`, and `#DateTime` (see 
 In type annotations (after `#`), nested type refs drop the `#` prefix — the compiler knows `#` starts a type context:
 
 ```polyglot
-[r] $user#UserRecord <~ ...
-[r] $users#array:UserRecord <~ {}
-[=] <incoming#Alert
+[-] $user#UserRecord <~ ...
+[-] $users#array:UserRecord <~ {}
+(-) <incoming#Alert
 ```
 
 The `#` prefix is only used when **referencing** a struct outside of type annotations (e.g., `#Boolean.True`, `@alias#DataName.EnumField`).
@@ -50,7 +50,7 @@ A field whose type is itself a struct defines the later levels. It is invalid to
 Curly braces with comma-separated values create inline data:
 
 ```polyglot
-[r] $values#array <~ {1, 2, 3, 4, 5}
+[-] $values#array <~ {1, 2, 3, 4, 5}
 ```
 
 This is shorthand for explicit field assignment: `#data:1 << 1`, `#data:2 << 2`, etc.

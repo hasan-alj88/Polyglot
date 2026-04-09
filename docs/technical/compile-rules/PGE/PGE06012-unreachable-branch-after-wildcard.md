@@ -19,42 +19,42 @@ severity: error
 ```polyglot
 [ ] ✓ wildcard is the last branch
 [?] $status =? "active"
-   [r] =HandleActive
+   [-] -HandleActive
 [?] $status =? "inactive"
-   [r] =HandleInactive
+   [-] -HandleInactive
 [?] *?
-   [r] =HandleUnknown
+   [-] -HandleUnknown
 ```
 
 ```polyglot
 [ ] ✓ no wildcard — statically exhaustive enum
 [?] $flag =? #Boolean.True
-   [r] =DoSomething
+   [-] -DoSomething
 [?] $flag =? #Boolean.False
-   [r] =DoNothing
+   [-] -DoNothing
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE06012 — branch after wildcard is unreachable
 [?] $status =? "active"
-   [r] =HandleActive
+   [-] -HandleActive
 [?] *?
-   [r] =HandleUnknown
+   [-] -HandleUnknown
 [?] $status =? "inactive"                   [ ] ✗ PGE06012 — unreachable after *?
-   [r] =HandleInactive
+   [-] -HandleInactive
 ```
 
 ```polyglot
 [ ] ✗ PGE06012 — multiple branches after wildcard
 [?] $code >? 100
-   [r] =HandleHigh
+   [-] -HandleHigh
 [?] *?
-   [r] =HandleDefault
+   [-] -HandleDefault
 [?] $code =? 50                             [ ] ✗ PGE06012 — unreachable
-   [r] =HandleFifty
+   [-] -HandleFifty
 [?] $code =? 0                              [ ] ✗ PGE06012 — unreachable
-   [r] =HandleZero
+   [-] -HandleZero
 ```
 
 **Open point:** None.

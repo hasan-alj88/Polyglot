@@ -83,11 +83,11 @@ Variable lifecycle state is queryable at runtime via the `%` metadata accessor:
 
 ```polyglot
 [?] $myVar%state =? #VarState.Default
-   [r] ...
+   [-] ...
 [?] $myVar%state =? #VarState.Failed
-   [r] ...
+   [-] ...
 [?] *?
-   [r] ...
+   [-] ...
 ```
 
 `$varName%state` returns a `#live.#VarState` value — reading from `%$:{name}:{instance}.state` in the metadata tree (see [[data-is-trees#How Concepts Connect]]). The `live` field is always readable and does not follow the standard lifecycle (it is managed by the runtime). The `#VarState` enum maps directly to the stages above: Declared, Default, Final, Failed, Released. See [[metadata]] for the full metadata tree and all `live` fields.
@@ -112,12 +112,12 @@ All assignment operators are directional — the arrow indicates data flow direc
 
 ```polyglot
 ...
-{=} =Example1
+{-} -Example1
 [ ] Daily trigger at 3AM
-[T] =DT.Daily"3AM"
+[T] -DT.Daily"3AM"
 [ ] Pipeline IO
-[=] <file#path <~ "\tmp\example1.txt"
-[=] >output#string ~> ""
+(-) <file#path <~ "\tmp\example1.txt"
+(-) >output#string ~> ""
 ...
 ```
 

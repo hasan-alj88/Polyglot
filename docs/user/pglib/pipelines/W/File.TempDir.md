@@ -7,14 +7,14 @@ metadata_definition: "%definition.W:File.TempDir"
 metadata_instance: "%W:File.TempDir:N"
 ---
 
-# =W.File.TempDir
+# -W.File.TempDir
 
 Creates temp directory on setup, deletes on cleanup.
 
 ## Definition
 
 ```polyglot
-{N} =W.File.TempDir
+{N} -W.File.TempDir
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WFileTempDir"
    [%] .description << "Creates temp directory on setup, deletes on cleanup."
@@ -51,5 +51,5 @@ File.Write
 
 ## Related
 
-- [[pglib/pipelines/W/INDEX|=W.* Wrappers]]
-- [[pglib/pipelines/W/File.Lock|=W.File.Lock]]
+- [[pglib/pipelines/W/INDEX|-W.* Wrappers]]
+- [[pglib/pipelines/W/File.Lock|-W.File.Lock]]

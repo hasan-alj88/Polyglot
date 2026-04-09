@@ -104,99 +104,99 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ range operator on int subject
-{=} =CheckScore
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <score#int
-   [=] >label#string
+{-} -CheckScore
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <score#int
+   (-) >label#string
    [?] $score
       [?] ?[0,59]
-         [r] >label << "fail"
+         [-] >label << "fail"
       [?] ?[60,100]
-         [r] >label << "pass"
+         [-] >label << "pass"
       [?] *?
-         [r] >label << "unknown"
+         [-] >label << "unknown"
 ```
 
 ```polyglot
 [ ] ✓ enum match on enum subject
-{=} =RouteByStatus
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <status#Status
-   [=] >action#string
+{-} -RouteByStatus
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <status#Status
+   (-) >action#string
    [?] $status
       [?] =? .Active
-         [r] >action << "proceed"
+         [-] >action << "proceed"
       [?] =? .Inactive
-         [r] >action << "skip"
+         [-] >action << "skip"
       [?] *?
-         [r] >action << "error"
+         [-] >action << "error"
 ```
 
 ```polyglot
 [ ] ✓ cross-numeric — int subject with float bounds
-{=} =CheckTemp
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <temp#int
-   [=] >alert#string
+{-} -CheckTemp
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <temp#int
+   (-) >alert#string
    [?] $temp
       [?] ?[0.0,36.9]
-         [r] >alert << "hypothermia"
+         [-] >alert << "hypothermia"
       [?] ?[37.0,42.0]
-         [r] >alert << "normal-to-fever"
+         [-] >alert << "normal-to-fever"
       [?] *?
-         [r] >alert << "critical"
+         [-] >alert << "critical"
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE04015 — range operator on string subject
-{=} =BadRange
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <name#string
-   [=] >out#string
+{-} -BadRange
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <name#string
+   (-) >out#string
    [?] $name
       [?] ?[1,10]                       [ ] ✗ PGE04015 — range requires numeric
-         [r] >out << "short"
+         [-] >out << "short"
       [?] *?
-         [r] >out << "other"
+         [-] >out << "other"
 ```
 
 ```polyglot
 [ ] ✗ PGE04015 — enum match on int subject
-{=} =BadEnum
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <count#int
-   [=] >out#string
+{-} -BadEnum
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <count#int
+   (-) >out#string
    [?] $count
       [?] =? .Active                   [ ] ✗ PGE04015 — enum match requires enum type
-         [r] >out << "yes"
+         [-] >out << "yes"
       [?] *?
-         [r] >out << "no"
+         [-] >out << "no"
 ```
 
 ```polyglot
 [ ] ✗ PGE04015 — string equality on int subject
-{=} =BadEquality
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <count#int
-   [=] >out#string
+{-} -BadEquality
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <count#int
+   (-) >out#string
    [?] $count
       [?] =? "five"                    [ ] ✗ PGE04015 — string operand on int subject
-         [r] >out << "matched"
+         [-] >out << "matched"
       [?] *?
-         [r] >out << "other"
+         [-] >out << "other"
 ```
 
 **Open point:** None.

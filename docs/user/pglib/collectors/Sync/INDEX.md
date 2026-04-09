@@ -7,7 +7,7 @@ status: stable
 
 # *All / *First / *Nth — Collect-All & Race Collectors
 
-Collect-all and race collectors operate outside expand scopes. They collect variables from parallel `[p]` pipeline calls using `[*] <<` (wait input) and `[*] >>` (collect output).
+Collect-all and race collectors operate outside expand scopes. They collect variables from parallel `[=]` pipeline calls using `(*) <<` (wait input) and `(*) >>` (collect output).
 
 No `[@]` import needed.
 
@@ -23,8 +23,8 @@ No `[@]` import needed.
 `$*` is the inline discard syntax -- no variable created, output immediately released. This is a language construct, not a collector operator.
 
 ```polyglot
-[p] =SomePipeline
-   [=] >result >> $*
+[=] -SomePipeline
+   (-) >result >> $*
 ```
 
 ## Related

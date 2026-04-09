@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.Serial.Read"
-metadata_instance: "%=:File.Serial.Read:N"
+metadata_definition: "%definition.-:File.Serial.Read"
+metadata_instance: "%-:File.Serial.Read:N"
 ---
 
-# =File.Serial.Read
+# -File.Serial.Read
 
-Read and parse a structured data file. Format is auto-detected from file extension (.json, .yaml, .toml). Internally delegates to `=#.JSON.Parse`, `=#.YAML.Parse`, or `=#.TOML.Parse` base parsers (see [[pglib/pipelines/Schema/INDEX|pipelines/Schema]]).
+Read and parse a structured data file. Format is auto-detected from file extension (.json, .yaml, .toml). Internally delegates to `-#.JSON.Parse`, `-#.YAML.Parse`, or `-#.TOML.Parse` base parsers (see [[pglib/pipelines/Schema/INDEX|pipelines/Schema]]).
 
 ## Definition
 
 ```polyglot
-{N} =File.Serial.Read
+{N} -File.Serial.Read
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileSerialRead"
    [%] .description << "Read and parse structured data file (JSON/YAML/TOML, auto-detected from extension)"
-   [=] <path#path
-   [=] >data#serial
+   (-) <path#path
+   (-) >data#serial
 ```
 
 ## Inputs
@@ -50,12 +50,12 @@ Requires `File.Read` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.Serial.Read` | Compile-time pipeline template |
-| Instance | `%=:File.Serial.Read:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.Serial.Read` | Compile-time pipeline template |
+| Instance | `%-:File.Serial.Read:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
-- [[pglib/pipelines/File/Serial.Write|=File.Serial.Write]]
-- [[pglib/pipelines/File/Serial.Read.Field|=File.Serial.Read.Field]]
-- [[pglib/pipelines/Schema/INDEX|=# Base Parsers]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[pglib/pipelines/File/Serial.Write|-File.Serial.Write]]
+- [[pglib/pipelines/File/Serial.Read.Field|-File.Serial.Read.Field]]
+- [[pglib/pipelines/Schema/INDEX|-# Base Parsers]]

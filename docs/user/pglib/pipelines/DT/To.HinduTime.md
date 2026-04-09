@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.To.HinduTime"
-metadata_instance: "%=:DT.To.HinduTime:N"
+metadata_definition: "%definition.-:DT.To.HinduTime"
+metadata_instance: "%-:DT.To.HinduTime:N"
 ---
 
-# =DT.To.HinduTime
+# -DT.To.HinduTime
 
 Converts a `#dt` into Hindu traditional time units (prahara/muhurta). These pipelines convert a `#dt` into culture-specific time representations.
 
 ## Definition
 
 ```polyglot
-{N} =DT.To.HinduTime
+{N} -DT.To.HinduTime
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToHinduTime"
    [%] .description << "DateTime to Hindu traditional time"
-   [=] <source#dt
-   [=] >time#HinduTime
+   (-) <source#dt
+   (-) >time#HinduTime
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.To.HinduTime` | Compile-time pipeline template |
-| Instance | `%=:DT.To.HinduTime:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.To.HinduTime` | Compile-time pipeline template |
+| Instance | `%-:DT.To.HinduTime:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

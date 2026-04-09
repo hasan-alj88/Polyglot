@@ -3,25 +3,25 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:#.Validate"
-metadata_instance: "%=:#.Validate:N"
+metadata_definition: "%definition.-:#.Validate"
+metadata_instance: "%-:#.Validate:N"
 ---
 
-# =#.Validate
+# -#.Validate
 
 Detailed validation -- checks data against type and reports all mismatches as a list of human-readable error strings.
 
 ## Definition
 
 ```polyglot
-{N} =#.Validate
+{N} -#.Validate
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaValidate"
    [%] .description << "Detailed validation with error reporting"
-   [=] <data#serial
-   [=] <#type
-   [=] >valid#bool
-   [=] >errors#array:string
+   (-) <data#serial
+   (-) <#type
+   (-) >valid#bool
+   (-) >errors#array:string
 ```
 
 ## Inputs
@@ -50,11 +50,11 @@ None -- pure computation.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:#.Validate` | Compile-time pipeline template |
-| Instance | `%=:#.Validate:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:#.Validate` | Compile-time pipeline template |
+| Instance | `%-:#.Validate:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Schema/INDEX|=# Schema Validation & Field Extraction]]
-- [[pglib/pipelines/Schema/Match|=#.Match]]
-- [[pglib/pipelines/Schema/Coerce|=#.Coerce]]
+- [[pglib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[pglib/pipelines/Schema/Match|-#.Match]]
+- [[pglib/pipelines/Schema/Coerce|-#.Coerce]]

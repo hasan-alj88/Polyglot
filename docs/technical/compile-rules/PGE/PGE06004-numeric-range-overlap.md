@@ -20,13 +20,13 @@ severity: error
 [ ] ✓ mutually exclusive ranges — no overlap
 [?] $val
    [?] $val <? 0
-      [r] =Negative
+      [-] -Negative
    [?] $val ?[0,50)
-      [r] =Low
+      [-] -Low
    [?] $val ?[50,100]
-      [r] =High
+      [-] -High
    [?] $val >? 100
-      [r] =VeryHigh
+      [-] -VeryHigh
 ```
 
 **INVALID:**
@@ -34,22 +34,22 @@ severity: error
 [ ] ✗ PGE06004 — ranges overlap at [80, 90]
 [?] $val
    [?] $val ?[0,90]
-      [r] =Low
+      [-] -Low
    [?] $val ?[80,100]
-      [r] =High                [ ] ✗ PGE06004 — [80,90] in both branches
+      [-] -High                [ ] ✗ PGE06004 — [80,90] in both branches
    [?] *?
-      [r] =Other               [ ] *? does not fix overlap
+      [-] -Other               [ ] *? does not fix overlap
 ```
 
 ```polyglot
 [ ] ✗ PGE06004 — comparison operators overlap
 [?] $score
    [?] $score >=? 80
-      [r] =High
+      [-] -High
    [?] $score >=? 70
-      [r] =Mid                 [ ] ✗ PGE06004 — [80, +∞) is in both branches
+      [-] -Mid                 [ ] ✗ PGE06004 — [80, +∞) is in both branches
    [?] $score <? 70
-      [r] =Low
+      [-] -Low
 ```
 
 **Open point:** None.

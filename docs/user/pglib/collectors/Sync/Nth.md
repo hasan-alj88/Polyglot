@@ -7,19 +7,19 @@ status: stable
 
 # *Nth
 
-Generic race collector -- waits for the Nth arriving value and cancels all remaining inputs. All `[*] <<` inputs must be the same type.
+Generic race collector -- waits for the Nth arriving value and cancels all remaining inputs. All `(*) <<` inputs must be the same type.
 
 `*First` is sugar for `*Nth` with n=1. `*Second` is sugar for `*Nth` with n=2.
 
 ## Syntax
 
 ```polyglot
-[*] *Nth
-   [*] <n << 2
-   [*] << $candidateA
-   [*] << $candidateB
-   [*] << $candidateC
-   [*] >> $winner
+(*) *Nth
+   (*) <n << 2
+   (*) << $candidateA
+   (*) << $candidateB
+   (*) << $candidateC
+   (*) >> $winner
 ```
 
 ## Inputs

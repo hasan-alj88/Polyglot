@@ -11,9 +11,9 @@ metadata_instance: "%#:Job:N"
 
 <!-- @types -->
 
-Runtime job state within a pipeline instance. Jobs are units of work created at IO boundaries — the compiler determines job start and end via pipeline IO state (inputs must be Final to start; outputs Final or Failed to complete). Sequential `[r]` jobs chain on predecessor completion; parallel `[p]` jobs fork. The Trigger Monitor generates UIDs for new jobs when triggered.
+Runtime job state within a pipeline instance. Jobs are units of work created at IO boundaries — the compiler determines job start and end via pipeline IO state (inputs must be Final to start; outputs Final or Failed to complete). Sequential `[-]` jobs chain on predecessor completion; parallel `[=]` jobs fork. The Trigger Monitor generates UIDs for new jobs when triggered.
 
-Job state is stored at `%=:Pipeline:N.jobs:UID` in the metadata tree. See [[glossary]] for the distinction between Job and Instance.
+Job state is stored at `%-:Pipeline:N.jobs:UID` in the metadata tree. See [[glossary]] for the distinction between Job and Instance.
 
 ---
 
@@ -48,7 +48,7 @@ Job state is stored at `%=:Pipeline:N.jobs:UID` in the metadata tree. See [[glos
 | `.parent` | `#String` | Parent job ID (empty for root job) |
 | `.hasChildren` | `#Boolean` | Whether this job has spawned sub-jobs |
 | `.hierarchy` | `#String` | Dot-separated path in job tree (e.g., `ProcessData/job1/job3`) |
-| `.marker` | `#String` | Block element that created this job: `[r]`, `[p]`, `[b]`, `[?]` |
+| `.marker` | `#String` | Block element that created this job: `[-]`, `[=]`, `[b]`, `[?]` |
 | `.killPropagation` | `#KillPropagation` | How kill signals propagate to sub-jobs |
 
 ---

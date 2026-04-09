@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.Access"
-metadata_instance: "%=:File.Access:N"
+metadata_definition: "%definition.-:File.Access"
+metadata_instance: "%-:File.Access:N"
 ---
 
-# =File.Access
+# -File.Access
 
 Check file access permissions at the given path. Returns a `#FileAccess` value describing what access is available.
 
 ## Definition
 
 ```polyglot
-{N} =File.Access
+{N} -File.Access
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileAccess"
    [%] .description << "Check file access permissions"
-   [=] <path#path
-   [=] >access#FileAccess
+   (-) <path#path
+   (-) >access#FileAccess
 ```
 
 ## Inputs
@@ -46,10 +46,10 @@ Requires `File.Read` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.Access` | Compile-time pipeline template |
-| Instance | `%=:File.Access:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.Access` | Compile-time pipeline template |
+| Instance | `%-:File.Access:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
-- [[pglib/pipelines/File/List|=File.List]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[pglib/pipelines/File/List|-File.List]]

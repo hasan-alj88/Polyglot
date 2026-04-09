@@ -3,31 +3,31 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:RT.<Lang>.Bind.File"
-metadata_instance: "%=:RT.<Lang>.Bind.File:N"
+metadata_definition: "%definition.-:RT.<Lang>.Bind.File"
+metadata_instance: "%-:RT.<Lang>.Bind.File:N"
 ---
 
-# =RT.\<Lang\>.Bind.File
+# -RT.\<Lang\>.Bind.File
 
 Native code imports the polyglot lib and calls `pull()`/`push()` to interact with Polyglot IO ports. File variant.
 
 ## Definition
 
 ```polyglot
-{N} =RT.<Lang>.Bind.File
+{N} -RT.<Lang>.Bind.File
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RtBindFile"
    [%] .description << "Native code imports polyglot lib and calls pull()/push(). File variant."
-   [=] <env#<Lang>Env
-   [=] >output#Code:<Lang>.Output
-   [=] <file#path
+   (-) <env#<Lang>Env
+   (-) >output#Code:<Lang>.Output
+   (-) <file#path
 ```
 
 ## Inputs
 
 | Name | Type | Description |
 |------|------|-------------|
-| `<env` | `#<Lang>Env` | Runtime environment from `=W.RT` |
+| `<env` | `#<Lang>Env` | Runtime environment from `-W.RT` |
 | `<file` | `#path` | Path to source file |
 
 ## Outputs
@@ -39,10 +39,10 @@ Native code imports the polyglot lib and calls `pull()`/`push()` to interact wit
 ## Example
 
 ```polyglot
-[r] =RT.Python.Bind.File
-   [=] <env#PyEnv << $pyenv
-   [=] >output#Code:Python.Output >> >fileResult
-   [=] <file#path << =Path"/scripts/transform.py"
+[-] -RT.Python.Bind.File
+   (-) <env#PyEnv << $pyenv
+   (-) >output#Code:Python.Output >> >fileResult
+   (-) <file#path << -Path"/scripts/transform.py"
 ```
 
 ## Errors
@@ -57,9 +57,9 @@ Requires `System.Process` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:RT.<Lang>.Bind.File` | Compile-time pipeline template |
-| Instance | `%=:RT.<Lang>.Bind.File:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:RT.<Lang>.Bind.File` | Compile-time pipeline template |
+| Instance | `%-:RT.<Lang>.Bind.File:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/RT/INDEX|=RT.* Runtime Execution]]
+- [[pglib/pipelines/RT/INDEX|-RT.* Runtime Execution]]

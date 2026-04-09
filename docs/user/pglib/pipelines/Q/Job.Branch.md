@@ -7,14 +7,14 @@ metadata_definition: "%definition.Q:Job.Branch"
 metadata_instance: "%Q:Job.Branch:N"
 ---
 
-# =Q.Job.Branch
+# -Q.Job.Branch
 
 Names a marker subtree as a branch group for external reference. Reserved for future branch-level operations beyond nested `[Q]` scoping.
 
 ## Definition
 
 ```polyglot
-{N} =Q.Job.Branch
+{N} -Q.Job.Branch
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobBranch"
    [%] .description << "Names a marker subtree as a branch group for external reference."
@@ -46,4 +46,4 @@ None — pure computation (queue scheduling and resource management).
 ## Related
 
 - [[concepts/pipelines/queue#Job-Level Queue Conditions]]
-- [[pglib/pipelines/Q/INDEX|=Q.* Queue Pipelines]]
+- [[pglib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

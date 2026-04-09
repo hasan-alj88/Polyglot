@@ -16,9 +16,9 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ all siblings use : (flexible)
-[r] $user:name << "Alice"
-[r] $user:age << 30
-[r] $user:email << "alice@example.com"
+[-] $user:name << "Alice"
+[-] $user:age << 30
+[-] $user:email << "alice@example.com"
 ```
 
 ```polyglot
@@ -34,17 +34,17 @@ severity: error
    [.] .timeout#int
    [.] .info#serial
 
-[r] $cfg#Config
-   [r] $cfg.timeout << 30
-   [r] $cfg.info:author << "admin"     [ ] ✓ .info level is fixed, :author level is flexible
-   [r] $cfg.info:version << "1.0"
+[-] $cfg#Config
+   [-] $cfg.timeout << 30
+   [-] $cfg.info:author << "admin"     [ ] ✓ .info level is fixed, :author level is flexible
+   [-] $cfg.info:version << "1.0"
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE05001 — mixing . and : at the same level
-[r] $user.name << "Alice"
-[r] $user:age << 30                    [ ] ✗ PGE05001 — : sibling among . siblings
+[-] $user.name << "Alice"
+[-] $user:age << 30                    [ ] ✗ PGE05001 — : sibling among . siblings
 ```
 
 ```polyglot

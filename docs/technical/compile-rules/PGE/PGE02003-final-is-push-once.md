@@ -16,87 +16,87 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ Final variable pulled multiple times — pulls are unlimited
-[=] >name#string
-[r] >name << "Alice"            [ ] Final
-[r] =Greet
-   [=] <who << >name            [ ] ✓ pull 1
-[r] =Log
-   [=] <msg << >name            [ ] ✓ pull 2 — no limit on pulls
+(-) >name#string
+[-] >name << "Alice"            [ ] Final
+[-] -Greet
+   (-) <who << >name            [ ] ✓ pull 1
+[-] -Log
+   (-) <msg << >name            [ ] ✓ pull 2 — no limit on pulls
 ```
 
 ```polyglot
 [ ] ✓ Default → Final is one valid transition
-[=] >label#string
-[r] >label <~ "pending"         [ ] Default
-[r] >label << "confirmed"       [ ] Final — exactly one more push allowed
-[r] =Display
-   [=] <text << >label          [ ] ✓ pulling Final is fine
+(-) >label#string
+[-] >label <~ "pending"         [ ] Default
+[-] >label << "confirmed"       [ ] Final — exactly one more push allowed
+[-] -Display
+   (-) <text << >label          [ ] ✓ pulling Final is fine
 ```
 
 ```polyglot
 [ ] ✓ >> also produces Final
-[=] >result#string
-[r] =Compute
-   [=] >value >> >result        [ ] Final via >>
-[r] =Log
-   [=] <msg << >result          [ ] ✓ pulling Final
+(-) >result#string
+[-] -Compute
+   (-) >value >> >result        [ ] Final via >>
+[-] -Log
+   (-) <msg << >result          [ ] ✓ pulling Final
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE02003 — second push into a Final variable
-[=] >name#string
-[r] >name << "Alice"            [ ] Final
-[r] >name << "Bob"              [ ] ✗ PGE02003 — >name is already Final
+(-) >name#string
+[-] >name << "Alice"            [ ] Final
+[-] >name << "Bob"              [ ] ✗ PGE02003 — >name is already Final
 ```
 
 ```polyglot
 [ ] ✗ PGE02003 — default push into a Final variable
-[=] >count#int
-[r] >count << 42                [ ] Final
-[r] >count <~ 0                 [ ] ✗ PGE02003 — cannot default-assign a Final variable
+(-) >count#int
+[-] >count << 42                [ ] Final
+[-] >count <~ 0                 [ ] ✗ PGE02003 — cannot default-assign a Final variable
 ```
 
 ```polyglot
 [ ] ✗ PGE02003 — >> into an already-Final variable
-[=] >result#string
-[r] =Step1
-   [=] >out >> >result          [ ] Final via >>
-[r] =Step2
-   [=] >out >> >result          [ ] ✗ PGE02003 — >result is already Final
+(-) >result#string
+[-] -Step1
+   (-) >out >> >result          [ ] Final via >>
+[-] -Step2
+   (-) >out >> >result          [ ] ✗ PGE02003 — >result is already Final
 ```
 
 ```polyglot
 [ ] ✗ PGE02003 — second default push (Default cannot be re-defaulted)
-[=] >tag#string
-[r] >tag <~ "draft"                [ ] Default
-[r] >tag <~ "review"              [ ] ✗ PGE02003 — already in Default, cannot default-assign again
+(-) >tag#string
+[-] >tag <~ "draft"                [ ] Default
+[-] >tag <~ "review"              [ ] ✗ PGE02003 — already in Default, cannot default-assign again
 ```
 
 ```polyglot
 [ ] ✓ Default → Final via one push
-[=] >label#string
-[r] >label <~ "pending"            [ ] Default
-[r] >label << "confirmed"          [ ] Final — the one allowed push
+(-) >label#string
+[-] >label <~ "pending"            [ ] Default
+[-] >label << "confirmed"          [ ] Final — the one allowed push
 ```
 
 ```polyglot
 [ ] ✓ Default pulled without promotion — stays Default
-[=] >fallback#string
-[r] >fallback <~ "N/A"             [ ] Default
-[r] =Display
-   [=] <text << >fallback          [ ] ✓ pulling Default is valid
+(-) >fallback#string
+[-] >fallback <~ "N/A"             [ ] Default
+[-] -Display
+   (-) <text << >fallback          [ ] ✓ pulling Default is valid
 ```
 
 ```polyglot
 [ ] ✓ Each conditional branch independently promotes Default → Final
-[=] >status#string
-[r] >status <~ "unknown"           [ ] Default
+(-) >status#string
+[-] >status <~ "unknown"           [ ] Default
 [?] $condition
    [?] #Yes
-      [r] >status << "approved"    [ ] Final in this branch
+      [-] >status << "approved"    [ ] Final in this branch
    [?] #No
-      [r] >status << "rejected"    [ ] Final in this branch
+      [-] >status << "rejected"    [ ] Final in this branch
    [?] *?
       [ ] ✓ >status stays Default — not promoted in catch-all
 ```

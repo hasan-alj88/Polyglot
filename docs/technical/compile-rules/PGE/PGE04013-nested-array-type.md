@@ -18,38 +18,38 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ 1D array (default — :1D implied)
-[=] >items#array:string
+(-) >items#array:string
 ```
 
 ```polyglot
 [ ] ✓ array of structs
-[=] <records#array:UserRecord
+(-) <records#array:UserRecord
 ```
 
 ```polyglot
 [ ] ✓ 2D matrix using :ND dimension specifier
-[=] >matrix#array:float:2D
+(-) >matrix#array:float:2D
 ```
 
 ```polyglot
 [ ] ✓ 3D cube
-[=] <cube#array:int:3D
+(-) <cube#array:int:3D
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE04013 — nested array type
-[=] >matrix#array:array.string                [ ] ✗ PGE04013 — use #array:string:2D instead
+(-) >matrix#array:array.string                [ ] ✗ PGE04013 — use #array:string:2D instead
 ```
 
 ```polyglot
 [ ] ✗ PGE04013 — nested array type
-[=] <data#array:array.int                     [ ] ✗ PGE04013 — use #array:int:2D instead
+(-) <data#array:array.int                     [ ] ✗ PGE04013 — use #array:int:2D instead
 ```
 
 ```polyglot
 [ ] ✗ PGE04013 — deeply nested array type
-[=] <cube#array:array.array.float             [ ] ✗ PGE04013 — use #array:float:3D instead
+(-) <cube#array:array.array.float             [ ] ✗ PGE04013 — use #array:float:3D instead
 ```
 
 **Diagnostic:** `"Nested array type on {parameter} at line {N} — array is one-dimensional by default, use :ND for multidimensional data (e.g., #array:float:2D)"`

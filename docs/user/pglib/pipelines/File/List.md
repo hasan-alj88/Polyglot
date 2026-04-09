@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.List"
-metadata_instance: "%=:File.List:N"
+metadata_definition: "%definition.-:File.List"
+metadata_instance: "%-:File.List:N"
 ---
 
-# =File.List
+# -File.List
 
 List all files in a folder, returning an array of paths.
 
 ## Definition
 
 ```polyglot
-{N} =File.List
+{N} -File.List
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileList"
    [%] .description << "List files in folder"
-   [=] <folder#path
-   [=] >files#array.path
+   (-) <folder#path
+   (-) >files#array.path
 ```
 
 ## Inputs
@@ -49,10 +49,10 @@ Requires `File.Read` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.List` | Compile-time pipeline template |
-| Instance | `%=:File.List:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.List` | Compile-time pipeline template |
+| Instance | `%-:File.List:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
-- [[pglib/pipelines/File/Access|=File.Access]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[pglib/pipelines/File/Access|-File.Access]]

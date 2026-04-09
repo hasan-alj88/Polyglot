@@ -7,14 +7,14 @@ metadata_definition: "%definition.Q:Assign"
 metadata_instance: "%Q:Assign:N"
 ---
 
-# =Q.Assign
+# -Q.Assign
 
 Assign a pipeline to a named queue. The string argument is the name of a `{Q}` defined queue. Referencing an undefined queue is a compile error (PGE01014).
 
 ## Definition
 
 ```polyglot
-{N} =Q.Assign
+{N} -Q.Assign
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QAssign"
    [%] .description << "Assign pipeline to a named queue."
@@ -23,7 +23,7 @@ Assign a pipeline to a named queue. The string argument is the name of a `{Q}` d
 ## Usage
 
 ```polyglot
-[Q] =Q.Assign"GPUQueue"
+[Q] -Q.Assign"GPUQueue"
 ```
 
 Queue strategy (FIFO, LIFO, Priority), constraints, and host are configured on the `{Q}` definition — not on the `[Q]` assignment line. See [[structs#Queue]] for the `#Queue` schema fields.
@@ -55,4 +55,4 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[pglib/pipelines/Q/INDEX|=Q.* Queue Pipelines]]
+- [[pglib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

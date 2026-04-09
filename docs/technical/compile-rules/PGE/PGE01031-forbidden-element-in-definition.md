@@ -19,74 +19,74 @@ severity: error
 
 | Definition | Required | Allowed | Forbidden |
 |---|---|---|---|
-| `{=}[exe]` | `[T]`, `[Q]`, `[W]` | `[=]` IO, `[r]`/`[p]`/`[b]` body, `[%]`, `[?]`, `[!]`, `[<]`/`[>]` | — |
-| `{T}` | `>IsTriggered#bool` | `[=]` IO, `[%]`, `[T]` (composed AND), `[Q]`, `[W]`, `[r]`/`[p]`/`[b]` body, `[?]`, `[!]`, `[<]`/`[>]` | — |
-| `{W}` | `[\]`/`[/]` (unless base) | `[{]`/`[}]`, `[\]`/`[/]` body, `[%]`, `[W]` (composed), `[r]` in setup/cleanup | `[T]`, `[Q]`, `[=]` pipeline IO |
-| `{Q} =Q.*` | — | `[=]` IO, `[%]` | `[T]`, `[W]`, `[r]`/`[p]`/`[b]` body |
+| `{-}[exe]` | `[T]`, `[Q]`, `[W]` | `(-)` IO, `[-]`/`[=]`/`[b]` body, `[%]`, `[?]`, `[!]`, `(<)`/`(>)` | — |
+| `{T}` | `>IsTriggered#bool` | `(-)` IO, `[%]`, `[T]` (composed AND), `[Q]`, `[W]`, `[-]`/`[=]`/`[b]` body, `[?]`, `[!]`, `(<)`/`(>)` | — |
+| `{W}` | `[\]`/`[/]` (unless base) | `[{]`/`[}]`, `[\]`/`[/]` body, `[%]`, `[W]` (composed), `[-]` in setup/cleanup | `[T]`, `[Q]`, `(-)` pipeline IO |
+| `{Q} -Q.*` | — | `(-)` IO, `[%]` | `[T]`, `[W]`, `[-]`/`[=]`/`[b]` body |
 | `{Q} #Name` | — | `[.]`/`[:]` fields, `[#]` | All pipeline elements |
 | `{#}` | — | `[.]`/`[:]` fields, `[#]`, `[%]` | All pipeline elements |
 | `{!}` | — | `[.]`/`[:]` fields | All pipeline elements |
 
-**Note:** `{T}` triggers may have execution body, `[Q]`, and `[W]`. These are optional (not required like in `{=}[exe]`). The only structural requirement unique to `{T}` is `>IsTriggered#bool` (see PGE01032).
+**Note:** `{T}` triggers may have execution body, `[Q]`, and `[W]`. These are optional (not required like in `{-}[exe]`). The only structural requirement unique to `{T}` is `>IsTriggered#bool` (see PGE01032).
 
 **VALID:**
 ```polyglot
 [ ] ✓ — derived trigger with full execution body
-{T} =T.Complex.SystemReady
-   [Q] =Q.Default
-   [W] =W.DB.Connection
-      [=] $connectionString << "postgres://..."
-      [=] $dbConn >> $dbConn
-   [=] <config#string
-   [=] >IsTriggered#bool
-   [=] >systemState#serial
-   [r] =DB.Query
-      [=] <conn << $dbConn
-      [=] <sql << "SELECT ready FROM system"
-      [=] >rows >> $rows
+{T} -T.Complex.SystemReady
+   [Q] -Q.Default
+   [W] -W.DB.Connection
+      (-) $connectionString << "postgres://..."
+      (-) $dbConn >> $dbConn
+   (-) <config#string
+   (-) >IsTriggered#bool
+   (-) >systemState#serial
+   [-] -DB.Query
+      (-) <conn << $dbConn
+      (-) <sql << "SELECT ready FROM system"
+      (-) >rows >> $rows
    [?] $rows<0.ready
       [?] =? "true"
-         [r] >IsTriggered << #True
+         [-] >IsTriggered << #True
       [?] *?
-         [r] >IsTriggered << #False
+         [-] >IsTriggered << #False
 
 [ ] ✓ — simple trigger, no body needed
-{T} =T.Simple
-   [=] >IsTriggered#bool
+{T} -T.Simple
+   (-) >IsTriggered#bool
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE01031 — {W} cannot have [T]
-{W} =W.Bad.WithTrigger
-   [T] =T.Call
+{W} -W.Bad.WithTrigger
+   [T] -T.Call
    [{] $input#string
 
 [ ] ✗ PGE01031 — {W} cannot have [Q]
-{W} =W.Bad.WithQueue
-   [Q] =Q.Default
+{W} -W.Bad.WithQueue
+   [Q] -Q.Default
    [{] $input#string
 
-[ ] ✗ PGE01031 — {W} cannot have [=] pipeline IO
-{W} =W.Bad.WithIO
-   [=] <input#string
+[ ] ✗ PGE01031 — {W} cannot have (-) pipeline IO
+{W} -W.Bad.WithIO
+   (-) <input#string
    [{] $wrapped#string
 
 [ ] ✗ PGE01031 — {Q} cannot have [T]
-{Q} =Q.Bad.WithTrigger
-   [T] =T.Call
+{Q} -Q.Bad.WithTrigger
+   [T] -T.Call
 
 [ ] ✗ PGE01031 — {Q} cannot have [W]
-{Q} =Q.Bad.WithWrapper
-   [W] =W.Polyglot
+{Q} -Q.Bad.WithWrapper
+   [W] -W.Polyglot
 
 [ ] ✗ PGE01031 — {Q} cannot have execution body
-{Q} =Q.Bad.WithBody
-   [=] <threshold#float
-   [r] =SomeWork
+{Q} -Q.Bad.WithBody
+   (-) <threshold#float
+   [-] -SomeWork
 ```
 
-**Diagnostic:** "`{X}` definition `=Name` cannot contain `[Y]` — [element] is forbidden in [type] definitions"
+**Diagnostic:** "`{X}` definition `-Name` cannot contain `[Y]` — [element] is forbidden in [type] definitions"
 
 ### See Also
 

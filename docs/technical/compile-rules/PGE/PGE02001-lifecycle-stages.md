@@ -14,21 +14,21 @@ name: Lifecycle Stages
 **VALID:**
 ```polyglot
 [ ] ✓ Declared → Final via <<
-[=] >result#string
-[r] =Compute
-   [=] >result << "done"    [ ] Final — no further push allowed
+(-) >result#string
+[-] -Compute
+   (-) >result << "done"    [ ] Final — no further push allowed
 
 [ ] ✓ Declared → Default via <~, then → Final via <<
-[=] >label#string
-[r] >label <~ "default"     [ ] Default — one more push allowed
-[r] >label << "confirmed"   [ ] Final
+(-) >label#string
+[-] >label <~ "default"     [ ] Default — one more push allowed
+[-] >label << "confirmed"   [ ] Final
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE02001 — backwards transition: attempting to re-enter Default after Final
-[=] >result#string
-[r] =Compute
-   [=] >result << "done"    [ ] Final
-[r] >result <~ "retry"      [ ] ✗ PGE02001 — cannot move Final → Default
+(-) >result#string
+[-] -Compute
+   (-) >result << "done"    [ ] Final
+[-] >result <~ "retry"      [ ] ✗ PGE02001 — cannot move Final → Default
 ```

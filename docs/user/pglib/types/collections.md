@@ -26,11 +26,11 @@ Polyglot provides five collection types: `#Map`, `#Array`, `#Dataframe`, `#Set`,
 The `:` separator binds positionally to `[#] <param` inputs. Users use the type names directly:
 
 ```polyglot
-[r] $scores#array:int <~ {...}
-[r] $lookup#map:string:int <~ {...}
-[r] $matrix#array:float:2D <~ {...}
-[r] $sales#dataframe:SalesColumns:string <~ {}
-[r] $tags#set:string <~ {}
+[-] $scores#array:int <~ {...}
+[-] $lookup#map:string:int <~ {...}
+[-] $matrix#array:float:2D <~ {...}
+[-] $sales#dataframe:SalesColumns:string <~ {}
+[-] $tags#set:string <~ {}
 ```
 
 ## Related

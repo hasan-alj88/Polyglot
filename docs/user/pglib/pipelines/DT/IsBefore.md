@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.IsBefore"
-metadata_instance: "%=:DT.IsBefore:N"
+metadata_definition: "%definition.-:DT.IsBefore"
+metadata_instance: "%-:DT.IsBefore:N"
 ---
 
-# =DT.IsBefore
+# -DT.IsBefore
 
 Returns `#bool` -- true when `a` is earlier than `b`.
 
 ## Definition
 
 ```polyglot
-{N} =DT.IsBefore
+{N} -DT.IsBefore
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtIsBefore"
    [%] .description << "Check if DateTime is before another"
-   [=] <a#dt
-   [=] <b#dt
-   [=] >result#bool
+   (-) <a#dt
+   (-) <b#dt
+   (-) >result#bool
 ```
 
 ## Inputs
@@ -48,10 +48,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.IsBefore` | Compile-time pipeline template |
-| Instance | `%=:DT.IsBefore:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.IsBefore` | Compile-time pipeline template |
+| Instance | `%-:DT.IsBefore:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

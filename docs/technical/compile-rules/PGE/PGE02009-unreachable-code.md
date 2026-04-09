@@ -18,66 +18,66 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ code between partial Final pushes — still reachable
-{=} =MultiStage
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >main#string
-   [=] >log#string
-   [r] >main << $input                         [ ] >main is Final
+{-} -MultiStage
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >main#string
+   (-) >log#string
+   [-] >main << $input                         [ ] >main is Final
    [ ] ✓ reachable — >log is still open
-   [r] =Format
-      [=] <msg << "processed: {$input}"
-      [=] >result >> $logMsg
-   [r] >log << $logMsg                         [ ] >log is now Final
+   [-] -Format
+      (-) <msg << "processed: {$input}"
+      (-) >result >> $logMsg
+   [-] >log << $logMsg                         [ ] >log is now Final
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE02009 — code after single output pushed Final
-{=} =DeadAfterFinal
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >result#string
-   [r] >result << $input                       [ ] >result is now Final
-   [r] =Log                                    [ ] ✗ PGE02009 — unreachable
-      [=] <msg << "this never runs"
+{-} -DeadAfterFinal
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >result#string
+   [-] >result << $input                       [ ] >result is now Final
+   [-] -Log                                    [ ] ✗ PGE02009 — unreachable
+      (-) <msg << "this never runs"
 ```
 
 ```polyglot
 [ ] ✗ PGE02009 — code after exhaustive conditional terminates all outputs
-{=} =DeadAfterExhaustive
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <data#string
-   [=] >output#string
+{-} -DeadAfterExhaustive
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <data#string
+   (-) >output#string
    [?] $data =? "ok"
-      [r] >output << $data
+      [-] >output << $data
    [?] *?
-      [r] >output << "error"
+      [-] >output << "error"
    [ ] >output is Final in all paths
-   [r] =Log                                    [ ] ✗ PGE02009 — unreachable
-      [=] <msg << "dead code"
+   [-] -Log                                    [ ] ✗ PGE02009 — unreachable
+      (-) <msg << "dead code"
 ```
 
 ```polyglot
 [ ] ✗ PGE02009 — multiple outputs, all Final
-{=} =MultiOutDead
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >main#string
-   [=] >log#string
-   [r] >main << $input                         [ ] >main is Final
-   [r] >log << "done"                          [ ] >log is Final
+{-} -MultiOutDead
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >main#string
+   (-) >log#string
+   [-] >main << $input                         [ ] >main is Final
+   [-] >log << "done"                          [ ] >log is Final
    [ ] all output ports are now Final
-   [r] =Cleanup                                [ ] ✗ PGE02009 — unreachable
-      [=] <data << $input
+   [-] -Cleanup                                [ ] ✗ PGE02009 — unreachable
+      (-) <data << $input
 ```
 
 **Fix:** If post-finalization work is needed (logging, cleanup, resource release), move it to the `[/]` cleanup section. Cleanup executes after all output ports are finalized (or after the execution scope ends if the pipeline has no outputs).
@@ -85,17 +85,17 @@ severity: error
 **VALID (fix):**
 ```polyglot
 [ ] ✓ post-finalization work in [/] cleanup
-{=} =CorrectCleanup
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >result#string
-   [r] >result << $input                       [ ] >result is Final
+{-} -CorrectCleanup
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >result#string
+   [-] >result << $input                       [ ] >result is Final
    [ ] ✓ no dead code — cleanup handles post-finalization work
    [/] cleanup
-      [r] =Log
-         [=] <msg << "processing complete"
+      [-] -Log
+         (-) <msg << "processing complete"
 ```
 
 **Diagnostic:** "Unreachable code at line N — all output ports reached Final; pipeline has terminated. Move post-finalization work to `[/]` cleanup"

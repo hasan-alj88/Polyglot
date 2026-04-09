@@ -18,58 +18,58 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ access within expand scope — before collector closes scope
-[p] ~ForEach.Array
-   [~] <Array << $files
-   [~] >item >> $file
+[=] =ForEach.Array
+   (=) <Array << $files
+   (=) >item >> $file
 
-   [r] =File.Text.Read
-      [=] <path << $file
-      [=] >content >> $text
+   [-] -File.Text.Read
+      (-) <path << $file
+      (-) >content >> $text
 
    [ ] ✓ $text is still in scope
-   [r] =Log
-      [=] <msg << $text
+   [-] -Log
+      (-) <msg << $text
 
-   [r] *Into.Array
-      [*] <item << $text
-      [*] >Array >> $results
+   [-] *Into.Array
+      (*) <item << $text
+      (*) >Array >> $results
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE02008 — access after collector boundary
-[p] ~ForEach.Array
-   [~] <Array << $files
-   [~] >item >> $file
+[=] =ForEach.Array
+   (=) <Array << $files
+   (=) >item >> $file
 
-   [r] =File.Text.Read
-      [=] <path << $file
-      [=] >content >> $text
+   [-] -File.Text.Read
+      (-) <path << $file
+      (-) >content >> $text
 
-   [r] *Into.Array
-      [*] <item << $text
-      [*] >Array >> $results
+   [-] *Into.Array
+      (*) <item << $text
+      (*) >Array >> $results
 
 [ ] $text is Released — collector closed its scope
-[r] =Log
-   [=] <msg << $text                        [ ] ✗ PGE02008 — $text is Released
+[-] -Log
+   (-) <msg << $text                        [ ] ✗ PGE02008 — $text is Released
 ```
 
 ```polyglot
 [ ] ✗ PGE02008 — access after cleanup exits
 [\] setup
-   [r] $conn#Connection << =DB.Connect
-      [=] <url << $dbUrl
+   [-] $conn#Connection << -DB.Connect
+      (-) <url << $dbUrl
 
 [ ] execution body uses $conn...
 
 [/] cleanup
-   [r] =DB.Disconnect
-      [=] <conn << $conn
+   [-] -DB.Disconnect
+      (-) <conn << $conn
 
 [ ] $conn is Released after [/] cleanup
-[r] =Query
-   [=] <conn << $conn                       [ ] ✗ PGE02008 — $conn is Released
+[-] -Query
+   (-) <conn << $conn                       [ ] ✗ PGE02008 — $conn is Released
 ```
 
 **Open point:** None.

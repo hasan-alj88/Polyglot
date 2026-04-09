@@ -7,16 +7,16 @@ status: stable
 
 # *All
 
-Waits for ALL listed variables to reach Final state. Uses `[*] <<` only -- no `[*] >>` output. All variables stay accessible after the barrier completes.
+Waits for ALL listed variables to reach Final state. Uses `(*) <<` only -- no `(*) >>` output. All variables stay accessible after the barrier completes.
 
 No type constraint on inputs.
 
 ## Syntax
 
 ```polyglot
-[*] *All
-   [*] << $profile
-   [*] << $history
+(*) *All
+   (*) << $profile
+   (*) << $history
 ```
 
 ## Inputs

@@ -36,7 +36,7 @@ By removing all structural constraints, `#Serial` accepts any compilable tree sh
 Access uses chained `<` at unlimited depth:
 
 ```polyglot
-[r] $value << $data<key<subkey<deeperkey
+[-] $value << $data<key<subkey<deeperkey
 ```
 
 `#Serial` is useful for JSON-like data, configuration trees, and any structure where the schema is unknown at compile time.
@@ -44,5 +44,5 @@ Access uses chained `<` at unlimited depth:
 ## See Also
 
 - [[syntax/types/conversions|Type Conversions]] — struct-to-serial and serial-to-struct conversion rules
-- [[concepts/collections/expand|Expand Operators]] — `~ForEach.Serial` and `~ForEach.Level` iteration
+- [[concepts/collections/expand|Expand Operators]] — `=ForEach.Serial` and `=ForEach.Level` iteration
 - [[concepts/collections/collect|Collect Operators]] — `*Into.Serial` and `*Into.Level` collection

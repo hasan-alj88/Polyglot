@@ -16,18 +16,18 @@ severity: error
 **VALID:**
 ```polyglot
 [ ] ✓ >name assigned to Final before being read
-[=] >name#string
-[r] >name << "Alice"         [ ] Final — safe to read
-[r] =Greet
-   [=] <who << >name        [ ] ✓ >name is Final
+(-) >name#string
+[-] >name << "Alice"         [ ] Final — safe to read
+[-] -Greet
+   (-) <who << >name        [ ] ✓ >name is Final
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE02002 — >name declared but never assigned
-[=] >name#string             [ ] Declared — no value
-[r] =Greet
-   [=] <who << >name        [ ] ✗ PGE02002 — >name is still Declared
+(-) >name#string             [ ] Declared — no value
+[-] -Greet
+   (-) <who << >name        [ ] ✗ PGE02002 — >name is still Declared
 ```
 
 ### See Also

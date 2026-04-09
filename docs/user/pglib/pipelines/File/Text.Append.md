@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:File.Text.Append"
-metadata_instance: "%=:File.Text.Append:N"
+metadata_definition: "%definition.-:File.Text.Append"
+metadata_instance: "%-:File.Text.Append:N"
 ---
 
-# =File.Text.Append
+# -File.Text.Append
 
 Append text content to the end of an existing file.
 
 ## Definition
 
 ```polyglot
-{N} =File.Text.Append
+{N} -File.Text.Append
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextAppend"
    [%] .description << "Append text to file"
-   [=] <path#path
-   [=] <content#string
+   (-) <path#path
+   (-) <content#string
 ```
 
 ## Inputs
@@ -48,9 +48,9 @@ Requires `File.Write` capability.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:File.Text.Append` | Compile-time pipeline template |
-| Instance | `%=:File.Text.Append:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:File.Text.Append` | Compile-time pipeline template |
+| Instance | `%-:File.Text.Append:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/File/INDEX|=File.* File Pipelines]]
+- [[pglib/pipelines/File/INDEX|-File.* File Pipelines]]

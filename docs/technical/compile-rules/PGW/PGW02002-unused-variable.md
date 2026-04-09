@@ -18,78 +18,78 @@ severity: warning
 **VALID:**
 ```polyglot
 [ ] ✓ variable assigned and consumed
-{=} =Process
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >out#string
-   [r] =Transform
-      [=] <data << $input
-      [=] >result >> $cleaned
-   [r] >out << $cleaned                 [ ] ✓ $cleaned is consumed
+{-} -Process
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >out#string
+   [-] -Transform
+      (-) <data << $input
+      (-) >result >> $cleaned
+   [-] >out << $cleaned                 [ ] ✓ $cleaned is consumed
 ```
 
 ```polyglot
 [ ] ✓ discard pattern — intentionally unused
-{=} =FireAndForget
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >out#string
-   [r] =SideEffect
-      [=] <data << $input
-      [=] >result >> $*                 [ ] ✓ $* explicit discard — no warning
-   [r] >out << "done"
+{-} -FireAndForget
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >out#string
+   [-] -SideEffect
+      (-) <data << $input
+      (-) >result >> $*                 [ ] ✓ $* explicit discard — no warning
+   [-] >out << "done"
 ```
 
 ```polyglot
 [ ] ✓ variable used in conditional
-{=} =Route
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <status#Status
-   [=] >out#string
-   [r] =Lookup
-      [=] <key << $status
-      [=] >code >> $code
+{-} -Route
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <status#Status
+   (-) >out#string
+   [-] -Lookup
+      (-) <key << $status
+      (-) >code >> $code
    [?] $code                            [ ] ✓ $code consumed in conditional
       [?] ?[200,299]
-         [r] >out << "ok"
+         [-] >out << "ok"
       [?] *?
-         [r] >out << "error"
+         [-] >out << "error"
 ```
 
 **WARNING:**
 ```polyglot
 [ ] ⚠ PGW02002 — $unused assigned but never consumed
-{=} =Wasteful
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >out#string
-   [r] =Transform
-      [=] <data << $input
-      [=] >result >> $cleaned
-   [r] =OtherWork
-      [=] <data << $input
-      [=] >result >> $unused            [ ] ⚠ PGW02002 — $unused never read
-   [r] >out << $cleaned
+{-} -Wasteful
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >out#string
+   [-] -Transform
+      (-) <data << $input
+      (-) >result >> $cleaned
+   [-] -OtherWork
+      (-) <data << $input
+      (-) >result >> $unused            [ ] ⚠ PGW02002 — $unused never read
+   [-] >out << $cleaned
 ```
 
 ```polyglot
 [ ] ⚠ PGW02002 — $temp assigned but never consumed
-{=} =DeadAssignment
-   [T] =T.Manual
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [=] <input#string
-   [=] >out#string
-   [r] $temp <~ "placeholder"           [ ] ⚠ PGW02002 — $temp never read
-   [r] >out << $input
+{-} -DeadAssignment
+   [T] -T.Manual
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <input#string
+   (-) >out#string
+   [-] $temp <~ "placeholder"           [ ] ⚠ PGW02002 — $temp never read
+   [-] >out << $input
 ```
 
 **Open point:** None.

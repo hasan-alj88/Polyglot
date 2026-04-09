@@ -19,9 +19,9 @@ split_from: PGE06001
 [ ] ✓ flexible field — *? required
 [?] $config:mode
    [?] "fast"
-      [r] =Run.Fast
+      [-] -Run.Fast
    [?] *?
-      [r] =Run.Default
+      [-] -Run.Default
 ```
 
 **INVALID:**
@@ -29,9 +29,9 @@ split_from: PGE06001
 [ ] ✗ PGE06007 — flexible field without *?
 [?] $config:mode
    [?] "fast"
-      [r] =Run.Fast
+      [-] -Run.Fast
    [?] "slow"
-      [r] =Run.Slow
+      [-] -Run.Slow
    [ ] ✗ PGE06007 — missing *?, flexible field is open type
 ```
 

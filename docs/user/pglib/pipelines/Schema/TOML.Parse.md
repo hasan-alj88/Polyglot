@@ -3,23 +3,23 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:#.TOML.Parse"
-metadata_instance: "%=:#.TOML.Parse:N"
+metadata_definition: "%definition.-:#.TOML.Parse"
+metadata_instance: "%-:#.TOML.Parse:N"
 ---
 
-# =#.TOML.Parse
+# -#.TOML.Parse
 
 Parses a TOML string into a `#serial` data tree. Compiler intrinsic -- not user-definable.
 
 ## Definition
 
 ```polyglot
-{N} =#.TOML.Parse
+{N} -#.TOML.Parse
    [%] .Kind << #NativeKind.Compiler
    [%] .Rust << "SchemaTomlParse"
    [%] .description << "Parse TOML string into serial data tree"
-   [=] <raw#RawString
-   [=] >data#serial
+   (-) <raw#RawString
+   (-) >data#serial
 ```
 
 ## Inputs
@@ -36,7 +36,7 @@ Parses a TOML string into a `#serial` data tree. Compiler intrinsic -- not user-
 
 ## Errors
 
-None -- invalid input handled by calling pipeline (e.g. `=File.Serial.Read` raises `!File.ParseError`).
+None -- invalid input handled by calling pipeline (e.g. `-File.Serial.Read` raises `!File.ParseError`).
 
 ## Permissions
 
@@ -46,11 +46,11 @@ None -- pure computation.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:#.TOML.Parse` | Compile-time pipeline template |
-| Instance | `%=:#.TOML.Parse:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:#.TOML.Parse` | Compile-time pipeline template |
+| Instance | `%-:#.TOML.Parse:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Schema/INDEX|=# Schema Validation & Field Extraction]]
-- [[pglib/pipelines/Schema/JSON.Parse|=#.JSON.Parse]]
-- [[pglib/pipelines/Schema/YAML.Parse|=#.YAML.Parse]]
+- [[pglib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[pglib/pipelines/Schema/JSON.Parse|-#.JSON.Parse]]
+- [[pglib/pipelines/Schema/YAML.Parse|-#.YAML.Parse]]

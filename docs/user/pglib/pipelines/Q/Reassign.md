@@ -7,19 +7,19 @@ metadata_definition: "%definition.Q:Reassign"
 metadata_instance: "%Q:Reassign:N"
 ---
 
-# =Q.Reassign
+# -Q.Reassign
 
 Move a job to a different queue. Enables host offloading.
 
 ## Definition
 
 ```polyglot
-{N} =Q.Reassign
+{N} -Q.Reassign
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QReassign"
    [%] .description << "Move a job to a different queue."
-   [=] <jobId#String
-   [=] <queue#String
+   (-) <jobId#String
+   (-) <queue#String
 ```
 
 ## Inputs
@@ -50,4 +50,4 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[pglib/pipelines/Q/INDEX|=Q.* Queue Pipelines]]
+- [[pglib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

@@ -9,7 +9,7 @@ status: stable
 
 Collectors gather outputs from expanded mini-pipelines or parallel pipeline calls back into a single value or collection.
 
-All collectors use the `*` prefix. Invocation uses `[r]` (sequential) or `[p]` (parallel) execution markers. Collector IO lines use `[*]`.
+All collectors use the `*` prefix. Invocation uses `[-]` (sequential) or `[=]` (parallel) execution markers. Collector IO lines use `(*)`.
 
 No `[@]` import needed.
 
@@ -27,7 +27,7 @@ Reduce mini-pipeline outputs to a single value.
 
 ## Collect-All & Race Collectors
 
-Collect variables from parallel `[p]` pipeline calls (outside expand scopes).
+Collect variables from parallel `[=]` pipeline calls (outside expand scopes).
 
 - [[pglib/collectors/Sync/INDEX|*All / *First / *Nth]] -- collect-all barrier, race collectors, discard
 

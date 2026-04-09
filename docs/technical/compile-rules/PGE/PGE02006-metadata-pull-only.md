@@ -18,32 +18,32 @@ severity: error
 2. **`%state`** is always accessible and returns the current state, including `"failed"`.
 3. **`live` metadata** on Failed variables is frozen at the point of failure — last known values remain readable. This allows `[!]` error handlers to inspect the failed variable's metadata for recovery decisions.
 
-**`%` schema tree:** Metadata is organized by block type — `%=.*` for `{=}` pipelines, `%#.*` for `{#}` data definitions, `%W.*` for `{W}` wrappers. The `*` in the path is the instance reference — one pipeline definition may span several concurrent instances, each with its own metadata. The schema is fixed per block type (all instances share the same field structure). See resolved design issue 002 (git history: `docs/technical/compiler_issues/002-metadata-schema-tree.md`) for full schema documentation status.
+**`%` schema tree:** Metadata is organized by block type — `%-.*` for `{-}` pipelines, `%#.*` for `{#}` data definitions, `%W.*` for `{W}` wrappers. The `*` in the path is the instance reference — one pipeline definition may span several concurrent instances, each with its own metadata. The schema is fixed per block type (all instances share the same field structure). See resolved design issue 002 (git history: `docs/technical/compiler_issues/002-metadata-schema-tree.md`) for full schema documentation status.
 
 **VALID:**
 ```polyglot
 [ ] ✓ pulling live %state in a conditional
-[=] >data#string
-[r] =Fetch
-   [=] >payload >> >data
+(-) >data#string
+[-] -Fetch
+   (-) >payload >> >data
 [?] >data%state
    [?] #Final
-      [r] =Process
-         [=] <input << >data
+      [-] -Process
+         (-) <input << >data
    [?] *?
-      [r] =Log
-         [=] <msg << "not ready"
+      [-] -Log
+         (-) <msg << "not ready"
 ```
 
 ```polyglot
 [ ] ✓ pulling live %status from a pipeline reference
-[?] =Fetch%status
+[?] -Fetch%status
    [?] #Running
-      [r] =Log
-         [=] <msg << "still running"
+      [-] -Log
+         (-) <msg << "still running"
    [?] *?
-      [r] =Log
-         [=] <msg << "done or failed"
+      [-] -Log
+         (-) <msg << "done or failed"
 ```
 
 ```polyglot
@@ -54,13 +54,13 @@ severity: error
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE02006 — pushing into a live %state field
-[=] >data#string
-[r] >data%state << #Final          [ ] ✗ PGE02006 — %state is live, cannot push
+(-) >data#string
+[-] >data%state << #Final          [ ] ✗ PGE02006 — %state is live, cannot push
 ```
 
 ```polyglot
 [ ] ✗ PGE02006 — default-pushing into a live %status field
-[r] =Pipeline%status <~ #Running   [ ] ✗ PGE02006 — %status is live, cannot push
+[-] -Pipeline%status <~ #Running   [ ] ✗ PGE02006 — %status is live, cannot push
 ```
 
 ### See Also

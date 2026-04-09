@@ -3,25 +3,25 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:#.Coerce"
-metadata_instance: "%=:#.Coerce:N"
+metadata_definition: "%definition.-:#.Coerce"
+metadata_instance: "%-:#.Coerce:N"
 ---
 
-# =#.Coerce
+# -#.Coerce
 
 Best-effort type conversion -- takes data and a target type, keeps fields that match, reports fields that don't. Always succeeds (never throws).
 
 ## Definition
 
 ```polyglot
-{N} =#.Coerce
+{N} -#.Coerce
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaCoerce"
    [%] .description << "Best-effort type conversion"
-   [=] <data#serial
-   [=] <#type
-   [=] >result#serial
-   [=] >dropped#array:string
+   (-) <data#serial
+   (-) <#type
+   (-) >result#serial
+   (-) >dropped#array:string
 ```
 
 ## Inputs
@@ -50,11 +50,11 @@ None -- pure computation.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:#.Coerce` | Compile-time pipeline template |
-| Instance | `%=:#.Coerce:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:#.Coerce` | Compile-time pipeline template |
+| Instance | `%-:#.Coerce:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/Schema/INDEX|=# Schema Validation & Field Extraction]]
-- [[pglib/pipelines/Schema/Match|=#.Match]]
-- [[pglib/pipelines/Schema/Validate|=#.Validate]]
+- [[pglib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[pglib/pipelines/Schema/Match|-#.Match]]
+- [[pglib/pipelines/Schema/Validate|-#.Validate]]

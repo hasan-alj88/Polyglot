@@ -12,10 +12,10 @@ Gathers key-value outputs from mini-pipelines into serialized siblings at a spec
 ## Syntax
 
 ```polyglot
-[r] *Into.Level
-   [*] <key << $key
-   [*] <value << $value
-   [*] >Serial >> $result
+[-] *Into.Level
+   (*) <key << $key
+   (*) <value << $value
+   (*) >Serial >> $result
 ```
 
 ## Inputs

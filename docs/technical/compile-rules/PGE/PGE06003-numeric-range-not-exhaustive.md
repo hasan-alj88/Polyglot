@@ -20,20 +20,20 @@ severity: error
 [ ] ✓ ranges cover -∞ to +∞ — no *? needed
 [?] $val
    [?] $val <? 0
-      [r] =Negative
+      [-] -Negative
    [?] $val ?[0,100]
-      [r] =Normal
+      [-] -Normal
    [?] $val >? 100
-      [r] =High
+      [-] -High
 ```
 
 ```polyglot
 [ ] ✓ partial ranges + *? fills the gap
 [?] $val ?[0,100]
    [?] #Boolean.True
-      [r] =InRange
+      [-] -InRange
    [?] *?
-      [r] =OutOfRange
+      [-] -OutOfRange
 ```
 
 **INVALID:**
@@ -41,9 +41,9 @@ severity: error
 [ ] ✗ PGE06003 — gap in coverage at [0, 100]
 [?] $val
    [?] $val <? 0
-      [r] =Negative
+      [-] -Negative
    [?] $val >? 100
-      [r] =High
+      [-] -High
    [ ] ✗ PGE06003 — [0, 100] not covered, no *?
 ```
 
@@ -51,7 +51,7 @@ severity: error
 [ ] ✗ PGE06003 — only one range, rest uncovered
 [?] $score >=? 90
    [?] #Boolean.True
-      [r] =Grade.A
+      [-] -Grade.A
    [ ] ✗ PGE06003 — (-∞, 90) not covered, no *?
 ```
 

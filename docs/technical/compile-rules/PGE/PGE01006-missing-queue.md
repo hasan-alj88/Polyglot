@@ -10,30 +10,30 @@ split_from: PGE01001
 ### Rule 1.6 — Missing Pipeline Queue
 `PGE01006`
 
-**Statement:** Every `{=}` pipeline must contain a `[Q]` queue section. A pipeline without a queue has no concurrency strategy and is a compile error.
+**Statement:** Every `{-}` pipeline must contain a `[Q]` queue section. A pipeline without a queue has no concurrency strategy and is a compile error.
 **Rationale:** The queue defines how concurrent invocations are handled — whether they are serialized, dropped, or run in parallel. Without it, the runtime has no policy for managing simultaneous triggers.
-**Detection:** The compiler checks that every `{=}` block contains exactly one `[Q]` section.
+**Detection:** The compiler checks that every `{-}` block contains exactly one `[Q]` section.
 
 **VALID:**
 ```polyglot
 [ ] ✓ pipeline has a queue
-{=} =Process
-   [T] =T.Call
-   [Q] =Q.Default
-   [W] =W.Polyglot
-   [r] =DoWork
+{-} -Process
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -DoWork
 ```
 
 **INVALID:**
 ```polyglot
 [ ] ✗ PGE01006 — [Q] missing
-{=} =Process
-   [T] =T.Call
-   [W] =W.Polyglot
-   [r] =DoWork
+{-} -Process
+   [T] -T.Call
+   [W] -W.Polyglot
+   [-] -DoWork
 ```
 
-**Diagnostic:** "Pipeline `=Process` has no queue — add `[Q]` after `[T]`/`[=]` section"
+**Diagnostic:** "Pipeline `-Process` has no queue — add `[Q]` after `[T]`/`(-)` section"
 
 ### See Also
 

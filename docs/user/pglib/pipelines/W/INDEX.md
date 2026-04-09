@@ -5,12 +5,12 @@ updated: 2026-04-07
 status: complete
 ---
 
-# =W — Wrappers
+# -W — Wrappers
 
 <!-- @pipelines -->
-Wrappers are placed on `[W]` lines. Each wrapper is a `{W}` definition that provides setup (`[\]`) and cleanup (`[/]`) around the pipeline execution body. Wrapper IO (`[{]` input, `[}]` output) is wired at the `[W]` line using `[=]` with `$` variables. See [[concepts/pipelines/wrappers#Wrappers]] for wrapper usage rules.
+Wrappers are placed on `[W]` lines. Each wrapper is a `{W}` definition that provides setup (`[\]`) and cleanup (`[/]`) around the pipeline execution body. Wrapper IO (`[{]` input, `[}]` output) is wired at the `[W]` line using `(-)` with `$` variables. See [[concepts/pipelines/wrappers#Wrappers]] for wrapper usage rules.
 
-Execution order: `[=],[T]` -> `[Q]` -> `[\]` -> Body -> `[/]`
+Execution order: `(-),[T]` -> `[Q]` -> `[\]` -> Body -> `[/]`
 
 No `[@]` import needed.
 
@@ -23,18 +23,18 @@ Wrappers that manage external resources require a `{_}` permission object granti
 
 | Pipeline | Required Capability | Category |
 |----------|-------------------|----------|
-| `=W.Polyglot` | None | — |
-| `=W.DB.Connection` | Database.Connect | Database |
-| `=W.DB.Transaction` | Database.Connect | Database |
-| `=W.File.Lock` | File.Read | File |
-| `=W.File.TempDir` | File.Write | File |
-| `=W.HTTP.Session` | Web.Request | Web |
-| `=W.SSH.Session` | System.Process | System |
-| `=W.Auth.Token` | Crypto.Key | Crypto |
-| `=W.Log.Context` | None | — |
-| `=W.Queue.Consumer` | IPC.Receive | IPC |
-| `=W.Cache.Scope` | Database.Read | Database |
-| `=W.RT` | System.Process | System |
+| `-W.Polyglot` | None | — |
+| `-W.DB.Connection` | Database.Connect | Database |
+| `-W.DB.Transaction` | Database.Connect | Database |
+| `-W.File.Lock` | File.Read | File |
+| `-W.File.TempDir` | File.Write | File |
+| `-W.HTTP.Session` | Web.Request | Web |
+| `-W.SSH.Session` | System.Process | System |
+| `-W.Auth.Token` | Crypto.Key | Crypto |
+| `-W.Log.Context` | None | — |
+| `-W.Queue.Consumer` | IPC.Receive | IPC |
+| `-W.Cache.Scope` | Database.Read | Database |
+| `-W.RT` | System.Process | System |
 
 ## Pipeline Listing
 
@@ -42,58 +42,58 @@ Wrappers that manage external resources require a `{_}` permission object granti
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/Polyglot\|=W.Polyglot]] | Pure Polyglot Code — no external runtime, no setup/cleanup |
+| [[pglib/pipelines/W/Polyglot\|-W.Polyglot]] | Pure Polyglot Code — no external runtime, no setup/cleanup |
 
 ### Database
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/DB.Connection\|=W.DB.Connection]] | Opens DB connection on setup, closes on cleanup |
-| [[pglib/pipelines/W/DB.Transaction\|=W.DB.Transaction]] | Opens connection + begins transaction on setup, commits + closes on cleanup |
+| [[pglib/pipelines/W/DB.Connection\|-W.DB.Connection]] | Opens DB connection on setup, closes on cleanup |
+| [[pglib/pipelines/W/DB.Transaction\|-W.DB.Transaction]] | Opens connection + begins transaction on setup, commits + closes on cleanup |
 
 ### File System
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/File.Lock\|=W.File.Lock]] | Acquires file lock on setup, releases on cleanup |
-| [[pglib/pipelines/W/File.TempDir\|=W.File.TempDir]] | Creates temp directory on setup, deletes on cleanup |
+| [[pglib/pipelines/W/File.Lock\|-W.File.Lock]] | Acquires file lock on setup, releases on cleanup |
+| [[pglib/pipelines/W/File.TempDir\|-W.File.TempDir]] | Creates temp directory on setup, deletes on cleanup |
 
 ### Network
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/HTTP.Session\|=W.HTTP.Session]] | Creates HTTP client on setup, closes on cleanup |
-| [[pglib/pipelines/W/SSH.Session\|=W.SSH.Session]] | Connects SSH on setup, disconnects on cleanup |
+| [[pglib/pipelines/W/HTTP.Session\|-W.HTTP.Session]] | Creates HTTP client on setup, closes on cleanup |
+| [[pglib/pipelines/W/SSH.Session\|-W.SSH.Session]] | Connects SSH on setup, disconnects on cleanup |
 
 ### Security
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/Auth.Token\|=W.Auth.Token]] | Acquires OAuth token on setup, revokes on cleanup |
+| [[pglib/pipelines/W/Auth.Token\|-W.Auth.Token]] | Acquires OAuth token on setup, revokes on cleanup |
 
 ### Observability
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/Log.Context\|=W.Log.Context]] | Opens structured log scope on setup, closes on cleanup |
+| [[pglib/pipelines/W/Log.Context\|-W.Log.Context]] | Opens structured log scope on setup, closes on cleanup |
 
 ### Messaging
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/Queue.Consumer\|=W.Queue.Consumer]] | Connects to message queue on setup, disconnects on cleanup |
+| [[pglib/pipelines/W/Queue.Consumer\|-W.Queue.Consumer]] | Connects to message queue on setup, disconnects on cleanup |
 
 ### Caching
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/Cache.Scope\|=W.Cache.Scope]] | Connects cache on setup, flushes + disconnects on cleanup |
+| [[pglib/pipelines/W/Cache.Scope\|-W.Cache.Scope]] | Connects cache on setup, flushes + disconnects on cleanup |
 
 ### Runtime
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/RT\|=W.RT]] | Starts language runtime on setup, stops on cleanup |
+| [[pglib/pipelines/W/RT\|-W.RT]] | Starts language runtime on setup, stops on cleanup |
 
 NOTE: Retry/timeout/rate-limiting are `[Q]` queue strategies, not wrappers.
 

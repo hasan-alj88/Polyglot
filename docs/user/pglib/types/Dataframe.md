@@ -55,12 +55,12 @@ Access uses double `<` -- first for row index, second for column name:
    [.] .price
    [.] .quantity
 
-[r] $sales#dataframe:SalesColumns:string <~ {}
+[-] $sales#dataframe:SalesColumns:string <~ {}
 
 [ ] Access: <row<column
-[r] $name#string << $sales<0<product       [ ] row 0, column "product"
-[r] $price#string << $sales<2<price        [ ] row 2, column "price"
-[r] $row#map:SalesColumns:string << $sales<0   [ ] entire row as Map
+[-] $name#string << $sales<0<product       [ ] row 0, column "product"
+[-] $price#string << $sales<2<price        [ ] row 2, column "price"
+[-] $row#map:SalesColumns:string << $sales<0   [ ] entire row as Map
 ```
 
 ---

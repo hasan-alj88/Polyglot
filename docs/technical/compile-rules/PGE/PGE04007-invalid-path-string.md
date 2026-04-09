@@ -17,7 +17,7 @@ severity: error
 
 **VALID:**
 ```polyglot
-[r] $AppDir#path
+[-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
 
@@ -25,7 +25,7 @@ severity: error
 ```
 
 ```polyglot
-[r] $LogFile#path
+[-] $LogFile#path
    [.] .Unix << "/var/log/app.log"
    [.] .Windows << "C:\ProgramData\App\app.log"
 
@@ -34,19 +34,19 @@ severity: error
 
 **INVALID:**
 ```polyglot
-[r] $BadPath#path
+[-] $BadPath#path
    [.] .Unix << "/tmp//MyApp"           [ ] ✗ PGE04007 — double separator in Unix path
    [.] .Windows << "C:\MyApp"
 ```
 
 ```polyglot
-[r] $BadPath#path
+[-] $BadPath#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\My<App"          [ ] ✗ PGE04007 — illegal character '<' in Windows path
 ```
 
 ```polyglot
-[r] $BadPath#path
+[-] $BadPath#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "MyApp"              [ ] ✗ PGE04007 — Windows path missing drive letter or UNC prefix
 ```
@@ -55,7 +55,7 @@ severity: error
 
 **Cross-platform inference (resolved 2026-03-20):**
 
-The compiler statically infers whether a `=Path"..."` expression is provably cross-platform or potentially single-OS:
+The compiler statically infers whether a `-Path"..."` expression is provably cross-platform or potentially single-OS:
 
 - **Provably cross-platform** — contains `{.}`, `{..}`, or interpolates a `$var#path` that has both `.Unix` and `.Windows` defined → no handling needed
 - **Potentially single-OS** — contains only literal strings or interpolates variables without dual-OS proof → compiler raises PGE04007, forcing the user to either:
@@ -64,22 +64,22 @@ The compiler statically infers whether a `=Path"..."` expression is provably cro
 
 ```polyglot
 [ ] ✓ provably cross-platform — {.} is dual-OS
-[r] $LogDir#path << =Path"{.}/logs"
+[-] $LogDir#path << -Path"{.}/logs"
 
 [ ] ✓ provably cross-platform — $Root has both subfields
-[r] $Root#path
+[-] $Root#path
    [.] .Unix << "/opt"
    [.] .Windows << "C:\opt"
-[r] $AppDir#path << =Path"{$Root}/MyApp"
+[-] $AppDir#path << -Path"{$Root}/MyApp"
 
 [ ] ✗ PGE04007 — literal string, no dual-OS proof
-[r] $dir#path << =Path"/tmp/MyApp"
+[-] $dir#path << -Path"/tmp/MyApp"
 
 [ ] ✓ handled — <! fallback for single-OS path
-[r] $dir#path << =Path"/tmp/MyApp"
-   [>] <! $defaultDir                 [ ] catch-all fallback
+[-] $dir#path << -Path"/tmp/MyApp"
+   (>) <! $defaultDir                 [ ] catch-all fallback
    [!] !PathPlatformMismatch
-      [r] >dir << $defaultDir
+      [-] >dir << $defaultDir
 ```
 
 ### See Also

@@ -12,95 +12,95 @@ Expand an array of integers in parallel, double each value, collect the doubled 
 
 ```polyglot
 ...
-{=} =DoubleAndSum
+{-} -DoubleAndSum
 [ ] Triggers, queue config, and wrapper assumed defined
 ...
 [ ] Input: an array of integers
-[=] <numbers#array << $InputNumbers
+(-) <numbers#array << $InputNumbers
 [ ] Output: doubled array and total sum
-[=] >doubled#array >> $DoubledNumbers
-[=] >total#int >> $TotalSum
+(-) >doubled#array >> $DoubledNumbers
+(-) >total#int >> $TotalSum
 
 [ ] Expand — one mini-pipeline per item, run in parallel
-[p] ~ForEach.Array.Enumerate
-   [~] <Array << $InputNumbers
-   [~] >index >> $idx
-   [~] >item >> $num
+[=] =ForEach.Array.Enumerate
+   (=) <Array << $InputNumbers
+   (=) >index >> $idx
+   (=) >item >> $num
 
    [ ] Double the number inside mini-pipeline scope
-   [r] $doubled#int << $num * 2
+   [-] $doubled#int << $num * 2
 
    [ ] Collect doubled values back into array (one level up)
-   [p] *Into.Array
-      [*] <item << $doubled
-      [*] >Array >> $DoubledNumbers
+   [=] *Into.Array
+      (*) <item << $doubled
+      (*) >Array >> $DoubledNumbers
 
    [ ] Also aggregate the sum (one level up)
-   [p] *Agg.Sum
-      [*] <number << $doubled
-      [*] >sum >> $TotalSum
+   [=] *Agg.Sum
+      (*) <number << $doubled
+      (*) >sum >> $TotalSum
 ...
 ```
 
 ## Example: Expand Map, Transform, and Collect
 
-Expand a map of ticker->price pairs, multiply each price by 1.1 using `=Math.Multiply`, and collect into a new map:
+Expand a map of ticker->price pairs, multiply each price by 1.1 using `-Math.Multiply`, and collect into a new map:
 
 ```polyglot
 ...
-{=} =AdjustPrices
+{-} -AdjustPrices
 [ ] Triggers, queue config, and wrapper assumed defined
 ...
 [ ] Input: a map of ticker → price
-[=] <prices#map:string:float << $InputPrices
+(-) <prices#map:string:float << $InputPrices
 [ ] Output: adjusted prices map
-[=] >adjusted#map:string:float >> $AdjustedPrices
+(-) >adjusted#map:string:float >> $AdjustedPrices
 
 [ ] Expand — one mini-pipeline per key-value pair
-[p] ~ForEach.Map
-   [~] <Map << $InputPrices
-   [~] >key >> $ticker
-   [~] >item >> $price
+[=] =ForEach.Map
+   (=) <Map << $InputPrices
+   (=) >key >> $ticker
+   (=) >item >> $price
 
    [ ] Multiply the price by 1.1
-   [r] =Math.Multiply
-      [=] <a#float << $price
-      [=] <b#float << 1.1
-      [=] >result#float >> $newPrice
+   [-] -Math.Multiply
+      (-) <a#float << $price
+      (-) <b#float << 1.1
+      (-) >result#float >> $newPrice
 
    [ ] Collect back into map (one level up)
-   [r] *Into.Map
-      [*] <key << $ticker
-      [*] <value << $newPrice
-      [*] >Map >> $AdjustedPrices
+   [-] *Into.Map
+      (*) <key << $ticker
+      (*) <value << $newPrice
+      (*) >Map >> $AdjustedPrices
 ...
 ```
 
 ## Fallback in Expand Context
 
 <!-- @errors:Error Fallback Operators -->
-When a pipeline call inside an expand scope may error, use `[>] <!` fallback to provide a default value per iteration instead of failing the entire expand:
+When a pipeline call inside an expand scope may error, use `(>) <!` fallback to provide a default value per iteration instead of failing the entire expand:
 
 ```polyglot
-[p] ~ForEach.Array
-   [~] <Array << $files
-   [~] >item >> $file
+[=] =ForEach.Array
+   (=) <Array << $files
+   (=) >item >> $file
 
-   [r] =File.Text.Read
-      [=] <path << $file
-      [=] >content >> $text
-         [>] <! ""
+   [-] -File.Text.Read
+      (-) <path << $file
+      (-) >content >> $text
+         (>) <! ""
 
-   [r] *Into.Array
-      [*] <item << $text
-      [*] >Array >> $results
+   [-] *Into.Array
+      (*) <item << $text
+      (*) >Array >> $results
 ```
 
 If any file fails to read, `$text` gets `""` for that iteration instead of entering the Failed state. The expand continues for all items. See [[errors#Error Fallback Operators]] for the full fallback model.
 
 ## See Also
 
-- [[concepts/collections/expand|Expand Operators]] — `~ForEach` operator reference and IO signatures
+- [[concepts/collections/expand|Expand Operators]] — `=ForEach` operator reference and IO signatures
 - [[concepts/collections/collect|Collect Operators]] — `*Into` and `*Agg` collector reference
 - [[concepts/pipelines/error-handling|Error Handling]] — `[!]` blocks and `<!` fallback operators
 

@@ -3,24 +3,24 @@ audience: pg-coder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.=:DT.Business.IsWorkDay"
-metadata_instance: "%=:DT.Business.IsWorkDay:N"
+metadata_definition: "%definition.-:DT.Business.IsWorkDay"
+metadata_instance: "%-:DT.Business.IsWorkDay:N"
 ---
 
-# =DT.Business.IsWorkDay
+# -DT.Business.IsWorkDay
 
 Returns `#bool` -- true when `source` falls on a work day. Requires an explicit `#BusinessWeek` configuration. No regional defaults are assumed -- all fields (`.firstDay`, `.workDays`, `.offDays`, `.hoursPerDay`) must be set by the user.
 
 ## Definition
 
 ```polyglot
-{N} =DT.Business.IsWorkDay
+{N} -DT.Business.IsWorkDay
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtBusinessIsWorkDay"
    [%] .description << "Check if DateTime is a work day"
-   [=] <source#dt
-   [=] <week#BusinessWeek
-   [=] >result#bool
+   (-) <source#dt
+   (-) <week#BusinessWeek
+   (-) >result#bool
 ```
 
 ## Inputs
@@ -48,10 +48,10 @@ None required.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.=:DT.Business.IsWorkDay` | Compile-time pipeline template |
-| Instance | `%=:DT.Business.IsWorkDay:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.-:DT.Business.IsWorkDay` | Compile-time pipeline template |
+| Instance | `%-:DT.Business.IsWorkDay:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 
-- [[pglib/pipelines/DT/INDEX|=DT.* DateTime Pipelines]]
+- [[pglib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
 - [[pglib/types/datetime|DateTime types]]

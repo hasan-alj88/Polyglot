@@ -7,14 +7,14 @@ metadata_definition: "%definition.T:Webhook"
 metadata_instance: "%T:Webhook:N"
 ---
 
-# =T.Webhook
+# -T.Webhook
 
-Fires on an incoming HTTP request to the specified endpoint. Endpoint path provided via inline call: `=T.Webhook"/api/onboarding"`.
+Fires on an incoming HTTP request to the specified endpoint. Endpoint path provided via inline call: `-T.Webhook"/api/onboarding"`.
 
 ## Definition
 
 ```polyglot
-{N} =T.Webhook
+{N} -T.Webhook
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TWebhook"
    [%] .description << "Fires on an incoming HTTP request to the specified endpoint."
@@ -25,7 +25,7 @@ Fires on an incoming HTTP request to the specified endpoint. Endpoint path provi
 
 | Name | Type | Description |
 |------|------|-------------|
-| `InlineStringLiteral` | `#string` | Endpoint path to bind (e.g. `"/api/onboarding"`). Provided inline: `=T.Webhook"/api/onboarding"`. Defaults to `""`. |
+| `InlineStringLiteral` | `#string` | Endpoint path to bind (e.g. `"/api/onboarding"`). Provided inline: `-T.Webhook"/api/onboarding"`. Defaults to `""`. |
 
 ## Outputs
 
@@ -49,4 +49,4 @@ Web.Socket
 
 ## Related
 
-- [[pglib/pipelines/T/INDEX|=T.* Trigger Pipelines]]
+- [[pglib/pipelines/T/INDEX|-T.* Trigger Pipelines]]

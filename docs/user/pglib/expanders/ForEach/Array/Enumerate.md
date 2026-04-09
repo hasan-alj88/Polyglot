@@ -5,17 +5,17 @@ updated: 2026-04-07
 status: stable
 ---
 
-# ~ForEach.Array.Enumerate
+# =ForEach.Array.Enumerate
 
-Iterates over each item in an array with its positional index. The execution marker on the expand line controls parallelism: `[p]` for parallel, `[r]` for sequential.
+Iterates over each item in an array with its positional index. The execution marker on the expand line controls parallelism: `[=]` for parallel, `[-]` for sequential.
 
 ## Syntax
 
 ```polyglot
-[p] ~ForEach.Array.Enumerate
-   [~] <Array << $myArray
-   [~] >index >> $idx
-   [~] >item >> $item
+[=] =ForEach.Array.Enumerate
+   (=) <Array << $myArray
+   (=) >index >> $idx
+   (=) >item >> $item
    ...
 ```
 
@@ -42,6 +42,6 @@ None.
 
 ## Related
 
-- [[pglib/expanders/ForEach/Array|~ForEach.Array]] -- base variant without index
-- [[pglib/expanders/ForEach/INDEX|~ForEach Expanders]]
+- [[pglib/expanders/ForEach/Array|=ForEach.Array]] -- base variant without index
+- [[pglib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]
