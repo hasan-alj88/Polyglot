@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-10
 status: complete
 ---
 
@@ -34,7 +34,8 @@ Wrappers that manage external resources require a `{_}` permission object granti
 | `-W.Log.Context` | None | — |
 | `-W.Queue.Consumer` | IPC.Receive | IPC |
 | `-W.Cache.Scope` | Database.Read | Database |
-| `-W.RT` | System.Process | System |
+| `-W.Env` | System.Process | System |
+| `-W.RT` *(deprecated)* | System.Process | System |
 
 ## Pipeline Listing
 
@@ -89,11 +90,17 @@ Wrappers that manage external resources require a `{_}` permission object granti
 |----------|-------------|
 | [[pglib/pipelines/W/Cache.Scope\|-W.Cache.Scope]] | Connects cache on setup, flushes + disconnects on cleanup |
 
-### Runtime
+### Environment
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/RT\|-W.RT]] | Starts language runtime on setup, stops on cleanup |
+| [[pglib/pipelines/W/Env\|-W.Env]] | Sets up language environment on setup, tears down on cleanup |
+
+### Runtime (Deprecated)
+
+| Pipeline | Description |
+|----------|-------------|
+| [[pglib/pipelines/W/RT\|-W.RT]] | **Deprecated** — use [[pglib/pipelines/W/Env\|-W.Env]]. Starts language runtime on setup, stops on cleanup |
 
 NOTE: Retry/timeout/rate-limiting are `[Q]` queue strategies, not wrappers.
 

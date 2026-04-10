@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-30
+updated: 2026-04-10
 status: complete
 ---
 
@@ -96,11 +96,30 @@ No `[@]` import needed. pglib errors are defined as `{!}` blocks by the runtime:
    [.] .RuntimeError#Error
    [.] .Timeout#Error
    [.] .EnvironmentError#Error
+
+{!} !Env
+   [.] .NotFound#Error
+   [.] .VersionMismatch#Error
+   [.] .SetupFailed#Error
+   [.] .TeardownFailed#Error
+   [:] :Dependency
+      [.] .Missing#Error
+      [.] .VersionConflict#Error
+      [.] .InstallFailed#Error
 ```
 
 ### `!Error` — User-Extensible Namespace
 
-`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) have Polyglot-defined fixed leaves.
+`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`, `!Env`) have Polyglot-defined fixed leaves.
+
+### `!Env` vs `!RT` — Phase Distinction
+
+| Namespace | Phase | Scope |
+|-----------|-------|-------|
+| `!Env.*` | `[W]` wrapper setup | Environment availability + dependency resolution |
+| `!RT.*` | `[-]` body execution | Foreign code compile/runtime errors |
+
+`!Env.*` errors fire during [[pglib/pipelines/W/Env|-W.Env]] wrapper setup when the environment cannot be established. `!RT.EnvironmentError` fires during execution when the foreign runtime encounters an environment issue within already-running code. Both coexist — they cover different execution phases. See [[environments]] for the `{;}` environment system.
 
 Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `[.]` for terminal leaves. Siblings at the same level must all use the same separator (sibling homogeneity rule).
 
@@ -204,6 +223,15 @@ Each pglib pipeline declares the errors it can raise via `[=] !ErrorName` (see [
    [=] !RT.CompileError
    [=] !RT.RuntimeError
    [=] !RT.EnvironmentError
+
+-W.Env
+   [=] !Env.NotFound
+   [=] !Env.VersionMismatch
+   [=] !Env.SetupFailed
+   [=] !Env.TeardownFailed
+   [=] !Env.Dependency.Missing
+   [=] !Env.Dependency.VersionConflict
+   [=] !Env.Dependency.InstallFailed
 ```
 
 ## `!Alias.Clash` — Compile Error

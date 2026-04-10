@@ -1,13 +1,15 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
-status: complete
+updated: 2026-04-10
+status: deprecated
 metadata_definition: "%definition.W:RT"
 metadata_instance: "%W:RT:N"
 ---
 
-# -W.RT
+# -W.RT (Deprecated)
+
+> **Deprecated:** Use [[pglib/pipelines/W/Env|-W.Env]] with `{;}` environment definitions instead. `-W.RT` and its version tree syntax are retired. See [[environments]] for the replacement system.
 
 Starts language runtime on setup, stops on cleanup. Uses version-specific paths (e.g., `-W.RT:Python:3:14`).
 
