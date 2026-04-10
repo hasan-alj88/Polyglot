@@ -21,16 +21,16 @@ updated: 2026-04-03
 
 Parameter names within `.<` and `.>` are flexible — they follow the pipeline's `(-)` IO declarations.
 
-Wrappers use `.[{]` (inputs) and `.[}]` (outputs) instead of `.<`/`.>`:
+Wrappers use `.<` (inputs) and `.>` (outputs) — same as pipelines:
 
 ```polyglot
 %W:DB.Connection:0
-├── .[{]                     <- wrapper inputs
+├── .<                       <- wrapper inputs
 │   └── .connectionString#string
-└── .[}]                     <- wrapper outputs
+└── .>                       <- wrapper outputs
     └── .dbConn
 ```
 
-Parameter names within `.[{]` and `.[}]` are flexible — they follow the wrapper's `[{]`/`[}]` declarations.
+Parameter names within `.<` and `.>` are flexible — they follow the wrapper's `(-)` IO declarations.
 
 See also: [[branches|Branch Specifications]], [[path-grammar|Path Grammar]]

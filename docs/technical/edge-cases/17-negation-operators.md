@@ -43,7 +43,7 @@ updated: 2026-03-30
 
 ### EC-17.2: Negation in compound logical condition
 
-**What it tests:** Negation operators combined with `[&]` / `[|]` logical markers. See [[operators#Comparison Operators]], [[blocks#Logical]].
+**What it tests:** Negation operators combined with `[&]` / `[+]` logical markers. See [[operators#Comparison Operators]], [[blocks#Logical]].
 
 ```polyglot
 [ ] Active user who is not banned and age is not less than 13

@@ -18,9 +18,9 @@ Creates HTTP client on setup, closes on cleanup.
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WHttpSession"
    [%] .description << "Creates HTTP client on setup, closes on cleanup."
-   [{] $baseUrl#string    [ ] Base URL for all requests in this session
-   [{] $timeout#int       [ ] Request timeout in milliseconds
-   [}] $httpClient        [ ] Configured HTTP client handle
+   (-) <baseUrl;string    [ ] Base URL for all requests in this session
+   (-) <timeout;int       [ ] Request timeout in milliseconds
+   (-) >httpClient        [ ] Configured HTTP client handle
 ```
 
 ## Inputs

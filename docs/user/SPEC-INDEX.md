@@ -40,7 +40,7 @@ flowchart LR
 | # | File | Covers |
 |---|------|--------|
 | 8 | variable-lifecycle.md | Declared → Default → Final → Failed → Released |
-| 9 | collections/INDEX.md | array, serial, ~ expand, * collect (read INDEX then sub-pages) |
+| 9 | collections/INDEX.md | array, serial, = expand, * collect (read INDEX then sub-pages) |
 | 10 | conditionals.md | [?] chains, exhaustiveness, logical operators, nesting |
 | 11 | pipelines/INDEX.md | {-} mandatory structure: trigger, IO, queue, wrapper, execution (read INDEX then sub-pages) |
 | 12 | errors.md | Error model, scoping, chain addressing, recovery |

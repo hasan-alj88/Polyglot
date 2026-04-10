@@ -58,4 +58,4 @@ None -- pure computation.
 - [[pglib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
 - [[pglib/pipelines/Schema/Field|-#.Field]]
 - [[concepts/collections/expand#Expand Operators]]
-- [[syntax/types/macro-types#Macro-Generated Types]]
+- [[syntax/types/generic-types|Generic Types and Parameterized Schemas]]

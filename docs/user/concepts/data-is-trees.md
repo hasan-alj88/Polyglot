@@ -9,7 +9,26 @@ updated: 2026-03-28
 <!-- @types:RawString -->
 <!-- @identifiers:Serialized Identifiers -->
 
-All Polyglot data is serialized strings. Every object — structs, pipelines, variables, collections, errors, macros, packages — is a branch on one unified tree rooted at `%`. Understanding this tree is the key to understanding how every concept in Polyglot Code connects.
+All Polyglot data is serialized strings. Every object — structs, pipelines, variables, collections, errors, packages — is a branch on one unified tree rooted at `%`. Understanding this tree is the key to understanding how every concept in Polyglot Code connects.
+
+## All Polyglot Objects Are Data Trees
+
+Every `{X}` definition block in Polyglot Code is fundamentally a `{#}` struct — a description of **data tree topology**. The different block types (`{-}`, `{T}`, `{W}`, `{Q}`, `{!}`, `{_}`, `{N}`) are `{#}` with specific schemas designed for designated purposes:
+
+- `{-}` is a struct with IO ports, trigger, queue, wrapper, and execution body fields
+- `{T}` is a struct with trigger-specific schema (subtype of `{-}`)
+- `{W}` is a struct with setup/cleanup scope schema (subtype of `{-}`)
+- `{Q}` is a struct with queue dispatch schema
+- `{!}` is a struct with error namespace schema (subtype of `{#}`)
+- `{_}` is a struct with permission policy schema
+
+A **datatype** is a description of data tree topology — the shape, depth, field names, field types, and constraints that define how a tree is structured. When Polyglot Code is parsed, it is serialized as data (JSON) and sent to the Polyglot service. The compiler and runtime operate entirely on these serialized data trees.
+
+### Topology Matching
+
+The compiler judges that two variables are the **same datatype** if they have the same topology and the same topology rules. Assignment between variables is only allowed when their topologies match. A topology mismatch is a compile error — there is no implicit coercion.
+
+When a `{#}` definition has all its field values in **Final** state (see [[variable-lifecycle#Final]]), it becomes a concrete variable `$`. The definition describes the tree shape; the variable is a tree instance with all leaves populated.
 
 ## All Data is Serialized Strings
 
@@ -46,7 +65,7 @@ The `%` root has fixed branches for every object type in Polyglot:
 %
 ├── #   Structs          — type definitions ({#} blocks)
 ├── -   Pipelines        — async workflows ({-} blocks)
-├── ~   Expanders         — expand operators (=ForEach.*)
+├── =   Expanders         — expand operators (=ForEach.*)
 ├── *   Collectors        — collect operators (*Into.*, *Agg.*, *All, *First)
 ├── $   Variables         — runtime data ($name, $result)
 ├── !   Errors            — error trees ({!} blocks, pglib !File.*, !No.*, etc.)
@@ -66,7 +85,7 @@ Each concept you have learned maps to a branch in the tree:
 | Struct types | [[syntax/types/structs#Struct Types]] | `%#` | `%#:UserRecord:0` |
 | Pipelines | [[concepts/pipelines/INDEX|pipelines]] | `%-` | `%-:ProcessData:0` |
 | Variables | [[variable-lifecycle]] | `%$` | `%$:myVar:0` |
-| Expand operators | [[concepts/collections/expand#Expand Operators]] | `%~` | `%~:ForEach.Array:0` |
+| Expand operators | [[concepts/collections/expand#Expand Operators]] | `%=` | `%=:ForEach.Array:0` |
 | Collect operators | [[concepts/collections/collect#Collect Operators]] | `%*` | `%*:Into.Array:0` |
 | Error trees | [[errors]], `{!}` blocks | `%!` | `%!.File.NotFound` |
 | Packages | [[packages]] | `%@` | `%@:Local:999::MyPkg` |
@@ -176,7 +195,7 @@ The general path notation is:
 | Segment | Meaning |
 |---------|---------|
 | `%` | Tree root — the metadata accessor |
-| `{type}` | Object type prefix (`#`, `=`, `$`, `~`, `*`, `!`, `@`, `_`) |
+| `{type}` | Object type prefix (`#`, `=`, `$`, `*`, `!`, `@`, `_`) |
 | `:{ref}` | Object name (flexible field) |
 | `:{instance}` | Instance number (flexible field) |
 | `.{fields}` | Fixed field path within the instance |

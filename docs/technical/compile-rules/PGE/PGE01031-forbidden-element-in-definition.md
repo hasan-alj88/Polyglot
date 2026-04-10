@@ -21,7 +21,7 @@ severity: error
 |---|---|---|---|
 | `{-}[exe]` | `[T]`, `[Q]`, `[W]` | `(-)` IO, `[-]`/`[=]`/`[b]` body, `[%]`, `[?]`, `[!]`, `(<)`/`(>)` | — |
 | `{T}` | `>IsTriggered#bool` | `(-)` IO, `[%]`, `[T]` (composed AND), `[Q]`, `[W]`, `[-]`/`[=]`/`[b]` body, `[?]`, `[!]`, `(<)`/`(>)` | — |
-| `{W}` | `[\]`/`[/]` (unless base) | `[{]`/`[}]`, `[\]`/`[/]` body, `[%]`, `[W]` (composed), `[-]` in setup/cleanup | `[T]`, `[Q]`, `(-)` pipeline IO |
+| `{W}` | `[\]`/`[/]` (unless base) | `(-)` IO, `[\]`/`[/]` body, `[%]`, `[W]` (composed), `[-]` in setup/cleanup | `[T]`, `[Q]` |
 | `{Q} -Q.*` | — | `(-)` IO, `[%]` | `[T]`, `[W]`, `[-]`/`[=]`/`[b]` body |
 | `{Q} #Name` | — | `[.]`/`[:]` fields, `[#]` | All pipeline elements |
 | `{#}` | — | `[.]`/`[:]` fields, `[#]`, `[%]` | All pipeline elements |
@@ -60,17 +60,12 @@ severity: error
 [ ] ✗ PGE01031 — {W} cannot have [T]
 {W} -W.Bad.WithTrigger
    [T] -T.Call
-   [{] $input#string
+   (-) <input;string
 
 [ ] ✗ PGE01031 — {W} cannot have [Q]
 {W} -W.Bad.WithQueue
    [Q] -Q.Default
-   [{] $input#string
-
-[ ] ✗ PGE01031 — {W} cannot have (-) pipeline IO
-{W} -W.Bad.WithIO
-   (-) <input#string
-   [{] $wrapped#string
+   (-) <input;string
 
 [ ] ✗ PGE01031 — {Q} cannot have [T]
 {Q} -Q.Bad.WithTrigger
@@ -92,5 +87,5 @@ severity: error
 
 - [[PGE01029-invalid-marker-for-definition-type|PGE01029]] — invalid markers on definition line (complementary rule)
 - [[PGE01032-missing-trigger-boolean-output|PGE01032]] — `{T}` required output constraint
-- [[PGE01004-macro-structural-constraints|PGE01004]] — definition structural constraints
+- [[PGE01004-macro-structural-constraints|PGE01004]] — wrapper structural constraints
 - [[marker-declarations|Marker Declarations Brainstorming]] — §4 Rule C, valid/invalid examples

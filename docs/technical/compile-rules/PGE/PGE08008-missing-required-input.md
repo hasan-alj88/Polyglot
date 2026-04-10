@@ -16,7 +16,7 @@ severity: error
 **See also:**
 - PGE01010 (pipeline IO name mismatch — wrong name, not missing name)
 - PGW08002 (unaddressed input with default — the warning counterpart)
-- PGE01009 (wrapper IO mismatch — covers wrapper-to-macro completeness)
+- PGE01009 (wrapper IO mismatch — covers wrapper IO completeness)
 - PGE08003 (auto-wire unmatched parameter — covers chain auto-wiring)
 
 **VALID:**

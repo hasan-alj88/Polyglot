@@ -13,7 +13,7 @@ severity: error
 
 | Element | Allowed | Scope |
 |---------|---------|-------|
-| `[{]` / `[}]` | Yes | Wrapper IO — inputs and outputs |
+| `(-)` IO | Yes | Wrapper IO — inputs (`<`) and outputs (`>`) |
 | `[\]` / `[/]` | Yes | Setup and cleanup scopes |
 | `[-]` | Yes | Pipeline calls within `[\]` or `[/]` |
 | `[W]` | Yes | Composite wrapper calls within `[\]` or `[/]` |
@@ -24,16 +24,16 @@ severity: error
 | `(*)` | Yes | Collectors within `[/]` — collect `[=]` forks started in `[\]` |
 | `[T]` | **No** | Triggers are pipeline-only |
 | `[Q]` | **No** | Queues are pipeline-only |
-| `(-)` | **No** | Pipeline-level IO is pipeline-only |
+| `(-)` pipeline IO | **No** | Pipeline-level IO (with `[T]`/`[Q]`) is pipeline-only |
 
 **Rationale:** Wrappers exist to encapsulate reusable setup/cleanup logic around pipeline execution. Allowing triggers or queues inside a wrapper would make it behave like a pipeline, breaking the structural separation between lifecycle wrappers and executable pipelines. Parallel forking (`[=]`, `[b]`) is allowed in `[\]` setup because setup may need to launch concurrent work that outlives setup and runs alongside the execution body — `(*) *All` in `[/]` cleanup collects the results. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
 
 **VALID:**
 ```polyglot
-[ ] ✓ wrapper with [{]/[}] IO, [\]/[/] scopes, and composite [W] inside
+[ ] ✓ wrapper with (-) IO, [\]/[/] scopes, and composite [W] inside
 {W} -W.DB.Transaction
-   [{] $connStr#string
-   [}] $txHandle#string
+   (-) <connStr;string
+   (-) >txHandle;string
 
    [\]
       [ ] ✓ composite wrapper inside wrapper setup
@@ -52,8 +52,8 @@ severity: error
 ```polyglot
 [ ] ✓ conditional inside wrapper setup — branching on input
 {W} -W.Cache.Init
-   [{] $backend#string
-   [}] $cacheHandle#string
+   (-) <backend;string
+   (-) >cacheHandle;string
 
    [\]
       [?] $backend
@@ -75,8 +75,8 @@ severity: error
 ```polyglot
 [ ] ✓ error handler inside wrapper setup
 {W} -W.Service.Init
-   [{] $config#string
-   [}] $serviceHandle#string
+   (-) <config;string
+   (-) >serviceHandle;string
 
    [\]
       [-] -Service.Connect
@@ -94,8 +94,8 @@ severity: error
 ```polyglot
 [ ] ✓ parallel fork in setup, collected in cleanup
 {W} -W.Tracing
-   [{] $traceId#string
-   [}] $duration#string
+   (-) <traceId;string
+   (-) >duration;string
 
    [\]
       [-] -Tracer.Open
@@ -124,8 +124,8 @@ severity: error
 ```polyglot
 [ ] ✗ PGE01004 — [T] inside a wrapper
 {W} -W.Bad
-   [{] $input#string
-   [}] $output#string
+   (-) <input;string
+   (-) >output;string
 
    [\]
       [T] -T.Call    [ ] ✗ PGE01004 — triggers not allowed in wrappers
@@ -139,9 +139,9 @@ severity: error
 ```
 
 ```polyglot
-[ ] ✗ PGE01004 — (-) pipeline IO inside a wrapper
+[ ] ✗ PGE01004 — [T] pipeline trigger inside a wrapper
 {W} -W.Bad
-   (-) <input#string    [ ] ✗ PGE01004 — pipeline-level IO not allowed in wrappers
+   [T] -T.Call    [ ] ✗ PGE01004 — triggers not allowed in wrappers
 ```
 
 **Open point:** None.
@@ -149,4 +149,4 @@ severity: error
 ### See Also
 
 - [[concepts/pipelines/wrappers|Wrappers]] — user-facing wrapper documentation (references PGE01004)
-- [[concepts/macros|Macros]] — user-facing macro concept overview (type macros are a separate construct)
+- [[concepts/macros|Macros (Retired)]] — macros retired; replaced by parameterized `##` schemas

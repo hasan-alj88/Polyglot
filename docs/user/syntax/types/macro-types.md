@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-09
+updated: 2026-04-10
 status: retired
 redirect: generic-types
 ---
@@ -10,4 +10,4 @@ redirect: generic-types
 
 This page has been superseded by [[generic-types|Generic Types and Parameterized Schemas]].
 
-`{M}` type macros have been replaced by generic `#` types and parameterized `##` schemas using `(#) <param` inputs directly in `{#}` definitions. See [[generic-types]] for the current specification.
+Type macros have been retired. Parameterized `##` schemas with `[#]` inputs now handle type generation using `(#) <param` inputs directly in `{#}` definitions. See [[generic-types]] for the current specification.

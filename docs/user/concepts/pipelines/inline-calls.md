@@ -113,11 +113,11 @@ Pipeline structure, chain execution, and call site rules enforced at compile tim
 |------|------|---------|
 | PGE01001 | Pipeline Section Misordering | Pipeline Structure |
 | PGE01002 | IO Before Trigger | Pipeline Structure |
-| PGE01004 | Macro Structural Constraints | Wrappers |
+| PGE01004 | Definition Structural Constraints | Wrappers |
 | PGE01005 | Missing Pipeline Trigger | Triggers |
 | PGE01006 | Missing Pipeline Queue | Queue |
 | PGE01007 | Missing Pipeline Setup/Cleanup | Wrappers |
-| PGE01008 | Wrapper Must Reference Macro | Wrappers |
+| PGE01008 | Wrapper Must Reference Wrapper Definition | Wrappers |
 | PGE01009 | Wrapper IO Mismatch | Wrappers |
 | PGE01010 | Pipeline IO Name Mismatch | Call Site Rules |
 | PGE01011 | Duplicate IO Parameter Name | Call Site Rules |

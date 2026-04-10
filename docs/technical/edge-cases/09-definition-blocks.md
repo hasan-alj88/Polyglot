@@ -137,8 +137,8 @@ updated: 2026-03-30
 
 ```polyglot
 {W} -W.Tracing
-   [{] $traceId#string
-   [}] $duration#string
+   (-) <traceId;string
+   (-) >duration;string
    [\]
       [-] -Tracer.Open
          (-) <id << $traceId
@@ -165,7 +165,7 @@ updated: 2026-03-30
 
 ```polyglot
 {W} -W.AuditLog
-   [{] $userId#string
+   (-) <userId;string
    [\]
       [-] -Session.Open
          (-) <id << $userId

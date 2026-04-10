@@ -229,6 +229,6 @@ Multiple `(*) *All` barriers create sequential waves of parallel work:
 
 ## See Also
 
-- [[concepts/collections/expand|Expand Operators]] — `~` operators that produce items for collectors
+- [[concepts/collections/expand|Expand Operators]] — `=` operators that produce items for collectors
 - [[concepts/pipelines/wrappers|Wrappers]] — parallel forking in setup with `(*) *All` in cleanup
 - [[concepts/collections/examples|Examples]] — complete expand/transform/collect patterns

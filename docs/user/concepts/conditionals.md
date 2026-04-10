@@ -3,7 +3,7 @@ audience: pg-coder
 type: specification
 updated: 2026-03-24
 status: complete
-changes: "[+] OR reassigned to [|] per issue #74"
+changes: "[+] is OR block — unified for both triggers and conditionals"
 ---
 
 # Conditionals
@@ -139,7 +139,7 @@ Strings are open sets — `*?` is always required ([[PGE06006|PGE06006]]). Flexi
 | `#int` / `#float` | Open but rangeable | No — if ranges cover full domain; otherwise yes |
 | `#string` | Open (infinite) | Yes — always |
 | Flexible field (`:`) | Open | Yes — always |
-| Compound (`[&]`/`[\|]`/`[^]`) | Complex | Depends on variable types |
+| Compound (`[&]`/`[+]`/`[^]`) | Complex | Depends on variable types |
 
 ```mermaid
 flowchart TD
@@ -185,13 +185,13 @@ Both conditions must hold:
    [-] $access << #AccessLevel.Denied
 ```
 
-### `[|]` — OR
+### `[+]` — OR
 
 At least one condition holds:
 
 ```polyglot
 [?] $role =? #Role.Admin
-[|] $role =? #Role.Superuser
+[+] $role =? #Role.Superuser
    [-] $elevated#bool << #Boolean.True
 [?] *?
    [-] $elevated#bool << #Boolean.False

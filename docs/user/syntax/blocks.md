@@ -9,11 +9,13 @@ status: complete
 
 <!-- @line-structure -->
 <!-- @identifiers -->
-Two bracket types with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native` (see [[data-is-trees]]).
+Three bracket shapes with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native` (see [[data-is-trees]]).
+
+> **Notation:** Throughout this document, `X` in `{X}`, `[X]`, and `(X)` is a **placeholder** — it represents any valid marker character, not a literal block. For example, `{X}` means "any definition block" (`{#}`, `{-}`, `{W}`, etc.), `[X]` means "any block element marker," and `(X)` means "any IO bracket."
 
 ## `{X}` — Definition Elements
 
-Define top-level structures. Open a scope that continues with indentation.
+Define top-level structures. Open a scope that continues with indentation. All definition blocks use a **single character** inside the brackets — this is a design invariant.
 
 | Marker | Defines |
 |--------|---------|
@@ -26,7 +28,6 @@ Define top-level structures. Open a scope that continues with indentation.
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
 | `{_}` | Permission object — named, reusable permission policy with `#Ceiling` or `#Grant` intent. Uses `_`/`__`/`___` tier system mirroring `#`/`##`/`###`. See [[permissions]] |
 | `{N}` | Native definition — compiler primitive with no Polyglot body. `[%]` metadata implicitly scopes to `%Native.*`. Non-user-extendable. See [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
-| `{Array}` | Array collection definition. See [[concepts/collections/INDEX|collections]] |
 | `{ }` | Comment. See [[comments]] |
 
 **Marker declarations on `{-}`:** The `[exe]` marker declares the pipeline as an execution pipeline, invocable via `[-]`, `[=]`, or `[b]`. `{-}` without a marker defaults to `{-}[exe]` — no warning. Subsets like `{-}[b]` (background-only) or `{-}[-=]` (sequential/parallel only) restrict how the pipeline can be invoked. Subtypes (`{T}`, `{W}`, `{Q}`) have fixed implicit markers and cannot take `marker_decl`. See [[concepts/pipelines/INDEX#Marker Declarations|Marker Declarations]] for full details.
@@ -74,8 +75,8 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 
 | Marker | Meaning |
 |--------|---------|
-| `[-]` | Run/execute in series; match header (with `>>` and `[?]` children). Without `[?]` children, `[-] $x >> $y` is a plain assignment. See [[conditionals#Match Syntax]] |
-| `[=]` | Run/execute in parallel |
+| `[-]` | Run/execute in series — single line (`-`) symbolizes one sequential thread. Also used as match header (with `>>` and `[?]` children). Without `[?]` children, `[-] $x >> $y` is a plain assignment. See [[conditionals#Match Syntax]] |
+| `[=]` | Run/execute in parallel — double line (`=`) symbolizes two parallel threads |
 | `[b]` | Run/execute in background (fire and forget) |
 | `[#]` | Load serialized data into typed structure |
 
@@ -99,8 +100,6 @@ See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure a
 |--------|---------|
 | `[\]` | Setup |
 | `[/]` | Cleanup |
-| `[{]` | From outer scope (in Wrappers) |
-| `[}]` | To outer scope (in Wrappers) |
 
 ### Data Access
 
@@ -157,7 +156,7 @@ See [[metadata]] for the full metadata tree, field listings, `live` semantics, a
 | Marker | Meaning |
 |--------|---------|
 | `[&]` | AND |
-| `[\|]` | OR |
+| `[+]` | OR |
 | `[-]` | NOT |
 | `[^]` | XOR |
 

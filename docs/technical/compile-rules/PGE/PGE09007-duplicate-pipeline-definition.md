@@ -102,8 +102,8 @@ severity: error
 {@} @Local:1000.MyApp:v1.0.0
 
 {W} -W.Setup
-   [{] $conn#string
-   [}] $handle#string
+   (-) <conn;string
+   (-) >handle;string
    [\]
       [-] -Connect
          (-) <conn << $conn
@@ -113,8 +113,8 @@ severity: error
          (-) <handle << $handle
 
 {W} -W.Setup                                [ ] ✗ PGE09007 — -W.Setup already defined above
-   [{] $input#string
-   [}] $output#string
+   (-) <input;string
+   (-) >output;string
    [\]
       [-] -DoNothing
    [/]

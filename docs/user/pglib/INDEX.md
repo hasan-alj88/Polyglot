@@ -12,7 +12,7 @@ This is the authoritative list of all pglib namespaces. Any top-level namespace 
 
 Standard library items do NOT require an `[@]` import — they are available in every `.pg` file by default.
 
-All pglib items live on the `%` metadata tree (see [[data-is-trees#How Concepts Connect]]). Pipeline namespaces are at `%-`, operators at `%~` and `%*`, types at `%#`, errors at `%!`.
+All pglib items live on the `%` metadata tree (see [[data-is-trees#How Concepts Connect]]). Pipeline namespaces are at `%-`, operators at `%=` and `%*`, types at `%#`, errors at `%!`.
 
 **Legend**
 
@@ -37,7 +37,7 @@ All pglib items live on the `%` metadata tree (see [[data-is-trees#How Concepts 
 | `-DT` | [pipelines/DT/INDEX.md](pipelines/DT/INDEX.md) | DateTime construction, conversion, arithmetic, comparison, extraction, formatting | Stable | `_IO.Read` (Now) / None |
 | `-W` | [pipelines/W.md](pipelines/W.md) | Wrappers (Polyglot, DB, File, HTTP, SSH, Auth, Log, Queue, Cache, RT) | Stable | Mixed |
 
-## Expander Operators (~)
+## Expander Operators (=)
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|

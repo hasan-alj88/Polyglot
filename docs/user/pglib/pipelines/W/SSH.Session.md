@@ -18,9 +18,9 @@ Connects SSH on setup, disconnects on cleanup.
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WSshSession"
    [%] .description << "Connects SSH on setup, disconnects on cleanup."
-   [{] $host#string          [ ] SSH host address
-   [{] $credentials#string   [ ] SSH credentials (key path or password reference)
-   [}] $sshSession           [ ] Active SSH session handle
+   (-) <host;string          [ ] SSH host address
+   (-) <credentials;string   [ ] SSH credentials (key path or password reference)
+   (-) >sshSession           [ ] Active SSH session handle
 ```
 
 ## Inputs

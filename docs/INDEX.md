@@ -35,7 +35,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | Queue | `{Q}` | [[user/concepts/pipelines/queue]] | [[user/pglib/pipelines/Q]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 | Trigger | `{T}` | [[user/concepts/pipelines/io-triggers]] | [[user/pglib/pipelines/T]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 | Wrapper | `{W}` | [[user/concepts/pipelines/wrappers]] | [[user/pglib/pipelines/W]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
-| Expander | `~` | [[user/concepts/collections/expand]] | [[user/pglib/expanders/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |
+| Expander | `=` | [[user/concepts/collections/expand]] | [[user/pglib/expanders/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |
 | Collector | `*` | [[user/concepts/collections/collect]] | [[user/pglib/collectors/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |
 | Data / Type | `#` | [[user/syntax/types/INDEX]] | [[user/pglib/types/]] | [[technical/ebnf/04-type-system]] | [[technical/edge-cases/04-type-system]] |
 | Metadata | `%` | [[user/concepts/metadata]] | — | [[technical/ebnf/05-block-elements]] | [[technical/edge-cases/15-metadata-blocks]] |
@@ -165,7 +165,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | collections/serial.md | user | spec | #Serial unconstrained tree |
 | collections/dataframe.md | user | spec | #Dataframe and nested safety |
 | collections/user-struct.md | user | spec | User-defined struct as collection |
-| collections/expand.md | user | spec | ~ expand operators |
+| collections/expand.md | user | spec | = expand operators |
 | collections/collect.md | user | spec | * collect operators and collect-all/race |
 | collections/examples.md | user | spec | Expand/transform/collect examples |
 

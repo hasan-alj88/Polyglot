@@ -192,7 +192,7 @@ updated: 2026-03-30
          [-] >source << "format_error"
 ```
 
-### ST-4: Multi-wave parallel with macro wrapper and nested expand
+### ST-4: Multi-wave parallel with wrapper and nested expand
 
 **What it tests:** Two parallel waves separated by `*All` barrier, followed by an expand+collect pipeline, all inside a DB transaction wrapper.
 
@@ -293,9 +293,9 @@ updated: 2026-03-30
 
 ```polyglot
 {W} -W.Traced
-   [{] $operationId#string
-   [}] $durationMs#int
-   [}] $spanId#string
+   (-) <operationId;string
+   (-) >durationMs;int
+   (-) >spanId;string
 
    [\]
       [ ] Sequential: open trace session before body
@@ -333,7 +333,7 @@ updated: 2026-03-30
       (-) $durationMs >> $parseDuration
       (-) $spanId >> $spanId
 
-   [ ] $spanId and $parseDuration from macro [}] outputs
+   [ ] $spanId and $parseDuration from wrapper outputs
    [-] -JSON.Parse
       (-) <input << $raw
       (-) >parsed >> >invoice

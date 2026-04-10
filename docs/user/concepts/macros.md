@@ -1,14 +1,14 @@
 ---
 audience: pg-coder
 type: concept
-updated: 2026-04-09
+updated: 2026-04-10
 status: retired
 redirect: syntax/types/generic-types
 ---
 
 # Macros (Retired)
 
-`{M}` type macros have been replaced by generic `#` types and parameterized `##` schemas. Types now declare `(#) <param` inputs directly in their `{#}` definitions — no separate macro block needed.
+Type macros have been retired. Parameterized `##` schemas with `[#]` inputs now handle type generation. Types declare `(#) <param` inputs directly in their `{#}` definitions — no separate macro block needed.
 
 See [[syntax/types/generic-types|Generic Types and Parameterized Schemas]] for the current specification.
 

@@ -51,7 +51,7 @@ updated: 2026-03-30
 
 **EBNF:** `logical_and ::= "[&]" comparison_expr` etc.
 
-**What it tests:** Compound conditions using `[&]`, `[|]`, `[-]`, `[^]`.
+**What it tests:** Compound conditions using `[&]`, `[+]`, `[-]`, `[^]`.
 
 ```polyglot
 [ ] AND: both conditions must be true
@@ -61,7 +61,7 @@ updated: 2026-03-30
 
 [ ] OR: either condition
 [?] $role =? #Role.Admin
-[|] $role =? #Role.Superuser
+[+] $role =? #Role.Superuser
    [-] $elevated << #Boolean.True
 
 [ ] Negation: insert ! before ? in comparison operator

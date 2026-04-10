@@ -38,18 +38,17 @@ execution_elem      ::= "[-]" | "[=]" | "[b]" | "[#]" ;
                          schema/type declaration element in {#} definition bodies — see §4.3, §9.2 *)
 
 (* Control Flow *)
-control_flow_elem   ::= "[?]" | "[!]" | "[T]" | "[Q]" | "[W]" | "[+]" ;
-                      (* [+] is the OR scope marker for triggers — distinct from
-                         [|] logical OR in conditional expressions (§11.4) *)
+control_flow_elem   ::= "[?]" | "[!]" | "[T]" | "[Q]" | "[W]" ;
 
 (* Scope *)
-scope_elem          ::= "[\]" | "[/]" | "[{]" | "[}]" ;
+scope_elem          ::= "[\]" | "[/]" ;
 
 (* Data Access *)
 data_access_elem    ::= "[.]" | "[:]" ;
 
 (* Logical *)
-logical_elem        ::= "[&]" | "[|]" | "[^]" ;
+logical_elem        ::= "[&]" | "[+]" | "[^]" ;
+                      (* [+] is OR — unified for both triggers and conditionals *)
 
 (* Line Continuation *)
 continuation_elem   ::= "[~]" ;

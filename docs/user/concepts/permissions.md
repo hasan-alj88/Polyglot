@@ -93,13 +93,30 @@ Named, reusable permission policies. Each `_` object holds concrete capability d
    [.] .Web.Socket "wss://stream.example.com/*"
 ```
 
-### __ Permission Descriptors
+### __ Permission Descriptors (Generic Permissions)
 
-Schema-level descriptors that define the structure of permission objects. `__Permission` is the root descriptor defining all fields a `{_}` object can contain.
+`__` descriptors are **generic permission templates** — they mirror `##` schemas with `[#]` inputs. A `__` descriptor takes parameters and produces a concrete `_` permission object at compile time, serving as syntax sugar so you don't have to write the full permission schema for common patterns.
+
+```polyglot
+{_} __FileReader
+   [#] <path;path
+
+   [.] .intent << #Grant
+   [.] .File.Read "{$path}"
+
+[ ] Usage — produces a concrete _ object at compile time
+[_] __FileReader "data/reports/q1.csv"
+```
+
+Without `__FileReader`, you would write the full `{_}` block each time you need file read permission for a different path. The generic descriptor eliminates this repetition.
+
+**Compile-time resolution:** All generic permissions are fully resolved at compile time. The resulting `_` object has all leaves in Final or Default state. When a Default leaf is pulled, it transitions to Final (see [[variable-lifecycle#Default]]). No runtime permission evaluation occurs — the compiler validates all grants against ceilings statically.
 
 ### ___ Constraint Descriptors
 
-Leaf-level constraints that restrict permission behavior based on environment or policy. Examples:
+`___` descriptors are **leaf-level constraint templates** — they mirror `###` field types. They restrict permission behavior based on environment or policy, and like `__` descriptors, resolve entirely at compile time.
+
+Examples:
 
 - `___Unix` — Unix-specific permission constraints (file modes, signals)
 - `___Sandboxed` — sandboxed environment restrictions

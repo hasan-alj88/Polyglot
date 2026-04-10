@@ -15,7 +15,7 @@ An instance is created when:
 - A wrapper is invoked via `[W]` (`%W:Name:N`)
 - A queue dispatches a pipeline (`%Q:Name:N`)
 - A variable is declared (`%$:name:N`)
-- An expand/collect operator begins execution (`%~:Name:N`, `%*:Name:N`)
+- An expand/collect operator begins execution (`%=:Name:N`, `%*:Name:N`)
 
 ## Numbering
 

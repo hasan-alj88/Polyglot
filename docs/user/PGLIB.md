@@ -19,7 +19,7 @@ This document has been split into per-namespace files organized by identifier pr
 - [-RT](pglib/pipelines/RT.md) — runtime execution (Function, Script, CLI, Bind)
 - [-W](pglib/pipelines/W.md) — wrappers
 
-## Expanders (~ → `%~`)
+## Expanders (= → `%=`)
 - [=ForEach](pglib/expanders/ForEach/) — expand operators
 
 ## Collectors (* → `%*`)

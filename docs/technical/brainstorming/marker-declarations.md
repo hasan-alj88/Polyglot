@@ -249,8 +249,8 @@ data alongside the fire signal.
 
 [ ] Derived — has body (setup/cleanup), no .baseCode
 {W} -W.DB.Connection
-   [{] $connectionString#string
-   [}] $dbConn
+   (-) <connectionString;string
+   (-) >dbConn
    [\]
       [-] -DB.Connect
          (-) <connStr << $connectionString
@@ -261,8 +261,8 @@ data alongside the fire signal.
 
 [ ] Derived — composes -W.DB.Connection
 {W} -W.DB.Transaction
-   [{] $connectionString#string
-   [}] $txHandle#string
+   (-) <connectionString;string
+   (-) >txHandle;string
    [\]
       [W] -W.DB.Connection
          (-) $connectionString << $connectionString
@@ -411,9 +411,9 @@ data alongside the fire signal.
 {W} -W.Bad
    [Q] -Q.Default                  [ ] ✗ — wrappers don't use queues
 
-[ ] ✗ PGE01031 — {W} cannot have (-) pipeline IO
+[ ] ✗ PGE01031 — {W} cannot have [T]
 {W} -W.Bad
-   (-) <input#string               [ ] ✗ — wrappers use [{]/[}], not (-) IO
+   [T] -T.Call                     [ ] ✗ — wrappers don't have triggers
 
 [ ] ✗ PGE01031 — {Q} cannot have execution body
 {Q} -Q.Bad
@@ -499,14 +499,14 @@ Note: `{-}` defaults to `{-}[exe]` — only execution gets the implicit default.
 [ ] ✗ — derived {W} wrapper cannot have .baseCode
 {W} -W.Bad.DerivedWithBase
    [%] .baseCode << #BaseCode.Rust.W.Polyglot
-   [{] $input#string
+   (-) <input;string
    [\]
       [-] -DoNothing               [ ] ✗ — has body, cannot also be base
 
-[ ] ✗ — base wrapper cannot have [{]/[}]/[\]/[/]
+[ ] ✗ — base wrapper cannot have (-) IO/[\]/[/]
 {W} -W.Bad.BaseWithBody
    [%] .baseCode << #BaseCode.Rust.W.Polyglot
-   [{] $input#string               [ ] ✗ — base wrappers are bodyless
+   (-) <input;string               [ ] ✗ — base wrappers are bodyless
 
 [ ] ✗ — .baseCode references non-existent variant
 {-}[exe] -Bad.InvalidBase
@@ -592,8 +592,8 @@ Same pattern for other languages: `-RT.JS.Script`, `-RT.Shell.Script`, etc.
 ```polyglot
 [ ] Base — sets up Python 3.19 environment
 {W} -W.Python.3.19
-   [{] $dependency#path
-   [}] $env#Code.Environment
+   (-) <dependency;path
+   (-) >env;Code.Environment
    [\]
       [-] -RT.Python.SetupEnv
          (-) <version << "3.19"
@@ -694,7 +694,7 @@ Three variants:
 
 ## 6. Resolved Questions
 
-1. **Zero-IO wrappers** — valid for both base and derived. `-W.Polyglot` (base) and user wrappers with no `[{]`/`[}]` are both allowed.
+1. **Zero-IO wrappers** — valid for both base and derived. `-W.Polyglot` (base) and user wrappers with no `(-)` IO are both allowed.
 2. **`#BaseCode` location** — lives in pglib.
 3. **`-RT.*`** — RT = RunTime. Bridges to other programming languages and shell/bash/cmd commands. Available for `{-}[exe]` pipelines.
 4. **`{Q} #QueueName`** — defines queue behavior and configuration data (how the queue behaves, its settings).
@@ -703,5 +703,5 @@ Three variants:
 
 ## 7. Open Questions
 
-1. ~~**{M} macros**~~ — Retired in Issue #272. Macros replaced by generic `{#}` definitions.
+1. ~~**Macros**~~ — Retired in Issue #272. Replaced by parameterized `##` schemas with `[#]` inputs in generic `{#}` definitions.
 2. **File-wide warning suppression** — what syntax for suppressing the `{-}` implicit `[exe]` warning?

@@ -8,14 +8,15 @@ updated: 2026-03-31
 
 ## Wrappers
 
-Wrappers invoke a wrapper definition (`{W}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE01007). The `[W]` line must reference a valid `{W}` wrapper definition (PGE01008), and the IO wired at the `[W]` site must match the wrapper's `[{]`/`[}]` declarations (PGE01009).
+Wrappers invoke a wrapper definition (`{W}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE01007). The `[W]` line must reference a valid `{W}` wrapper definition (PGE01008), and the IO wired at the `[W]` site must match the wrapper's `(-)` IO declarations (PGE01009).
+
+**Wrappers are THE mechanism for all runtime environments.** For Polyglot Code, wrappers provide lifecycle hooks (setup/cleanup). For foreign code (via `-RT.*` pipelines), wrappers provide the runtime environment — Python interpreter, Rust toolchain, database connections, HTTP sessions, etc. There is no other mechanism for runtime setup.
 
 Wrappers (`{W}`) cannot contain `[T]`, `[Q]`, or `(-)` pipeline-level IO — these are pipeline-only elements (PGE01004). See [[blocks]] for wrapper structural constraints.
 
 - `[\]` — wrapper setup, runs before the execution body
 - `[/]` — wrapper cleanup, runs after the execution body
-- `[{]` — wrapper input (typed variable from pipeline scope)
-- `[}]` — wrapper output (variable exposed back to pipeline scope)
+- `(-)` — wrapper IO (inputs and outputs declared with `<`/`>` prefixes)
 
 At the `[W]` usage site, wrapper IO is wired using `(-)` with `$` variables:
 
@@ -25,7 +26,7 @@ At the `[W]` usage site, wrapper IO is wired using `(-)` with `$` variables:
    (-) $dbConn >> $dbConn
 ```
 
-After `[W]` wiring, the wrapper's `[}]` outputs (e.g., `$dbConn`) become available as `$` variables in the execution body.
+After `[W]` wiring, the wrapper's output variables (e.g., `$dbConn`) become available as `$` variables in the execution body.
 
 Execution order: `(-),​[T]` → `[Q]` → `[\]` → Execution Body → `[/]` (see [[concepts/pipelines/execution|execution]])
 
@@ -74,8 +75,8 @@ flowchart LR
 
 ```polyglot
 {W} -W.Tracing
-   [{] $traceId#string
-   [}] $duration#string
+   (-) <traceId;string
+   (-) >duration;string
 
    [\]
       [ ] Sequential: open session — blocks before body starts

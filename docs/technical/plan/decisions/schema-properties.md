@@ -39,7 +39,7 @@ Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Proper
 
 ### Parameterized Types via Generic `{#}` Definitions
 
-> **Note:** This section originally described `{M}` type macros. As of Issue #272, `{M}` macros are retired. Parameterized types now use generic `{#}` definitions with `(#) <#param` type inputs and `(#) <param` value inputs directly.
+> **Note:** This section originally described type macros. As of Issue #272, macros are retired. Parameterized types now use generic `{#}` definitions with `(#) <#param` type inputs and `(#) <param` value inputs directly.
 
 Generic `{#}` definitions declare parameters with `(#) <#Param` (type input) and `(#) <Param` (value input). The `:` separator in type annotations binds positionally to parameters:
 

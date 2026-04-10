@@ -119,11 +119,10 @@ wrapper_def         ::= "{W}" '=' dotted_name NEWLINE
 
 wrapper_body_line   ::= scope_setup
                        | scope_cleanup
-                       | from_outer
-                       | to_outer
+                       | wrapper_io_decl
                        | exec_line
                        | comment_line ;
-                      (* Wrappers contain [\]/[/] scope and [{]/[}] IO — never {#} definitions *)
+                      (* Wrappers contain [\]/[/] scope and (-) IO — never {#} definitions *)
 ```
 
 **Rule:** Parameterized types use generic `{#}` definitions with `(#) <#param` type inputs and `(#) <param` value inputs. The `:` separator in type annotations binds positionally to declared parameters (e.g., `#array:float:2D` → ValueType=Float, Dim=2D). Default values use `<~`; missing required params = compile error. `{W}` defines wrappers; `[W]` invokes them. Schema composition (`[#] ##Name`) accumulates — each line adds one schema's properties. Parameterized schemas accept their own `(#) <#param` / `(#) <param` bindings nested under the `[#]` line. Schema properties (`[#] %##`) declare branch-level compile-time metadata. Field type properties (`[#] %###`) declare leaf-level metadata. Param constraints (`[<]`) restrict what types may bind to a parameter. Schema references (`##`) are only valid inside `{#}` definitions (PGE05006).

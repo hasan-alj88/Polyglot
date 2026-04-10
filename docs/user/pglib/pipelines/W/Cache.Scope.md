@@ -18,8 +18,8 @@ Connects cache on setup, flushes + disconnects on cleanup.
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WCacheScope"
    [%] .description << "Connects cache on setup, flushes + disconnects on cleanup."
-   [{] $cacheUrl#string   [ ] Cache server connection URL
-   [}] $cache             [ ] Active cache connection handle
+   (-) <cacheUrl;string   [ ] Cache server connection URL
+   (-) >cache             [ ] Active cache connection handle
 ```
 
 ## Inputs

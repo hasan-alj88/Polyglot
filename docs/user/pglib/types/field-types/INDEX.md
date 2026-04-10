@@ -19,7 +19,7 @@ Every field in a `{#}` type definition receives exactly one `###` field type cla
 |------------|-------------|-------------|---------------|
 | [[field-types/Value\|###Value]] | Typed data | `[.] .name#type` | #path, #Queue, #Job |
 | [[field-types/Enum\|###Enum]] | Variant selector | `[.] .Name` (no type) | #Boolean, #OS, all enums |
-| [[field-types/ScalarValue\|###ScalarValue]] | Regex-validated string | (via ##Scalar macro) | ##Int, ##Float |
+| [[field-types/ScalarValue\|###ScalarValue]] | Regex-validated string | (via ##Scalar schema) | ##Int, ##Float |
 | [[field-types/ScalarEnum\|###ScalarEnum]] | Variant in scalar | `[.] .Name` in ##Scalar | #Boolean, #OS |
 | [[field-types/None\|###None]] | Empty string only | (special) | #None |
 

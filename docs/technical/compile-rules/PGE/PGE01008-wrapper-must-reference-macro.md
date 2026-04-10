@@ -19,8 +19,8 @@ severity: error
 ```polyglot
 [ ] ✓ wrapper references a {W} wrapper definition
 {W} -W.DB.Transaction
-   [{] $connStr#string
-   [}] $txHandle#string
+   (-) <connStr;string
+   (-) >txHandle;string
    [\]
       [-] -DB.Connect
          (-) <connStr << $connStr

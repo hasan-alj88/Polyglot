@@ -18,8 +18,8 @@ Opens DB connection on setup, closes on cleanup.
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WDbConnection"
    [%] .description << "Opens DB connection on setup, closes on cleanup."
-   [{] $connectionString#string   [ ] Database connection string
-   [}] $dbConn                    [ ] Open database connection handle
+   (-) <connectionString;string   [ ] Database connection string
+   (-) >dbConn                    [ ] Open database connection handle
 ```
 
 ## Inputs

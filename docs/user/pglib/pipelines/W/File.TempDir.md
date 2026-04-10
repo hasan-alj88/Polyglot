@@ -18,8 +18,8 @@ Creates temp directory on setup, deletes on cleanup.
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WFileTempDir"
    [%] .description << "Creates temp directory on setup, deletes on cleanup."
-   [{] $prefix#string   [ ] Prefix for the temporary directory name
-   [}] $tempDir         [ ] Path to the created temporary directory
+   (-) <prefix;string   [ ] Prefix for the temporary directory name
+   (-) >tempDir         [ ] Path to the created temporary directory
 ```
 
 ## Inputs

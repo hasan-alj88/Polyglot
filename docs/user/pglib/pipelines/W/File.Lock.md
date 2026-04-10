@@ -18,8 +18,8 @@ Acquires file lock on setup, releases on cleanup.
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WFileLock"
    [%] .description << "Acquires file lock on setup, releases on cleanup."
-   [{] $lockPath#path   [ ] Path to the file to lock
-   [}] $lock            [ ] Active file lock handle
+   (-) <lockPath;path   [ ] Path to the file to lock
+   (-) >lock            [ ] Active file lock handle
 ```
 
 ## Inputs

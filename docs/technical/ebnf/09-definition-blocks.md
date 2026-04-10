@@ -254,17 +254,16 @@ scope_cleanup       ::= "[/]" pipeline_ref NEWLINE
                       | "[/]" NEWLINE
                          { indent exec_line NEWLINE } ;
 
-from_outer          ::= "[{]" typed_variable ;
-to_outer            ::= "[}]" variable_id ;
+wrapper_io_decl     ::= "(-)" typed_io_param ;
+                      (* Wrapper IO uses (-) with <input and >output prefixes — same as pipeline IO *)
 ```
 
 **Rules:**
 - `{W} -W.Name` defines a wrapper. `[W] -W.Name` invokes it inside a pipeline.
-- `[{]` declares a wrapper input — a typed variable pulled from the calling pipeline's scope.
-- `[}]` declares a wrapper output — a variable exposed back to the calling pipeline's scope.
+- `(-)` declares wrapper IO — inputs use `<` prefix, outputs use `>` prefix, same as pipeline IO.
 - `[\]` runs before the pipeline execution body (setup). Can call a single pipeline or open a scope with multiple exec lines.
 - `[/]` runs after the pipeline execution body (cleanup). Same structure as `[\]`.
-- Wrappers do NOT contain `{#}` definitions, `[T]`, `(-)` pipeline-level IO, or `[Q]` — those belong to pipelines.
+- Wrappers do NOT contain `{#}` definitions, `[T]`, or `[Q]` — those belong to pipelines.
 - Execution order: `(-)`/`[T]` → `[Q]` → `[\]` → Execution Body → `[/]`.
 - The wrapper unpacks before and after the body like brackets.
 - **Rule (parallel fork):** `[=]` inside `[\]` with no subsequent `(*) *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `(*) *All` with `(*) << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
@@ -279,7 +278,7 @@ wrapper_section     ::= indent "[W]" pipeline_ref NEWLINE
 wrapper_io_line     ::= "(-)" variable_id assignment_op value_expr ;
 ```
 
-At the `[W]` line, wrapper IO is wired using `(-)` with `$` variables (not `<`/`>` IO params, not `[{]`/`[}]`):
+At the `[W]` line, wrapper IO is wired using `(-)` with `$` variables:
 
 ```polyglot
 [W] -W.DB.Connection
@@ -413,16 +412,7 @@ User-defined `{!} !Name` implicitly nests under `!Error` in the metadata tree, c
          [.] .Corrupt#Error
 ```
 
-### 9.9 Array Definition
-
-```ebnf
-array_def           ::= "{Array}" variable_id type_annotation NEWLINE
-                         { indent array_body_line NEWLINE } ;
-
-array_body_line     ::= exec_line | comment_line ;
-```
-
-### 9.10 Permission Object Definition (`{_}`)
+### 9.9 Permission Object Definition (`{_}`)
 
 ```ebnf
 permission_object_def  ::= "{_}" permission_id NEWLINE
@@ -446,13 +436,13 @@ category_name          ::= "File" | "Web" | "Database" | "System"
 - **No inline declarations** — `[_]` in `{@}` and `{-}` always references a `{_}` object by name. Inline permission syntax is not valid.
 - **Identifier tiers:** `_` = permission object, `__` = permission descriptor (schema), `___` = constraint descriptor. Mirrors `#`/`##`/`###`.
 
-### 9.11 Comment Block (Definition Level)
+### 9.10 Comment Block (Definition Level)
 
 ```ebnf
 comment_block       ::= "{ }" comment_text NEWLINE ;
 ```
 
-### 9.12 Metadata Block
+### 9.11 Metadata Block
 
 ```ebnf
 metadata_line       ::= "[%]" metadata_expr ;
@@ -505,5 +495,5 @@ metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 | §9.6 `{N}` Native | [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
 | §9.7 `{Q}` Queue | [[concepts/pipelines/INDEX\|pipelines]] |
 | §9.8 `{!}` Error | [[concepts/errors\|errors]] |
-| §9.10 `{_}` Permission | [[concepts/permissions\|permissions]] |
-| §9.12 `[%]` Metadata | [[concepts/metadata\|metadata]] |
+| §9.9 `{_}` Permission | [[concepts/permissions\|permissions]] |
+| §9.11 `[%]` Metadata | [[concepts/metadata\|metadata]] |

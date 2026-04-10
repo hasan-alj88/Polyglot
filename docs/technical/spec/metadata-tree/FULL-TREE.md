@@ -87,8 +87,8 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |
 |   +-- .W                                      Wrapper definitions
 |   |   +-- :(name)                             %definition.W:{name}
-|   |       +-- .[{]                             input template
-|   |       +-- .[}]                             output template
+|   |       +-- .<                               input template
+|   |       +-- .>                               output template
 |   |
 |   +-- .Q                                      Queue definitions
 |   |   +-- :(name)                             %definition.Q:{name}
@@ -216,9 +216,9 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |       +-- .lastFired#live
 |       +-- .fireCount#live
 |
-+-- ~   Expanders (instances)
++-- =   Expanders (instances)
 |   |
-|   +-- :(name):N                               %~:{name}:N
+|   +-- :(name):N                               %=:{name}:N
 |   |   +-- .<                                   input (collection)
 |   |   +-- .>                                   output (individual items)
 |   |
@@ -242,8 +242,8 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 +-- W   Wrappers (instances)                    → [[branches#Wrapper Branch]]
 |   |
 |   +-- :(name):N                               %W:{name}:N
-|       +-- .[{]                                 wrapper inputs
-|       +-- .[}]                                 wrapper outputs
+|       +-- .<                                   wrapper inputs
+|       +-- .>                                   wrapper outputs
 |       +-- .setup                               [\] setup phase
 |       +-- .cleanup                              [/] cleanup phase
 |       +-- .status#live.#WrapperStatus          → [[metadata#Wrapper]]

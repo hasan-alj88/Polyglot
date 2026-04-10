@@ -78,11 +78,11 @@ raise_fallback_meta ::= "(>)" "%FallbackMessage" assignment_op string_literal ;
 
 ```ebnf
 logical_and         ::= "[&]" comparison_expr ;
-logical_or          ::= "[|]" comparison_expr ;
+logical_or          ::= "[+]" comparison_expr ;
 logical_xor         ::= "[^]" comparison_expr ;
 
 (* Note: Negation is expressed by modifying the comparison operator: <? → <!?, >=? → >=!? etc.
-   [+] is the OR scope marker for triggers (§9.3.1) — distinct from [|] logical OR here. *)
+   [+] is the OR marker — unified for both triggers (§9.3.1) and conditionals. *)
 ```
 
 ### 11.5 Line Continuation

@@ -6,10 +6,10 @@ updated: 2026-03-30
 
 <!-- @concepts/collections/INDEX -->
 
-## Expand Operators (`~`)
+## Expand Operators (`=`)
 
-Expand operators iterate over a collection, producing a **mini-pipeline** for each item. The execution marker on the expand line controls parallelism:
-- `[=] =ForEach.Array` — mini-pipelines run in **parallel**
+Expand operators iterate over a collection, producing a **mini-pipeline** for each item. The `=` symbol represents parallelism — contrasting with `-` for a single sequential thread. The execution marker on the expand line controls which mode is used:
+- `[=] =ForEach.Array` — mini-pipelines run in **parallel** (the default intent of `=`)
 - `[-] =ForEach.Array` — mini-pipelines run **sequentially**
 
 <!-- @variable-lifecycle -->

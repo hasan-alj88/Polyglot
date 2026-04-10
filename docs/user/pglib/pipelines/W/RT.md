@@ -29,12 +29,12 @@ Runtime versions are selected via colon-separated paths:
    :Python
       :3
          :14
-            [}] $pyenv#PyEnv
+            (-) >pyenv;PyEnv
             [ ] Starts Python 3.14 runtime on setup, stops on cleanup.
    :Rust
       :1
          :84
-            [}] $rsenv#RsEnv
+            (-) >rsenv;RsEnv
             [ ] Starts Rust 1.84 runtime on setup, stops on cleanup.
 ```
 

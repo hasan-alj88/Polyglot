@@ -18,9 +18,9 @@ Acquires OAuth token on setup, revokes on cleanup.
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WAuthToken"
    [%] .description << "Acquires OAuth token on setup, revokes on cleanup."
-   [{] $clientId#string       [ ] OAuth client ID
-   [{] $clientSecret#string   [ ] OAuth client secret
-   [}] $authToken             [ ] Active OAuth token
+   (-) <clientId;string       [ ] OAuth client ID
+   (-) <clientSecret;string   [ ] OAuth client secret
+   (-) >authToken             [ ] Active OAuth token
 ```
 
 ## Inputs

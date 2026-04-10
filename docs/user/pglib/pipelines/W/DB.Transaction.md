@@ -18,9 +18,9 @@ Opens connection + begins transaction on setup. Commits transaction + closes con
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WDbTransaction"
    [%] .description << "Opens connection + begins transaction on setup. Commits + closes on cleanup."
-   [{] $connectionString#string   [ ] Database connection string
-   [}] $tx                        [ ] Active transaction handle
-   [}] $dbConn                    [ ] Open database connection handle
+   (-) <connectionString;string   [ ] Database connection string
+   (-) >tx                        [ ] Active transaction handle
+   (-) >dbConn                    [ ] Open database connection handle
 ```
 
 ## Inputs

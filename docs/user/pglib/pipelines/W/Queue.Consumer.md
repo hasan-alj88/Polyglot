@@ -18,8 +18,8 @@ Connects to message queue on setup, disconnects on cleanup.
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WQueueConsumer"
    [%] .description << "Connects to message queue on setup, disconnects on cleanup."
-   [{] $queueUrl#string   [ ] Message queue connection URL
-   [}] $consumer          [ ] Active message queue consumer handle
+   (-) <queueUrl;string   [ ] Message queue connection URL
+   (-) >consumer          [ ] Active message queue consumer handle
 ```
 
 ## Inputs

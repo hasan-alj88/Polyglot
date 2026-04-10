@@ -57,6 +57,8 @@ A variable enters the Declared stage when it appears in a block without an assig
 
 A variable enters the Default stage when assigned with a default assignment operator (`<~` or `~>`). A default-assigned variable allows **one more** push (which promotes it to Final). A second default assignment without a Final in between is a compile error (PGE02004).
 
+**Pull promotes to Final:** When a Default variable is pulled (read by another operation), it automatically transitions to Final — the default value is accepted as the resolved value. No explicit final push is needed.
+
 ### Final
 
 A variable enters the Final stage when assigned with a final assignment operator (`<<` or `>>`). Once final:

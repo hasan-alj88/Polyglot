@@ -179,6 +179,76 @@ All `{N}` definitions must include a `.<Language>` binding for the language reso
 
 See [[pglib/types/NativeKind|#NativeKind enum]] for the full enum definition and [[technical/ebnf/09-definition-blocks#9.4c|EBNF §9.4c]] for the formal `{N}` grammar.
 
+## Pipeline, Instance, and Job
+
+Three distinct concepts form the execution hierarchy:
+
+| Concept | What it is | Defined by | Exists at |
+|---------|-----------|------------|-----------|
+| **Pipeline** | The DEFINITION of how jobs inter-relate | `{-}` block | Compile-time |
+| **Instance** | A composite job running sub-jobs per a pipeline definition | Triggered at runtime | `%-:Pipeline:N` |
+| **Job** | A task queued for execution | IO boundaries in pipeline body | `%-:Pipeline:N.jobs:UID` |
+
+**Pipeline** — The `{-}` definition describes triggers, queue configuration, setup, execution body (with concurrency via `[-]`/`[=]`), and cleanup. A pipeline is not a running thing — it is a blueprint.
+
+**Instance** — When a pipeline is triggered, it produces an Instance. An Instance IS a job — specifically a composite job that runs other jobs in accordance with the pipeline definition. Multiple instances of the same pipeline can run concurrently (`:0`, `:1`, `:2`).
+
+**Job** — A task queued for execution. Two kinds:
+- **Atomic** — `{N}` native definitions. Single unit of work, no sub-jobs. Implemented in the host language.
+- **Composite (Instance)** — Created from a `{-}` pipeline definition. Runs sub-jobs per the definition.
+
+### IO as Start/Completion Signals
+
+Every job starts and completes based on IO state:
+- **Start:** All input IO must be in Final state. If an input is in Default state, pulling it promotes it to Final (see [[variable-lifecycle#Default]]).
+- **Completion:** All output IO in Final state signals the job is complete.
+- **Error guarantee:** The compiler ensures no output can reach Failed state without handling. Declared errors (`(-) !ErrorName`) must have `[!]` handlers or `<!` fallback operators. Unhandled error paths are a compile error.
+
+### Implicit Triggers in the Pipeline Body
+
+Inside a `{-}` execution body, each `[-]`, `[=]`, and `[b]` line creates a job. These jobs have implicit triggers based on their position and marker:
+
+| Pattern | Triggers when |
+|---------|--------------|
+| First `[-]` in body | Pipeline itself is triggered (instance starts) |
+| Subsequent `[-]` | Previous sequential job completes (outputs Final) |
+| `[=]` after `[-]` | Previous sequential job completes — forks parallel |
+| `[=]` after `[=]` | Same as above — both fork from the same sequential predecessor |
+| `[*]` collector | All specified parallel outputs become Final |
+| `[-]` after `[*]` | Collector completes |
+
+**Parallel jobs require collectors.** After `[=]` parallel jobs, a `[*]` collector is mandatory — failing to collect a parallel job's output is a compile error. Collectors specify which parallel outputs they collect by variable (not by position), enabling partial collection:
+
+```polyglot
+[-] -JobA
+   (-) >result >> $a
+
+[=] -JobB
+   (-) >result >> $b
+[=] -JobC
+   (-) >result >> $c
+[=] -JobD
+   (-) >result >> $d
+
+[*] *All
+   (*) << $b
+   (*) << $c
+
+[-] -JobE                  [ ] triggers after $b and $c are collected
+   (-) <input << $a        [ ] $d still running in parallel
+
+[*] *All
+   (*) << $d               [ ] collect $d later
+
+[-] -JobF                  [ ] triggers after $d is collected
+```
+
+Flow control via `[?]` conditionals and `[!]` error handlers also affect trigger paths — a conditional branch's jobs only trigger if the condition is met.
+
+### Queue Configuration Inheritance
+
+Every job passes through a queue. Pipeline-level `[Q]` sets the default for all jobs (same host as the pipeline). Individual `[-]`/`[=]` calls can have per-job `[Q]` that **extends** the pipeline-level config for that specific job — it does not replace it. Contradictions between job-level and pipeline-level `[Q]` raise PGE01013. See [[queue#Job-Level Queue Conditions]].
+
 ## Sub-Pages
 
 | File | Covers |

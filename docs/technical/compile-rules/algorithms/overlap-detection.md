@@ -147,7 +147,7 @@ function checkOverlap(conditional):
     variable = conditional.branchedVariable
     branches = conditional.branches
 
-    if branches contain compound operators ([&], [|], [^]):
+    if branches contain compound operators ([&], [+], [^]):
         → Algorithm 4 (grid cell overlap via partition refinement)
     else if variable.type is int or float:
         → Algorithm 1 (interval intersection)

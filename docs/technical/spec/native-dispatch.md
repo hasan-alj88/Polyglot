@@ -484,7 +484,7 @@ Runner starts pipeline execution
    → Runner dispatches wrapper cleanup: WrapperDBConnectionCleanup(JSON)
 ```
 
-Wrapper natives expose `[{]` inputs and `[}]` outputs through the standard serialization protocol.
+Wrapper natives expose `(-)` inputs and outputs through the standard serialization protocol.
 
 ### Intrinsic
 

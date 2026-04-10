@@ -72,9 +72,9 @@ Nested sub-jobs extend the positional path:
 
 ```polyglot
 %W:DB.Connection:0
-├── .[{]                     <- inputs from calling pipeline
+├── .<                       <- inputs from calling pipeline
 │   └── .connectionString#string
-├── .[}]                     <- outputs exposed to calling pipeline
+├── .>                       <- outputs exposed to calling pipeline
 │   └── .dbConn
 ├── .setup                   <- [\] setup phase
 └── .cleanup                 <- [/] cleanup phase
@@ -83,7 +83,7 @@ Nested sub-jobs extend the positional path:
 ### Key Properties
 
 - **Flexible instances** — each `[W]` invocation creates `%W:Name:N` with sequential numbering, like pipelines.
-- **IO via `[{]`/`[}]`** — wrapper inputs (`[{]`) and outputs (`[}]`) are fixed typed data sections, analogous to `.<`/`.>` in pipelines.
+- **IO via `.<`/`.>`** — wrapper inputs and outputs use the same `.<`/`.>` structure as pipelines.
 - **Composite wrappers** — a `{W}` definition can contain `[W]` references to other wrappers inside `[\]` or `[/]`, creating nested wrapper instances.
 - **`live` fields** — wrapper instances report runtime state: `status`, `errors`, `setupDuration`. See [[metadata|user/concepts/metadata]].
 
@@ -135,7 +135,7 @@ Nested sub-jobs extend the positional path:
 ### Key Properties
 
 - **Flexible instances** — each trigger invocation creates `%T:Name:N` with sequential numbering, like pipelines.
-- **IO via `.<`/`.>`** — same as pipelines (not `.[{]`/`.[}]` like wrappers). Inputs are trigger configuration; outputs are trigger results.
+- **IO via `.<`/`.>`** — same as pipelines. Inputs are trigger configuration; outputs are trigger results.
 - **Mandatory output** — `>IsTriggered#bool` must exist on every trigger definition (compiler enforced).
 - **`live` fields** — trigger instances report runtime state: `status`, `lastFired`, `fireCount`. See [[metadata|user/concepts/metadata]].
 

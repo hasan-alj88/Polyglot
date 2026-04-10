@@ -30,7 +30,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 | EC-24.16 | #Serial — maximally permissive schemas | Unlimited depth escape hatch (PGW11003 exemption) |
 | EC-24.17 | #Dataframe status | Row-oriented access via `$df<row<column` |
 | EC-24.18 | Stale %Property notation | pglib types.md missing `##` prefix |
-| EC-24.19 | *(Retired)* [M] merge behavior | Macros removed — see #272 |
+| EC-24.19 | *(Retired)* Macro merge behavior | Macros removed — see #272 |
 | EC-24.20 | *(Retired)* Macro dispatch ambiguity | Macros removed — see #272 |
 
 ---
@@ -451,13 +451,13 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [#] %##Depth.Max << Dim
 ```
 
-### EC-24.19: *(Retired)* [M] merge behavior
+### EC-24.19: *(Retired)* Macro merge behavior
 
-**Status:** Retired — `{M}` macro block type and `[M]` invocation marker removed in Issue #272. Parameterized types now use generic `{#}` definitions with `(#) <#param` type inputs. See [[technical/ebnf/04-type-system#4.3]].
+**Status:** Retired — macro block type removed in Issue #272. Parameterized `##` schemas with `[#]` inputs now handle type generation. See [[technical/ebnf/04-type-system#4.3]].
 
 ### EC-24.20: *(Retired)* Macro dispatch ambiguity (PGE01019)
 
-**Status:** Retired — `{M}` macro block type removed in Issue #272. PGE01019 retired. See [[technical/ebnf/04-type-system#4.3]].
+**Status:** Retired — macro block type removed in Issue #272. PGE01019 retired. Parameterized `##` schemas with `[#]` inputs now handle type generation. See [[technical/ebnf/04-type-system#4.3]].
 
 ### Potential Follow-up Issues
 

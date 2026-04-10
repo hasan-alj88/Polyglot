@@ -32,7 +32,7 @@ The `%` root has fixed branches for each object type prefix:
 |--------|---------|------------|
 | `%#` | Structs | Flexible (`:type`) |
 | `%-` | Pipelines | Flexible (`:name`) |
-| `%~` | Expanders | Flexible (`:name`) |
+| `%=` | Expanders | Flexible (`:name`) |
 | `%*` | Collectors | Flexible (`:name`) |
 | `%$` | Variables | Flexible (`:name`) |
 | `%!` | Errors | Flexible (`:namespace`) |

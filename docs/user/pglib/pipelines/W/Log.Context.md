@@ -18,8 +18,8 @@ Opens structured log scope on setup, closes on cleanup.
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WLogContext"
    [%] .description << "Opens structured log scope on setup, closes on cleanup."
-   [{] $traceId#string   [ ] Trace ID for the log scope
-   [}] $logScope         [ ] Active structured log scope
+   (-) <traceId;string   [ ] Trace ID for the log scope
+   (-) >logScope         [ ] Active structured log scope
 ```
 
 ## Inputs
