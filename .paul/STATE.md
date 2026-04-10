@@ -93,6 +93,7 @@ Progress:
 - Issue #163: [██████████] 100% (3/3 plans — metadata paths for types + operations)
 - Issue #272: [██████████] 100% (5/5 plans — parameterized ## schemas replace {M} macros)
 - Issue #273: [██████████] 100% (5/5 plans — three-bracket system + parallelism unification)
+- Issue #275: [██████████] 100% (5/5 plans — collection redesign: ##Record, %##Fields)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -102,18 +103,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #275 — Collection redesign: ##Record, %##Fields, retire #Map/#Set
-Branch: design/issue-275-collection-redesign-record-fields
-Labels: design, P2-high
-Started: 2026-04-09
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/275
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — ready for merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -255,6 +252,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #163 — Metadata paths for types + operations | 2026-04-07 | 3 plans: type file split (163-01), schema/field-type files (163-02), 109 pipeline metadata (163-03); merged to main |
 | Closed #272 — Parameterized ## schemas replace {M} macros | 2026-04-09 | 5 plans: core properties, schema files, collection types, syntax/concept docs, technical docs; merged to main |
 | Issue #273 — Three-bracket system complete | 2026-04-09 | 5 plans, 387 files: EBNF grammar, core docs, compile rules, pglib, remaining technical; {X} define, [X] control, (X) IO |
+| Closed #275 — Collection redesign | 2026-04-10 | Squash-merged to main; 107 files, ##Record replaces #Map, %##Fields replaces %##Key, 6 schemas retired, composition syntax updated |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -274,11 +272,9 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-10
-Stopped at: UNIFY complete — all 5 plans executed, loop closed
-Next action: /paul:merge to merge branch and close issue #275
-Resume file: .paul/phases/275-collection-redesign-record-fields/275-SUMMARY.md
-Design context: 18 commits on branch, ~60 files modified, full verification passed
-Prior work on branch: 275-01 through 275-05 all complete + cleanup fixups
+Stopped at: Issue #275 merged to main, GitHub issue closed
+Next action: /paul:issues or /paul:progress
+Resume file: .paul/STATE.md
 
 ---
 *STATE.md — Updated after every significant action*

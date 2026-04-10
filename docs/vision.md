@@ -1,7 +1,7 @@
 ---
 audience: [pg-coder, integrator, architect, designer]
 type: reference
-updated: 2026-04-03
+updated: 2026-04-10
 ---
 
 # The Polyglot Project
@@ -25,13 +25,22 @@ The project aims to provide a unified platform for developers to leverage the st
 
 - **Don't Reinvent the Wheel, Use Legacy Code!** — Many developers have existing codebases in various programming languages. By supporting multiple languages, we allow developers to reuse their existing code and libraries, reducing the need for rewriting and increasing productivity. Legacy code is well-tested and production-proven — it can be more reliable and efficient than code written from scratch. Developers can also leverage their existing knowledge and expertise, making it easier for them to contribute and collaborate.
 
-- **Async-Centric by Design** — Polyglot is designed from the ground up with a focus on asynchronous programming, allowing developers to write code that runs concurrently and handles tasks in parallel. This is particularly beneficial for applications requiring high performance and responsiveness: web applications, real-time data processing, and distributed systems.
+- **Async-Centric by Design** — Polyglot makes parallel programming **easy, bug-free, safe, and — most importantly — intentional**. The code behaves exactly as the developer designed it to behave, in every situation, because the platform applies Murphy's Law as a design principle: *if something can go wrong, it will go wrong* — so Polyglot proactively covers for it.
 
-  Being async-centric means the language puts focus on *how* automated tasks are executed and how their interactions and race conditions are handled while running in parallel. Task behaviors are intentional and designed by the developer's instructions, rather than building synchronous automation and retrofitting async handling as an afterthought — which leads to more complex and error-prone code.
+  Traditional approaches build synchronous automation first, then retrofit async handling as an afterthought — leading to complex, error-prone code where race conditions and edge cases surface only in production. Polyglot inverts this: concurrency is the starting point, not an add-on. Developers declare *what* runs in parallel, *how* tasks interact, and *what happens* when things go wrong. The compiler and Polyglot Code enforce the rest.
+
+  **The compiler catches problems before code ever runs.** Race conditions, resource conflicts, unhandled parallel interactions, and missing error paths are compile-time errors — not runtime surprises discovered under load at 3 AM. If a developer's concurrent design has a gap, the compiler rejects it. This means every pipeline that compiles is a pipeline where all concurrent paths are accounted for.
+
+  **Polyglot Code makes concurrency easy by design.** Developers express parallelism through structured constructs — triggers, queues, collectors, parallel blocks, wait/collect markers — rather than low-level primitives like locks, mutexes, or manual thread management. These constructs are inherently safe by construction. Developers describe intent; the platform handles synchronization, ordering, and resource management.
+
+  **Intentional behavior under Murphy's Law.** Every conditional must be exhaustive. Every parallel job must have its output collected. Every error path must be handled. Polyglot does not allow "happy path only" code — the developer must address what happens when tasks fail, when resources are unavailable, when race conditions arise. The result is automation that behaves predictably in all situations the developer has covered, because the compiler guarantees there are no uncovered situations.
 
   Key advantages of async-centric design:
+  - **Compiler-enforced safety** — The compiler verifies concurrent interactions at build time, catching race conditions, resource conflicts, and missing error paths before deployment.
+  - **Structured concurrency primitives** — Polyglot Code provides first-class constructs for parallelism that are safe by construction. Developers describe *what* should run concurrently and *how* results combine — the platform handles the rest.
+  - **Intentional task behavior** — Developers explicitly define how concurrent tasks interact and how failures are handled, rather than discovering unexpected behaviors in production.
+  - **Exhaustive coverage** — The compiler enforces that all parallel paths, error conditions, and edge cases are addressed. No implicit defaults, no silent failures, no undefined behavior.
   - Better native integration between runtime and compile-time code, enabling more efficient and optimized execution.
-  - Intentional task behavior — developers explicitly define how concurrent tasks interact, rather than discovering unexpected behaviors and applying workarounds.
   - Native integration of API protocols and libraries, allowing developers to easily access and utilize tools and services without writing complex wrappers or adapters.
 
 ### Evolution
@@ -52,7 +61,7 @@ The project aims to provide a unified platform for developers to leverage the st
 
 - **Open Source and Transparency** — Polyglot is committed to being open source, allowing anyone to contribute, review, and use the code. This transparency promotes trust and encourages a diverse range of contributions, leading to innovative solutions and rapid development.
 
-- **Security** — One of the dangers of automated tasks is vulnerabilities in undefined or unexpected behaviors that can be exploited by attackers. Polyglot is designed from day one to handle concurrency, race conditions, error handling, and pipeline interactions intentionally. As the project evolves, we will define secure interactions between automated tasks and close potential security gaps as we and the community discover them.
+- **Security** — One of the dangers of automated tasks is vulnerabilities in undefined or unexpected behaviors that can be exploited by attackers. Polyglot applies Murphy's Law at the compiler level: if a concurrent interaction *can* go wrong, the compiler forces the developer to handle it. Undefined behavior is a compile error, not an exploitable vulnerability. Race conditions, unhandled error paths, and uncovered edge cases are rejected before code reaches production. As the project evolves, we will define secure interactions between automated tasks and close potential security gaps as we and the community discover them.
 
 - **Privacy** — The ability to run Polyglot services locally on users' machines, without the need for cloud-based services, provides greater control over data and privacy. Local execution also reduces latency and improves performance, as users access services directly from their machines without relying on internet connectivity. Users can tailor services to their specific needs and preferences.
 
@@ -69,7 +78,7 @@ The project aims to provide a unified platform for developers to leverage the st
 
   The Polyglot service must be running in the background to handle execution of automated tasks and manage their interactions.
 
-- **Polyglot Code** — Think: *what if API was a programming language?* Polyglot code is what developers write to define their automated tasks and their interactions. It is designed to be flexible and extensible, providing a unified syntax for multi-language workflow orchestration.
+- **Polyglot Code** — Think: *what if API was a programming language?* Polyglot Code is what developers write to define their automated tasks and their interactions. Its structured syntax — triggers, queues, wrappers, collectors, and parallel blocks — makes concurrency the default mode of operation, not an opt-in complexity. The compiler validates every concurrent interaction, so developers get safe parallelism without writing synchronization logic. It is designed to be flexible and extensible, providing a unified syntax for multi-language workflow orchestration.
 
 ---
 

@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
-# generate-docs-pdf.sh — Combine all docs/ markdown into a single PDF via Pandoc + Typst
+# generate-docs-pdf.sh — Combine docs/ markdown into PDF(s) via Pandoc + Typst
 #
 # Usage:
-#   ./scripts/generate-docs-pdf.sh              # full documentation book
-#   ./scripts/generate-docs-pdf.sh docs/user    # only user docs
+#   ./scripts/generate-docs-pdf.sh                    # full documentation book
+#   ./scripts/generate-docs-pdf.sh docs/user           # only user docs
+#   ./scripts/generate-docs-pdf.sh --by-audience       # one PDF per audience in docs/pdf/
+#   ./scripts/generate-docs-pdf.sh --audience=architect # single audience PDF
 #
 # Requirements: pandoc (>=3.x), typst (>=0.14)
-# Output: Polyglot-Documentation.pdf in repo root
+# Output:
+#   Default:       Polyglot-Documentation.pdf in repo root
+#   --by-audience: docs/pdf/{audience}.pdf for each audience
 
 set -euo pipefail
 
@@ -15,7 +19,6 @@ DOCS_DIR="$REPO_ROOT/docs"
 TEMPLATE="$REPO_ROOT/scripts/doc-template.typ"
 BUILD_DIR="$REPO_ROOT/.docs-build"
 OUTPUT_PDF="$REPO_ROOT/Polyglot-Documentation.pdf"
-COMBINED_TYP="$BUILD_DIR/book.typ"
 
 # Colors
 RED='\033[0;31m'
@@ -37,19 +40,33 @@ for cmd in pandoc typst; do
    fi
 done
 
-# Determine target
-TARGET="${1:-$DOCS_DIR}"
-if [[ ! "$TARGET" = /* ]]; then
-   TARGET="$REPO_ROOT/$TARGET"
-fi
+# --- Argument parsing ---
+BY_AUDIENCE=false
+AUDIENCE_FILTER=""
+TARGET="$DOCS_DIR"
 
-# Clean build directory
-rm -rf "$BUILD_DIR"
-mkdir -p "$BUILD_DIR"
+while [[ $# -gt 0 ]]; do
+   case "$1" in
+      --by-audience)
+         BY_AUDIENCE=true
+         shift
+         ;;
+      --audience=*)
+         AUDIENCE_FILTER="${1#--audience=}"
+         BY_AUDIENCE=true
+         shift
+         ;;
+      *)
+         TARGET="$1"
+         if [[ ! "$TARGET" = /* ]]; then
+            TARGET="$REPO_ROOT/$TARGET"
+         fi
+         shift
+         ;;
+   esac
+done
 
 # --- Document ordering ---
-# Define the canonical section order. Files within each section are sorted.
-# This ensures the book reads logically.
 SECTIONS=(
    "vision.md"
    "user/SPEC-INDEX.md"
@@ -91,7 +108,21 @@ declare -A SECTION_NAMES=(
    ["audit"]="Documentation Audit"
 )
 
-# Collect files in order
+# Audience display names
+declare -A AUDIENCE_DISPLAY=(
+   ["pg-coder"]="Polyglot Coder"
+   ["developer"]="Developer"
+   ["designer"]="Language Designer"
+   ["architect"]="System Architect"
+   ["integrator"]="Integrator"
+)
+
+# Audiences excluded from per-audience PDF generation
+EXCLUDED_AUDIENCES=("ai")
+
+# --- Helper functions ---
+
+# Collect files in section order (INDEX.md first, then sorted)
 collect_section_files() {
    local section="$1"
    local full_path="$DOCS_DIR/$section"
@@ -99,7 +130,6 @@ collect_section_files() {
    if [[ -f "$full_path" ]]; then
       echo "$full_path"
    elif [[ -d "$full_path" ]]; then
-      # INDEX.md first if it exists, then everything else sorted
       if [[ -f "$full_path/INDEX.md" ]]; then
          echo "$full_path/INDEX.md"
       fi
@@ -110,11 +140,7 @@ collect_section_files() {
 # Convert one markdown file to typst content (no template wrapper)
 convert_one() {
    local md_file="$1"
-   local rel_path="${md_file#"$DOCS_DIR"/}"
 
-   # Strip HTML comments, convert, then:
-   # 1. Remove standalone label anchors (e.g. <my-heading>)
-   # 2. Replace \[#link(<label>)[text]\] with just the display text
    sed 's/<!--.*-->//g' "$md_file" | pandoc \
       --from markdown+yaml_metadata_block \
       --to typst \
@@ -123,53 +149,146 @@ convert_one() {
          -e 's/\\\[#link\(<[^>]*>\)\[([^]]*)\]\\\]/\1/g'
 }
 
-info "Building combined documentation PDF..."
-info "Source: $TARGET"
-echo ""
+# Extract audience values from YAML frontmatter (one per line)
+extract_audiences() {
+   local md_file="$1"
 
-# Counters
-total=0
-success=0
-skipped=0
-failed=0
+   # Read only the YAML frontmatter block, extract audience line
+   sed -n '/^---$/,/^---$/p' "$md_file" | grep '^audience:' | head -1 \
+      | sed 's/^audience: *//' \
+      | sed 's/ *#.*//' \
+      | sed 's/^\[//; s/\]$//' \
+      | tr ',' '\n' \
+      | tr '|' '\n' \
+      | sed 's/^ *//; s/ *$//' \
+      | grep -v '^$'
+}
 
-# Start building the combined typst file
-cat > "$COMBINED_TYP" <<'HEADER'
-#import "/scripts/doc-template.typ": *
-#show: polyglot-book
+# Guess audience from file path when frontmatter is missing
+guess_audience() {
+   local md_file="$1"
+   local rel_path="${md_file#"$DOCS_DIR"/}"
 
-// Title page
-#polyglot-title-page()
+   case "$rel_path" in
+      vision.md)
+         # vision applies to all non-excluded audiences
+         for aud in "${!AUDIENCE_DISPLAY[@]}"; do
+            echo "$aud"
+         done
+         ;;
+      user/*)       echo "pg-coder" ;;
+      technical/spec/*|technical/plan/*|technical/compile-rules/*|technical/COMPILE-RULES.md)
+                    echo "architect" ;;
+      technical/ebnf/*|technical/edge-cases/*|technical/brainstorming/*)
+                    echo "designer" ;;
+      technical/*)  echo "developer" ;;
+      audit/*)      ;; # ai-facing, excluded
+      *)            echo "developer" ;;
+   esac
+}
 
-// Table of contents
-#outline(title: "Table of Contents", depth: 2, indent: 1.5em)
-#pagebreak()
-HEADER
+# Get audiences for a file (frontmatter or guessed)
+get_file_audiences() {
+   local md_file="$1"
+   local audiences
+   audiences="$(extract_audiences "$md_file")"
 
-# Process each section
-for section in "${SECTIONS[@]}"; do
-   full_path="$DOCS_DIR/$section"
+   if [[ -z "$audiences" ]]; then
+      guess_audience "$md_file"
+   else
+      echo "$audiences"
+   fi
+}
 
-   # If targeting a subdirectory, skip sections outside it
-   if [[ "$TARGET" != "$DOCS_DIR" ]]; then
-      if [[ -f "$TARGET" ]]; then
-         [[ "$full_path" != "$TARGET" ]] && continue
-      elif [[ -d "$TARGET" ]]; then
-         # Check if section is under target
-         [[ "$full_path" != "$TARGET"* ]] && continue
+# Check if an audience is excluded
+is_excluded_audience() {
+   local aud="$1"
+   for excl in "${EXCLUDED_AUDIENCES[@]}"; do
+      [[ "$aud" == "$excl" ]] && return 0
+   done
+   return 1
+}
+
+# Check if a file matches a given audience filter
+file_matches_audience() {
+   local md_file="$1"
+   local filter="$2"
+
+   # No filter = include everything
+   [[ -z "$filter" ]] && return 0
+
+   get_file_audiences "$md_file" | grep -qx "$filter"
+}
+
+# --- PDF generation function ---
+
+generate_pdf() {
+   local output_pdf="$1"
+   local audience_filter="$2"    # empty = all files
+   local audience_label="$3"     # display name for title page, empty for monolithic
+
+   local combined_typ="$BUILD_DIR/book.typ"
+
+   # Counters
+   local total=0 success=0 skipped=0 failed=0
+
+   # Write typst header
+   {
+      echo '#import "/scripts/doc-template.typ": *'
+      if [[ -n "$audience_label" ]]; then
+         echo "#show: polyglot-book.with(audience: \"$audience_label\")"
+         echo ""
+         echo "#polyglot-title-page(audience: \"$audience_label\")"
+      else
+         echo '#show: polyglot-book'
+         echo ''
+         echo '#polyglot-title-page()'
       fi
-   fi
+      echo ''
+      echo '// Table of contents'
+      echo '#outline(title: "Table of Contents", depth: 2, indent: 1.5em)'
+      echo '#pagebreak()'
+   } > "$combined_typ"
 
-   # Skip if section doesn't exist
-   if [[ ! -e "$full_path" ]]; then
-      continue
-   fi
+   # Process each section
+   for section in "${SECTIONS[@]}"; do
+      local full_path="$DOCS_DIR/$section"
 
-   section_name="${SECTION_NAMES[$section]:-$section}"
-   info "Section: $section_name"
+      # If targeting a subdirectory, skip sections outside it
+      if [[ "$TARGET" != "$DOCS_DIR" ]]; then
+         if [[ -f "$TARGET" ]]; then
+            [[ "$full_path" != "$TARGET" ]] && continue
+         elif [[ -d "$TARGET" ]]; then
+            [[ "$full_path" != "$TARGET"* ]] && continue
+         fi
+      fi
 
-   # Add part heading
-   cat >> "$COMBINED_TYP" <<PART
+      # Skip if section doesn't exist
+      [[ ! -e "$full_path" ]] && continue
+
+      local section_name="${SECTION_NAMES[$section]:-$section}"
+      local section_has_files=false
+
+      # Check if section has any matching files before adding part heading
+      local section_content=""
+      while IFS= read -r md_file; do
+         [[ -z "$md_file" ]] && continue
+
+         # Audience filter
+         if ! file_matches_audience "$md_file" "$audience_filter"; then
+            continue
+         fi
+
+         section_has_files=true
+         break
+      done < <(collect_section_files "$section")
+
+      [[ "$section_has_files" == false ]] && continue
+
+      info "Section: $section_name"
+
+      # Add part heading
+      cat >> "$combined_typ" <<PART
 
 // ═══════════════════════════════════════════
 // Part: $section_name
@@ -177,54 +296,116 @@ for section in "${SECTIONS[@]}"; do
 #part-heading("$section_name")
 PART
 
-   # Process files in this section
-   while IFS= read -r md_file; do
-      [[ -z "$md_file" ]] && continue
+      # Process files in this section
+      while IFS= read -r md_file; do
+         [[ -z "$md_file" ]] && continue
 
-      rel_path="${md_file#"$DOCS_DIR"/}"
-      ((total++)) || true
+         # Audience filter
+         if ! file_matches_audience "$md_file" "$audience_filter"; then
+            continue
+         fi
 
-      content="$(convert_one "$md_file" 2>/dev/null)" || {
-         ((failed++)) || true
-         fail "$rel_path (pandoc error)"
-         continue
-      }
+         local rel_path="${md_file#"$DOCS_DIR"/}"
+         ((total++)) || true
 
-      if [[ -z "$content" ]]; then
-         ((skipped++)) || true
-         warn "$rel_path (empty)"
-         continue
-      fi
+         local content
+         content="$(convert_one "$md_file" 2>/dev/null)" || {
+            ((failed++)) || true
+            fail "$rel_path (pandoc error)"
+            continue
+         }
 
-      # Add a page break and source path annotation before each document
-      cat >> "$COMBINED_TYP" <<DOC
+         if [[ -z "$content" ]]; then
+            ((skipped++)) || true
+            warn "$rel_path (empty)"
+            continue
+         fi
+
+         cat >> "$combined_typ" <<DOC
 
 // --- $rel_path ---
 #doc-separator("$rel_path")
 $content
 DOC
 
-      ((success++)) || true
-      log "$rel_path"
+         ((success++)) || true
+         log "$rel_path"
 
-   done < <(collect_section_files "$section")
-done
+      done < <(collect_section_files "$section")
+   done
 
-echo ""
-info "Compiling combined Typst file to PDF..."
+   # Compile
+   info "Compiling Typst to PDF..."
+   if typst compile --root "$REPO_ROOT" "$combined_typ" "$output_pdf" 2>&1; then
+      local pdf_size
+      pdf_size="$(du -h "$output_pdf" | cut -f1)"
+      log "Output: $output_pdf ($pdf_size)"
+      log "$success documents included, $skipped skipped, $failed failed (of $total total)"
+   else
+      fail "Typst compilation failed. Check $combined_typ for errors."
+      return 1
+   fi
+}
 
-# Compile
-if typst compile --root "$REPO_ROOT" "$COMBINED_TYP" "$OUTPUT_PDF" 2>&1; then
+# --- Main execution ---
+
+if $BY_AUDIENCE; then
+   # Discover all unique audiences
+   declare -A ALL_AUDIENCES
+   for section in "${SECTIONS[@]}"; do
+      while IFS= read -r md_file; do
+         [[ -z "$md_file" ]] && continue
+         while IFS= read -r aud; do
+            if [[ -n "$aud" ]] && ! is_excluded_audience "$aud"; then
+               ALL_AUDIENCES["$aud"]=1
+            fi
+         done < <(get_file_audiences "$md_file")
+      done < <(collect_section_files "$section")
+   done
+
+   # Determine which audiences to generate
+   if [[ -n "$AUDIENCE_FILTER" ]]; then
+      AUDIENCE_LIST=("$AUDIENCE_FILTER")
+   else
+      AUDIENCE_LIST=("${!ALL_AUDIENCES[@]}")
+   fi
+
+   mkdir -p "$REPO_ROOT/docs/pdf"
+
+   info "Generating per-audience PDFs for: ${AUDIENCE_LIST[*]}"
    echo ""
-   pdf_size="$(du -h "$OUTPUT_PDF" | cut -f1)"
-   page_count="$(typst compile --root "$REPO_ROOT" "$COMBINED_TYP" - 2>/dev/null | wc -c || echo "?")"
-   log "Output: $OUTPUT_PDF ($pdf_size)"
-   log "$success documents included, $skipped skipped, $failed failed (of $total total)"
+
+   for aud in "${AUDIENCE_LIST[@]}"; do
+      local_label="${AUDIENCE_DISPLAY[$aud]:-$aud}"
+      local_output="$REPO_ROOT/docs/pdf/${aud}.pdf"
+
+      echo ""
+      info "════════════════════════════════════════"
+      info "Audience: $local_label ($aud)"
+      info "════════════════════════════════════════"
+
+      rm -rf "$BUILD_DIR"
+      mkdir -p "$BUILD_DIR"
+      generate_pdf "$local_output" "$aud" "$local_label"
+   done
+
+   rm -rf "$BUILD_DIR"
+
+   echo ""
+   info "All per-audience PDFs generated in docs/pdf/"
+   ls -lh "$REPO_ROOT/docs/pdf/"*.pdf 2>/dev/null | while read -r line; do
+      log "$line"
+   done
 else
-   echo ""
-   fail "Typst compilation failed. Check $COMBINED_TYP for errors."
-   exit 1
-fi
+   # Monolithic mode (original behavior)
+   rm -rf "$BUILD_DIR"
+   mkdir -p "$BUILD_DIR"
 
-# Clean up build directory on success
-rm -rf "$BUILD_DIR"
+   info "Building combined documentation PDF..."
+   info "Source: $TARGET"
+   echo ""
+
+   generate_pdf "$OUTPUT_PDF" "" ""
+
+   rm -rf "$BUILD_DIR"
+fi

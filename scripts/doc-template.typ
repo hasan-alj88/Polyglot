@@ -44,13 +44,19 @@
 }
 
 // Title page
-#let polyglot-title-page() = {
+#let polyglot-title-page(audience: none) = {
    set page(header: none, footer: none)
    v(2fr)
    align(center)[
       #text(size: 36pt, weight: "bold")[Polyglot]
       #v(0.3em)
       #text(size: 16pt, fill: luma(80))[Documentation]
+      #if audience != none {
+         v(1em)
+         text(size: 13pt, fill: rgb("#2563eb"), weight: "medium")[
+            #upper(audience) Edition
+         ]
+      }
       #v(2em)
       #line(length: 30%, stroke: 1.5pt + luma(120))
       #v(2em)
@@ -67,14 +73,14 @@
 }
 
 // Main book layout
-#let polyglot-book(doc) = {
+#let polyglot-book(audience: none, doc) = {
    set page(
       paper: "a4",
       margin: (top: 2.5cm, bottom: 2.5cm, left: 2.2cm, right: 2.2cm),
       header: context {
          if counter(page).get().first() > 2 {
             set text(size: 8.5pt, fill: luma(130))
-            [Polyglot Documentation]
+            if audience != none [Polyglot Documentation (#audience)] else [Polyglot Documentation]
             h(1fr)
             context {
                let headings = query(selector(heading.where(level: 1)).before(here()))

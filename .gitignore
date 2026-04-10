@@ -50,3 +50,4 @@ coverage/
 *.profraw
 *.profdata
 docs/draft.md
+docs/pdf/
