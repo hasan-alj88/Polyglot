@@ -29,6 +29,9 @@ See [[syntax/types/INDEX|types]] for the full type hierarchy and [[scalars]] for
    [.] .regex#RawString <~ ".*"
    [%] %alias
       [:] "re"
+   [%] %Native.Class
+      [.] .Rust << "PgString"
+      [.] .Validate << #True
 ```
 
 ## Fields
@@ -42,6 +45,17 @@ See [[syntax/types/INDEX|types]] for the full type hierarchy and [[scalars]] for
 
 - `[#] ##Scalar` -- sets `%##Depth.Max << 1`, marking `#String` as a scalar
 - `%##Alias << "string"` -- lets users write `#string` (lowercase) as shorthand
+
+## Native Class
+
+`#String` is backed by a native Rust class (`PgString`) declared via `[%] %Native.Class`. This tells the compiler that a host-language class exists for this type and provides validation — the Rust class contains regex validation logic that the compiler calls to verify `.string` values match the `.regex` pattern at runtime.
+
+| Field | Value | Meaning |
+|-------|-------|---------|
+| `.Rust` | `"PgString"` | Name of the Rust class backing `#String` |
+| `.Validate` | `#True` | The class exposes a validation function |
+
+Scalar subtypes that inherit from `#String` (e.g. `#Int`, `#Float`) inherit this native class relationship — the same `PgString` validation is used with each subtype's specialized `.regex`.
 
 ## Scalar Subtypes via `##String`
 
@@ -63,6 +77,7 @@ Users can define custom string subtypes with their own `.regex`:
 |------|---------|-------------|
 | Definition | `%definition.#:String` | Compile-time type template |
 | Instance | `%#:String:N` | Runtime instance (N = instance number) |
+| Native class | `%definition.#:String.%Native.Class` | Rust class backing (`PgString`) |
 
 String subtypes nest under the instance path: `%#:String:int`, `%#:String:float`, `%#:String:uint`, etc. See [[metadata-tree/string-subtypes]] for full resolution.
 

@@ -28,6 +28,9 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   |
 |   |   +-- :Boolean                            %definition.#:Boolean  (bool)
 |   |   +-- :String                             %definition.#:String  (string)
+|   |   |   +-- %Native.Class
+|   |   |       +-- .Rust                       "PgString"
+|   |   |       +-- .Validate                   #True
 |   |   +-- :Array                              %definition.#:Array  (array)
 |   |   +-- :Map                                %definition.#:Map  *(retired #275 — use ##Record)*
 |   |   +-- :Serial                             %definition.#:Serial  (serial)

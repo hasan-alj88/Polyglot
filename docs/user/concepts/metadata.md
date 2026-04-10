@@ -37,6 +37,7 @@ Native definitions (`{N}`) use a separate metadata scope — `[%]` under `{N}` i
 | Field | Type | Description |
 |-------|------|-------------|
 | `%alias` | `#Array.NestedKeyString` | Shorthand names — multiple aliases per definition. Each alias is a `#NestedKeyString` (allows `.` and `:` for nested paths). Must be globally unique (PGE12002) |
+| `%Native.Class` | scope | Native class backing — `{#}` only. Declares that a host-language class backs this type. Fields: `.Rust` (class name), `.Validate` (`#True` if class provides validation). See [[pglib/types/string\|#String]] for example |
 | `:info` | `#serial` | Opens a flexible scope for custom key-value tooling data |
 
 ### Example

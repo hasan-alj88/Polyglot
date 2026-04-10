@@ -118,6 +118,24 @@ Field-level metadata uses the `%###` prefix. The `###` classification describes 
 
 All siblings must be the same `###` kind — mixing typed and untyped fields among siblings raises PGE05005.
 
+### Native class metadata (`%Native.Class`)
+
+`{#}` definitions backed by a native language class declare `[%] %Native.Class` with fixed fields naming the host class and its capabilities:
+
+| Field | Type | Meaning |
+|-------|------|---------|
+| `.Rust` | `#string` | Rust class name backing this type |
+| `.Validate` | `#Boolean` | Class provides a validation function |
+
+The compiler uses `%Native.Class` to discover host-language functions for the type. Currently only `.Validate` is defined — additional capabilities will be added as needed.
+
+```polyglot
+%definition.#:String
+├── %Native.Class
+│   ├── .Rust                      -> "PgString"
+│   └── .Validate                  -> #True
+```
+
 ## Complete Type Definition Example
 
 `#Array` definition template showing all metadata layers (generic type with `(#) <#ValueType` and `(#) <Dim` parameters):
