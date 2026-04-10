@@ -9,6 +9,11 @@ severity: error
 ### Rule 8.4 — Ambiguous Step Reference
 `PGE08004`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:concepts/errors -->
+<!-- @u:syntax/operators -->
+
 **Statement:** In chain execution, step references in `(-)` IO lines and `[!]` error blocks must unambiguously identify a single step. When two or more steps share the same leaf name, using that leaf name alone is ambiguous and is a compile error. Two solutions: (1) extend the reference upward through the dotted name until it uniquely identifies the step, or (2) use numeric indices. Non-ambiguous references (unique leaf names) can use the short form. Mixing numeric and name-based references in the same chain is allowed.
 **Rationale:** Step references are a readability convenience, but they must resolve to exactly one step. The issue is not that leaf names happen to match — it's that the reference is ambiguous. Extending the reference path or using numeric indices both eliminate the ambiguity while keeping chains readable.
 **Detection:** The compiler resolves each step reference in `(-)` and `[!]` lines against the chain's step list. If a reference matches more than one step, PGE08004 fires.

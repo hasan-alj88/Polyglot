@@ -8,7 +8,7 @@ metadata_definition: "%definition.###:ScalarEnum"
 
 # ###ScalarEnum Field Type
 
-<!-- @types -->
+<!-- @c:types -->
 
 `###ScalarEnum` classifies a variant selector within a scalar type. It combines `##Enum` classification with `##Scalar` depth constraint -- the leaf is an enum variant (no type annotation) within a depth-1 type.
 

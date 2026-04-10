@@ -9,7 +9,7 @@ severity: error
 ### Rule 1.30 — Missing Pipeline Wrapper
 `PGE01030`
 
-<!-- @brainstorming:marker-declarations §4 Rule B -->
+<!-- @c:brainstorming:marker-declarations §4 Rule B -->
 
 **Statement:** Every `{-}[exe]` pipeline must contain a `[W]` wrapper invocation. A pipeline without a wrapper has no lifecycle management and is a compile error.
 **Rationale:** The wrapper provides setup/cleanup lifecycle around pipeline execution. Even pipelines with no special requirements must declare `[W] -W.Polyglot` (the identity wrapper). This completes the required trio: `[T]` (PGE01005), `[Q]` (PGE01006), and `[W]` (PGE01030).

@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-5.1: All block element categories used
 
-<!-- @blocks -->
+<!-- @c:blocks -->
 **What it tests:** A file exercising every block element category. See [[blocks]].
 
 | Category | Elements | Where tested |
@@ -25,7 +25,7 @@ updated: 2026-03-30
 
 ### EC-5.2: Background execution
 
-<!-- @blocks:Execution -->
+<!-- @u:blocks:Execution -->
 **EBNF:** `background_line ::= "[b]" exec_expr`
 
 **What it tests:** Fire-and-forget execution. See [[blocks#Execution]].

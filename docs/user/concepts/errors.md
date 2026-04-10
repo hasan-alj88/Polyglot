@@ -7,10 +7,10 @@ updated: 2026-03-25
 
 # Error Handling
 
-<!-- @pipelines:Error Handling -->
-<!-- @variable-lifecycle:Failed -->
-<!-- @data-is-trees -->
-<!-- @pglib/errors/errors -->
+<!-- @u:pipelines:Error Handling -->
+<!-- @c:variable-lifecycle:Failed -->
+<!-- @c:data-is-trees -->
+<!-- @c:pglib/errors/errors -->
 
 Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Polyglot objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[pglib/errors/errors#`#Error` Struct]]).
 
@@ -238,9 +238,9 @@ Query a variable's state via `$varName%state` — this reads from `%$:{name}:{in
 
 ## Error Fallback Operators
 
-<!-- @operators -->
-<!-- @io:Fallback IO -->
-<!-- @blocks:Data Flow -->
+<!-- @u:operators -->
+<!-- @u:io:Fallback IO -->
+<!-- @u:blocks:Data Flow -->
 The `<!` and `!>` operators (see [[operators#Assignment Operators]]) provide inline fallback values on IO lines, preventing variables from entering the Failed state. Fallback lines use the `(>)` / `(<)` IO parameter handling markers (see [[blocks#Data Flow]]) scoped under `(-)` IO lines (see [[io#IO Parameter Handling]]).
 
 ### Generic Fallback

@@ -9,7 +9,7 @@ metadata_instance: "%#:Job:N"
 
 # #Job Struct
 
-<!-- @types -->
+<!-- @c:types -->
 
 Runtime job state within a pipeline instance. Jobs are units of work created at IO boundaries — the compiler determines job start and end via pipeline IO state (inputs must be Final to start; outputs Final or Failed to complete). Sequential `[-]` jobs chain on predecessor completion; parallel `[=]` jobs fork. The Trigger Monitor generates UIDs for new jobs when triggered.
 

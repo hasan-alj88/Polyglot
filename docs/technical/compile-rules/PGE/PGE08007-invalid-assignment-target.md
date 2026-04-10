@@ -9,6 +9,9 @@ severity: error
 ### Rule 8.7 — Invalid Assignment Target
 `PGE08007`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+
 **Statement:** The left-hand side of any assignment operator (`<<`, `<~`, `>>`, `~>`) must be a valid assignment target: a variable (`$name`), an output port (`>name`), or a field path (`$var.field`). Value expressions — literals, inline pipeline calls, or any other non-variable construct — cannot be assigned to.
 **Rationale:** Assignments push data into a destination. Only variables and output ports in Declared or Default state can receive data (see PGE02003, PGE02005, PGE02008 for state-based constraints). A value expression like `-Path"/tmp"` or `"hello"` produces a value — it has no storage location to push into. This rule catches structural misuse; lifecycle state rules (PGE02002, PGE02003, PGE02005, PGE02008) catch state-based misuse.
 **Detection:** The compiler checks the left-hand side of every assignment expression. If it is not a valid `assign_target` (variable, output port, or field path), the expression is rejected.

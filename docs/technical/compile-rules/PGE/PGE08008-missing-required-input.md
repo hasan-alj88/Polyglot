@@ -9,6 +9,10 @@ severity: error
 ### Rule 8.8 — Missing Required Input at Call Site
 `PGE08008`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Every declared `<input` on the called pipeline or operator that has no default value (`<~`) must be wired by the caller. If the caller omits a required input, PGE08008 fires. This applies to sequential pipeline (`[-]`), parallel pipeline (`[=]`), expand operator (`(=)`), collect operator (`(*)`), and wrapper (`[W]`) calls.
 **Rationale:** The compiler knows the full IO contract of every pipeline and operator from its definition. An unwired required input leaves the parameter in Declared state — the called pipeline cannot read it (PGE02002), so execution would always fail. Catching this at compile time prevents silent failures.
 **Detection:** The compiler resolves the called pipeline's `(-)` declarations, enumerates all `<input` parameters, and checks each against the caller's wiring lines. Any `<input` that has no default (`<~`) and no corresponding wiring line from the caller triggers PGE08008.

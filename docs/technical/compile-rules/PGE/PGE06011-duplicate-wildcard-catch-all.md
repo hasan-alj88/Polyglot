@@ -9,6 +9,9 @@ severity: error
 ### Rule 6.11 — Duplicate Wildcard Catch-All
 `PGE06011`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/types -->
+
 **Statement:** A `[?]` conditional chain must contain at most one `[?] *?` wildcard catch-all branch. A second `*?` is unreachable dead code and is a compile error.
 **Rationale:** Only the first `*?` is reachable — it catches everything the preceding branches did not. Any subsequent `*?` can never execute. Rejecting duplicates early prevents hidden dead code.
 **Detection:** The compiler scans all `[?]` branches in a conditional chain. If more than one branch uses the `*?` wildcard pattern, PGE06011 fires on the second (and any subsequent) occurrence.

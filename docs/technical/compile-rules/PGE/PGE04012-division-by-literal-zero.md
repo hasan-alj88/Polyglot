@@ -9,6 +9,10 @@ severity: error
 ### Rule 4.11 — Division by Literal Zero
 `PGE04011`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A call to `-Math.Divide` or `-Math.Modulo` where the divisor input is the literal value `0` is a compile error.
 **Rationale:** Division by zero is always a runtime failure. When the divisor is a literal `0`, the compiler can detect this statically and reject the program. This catches obvious mistakes before deployment.
 **Detection:** The compiler inspects all `[-] -Math.Divide` and `[-] -Math.Modulo` calls. If the second positional input (`<< 0`) is the integer literal `0` or float literal `0.0`, the call is rejected.

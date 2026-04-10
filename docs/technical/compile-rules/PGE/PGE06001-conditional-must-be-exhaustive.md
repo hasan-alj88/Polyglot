@@ -9,6 +9,8 @@ severity: error
 # Rule 6.1 — Conditional Must Be Exhaustive
 `PGE06001`
 
+<!-- @u:syntax/types -->
+
 **Statement:** Every `[?]` conditional block must be exhaustive — every possible value of the branched type must have a defined path. Exhaustiveness is proven in two ways:
 
 1. **Static proof** — the compiler verifies all values are covered (closed types)

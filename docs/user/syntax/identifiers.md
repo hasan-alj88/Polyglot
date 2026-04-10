@@ -7,8 +7,8 @@ status: complete
 
 # Identifiers
 
-<!-- @types -->
-<!-- @packages -->
+<!-- @c:types -->
+<!-- @c:packages -->
 ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address format, [[syntax/types/INDEX|types]] for `#` type annotations:
 
 | Prefix | Type | Example |

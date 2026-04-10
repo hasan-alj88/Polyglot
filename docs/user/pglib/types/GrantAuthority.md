@@ -9,7 +9,7 @@ metadata_instance: "%#:GrantAuthority:N"
 
 # #GrantAuthority Enum
 
-<!-- @types -->
+<!-- @c:types -->
 
 Permission enum used in `{_}` permission objects. See [[concepts/permissions|Permissions]].
 

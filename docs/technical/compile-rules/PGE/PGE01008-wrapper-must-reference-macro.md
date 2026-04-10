@@ -9,6 +9,11 @@ severity: error
 ### Rule 1.8 — Wrapper Must Reference Wrapper Definition
 `PGE01008`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** A `[W]` wrapper element must reference a `{W}` wrapper definition. Referencing a `{-}` pipeline, a `{#}` data block, or a nonexistent definition is a compile error.
 **Rationale:** Wrappers exist to apply setup/cleanup lifecycle logic around pipeline execution. Only wrapper definitions (`{W}`) provide this lifecycle structure — pipelines have their own trigger/queue/execution lifecycle and cannot be composed as wrappers. Catching an invalid reference at compile time prevents runtime confusion about missing setup/cleanup hooks.
 **Detection:** The compiler resolves the `[W]` target name against all definitions in scope (including imports). If the target resolves to a non-wrapper definition, or resolves to nothing, PGE01008 fires.

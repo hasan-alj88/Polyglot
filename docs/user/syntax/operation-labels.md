@@ -7,8 +7,8 @@ status: draft
 
 # Operation Labels
 
-<!-- @blocks -->
-<!-- @io -->
+<!-- @c:blocks -->
+<!-- @u:io -->
 Operation labels attach a reusable name to a pipeline call's IO, allowing downstream operations to reference outputs, inputs, errors, and permissions without intermediate variables. `($)` belongs to the `(X)` IO bracket family described in [[blocks#Data Flow]] and follows all [[io]] parameter rules.
 
 ## Overview

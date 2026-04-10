@@ -9,6 +9,10 @@ severity: warning
 ### Rule 3.5w — Error Handler on Fire-and-Forget
 `PGW03002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** An `[!]` error handler block scoped under a `[b]` (fire-and-forget) call is unreachable dead code. `[b]` calls run detached from the prime pipeline — the caller does not wait for completion and cannot receive errors. Any `[!]` handler under `[b]` will never execute.
 **Rationale:** `[b]` is explicitly fire-and-forget: no output, no error propagation. Adding `[!]` handlers suggests the developer expects to catch errors, which is impossible with `[b]`. Either the call should use `[-]` (synchronous, can handle errors) or `[=]` (parallel, can collect and handle errors), or the error handling should be removed. Note that `[b]` on a failable pipeline is valid — the called pipeline handles its own errors internally, and `[b]` exempts the caller from PGE07007 exhaustive handling.
 **Detection:** The compiler checks each `[!]` block's parent call marker. If the parent is `[b]`, PGW03002 fires.

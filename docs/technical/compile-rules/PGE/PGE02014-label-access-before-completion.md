@@ -11,6 +11,9 @@ updated: 2026-04-09
 ### Rule 2.14 — Label Access Before Completion
 `PGE02014`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Accessing a label's outputs before the labeled operation has completed (in sequential execution order) is a compile error. The compiler verifies that every `$Label>param` or `$Label<param` reference appears strictly after the labeled operation in the execution flow.
 **Rationale:** A label's outputs are only populated once the labeled operation finishes. Accessing them beforehand would read uninitialized state, which Polyglot forbids (see PGE02002). The compiler enforces this statically by analyzing execution ordering.
 **Detection:** The compiler tracks the sequential position of each `($)` label and every accessor that references it. If an accessor appears before or at the same position as the labeled operation, the error is raised.

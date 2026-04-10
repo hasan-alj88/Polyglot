@@ -9,6 +9,10 @@ severity: error
 ### Rule 4.3 — Leaf-Only Assignment
 `PGE04003`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** Assignment operators (`<<`, `>>`, `<~`, `~>`) can only target **leaf nodes** in a serialized identifier path. A leaf node is a field with no children. Assigning to an intermediate branch node (a field that has sub-fields) is a compile error. Each leaf field must be assigned individually. This applies to both fixed (`.`) and flexible (`:`) field paths.
 **Rationale:** Polyglot's serialized data model treats every field path as a tree. Only leaf nodes hold values — branch nodes are structural groupings. Allowing assignment to a branch would be ambiguous: does it replace the subtree or set a value alongside children? Requiring leaf-only assignment eliminates this ambiguity.
 **Detection:** The compiler checks whether the target of an assignment has declared sub-fields. If it does, the target is a branch node and PGE04003 fires.

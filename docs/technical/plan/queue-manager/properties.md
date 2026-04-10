@@ -6,7 +6,7 @@ updated: 2026-04-03
 
 # Properties
 
-<!-- @queue-manager/dispatch-coordinator -->
+<!-- @c:queue-manager/dispatch-coordinator -->
 
 | Property | How Achieved |
 |----------|--------------|

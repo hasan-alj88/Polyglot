@@ -9,6 +9,8 @@ severity: error
 ### Rule 9.11 — Asymmetric Multi-File Reference
 `PGE09010`
 
+<!-- @u:syntax/operators -->
+
 **Statement:** All files in a multi-file package must form a full mesh — every file must reference every other file. If file A includes file B in its `[@]` file list, then file B must also include file A. More generally, every file must list all other files in the package. Folder shorthand (`[@] << "{.}"`) satisfies this automatically since it expands to include all `.pg` files in the directory.
 **Rationale:** A partial reference graph means some files see definitions that others don't, creating inconsistent compilation views. The full mesh ensures every file in the package has the same complete view of all definitions.
 **Detection:** After resolving all `[@]` file references across the package, the compiler builds the reference graph. For each pair of files (A, B) where A references B, it checks that B also references A. If any pair is asymmetric, PGE09010 fires on the file missing the reference.

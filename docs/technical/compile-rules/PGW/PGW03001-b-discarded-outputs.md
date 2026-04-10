@@ -9,6 +9,9 @@ severity: warning
 ### Rule 3.5w — `[b]` Called Pipeline Has Discarded Outputs
 `PGW03001`
 
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** When a `[b]` call invokes a pipeline that declares output parameters, those outputs are silently discarded. PGW03001 warns that the called pipeline produces data that will be lost. Use `$*` to explicitly acknowledge the discard, or `[ ] Ignore PGW03001` to suppress.
 **Rationale:** Silently discarding output is often unintentional — the developer may have meant to use `[=]` instead. The warning surfaces this before it becomes a runtime surprise.
 **Detection:** The compiler inspects the called pipeline's signature. If it declares output parameters and the caller is `[b]`, PGW03001 fires.

@@ -9,6 +9,11 @@ severity: error
 ### Rule 9.19 — Invalid Permission Block Marker
 `PGE10005`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** A `{_}` permission object block may only contain `[.]` field lines. Any other block element marker (`[-]`, `(-)`, `[=]`, `[T]`, `[Q]`, `[W]`, `[b]`, etc.) inside a `{_}` block is a compile error. Permission objects are static declarations — they do not execute pipelines, declare IO, or contain computation.
 **Rationale:** `{_}` blocks define compile-time permission policies using fixed `[.]` field lines: `.intent`, `.Category.Capability`, and schema fields. They have no runtime behavior. Allowing execution markers would confuse the permission model with pipeline execution and create declarations that the compiler cannot enforce as static policies.
 **Detection:** The compiler checks all lines within `{_}` blocks. If any line uses a marker other than `[.]`, PGE10005 fires immediately on the offending line. Valid `{_}` content: `[.] .intent << #Ceiling` or `#Grant`, `[.] .Category.Capability "scope"`, and `[ ]` comment lines.

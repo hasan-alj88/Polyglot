@@ -7,8 +7,8 @@ updated: 2026-04-09
 
 # Glossary — Authoritative Definitions
 
-<!-- @vision:The Polyglot Ecosystem -->
-<!-- @vision:Ways of Integration -->
+<!-- @c:vision:The Polyglot Ecosystem -->
+<!-- @c:vision:Ways of Integration -->
 Source: [[vision]]
 
 **Rule:** If a term is defined here, Claude MUST use this definition. Do not improvise or paraphrase.

@@ -10,6 +10,9 @@ split_from: PGE01001
 ### Rule 1.6 — Missing Pipeline Queue
 `PGE01006`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+
 **Statement:** Every `{-}` pipeline must contain a `[Q]` queue section. A pipeline without a queue has no concurrency strategy and is a compile error.
 **Rationale:** The queue defines how concurrent invocations are handled — whether they are serialized, dropped, or run in parallel. Without it, the runtime has no policy for managing simultaneous triggers.
 **Detection:** The compiler checks that every `{-}` block contains exactly one `[Q]` section.

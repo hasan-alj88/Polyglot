@@ -6,7 +6,7 @@ updated: 2026-04-03
 
 # Containers in Redis
 
-<!-- @queue-manager/infrastructure -->
+<!-- @c:queue-manager/infrastructure -->
 
 ## Dispatch Queues (one per `{Q}` definition)
 

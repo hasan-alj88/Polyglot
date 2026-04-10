@@ -9,6 +9,8 @@ severity: error
 ### Rule 9.2 — Circular Package Dependency
 `PGE09002`
 
+<!-- @u:syntax/operators -->
+
 **Statement:** Package imports must form a directed acyclic graph (DAG). If Package A imports Package B (directly or transitively) and Package B imports Package A, PGE09002 fires. The compiler must report the cycle path.
 **Rationale:** Circular dependencies create initialization order ambiguity — neither package can be fully resolved before the other. This is always a design error in Polyglot's deterministic execution model.
 **Detection:** The compiler builds a dependency graph from all `[@]` import declarations across files. If a cycle is detected (via topological sort or DFS), PGE09002 fires with the cycle path (e.g., "A → B → C → A").

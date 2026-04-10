@@ -12,8 +12,8 @@ updated: 2026-04-09
 
 ## Context
 
-<!-- @types -->
-<!-- @data-is-trees -->
+<!-- @c:types -->
+<!-- @c:data-is-trees -->
 
 All Polyglot data is trees of `#String` leaves (which have `RawString` leaves). The existing `.regex#RawString` field on `#String` ([[syntax/types/basic-types#Numeric Types — #String Subtypes]]) constrains **leaf values** via regex. However, **structural constraints** — key patterns, ordering, depth limits, openness — were implicit in compiler rules (PGE04001, PGE05001, PGE05002) with no declarative representation.
 

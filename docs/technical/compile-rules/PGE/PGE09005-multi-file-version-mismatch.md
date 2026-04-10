@@ -9,6 +9,8 @@ severity: error
 ### Rule 9.5 — Multi-File Version Mismatch
 `PGE09005`
 
+<!-- @u:syntax/operators -->
+
 **Statement:** All files in a multi-file package must declare the same version in their `{@}` block. If any file's version differs from the others, PGE09005 fires on the mismatching file.
 **Rationale:** A multi-file package is one logical unit — all files must agree on what version they represent. A version mismatch means either a file was not updated during a version bump or belongs to a different package entirely.
 **Detection:** After the compiler resolves the `[@]` file references and loads all files in the package, it compares the version segment of each file's `{@}` address. If any version differs, PGE09005 fires on the file whose version does not match the majority (or the first file processed, if no majority).

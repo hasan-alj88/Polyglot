@@ -9,6 +9,13 @@ severity: error
 ### Rule 1.4 — Wrapper Structural Constraints
 `PGE01004`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:concepts/errors -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** A `{W}` wrapper definition is restricted to setup/cleanup lifecycle elements only. The complete element whitelist:
 
 | Element | Allowed | Scope |

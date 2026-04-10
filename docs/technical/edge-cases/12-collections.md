@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-12.1: Expand with sequential vs parallel
 
-<!-- @collections:Expand Operators -->
+<!-- @u:collections:Expand Operators -->
 **EBNF:** `expand_line ::= ( "[-]" | "[=]" ) expand_invocation`
 
 **What it tests:** `[-]` = sequential mini-pipelines, `[=]` = parallel. See [[concepts/collections/expand#Expand Operators]].
@@ -68,7 +68,7 @@ updated: 2026-03-30
 
 ### EC-12.5: Collector invocation with execution marker + (*) IO
 
-<!-- @io:Collection Operators -->
+<!-- @u:io:Collection Operators -->
 **EBNF:** `collect_line ::= ( "[-]" | "[=]" ) collect_invocation NEWLINE { indent collect_io_line NEWLINE }` where `collect_io_line ::= "(*)" ...`
 
 **What it tests:** `[-]`/`[=]` execution marker for invocation, `(*)` for IO — consistent with expand (`[-]`/`[=]` + `(=)`). See [[io#Collection Operators]].
@@ -273,7 +273,7 @@ updated: 2026-03-30
 
 ### EC-12.14: Collector outside expand/parallel scope
 
-<!-- @collections -->
+<!-- @u:collections -->
 **EBNF ref:** `exec_line` includes `collect_line` at any scope
 **What it tests:** `*Into.Array` at pipeline top level with no `=ForEach` or `[=]` context. PGE03010 fires. See [[concepts/collections/expand|expand]].
 

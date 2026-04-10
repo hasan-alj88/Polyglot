@@ -7,7 +7,7 @@ status: complete
 
 # ## Schema Types
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##` schemas are compile-time metadata constraints on `{#}` types. Each schema lives at `%definition.##:{Name}` on the metadata tree. A `#` struct can compose multiple `##` schemas as long as they do not contradict -- the compiler validates all composed constraints at definition time.
 

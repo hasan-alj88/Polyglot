@@ -7,8 +7,8 @@ status: complete
 
 # Package Declaration
 
-<!-- @identifiers -->
-<!-- @blocks -->
+<!-- @c:identifiers -->
+<!-- @c:blocks -->
 Mandatory first block in every `.pg` file — exactly one `{@}` per file. Multiple `{#}` and `{-}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses use `::` to separate the registry from the package name, with `:` (flexible) separators throughout. Packages live at `%@` in the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
 ```polyglot
@@ -152,7 +152,7 @@ All three files share the `#Config` data type and can each other's pipelines as 
 
 ## Permissions
 
-<!-- @permissions -->
+<!-- @c:permissions -->
 The `{@}` block uses `[_]` lines to reference `{_}` permission ceiling objects, setting the **permission ceiling** — the maximum IO permissions any definition in the package can request. See [[permissions]] for the full permission system, `{_}` object syntax, and per-category capability enums.
 
 ### Ceiling Syntax

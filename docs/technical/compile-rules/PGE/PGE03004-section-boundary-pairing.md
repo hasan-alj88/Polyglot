@@ -9,6 +9,10 @@ severity: error
 ### Rule 3.4 — Section-Boundary Pairing
 `PGE03004`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A `[=]` parallel and its `(*)` collector must be paired within valid section boundaries. Valid pairings: within the same section (`[\]` internal, body internal, `[/]` internal) and across `[\]`↔`[/]`. Invalid pairings: across `[\]`↔body or body↔`[/]` — because the execution body runs concurrently with in-flight `[\]` parallels, and `[/]` cleanup must not depend on body-scoped parallels still running.
 **Rationale:** Setup (`[\]`) runs before the body, cleanup (`[/]`) runs after. A parallel started in `[\]` can be collected in `[/]` because the body has completed by then. But a parallel started in `[\]` cannot be collected in the body — the body may start before the parallel finishes. Similarly, a body parallel cannot be collected in `[/]` because the body's scope is closed.
 **Detection:** The compiler maps each `[=]` to its containing section and each `(*)` to its containing section, then validates the pairing.

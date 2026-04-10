@@ -9,6 +9,9 @@ severity: error
 ### Rule 3.8 — Collect Operator IO Mismatch
 `PGE03008`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Each collect operator (`*Into.*`, `*Agg.*`) requires specific IO inputs and outputs. If the provided IO does not match the operator's signature, PGE03008 fires.
 **Rationale:** Collect operators aggregate items into specific shapes. Wrong IO (e.g., providing `<string` to `*Agg.Sum` which expects `<number`) would produce type errors or undefined aggregation behavior. Compile-time validation ensures correctness.
 **Detection:** The compiler checks the `(*)` IO lines under the collect operator against the required signature:

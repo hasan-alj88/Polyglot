@@ -9,6 +9,11 @@ severity: error
 ### Rule 1.13 — Queue Control Contradicts Queue Default
 `PGE01013`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** A pipeline's `[Q]` section must not contain IO parameters or active controls that contradict the defaults set in its queue's `{Q}` definition.
 **Rationale:** `{Q}` defines queue-level defaults that apply to all pipelines on that queue. If a pipeline overrides these with contradictory values, it creates ambiguous runtime behavior. The compiler catches these contradictions statically.
 **Detection:** The compiler compares each `[Q]` IO parameter and nested `[Q]` control against the referenced `{Q}` definition. A contradiction is any parameter that directly conflicts with a queue-level default.

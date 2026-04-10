@@ -7,9 +7,9 @@ status: draft
 
 # Native Dispatch
 
-<!-- @spec/type-identity -->
+<!-- @c:spec/type-identity -->
 <!-- @concepts/pipelines/INDEX -->
-<!-- @pglib/types/NativeKind -->
+<!-- @c:pglib/types/NativeKind -->
 
 The native dispatch layer bridges Polyglot's runtime and host-language functions. When a subsystem encounters a call to a `{N}` native pipeline, the dispatch layer resolves the function, serializes inputs, executes the native function, and deserializes outputs back into Polyglot variables.
 
@@ -29,7 +29,7 @@ See [[reference/glossary]] for canonical Polyglot terminology.
 
 ## Subsystem Architecture
 
-<!-- @queue-manager/end-to-end-flow -->
+<!-- @u:queue-manager/end-to-end-flow -->
 
 Four subsystems dispatch native operations. Each subsystem dispatches its own `#NativeKind` operations:
 
@@ -292,7 +292,7 @@ On error, the subsystem validates the `error.id` against the declared errors for
 
 ## Serialization Protocol
 
-<!-- @spec/type-identity -->
+<!-- @c:spec/type-identity -->
 
 All data crossing the native boundary uses JSON. This section defines the wire format.
 
@@ -423,7 +423,7 @@ Native functions report errors by returning an error envelope. The `error.id` mu
 
 ## #NativeKind Routing
 
-<!-- @pglib/types/NativeKind -->
+<!-- @c:pglib/types/NativeKind -->
 
 Each `#NativeKind` variant routes to a specific subsystem and dispatch context.
 

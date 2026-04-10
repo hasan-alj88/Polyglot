@@ -7,9 +7,9 @@ status: complete
 
 # Variable Lifecycle
 
-<!-- @glossary:Polyglot Code -->
-<!-- @identifiers -->
-<!-- @pipelines -->
+<!-- @c:glossary:Polyglot Code -->
+<!-- @c:identifiers -->
+<!-- @c:pipelines -->
 Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through five lifecycle stages. Variables are [[identifiers]] with the `$` prefix. For how lifecycle applies to IO parameters, see [[concepts/pipelines/io-triggers#IO as Implicit Triggers]].
 
 ## Stages
@@ -96,7 +96,7 @@ Variable lifecycle state is queryable at runtime via the `%` metadata accessor:
 
 ## Assignment Operators
 
-<!-- @operators -->
+<!-- @u:operators -->
 All assignment operators are directional — the arrow indicates data flow direction between source and destination. See [[operators]] for the full operator table.
 
 | Operator | Type | Direction | Example | Reading |

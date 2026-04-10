@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Contiguous"
 
 # ##Contiguous Schema
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Contiguous` enforces that no gaps exist in child keys and that insertion order is preserved. Elements form a dense, ordered sequence.
 

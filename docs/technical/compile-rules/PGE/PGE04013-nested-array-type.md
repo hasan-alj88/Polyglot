@@ -9,6 +9,9 @@ severity: error
 ### Rule 4.12 — Nested Array Type
 `PGE04013`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+
 **Statement:** Array type annotations must not nest — `array.array.X` is a compile error. The `#array` type is one-dimensional by default. For multidimensional data, use the `:ND` dimension specifier (e.g., `#array:float:2D`).
 **Rationale:** Nested arrays create ambiguous semantics — element access, iteration, and collection behavior are undefined for arrays-of-arrays. The `:ND` specifier provides explicit multidimensional arrays with well-defined indexing and compiler-enforced access depth.
 **Detection:** The compiler checks type annotations. If `array` appears as the element type of another `array`, PGE04013 fires.

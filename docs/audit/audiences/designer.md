@@ -6,7 +6,7 @@ updated: 2026-04-03
 
 # Audience: Designers
 
-<!-- @vision:Core Philosophy -->
+<!-- @c:vision:Core Philosophy -->
 Authority: [[vision#Core Philosophy]]
 
 ## Who They Are

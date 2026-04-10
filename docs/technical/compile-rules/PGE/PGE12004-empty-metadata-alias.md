@@ -9,6 +9,8 @@ severity: error
 ### Rule 12.4 — Empty Metadata Alias
 `PGE12004`
 
+<!-- @u:syntax/types -->
+
 **Statement:** A `[%] %alias` declaration must contain at least one `:` alias name. An alias block with no names is a compile error.
 **Rationale:** The `%alias` marker exists to declare shorthand names for definitions or fields. An empty alias declaration adds noise without defining any aliases. The EBNF requires at least one alias name.
 **Detection:** The compiler checks that each `[%] %alias` block contains at least one `[:] "name"` child line.

@@ -9,6 +9,10 @@ severity: error
 ### Rule 1.14 — Unresolved Queue Reference
 `PGE01014`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** A pipeline's `[Q]` line must reference either the pglib `-Q.Default` or a `{Q}` definition that exists in the current package or is imported via `[@]`. Referencing a queue that does not exist is a compile error.
 **Rationale:** The runtime must locate and instantiate the queue before dispatching pipelines to it. An unresolved reference means the queue cannot be created.
 **Detection:** The compiler resolves the `[Q]` reference against: (1) pglib queues (`-Q.Default`), (2) `{Q}` definitions in the current file/package, (3) `{Q}` definitions from imported packages.

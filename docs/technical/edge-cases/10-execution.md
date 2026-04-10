@@ -10,8 +10,8 @@ updated: 2026-03-30
 
 ### EC-10.1: Pipeline call with IO and error
 
-<!-- @pipelines:Error Handling -->
-<!-- @io:Pipeline Call -->
+<!-- @u:pipelines:Error Handling -->
+<!-- @u:io:Pipeline Call -->
 **EBNF:** `pipeline_call ::= pipeline_ref NEWLINE { indent call_io_line NEWLINE } { indent error_block NEWLINE }`
 
 **What it tests:** Full call structure: ref -> IO lines -> error blocks scoped under call. See [[concepts/pipelines/error-handling#Error Handling]], [[io#Pipeline Call]].
@@ -29,7 +29,7 @@ updated: 2026-03-30
 
 ### EC-10.2: pglib pipeline call — no import needed
 
-<!-- @EBNF:pipeline_ref -->
+<!-- @u:EBNF:pipeline_ref -->
 **EBNF:** `pipeline_ref ::= pipeline_id` — pglib uses `=` prefix like all pipelines.
 
 **What it tests:** `-File.Text.Append` with `=` prefix (all identifiers have a prefix, no exceptions). No `[@]` import needed. See [[concepts/pipelines/INDEX|pipelines]], [[technical/ebnf/10-execution#10.2]].
@@ -60,7 +60,7 @@ updated: 2026-03-30
 
 ### EC-10.4: Parallel execution
 
-<!-- @blocks:Execution -->
+<!-- @u:blocks:Execution -->
 **What it tests:** `[=]` for parallel runs. See [[blocks#Execution]].
 
 ```polyglot
@@ -73,8 +73,8 @@ updated: 2026-03-30
 
 ### EC-10.5: Chain execution — explicit multi-IO wiring
 
-<!-- @pipelines:Chain Execution -->
-<!-- @io:Chain IO Addressing -->
+<!-- @u:pipelines:Chain Execution -->
+<!-- @u:io:Chain IO Addressing -->
 **EBNF:** `chain_call ::= pipeline_ref "->" pipeline_ref { "->" pipeline_ref }`
 
 **What it tests:** Multiple pipelines chained with `->`, IO wired via numeric step indices. See [[concepts/pipelines/chains#Chain Execution]], [[io#Chain IO Addressing]].
@@ -180,7 +180,7 @@ updated: 2026-03-30
 
 ### EC-10.12: Bare literal as execution expression (INVALID)
 
-<!-- @EBNF:exec_expr -->
+<!-- @u:EBNF:exec_expr -->
 **EBNF:** `exec_expr` — `literal` is not a valid alternative.
 
 **What it tests:** A standalone literal under `[-]`/`[=]`/`[b]` — no assignment, no call, no effect. See [[technical/compile-rules/PGE/PGE01020-effectless-execution-expression|PGE01020]].
@@ -195,7 +195,7 @@ updated: 2026-03-30
 
 ### EC-10.13: Non-pipeline identifier as execution expression (INVALID)
 
-<!-- @EBNF:exec_expr -->
+<!-- @u:EBNF:exec_expr -->
 **EBNF:** `exec_expr` — `identifier` removed from alternatives.
 
 **What it tests:** Data type, variable, or package identifiers used as execution expressions — they aren't pipeline calls and produce no effect. See [[technical/compile-rules/PGE/PGE01020-effectless-execution-expression|PGE01020]].
@@ -227,7 +227,7 @@ updated: 2026-03-30
 
 ### EC-10.15: Self-chain — valid with numeric indexing
 
-<!-- @pipelines:Chains -->
+<!-- @u:pipelines:Chains -->
 **EBNF ref:** `chain_call ::= pipeline_ref "->" pipeline_ref { "->" pipeline_ref }`
 **What it tests:** `-A -> -A` is valid (runs twice) but requires numeric step indexing. PGE08012 fires without it.
 

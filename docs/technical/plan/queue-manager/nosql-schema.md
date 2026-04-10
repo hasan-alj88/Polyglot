@@ -6,7 +6,7 @@ updated: 2026-04-03
 
 # NoSQL Schema (definitions)
 
-<!-- @queue-manager/infrastructure -->
+<!-- @c:queue-manager/infrastructure -->
 
 ## Queue Definition (from `{Q} #Queue:Name`)
 

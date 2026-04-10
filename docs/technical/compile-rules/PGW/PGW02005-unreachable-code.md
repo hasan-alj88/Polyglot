@@ -9,6 +9,10 @@ severity: warning
 ### Rule 2.9 — Unreachable Code
 `PGW02005`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Executable statements that appear after a terminal operation — where all output ports have been pushed to Final in every code path, or where every branch of a conditional terminates — produce a warning. The code is syntactically valid but can never execute.
 **Rationale:** Unreachable code is dead weight that misleads developers about what the pipeline actually does. This is a warning rather than an error because the pipeline is structurally complete and the unreachable statements do not affect correctness.
 **Detection:** The compiler performs basic control flow analysis after each statement. When all output ports reach Final state (directly or through exhaustive conditional branches), any subsequent statements are flagged as unreachable.

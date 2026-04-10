@@ -8,7 +8,7 @@ metadata_definition: "%definition.###:ScalarValue"
 
 # ###ScalarValue Field Type
 
-<!-- @types -->
+<!-- @c:types -->
 
 `###ScalarValue` classifies a leaf node that holds regex-validated string data. The leaf content is a string that must match the type's `.regex` pattern at runtime.
 

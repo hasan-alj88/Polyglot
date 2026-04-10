@@ -9,6 +9,10 @@ severity: error
 ### Rule 8.2 — Auto-Wire Ambiguous Type
 `PGE08002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** In chain execution auto-wire, PGE08002 fires when two or more outputs (or inputs) share the same type (per [TYPE-IDENTITY](../TYPE-IDENTITY.md)), making it impossible for the compiler to determine which maps where.
 **Rationale:** Auto-wire must be deterministic. When multiple parameters share a type, the compiler cannot infer which output feeds which input — the developer must wire explicitly.
 **Detection:** After confirming all types have at least one match (no PGE08001), the compiler checks for duplicate types on either side. If found, PGE08002 fires.

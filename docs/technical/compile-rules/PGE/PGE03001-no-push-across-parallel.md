@@ -9,6 +9,10 @@ severity: error
 ### Rule 3.1 — No Push Across Parallel Boundaries
 `PGE03001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A variable that originates inside a `[=]` parallel pipeline cannot be pushed into from outside that parallel scope. Cross-parallel data flow is collection-only — the parallel must produce its output, and the prime pipeline collects it via `(*)` after the parallel completes. This applies to all push operators (`<<`, `>>`, `<~`, `~>`).
 **Rationale:** Parallel pipelines run concurrently. Allowing external pushes into a parallel's internal variables would create race conditions — two concurrent writers with no ordering guarantee. The collection model (`(*)`) provides a structured, deterministic way to gather parallel results.
 **Detection:** At any push statement in the prime pipeline (or a sibling parallel) that targets a variable declared inside a `[=]` parallel scope.

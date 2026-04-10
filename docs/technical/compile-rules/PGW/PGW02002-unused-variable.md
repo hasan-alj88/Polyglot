@@ -9,6 +9,11 @@ severity: warning
 ### Rule 2.2 — Unused Variable
 `PGW02002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** A variable `$var` that is assigned (reaches Default or Final state) but is never read, pushed to a consumer, or used in a conditional is flagged with a warning. The `$*` discard pattern suppresses this warning.
 **Rationale:** An assigned but unconsumed variable is dead code — it occupies resources and its assignment serves no purpose. This is standard lint that helps developers identify forgotten variables or incomplete wiring. The `$*` discard pattern signals intentional discard.
 **Detection:** The compiler tracks all variable assignments and reads. Any variable that has at least one assignment but zero reads is flagged. Exceptions: output ports (`>name`) are excluded (see PGW02003), IO inputs (`<name`) are excluded (consumed by the pipeline itself), and `$*` discard patterns are excluded.

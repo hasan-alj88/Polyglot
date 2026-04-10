@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-03-24)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Language specification complete — next milestone TBD
+**Current focus:** Typed cross-references for change propagation
 
 ## Current Position
 
-Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #275 — Collection redesign (##Record, %##Fields, retire #Map/#Set)
-Plan: 275-05 COMPLETE — full-codebase propagation and verification
-Status: All 5 plans complete — ready for unify
-Last activity: 2026-04-09 — 275-05 complete (42 files, 3 commits)
+Milestone: Doc Infrastructure — typed-cross-references
+Phase: typed-cross-references — Add @c: (concept) and @u: (usage) typed cross-references
+Plan: All 3 plans COMPLETE + UNIFIED
+Status: Phase complete — ready for commit
+Last activity: 2026-04-10 — UNIFY complete (810 total refs, up from 409)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -103,14 +103,14 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Phase: typed-cross-references (3 plans)
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [ready for commit]
 ```
 
 ## Accumulated Context
@@ -272,8 +272,8 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-10
-Stopped at: Issue #275 merged to main, GitHub issue closed
-Next action: /paul:issues or /paul:progress
+Stopped at: UNIFY complete for typed-cross-references
+Next action: Commit changes
 Resume file: .paul/STATE.md
 
 ---

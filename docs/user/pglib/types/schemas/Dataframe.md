@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Dataframe"
 
 # ##Dataframe Schema (Parameterized)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Dataframe` is a parameterized schema that describes a two-level tabular structure. Level 1 uses `%##Fields << #Range` for integer row indices. Level 2 composes `##Record` with the column enum as fields.
 

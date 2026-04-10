@@ -7,8 +7,8 @@ status: draft
 
 # Line Structure
 
-<!-- @blocks -->
-<!-- @identifiers -->
+<!-- @c:blocks -->
+<!-- @c:identifiers -->
 
 ## Ground Truth: Every Line Has a Marker
 

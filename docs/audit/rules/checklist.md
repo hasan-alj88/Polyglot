@@ -11,7 +11,7 @@ Run before finalizing any new or modified documentation.
 
 ## Contradiction Check
 
-<!-- @vision:Core Philosophy -->
+<!-- @c:vision:Core Philosophy -->
 | ID | Check | Source |
 |----|-------|--------|
 | contradiction-check | Does not contradict [[vision]] (two pillars, integration evolution) | [[vision]] |
@@ -20,8 +20,8 @@ Run before finalizing any new or modified documentation.
 
 ## Structure Check
 
-<!-- @rule:frontmatter -->
-<!-- @rule:heading-hierarchy -->
+<!-- @c:rule:frontmatter -->
+<!-- @c:rule:heading-hierarchy -->
 | ID | Check | Source |
 |----|-------|--------|
 | frontmatter-check | Has YAML frontmatter (audience, type, updated) | [[conventions#frontmatter]] |
@@ -46,3 +46,10 @@ Run before finalizing any new or modified documentation.
 | valid-links | All [[wikilinks]] resolve to existing files |
 | examples-valid | Examples compile/run (or clearly marked pseudocode) |
 | dual-refs | @-imports paired with [[wikilinks]] |
+
+## Cross-Reference Check
+
+| ID | Check | Source |
+|----|-------|--------|
+| typed-ref-check | New @-imports use `@c:` or `@u:` type prefix | [[conventions#typed-refs]] |
+| usage-coverage-check | Syntax constructs used without explanation have `@u:` back-reference | [[conventions#usage-coverage]] |

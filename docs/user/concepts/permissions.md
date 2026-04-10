@@ -7,8 +7,8 @@ status: complete
 
 # Permissions
 
-<!-- @identifiers -->
-<!-- @blocks -->
+<!-- @c:identifiers -->
+<!-- @c:blocks -->
 Polyglot uses an implicit-deny permission system. Every pipeline starts with zero IO capabilities. To perform any IO — read a file, make a web request, access a database — the package or pipeline must reference a named `{_}` permission object. The `{_}` definition block and `[_]` block element are registered in [[blocks#Permissions]].
 
 This follows the Cisco ACL model: if you don't explicitly allow it, it's denied.
@@ -304,7 +304,7 @@ A full package showing the ceiling-to-grant flow:
 
 ## Foreign Code
 
-<!-- @blocks#Foreign Code -->
+<!-- @u:blocks#Foreign Code -->
 Pipelines using `[C]` foreign code blocks ([[blocks#Foreign Code]]) interact with permissions as follows:
 
 - The pipeline must reference `[_]` permission objects for the IO the foreign code will perform

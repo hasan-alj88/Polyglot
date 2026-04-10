@@ -36,7 +36,7 @@ Custom queues are defined with `{Q}`, which both defines the queue struct and in
 
 ### Queue Pipeline Operations (`{Q} -Q.*`)
 
-<!-- @technical/brainstorming/marker-declarations -->
+<!-- @c:technical/brainstorming/marker-declarations -->
 
 `{Q}` is a **dual-purpose block** — the identifier prefix disambiguates its role:
 

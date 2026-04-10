@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Deep"
 
 # ##Deep Schema
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Deep` permits unlimited nesting depth. Types composing this schema can contain children that themselves contain children, recursively.
 

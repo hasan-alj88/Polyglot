@@ -9,6 +9,9 @@ severity: error
 ### Rule 8.12 — Self-Chain Requires Numeric Indexing
 `PGE08012`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+
 **Statement:** When a pipeline is chained to itself (`-A -> -A`), all chain IO lines must use numeric step indexing (`>0.output`, `<1.input`) to disambiguate which instance of the pipeline is being addressed. Without numeric indexing, the compiler cannot determine which step's IO is referenced, and PGE08012 fires.
 **Rationale:** Self-chains are valid — a pipeline can run twice sequentially (e.g., applying a transformation twice). However, because both steps have identical IO parameter names, numeric indexing is mandatory to avoid ambiguity. This is a special case of the general chain IO addressing rules.
 **Detection:** The compiler detects when a chain references the same pipeline multiple times and checks that all `(-)` IO lines use numeric step prefixes (`>N.` / `<N.`).

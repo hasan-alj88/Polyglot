@@ -9,6 +9,10 @@ severity: error
 ### Rule 9.13 — Import Alias Shadows Standard Library
 `PGE09012`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** An `[@]` import alias must not use a name that matches a standard library namespace prefix. Reserved namespace prefixes include: `File`, `T`, `Q`, `W`, `Sys`, and any other top-level pglib namespace. If an import alias matches a reserved name, PGE09012 fires. In the serialized path tree, pglib pipelines occupy paths like `.pipeline:T.Daily` — a user alias `@T` would create a conflicting reference at the same tree level.
 **Rationale:** Standard library pipelines (`-File.*`, `-T.*`, `-Q.*`, `-W.*`, `-Sys.*`) are built-in and accessed without `[@]` import. If a user declares `[@] @T << ...`, then `@T-Something` becomes ambiguous — is it an imported pipeline call or a reference to the pglib `-T.Something`? The serialized tree cannot hold two different objects at the same path.
 **Detection:** The compiler maintains a list of reserved pglib namespace prefixes. Each `[@]` alias is checked against this list. If the alias matches (case-sensitive), PGE09012 fires.

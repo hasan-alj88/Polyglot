@@ -9,6 +9,8 @@ severity: error
 ### Rule 6.4 — Numeric Range Overlap
 `PGE06004`
 
+<!-- @u:syntax/blocks -->
+
 **Statement:** In a `[?]` conditional with numeric branches, no two branches may overlap. Overlapping ranges are always a compile error, regardless of whether `*?` is present. The compiler must identify the overlapping branches and the overlapping interval.
 **Rationale:** Overlapping ranges create ambiguity — when a value falls in the overlap, the compiler cannot determine which branch should execute. This is always a bug. Even with `*?`, overlaps must be resolved.
 **Detection:** The compiler checks all pairs of numeric branch conditions for intersection. If any pair has a non-empty intersection, PGE06004 fires. The error message identifies the two overlapping branches and the overlapping interval.

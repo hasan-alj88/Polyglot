@@ -9,6 +9,11 @@ severity: error
 ### Rule 9.1 — Undefined Import Alias
 `PGE09001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** Every `@alias` reference in a pipeline must resolve to a `[@]` import declared in the file's `{@}` package block. Using an `@alias` that was never declared is a compile error.
 **Rationale:** Unresolved aliases would cause runtime lookup failures. Catching them at compile time ensures all cross-package references are valid before execution.
 **Detection:** The compiler collects all `[@]` import declarations from the `{@}` block, then checks every `@alias-Pipeline` and `@alias#DataType` reference in the file. If any alias is not in the declared set, PGE09001 fires.

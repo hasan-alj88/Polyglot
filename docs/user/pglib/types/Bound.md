@@ -9,7 +9,7 @@ metadata_instance: "%#:Bound:N"
 
 # #Bound Type
 
-<!-- @types -->
+<!-- @c:types -->
 
 `#Bound` represents a numeric value that may be infinite. It composes `##Int` and `##Inf` -- exactly one branch is active at a time (`%##Active << #ActiveKind.One`). Use `#Bound` wherever a count or limit may be unbounded, replacing the old `-1` magic number convention.
 

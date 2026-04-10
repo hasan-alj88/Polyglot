@@ -9,6 +9,11 @@ severity: error
 ### Rule 1.28 — Native/Derived Block Mutual Exclusion
 `PGE01028`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** Native `{N}` and derived `{-}` block types are mutually exclusive. A `{N}` definition cannot have an execution body; a `{-}` definition cannot have `%Native.*` metadata. A `{N}` definition without `%Native.Kind` is also an error (exception: `{T}` and `{Q}` are IO-only subtypes of `{-}` by design).
 **Rationale:** Native definitions delegate to host language code — a Polyglot execution body would conflict with the native implementation. Derived definitions are pure Polyglot — `%Native.*` metadata would create ambiguity about which implementation runs. A `{N}` block without `.Kind` has no subsystem role, making it unresolvable.
 **Detection:** The compiler checks for mutual exclusion between `{N}` block type and execution body elements (`[T]`, `[Q]`, `[W]`, `[-]`, `[=]`, `[b]`, `[s]`, `[\]`, `[/]`). It also validates that `{N}` blocks declare `%Native.Kind` with a valid `#NativeKind` variant and have a `.<Language>` field matching the language resolved for the operation's subsystem (via `native.defaults` or `native.overrides` in the service config).

@@ -9,6 +9,10 @@ severity: warning
 ### Rule 10.2 — Missing Inline Format Metadata
 `PGW12001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** When an inline pipeline call `-Foo"arg"` targets a pipeline that does not declare `.inlineFormat` metadata, the compiler emits a warning. The inline argument cannot be validated at compile time.
 **Rationale:** Without `.inlineFormat`, the compiler cannot verify that the inline string argument is well-formed. The call may succeed or fail at runtime depending on whether the target pipeline can parse the argument. This warning encourages pipeline authors to declare format expectations for compile-time safety.
 **Detection:** The compiler checks the target pipeline's `[%]` metadata for `.inlineFormat`. If absent and the pipeline is called with an inline argument, the warning is emitted.

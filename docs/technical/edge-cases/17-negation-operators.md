@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-17.1: All four negation comparison operators
 
-<!-- @operators -->
+<!-- @u:operators -->
 **EBNF:** negation inserts `!` before `?` in base comparison: `<!?`, `>!?`, `<=!?`, `>=!?`
 
 **What it tests:** Each negated form used correctly in `[?]` conditionals. `<!?` = not-less-than (>=), `>!?` = not-greater-than (<=), `<=!?` = not-less-or-equal (>), `>=!?` = not-greater-or-equal (<). See [[operators#Comparison Operators]].

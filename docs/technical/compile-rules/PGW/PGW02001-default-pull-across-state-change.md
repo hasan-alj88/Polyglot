@@ -9,6 +9,10 @@ severity: warning
 ### Rule 2.7 — Default Pull Across State Change
 `PGW02001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** If a variable in Default state is pulled, and then pulled again after a subsequent push has promoted it to Final, the two pulls may return different values. The runtime emits PGW02001 as a warning on the second pull. The second pull succeeds with the Final value.
 **Rationale:** Pulling a Default variable and later pulling the same variable after it becomes Final means two different pipeline steps observe different values — one the default, one the final. This inconsistency is usually unintentional and can cause subtle bugs.
 **Detection:** At runtime, when a variable that was previously pulled in Default state is pulled again after transitioning to Final. The warning is emitted on the second pull — the pull succeeds but flags the inconsistency.

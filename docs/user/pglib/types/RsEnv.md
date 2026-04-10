@@ -9,7 +9,7 @@ metadata_instance: "%#:RsEnv:N"
 
 # #RsEnv Struct
 
-<!-- @types -->
+<!-- @c:types -->
 
 Runtime environment handle produced by `-W.RT:Rust:*` wrapper setup.
 

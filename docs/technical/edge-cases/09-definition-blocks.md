@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-9.1: Package with multiple imports
 
-<!-- @packages -->
+<!-- @c:packages -->
 **EBNF:** `package_block ::= "{@}" package_id NEWLINE { indent import_line NEWLINE }`
 
 **What it tests:** Multiple `[@]` imports in one package block. See [[packages]].
@@ -24,7 +24,7 @@ updated: 2026-03-30
 
 ### EC-9.2: Enum fields — pure enum (no value sub-fields)
 
-<!-- @types:Enum Fields -->
+<!-- @u:types:Enum Fields -->
 **EBNF:** `enum_field ::= "[.]" fixed_sep name`
 
 **What it tests:** All-enum siblings, no `#type`, no assignment. See [[syntax/types/structs#Enum Fields vs Value Fields]].
@@ -53,7 +53,7 @@ updated: 2026-03-30
 
 ### EC-9.4: Value field data definition — all siblings assigned
 
-<!-- @identifiers:Serialization Rules -->
+<!-- @u:identifiers:Serialization Rules -->
 **EBNF:** `value_field ::= "[.]" fixed_sep name type_annotation [ assignment_op value_expr ]`
 
 **What it tests:** All-or-none assignment rule — all siblings have defaults. See [[identifiers#Serialization Rules]].
@@ -79,7 +79,7 @@ updated: 2026-03-30
 
 ### EC-9.6: Pipeline — mandatory structure ordering
 
-<!-- @pipelines -->
+<!-- @c:pipelines -->
 **EBNF:** `pipeline_body ::= trigger_section [ io_section ] [ queue_section ] wrapper_section execution_section`
 
 **What it tests:** Correct order: trigger -> IO -> queue -> wrapper -> execution. See [[concepts/pipelines/INDEX|pipelines]].
@@ -119,7 +119,7 @@ updated: 2026-03-30
 
 ### EC-9.9: IO as implicit triggers — all three modes
 
-<!-- @pipelines:IO as Implicit Triggers -->
+<!-- @u:pipelines:IO as Implicit Triggers -->
 **What it tests:** Constant, default, and required IO. See [[concepts/pipelines/io-triggers#IO as Implicit Triggers]].
 
 ```polyglot
@@ -130,7 +130,7 @@ updated: 2026-03-30
 
 ### EC-9.10: `[=]` in `[\]` — parallel fork outlives setup, collected in `[/]`
 
-<!-- @pipelines:Parallel Forking in Setup -->
+<!-- @u:pipelines:Parallel Forking in Setup -->
 **EBNF:** `scope_setup ::= "[\]" NEWLINE { indent exec_line NEWLINE }` — `exec_line` includes `parallel_line`.
 
 **What it tests:** `[=]` at end of `[\]` with no `(*) *All` — forked path runs concurrently with body; `[/]` collects via `(*) *All` with `(*) <<` wait inputs. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
@@ -180,7 +180,7 @@ updated: 2026-03-30
 
 ### EC-9.12: Empty pipeline body — no sections at all
 
-<!-- @pipelines -->
+<!-- @c:pipelines -->
 **EBNF ref:** `pipeline_body` — trigger, queue, wrapper, execution sections
 **What it tests:** A `{-}` with no content. PGE01005 (missing trigger) fires first. See [[concepts/pipelines/INDEX|pipelines]].
 
@@ -222,7 +222,7 @@ updated: 2026-03-30
 
 ### EC-9.16: Non-trigger pipeline used as `[T]` trigger
 
-<!-- @pipelines:Triggers -->
+<!-- @u:pipelines:Triggers -->
 **EBNF ref:** `trigger_ref ::= pipeline_ref [ string_literal ]`
 **What it tests:** Using a non-trigger operation (e.g., `-File.Text.Read`) with `[T]`. PGE01024 fires — operations declare allowed markers. See [[concepts/pipelines/INDEX|pipelines]].
 
@@ -234,7 +234,7 @@ updated: 2026-03-30
 
 ### EC-9.17: Multiple `[T]` trigger lines — AND semantics
 
-<!-- @pipelines:Triggers -->
+<!-- @u:pipelines:Triggers -->
 **EBNF ref:** `trigger_io_section` — allows multiple `trigger_line` via `{ }` repetition
 **What it tests:** Multiple `[T]` lines use AND semantics — all triggers must fire. For OR, use `[+]`. See [[concepts/pipelines/INDEX|pipelines]].
 
@@ -264,7 +264,7 @@ updated: 2026-03-30
 
 ### EC-9.19: Discard `$*` in wrapper IO wiring
 
-<!-- @pipelines:Wrappers -->
+<!-- @u:pipelines:Wrappers -->
 **EBNF ref:** `wrapper_io_line ::= "(-)" variable_id assignment_op value_expr`
 **What it tests:** Using `$*` (discard) in wrapper IO defeats the purpose. PGE01025 fires. See [[concepts/pipelines/wrappers|wrappers]].
 

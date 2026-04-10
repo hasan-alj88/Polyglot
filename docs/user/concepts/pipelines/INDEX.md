@@ -9,10 +9,10 @@ status: complete
 
 # Pipeline Structure
 
-<!-- @blocks -->
-<!-- @io -->
-<!-- @operators -->
-<!-- @variable-lifecycle -->
+<!-- @c:blocks -->
+<!-- @u:io -->
+<!-- @u:operators -->
+<!-- @c:variable-lifecycle -->
 Every pipeline definition `{-}` (see [[blocks]]) must contain these elements in order. IO lines use [[io]] parameters with [[operators]] for assignment. Variable states follow [[variable-lifecycle]].
 
 | Order | Element | Marker | Required |
@@ -38,7 +38,7 @@ Misordering these sections is a compile error (PGE01001).
 
 ## Marker Declarations
 
-<!-- @blocks -->
+<!-- @c:blocks -->
 A marker declaration on `{-}` specifies the pipeline's invocation context — which execution markers (`[-]`, `[=]`, `[b]`) can invoke it. See [[blocks#Marker declarations on `{-}`]] for the definition-level summary.
 
 | Declaration | Invocable via | Restriction |
@@ -82,7 +82,7 @@ See [[technical/ebnf/09-definition-blocks#9.3|EBNF §9.3]] for the formal `marke
 
 ## Native vs Derived
 
-<!-- @pglib/types/NativeKind -->
+<!-- @c:pglib/types/NativeKind -->
 Every pipeline definition is either **native** or **derived**. The distinction determines whether execution is handled by the host language or by a Polyglot body.
 
 | Property | Native `{N}` | Derived `{-}` |

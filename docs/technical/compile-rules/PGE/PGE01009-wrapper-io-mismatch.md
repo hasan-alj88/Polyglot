@@ -9,6 +9,9 @@ severity: error
 ### Rule 1.9 — Wrapper IO Mismatch
 `PGE01009`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** The `(-)` wiring lines under a `[W]` wrapper must match the referenced wrapper's IO contract:
 1. **Completeness** — every required `(-)` input in the wrapper must have a corresponding `(-) ... <<` wiring line.
 2. **Type compatibility** — each wired value must be schema-compatible with the wrapper's declared input or output type (per PGE04001/PGE04002 rules).

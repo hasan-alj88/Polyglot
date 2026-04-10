@@ -10,8 +10,8 @@ updated: 2026-03-30
 
 ### EC-20.1: Declared state — value field without assignment cannot be pulled
 
-<!-- @variable-lifecycle -->
-<!-- @identifiers:Serialization Rules -->
+<!-- @c:variable-lifecycle -->
+<!-- @u:identifiers:Serialization Rules -->
 **What it tests:** A value field with no assignment is in **Declared** state. Pulling from it before assignment is a compile error. Assignment within value siblings is individually optional. See [[identifiers#Serialization Rules]].
 
 ```polyglot
@@ -57,7 +57,7 @@ updated: 2026-03-30
 
 ### EC-20.3: `~>` default operator on output parameters
 
-<!-- @operators -->
+<!-- @u:operators -->
 **What it tests:** `~>` sets a default on an **output** parameter — if execution does not push a value, the default is used. See [[operators#Assignment Operators]].
 
 ```polyglot

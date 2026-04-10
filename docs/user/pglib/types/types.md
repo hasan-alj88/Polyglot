@@ -7,7 +7,7 @@ status: complete
 
 # Built-in Types (#)
 
-<!-- @types -->
+<!-- @c:types -->
 
 pglib structs and enums available in every `.pg` file. No `[@]` import needed. For the full type system specification (annotations, schemas, generics), see [[syntax/types/INDEX|types]].
 

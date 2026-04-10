@@ -6,7 +6,7 @@ updated: 2026-03-30
 
 # EBNF Edge Cases
 
-<!-- @EBNF -->
+<!-- @u:EBNF -->
 Structured edge case catalog for validating the Polyglot Code grammar ([[technical/ebnf/INDEX|EBNF]]). Each case maps to an EBNF production rule and tests a boundary condition, ambiguity, or interaction between rules.
 
 ## How to Use

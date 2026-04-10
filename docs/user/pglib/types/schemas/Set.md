@@ -9,7 +9,7 @@ metadata_definition: "%definition.##:Set"
 
 # ##Set Schema (Retired)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Set` has been retired. Use `##Array` with `%###Unique << #True` instead.
 

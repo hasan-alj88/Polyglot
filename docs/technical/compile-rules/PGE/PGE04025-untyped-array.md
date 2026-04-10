@@ -9,6 +9,8 @@ severity: error
 ### Rule 4.25 — Untyped Array
 `PGE04025`
 
+<!-- @u:syntax/io -->
+
 **Statement:** `#array` type annotations must specify an element type. Untyped arrays (`#array` without element type) are a compile error — the compiler cannot infer the element type, and all elements must share the same schema.
 **Rationale:** Polyglot is type-safe first. Arrays hold homogeneous elements — every element must conform to the declared element type's schema. Without a declared type, the compiler cannot enforce this constraint, leading to potential runtime type errors.
 **Detection:** The compiler checks that every `#array` type annotation includes an element type via colon notation (e.g., `#array:int`, `#array:UserRecord`).

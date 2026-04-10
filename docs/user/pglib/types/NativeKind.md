@@ -9,7 +9,7 @@ metadata_instance: "%#:NativeKind:N"
 
 # #NativeKind Enum
 
-<!-- @types -->
+<!-- @c:types -->
 <!-- @concepts/pipelines/INDEX -->
 
 `#NativeKind` classifies which subsystem role a native `{N}` definition fulfills. Every `{N}` block must declare `[%] .Kind << #NativeKind.<variant>` — omitting it is a compile error (PGE01028c).

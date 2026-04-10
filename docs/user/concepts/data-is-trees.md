@@ -6,8 +6,8 @@ updated: 2026-03-28
 
 # Everything is a Tree
 
-<!-- @types:RawString -->
-<!-- @identifiers:Serialized Identifiers -->
+<!-- @c:types:RawString -->
+<!-- @u:identifiers:Serialized Identifiers -->
 
 All Polyglot data is serialized strings. Every object — structs, pipelines, variables, collections, errors, packages — is a branch on one unified tree rooted at `%`. Understanding this tree is the key to understanding how every concept in Polyglot Code connects.
 

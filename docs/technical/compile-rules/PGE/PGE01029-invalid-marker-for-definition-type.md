@@ -9,7 +9,7 @@ severity: error
 ### Rule 1.29 — Invalid Marker for Definition Type
 `PGE01029`
 
-<!-- @brainstorming:marker-declarations §4 Rule A -->
+<!-- @c:brainstorming:marker-declarations §4 Rule A -->
 
 **Statement:** Only `{-}` accepts an explicit marker declaration, and only `[exe]`. Sugar types (`{T}`, `{W}`, `{Q}`) already have implicit markers (`[T]`, `[W]`, `[Q]`) and cannot take additional markers. Data types (`{#}`, `{!}`) cannot have markers at all.
 **Rationale:** Each definition type has a fixed role in the type hierarchy. `{T}` is syntactic sugar for `{-}[T]` — attaching `[exe]` or `[W]` to it would create a contradictory declaration. Data types (`{#}` and its subtype `{!}`) are not callable and have no execution semantics, so markers are meaningless.

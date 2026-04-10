@@ -9,6 +9,10 @@ severity: error
 # Rule 2.5 — Failed Must Resolve
 `PGE02005`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:concepts/errors -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A variable in Failed state cannot proceed to the next job or task. The compiler enforces exhaustive error handling: every failable call must have an `[!]` error block or `<!`/`>!` fallback operators on its IO lines. If neither is present, the compiler emits PGE02005. At runtime, the Failed state triggers the declared fallback, resolving the variable to Final before downstream code executes.
 **Rationale:** Failed means the producing pipeline errored. The compiler performs static analysis to account for all possible states, including Failed. By enforcing exhaustive handling at compile time, no Failed variable ever reaches downstream code unresolved.
 **Detection:** At compile time: for each `[-]` call that can produce an error, verify that either (1) an `[!]` block provides a replacement value, or (2) `<!`/`>!` fallback operators are declared on the IO lines. If neither exists, emit PGE02005.

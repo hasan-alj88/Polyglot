@@ -9,6 +9,9 @@ severity: error
 ### Rule 8.10 — IO Direction Mismatch
 `PGE08010`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** At a call site, input ports (`<name`) must use `<<` (push value in) and output ports (`>name`) must use `>>` (pull value out). Using the wrong assignment direction — pushing into an output or pulling from an input — is a compile error. Inside the pipeline body, the pipeline may push to its own output ports (`>name << value`) because it is writing its own results.
 **Rationale:** Inputs are destinations (the caller sends data in) and outputs are sources (the caller receives data out). Reversing the direction is always a bug — it means the developer confused which port they are wiring. This is distinct from PGE01010 (name mismatch) and PGE08007 (invalid assignment target).
 **Detection:** The compiler checks each IO line under a `[-]` call site. If a `<name` port uses `>>` or a `>name` port uses `<<`, PGE08010 fires.

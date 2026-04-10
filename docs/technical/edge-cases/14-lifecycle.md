@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-14.1: Default then Final — one reassignment
 
-<!-- @variable-lifecycle -->
+<!-- @c:variable-lifecycle -->
 **What it tests:** Default allows exactly one promotion to Final. See [[variable-lifecycle]].
 
 ```polyglot
@@ -31,7 +31,7 @@ updated: 2026-03-30
 
 ### EC-14.3: Leaf-only assignment
 
-<!-- @identifiers:Serialization Rules -->
+<!-- @u:identifiers:Serialization Rules -->
 **What it tests:** Only leaf fields (no children) can be assigned. See [[identifiers#Serialization Rules]].
 
 ```polyglot

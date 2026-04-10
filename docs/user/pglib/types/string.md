@@ -9,7 +9,7 @@ metadata_instance: "%#:String:N"
 
 # #String — Foundation Type
 
-<!-- @types -->
+<!-- @c:types -->
 
 `#String` is the foundation type built on `RawString`. All scalar subtypes inherit from `#String` via `<~` (default schema inheritance). What users write as `#string` (lowercase) resolves here via alias.
 

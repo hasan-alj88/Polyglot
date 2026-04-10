@@ -9,6 +9,12 @@ severity: error
 ### Rule 2.6 — `live` Metadata Fields Are Pull-Only
 `PGE02006`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:concepts/errors -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** `live`-typed `%` metadata fields are managed by the Polyglot runtime and can only be pulled from. Any push into a `live` `%` field is a compile error. This rule applies only to `live` fields — non-live `%` fields (e.g., `%pipeline.*.description`) are user-assignable and follow normal lifecycle rules.
 **Rationale:** `live` fields reflect runtime state that only the runtime can change (e.g., a variable's lifecycle stage, a pipeline's execution status). Allowing user code to push into `live` metadata would break runtime invariants. Non-live metadata fields are user-defined and follow standard push/pull rules.
 **Detection:** At any assignment statement where the target uses the `%` accessor on a `live`-typed field — the compiler rejects the push regardless of operator (`<<`, `>>`, `<~`, `~>`).

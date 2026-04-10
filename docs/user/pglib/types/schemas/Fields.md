@@ -8,7 +8,7 @@ metadata_definition: "%definition.%##:Fields"
 
 # %##Fields Property
 
-<!-- @types -->
+<!-- @c:types -->
 
 `%##Fields` is a branch-level schema property that describes how a type's children are organized. It replaces the former `##Fields` parameterized schema, `%##Key`, `%##Range`, and `%##Flexible` / `#FlexKind`.
 

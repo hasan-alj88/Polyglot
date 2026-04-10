@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-1.1: Multiple definitions in one file
 
-<!-- @EBNF:file -->
+<!-- @u:EBNF:file -->
 **EBNF:** `file ::= package_block { definition }` — the `{ }` repetition allows zero or more definitions after the package block.
 
 **What it tests:** A single `.pg` file containing `{@}`, `{#}`, `{-}`, and `{ }` definitions together.

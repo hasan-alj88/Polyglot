@@ -9,6 +9,11 @@ severity: error
 ### Rule 7.1 — `[!]` Error Block Scoping
 `PGE07001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+
 **Statement:** `[!]` error handler blocks must be scoped directly under the specific `[-]` call that can produce the error. Each `[-]` call owns its own `[!]` blocks, indented under the call after any `(-)` IO lines. A `[!]` block that is not under a specific `[-]` call — such as at pipeline level or under a `[?]` conditional — is a compile error. Errors do not bubble up automatically to parent pipelines; each `[-]` must handle its own errors explicitly.
 **Rationale:** Scoping errors to their producing call makes error handling explicit and local. The caller always knows which operation failed and can respond specifically. Ambient or pipeline-level catch-all blocks would obscure the error source and encourage imprecise handling.
 **Detection:** The compiler checks the parent of every `[!]` block. If the immediate parent is not an `[-]` call (or a chain `[-]`), PGE07001 fires.

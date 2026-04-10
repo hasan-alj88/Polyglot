@@ -9,6 +9,11 @@ severity: error
 ### Rule 1.17 — Wrong Block Element Marker
 `PGE01017`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A block element marker that is syntactically valid but used in the wrong context is a compile error. Specifically, `(-)` may only appear in the IO declaration section (for declaring inputs/outputs with optional inline assignment). Using `(-)` in the execution body for a standalone assignment is an error — `[-]` is the correct marker for process steps.
 **Rationale:** `(-)` and `[-]` have distinct semantics: `(-)` declares an IO parameter and optionally binds it, while `[-]` executes a process step (pipeline call, assignment, output push). Confusing the two masks whether a line is a declaration or an operation, which breaks both compiler analysis and developer understanding.
 **Detection:** The compiler checks each block element marker against its syntactic context. If `(-)` appears outside the IO declaration section (i.e., in the execution body, conditional branch, or expand scope), and the line is not wiring IO on a called pipeline, the compiler rejects it and suggests `[-]` instead.

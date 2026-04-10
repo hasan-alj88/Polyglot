@@ -9,6 +9,9 @@ severity: warning
 ### Rule 4.8w — Single-Platform Path
 `PGW04001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A `#path` variable that assigns only one OS subfield (`.Unix` or `.Windows`) emits PGW04001 as a portability warning — even when the assigned subfield matches the current OS. The code compiles but will not work if deployed to the other platform. Suppress with `[ ] Ignore PGW04001`.
 **Rationale:** Single-platform paths are a portability risk. The warning alerts developers that their code is OS-specific, giving them the chance to add the missing subfield or explicitly acknowledge the limitation.
 **Detection:** The compiler counts explicit `.Unix` and `.Windows` subfield assignments on a `#path` variable. If exactly one is present, PGW04001 fires — regardless of whether it matches the current OS.

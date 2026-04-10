@@ -9,6 +9,10 @@ severity: error
 ### Rule 3.3 — Pull Isolation Until Collection
 `PGE03003`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A variable produced by a `[=]` parallel pipeline cannot be pulled from in the prime pipeline before the `(*)` collector for that parallel has executed. Pulling such a variable before collection is a compile error. Variables discarded via `$*` are exempt (they are never accessible). Push violations are caught by PGE03001 regardless of collection status.
 **Rationale:** Parallel pipelines run concurrently with the prime pipeline. Until a collector synchronizes, the variable may not yet have a value — or may be mid-write. Enforcing pull isolation ensures the prime pipeline only sees fully resolved values.
 **Detection:** The compiler tracks which variables originate from `[=]` scopes and verifies that any pull targeting them appears only after the corresponding `(*)` collector block.

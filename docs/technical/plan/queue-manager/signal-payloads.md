@@ -6,8 +6,8 @@ updated: 2026-04-03
 
 # Signal Data Payloads
 
-<!-- @queue-manager/reactive-signals -->
-<!-- @queue-manager/nats-namespace -->
+<!-- @c:queue-manager/reactive-signals -->
+<!-- @u:queue-manager/nats-namespace -->
 
 ## Command Signals (Trigger Monitor → Queue Handler)
 

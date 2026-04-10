@@ -9,6 +9,9 @@ severity: error
 ### Rule 6.12 — Unreachable Branch After Wildcard
 `PGE06012`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/types -->
+
 **Statement:** The `[?] *?` wildcard catch-all must be the final branch in a conditional chain. Any `[?]` branch after `*?` is unreachable dead code and is a compile error.
 **Rationale:** `*?` matches everything the preceding branches did not. Any branch declared after it can never execute — the wildcard already consumed all remaining cases. Enforcing `*?`-last prevents hidden dead code.
 **Detection:** The compiler scans `[?]` branches in declaration order. If a `*?` branch is encountered and further `[?]` branches follow, PGE06012 fires on each subsequent branch.

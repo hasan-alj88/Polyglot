@@ -7,8 +7,8 @@ updated: 2026-03-30
 # Struct Types
 
 <!-- @syntax/types/INDEX -->
-<!-- @blocks -->
-<!-- @identifiers -->
+<!-- @c:blocks -->
+<!-- @c:identifiers -->
 
 ## Struct Types
 

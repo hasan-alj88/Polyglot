@@ -7,7 +7,7 @@ status: complete
 
 # Struct Types
 
-<!-- @types -->
+<!-- @c:types -->
 
 pglib struct types available in every `.pg` file. These are non-enum, non-collection structs with typed value fields.
 

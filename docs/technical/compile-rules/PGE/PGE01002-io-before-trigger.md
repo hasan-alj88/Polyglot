@@ -8,6 +8,9 @@ name: IO Before Trigger
 ### Rule 1.2 — IO Before Trigger
 `PGE01002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** IO input declarations (`(-) <param`) must appear **positionally before** all `[T]` trigger lines. Within the trigger/IO section, all `(-)` declarations come first, then all `[T]` lines.
 **Rationale:** IO declarations and triggers form one section but have a fixed internal order: declarations first, triggers second. The IO variable must exist before it can be assigned, and this is enforced as a textual ordering requirement — not just a semantic dependency on which trigger pushes where. `[W]` is wrapper invocation (setup/cleanup scope from `{W}`), not wiring — this rule applies to `[T]` only.
 

@@ -9,6 +9,11 @@ severity: error
 ### Rule 4.6 — Undefined Variable Reference
 `PGE04006`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Every `$variable`, `>output`, or `<input` reference used in a push or pull expression must resolve to a declaration in the current scope. A reference that matches no declared variable, IO parameter, or field is a compile error. This covers all assignment operators (`<<`, `>>`, `<~`, `~>`), conditional pulls (`[?]`), and any other expression context. String interpolation references (`{$var}`) are covered separately by PGE04005.
 **Rationale:** Undeclared variable references are always bugs — typos, stale names from refactoring, or copy-paste errors. Catching them at compile time prevents silent runtime failures where a pull returns undefined data or a push targets nothing.
 **Detection:** The compiler maintains a scope table of all declared variables (`$`), IO inputs (`<`), and IO outputs (`>`) visible at each point in the program. When a reference is encountered, it is looked up in the scope table. If no matching declaration is found, PGE04006 fires.

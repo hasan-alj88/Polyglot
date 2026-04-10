@@ -9,6 +9,11 @@ severity: error
 ### Rule 8.5 — Unresolved Step Reference
 `PGE08005`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:concepts/errors -->
+<!-- @u:syntax/operators -->
+
 **Statement:** In chain execution, step references in `(-)` IO lines and `[!]` error blocks must resolve to an existing step. A numeric index that exceeds the chain length, or a name that matches zero steps, is a compile error. This is distinct from PGE08004 (ambiguity, which matches >1 step) — PGE08005 fires when a reference matches zero steps.
 **Rationale:** Referencing a nonexistent step is always a bug — a typo in the name or an index from a previous chain version that no longer applies. Catching this at compile time prevents silent wiring failures.
 **Detection:** The compiler resolves each step reference against the chain's step list. If a numeric index is >= the number of steps, or a name-based reference matches no step's leaf or extended path, PGE08005 fires.

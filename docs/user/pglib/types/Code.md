@@ -9,7 +9,7 @@ metadata_instance: "%#:Code:N"
 
 # #Code Struct
 
-<!-- @types -->
+<!-- @c:types -->
 
 Runtime execution output type. Output struct for all `-RT.*` pipeline modes. Language is a flexible field (`:Python`, `:Rust`, etc.), `.Output` is fixed.
 

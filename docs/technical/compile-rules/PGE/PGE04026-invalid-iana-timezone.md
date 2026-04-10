@@ -9,6 +9,10 @@ severity: error
 ### Rule 4.26 — Invalid IANA Timezone
 `PGE04026`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A string literal assigned to a `#Zone.iana` field or passed as an `<iana#string` input to `-DT.Zone.Set` / `-DT.Zone.Convert` must be a valid IANA timezone identifier. Invalid or unrecognized timezone strings trigger PGE04026. This only applies to string literals — runtime-determined strings are validated at runtime.
 **Rationale:** IANA timezone identifiers follow a strict `Area/Location` format. Catching typos and invalid identifiers at compile time prevents silent timezone mismatches that produce incorrect date/time conversions.
 **Detection:** When the compiler encounters a string literal in an IANA timezone context, it validates against the IANA timezone database format: must match `Area/Location` pattern (e.g., `America/New_York`, `UTC`). Common aliases (`EST`, `PST`) are not valid IANA identifiers.

@@ -9,6 +9,10 @@ severity: error
 # Rule 4.15 — Conditional Type-Operator Mismatch
 `PGE04015`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** The comparison operator in a `[?]` conditional branch must be compatible with the subject variable's type, and the operand type must be compatible with both the operator and the subject. Numerics (`#int` and `#float`) form one family and freely interoperate. All other types require exact type matching.
 **Rationale:** A range operator on a string or an enum match on an integer is always a logic error. Catching type-operator mismatches at compile time prevents nonsensical comparisons that would either always fail or produce undefined results at runtime.
 **Detection:** The compiler resolves the subject variable's type, then checks each branch's comparison operator and operand type against the compatibility tables below.

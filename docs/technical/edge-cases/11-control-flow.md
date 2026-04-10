@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-11.1: Conditional chain — multiple [?] branches
 
-<!-- @blocks:Control Flow -->
+<!-- @u:blocks:Control Flow -->
 **EBNF:** `conditional_line ::= "[?]" comparison_expr`
 
 **What it tests:** Sequential `[?]` blocks acting as switch-case. See [[blocks#Control Flow]].

@@ -6,7 +6,7 @@ updated: 2026-03-14
 
 # Audience: AI
 
-<!-- @vision:Core Philosophy -->
+<!-- @c:vision:Core Philosophy -->
 Authority: [[vision#Core Philosophy]]
 
 ## Who They Are

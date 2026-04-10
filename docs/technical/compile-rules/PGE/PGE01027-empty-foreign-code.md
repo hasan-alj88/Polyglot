@@ -9,6 +9,10 @@ severity: error
 ### Rule 1.27 — Empty Foreign Code Block
 `PGE01027`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A `[C]` foreign code block must contain at least one line of code. A `<script` input with `[C]` but no code lines is a compile error.
 **Rationale:** Foreign code blocks exist to embed non-Polyglot code passed to `-RT.*` pipelines. An empty block serves no purpose — it declares a foreign code context but provides nothing to execute.
 **Detection:** The compiler checks that each `[C]` sequence contains at least one `foreign_code_line`.

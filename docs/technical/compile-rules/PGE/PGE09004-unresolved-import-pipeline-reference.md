@@ -9,6 +9,10 @@ severity: error
 ### Rule 9.4 — Unresolved Import Pipeline Reference
 `PGE09004`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** After an `@alias` resolves to an imported package (PGE09001 passes), the `-Pipeline` name in `@alias-Pipeline` must exist as a `{-}` definition in that package. If the pipeline is not found in the imported package, PGE09004 fires. This is the second-phase resolution check — PGE09001 validates the alias, PGE09004 validates the pipeline name within the resolved package.
 **Rationale:** A valid import alias pointing to a real package does not guarantee the pipeline exists there. The pipeline may have been renamed, removed, or never existed. Catching this at compile time prevents runtime lookup failures in cross-package calls.
 **Detection:** After PGE09001 resolves the `@alias` to an imported package, the compiler enumerates all `{-}` definitions in that package and checks the `-Pipeline` name against them. If no match is found, PGE09004 fires.

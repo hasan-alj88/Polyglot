@@ -9,7 +9,7 @@ metadata_instance: "%#:Queue:N"
 
 # #Queue Struct
 
-<!-- @types -->
+<!-- @c:types -->
 
 Queue configuration struct used in `{Q}` queue definitions. Each `{Q} #Queue:Name` creates a Dispatch Queue at metadata path `%Queue.DispatchQueue:Name`.
 

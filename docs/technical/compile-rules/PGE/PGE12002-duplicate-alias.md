@@ -9,6 +9,9 @@ severity: error
 ### Rule 10.2 — Duplicate Alias
 `PGE12002`
 
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** Each alias string within a single `%alias` declaration must be unique, AND each fully resolved alias name must be globally unique across all definitions in the compilation unit. Duplicate alias names are a compile error.
 **Rationale:** Aliases create alternative lookup paths for definitions. If two definitions resolve to the same alias, the compiler cannot determine which definition the alias refers to. This includes nested paths — `File.Permission.Denied` declared as an alias from two different error branches creates ambiguity. Global uniqueness ensures every alias resolves to exactly one definition.
 **Detection:** The compiler collects all alias strings from all `%alias` declarations across the compilation unit, resolves them to fully qualified paths, and rejects any name that appears more than once. Both intra-definition duplicates (same alias listed twice in one `%alias`) and inter-definition duplicates (same alias in different definitions) are errors.

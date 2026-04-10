@@ -10,8 +10,8 @@ updated: 2026-03-30
 
 ### EC-21.1: `Registry` type — public/global registry address format
 
-<!-- @identifiers -->
-<!-- @packages -->
+<!-- @c:identifiers -->
+<!-- @c:packages -->
 **EBNF:** `registry_type ::= "Local" | "Community" | "Registry"`
 
 **What it tests:** Third registry type `Registry` uses a different ID format from `Local` (numeric) and `Community` (username). See [[identifiers]], [[packages]].

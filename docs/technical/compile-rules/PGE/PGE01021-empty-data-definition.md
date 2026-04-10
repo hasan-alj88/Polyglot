@@ -10,6 +10,9 @@ supersedes: PGW01002
 ### Rule 1.21 — Empty Data Definition
 `PGE01021`
 
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** A `{#}` data definition must contain at least one `[.]` fixed field, `[:]` flexible field, or `[#]` schema/generic composition. A `{#}` block with no structural content is a compile error.
 **Rationale:** A data type with no fields cannot carry data and serves no purpose. Previously this was a warning (PGW01002) but has been upgraded to an error because the EBNF now requires at least one body line, making empty definitions grammatically invalid.
 **Detection:** The compiler checks that each `{#}` block contains at least one field declaration or schema composition line. Comment-only and metadata-only blocks still trigger this error.

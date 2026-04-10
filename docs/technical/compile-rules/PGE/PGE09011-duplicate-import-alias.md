@@ -9,6 +9,10 @@ severity: error
 ### Rule 9.12 — Duplicate Import Alias
 `PGE09011`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Each `@alias` name in a file's `{@}` package block must be unique. If two or more `[@]` import declarations use the same alias name, PGE09011 fires. In the serialized path tree, aliases create shorthand references at a given level — duplicate names at the same level make resolution ambiguous.
 **Rationale:** When the compiler encounters `@utils-Pipeline`, it must resolve `@utils` to exactly one imported package. Two `[@]` lines declaring `@utils` pointing to different packages make this resolution impossible. Since all objects live in a serialized tree, duplicate alias names at the same level create conflicting paths.
 **Detection:** The compiler collects all `[@]` alias names from the `{@}` block. If any alias name appears more than once, PGE09011 fires on the second (and subsequent) declaration(s), reporting the conflicting alias and both target packages.

@@ -7,8 +7,8 @@ status: draft
 
 # Environment Definitions (`{;}`)
 
-<!-- @vision:Core Philosophy -->
-<!-- @glossary:Polyglot Service -->
+<!-- @c:vision:Core Philosophy -->
+<!-- @c:glossary:Polyglot Service -->
 
 Environment definitions declare what a pipeline needs from its host system — language runtime, version, dependencies, and configuration. The compiler validates environment availability at every call site, ensuring no runtime surprises.
 

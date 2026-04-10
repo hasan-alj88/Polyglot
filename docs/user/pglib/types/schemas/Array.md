@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Array"
 
 # ##Array Schema (Parameterized)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Array` is a parameterized schema that describes a contiguous, rectangular, N-dimensional structure. It takes value type and dimension parameters.
 

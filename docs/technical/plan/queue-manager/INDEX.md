@@ -6,8 +6,8 @@ updated: 2026-04-03
 
 # Queue Manager Architecture
 
-<!-- @concepts/pipelines/queue -->
-<!-- @Q -->
+<!-- @c:concepts/pipelines/queue -->
+<!-- @c:Q -->
 
 The Queue Handler is responsible for dispatching triggered pipelines to execution. It manages multiple Dispatch Queues, lifecycle state transitions (pause, resume, kill), and cross-queue constraint enforcement via the Dispatch Coordinator. The Queue Handler is purely reactive — it never evaluates conditions or makes decisions. The Trigger Monitor is the decision-maker; the Queue Handler only executes commands.
 

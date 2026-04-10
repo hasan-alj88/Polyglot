@@ -7,8 +7,8 @@ status: complete
 
 # Error System
 
-<!-- @errors -->
-<!-- @blocks -->
+<!-- @c:errors -->
+<!-- @c:blocks -->
 
 Errors use the `!` prefix and hierarchical dot names. Every error leaf is typed `#Error`. Custom errors are defined with `{!}` blocks; pglib errors are built-in and require no `[@]` import.
 

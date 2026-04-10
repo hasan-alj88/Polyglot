@@ -7,7 +7,7 @@ status: complete
 
 # -Q — Queue Pipelines
 
-<!-- @pipelines -->
+<!-- @c:pipelines -->
 Queue pipelines manage the multi-queue execution model: **Dispatch Queues** (pipelines awaiting dispatch, one per `{Q}` definition) and **Executing Set** (pipelines currently running). The **Dispatch Coordinator** reads from all Dispatch Queues simultaneously, faithfully honoring each queue's ordering and concurrency rules. No `[@]` import needed. See [[concepts/pipelines/queue#Queue]] for queue usage rules.
 
 All `-Q.*` pipelines are used via `[Q]` — either in a `{Q}` queue definition (queue-level defaults) or in a pipeline's `[Q]` section (pipeline-specific controls). Controls in `{Q}` apply to all pipelines on that queue. Controls in `[Q]` are pipeline-specific. Contradictions raise PGE01013.

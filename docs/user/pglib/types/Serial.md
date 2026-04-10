@@ -9,7 +9,7 @@ metadata_instance: "%#:Serial:N"
 
 # #Serial Collection
 
-<!-- @types -->
+<!-- @c:types -->
 
 Unconstrained collection with unlimited depth. Any keys, any types, any nesting. No compile-time validation of shape. Child access uses the `<` operator (`$data<key`). `#Serial` is a plain `{#}` definition -- no generic parameters needed.
 

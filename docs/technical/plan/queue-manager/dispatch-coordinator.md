@@ -6,8 +6,8 @@ updated: 2026-04-03
 
 # Dispatch Coordinator
 
-<!-- @queue-manager/redis-containers -->
-<!-- @queue-manager/reactive-signals -->
+<!-- @c:queue-manager/redis-containers -->
+<!-- @c:queue-manager/reactive-signals -->
 
 The Dispatch Coordinator is the autonomous dispatch loop inside the Queue Handler. It runs as an **atomic Redis Lua script** to prevent race conditions between constraint checks and state mutations.
 

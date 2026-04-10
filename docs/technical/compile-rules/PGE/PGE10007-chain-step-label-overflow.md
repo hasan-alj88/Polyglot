@@ -11,6 +11,8 @@ updated: 2026-04-09
 ### Rule 10.7 — Chain Step Label Overflow
 `PGE10007`
 
+<!-- @u:syntax/blocks -->
+
 **Statement:** The number of `(.)` step labels in a chain label block must not exceed the number of steps in the chain. More labels than steps means at least one label has no target, which is a compile error.
 **Rationale:** Each `(.)` step label maps positionally to a step in the chain. If there are more labels than steps, the excess labels cannot bind to anything — they are dangling references. The compiler rejects this to prevent silent misconfiguration.
 **Detection:** The compiler counts the steps in the chain body and the `(.)` labels in the label block. If the label count exceeds the step count, the error is raised at the first excess label.

@@ -11,6 +11,9 @@ updated: 2026-04-09
 ### Rule 2.13 — Write To Label Accessor
 `PGE02013`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Operation label accessors (`$Label>param`, `$Label<param`) are read-only. Writing to them (`$Label>param << value`) is a compile error because label outputs are Final — they capture the result of a completed operation and cannot be overwritten.
 **Rationale:** Labels provide a read-only window into a completed operation's inputs and outputs. Allowing writes would violate the Final guarantee on operation results and break referential integrity for any other code that reads the same accessor.
 **Detection:** The compiler checks that label accessors never appear on the left-hand side of a push (`<<`) or as targets of `>>` wiring. Any such occurrence is rejected.

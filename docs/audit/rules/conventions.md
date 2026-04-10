@@ -7,7 +7,7 @@ updated: 2026-03-14
 
 # Writing Conventions
 
-<!-- @vision:Core Philosophy -->
+<!-- @c:vision:Core Philosophy -->
 Authority: [[vision]]
 
 ## Structure Rules
@@ -34,13 +34,16 @@ Authority: [[vision]]
 
 ## Cross-Reference Rules
 
-| Rule ID | Rule |
-|---------|------|
-| dual-refs | Use both @-imports (Claude) and [[wikilinks]] (Obsidian) |
-| no-duplication | Never duplicate content — reference it |
-| relative-paths | Relative paths only within docs/ |
-| vision-authority | Link to [[vision]] for philosophy justifications |
-| glossary-authority | Link to [[glossary]] for term definitions |
+| Rule ID | Rule | Detail |
+|---------|------|--------|
+| dual-refs | Use both @-imports (Claude) and [[wikilinks]] (Obsidian) | Every cross-reference needs both syntaxes |
+| typed-refs | New docs must use `@c:` or `@u:` — not bare `@` | `@c:` for concepts, `@u:` for syntax usage |
+| usage-coverage | Syntax constructs appearing without explanation must have `@u:` to definition | Enables change propagation across docs |
+| untyped-valid | Existing bare `@` refs valid until file is touched | Migrate to typed on touch |
+| no-duplication | Never duplicate content — reference it | |
+| relative-paths | Relative paths only within docs/ | |
+| vision-authority | Link to [[vision]] for philosophy justifications | |
+| glossary-authority | Link to [[glossary]] for term definitions | |
 
 ## Frontmatter Template
 

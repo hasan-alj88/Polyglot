@@ -9,7 +9,7 @@ metadata_definition: "%definition.##:Map"
 
 # ##Map Schema (Retired)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Map` has been retired. Use `##Record` instead.
 

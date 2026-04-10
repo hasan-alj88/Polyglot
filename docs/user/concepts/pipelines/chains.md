@@ -8,8 +8,8 @@ updated: 2026-03-30
 
 ## Chain Execution
 
-<!-- @io:Chain IO Addressing -->
-<!-- @operators -->
+<!-- @u:io:Chain IO Addressing -->
+<!-- @u:operators -->
 Every step in a chain must be a pipeline reference — non-pipeline values are a compile error (PGE08006). Chain execution wires multiple pipelines in sequence on a single `[-]` line, with `->` separating each step (no spaces — the chain is one continuous expression). IO lines under the chain address individual steps by **numeric index** (0-based) or **leaf name** (the last segment of the pipeline's dotted name).
 
 ```polyglot

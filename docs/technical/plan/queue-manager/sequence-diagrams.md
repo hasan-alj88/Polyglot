@@ -6,8 +6,8 @@ updated: 2026-04-03
 
 # Sequence Diagrams
 
-<!-- @queue-manager/end-to-end-flow -->
-<!-- @queue-manager/dispatch-coordinator -->
+<!-- @u:queue-manager/end-to-end-flow -->
+<!-- @c:queue-manager/dispatch-coordinator -->
 
 ## 1. Normal Dispatch Flow
 

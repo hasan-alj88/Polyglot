@@ -7,8 +7,8 @@ status: complete
 
 # Block System
 
-<!-- @line-structure -->
-<!-- @identifiers -->
+<!-- @u:line-structure -->
+<!-- @c:identifiers -->
 Three bracket shapes with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native` (see [[data-is-trees]]).
 
 > **Notation:** Throughout this document, `X` in `{X}`, `[X]`, and `(X)` is a **placeholder** — it represents any valid marker character, not a literal block. For example, `{X}` means "any definition block" (`{#}`, `{-}`, `{W}`, etc.), `[X]` means "any block element marker," and `(X)` means "any IO bracket."
@@ -46,7 +46,7 @@ Mark individual lines within blocks.
 
 ### Permissions
 
-<!-- @permissions -->
+<!-- @c:permissions -->
 See [[permissions]] for inline/IO forms, permission categories, and hierarchical scoping rules.
 
 | Marker | Meaning |
@@ -55,7 +55,7 @@ See [[permissions]] for inline/IO forms, permission categories, and hierarchical
 
 ### Data Flow
 
-<!-- @io -->
+<!-- @u:io -->
 See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collections]] for expand/collect semantics.
 
 | Marker | Meaning |
@@ -82,7 +82,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 
 ### Control Flow
 
-<!-- @pipelines -->
+<!-- @c:pipelines -->
 See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure and error scoping rules.
 
 | Marker | Meaning |
@@ -120,7 +120,7 @@ See [[metadata]] for the full metadata tree, field listings, `live` semantics, a
 
 ### Metadata Accessors
 
-<!-- @metadata -->
+<!-- @c:metadata -->
 
 `%This`, `%Parent`, and `%name` provide scoped access to definition metadata from within `{x}` blocks.
 

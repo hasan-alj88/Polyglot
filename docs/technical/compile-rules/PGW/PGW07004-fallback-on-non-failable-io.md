@@ -9,6 +9,10 @@ severity: warning
 ### Rule 7.4w — Fallback on Non-Failable IO
 `PGW07004`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A `<!` fallback on an IO line whose source is provably non-failable is dead code. The compiler emits a warning. A source is non-failable when:
 1. The parent `[-]` call targets a pipeline that declares no `(-) !ErrorName` error declarations (non-failable call).
 2. The input source is a literal value (e.g., `<data << "hello"` with `<! "fallback"`).

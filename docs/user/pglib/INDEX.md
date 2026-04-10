@@ -7,7 +7,7 @@ status: complete
 
 # Standard Library — Namespace Registry
 
-<!-- @packages -->
+<!-- @c:packages -->
 This is the authoritative list of all pglib namespaces. Any top-level namespace listed here is **reserved** — user `[@]` import aliases must not shadow these names (PGE09012). See [[packages#Import Rules]].
 
 Standard library items do NOT require an `[@]` import — they are available in every `.pg` file by default.

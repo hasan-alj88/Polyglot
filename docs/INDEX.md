@@ -7,9 +7,9 @@ updated: 2026-04-03
 
 # Polyglot Documentation — Master Index
 
-<!-- @vision -->
+<!-- @c:vision -->
 <!-- @audit/README -->
-<!-- @glossary -->
+<!-- @c:glossary -->
 This is the single entry point for all Polyglot documentation. Authority chain: [[vision]] > [[audit/README]] > `.paul/`. Terms follow [[reference/glossary]].
 
 ## Quick Navigation

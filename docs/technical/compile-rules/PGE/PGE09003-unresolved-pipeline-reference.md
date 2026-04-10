@@ -9,6 +9,10 @@ severity: error
 ### Rule 9.3 — Unresolved Pipeline Reference
 `PGE09003`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Every `-Pipeline` reference in an `[-]` or `[=]` call must resolve to either a pglib pipeline or a `{-}` definition within the same package. If the reference matches neither, it is a compile error. Cross-package pipelines must use `@alias-Pipeline` syntax with a valid `[@]` import (see PGE09001). This rule does not apply to `@alias-Pipeline` references — those are validated by PGE09001 (alias resolution) and then by the imported package's own definitions.
 **Rationale:** Calling a pipeline that doesn't exist is always a bug — a typo, a deleted definition, or a missing import. Catching unresolved references at compile time prevents runtime lookup failures.
 **Detection:** The compiler collects all `{-}` definitions in the current package and the pglib pipeline set. When an `[-]` or `[=]` call references `-Name` (without an `@` alias prefix), the compiler checks the name against both sets. If no match is found, PGE09003 fires.

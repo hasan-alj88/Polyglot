@@ -7,6 +7,8 @@ consumes: PGE06004, PGE06005
 
 # Conditional Overlap Detection Algorithm
 
+<!-- @u:syntax/types -->
+
 Detects when two or more `[?]` branches cover the same value, creating ambiguity. The compiler dispatches to a type-specific overlap algorithm based on the branched variable's type.
 
 ## Inputs

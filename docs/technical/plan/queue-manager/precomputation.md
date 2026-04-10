@@ -6,8 +6,8 @@ updated: 2026-04-03
 
 # Precomputation
 
-<!-- @queue-manager/dispatch-coordinator -->
-<!-- @queue-manager/properties -->
+<!-- @c:queue-manager/dispatch-coordinator -->
+<!-- @c:queue-manager/properties -->
 
 Because every signal handler is `f(signal, state) → (new_state, output_signals)` — a pure function — the Queue Handler can optimize without changing behavior.
 

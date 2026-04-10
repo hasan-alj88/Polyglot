@@ -8,7 +8,7 @@ metadata_definition: "%definition.###:None"
 
 # ###None Field Type
 
-<!-- @types -->
+<!-- @c:types -->
 
 `###None` classifies a leaf where empty string `""` is the only valid value. This field type is used exclusively by the `#None` type. All other types reject `""` with PGE04021.
 

@@ -6,8 +6,8 @@ updated: 2026-03-30
 
 # Polyglot Technical Documentation
 
-<!-- @vision:Core Philosophy -->
-<!-- @glossary:Polyglot Service -->
+<!-- @c:vision:Core Philosophy -->
+<!-- @c:glossary:Polyglot Service -->
 <!-- @audit/README -->
 
 Internal specifications for Polyglot project contributors. These documents describe how Polyglot Code is parsed, validated, and processed.

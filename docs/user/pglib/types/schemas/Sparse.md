@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Sparse"
 
 # ##Sparse Schema
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Sparse` permits gaps in child keys. Not all key positions need to be occupied.
 

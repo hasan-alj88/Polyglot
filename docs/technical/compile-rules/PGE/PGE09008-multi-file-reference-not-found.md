@@ -9,6 +9,8 @@ severity: error
 ### Rule 9.9 — Multi-File Reference Not Found
 `PGE09008`
 
+<!-- @u:syntax/operators -->
+
 **Statement:** Every `[@] << "path"` file reference in a `{@}` block must resolve to an existing `.pg` file. If the path does not point to a file that exists at compile time, PGE09008 fires. For folder references (`[@] << "{.}"`), the directory must exist and contain at least one other `.pg` file.
 **Rationale:** Referencing a non-existent file is always a bug — a typo, a deleted file, or a misconfigured path. Catching this at compile time prevents partial package loading.
 **Detection:** The compiler resolves the path relative to the current file's directory (using `{.}` expansion). If the resolved path does not exist or is not a `.pg` file, PGE09008 fires. For folder references, the compiler checks the directory exists and contains at least one `.pg` file other than the current file.

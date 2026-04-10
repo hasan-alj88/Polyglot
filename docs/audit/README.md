@@ -40,29 +40,64 @@ updated: 2026-03-30
 
 **Rule:** If any document contradicts [[vision]], vision.md wins. Always.
 
-## Dual Smart Referencing
+## Typed Smart Referencing
 
-Every cross-reference uses both syntaxes:
+Every cross-reference carries a **type** that tells Claude *why* the import exists. This enables change propagation — when a concept changes, every doc that references it can be traced and updated.
 
-| Purpose | Claude @-import (mandatory) | Obsidian [[wikilink]] |
-|---------|----------------------------|----------------------|
-| Vision section | `<!-- @vision:Core Philosophy -->` | `[[vision#Core Philosophy]]` |
-| Glossary term | `<!-- @glossary:Polyglot Service -->` | `[[glossary#Polyglot Service]]` |
-| Convention rule | `<!-- @rule:heading-hierarchy -->` | `[[conventions#heading-hierarchy]]` |
-| Checklist item | `<!-- @checklist:contradiction-check -->` | `[[checklist#contradiction-check]]` |
+### Reference Types
+
+| Type | Prefix | Purpose | Points to |
+|------|--------|---------|-----------|
+| Concept | `@c:` | "What is this?" — load a definition before writing about it | Glossary, vision, design rationale, type definitions |
+| Usage | `@u:` | "This construct appears here" — link to where it's defined | Syntax specs, EBNF grammar, pglib signatures, scenarios |
+| Untyped | `@` | Legacy form — valid but deprecated for new docs | Any (migrate to `@c:` or `@u:` on touch) |
+
+### Examples
+
+**Concept references** (`@c:`) — understand before writing:
+
+```markdown
+<!-- @c:glossary#Trigger Monitor -->
+The Trigger Monitor ([[glossary#Trigger Monitor|c:Trigger Monitor]]) owns collector logic...
+
+<!-- @c:vision#Core Philosophy -->
+This design follows the core philosophy ([[vision#Core Philosophy|c:Core Philosophy]])...
+```
+
+**Usage references** (`@u:`) — syntax appears here, defined elsewhere:
+
+```markdown
+<!-- @u:syntax/blocks#trigger -->
+The pipeline uses [T] to declare its trigger:
+
+<!-- @u:technical/ebnf/conditional#match-syntax -->
+```polyglot
+[?] $status
+   =? "active" >> $result <~ "proceed"
+   *?           >> $result <~ "skip"
+```
 
 ### How @-imports work
 
-`@` references are **mandatory imports**. When Claude encounters `<!-- @vision:Core Philosophy -->`, Claude MUST:
+Both `@c:` and `@u:` are **mandatory imports**. When Claude encounters either type, Claude MUST:
 1. Read the referenced section from the source file
 2. Hold that content in context
 3. Only then proceed with writing
 
-`[[wikilinks]]` are Obsidian navigation — clickable links, graph view edges, backlink tracking.
+The type tag is **semantic** — it tells Claude the *purpose* of the import:
+- `@c:` means "understand this concept before writing about it"
+- `@u:` means "this construct is used here; if its definition changes, this doc needs updating"
+
+Untyped `@` refs (legacy) behave the same as always — mandatory read-before-write. New docs must use `@c:` or `@u:`.
+
+`[[wikilinks]]` are Obsidian navigation — clickable links, graph view edges, backlink tracking. The display text may carry a `c:` or `u:` prefix (e.g., `[[glossary#Trigger Monitor|c:Trigger Monitor]]`) to signal the reference type to readers. Wikilink prefixes are added on touch, not batch-migrated.
 
 ### Reference format in files
 
 ```markdown
-<!-- @glossary:Polyglot Service -->
-The Polyglot Service ([[glossary#Polyglot Service]]) consists of three components...
+<!-- @c:glossary#Polyglot Service -->
+The Polyglot Service ([[glossary#Polyglot Service|c:Polyglot Service]]) consists of three components...
+
+<!-- @u:syntax/operators#comparison -->
+The conditional uses comparison operators defined in the operators spec.
 ```

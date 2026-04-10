@@ -9,6 +9,10 @@ severity: error
 ### Rule 1.20 — Effectless Execution Expression
 `PGE01020`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** An execution expression under `[-]`, `[=]`, or `[b]` must be an assignment, pipeline call, chain call, or expand invocation. Bare literals and non-pipeline identifiers produce no effect and are compile errors.
 **Rationale:** Execution markers define how work runs — `[-]` is synchronous, `[=]` is parallel, `[b]` is fire-and-forget. A bare literal (`42`, `"string"`) or non-pipeline identifier (`#UserRecord`, `$existingVar`, `@AD`) is not work: it assigns nothing, calls nothing, and produces no side effect. Allowing it would be misleading dead code that passes parsing but wastes an execution slot.
 **Detection:** The compiler validates each `exec_expr` after the block element marker. If the expression is not an `assignment_expr`, `pipeline_call`, `chain_call`, or `expand_invocation`, it is rejected. The diagnostic suggests the likely intent (e.g., missing assignment operator, missing pipeline `=` prefix).

@@ -9,6 +9,10 @@ severity: error
 # Rule 6.9 — Conditional Missing Comparison Operator
 `PGE06009`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** Every `[?]` line must follow the form `[?] $variable <operator> value` or `[?] *?`. A `[?]` line without a comparison operator is a syntax violation. **Exception:** `[?]` lines in match context (indented under `[-] $source >> $target`) use `[?] value >> result` form without a comparison operator — PGE06009 does not apply to match arms. See [[conditionals#Match Syntax]].
 
 **Rationale:** Conditionals are explicit comparison expressions, not switch/match blocks. There is no "subject" line that introduces a value to match against — each arm is a standalone test. Bare `[?] $variable` lines create ambiguity about what comparison is being performed.

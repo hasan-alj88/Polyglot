@@ -9,6 +9,11 @@ severity: error
 ### Rule 9.18 — Undeclared Permission
 `PGE10004`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** If a pipeline calls a pglib IO pipeline (e.g., `-File.Text.Read`) without a `[_]` reference to a `{_}` permission object that grants the needed capability, PGE10004 fires. The compiler traces the call graph to verify that every IO operation in a pipeline's execution — including transitive calls through other pipelines — is covered by a referenced `{_}` object.
 **Rationale:** Polyglot uses an implicit-deny permission model. Every pipeline starts with zero IO capabilities. This forces developers to explicitly declare their IO footprint via named `{_}` objects, making each pipeline's external interactions auditable. Without this rule, a pipeline could silently perform IO that was never authorized.
 **Detection:** The compiler builds a call graph from each pipeline's execution body. For every call to a known IO pipeline (pglib pipelines under `-File.*`, `-Web.*`, `-Database.*`, etc.), it checks that the calling pipeline has a `[_] _ObjectName` reference whose `{_}` definition includes the matching `Category.Capability`. This includes transitive calls: if `-A` calls `-B` which calls `-File.Text.Read`, then `-A` must reference a `{_}` object granting `File.Read` covering the path. If no matching permission is found, PGE10004 fires.

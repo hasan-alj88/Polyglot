@@ -9,6 +9,10 @@ severity: warning
 ### Rule 8.1 — Auto-Wire Succeeded
 `PGW08001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** When auto-wire between adjacent chain steps succeeds (no PGE08001, PGE08002, or PGE08003), PGW08001 fires as a warning. Auto-wire is valid but explicit `(-)` wiring is preferred for clarity.
 **Rationale:** Implicit wiring obscures data flow. Explicit `(-)` lines make the pipeline self-documenting and prevent surprises when a step's signature changes.
 **Detection:** After all auto-wire checks pass, PGW08001 fires on each successfully auto-wired step pair.

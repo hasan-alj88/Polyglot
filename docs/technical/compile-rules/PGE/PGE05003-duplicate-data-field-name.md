@@ -9,6 +9,10 @@ severity: error
 ### Rule 4.13 — Duplicate Data Field Name
 `PGE05003`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** All sibling fields at the same nesting level must have unique names. Two fields with the same name at the same level — whether in a `{#}` data definition or in `$` variable field assignment — are a compile error. Fields at different levels are unaffected (e.g., `.config.name` and `.user.name` are distinct paths).
 **Rationale:** Duplicate field names at the same level create ambiguous access — `$record.name` cannot resolve to two distinct fields. Catching this at compile time prevents silent data loss where one field silently shadows the other.
 **Detection:** The compiler collects all field names at each nesting level (grouped by parent path) and rejects any name that appears more than once within a level. This applies to `{#}` definitions, `$` variable field pushes, and any context where sibling fields are declared or assigned.

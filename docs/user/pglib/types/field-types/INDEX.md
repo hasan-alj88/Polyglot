@@ -7,7 +7,7 @@ status: complete
 
 # ### Field Types
 
-<!-- @types -->
+<!-- @c:types -->
 
 `###` field types classify what leaf nodes contain in `{#}` type definitions. They are compile-time metadata that tells the compiler how to validate and interpret the data stored at each leaf. Field types live at `%definition.###:{Name}` on the metadata tree.
 

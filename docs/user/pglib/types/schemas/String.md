@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:String"
 
 # ##String Schema (Parameterized)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##String` is a parameterized schema that generates a string type with `.string` and `.regex` fields. The `<regex` parameter sets the validation pattern. All `#String` subtypes compose this schema.
 

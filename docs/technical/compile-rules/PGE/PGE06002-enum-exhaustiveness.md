@@ -9,6 +9,11 @@ severity: error
 # Rule 6.2 — Enum Exhaustiveness
 `PGE06002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** When a `[?]` conditional branches on a `{#}` enum type, all declared enum variants must either appear as explicit branches or be covered by a `*?` catch-all. When **all** variants are explicitly listed, `*?` is optional — exhaustiveness is proven statically. When some variants are missing and no `*?` is present, PGE06002 fires.
 **Rationale:** Enum types have a closed set of variants defined at compile time. Failing to handle a variant is a likely bug — the compiler enforces that every variant has a path, either explicitly or via `*?`.
 **Detection:** The compiler resolves the `{#}` enum definition, enumerates all declared variants, and compares them against the explicit `[?]` branches. If any variant is missing and no `*?` branch exists, PGE06002 fires.

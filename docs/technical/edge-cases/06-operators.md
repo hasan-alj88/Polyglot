@@ -10,8 +10,8 @@ updated: 2026-03-30
 
 ### EC-6.1: All four assignment operators
 
-<!-- @operators -->
-<!-- @variable-lifecycle -->
+<!-- @u:operators -->
+<!-- @c:variable-lifecycle -->
 **What it tests:** Each operator used in its correct context. See [[operators]], [[variable-lifecycle]].
 
 ```polyglot

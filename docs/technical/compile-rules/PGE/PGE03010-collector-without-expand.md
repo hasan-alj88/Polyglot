@@ -9,6 +9,10 @@ severity: error
 ### Rule 3.11 — Collector Without Expand
 `PGE03010`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Every `*Into`/`*Agg` collector must appear within the scope of a `=ForEach` expand operator. A collector outside any expand scope has no source of expanded items and is a compile error.
 **Rationale:** Collectors aggregate items produced by iteration. Without an expand, there is no iteration — the collector has no source and cannot function. This is the structural inverse of PGE03009 (expand without collector).
 **Detection:** The compiler tracks expand scope depth. When a `*Into`/`*Agg` collector is encountered at scope depth zero (no enclosing expand), PGE03010 fires.

@@ -9,6 +9,11 @@ severity: warning
 ### Rule 9.2 — Unused Import
 `PGW09002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** An `[@]` import alias declared in the `{@}` package block that is never referenced by any `@alias-Pipeline` or `@alias#Data` expression in the file is flagged with a warning. The import is dead code.
 **Rationale:** Unused imports add clutter and may indicate incomplete refactoring — a pipeline call was removed but the import was left behind. Flagging unused imports keeps the dependency graph clean and makes it clear which external packages are actually used.
 **Detection:** The compiler collects all `[@]` alias declarations from the `{@}` block, then scans all expressions in the file for `@alias` references. Any alias with zero references is flagged.

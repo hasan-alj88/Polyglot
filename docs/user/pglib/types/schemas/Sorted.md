@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Sorted"
 
 # ##Sorted Schema
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Sorted` enforces that children are sorted by key. Order is derived from the key type: numeric keys sort numerically, string keys sort alphabetically (lexicographic), enum keys sort by declaration order.
 

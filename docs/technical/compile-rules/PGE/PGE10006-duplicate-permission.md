@@ -9,6 +9,12 @@ severity: error
 ### Rule 9.20 — Duplicate Permission
 `PGE10006`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/packages -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** Duplicate permission declarations are a compile error in two scopes:
 1. **Duplicate `[_]` reference** — the same `{_}` object name referenced more than once within a single `{@}` ceiling or `{-}` definition.
 2. **Duplicate capability in `{_}`** — the same `Category.Capability` declared more than once within a single `{_}` permission object block.

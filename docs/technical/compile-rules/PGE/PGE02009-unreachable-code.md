@@ -9,6 +9,10 @@ severity: error
 ### Rule 2.9 — Unreachable Code
 `PGE02009`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Code that appears after all output ports have reached Final state in every code path is unreachable and produces a compile error. The pipeline has terminated — no further statements can have any effect.
 **Rationale:** Unlike dead code that merely wastes space (PGW02005), unreachable code after full pipeline termination indicates a logic error. The developer believes work is being done, but the pipeline has already completed. This is an error rather than a warning because it reveals a misunderstanding of control flow that should be fixed before deployment.
 **Detection:** The compiler tracks the lifecycle state of all output ports through control flow analysis. When every output port has been pushed to Final — either directly or through exhaustive conditional branches where every branch pushes all remaining ports Final — the pipeline is considered terminated. Any subsequent executable statement triggers PGE02009.

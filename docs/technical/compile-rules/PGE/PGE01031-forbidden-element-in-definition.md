@@ -9,7 +9,7 @@ severity: error
 ### Rule 1.31 — Forbidden Element in Definition
 `PGE01031`
 
-<!-- @brainstorming:marker-declarations §4 Rule C -->
+<!-- @c:brainstorming:marker-declarations §4 Rule C -->
 
 **Statement:** Each definition type restricts which block elements may appear inside it. Using a forbidden element is a compile error. This is a single error code with variable messages — the definition type and forbidden element identify the specific violation.
 **Rationale:** Definition types have distinct roles: wrappers manage lifecycle, queue operations manage scheduling, data types define structure. Allowing arbitrary elements would blur these roles and create semantic confusion. The compiler enforces structural correctness per type.

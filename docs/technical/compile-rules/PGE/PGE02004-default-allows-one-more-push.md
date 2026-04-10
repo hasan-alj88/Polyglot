@@ -12,6 +12,8 @@ superseded_by: PGE02003
 ### Rule 2.4 — Default Allows Exactly One More Push *(retired)*
 `PGE02004` → folded into `PGE02003`
 
+<!-- @u:syntax/operators -->
+
 **This rule has been retired.** All cases previously covered by PGE02004 are now enforced by [PGE02003 — Final Is Push-Once](PGE02003-final-is-push-once.md):
 
 - **Double-default** (`<~ → <~`): PGE02003 now rejects re-defaulting a Default variable

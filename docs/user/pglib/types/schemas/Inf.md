@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Inf"
 
 # ##Inf Schema
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Inf` is a composable schema that adds an `.Inf` variant to a type. It is not a standalone type -- it provides the "infinity" option when composed into concrete `#` types.
 

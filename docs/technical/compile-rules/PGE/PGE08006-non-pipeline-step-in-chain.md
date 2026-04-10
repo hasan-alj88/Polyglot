@@ -9,6 +9,10 @@ severity: error
 ### Rule 8.6 — Non-Pipeline Step in Chain
 `PGE08006`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Every step in a chain (`->`) must be a pipeline reference. Inline pipeline calls (pipeline ref + string literal, e.g., `-Path"/tmp"`) are value expressions, not callable steps, and must not appear in any chain position.
 **Rationale:** A chain `-A->-B->-C` auto-wires output from one pipeline as input to the next. Each step must be a callable pipeline that can receive input and produce output. An inline call like `-Path"/tmp"` is a value expression — it already has its input (the inline string) and produces a value, just like `$variable`. Writing `-Path"/tmp"->-Process` is equivalent to writing `$tmp->-Process`, which is nonsensical — values are not pipeline steps.
 **Detection:** The compiler inspects each step in a chain expression. Any step that is not a plain `pipeline_ref` is rejected — this includes `inline_pipeline_call` (pipeline ref + string literal).

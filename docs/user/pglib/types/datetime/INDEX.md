@@ -6,7 +6,7 @@ updated: 2026-04-03
 
 # #DT (DateTime Types)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `#DateTime` is the comprehensive date and time type. It represents absolute instants, civil date/time, multi-calendar projections, relative durations, week systems, non-standard time units, and cultural extensions. All calendars are projections of a single epoch value -- converting between calendars always goes through `.Instant.epoch`.
 

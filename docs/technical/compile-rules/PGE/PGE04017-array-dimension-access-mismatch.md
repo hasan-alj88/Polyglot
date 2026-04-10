@@ -9,6 +9,10 @@ severity: error
 ### Rule 4.17 — Array Dimension Access Mismatch
 `PGE04017`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** When accessing elements of a multidimensional array (`#array.<type>:<N>D`), the number of dot-separated indices must exactly match the declared dimension count. Too many or too few indices is a compile error. The dimension specifier is mandatory for multidimensional arrays — `#array.<type>` without `:<N>D` defaults to `:1D`. The dimension value must be a positive integer (`:0D` is invalid).
 **Rationale:** Multidimensional arrays have a fixed number of dimensions declared at compile time. The compiler enforces that every element access uses exactly the right number of indices, preventing partial access (returning a row instead of an element) or over-indexing (accessing beyond declared dimensions).
 **Detection:** The compiler counts the dot-separated integer indices in an element access expression and compares against the declared `:<N>D` dimension. If the counts differ, PGE04017 fires. Also fires if `:0D` is declared.

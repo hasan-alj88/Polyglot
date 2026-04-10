@@ -9,6 +9,10 @@ severity: error
 ### Rule 4.11 — Negative Array Index Literal
 `PGE04011`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Array access with a negative literal index is a compile error. Polyglot arrays are zero-indexed; negative indices are not valid. Reverse access must use explicit pglib pipelines (e.g., `-Array.Last`, `-Array.FromEnd`).
 **Rationale:** Implicit negative-means-reverse indexing (Python-style) is a source of subtle bugs — off-by-one errors, empty array edge cases, and unclear intent. Polyglot is type-safe first; reverse access should be explicit and self-documenting.
 **Detection:** The compiler checks array access expressions with literal integer indices. If the index is negative, PGE04011 fires.

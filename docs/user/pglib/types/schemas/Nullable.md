@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Nullable"
 
 # ##Nullable Schema (Parameterized)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Nullable` is a parameterized schema that creates a two-branch structure: `.Ok` holding a value of the specified type, or `.None` representing absence.
 

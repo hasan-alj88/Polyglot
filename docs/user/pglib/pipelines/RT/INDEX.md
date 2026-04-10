@@ -7,7 +7,7 @@ status: complete
 
 # -RT — Runtime Execution
 
-<!-- @pipelines -->
+<!-- @c:pipelines -->
 Runtime execution pipelines run foreign code (Python, Rust, etc.) within Polyglot pipelines. Each `-RT.<Lang>.*` pipeline takes a language-specific environment handle from `-W.RT` and executes code in that runtime.
 
 No `[@]` import needed.
@@ -18,7 +18,7 @@ No `[@]` import needed.
 
 ## Permissions
 
-<!-- @permissions -->
+<!-- @c:permissions -->
 All `-RT.*` pipelines require a `{_}` permission object granting System.Process. See [[permissions]] for the permission system.
 
 | Pipeline | Required Capability | Category |

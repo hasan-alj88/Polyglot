@@ -6,8 +6,8 @@ updated: 2026-04-03
 
 # Reactive Signal Table
 
-<!-- @queue-manager/dispatch-coordinator -->
-<!-- @queue-manager/signal-payloads -->
+<!-- @c:queue-manager/dispatch-coordinator -->
+<!-- @u:queue-manager/signal-payloads -->
 
 `f(signal, state) → (new_state, output_signals)`
 

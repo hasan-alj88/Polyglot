@@ -9,6 +9,9 @@ severity: error
 ### Rule 6.13 — Tautological or Contradictory Branch Condition
 `PGE06013`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/types -->
+
 **Statement:** The compiler evaluates the boolean algebra of each `[?]` branch's compound expression (`[&]` AND, `[+]` OR, `[^]` XOR). If a single branch's expression evaluates to the same boolean value (all True or all False) for every possible combination of its sub-conditions, it is a compile error. An always-True branch catches everything (making subsequent branches unreachable). An always-False branch is dead code (never matches any input).
 **Rationale:** Compound conditions combine multiple predicates. A branch that produces the same result for all inputs is always a bug — either the developer wrote a contradictory expression (never matches) or a tautological one (matches everything). This is the conditional equivalent of PGE01018 (tautological/contradictory trigger conditions).
 **Detection:** The compiler builds the truth table for the branch's compound expression. Each sub-condition is a boolean variable (true or false). If all rows produce the same result, PGE06013 fires. This check runs before the partition refinement algorithm (PGE06005/PGE06008), which assumes all branches are individually satisfiable.

@@ -8,6 +8,10 @@ updated: 2026-03-24
 
 # Pipeline Call Cycle Detection Algorithm
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/types -->
+
 Detects circular call chains among `{-}` pipelines within the same package. Polyglot has no recursion — no base case construct, no call stack, no termination mechanism. A circular call graph executes forever and is always a compile error ([[PGE09013-circular-pipeline-call|PGE09013]]).
 
 Cross-package cycles are excluded — those are caught by [[PGE09002-circular-package-dependency|PGE09002]] at the import level.

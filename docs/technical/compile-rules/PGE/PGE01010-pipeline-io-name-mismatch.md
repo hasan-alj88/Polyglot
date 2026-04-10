@@ -9,6 +9,9 @@ severity: error
 ### Rule 1.10 — Pipeline IO Name Mismatch
 `PGE01010`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Every `(-)` IO line under an `[-]` or `[=]` pipeline call must reference a parameter name declared in the target pipeline's IO section. An input (`<name`) or output (`>name`) that does not match any declared parameter is a compile error. This applies to both direct calls and parallel fork calls.
 **Rationale:** Typos and stale parameter names silently fail at runtime. Catching name mismatches at compile time prevents wiring bugs and makes refactoring safe — renaming a pipeline parameter immediately surfaces all call sites that need updating.
 **Detection:** The compiler resolves the target pipeline definition, enumerates its declared `<input` and `>output` parameters, and checks each `(-)` line's parameter name against that list. Any name not found in the declaration triggers PGE01010.

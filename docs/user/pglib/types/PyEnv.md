@@ -9,7 +9,7 @@ metadata_instance: "%#:PyEnv:N"
 
 # #PyEnv Struct
 
-<!-- @types -->
+<!-- @c:types -->
 
 Runtime environment handle produced by `-W.RT:Python:*` wrapper setup.
 

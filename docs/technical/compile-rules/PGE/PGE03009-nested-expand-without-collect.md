@@ -9,6 +9,10 @@ severity: error
 ### Rule 3.9 — Nested Expand Without Collect
 `PGE03009`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Every `=ForEach` expand operator must have a corresponding collector (`*Into`, `*Agg`, or `*Ignore`) within its own scope. A nested `=ForEach` inside another `=ForEach` without an intermediate collector for the inner expand is a compile error. If the inner expand's items are intentionally discarded, an explicit ignore collector must be used.
 **Rationale:** Expand/collect scopes do not nest transparently — inner items cannot flow upward to an outer collector. Without a paired collector, inner items have no defined destination. Requiring explicit pairing (including explicit ignore) prevents silent data loss and makes intent clear.
 **Detection:** The compiler tracks expand/collect scope depth. When a `=ForEach` is encountered, it opens a scope that must be closed by a corresponding collector before the scope exits or another expand begins at the same level. An unpaired expand triggers PGE03009.

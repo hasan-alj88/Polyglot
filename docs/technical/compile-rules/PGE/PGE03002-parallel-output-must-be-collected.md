@@ -9,6 +9,10 @@ severity: error
 ### Rule 3.2 — Parallel Output Must Be Collected
 `PGE03002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** If a `[=]` parallel pipeline produces any output variable, there must be a `(*)` collector (`*All`, `*First`, `*Nth`, `*Ignore`, etc.) that references it. An uncollected parallel output is a compile error. `*Ignore` explicitly discards unwanted outputs — it satisfies this rule without consuming the value. This rule does not apply to `[b]` fire-and-forget — `[b]` outputs are explicitly disallowed (see Rule 3.5, PGE03005).
 **Rationale:** Parallel output variables exist in an isolated scope until collected. Without a collector, the output is inaccessible and the parallel work is wasted. Requiring collection ensures every parallel pipeline's results are explicitly consumed or intentionally discarded via `*Ignore` (or the pipeline uses `[b]` if no output is needed at all).
 **Detection:** After parsing the full pipeline body, the compiler checks that every `[=]` output variable appears as a `(*) <<` input in a `(*)` collector block.

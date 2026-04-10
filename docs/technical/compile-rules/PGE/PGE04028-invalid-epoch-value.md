@@ -9,6 +9,9 @@ severity: error
 ### Rule 4.28 — Invalid Epoch Value
 `PGE04028`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A literal value assigned to `#DateTime.Instant.epoch` or passed as `<epoch#int` to `-DT.From.Epoch` must be within the representable epoch range. An epoch value outside the supported range triggers PGE04028. This only applies to literal values — runtime-computed values are validated at runtime.
 **Rationale:** Epoch seconds have a finite representable range determined by the target platform's integer width. Detecting out-of-range literals at compile time prevents integer overflow or undefined behavior at runtime.
 **Detection:** When the compiler encounters a literal integer assigned to `.Instant.epoch` or `<epoch`, it checks the value falls within the platform's representable range. The exact bounds are implementation-defined but must at minimum cover years 0001–9999 CE.

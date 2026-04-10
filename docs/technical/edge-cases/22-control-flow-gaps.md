@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-22.1: Exhaustiveness — `[?] *?` catch-all is mandatory when conditions are non-exhaustive
 
-<!-- @operators -->
+<!-- @u:operators -->
 **EBNF:** `conditional_chain ::= { conditional_branch } [ wildcard_branch ]` — wildcard required if set is non-exhaustive.
 
 **What it tests:** A conditional on a string/int value (open set) requires `*?`. Missing `*?` is a compile error. See [[operators#Comparison Operators]].
@@ -77,7 +77,7 @@ updated: 2026-03-30
 
 ### EC-22.4: `[^]` XOR logical operator
 
-<!-- @blocks:Logical -->
+<!-- @u:blocks:Logical -->
 **What it tests:** XOR condition — true when exactly one of two conditions holds. See [[blocks#Logical]].
 
 ```polyglot

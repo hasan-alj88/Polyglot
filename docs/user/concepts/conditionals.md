@@ -8,9 +8,9 @@ changes: "[+] is OR block — unified for both triggers and conditionals"
 
 # Conditionals
 
-<!-- @operators -->
-<!-- @blocks:Control Flow -->
-<!-- @blocks:Logical -->
+<!-- @u:operators -->
+<!-- @u:blocks:Control Flow -->
+<!-- @u:blocks:Logical -->
 
 Conditionals in Polyglot Code use `[?]` block elements to branch execution based on comparisons. Each branch is a standalone test — there is no "subject" line that introduces a value to match against. See [[operators#Comparison Operators]] for the full operator table and [[blocks#Control Flow]] for marker reference.
 
@@ -88,7 +88,7 @@ Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the f
 
 ### Match Syntax
 
-<!-- @EBNF:match_line -->
+<!-- @u:EBNF:match_line -->
 
 When every `[?]` arm performs the same operation — mapping one value to another — use match syntax. Match nests `[?]` arms under a `[-] $source >> $target` header:
 

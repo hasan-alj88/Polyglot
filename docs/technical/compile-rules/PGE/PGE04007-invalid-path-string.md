@@ -9,6 +9,10 @@ severity: error
 ### Rule 4.7 — Invalid Path String
 `PGE04007`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:concepts/errors -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A string literal assigned to a `#path` subfield (`.Unix` or `.Windows`) must be a syntactically valid path for that OS. Invalid characters, malformed syntax (e.g., double separators, illegal characters in filenames), or structurally impossible paths trigger PGE04007. This applies to both explicit subfield assignment and path interpolation contexts.
 **Rationale:** Path strings are not arbitrary strings — they must conform to OS filesystem rules. Catching invalid paths at compile time prevents runtime filesystem errors and surfaces typos or copy-paste mistakes early.
 **Detection:** When the compiler encounters a string literal being pushed into a `.Unix` or `.Windows` subfield of a `#path` typed variable, it validates the string against the target OS's path rules. For `.Unix`: no null bytes, no double `//` (except root). For `.Windows`: no `<>|"*?` characters in names, valid drive letter or UNC prefix.

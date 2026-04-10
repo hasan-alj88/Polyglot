@@ -7,9 +7,9 @@ status: complete
 
 # Operators
 
-<!-- @variable-lifecycle -->
-<!-- @io -->
-<!-- @collections -->
+<!-- @c:variable-lifecycle -->
+<!-- @u:io -->
+<!-- @u:collections -->
 
 ## Assignment Operators
 

@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-2.1: Indentation depth — deeply nested scopes
 
-<!-- @line-structure -->
+<!-- @u:line-structure -->
 **EBNF:** `indent ::= { "   " }` — unlimited nesting via 3-space repetition.
 
 **What it tests:** 4+ levels of indentation (package -> pipeline -> expand -> conditional -> error). See [[line-structure]].
@@ -34,7 +34,7 @@ updated: 2026-03-30
 
 ### EC-2.2: Bool literals
 
-<!-- @types -->
+<!-- @c:types -->
 **EBNF:** `bool_literal ::= "#Boolean.True" | "#Boolean.False"` — booleans are data references, not keywords.
 
 **What it tests:** Bool values are `#Boolean.True` / `#Boolean.False` (not `true`/`false`). See [[syntax/types/INDEX|types]].

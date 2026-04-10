@@ -9,6 +9,10 @@ severity: warning
 ### Rule 9.1 — Deprecated Pipeline Reference
 `PGW09001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Referencing a pipeline whose `%deprecated` metadata is `true` emits a compile warning. If the pipeline's `%deprecatedMessage` field is set, the warning includes it. This applies to all call forms: `[-]`, `[=]`, and chain (`->`) references, whether local or imported via `@alias`.
 **Rationale:** Deprecated pipelines still compile and run, but should be phased out. Surfacing deprecation at compile time — with an actionable message when available — guides developers toward replacements without breaking builds.
 **Detection:** After the compiler resolves a pipeline reference (PGE09003/PGE09004), it checks the target pipeline's `%deprecated` metadata. If `true`, PGW09001 fires. The warning message includes `%deprecatedMessage` if present, otherwise a generic "pipeline is deprecated" note.

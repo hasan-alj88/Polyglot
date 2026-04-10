@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-19.1: `*Into.Serial` — uses `<key` and `<value` (not `<item`)
 
-<!-- @collections:Collect Operators -->
+<!-- @u:collections:Collect Operators -->
 **EBNF:** `collect_operator ::= "Into.Serial"` with IO `<key`, `<value`, `>Serial`
 
 **What it tests:** `*Into.Serial` takes separate key and value inputs, not a single `<item`. See [[concepts/collections/collect#Collect Operators]].
@@ -74,7 +74,7 @@ updated: 2026-03-30
 
 ### EC-19.4: `[b]` collector inside expand — fire-and-forget per item
 
-<!-- @blocks:Execution -->
+<!-- @u:blocks:Execution -->
 **What it tests:** `[b]` execution marker on a collector invocation — fires without waiting for result. See [[blocks#Execution]], [[concepts/collections/collect#Collect Operators]].
 
 ```polyglot

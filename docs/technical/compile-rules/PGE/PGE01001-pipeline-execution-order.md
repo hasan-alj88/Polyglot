@@ -9,6 +9,10 @@ severity: error
 ### Rule 1.1 — Pipeline Section Misordering
 `PGE01001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A `{-}` pipeline's sections must appear in fixed order: `(-),[T]` → `[Q]` → setup → execution body → cleanup. If all required sections are present but in the wrong order, it is a compile error. Missing sections are caught by PGE01005 (trigger), PGE01006 (queue), and PGE01007 (setup/cleanup). An empty execution body produces PGW01001.
 **Rationale:** Fixed section order guarantees that setup resources are always available before the execution body runs and always released after — preventing resource leaks and undefined state regardless of concurrent instance activity.
 **Detection:** After confirming all required sections are present (via PGE01005/106/107), the compiler checks that they appear in the correct order.

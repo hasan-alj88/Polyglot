@@ -9,7 +9,7 @@ severity: error
 ### Rule 1.32 — Missing Trigger Boolean Output
 `PGE01032`
 
-<!-- @brainstorming:marker-declarations §4 Rule G -->
+<!-- @c:brainstorming:marker-declarations §4 Rule G -->
 
 **Statement:** Every `{T}` trigger definition must include an output `>IsTriggered#bool`. The output must exist and its type must be `#bool`. Additional outputs are allowed — they wire into the execution pipeline's inputs, supplying data alongside the fire signal.
 **Rationale:** `>IsTriggered#bool` is the universal trigger contract. Every trigger must produce a boolean signal indicating whether the triggering condition was met. Without it, the pipeline has no way to know if it should execute. The type must be `#bool` (not `#string` or other types) to ensure unambiguous boolean semantics.

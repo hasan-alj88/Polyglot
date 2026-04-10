@@ -9,6 +9,12 @@ severity: error
 ### Rule 4.9 — Unhandled Serial→Struct Conversion
 `PGE04009`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:concepts/errors -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** When a `serial` value is pushed into a `struct`-typed target and the compiler cannot statically prove that the serial's fields satisfy the struct's schema, the push must be wrapped in `[!]` error handling with `<! fallback`. If the error handling is absent, the compiler raises PGE04009.
 **Rationale:** Murphy's Law — if a serial→struct conversion can fail, it will fail. Serial is unconstrained; struct has a fixed schema. When the compiler cannot guarantee compatibility, the user must handle the mismatch explicitly. This ensures every uncertain conversion has a recovery path with a known-good fallback value. No warnings, no hoping for the best.
 **Detection:** The compiler identifies every assignment where a `#serial` source flows into a `#StructType` target. If the serial's fields are all statically known and provably match → no action needed. If the serial's fields are all statically known and provably wrong → PGE04002. Otherwise (partial knowledge, dynamic origin, conditional fields), the compiler checks for an enclosing `[!]` block with `<! fallback`. Absent → PGE04009.

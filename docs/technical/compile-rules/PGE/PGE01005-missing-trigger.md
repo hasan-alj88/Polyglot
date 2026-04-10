@@ -10,6 +10,8 @@ split_from: PGE01001
 ### Rule 1.5 — Missing Pipeline Trigger
 `PGE01005`
 
+<!-- @u:syntax/blocks -->
+
 **Statement:** Every `{-}` pipeline must contain a `[T]` trigger section. A pipeline without a trigger has no way to start execution and is a compile error.
 **Rationale:** The trigger defines what event initiates the pipeline. Without it, the pipeline cannot be invoked — it would exist as dead code with no entry point.
 **Detection:** The compiler checks that every `{-}` block contains exactly one `[T]` section.

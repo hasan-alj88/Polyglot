@@ -9,7 +9,7 @@ metadata_instance: "%#:Record:N"
 
 # Record (##Record)
 
-<!-- @types -->
+<!-- @c:types -->
 
 Enum-keyed collection with typed value fields. `##Record` is a parameterized schema that stamps one field per enum variant. Previously `#Map` / `##Map`.
 

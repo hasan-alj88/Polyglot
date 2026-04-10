@@ -6,8 +6,8 @@ updated: 2026-03-30
 
 # Polyglot Language Reference
 
-<!-- @vision:Core Philosophy -->
-<!-- @glossary:Polyglot Code -->
+<!-- @c:vision:Core Philosophy -->
+<!-- @c:glossary:Polyglot Code -->
 <!-- @audit/README -->
 
 Read the files below in order to learn how to write Polyglot Code. The progression builds from syntax fundamentals through core concepts to the unified tree that connects everything.

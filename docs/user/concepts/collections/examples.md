@@ -78,7 +78,7 @@ Expand a map of ticker->price pairs, multiply each price by 1.1 using `-Math.Mul
 
 ## Fallback in Expand Context
 
-<!-- @errors:Error Fallback Operators -->
+<!-- @u:errors:Error Fallback Operators -->
 When a pipeline call inside an expand scope may error, use `(>) <!` fallback to provide a default value per iteration instead of failing the entire expand:
 
 ```polyglot

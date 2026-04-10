@@ -7,7 +7,7 @@ status: complete
 
 # Collection Types
 
-<!-- @types -->
+<!-- @c:types -->
 
 Polyglot provides three collection schemas and one unconstrained type: `##Record`, `##Array`, `##Dataframe`, and `#Serial`. All are available in every `.pg` file without `[@]` import.
 

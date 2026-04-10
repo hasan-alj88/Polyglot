@@ -9,7 +9,7 @@ metadata_instance: "%#:Dataframe:N"
 
 # #Dataframe Collection
 
-<!-- @types -->
+<!-- @c:types -->
 
 Two-level tabular collection. Level 1 is range-indexed rows (like `##Array`). Level 2 is a `##Record` keyed by column enum. Access: `$df<row<column`.
 

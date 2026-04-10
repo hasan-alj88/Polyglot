@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-4.1: Element-typed array — basic type
 
-<!-- @types:Element-Typed Arrays -->
+<!-- @u:types:Element-Typed Arrays -->
 **EBNF:** `array_type ::= "array" [ fixed_sep element_type ]`
 
 **What it tests:** `array.string`, `array.int`, `array.path` — dot separates array from element type. See [[syntax/types/arrays#Element-Typed Arrays]].

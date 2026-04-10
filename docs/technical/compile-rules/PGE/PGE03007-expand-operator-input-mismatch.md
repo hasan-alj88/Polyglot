@@ -9,6 +9,10 @@ severity: error
 ### Rule 3.7 — Expand Operator Input Mismatch
 `PGE03007`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Each expand operator (`=ForEach.*`) requires specific IO inputs and outputs. If the provided IO does not match the operator's signature, PGE03007 fires.
 **Rationale:** Expand operators iterate over specific collection shapes. Providing the wrong input type (e.g., a serial to `=ForEach.Array`) would produce undefined iteration behavior. Compile-time validation ensures the data shape matches the operator.
 **Detection:** The compiler checks the `(=)` IO lines under the expand operator against the required signature:

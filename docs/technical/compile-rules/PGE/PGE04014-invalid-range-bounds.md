@@ -9,6 +9,11 @@ severity: error
 ### Rule 4.12 — Invalid Range Bounds
 `PGE04013`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A range expression where both bounds are literals and the lower bound exceeds the upper bound is a compile error. For inclusive ranges `?[lo,hi]`, `lo > hi` is invalid. For exclusive ranges `?(lo,hi)`, `lo >= hi` is invalid. Mixed ranges follow accordingly: `?[lo,hi)` requires `lo < hi`; `?(lo,hi]` requires `lo < hi`.
 **Rationale:** An inverted range creates an empty set that can never be satisfied — no value is simultaneously above the lower bound and below the upper bound. This is always a mistake and produces dead conditional branches. Catching it at compile time prevents silent logic errors.
 **Detection:** The compiler evaluates range bounds when both are numeric literals. If the resulting range is empty (lower exceeds upper given the inclusivity), the range is rejected. Ranges with variable bounds are excluded from this check.

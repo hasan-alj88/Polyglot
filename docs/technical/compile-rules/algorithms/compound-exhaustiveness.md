@@ -8,6 +8,8 @@ prerequisite: PGE06013
 
 # Compound Condition Partition Refinement Algorithm
 
+<!-- @u:syntax/types -->
+
 Determines whether compound conditional branches (`[&]` AND, `[+]` OR, `[^]` XOR) are collectively exhaustive (PGE06008) and mutually exclusive (PGE06005).
 
 ## Inputs

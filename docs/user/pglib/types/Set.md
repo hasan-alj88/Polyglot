@@ -8,7 +8,7 @@ redirect: pglib/types/Array
 
 # #Set (Retired)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `#Set` and `##Set` have been retired. Use `#Array` with `%###Unique << #True` instead.
 

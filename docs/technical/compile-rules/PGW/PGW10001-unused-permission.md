@@ -9,6 +9,11 @@ severity: warning
 ### Rule 9.3 — Unused Permission
 `PGW10001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** A `[_]` reference to a `{_}` permission object in a pipeline that is never exercised by any IO call in its call graph is flagged with a warning. The reference is dead — the `{_}` object grants capabilities that are never used.
 **Rationale:** Unused permission references indicate incomplete refactoring (an IO call was removed but the `[_]` reference was left behind) or over-broad permission requests. While not a correctness error, unused references make a pipeline's declared IO footprint misleading — auditing permissions becomes harder when references do not match actual IO usage. This is analogous to PGW09002 (unused import).
 **Detection:** The compiler traces the call graph from each `{-}` pipeline definition. For each `[_] _ObjectName` reference, it resolves the `{_}` definition and checks whether any call in the graph exercises at least one capability granted by that object. If no call matches any capability in the referenced `{_}` object, PGW10001 fires on that `[_]` line.

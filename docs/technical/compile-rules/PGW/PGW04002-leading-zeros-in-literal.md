@@ -9,6 +9,9 @@ severity: warning
 ### Rule 4.2w — Leading Zeros in Literal
 `PGW04002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** An `int` or `float` literal with unnecessary leading zeros produces a warning. Polyglot has no octal notation — `007` is decimal seven, not octal seven — but leading zeros may confuse developers familiar with languages that use `0`-prefixed octal.
 **Rationale:** Leading zeros are syntactically valid per the EBNF but can cause confusion. The value is always interpreted as decimal. This warning encourages clearer literal formatting.
 **Detection:** The compiler checks if an `int` or `float` literal starts with `0` followed by additional digits (excluding `0.` for floats, which is normal notation).

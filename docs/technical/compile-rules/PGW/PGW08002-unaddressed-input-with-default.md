@@ -9,6 +9,10 @@ severity: warning
 ### Rule 8.8w — Unaddressed Input With Default
 `PGW08002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** A declared `<input` with a default value (`<~`) that the caller does not wire triggers a warning. The diagnostic message includes the default value so the caller can confirm it is acceptable. This warning is suppressible. Applies to sequential pipeline (`[-]`), parallel pipeline (`[=]`), expand operator (`(=)`), collect operator (`(*)`), and wrapper (`[W]`) calls.
 **Rationale:** Default values are set by the pipeline author as sensible fallbacks — but callers may not be aware of what default they are implicitly accepting. Surfacing the default value in the warning gives the caller the information to either accept it (and suppress the warning) or wire an explicit value.
 **Detection:** The compiler resolves the called pipeline's `(-)` declarations. For each `<input` that has a default (`<~`) and no corresponding wiring line from the caller, PGW08002 fires with the default value in the message.

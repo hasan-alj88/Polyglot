@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Flat"
 
 # ##Flat Schema
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Flat` constrains a type to one level of flexible `:` children. Both `##Flat` and `##Scalar` set `Depth.Max=1`, but `##Flat` applies to types with flexible `:` children while `##Scalar` applies to types with fixed `.` children.
 

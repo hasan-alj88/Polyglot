@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-15.1: `[%]` user-declared fields in pipeline
 
-<!-- @blocks:Metadata -->
+<!-- @u:blocks:Metadata -->
 **EBNF:** `metadata_line ::= "[%]" fixed_sep name [ type_annotation ] [ "<<" value_expr ]`
 
 **What it tests:** `[%]` lines appear before `[T]` (position 0). Fixed fields `.description`, `.version`, `.authors` assigned via `<<`. See [[blocks#Metadata]].
@@ -84,7 +84,7 @@ updated: 2026-03-30
 
 ### EC-15.4: `live` metadata accessor — `%` on pipeline, variable, data
 
-<!-- @types:Live Type Modifier -->
+<!-- @u:types:Live Type Modifier -->
 **EBNF:** `metadata_access ::= identifier '%' name`
 
 **What it tests:** `%` accessor reads live runtime fields. Read-only — no assignment. See [[syntax/types/hierarchy#Live Type Modifier]], [[identifiers]].

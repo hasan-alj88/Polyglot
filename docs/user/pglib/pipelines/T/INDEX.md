@@ -7,14 +7,14 @@ status: complete
 
 # -T.* Trigger Pipelines
 
-<!-- @pipelines -->
+<!-- @c:pipelines -->
 Triggers are placed on `[T]` lines inside `{-}` pipeline definitions. No `[@]` import needed. See [[concepts/pipelines/io-triggers#Triggers]] for trigger usage rules.
 
 **PRIMITIVE** — Trigger pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
 
 ## Permissions
 
-<!-- @permissions -->
+<!-- @c:permissions -->
 Most triggers require no permissions. IO-touching triggers require a `{_}` permission object granting the listed capabilities. See [[permissions]] for the permission system and [[errors#Built-in Error Namespaces]] for `!Permission.*` errors.
 
 | Pipeline | Required Capability | Category |

@@ -9,17 +9,17 @@ status: draft
 
 # Polyglot Code — EBNF Grammar
 
-<!-- @line-structure -->
-<!-- @blocks -->
-<!-- @identifiers -->
-<!-- @types -->
-<!-- @operators -->
-<!-- @io -->
-<!-- @packages -->
-<!-- @comments -->
-<!-- @pipelines -->
-<!-- @collections -->
-<!-- @variable-lifecycle -->
+<!-- @u:line-structure -->
+<!-- @c:blocks -->
+<!-- @c:identifiers -->
+<!-- @c:types -->
+<!-- @u:operators -->
+<!-- @u:io -->
+<!-- @c:packages -->
+<!-- @u:comments -->
+<!-- @c:pipelines -->
+<!-- @u:collections -->
+<!-- @c:variable-lifecycle -->
 This document defines the complete formal grammar for Polyglot Code (`.pg` files) using Extended Backus-Naur Form (EBNF). Each section maps to spec files: [[line-structure]], [[blocks]], [[identifiers]], [[syntax/types/INDEX|types]], [[operators]], [[io]], [[packages]], [[comments]], [[concepts/pipelines/INDEX|pipelines]], [[concepts/collections/INDEX|collections]], [[variable-lifecycle]]. For edge case testing, see [[technical/edge-cases/INDEX|EDGE-CASES]].
 
 ## Notation Conventions

@@ -8,7 +8,7 @@ updated: 2026-03-30
 
 ## Collect Operators (`*`)
 
-<!-- @io:Direct Output Port Writing -->
+<!-- @u:io:Direct Output Port Writing -->
 Collect operators gather outputs from mini-pipelines back into a single value, accessible **one level up** from the [[concepts/collections/expand|expand]] scope. Multiple collectors can operate within the same expand scope.
 
 Collector invocation uses an execution marker (`[-]` sequential, `[=]` parallel) — just like expand operators. Collector IO lines use `(*)` (matching the `*` operator prefix) — see [[io#IO Line Pattern]]. Collectors can write directly to pipeline output ports — see [[io#Direct Output Port Writing]].
@@ -62,7 +62,7 @@ flowchart LR
 
 ## Collect-All & Race Collectors
 
-<!-- @io:Wait and Collect-Into Markers -->
+<!-- @u:io:Wait and Collect-Into Markers -->
 Collect-all and race collectors operate **outside** expand scopes — they work on variables produced by parallel `[=]` pipeline calls. They use `(*) <<` (wait input) and `(*) >>` (collect output) forms (see [[io#Wait and Collect IO]]).
 
 ```mermaid

@@ -10,8 +10,8 @@ updated: 2026-03-30
 
 ### EC-3.1: Package address — all components present
 
-<!-- @packages -->
-<!-- @identifiers -->
+<!-- @c:packages -->
+<!-- @c:identifiers -->
 **EBNF:** `package_address ::= registry_type flex_sep registry_id fixed_sep package_name { fixed_sep sub_package } [ flex_sep version ]`
 
 **What it tests:** Full address with subpackage and 4-segment version. See [[packages]], [[identifiers]].
@@ -40,7 +40,7 @@ updated: 2026-03-30
 
 ### EC-3.4: Cross-package enum reference
 
-<!-- @types:Enum Fields -->
+<!-- @u:types:Enum Fields -->
 **EBNF:** `cross_pkg_enum ::= '@' name '#' dotted_name`
 
 **What it tests:** Referencing an enum value from an imported package: `@alias#DataName.EnumField`. See [[syntax/types/structs#Enum Fields vs Value Fields]].
@@ -62,7 +62,7 @@ updated: 2026-03-30
 
 ### EC-3.6: Flexible-field variable paths
 
-<!-- @identifiers:Serialized Identifiers -->
+<!-- @u:identifiers:Serialized Identifiers -->
 **EBNF:** `field_path ::= name { field_separator name }` with `flex_sep ::= ':'`
 
 **What it tests:** Variables with `:` flexible field separators. See [[identifiers#Serialized Identifiers]].
@@ -74,7 +74,7 @@ updated: 2026-03-30
 
 ### EC-3.7: Sibling homogeneity violation (INVALID)
 
-<!-- @identifiers:Serialization Rules -->
+<!-- @u:identifiers:Serialization Rules -->
 **EBNF:** Semantic rule — all siblings must use same separator. See [[identifiers#Serialization Rules]].
 
 **What it tests:** Mixing `.` and `:` at same level is rejected.

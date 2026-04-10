@@ -8,7 +8,7 @@ metadata_definition: "%definition.###:Enum"
 
 # ###Enum Field Type
 
-<!-- @types -->
+<!-- @c:types -->
 
 `###Enum` classifies a leaf node as a variant selector. The field is declared WITHOUT a type annotation in the `{#}` block: `[.] .VariantName`. Exactly one variant is active at a time.
 

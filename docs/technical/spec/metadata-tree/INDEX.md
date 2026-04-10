@@ -6,9 +6,9 @@ updated: 2026-04-03
 
 # Metadata Tree Specification
 
-<!-- @user/concepts/data-is-trees -->
-<!-- @user/concepts/metadata -->
-<!-- @EBNF -->
+<!-- @c:user/concepts/data-is-trees -->
+<!-- @c:user/concepts/metadata -->
+<!-- @u:EBNF -->
 
 This document formally specifies the `%` metadata tree — the unified structure that organizes all Polyglot objects. For the user-friendly introduction, see [[data-is-trees|user/concepts/data-is-trees]]. For field listings and access patterns, see [[metadata|user/concepts/metadata]].
 

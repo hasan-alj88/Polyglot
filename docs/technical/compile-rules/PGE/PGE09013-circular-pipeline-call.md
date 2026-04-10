@@ -9,6 +9,10 @@ severity: error
 ### Rule 9.14 — Circular Pipeline Call
 `PGE09013`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Pipelines within the same package must not call each other in a cycle — directly or transitively. Self-calls and mutual call loops are compile errors.
 **Rationale:** Polyglot has no recursion mechanism — no base case construct, no call stack, and no way to terminate a recursive cycle. A circular call graph would execute forever. Cross-package call cycles are already caught by PGE09002 (circular package dependency); this rule covers intra-package cycles.
 **Detection:** The compiler builds a directed call graph: each `{-}` pipeline in the package is a node, each `[-]`/`[=]`/`[b]` reference to another same-package pipeline is an edge. A topological sort is attempted — if it fails, a cycle exists. The diagnostic reports the full cycle path (e.g., `-A → -B → -C → -A`). Cross-package calls are excluded (covered by PGE09002).

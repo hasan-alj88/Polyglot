@@ -6,8 +6,8 @@ updated: 2026-03-31
 
 # Metadata
 
-<!-- @glossary:Polyglot Service -->
-<!-- @data-is-trees -->
+<!-- @c:glossary:Polyglot Service -->
+<!-- @c:data-is-trees -->
 
 Every Polyglot object carries metadata — descriptive fields you declare and runtime fields the system manages. You interact with metadata through two mechanisms:
 

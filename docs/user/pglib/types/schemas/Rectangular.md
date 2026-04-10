@@ -8,7 +8,7 @@ redirect: schema-properties
 
 # ##Rectangular Schema (Retired)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Rectangular` has been retired. The properties it bundled are now stated directly on each type definition using individual `%##` property assignments.
 

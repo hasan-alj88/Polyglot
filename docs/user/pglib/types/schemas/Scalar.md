@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Scalar"
 
 # ##Scalar Schema
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Scalar` constrains a type to one level of fixed `.` children. This is the most common schema for simple types with named fields.
 

@@ -9,6 +9,10 @@ severity: error
 ### Rule 5.1 — Sibling Separator Homogeneity
 `PGE05001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** All sibling fields at the same nesting level must use the same separator. Mixing `.` (fixed) and `:` (flexible) separators among siblings is a compile error. This applies to `{#}` data definitions, `$` variable field access, and any serialized identifier path. Different nesting levels may use different separators — the rule is per-level only.
 **Rationale:** Each separator carries semantic meaning — `.` means a closed, compile-time-known key set; `:` means an open, runtime-extensible key set. Mixing them at the same level creates ambiguity: is the level fixed or flexible? Enforcing homogeneity per level keeps the schema model unambiguous.
 **Detection:** The compiler groups sibling fields by their parent path and checks that all siblings share the same separator. If any sibling uses a different separator than its peers, PGE05001 fires.

@@ -9,6 +9,11 @@ severity: error
 ### Rule 6.10 — Empty Conditional Scope
 `PGE06010`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** Every `[?]` branch must contain at least one executable statement (`[-]`, `[=]`, `[b]`, or nested `[?]`). A `[?]` branch with only comments or no body at all is a compile error. Use `[-] -DoNothing` to explicitly mark an intentionally empty branch.
 **Rationale:** An empty conditional branch is almost always an authoring mistake — the developer intended to add logic but forgot. Unlike an empty pipeline body (PGW01001, warning), a conditional branch is a targeted decision point: if the developer wrote the condition, they intended an action. Requiring `-DoNothing` makes the "do nothing" intent explicit and self-documenting.
 **Detection:** The compiler checks the body of every `[?]` branch (including `[?] *?` catch-all). If no executable statement is found, PGE06010 fires.

@@ -9,6 +9,11 @@ severity: error
 ### Rule 9.17 — Unknown Permission Category
 `PGE10003`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/packages -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** A `{_}` permission object's `[.]` field lines must use a known `category_name.capability_name` pair. Polyglot defines exactly 8 permission categories with fixed capabilities (see [[permissions#Per-Category Capability Enums]]). If a `[.]` field line references a category or capability not in the predefined set, PGE10003 fires.
 **Rationale:** Permission categories are Polyglot-defined, not user-extensible. An unknown category would create a permission that no IO operation can consume — it cannot grant or restrict anything. Catching this at compile time prevents silent misconfiguration where a developer believes they have granted a capability that does not exist.
 **Detection:** The compiler parses each `[.] .Category.Capability` field line in `{_}` blocks and checks against the known set: File (Read, Write, Execute, Delete), Web (Request, Socket), Database (Connect, Read, Write), System (Env, Process, Signal), Crypto (Key, Sign, Encrypt), IPC (Send, Receive, Subscribe), Device (Camera, Microphone, Location, Bluetooth), Memory (Allocate, Shared). If the category or capability is not in this set, PGE10003 fires.

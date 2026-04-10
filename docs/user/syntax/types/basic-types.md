@@ -20,7 +20,7 @@ All Polyglot data is serialized strings. The type system is a schema layer on to
 
 ### Layer 1: #String — The Foundation Type
 
-<!-- @types -->
+<!-- @c:types -->
 What `#string` refers to is `#String` — a struct built on `RawString`:
 
 ```polyglot

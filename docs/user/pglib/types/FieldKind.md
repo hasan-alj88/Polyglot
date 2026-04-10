@@ -9,7 +9,7 @@ metadata_instance: "%#:FieldKind:N"
 
 # #FieldKind Enum
 
-<!-- @types -->
+<!-- @c:types -->
 
 Runtime `##Enum` type available in every `.pg` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
 

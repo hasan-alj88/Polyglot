@@ -9,6 +9,11 @@ severity: error
 ### Rule 4.1 — Type Mismatch
 `PGE04001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** Pushing a value into a variable or parameter whose declared type differs from the value's type is a compile error. This applies to all assignment operators (`<<`, `>>`, `<~`, `~>`), IO wiring (`(-)`), collector output (`(*) >>`), and race collector inputs (`(*) <<`). There are no implicit coercions — `int` does not auto-promote to `float`, `string` does not coerce to `path`, etc.
 
 Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same type" means "same schema" (structural matching, not nominal).

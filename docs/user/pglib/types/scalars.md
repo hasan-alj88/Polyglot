@@ -9,7 +9,7 @@ metadata_instance: "%#:String:int"
 
 # Scalar Subtypes
 
-<!-- @types -->
+<!-- @c:types -->
 
 Scalars are `#` types that compose the `##String` parameterized schema — regex constraints on `#String`. A `##` schema describes a property of a struct; it lives at `%##` on the metadata tree. `{#}` can define any tier of the `#`/`##`/`###` prefix system.
 

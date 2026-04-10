@@ -10,6 +10,8 @@ split_from: PGE06001
 ### Rule 6.6 — String Exhaustiveness
 `PGE06006`
 
+<!-- @u:syntax/blocks -->
+
 **Statement:** A `[?]` conditional branching on a `string` value must include a `[?] *?` catch-all branch. String values are an open set — the compiler cannot know all possible values at compile time, so static exhaustiveness proof is impossible.
 **Rationale:** Strings are unbounded. Unlike enums (PGE06002) or numeric ranges (PGE06003), the compiler cannot verify that all string values are covered by listed branches. The `*?` catch-all is the only way to guarantee exhaustiveness.
 **Detection:** When a `[?]` block branches on a `string`-typed variable, the compiler checks for a `[?] *?` branch. If absent, PGE06006 fires.

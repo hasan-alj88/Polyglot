@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-8.1: Inline data — multiple elements
 
-<!-- @types:Inline Data Shorthand -->
+<!-- @u:types:Inline Data Shorthand -->
 **EBNF:** `inline_data ::= '{' value_expr { ',' value_expr } '}'`
 
 **What it tests:** Non-empty inline data with mixed types. See [[syntax/types/structs#Inline Data Shorthand]].
@@ -32,7 +32,7 @@ updated: 2026-03-30
 
 ### EC-8.3: String interpolation
 
-<!-- @types:String Interpolation -->
+<!-- @u:types:String Interpolation -->
 **EBNF:** `interpolation ::= '{' variable_id '}'`
 
 **What it tests:** Variable interpolation inside string literals using `{$var}` syntax. See [[syntax/types/strings#String Interpolation]].
@@ -46,7 +46,7 @@ updated: 2026-03-30
 
 ### EC-8.4: Default assignment to discard (INVALID)
 
-<!-- @EBNF:assign_target -->
+<!-- @u:EBNF:assign_target -->
 **EBNF:** `assign_target ::= ... | "$*"` — discard accepts final operators only (`<<`, `>>`).
 
 **What it tests:** `$*` is immediately released — setting a default (`<~`/`~>`) implies the value persists for later override, which is meaningless for a discard. See [[technical/compile-rules/PGE/PGE02010-discard-default-assignment|PGE02010]].
@@ -69,7 +69,7 @@ updated: 2026-03-30
 
 ### EC-8.5: Self-assignment via output params (INVALID)
 
-<!-- @EBNF:assignment_expr -->
+<!-- @u:EBNF:assignment_expr -->
 **EBNF:** `assign_target ::= ... | output_param` and `value_expr ::= ... | output_param`
 
 **What it tests:** Same output parameter on both sides of an assignment within the same operation scope — no state change. See [[technical/compile-rules/PGE/PGE08011-self-assignment|PGE08011]].
@@ -87,7 +87,7 @@ updated: 2026-03-30
 
 ### EC-8.6: Variable self-assignment (INVALID)
 
-<!-- @EBNF:assignment_expr -->
+<!-- @u:EBNF:assignment_expr -->
 **EBNF:** `assign_target ::= ... | typed_variable` and `value_expr ::= ... | identifier`
 
 **What it tests:** Same variable on both sides of an assignment — a no-op. See [[technical/compile-rules/PGE/PGE08011-self-assignment|PGE08011]].

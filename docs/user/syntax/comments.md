@@ -7,8 +7,8 @@ status: draft
 
 # Comments
 
-<!-- @blocks -->
-<!-- @line-structure -->
+<!-- @c:blocks -->
+<!-- @u:line-structure -->
 Bracket comments replace `//` entirely. Comment brackets follow the same [[line-structure]] rules (3-space indentation, one per line). See [[blocks#Comments]] for the `[ ]` block element and [[blocks]] `{ }` for definition-level comments.
 
 | Syntax | Type | Context |

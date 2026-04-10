@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 ### EC-16.1: Trigger that produces outputs — IO declared before trigger, wired inside
 
-<!-- @pipelines:Triggers -->
+<!-- @u:pipelines:Triggers -->
 **EBNF:** `trigger_io_section ::= { indent ( io_decl_line | error_decl_line | comment_line ) NEWLINE } { indent ( trigger_line | comment_line ) NEWLINE }`
 
 **What it tests:** IO must be declared **before** the trigger that pushes into it. Trigger outputs wired via indented `(-)` lines. See [[concepts/pipelines/io-triggers#Triggers]].

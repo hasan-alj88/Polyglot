@@ -9,6 +9,10 @@ severity: error
 # Rule 10.2 — Invalid Inline Pipeline Argument
 `PGE12002`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** When an inline pipeline call `-Foo"arg"` targets a pipeline that declares `.inlineFormat#array:RawString` metadata, the inline string argument must match at least one of the declared regex patterns. If no pattern matches, the call is a compile error.
 **Rationale:** Inline pipeline arguments have format requirements specific to the target pipeline (e.g., `-T.Daily` expects a time string, `-T.Webhook` expects a URL path). The `.inlineFormat` metadata makes these requirements machine-checkable. Catching format errors at compile time prevents runtime failures from malformed arguments. The `.inlineExamples` metadata provides human-readable guidance in the error message.
 **Detection:** The compiler reads `.inlineFormat` from the target pipeline's `[%]` metadata. If present, it tests the inline string against each regex pattern. If none match, the call is rejected. The error message includes `.inlineExamples` values if declared. If `.inlineFormat` is absent, no validation occurs (see PGW12001).

@@ -8,7 +8,7 @@ metadata_definition: "%definition.###:Value"
 
 # ###Value Field Type
 
-<!-- @types -->
+<!-- @c:types -->
 
 `###Value` classifies a leaf node that holds typed data. The field is declared with a type annotation in the `{#}` block using `[.] .fieldName#type`.
 

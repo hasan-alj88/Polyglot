@@ -9,6 +9,11 @@ severity: error
 ### Rule 7.6 — Unused Error Declaration
 `PGE07006`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+
 **Statement:** An `(-) !ErrorName` error declaration in a pipeline's IO section must have a corresponding `[!] >> !ErrorName` raise in the pipeline's execution body. Declaring an error that is never raised is a compile error — the pipeline's error tree must accurately reflect its behavior.
 **Rationale:** Error declarations are a contract. If a pipeline declares it can raise `!Validation.Empty` but never does, callers write dead error handling code for an impossible case. This wastes effort and misleads readers about the pipeline's actual failure modes. Keeping declarations in sync with raises ensures the error tree is trustworthy.
 **Detection:** The compiler collects all `(-) !ErrorName` declarations in the pipeline's IO section and all `[!] >> !ErrorName` raises in the execution body. Any declaration without a matching raise triggers PGE07006.

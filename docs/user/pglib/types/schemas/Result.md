@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Result"
 
 # ##Result Schema (Parameterized)
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Result` is a parameterized schema that creates a two-branch structure: `.Ok` holding a success value, or `.Err` holding an error value. Exactly one branch is active at any time.
 

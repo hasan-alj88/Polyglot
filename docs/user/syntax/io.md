@@ -7,9 +7,9 @@ status: draft
 
 # IO Parameters
 
-<!-- @operators -->
-<!-- @pipelines -->
-<!-- @identifiers -->
+<!-- @u:operators -->
+<!-- @c:pipelines -->
+<!-- @c:identifiers -->
 Input and output parameters bind data into and out of operators. IO labels are [[identifiers#Serialized Identifiers]]. Assignment uses [[operators]] (`<<`, `>>`, `<~`, `~>`). For how IO assignment mode controls pipeline triggering, see [[concepts/pipelines/io-triggers#IO as Implicit Triggers]]. IO ports live as nested typed sections in the metadata tree at `%-:{name}:{instance}.<` (inputs) and `.>` (outputs) — see [[data-is-trees#IO Ports — Nested Typed Sections]].
 
 ## IO Labels
@@ -60,7 +60,7 @@ IO inputs with no assignment must be filled externally and are in Final state wh
 
 ## Error Declaration
 
-<!-- @errors:Declaring Pipeline Errors -->
+<!-- @u:errors:Declaring Pipeline Errors -->
 Pipelines that can raise errors declare them in the IO section using `(-) !ErrorName`:
 
 ```polyglot
@@ -74,7 +74,7 @@ Error declarations use the same `(-)` marker as inputs (`<`) and outputs (`>`). 
 
 ## Environment Declaration
 
-<!-- @environments -->
+<!-- @c:environments -->
 Every pipeline declares its environment requirement using `(-) ;EnvName`. This is mandatory — the compiler raises PGE01036 if missing. See [[environments]] for `{;}` definition syntax.
 
 ```polyglot
@@ -115,7 +115,7 @@ The compiler tracks which environment is active for each call site and validates
 
 ## Pipeline Call
 
-<!-- @pipelines:Error Handling -->
+<!-- @u:pipelines:Error Handling -->
 Pipeline calls use `[-]` execution with `(-)` IO lines. Error blocks `[!]` scope under the call — see [[concepts/pipelines/error-handling#Error Handling]]. For pglib pipelines that need no import, see [[packages#Usage]].
 
 ```polyglot
@@ -126,7 +126,7 @@ Pipeline calls use `[-]` execution with `(-)` IO lines. Error blocks `[!]` scope
 
 ## Chain IO Addressing
 
-<!-- @pipelines:Chain Execution -->
+<!-- @u:pipelines:Chain Execution -->
 In chain execution (`[-] -A->-B->-C`), IO parameters are addressed by step reference — a numeric index (0-based) or pipeline leaf name, followed by `.` and the parameter name. See [[concepts/pipelines/chains#Chain Execution]] for full chain semantics.
 
 `<` and `>` always describe the port from the pipeline's own viewpoint — `<` marks the pipeline's input, `>` marks its output — whether in a definition, a call site, or a chain step reference.
@@ -154,7 +154,7 @@ This reads: "from step 0's output, feed step 1's input." Both sides use the pipe
 
 ## Operation Labels
 
-<!-- @operation-labels -->
+<!-- @u:operation-labels -->
 `($)` labels a pipeline call's IO, allowing downstream operations to access outputs via `$Label>outputParam` without intermediate variables. See [[operation-labels]] for full syntax, chain step labels `(.)`, IO comments `( )`, and compile rules.
 
 ```polyglot
@@ -182,7 +182,7 @@ In chain IO addressing, step labels replace numeric/leaf-name step refs:
 
 ## Collection Operators
 
-<!-- @collections -->
+<!-- @u:collections -->
 Two operator prefixes for collection processing. For the full operator reference and semantics, see [[concepts/collections/INDEX|collections]].
 
 | Prefix | Operation | Example |
@@ -242,8 +242,8 @@ The target output port reaches **Final** state after the collector writes to it 
 
 ## IO Parameter Handling
 
-<!-- @errors:Error Fallback Operators -->
-<!-- @operators -->
+<!-- @u:errors:Error Fallback Operators -->
+<!-- @u:operators -->
 The `(>)` (output) and `(<)` (input) block markers handle IO parameters scoped under `(-)` IO lines (see [[blocks#Data Flow]]). Currently, fallback is the primary use case: providing a value when a pipeline call errors, preventing the variable from entering the Failed state. Fallback uses the `<!` / `!>` operators (see [[operators#Assignment Operators]]).
 
 ### Fallback Line Pattern

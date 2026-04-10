@@ -9,6 +9,10 @@ severity: error
 ### Rule 8.1 — Auto-Wire Type Mismatch
 `PGE08001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** In chain execution (`[-] -A->-B->-C`), auto-wire between adjacent steps requires a **1-to-1 type match** across all IO parameters per [TYPE-IDENTITY](../TYPE-IDENTITY.md). PGE08001 fires when an output schema has no matching input schema, or vice versa.
 
 Entry IO (first step's inputs) and exit IO (last step's outputs) always require explicit `(-)` lines — auto-wire applies only between adjacent mid-chain steps.

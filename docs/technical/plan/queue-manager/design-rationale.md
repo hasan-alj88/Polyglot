@@ -6,7 +6,7 @@ updated: 2026-04-03
 
 # Design Rationale
 
-<!-- @queue-manager/infrastructure -->
+<!-- @c:queue-manager/infrastructure -->
 
 ## Why Redis for State
 

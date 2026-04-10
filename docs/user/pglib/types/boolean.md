@@ -9,7 +9,7 @@ metadata_instance: "%#:Boolean:N"
 
 # #Boolean and #None
 
-<!-- @types -->
+<!-- @c:types -->
 
 ## #Boolean
 

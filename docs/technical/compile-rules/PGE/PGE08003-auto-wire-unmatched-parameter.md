@@ -9,6 +9,10 @@ severity: error
 ### Rule 8.3 — Auto-Wire Unmatched Parameter
 `PGE08003`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/io -->
+<!-- @u:syntax/operators -->
+
 **Statement:** In chain execution auto-wire, PGE08003 fires when, after successful type pairing, one or more parameters on either side have no counterpart.
 **Rationale:** Every output must go somewhere and every input must come from somewhere. Leftover parameters indicate a signature mismatch that the developer must resolve with explicit `(-)` wiring.
 **Detection:** After type matching succeeds (no PGE08001) and is unambiguous (no PGE08002), the compiler checks for leftover unmatched parameters. If any remain, PGE08003 fires.

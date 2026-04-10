@@ -8,6 +8,9 @@ name: Lifecycle Stages
 ### Rule 2.1 — Lifecycle Stages
 `PGE02001`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+
 **Statement:** Every variable follows the lifecycle: **Declared** → (**Default** | **Final**) → **Released**. `<<` from Declared produces Final directly (bypasses Default). `<~` from Declared produces Default; one further push promotes to Final. **Failed** is a terminal stage reachable from any non-Released stage when the producing pipeline errors. Backwards transitions and invalid stage jumps are errors (PGE02001). Specific lifecycle violations fire PGE02002 through PGE02006.
 **Rationale:** The lifecycle encodes write-once semantics and propagation guarantees. Each stage transition is intentional — accidental reassignment or reading an uninitialized variable are caught before they propagate through the pipeline.
 

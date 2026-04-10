@@ -9,7 +9,7 @@ metadata_instance: "%#:path:N"
 
 # #path Struct
 
-<!-- @types -->
+<!-- @c:types -->
 
 Cross-platform file system path with OS-specific subfields. At runtime, the Polyglot runtime resolves `$pathVar` to the correct subfield based on the current OS.
 

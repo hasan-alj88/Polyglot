@@ -9,8 +9,8 @@ status: complete
 
 > This folder is named `Schema/` because `#` is filesystem-unfriendly. Pipelines use the `-#.*` namespace.
 
-<!-- @types -->
-<!-- @errors -->
+<!-- @c:types -->
+<!-- @c:errors -->
 The `-#` namespace groups schema-related pipelines. The `=` is the pipeline prefix; `#` is the first name segment (referring to schema/type operations). This follows the same convention as `-W.*` (wrappers), `-Q.*` (queues), and `-T.*` (triggers) -- no prefix collision.
 
 pglib pipelines for schema validation, field extraction, format parsing, and dataframe column extraction. No `[@]` import needed. See [[errors#Pipeline Error Associations]] for error contracts.

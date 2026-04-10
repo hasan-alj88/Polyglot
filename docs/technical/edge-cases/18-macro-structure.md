@@ -12,8 +12,8 @@ updated: 2026-04-09
 
 ### EC-18.1: Minimal wrapper — `(-)` IO, `[\]` setup, `[/]` cleanup
 
-<!-- @blocks:Scope -->
-<!-- @pipelines:Wrappers -->
+<!-- @u:blocks:Scope -->
+<!-- @u:pipelines:Wrappers -->
 **EBNF:** `wrapper_def ::= "{W}" pipeline_id NEWLINE { indent wrapper_body_line NEWLINE }` (§9.5)
 
 **What it tests:** Complete `{W}` structure with setup/cleanup and IO. No `[T]`, `[Q]`, or pipeline-level IO. See [[blocks#Scope]], [[concepts/pipelines/wrappers#Wrappers]].

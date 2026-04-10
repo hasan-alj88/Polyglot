@@ -9,7 +9,7 @@ metadata_instance: "%#:Array:N"
 
 # #Array Collection
 
-<!-- @types -->
+<!-- @c:types -->
 
 Ordered, range-indexed collection with typed elements and N-dimensional support. `#Array` is a generic type with `(#) <param` inputs.
 

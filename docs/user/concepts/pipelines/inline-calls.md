@@ -8,7 +8,7 @@ updated: 2026-03-30
 
 ## Inline Pipeline Calls
 
-<!-- @types -->
+<!-- @c:types -->
 An inline pipeline call evaluates a pipeline as a single value. The syntax is `-Pipeline"string"` — a pipeline reference immediately followed by a string literal. Inline calls are valid anywhere a `value_expr` is expected: assignment RHS, comparison operands, etc. See [[syntax/types/strings#`-Path"..."` Inline Notation]] for the `-Path` example.
 
 ```polyglot

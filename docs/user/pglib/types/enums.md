@@ -7,7 +7,7 @@ status: complete
 
 # Enum Types
 
-<!-- @types -->
+<!-- @c:types -->
 
 Runtime and internal `##Enum` types available in every `.pg` file. All enums use `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
 

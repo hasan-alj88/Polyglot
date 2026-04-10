@@ -9,6 +9,11 @@ severity: error
 ### Rule 2.3 — Final Is Push-Once
 `PGE02003` · also covers former `PGE02004`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/types -->
+
 **Statement:** Once a variable reaches Final state (via `<<` or `>>`), no further push is allowed. A variable in Default state (assigned via `<~` or `~>`) cannot receive another default assignment — it may only be promoted to Final via one push. Any attempt to push into a Final variable, or to re-default a Default variable, is a compile error. Pulls from a Final or Default variable are unlimited.
 **Rationale:** Final means the value is settled — downstream consumers can depend on it never changing. Default values exist so pipelines can provide fallbacks that are overridden at most once. Allowing reassignment would break deterministic data flow and make pipeline behavior unpredictable. Polyglot has no mutable variables.
 **Detection:** The compiler tracks each variable's lifecycle stage. A push into Final, or a default assignment into Default, is rejected.

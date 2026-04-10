@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Enum"
 
 # ##Enum Schema
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Enum` classifies a type as an enumeration -- all fields are enum fields (no type annotation), and exactly one branch is active at any time. It composes `##Flat` (depth 1) with active-one and enum leaf constraints.
 

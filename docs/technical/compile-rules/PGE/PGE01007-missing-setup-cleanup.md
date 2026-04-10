@@ -10,6 +10,8 @@ split_from: PGE01001
 ### Rule 1.7 — Missing Pipeline Setup/Cleanup
 `PGE01007`
 
+<!-- @u:syntax/blocks -->
+
 **Statement:** Every `{-}` pipeline must have setup and cleanup — either via a `[W]` wrapper (which provides both) or via explicit `[\]` and `[/]` sections. A pipeline with neither is a compile error.
 **Rationale:** Setup/cleanup ensures resources are acquired before the execution body runs and released after — preventing resource leaks and undefined state. Even pipelines that need no resources must declare `[W] -W.Polyglot` (which calls `-DoNothing` for both).
 **Detection:** The compiler checks that every `{-}` block contains either `[W]` or both `[\]` and `[/]`.

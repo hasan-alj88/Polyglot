@@ -6,8 +6,8 @@ updated: 2026-04-03
 
 # End-to-End Flow
 
-<!-- @queue-manager/dispatch-coordinator -->
-<!-- @queue-manager/reactive-signals -->
+<!-- @c:queue-manager/dispatch-coordinator -->
+<!-- @c:queue-manager/reactive-signals -->
 
 ## Normal Execution
 

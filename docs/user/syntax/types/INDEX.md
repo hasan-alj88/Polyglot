@@ -8,8 +8,8 @@ status: complete
 # Type System
 
 <!-- @syntax/types/INDEX -->
-<!-- @identifiers -->
-<!-- @variable-lifecycle -->
+<!-- @c:identifiers -->
+<!-- @c:variable-lifecycle -->
 
 ## Ground Truths
 

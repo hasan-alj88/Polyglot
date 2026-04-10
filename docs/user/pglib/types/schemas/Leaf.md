@@ -8,7 +8,7 @@ metadata_definition: "%definition.##:Leaf"
 
 # ##Leaf Schema
 
-<!-- @types -->
+<!-- @c:types -->
 
 `##Leaf` constrains a type to zero depth — the type itself is its only node, with no children allowed.
 

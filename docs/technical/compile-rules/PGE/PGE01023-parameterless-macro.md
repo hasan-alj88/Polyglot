@@ -10,6 +10,8 @@ redirect: "#272"
 ### Rule 1.23 — Parameterless Macro (RETIRED)
 `PGE01023`
 
+<!-- @u:syntax/types -->
+
 **Status:** Retired as of Issue #272 — parameterized `##` schemas replace macros.
 
 **Original purpose:** Enforced that type macros declared at least one parameter. Macros with no parameters should have been plain `{#}` definitions.

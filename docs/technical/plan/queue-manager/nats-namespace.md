@@ -6,7 +6,7 @@ updated: 2026-04-03
 
 # NATS Subject Namespace
 
-<!-- @queue-manager/signal-payloads -->
+<!-- @u:queue-manager/signal-payloads -->
 
 All inter-service communication flows through NATS subjects:
 

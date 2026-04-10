@@ -9,7 +9,7 @@ metadata_instance: "%#:OSTarget:N"
 
 # #OSTarget Enum
 
-<!-- @types -->
+<!-- @c:types -->
 
 Permission enum used in `{_}` permission objects. See [[concepts/permissions|Permissions]].
 

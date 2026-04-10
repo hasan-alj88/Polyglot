@@ -9,9 +9,9 @@ updated: 2026-04-09
 
 # Collections
 
-<!-- @glossary:Polyglot Code -->
-<!-- @operators -->
-<!-- @blocks -->
+<!-- @c:glossary:Polyglot Code -->
+<!-- @u:operators -->
+<!-- @c:blocks -->
 Collections in Polyglot Code ([[glossary#Polyglot Code]]) are data structures that hold multiple items. They are processed using expand (`=`) and collect (`*`) operators — see [[operators#Collection Operators]] and [[blocks#Data Flow]] for block element reference. Expand operators live at `%=` and collect operators at `%*` in the metadata tree — see [[data-is-trees#How Concepts Connect]].
 
 ## Collection Hierarchy

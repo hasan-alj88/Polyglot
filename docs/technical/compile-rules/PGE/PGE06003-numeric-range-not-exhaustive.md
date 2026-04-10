@@ -9,6 +9,9 @@ severity: error
 ### Rule 6.3 — Numeric Range Not Exhaustive
 `PGE06003`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/types -->
+
 **Statement:** When a `[?]` conditional branches on a numeric type (`int` or `float`) using comparison operators or range operators, the branches must collectively cover -∞ to +∞. If they do not and no `*?` catch-all is present, PGE06003 fires. With `*?`, it covers any gap and PGE06003 does not fire.
 **Rationale:** Numeric ranges are analyzable at compile time. The compiler can verify whether the union of all branch conditions covers the entire number line. Gaps mean some values have no defined path.
 **Detection:** The compiler collects all numeric comparison/range conditions in the `[?]` block, computes their union, and checks whether it equals (-∞, +∞). If not and no `*?` exists, PGE06003 fires. The error message identifies the uncovered interval(s).

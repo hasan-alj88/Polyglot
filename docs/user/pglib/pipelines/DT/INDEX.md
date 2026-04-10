@@ -7,7 +7,7 @@ status: complete
 
 # -DT.* DateTime Pipelines
 
-<!-- @pipelines -->
+<!-- @c:pipelines -->
 
 DateTime pipelines for construction, calendar conversion, arithmetic, comparison, extraction, zone management, formatting, and business day operations. No `[@]` import needed.
 
@@ -27,7 +27,7 @@ All `-DT.*` pipelines are native definitions (`{N}` blocks). They operate on `#d
 
 ## Permissions
 
-<!-- @permissions -->
+<!-- @c:permissions -->
 
 All `-DT.*` pipelines are pure computation and require no `{_}` permission objects, except `-DT.Now` which reads the system clock. See [[permissions]].
 

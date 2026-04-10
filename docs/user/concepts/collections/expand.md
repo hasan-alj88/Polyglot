@@ -12,7 +12,7 @@ Expand operators iterate over a collection, producing a **mini-pipeline** for ea
 - `[=] =ForEach.Array` — mini-pipelines run in **parallel** (the default intent of `=`)
 - `[-] =ForEach.Array` — mini-pipelines run **sequentially**
 
-<!-- @variable-lifecycle -->
+<!-- @c:variable-lifecycle -->
 Variables declared inside a mini-pipeline are scoped to that iteration — they cannot be accessed outside. See [[variable-lifecycle#Released]].
 
 | Operator | Iterates | IO |

@@ -9,6 +9,10 @@ severity: warning
 ### Rule 2.3 — Unpushed Output Port
 `PGW02003`
 
+<!-- @u:syntax/blocks -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:syntax/operators -->
+
 **Statement:** An output `>name` declared in a pipeline's `(-)` IO section that is never pushed to by any code path is flagged with a warning. The output will remain in Declared state (never reach Final), which may block downstream pipelines waiting for it.
 **Rationale:** A declared but unpushed output port is likely a wiring oversight. Callers expecting this output will see a variable stuck in Declared state, preventing downstream triggers from firing. This is a warning rather than an error because the output might be intentionally optional in some designs.
 **Detection:** The compiler analyzes all code paths within the pipeline body and checks whether each declared `>name` output has at least one push (`<<` or `<~`) on every code path. If any output has zero pushes on any path, the warning is emitted.

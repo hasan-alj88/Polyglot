@@ -9,6 +9,8 @@ severity: error
 ### Rule 9.10 — Multi-File Self-Reference
 `PGE09009`
 
+<!-- @u:syntax/operators -->
+
 **Statement:** A file must not reference itself in its `[@]` file list. Self-references serve no purpose and indicate a mistake. This applies to explicit file paths only — folder shorthand (`[@] << "{.}"`) implicitly excludes the current file.
 **Rationale:** A file is always part of its own package. Listing itself as a sibling file is redundant and likely a copy-paste error from duplicating the `{@}` block across files.
 **Detection:** After resolving the `[@]` path to an absolute file path, the compiler checks whether it matches the current file's path. If so, PGE09009 fires.
