@@ -2,7 +2,7 @@
 audience: ai
 type: audit-rules
 scope: writing-conventions
-updated: 2026-03-14
+updated: 2026-04-10
 ---
 
 # Writing Conventions
@@ -37,8 +37,9 @@ Authority: [[vision]]
 | Rule ID | Rule | Detail |
 |---------|------|--------|
 | dual-refs | Use both @-imports (Claude) and [[wikilinks]] (Obsidian) | Every cross-reference needs both syntaxes |
-| typed-refs | New docs must use `@c:` or `@u:` — not bare `@` | `@c:` for concepts, `@u:` for syntax usage |
+| typed-refs | New docs must use `@c:`, `@u:`, or `@d:` — not bare `@` | `@c:` for concepts, `@u:` for syntax usage, `@d:` for deprecated content |
 | usage-coverage | Syntax constructs appearing without explanation must have `@u:` to definition | Enables change propagation across docs |
+| deprecated-refs | `@d:` marks superseded content with pointer to replacement | When archiving or deprecating docs, add `@d:` linking to current version |
 | untyped-valid | Existing bare `@` refs valid until file is touched | Migrate to typed on touch |
 | no-duplication | Never duplicate content — reference it | |
 | relative-paths | Relative paths only within docs/ | |

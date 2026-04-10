@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-03-24)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Typed cross-references for change propagation
+**Current focus:** Archive doc enrichment with @d: deprecated cross-references
 
 ## Current Position
 
-Milestone: Doc Infrastructure — typed-cross-references
-Phase: typed-cross-references — Add @c: (concept) and @u: (usage) typed cross-references
-Plan: All 3 plans COMPLETE + UNIFIED
-Status: Phase complete — ready for commit
-Last activity: 2026-04-10 — UNIFY complete (810 total refs, up from 409)
+Milestone: Handle Archive Docs
+Phase: 14 of 16 (Archive Frontmatter & Deprecation Marking)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-04-10 — Phase 13 complete, transitioned to Phase 14
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -103,14 +103,14 @@ Progress:
 
 ## Active Issue
 
-Phase: typed-cross-references (3 plans)
+Phase: 14 — Archive Frontmatter & Deprecation Marking
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [ready for commit]
+  ○        ○        ○        ○     [Ready for first PLAN]
 ```
 
 ## Accumulated Context
@@ -253,6 +253,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #272 — Parameterized ## schemas replace {M} macros | 2026-04-09 | 5 plans: core properties, schema files, collection types, syntax/concept docs, technical docs; merged to main |
 | Issue #273 — Three-bracket system complete | 2026-04-09 | 5 plans, 387 files: EBNF grammar, core docs, compile rules, pglib, remaining technical; {X} define, [X] control, (X) IO |
 | Closed #275 — Collection redesign | 2026-04-10 | Squash-merged to main; 107 files, ##Record replaces #Map, %##Fields replaces %##Key, 6 schemas retired, composition syntax updated |
+| Added @d: deprecated cross-reference type | 2026-04-10 | Informational marker (not mandatory import); extends @c:/@u: system; 4 audit files updated |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -272,9 +273,9 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-10
-Stopped at: UNIFY complete for typed-cross-references
-Next action: Commit changes
-Resume file: .paul/STATE.md
+Stopped at: Phase 13 complete, ready to plan Phase 14
+Next action: /paul:plan for Phase 14
+Resume file: .paul/ROADMAP.md
 
 ---
 *STATE.md — Updated after every significant action*

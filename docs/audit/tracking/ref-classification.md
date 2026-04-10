@@ -128,6 +128,7 @@ updated: 2026-04-10
 - Total unique targets: 101 (excluding 8 already-typed refs)
 - Classified as @c:: 52
 - Classified as @u:: 43
+- Classified as @d:: 0 (to be populated during archive enrichment — Phase 15)
 - Classified as untyped: 20
 - Ambiguous: 0 (resolved: `@blocks` → @c:, `@Q` → @c:)
 
@@ -167,6 +168,7 @@ Migration completed: 2026-04-10
 |---|---|
 | `@c:` refs (concept) | 195 |
 | `@u:` refs (usage) | 533 |
+| `@d:` refs (deprecated) | 0 |
 | Untyped refs (intentional — INDEX/navigation) | 82 |
 | **Total refs** | **810** |
 | Double-prefix errors | 0 |

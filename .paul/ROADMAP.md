@@ -244,5 +244,85 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 | 147 | ForEach.Level ~~ double-prefix violates single ~ rule | 5 | P3-medium | Done |
 
 ---
+
+## Milestone: Handle Archive Docs
+
+**Handle Archive Docs**
+Status: In Progress
+Phases: 1 of 4 complete
+
+Theme: Before permanent deletion, enrich archived docs with cross-references and frontmatter to surface any reusable content.
+
+### Phases
+
+| Phase | Name | Plans | Status | Completed |
+|-------|------|-------|--------|-----------|
+| 13 | @d: Deprecated Cross-Reference | 1 | Complete | 2026-04-10 |
+| 14 | Archive Frontmatter & Deprecation Marking | TBD | Not started | - |
+| 15 | Cross-Reference Enrichment | TBD | Not started | - |
+| 16 | Triage & Decision | TBD | Not started | - |
+
+### Phase 13: @d: Deprecated Cross-Reference
+
+**Goal:** Define the new @d: prefix in the cross-reference system
+
+**Depends on:** Nothing (first phase)
+
+**Research:** Likely — review existing @c:/@u: implementation for extension pattern
+
+**Scope:**
+- Add @d: (deprecated) as a new typed cross-reference prefix
+- Update cross-reference documentation and EBNF if applicable
+- Establish semantics: @d: marks a link target as deprecated/superseded
+
+**Plans:** TBD (during /paul:plan)
+
+### Phase 14: Archive Frontmatter & Deprecation Marking
+
+**Goal:** Add YAML frontmatter with status: deprecated to all archived docs, clearly marking them as not relevant
+
+**Depends on:** Phase 13 (@d: prefix available for use in frontmatter references)
+
+**Research:** Unlikely — frontmatter conventions already established
+
+**Scope:**
+- Inventory all archived docs
+- Add YAML frontmatter with status: deprecated, archive date, and reason
+- Ensure Obsidian compatibility with new frontmatter fields
+
+**Plans:** TBD (during /paul:plan)
+
+### Phase 15: Cross-Reference Enrichment
+
+**Goal:** Add @c:, @u:, @d: cross-references throughout archived docs to link them to current spec
+
+**Depends on:** Phase 13 (@d: prefix), Phase 14 (frontmatter identifies archive scope)
+
+**Research:** Unlikely
+
+**Scope:**
+- Add @c: (concept) references where archived docs define concepts still in use
+- Add @u: (usage) references where archived docs show patterns still relevant
+- Add @d: (deprecated) references where content has been superseded
+- Cross-link archived docs to their current-spec replacements
+
+**Plans:** TBD (during /paul:plan)
+
+### Phase 16: Triage & Decision
+
+**Goal:** Review enriched archives — keep useful content, mark rest for deletion
+
+**Depends on:** Phase 15 (cross-references reveal what's still valuable)
+
+**Research:** None
+
+**Scope:**
+- Review each archived doc's cross-reference density and relevance
+- Decide: keep (promote back), extract (pull useful sections), or delete
+- Execute decisions and update ROADMAP.md
+
+**Plans:** TBD (during /paul:plan)
+
+---
 *Roadmap created: 2026-02-27*
-*Last updated: 2026-04-06*
+*Last updated: 2026-04-10 — Phase 13 complete*

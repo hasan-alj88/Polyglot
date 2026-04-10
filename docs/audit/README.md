@@ -2,7 +2,7 @@
 audience: ai
 type: audit-index
 scope: all-documentation
-updated: 2026-03-30
+updated: 2026-04-10
 ---
 
 # Audit — Claude's Documentation Ground Truth
@@ -50,7 +50,8 @@ Every cross-reference carries a **type** that tells Claude *why* the import exis
 |------|--------|---------|-----------|
 | Concept | `@c:` | "What is this?" — load a definition before writing about it | Glossary, vision, design rationale, type definitions |
 | Usage | `@u:` | "This construct appears here" — link to where it's defined | Syntax specs, EBNF grammar, pglib signatures, scenarios |
-| Untyped | `@` | Legacy form — valid but deprecated for new docs | Any (migrate to `@c:` or `@u:` on touch) |
+| Deprecated | `@d:` | "This is superseded" — mark content as deprecated with pointer to replacement | Archived docs, retired constructs, superseded designs |
+| Untyped | `@` | Legacy form — valid but deprecated for new docs | Any (migrate to `@c:`, `@u:`, or `@d:` on touch) |
 
 ### Examples
 
@@ -77,20 +78,36 @@ The pipeline uses [T] to declare its trigger:
    *?           >> $result <~ "skip"
 ```
 
+**Deprecated references** (`@d:`) — content superseded, kept for history:
+
+```markdown
+<!-- @d:archive/old-pipeline-spec -->
+This document described the original pipeline syntax. See [[pipelines|u:pipelines]] for the current spec.
+
+<!-- @d:archive/old-type-system#enums -->
+The enum approach described here was replaced by [[basic-types#enums|c:enums]].
+```
+
 ### How @-imports work
 
-Both `@c:` and `@u:` are **mandatory imports**. When Claude encounters either type, Claude MUST:
+`@c:` and `@u:` are **mandatory imports**. When Claude encounters either type, Claude MUST:
 1. Read the referenced section from the source file
 2. Hold that content in context
 3. Only then proceed with writing
 
+`@d:` is an **informational marker**, not a mandatory import. When Claude encounters `@d:`, Claude should:
+1. Note that the referenced content is deprecated
+2. Do NOT hold deprecated content in context or propagate its patterns
+3. If writing about the topic, reference the current replacement instead
+
 The type tag is **semantic** — it tells Claude the *purpose* of the import:
 - `@c:` means "understand this concept before writing about it"
 - `@u:` means "this construct is used here; if its definition changes, this doc needs updating"
+- `@d:` means "this content is deprecated; note the deprecation but use the replacement instead"
 
-Untyped `@` refs (legacy) behave the same as always — mandatory read-before-write. New docs must use `@c:` or `@u:`.
+Untyped `@` refs (legacy) behave the same as always — mandatory read-before-write. New docs must use `@c:`, `@u:`, or `@d:`.
 
-`[[wikilinks]]` are Obsidian navigation — clickable links, graph view edges, backlink tracking. The display text may carry a `c:` or `u:` prefix (e.g., `[[glossary#Trigger Monitor|c:Trigger Monitor]]`) to signal the reference type to readers. Wikilink prefixes are added on touch, not batch-migrated.
+`[[wikilinks]]` are Obsidian navigation — clickable links, graph view edges, backlink tracking. The display text may carry a `c:`, `u:`, or `d:` prefix (e.g., `[[glossary#Trigger Monitor|c:Trigger Monitor]]`) to signal the reference type to readers. Wikilink prefixes are added on touch, not batch-migrated.
 
 ### Reference format in files
 

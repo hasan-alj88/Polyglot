@@ -2,7 +2,7 @@
 audience: ai
 type: audit-rules
 scope: quality-checklist
-updated: 2026-03-14
+updated: 2026-04-10
 ---
 
 # Documentation Quality Checklist
@@ -51,5 +51,6 @@ Run before finalizing any new or modified documentation.
 
 | ID | Check | Source |
 |----|-------|--------|
-| typed-ref-check | New @-imports use `@c:` or `@u:` type prefix | [[conventions#typed-refs]] |
+| typed-ref-check | New @-imports use `@c:`, `@u:`, or `@d:` type prefix | [[conventions#typed-refs]] |
 | usage-coverage-check | Syntax constructs used without explanation have `@u:` back-reference | [[conventions#usage-coverage]] |
+| deprecated-target-check | `@d:` refs point to a valid replacement doc (the current version) | [[conventions#deprecated-refs]] |
