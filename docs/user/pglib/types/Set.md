@@ -2,67 +2,49 @@
 audience: pg-coder
 type: specification
 updated: 2026-04-09
-status: complete
-metadata_definition: "%definition.#:Set"
-metadata_instance: "%#:Set:N"
+status: retired
+redirect: pglib/types/Array
 ---
 
-# #Set Collection
+# #Set (Retired)
 
 <!-- @types -->
 
-Collection of unique values. `#Set` is a generic type with `[#] <param` inputs. Duplicates are rejected at runtime.
+`#Set` and `##Set` have been retired. Use `#Array` with `%###Unique << #True` instead.
 
 ---
 
-## Definition
+## Replacement
+
+The uniqueness guarantee formerly provided by `##Set` is now a leaf-level property on any collection:
 
 ```polyglot
-{#} #Set
-   [#] <#ValueType
-   [#] << ##Set
-      [#] <#ValueType << <#ValueType
-   [#] %##Alias << "set"
+{#} #UniqueStrings
+   (#) <#ValueType << #String
+   [#] ##Array
+      (#) <#ValueType << <#ValueType
+   [#] %###Unique << #True
+   [#] %##Alias << "unique-strings"
 ```
 
-The `<#ValueType` parameter sets the element type. The `##Set` parameterized schema provides the structural constraints: sparse storage with a uniqueness guarantee.
+This composes `##Array` for ordered, range-indexed storage and adds `%###Unique << #True` to reject duplicates.
 
 ---
 
-## Schema Properties
+## Migration
 
-| Property | Value | Meaning |
-|----------|-------|---------|
-| `%##Gap` | `#True` (via ##Sparse) | Gaps allowed |
-| `%##Flexible` | `#FlexKind.Flexible` | User adds/removes entries |
-| `%###Type` | `<#ValueType` | Element type constraint |
-| `%###Unique` | `#True` | No duplicate values |
-
----
-
-## Usage
-
-```polyglot
-[ ] #set:string → ValueType=String
-[-] $tags#set:string <~ {}
-
-[ ] #set:int → ValueType=Int
-[-] $ids#set:int <~ {}
-```
-
----
-
-## Metadata
-
-| Path | Pattern | Description |
-|------|---------|-------------|
-| Definition | `%definition.#:Set` | Compile-time type template |
-| Instance | `%#:Set:N` | Runtime instance (N = instance number) |
+| Former | Now |
+|--------|-----|
+| `#Set` | `#Array` + `%###Unique << #True` |
+| `##Set` | `##Array` + `%###Unique << #True` |
+| `#set:string` | custom `{#}` with `##Array` + `%###Unique` |
 
 ---
 
 ## Related
 
-- [[collections]] -- collection type overview
-- [[schemas/Set|##Set]] -- parameterized schema
+- [[Array]] -- replacement base type
+- [[schemas/Array|##Array]] -- parameterized schema
+- [[schemas/INDEX|## Schema Types]] -- retired schemas list
 - [[syntax/types/INDEX|types]] -- full type system specification
+

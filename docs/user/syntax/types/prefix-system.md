@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-04
+updated: 2026-04-09
 ---
 
 # Prefix System and Tree Access
@@ -15,7 +15,7 @@ The `#` character is not just for type annotations — it participates in a thre
 | Prefix | Name | Describes | Example |
 |--------|------|-----------|---------|
 | `#` | Type | Concrete data type | `#Array`, `#String`, `#Person` |
-| `##` | Schema | Tree shape — structure and constraints | `##Scalar`, `##Flat`, `##Leaf`, `##Contiguous` |
+| `##` | Schema | Tree shape -- structure and constraints | `##Scalar`, `##Flat`, `##Leaf`, `##Array` |
 | `###` | Field | Leaf content nature | `###Value`, `###Enum`, `###ScalarValue`, `###ScalarEnum`, `###None` |
 
 - `#` = **what** — the concrete type a variable holds
@@ -33,7 +33,7 @@ The `<` character is a tree child accessor. It reads a child from a data tree by
 | `$var<key` | Tree child access | `$myArray<0`, `$myMap<name` |
 | `$var<key<subkey` | Chained access for nested trees | `$matrix<0<1`, `$df<0<product` |
 
-The `<` operator also appears inside `{#}` generic type definitions as a parameter input marker (`[#] <Param`). See [[generic-types]] for details.
+The `<` operator also appears inside `{#}` generic type definitions as a parameter input marker (`(#) <Param`). See [[generic-types]] for details.
 
 ## See Also
 

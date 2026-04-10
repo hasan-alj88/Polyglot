@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.###:None"
 ---
@@ -16,11 +16,11 @@ metadata_definition: "%definition.###:None"
 
 ```polyglot
 {#} #None
-   [#] << ##Scalar
-   [#] << ###None
+   [#] ##Scalar
+   [#] ###None
 ```
 
-The `[#] << ###None` line declares the field type. No `[.]` fields are needed -- the type itself holds only `""`.
+The `[#] ###None` line declares the field type. No `[.]` fields are needed -- the type itself holds only `""`.
 
 ## Metadata
 

@@ -14,6 +14,6 @@ redirect: "#272"
 
 **Original purpose:** Enforced that `{M}` type macros declared at least one parameter. Macros with no parameters should have been plain `{#}` definitions.
 
-**Why retired:** The `{M}` block type has been removed entirely. Parameterized types now use generic `{#}` definitions with `[#] <#param` type inputs and `[#] <param` value inputs. The concept of a "parameterless macro" no longer applies.
+**Why retired:** The `{M}` block type has been removed entirely. Parameterized types now use generic `{#}` definitions with `(#) <#param` type inputs and `(#) <param` value inputs. The concept of a "parameterless macro" no longer applies.
 
 **See also:** [[09-definition-blocks|EBNF §9.2]] — `{#}` data definitions with generic parameters.

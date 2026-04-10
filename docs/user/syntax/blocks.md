@@ -66,6 +66,9 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `(*) >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `(>)` | Output parameter handling — scoped under `(-)` output line. See [[io#IO Parameter Handling]] |
 | `(<)` | Input parameter handling — scoped under `(-)` input line. See [[io#IO Parameter Handling]] |
+| `($)` | Operation label — names a call's IO for downstream access via `$Label>output`. See [[operation-labels]] |
+| `(.)` | Chain step label — names individual steps within a chain, indented under `($)`. See [[operation-labels#Chain Step Labels]] |
+| `( )` | IO comment — inline annotation within IO blocks. See [[comments]] |
 
 ### Execution
 

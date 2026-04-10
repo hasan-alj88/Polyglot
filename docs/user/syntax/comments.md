@@ -16,6 +16,7 @@ Bracket comments replace `//` entirely. Comment brackets follow the same [[line-
 | `[ ] text` | Single-line comment (square bracket) | Inside any block |
 | `{ } text` | Single-line comment (curly bracket) | Between definitions (top level) |
 | `[ ]<` ... `[ ]>` | Multi-line comment block | Inside any block |
+| `( ) text` | IO comment (round bracket) | Inside `(X)` IO blocks only |
 
 A bracket with only whitespace inside is always a comment.
 

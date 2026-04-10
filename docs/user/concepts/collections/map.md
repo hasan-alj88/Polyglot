@@ -1,37 +1,54 @@
 ---
 audience: pg-coder
 type: spec
-updated: 2026-03-30
+updated: 2026-04-09
 ---
 
 <!-- @concepts/collections/INDEX -->
 
-## #Map — Base Collection
+## ##Record -- Enum-Keyed Collection
 
-`#Map` is the universal flat key-value collection — a generic `{#}` type with `[#] <#KeyType` and `[#] <#ValueType` parameters. Use `:` positional binding: `#map:string:int`.
+`##Record` is a parameterized schema for enum-keyed collections with typed value fields. It replaces the former `#Map` / `##Map`. The `<#Fields` parameter must satisfy `##Enum` -- field names come from an enum type. `<#ValueType` sets the value type for all fields.
 
-See [[pglib/types/Map|#Map]] for the full definition and [[syntax/types/generic-types|Generic Types]] for the `[#] <param` syntax.
+See [[pglib/types/Map|##Record]] for the full definition and [[syntax/types/generic-types|Generic Types]] for the `(#) <param` syntax.
 
 ### Schema composition
 
-`#Map` composes the `##Map` parameterized schema, which sets:
+`##Record` composes `##Flat` and sets:
 
-- `%##Depth.Max << 1` — flat (one level of children)
-- `%##Flexible << #FlexKind.Flexible` — user-controlled `:` fields
-- `%##Gap << #True` — sparse (gaps allowed in keys)
+- `%##Depth.Max << 1` -- flat (one level of children)
+- `%##Fields << <#Fields` -- one child per enum variant
+- `%##Active << #ActiveKind.All` -- all fields active simultaneously
+- `%###Type << <#ValueType` -- uniform value type
+- `%###Kind << #FieldKind.Value` -- all children are value fields
 
 ### Access
 
-Use `<` to access flexible children by key:
+Use `<` to access fields by enum variant name:
 
 ```polyglot
-[-] $ages#map:string:int << ...
-[-] $aliceAge#int << $ages<alice
-[-] $bobAge#int << $ages<bob
+{#} #Colors
+   [#] ##Enum
+   [#] ##Scalar
+   [.] .Red
+   [.] .Green
+   [.] .Blue
+
+{#} #RGBValues
+   (#) <#Fields << #Colors
+   (#) <#ValueType << #Int
+   [#] ##Record
+      (#) <#Fields << <#Fields
+      (#) <#ValueType << <#ValueType
+
+[-] $rgb#RGBValues <~ {}
+[-] $red#int << $rgb<Red
+[-] $green#int << $rgb<Green
 ```
 
 ## See Also
 
-- [[concepts/collections/expand|Expand Operators]] — `=ForEach.Map` iteration over key-value pairs
-- [[concepts/collections/collect|Collect Operators]] — `*Into.Map` collection
-- [[syntax/types/flexible-fields|Typed Flexible Fields]] — typed `:` fields in struct definitions
+- [[concepts/collections/expand|Expand Operators]] -- iteration over record fields
+- [[concepts/collections/collect|Collect Operators]] -- collection into records
+- [[pglib/types/schemas/Fields|%##Fields]] -- field descriptor property
+

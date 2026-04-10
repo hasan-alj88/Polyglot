@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 ---
 
@@ -9,7 +9,7 @@ status: complete
 
 <!-- @types -->
 
-Runtime and internal `##Enum` types available in every `.pg` file. All enums use `[#] << ##Enum` (enum classification), `[#] << ##Scalar` (depth 1), and `[#] << ###ScalarEnum` (leaf content is variant selection).
+Runtime and internal `##Enum` types available in every `.pg` file. All enums use `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
 
 See [[boolean]] for `#Boolean` (also a `##Enum` type, documented separately).
 
@@ -25,7 +25,7 @@ See [[boolean]] for `#Boolean` (also a `##Enum` type, documented separately).
 | `#FileAccess` | File access state | [[FileAccess]] |
 | `#VarState` | Variable lifecycle state | [[VarState]] |
 | `#FieldKind` | Leaf content field type classifier | [[FieldKind]] |
-| `#FlexKind` | Branch flexibility classifier | [[FlexKind]] |
+| `#FieldsDescriptor` | Child field descriptor | [[FieldsDescriptor]] |
 | `#ActiveKind` | Branch activation classifier | [[ActiveKind]] |
 
 ## Permission Enums

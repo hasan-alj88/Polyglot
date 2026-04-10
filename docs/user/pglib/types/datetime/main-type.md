@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: reference
-updated: 2026-04-03
+updated: 2026-04-09
 ---
 
 # Main Type
@@ -16,7 +16,7 @@ updated: 2026-04-03
 {#} #DateTime
    [%] .description << "Comprehensive date/time with multi-calendar support"
    [%] .version << "1.0.0"
-   [#] << ###Value
+   [#] ###Value
    [#] %##Alias << "dt"
 
    [ ] Absolute point in time

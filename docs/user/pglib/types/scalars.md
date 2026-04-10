@@ -47,8 +47,8 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 ```polyglot
 {#} #Int
    [%] %alias << "int,integer,Integer"
-   [#] << ##String
-      [#] <regex << "^-?[0-9]+$"
+   [#] ##String
+      (#) <regex << "^-?[0-9]+$"
 ```
 
 ## #UnsignedInt
@@ -56,8 +56,8 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 ```polyglot
 {#} #UnsignedInt
    [%] %alias << "uint"
-   [#] << ##String
-      [#] <regex << "^[0-9]+$"
+   [#] ##String
+      (#) <regex << "^[0-9]+$"
 ```
 
 ## #Float
@@ -65,8 +65,8 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 ```polyglot
 {#} #Float
    [%] %alias << "float"
-   [#] << ##String
-      [#] <regex << "^-?[0-9]+\.[0-9]+$"
+   [#] ##String
+      (#) <regex << "^-?[0-9]+\.[0-9]+$"
 ```
 
 ## #Sci
@@ -74,8 +74,8 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 ```polyglot
 {#} #Sci
    [%] %alias << "sci"
-   [#] << ##String
-      [#] <regex << "^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$"
+   [#] ##String
+      (#) <regex << "^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$"
 ```
 
 ## #Eng
@@ -83,8 +83,8 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 ```polyglot
 {#} #Eng
    [%] %alias << "eng"
-   [#] << ##String
-      [#] <regex << "^-?[0-9]+(\.[0-9]+)?[kKMGTPE]?$"
+   [#] ##String
+      (#) <regex << "^-?[0-9]+(\.[0-9]+)?[kKMGTPE]?$"
 ```
 
 ## #Dimension
@@ -92,8 +92,8 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 ```polyglot
 {#} #Dimension
    [%] %alias << "dim"
-   [#] << ##String
-      [#] <regex << "^[0-9]+D$"
+   [#] ##String
+      (#) <regex << "^[0-9]+D$"
 ```
 
 ## #KeyString
@@ -101,19 +101,19 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 ```polyglot
 {#} #KeyString
    [%] %alias << "key"
-   [#] << ##String
-      [#] <regex << "^[a-zA-Z_][a-zA-Z0-9_]*$"
+   [#] ##String
+      (#) <regex << "^[a-zA-Z_][a-zA-Z0-9_]*$"
 ```
 
-`#KeyString` excludes characters reserved by Polyglot syntax. Any type used as `%##Key` must compose `#KeyString`; otherwise the compiler raises PGE11004.
+`#KeyString` excludes characters reserved by Polyglot syntax. Enum variant names used in `%##Fields` must conform to `#KeyString`; otherwise the compiler raises PGE11004.
 
 ## #NestedKeyString
 
 ```polyglot
 {#} #NestedKeyString
    [%] %alias << "nestedkey"
-   [#] << ##String
-      [#] <regex << "^[a-zA-Z_][a-zA-Z0-9_.]*$"
+   [#] ##String
+      (#) <regex << "^[a-zA-Z_][a-zA-Z0-9_.]*$"
 ```
 
 `#NestedKeyString` allows `.` separators but still excludes whitespace, `<`, and `>`. Used as the element type for `%##Alias` -- alias values may contain `.` to reference paths in the definition tree.
@@ -123,8 +123,8 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 ```polyglot
 {#} #CommaSeparatedList
    [%] %alias << "csvlist"
-   [#] << ##String
-      [#] <regex << "^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$"
+   [#] ##String
+      (#) <regex << "^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$"
 ```
 
 ## #DataTypeString
@@ -132,8 +132,8 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 ```polyglot
 {#} #DataTypeString
    [%] %alias << "dtstring"
-   [#] << ##String
-      [#] <regex << "^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$"
+   [#] ##String
+      (#) <regex << "^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$"
 ```
 
 `#DataTypeString` validates `{x}` definition name format -- uppercase-initial segments separated by `:`.

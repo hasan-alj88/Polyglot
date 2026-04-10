@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:Job"
 metadata_instance: "%#:Job:N"
@@ -23,7 +23,7 @@ Job state is stored at `%-:Pipeline:N.jobs:UID` in the metadata tree. See [[glos
 {#} #Job
    [%] .description << "Runtime job state within a pipeline instance"
    [%] .version << "1.0.0"
-   [#] << ##Flat
+   [#] ##Flat
    [.] .PID#String
    [.] .status#QueueState
    [.] .pipeline#String

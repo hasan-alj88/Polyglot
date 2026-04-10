@@ -39,7 +39,8 @@ pipeline_ref        ::= pipeline_id                    (* local: -Pipeline.Name 
    All Polyglot identifiers have a prefix; pipelines always use -. *)
 
 call_io_line        ::= "(-)" io_param assignment_op value_expr
-                         { indent fallback_line NEWLINE } ;
+                         { indent fallback_line NEWLINE }
+                      | operation_label ;
 
 fallback_line       ::= "(>)" "<!" value_expr                   (* generic fallback *)
                       | "(>)" "<!" error_id value_expr           (* error-specific fallback *)
@@ -67,10 +68,15 @@ fallback_line       ::= "(>)" "<!" value_expr                   (* generic fallb
 
 ```ebnf
 chain_call          ::= pipeline_ref "->" pipeline_ref { "->" pipeline_ref } NEWLINE
+                         [ indent chain_label_block ]
                          { indent chain_io_line NEWLINE }
                          { indent chain_error_block NEWLINE } ;
 
-step_ref            ::= step_index | step_leaf_name ;
+chain_label_block   ::= operation_label NEWLINE
+                         { indent step_label NEWLINE } ;
+
+step_ref            ::= step_index | step_leaf_name | step_label_ref ;
+step_label_ref      ::= variable_id ;
 step_index          ::= digit { digit } ;              (* 0-based position in chain *)
 step_leaf_name      ::= name ;                          (* last segment of pipeline dotted name *)
 

@@ -20,11 +20,10 @@ Unconstrained collection with unlimited depth. Any keys, any types, any nesting.
 ```polyglot
 {#} #Serial
    [#] %##Alias << "serial"
-   [#] << ##Deep
-   [#] << ##Sparse
+   [#] %##Depth.Max << #Inf
+   [#] %##Gap << #True
    [#] %##Ordered << #False
-   [#] %##Regular << #False
-   [#] %##Count << .Inf
+   [#] %##Count << #Inf
    [:] :*#*
 ```
 
@@ -35,11 +34,10 @@ Unconstrained collection with unlimited depth. Any keys, any types, any nesting.
 | Property | Value | Constraint Removed |
 |----------|-------|--------------------|
 | `%##Alias` | `"serial"` | -- (shorthand `#serial`) |
-| `##Deep` | `%##Depth.Max << .Inf` | Depth limit |
-| `##Sparse` | `%##Gap << #True` | No-gap requirement |
+| `%##Depth.Max` | `#Inf` | Depth limit |
+| `%##Gap` | `#True` | No-gap requirement |
 | `%##Ordered` | `#False` | Ordering requirement |
-| `%##Regular` | `#False` | Regularity requirement |
-| `%##Count` | `.Inf` | Max children limit |
+| `%##Count` | `#Inf` | Max children limit |
 
 ---
 

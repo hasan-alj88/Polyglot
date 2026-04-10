@@ -33,7 +33,7 @@ RawString (compiler intrinsic) [##Leaf]
 #Dataframe:ColumnEnum:CellType (generic — row-oriented, Array of Map)
 #Serial (unconstrained, unlimited depth)
 
-#FlexKind (##Enum — branch flexibility classifier)
+#FieldsDescriptor (##Enum — child field descriptor)
 #ActiveKind (##Enum — branch activation classifier)
 #Bound (##Int + ##Inf — numeric value or infinity)
 
@@ -50,7 +50,7 @@ RawString (compiler intrinsic) [##Leaf]
 | Scalar subtypes | [scalars.md](scalars.md) | #Int, #UnsignedInt, #Float, #Sci, #Eng, #Dimension, #KeyString, #NestedKeyString |
 | Boolean | [boolean.md](boolean.md) | #Boolean, #None |
 | Collections | [collections.md](collections.md) | #Map, #Array, #Dataframe, #Set, #Serial |
-| Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #KillPropagation, #ResourceTag, #FileAccess, #VarState, #FieldKind, #FlexKind, #ActiveKind |
+| Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #KillPropagation, #ResourceTag, #FileAccess, #VarState, #FieldKind, #FieldsDescriptor, #ActiveKind |
 | Structs | [structs.md](structs.md) | #path, #Queue |
 | Schema types | [Bound.md](Bound.md) | #Bound |
 | Runtime | [rt.md](rt.md) | #Code, #PyEnv, #RsEnv |

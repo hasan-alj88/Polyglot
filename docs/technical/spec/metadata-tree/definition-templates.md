@@ -1,7 +1,7 @@
 ---
 audience: [architect, designer]
 type: spec
-updated: 2026-04-04
+updated: 2026-04-09
 ---
 
 # Definition Templates
@@ -33,23 +33,11 @@ Definitions are immutable at runtime — they are resolved entirely at compile t
 │   └── .%##Depth.Max          -> 1
 ├── .##:Flat
 │   └── .%##Depth.Max          -> 1
-├── .##:Deep
-│   └── .%##Depth.Max          -> .Inf
 │
 │   Value schemas
 ├── .##:Inf                     (composable .Inf variant)
 │
 │   Structure schemas
-├── .##:Contiguous
-│   ├── .%##Gap                -> #False
-│   └── .%##Ordered            -> #True
-├── .##:Sparse
-│   └── .%##Gap                -> #True
-├── .##:Rectangular            <Dim(default 1D)>
-│   ├── .%##Regular            -> #True
-│   ├── .%##Depth.Max          -> Dim
-│   ├── .%##Flexible           -> .Range
-│   └── .%##Propagate          -> #True
 ├── .##:Sorted
 │   ├── .%##Sorted             -> #True
 │   └── .%##Ordered            -> #True
@@ -65,13 +53,20 @@ Definitions are immutable at runtime — they are resolved entirely at compile t
 ├── .##:Nullable               <#ValueType>
 ├── .##:Result                 <#OkType, #ErrType>
 ├── .##:String                 <regex>
-├── .##:Map                    <#KeyType, #ValueType(default #)>
+├── .##:Record                 <#Fields(##Enum), #ValueType(default #)>
 ├── .##:Array                  <#ValueType, Dim(default 1D)>
-├── .##:Set                    <#ValueType>
-└── .##:Dataframe              <#Columns, #CellType(default #)>
+├── .##:Dataframe              <#Columns, #CellType(default #)>
+│
+│   Retired schemas (#275)
+├── .##:Deep                   *(retired — use %##Depth.Max << #Inf)*
+├── .##:Contiguous             *(retired — use %##Gap/%##Ordered directly)*
+├── .##:Sparse                 *(retired — use %##Gap << #True)*
+├── .##:Rectangular            *(retired — use %##Propagate directly)*
+├── .##:Map                    *(retired — use ##Record)*
+└── .##:Set                    *(retired — use ##Array + %###Unique)*
 ```
 
-Schema definitions are immutable compile-time templates. When a `{#}` type composes a schema via `[#] << ##Flat`, the schema's `%##` properties are inherited into the type's definition. Parameterized schemas accept `[#] <#param` / `[#] <param` bindings nested under the `[#] <<` line — the `:` separator in type annotations binds positionally to declared parameters.
+Schema definitions are immutable compile-time templates. When a `{#}` type composes a schema via `[#] ##Flat`, the schema's `%##` properties are inherited into the type's definition. Parameterized schemas accept `(#) <#param` / `(#) <param` bindings nested under the `[#]` line — the `:` separator in type annotations binds positionally to declared parameters.
 
 ## Field Type Definition Templates (`%definition.###`)
 
@@ -86,7 +81,7 @@ Schema definitions are immutable compile-time templates. When a `{#}` type compo
 └── .###:None             <- nullable (empty string "")
 ```
 
-The compiler infers `###Value` or `###Enum` from field declarations. Explicit `[#] << ###Value` or `[#] << ###Enum` is optional. A contradiction between explicit declaration and fields raises PGE11003.
+The compiler infers `###Value` or `###Enum` from field declarations. Explicit `[#] ###Value` or `[#] ###Enum` is optional. A contradiction between explicit declaration and fields raises PGE11003.
 
 ## Schema Properties in Type Definitions (`%##`)
 
@@ -96,21 +91,20 @@ When a `{#}` definition includes `[#] %##Property` declarations or composes `##`
 
 | Property | Type | Meaning |
 |----------|------|---------|
-| `%##Flexible` | `#FlexKind` | `.Fixed` (. fields), `.Flexible` (: user-controlled), `.Range` (: compiler-generated from range) |
-| `%##Key` | type ref | Type of flexible `:` child names. Only for Flexible/Range |
-| `%##Range` | range expr | Valid key interval (numeric keys only) |
+| `%##Fields` | `#FieldsDescriptor` or `##Enum` ref | `.Range` (integer-indexed) or enum ref (stamp children from variants) |
 | `%##Schema` | list of `##` | Structural schemas children must satisfy (AND) |
 | `%##Active` | `#ActiveKind` | `.All` (every branch present) / `.One` (exactly one) / `.Partial` (any non-zero subset) |
 | `%##Ordered` | `#Boolean` | Insertion order preserved? |
 | `%##Sorted` | `#Boolean` | Sorted by key? (order derived from key type) |
 | `%##Gap` | `#Boolean` | Gaps allowed in keys? |
-| `%##Regular` | `#Boolean` | Same child count per sub-branch? |
-| `%##Count` | `#Bound` | Max children (.Inf = unlimited) |
+| `%##Count` | `#Bound` | Max children (#Inf = unlimited) |
 | `%##Count.Min` | `#uint` | Min children (0 if absent) |
 | `%##Propagate` | `#Boolean` | Apply these properties recursively to all levels down to Depth.Max |
 | `%##Level.N` | scope | Per-level override when Propagate is true |
-| `%##Depth.Max` | `#Bound` | Max depth (0, 1, N, .Inf) |
+| `%##Depth.Max` | `#Bound` | Max depth (0, 1, N, #Inf) |
 | `%##Alias` | `#NestedKeyString` | Lowercase shorthand name |
+
+*Retired (#275):* `%##Flexible` (`#FlexKind`), `%##Key`, `%##Range`, `%##Regular`.
 
 ### Leaf-level properties (`%###`)
 
@@ -126,23 +120,21 @@ All siblings must be the same `###` kind — mixing typed and untyped fields amo
 
 ## Complete Type Definition Example
 
-`#Array` definition template showing all metadata layers (generic type with `[#] <#ValueType` and `[#] <Dim` parameters):
+`#Array` definition template showing all metadata layers (generic type with `(#) <#ValueType` and `(#) <Dim` parameters):
 
 ```polyglot
 %definition.#:Array
-├── .%##Depth.Max              -> Dim (from ##Rectangular parameter)
-├── .%##Gap                    -> #False (from ##Contiguous)
-├── .%##Ordered                -> #True (from ##Contiguous)
-├── .%##Regular                -> #True (from ##Rectangular)
-├── .%##Propagate              -> #True (from ##Rectangular)
-├── .%##Flexible               -> .Range (from ##Rectangular)
-├── .%##Key                    -> #uint (numeric indices)
+├── .%##Depth.Max              -> Dim (from ##Array parameter)
+├── .%##Gap                    -> #False (from ##Array)
+├── .%##Ordered                -> #True (from ##Array)
+├── .%##Propagate              -> #True (from ##Array)
+├── .%##Fields                 -> #Range (from ##Array)
 ├── .%##Alias                  -> "array"
 ├── .%###Kind                  -> ###Value (inferred from :*#ValueType)
 └── :*#ValueType               <- flexible children (generic param)
 ```
 
-The `%##` properties are accumulated from composed schemas: `##Contiguous` provides `%##Gap << #False` and `%##Ordered << #True`, `##Rectangular` provides `%##Regular << #True` and `%##Propagate << #True`. Redundant properties raise PGW11001; contradicting overrides raise PGW11002.
+The `%##` properties are accumulated from composed schemas: `##Array` provides `%##Gap << #False`, `%##Ordered << #True`, `%##Propagate << #True`, and `%##Fields << #Range`. Redundant properties raise PGW11001; contradicting overrides raise PGW11002.
 
 `#Boolean` definition template showing `###ScalarEnum`:
 

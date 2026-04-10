@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.###:Enum"
 ---
@@ -18,9 +18,9 @@ This is distinct from the `##Enum` schema. `##Enum` is a schema that constrains 
 
 ```polyglot
 {#} #Boolean
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [.] .True
    [.] .False
 ```

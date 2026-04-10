@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: reference
-updated: 2026-04-04
+updated: 2026-04-09
 ---
 
 # Core Component Types
@@ -14,8 +14,8 @@ updated: 2026-04-04
 {#} #Date
    [%] .description << "Calendar date with year, month, day"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [#] %##Alias << "date"
    [.] .year#int
    [.] .month#int
@@ -28,8 +28,8 @@ updated: 2026-04-04
 {#} #Time
    [%] .description << "Time of day with nanosecond precision"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [#] %##Alias << "time"
    [.] .hour#int
    [.] .minute#int
@@ -43,8 +43,8 @@ updated: 2026-04-04
 {#} #Zone
    [%] .description << "Timezone with IANA identifier, offset, and DST flag"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [#] %##Alias << "zone"
    [.] .iana#string
    [.] .offset#ZoneOffset
@@ -57,8 +57,8 @@ updated: 2026-04-04
 {#} #ZoneOffset
    [%] .description << "UTC offset in hours and minutes"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [#] %##Alias << "zoneoffset"
    [.] .hours#int
    [.] .minutes#int
@@ -70,8 +70,8 @@ updated: 2026-04-04
 {#} #Duration
    [%] .description << "Absolute time span in seconds and nanoseconds"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [#] %##Alias << "duration"
    [.] .seconds#int
    [.] .nanos#int
@@ -83,8 +83,8 @@ updated: 2026-04-04
 {#} #Period
    [%] .description << "Calendar-relative time span in years, months, weeks, days"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [#] %##Alias << "period"
    [.] .years#int
    [.] .months#int
@@ -98,8 +98,8 @@ updated: 2026-04-04
 {#} #Interval
    [%] .description << "Start/end date-time range with inclusivity flags"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [#] %##Alias << "interval"
    [.] .start#dt
    [.] .end#dt
@@ -113,8 +113,8 @@ updated: 2026-04-04
 {#} #Recurrence
    [%] .description << "Repeating date-time pattern with optional end"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [#] %##Alias << "recurrence"
    [.] .pattern#RecurrencePattern
    [.] .count#int <~ 0

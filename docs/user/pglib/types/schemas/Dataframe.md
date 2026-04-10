@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.##:Dataframe"
 ---
@@ -10,29 +10,34 @@ metadata_definition: "%definition.##:Dataframe"
 
 <!-- @types -->
 
-`##Dataframe` is a parameterized schema that describes a row-oriented tabular structure -- an array of maps. Each row is a map keyed by column names, and all rows share the same column set.
+`##Dataframe` is a parameterized schema that describes a two-level tabular structure. Level 1 uses `%##Fields << #Range` for integer row indices. Level 2 composes `##Record` with the column enum as fields.
 
 ## Definition
 
 ```polyglot
 {#} ##Dataframe
-   [#] <#Columns << ##Enum
-   [#] <#CellType <~ #
-   [#] << ##Contiguous
-   [#] << ##Rectangular
-   [#] %##Key << #UnsignedInt
+   (#) <#Columns << ##Enum
+   (#) <#CellType <~ #
+   [#] %##Depth.Max << 2
+   [#] %##Fields << #Range
+   [#] %##Ordered << #True
+   [#] %##Gap << #False
+   [#] %##Level.2 ##Record
+      (#) <#Fields << <#Columns
+      (#) <#ValueType << <#CellType
 ```
 
 ## Properties Set
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `%##Gap` | `#False` (via ##Contiguous) | No gaps in row indices |
-| `%##Ordered` | `#True` (via ##Contiguous) | Row order preserved |
-| `%##Regular` | `#True` (via ##Rectangular) | Every row has same column count |
-| `%##Key` | `#UnsignedInt` | Integer row indices |
+| `%##Depth.Max` | `2` | Two levels: rows + columns |
+| `%##Fields` | `#Range` | Integer row indices (L1) |
+| `%##Ordered` | `#True` | Row order preserved |
+| `%##Gap` | `#False` | No gaps in row indices |
+| `%##Level.2` | `##Record` | Columns are enum-keyed record fields |
 
-The `<#Columns` parameter must satisfy `##Enum` -- column names come from an enum type. `<#CellType` defaults to `#` (any type).
+The `<#Columns` parameter must satisfy `##Enum` -- column names come from an enum type. `<#CellType` defaults to `#` (any type). The level 2 `##Record` composition passes `<#Columns` as `<#Fields` and `<#CellType` as `<#ValueType`.
 
 ## Used By
 
@@ -50,5 +55,6 @@ Schemas are compile-time metadata constraints -- they have no runtime instances.
 
 - [[schemas/INDEX|## Schema Types]] -- all schema definitions
 - [[Dataframe]] -- `#Dataframe` generic type composing ##Dataframe
-- [[schemas/Contiguous|##Contiguous]] -- no-gap base
-- [[schemas/Rectangular|##Rectangular]] -- regular shape base
+- [[schemas/Record|##Record]] -- enum-keyed record used for columns (L2)
+- [[schemas/Fields|%##Fields]] -- field descriptor property
+

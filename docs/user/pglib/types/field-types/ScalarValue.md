@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.###:ScalarValue"
 ---
@@ -20,8 +20,8 @@ Scalar value types are defined through the `##Scalar` composition. The `.string`
 
 ```polyglot
 {#} ##Int
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [.] .string#string
    [.] .regex << "^-?[0-9]+$"
 ```

@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:HandleKind"
 metadata_instance: "%#:HandleKind:N"
@@ -19,9 +19,9 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
 {#} #HandleKind
    [%] .description << "Resource handle type for permission descriptors"
    [%] .version << "1.0.0"
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [#] %##Alias << "handlekind"
    [.] .Path
    [.] .ConnectionString

@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: specification
-updated: 2026-04-01
+updated: 2026-04-09
 status: draft
 ---
 
@@ -75,6 +75,10 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE02009 | Unreachable Code |
 | PGE02010 | Discard Default Assignment |
 | PGE02011 | Data Load Schema Mismatch |
+| PGE02012 | Duplicate Operation Label |
+| PGE02013 | Write to Label Accessor |
+| PGE02014 | Label Access Before Completion |
+| PGE02015 | Unused Background Label |
 
 ### 03 — Parallelism
 
@@ -91,6 +95,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE03009 | Nested Expand Without Collect |
 | PGE03010 | Collector Without Expand |
 | PGE03011 | Orphaned Expand IO Marker |
+| PGE03012 | Parallel Label Isolation |
 
 ### 04 — Types & Values
 
@@ -212,6 +217,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE10004 | Undeclared Permission |
 | PGE10005 | Invalid Permission Block Marker |
 | PGE10006 | Duplicate Permission |
+| PGE10007 | Chain Step Label Overflow |
 
 ### 11 — Schema Properties
 
@@ -332,22 +338,25 @@ Each rule follows this structure:
 **VALID:**
 ```polyglot
 {#} #Matrix
-   [#] << ##Rectangular
-      [#] <Dim << "2D"
+   [#] ##Array
+      (#) <#ValueType << #float
+      (#) <Dim << "2D"
    [#] %##Depth.Max << 2
 ```
 
 **INVALID:**
 ```polyglot
 {#} #Nested
-   [#] << ##Rectangular              [ ] ✗ PGE11002 — no %##Depth.Max declared
+   [#] ##Array
+      (#) <#ValueType << #int        [ ] ✗ PGE11002 — no %##Depth.Max declared
 ```
 
 **WARNING:**
 ```polyglot
 {#} #FlexNested
-   [#] << ##Rectangular
-   [#] %##Depth.Max << .Inf          [ ] ⚠ PGW11003 — unlimited depth on user type
+   [#] ##Array
+      (#) <#ValueType << #int
+   [#] %##Depth.Max << #Inf          [ ] ⚠ PGW11003 — unlimited depth on user type
 ```
 
 ### Rule 9.23 — Field Type Contradiction
@@ -360,7 +369,7 @@ Each rule follows this structure:
 **VALID:**
 ```polyglot
 {#} #Boolean
-   [#] << ###ScalarEnum
+   [#] ###ScalarEnum
    [.] .True
    [.] .False
 ```
@@ -368,29 +377,31 @@ Each rule follows this structure:
 **INVALID:**
 ```polyglot
 {#} #BadEnum
-   [#] << ###Enum                 [ ] ✗ PGE11003 — declares ###Enum
+   [#] ###Enum                    [ ] ✗ PGE11003 — declares ###Enum
    [.] .name#string               [ ] ✗ PGE11003 — but fields have #type (value fields)
 ```
 
 ### Rule 9.24 — Invalid Key Type
 `PGE11004`
 
-**Statement:** `%##Key` must be set to a type that inherits from `#KeyString`. Keys must exclude syntax-reserved characters (whitespace, `.`, `:`, `<`, `>`).
+**Statement:** When `%##Fields << #Range`, the implicit key type must inherit from `#KeyString`. Keys must exclude syntax-reserved characters (whitespace, `.`, `:`, `<`, `>`). For enum-keyed types (`%##Fields << SomeEnum`), key validity is guaranteed by the enum definition.
 
 **Rationale:** Tree child keys appear in accessor syntax (`$var<key`). Types that permit syntax-reserved characters in their values would create parse ambiguity.
 
 **VALID:**
 ```polyglot
-{#} #NamedMap
-   [#] << ##Flat
-   [#] %##Key << #KeyString
+{#} #NamedRecord
+   [#] ##Flat
+   [#] %##Fields << #Range
 ```
 
 **INVALID:**
 ```polyglot
-{#} #BadMap
-   [#] << ##Flat
-   [#] %##Key << #string   [ ] ✗ PGE11004 — #string allows '.', ':', '<', '>'
+[ ] PGE11004 — explicit key type override that allows reserved chars
+{#} #BadRecord
+   [#] ##Flat
+   [#] %##Fields << #Range
+   [ ] ✗ PGE11004 if key type resolves to one allowing '.', ':', '<', '>'
 ```
 
 ### Rule 9.25 — Mixed Field Kinds
@@ -424,7 +435,12 @@ Each rule follows this structure:
 **VALID:**
 ```polyglot
 {#} #MyType
-   [#] << ##Flat
+   [#] ##Flat
+
+{#} #UserData
+   [#] ##Record
+      (#) <#Fields << #UserFields
+      (#) <#ValueType << #string
 ```
 
 **INVALID:**
@@ -447,19 +463,19 @@ Each rule follows this structure:
 
 [ ] ✓ .regex is <~ (default) in #String — child CAN override
 {#} #Int
-   [#] <~ #String
+   (#) <~ #String
    [.] .regex#RawString << "^-?[0-9]+$"
 ```
 
 **INVALID:**
 ```polyglot
 {#} #Int
-   [#] <~ #String
+   (#) <~ #String
    [.] .regex#RawString << "^-?[0-9]+$"
 
 [ ] ✗ PGE11005 — .regex is already << final in #Int
 {#} #PositiveInt
-   [#] <~ #Int
+   (#) <~ #Int
    [.] .regex#RawString << "^[1-9][0-9]*$"
 ```
 
@@ -473,9 +489,9 @@ Each rule follows this structure:
 **WARNING:**
 ```polyglot
 {#} #MyArray
-   [#] << ##Array
-      [#] <#ValueType << #int
-   [#] %##Gap << #False                [ ] ⚠ PGW11001 — already set by ##Contiguous via ##Array
+   [#] ##Array
+      (#) <#ValueType << #int
+   [#] %##Gap << #False                [ ] ⚠ PGW11001 — already set by ##Array
 ```
 
 ### Rule 9.22w — Contradicting Schema Override
@@ -488,9 +504,9 @@ Each rule follows this structure:
 **WARNING:**
 ```polyglot
 {#} #SparseArray
-   [#] << ##Array
-      [#] <#ValueType << #int
-   [#] %##Gap << #True                 [ ] ⚠ PGW11002 — overrides #False from ##Contiguous
+   [#] ##Array
+      (#) <#ValueType << #int
+   [#] %##Gap << #True                 [ ] ⚠ PGW11002 — overrides #False from ##Array
 ```
 
 ### Rule 9.23w — Unlimited Depth on User Type

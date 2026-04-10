@@ -34,8 +34,8 @@ supersedes: PGW01002
 ```polyglot
 [ ] ✓ schema composition provides structure
 {#} #MyArray
-   [#] << ##Array
-      [#] <#ValueType << #int
+   [#] ##Array
+      (#) <#ValueType << #int
 ```
 
 **INVALID:**

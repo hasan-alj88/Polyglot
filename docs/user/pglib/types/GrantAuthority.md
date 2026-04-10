@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:GrantAuthority"
 metadata_instance: "%#:GrantAuthority:N"
@@ -19,9 +19,9 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
 {#} #GrantAuthority
    [%] .description << "Permission grant authority level"
    [%] .version << "1.0.0"
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [#] %##Alias << "grantauthority"
    [.] .Package
    [.] .Pipeline

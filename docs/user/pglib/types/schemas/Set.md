@@ -1,51 +1,30 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
-status: complete
+updated: 2026-04-09
+status: retired
+redirect: pglib/types/schemas/Array
 metadata_definition: "%definition.##:Set"
 ---
 
-# ##Set Schema (Parameterized)
+# ##Set Schema (Retired)
 
 <!-- @types -->
 
-`##Set` is a parameterized schema that describes a collection of unique values. It combines sparse storage with a uniqueness constraint on leaf values.
+`##Set` has been retired. Use `##Array` with `%###Unique << #True` instead.
 
-## Definition
+The uniqueness guarantee formerly provided by `##Set` is now a leaf-level property on any collection. Compose `##Array` for ordered, range-indexed storage and add `%###Unique << #True` to reject duplicates.
 
-```polyglot
-{#} ##Set
-   [#] <#ValueType
-   [#] << ##Sparse
-   [#] %##Flexible << #FlexKind.Flexible
-   [#] %###Type << <#ValueType
-   [#] %###Unique << #True
-```
+## Migration
 
-## Properties Set
-
-| Property | Value | Meaning |
-|----------|-------|---------|
-| `%##Gap` | `#True` (via ##Sparse) | Gaps allowed |
-| `%##Flexible` | `#FlexKind.Flexible` | User adds/removes entries |
-| `%###Type` | `<#ValueType` | Element type constraint |
-| `%###Unique` | `#True` | No duplicate values |
-
-## Used By
-
-- `#Set` type composes this schema
-
-## Metadata
-
-| Path | Pattern | Description |
-|------|---------|-------------|
-| Definition | `%definition.##:Set` | Schema definition template |
-
-Schemas are compile-time metadata constraints -- they have no runtime instances.
+| Former (##Set) | Now |
+|----------------|-----|
+| `##Set` schema | `##Array` + `%###Unique << #True` |
+| `%##Flexible << #FlexKind.Flexible` | Retired |
+| `%###Unique << #True` | `%###Unique << #True` (unchanged) |
 
 ## Related
 
-- [[schemas/INDEX|## Schema Types]] -- all schema definitions
-- [[schemas/Sparse|##Sparse]] -- gap-allowing base
-- [[syntax/types/schema-properties|Schema Properties]] -- `%###Unique` property
+- [[schemas/Array|##Array]] -- replacement schema
+- [[schemas/INDEX|## Schema Types]] -- retired schemas list
+

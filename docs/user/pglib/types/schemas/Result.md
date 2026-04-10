@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.##:Result"
 ---
@@ -10,25 +10,29 @@ metadata_definition: "%definition.##:Result"
 
 <!-- @types -->
 
-`##Result` is a parameterized schema that creates a two-branch structure: `.OK` holding a success value, or `.Err` holding an error value. Exactly one branch is active at any time.
+`##Result` is a parameterized schema that creates a two-branch structure: `.Ok` holding a success value, or `.Err` holding an error value. Exactly one branch is active at any time.
 
 ## Definition
 
 ```polyglot
 {#} ##Result
-   [#] <#OkType
-   [#] <#ErrType
+   (#) <#OkType
+   (#) <#ErrType
    [#] %##Active << #ActiveKind.One
+   [.] .Ok
+      [.] .Value;#OkType
+   [.] .Err
+      [.] .Value;#ErrType
 ```
 
 ## Usage
 
 ```polyglot
 {#} #ParseResult
-   [#] << ##Result
-      [#] <#OkType << #Int
-      [#] <#ErrType << !Validation.Type
-   [ ] .OK.Value#Int OR .Err.Value#!Validation.Type
+   [#] ##Result
+      (#) <#OkType << #Int
+      (#) <#ErrType << !Validation.Type
+   [ ] .Ok.Value;int OR .Err.Value;!Validation.Type
 ```
 
 The compiler validates that exactly one branch is active at any time (`%##Active << .One`). This provides type-safe error handling at the data level.

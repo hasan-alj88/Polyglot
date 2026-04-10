@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-04
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:NativeKind"
 metadata_instance: "%#:NativeKind:N"
@@ -24,8 +24,8 @@ See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] f
 {#} #NativeKind
    [%] .description << "Subsystem role classifier for native {N} definitions"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [.] .Trigger
    [.] .Queue
    [.] .Wrapper

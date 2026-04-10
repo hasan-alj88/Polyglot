@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:path"
 metadata_instance: "%#:path:N"
@@ -21,7 +21,7 @@ Cross-platform file system path with OS-specific subfields. At runtime, the Poly
 {#} #path
    [%] .description << "Cross-platform file system path"
    [%] .version << "1.0.0"
-   [#] << ##Scalar
+   [#] ##Scalar
    [.] .Unix#string
    [.] .Windows#string
 ```

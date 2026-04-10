@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:PermissionCategory"
 metadata_instance: "%#:PermissionCategory:N"
@@ -19,9 +19,9 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
 {#} #PermissionCategory
    [%] .description << "Permission IO category"
    [%] .version << "1.0.0"
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [#] %##Alias << "permissioncategory"
    [.] .File
    [.] .Web

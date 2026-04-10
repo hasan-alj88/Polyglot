@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.##:Enum"
 ---
@@ -16,7 +16,7 @@ metadata_definition: "%definition.##:Enum"
 
 ```polyglot
 {#} ##Enum
-   [#] << ##Flat
+   [#] ##Flat
    [#] %##Active << #ActiveKind.One
    [#] %###Kind << #FieldKind.Enum
 ```

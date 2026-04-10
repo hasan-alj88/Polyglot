@@ -1,55 +1,30 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
-status: complete
-metadata_definition: "%definition.##:Rectangular"
+updated: 2026-04-09
+status: retired
+redirect: schema-properties
 ---
 
-# ##Rectangular Schema (Parameterized)
+# ##Rectangular Schema (Retired)
 
 <!-- @types -->
 
-`##Rectangular` enforces a regular shape where all sub-branches at each level have the same child count. It is parameterized with `<Dim` to set depth and propagation scope.
+`##Rectangular` has been retired. The properties it bundled are now stated directly on each type definition using individual `%##` property assignments.
 
-## Definition
+## Migration
 
-```polyglot
-{#} ##Rectangular
-   [#] <Dim <~ "1D"
-   [#] %##Regular << #True
-   [#] %##Depth.Max << <Dim
-   [#] %##Flexible << #FlexKind.Range
-   [#] %##Propagate << #True
-```
+The properties that `##Rectangular` set are now composed individually:
 
-## Properties Set
+| Old (via ##Rectangular) | New (direct property) |
+|---|---|
+| `%##Regular << #True` | `[#] %##Regular << #True` |
+| `%##Depth.Max << <Dim` | `[#] %##Depth.Max << <Dim` |
+| `%##Propagate << #True` | `[#] %##Propagate << #True` |
 
-| Property | Value | Meaning |
-|----------|-------|---------|
-| `%##Regular` | `#True` | Same child count at each level |
-| `%##Depth.Max` | `<Dim` | Dimension count from parameter |
-| `%##Flexible` | `#FlexKind.Range` | Compiler-generated indices |
-| `%##Propagate` | `#True` | Properties apply recursively to all levels |
+The retired `%##Flexible` property (formerly `#FlexKind.Range`) has been replaced by `%##Fields` with `#Range` value. See [[schemas/Fields|%##Fields]].
 
-When `%##Propagate` is `#True`, the properties set by `##Rectangular` apply to every level down to `%##Depth.Max`. Use `%##Level.N` for per-level overrides.
+## See Also
 
-## Used By
-
-- `#Array` (via `##Array`)
-- `#Dataframe` (via `##Dataframe`)
-
-## Metadata
-
-| Path | Pattern | Description |
-|------|---------|-------------|
-| Definition | `%definition.##:Rectangular` | Schema definition template |
-
-Schemas are compile-time metadata constraints -- they have no runtime instances.
-
-## Related
-
+- [[syntax/types/schema-properties|Schema Properties]] -- current property definitions
 - [[schemas/INDEX|## Schema Types]] -- all schema definitions
-- [[schemas/Contiguous|##Contiguous]] -- no gaps, ordered (often paired with Rectangular)
-- [[schemas/Array|##Array]] -- array schema composing ##Rectangular
-- [[FlexKind]] -- `#FlexKind` enum used by `%##Flexible`

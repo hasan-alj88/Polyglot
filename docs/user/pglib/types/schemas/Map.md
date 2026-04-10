@@ -1,55 +1,32 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
-status: complete
+updated: 2026-04-09
+status: retired
+redirect: pglib/types/schemas/Record
 metadata_definition: "%definition.##:Map"
 ---
 
-# ##Map Schema (Parameterized)
+# ##Map Schema (Retired)
 
 <!-- @types -->
 
-`##Map` is a parameterized schema that describes a flat, sparse, flexible key-value structure. It takes key and value type parameters.
+`##Map` has been retired. Use `##Record` instead.
 
-## Definition
+`##Record` provides enum-keyed fields with `%##Fields << <#Fields` instead of arbitrary sparse keys. See [[schemas/Record|##Record]] for the full definition.
 
-```polyglot
-{#} ##Map
-   [#] <#KeyType
-   [#] <#ValueType <~ #
-   [#] << ##Flat
-   [#] << ##Sparse
-   [#] %##Flexible << #FlexKind.Flexible
-   [#] %##Key << <#KeyType
-   [#] %###Type << <#ValueType
-```
+## Migration
 
-## Properties Set
-
-| Property | Value | Meaning |
-|----------|-------|---------|
-| `%##Depth.Max` | `1` (via ##Flat) | One level of children |
-| `%##Gap` | `#True` (via ##Sparse) | Gaps allowed in keys |
-| `%##Flexible` | `#FlexKind.Flexible` | User adds/removes entries |
-| `%##Key` | `<#KeyType` | Key type from parameter |
-| `%###Type` | `<#ValueType` | Value type constraint |
-
-## Used By
-
-- `#Map` type composes this schema
-
-## Metadata
-
-| Path | Pattern | Description |
-|------|---------|-------------|
-| Definition | `%definition.##:Map` | Schema definition template |
-
-Schemas are compile-time metadata constraints -- they have no runtime instances.
+| Former (##Map) | Now (##Record) |
+|----------------|----------------|
+| `%##Key << <#KeyType` | `%##Fields << <#Fields` (enum ref) |
+| `%##Flexible << #FlexKind.Flexible` | Retired -- fields determined by enum |
+| `%##Gap << #True` (via ##Sparse) | Retired -- all enum fields present |
+| `%###Type << <#ValueType` | `%###Type << <#ValueType` (unchanged) |
 
 ## Related
 
-- [[schemas/INDEX|## Schema Types]] -- all schema definitions
-- [[Map]] -- `#Map` generic type composing ##Map
-- [[schemas/Sparse|##Sparse]] -- gap-allowing base
-- [[schemas/Flat|##Flat]] -- depth 1 base
+- [[schemas/Record|##Record]] -- replacement schema
+- [[schemas/INDEX|## Schema Types]] -- retired schemas list
+- [[schemas/Fields|%##Fields]] -- field descriptor property
+

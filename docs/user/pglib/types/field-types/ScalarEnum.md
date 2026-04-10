@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.###:ScalarEnum"
 ---
@@ -18,14 +18,14 @@ A type composes `###ScalarEnum` when it is both an enum (all fields are variants
 
 ```polyglot
 {#} #Boolean
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [.] .True
    [.] .False
 ```
 
-The `[#] << ###ScalarEnum` line declares the field type for all variant fields in the type. Each `[.]` without a `#type` annotation is a scalar enum variant.
+The `[#] ###ScalarEnum` line declares the field type for all variant fields in the type. Each `[.]` without a `#type` annotation is a scalar enum variant.
 
 ## Example Types
 

@@ -20,7 +20,7 @@ See [[syntax/types/INDEX|types]] for the full type hierarchy and [[scalars]] for
 ```polyglot
 {#} #String
    [ ] #String and #string both resolve here
-   [#] << ##Scalar
+   [#] ##Scalar
    [#] %##Alias << "string"
    [ ] The actual string value
    [.] .string#RawString
@@ -40,7 +40,7 @@ See [[syntax/types/INDEX|types]] for the full type hierarchy and [[scalars]] for
 
 ## Schema Properties
 
-- `[#] << ##Scalar` -- sets `%##Depth.Max << 1`, marking `#String` as a scalar
+- `[#] ##Scalar` -- sets `%##Depth.Max << 1`, marking `#String` as a scalar
 - `%##Alias << "string"` -- lets users write `#string` (lowercase) as shorthand
 
 ## Scalar Subtypes via `##String`
@@ -53,8 +53,8 @@ Users can define custom string subtypes with their own `.regex`:
 
 ```polyglot
 {#} #emailAddress
-   [#] << ##String
-      [#] <regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+   [#] ##String
+      (#) <regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
 ## Metadata

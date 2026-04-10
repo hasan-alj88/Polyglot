@@ -1,7 +1,7 @@
 ---
 audience: [architect, designer]
 type: spec
-updated: 2026-04-07
+updated: 2026-04-09
 ---
 
 # Full Metadata Tree
@@ -29,7 +29,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   +-- :Boolean                            %definition.#:Boolean  (bool)
 |   |   +-- :String                             %definition.#:String  (string)
 |   |   +-- :Array                              %definition.#:Array  (array)
-|   |   +-- :Map                                %definition.#:Map  (map)
+|   |   +-- :Map                                %definition.#:Map  *(retired #275 — use ##Record)*
 |   |   +-- :Serial                             %definition.#:Serial  (serial)
 |   |   +-- :Error                              %definition.#:Error
 |   |   +-- :Job                                %definition.#:Job
@@ -98,15 +98,11 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   +-- :Leaf                               %definition.##:Leaf           %##Depth.Max -> 0
 |   |   +-- :Scalar                             %definition.##:Scalar         %##Depth.Max -> 1
 |   |   +-- :Flat                               %definition.##:Flat           %##Depth.Max -> 1
-|   |   +-- :Deep                               %definition.##:Deep           %##Depth.Max -> .Inf
 |   |   |
 |   |   |   Value schemas
 |   |   +-- :Inf                                %definition.##:Inf            composable .Inf variant
 |   |   |
 |   |   |   Structure schemas
-|   |   +-- :Contiguous                         %definition.##:Contiguous     %##Gap -> #False, %##Ordered -> #True
-|   |   +-- :Sparse                             %definition.##:Sparse         %##Gap -> #True
-|   |   +-- :Rectangular                        %definition.##:Rectangular    %##Regular -> #True, %##Propagate -> #True
 |   |   +-- :Sorted                             %definition.##:Sorted         %##Sorted -> #True, %##Ordered -> #True
 |   |   |
 |   |   |   Classification schemas
@@ -114,13 +110,20 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   |
 |   |   |   Parameterized schemas
 |   |   +-- :Fields                             %definition.##:Fields         <#Type(##Enum) → stamps variants as [.] fields
-|   |   +-- :Nullable                           %definition.##:Nullable       <#ValueType → .OK.Value OR .None
-|   |   +-- :Result                             %definition.##:Result         <#OkType, <#ErrType → .OK OR .Err
+|   |   +-- :Nullable                           %definition.##:Nullable       <#ValueType → .Ok.Value OR .None
+|   |   +-- :Result                             %definition.##:Result         <#OkType, <#ErrType → .Ok OR .Err
 |   |   +-- :String                             %definition.##:String         <regex → .string + .regex
-|   |   +-- :Map                                %definition.##:Map            <#KeyType, <#ValueType → flat sparse flexible
-|   |   +-- :Array                              %definition.##:Array          <#ValueType, <Dim → contiguous rectangular
-|   |   +-- :Set                                %definition.##:Set            <#ValueType → sparse + %###Unique
-|   |   +-- :Dataframe                          %definition.##:Dataframe      <#Columns, <#CellType → array of maps
+|   |   +-- :Record                             %definition.##:Record         <#Fields(##Enum), <#ValueType → flat enum-keyed
+|   |   +-- :Array                              %definition.##:Array          <#ValueType, <Dim → contiguous ordered
+|   |   +-- :Dataframe                          %definition.##:Dataframe      <#Columns, <#CellType → array of records
+|   |   |
+|   |   |   Retired schemas (#275)
+|   |   +-- :Deep                               *(retired — use %##Depth.Max << #Inf directly)*
+|   |   +-- :Contiguous                         *(retired — use %##Gap << #False, %##Ordered << #True)*
+|   |   +-- :Sparse                             *(retired — use %##Gap << #True)*
+|   |   +-- :Rectangular                        *(retired — use %##Propagate << #True)*
+|   |   +-- :Map                                *(retired — use ##Record)*
+|   |   +-- :Set                                *(retired — use ##Array + %###Unique << #True)*
 |   |
 |   +-- .###                                    Field type definitions
 |       |                                       → [[definition-templates#Field Type Definition Templates]]
@@ -161,7 +164,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   +-- :Array:0                                %#:Array:0
 |   |   +-- :0, :1, :2, ...                     flexible children (elements)
 |   |
-|   +-- :Map:0                                  %#:Map:0
+|   +-- :Map:0                                  %#:Map:0  *(retired #275 — use ##Record)*
 |   |   +-- :key1, :key2, ...                   flexible children (key-value)
 |   |
 |   +-- :Serial:0                               %#:Serial:0  (arbitrary depth)
@@ -325,7 +328,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 | `#string` | `#String` | `#String` | `%#:String` |
 | `#bool` | `#Boolean` | `#Boolean` | `%#:Boolean` |
 | `#array` | `#Array` | `#Array` | `%#:Array` |
-| `#map` | `#Map` | `#Map` | `%#:Map` |
+| `#map` | `#Map` | `#Map` | `%#:Map` *(retired #275)* |
 | `#serial` | `#Serial` | `#Serial` | `%#:Serial` |
 
 ## Path Grammar Quick Reference

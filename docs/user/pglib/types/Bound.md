@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:Bound"
 metadata_instance: "%#:Bound:N"
@@ -21,8 +21,8 @@ metadata_instance: "%#:Bound:N"
 {#} #Bound
    [%] .description << "Numeric value or infinity"
    [%] .version << "1.0.0"
-   [#] << ##Int
-   [#] << ##Inf
+   [#] ##Int
+   [#] ##Inf
    [#] %##Active << #ActiveKind.One
    [#] %##Alias << "bound"
 ```

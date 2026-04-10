@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.##:Array"
 ---
@@ -16,12 +16,14 @@ metadata_definition: "%definition.##:Array"
 
 ```polyglot
 {#} ##Array
-   [#] <#ValueType
-   [#] <Dim <~ "1D"
-   [#] << ##Contiguous
-   [#] << ##Rectangular
-      [#] <Dim << <Dim
-   [#] %##Key << #UnsignedInt
+   (#) <#ValueType
+   (#) <Dim <~ "1D"
+   [#] %##Gap << #False
+   [#] %##Ordered << #True
+   [#] %##Regular << #True
+   [#] %##Depth.Max << <Dim
+   [#] %##Propagate << #True
+   [#] %##Fields << #Range
    [#] %###Type << <#ValueType
 ```
 
@@ -29,13 +31,12 @@ metadata_definition: "%definition.##:Array"
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `%##Gap` | `#False` (via ##Contiguous) | No gaps in indices |
-| `%##Ordered` | `#True` (via ##Contiguous) | Insertion order preserved |
-| `%##Regular` | `#True` (via ##Rectangular) | Same child count per dimension |
-| `%##Depth.Max` | `<Dim` (via ##Rectangular) | Dimension count |
-| `%##Propagate` | `#True` (via ##Rectangular) | Properties apply to all levels |
-| `%##Flexible` | `#FlexKind.Range` (via ##Rectangular) | Compiler-generated indices |
-| `%##Key` | `#UnsignedInt` | Integer indices |
+| `%##Gap` | `#False` | No gaps in indices |
+| `%##Ordered` | `#True` | Insertion order preserved |
+| `%##Regular` | `#True` | Same child count per dimension |
+| `%##Depth.Max` | `<Dim` | Dimension count |
+| `%##Propagate` | `#True` | Properties apply to all levels |
+| `%##Fields` | `#Range` | Compiler-generated integer indices |
 | `%###Type` | `<#ValueType` | Element type constraint |
 
 ## Used By
@@ -54,5 +55,4 @@ Schemas are compile-time metadata constraints -- they have no runtime instances.
 
 - [[schemas/INDEX|## Schema Types]] -- all schema definitions
 - [[Array]] -- `#Array` generic type composing ##Array
-- [[schemas/Contiguous|##Contiguous]] -- no-gap base
-- [[schemas/Rectangular|##Rectangular]] -- regular shape base
+- [[syntax/types/schema-properties|Schema Properties]] -- property definitions

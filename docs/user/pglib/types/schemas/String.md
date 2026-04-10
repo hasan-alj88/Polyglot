@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.##:String"
 ---
@@ -16,9 +16,9 @@ metadata_definition: "%definition.##:String"
 
 ```polyglot
 {#} ##String
-   [#] <regex
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   (#) <regex
+   [#] ##Scalar
+   [#] ###ScalarValue
 ```
 
 ## Usage
@@ -26,8 +26,8 @@ metadata_definition: "%definition.##:String"
 ```polyglot
 {#} #Int
    [%] %alias << "int,integer,Integer"
-   [#] << ##String
-      [#] <regex << "^-?[0-9]+$"
+   [#] ##String
+      (#) <regex << "^-?[0-9]+$"
    [ ] .string#RawString validated by .regex
 ```
 

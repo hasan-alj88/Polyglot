@@ -10,4 +10,4 @@ redirect: generic-types
 
 This page has been superseded by [[generic-types|Generic Types and Parameterized Schemas]].
 
-`{M}` type macros have been replaced by generic `#` types and parameterized `##` schemas using `[#] <param` inputs directly in `{#}` definitions. See [[generic-types]] for the current specification.
+`{M}` type macros have been replaced by generic `#` types and parameterized `##` schemas using `(#) <param` inputs directly in `{#}` definitions. See [[generic-types]] for the current specification.

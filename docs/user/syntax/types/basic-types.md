@@ -26,8 +26,8 @@ What `#string` refers to is `#String` — a struct built on `RawString`:
 ```polyglot
 {#} #String
    [ ] #String and #string both resolve here
-   [#] << ##Scalar
-   [#] << ###ScalarValue
+   [#] ##Scalar
+   [#] ###ScalarValue
    [#] %##Alias << "string"
    [ ] The actual string value
    [.] .string#RawString
@@ -41,8 +41,8 @@ What `#string` refers to is `#String` — a struct built on `RawString`:
 - `.string` — the raw string value
 - `.regex` — a regular expression constraint (alias: `.re`). Defaults to `".*"` (accept any string). Subtypes override with `<~` (default assignment — overridable once). See [[variable-lifecycle]]
 - `%##Alias << "string"` — lets users write `#string` (lowercase) as shorthand for `#String`
-- `[#] << ##Scalar` — applies the `##Scalar` schema (sets `%##Depth.Max << 1` — `#String` is a scalar type with fixed fields at one level of depth)
-- `[#] << ###ScalarValue` — marks leaf content as regex-validated string data (`#String:*` family)
+- `[#] ##Scalar` — applies the `##Scalar` schema (sets `%##Depth.Max << 1` — `#String` is a scalar type with fixed fields at one level of depth)
+- `[#] ###ScalarValue` — marks leaf content as regex-validated string data (`#String:*` family)
 
 A string literal (quoted text with `{$var}` interpolation) is always `#string`. When `.regex` is set, the string value must match the pattern — violations are caught at compile time for literals (PGE04010) and at runtime for dynamic values (handled with `[!]` error blocks).
 
@@ -66,23 +66,23 @@ Each subtype composes `##String` directly:
 ```polyglot
 {#} #Int
    [%] %alias << "int,integer,Integer"
-   [#] << ##String
-      [#] <regex << "^-?[0-9]+$"
+   [#] ##String
+      (#) <regex << "^-?[0-9]+$"
 
 {#} #UnsignedInt
    [%] %alias << "uint"
-   [#] << ##String
-      [#] <regex << "^[0-9]+$"
+   [#] ##String
+      (#) <regex << "^[0-9]+$"
 
 {#} #Float
    [%] %alias << "float"
-   [#] << ##String
-      [#] <regex << "^-?[0-9]+\.[0-9]+$"
+   [#] ##String
+      (#) <regex << "^-?[0-9]+\.[0-9]+$"
 
 {#} #Dimension
    [%] %alias << "dim"
-   [#] << ##String
-      [#] <regex << "^[0-9]+D$"
+   [#] ##String
+      (#) <regex << "^[0-9]+D$"
 ```
 
 The `##String` parameterized schema provides `##Scalar`, `###ScalarValue`, `.string`, and `.regex` fields internally. See [[scalars]] for all subtypes.
@@ -91,8 +91,8 @@ Users can still define custom string subtypes with their own `.regex`:
 
 ```polyglot
 {#} #emailAddress
-   [#] << ##String
-      [#] <regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+   [#] ##String
+      (#) <regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
 Literal numeric values always match their RE by construction — no error handling needed.
@@ -103,13 +103,13 @@ Literal numeric values always match their RE by construction — no error handli
 
 ```polyglot
 {#} #KeyString
-   [#] <~ #String
+   (#) <~ #String
    [#] %##Alias << "key"
    [ ] Excludes whitespace, dot, colon, angle brackets
    [.] .regex#RawString << "^[^\s.<>:]+$"
 ```
 
-Any type used as `%##Key` (the key type for a collection's flexible children) must compose `#KeyString`. If it does not, the compiler raises PGE11004 -- keys must exclude syntax-reserved characters to avoid compile ambiguity.
+Any type used as flexible child keys must compose `#KeyString`. If it does not, the compiler raises PGE11004 -- keys must exclude syntax-reserved characters to avoid compile ambiguity.
 
 ### Layer 2d: #NestedKeyString — Key Type for Alias Paths
 
@@ -117,7 +117,7 @@ Any type used as `%##Key` (the key type for a collection's flexible children) mu
 
 ```polyglot
 {#} #NestedKeyString
-   [#] <~ #String
+   (#) <~ #String
    [#] %##Alias << "nestedkey"
    [ ] Allows dot and colon; excludes whitespace and angle brackets
    [.] .regex#RawString << "^[^\s<>]+$"
@@ -133,9 +133,9 @@ Used as the element type for `%alias` — alias values may contain `.` and `:` t
 
 ```polyglot
 {#} #Boolean
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [#] %##Alias << "bool"
    [.] .True
    [.] .False
@@ -145,10 +145,10 @@ Used as the element type for `%alias` — alias values may contain `.` and `:` t
 
 ### Other Types
 
-- `map` — sparse, homogeneous key-value pairs with `#KeyString` keys. Child access uses `<` operator (`$myMap<name`). See [[concepts/collections/INDEX|collections]].
-- `array` — contiguous, rectangular collection with typed elements and N-dimensional support. A `#Map` variant with `#UnsignedInt` keys. Child access uses `<` operator (`$myArray<0`). See [[concepts/collections/INDEX|collections]].
+- `record` — enum-keyed, flat structure with typed value fields. Child access uses `<` operator (`$myRecord<name`). See [[concepts/collections/INDEX|collections]].
+- `array` — range-indexed, ordered collection with typed elements and N-dimensional support. Child access uses `<` operator (`$myArray<0`). See [[concepts/collections/INDEX|collections]].
 - `serial` — unconstrained. Any keys, any types, any depth. No compile-time validation of shape. Child access uses `<` operator (`$data<key`). See [[concepts/collections/INDEX|collections]].
-- `dataframe` — row-oriented table. A `#Dataframe` is an array of maps — each row is a `#Map`, the array holds rows. Row access uses `<` (array index), column access chains a second `<`: `$df<row<column`. See [[concepts/collections/INDEX|collections]].
+- `dataframe` — row-oriented table. Two-level schema: L1 range-indexed rows, L2 `##Record` columns. Row access uses `<` (array index), column access chains a second `<`: `$df<row<column`. See [[concepts/collections/INDEX|collections]].
 - struct (`{#}`) — defined schema. Compile-time enforced field names and types. See [[structs]].
 
 ## See Also

@@ -23,8 +23,8 @@ These axioms define Polyglot's data model. All type system design follows from t
 6. **GT-6: Not all tree properties can be expressed via regex** — hence `%` metadata properties (`##` schemas) describe tree shapes the compiler can identify and enforce
 7. **GT-7: `#`, `##`, `###` are user-friendly aliases for `%` metadata** — users should never need to use `%` directly; the prefix tiers are the user-facing alternative
 8. **GT-8: `{x}` = compile-time definitions; `-` pipelines = runtime definitions** — clean separation
-9. **GT-9: `##` schemas can be parameterized** — parameterized schemas use `[#] <param` inputs to generate structural constraints at compose time
-10. **GT-10: `#` types can be generic** — generic types use `[#] <param` inputs with `:` positional binding; compiler resolves all params to produce fully realized types
+9. **GT-9: `##` schemas can be parameterized** — parameterized schemas use `(#) <param` inputs to generate structural constraints at compose time
+10. **GT-10: `#` types can be generic** — generic types use `(#) <param` inputs with `:` positional binding; compiler resolves all params to produce fully realized types
 
 ## Type Annotation
 

@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.##:Inf"
 ---
@@ -16,7 +16,7 @@ metadata_definition: "%definition.##:Inf"
 
 ```polyglot
 {#} ##Inf
-   [ ] Composable .Inf variant -- not a standalone type
+   [.] .Inf
 ```
 
 ## Usage
@@ -25,12 +25,14 @@ Compose `##Inf` into types that need an unbounded option:
 
 ```polyglot
 {#} #Bound
-   [#] << ##Int
-   [#] << ##Inf
+   [#] ##Int
+   [#] ##Inf
    [#] %##Active << #ActiveKind.One
 ```
 
 When `##Inf` is composed, the type gains an `.Inf` branch. Combined with `%##Active << #ActiveKind.One`, the type acts as a tagged union -- either a concrete integer or `.Inf`.
+
+`#Inf` is a shorthand alias for `#Bound.Inf` -- the infinity variant of the `#Bound` type. Use `#Inf` in property assignments: `%##Depth.Max << #Inf`, `%##Count << #Inf`.
 
 ## Metadata
 

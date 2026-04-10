@@ -19,9 +19,9 @@ metadata_instance: "%#:Boolean:N"
 {#} #Boolean
    [%] .description << "boolean type Enum"
    [%] .version << "1.0.0"
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [#] %##Alias << "bool"
    [.] .True
    [.] .False
@@ -36,9 +36,9 @@ metadata_instance: "%#:Boolean:N"
 
 ### Schema Properties
 
-- `[#] << ##Enum` -- classifies as enum: `%##Active << #ActiveKind.One`, `%###Kind << #FieldKind.Enum`
-- `[#] << ##Scalar` -- sets `%##Depth.Max << 1`
-- `[#] << ###ScalarEnum` -- leaf content is variant selection, not typed data
+- `[#] ##Enum` -- classifies as enum: `%##Active << #ActiveKind.One`, `%###Kind << #FieldKind.Enum`
+- `[#] ##Scalar` -- sets `%##Depth.Max << 1`
+- `[#] ###ScalarEnum` -- leaf content is variant selection, not typed data
 - `%##Alias << "bool"` -- shorthand `#bool`
 
 ---
@@ -51,8 +51,8 @@ metadata_instance: "%#:Boolean:N"
 {#} #None
    [ ] Represents the absence of a value
    [ ] Empty string "" is the only valid value
-   [#] << ##Scalar
-   [#] << ###None
+   [#] ##Scalar
+   [#] ###None
 ```
 
 ## Metadata

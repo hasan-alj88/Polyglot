@@ -212,10 +212,10 @@ Each pglib pipeline declares the errors it can raise via `[=] !ErrorName` (see [
 
 ### `[<] !Alias.Clash` Fallback Chain
 
-In `{#}` generic type definitions, the `[#] <Alias` parameter can provide a fallback chain of alternative alias values using `[<] !Alias.Clash`. The compiler tries each value in order until one succeeds:
+In `{#}` generic type definitions, the `(#) <Alias` parameter can provide a fallback chain of alternative alias values using `[<] !Alias.Clash`. The compiler tries each value in order until one succeeds:
 
 ```polyglot
-[#] <Alias << "int"
+(#) <Alias << "int"
    [<] !Alias.Clash << "integer"
    [<] !Alias.Clash << "Integer"
 ```

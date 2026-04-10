@@ -1,35 +1,33 @@
 ---
 audience: pg-coder
 type: spec
-updated: 2026-03-30
+updated: 2026-04-09
 ---
 
 <!-- @concepts/collections/INDEX -->
 
-## #Serial — Unconstrained Tree
+## #Serial -- Unconstrained Tree
 
-`#Serial` achieves its unconstrained nature by explicitly removing every structural constraint through schema properties:
+`#Serial` achieves its unconstrained nature by explicitly removing every structural constraint through direct schema properties:
 
-| Schema / Property | Constraint Removed | Effect |
+| Property | Value | Constraint Removed |
 |---|---|---|
-| `##Deep` (`%##Depth.Max << -1`) | Depth limit | Unlimited nesting |
-| `##Sparse` (`%##Children.Gap << #True`) | No-gap requirement | Gaps allowed in child keys |
-| `##Heterogeneous` (`%##Children.Uniform << #False`) | Same-schema requirement | Children can be mixed types |
-| `%##Children.Ordered << #False` | Ordering requirement | No assumed key order |
-| `%##Children.Regular << #False` | Regularity requirement | Branches at same depth can have different child counts |
-| `%##Children.Max << -1` | Max children limit | Unlimited children per node |
+| `%##Depth.Max << #Inf` | `#Inf` | Depth limit -- unlimited nesting |
+| `%##Gap << #True` | `#True` | No-gap requirement -- gaps allowed in child keys |
+| `%##Ordered << #False` | `#False` | Ordering requirement -- no assumed key order |
+| `%##Regular << #False` | `#False` | Regularity requirement -- branches at same depth can have different child counts |
+| `%##Count << #Inf` | `#Inf` | Max children limit -- unlimited children per node |
 
-By removing all structural constraints, `#Serial` accepts any compilable tree shape. This is the "raw tree" escape hatch — it has schema properties, but every one is maximally permissive.
+By removing all structural constraints, `#Serial` accepts any compilable tree shape. This is the "raw tree" escape hatch -- it has schema properties, but every one is maximally permissive.
 
 ```polyglot
 {#} #Serial
    [#] %##Alias << "serial"
-   [#] << ##Deep
-   [#] << ##Sparse
-   [#] << ##Heterogeneous
-   [#] %##Children.Ordered << #False
-   [#] %##Children.Regular << #False
-   [#] %##Children.Max << -1
+   [#] %##Depth.Max << #Inf
+   [#] %##Gap << #True
+   [#] %##Ordered << #False
+   [#] %##Regular << #False
+   [#] %##Count << #Inf
    [:] :*#*
 ```
 
@@ -43,6 +41,6 @@ Access uses chained `<` at unlimited depth:
 
 ## See Also
 
-- [[syntax/types/conversions|Type Conversions]] — struct-to-serial and serial-to-struct conversion rules
-- [[concepts/collections/expand|Expand Operators]] — `=ForEach.Serial` and `=ForEach.Level` iteration
-- [[concepts/collections/collect|Collect Operators]] — `*Into.Serial` and `*Into.Level` collection
+- [[syntax/types/conversions|Type Conversions]] -- struct-to-serial and serial-to-struct conversion rules
+- [[concepts/collections/expand|Expand Operators]] -- `=ForEach.Serial` and `=ForEach.Level` iteration
+- [[concepts/collections/collect|Collect Operators]] -- `*Into.Serial` and `*Into.Level` collection

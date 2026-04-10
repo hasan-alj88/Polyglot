@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-04-04
+updated: 2026-04-09
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -22,11 +22,11 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 | EC-24.8 | #Boolean — ##Enum + ##Scalar + ###ScalarEnum | Dual schema composition |
 | EC-24.9 | Enum inheritance via `<~` | Extending enum variants |
 | EC-24.10 | #None — minimal type | No fields, no schema |
-| EC-24.11 | #Array as generic `{#}` with `[#] <#param` | Generic type definition with schema accumulation |
-| EC-24.12 | ##Contiguous vs ##Sparse override | Contradicting property override (PGW11002) |
+| EC-24.11 | #Array as generic `{#}` with `(#) <#param` | Generic type definition with schema accumulation |
+| EC-24.12 | %##Gap override on ##Array | Contradicting property override (PGW11002) |
 | EC-24.13 | 0D array | Dimension collapse to scalar |
-| EC-24.14 | Empty collections | Zero-element #Array and #Map |
-| EC-24.15 | Invalid key type | #Int as map key (PGE11004) |
+| EC-24.14 | Empty collections | Zero-element #Array and ##Record |
+| EC-24.15 | Invalid key type | Non-#KeyString key (PGE11004) |
 | EC-24.16 | #Serial — maximally permissive schemas | Unlimited depth escape hatch (PGW11003 exemption) |
 | EC-24.17 | #Dataframe status | Row-oriented access via `$df<row<column` |
 | EC-24.18 | Stale %Property notation | pglib types.md missing `##` prefix |
@@ -38,12 +38,12 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.1: #String `.regex` default
 
 **EBNF:** `type_definition ::= "{#}" type_header { schema_line | field_line }` — field defaults via `<~`.
-**What it tests:** Empty string `""` matches `.regex = ".*"` — the default regex accepts all strings, including empty. Verifies `##Scalar` is inherited via `[#] << ##Scalar`. See [[syntax/types/basic-types#Layer 1: #String — The Foundation Type]].
+**What it tests:** Empty string `""` matches `.regex = ".*"` — the default regex accepts all strings, including empty. Verifies `##Scalar` is inherited via `[#] ##Scalar`. See [[syntax/types/basic-types#Layer 1: #String — The Foundation Type]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[variable-lifecycle]]
 
 ```polyglot
 {#} #String
-   [#] << ##Scalar
+   [#] ##Scalar
    [#] %##Alias << "string"
    [.] .string#RawString
    [.] .regex#RawString <~ ".*"
@@ -63,7 +63,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ```polyglot
 {#} #Int
-   [#] <~ #String
+   (#) <~ #String
    [#] %##Alias << "int"
    [.] .regex#RawString << "^-?[0-9]+$"
 
@@ -87,7 +87,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ```polyglot
 [ ] Authoritative definition — corrected regex
 {#} #Dimension
-   [#] <~ #String
+   (#) <~ #String
    [#] %##Alias << "dim"
    [ ] Stored value includes D suffix
    [.] .regex#RawString << "^[0-9]+D$"
@@ -108,7 +108,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ```polyglot
 {#} #Eng
-   [#] <~ #String
+   (#) <~ #String
    [#] %##Alias << "eng"
    [.] .regex#RawString << "^-?[1-9]\.[0-9]{0,2}[eE][+-]?(0|[369]|[1-9][0-9]*[0369])$"
 
@@ -132,7 +132,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ```polyglot
 {#} #KeyString
-   [#] <~ #String
+   (#) <~ #String
    [#] %##Alias << "key"
    [.] .regex#RawString << "^[^\s.<>:]+$"
 
@@ -158,7 +158,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ```polyglot
 {#} #NestedKeyString
-   [#] <~ #String
+   (#) <~ #String
    [#] %##Alias << "nestedkey"
    [.] .regex#RawString << "^[^\s<>]+$"
 
@@ -187,35 +187,35 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 [ ] #Int inherits and sets .regex with << (final)
 {#} #Int
-   [#] <~ #String
+   (#) <~ #String
    [.] .regex#RawString << "^-?[0-9]+$"
 
 [ ] PGE11005 — .regex is already << final in #Int
 {#} #PositiveInt
-   [#] <~ #Int
+   (#) <~ #Int
    [.] .regex#RawString << "^[1-9][0-9]*$"
 ```
 
 ### EC-24.8: #Boolean — ##Enum + ##Scalar + ###ScalarEnum
 
-**EBNF:** `schema_line ::= "[#]" "<<" schema_ref` — multiple schema compositions accumulate.
+**EBNF:** `schema_line ::= "[#]" schema_ref` — multiple schema compositions accumulate.
 **What it tests:** #Boolean composes `##Enum` (enum classification), `##Scalar` (depth 1), and `###ScalarEnum` (leaf content is variant selector). A type can be both scalar AND enum. Can a user define a custom enum with the same pattern? Yes — `###ScalarEnum` and `##Scalar` are orthogonal. See [[syntax/types/basic-types#Layer 2b: #Boolean — Independent ##Enum Type]], [[syntax/types/schema-properties#`###` Field Types — Leaf Content]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
 ```polyglot
 {#} #Boolean
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [#] %##Alias << "bool"
    [.] .True
    [.] .False
 
 [ ] user-defined enum with same pattern
 {#} #TrafficLight
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [.] .Red
    [.] .Yellow
    [.] .Green
@@ -232,7 +232,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ```polyglot
 {#} #PipelineStatus
-   [#] << ###Enum
+   [#] ###Enum
    [.] .AwaitTrigger
    [.] .Disabled
    [.] .Running
@@ -240,7 +240,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 [ ] Extends #PipelineStatus with additional variants
 {#} #MyStatus
-   [#] <~ #PipelineStatus
+   (#) <~ #PipelineStatus
    [.] .Degraded
    [.] .Maintenance
 
@@ -259,14 +259,14 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **EBNF:** `type_definition ::= "{#}" type_header { schema_line | field_line }` — zero fields, `###None` field type.
 **What it tests:** #None has no fields and uses `###None` — a third field type meaning "nullable." Empty string `""` is the only valid value. Only `###None` types accept empty string; all others reject it with PGE04021. See [[syntax/types/INDEX|types]], [[syntax/types/schema-properties#`###` Field Types — Leaf Content]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]]
-**Status:** RESOLVED — `###None` added as third field type, PGE04021 added, #None definition updated with `[#] << ###None`.
+**Status:** RESOLVED — `###None` added as third field type, PGE04021 added, #None definition updated with `[#] ###None`.
 
 ```polyglot
 {#} #None
    [ ] Represents the absence of a value
    [ ] Empty string "" is the only valid value
-   [#] << ##Scalar
-   [#] << ###None
+   [#] ##Scalar
+   [#] ###None
 
 [ ] usage — signals absence
 [-] $result << #None
@@ -275,47 +275,44 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [-] $bad#string << ""
 ```
 
-### EC-24.11: #Array as generic `{#}` with `[#] <#param`
+### EC-24.11: #Array as generic `{#}` with `(#) <#param`
 
 **EBNF:** `generic_param ::= "[#]" "<#" name`, `value_param ::= "[#]" "<" name schema_id`, `schema_param_bind` — generic type definition with parameterized schema composition.
-**What it tests:** `{#} #Array` is a generic type with `<#ValueType` (type input) and `<Dim` (value input with default "1D"). Schema properties accumulate from `##Contiguous` and `##Rectangular`. The `:` separator in type annotations binds positionally: `#array:float:2D` → ValueType-Float, Dim=2D. See [[syntax/types/schema-properties#Approved ## Schema Types]].
+**What it tests:** `{#} #Array` is a generic type with `<#ValueType` (type input) and `<Dim` (value input with default "1D"). Schema properties accumulate from `##Array`. The `:` separator in type annotations binds positionally: `#array:float:2D` → ValueType-Float, Dim=2D. See [[syntax/types/schema-properties#Approved ## Schema Types]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]], [[technical/ebnf/04-type-system#4.3]]
 
 ```polyglot
 [ ] {#} #Array — generic type with two parameters
 {#} #Array
-   [#] <#ValueType
-   [#] <Dim##Dimension <~ "1D"
-   [#] << ##Array
-      [#] <#ValueType << <#ValueType
-      [#] <Dim << <Dim
+   (#) <#ValueType
+   (#) <Dim##Dimension <~ "1D"
+   [#] ##Array
+      (#) <#ValueType << <#ValueType
+      (#) <Dim << <Dim
    [#] %##Alias << "array"
-   [#] %##Key << #uint
-   [ ] ##Contiguous provides: %##Gap << #False, %##Ordered << #True
-   [ ] ##Rectangular provides: %##Regular << #True, %##Propagate << #True
+   [#] %##Fields << #Range
+   [ ] ##Array provides: %##Gap << #False, %##Ordered << #True, %##Propagate << #True
    [:] :*#<#ValueType
 ```
 
-### EC-24.12: ##Contiguous vs ##Sparse override
+### EC-24.12: %##Gap override on ##Array
 
-**EBNF:** `schema_line ::= "[#]" "<<" schema_ref` — contradicting schema compositions.
-**What it tests:** #Map composes `##Sparse` (`%##Gap << #True`). #Array composes `##Contiguous` (`%##Gap << #False`, `%##Ordered << #True`). If both schemas are composed, `%##Gap` contradicts — the compiler raises PGW11002 (contradicting override). This is intentional: #Array IS a contiguous specialization. See [[syntax/types/schema-properties#Schema Properties]].
+**EBNF:** `schema_line ::= "[#]" schema_ref` — contradicting property overrides.
+**What it tests:** ##Array sets `%##Gap << #False`. A user type composing ##Array and then setting `%##Gap << #True` triggers PGW11002 (contradicting override). This tests that property contradictions are detected across composition. See [[syntax/types/schema-properties#Schema Properties]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
+**Status:** Updated for #275 — ##Contiguous/##Sparse retired; properties stated directly on schemas.
 
 ```polyglot
-{#} ##Sparse
-   [#] %##Gap << #True
+[ ] ##Array sets %##Gap << #False, %##Ordered << #True
+[ ] Overriding %##Gap on a type composing ##Array triggers PGW11002
 
-{#} ##Contiguous
-   [#] %##Gap << #False
-   [#] %##Ordered << #True
-
-[ ] #Array composes ##Contiguous, overriding ##Sparse properties
-[ ] PGW11002 — %##Gap contradicts if ##Sparse also composed
-[ ] This is intentional — #Array is a contiguous specialization
+{#} #SparseCustom
+   [#] ##Array
+      (#) <#ValueType << #int
+   [#] %##Gap << #True                 [ ] ⚠ PGW11002 — overrides #False from ##Array
 
 [-] $arr#array:int <~ {1, 2, 3}
-[ ] no gaps — contiguous enforced
+[ ] no gaps — contiguous enforced by ##Array
 [ ] ordered — indices 0, 1, 2
 ```
 
@@ -341,41 +338,37 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.14: Empty collections
 
 **EBNF:** `inline_data ::= "{" "}"` — zero-element initialization.
-**What it tests:** Zero-element #Array and #Map. `%##Count.Min` is not explicitly set for #Array or #Map — the minimum child count defaults to 0. Empty collections are valid. See [[syntax/types/structs#Inline Data Shorthand]].
+**What it tests:** Zero-element #Array and ##Record-based types. `%##Count.Min` is not explicitly set for #Array — the minimum child count defaults to 0. Empty collections are valid. See [[syntax/types/structs#Inline Data Shorthand]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
+**Status:** Updated for #275 — #Map retired; ##Record replaces it.
 
 ```polyglot
 [ ] empty array — zero elements, valid
 [-] $empty#array:int <~ {}
 
-[ ] empty map — zero entries, valid
-[-] $emptyMap#map:string:int <~ {}
-
 [ ] %##Count.Min is not set — defaults to 0
-[ ] Both are valid typed containers with no elements
+[ ] Valid typed container with no elements
 ```
 
 ### EC-24.15: Invalid key type (PGE11004)
 
-**EBNF:** `schema_property ::= "%##Key" "<<" type_ref` — key type must inherit #KeyString.
-**What it tests:** `#map:int:string` — ##Int inherits from #String, NOT from #KeyString. The `%##Key` must inherit `#KeyString` to exclude syntax-reserved characters. Compiler raises PGE11004. See [[syntax/types/basic-types#Layer 2c: #KeyString — Key Type for Tree Access]].
+**EBNF:** `schema_property ::= "%##Fields" "<<" value` — when using `#Range`, key type must be valid.
+**What it tests:** When `%##Fields << #Range`, the implicit key type inherits `#KeyString` to exclude syntax-reserved characters. Enum-keyed records (`%##Fields << SomeEnum`) have guaranteed-safe keys from enum variant names. Compiler raises PGE11004 if a range key type resolves to one allowing reserved chars. See [[syntax/types/basic-types#Layer 2c: #KeyString — Key Type for Tree Access]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
+**Status:** Updated for #275 — %##Key retired; %##Fields replaces it. #Map retired; ##Record replaces it.
 
 ```polyglot
-[ ] PGE11004 — #Int does not inherit #KeyString
-[ ] #Int.regex allows "-7" — the hyphen is fine, but dots/colons are
-[ ] not excluded by #Int's regex, only by #KeyString's
-[-] $bad#map:int:string <~ {}
-
-[ ] correct — #KeyString (default) excludes reserved chars
-[-] $good#map:string:int <~ {}
+[ ] ##Record with enum keys — safe by definition
+{#} #UserRecord
+   [#] ##Record
+      (#) <#Fields << #UserFields
+      (#) <#ValueType << #string
+[ ] enum variant names cannot contain reserved chars
 
 [ ] correct — custom key type inheriting #KeyString
 {#} #SafeKey
-   [#] <~ #KeyString
+   (#) <~ #KeyString
    [.] .regex#RawString << "^[a-z][a-z0-9-]*$"
-
-[-] $custom#map:SafeKey:int <~ {}
 ```
 
 ### EC-24.16: #Serial — maximally permissive schemas
@@ -388,16 +381,16 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] #Serial — pglib, no PGW11003
 {#} #Serial
    [#] %##Alias << "serial"
-   [#] << ##Deep
-   [#] << ##Sparse
+   [#] %##Depth.Max << #Inf
+   [#] %##Gap << #True
    [#] %##Ordered << #False
-   [#] %##Regular << #False
-   [#] %##Count << #Bound.Inf
+   [#] %##Count << #Inf
+   [#] %##Fields << #Range
    [:] :*#*
 
 [ ] PGW11003 — user type with unlimited depth
 {#} #MyFreeform
-   [#] %##Depth.Max << .Inf
+   [#] %##Depth.Max << #Inf
    [:] :*#*
 
 [ ] no warning — user type with bounded depth
@@ -408,15 +401,15 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.17: #Dataframe row-oriented access — RESOLVED
 
-**EBNF:** `generic_param`, `child_access` — Dataframe is a generic `{#}` type, row-oriented (Array of Map).
-**What it tests:** #Dataframe is a generic type with `<#Columns` and `<#CellType` parameters, composing `##Dataframe`. Access is row-oriented: `$df<row<column` (not column-oriented). Each row is a `#Map` keyed by the column enum; the outer structure is an `#Array` of rows. See [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]], [[concepts/collections/INDEX|collections]].
+**EBNF:** `generic_param`, `child_access` — Dataframe is a generic `{#}` type, row-oriented (Array of ##Record).
+**What it tests:** #Dataframe is a generic type with `<#Columns` and `<#CellType` parameters, composing `##Dataframe`. Access is row-oriented: `$df<row<column` (not column-oriented). Each row is a ##Record keyed by the column enum; the outer structure is an `#Array` of rows. See [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]], [[concepts/collections/INDEX|collections]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]], [[concepts/collections/INDEX|collections]], [[technical/ebnf/04-type-system#4.3]]
 
 ```polyglot
-[ ] RESOLVED — #Dataframe is row-oriented (Array of Map)
+[ ] RESOLVED — #Dataframe is row-oriented (Array of ##Record)
 {#} #SalesColumns
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [.] .product
    [.] .price
    [.] .quantity
@@ -426,7 +419,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 [ ] Row-oriented access: $df<row<column
 [-] $name#string << $sales<0<product       [ ] row 0, column "product"
 [-] $price#string << $sales<2<price        [ ] row 2, column "price"
-[-] $row#map:SalesColumns:string << $sales<0   [ ] entire row as Map
+[-] $row << $sales<0                            [ ] entire row as ##Record
 ```
 
 ### EC-24.18: Stale %Property notation
@@ -460,7 +453,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.19: *(Retired)* [M] merge behavior
 
-**Status:** Retired — `{M}` macro block type and `[M]` invocation marker removed in Issue #272. Parameterized types now use generic `{#}` definitions with `[#] <#param` type inputs. See [[technical/ebnf/04-type-system#4.3]].
+**Status:** Retired — `{M}` macro block type and `[M]` invocation marker removed in Issue #272. Parameterized types now use generic `{#}` definitions with `(#) <#param` type inputs. See [[technical/ebnf/04-type-system#4.3]].
 
 ### EC-24.20: *(Retired)* Macro dispatch ambiguity (PGE01019)
 

@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:Queue"
 metadata_instance: "%#:Queue:N"
@@ -21,7 +21,7 @@ Queue configuration struct used in `{Q}` queue definitions. Each `{Q} #Queue:Nam
 {#} #Queue
    [%] .description << "Queue configuration for pipeline dispatch"
    [%] .version << "2.0.0"
-   [#] << ##Scalar
+   [#] ##Scalar
    [.] .strategy#QueueStrategy
    [.] .host#String
    [.] .maxInstances#UnsignedInt

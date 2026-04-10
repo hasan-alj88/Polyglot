@@ -35,10 +35,10 @@ These axioms define Polyglot's data model:
 Generic type parameters via `<param` in `{#}` headers:
 ```polyglot
 {#} #Array<ValueType<Dim
-   [#] <ValueType << #*
-      [<] << ##Scalar
-   [#] <Dim << #Dimension
-      [<] << ##Scalar
+   (#) <ValueType << #*
+      [<] ##Scalar
+   (#) <Dim << #Dimension
+      [<] ##Scalar
 ```
 
 ### New State: {M} and {W} as Separate Entities
@@ -47,7 +47,7 @@ The old `{M}` is split into two distinct definition blocks:
 
 | Block | Role | Invoked by | Input marker | Must contain | Must NOT contain |
 |-------|------|-----------|-------------|-------------|-----------------|
-| `{M} #Name` | Type macro | `[M]` | `[#] <Param` | `{#}` definition | `[\]`/`[/]` |
+| `{M} #Name` | Type macro | `[M]` | `(#) <Param` | `{#}` definition | `[\]`/`[/]` |
 | `{W} =W.Name` | Wrapper | `[W]` | `[{] $Param` / `[}] $Param` | `[\]`/`[/]` | `{#}` definition |
 
 - `{M}` **defines** type macros, `[M]` **invokes** them — mirrors `{#}`/`[#]`, `{=}`/`[=]` pattern
@@ -61,15 +61,15 @@ The old `{M}` is split into two distinct definition blocks:
 ```polyglot
 {#} ##Int
    [M] #String.Subtype
-      [#] <Name << "Int"
-      [#] <Alias << "int"
+      (#) <Name << "Int"
+      (#) <Alias << "int"
          [<] !Alias.Clash << "integer"
          [<] !Alias.Clash << "Integer"
-      [#] <Regex << "^-?[0-9]+$"
+      (#) <Regex << "^-?[0-9]+$"
 ```
 
 - `[M] #String.Subtype` — invoke the `{M} #String.Subtype` macro
-- `[#] <Name << "Int"` — pass argument matching macro's `[#] <Name#RawString` parameter
+- `(#) <Name << "Int"` — pass argument matching macro's `(#) <Name#RawString` parameter
 - `[<] !Alias.Clash` — error-driven fallback: if alias "int" clashes, try "integer", then "Integer"
 - **`[M]` merge rule (identity):** The outer `{#} ##Int` **names** the result; the macro's internal `{#} ##{$Name}` resolves to the same name, confirming identity. The macro fills the body. Any `[#]` lines after `[M]` in the outer `{#}` extend/override the macro's output
 
@@ -81,10 +81,10 @@ Aliases serve two purposes:
 
 **PGW-9XX** — Namespace alias warning: "Alias `{alias}` creates namespace placement at `{path}` — compiler verifies no name clash in target namespace." Fires when an alias places a definition into a different namespace branch than its canonical location.
 
-**!Alias.Clash** — Compile error when an alias collides with an existing name in the target namespace. The `[<]` fallback chain under `[#] <Alias` provides alternative alias values:
+**!Alias.Clash** — Compile error when an alias collides with an existing name in the target namespace. The `[<]` fallback chain under `(#) <Alias` provides alternative alias values:
 
 ```polyglot
-[#] <Alias << "int"           [ ] Try "int" first
+(#) <Alias << "int"           [ ] Try "int" first
    [<] !Alias.Clash << "integer"  [ ] If "int" clashes, try "integer"
    [<] !Alias.Clash << "Integer"  [ ] If "integer" also clashes, try "Integer"
 ```
@@ -95,8 +95,8 @@ Macros overload by **signature** — the ordered list of parameter count and kin
 
 | Kind | Syntax | Meaning |
 |------|--------|---------|
-| Type input | `[#] <#ParamName` | A `#` type definition as input (datatypes are data trees) |
-| Value input | `[#] <ParamName##Type` | A typed value as input |
+| Type input | `(#) <#ParamName` | A `#` type definition as input (datatypes are data trees) |
+| Value input | `(#) <ParamName##Type` | A typed value as input |
 
 Dispatch matches by **parameter count AND parameter kind** (`<#` type vs `<` value). Examples:
 - `{M} #Map` → signature `(<#, <#)` = homogeneous (2 type inputs)
@@ -110,9 +110,9 @@ Dispatch matches by **parameter count AND parameter kind** (`<#` type vs `<` val
 
 - Two schemas setting the **same** `%` property to the **same** value → consistent (no error, they agree)
 - Two schemas setting the **same** `%` property to **different** values → **PGE11001** (schema property conflict)
-- Schemas accumulate — each `[#] << ##Schema` adds its `%` properties to the definition's metadata
+- Schemas accumulate — each `[#] ##Schema` adds its `%` properties to the definition's metadata
 
-Example: `[#] << ##Contiguous` sets `%##Children.Gap << #False` + `%##Children.Ordered << #True`. If another schema also sets `%##Children.Ordered << #True`, they agree. If it sets `%##Children.Ordered << #False`, PGE11001.
+Example: `[#] ##Contiguous` sets `%##Children.Gap << #False` + `%##Children.Ordered << #True`. If another schema also sets `%##Children.Ordered << #True`, they agree. If it sets `%##Children.Ordered << #False`, PGE11001.
 
 ### `%name` Metadata Accessor
 
@@ -160,10 +160,10 @@ To reference the enclosing macro from inside a nested `{#}`, use `%Parent` (one 
 | Pattern | Role | Context |
 |---------|------|---------|
 | `[#] %Property` | Schema property declaration | `{#}` |
-| `[#] << ##Schema` | Schema composition (property substitution) | `{#}` |
-| `[#] <~ #Parent` | Inheritance (copy parent's `%` properties as defaults) | `{#}` |
-| `[#] <Param` | Macro input parameter declaration | `{M}` only |
-| `[#] <Param << "value"` | Macro argument (pass value to `[#] <Param`) | `[M]` invocation |
+| `[#] ##Schema` | Schema composition (property substitution) | `{#}` |
+| `(#) <~ #Parent` | Inheritance (copy parent's `%` properties as defaults) | `{#}` |
+| `(#) <Param` | Macro input parameter declaration | `{M}` only |
+| `(#) <Param << "value"` | Macro argument (pass value to `(#) <Param`) | `[M]` invocation |
 
 Note: `<~` in `{#}` means **only** inheritance — copying the parent type's `%` metadata properties as defaults. It never means macro invocation. Macros are invoked exclusively via `[M]`.
 
@@ -172,11 +172,11 @@ Note: `<~` in `{#}` means **only** inheritance — copying the parent type's `%`
 ```polyglot
 {M} #Array
    [ ] First input: a DataType — `<#` means type input (all definitions are data trees)
-   [#] <#ValueType
-      [<] << ##Scalar
+   (#) <#ValueType
+      [<] ##Scalar
    [ ] Optional second input: a Dimension (defaults to 1D)
-   [#] <Dim##Dimension <~ "1D"
-      [<] << ##Scalar
+   (#) <Dim##Dimension <~ "1D"
+      [<] ##Scalar
 
    [ ] Direct substitution via {} inside double quotes — implicit inline pipeline
    [ ] ##DataTypeString: new stdlib schema for valid {x} definition names
@@ -184,7 +184,7 @@ Note: `<~` in `{#}` means **only** inheritance — copying the parent type's `%`
    [r] $dim#RawString << =String.Lower"{$Dim}"
 
    {#} #{$ArrayName}
-      [#] <~ #Map:#UnsignedInt:$ValueType
+      (#) <~ #Map:#UnsignedInt:$ValueType
       [#] %##Alias
          [:] << "array:{$ValueType%name}:{$dim}"
          [:] << "array{$dim}:{$ValueType%name}"
@@ -192,17 +192,17 @@ Note: `<~` in `{#}` means **only** inheritance — copying the parent type's `%`
       [#] %##Children.Type << #UnsignedInt
       [#] %##Children.Ordered << #True
       [#] %##Children.Uniform << #True
-      [#] << ##Contiguous
-      [#] << ##Rectangular
+      [#] ##Contiguous
+      [#] ##Rectangular
       [#] %##Depth.Max << $Dim
       [:] :*#$ValueType
 
 { } Homogeneous variant — dispatched by signature (<#, <#)
 {M} #Map
-   [#] <#KeyType
-      [<] << ##EnumLeafs
-   [#] <#ValueType
-      [<] << ##Scalar
+   (#) <#KeyType
+      [<] ##EnumLeafs
+   (#) <#ValueType
+      [<] ##Scalar
 
    [r] $UniformMapName##DataTypeString << "Map:{$KeyType%name}:{$ValueType%name}"
    {#} #{$UniformMapName}
@@ -210,15 +210,15 @@ Note: `<~` in `{#}` means **only** inheritance — copying the parent type's `%`
          [:] << "map:{$KeyType%name}:{$ValueType%name}"
          [:] << "Map:{$KeyType%name}:{$ValueType%name}"
       [#] %##Children.Type << $KeyType
-      [#] << ##Flat
-      [#] << ##Homogeneous
-      [#] << ##Sparse
+      [#] ##Flat
+      [#] ##Homogeneous
+      [#] ##Sparse
       [:] :*#$ValueType
 
 { } Heterogeneous variant — dispatched by signature (<#)
 {M} #Map
-   [#] <#KeyType
-      [<] << ##EnumLeafs
+   (#) <#KeyType
+      [<] ##EnumLeafs
 
    [r] $MapName##DataTypeString << "Map:{$KeyType%name}"
    {#} #{$MapName}
@@ -226,35 +226,35 @@ Note: `<~` in `{#}` means **only** inheritance — copying the parent type's `%`
          [:] << "map:{$KeyType%name}"
          [:] << "Map:{$KeyType%name}"
       [#] %##Children.Type << $KeyType
-      [#] << ##Flat
-      [#] << ##Heterogeneous
-      [#] << ##Sparse
+      [#] ##Flat
+      [#] ##Heterogeneous
+      [#] ##Sparse
       [:] :*#*
 
 { } Compile-time safe Dataframe — dispatched by signature (<#, <#)
 { } Dataframe = Array of Map — each row is a Map, array holds rows
 {M} #Dataframe
-   [#] <#ColumnEnum
-      [<] << ##EnumLeafs
-   [#] <#CellType
-      [<] << ##Scalar
+   (#) <#ColumnEnum
+      [<] ##EnumLeafs
+   (#) <#CellType
+      [<] ##Scalar
 
    [r] $DfName##DataTypeString << "Dataframe:{$ColumnEnum%name}:{$CellType%name}"
    {#} #{$DfName}
       [#] %##Alias
          [:] << "dataframe:{$ColumnEnum%name}:{$CellType%name}"
          [:] << "Dataframe:{$ColumnEnum%name}:{$CellType%name}"
-      [#] << ##Contiguous
-      [#] << ##Rectangular
-      [#] << ##Ordered
+      [#] ##Contiguous
+      [#] ##Rectangular
+      [#] ##Ordered
       [:] :*#Map:$ColumnEnum:$CellType
 
 { } Runtime flexible Dataframe — dispatched by signature (<, <)
 { } Needs =#.Validate at runtime for schema enforcement
 { } Dataframe = Array of Map — each row is a string-keyed map
 {M} #Dataframe
-   [#] <Columns##CommaSeparatedList
-   [#] <DataFrameName##DataTypeString
+   (#) <Columns##CommaSeparatedList
+   (#) <DataFrameName##DataTypeString
 
    [ ] Dynamically generate an Enum from the column names
    [r] $uid##DataTypeString << =UID""
@@ -266,9 +266,9 @@ Note: `<~` in `{#}` means **only** inheritance — copying the parent type's `%`
       [#] %##Alias
          [:] << "dataframe:{$Columns%name}"
          [:] << "DataFrame:{$Columns%name}"
-      [#] << ##Contiguous
-      [#] << ##Rectangular
-      [#] << ##Ordered
+      [#] ##Contiguous
+      [#] ##Rectangular
+      [#] ##Ordered
       [:] :*#Map:#String:#String
 ```
 
@@ -278,8 +278,8 @@ Dataframe is an `#Array` of `#Map` — row-oriented. Access: `$df<row<column`.
 
 ```polyglot
 {#} #SalesColumns
-   [#] << ##Scalar
-   [#] << ###Enum
+   [#] ##Scalar
+   [#] ###Enum
    [.] .product
    [.] .price
    [.] .quantity
@@ -299,9 +299,9 @@ Dataframe is an `#Array` of `#Map` — row-oriented. Access: `$df<row<column`.
 ```polyglot
 {#} #Serial
    [#] %##Alias << "serial"
-   [#] << ##Deep
-   [#] << ##Sparse
-   [#] << ##Heterogeneous
+   [#] ##Deep
+   [#] ##Sparse
+   [#] ##Heterogeneous
    [:] :*#*
 ```
 
@@ -311,86 +311,86 @@ Scalars are `##` schemas (not `#` structs) — they are regex constraints on `#S
 
 ```polyglot
 {M} #String.Subtype
-   [#] <Name#RawString
-   [#] <Alias#RawString
-   [#] <Regex#RawString
+   (#) <Name#RawString
+   (#) <Alias#RawString
+   (#) <Regex#RawString
 
    {#} ##{$Name}
-      [#] <~ #String
+      (#) <~ #String
       [#] %##Alias
          [:] << $Alias
          [ ] Auto-alias with definition name if no conflict
          [:] <~ {%This.%name.Last}
-      [#] << ##Scalar
+      [#] ##Scalar
       [.] .re << $Regex
 ```
 
 ### Stdlib Scalar Invocations
 
-Scalars are invoked via `[M]` inside `{#}` definitions. Arguments use `[#] <Param` matching the macro's parameters:
+Scalars are invoked via `[M]` inside `{#}` definitions. Arguments use `(#) <Param` matching the macro's parameters:
 
 ```polyglot
 {#} ##Int
    [M] #String.Subtype
-      [#] <Name << "Int"
-      [#] <Alias << "int"
+      (#) <Name << "Int"
+      (#) <Alias << "int"
          [<] !Alias.Clash << "integer"
          [<] !Alias.Clash << "Integer"
-      [#] <Regex << "^-?[0-9]+$"
+      (#) <Regex << "^-?[0-9]+$"
 
 {#} ##UnsignedInt
    [M] #String.Subtype
-      [#] <Name << "UnsignedInt"
-      [#] <Alias << "uint"
-      [#] <Regex << "^[0-9]+$"
+      (#) <Name << "UnsignedInt"
+      (#) <Alias << "uint"
+      (#) <Regex << "^[0-9]+$"
 
 {#} ##Float
    [M] #String.Subtype
-      [#] <Name << "Float"
-      [#] <Alias << "float"
-      [#] <Regex << "^-?[0-9]+\.[0-9]+$"
+      (#) <Name << "Float"
+      (#) <Alias << "float"
+      (#) <Regex << "^-?[0-9]+\.[0-9]+$"
 
 {#} ##Sci
    [M] #String.Subtype
-      [#] <Name << "Sci"
-      [#] <Alias << "sci"
-      [#] <Regex << "^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$"
+      (#) <Name << "Sci"
+      (#) <Alias << "sci"
+      (#) <Regex << "^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$"
 
 {#} ##Eng
    [M] #String.Subtype
-      [#] <Name << "Eng"
-      [#] <Alias << "eng"
-      [#] <Regex << "^-?[0-9]+(\.[0-9]+)?[kKMGTPE]?$"
+      (#) <Name << "Eng"
+      (#) <Alias << "eng"
+      (#) <Regex << "^-?[0-9]+(\.[0-9]+)?[kKMGTPE]?$"
 
 {#} ##Dimension
    [M] #String.Subtype
-      [#] <Name << "Dimension"
-      [#] <Alias << "dim"
-      [#] <Regex << "^[1-9][0-9]*D$"
+      (#) <Name << "Dimension"
+      (#) <Alias << "dim"
+      (#) <Regex << "^[1-9][0-9]*D$"
 
 {#} ##KeyString
    [M] #String.Subtype
-      [#] <Name << "KeyString"
-      [#] <Alias << "key"
-      [#] <Regex << "^[a-zA-Z_][a-zA-Z0-9_]*$"
+      (#) <Name << "KeyString"
+      (#) <Alias << "key"
+      (#) <Regex << "^[a-zA-Z_][a-zA-Z0-9_]*$"
 
 {#} ##NestedKeyString
    [M] #String.Subtype
-      [#] <Name << "NestedKeyString"
-      [#] <Alias << "nestedkey"
-      [#] <Regex << "^[a-zA-Z_][a-zA-Z0-9_.]*$"
+      (#) <Name << "NestedKeyString"
+      (#) <Alias << "nestedkey"
+      (#) <Regex << "^[a-zA-Z_][a-zA-Z0-9_.]*$"
 
 {#} ##CommaSeparatedList
    [M] #String.Subtype
-      [#] <Name << "CommaSeparatedList"
-      [#] <Alias << "csvlist"
-      [#] <Regex << "^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$"
+      (#) <Name << "CommaSeparatedList"
+      (#) <Alias << "csvlist"
+      (#) <Regex << "^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$"
 
 {#} ##DataTypeString
    [M] #String.Subtype
-      [#] <Name << "DataTypeString"
-      [#] <Alias << "dtstring"
-      [#] <Regex << "^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$"
+      (#) <Name << "DataTypeString"
+      (#) <Alias << "dtstring"
+      (#) <Regex << "^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$"
 ```
 
 ### Usage (unchanged for users)
@@ -407,14 +407,14 @@ The `:` separator still binds positionally to macro inputs. Users don't see the 
 
 | What | Before | After |
 |------|--------|-------|
-| Generic syntax | `{#} #Array<ValueType<Dim` | `{M} #Array` with `[#] <Param` inputs |
-| `[#] <param` in `{#}` | Type param declaration | Removed from `{#}` — now in `{M}` only |
+| Generic syntax | `{#} #Array<ValueType<Dim` | `{M} #Array` with `(#) <Param` inputs |
+| `(#) <param` in `{#}` | Type param declaration | Removed from `{#}` — now in `{M}` only |
 | Macro definition | `{M}` (both macros + wrappers) | `{M}` = type macros only; `{W}` = wrappers |
-| Macro invocation | `[#] <~ #MacroName` (ambiguous with inheritance) | `[M] #MacroName` (explicit, unambiguous) |
+| Macro invocation | `(#) <~ #MacroName` (ambiguous with inheritance) | `[M] #MacroName` (explicit, unambiguous) |
 | Wrapper invocation | `[W]` (called `{M}`) | `[W]` (now calls `{W}` — wrappers are own entity) |
 | `<~` meaning | Inheritance OR macro invocation | **Only** inheritance/default — never macro invocation |
-| `[<]` constraints | Nested under `[#] <param` | Nested under `[#] <Param` in `{M}`; also `[<] !Error` fallback in `[M]` |
-| `[.] .*Param` expansion | References `<param` in `{#}` | References `$Param` from `[#] <Param` in `{M}` |
+| `[<]` constraints | Nested under `(#) <param` | Nested under `(#) <Param` in `{M}`; also `[<] !Error` fallback in `[M]` |
+| `[.] .*Param` expansion | References `<param` in `{#}` | References `$Param` from `(#) <Param` in `{M}` |
 | Scalar subtypes | `{#} #Int` (concrete `#` types) | `{#} ##Int` via `[M] #String.Subtype` (`##` schemas) |
 | `<` in `{#}` header | Type parameter | **Removed** from `{#}` headers |
 | Macro dispatch | N/A | By signature: parameter count + kind (`<#` type vs `<` value) |
@@ -429,10 +429,10 @@ The `:` separator still binds positionally to macro inputs. Users don't see the 
 |---------|-------------|
 | `{W}` definition block | Wrappers as own entity — separated from `{M}` type macros |
 | `[M]` block element | Macro invocation — expand `{M}` macro inside `{#}` definition |
-| `[#] <#Param` (type macro input) | Types as inputs — datatypes are data trees |
-| `[#] <Param##Type` (value macro input) | Typed values as macro inputs |
-| `[#] <Param << "value"` (macro argument) | Pass arguments in `[M]` invocation — mirrors macro parameter syntax |
-| `[<] !Alias.Clash` | Error-driven alias fallback chain under `[#] <Alias` |
+| `(#) <#Param` (type macro input) | Types as inputs — datatypes are data trees |
+| `(#) <Param##Type` (value macro input) | Typed values as macro inputs |
+| `(#) <Param << "value"` (macro argument) | Pass arguments in `[M]` invocation — mirrors macro parameter syntax |
+| `[<] !Alias.Clash` | Error-driven alias fallback chain under `(#) <Alias` |
 | `!Alias.Clash` error | Compile error when alias collides with existing name in target namespace |
 | PGW-9XX namespace alias | Warning when alias creates namespace placement — compiler verifies no clash |
 | Dynamic type naming | `{#} #{$ArrayName}` — computed names via `{$var}` interpolation |
@@ -443,7 +443,7 @@ The `:` separator still binds positionally to macro inputs. Users don't see the 
 | `%Parent` | One level up from `%This` — access enclosing `{x}` from nested blocks |
 | Macro overloading | Multiple `{M}` with same name dispatch by signature |
 | Scalars are `##` schemas | `{#} ##Int` — regex constraints on `#String`, not structs |
-| `##` = property substitution | `[#] << ##Schema` sets `%` properties — NOT inheritance. Two schemas agree or PGE11001 |
+| `##` = property substitution | `[#] ##Schema` sets `%` properties — NOT inheritance. Two schemas agree or PGE11001 |
 | `{#}` defines all tiers | `{#}` can define `#`, `##`, or `###` prefixed names |
 | Bootstrap layers | Layer 0 (hardcoded), Layer 1 (no pipelines), Layer 2 (full pipelines) |
 | Compile-time `=` pipelines | Layer 2 macros can invoke `=` pipelines during compilation |
@@ -481,13 +481,13 @@ The `:` separator still binds positionally to macro inputs. Users don't see the 
 | Rule | Impact |
 |------|--------|
 | PGE11001 | Clarify: applies to `##` schema composition conflicts (two schemas setting same `%` property to different values) |
-| PGE04022 | Field expansion constraint — moves from `[<]` under `[#]` to `[<]` under `[#] <Param` in `{M}` |
+| PGE04022 | Field expansion constraint — moves from `[<]` under `[#]` to `[<]` under `(#) <Param` in `{M}` |
 | PGE01004 | Macro structural constraints — update for `{M}`/`{W}` split |
 | New PGW-9XX | Namespace alias warning — alias creates placement in different namespace branch; compiler checks for clashes |
 | New rule | `{M} #Name` must contain `{#}` and must NOT contain `[\]`/`[/]` |
 | New rule | `{W} =W.Name` must contain `[\]`/`[/]` and must NOT contain `{#}` |
 | New rule | `[M]` can only appear inside `{#}` blocks; `[W]` can only appear inside `{=}` blocks |
-| New rule | `[M]` arguments must use `[#] <Param` syntax matching macro parameter names |
+| New rule | `[M]` arguments must use `(#) <Param` syntax matching macro parameter names |
 | New rule | `!Alias.Clash` — alias collides with existing name in target namespace |
 | New rule | Layer 1 type macros must NOT contain `[r] =Pipeline` calls |
 | New rule | `%This` outside any `{x}` block — compile error |
@@ -501,7 +501,7 @@ The `:` separator still binds positionally to macro inputs. Users don't see the 
 3. **Ground truths:** 9 axioms documented in types.md preamble
 4. **Usage unchanged:** `#array:int`, `#map:string:int`, `#dataframe:SalesColumns:string` syntax still works
 5. **{M}/{W} split:** `{M}` only contains type macros; `{W}` only contains wrappers; no cross-contamination
-6. **[M] invocation:** All macro invocations use `[M]` block element, not `[#] <~`
+6. **[M] invocation:** All macro invocations use `[M]` block element, not `(#) <~`
 7. **`<~` clean:** `<~` only means inheritance/default in all docs — never macro invocation
 8. **Macro examples:** At least 3 complete macro-generated type examples (collection + scalar + user-defined)
 9. **Bootstrap:** Layer 0 → 1 → 2 sequence documented; Layer 1 macros verified pipeline-free; ##CommaSeparatedList breaks circular dependency

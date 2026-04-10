@@ -1,47 +1,90 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
-metadata_definition: "%definition.##:Fields"
+metadata_definition: "%definition.%##:Fields"
 ---
 
-# ##Fields Schema (Parameterized)
+# %##Fields Property
 
 <!-- @types -->
 
-`##Fields` is a parameterized schema that stamps enum variants as `[.]` fixed fields on a type. It takes an enum type as input and generates one `.` field per variant.
+`%##Fields` is a branch-level schema property that describes how a type's children are organized. It replaces the former `##Fields` parameterized schema, `%##Key`, `%##Range`, and `%##Flexible` / `#FlexKind`.
 
-## Definition
+## Values
+
+`%##Fields` accepts either a `#FieldsDescriptor` variant or a `##Enum`-satisfying type reference:
+
+| Value | Effect | Used By |
+|-------|--------|---------|
+| `#Range` | Integer-indexed children (`:0`, `:1`, `:2`, ...) | `##Array`, `##Dataframe` (L1) |
+| `#SomeEnum` ref | Stamps one `:` child per enum variant | `##Record` |
+
+### #Range (Integer-Indexed)
+
+When `%##Fields << #Range`, children are addressed by integer index. The compiler generates `:0`, `:1`, `:2`, ... flexible fields up to `%##Count`:
 
 ```polyglot
-{#} ##Fields
-   [#] <#Type << ##Enum
+{#} ##Array
+   (#) <#ValueType
+   (#) <Dim##Dimension <~ "1D"
+   [#] %##Depth.Max << <Dim
+   [#] %##Fields << #Range
+   [#] %##Ordered << #True
+   [#] %##Gap << #False
+   [#] %##Propagate << #True
+   [#] %###Type << <#ValueType
+   [#] %###Kind << #FieldKind.Value
 ```
 
-The `<#Type` parameter must satisfy `##Enum` -- only enum types can be used to generate fields.
+### Enum Reference (Variant-Stamped)
 
-## Usage
+When `%##Fields` receives an enum type reference, the compiler reads the enum's variants and generates one `:` child per variant:
 
 ```polyglot
-{#} #DaySchedule
-   [#] << ##Fields
-      [#] <#Type << #DayOfWeek
-   [ ] Generates .Monday, .Tuesday, ... .Sunday as fixed fields
+{#} ##Record
+   (#) <#Fields << ##Enum
+   (#) <#ValueType <~ #
+   [#] ##Flat
+   [#] %##Fields << <#Fields
+   [#] %##Active << #ActiveKind.All
+   [#] %###Type << <#ValueType
+   [#] %###Kind << #FieldKind.Value
 ```
 
-Each variant of the input enum becomes a `.` field on the consuming type. This replaces manual field declaration when the field set mirrors an enum.
+For example, `%##Fields << #DayOfWeek` stamps `.Monday`, `.Tuesday`, ... `.Sunday` as typed value fields.
 
-## Metadata
+## #FieldsDescriptor
 
-| Path | Pattern | Description |
-|------|---------|-------------|
-| Definition | `%definition.##:Fields` | Schema definition template |
+The enum governing `%##Fields`:
 
-Schemas are compile-time metadata constraints -- they have no runtime instances.
+```polyglot
+{#} #FieldsDescriptor
+   [#] ##Scalar
+   [#] %##Active << #ActiveKind.One
+   [.] .Range
+      [#] %##Alias << "range"
+   [.] .Enum
+      [#] %##Alias << "enum"
+```
+
+`#Range` (alias for `#FieldsDescriptor.Range`) and `#Enum` (alias for `#FieldsDescriptor.Enum`) are the two variants.
+
+## Retired
+
+`%##Fields` replaces several former properties and types:
+
+| Former | Replaced By |
+|--------|-------------|
+| `%##Key` | `%##Fields` with enum ref |
+| `%##Range` | `%##Count` for bounds; `%##Fields << #Range` for integer indexing |
+| `%##Flexible` / `#FlexKind` | `%##Fields` (range vs enum) |
+| `##Fields` (parameterized schema) | `%##Fields` property |
 
 ## Related
 
 - [[schemas/INDEX|## Schema Types]] -- all schema definitions
-- [[schemas/Enum|##Enum]] -- input constraint for `<#Type`
-- [[syntax/types/schema-properties|Schema Properties]] -- parameterized schema overview
+- [[syntax/types/schema-properties|Schema Properties]] -- full property reference
+- [[schemas/Record|##Record]] -- primary consumer of enum-ref `%##Fields`
+- [[schemas/Array|##Array]] -- primary consumer of `#Range` `%##Fields`

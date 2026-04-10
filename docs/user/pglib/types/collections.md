@@ -9,28 +9,32 @@ status: complete
 
 <!-- @types -->
 
-Polyglot provides five collection types: `#Map`, `#Array`, `#Dataframe`, `#Set`, and `#Serial`. All are available in every `.pg` file without `[@]` import.
+Polyglot provides three collection schemas and one unconstrained type: `##Record`, `##Array`, `##Dataframe`, and `#Serial`. All are available in every `.pg` file without `[@]` import.
 
-`#Map`, `#Array`, `#Dataframe`, and `#Set` are generic types with `[#] <param` inputs that compose parameterized `##` schemas. `#Serial` is a plain `{#}` definition (no parameters needed). See [[syntax/types/INDEX|types]] for the full type hierarchy and schema property definitions.
+`##Record`, `##Array`, and `##Dataframe` are parameterized schemas that `{#}` types compose via `[#]`. `#Serial` is a plain `{#}` definition (no schema composition needed). See [[syntax/types/INDEX|types]] for the full type hierarchy and schema property definitions.
 
-| Type | Description | File |
-|------|-------------|------|
-| `#Map` | Sparse key-value pairs (generic) | [[Map]] |
-| `#Array` | Contiguous rectangular collection (generic) | [[Array]] |
-| `#Dataframe` | Row-oriented table (generic) | [[Dataframe]] |
-| `#Set` | Collection of unique values (generic) | [[Set]] |
+| Schema / Type | Description | File |
+|---------------|-------------|------|
+| `##Record` | Enum-keyed value fields (replaces former `#Map`) | [[Map]] |
+| `##Array` | Range-indexed ordered collection | [[Array]] |
+| `##Dataframe` | Two-level: range rows + ##Record columns | [[Dataframe]] |
 | `#Serial` | Unconstrained collection, unlimited depth | [[Serial]] |
+
+## Retired
+
+| Former | Replaced By |
+|--------|-------------|
+| `#Map` / `##Map` | `##Record` -- enum-keyed records replace sparse key-value maps |
+| `#Set` / `##Set` | `##Array` + `%###Unique << #True` -- sets are arrays with uniqueness constraint |
 
 ## Usage
 
-The `:` separator binds positionally to `[#] <param` inputs. Users use the type names directly:
+Types compose collection schemas using `[#]` schema composition:
 
 ```polyglot
 [-] $scores#array:int <~ {...}
-[-] $lookup#map:string:int <~ {...}
 [-] $matrix#array:float:2D <~ {...}
 [-] $sales#dataframe:SalesColumns:string <~ {}
-[-] $tags#set:string <~ {}
 ```
 
 ## Related
@@ -39,4 +43,6 @@ The `:` separator binds positionally to `[#] <param` inputs. Users use the type 
 - [[scalars]] -- scalar subtypes
 - [[structs]] -- #path and #Queue struct types
 - [[enums]] -- enum types
+- [[schemas/Fields|%##Fields]] -- field descriptor property
 - [[syntax/types/INDEX|types]] -- full type system specification
+

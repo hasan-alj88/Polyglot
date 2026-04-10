@@ -67,7 +67,8 @@ comment_elem        ::= "[ ]" ;
 ### 5.2 IO Brackets (Data Binding)
 
 ```ebnf
-io_bracket          ::= "(-)" | "(=)" | "(*)" | "(>)" | "(<)" ;
+io_bracket          ::= "(-)" | "(=)" | "(*)" | "(>)" | "(<)"
+                      | "($)" | "(.)" | "( )" ;
 ```
 
 IO brackets use round brackets to distinguish data binding from control instructions. The symbol inside matches the operator prefix on the parent line:
@@ -79,9 +80,12 @@ IO brackets use round brackets to distinguish data binding from control instruct
 | `(*)` | Collector (`*Into.*`, `*All`) | Collector IO — wait/collect bindings |
 | `(>)` | Under `(-)` output line | Output parameter handling (fallback) |
 | `(<)` | Under `(-)` input line | Input parameter handling (fallback) |
+| `($)` | Pipeline/chain call | Operation label — names the call for downstream IO access |
+| `(.)` | Under `($)` in chains | Chain step label — names individual chain steps by position |
+| `( )` | Any IO context | IO comment — inline annotation |
 
-**Rule:** `(>)` (output parameter handling) and `(<)` (input parameter handling) are scoped under `(-)` IO lines — they handle IO parameters (e.g., the `<!` fallback operator provides error-recovery values — see §10.2). These are distinct from `(*) <<` / `(*) >>` collector IO lines, which handle wait/collect semantics for parallel synchronization (see §12). `(<)` also appears nested under `[#] <param` in `{#}` definitions as a type parameter constraint block (see §4.3).
+**Rule:** `(>)` (output parameter handling) and `(<)` (input parameter handling) are scoped under `(-)` IO lines — they handle IO parameters (e.g., the `<!` fallback operator provides error-recovery values — see §10.2). These are distinct from `(*) <<` / `(*) >>` collector IO lines, which handle wait/collect semantics for parallel synchronization (see §12). `(<)` also appears nested under `(#) <param` in `{#}` definitions as a type parameter constraint block (see §4.3).
 
-**Rule:** `[#]` serves two contexts. In `{-}` pipeline execution bodies, `[#] <param` loads data parameters (execution element). In `{#}` definition bodies, `[#]` introduces schema composition (`[#] << ##Schema`), field type composition (`[#] << ###FieldType`), schema properties (`[#] %##Property`), and inheritance (`[#] <~ #Parent`) — see §4.3 for grammar rules and §9.2 `data_body_line` for how these integrate into data definitions.
+**Rule:** `[#]` serves two contexts. In `{-}` pipeline execution bodies, `(#) <param` loads data parameters (execution element). In `{#}` definition bodies, `[#]` introduces schema composition (`[#] ##Schema`), field type composition (`[#] ###FieldType`), schema properties (`[#] %##Property << value`), and inheritance (`(#) <~ #Parent`) — see §4.3 for grammar rules and §9.2 `data_body_line` for how these integrate into data definitions.
 
 ---

@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.##:Nullable"
 ---
@@ -10,23 +10,26 @@ metadata_definition: "%definition.##:Nullable"
 
 <!-- @types -->
 
-`##Nullable` is a parameterized schema that creates a two-branch structure: `.OK` holding a value of the specified type, or `.None` representing absence.
+`##Nullable` is a parameterized schema that creates a two-branch structure: `.Ok` holding a value of the specified type, or `.None` representing absence.
 
 ## Definition
 
 ```polyglot
 {#} ##Nullable
-   [#] <#ValueType
+   (#) <#ValueType
    [#] %##Active << #ActiveKind.One
+   [.] .Ok
+      [.] .Value;#ValueType
+   [.] .None
 ```
 
 ## Usage
 
 ```polyglot
 {#} #MaybeInt
-   [#] << ##Nullable
-      [#] <#ValueType << #Int
-   [ ] .OK.Value#Int OR .None
+   [#] ##Nullable
+      (#) <#ValueType << #Int
+   [ ] .Ok.Value;int OR .None
 ```
 
 The compiler validates that exactly one branch is active at any time (`%##Active << .One`). This provides type-safe null handling without sentinel values.

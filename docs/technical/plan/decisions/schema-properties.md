@@ -1,7 +1,7 @@
 ---
 audience: developer
 type: decision
-updated: 2026-04-05
+updated: 2026-04-09
 ---
 
 # Decision: Schema Properties in `{#}` Definitions
@@ -21,43 +21,38 @@ Collection types (`;array`, `;serial`, and the new `;dict`) need structural cons
 
 ## Decisions
 
-### Schema Properties via `[#] %` in `{#}` Blocks
+### Schema Properties via `[#] %##` in `{#}` Blocks
 
-`{#}` definitions gain **schema properties** declared with `[#] %Property`. These are compile-time metadata that describe structural constraints on the type's tree shape:
+> **Note:** The original #88 property names below (`%Key.Type`, `%Key.Gap`, etc.) were superseded by the `%##` prefix system in #272, then further refined in #275 where `%##Key` became `%##Fields`, `%##Range` became `%##Count`, and `%##Flexible`/`#FlexKind` were retired. See the current property table in [[definition-templates]].
+
+`{#}` definitions gain **schema properties** declared with `[#] %##Property << value`. These are compile-time metadata that describe structural constraints on the type's tree shape. Original #88 property names (historical):
 
 | Property | Type | Meaning |
 |----------|------|---------|
-| `%Key.Type` | type ref | Data type of keys at this level |
-| `%Key.Gap` | `#Boolean` | Can keys have gaps? (`#False` = contiguous, `#True` = sparse) |
-| `%Ordered` | `#Boolean` | Are keys ordered? |
-| `%Open` | `#Boolean` | Can new keys be added at runtime? |
-| `%Depth.Max` | `#Int` | Max tree depth (`1` = flat, `-1` = unlimited) |
+| `%Key.Type` | type ref | *(now `%##Fields`)* Data type of keys at this level |
+| `%Key.Gap` | `#Boolean` | *(now `%##Gap`)* Can keys have gaps? (`#False` = contiguous, `#True` = sparse) |
+| `%Ordered` | `#Boolean` | *(now `%##Ordered`)* Are keys ordered? |
+| `%Open` | `#Boolean` | *(removed — see below)* Can new keys be added at runtime? |
+| `%Depth.Max` | `#Int` | *(now `%##Depth.Max`)* Max tree depth (`1` = flat, `-1` = unlimited) |
 
 Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Property}`, making them introspectable at compile time.
 
 ### Parameterized Types via Generic `{#}` Definitions
 
-> **Note:** This section originally described `{M}` type macros. As of Issue #272, `{M}` macros are retired. Parameterized types now use generic `{#}` definitions with `[#] <#param` type inputs and `[#] <param` value inputs directly.
+> **Note:** This section originally described `{M}` type macros. As of Issue #272, `{M}` macros are retired. Parameterized types now use generic `{#}` definitions with `(#) <#param` type inputs and `(#) <param` value inputs directly.
 
-Generic `{#}` definitions declare parameters with `[#] <#Param` (type input) and `[#] <Param` (value input). The `:` separator in type annotations binds positionally to parameters:
+Generic `{#}` definitions declare parameters with `(#) <#Param` (type input) and `(#) <Param` (value input). The `:` separator in type annotations binds positionally to parameters:
 
 ```polyglot
 {#} #Array
-   [#] <#ValueType
-   [#] <Dim##Dimension <~ "1D"
-   [#] << ##Array
-      [#] <#ValueType << <#ValueType
-      [#] <Dim << <Dim
-
-{#} #Map
-   [#] <#KeyType
-   [#] <#ValueType <~ #
-   [#] << ##Map
-      [#] <#KeyType << <#KeyType
-      [#] <#ValueType << <#ValueType
+   (#) <#ValueType
+   (#) <Dim##Dimension <~ "1D"
+   [#] ##Array
+      (#) <#ValueType << <#ValueType
+      (#) <Dim << <Dim
 ```
 
-`[#] << ##Schema` sets `%##` properties — two schemas that agree on a property value produce no error; conflicting values produce PGE11001.
+`[#] ##Schema` sets `%##` properties — two schemas that agree on a property value produce no error; conflicting values produce PGE11001.
 
 ### No `.schema` Field on `#String`
 
@@ -83,13 +78,13 @@ Generic `{#}` definition:
 
 ```polyglot
 {#} #Array
-   [#] <#ValueType
-   [#] <Dim##Dimension <~ "1D"
-   [#] << ##Array
-      [#] <#ValueType << <#ValueType
-      [#] <Dim << <Dim
+   (#) <#ValueType
+   (#) <Dim##Dimension <~ "1D"
+   [#] ##Array
+      (#) <#ValueType << <#ValueType
+      (#) <Dim << <Dim
    [#] %##Alias << "array"
-   [#] %##Key << #uint
+   [#] %##Fields << #Range
    [:] :*#<#ValueType
 ```
 
@@ -97,44 +92,48 @@ Generic `{#}` definition:
 - No gaps — removing an element reindexes
 - Ordered by insertion
 - Depth from dimension parameter (default 1D)
-- Composed from ##Array (which composes ##Contiguous + ##Rectangular)
+- Composed from ##Array (sets %##Gap, %##Ordered, %##Propagate)
 
-### `#Map`
+### `#Map` *(Retired #275 — replaced by ##Record)*
 
-Generic `{#}` definition:
+> **Note:** As of Issue #275, `#Map`/`##Map` are retired. Use `##Record` for enum-keyed flat collections.
+
+### `##Record` (replaces `##Map`)
+
+Parameterized schema for enum-keyed flat collections:
 
 ```polyglot
-{#} #Map
-   [#] <#KeyType
-   [#] <#ValueType <~ #
-   [#] << ##Map
-      [#] <#KeyType << <#KeyType
-      [#] <#ValueType << <#ValueType
-   [#] %##Alias << "map"
-   [:] :*#<#ValueType
+{#} ##Record
+   (#) <#Fields << ##Enum
+   (#) <#ValueType <~ #
+   [#] ##Flat
+   [#] %##Fields << <#Fields
+   [#] %##Active << #ActiveKind.All
+   [#] %###Type << <#ValueType
+   [#] %###Kind << #FieldKind.Value
 ```
 
-- Keys typed by `KeyType` parameter (type input)
-- Gaps allowed (sparse keys)
-- Unordered
-- Flat only (depth = 1)
+- Fields keyed by an enum type (compile-time known)
+- Flat (depth = 1)
+- All fields active by default
+- Value type uniform across all fields
 
 ### `#Serial`
 
 ```polyglot
 {#} #Serial
-   [#] %Key.Gap << #True
-   [#] %Ordered << #False
-   [#] %Open << #True
-   [#] %Depth.Max << -1
-   [:] :*;*
+   [#] %##Gap << #True
+   [#] %##Ordered << #False
+   [#] %##Depth.Max << #Inf
+   [#] %##Count << #Inf
+   [#] %##Fields << #Range
+   [:] :*#*
 ```
 
 - No type constraints on keys or values
 - Gaps allowed
 - Unordered
-- Open
-- Unlimited depth
+- Unlimited depth and count
 
 ### Regular Structs (No Schema Properties Needed)
 
@@ -167,8 +166,8 @@ Design gaps identified during session review, all resolved:
 
 | # | Gap | Resolution |
 |---|-----|-----------|
-| 1 | Generic param binding syntax | Generic `{#}` definitions with `[#] <#param`. Type annotations use `:` for positional binding (e.g., `#array:int`) |
-| 2 | `#*` wildcard type + `[<]` constraints | `#*` is "any type" wildcard. `[<]` nested under `[#] <param` in `{#}` constrains via `##` schemas (e.g., `[<] << ##Scalar`) |
+| 1 | Generic param binding syntax | Generic `{#}` definitions with `(#) <#param`. Type annotations use `:` for positional binding (e.g., `#array:int`) |
+| 2 | `#*` wildcard type + `[<]` constraints | `#*` is "any type" wildcard. `[<]` nested under `(#) <param` in `{#}` constrains via `##` schemas (e.g., `[<] << ##Scalar`) |
 | 3 | Enum vs Value field kind | Implicit from syntax — no `%Kind` property. Document that no `#type` = enum field |
 | 4 | Key uniqueness | Universal tree invariant — duplicate keys always error, including deserialized data. No `%Key.Unique` property |
 | 5 | `[#]` overloading | Keep — prefix after `[#]` disambiguates (`.` field, `<` type param, `%` schema prop) |
@@ -185,7 +184,7 @@ These emerged during gap resolution and significantly evolve the original design
 
 ### Schema Inheritance via `<~`
 
-`[#] <~ #String` (not `<<`) for schema inheritance. `<~` = "default schema, can be specialized" — consistent with assignment semantics where `<~` is overridable default.
+`(#) <~ #String` (not `<<`) for schema inheritance. `<~` = "default schema, can be specialized" — consistent with assignment semantics where `<~` is overridable default.
 
 ### `%Open` Property Removed
 
@@ -197,10 +196,10 @@ New `[#] %Alias` property allows lowercase shorthand names (e.g., `%Alias << "in
 
 ### `[<]` Type Parameter Constraints
 
-Block marker nested under `[#] <param` declarations in generic `{#}` definitions. Constrains parameters via `##` schema references:
+Block marker nested under `(#) <param` declarations in generic `{#}` definitions. Constrains parameters via `##` schema references:
 ```polyglot
-[#] <#ValueType
-   [<] << ##Scalar
+(#) <#ValueType
+   [<] ##Scalar
    [ ] ValueType must satisfy ##Scalar schema
 ```
 
@@ -251,3 +250,14 @@ Complete hierarchy defined in `docs/draft.md`:
 - [[metadata-tree/INDEX|spec/metadata-tree]] — `%definition` template paths
 - Decision: [string-re-subfields](string-re-subfields.md) — `.regex` as value schema
 - `docs/draft.md` — complete ground-up type hierarchy definitions
+
+## Issue #275 Updates (2026-04-09)
+
+- `#Map`/`##Map` retired — replaced by `##Record` (enum-keyed flat collection)
+- `#Set`/`##Set` retired — replaced by `#Array` + `%###Unique << #True`
+- `##Contiguous`, `##Sparse`, `##Rectangular`, `##Deep` retired — properties stated directly
+- `%##Key` → `%##Fields` (`#FieldsDescriptor` or `##Enum` ref)
+- `%##Range` → `%##Count` (`#Bound`)
+- `%##Flexible`/`#FlexKind` → `%##Fields`
+- `%##Regular` retired — consequence of `%##Propagate` + `%##Count`
+- Schema composition syntax: `[#] ##Name` (drop `<<` for schemas); properties keep `<<`: `[#] %##Prop << value`

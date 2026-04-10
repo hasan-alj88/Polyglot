@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-08
+updated: 2026-04-09
 status: complete
 metadata_definition: "%definition.#:ActiveKind"
 metadata_instance: "%#:ActiveKind:N"
@@ -11,7 +11,7 @@ metadata_instance: "%#:ActiveKind:N"
 
 <!-- @types -->
 
-Runtime `##Enum` type available in every `.pg` file. Uses `[#] << ##Enum` (enum classification), `[#] << ##Scalar` (depth 1), and `[#] << ###ScalarEnum` (leaf content is variant selection).
+Runtime `##Enum` type available in every `.pg` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
 
 ---
 
@@ -21,9 +21,9 @@ Runtime `##Enum` type available in every `.pg` file. Uses `[#] << ##Enum` (enum 
 {#} #ActiveKind
    [%] .description << "Branch activation classifier"
    [%] .version << "1.0.0"
-   [#] << ##Enum
-   [#] << ##Scalar
-   [#] << ###ScalarEnum
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
    [#] %##Alias << "activekind"
    [.] .All         [ ] Every branch must be present
    [.] .One         [ ] Exactly one branch active

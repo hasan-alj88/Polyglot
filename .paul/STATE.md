@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: v0.2 Language Specification — COMPLETE
-Phase: Issue #273 — Three-bracket system + parallelism unification symbol redesign
-Plan: All 5 plans COMPLETE (273-01 through 273-05)
-Status: Loop complete — ready for commit and merge
-Last activity: 2026-04-09 — Issue #273 complete (387 files across 5 plans)
+Phase: Issue #275 — Collection redesign (##Record, %##Fields, retire #Map/#Set)
+Plan: 275-05 COMPLETE — full-codebase propagation and verification
+Status: All 5 plans complete — ready for unify
+Last activity: 2026-04-09 — 275-05 complete (42 files, 3 commits)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -102,14 +102,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #275 — Collection redesign: ##Record, %##Fields, retire #Map/#Set
+Branch: design/issue-275-collection-redesign-record-fields
+Labels: design, P2-high
+Started: 2026-04-09
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/275
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop complete — ready for merge]
 ```
 
 ## Accumulated Context
@@ -269,10 +273,12 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-09
-Stopped at: Issue #273 merged to main, GitHub issue closed
-Next action: /paul:issues or /paul:progress
-Resume file: .paul/STATE.md
+Last session: 2026-04-10
+Stopped at: UNIFY complete — all 5 plans executed, loop closed
+Next action: /paul:merge to merge branch and close issue #275
+Resume file: .paul/phases/275-collection-redesign-record-fields/275-SUMMARY.md
+Design context: 18 commits on branch, ~60 files modified, full verification passed
+Prior work on branch: 275-01 through 275-05 all complete + cleanup fixups
 
 ---
 *STATE.md — Updated after every significant action*

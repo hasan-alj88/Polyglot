@@ -111,6 +111,34 @@ This reads: "from step 0's output, feed step 1's input." Both sides use the pipe
 
 **Error references** in chains also use step addressing: `!0.ErrorName` or `!LeafName.ErrorName`. See [[concepts/pipelines/chains#Error Handling in Chains]].
 
+## Operation Labels
+
+<!-- @operation-labels -->
+`($)` labels a pipeline call's IO, allowing downstream operations to access outputs via `$Label>outputParam` without intermediate variables. See [[operation-labels]] for full syntax, chain step labels `(.)`, IO comments `( )`, and compile rules.
+
+```polyglot
+[-] -ReadFile
+   ($) $Read
+   (-) <path << "input.csv"
+   (-) >content
+
+[-] -ParseCSV
+   ($) $Parse
+   (-) <data << $Read>content         ( ) access Read's output directly
+```
+
+In chain IO addressing, step labels replace numeric/leaf-name step refs:
+
+```polyglot
+[-] -ReadFile->-ParseCSV->-ValidateRows
+   ($) $Pipeline
+      (.) $Read
+      (.) $Parse
+      (.) $Validate
+   (-) >$Read.path << "input.csv"
+   (-) <$Parse.rows >> >result
+```
+
 ## Collection Operators
 
 <!-- @collections -->

@@ -2,7 +2,7 @@
 audience: ai
 type: audit-reference
 scope: glossary
-updated: 2026-04-03
+updated: 2026-04-09
 ---
 
 # Glossary — Authoritative Definitions
@@ -33,7 +33,16 @@ Source: [[vision]]
 | RawString | The only true primitive type — literal raw characters, no interpolation, no substitution. Compiler intrinsic | Not `string` (`#String`), which is a struct with `.string` and `.regex` subfields |
 | #String | Struct type for `#string` — contains `.string#RawString` (value) and `.regex#RawString` (RE constraint; alias: `.re`). `int`/`float` are flexible subtypes of `#String` | Not the primitive — `RawString` is the primitive |
 | *Agg | Canonical shorthand alias for `*Aggregate`. Aggregation collectors that reduce expand outputs to a single value (sum, count, max, etc.). Always use `*Agg` in Polyglot Code | Not `*Aggregate` in code — `*Aggregate` is the valid long form but `*Agg` is the standard namespace used in pglib and EBNF |
+| Operation Label | A `($)` IO line inside a pipeline call that names the call's IO for downstream access via `$Label>outputParam`. Labels become Final when the operation completes and are read-only. See [[operation-labels]] | Not a variable declaration — labels are auto-populated from the operation's IO, not user-assigned |
+| Chain Step Label | A `(.)` IO line indented under `($)` in a chain call that names an individual chain step by position. Access via `>$Label.param` in chain IO lines. See [[operation-labels#Chain Step Labels]] | Not a chain-level label — `($)` labels the whole chain, `(.)` labels steps within it |
+| IO Comment | A `( )` bracket (parentheses with space) introducing an inline comment within `(X)` IO blocks. The IO-family equivalent of `[ ]` block comments. See [[comments]] | Not `[ ]` — `( )` is scoped to IO context only |
 | .pg files | Polyglot source files written in Polyglot Code | Not configuration files |
+| ##Record | Parameterized schema for enum-keyed flat collections. Takes `(#) <#Fields << ##Enum` and `(#) <#ValueType <~ #`. Replaces ##Map (#275) | Not #Map — ##Record uses enum keys, not arbitrary string keys |
+| #FieldsDescriptor | Enum type with `.Range` (alias `#Range`) and `.Enum` (alias `#Enum`). Used by `%##Fields` property to describe how a type's children are keyed | Not `#FlexKind` (retired #275) |
+| %##Fields | Branch-level schema property taking `#FieldsDescriptor` or `##Enum` ref. `#Range` = integer-indexed; enum ref = stamp children from variants. Replaces `%##Key`, `%##Range`, `%##Flexible` (#275) | Not `%##Key` (retired #275) |
+| %##Count | Branch-level schema property taking `#Bound`. Maximum number of children (`#Inf` = unlimited). Replaces `%##Range` for bounds (#275) | Not `%##Range` (retired #275) |
+| #Map | *(Retired #275)* — replaced by ##Record (enum-keyed) or custom `{#}` types | Not active — use ##Record |
+| #Set | *(Retired #275)* — replaced by `#Array` + `%###Unique << #True` | Not active — use #Array with uniqueness constraint |
 
 ## Adding Terms
 

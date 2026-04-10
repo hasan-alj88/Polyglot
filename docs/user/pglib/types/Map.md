@@ -3,31 +3,32 @@ audience: pg-coder
 type: specification
 updated: 2026-04-09
 status: complete
-metadata_definition: "%definition.#:Map"
-metadata_instance: "%#:Map:N"
+metadata_definition: "%definition.##:Record"
+metadata_instance: "%#:Record:N"
 ---
 
-# #Map Collection
+# Record (##Record)
 
 <!-- @types -->
 
-Sparse key-value pairs. `#Map` is a generic type with `[#] <param` inputs. Child access uses the `<` operator (`$myMap<key`).
+Enum-keyed collection with typed value fields. `##Record` is a parameterized schema that stamps one field per enum variant. Previously `#Map` / `##Map`.
 
 ---
 
 ## Definition
 
 ```polyglot
-{#} #Map
-   [#] <#KeyType
-   [#] <#ValueType <~ #
-   [#] << ##Map
-      [#] <#KeyType << <#KeyType
-      [#] <#ValueType << <#ValueType
-   [#] %##Alias << "map"
+{#} ##Record
+   (#) <#Fields << ##Enum
+   (#) <#ValueType <~ #
+   [#] ##Flat
+   [#] %##Fields << <#Fields
+   [#] %##Active << #ActiveKind.All
+   [#] %###Type << <#ValueType
+   [#] %###Kind << #FieldKind.Value
 ```
 
-The `<#KeyType` parameter sets the key type. The `<#ValueType` parameter sets the value type (defaults to `#` -- any type). The `##Map` parameterized schema provides the structural constraints: flat, sparse, flexible.
+The `<#Fields` parameter must satisfy `##Enum` -- field names come from an enum type. The `<#ValueType` parameter sets the value type for all fields (defaults to `#` -- any type). `##Flat` limits depth to one level. `%##Fields << <#Fields` stamps one child per enum variant.
 
 ---
 
@@ -35,25 +36,59 @@ The `<#KeyType` parameter sets the key type. The `<#ValueType` parameter sets th
 
 | Property | Value | Meaning |
 |----------|-------|---------|
-| `%##Depth.Max` | `1` (via ##Flat) | One level of flexible children |
-| `%##Gap` | `#True` (via ##Sparse) | Gaps allowed in keys |
-| `%##Flexible` | `#FlexKind.Flexible` | User adds/removes entries |
-| `%##Key` | `<#KeyType` | Key type from parameter |
+| `%##Depth.Max` | `1` (via ##Flat) | One level of children |
+| `%##Fields` | `<#Fields` | One child per enum variant |
+| `%##Active` | `#ActiveKind.All` | All fields active simultaneously |
 | `%###Type` | `<#ValueType` | Value type constraint |
+| `%###Kind` | `#FieldKind.Value` | All children are value fields |
 
 ---
 
 ## Usage
 
-The `:` separator binds positionally to `[#] <param` declarations:
+Types that compose `##Record` use `:` positional binding for their `(#) <param` declarations:
 
 ```polyglot
-[ ] #map:string:int → KeyType=String, ValueType=Int
-[-] $lookup#map:string:int <~ {}
+{#} #DayOfWeek
+   [#] ##Enum
+   [#] ##Scalar
+   [.] .Monday
+   [.] .Tuesday
+   [.] .Wednesday
+   [.] .Thursday
+   [.] .Friday
+   [.] .Saturday
+   [.] .Sunday
 
-[ ] #map:string → KeyType=String, ValueType-# (default, any type)
-[-] $config#map:string <~ {}
+{#} #WeeklySchedule
+   (#) <#Fields << #DayOfWeek
+   (#) <#ValueType << #String
+   [#] ##Record
+      (#) <#Fields << <#Fields
+      (#) <#ValueType << <#ValueType
+
+[-] $schedule#WeeklySchedule <~ {}
 ```
+
+Access uses `<` with enum variant names:
+
+```polyglot
+[-] $monday#string << $schedule<Monday
+[-] $friday#string << $schedule<Friday
+```
+
+---
+
+## Migration
+
+`##Record` replaces the former `#Map` / `##Map` types. The key difference: `##Record` uses enum-keyed fields (`%##Fields << <#Fields`) instead of arbitrary sparse keys (`%##Key`). All fields are declared at compile time via the enum, making the structure fully type-safe.
+
+| Former | Now |
+|--------|-----|
+| `#Map` / `##Map` | `##Record` |
+| `%##Key` | `%##Fields` with enum ref |
+| `%##Flexible` | Retired -- fields determined by enum |
+| `%##Gap` | Retired -- all enum fields present |
 
 ---
 
@@ -61,14 +96,17 @@ The `:` separator binds positionally to `[#] <param` declarations:
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.#:Map` | Compile-time type template |
-| Instance | `%#:Map:N` | Runtime instance (N = instance number) |
+| Definition | `%definition.##:Record` | Compile-time schema template |
+
+Schemas are compile-time metadata constraints -- they have no runtime instances.
 
 ---
 
 ## Related
 
 - [[collections]] -- collection type overview
-- [[Array]] -- contiguous ordered collection (composes ##Array)
-- [[schemas/Map|##Map]] -- parameterized schema
+- [[Array]] -- range-indexed ordered collection (composes ##Array)
+- [[schemas/Record|##Record]] -- schema definition
+- [[schemas/Fields|%##Fields]] -- field descriptor property
 - [[syntax/types/INDEX|types]] -- full type system specification
+
