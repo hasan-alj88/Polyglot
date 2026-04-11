@@ -276,7 +276,11 @@ Protected elements for current milestone:
 Last session: 2026-04-11
 Stopped at: Phase 14 complete, ready to plan Phase 15
 Next action: /paul:plan for Phase 15
-Resume file: .paul/ROADMAP.md
+Resume file: .paul/HANDOFF-2026-04-11.md
+Resume context:
+- Phase 13 defined @d: prefix; Phase 14 added replaced_by to 52 archive files
+- Phase 15 is content-heavy: add @c:/@u:/@d: cross-refs to all 52 archived docs
+- Each file's replaced_by field provides the @d: target mapping
 
 ---
 *STATE.md — Updated after every significant action*
