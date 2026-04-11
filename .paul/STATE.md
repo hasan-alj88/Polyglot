@@ -103,22 +103,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #278 — Add *Into.Text.* collector operators and *Agg.Concatenate separator
-Branch: design/issue-278-into-text-collector-operators-agg-concat
-Labels: docs, design, pglib
-Started: 2026-04-11
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/278
-Plan: All 3 plans complete
-Plans total: 3/3 (278-01 DONE, 278-02 DONE, 278-03 DONE)
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Plan 278-01 loop closed]
-  ✓        ✓        ✓        ○     [Plan 278-02 loop closed]
-  ✓        ✓        ✓        ○     [Plan 278-03 loop closed — issue ready for merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -266,6 +258,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Cross-reference enrichment complete | 2026-04-11 | 52 files, 157 cross-refs (@d:/@c:/@u:); audit files @d: only; language/stdlib files got @c:/@u: |
 | Archive triage: 49 deleted, 3 kept | 2026-04-11 | Kept database-schema, ir-representation, contributing (replaced_by: none); all others fully superseded |
 | Handle Archive Docs milestone complete | 2026-04-11 | 4 phases (13-16): @d: prefix, frontmatter, cross-refs, triage; archive reduced from 52 to 3 files |
+| Closed #278 — *Into.Text.* and *Into.CSV.* collector operators | 2026-04-11 | Merged design/issue-278-into-text-collector-operators-agg-concat to main; 3 plans, 43 files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -285,15 +278,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-11
-Stopped at: Issue #278 all 3 plans complete — ready for merge
-Next action: /paul:merge to merge branch to main
-Resume file: .paul/phases/278-into-text-csv-collectors/278-03-SUMMARY.md
+Stopped at: Issue #278 merged to main, issue closed
+Next action: /paul:progress or /paul:work-issue for next issue
+Resume file: none
 Resume context:
-- Branch: design/issue-278-into-text-collector-operators-agg-concat
-- Plan 278-01: 7 types, PPTD overflow, Concatenate separator, 12 errors
-- Plan 278-02: =Text.Diff, =ForEach.Text.Lines, *Into.Text.Append, *Into.Text.Merge
-- Plan 278-03: =ForEach.CSV.Rows, *Into.CSV.Rows, *Into.CSV.Merge, 4 INDEX updates
-- Total: 19 new/modified files across 3 plans
+- Issue #278 complete and merged (43 files, 2506 insertions)
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
