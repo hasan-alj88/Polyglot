@@ -1,21 +1,21 @@
 # Polyglot
 
-**Version:** 0.1.0-development
-**Status:** Active Development - Not Production Ready
+**Version:** 0.2.0-specification
+**Status:** Active Development - Language Specification Phase
 **License:** TBD (Apache 2.0 or MIT)
 
 <img src="./Polyglot%20Logo/PNG/Logo.png" width="150" alt="">
 
-> **Important**: Polyglot is currently in early development. APIs, architecture, and features are subject to change. We're building in public and welcome contributors!
+> **Important**: Polyglot is currently in the specification phase. The language design is stable but the compiler is not yet built. We're building in public and welcome contributors!
 
 ## Overview
 
 Polyglot is an **async-centric programming language and platform** built on two pillars:
 
-1. **Cross-Language Integration** — Write code in multiple programming languages and run them together seamlessly, leveraging the strengths of each.
-2. **Async-Centric Automation** — First-class parallelism, concurrency, race condition handling, and resource management — designed in, not bolted on.
+1. **Cross-Language Integration** — Write orchestration logic in Polyglot, execute work in Python, Rust, JavaScript, C++, or any supported runtime.
+2. **Async-Centric Automation** — First-class parallelism, concurrency, queuing, and resource management — designed in, not bolted on.
 
-Think: *what if API was a programming language?*
+Think: *what if your API orchestration layer was a programming language?*
 
 For the full project vision, philosophy, and design principles, see **[Project Vision](docs/vision.md)**.
 
@@ -24,64 +24,57 @@ For the full project vision, philosophy, and design principles, see **[Project V
 - **The Right Tool for the Right Job** — Use the best language for each task in a workflow
 - **Don't Reinvent the Wheel, Use Legacy Code** — Bridge existing Python, JavaScript, Rust, C++, and other codebases
 - **Async-Centric by Design** — Every operation is inherently async; task behaviors are intentional, not afterthoughts
-- **Divide and Conquer** — Break cross-language integration into smaller, solvable pieces and optimize each one
 - **Pipeline-Centric** — Compose workflows through chaining, parallelism, and branching
+- **Everything Is a Tree** — All data, types, pipelines, and metadata are trees on a unified `%` metadata tree
 - **Resource Governance** — Explicit resource management, queuing, and limits
-- **Security First** — Concurrency, race conditions, and pipeline interactions are handled intentionally from day one
+- **Security First** — Permissions, concurrency, and pipeline interactions are handled intentionally from day one
 
 ## Quick Example
 
+A pipeline that watches for new log files, summarizes them with an LLM, and writes reports:
+
 ```polyglot
-// Module declaration
-[@] com.example>DataPipeline>Analytics
-[X]
+{@} @Local:1000::LogSummarizer:v1.0.0
+   [@] @llm << @Community:ai::LLMService:v1.0.0
 
-[|] ProcessUserData
-[i] user_data: py\dict
-[t] |T.Call
-
-// Queue configuration
-[Q] |Q.Priority
-[<] .level: pg\uint = 2
-[<] .maxInstances: pg\uint = 1
-
-// Runtime wrapper
-[W] |W.Python3.10
-
-// Validate data
-[r] |ValidateData
-[<] .data: py\dict = user_data
-[>] .validated: py\dict = validated_data
-
-[~][!] !> py\!ValueError
-[~][~][r] |U.Log.Error
-[~][~][<] .message: pg\string = "Invalid data"
-[~][~]
-[~][~][x] |Exit << .status = #Status.MainOperations.DataCorruption
-
-// Parallel processing
-[f] |AnalyzePython
-[<] .data: py\dict = validated_data
-[>] .result: py\dict = py_results
-
-[f] |AnalyzeRust
-[<] .data: rust\HashMap = validated_data
-[>] .result: rust\HashMap = rust_results
-
-// Wait for both
-[j] |Y.JoinAll
-[<] ... py_results
-[<] ... rust_results
-
-// Combine results
-[r] |CombineResults
-[<] .py_data: py\dict = py_results
-[<] .rust_data: py\dict = rust_results
-[>] .combined: py\dict = final_results
-
-[o] .results: pg\json = final_results
-[x]
+{-} -SummarizeCompletedLogs
+   (-) <NewFiles#array.path
+   (-) >ReportCount#int ~> 0
+   [T] -T.Folder.NewFiles"/var/logs/app/"
+      (-) >NewFiles >> <NewFiles
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [=] =ForEach.Array.Enumerate
+      (=) <Array << $NewFiles
+      (=) >item >> $logFile
+      (=) >index >> $index
+      [?] -File.Access"{$logFile}" =? #FileAccess.Available
+         [-] $logContent#string << -File.Text.Read"{$logFile}"
+            [!] !*
+               [-] $logContent#string << ""
+         [-] @llm-Summarize
+            (-) <content << $logContent
+            (-) <prompt << "Summarize this log file concisely."
+            (-) >response >> $summary
+         [-] -File.Text.Write
+            (-) <path << -Path"/var/logs/reports/log_report_{$index}.txt"
+            (-) <content << $summary
+      [?] *?
+         [-] -DoNothing
+   [-] *Agg.Count
+      (*) <item << $summary
+      (*) >count >> >ReportCount
 ```
+
+**What this shows:**
+- `{@}` package declaration with `[@]` import
+- `{-}` pipeline with mandatory `[T]` trigger, `[Q]` queue, `[W]` wrapper
+- `(-)` IO parameters with `<<`/`>>` assignment and `#type` annotations
+- `[=]` parallel expand over an array with `(=)` IO
+- `[?]` conditionals with mandatory comparison operators and `*?` wildcard catch-all
+- `[!]` error handling with `!*` wildcard catch and recovery value
+- `[-]` sequential calls with inline string args (`"{$logFile}"`)
+- `*Agg.Count` collector with `(*)` IO writing to output port
 
 ## Why Polyglot?
 
@@ -98,141 +91,148 @@ Existing solutions force you to choose one language or write brittle glue code.
 ### The Solution
 Polyglot provides:
 - **Unified Syntax** — Single language for multi-language workflows
-- **Type-Safe Conversions** — Automatic conversion between language types
-- **Event-Driven** — React to file changes, schedules, resource availability
-- **Resource Management** — Built-in queuing, throttling, and limits
+- **Three-Bracket System** — `{X}` definitions, `[X]` control flow, `(X)` IO
+- **Event-Driven** — React to file changes, schedules, webhooks, or direct calls
+- **Resource Management** — Built-in queuing, throttling, and permission policies
 
 ## Key Features
 
-### 1. Multi-Language Integration
+### 1. Pipeline Structure
+
+Every pipeline follows a mandatory structure: trigger, IO, queue, wrapper, execution body.
+
 ```polyglot
-[f] |Python.ProcessData
-[<] .csv_path: py\str = file_path
-[>] .df: py\DataFrame = data
-
-[f] |Rust.ComputeStats
-[<] .data: rust\Vec<f64> = rust_data
-[>] .stats: rust\HashMap = stats
-
-[f] |Node.SendWebhook
-[<] .payload: js\object = payload_object
-[>] .status: js\number = status
-
-[j] |Y.JoinAll
-[<] ... data
-[<] ... stats
-[<] ... status
+{-} -ProcessData
+   (-) <input#string
+   (-) >result#string
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] $result << -Transform
+      (-) <data << $input
+      (-) >output >> $result
 ```
 
 ### 2. Event-Driven Triggers
+
 ```polyglot
-[t] |T.File.Created
-[<] .path: pg\path = //cwd//data
-[<] .pattern: pg\string = "*.csv"
+{ } Watch for new CSV files
+[T] -T.Folder.NewFiles"/data/"
+   (-) >NewFiles >> <FilesToProcess
 
-[t] |T.Schedule.Cron
-[<] .cron: pg\string = "0 2 * * *"
+{ } Triggered by external call
+[T] -T.Call
 
-[t] |T.HTTP.Webhook
-[<] .endpoint: pg\string = "/process"
-[<] .method: pg\Enum = #Rest.POST
+{ } Webhook trigger
+[T] -T.Webhook"/api/process"
 ```
 
-### 3. Resource Management
+### 3. Parallel Execution with Expand/Collect
+
 ```polyglot
-// Pending queue: priority ordering with concurrency limits
-[Q] |Q.Priority
-[<] .level: pg\uint = 5
-[<] .maxInstances: pg\uint = 2
-
-// Active queue controls (called from execution body)
-[r] |Q.KillIf.ExecutionTime.MoreThan
-[<] .pipeline: pg\string = "=HeavyWork"
-[<] .timeout: pg\string = "30m"
-
-[r] |Q.PauseIf.CPU.MoreThan
-[<] .pipeline: pg\string = "=HeavyWork"
-[<] .threshold: pg\float = 95.0
+{ } Process items in parallel, collect results
+[=] =ForEach.Array
+   (=) <Array << $items
+   (=) >item >> $current
+   [-] -ProcessItem
+      (-) <data << $current
+      (-) >output >> $processed
+[-] *Into.Array
+   (*) <item << $processed
+   (*) >Array >> >results
 ```
 
-### 4. Sophisticated Error Handling
+### 4. Error Handling
+
+All errors must be handled — no silent failures. Errors use the `!` prefix and `[!]` blocks:
+
 ```polyglot
-[r] |RiskyOperation
-[>] .result: pg\string = result
-
-[~][!] !> py\!ValueError
-[~][~][r] |U.Log.Error
-[~][~][<] .message: pg\string = "Value error occurred"
-[~][~]
-[~][~][r] |RetryWithBackoff
-[~][~][<] .max_attempts: pg\uint = 3
-
-[~][!] !> pg\!NetworkError
-[~][~][r] |FallbackOperation
-[~][~][>] .result: pg\string = result
+[-] -RiskyOperation
+   (-) <input << $data
+   (-) >output >> $result
+   [!] !File.NotFound
+      [-] $result << "fallback"
+   [!] !*
+      [-] $result << ""
 ```
 
-### 5. Parallel Execution with Synchronization
+### 5. Type System
+
+Everything is a tree. Types use `{#}` definitions with `#` prefix:
+
 ```polyglot
-[f] |ProcessBatch1
-[>] .results: pg\array<pg\json> = results1
+{#} #UserRecord
+   .name#string
+   .email#string
+   .age#int
+   .role#UserRole
 
-[f] |ProcessBatch2
-[>] .results: pg\array<pg\json> = results2
-
-[f] |ProcessBatch3
-[>] .results: pg\array<pg\json> = results3
-
-[j] |Y.JoinFirst
-[<] ... results1
-[<] ... results2
-[<] ... results3
-[>] .first: pg\array<pg\json> = first_result
-
-// Continue with whichever finishes first
+{#} #UserRole
+   .Admin
+   .Editor
+   .Viewer
 ```
+
+### 6. Cross-Language Execution
+
+Runtime wrappers (`[W]`) connect to foreign language runtimes:
+
+```polyglot
+{ } Execute Python code
+[W] -W.RT.Python:3:14
+[-] [C]
+   import pandas as pd
+   df = pd.read_csv(input_path)
+   result = df.describe().to_dict()
+
+{ } Execute a compiled Rust binary
+[W] -W.Polyglot
+[-] -RT.CLI"./target/release/my_tool --input {$path}"
+```
+
+## Syntax At a Glance
+
+### Three Bracket Types
+
+| Shape | Role | Examples |
+|-------|------|---------|
+| `{X}` | Define | `{@}` package, `{#}` struct, `{-}` pipeline, `{!}` errors, `{_}` permissions |
+| `[X]` | Control | `[T]` trigger, `[Q]` queue, `[W]` wrapper, `[-]` run, `[=]` parallel, `[?]` conditional |
+| `(X)` | IO | `(-)` pipeline IO, `(=)` expand IO, `(*)` collect IO |
+
+### Identifier Prefixes
+
+| Prefix | Meaning | Example |
+|--------|---------|---------|
+| `@` | Package | `@Local:1000::MyPkg:v1` |
+| `#` | Data type | `#UserRecord`, `#string` |
+| `-` | Pipeline | `-ProcessData`, `-File.Text.Read` |
+| `$` | Variable | `$input`, `$result` |
+| `!` | Error | `!File.NotFound`, `!Error:Validation.Empty` |
+| `%` | Metadata | `%#`, `%-`, `%!` |
+| `_` | Permission | `_ReadOnly`, `__NetworkAccess` |
+
+### Assignment Operators
+
+| Operator | Name | Direction |
+|----------|------|-----------|
+| `<<` | PushLeft (Final) | Right to left |
+| `>>` | PushRight (Final) | Left to right |
+| `<~` | DefaultPushLeft | Right to left (one reassignment allowed) |
+| `~>` | DefaultPushRight | Left to right (one reassignment allowed) |
 
 ## Minimal Example
 
 **hello.pg**
 ```polyglot
-[@] com.example>HelloWorld
-[X]
+{@} @Local:1000::HelloWorld:v1.0.0
 
-[|] SayHello
-[i] name: pg\string
-[t] |T.Call
-
-[W] |W.Python3.10
-
-[r] |U.Console.Print << .message: f"Hello, {name}!"
-
-[o] >> name
-[x]
-```
-
-Run it:
-```bash
-polyglot run hello.pg --name="World"
->> Hello, World!
-```
-
-### The Cross-Language Bridge
-One of the aims is the ability to integrate codebases from different programming languages easily. The Polyglot service needs to be running in the background for it.
-
-```python
-# Trigger from Python, get results from Rust
-import polyglot as pg
-import polars as pl
-import os
-
-rust_function = pg.register.rust(
-    base_dir= os.environ['RustBaseDirectory'],
-    function_name="rust_data_processing"
-)
-
-data = pl.readcsv('datafile.csv')
-result = await pg.run(rust_function, data=data)
+{-} -SayHello
+   (-) <name#string
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [-] -Console.Print"Hello, {$name}!"
 ```
 
 ## Use Cases
@@ -247,18 +247,18 @@ result = await pg.run(rust_function, data=data)
 ## Documentation
 
 - **[Project Vision & Philosophy](docs/vision.md)** — What Polyglot is, why it exists, and where it's going
-
-> Language specification, architecture, and ecosystem docs are being written as part of the documentation-first development approach. More coming soon.
+- **[Language Specification](docs/user/SPEC-INDEX.md)** — Complete syntax and concept reference
+- **[Technical Reference](docs/technical/INDEX.md)** — EBNF grammar, compile rules, edge cases
 
 ## Project Status
 
-**Current Phase:** Documentation-first specification — defining the language and architecture before coding.
+**Current Phase:** Documentation-first specification (v0.2 complete). The language design is stable with comprehensive specs covering syntax, type system, pipelines, concurrency, error handling, permissions, and the standard library (pglib).
 
-The project previously had a Rust implementation prototype which was reset in favor of a specification-first approach. We're writing comprehensive specs, then building the implementation on solid foundations.
+The project previously had a Rust implementation prototype which was reset in favor of a specification-first approach. Next steps: compiler architecture design and implementation.
 
 ## Installation
 
-> To be determined. Polyglot is not yet installable — we're in the specification phase.
+> Polyglot is not yet installable — we're in the specification phase. The compiler will be built on the foundations of the completed language spec.
 
 ## Getting Involved
 
@@ -266,11 +266,9 @@ We're looking for collaborators interested in:
 - Language design and syntax refinement
 - Architecture review and feedback
 - Documentation and examples
-- Compiler implementation (once specs are complete)
+- Compiler implementation (Rust)
 - Runtime system architecture
 - Standard library development
-
-**Contributing Guidelines:** Coming soon in `docs/contributing.md`
 
 ## License
 
@@ -278,4 +276,4 @@ To be determined (likely Apache 2.0 or MIT)
 
 ---
 
-**Status:** The language is being specified. We're seeking feedback and collaborators to turn this vision into reality.
+**Status:** Language specification is complete. Seeking feedback and collaborators to build the compiler.
