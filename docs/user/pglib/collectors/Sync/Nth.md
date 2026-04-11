@@ -42,6 +42,28 @@ Generic race collector -- waits for the Nth arriving value and cancels all remai
 | `*First` | `*Nth` with n=1 |
 | `*Second` | `*Nth` with n=2 |
 
+## Job Reconciliation
+
+Algorithm for THIS job when it completes:
+
+```mermaid
+flowchart TD
+    JC["Job completed"]
+    COUNT["Increment arrival count"]
+    IS_NTH{"Is this the Nth arrival?"}
+    COLLECT["Collect output into >> $winner"]
+    RELEASE["Release *Nth claim on this job"]
+
+    JC --> COUNT --> IS_NTH
+    IS_NTH -- yes --> COLLECT --> RELEASE
+    IS_NTH -- no --> RELEASE
+```
+
+- **Nth arrival:** output collected, claim released
+- **Before Nth:** claim released, output unused by this collector
+
+The TM sends a kill signal to a job only when all collector claims on it have been released. See [[concepts/collections/collect#Compound Collector Strategies]].
+
 ## Errors
 
 None.

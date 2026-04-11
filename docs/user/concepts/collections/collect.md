@@ -227,8 +227,80 @@ Multiple `(*) *All` barriers create sequential waves of parallel work:
 [-] -Assemble ...
 ```
 
+## Reconciliation
+
+<!-- @c:glossary#Reconciliation -->
+Every parallel job must be **reconciled** ([[glossary#Reconciliation|c:Reconciliation]]) — the process by which parallel job outputs are collected and parallel jobs are terminated. Collectors are the reconciliation layer: they determine both what happens to the data and what happens to the jobs.
+
+### Output Reconciliation
+
+| Strategy | Operators | Result |
+|----------|-----------|--------|
+| Aggregation | `*Agg.*` | Reduce parallel outputs into one scalar value |
+| Collection Transformation | `*Into.*` | Populate a collection from parallel outputs |
+| Race Selection | `*First`, `*Nth` | Select one output, discard the rest |
+| Barrier | `*All` | Wait for all outputs — variables stay accessible |
+| Discard | `$*`, `*Ignore`, `[b]` | Intentionally discard job output |
+
+`*Into.*` and `*Agg.*` operate **inside** expand scopes — they gather per-item results from mini-pipelines. `*All`, `*First`, and `*Nth` operate **outside** expand scopes — they synchronize parallel `[=]` pipeline calls.
+
+### Job Reconciliation
+
+The collector determines *when* collection is satisfied. In all cases, jobs whose output has been collected are terminated:
+
+- `*All`, `*Into.*`, `*Agg.*` — every associated job completes naturally
+- `*First` / `*Nth` — winner collected, remaining associated jobs are cancelled
+- `$*` / `*Ignore` / `[b]` — output discarded, job completes but output is released
+
+### Compound Collector Strategies
+
+A parallel job can be referenced by multiple collectors. The rule:
+
+> **A job is cancelled only when ALL collectors referencing it agree it can be cancelled.**
+
+When `*First` is satisfied, it releases its claim on remaining jobs — but does not issue a cancel signal. If `*All` also references those jobs, they continue running until `*All` is also satisfied. A job is cancelled only when it has zero remaining collector claims.
+
+```polyglot
+[=] -Search.A
+   (-) >result >> $a
+[=] -Search.B
+   (-) >result >> $b
+[=] -Search.C
+   (-) >result >> $c
+
+[ ] *First takes the fastest — but does not cancel B/C yet
+(*) *First
+   (*) << $a
+   (*) << $b
+   (*) << $c
+   (*) >> $fastest
+
+[ ] *All needs all three — B and C continue running
+(*) *All
+   (*) << $a
+   (*) << $b
+   (*) << $c
+
+[ ] After *All completes, all jobs have zero claims — terminated
+[-] -Report.Generate
+   (-) <fastest << $fastest
+   (-) <a << $a
+   (-) <b << $b
+   (-) <c << $c
+```
+
+The compiler validates compound collector usage: if `*First` references a variable, and no other collector would allow the associated job to continue, the compiler confirms the cancellation is intentional. If another collector (`*All`) also references the same variable, the compiler confirms the combined strategy is consistent.
+
+### Permission Safety
+
+<!-- @c:permissions -->
+Concurrent parallel jobs may not hold write permission to the same resource path — this is a compile error (PGE10008). Read permission to the same resource is allowed. See [[permissions#Parallel Write Exclusion]].
+
+This makes reconciliation safe by construction: parallel jobs are pure readers, and only the sequential code after collection can write. No runtime locks, no mutexes — the permission system forbids write contention at compile time.
+
 ## See Also
 
 - [[concepts/collections/expand|Expand Operators]] — `=` operators that produce items for collectors
 - [[concepts/pipelines/wrappers|Wrappers]] — parallel forking in setup with `(*) *All` in cleanup
 - [[concepts/collections/examples|Examples]] — complete expand/transform/collect patterns
+- [[permissions#Parallel Write Exclusion]] — PGE10008 parallel write exclusion rule

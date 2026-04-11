@@ -7,7 +7,10 @@ status: stable
 
 # *Agg — Aggregation Collectors
 
+<!-- @c:glossary#Reconciliation -->
 Aggregation collectors reduce mini-pipeline outputs to a single value. The namespace is `*Agg` -- the canonical shorthand for `*Aggregate`. Always use `*Agg` in code.
+
+`*Agg` collectors operate **inside** expand scopes. Their [[glossary#Reconciliation|c:reconciliation]] strategy is aggregation — every expanded job completes naturally, and outputs are reduced into one scalar result.
 
 Collector invocation uses `[-]` (sequential) or `[=]` (parallel) execution markers. Collector IO lines use `(*)`.
 
@@ -26,3 +29,4 @@ No `[@]` import needed.
 
 - [[pglib/collectors/INDEX|Collectors overview]]
 - [[concepts/collections/collect|Collect Operators]]
+- [[concepts/collections/collect#Reconciliation]] -- reconciliation model

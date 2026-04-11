@@ -14,20 +14,24 @@ Reduces mini-pipeline string outputs by joining them into a single string.
 ```polyglot
 [-] *Agg.Concatenate
    (*) <string << $fragment
+   (*) <separator << "\n"
    (*) >result >> $combined
 ```
 
 ## Inputs
 
-| Name | Type | Description |
-|------|------|-------------|
-| `<string` | `#String` | String fragment to append |
+| Name | Type | Required | Default | Description |
+|------|------|----------|---------|-------------|
+| `<string` | `#String` | Yes | — | String fragment to append |
+| `<separator` | `#String` | No | `""` | Separator inserted between fragments |
+
+Separator is optional — omitting preserves existing concatenation behavior (empty-string join).
 
 ## Outputs
 
 | Name | Type | Description |
 |------|------|-------------|
-| `>result` | `#String` | Concatenation of all input strings |
+| `>result` | `#String` | Concatenation of all input strings, joined by separator |
 
 ## Errors
 

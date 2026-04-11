@@ -198,6 +198,35 @@ Each `{-}` pipeline must explicitly reference `{_}` grant objects for the permis
 
 Permissions are never inherited. Every definition must reference the `{_}` grant objects it requires, even if the package ceiling allows them. This makes each definition's IO footprint explicit and auditable.
 
+## Parallel Write Exclusion
+
+<!-- @c:glossary#Reconciliation -->
+Concurrent parallel jobs (`[=]`) may not hold write permission to the same resource path — this is a compile error (PGE10008). Read permission to the same resource is allowed across parallel jobs.
+
+This rule makes [[glossary#Reconciliation|reconciliation]] safe by construction: parallel jobs are pure readers, and only sequential code after collection can write to shared resources. No runtime locks, mutexes, or transactional memory are needed — the permission system eliminates write contention at compile time.
+
+The compiler checks for overlapping write targets by comparing the resource paths in `{_}` grant objects across all `[=]` jobs in the same parallel scope. Overlap is determined by glob intersection — if two grants can match the same concrete path, PGE10008 fires.
+
+```polyglot
+{_} _WriteGrant
+   [.] .intent << #Grant
+   [.] .File.Write "output/result.json"
+
+{ } ✗ PGE10008 — two parallel jobs write to the same file
+[=] -Write.PartA
+   [_] _WriteGrant
+[=] -Write.PartB
+   [_] _WriteGrant                      [ ] ✗ same write target as PartA
+
+{ } ✓ Sequential is fine — no contention
+[-] -Write.PartA
+   [_] _WriteGrant
+[-] -Write.PartB
+   [_] _WriteGrant                      [ ] ✓ sequential — no overlap
+```
+
+See [[technical/compile-rules/PGE/PGE10008-parallel-write-permission-exclusion|PGE10008]] for the full rule with detection algorithm and examples.
+
 ## No Instances
 
 Permissions are **compile-time declarations** — they apply across all instances of a pipeline. There are no per-instance permissions. If `-ProcessLogs` has `[_] _LogFileGrant`, every instance of `-ProcessLogs` shares that grant. The `%_` metadata tree branch has no `:{instance}` level (see [[data-is-trees]]).

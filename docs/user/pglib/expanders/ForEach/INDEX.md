@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-11
 status: stable
 ---
 
@@ -30,6 +30,14 @@ No `[@]` import needed.
 - [[pglib/expanders/ForEach/Dataframe|=ForEach.Dataframe]] -- iterate rows
 - [[pglib/expanders/ForEach/Dataframe/Enumerate|=ForEach.Dataframe.Enumerate]] -- with row index
 - ~~Column~~ -- **deprecated**. Use `-#.Column` pipeline instead.
+
+## Text
+
+- [[pglib/expanders/ForEach/Text.Lines|=ForEach.Text.Lines]] -- expand text into lines with index
+
+## CSV
+
+- [[pglib/expanders/ForEach/CSV.Rows|=ForEach.CSV.Rows]] -- expand CSV into rows with index
 
 ## Related
 

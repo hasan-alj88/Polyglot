@@ -141,6 +141,27 @@ collector.{jobId}.collected
 }
 ```
 
+### Collector Reconciliation Logic (TM-internal)
+
+<!-- @c:glossary#Reconciliation -->
+Collectors are **Trigger Monitor programs** — algorithms that run inside the TM to determine output selection strategy and job lifecycle policy. The QH has no concept of collectors; it only receives `command.kill.*` and `collector.*.collected` signals.
+
+**Core rule:** The TM sends `command.kill.graceful` to a job only when **all** collector claims on that job have been released. Each collector independently decides when to release its claim (based on its own algorithm). The TM tracks the claim count per job and acts only when it reaches zero.
+
+**How the TM processes collectors:**
+
+1. When a `[=]` parallel scope is entered, the TM registers all collector programs referencing that scope's job variables
+2. When `runner.completed` arrives for a sub-job, the TM evaluates every active collector referencing that job:
+   - `*All`: marks this job's output as received; when all referenced jobs report, emits `collector.*.collected`
+   - `*First` / `*Nth`: checks if the Nth result has arrived; if so, emits `collector.*.collected` and **releases its claim** on remaining jobs
+   - `*Into.*` / `*Agg.*`: accumulates the per-item result; emits `collector.*.collected` when the expand scope completes
+3. After evaluating collectors, the TM checks each remaining in-flight job: if **zero** collectors still reference it, the TM emits `command.kill.graceful` to the QH
+4. If all collectors referencing a job still need it, no kill signal is sent — the job continues
+
+**Compound collector example:** `*First` + `*All` on the same variables. When the first job completes, `*First` is satisfied and releases its claims on the remaining jobs. But `*All` still holds claims on them. The TM sees non-zero claim count → no kill signal. Only when `*All` is also satisfied (all jobs complete) are all claims released.
+
+The Polyglot Code gives the TM foreknowledge of all collector rules at compile time. The compiler validates that collector usage is consistent (e.g., all parallel outputs are collected per PGE03002). The TM implements these rules at runtime exactly as described.
+
 ## Trigger Monitor-exclusive signals
 
 Only `trigger.subjob` is Trigger Monitor-exclusive (Runner → TM only):
