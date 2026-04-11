@@ -52,6 +52,7 @@ RawString (compiler intrinsic) [##Leaf]
 | Collections | [collections.md](collections.md) | #Map, #Array, #Dataframe, #Set, #Serial |
 | Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #KillPropagation, #ResourceTag, #FileAccess, #VarState, #FieldKind, #FieldsDescriptor, #ActiveKind |
 | Structs | [structs.md](structs.md) | #path, #Queue |
+| Text & Merge | [TextDiff.md](TextDiff.md), [DiffStats.md](DiffStats.md), [MergeConflict.md](MergeConflict.md), [MergeResult.md](MergeResult.md) | #TextDiff, #TextDiffs, #DiffStats, #MergeConflict, #MergeResult |
 | Schema types | [Bound.md](Bound.md) | #Bound |
 | Runtime | [rt.md](rt.md) | #Code, #PyEnv, #RsEnv |
 

@@ -218,6 +218,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE10005 | Invalid Permission Block Marker |
 | PGE10006 | Duplicate Permission |
 | PGE10007 | Chain Step Label Overflow |
+| PGE10008 | Parallel Write Permission Exclusion |
 
 ### 11 — Schema Properties
 

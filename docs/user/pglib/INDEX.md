@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-30
+updated: 2026-04-11
 status: complete
 ---
 
@@ -36,18 +36,19 @@ All pglib items live on the `%` metadata tree (see [[data-is-trees#How Concepts 
 | `-RT` | [pipelines/RT.md](pipelines/RT.md) | Runtime execution (Function, Script, CLI, Bind — inline and file modes) | Stable | `_System.process` |
 | `-DT` | [pipelines/DT/INDEX.md](pipelines/DT/INDEX.md) | DateTime construction, conversion, arithmetic, comparison, extraction, formatting | Stable | `_IO.Read` (Now) / None |
 | `-W` | [pipelines/W.md](pipelines/W.md) | Wrappers (Polyglot, DB, File, HTTP, SSH, Auth, Log, Queue, Cache, RT) | Stable | Mixed |
+| `-Text` | [pipelines/Text/Diff.md](pipelines/Text/Diff.md) | Text comparison (line-level diff) | Draft | None |
 
 ## Expander Operators (=)
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
-| `=ForEach` | [expanders/ForEach/](expanders/ForEach/) | Expand operators (iterate arrays, maps, serials, levels) | Stable |
+| `=ForEach` | [expanders/ForEach/](expanders/ForEach/) | Expand operators (iterate arrays, maps, serials, levels, text, CSV) | Stable |
 
 ## Collector Operators (*)
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
-| `*Into` | [collectors/Into/](collectors/Into/) | Collect into collection (array, map, serial, level) | Stable |
+| `*Into` | [collectors/Into/](collectors/Into/) | Collect into collection (array, map, serial, level, text, CSV) | Stable |
 | `*Agg` | [collectors/Agg.md](collectors/Agg.md) | Reduce to single value (sum, count, average, max, min, concatenate) | Stable |
 | `*All` / `*First` / `*Nth` | [collectors/Sync.md](collectors/Sync.md) | Collect-all and race collectors | Stable |
 
@@ -63,9 +64,11 @@ All pglib items live on the `%` metadata tree (see [[data-is-trees#How Concepts 
 | `#path`, `#Queue` | [types/structs.md](types/structs.md) | Struct types | Stable |
 | `#DateTime` (`#dt`) | [types/datetime.md](types/datetime.md) | Date, time, calendar, timezone, duration types | Stable |
 | `#Code`, `#PyEnv`, `#RsEnv` | [types/rt.md](types/rt.md) | Runtime types | Stable |
+| `#TextDiff`, `#DiffOp`, `#DiffStats`, `#MergeConflict`, `#MergeResult`, `#MergeStrategy`, `#CollectOrder` | [types/](types/) | Text diff and merge types | Draft |
 
 ## Error Namespaces (!)
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
 | `!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT` | [errors/errors.md](errors/errors.md) | Standard error trees | Stable |
+| `!Storage`, `!Text`, `!CSV` | [errors/errors.md](errors/errors.md) | Text/CSV operation errors | Draft |

@@ -45,6 +45,16 @@ Permission enums used in `{_}` permission objects. See [[concepts/permissions|Pe
 | `#AuditLevel` | Audit logging level | [[AuditLevel]] |
 | `#AlertLevel` | Alert trigger level | [[AlertLevel]] |
 
+## Text & Merge Enums
+
+Enums used by text/CSV collection and merge operators.
+
+| Type | Description | File |
+|------|-------------|------|
+| `#DiffOp` | Text diff operation type (Add, Delete, Replace) | [[DiffOp]] |
+| `#MergeStrategy` | Conflict resolution for k-way merge collectors | [[MergeStrategy]] |
+| `#CollectOrder` | Fragment ordering in append-style collectors | [[CollectOrder]] |
+
 ## Related
 
 - [[boolean]] -- #Boolean enum type

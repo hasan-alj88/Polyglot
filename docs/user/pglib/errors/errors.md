@@ -106,11 +106,36 @@ No `[@]` import needed. pglib errors are defined as `{!}` blocks by the runtime:
       [.] .Missing#Error
       [.] .VersionConflict#Error
       [.] .InstallFailed#Error
+
+{!} !Storage
+   [.] .Space#Error
+
+{!} !Text
+   [:] :Diff
+      [.] .EmptyInput#Error
+   [:] :Lines
+      [.] .Empty#Error
+   [:] :Append
+      [.] .EmptyResult#Error
+   [:] :Merge
+      [.] .InvalidLineNumber#Error
+      [.] .EmptyBase#Error
+
+{!} !CSV
+   [:] :Parse
+      [.] .MalformedRow#Error
+      [.] .Empty#Error
+      [.] .InvalidDelimiter#Error
+   [:] :Collect
+      [.] .SchemaMismatch#Error
+      [.] .EmptyResult#Error
+   [:] :Merge
+      [.] .HeaderConflict#Error
 ```
 
 ### `!Error` — User-Extensible Namespace
 
-`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`, `!Env`) have Polyglot-defined fixed leaves.
+`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`, `!Env`, `!Storage`, `!Text`, `!CSV`) have Polyglot-defined fixed leaves.
 
 ### `!Env` vs `!RT` — Phase Distinction
 
@@ -223,6 +248,37 @@ Each pglib pipeline declares the errors it can raise via `[=] !ErrorName` (see [
    [=] !RT.CompileError
    [=] !RT.RuntimeError
    [=] !RT.EnvironmentError
+
+=Text.Diff
+   [=] !Text.Diff.EmptyInput
+
+=ForEach.Text.Lines
+   [=] !Text.Lines.Empty
+
+*Into.Text.Append
+   [=] !Storage.Space
+   [=] !Text.Append.EmptyResult
+
+*Into.Text.Merge
+   [=] !Storage.Space
+   [=] !Text.Merge.InvalidLineNumber
+   [=] !Text.Merge.EmptyBase
+
+=ForEach.CSV.Rows
+   [=] !CSV.Parse.MalformedRow
+   [=] !CSV.Parse.Empty
+   [=] !CSV.Parse.InvalidDelimiter
+
+*Into.CSV.Rows
+   [=] !Storage.Space
+   [=] !CSV.Collect.SchemaMismatch
+   [=] !CSV.Collect.EmptyResult
+
+*Into.CSV.Merge
+   [=] !Storage.Space
+   [=] !Text.Merge.InvalidLineNumber
+   [=] !Text.Merge.EmptyBase
+   [=] !CSV.Merge.HeaderConflict
 
 -W.Env
    [=] !Env.NotFound

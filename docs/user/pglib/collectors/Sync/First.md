@@ -30,6 +30,27 @@ Sugar for `*Nth` with n=1. Takes the first arriving value; all other inputs are 
 |------|------|-------------|
 | `>> $var` | same as inputs | First value to arrive |
 
+## Job Reconciliation
+
+Algorithm for THIS job when it completes:
+
+```mermaid
+flowchart TD
+    JC["Job completed"]
+    IS_FIRST{"Finished first?"}
+    COLLECT["Collect output into >> $winner"]
+    RELEASE["Release *First claim on this job"]
+
+    JC --> IS_FIRST
+    IS_FIRST -- yes --> COLLECT --> RELEASE
+    IS_FIRST -- no --> RELEASE
+```
+
+- **Finished first:** output collected, claim released
+- **Not first:** claim released, output unused
+
+The TM sends a kill signal to a job only when all collector claims on it have been released. See [[concepts/collections/collect#Compound Collector Strategies]].
+
 ## Errors
 
 None.

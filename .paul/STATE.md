@@ -103,14 +103,22 @@ Progress:
 
 ## Active Issue
 
-Phase: 16 — Triage & Decision
+Issue: #278 — Add *Into.Text.* collector operators and *Agg.Concatenate separator
+Branch: design/issue-278-into-text-collector-operators-agg-concat
+Labels: docs, design, pglib
+Started: 2026-04-11
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/278
+Plan: All 3 plans complete
+Plans total: 3/3 (278-01 DONE, 278-02 DONE, 278-03 DONE)
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [Merged to main — milestone complete]
+  ✓        ✓        ✓        ○     [Plan 278-01 loop closed]
+  ✓        ✓        ✓        ○     [Plan 278-02 loop closed]
+  ✓        ✓        ✓        ○     [Plan 278-03 loop closed — issue ready for merge]
 ```
 
 ## Accumulated Context
@@ -277,13 +285,15 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-11
-Stopped at: Handle Archive Docs milestone complete
-Next action: /paul:merge to merge branch, then /paul:complete-milestone
-Resume file: .paul/ROADMAP.md
+Stopped at: Issue #278 all 3 plans complete — ready for merge
+Next action: /paul:merge to merge branch to main
+Resume file: .paul/phases/278-into-text-csv-collectors/278-03-SUMMARY.md
 Resume context:
-- Branch feature/15-cross-reference-enrichment needs merge to main
-- Milestone has 4 phases (13-16) all complete
-- Archive reduced from 52 to 3 files
+- Branch: design/issue-278-into-text-collector-operators-agg-concat
+- Plan 278-01: 7 types, PPTD overflow, Concatenate separator, 12 errors
+- Plan 278-02: =Text.Diff, =ForEach.Text.Lines, *Into.Text.Append, *Into.Text.Merge
+- Plan 278-03: =ForEach.CSV.Rows, *Into.CSV.Rows, *Into.CSV.Merge, 4 INDEX updates
+- Total: 19 new/modified files across 3 plans
 
 ---
 *STATE.md — Updated after every significant action*
