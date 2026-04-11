@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/audit/README.md
 ---
+<!-- @d:audit/README.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Polyglot Quick Language Reference
 
@@ -16,6 +18,8 @@ replaced_by: docs/audit/README.md
 
 ## 1. CRITICAL RULES
 
+<!-- @u:user/syntax/blocks#block-markers -->
+<!-- @c:user/concepts/pipelines#structure -->
 ### Absolute Requirements
 
 1. **EVERY valid line MUST start with a block element** `[x]`

@@ -249,7 +249,7 @@ Theme: Establish Claude's ground-truth reference hub (docs/audit/) for structure
 
 **Handle Archive Docs**
 Status: In Progress
-Phases: 2 of 4 complete
+Phases: 3 of 4 complete
 
 Theme: Before permanent deletion, enrich archived docs with cross-references and frontmatter to surface any reusable content.
 
@@ -259,7 +259,7 @@ Theme: Before permanent deletion, enrich archived docs with cross-references and
 |-------|------|-------|--------|-----------|
 | 13 | @d: Deprecated Cross-Reference | 1 | Complete | 2026-04-10 |
 | 14 | Archive Frontmatter & Deprecation Marking | 1 | Complete | 2026-04-11 |
-| 15 | Cross-Reference Enrichment | TBD | Not started | - |
+| 15 | Cross-Reference Enrichment | 2 | Complete | 2026-04-11 |
 | 16 | Triage & Decision | TBD | Not started | - |
 
 ### Phase 13: @d: Deprecated Cross-Reference
@@ -325,4 +325,4 @@ Theme: Before permanent deletion, enrich archived docs with cross-references and
 
 ---
 *Roadmap created: 2026-02-27*
-*Last updated: 2026-04-10 — Phase 13 complete*
+*Last updated: 2026-04-11 — Phase 15 complete*

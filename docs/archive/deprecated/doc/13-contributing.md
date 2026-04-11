@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: none
 ---
+<!-- no current replacement -->
+> **Deprecated:** No current replacement exists for this content.
 
 # Pipeline Execution Model
 
@@ -24,6 +26,7 @@ replaced_by: none
 Polyglot pipelines execute through a well-defined sequence of phases, from trigger activation to final output. Understanding this execution model is crucial for writing efficient and correct pipelines.
 
 **Key Principles:**
+<!-- @c:reference/glossary#pipeline -->
 - **Sequential by default**—Operations run in order unless explicitly forked
 - **Explicit dependencies**-Data flow determines execution order
 - **Resource-aware**-Execution respects resource limits
@@ -292,6 +295,7 @@ Both `ProcessA` and `ProcessB` wait for `DataValidation` to complete before star
 
 ### Kill Condition Monitoring
 
+<!-- @c:reference/glossary#Queue Manager -->
 During execution, the Kill Condition Manager continuously monitors:
 
 ```polyglot

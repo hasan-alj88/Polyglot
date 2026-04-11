@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/technical/ebnf/INDEX.md
 ---
+<!-- @d:technical/ebnf/INDEX -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Polyglot Grammar Rules (BNF)
 
@@ -16,6 +18,7 @@ replaced_by: docs/technical/ebnf/INDEX.md
 
 ## Core Rules
 
+<!-- @u:user/syntax/blocks#block-markers -->
 ### Line Structure
 - All lines MUST begin with block element which is one square bracketed character
 - Block elements can only be at the start of new line and not allowed mid-line
@@ -189,6 +192,7 @@ Error names must start with `!`
 
 ---
 
+<!-- @u:user/concepts/pipelines#structure -->
 ## Pipeline Definition Block
 
 ### Structure
@@ -312,6 +316,7 @@ Used for operations within expanded contexts (parallel blocks, conditionals, etc
 
 ---
 
+<!-- @u:technical/ebnf/INDEX -->
 ## BNF Grammar
 
 ### File Structure

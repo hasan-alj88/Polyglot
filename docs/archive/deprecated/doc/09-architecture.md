@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/technical/brainstorming/marker-declarations.md
 ---
+<!-- @d:docs/technical/brainstorming/marker-declarations.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # System Architecture
 
@@ -24,6 +26,7 @@ replaced_by: docs/technical/brainstorming/marker-declarations.md
 Polyglot is built as a microservice architecture with three main components that work together to provide event-driven, resource-aware pipeline orchestration.
 
 **Design Principles:**
+<!-- @c:vision#Core Philosophy -->
 - **Separation of Concerns**—Each service has a single, well-defined responsibility
 - **Loose Coupling**—Services communicate via well-defined interfaces
 - **Independent Scaling**—Each service can scale independently based on the load
@@ -56,6 +59,7 @@ Polyglot is built as a microservice architecture with three main components that
 
 ### 1. Trigger Monitor
 
+<!-- @c:reference/glossary#Trigger Monitor -->
 **Responsibility:** Detect conditions that should activate pipelines
 
 **Sub-components:**
@@ -121,6 +125,7 @@ Trigger Monitor
 
 ### 2. Queue Manager
 
+<!-- @c:reference/glossary#Queue Manager -->
 **Responsibility:** Manage pipeline queueing, prioritization, and resource-based scheduling
 
 **Sub-components:**

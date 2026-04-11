@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/concepts/pipelines.md
 ---
+<!-- @d:docs/user/concepts/pipelines.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Queue Control (|Q.*)
 
@@ -14,6 +16,7 @@ replaced_by: docs/user/concepts/pipelines.md
 
 ## Overview
 
+<!-- @c:reference/glossary#Queue Manager -->
 Queue control operations provide precision automation for managing pipeline instance lifecycle. The `|Q.*` namespace offers fine-grained control over pipeline execution: pausing, resuming, terminating, prioritizing, and monitoring instances across system queues.
 
 ### Philosophy
@@ -25,6 +28,7 @@ Queue control operations provide precision automation for managing pipeline inst
 
 ## System Queues
 
+<!-- @c:reference/glossary#pipeline -->
 Polyglot manages pipeline instances across three system queues:
 
 ### #Queues.Pending
@@ -67,6 +71,7 @@ Custom queues enable:
 
 ## Block Marker: [Q]
 
+<!-- @u:user/syntax/blocks#block-markers -->
 The `[Q]` block marker establishes a queue control context for operations.
 
 ```polyglot

@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/concepts/collections.md
 ---
+<!-- @d:docs/user/concepts/collections.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Join Operations (|Y.*)
 
@@ -14,6 +16,7 @@ replaced_by: docs/user/concepts/collections.md
 
 ## Overview
 
+<!-- @u:user/concepts/collections#expand-collect -->
 Join operations provide synchronization and result aggregation for parallel execution. The `|Y.*` namespace works with the `[Y]` block marker to collect results from parallel `[p]` blocks, enabling safe concurrent programming patterns.
 
 ### Philosophy
@@ -26,6 +29,7 @@ Join operations provide synchronization and result aggregation for parallel exec
 
 ## Block Marker: [Y]
 
+<!-- @u:user/syntax/blocks#block-markers -->
 The `[Y]` block marker establishes a join/synchronization context for collecting parallel results.
 
 ```polyglot
@@ -50,6 +54,7 @@ See [Block Markers](../language/06-block-markers.md) and [Parallel Execution](..
 
 ### |Y.Join
 
+<!-- @c:reference/glossary#pipeline -->
 Basic synchronization operation that waits for all parallel blocks to complete and collects their results.
 
 **Signature:**

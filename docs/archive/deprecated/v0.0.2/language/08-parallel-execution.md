@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/concepts/pipelines.md
 ---
+<!-- @d:user/concepts/pipelines -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Parallel Execution
 
@@ -16,6 +18,7 @@ replaced_by: docs/user/concepts/pipelines.md
 
 ## Overview
 
+<!-- @u:user/concepts/pipelines#structure -->
 Polyglot's parallel execution system allows multiple operations to run concurrently while maintaining type safety and preventing race conditions. Parallel blocks use copy semantics to ensure thread-safe execution.
 
 **Key Features:**
@@ -59,6 +62,7 @@ Polyglot's parallel execution system allows multiple operations to run concurren
 
 ### Mini-Pipeline Model
 
+<!-- @c:reference/glossary#pipeline -->
 Each `[p]` block is a **mini-pipeline** - a lightweight pipeline that:
 - Has its own scope
 - Copies data IN from outer scope
@@ -634,6 +638,7 @@ Parallel blocks can contain other parallel blocks:
 
 ### Errors in Parallel Blocks
 
+<!-- @u:user/concepts/errors#error-handler -->
 Each parallel block can handle errors independently:
 
 ```polyglot

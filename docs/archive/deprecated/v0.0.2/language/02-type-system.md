@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/syntax/types.md
 ---
+<!-- @d:user/syntax/types -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Type System
 
@@ -16,6 +18,7 @@ replaced_by: docs/user/syntax/types.md
 
 ## Overview
 
+<!-- @c:user/syntax/types#type-system -->
 Polyglot features a strong, static type system with compile-time type checking. The type system is designed to prevent common errors while providing flexibility for complex workflows.
 
 **Key Principles:**
@@ -447,6 +450,7 @@ Path identifiers enable cross-platform paths using the reserved enumeration `#Pa
 
 ## Collection Types
 
+<!-- @u:user/concepts/collections#expand-collect -->
 ### Array Type: `pg\array{T}`
 
 **Description:** Ordered collection of elements of the same type
@@ -716,6 +720,7 @@ Use mutable types when:
 
 ## Enumeration Types
 
+<!-- @c:user/concepts/data-is-trees -->
 ### Enumeration Type: `#EnumName`
 
 **Description:** Immutable data structure with fixed schema defined at compile-time

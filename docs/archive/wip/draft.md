@@ -5,6 +5,8 @@ source_branch: main
 note: Working draft for Plan 94-01 macro-for-generics redesign — content now merged into spec
 replaced_by: docs/user/syntax/types.md
 ---
+<!-- @d:docs/user/syntax/types.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Plan 94-01: Ground Truths + Macro-for-Generics Redesign
 

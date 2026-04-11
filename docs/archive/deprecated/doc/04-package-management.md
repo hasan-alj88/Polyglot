@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/syntax/packages.md
 ---
+<!-- @d:docs/user/syntax/packages.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Package Management and Namespaces
 
@@ -33,6 +35,7 @@ Polyglot uses a registry-based package management system with descriptive naming
 
 ## Namespace Declaration
 
+<!-- @u:user/syntax/blocks#block-markers -->
 Every Polyglot file begins with a namespace declaration:
 
 ```polyglot
@@ -280,6 +283,7 @@ Other files import the base namespace:
 
 ## Standard Library Implicit Import
 
+<!-- @c:reference/glossary#pglib -->
 The Polyglot standard library is **always automatically imported**:
 
 ```polyglot

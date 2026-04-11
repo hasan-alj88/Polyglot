@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/pglib/types/DT/INDEX.md
 ---
+<!-- @d:user/pglib/types/DT/INDEX -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # DateTime System
 
@@ -47,6 +49,7 @@ Polyglot's DateTime system provides comprehensive date and time handling with su
 
 ### The `pg\dt` Type
 
+<!-- @c:user/syntax/types#type-system -->
 **Type:** `pg\dt`
 
 **Description:** DateTime type with calendar and timezone support
@@ -342,6 +345,7 @@ Supported time units for relative expressions:
 
 ### Recurring Time Expressions
 
+<!-- @c:reference/glossary#Trigger Monitor -->
 Use `DT.Every` for recurring patterns (commonly used with triggers).
 
 ---
@@ -516,6 +520,7 @@ Polyglot uses format strings for custom datetime formatting:
 
 ### DateTime Literals are Syntax Sugar
 
+<!-- @c:reference/glossary#pglib -->
 **Important:** `DT"..."` literals are syntax sugar that compile to underlying pipeline operations.
 
 ---

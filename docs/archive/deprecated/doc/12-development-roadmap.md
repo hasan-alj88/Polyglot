@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: .paul/ROADMAP.md
 ---
+<!-- @d:.paul/ROADMAP.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Development Roadmap
 
@@ -106,6 +108,7 @@ replaced_by: .paul/ROADMAP.md
 
 ## Phase 2: Trigger Monitor (Months 3-6)
 
+<!-- @c:reference/glossary#Trigger Monitor -->
 ### Core Triggers
 
 - [ ] File system watchers

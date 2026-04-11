@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/concepts/variable-lifecycle.md
 ---
+<!-- @d:user/concepts/variable-lifecycle -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Pipeline Lifecycle
 
@@ -16,6 +18,7 @@ replaced_by: docs/user/concepts/variable-lifecycle.md
 
 ## Overview
 
+<!-- @c:reference/glossary#pipeline -->
 Understanding the pipeline lifecycle is essential for working with Polyglot. Pipelines are defined once but can be instantiated many times, similar to classes and objects in object-oriented programming.
 
 **Key Concepts:**
@@ -260,6 +263,7 @@ Running → Exited (completion or |Q.Kill)
 
 ## Queue System
 
+<!-- @c:reference/glossary#Queue Manager -->
 ### Three System Queues
 
 Polyglot has three built-in system queues:
@@ -446,6 +450,7 @@ Created → Queued → Running (executing) → Paused → Resumed (executing) �
 
 ---
 
+<!-- @c:reference/glossary#Trigger Monitor -->
 ### Trigger-Based Creation
 
 ```polyglot

@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/pglib/pipelines/T/INDEX.md
 ---
+<!-- @d:docs/user/pglib/pipelines/T/INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Triggers Catalog (|T.*)
 
@@ -14,6 +16,7 @@ replaced_by: docs/user/pglib/pipelines/T/INDEX.md
 
 ## Overview
 
+<!-- @c:reference/glossary#Trigger Monitor -->
 The `|T.*` namespace provides event-driven and conditional execution utilities that work with the `[t]` trigger block marker. Triggers enable reactive programming patterns, event handling, and sophisticated conditional logic beyond simple boolean conditions.
 
 ### Philosophy
@@ -32,6 +35,7 @@ The `|T.*` namespace provides event-driven and conditional execution utilities t
 
 ## Trigger Block Marker: [t]
 
+<!-- @u:user/syntax/blocks#block-markers -->
 The `[t]` block marker establishes conditional execution contexts. Code within or after a `[t]` block executes only when the condition is satisfied.
 
 **Basic Usage:**
@@ -244,6 +248,7 @@ See [Block Markers](../language/06-block-markers.md) for complete `[t]` document
 
 ### |T.Pipeline.*
 
+<!-- @c:reference/glossary#pipeline -->
 **Purpose:** Pipeline instance state triggers
 
 **Intended Scope:**

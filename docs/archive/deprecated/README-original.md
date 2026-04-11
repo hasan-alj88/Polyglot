@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/SPEC-INDEX.md
 ---
+<!-- @d:docs/user/SPEC-INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Polyglot Automation Language
 
@@ -14,6 +16,7 @@ replaced_by: docs/user/SPEC-INDEX.md
 
 ## Overview
 
+<!-- @c:vision#Core Philosophy -->
 Polyglot is an automation language designed to seamlessly integrate code from multiple programming languages into single coherent pipelines. Its core philosophy is pragmatic: **leverage existing legacy code** instead of reinventing the wheel.
 
 **Note:** This language is currently in the brainstorming phase. Nothing concrete has been built yet.
@@ -44,6 +47,7 @@ Polyglot is an automation language designed to seamlessly integrate code from mu
 Polyglot consists of three main microservices:
 
 ### 1. Trigger Monitor
+<!-- @c:reference/glossary#Trigger Monitor -->
 Watches for conditions that activate pipelines:
 - File system changes
 - Scheduled times
@@ -53,6 +57,7 @@ Watches for conditions that activate pipelines:
 - Resource thresholds
 
 ### 2. Queue Manager
+<!-- @c:reference/glossary#Queue Manager -->
 Handles pipeline queueing and resource management:
 - Priority-based scheduling
 - Resource admission control
@@ -167,6 +172,7 @@ Call functions seamlessly across Python, Rust, JavaScript, C++, and more with au
 ```
 
 ### Sophisticated Error Handling
+<!-- @u:user/concepts/errors#error-handler -->
 ```polyglot
 [r] |RiskyOperation
 [~] << input >> output

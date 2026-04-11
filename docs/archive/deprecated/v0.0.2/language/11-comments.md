@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/syntax/comments.md
 ---
+<!-- @d:user/syntax/comments -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Comments
 
@@ -16,6 +18,7 @@ replaced_by: docs/user/syntax/comments.md
 
 ## Overview
 
+<!-- @c:reference/glossary#pipeline -->
 Polyglot supports two types of comments: single-line and multi-line. Comments use forward slash `/` syntax, which is distinct from the backslash `\` used in other parts of the language.
 
 **Key Points:**
@@ -346,6 +349,7 @@ Use C-style block comments `/* */`:
 
 ## Documentation Comments
 
+<!-- @u:user/syntax/blocks#block-markers -->
 ### Pipeline Documentation
 
 ```polyglot
@@ -403,6 +407,7 @@ Use C-style block comments `/* */`:
 
 ---
 
+<!-- @u:user/concepts/errors#error-handler -->
 ### Error Documentation
 
 ```polyglot

@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/pglib/types/INDEX.md
 ---
+<!-- @d:docs/user/pglib/types/INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Reserved Enumerations
 
@@ -16,6 +18,7 @@ replaced_by: docs/user/pglib/types/INDEX.md
 
 ## Overview
 
+<!-- @c:reference/glossary#pglib -->
 Reserved enumerations are system-provided enumerations that replace keywords and provide type-safe values for common language constructs. They use the `#` prefix and are part of Polyglot's zero-keyword philosophy.
 
 **Key Properties:**
@@ -31,6 +34,7 @@ Reserved enumerations are system-provided enumerations that replace keywords and
 
 ### `#Boolean`
 
+<!-- @c:user/concepts/data-is-trees -->
 **Status:** ✓ COMPLETE
 **Extendable:** NO (System-provided, closed)
 **Purpose:** Polyglot's fundamental boolean type. Replaces `True` and `False` keywords.
@@ -160,6 +164,7 @@ The following reserved enumerations are planned but deferred to a later document
 
 ### Why Enumerations Instead of Keywords?
 
+<!-- @u:user/pglib/INDEX -->
 1. **Zero-Keyword Philosophy:** Maintains Polyglot's goal of having no keywords
 2. **Exhaustive Pattern Matching:** Enables compile-time verification of all cases
 3. **Type Safety:** Enumerations are types, providing stronger type checking

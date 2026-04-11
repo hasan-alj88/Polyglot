@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/concepts/collections.md
 ---
+<!-- @d:user/concepts/collections -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Expansion Operator
 
@@ -16,6 +18,7 @@ replaced_by: docs/user/concepts/collections.md
 
 ## Overview
 
+<!-- @u:user/concepts/collections#expand-collect -->
 The expansion operator `[~]` controls nesting and scope in Polyglot. It indicates that an operation runs WITHIN a parent context rather than at the same level. Understanding implicit vs explicit expansion is crucial for writing correct Polyglot code.
 
 **Key Concepts:**
@@ -47,6 +50,7 @@ The expansion operator `[~]` controls nesting and scope in Polyglot. It indicate
 
 ### Parent-Child Relationships
 
+<!-- @u:user/syntax/blocks#block-markers -->
 All block elements have hierarchical relationships where certain elements are automatically children of others.
 
 ---
@@ -325,6 +329,7 @@ Sequential operations (`[r]`) have **direct access** to outer scope:
 
 ### Scope in Parallel Operations
 
+<!-- @u:user/concepts/pipelines#structure -->
 Parallel operations (`[p]`) use **copy semantics**:
 
 ```polyglot

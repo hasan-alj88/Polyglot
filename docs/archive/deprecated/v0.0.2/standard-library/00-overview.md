@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/pglib/INDEX.md
 ---
+<!-- @d:docs/user/pglib/INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Standard Library Overview
 
@@ -16,9 +18,11 @@ replaced_by: docs/user/pglib/INDEX.md
 
 ## Overview
 
+<!-- @c:reference/glossary#pglib -->
 The Polyglot standard library provides built-in pipelines, operations, and enumerations that form the foundation of Polyglot applications. The library is organized into namespaces, each serving a specific purpose.
 
 **Key Namespaces:**
+<!-- @u:user/pglib/INDEX -->
 - `|W.*` - Runtime wrappers (Python, Node, Rust, etc.)
 - `|Q.*` - Queue control operations
 - `|Y.*` - Join operations
@@ -53,6 +57,7 @@ The Polyglot standard library provides built-in pipelines, operations, and enume
 
 ### Naming Convention
 
+<!-- @c:reference/glossary#pipeline -->
 All standard library pipelines follow a hierarchical dot notation:
 
 ```
@@ -521,6 +526,7 @@ Migration:
 
 ## Usage Guidelines
 
+<!-- @u:user/syntax/blocks#block-markers -->
 ### Calling Standard Library Pipelines
 
 ```polyglot

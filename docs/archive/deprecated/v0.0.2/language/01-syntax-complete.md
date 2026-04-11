@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/syntax/blocks.md
 ---
+<!-- @d:user/syntax/blocks -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Complete Syntax Reference
 
@@ -41,6 +43,7 @@ This document provides a complete reference for all Polyglot syntax elements. It
 
 ### Pipelines are the Foundation
 
+<!-- @c:reference/glossary#pipeline -->
 **Pipeline** - The fundamental unit of execution in Polyglot. Like a function or blackbox with defined inputs and outputs.
 
 ```polyglot
@@ -71,6 +74,7 @@ All Polyglot pipelines are inherently asynchronous. They execute in response to 
 
 ## Block Markers
 
+<!-- @u:user/syntax/blocks#block-markers -->
 Block markers are special syntax elements enclosed in square brackets `[ ]` that define the structure and behavior of Polyglot code.
 
 ### Case Sensitivity
@@ -360,6 +364,7 @@ Purpose 2: Field definition in enumerations/errors
 
 ## Operators
 
+<!-- @u:user/syntax/operators#assignment -->
 Operators are special symbols with specific semantic meanings in Polyglot.
 
 ### Pipeline Operator `|`
@@ -1033,6 +1038,7 @@ Polyglot minimizes reserved keywords. Only 5 exist:
 
 ---
 
+<!-- @c:reference/glossary#pglib -->
 ### Standard Library Namespaces
 
 | Namespace | Purpose | Status |

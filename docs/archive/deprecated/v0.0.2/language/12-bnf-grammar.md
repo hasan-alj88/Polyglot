@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/technical/ebnf/INDEX.md
 ---
+<!-- @d:technical/ebnf/INDEX -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # BNF Grammar Specification
 
@@ -16,6 +18,7 @@ replaced_by: docs/technical/ebnf/INDEX.md
 
 ## Overview
 
+<!-- @u:technical/ebnf/INDEX -->
 This document provides **two formal BNF grammars** for the Polyglot language v0.0.2, corresponding to the two compilation phases:
 
 1. **Surface Syntax Grammar (Phase 1)** - Compact form users write
@@ -56,6 +59,7 @@ User Source Code
 5. [Validation Constraints](#validation-constraints)
 6. [Lexical Elements](#lexical-elements)
 7. [Type System](#type-system)
+<!-- @c:user/syntax/types#type-system -->
 8. [Operators](#operators)
 9. [Literals](#literals)
 10. [Complete Grammar Reference](#complete-grammar-reference)
@@ -147,6 +151,7 @@ This grammar uses Extended Backus-Naur Form (EBNF) notation:
 
 ---
 
+<!-- @c:reference/glossary#pipeline -->
 ## Pipeline Definition (Surface)
 
 ```bnf

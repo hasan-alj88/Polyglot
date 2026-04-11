@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-03-24)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Archive doc enrichment with @d: deprecated cross-references
+**Current focus:** Archive triage — decide keep/extract/delete for enriched archive docs
 
 ## Current Position
 
 Milestone: Handle Archive Docs
-Phase: 15 of 16 (Cross-Reference Enrichment)
+Phase: 16 of 16 (Triage & Decision)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-04-11 — Phase 14 complete, transitioned to Phase 15
+Last activity: 2026-04-11 — Phase 15 complete, transitioned to Phase 16
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -103,7 +103,7 @@ Progress:
 
 ## Active Issue
 
-Phase: 15 — Cross-Reference Enrichment
+Phase: 16 — Triage & Decision
 
 ## Loop Position
 
@@ -255,6 +255,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #275 — Collection redesign | 2026-04-10 | Squash-merged to main; 107 files, ##Record replaces #Map, %##Fields replaces %##Key, 6 schemas retired, composition syntax updated |
 | Added @d: deprecated cross-reference type | 2026-04-10 | Informational marker (not mandatory import); extends @c:/@u: system; 4 audit files updated |
 | Added replaced_by: to 52 archive files | 2026-04-11 | All archived docs now point to current-spec replacements; 3 marked replaced_by: none |
+| Cross-reference enrichment complete | 2026-04-11 | 52 files, 157 cross-refs (@d:/@c:/@u:); audit files @d: only; language/stdlib files got @c:/@u: |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -274,13 +275,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-11
-Stopped at: Phase 14 complete, ready to plan Phase 15
-Next action: /paul:plan for Phase 15
-Resume file: .paul/HANDOFF-2026-04-11.md
+Stopped at: Phase 15 complete, ready to plan Phase 16
+Next action: /paul:plan for Phase 16
+Resume file: .paul/ROADMAP.md
 Resume context:
-- Phase 13 defined @d: prefix; Phase 14 added replaced_by to 52 archive files
-- Phase 15 is content-heavy: add @c:/@u:/@d: cross-refs to all 52 archived docs
-- Each file's replaced_by field provides the @d: target mapping
+- Phase 15 enriched all 52 archive files with 157 cross-references
+- Phase 16 reviews enriched archives to decide keep/extract/delete
+- This is the final phase of the Handle Archive Docs milestone
 
 ---
 *STATE.md — Updated after every significant action*

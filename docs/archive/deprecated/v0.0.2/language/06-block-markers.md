@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/syntax/blocks.md
 ---
+<!-- @d:user/syntax/blocks -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Block Markers
 
@@ -50,6 +52,7 @@ Block markers are special syntax elements enclosed in square brackets `[ ]` that
 
 ### What are Block Markers?
 
+<!-- @u:user/syntax/blocks#block-markers -->
 **Block markers** are syntax elements that:
 - Define the type of operation or declaration
 - Start every valid line of Polyglot code
@@ -469,6 +472,7 @@ Block markers use square brackets `[ ]` with the marker inside:
 
 ## Trigger & Queue Markers
 
+<!-- @c:reference/glossary#Trigger Monitor -->
 ### `[t]` - Trigger
 
 **Purpose:** Defines when pipeline should activate
@@ -535,6 +539,7 @@ Block markers use square brackets `[ ]` with the marker inside:
 
 ---
 
+<!-- @c:reference/glossary#Queue Manager -->
 ### `[Q]` - Queue Control
 
 **Purpose:** Controls queue operations within pipeline
@@ -757,6 +762,7 @@ Block markers use square brackets `[ ]` with the marker inside:
 
 ## Error Handling Markers
 
+<!-- @u:user/concepts/errors#error-handler -->
 ### `[!]` - Error Catching (Context-Dependent)
 
 **Purpose:** Catches specific error types

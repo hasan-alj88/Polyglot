@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/pglib/pipelines/W/INDEX.md
 ---
+<!-- @d:docs/user/pglib/pipelines/W/INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Runtime Wrappers
 
@@ -16,6 +18,7 @@ replaced_by: docs/user/pglib/pipelines/W/INDEX.md
 
 ## Overview
 
+<!-- @c:reference/glossary#pipeline -->
 Runtime wrappers (`|W.*`) allow Polyglot pipelines to execute code in other programming languages. This enables seamless integration with existing codebases and leveraging language-specific libraries.
 
 **Supported Runtimes:**
@@ -103,6 +106,7 @@ Runtime wrappers (`|W.*`) allow Polyglot pipelines to execute code in other prog
 
 ### Purpose
 
+<!-- @u:user/syntax/blocks#block-markers -->
 The `[w]` block marker establishes a wrapper context for subsequent operations.
 
 ---
@@ -492,6 +496,7 @@ Available Node versions (examples):
 
 ### Using Multiple Runtimes
 
+<!-- @u:user/concepts/pipelines#structure -->
 A single pipeline can use multiple runtime wrappers:
 
 ```polyglot

@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/concepts/errors.md
 ---
+<!-- @d:user/concepts/errors -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Error Handling
 
@@ -16,6 +18,7 @@ replaced_by: docs/user/concepts/errors.md
 
 ## Overview
 
+<!-- @u:user/concepts/errors#error-handler -->
 Polyglot's error handling system uses **`!Error` types** - special enumerations with three reserved fields designed for structured error management. This system provides compile-time type safety while allowing flexible error handling patterns.
 
 **Key Characteristics:**
@@ -58,6 +61,7 @@ Polyglot's error handling system uses **`!Error` types** - special enumerations 
 
 ### Error Marker: `!`
 
+<!-- @u:user/syntax/operators#comparison -->
 The `!` operator marks error types:
 
 ```polyglot
@@ -601,6 +605,7 @@ Extract only the fields you need:
 
 ### Standard Library Errors
 
+<!-- @c:reference/glossary#pglib -->
 Polyglot provides built-in error types in the `pg` namespace:
 
 ---

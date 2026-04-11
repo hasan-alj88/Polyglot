@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/pglib/INDEX.md
 ---
+<!-- @d:docs/user/pglib/INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Utilities Catalog (|U.*)
 
@@ -14,6 +16,7 @@ replaced_by: docs/user/pglib/INDEX.md
 
 ## Overview
 
+<!-- @c:reference/glossary#pglib -->
 The `|U.*` namespace provides essential utility operations for common programming tasks. This document catalogs the available utility categories and their intended purposes. Detailed APIs will be specified in future documentation versions.
 
 ### Philosophy
@@ -342,6 +345,7 @@ Each utility performs one specific operation.
 
 ### Pattern 2: Composition
 
+<!-- @c:reference/glossary#pipeline -->
 Utilities compose naturally in pipelines.
 
 ```polyglot
@@ -485,6 +489,7 @@ Upcoming documentation versions will provide:
 
 ## Relationship to Packages
 
+<!-- @u:user/pglib/INDEX -->
 Utilities are part of the standard library (`|U.*`), not external packages. Key differences:
 
 **Standard Library Utilities:**

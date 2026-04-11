@@ -5,9 +5,12 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/pglib/INDEX.md
 ---
+<!-- @d:docs/user/pglib/INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Standard Library Reference
 
+<!-- @c:reference/glossary#pglib -->
 [← Back to README](../README.md)
 
 ## Table of Contents
@@ -37,6 +40,7 @@ The standard library uses hierarchical full names with short aliases for common 
 
 ## Trigger Pipelines (`|T.`)
 
+<!-- @c:reference/glossary#Trigger Monitor -->
 ### File System Triggers
 
 ```polyglot
@@ -465,6 +469,7 @@ Format: `|U.Convert.{lang1}.{type1}.To.{lang2}.{type2}`
 
 ## Queue Management (`|Q.`)
 
+<!-- @c:reference/glossary#Queue Manager -->
 ### Queue Configuration
 
 ```polyglot

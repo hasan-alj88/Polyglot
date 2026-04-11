@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/scenarios/INDEX.md
 ---
+<!-- @d:user/scenarios/INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Hello World Examples
 
@@ -17,9 +19,11 @@ The traditional "Hello World" program demonstrates the minimal syntax required t
 
 ### What You'll Learn
 
+<!-- @c:user/concepts/pipelines#structure -->
 - Basic pipeline structure
 - Input and output declarations
 - String literals and types
+<!-- @u:user/syntax/blocks#block-markers -->
 - Block markers and syntax
 - Triggers and conditionals
 - Error handling basics

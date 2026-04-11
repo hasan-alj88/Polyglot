@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/concepts/conditionals.md
 ---
+<!-- @d:docs/user/concepts/conditionals.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Flow Control (Switch Statements)
 
@@ -21,6 +23,7 @@ replaced_by: docs/user/concepts/conditionals.md
 
 ## Overview
 
+<!-- @u:user/syntax/blocks#block-markers -->
 The `[?]` switch element provides conditional branching within pipelines. Unlike traditional if-else statements, Polyglot switches are **non-exclusive** by default—multiple switch branches can execute for the same condition check.
 
 **Two Modes:**
@@ -382,6 +385,7 @@ Use `[x] |Exit` to create mutually exclusive behavior:
 
 ## Standard Library Boolean Utilities
 
+<!-- @c:reference/glossary#pglib -->
 ### Logical Operations
 
 ```polyglot

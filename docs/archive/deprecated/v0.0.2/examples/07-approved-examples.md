@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/scenarios/INDEX.md
 ---
+<!-- @d:user/scenarios/INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Approved Polyglot v0.0.2 Code Examples
 
@@ -17,6 +19,8 @@ replaced_by: docs/user/scenarios/INDEX.md
 This document contains comprehensive Polyglot v0.0.2 code examples that have been validated against the authoritative audit documentation. These examples demonstrate correct syntax, proper error handling, and idiomatic patterns.
 
 All examples follow v0.0.2 specifications:
+<!-- @u:user/syntax/blocks#block-markers -->
+<!-- @c:user/concepts/pipelines#structure -->
 - Error raising with `[r] .error: ! << !ErrorType` and `[o] .error: !`
 - Error catching with `[~][!] !ErrorType`
 - Range notation for comparisons (`.value..`, `...value`, `.value`)

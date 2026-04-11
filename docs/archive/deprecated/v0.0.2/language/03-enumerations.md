@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/syntax/types.md
 ---
+<!-- @d:user/syntax/types -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Enumerations
 
@@ -47,6 +49,7 @@ Enumerations are immutable data structures with fixed schemas defined at compile
 
 ### What is an Enumeration?
 
+<!-- @c:user/syntax/types#type-system -->
 An **enumeration** is an immutable data structure with a fixed set of fields, similar to:
 - Structs in C/Rust
 - Records in functional languages
@@ -81,6 +84,7 @@ An **enumeration** is an immutable data structure with a fixed set of fields, si
 
 ### Basic Definition
 
+<!-- @u:user/syntax/blocks#block-markers -->
 **Block Markers:**
 - `[#]` - Start enumeration definition
 - `[X]` - End enumeration definition
@@ -391,6 +395,7 @@ Package.Context.Name
 
 ### What are Reserved Enumerations?
 
+<!-- @c:reference/glossary#pglib -->
 **Reserved enumerations** are system-defined enumerations provided by Polyglot with fixed schemas.
 
 **Characteristics:**

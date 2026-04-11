@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/syntax/operators.md
 ---
+<!-- @d:user/syntax/operators -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Operators
 
@@ -16,6 +18,7 @@ replaced_by: docs/user/syntax/operators.md
 
 ## Overview
 
+<!-- @u:user/syntax/operators#assignment -->
 Polyglot uses a minimal set of operators with clear, unambiguous semantics. Each operator has a specific purpose and cannot be combined with others.
 
 **Design Philosophy:**
@@ -80,6 +83,7 @@ Polyglot uses a minimal set of operators with clear, unambiguous semantics. Each
 
 ### Purpose
 
+<!-- @c:reference/glossary#pipeline -->
 The `|` operator **calls pipelines** - the fundamental units of execution defined with `[|]...[X]`.
 
 ---
@@ -238,6 +242,7 @@ The `~` operator **unpacks and expands** collections (arrays, sets, enumerations
 
 ### Purpose
 
+<!-- @u:user/syntax/operators#comparison -->
 The `@` operator accesses pipelines and enumerations from **external packages** in the three-tier registry system.
 
 ---

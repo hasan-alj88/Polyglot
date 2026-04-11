@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/syntax/blocks.md
 ---
+<!-- @d:docs/user/syntax/blocks.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Language Syntax Reference
 
@@ -20,6 +22,7 @@ replaced_by: docs/user/syntax/blocks.md
 
 ## Structural Block Elements
 
+<!-- @u:user/syntax/blocks#block-markers -->
 Polyglot supports both **compact** and **verbose** notation. Compact form is recommended for cleaner code.
 
 | Compact                    | Verbose      | Purpose                                     |
@@ -52,6 +55,7 @@ Polyglot supports both **compact** and **verbose** notation. Compact form is rec
 
 ## Binary Operators
 
+<!-- @u:user/syntax/operators#assignment -->
 | Operator | 1st Operand            | 2nd Operand                    | Purpose                            |
 |----------|------------------------|--------------------------------|------------------------------------|
 | `!>`     | Error capture          | ErrorType                      | If equal to error type, run branch |
@@ -63,6 +67,7 @@ Polyglot supports both **compact** and **verbose** notation. Compact form is rec
 
 ## Pipeline Structure
 
+<!-- @u:user/concepts/pipelines#structure -->
 Every pipeline follows this structure:
 
 ```polyglot

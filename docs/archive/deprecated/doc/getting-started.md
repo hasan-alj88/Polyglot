@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/SPEC-INDEX.md
 ---
+<!-- @d:docs/user/SPEC-INDEX.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Getting Started with Polyglot
 
@@ -289,6 +291,7 @@ polyglot stop   # Stop daemon
 
 #### Defining Pipeline
 
+<!-- @u:user/concepts/pipelines#structure -->
 Pipelines are the core unit of work in Polyglot. They have:
 - **Inputs** (`[i]`) - Data the pipeline receives
 - **Setup and cleanup** ({`[\]`,`[/]`} or `[W]`) - Setup preparation and cleanup
@@ -425,6 +428,7 @@ All three tasks run simultaneously, then join before continuing.
 
 ### 5. Error Handling
 
+<!-- @u:user/concepts/errors#error-handler -->
 Handle errors explicitly:
 
 ```polyglot

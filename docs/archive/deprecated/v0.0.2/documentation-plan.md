@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: .paul/ROADMAP.md
 ---
+<!-- @d:.paul/ROADMAP.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Polyglot v0.0.2 Documentation Plan & Progress Tracker
 

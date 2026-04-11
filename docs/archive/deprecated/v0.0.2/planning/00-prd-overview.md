@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: .paul/PROJECT.md
 ---
+<!-- @d:.paul/PROJECT.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Polyglot Product Requirements Document
 

@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/technical/brainstorming/marker-declarations.md
 ---
+<!-- @d:docs/technical/brainstorming/marker-declarations.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # System Architecture Overview
 
@@ -38,6 +40,9 @@ High-level system architecture, component interaction, and design philosophy
 
 ## Executive Summary
 
+<!-- @c:reference/glossary#Trigger Monitor -->
+<!-- @c:reference/glossary#Queue Manager -->
+<!-- @c:reference/glossary#Runner -->
 Polyglot is a background service daemon written in Rust that orchestrates multi-language workflow automation. The system compiles `.pg` files into Intermediate Representations (IR) stored in PostgreSQL and executes workflows through three core components: **Trigger Monitor**, **Queue Manager**, and **Runner Pool**.
 
 **Key Architectural Decisions:**
@@ -119,6 +124,7 @@ Queue Manager ← Completion/Pause ← Results/Errors
 
 ### 1. Compiler (Registration Phase)
 
+<!-- @c:reference/glossary#pipeline -->
 **Responsibility:** Parse `.pg` files and generate normalized IR stored in PostgreSQL
 
 **Key Features:**

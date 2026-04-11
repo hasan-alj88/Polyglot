@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/user/concepts/errors.md
 ---
+<!-- @d:docs/user/concepts/errors.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Error Handling
 
@@ -20,6 +22,7 @@ replaced_by: docs/user/concepts/errors.md
 
 ## Error Handling Philosophy
 
+<!-- @c:reference/glossary#pipeline -->
 Polyglot treats errors as **first-class citizens** in the pipeline flow. Every operation that can fail should explicitly handle potential errors using the `[!]` error handler block.
 
 **Key Principles:**
@@ -30,6 +33,7 @@ Polyglot treats errors as **first-class citizens** in the pipeline flow. Every o
 
 ## Error Handler Syntax
 
+<!-- @u:user/concepts/errors#error-handler -->
 Basic pattern:
 ```polyglot
 [r] |RiskyOperation

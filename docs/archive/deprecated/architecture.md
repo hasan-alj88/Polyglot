@@ -5,11 +5,15 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: docs/technical/brainstorming/marker-declarations.md
 ---
+<!-- @d:docs/technical/brainstorming/marker-declarations.md -->
+> **Deprecated:** This document is superseded. See the current spec for up-to-date content.
 
 # Architecture
 
 ## Executive Summary
 
+<!-- @c:reference/glossary#Trigger Monitor -->
+<!-- @c:reference/glossary#Queue Manager -->
 Polyglot is implemented as a Rust workspace with three backend services (Trigger Monitor, Queue Manager, Runner) that communicate via PostgreSQL and Redis. The architecture prioritizes async performance, runtime type resolution, and AI agent consistency through explicit patterns and conventions.
 
 ## Project Initialization
