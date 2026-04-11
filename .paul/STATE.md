@@ -277,11 +277,12 @@ Protected elements for current milestone:
 Last session: 2026-04-11
 Stopped at: Phase 15 complete, ready to plan Phase 16
 Next action: /paul:plan for Phase 16
-Resume file: .paul/ROADMAP.md
+Resume file: .paul/HANDOFF-2026-04-11.md
 Resume context:
 - Phase 15 enriched all 52 archive files with 157 cross-references
-- Phase 16 reviews enriched archives to decide keep/extract/delete
-- This is the final phase of the Handle Archive Docs milestone
+- README.md updated with current v0.2 syntax
+- Branch feature/15-cross-reference-enrichment needs merge after Phase 16
+- User attempted /paul:add-phase but was interrupted — ask if still needed
 
 ---
 *STATE.md — Updated after every significant action*
