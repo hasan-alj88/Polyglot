@@ -1,3 +1,11 @@
+---
+status: deprecated
+archived: 2026-04-11
+source_branch: main
+note: Working draft for Plan 94-01 macro-for-generics redesign — content now merged into spec
+replaced_by: docs/user/syntax/types.md
+---
+
 # Plan 94-01: Ground Truths + Macro-for-Generics Redesign
 
 ## Context

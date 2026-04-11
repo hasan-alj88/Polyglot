@@ -3,6 +3,7 @@ status: deprecated
 archived: 2026-03-22
 source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
+replaced_by: docs/audit/README.md
 ---
 
 # Polyglot v0.0.2 Decision Log

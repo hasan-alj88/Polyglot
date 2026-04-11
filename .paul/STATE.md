@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Milestone: Handle Archive Docs
-Phase: 14 of 16 (Archive Frontmatter & Deprecation Marking)
+Phase: 15 of 16 (Cross-Reference Enrichment)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-04-10 — Phase 13 complete, transitioned to Phase 14
+Last activity: 2026-04-11 — Phase 14 complete, transitioned to Phase 15
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -103,7 +103,7 @@ Progress:
 
 ## Active Issue
 
-Phase: 14 — Archive Frontmatter & Deprecation Marking
+Phase: 15 — Cross-Reference Enrichment
 
 ## Loop Position
 
@@ -254,6 +254,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #273 — Three-bracket system complete | 2026-04-09 | 5 plans, 387 files: EBNF grammar, core docs, compile rules, pglib, remaining technical; {X} define, [X] control, (X) IO |
 | Closed #275 — Collection redesign | 2026-04-10 | Squash-merged to main; 107 files, ##Record replaces #Map, %##Fields replaces %##Key, 6 schemas retired, composition syntax updated |
 | Added @d: deprecated cross-reference type | 2026-04-10 | Informational marker (not mandatory import); extends @c:/@u: system; 4 audit files updated |
+| Added replaced_by: to 52 archive files | 2026-04-11 | All archived docs now point to current-spec replacements; 3 marked replaced_by: none |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -272,9 +273,9 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-10
-Stopped at: Phase 13 complete, ready to plan Phase 14
-Next action: /paul:plan for Phase 14
+Last session: 2026-04-11
+Stopped at: Phase 14 complete, ready to plan Phase 15
+Next action: /paul:plan for Phase 15
 Resume file: .paul/ROADMAP.md
 
 ---
