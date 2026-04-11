@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: none
 ---
+<!-- no current replacement -->
+> **Deprecated:** No current replacement exists for this content.
 
 # Database Schema Design
 
@@ -19,6 +21,9 @@ replaced_by: none
 
 Complete PostgreSQL schema for IR storage and workflow state management.
 
+<!-- @c:reference/glossary#Trigger Monitor -->
+<!-- @c:reference/glossary#Queue Manager -->
+<!-- @c:reference/glossary#Runner -->
 This schema stores the Intermediate Representation (IR) as normalized relational data, enabling efficient queries by all system components (Trigger Monitor, Queue Manager, Runner Pool).
 
 ---

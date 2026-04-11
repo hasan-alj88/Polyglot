@@ -5,6 +5,8 @@ source_branch: main
 note: Superseded by docs/user/ and docs/technical/ in v0.0.4 documentation rewrite
 replaced_by: none
 ---
+<!-- no current replacement -->
+> **Deprecated:** No current replacement exists for this content.
 
 # IR Representation & Type System
 
@@ -38,6 +40,7 @@ Intermediate Representation (IR) design, type system architecture, and cross-lan
 
 ### Database-Centric Storage
 
+<!-- @c:reference/glossary#pipeline -->
 Rather than storing IR as JSON blobs, Polyglot uses **normalized relational tables** to represent the AST structure. This enables:
 
 1. **Efficient Querying:** Components can query IR using SQL
@@ -200,6 +203,7 @@ VALUES
 
 ### Trigger Monitor
 
+<!-- @c:reference/glossary#Trigger Monitor -->
 **Reads:**
 - Trigger definitions from `triggers` table
 - Trigger configuration (cron, file paths, webhooks)
@@ -208,6 +212,7 @@ VALUES
 - Updates `last_triggered_at` timestamp
 - Creates new `pipeline_instances`
 
+<!-- @c:reference/glossary#Queue Manager -->
 ### Queue Manager
 
 **Reads:**

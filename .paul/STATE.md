@@ -2,18 +2,18 @@
 
 ## Project Reference
 
-See: .paul/PROJECT.md (updated 2026-03-24)
+See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Archive doc enrichment with @d: deprecated cross-references
+**Current focus:** Handle Archive Docs milestone complete — ready for next milestone
 
 ## Current Position
 
-Milestone: Handle Archive Docs
-Phase: 15 of 16 (Cross-Reference Enrichment)
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-04-11 — Phase 14 complete, transitioned to Phase 15
+Milestone: Handle Archive Docs — COMPLETE
+Phase: 16 of 16 (Triage & Decision) — Complete
+Plan: 16-01 complete
+Status: Milestone complete, ready for next milestone
+Last activity: 2026-04-11 — Phase 16 complete, milestone finished
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -103,14 +103,14 @@ Progress:
 
 ## Active Issue
 
-Phase: 15 — Cross-Reference Enrichment
+Phase: 16 — Triage & Decision
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ○        ○        ○        ○     [Ready for first PLAN]
+  ✓        ✓        ✓        ○     [Loop complete — milestone finished]
 ```
 
 ## Accumulated Context
@@ -255,6 +255,9 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #275 — Collection redesign | 2026-04-10 | Squash-merged to main; 107 files, ##Record replaces #Map, %##Fields replaces %##Key, 6 schemas retired, composition syntax updated |
 | Added @d: deprecated cross-reference type | 2026-04-10 | Informational marker (not mandatory import); extends @c:/@u: system; 4 audit files updated |
 | Added replaced_by: to 52 archive files | 2026-04-11 | All archived docs now point to current-spec replacements; 3 marked replaced_by: none |
+| Cross-reference enrichment complete | 2026-04-11 | 52 files, 157 cross-refs (@d:/@c:/@u:); audit files @d: only; language/stdlib files got @c:/@u: |
+| Archive triage: 49 deleted, 3 kept | 2026-04-11 | Kept database-schema, ir-representation, contributing (replaced_by: none); all others fully superseded |
+| Handle Archive Docs milestone complete | 2026-04-11 | 4 phases (13-16): @d: prefix, frontmatter, cross-refs, triage; archive reduced from 52 to 3 files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -274,9 +277,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-11
-Stopped at: Phase 14 complete, ready to plan Phase 15
-Next action: /paul:plan for Phase 15
+Stopped at: Handle Archive Docs milestone complete
+Next action: /paul:merge to merge branch, then /paul:complete-milestone
 Resume file: .paul/ROADMAP.md
+Resume context:
+- Branch feature/15-cross-reference-enrichment needs merge to main
+- Milestone has 4 phases (13-16) all complete
+- Archive reduced from 52 to 3 files
 
 ---
 *STATE.md — Updated after every significant action*
