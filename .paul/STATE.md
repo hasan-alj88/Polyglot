@@ -110,7 +110,7 @@ Phase: 16 — Triage & Decision
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — milestone finished]
+  ✓        ✓        ✓        ✓     [Merged to main — milestone complete]
 ```
 
 ## Accumulated Context
