@@ -10,7 +10,7 @@ status: complete
 <!-- @c:errors -->
 <!-- @c:blocks -->
 
-Errors use the `!` prefix and hierarchical dot names. Every error leaf is typed `#Error`. Custom errors are defined with `{!}` blocks; pglib errors are built-in and require no `[@]` import.
+Errors use the `!` prefix and hierarchical dot names. Every error terminal is typed `#Error` — enforced by `%##TerminalType << #Error` (see [[pglib/types/properties/TerminalType|%##TerminalType]]). `{!}` blocks are effectively `{#}` data trees with this terminal constraint. Custom errors are defined with `{!}` blocks; pglib errors are built-in and require no `[@]` import.
 
 ## `#NullableRecord`
 

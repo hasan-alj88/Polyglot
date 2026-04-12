@@ -18,6 +18,7 @@ These describe how children behave at the level where they are declared:
 |----------|------|---------|
 | [[properties/Fields\|%##Fields]] | `#FieldsDescriptor` or `##Enum` ref | How children are indexed |
 | [[properties/Schema\|%##Schema]] | list of `##` | Structural schemas children must satisfy |
+| [[properties/TerminalType\|%##TerminalType]] | type ref | Type all terminal branches must be (any depth) |
 | [[properties/Active\|%##Active]] | `#ActiveKind` | Which branches must be present |
 | [[properties/Ordered\|%##Ordered]] | `#Boolean` | Insertion order preserved? |
 | [[properties/Sorted\|%##Sorted]] | `#Boolean` | Sorted by key? |

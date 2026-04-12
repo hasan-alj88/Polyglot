@@ -27,7 +27,7 @@ flowchart LR
 
 ## Defining Custom Errors (`{!}`)
 
-Custom errors are defined with `{!}` blocks (see [[blocks#Definition Elements]]). All user-defined errors live under the `!Error` namespace — `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. Use `[:]` for extensible branches and `[.]` for terminal leaves (typed `#Error`):
+Custom errors are defined with `{!}` blocks (see [[blocks#Definition Elements]]). All user-defined errors live under the `!Error` namespace — `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. `{!}` is effectively a `{#}` data tree with `%##TerminalType << #Error` — every terminal branch must be an `#Error` instance (see [[pglib/types/properties/TerminalType|%##TerminalType]]). Use `[:]` for extensible branches and `[.]` for terminals (typed `#Error`):
 
 ```polyglot
 {!} !Error

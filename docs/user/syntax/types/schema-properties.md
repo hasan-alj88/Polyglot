@@ -30,6 +30,7 @@ Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Proper
 |----------|------|---------|
 | [[properties/Fields\|%##Fields]] | `#FieldsDescriptor` or `##Enum` ref | `#Range` = integer-indexed; enum ref = stamp children from variants |
 | [[properties/Schema\|%##Schema]] | list of `##` | Structural schemas children must satisfy (AND-composed) |
+| [[properties/TerminalType\|%##TerminalType]] | type ref | Type all terminal branches must conform to (any depth — unlike `%###Type` which is scalar only). Mutually exclusive with `%###Type` (PGE11004) |
 | [[properties/Active\|%##Active]] | `#ActiveKind` | `#All` (every branch present) / `#One` (exactly one active) / `#Partial` (any non-zero subset) |
 | [[properties/Ordered\|%##Ordered]] | `#Boolean` | Insertion order preserved? |
 | [[properties/Sorted\|%##Sorted]] | `#Boolean` | Sorted by key? (order derived from key type: numeric, alphabetical, or declaration) |
