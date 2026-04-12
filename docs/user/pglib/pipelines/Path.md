@@ -13,8 +13,9 @@ Creates a `#path` value from a string argument. No `[@]` import needed.
 
 ```polyglot
 -Path
-   <InlineStringLiteral#string <~ ""
-   >result#path
+   (-) %InlineString << "{path}"
+   (-) <path#path
+   (-) >result#path
 ```
 
 ## Permissions

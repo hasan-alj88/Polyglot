@@ -132,7 +132,9 @@ updated: 2026-03-30
 
 ```polyglot
 {-} -ParsePair
-   (-) <InlineStringLiteral#string <~ ""
+   (-) %InlineString << "{key}-{value}"
+   (-) <key#string
+   (-) <value#string
    (-) >key#string
    (-) >value#string
    [T] -T.Call
@@ -158,31 +160,30 @@ updated: 2026-03-30
 
 ### EC-4.11: Inline pipeline call — user-defined pipeline
 
-**What it tests:** User-defined pipelines can accept inline calls by declaring `<InlineStringLiteral#string`.
+**What it tests:** User-defined pipelines can accept inline calls by declaring `%InlineString` with a template.
 
 ```polyglot
 {-} -Greeting
-   (-) <InlineStringLiteral#string <~ ""
+   (-) %InlineString << "{name}"
+   (-) <name#string <~ "World"
    (-) >message#string
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
-   [?] $InlineStringLiteral =!? ""
-      [-] >message << "Hello {$InlineStringLiteral}"
-   [?] *?
-      [-] >message << "Hello World"
+   [-] >message << "Hello {$name}"
 
-[ ] inline call
+[ ] inline call — compiler extracts "Alice" into <name
 [-] $msg#string << -Greeting"Alice"
 
-[ ] normal call — $InlineStringLiteral is "" (default)
+[ ] normal call — <name wired directly
 [-] -Greeting
+   (-) <name << "Alice"
    (-) >message >> $msg
 ```
 
-### EC-4.12: Pipeline without `<InlineStringLiteral#string` called inline
+### EC-4.12: Pipeline without `%InlineString` called inline
 
-**What it tests:** Calling a pipeline inline when it has not declared the reserved parameter.
+**What it tests:** Calling a pipeline inline when it has not declared a `%InlineString` template.
 
 ```polyglot
 {-} -NormalPipeline
@@ -193,7 +194,7 @@ updated: 2026-03-30
    [W] -W.Polyglot
    [-] >output << $input
 
-[ ] compile error — -NormalPipeline has no <InlineStringLiteral#string
+[ ] PGE12003 — -NormalPipeline has no %InlineString declaration
 [-] $result#string << -NormalPipeline"test"
 ```
 

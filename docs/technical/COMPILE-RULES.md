@@ -236,8 +236,14 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 |------|------|
 | PGE12001 | Undefined Metadata Field Access |
 | PGE12002 | Duplicate Alias |
-| PGE12003 | Invalid Inline Pipeline Argument |
+| PGE12003 | Undefined Inline Template |
 | PGE12004 | Empty Metadata Alias |
+| PGE12005 | Inline Format Mismatch |
+| PGE12006 | Unresolved Template Placeholder |
+| PGE12007 | Required Input Not In Template |
+| PGE12008 | Duplicate Template Placeholder |
+| PGE12009 | Template Type Coercion Failure |
+| PGE12010 | Optional Placeholder Without Default |
 
 ## Warning Code Reference (PGW)
 
@@ -270,7 +276,8 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | PGW11001 | Redundant Schema Property *(planned)* |
 | PGW11002 | Contradicting Schema Override *(planned)* |
 | PGW11003 | Unlimited Depth on User Type *(planned)* |
-| PGW12001 | Missing Inline Format Metadata |
+| PGW12001 | Template With No Placeholders |
+| PGW12002 | Optional Placeholder Never Provided |
 
 ---
 

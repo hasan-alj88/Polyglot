@@ -17,32 +17,38 @@ An inline pipeline call evaluates a pipeline as a single value. The syntax is `-
 [?] $dir =? -Path"/expected"
 ```
 
-### Reserved Parameter: `<InlineStringLiteral#string`
+### `%InlineString` Template Declaration
 
-Every pipeline has a reserved parameter name `InlineStringLiteral`. To accept inline calls, a pipeline must explicitly declare it in its `(-)` IO:
+To accept inline calls, a pipeline declares a `%InlineString` template in its `(-)` IO section:
 
 ```polyglot
-(-) <InlineStringLiteral#string <~ ""
+(-) %InlineString << "{path}"
 ```
 
-The default value is `""`. When the pipeline is called inline (`-Pipeline"..."`), the compiler auto-wires the rendered string into this parameter. When called normally (via `[-]`), the default `""` applies.
+The template string contains **placeholders** that map to declared `(-)` inputs by name:
+
+- `{name}` — **required** placeholder. Must match a declared `<name` input.
+- `{name?}` — **optional** placeholder. The matched `<name` input **must** have a `<~` default.
+
+When the pipeline is called inline (`-Pipeline"..."`), the compiler matches the rendered string against the template, extracts named values, and wires them to the corresponding inputs. When called normally (via `[-]`), `%InlineString` is ignored — callers wire inputs directly.
 
 ### Mechanism
 
-1. **String interpolation** — `{$var}` inside the string literal resolves first
-2. **Auto-wire** — the rendered string is pushed into `<InlineStringLiteral#string`
-3. **Pipeline-specific parsing** — the pipeline body interprets the string its own way (e.g., `-Path` normalizes separators, `-T.Daily` parses a time)
-4. **Result returned** — the pipeline's output becomes the value of the expression
+1. **String interpolation** — `{$var}` inside the caller's string literal resolves first (caller scope)
+2. **Template extraction** — the compiler matches the rendered string against the pipeline's `%InlineString` template and extracts named values from placeholder positions
+3. **Input wiring** — extracted values are pushed to the corresponding `<name` inputs (type coercion applied)
+4. **Pipeline executes** — the pipeline runs with its inputs populated from the template extraction
+5. **Result returned** — the pipeline's output becomes the value of the expression
 
 ```mermaid
 flowchart LR
     RAW["-Path&quot;/tmp/{$app}&quot;"]
     INTERP["1. Interpolate\n/tmp/MyApp"]
-    WIRE["2. Auto-wire into\n< InlineStringLiteral"]
-    PARSE["3. Pipeline parses\n-Path normalizes sep"]
+    EXTRACT["2. Template extraction\n%InlineString: {path}\npath = /tmp/MyApp"]
+    WIRE["3. Wire to inputs\n<path << /tmp/MyApp"]
     RESULT["4. Result returned\n#path value"]
 
-    RAW --> INTERP --> WIRE --> PARSE --> RESULT
+    RAW --> INTERP --> EXTRACT --> WIRE --> RESULT
 ```
 
 ### Return Value
@@ -54,36 +60,57 @@ flowchart LR
 
 If the target type does not match the inline pipeline's output type, the compiler raises a type or schema mismatch error.
 
+### Optional Placeholders
+
+Use `{name?}` for optional parts of the template. The matched input **must** have a `<~` default:
+
+```polyglot
+{-} -DB.Connect
+   [%] .description << "Connect to a database"
+   (-) %InlineString << "{host}:{port?}/{db}"
+   (-) <host#string
+   (-) <port#string <~ "5432"
+   (-) <db#string
+   (-) >connection#DBConnection
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [ ] ... connection logic using $host, $port, $db ...
+```
+
+```polyglot
+[ ] All placeholders filled
+[-] $conn << -DB.Connect"myhost:3306/mydb"
+
+[ ] Optional placeholder omitted — $port uses default "5432"
+[-] $conn << -DB.Connect"myhost:/mydb"
+```
+
 ### Dual-Mode Pipelines
 
-Since `<InlineStringLiteral#string` defaults to `""`, a pipeline can support both normal calls and inline calls. Guard inline-specific logic with a conditional:
+Since `%InlineString` is only used during inline calls, a pipeline can support both normal calls and inline calls with no special branching. The same inputs are wired either way:
 
 ```polyglot
 {-} -Greeting
    [%] .description << "Generates a greeting message"
-   (-) <InlineStringLiteral#string <~ ""
-   (-) <name#string <~ ""
+   (-) %InlineString << "{name}"
+   (-) <name#string <~ "World"
    (-) >message#string
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
-   [?] $InlineStringLiteral =!? ""
-      [ ] Inline call — parse the string
-      [-] $name << $InlineStringLiteral
-   [?] *?
-      [ ] Normal call — $name filled by caller
    [-] >message << "Hello {$name}"
 ```
 
 Both calling forms work:
 
 ```polyglot
-[ ] Inline call
-[-] $msg#string << -Greeting"World"
+[ ] Inline call — compiler extracts "Alice" and wires to <name
+[-] $msg#string << -Greeting"Alice"
 
-[ ] Normal call
+[ ] Normal call — caller wires <name directly
 [-] -Greeting
-   (-) <name << "World"
+   (-) <name << "Alice"
    (-) >message >> $msg
 ```
 
