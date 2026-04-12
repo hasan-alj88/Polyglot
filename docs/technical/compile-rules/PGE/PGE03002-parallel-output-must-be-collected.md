@@ -24,7 +24,7 @@ severity: error
    (-) <id << $userId
    (-) >data >> $data
 
-(*) *All
+[*] *All
    (*) << $data
 
 [-] -Process
@@ -39,7 +39,7 @@ severity: error
 [=] -Fetch.B
    (-) >result >> $b
 
-(*) *All
+[*] *All
    (*) << $a
    (*) << $b
 ```
@@ -52,7 +52,7 @@ severity: error
 [=] -Search.Slow
    (-) >result >> $slow
 
-(*) *First
+[*] *First
    (*) << $fast
    (*) << $slow
    (*) >> $winner
@@ -71,7 +71,7 @@ severity: error
    (-) <event << $event
    (-) >auditId >> $auditId
 
-(*) *Ignore
+[*] *Ignore
    (*) << $auditId                   [ ] ✓ acknowledged and discarded
 ```
 
@@ -94,7 +94,7 @@ severity: error
 [=] -Fetch.B
    (-) >result >> $b
 
-(*) *All
+[*] *All
    (*) << $a                          [ ] ✓ $a collected
                                       [ ] ✗ PGE03002 — $b not in any collector
 ```

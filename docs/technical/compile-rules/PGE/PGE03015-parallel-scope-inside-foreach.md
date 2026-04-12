@@ -22,7 +22,7 @@ severity: error
    (-) >result >> $a
 [=] -Search.B
    (-) >result >> $b
-(*) *First                                [ ] ✓ outside =ForEach
+[*] *First                                [ ] ✓ outside =ForEach
    (*) << $a
    (*) << $b
    (*) >> $winner
@@ -34,7 +34,7 @@ severity: error
    (=) <Array << $items
    (=) >item >> $item
    [ ] ✗ PGE03015 — *All used inside =ForEach
-   (*) *All
+   [*] *All
       (*) << $someVar
 ```
 

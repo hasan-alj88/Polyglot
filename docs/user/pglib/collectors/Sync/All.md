@@ -14,7 +14,7 @@ No type constraint on inputs.
 ## Syntax
 
 ```polyglot
-(*) *All
+[*] *All
    (*) << $profile
    (*) << $history
 ```

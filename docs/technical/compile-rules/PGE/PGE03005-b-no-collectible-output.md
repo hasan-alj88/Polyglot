@@ -34,7 +34,7 @@ severity: error
    (-) <id << $userId
    (-) >result >> $data
 
-(*) *All
+[*] *All
    (*) << $data                      [ ] ✓ only $data (from [=]) is collected
 ```
 
@@ -51,7 +51,7 @@ severity: error
 [b] -Background.Task
    (-) >result >> $bgResult
 
-(*) *All
+[*] *All
    (*) << $bgResult                  [ ] ✗ PGE03005 — $bgResult is from [b]
 ```
 

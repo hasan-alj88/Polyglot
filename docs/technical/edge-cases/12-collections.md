@@ -155,7 +155,7 @@ updated: 2026-03-30
    (-) <id << $id
    (-) >resultB >> $resultB
 
-(*) *All
+[*] *All
    (*) << $resultA
    (*) << $resultB
 
@@ -180,7 +180,7 @@ updated: 2026-03-30
    (-) <q << $query
    (-) >result >> $rB
 
-(*) *First
+[*] *First
    (*) << $rA
    (*) << $rB
    (*) >> $fastest
@@ -207,7 +207,7 @@ updated: 2026-03-30
    (-) <q << $query
    (-) >result >> $rC
 
-(*) *Nth
+[*] *Nth
    (*) <n#int << 2
    (*) << $rA
    (*) << $rB
@@ -217,7 +217,7 @@ updated: 2026-03-30
 
 ### EC-12.12: Multi-wave parallel pattern with multiple `*All` barriers
 
-**What it tests:** `(*) *All` used twice in a pipeline body to form sequential parallel waves.
+**What it tests:** `[*] *All` used twice in a pipeline body to form sequential parallel waves.
 
 ```polyglot
 [=] -Fetch.Profile
@@ -228,7 +228,7 @@ updated: 2026-03-30
    (-) <id << $id
    (-) >prefs >> $prefs
 
-(*) *All
+[*] *All
    (*) << $profile
    (*) << $prefs
 
@@ -240,7 +240,7 @@ updated: 2026-03-30
    (-) <prefs << $prefs
    (-) >recs >> $recs
 
-(*) *All
+[*] *All
    (*) << $enriched
    (*) << $recs
 
@@ -255,7 +255,7 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] *All: (*) << only — $a and $b accessible after
-(*) *All
+[*] *All
    (*) << $a
    (*) << $b
 [-] -UseAB
@@ -263,7 +263,7 @@ updated: 2026-03-30
    (-) <y << $b
 
 [ ] *First: (*) <<+(*) >> — $a and $b cancelled; only $winner accessible
-(*) *First
+[*] *First
    (*) << $a
    (*) << $b
    (*) >> $winner

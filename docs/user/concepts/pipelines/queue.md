@@ -120,7 +120,7 @@ Pipeline-level `[Q]` applies to all jobs. Job-level `[Q]` **extends** the pipeli
    [=] -Validate
       (-) << $fetched
       (-) >> $validated
-   (*) *All
+   [*] *All
       (*) << $transformed
       (*) << $validated
       (*) >> $results

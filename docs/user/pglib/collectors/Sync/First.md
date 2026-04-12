@@ -12,7 +12,7 @@ Sugar for `*Nth` with n=1. Takes the first arriving value; all other inputs are 
 ## Syntax
 
 ```polyglot
-(*) *First
+[*] *First
    (*) << $candidateA
    (*) << $candidateB
    (*) >> $winner

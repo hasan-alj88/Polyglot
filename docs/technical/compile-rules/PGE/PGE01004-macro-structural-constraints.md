@@ -33,7 +33,7 @@ severity: error
 | `[Q]` | **No** | Queues are pipeline-only |
 | `(-)` pipeline IO | **No** | Pipeline-level IO (with `[T]`/`[Q]`) is pipeline-only |
 
-**Rationale:** Wrappers exist to encapsulate reusable setup/cleanup logic around pipeline execution. Allowing triggers or queues inside a wrapper would make it behave like a pipeline, breaking the structural separation between lifecycle wrappers and executable pipelines. Parallel forking (`[=]`, `[b]`) is allowed in `[\]` setup because setup may need to launch concurrent work that outlives setup and runs alongside the execution body — `(*) *All` in `[/]` cleanup collects the results. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
+**Rationale:** Wrappers exist to encapsulate reusable setup/cleanup logic around pipeline execution. Allowing triggers or queues inside a wrapper would make it behave like a pipeline, breaking the structural separation between lifecycle wrappers and executable pipelines. Parallel forking (`[=]`, `[b]`) is allowed in `[\]` setup because setup may need to launch concurrent work that outlives setup and runs alongside the execution body — `[*] *All` in `[/]` cleanup collects the results. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
 
 **VALID:**
 ```polyglot
@@ -116,7 +116,7 @@ severity: error
 
    [/]
       [ ] collect the timer started in setup
-      (*) *All
+      [*] *All
          (*) << $timerHandle
 
       [-] -Tracer.StopTimer

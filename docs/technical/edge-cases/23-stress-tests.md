@@ -61,7 +61,7 @@ updated: 2026-03-30
          [-] $slackId << "SLACK_FAILED"
 
    [ ] Wait for all three to complete
-   (*) *All
+   [*] *All
       (*) << $adId
       (*) << $mailboxId
       (*) << $slackId
@@ -172,7 +172,7 @@ updated: 2026-03-30
       (-) >result >> $archive
 
    [ ] Take whoever finishes first
-   (*) *First
+   [*] *First
       (*) << $fast
       (*) << $semantic
       (*) << $archive
@@ -217,7 +217,7 @@ updated: 2026-03-30
       (-) <items << $items
       (-) >perms >> $perms
 
-   (*) *All
+   [*] *All
       (*) << $meta
       (*) << $perms
 
@@ -233,7 +233,7 @@ updated: 2026-03-30
       (-) <meta << $meta
       (-) >enriched >> $enrichedItems
 
-   (*) *All
+   [*] *All
       (*) << $validItems
       (*) << $enrichedItems
 
@@ -313,7 +313,7 @@ updated: 2026-03-30
 
    [/]
       [ ] Collect timer handle — must be Final before we stop it
-      (*) *All
+      [*] *All
          (*) << $timerHandle
 
       [-] -Tracer.StopTimer

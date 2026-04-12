@@ -26,7 +26,7 @@ severity: error
 [=] -Search.EngineB
    (-) >result#string >> $resultB
 
-(*) *First
+[*] *First
    (*) << $resultA
    (*) << $resultB
    (*) >> $fastest                   [ ] ✓ type is #string
@@ -40,7 +40,7 @@ severity: error
 [=] -Fetch.Count
    (-) >count#int >> $count
 
-(*) *All
+[*] *All
    (*) << $profile
    (*) << $count                     [ ] ✓ *All does not merge — no type constraint
 ```
@@ -54,7 +54,7 @@ severity: error
 [=] -Search.Slow
    (-) >result#int >> $slow
 
-(*) *First
+[*] *First
    (*) << $fast                      [ ] #string
    (*) << $slow                      [ ] #int — ✗ PGE03006
    (*) >> $winner
@@ -68,7 +68,7 @@ severity: error
 [=] -Fetch.Counts
    (-) >list#array:int >> $counts
 
-(*) *First
+[*] *First
    (*) << $names                     [ ] #array:string
    (*) << $counts                    [ ] #array:int — ✗ PGE03006
    (*) >> $winner

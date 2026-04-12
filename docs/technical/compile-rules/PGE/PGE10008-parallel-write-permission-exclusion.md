@@ -36,7 +36,7 @@ severity: error
    [=] -Analyze.Schema
       (-) <path << "data/input.csv"
       (-) >schema >> $schema
-   (*) *All
+   [*] *All
       (*) << $stats
       (*) << $schema
    [-] ...
@@ -62,7 +62,7 @@ severity: error
    [=] -Write.Schema
       [_] _WriteGrantB
       (-) <data << $schema
-   (*) *All
+   [*] *All
       (*) << $statsResult
       (*) << $schemaResult
 ```
@@ -84,7 +84,7 @@ severity: error
    [=] -Write.PartB
       [_] _WriteGrant                   [ ] ✗ PGE10008 — same write target
       (-) <data << $partB
-   (*) *All
+   [*] *All
       (*) << $resultA
       (*) << $resultB
 ```
@@ -107,7 +107,7 @@ severity: error
       [_] _WriteAll                     [ ] ✗ output/*.json
    [=] -Write.Reports
       [_] _WriteReports                 [ ] ✗ PGE10008 — output/report-*.json ⊂ output/*.json
-   (*) *All
+   [*] *All
       (*) << $generalResult
       (*) << $reportResult
 ```

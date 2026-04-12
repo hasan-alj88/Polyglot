@@ -23,7 +23,7 @@ severity: error
 [=] -Fetch.Data
    (-) >result >> $data
 
-(*) *All
+[*] *All
    (*) << $data
 
 [-] -Process
@@ -38,7 +38,7 @@ severity: error
 [=] -Fetch.B
    (-) >result >> $b
 
-(*) *All
+[*] *All
    (*) << $a
    (*) << $b
 
@@ -56,7 +56,7 @@ severity: error
 [-] -Process
    (-) <input << $data             [ ] ✗ PGE03003 — $data not yet collected
 
-(*) *All
+[*] *All
    (*) << $data
 ```
 
@@ -67,7 +67,7 @@ severity: error
 
 [-] $data << "override"           [ ] ✗ PGE03001 — push across parallel boundary
 
-(*) *All
+[*] *All
    (*) << $data
 ```
 

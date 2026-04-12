@@ -14,7 +14,7 @@ Generic race collector -- waits for the Nth arriving value and cancels all remai
 ## Syntax
 
 ```polyglot
-(*) *Nth
+[*] *Nth
    (*) <n << 2
    (*) << $candidateA
    (*) << $candidateB

@@ -63,7 +63,7 @@ updated: 2026-03-30
    (-) <q << $query
    (-) >result >> $rDeep
 
-(*) *Second
+[*] *Second
    (*) << $rFast
    (*) << $rAccurate
    (*) << $rDeep

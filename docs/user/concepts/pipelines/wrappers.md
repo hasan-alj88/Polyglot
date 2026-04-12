@@ -45,7 +45,7 @@ flowchart LR
 
 `[=]` or `[b]` inside `[\]` forks a parallel execution path:
 
-- **`[=]` with no `(*) *All` in setup** — the forked path outlives setup and runs **concurrently with the execution body**. `[/]` uses `(*) *All` with `(*) << $var` to collect the result before proceeding.
+- **`[=]` with no `[*] *All` in setup** — the forked path outlives setup and runs **concurrently with the execution body**. `[/]` uses `[*] *All` with `(*) << $var` to collect the result before proceeding.
 - **`[b]` in setup** — fire-and-forget. No collection in `[/]` is possible.
 - Variables produced in `[\]` (including by `[=]`) are accessible in `[/]` — same principle as `$dbConn` flowing from `[\]` to `[/]` in `-W.DB.Connection`.
 
@@ -55,7 +55,7 @@ flowchart LR
     P2["[=] fork 2"]
     R1["[-] Sequential 1"]
     R2["[-] Sequential 2"]
-    COL["(*) *All"]
+    COL["[*] *All"]
 
     PA1["Parallel task 1"]
     PA2["Parallel task 2"]
@@ -65,13 +65,13 @@ flowchart LR
     P2 -.-> PA2 -.-> COL
 ```
 
-**Pairing constraint:** A `[=]` started in `[\]` and its `(*) *All` collector form an exclusive pair — the collection **must** appear in `[/]`, never in the execution body. The execution body runs while the `[=]` is still in-flight; only `[/]` runs after execution completes and can safely collect.
+**Pairing constraint:** A `[=]` started in `[\]` and its `[*] *All` collector form an exclusive pair — the collection **must** appear in `[/]`, never in the execution body. The execution body runs while the `[=]` is still in-flight; only `[/]` runs after execution completes and can safely collect.
 
 | Started in | Collected in | Valid? |
 |------------|--------------|--------|
-| `[\]` `[=]` | `[/]` `(*) *All` | ✓ |
-| `[\]` `[=]` | Execution body `(*) *All` | ✗ — body runs while `[=]` is still in-flight |
-| Execution body `[=]` | Execution body `(*) *All` | ✓ — normal parallel pattern |
+| `[\]` `[=]` | `[/]` `[*] *All` | ✓ |
+| `[\]` `[=]` | Execution body `[*] *All` | ✗ — body runs while `[=]` is still in-flight |
+| Execution body `[=]` | Execution body `[*] *All` | ✓ — normal parallel pattern |
 
 ```polyglot
 {W} -W.Tracing
@@ -93,7 +93,7 @@ flowchart LR
 
    [/]
       [ ] Collect the timer started in setup
-      (*) *All
+      [*] *All
          (*) << $timerHandle
 
       [-] -Tracer.StopTimer

@@ -26,8 +26,8 @@ flowchart LR
         I3["item N"]
     end
 
-    C1["(*) *Into.Array"]
-    C2["(*) *Agg.Sum"]
+    C1["[*] *Into.Array"]
+    C2["[*] *Agg.Sum"]
     R1["Result array — one level up"]
     R2["Result value — one level up"]
 
@@ -65,6 +65,21 @@ flowchart LR
 <!-- @u:io:Wait and Collect-Into Markers -->
 Collect-all and race collectors operate **outside** expand scopes — they work on variables produced by parallel `[=]` pipeline calls. They use `(*) <<` (wait input) and `(*) >>` (collect output) forms (see [[io#Wait and Collect IO]]).
 
+### Invocation vs IO
+
+Collectors follow the same bracket convention as other operators: square brackets `[X]` invoke, parenthetical brackets `(X)` wire IO.
+
+```ebnf
+collector_invoke = "[*]" , "*" , collector_name ;
+collector_io     = "(*)" , ( "<<" , "$" , var_name
+                           | ">>" , "$" , var_name
+                           | "<" , param_name , "<<" , source ) ;
+collector_name   = "All" | "First" | "Second" | "Nth" | "Ignore"
+                 | "Into." , into_target | "Agg." , agg_op ;
+```
+
+`[*]` is the **invocation marker** — it appears once on the collector header line, analogous to `[-]` (sequential call) and `[=]` (parallel call). `(*)` is the **IO marker** — it appears on each data-wiring line underneath, analogous to `(-)` for pipeline IO and `(=)` for expand IO.
+
 ```mermaid
 flowchart LR
     subgraph sync ["*All — collect all"]
@@ -72,7 +87,7 @@ flowchart LR
         PA["[=] A → $a"]
         PB["[=] B → $b"]
         PC["[=] C → $c"]
-        ALL["(*) *All\n<< $a, << $b, << $c"]
+        ALL["[*] *All\n<< $a, << $b, << $c"]
         AFTER["All variables\naccessible after"]
 
         PA --> ALL
@@ -86,7 +101,7 @@ flowchart LR
         RA["[=] A → $a"]
         RB["[=] B → $b"]
         RC["[=] C → $c"]
-        FIRST["(*) *First\n>> $fastest"]
+        FIRST["[*] *First\n>> $fastest"]
         WIN["Winner proceeds"]
 
         RA --> FIRST
@@ -104,8 +119,8 @@ flowchart LR
 Parallel execution enforces strict variable isolation:
 
 - A variable inside a `[=]` scope cannot be pushed into from outside that scope (PGE03001)
-- A `[=]` output variable cannot be pulled before its `(*)` collector has executed (PGE03003)
-- A `[=]` parallel and its `(*)` collector must pair within valid section boundaries — same scope, or `[\]` setup to `[/]` cleanup. A `[=]` in setup cannot be collected in the execution body (PGE03004). See [[concepts/pipelines/wrappers#Parallel Forking in Setup]] for the pairing constraint.
+- A `[=]` output variable cannot be pulled before its `[*]` collector has executed (PGE03003)
+- A `[=]` parallel and its `[*]` collector must pair within valid section boundaries — same scope, or `[\]` setup to `[/]` cleanup. A `[=]` in setup cannot be collected in the execution body (PGE03004). See [[concepts/pipelines/wrappers#Parallel Forking in Setup]] for the pairing constraint.
 
 ### `*All` — Collect All
 
@@ -125,7 +140,7 @@ No type constraint on inputs.
    (-) >history >> $history
 
 [ ] Wait for both — $profile and $history stay accessible after
-(*) *All
+[*] *All
    (*) << $profile
    (*) << $history
 
@@ -159,14 +174,14 @@ All `(*) <<` inputs must be the **same type** (PGE03006). `(*) >>` output is req
    (-) >result >> $resultC
 
 [ ] Take the first to arrive — other two are cancelled
-(*) *First
+[*] *First
    (*) << $resultA
    (*) << $resultB
    (*) << $resultC
    (*) >> $fastest
 
 [ ] *Nth — generic form; take the 2nd to arrive
-(*) *Nth
+[*] *Nth
    (*) <n#int << 2
    (*) << $resultA
    (*) << $resultB
@@ -194,7 +209,7 @@ Two ways to intentionally discard output from a `[=]` parallel pipeline, both sa
    (-) >auditId >> $auditId
 
 [ ] We triggered the audit but don't need the ID
-(*) *Ignore
+[*] *Ignore
    (*) << $auditId
 ```
 
@@ -206,20 +221,20 @@ Prefer `$*` for clean discards. Prefer `*Ignore` when the variable may be needed
 
 ### Multi-Wave Parallel Pattern
 
-Multiple `(*) *All` barriers create sequential waves of parallel work:
+Multiple `[*] *All` barriers create sequential waves of parallel work:
 
 ```polyglot
 [ ] Wave 1
 [=] -Fetch.A ...
 [=] -Fetch.B ...
-(*) *All
+[*] *All
    (*) << $a
    (*) << $b
 
 [ ] Wave 2 — uses $a and $b
 [=] -Enrich.A ...
 [=] -Enrich.B ...
-(*) *All
+[*] *All
    (*) << $enrichedA
    (*) << $enrichedB
 
@@ -269,14 +284,14 @@ When `*First` is satisfied, it releases its claim on remaining jobs — but does
    (-) >result >> $c
 
 [ ] *First takes the fastest — but does not cancel B/C yet
-(*) *First
+[*] *First
    (*) << $a
    (*) << $b
    (*) << $c
    (*) >> $fastest
 
 [ ] *All needs all three — B and C continue running
-(*) *All
+[*] *All
    (*) << $a
    (*) << $b
    (*) << $c
@@ -301,6 +316,6 @@ This makes reconciliation safe by construction: parallel jobs are pure readers, 
 ## See Also
 
 - [[concepts/collections/expand|Expand Operators]] — `=` operators that produce items for collectors
-- [[concepts/pipelines/wrappers|Wrappers]] — parallel forking in setup with `(*) *All` in cleanup
+- [[concepts/pipelines/wrappers|Wrappers]] — parallel forking in setup with `[*] *All` in cleanup
 - [[concepts/collections/examples|Examples]] — complete expand/transform/collect patterns
 - [[permissions#Parallel Write Exclusion]] — PGE10008 parallel write exclusion rule

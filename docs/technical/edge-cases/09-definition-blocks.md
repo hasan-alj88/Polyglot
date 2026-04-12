@@ -133,7 +133,7 @@ updated: 2026-03-30
 <!-- @u:pipelines:Parallel Forking in Setup -->
 **EBNF:** `scope_setup ::= "[\]" NEWLINE { indent exec_line NEWLINE }` — `exec_line` includes `parallel_line`.
 
-**What it tests:** `[=]` at end of `[\]` with no `(*) *All` — forked path runs concurrently with body; `[/]` collects via `(*) *All` with `(*) <<` wait inputs. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
+**What it tests:** `[=]` at end of `[\]` with no `[*] *All` — forked path runs concurrently with body; `[/]` collects via `[*] *All` with `(*) <<` wait inputs. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
 
 ```polyglot
 {W} -W.Tracing
@@ -148,7 +148,7 @@ updated: 2026-03-30
          (-) <session << $session
          (-) >handle >> $timerHandle
    [/]
-      (*) *All
+      [*] *All
          (*) << $timerHandle
       [-] -Tracer.StopTimer
          (-) <handle << $timerHandle
@@ -161,7 +161,7 @@ updated: 2026-03-30
 
 **EBNF:** `scope_setup ::= "[\]" NEWLINE { indent exec_line NEWLINE }` — `exec_line` includes `background_line`.
 
-**What it tests:** `[b]` in setup fires and is never collected — no `(*) *All` in `[/]` for it.
+**What it tests:** `[b]` in setup fires and is never collected — no `[*] *All` in `[/]` for it.
 
 ```polyglot
 {W} -W.AuditLog

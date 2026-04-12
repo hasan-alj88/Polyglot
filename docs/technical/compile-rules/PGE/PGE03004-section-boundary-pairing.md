@@ -26,7 +26,7 @@ severity: error
 [=] -Fetch.B
    (-) >result >> $b
 
-(*) *All
+[*] *All
    (*) << $a
    (*) << $b
 ```
@@ -42,7 +42,7 @@ severity: error
    (-) <input << $data
 
 [/]
-   (*) *All
+   [*] *All
       (*) << $cacheReady             [ ] ✓ [\]↔[/] pairing is valid
 ```
 
@@ -52,7 +52,7 @@ severity: error
    [=] -Init.Config
       (-) >config >> $config
 
-   (*) *All
+   [*] *All
       (*) << $config                 [ ] ✓ same-section pairing
    [-] -Init.WithConfig
       (-) <config << $config
@@ -66,7 +66,7 @@ severity: error
       (-) >status >> $cacheReady
 
 [ ] body — Warmup.Cache may still be running
-(*) *All
+[*] *All
    (*) << $cacheReady                   [ ] ✗ PGE03004 — [\]↔body pairing not allowed
 ```
 
@@ -76,7 +76,7 @@ severity: error
    (-) >result >> $data
 
 [/]
-   (*) *All
+   [*] *All
       (*) << $data                   [ ] ✗ PGE03004 — body↔[/] pairing not allowed
 ```
 

@@ -28,7 +28,7 @@ severity: error
    (-) <id << $userId
    (-) >history >> $history
 
-(*) *All
+[*] *All
    (*) << $profile
    (*) << $history
 
