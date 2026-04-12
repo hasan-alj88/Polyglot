@@ -63,14 +63,14 @@ The canonical pattern pairs `=Text.Diff` with `*Into.Text.Merge`:
    (=) >line >> $line
    (=) >index >> $idx
 
-   [r] =ProcessLine
-      (r) <line << $line
-      (r) >modified >> $processed
+   [-] -ProcessLine
+      (-) <line << $line
+      (-) >modified >> $processed
 
-   [r] =Text.Diff
-      (r) <original << $line
-      (r) <modified << $processed
-      (r) >diffs >> $lineDiffs
+   [-] -Text.Diff
+      (-) <original << $line
+      (-) <modified << $processed
+      (-) >diffs >> $lineDiffs
 
    [-] *Into.Text.Merge
       (*) <diffs << $lineDiffs

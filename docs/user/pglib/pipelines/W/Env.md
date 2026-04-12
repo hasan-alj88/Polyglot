@@ -72,7 +72,7 @@ Callers handle environment errors using `[!]` blocks or `(>) !>` fallbacks:
 
 ```polyglot
 [-]
-   [r] =SomePipeline
+   [-] -SomePipeline
       (-) <file << $File
       (-) >result >> $Result
       [!] !Env.NotFound
