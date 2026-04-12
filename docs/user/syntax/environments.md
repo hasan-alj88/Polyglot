@@ -22,7 +22,7 @@ Environment definitions declare what a pipeline needs from its host system — l
 |--------|---------|
 | `@` | Packages |
 | `#` | Data types |
-| `=` | Pipelines |
+| `-` | Pipelines |
 | `$` | Variables |
 | `!` | Errors |
 | `%` | Metadata |
