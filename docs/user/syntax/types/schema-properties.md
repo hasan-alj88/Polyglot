@@ -186,7 +186,7 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
 
 ```polyglot
 {#} ##Inf
-   [ ] Composable .Inf variant -- not a standalone type
+   [.] .Inf
 ```
 
 `##Inf` adds an `.Inf` variant to a type. It is a schema, not a type -- compose it into `#` types that need an unbounded option (e.g., `#Bound`).

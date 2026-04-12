@@ -277,7 +277,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.11: #Array as generic `{#}` with `(#) <#param`
 
-**EBNF:** `generic_param ::= "[#]" "<#" name`, `value_param ::= "[#]" "<" name schema_id`, `schema_param_bind` — generic type definition with parameterized schema composition.
+**EBNF:** `generic_param ::= "(#)" "<#" name`, `value_param ::= "(#)" "<" name schema_id`, `schema_param_bind` — generic type definition with parameterized schema composition.
 **What it tests:** `{#} #Array` is a generic type with `<#ValueType` (type input) and `<Dim` (value input with default "1D"). Schema properties accumulate from `##Array`. The `:` separator in type annotations binds positionally: `#array:float:2D` → ValueType-Float, Dim=2D. See [[syntax/types/schema-properties#Approved ## Schema Types]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]], [[technical/ebnf/04-type-system#4.3]]
 
