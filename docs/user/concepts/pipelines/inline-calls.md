@@ -1,15 +1,17 @@
 ---
 audience: pg-coder
 type: specification
-updated: 2026-03-30
+updated: 2026-04-12
 ---
 
 <!-- @concepts/pipelines/INDEX -->
 
 ## Inline Pipeline Calls
 
+Polyglot's power comes from reusing battle-tested code that already works — not reinventing it. Inline pipeline calls are where this philosophy meets ergonomics: a pipeline wrapping Python's `pathlib`, a Rust hashing function, or a database connector all look the same at the call site. The caller writes `-Pipeline"value"` and expresses intent; Polyglot handles the wiring, type checking, and concurrency underneath. The language running behind the pipeline is an implementation detail the caller never needs to know.
+
 <!-- @c:types -->
-An inline pipeline call evaluates a pipeline as a single value. The syntax is `-Pipeline"string"` — a pipeline reference immediately followed by a string literal. Inline calls are valid anywhere a `value_expr` is expected: assignment RHS, comparison operands, etc. See [[syntax/types/strings#`-Path"..."` Inline Notation]] for the `-Path` example.
+An inline pipeline call evaluates a pipeline as a single value. The syntax is `-Pipeline"string"` — a pipeline reference immediately followed by a string literal. Inline calls are valid anywhere a `value_expr` is expected: assignment RHS, comparison operands, etc. See [[syntax/types/strings#`-Path"..."` Inline Notation]] for the `-Path` example. Whether the target pipeline wraps a Python library, a Rust function, or a database connector, the inline call looks the same — the syntax abstracts away what language runs underneath.
 
 ```polyglot
 [-] $dir#path << -Path"/tmp/MyApp"
@@ -32,6 +34,8 @@ The template string contains **placeholders** that map to declared `(-)` inputs 
 
 When the pipeline is called inline (`-Pipeline"..."`), the compiler matches the rendered string against the template, extracts named values, and wires them to the corresponding inputs. When called normally (via `[-]`), `%InlineString` is ignored — callers wire inputs directly.
 
+The compiler validates the template at compile time — a malformed inline call is rejected before your code ever runs, not when your system is under load.
+
 ### Mechanism
 
 1. **String interpolation** — `{$var}` inside the caller's string literal resolves first (caller scope)
@@ -39,6 +43,8 @@ When the pipeline is called inline (`-Pipeline"..."`), the compiler matches the 
 3. **Input wiring** — extracted values are pushed to the corresponding `<name` inputs (type coercion applied)
 4. **Pipeline executes** — the pipeline runs with its inputs populated from the template extraction
 5. **Result returned** — the pipeline's output becomes the value of the expression
+
+Polyglot builds on the async foundations of languages like Python, Rust, and JavaScript — but abstracts away the concurrency mechanism complexity. You express intent; the platform handles synchronization.
 
 ```mermaid
 flowchart LR
@@ -50,6 +56,64 @@ flowchart LR
 
     RAW --> INTERP --> EXTRACT --> WIRE --> RESULT
 ```
+
+### Cross-Language Inline Calls
+
+Inline calls shine when wrapping legacy code from other languages. The caller does not need to know whether `-Py.Path.Resolve` runs Python underneath or `-Crypto.SHA256` calls Rust — the inline syntax is identical. You get the battle-tested reliability of existing libraries with the composability and compile-time safety of Polyglot.
+
+**Python — resolve a filesystem path using `pathlib`:**
+
+```polyglot
+{-} -Py.Path.Resolve
+   [%] .description << "Resolve a filesystem path using Python pathlib"
+   (-) %InlineString << "{path}"
+   (-) <path#string
+   (-) >resolved#path
+   (-) ;PyPathEnv
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Env
+      (-) <env#; << ;PyPathEnv
+   [-] -RT.Python.Function.File
+      (-) <env#PyEnv << $env
+      (-) <func#string << "resolve_path"
+      (-) <arg#array.string << [$path]
+      (-) >return#serial >> >resolved
+      (-) <file#path << -Path"./scripts/path_utils.py"
+```
+
+```polyglot
+[ ] Caller — one line, no knowledge of Python underneath
+[-] $resolved#path << -Py.Path.Resolve"/tmp/{$app}/data"
+```
+
+**Rust — SHA-256 hash via a crypto library:**
+
+```polyglot
+{-} -Crypto.SHA256
+   [%] .description << "SHA-256 hash via Rust crypto library"
+   (-) %InlineString << "{input}"
+   (-) <input#string
+   (-) >hash#string
+   (-) ;RsCryptoEnv
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Env
+      (-) <env#; << ;RsCryptoEnv
+   [-] -RT.Rust.Function.File
+      (-) <env#RsEnv << $env
+      (-) <func#string << "sha256_hex"
+      (-) <arg#array.string << [$input]
+      (-) >return#serial >> >hash
+      (-) <file#path << -Path"./lib/crypto.rs"
+```
+
+```polyglot
+[ ] Caller — same inline syntax, Rust runs underneath
+[-] $hash#string << -Crypto.SHA256"{$password}{$salt}"
+```
+
+Both pipelines {-} define a `%InlineString` template, both use [-] to call `-RT.<Lang>.Function.File` with the appropriate `-W.Env` wrapper, and both produce a single output. The caller sees only `-Pipeline"value"` — the language boundary is invisible.
 
 ### Return Value
 
@@ -86,6 +150,8 @@ Use `{name?}` for optional parts of the template. The matched input **must** hav
 [-] $conn << -DB.Connect"myhost:/mydb"
 ```
 
+The compiler enforces that optional placeholders have defaults (`<~`) — every code path produces a value. You handle the edge case at definition time, not when a production connection fails silently.
+
 ### Dual-Mode Pipelines
 
 Since `%InlineString` is only used during inline calls, a pipeline can support both normal calls and inline calls with no special branching. The same inputs are wired either way:
@@ -102,7 +168,7 @@ Since `%InlineString` is only used during inline calls, a pipeline can support b
    [-] >message << "Hello {$name}"
 ```
 
-Both calling forms work:
+A pipeline wrapping a legacy Python library can be called inline for quick one-liners or with full `[-]` wiring for complex orchestration — same pipeline, same compile-time checks, zero duplication. Both calling forms work:
 
 ```polyglot
 [ ] Inline call — compiler extracts "Alice" and wires to <name
@@ -119,7 +185,11 @@ Both calling forms work:
 - **Chain calls** — `->` connects pipeline references, not values. `[-] -Path"/tmp"->-Other` is invalid (both sides would be values).
 - **LHS of assignments** — inline calls produce values, they are not assignable targets.
 
+These restrictions exist because the compiler must resolve whether an expression is a value or a pipeline reference at compile time — ambiguity here would mean bugs that surface only at runtime.
+
 ## Call Site Rules
+
+Call site rules are the compiler's contract with you: wire your IO correctly, and the pipeline executes correctly. This is Polyglot's barrier against the parallel programming bugs that plague concurrent code — missing inputs, uncaptured outputs, direction mismatches. Yes, satisfying the compiler is a headache. It is a dramatically smaller headache than debugging silent data loss in production at 3 AM when you have no time or energy to handle it.
 
 When calling a pipeline (via `[-]`, `[=]`, `[b]`, or chain step), the compiler enforces IO wiring constraints:
 
@@ -134,7 +204,7 @@ Inputs with defaults that are not addressed by the caller emit a warning (PGW080
 
 ## Compile Rules
 
-Pipeline structure, chain execution, and call site rules enforced at compile time. See [[compile-rules/PGE/{code}|{code}]] for full definitions.
+Pipeline structure, chain execution, and call site rules enforced at compile time. Every rule in this table is a class of bug that other languages discover at runtime — Polyglot catches them before your code ever runs. See [[compile-rules/PGE/{code}|{code}]] for full definitions.
 
 | Code | Name | Section |
 |------|------|---------|

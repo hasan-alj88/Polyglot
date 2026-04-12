@@ -2,7 +2,7 @@
 audience: ai
 type: audit-reference
 scope: glossary
-updated: 2026-04-09
+updated: 2026-04-12
 ---
 
 # Glossary — Authoritative Definitions
@@ -37,6 +37,8 @@ Source: [[vision]]
 | Operation Label | A `($)` IO line inside a pipeline call that names the call's IO for downstream access via `$Label>outputParam`. Labels become Final when the operation completes and are read-only. See [[operation-labels]] | Not a variable declaration — labels are auto-populated from the operation's IO, not user-assigned |
 | Chain Step Label | A `(.)` IO line indented under `($)` in a chain call that names an individual chain step by position. Access via `>$Label.param` in chain IO lines. See [[operation-labels#Chain Step Labels]] | Not a chain-level label — `($)` labels the whole chain, `(.)` labels steps within it |
 | IO Comment | A `( )` bracket (parentheses with space) introducing an inline comment within `(X)` IO blocks. The IO-family equivalent of `[ ]` block comments. See [[comments]] | Not `[ ]` — `( )` is scoped to IO context only |
+| Data Tree | A tree of serialized strings — the universal data representation in Polyglot. "Data tree" and "serialized data" are synonyms: all Polyglot objects are trees, all tree leaves are `RawString`, and the serialized (JSON) form IS the data. See [[data-is-trees]] | Not a separate concept from serialized data — they are the same thing viewed from different angles (structure vs format) |
+| #serial | The untyped serialized data tree type — a `#` struct with no schema constraints. Accepts any tree topology. Used when a pipeline returns structured data whose shape is not known at definition time (e.g., `-RT.*.Function.*` return values) | Not a primitive — `#serial` is a `{#}` struct with no `##` schema, not a `RawString`. Not "JSON" — it is a Polyglot data tree that happens to serialize as JSON |
 | .pg files | Polyglot source files written in Polyglot Code | Not configuration files |
 | ##Record | Parameterized schema for enum-keyed flat collections. Takes `(#) <#Fields << ##Enum` and `(#) <#ValueType <~ #`. Replaces ##Map (#275) | Not #Map — ##Record uses enum keys, not arbitrary string keys |
 | #FieldsDescriptor | Enum type with `.Range` (alias `#Range`) and `.Enum` (alias `#Enum`). Used by `%##Fields` property to describe how a type's children are keyed | Not `#FlexKind` (retired #275) |

@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue #280 — Planning
-Plan: 280-01 complete
-Status: Loop closed, ready for TRANSITION
-Last activity: 2026-04-12 — UNIFY complete, SUMMARY created
+Phase: Issue-driven — ready for next issue
+Plan: —
+Status: Idle
+Last activity: 2026-04-12 — Closed #280, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -95,6 +95,7 @@ Progress:
 - Issue #273: [██████████] 100% (5/5 plans — three-bracket system + parallelism unification)
 - Issue #274: [██████████] 100% (1/1 plans — (#) generic input + ##Nullable/##Inf fields)
 - Issue #275: [██████████] 100% (5/5 plans — collection redesign: ##Record, %##Fields)
+- Issue #280: [██████████] 100% (1/1 plans — %InlineString template system)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -106,20 +107,12 @@ Progress:
 
 No active issue. Run /paul:work-issue <number> to start.
 
-## Active Issue
-
-Issue: #280 — Design pipeline inline =Pipeline"{args}" syntax
-Branch: design/issue-280-design-pipeline-inline-syntax
-Labels: design
-Started: 2026-04-12
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/280
-
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — transition required]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -269,6 +262,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Handle Archive Docs milestone complete | 2026-04-11 | 4 phases (13-16): @d: prefix, frontmatter, cross-refs, triage; archive reduced from 52 to 3 files |
 | Closed #274 — (#) generic input marker + explicit ##Nullable/##Inf fields | 2026-04-12 | Merged design/issue-274 to main; 2 stale references fixed |
 | Closed #278 — *Into.Text.* and *Into.CSV.* collector operators | 2026-04-11 | Merged design/issue-278-into-text-collector-operators-agg-concat to main; 3 plans, 43 files |
+| Closed #280 — %InlineString template system | 2026-04-12 | Merged design/issue-280 to main; replaces <InlineStringLiteral with structured template extraction |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -288,14 +282,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-12
-Stopped at: UNIFY complete — phase transition pending
-Next action: Commit changes and merge branch
+Stopped at: Issue #280 complete and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/280-inline-pipeline-syntax/280-01-SUMMARY.md
 Resume context:
-- %InlineString template system fully documented (replaces <InlineStringLiteral)
-- 8 compiler rules total (PGE12003 rewritten, PGE12005-12010 new, PGW12001 rewritten, PGW12002 new)
-- 3 pglib pipelines updated, 3 edge cases updated, EBNF updated
-- Single-plan phase — ready for commit + merge
+- Issue #280 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*

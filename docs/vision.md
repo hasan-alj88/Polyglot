@@ -1,7 +1,7 @@
 ---
 audience: [pg-coder, integrator, architect, designer]
 type: reference
-updated: 2026-04-10
+updated: 2026-04-12
 ---
 
 # The Polyglot Project
@@ -10,6 +10,8 @@ Polyglot is a trigger-driven programming language and platform — async-centric
 
 1. **Cross-Language Integration** — Enabling developers to utilise well-tested legacy code across multiple programming languages within a unified project, rather than reinventing what already works.
 2. **Trigger-Driven Orchestration** — Providing first-class support for parallelism, concurrency, race condition handling, error handling, and resource management as foundational language features. Every pipeline is triggered, not called — concurrency is the starting point, not an add-on.
+
+The name *Polyglot* — one who speaks many languages — is the project's mission statement. Polyglot exists because every programming language brings something valuable: Python's data science ecosystem, Rust's performance guarantees, JavaScript's frontend reach, Go's networking simplicity. Rather than replacing any of them, Polyglot provides the platform that lets them work together. The best code is often the code that already exists — battle-tested, production-proven, written by experts in each language's domain. Polyglot's job is to make that code seamlessly available across language boundaries.
 
 The project aims to provide a unified platform for developers to leverage the strengths of different programming languages while maintaining a cohesive development experience. By fostering a collaborative environment for developers, the Polyglot Project seeks to promote innovation and creativity in software development.
 
@@ -26,6 +28,8 @@ The project aims to provide a unified platform for developers to leverage the st
 - **Don't Reinvent the Wheel — Utilise Legacy Code** — Years of battle-tested, production-proven code already exist across every language ecosystem. Rewriting it introduces new bugs; reusing it leverages decades of fixes, optimisations, and real-world validation. Polyglot's cross-language integration lets developers bring their existing codebases, libraries, and expertise directly into a unified project — no rewrites, no wrappers, no starting from scratch. The safest code is the code that already works.
 
 - **Trigger-Driven, Async-Centric, Parallel-by-Design** — Polyglot makes parallel programming **easy, bug-free, safe, and — most importantly — intentional**. Every pipeline is triggered by an event — not called imperatively — and the code behaves exactly as the developer designed it to behave, in every situation, because the platform applies Murphy's Law as a design principle: *if something can go wrong, it will go wrong* — so Polyglot proactively covers for it.
+
+  Polyglot's concurrency model builds on the async foundations established by languages like Python (`asyncio`), Rust (`tokio`), JavaScript (Promises), and Go (goroutines). These are powerful mechanisms — Polyglot does not replace them or claim superiority over them. What Polyglot adds is a layer of abstraction that lets developers express *what* should happen concurrently without managing the underlying synchronisation primitives directly. The complexity of locks, mutexes, channels, and callback chains is handled by the platform, so developers focus on intent rather than mechanism.
 
   Traditional approaches build synchronous automation first, then retrofit async handling as an afterthought — leading to complex, error-prone code where race conditions and edge cases surface only in production. Polyglot inverts this: triggers and concurrency are the starting point, not an add-on. Developers declare *what* triggers execution, *what* runs in parallel, *how* tasks interact, and *what happens* when things go wrong. The compiler and Polyglot Code enforce the rest.
 

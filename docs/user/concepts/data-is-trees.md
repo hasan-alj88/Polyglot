@@ -1,7 +1,7 @@
 ---
 audience: pg-coder
 type: spec
-updated: 2026-03-28
+updated: 2026-04-12
 ---
 
 # Everything is a Tree
@@ -10,6 +10,8 @@ updated: 2026-03-28
 <!-- @u:identifiers:Serialized Identifiers -->
 
 All Polyglot data is serialized strings. Every object — structs, pipelines, variables, collections, errors, packages — is a branch on one unified tree rooted at `%`. Understanding this tree is the key to understanding how every concept in Polyglot Code connects.
+
+**"Data tree" and "serialized data" are the same thing.** A data tree is the structure; serialized data is the format. In Polyglot, these are inseparable — when code is parsed, every object becomes a tree of `RawString` leaves serialized as JSON. The compiler and runtime operate on this serialized tree directly. The type `#serial` is the untyped form: a data tree with no schema constraints, accepting any topology.
 
 ## All Polyglot Objects Are Data Trees
 
