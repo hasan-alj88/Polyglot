@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# generate-docs-pdf.sh — Combine docs/ markdown into PDF(s) via Pandoc + Typst
+# generate-docs-pdf.sh — Render docs/ markdown into PDF(s) via Pandoc + Typst
 #
 # Usage:
-#   ./scripts/generate-docs-pdf.sh                    # full documentation book
+#   ./scripts/generate-docs-pdf.sh                    # full docs rendering
 #   ./scripts/generate-docs-pdf.sh docs/user           # only user docs
 #   ./scripts/generate-docs-pdf.sh --by-audience       # one PDF per audience in docs/pdf/
 #   ./scripts/generate-docs-pdf.sh --audience=architect # single audience PDF
 #
-# Requirements: pandoc (>=3.x), typst (>=0.14)
+# Requirements: pandoc (>=3.x), typst (>=0.14), mmdc (mermaid-cli, optional)
 # Output:
 #   Default:       Polyglot-Documentation.pdf in repo root
 #   --by-audience: docs/pdf/{audience}.pdf for each audience
@@ -18,6 +18,7 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DOCS_DIR="$REPO_ROOT/docs"
 TEMPLATE="$REPO_ROOT/scripts/doc-template.typ"
 BUILD_DIR="$REPO_ROOT/.docs-build"
+MERMAID_DIR="$BUILD_DIR/mermaid"
 OUTPUT_PDF="$REPO_ROOT/Polyglot-Documentation.pdf"
 
 # Colors
@@ -39,6 +40,14 @@ for cmd in pandoc typst; do
       exit 1
    fi
 done
+
+HAS_MERMAID=false
+if command -v mmdc &>/dev/null; then
+   HAS_MERMAID=true
+   info "mermaid-cli found — diagrams will be rendered"
+else
+   warn "mmdc not found — mermaid blocks will render as code"
+fi
 
 # --- Argument parsing ---
 BY_AUDIENCE=false
@@ -87,7 +96,7 @@ SECTIONS=(
    "audit"
 )
 
-# Section display names for part headings
+# Section display names
 declare -A SECTION_NAMES=(
    ["vision.md"]="Vision"
    ["user/SPEC-INDEX.md"]="Language Reference Index"
@@ -137,16 +146,87 @@ collect_section_files() {
    fi
 }
 
+# Pre-process mermaid blocks in a markdown file:
+#   Extracts ```mermaid ... ``` blocks, renders to SVG, replaces with image refs.
+#   Returns the processed markdown content on stdout.
+preprocess_mermaid() {
+   local md_file="$1"
+   local file_id="$2"   # unique id for naming output images
+
+   if [[ "$HAS_MERMAID" != true ]]; then
+      cat "$md_file"
+      return
+   fi
+
+   local content
+   content="$(<"$md_file")"
+
+   # Check if file contains mermaid blocks at all
+   if ! grep -q '```mermaid' <<< "$content"; then
+      echo "$content"
+      return
+   fi
+
+   local diagram_idx=0
+   local in_mermaid=false
+   local mermaid_buf=""
+   local result=""
+
+   while IFS= read -r line || [[ -n "$line" ]]; do
+      if [[ "$in_mermaid" == true ]]; then
+         if [[ "$line" == '```' ]]; then
+            # End of mermaid block — render it
+            in_mermaid=false
+            ((diagram_idx++)) || true
+            local png_file="$MERMAID_DIR/${file_id}_${diagram_idx}.png"
+
+            if echo "$mermaid_buf" | mmdc -i /dev/stdin -o "$png_file" -b transparent -s 2 >/dev/null 2>&1; then
+               # Use path relative to repo root for Typst --root
+               local rel_png="${png_file#"$REPO_ROOT"/}"
+               result+=$'\n'"![Diagram](/${rel_png})"$'\n'
+            else
+               # Fallback: keep as code block
+               result+=$'\n'"\`\`\`"$'\n'"$mermaid_buf"$'\n'"\`\`\`"$'\n'
+            fi
+            mermaid_buf=""
+         else
+            mermaid_buf+="$line"$'\n'
+         fi
+      elif [[ "$line" == '```mermaid' ]]; then
+         in_mermaid=true
+         mermaid_buf=""
+      else
+         result+="$line"$'\n'
+      fi
+   done <<< "$content"
+
+   echo "$result"
+}
+
+# Extract YAML frontmatter as key: value lines (empty if none)
+extract_frontmatter() {
+   local md_file="$1"
+   sed -n '1{/^---$/!q}; 1,/^---$/{/^---$/d;p}' "$md_file"
+}
+
 # Convert one markdown file to typst content (no template wrapper)
 convert_one() {
    local md_file="$1"
+   local file_id="$2"
 
-   sed 's/<!--.*-->//g' "$md_file" | pandoc \
-      --from markdown+yaml_metadata_block \
-      --to typst \
-      --wrap=none 2>/dev/null | sed -E \
+   local preprocessed
+   preprocessed="$(preprocess_mermaid "$md_file" "$file_id")" || true
+
+   echo "$preprocessed" \
+      | sed 's/<!--.*-->//g' \
+      | pandoc \
+         --from markdown+yaml_metadata_block \
+         --to typst \
+         --wrap=none 2>/dev/null \
+      | sed -E \
          -e 's/^<[a-z][a-z0-9_-]*>$//g' \
-         -e 's/\\\[#link\(<[^>]*>\)\[([^]]*)\]\\\]/\1/g'
+         -e 's/\\\[#link\(<[^>]*>\)\[([^]]*)\]\\\]/\1/g' \
+         -e 's/#cite\("[^"]*"\)//g'
 }
 
 # Extract audience values from YAML frontmatter (one per line)
@@ -225,12 +305,14 @@ file_matches_audience() {
 generate_pdf() {
    local output_pdf="$1"
    local audience_filter="$2"    # empty = all files
-   local audience_label="$3"     # display name for title page, empty for monolithic
+   local audience_label="$3"     # display name for cover page, empty for full render
 
    local combined_typ="$BUILD_DIR/book.typ"
+   mkdir -p "$MERMAID_DIR"
 
    # Counters
    local total=0 success=0 skipped=0 failed=0
+   local file_counter=0
 
    # Write typst header
    {
@@ -238,15 +320,14 @@ generate_pdf() {
       if [[ -n "$audience_label" ]]; then
          echo "#show: polyglot-book.with(audience: \"$audience_label\")"
          echo ""
-         echo "#polyglot-title-page(audience: \"$audience_label\")"
+         echo "#cover-page(audience: \"$audience_label\")"
       else
          echo '#show: polyglot-book'
          echo ''
-         echo '#polyglot-title-page()'
+         echo '#cover-page()'
       fi
       echo ''
-      echo '// Table of contents'
-      echo '#outline(title: "Table of Contents", depth: 2, indent: 1.5em)'
+      echo '#outline(title: "Contents", depth: 2, indent: 1.5em)'
       echo '#pagebreak()'
    } > "$combined_typ"
 
@@ -267,34 +348,26 @@ generate_pdf() {
       [[ ! -e "$full_path" ]] && continue
 
       local section_name="${SECTION_NAMES[$section]:-$section}"
-      local section_has_files=false
 
-      # Check if section has any matching files before adding part heading
-      local section_content=""
+      # Check if section has any matching files before adding heading
+      local section_has_files=false
       while IFS= read -r md_file; do
          [[ -z "$md_file" ]] && continue
-
-         # Audience filter
-         if ! file_matches_audience "$md_file" "$audience_filter"; then
-            continue
+         if file_matches_audience "$md_file" "$audience_filter"; then
+            section_has_files=true
+            break
          fi
-
-         section_has_files=true
-         break
       done < <(collect_section_files "$section")
 
       [[ "$section_has_files" == false ]] && continue
 
+      # Section heading
+      cat >> "$combined_typ" <<SEC
+
+// ═══ Section: $section_name ═══
+#section-heading("$section_name")
+SEC
       info "Section: $section_name"
-
-      # Add part heading
-      cat >> "$combined_typ" <<PART
-
-// ═══════════════════════════════════════════
-// Part: $section_name
-// ═══════════════════════════════════════════
-#part-heading("$section_name")
-PART
 
       # Process files in this section
       while IFS= read -r md_file; do
@@ -307,9 +380,14 @@ PART
 
          local rel_path="${md_file#"$DOCS_DIR"/}"
          ((total++)) || true
+         ((file_counter++)) || true
+
+         # Extract frontmatter for metadata display
+         local fm
+         fm="$(extract_frontmatter "$md_file")"
 
          local content
-         content="$(convert_one "$md_file" 2>/dev/null)" || {
+         content="$(convert_one "$md_file" "f${file_counter}" 2>/dev/null)" || {
             ((failed++)) || true
             fail "$rel_path (pandoc error)"
             continue
@@ -321,10 +399,28 @@ PART
             continue
          fi
 
+         # Emit file header with path and frontmatter
          cat >> "$combined_typ" <<DOC
 
 // --- $rel_path ---
 #doc-separator("$rel_path")
+DOC
+         # Add frontmatter block if present
+         if [[ -n "$fm" ]]; then
+            {
+               echo '#doc-metadata(('
+               while IFS= read -r fm_line; do
+                  local key="${fm_line%%:*}"
+                  local val="${fm_line#*: }"
+                  # Escape quotes in values
+                  val="${val//\"/\\\"}"
+                  echo "  (\"$key\", \"$val\"),"
+               done <<< "$fm"
+               echo '))'
+            } >> "$combined_typ"
+         fi
+
+         cat >> "$combined_typ" <<DOC
 $content
 DOC
 
@@ -340,7 +436,7 @@ DOC
       local pdf_size
       pdf_size="$(du -h "$output_pdf" | cut -f1)"
       log "Output: $output_pdf ($pdf_size)"
-      log "$success documents included, $skipped skipped, $failed failed (of $total total)"
+      log "$success files rendered, $skipped skipped, $failed failed (of $total total)"
    else
       fail "Typst compilation failed. Check $combined_typ for errors."
       return 1
@@ -397,11 +493,11 @@ if $BY_AUDIENCE; then
       log "$line"
    done
 else
-   # Monolithic mode (original behavior)
+   # Full render mode
    rm -rf "$BUILD_DIR"
    mkdir -p "$BUILD_DIR"
 
-   info "Building combined documentation PDF..."
+   info "Rendering docs/ to PDF..."
    info "Source: $TARGET"
    echo ""
 
