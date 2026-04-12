@@ -19,7 +19,7 @@ Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through five lifecy
 | Declared | Variable exists but has no value | Default or Final |
 | Default | Assigned via `<~` or `~>` — allows one more reassignment | Final or Released |
 | Final | Assigned via `<<` or `>>` — no further assignment allowed | Released |
-| Failed | The pipeline responsible for producing this variable failed with an error. The variable will never resolve. Check the source pipeline's error tree for details. **Exception:** if a `<!` fallback is declared, the variable becomes Final with the fallback value instead — see [[errors#Error Fallback Operators]] | — |
+| Failed | The pipeline responsible for producing this variable failed with an error. The variable will never resolve. Check the source pipeline's error tree for details. **Exception:** if a `!<` fallback is declared, the variable becomes Final with the fallback value instead — see [[errors#Error Fallback Operators]] | — |
 | Released | Variable is out of scope and no longer accessible | — |
 
 ```mermaid
@@ -69,7 +69,7 @@ A variable enters the Final stage when assigned with a final assignment operator
 
 A variable enters the Failed stage when the pipeline responsible for producing its value terminates with an error. A failed variable will never resolve — it cannot transition to any other stage (PGE02005). Downstream pipelines waiting on a failed variable will not fire. Inspect the source pipeline's error tree (see [[concepts/pipelines/metadata#Error Trees]]) for details on the failure.
 
-**Fallback override:** If the IO line has a `<!` fallback declared (see [[errors#Error Fallback Operators]]), the variable bypasses the Failed stage entirely and becomes **Final** with the fallback value. The error that would have caused the Failed state is accessible via `$var%sourceError` metadata (see [[metadata#Variable (`$`)]]).
+**Fallback override:** If the IO line has a `!<` / `!>` fallback declared (see [[errors#Error Fallback Operators]]), the variable bypasses the Failed stage entirely and becomes **Final** with the fallback value. The error that would have caused the Failed state is accessible via `$var%sourceError` metadata (see [[metadata#Variable (`$`)]]).
 
 ### Released
 
@@ -105,7 +105,7 @@ All assignment operators are directional — the arrow indicates data flow direc
 | `>>` | Final (PushRight) | Left to right | `>array >> $arr` | "PushRight >array into $arr" |
 | `<~` | DefaultPushLeft | Right to left | `.field#string <~ "value"` | "DefaultPushLeft \"value\" to .field" |
 | `~>` | DefaultPushRight | Left to right | `>output#string ~> ""` | "DefaultPushRight >output to empty string" |
-| `<!` | FallbackPushLeft (Error) | Right to left | `<! "fallback"` | "On error, FallbackPushLeft into output" |
+| `!<` | FallbackPushLeft (Error) | Right to left | `!< "fallback"` | "On error, FallbackPushLeft into output" |
 | `!>` | FallbackPushRight (Error) | Left to right | `"fallback" !> >output` | "On error, FallbackPushRight outward" |
 
 ## Examples

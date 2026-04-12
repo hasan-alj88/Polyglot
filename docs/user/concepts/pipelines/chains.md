@@ -124,16 +124,16 @@ Errors in chains use the `!` prefix with a step index or leaf name, followed by 
 
 ### Fallback in Chains
 
-In chain execution, `(>)`/`(<)` markers cannot carry step addressing. Use the `(-)` explicit form with `<!` instead:
+In chain execution, `(>)`/`(<)` markers cannot carry step addressing. Use the `(-)` explicit form with `!<` instead:
 
 ```polyglot
 [-] -File.Text.Read->-Text.Parse.CSV
    (-) >0.path << $file
    (-) <1.rows >> $rows
-   (-) <0.content <! ""
-   (-) <1.rows <! ""
+   (-) <0.content !< ""
+   (-) <1.rows !< ""
    [!] !0.File.NotFound
-      (-) <0.content <! "missing"
+      (-) <0.content !< "missing"
 ```
 
 See [[errors#Error Fallback Operators]] for the full fallback model.

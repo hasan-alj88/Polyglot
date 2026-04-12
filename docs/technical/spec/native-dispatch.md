@@ -287,7 +287,7 @@ The native function returns one of two results:
 On success, the subsystem deserializes JSON outputs into Polyglot `$` variables. Each output becomes Final in the pipeline's IO state.
 
 On error, the subsystem validates the `error.id` against the declared errors for this `{N}` definition:
-- **Declared error** → propagates to the pipeline's `[!]` error handler or `<!` fallback
+- **Declared error** → propagates to the pipeline's `[!]` error handler or `!<` / `!>` fallback
 - **Undeclared error** → runtime fatal `!RT.NativeUndeclaredError` — the native function violated its contract
 
 ## Serialization Protocol

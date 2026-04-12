@@ -21,7 +21,7 @@ Directional — the arrow indicates data flow. Operators push and pull data acro
 | `>>` | PushRight (Final) | Left → right | `>array >> $arr`. See [[variable-lifecycle#Final]] |
 | `<~` | DefaultPushLeft | Right → left | `.field <~ "value"`. See [[variable-lifecycle#Default]] |
 | `~>` | DefaultPushRight | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
-| `<!` | FallbackPushLeft (Error) | Right → left | `<! "fallback"`. See [[errors#Error Fallback Operators]] |
+| `!<` | FallbackPushLeft (Error) | Right → left | `!< "fallback"`. See [[errors#Error Fallback Operators]] |
 | `!>` | FallbackPushRight (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
 | `->` | Chain | Left → right | `-A->-B->-C`. See [[concepts/pipelines/chains#Chain Execution]] |
 

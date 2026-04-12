@@ -14,7 +14,7 @@ severity: error
 <!-- @u:concepts/errors -->
 <!-- @u:syntax/operators -->
 
-**Statement:** When a pipeline declares `%constraint#array:RawString` on an input parameter and a caller passes a literal value that matches any entry in the constraint set, it is a compile error. Variable inputs cannot be checked statically — use fallback assignment (`<!`) for runtime safety.
+**Statement:** When a pipeline declares `%constraint#array:RawString` on an input parameter and a caller passes a literal value that matches any entry in the constraint set, it is a compile error. Variable inputs cannot be checked statically — use fallback assignment (`!<`) for runtime safety.
 **Rationale:** Some inputs have values that are provably invalid regardless of context (e.g., division by zero). When the pipeline author declares these constraints and the caller passes a matching literal, the compiler can catch the bug at compile time rather than at runtime.
 **Detection:** The compiler reads the `%constraint` metadata on each input of the called pipeline. For each literal value passed at the call site, if the literal matches any entry in the constraint array, PGE04016 fires.
 
@@ -50,7 +50,7 @@ severity: error
    (-) <denominator << $divisor
    (-) >result >> $half
    [!] !DivisionByZero
-      (>) <! 0
+      (>) !> 0
 ```
 
 **INVALID:**

@@ -13,20 +13,20 @@ severity: warning
 <!-- @u:syntax/io -->
 <!-- @u:syntax/operators -->
 
-**Statement:** A `<!` fallback on an IO line whose source is provably non-failable is dead code. The compiler emits a warning. A source is non-failable when:
+**Statement:** A `!<` fallback on an IO line whose source is provably non-failable is dead code. The compiler emits a warning. A source is non-failable when:
 1. The parent `[-]` call targets a pipeline that declares no `(-) !ErrorName` error declarations (non-failable call).
-2. The input source is a literal value (e.g., `<data << "hello"` with `<! "fallback"`).
+2. The input source is a literal value (e.g., `<data << "hello"` with `!< "fallback"`).
 3. The input source is a variable that is already Final via `<<` constant assignment and cannot enter Failed state.
 
-**Rationale:** Fallback values on non-failable sources give a false impression that the source can fail. This misleads developers into thinking error recovery is needed where none exists. Unlike PGW07001 (which flags dead `[!]` handler blocks), this rule targets dead `<!` fallback values on IO lines — a subtler form of dead error-handling code.
-**Detection:** The compiler checks each `<!` fallback line. It determines whether the source can fail:
-- For output IO (`>output >> $var` with `<! value`): resolve the parent `[-]` call. If the called pipeline has no `(-) !...` error declarations (and is not a pglib failable pipeline), the source is non-failable.
-- For input IO (`<input << source` with `<! value`): if the source is a literal or a variable that is already Final via `<<` assignment, the source is non-failable.
+**Rationale:** Fallback values on non-failable sources give a false impression that the source can fail. This misleads developers into thinking error recovery is needed where none exists. Unlike PGW07001 (which flags dead `[!]` handler blocks), this rule targets dead `!<` fallback values on IO lines — a subtler form of dead error-handling code.
+**Detection:** The compiler checks each `!<` fallback line. It determines whether the source can fail:
+- For output IO (`>output >> $var` with `!> value`): resolve the parent `[-]` call. If the called pipeline has no `(-) !...` error declarations (and is not a pglib failable pipeline), the source is non-failable.
+- For input IO (`<input << source` with `!< value`): if the source is a literal or a variable that is already Final via `<<` assignment, the source is non-failable.
 If the source is non-failable, PGW07004 fires.
 
 **See also:**
 - [PGW07001 — Error Handler on Non-Failable Call](PGW07001-error-handler-on-non-failable-call.md) — dead `[!]` handler on non-failable call
-- [PGE07003 — Duplicate Fallback Assignment](../PGE/PGE07003-duplicate-fallback-assignment.md) — duplicate `<!` on same output
+- [PGE07003 — Duplicate Fallback Assignment](../PGE/PGE07003-duplicate-fallback-assignment.md) — duplicate `!<` on same output
 - [PGE07005 — Undeclared Error Raise](../PGE/PGE07005-undeclared-error-raise.md) — raising an error not declared by the pipeline
 - [PGE02005 — Failed Is Terminal](../PGE/PGE02005-failed-is-terminal.md) — Failed state semantics
 
@@ -42,7 +42,7 @@ If the source is non-failable, PGW07004 fires.
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
-         (>) <! "file not available"
+         (>) !> "file not available"
    [-] >content << $content
 ```
 
@@ -57,8 +57,8 @@ If the source is non-failable, PGW07004 fires.
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
-         (>) <!File.NotFound "missing"
-         (>) <!File.ReadError "unreadable"
+         (>) !File.NotFound> "missing"
+         (>) !File.ReadError> "unreadable"
    [-] >content << $content
 ```
 
@@ -75,7 +75,7 @@ If the source is non-failable, PGW07004 fires.
       (-) >content >> $text
    [-] -Format
       (-) <text << $text
-         (>) <! "default text"                  [ ] ✓ $text came from failable -File.Text.Read
+         (>) !> "default text"                  [ ] ✓ $text came from failable -File.Text.Read
       (-) >formatted >> $result
    [-] >result << $result
 ```
@@ -92,7 +92,7 @@ If the source is non-failable, PGW07004 fires.
    [-] -Format
       (-) <text << $input
       (-) >formatted >> $out
-         (>) <! "format failed"              [ ] ⚠ PGW07004 — -Format is non-failable
+         (>) !> "format failed"              [ ] ⚠ PGW07004 — -Format is non-failable
    [-] >result << $out
 ```
 
@@ -105,7 +105,7 @@ If the source is non-failable, PGW07004 fires.
    (-) >result#string
    [-] -Process
       (-) <data << "hello"
-         (>) <! "fallback"                   [ ] ⚠ PGW07004 — source is a literal, cannot fail
+         (>) !> "fallback"                   [ ] ⚠ PGW07004 — source is a literal, cannot fail
       (-) >out >> $result
    [-] >result << $result
 ```
@@ -120,14 +120,14 @@ If the source is non-failable, PGW07004 fires.
    [-] $name << "Alice"
    [-] -Greet
       (-) <name << $name
-         (>) <! "Unknown"                    [ ] ⚠ PGW07004 — $name is Final via <<, cannot fail
+         (>) !> "Unknown"                    [ ] ⚠ PGW07004 — $name is Final via <<, cannot fail
       (-) >msg >> $greeting
    [-] >greeting << $greeting
 ```
 
 **Diagnostic:**
-- Non-failable call: `"Fallback <!  at line {N} on output from non-failable call ={PipelineName} — pipeline declares no errors; fallback will never activate"`
-- Literal source: `"Fallback <! at line {N} on input <{name} — source is a literal value; fallback will never activate"`
-- Final constant source: `"Fallback <! at line {N} on input <{name} — source ${variable} is Final; fallback will never activate"`
+- Non-failable call: `"Fallback !<  at line {N} on output from non-failable call ={PipelineName} — pipeline declares no errors; fallback will never activate"`
+- Literal source: `"Fallback !< at line {N} on input <{name} — source is a literal value; fallback will never activate"`
+- Final constant source: `"Fallback !< at line {N} on input <{name} — source ${variable} is Final; fallback will never activate"`
 
 **Open point:** None.

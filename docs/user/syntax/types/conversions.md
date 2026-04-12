@@ -55,20 +55,20 @@ Allowed only if the serial's fields satisfy the struct's schema. Extra fields in
 The compiler performs best-effort static analysis:
 - **Provably matches** — no handling needed
 - **Provably mismatches** — PGE04002 (schema mismatch)
-- **Cannot prove match** — user must handle with `[!]` block or `<!` fallback. If absent → PGE04009
+- **Cannot prove match** — user must handle with `[!]` block or `!<` fallback. If absent → PGE04009
 
 ```polyglot
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
 
-[ ] handled — <! provides fallback if serial doesn't match
+[ ] handled — !< provides fallback if serial doesn't match
 [-] $defaultUser#UserRecord
    [-] $defaultUser.name << "Unknown"
    [-] $defaultUser.age << 0
 
 [-] $user#UserRecord << $dynamicSerial
-   (>) <! $defaultUser                [ ] catch-all fallback
+   (>) !> $defaultUser                [ ] catch-all fallback
    [!] !SchemaMismatch
       [-] >user << $defaultUser
 ```

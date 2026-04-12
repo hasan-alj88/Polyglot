@@ -13,9 +13,9 @@ severity: error
 <!-- @u:syntax/io -->
 <!-- @u:syntax/operators -->
 
-**Statement:** Each output port may have at most one generic `<!` fallback and at most one `<!Error.Name` fallback per specific error. Duplicate generic fallbacks or duplicate error-specific fallbacks for the same error on the same output are compile errors.
+**Statement:** Each output port may have at most one generic `!<` fallback and at most one `!Error.Name>` fallback per specific error. Duplicate generic fallbacks or duplicate error-specific fallbacks for the same error on the same output are compile errors.
 **Rationale:** Multiple fallbacks for the same condition create ambiguity — which value should the runtime use? A single, deterministic fallback per error condition keeps the behavior predictable and explicit.
-**Detection:** The compiler collects all `(>)`/`(<)` fallback lines scoped under each `(-)` output. If two or more generic `<!` or two or more `<!Error.Name` with the same error name are found, PGE07003 fires.
+**Detection:** The compiler collects all `(>)`/`(<)` fallback lines scoped under each `(-)` output. If two or more generic `!>` or two or more `!Error.Name>` with the same error name are found, PGE07003 fires.
 
 **VALID:**
 ```polyglot
@@ -23,9 +23,9 @@ severity: error
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
-      (>) <! "generic"
-      (>) <!File.NotFound "missing"
-      (>) <!File.ReadError "error"
+      (>) !> "generic"
+      (>) !File.NotFound> "missing"
+      (>) !File.ReadError> "error"
 ```
 
 ```polyglot
@@ -33,8 +33,8 @@ severity: error
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
-      (>) <!File.NotFound "missing"
-      (>) <!File.ReadError "error"
+      (>) !File.NotFound> "missing"
+      (>) !File.ReadError> "error"
 ```
 
 ```polyglot
@@ -42,7 +42,7 @@ severity: error
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
-      (>) <! "fallback"
+      (>) !> "fallback"
 ```
 
 **INVALID:**
@@ -51,8 +51,8 @@ severity: error
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
-      (>) <! "first"
-      (>) <! "second"              [ ] ✗ PGE07003
+      (>) !> "first"
+      (>) !> "second"              [ ] ✗ PGE07003
 ```
 
 ```polyglot
@@ -60,8 +60,8 @@ severity: error
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
-      (>) <!File.NotFound "a"
-      (>) <!File.NotFound "b"      [ ] ✗ PGE07003
+      (>) !File.NotFound> "a"
+      (>) !File.NotFound> "b"      [ ] ✗ PGE07003
 ```
 
 **See also:**
@@ -69,3 +69,4 @@ severity: error
 - [PGE07002 — Chain Error Scoping](PGE07002-chain-error-scoping.md) — chain-specific error rules
 - [[user/syntax/io|IO]] — references PGE07003 in fallback duplicate rules
 - [[user/concepts/errors|Errors]] — references PGE07003 in error fallback operators
+

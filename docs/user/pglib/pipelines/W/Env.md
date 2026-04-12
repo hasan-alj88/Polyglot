@@ -68,7 +68,7 @@ See [[pglib/errors/errors#Built-in Error Namespaces]] for the full `!Env` error 
 
 ### Error Handling at Call Site
 
-Callers handle environment errors using `[!]` blocks or `(>) <!` fallbacks:
+Callers handle environment errors using `[!]` blocks or `(>) !>` fallbacks:
 
 ```polyglot
 [-]

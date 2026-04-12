@@ -15,7 +15,7 @@ severity: warning
 <!-- @u:syntax/operators -->
 
 **Statement:** When a pipeline author defines an output fallback inside a `[!] >>` raise block (`(-) >output << value`) but does not include a `(>) %FallbackMessage` line, the compiler emits a warning. Without a message, callers can silently override the fallback without understanding the author's intent. Suppress the warning with `(>) %FallbackMessage << ""` to explicitly allow silent overrides.
-**Rationale:** Pipeline-defined fallbacks represent deliberate design decisions. If the author does not document why the fallback exists, callers who override it via `(>) <!` will not receive PGW07002, losing the safety net. This warning ensures authors either document their fallback reasoning or explicitly opt out.
+**Rationale:** Pipeline-defined fallbacks represent deliberate design decisions. If the author does not document why the fallback exists, callers who override it via `(>) !>` will not receive PGW07002, losing the safety net. This warning ensures authors either document their fallback reasoning or explicitly opt out.
 **Detection:** The compiler checks each `(-) >output << value` line inside `[!] >>` raise blocks. If no `(>) %FallbackMessage` line follows (indented under the output fallback), PGW07003 fires.
 
 **See also:**

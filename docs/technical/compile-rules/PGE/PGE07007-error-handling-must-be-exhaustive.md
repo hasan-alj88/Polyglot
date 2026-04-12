@@ -21,8 +21,8 @@ severity: error
 |-----------|-------|
 | `[!] !ErrorName` handler block | Addresses that specific error |
 | `[!] !*` wildcard catch-all | Addresses all remaining errors |
-| `(>) <!` generic fallback | Addresses all errors (on that output) |
-| `(>) <!Error.Name` specific fallback | Addresses that specific error (on that output) |
+| `(>) !>` generic fallback | Addresses all errors (on that output) |
+| `(>) !Error.Name>` specific fallback | Addresses that specific error (on that output) |
 
 If any declared error is not addressed by at least one mechanism, PGE07007 fires.
 
@@ -70,7 +70,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 ```
 
 ```polyglot
-[ ] ✓ generic (>) <! fallback addresses all errors
+[ ] ✓ generic (>) !> fallback addresses all errors
 {-} -ProcessFallback
    [T] -T.Call
    [Q] -Q.Default
@@ -80,7 +80,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
-         (>) <! "unavailable"
+         (>) !> "unavailable"
    [-] >content << $content
 ```
 
@@ -114,8 +114,8 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
-         (>) <!File.NotFound "missing"
-         (>) <!File.ReadError "unreadable"
+         (>) !File.NotFound> "missing"
+         (>) !File.ReadError> "unreadable"
    [-] >content << $content
 ```
 
@@ -164,12 +164,12 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
-         (>) <!File.NotFound "missing"
+         (>) !File.NotFound> "missing"
                                                      [ ] ✗ PGE07007 — !File.ReadError unaddressed
    [-] >content << $content
 ```
 
-**Diagnostic:** "Unaddressed error `!ErrorName` from failable call `-PipelineName` at line N — add `[!] !ErrorName` handler, `[!] !*` wildcard, or `(>) <!` fallback"
+**Diagnostic:** "Unaddressed error `!ErrorName` from failable call `-PipelineName` at line N — add `[!] !ErrorName` handler, `[!] !*` wildcard, or `(>) !>` fallback"
 
 ### See Also
 

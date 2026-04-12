@@ -22,14 +22,14 @@ When a `serial` value is pushed into a `struct`-typed target, the compiler must 
 
 ### 2. Mandatory error handling — PGE04009 (Murphy's Law)
 
-**If it can go wrong, it will go wrong.** When the compiler cannot prove serial→struct compatibility at compile time, the user MUST handle the potential failure with `[!]` error handling or `<!` fallback operators. If unhandled → **PGE04009** ("Unhandled serial→struct conversion — `[!]` block or `<!` fallback required").
+**If it can go wrong, it will go wrong.** When the compiler cannot prove serial→struct compatibility at compile time, the user MUST handle the potential failure with `[!]` error handling or `!<` fallback operators. If unhandled → **PGE04009** ("Unhandled serial→struct conversion — `[!]` block or `!<` fallback required").
 
 No warnings. Either the compiler can prove it's safe (no handling needed), prove it's wrong (PGE04002), or the user must handle the uncertainty (PGE04009 if they don't).
 
 ```polyglot
-[ ] ✓ Handled — <! provides fallback
+[ ] ✓ Handled — !> provides fallback
 [-] $record#UserRecord << $someSerial
-   (>) <! $defaultRecord              [ ] catch-all fallback
+   (>) !> $defaultRecord              [ ] catch-all fallback
    [!] !SchemaMismatch
       [-] >record << $defaultRecord
 ```
@@ -41,7 +41,7 @@ No warnings. Either the compiler can prove it's safe (no handling needed), prove
 
 ### 3. Runtime behavior
 
-A failed serial→struct match at runtime fires the `[!]` error block or `<!` fallback. Since PGE04009 guarantees error handling is always present when the match is uncertain, the pipeline always has a recovery path. No unhandled runtime crashes.
+A failed serial→struct match at runtime fires the `[!]` error block or `!<` fallback. Since PGE04009 guarantees error handling is always present when the match is uncertain, the pipeline always has a recovery path. No unhandled runtime crashes.
 
 ### 4. Partial matching — superset allowed, subset not
 
@@ -58,8 +58,8 @@ Rationale:
 |--------|----------|
 | Static match (all fields known) | No handling needed |
 | Static mismatch (provably wrong) | PGE04002 |
-| Cannot prove match | `[!]` block or `<!` fallback required — PGE04009 if absent |
-| Runtime failure | Fires `[!]` block or `<!` fallback |
+| Cannot prove match | `[!]` block or `!<` fallback required — PGE04009 if absent |
+| Runtime failure | Fires `[!]` block or `!<` fallback |
 | Extra fields in serial | Allowed (ignored) |
 | Missing fields in serial | Error |
 

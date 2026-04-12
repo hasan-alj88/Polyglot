@@ -71,11 +71,11 @@ The handler **cannot** access other steps' IO (steps other than N).
 ```
 
 ```polyglot
-[ ] ✓ error handler with <! fallback
+[ ] ✓ error handler with !> fallback
 [-] -File.Text.Read->-Text.Parse.CSV
    (-) >0.path#path << $path
    (-) <1.rows#string >> >content
-      (>) <! ""                       [ ] catch-all fallback
+      (>) !> ""                       [ ] catch-all fallback
    [!] .0!File.NotFound
       [-] -LogError
          (-) <msg << "file not found"

@@ -17,7 +17,7 @@ severity: error
 **Rationale:** When two `[!]` blocks catch the same error, the runtime cannot determine which handler to invoke. Handling different errors separately is the intended pattern — it gives each error a distinct recovery path. Duplicate same-name handlers are always ambiguous.
 **Detection:** The compiler collects all `[!]` blocks scoped under each `[-]` call and groups them by error name. If any error name (including `!*`) appears more than once, PGE07004 fires on the duplicate.
 
-**See also:** PGE07001 (error block scoping), PGE07003 (duplicate fallback assignment — `<!` lines, not `[!]` blocks)
+**See also:** PGE07001 (error block scoping), PGE07003 (duplicate fallback assignment — `!<` lines, not `[!]` blocks)
 
 **VALID:**
 ```polyglot

@@ -83,7 +83,7 @@ IO brackets use round brackets to distinguish data binding from control instruct
 | `(.)` | Under `($)` in chains | Chain step label — names individual chain steps by position |
 | `( )` | Any IO context | IO comment — inline annotation |
 
-**Rule:** `(>)` (output parameter handling) and `(<)` (input parameter handling) are scoped under `(-)` IO lines — they handle IO parameters (e.g., the `<!` fallback operator provides error-recovery values — see §10.2). These are distinct from `(*) <<` / `(*) >>` collector IO lines, which handle wait/collect semantics for parallel synchronization (see §12). `(<)` also appears nested under `(#) <param` in `{#}` definitions as a type parameter constraint block (see §4.3).
+**Rule:** `(>)` (output parameter handling) and `(<)` (input parameter handling) are scoped under `(-)` IO lines — they handle IO parameters (e.g., the `!<` / `!>` fallback operators provide error-recovery values — see §10.2). These are distinct from `(*) <<` / `(*) >>` collector IO lines, which handle wait/collect semantics for parallel synchronization (see §12). `(<)` also appears nested under `(#) <param` in `{#}` definitions as a type parameter constraint block (see §4.3).
 
 **Rule:** `[#]` serves two contexts. In `{-}` pipeline execution bodies, `(#) <param` loads data parameters (execution element). In `{#}` definition bodies, `[#]` introduces schema composition (`[#] ##Schema`), field type composition (`[#] ###FieldType`), schema properties (`[#] %##Property << value`), and inheritance (`(#) <~ #Parent`) — see §4.3 for grammar rules and §9.2 `data_body_line` for how these integrate into data definitions.
 
