@@ -34,6 +34,6 @@ Pipelines declare permissions by referencing named `{_}` grant objects via `[_]`
 
 ## See Also
 
-- [[permissions]] — full `{_}` permission object system, tier system, per-category enums
+- [[permissions]] — full `{_}` permission object system, `_`/`__`/`___` prefixes, per-category enums
 - [[concepts/pipelines/INDEX|Pipeline Structure]] — where `[_]` fits in pipeline element order
 - [[concepts/pipelines/metadata|Pipeline Metadata]] — `[%]` metadata that precedes permissions

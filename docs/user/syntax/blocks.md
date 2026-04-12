@@ -26,7 +26,7 @@ Define top-level structures. Open a scope that continues with indentation. All d
 | `{W}` | Wrapper definition (subtype of `{-}`). See [[wrappers]] |
 | `{Q}` | Queue — dual-purpose block. `{Q} #Queue:Name` defines a queue instance (subtype of `{#}`, data definition). `{Q} -Q.*` defines a queue pipeline operation (subtype of `{-}`, equivalent to `{-}[Q]`). The identifier prefix (`#` vs `-`) disambiguates. See [[concepts/pipelines/queue#Queue]] |
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
-| `{_}` | Permission object — named, reusable permission policy with `#Ceiling` or `#Grant` intent. Uses `_`/`__`/`___` tier system mirroring `#`/`##`/`###`. See [[permissions]] |
+| `{_}` | Permission object — `##Permission` struct instance with all leaves filled. `_`/`__`/`___` mirror `#`/`##`/`###` (instance, template, field). See [[permissions]] |
 | `{N}` | Native definition — compiler primitive with no Polyglot body. `[%]` metadata implicitly scopes to `%Native.*`. Non-user-extendable. See [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
 | `{*}` | Collector definition — first-class definable collector logic. Metadata at `%*`. See [[technical/spec/collector-definitions\|Collector Definitions]] |
 | `{ }` | Comment. See [[comments]] |
@@ -64,6 +64,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `(-)` | Pipeline IO line — scopes to parent operator via indentation (top-level IO, `[Q]`, `[W]`, `[-]`/`[=]`/`[b]`). See [[io#IO Line Pattern]] |
 | `(=)` | Collection-expand IO line. See [[concepts/collections/expand#Expand Operators]] |
 | `(*)` | Collection-collect IO line. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
+| `(_)` | Permission IO line — scopes to `[_]` permission references for `__` generic permission inputs. See [[permissions#__ Generic Permissions]] |
 | `(*) <<` | Wait input — wait for variable to be Final (used inside `(*)` blocks). See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `(*) >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `(>)` | Output parameter handling — scoped under `(-)` output line. See [[io#IO Parameter Handling]] |
@@ -80,6 +81,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `[-]` | Run/execute in series — single line (`-`) symbolizes one sequential thread. Also used as match header (with `>>` and `[?]` children). Without `[?]` children, `[-] $x >> $y` is a plain assignment. See [[conditionals#Match Syntax]] |
 | `[=]` | Run/execute in parallel — double line (`=`) symbolizes two parallel threads |
 | `[b]` | Run/execute in background (fire and forget) |
+| `[*]` | Invoke a collector operator (`*All`, `*First`, `*Nth`, `*Ignore`). IO lines underneath use `(*)`. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `[#]` | Load serialized data into typed structure |
 
 ### Control Flow
@@ -93,7 +95,7 @@ See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure a
 | `[!]` | Error handling — scoped under `[-]` call. See [[concepts/pipelines/error-handling#Error Handling]] |
 | `[!] >>` | Error raise — raises a declared error. See [[errors#Raising Errors]] |
 | `[T]` | Trigger. In pipelines: [[concepts/pipelines/io-triggers#Triggers]]. In `{*}` collectors: arrival trigger — [[technical/spec/collector-definitions\|Collector Definitions]] |
-| `[*]` | Release — inside `{*}` collector triggers, releases collector claims on jobs (`*Job.Release`, `*Arrive.Job.Release`). See [[technical/spec/collector-definitions\|Collector Definitions]] |
+| `[*]` | Release — inside `{*}` collector definition triggers, releases collector claims on jobs (`*Job.Release`, `*Arrive.Job.Release`). See [[technical/spec/collector-definitions\|Collector Definitions]] |
 | `[Q]` | Queue. See [[concepts/pipelines/queue#Queue]] |
 | `[W]` | Wrapper. See [[concepts/pipelines/wrappers#Wrappers]] |
 

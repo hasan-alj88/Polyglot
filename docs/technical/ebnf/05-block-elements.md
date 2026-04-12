@@ -66,7 +66,7 @@ comment_elem        ::= "[ ]" ;
 ### 5.2 IO Brackets (Data Binding)
 
 ```ebnf
-io_bracket          ::= "(-)" | "(=)" | "(*)" | "(>)" | "(<)"
+io_bracket          ::= "(-)" | "(=)" | "(*)" | "(_)" | "(>)" | "(<)"
                       | "($)" | "(.)" | "( )" ;
 ```
 
@@ -77,6 +77,7 @@ IO brackets use round brackets to distinguish data binding from control instruct
 | `(-)` | Pipeline call (`-Name`) | Pipeline IO — inputs, outputs, errors |
 | `(=)` | Expander (`=ForEach.*`) | Expander IO — expand inputs/outputs |
 | `(*)` | Collector (`*Into.*`, `*All`) | Collector IO — wait/collect bindings |
+| `(_)` | Permission ref (`[_]`) | Permission IO — inputs for `__` generic permissions |
 | `(>)` | Under `(-)` output line | Output parameter handling (fallback) |
 | `(<)` | Under `(-)` input line | Input parameter handling (fallback) |
 | `($)` | Pipeline/chain call | Operation label — names the call for downstream IO access |

@@ -177,7 +177,7 @@ Nested sub-jobs extend the positional path:
 - **No instances** — permissions are per-definition, resolved at compile time. No `:{instance}` level exists. No runtime metadata.
 - **No `live` fields** — all permission data is static. The compiler resolves permissions entirely during compilation.
 - **Fully filled** — every `{_}` object must have all leaf fields assigned. Empty leaves are a compile error.
-- **Identifier tiers** — `_` = permission object, `__` = permission descriptor (schema), `___` = constraint descriptor. Mirrors `#`/`##`/`###`.
+- **Identifier prefixes** — permissions are data trees using `#`/`##`/`###` pattern: `_` = `##Permission` struct instance (all leaves filled), `__` = generic template with `[#]` inputs, `___` = specific field within the permission object.
 - **Nested under `%@` and `%-`** — permissions also appear as `._` subsections under package (`%@:<address>._`) and pipeline (`%-:<name>:<instance>._`) branches, representing the package ceiling and pipeline-level grant references respectively.
 
 See also: [[io-ports|IO Port Nesting]], [[instance-lifecycle|Instance Lifecycle]], [[object-types|Object Type Branches]]

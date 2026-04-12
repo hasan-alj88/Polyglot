@@ -266,7 +266,7 @@ wrapper_io_decl     ::= "(-)" typed_io_param ;
 - Wrappers do NOT contain `{#}` definitions, `[T]`, or `[Q]` — those belong to pipelines.
 - Execution order: `(-)`/`[T]` → `[Q]` → `[\]` → Execution Body → `[/]`.
 - The wrapper unpacks before and after the body like brackets.
-- **Rule (parallel fork):** `[=]` inside `[\]` with no subsequent `(*) *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `(*) *All` with `(*) << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
+- **Rule (parallel fork):** `[=]` inside `[\]` with no subsequent `[*] *All` in setup forks a parallel execution path. Setup completes and the body begins while the forked path is still running. `[/]` may use `[*] *All` with `(*) << $var` to synchronise with it before proceeding. `[b]` inside `[\]` is fire-and-forget — no collection in `[/]` is possible.
 - Variables produced in `[\]` (including by `[=]`) remain accessible in `[/]`.
 
 **Wrapper IO wiring at `[W]` usage site:**
@@ -434,7 +434,7 @@ category_name          ::= "File" | "Web" | "Database" | "System"
 - **Fully filled** — every `{_}` object must have all leaf fields assigned. Empty leaves are a compile error.
 - **No instances** — permissions are compile-time declarations. No `:{instance}` level exists in `%_`.
 - **No inline declarations** — `[_]` in `{@}` and `{-}` always references a `{_}` object by name. Inline permission syntax is not valid.
-- **Identifier tiers:** `_` = permission object, `__` = permission descriptor (schema), `___` = constraint descriptor. Mirrors `#`/`##`/`###`.
+- **Identifier prefixes:** permissions are data trees using `#`/`##`/`###` pattern: `_` = `##Permission` struct instance (all leaves filled), `__` = generic template with `[#]` inputs, `___` = specific field within the permission object.
 
 ### 9.10 Comment Block (Definition Level)
 

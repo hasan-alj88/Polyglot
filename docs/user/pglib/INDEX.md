@@ -66,6 +66,21 @@ All pglib items live on the `%` metadata tree (see [[data-is-trees#How Concepts 
 | `#Code`, `#PyEnv`, `#RsEnv` | [types/rt.md](types/rt.md) | Runtime types | Stable |
 | `#TextDiff`, `#DiffOp`, `#DiffStats`, `#MergeConflict`, `#MergeResult`, `#MergeStrategy`, `#CollectOrder` | [types/](types/) | Text diff and merge types | Draft |
 
+## Generic Permissions (__)
+
+| Prefix | File | Description | Status |
+|--------|------|-------------|--------|
+| `__File` | [permissions/File.md](permissions/File.md) | File system permissions (Read, Write, Execute, Delete, Create) | Stable |
+| `__Web` | [permissions/Web.md](permissions/Web.md) | Network/web permissions (Request, Socket, Listen) | Stable |
+| `__Database` | [permissions/Database.md](permissions/Database.md) | Database permissions (Connect, Read, Write) | Stable |
+| `__System` | [permissions/System.md](permissions/System.md) | System permissions (Env, Process, Signal) | Stable |
+| `__Crypto` | [permissions/Crypto.md](permissions/Crypto.md) | Cryptographic permissions (Key, Sign, Encrypt) | Stable |
+| `__IPC` | [permissions/IPC.md](permissions/IPC.md) | IPC permissions (Send, Receive, Subscribe) | Stable |
+| `__Device` | [permissions/Device.md](permissions/Device.md) | Device permissions (Camera, Microphone, Location, Bluetooth) | Stable |
+| `__Memory` | [permissions/Memory.md](permissions/Memory.md) | Memory permissions (Allocate, Shared) | Stable |
+
+See [[pglib/permissions/INDEX|Generic Permissions INDEX]] for full capability-level breakdown.
+
 ## Error Namespaces (!)
 
 | Prefix | File | Description | Status |

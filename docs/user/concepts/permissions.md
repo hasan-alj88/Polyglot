@@ -72,19 +72,19 @@ Every `{_}` object must be **fully filled** — every leaf field must have a val
 [_] _File.read"/var/log/*"
 ```
 
-## Tier System: _ / __ / ___
+## Permission Prefixes: _ / __ / ___
 
-Permission identifiers use a three-tier prefix system that mirrors the `#` / `##` / `###` data tier:
+Permission objects are data trees — the same `#`/`##`/`###` pattern applied to permissions:
 
-| Prefix | Tier | Purpose | Parallel |
-|--------|------|---------|----------|
-| `_` | Object | Named permission policy instance | `#` (struct instance) |
-| `__` | Descriptor | Permission schema definition | `##` (schema descriptor) |
-| `___` | Constraint | Leaf-level constraint descriptors | `###` (field constraint) |
+| Prefix | Is a | Purpose | Mirrors |
+|--------|------|---------|---------|
+| `_` | `#` struct instance | `##Permission` instance, all leaves filled (Final or Default→Final on pull) | `#` |
+| `__` | `##` schema template | Generic permission with `[#]` inputs — fills missing fields to yield a valid `_` object | `##` |
+| `___` | `###` field | A specific field within the permission object | `###` |
 
 ### _ Permission Objects
 
-Named, reusable permission policies. Each `_` object holds concrete capability declarations with an intent (Ceiling or Grant).
+A `_` object is a `#` struct instance whose schema is `##Permission`. Every leaf must be filled — either Final or Default (which becomes Final when pulled). This is a data tree, not a special construct.
 
 ```polyglot
 {_} _WebAccess
@@ -93,28 +93,46 @@ Named, reusable permission policies. Each `_` object holds concrete capability d
    [.] .Web.Socket "wss://stream.example.com/*"
 ```
 
-### __ Permission Descriptors (Generic Permissions)
+### __ Generic Permissions
 
-`__` descriptors are **generic permission templates** — they mirror `##` schemas with `[#]` inputs. A `__` descriptor takes parameters and produces a concrete `_` permission object at compile time, serving as syntax sugar so you don't have to write the full permission schema for common patterns.
+A `__` descriptor is a `##` schema template with `[#]` inputs. It fills missing fields to produce a concrete `_` object at compile time — syntax sugar so you don't write the full `{_}` block each time.
+
+pglib ships generic permissions at two levels:
+
+- **Category-level** (`__File`, `__Web`, ...) — takes capability + scope
+- **Capability-level** (`__File.Read`, `__Web.Request`, ...) — takes only scope, sugar over category-level
 
 ```polyglot
-{_} __FileReader
-   [#] <path;path
+[ ] Category-level — specify capability and scope
+[_] __File
+   (_) <capability << .Read
+   (_) <scope << "/var/log/*"
 
-   [.] .intent << #Grant
-   [.] .File.Read "{$path}"
-
-[ ] Usage — produces a concrete _ object at compile time
-[_] __FileReader "data/reports/q1.csv"
+[ ] Capability-level — scope only (capability is baked in)
+[_] __File.Read
+   (_) <scope << "/var/log/app/*.log"
 ```
 
-Without `__FileReader`, you would write the full `{_}` block each time you need file read permission for a different path. The generic descriptor eliminates this repetition.
+See [[pglib/permissions/INDEX|pglib Generic Permissions]] for the full list of 8 category generics and 31 capability generics.
+
+Users can also define custom `__` generics:
+
+```polyglot
+{_} __ApiAccess
+   [#] <endpoint;string
+
+   [.] .intent << #Grant
+   [.] .Web.Request "{$endpoint}"
+
+[_] __ApiAccess
+   (_) <endpoint << "https://api.example.com/*"
+```
 
 **Compile-time resolution:** All generic permissions are fully resolved at compile time. The resulting `_` object has all leaves in Final or Default state. When a Default leaf is pulled, it transitions to Final (see [[variable-lifecycle#Default]]). No runtime permission evaluation occurs — the compiler validates all grants against ceilings statically.
 
-### ___ Constraint Descriptors
+### ___ Permission Fields
 
-`___` descriptors are **leaf-level constraint templates** — they mirror `###` field types. They restrict permission behavior based on environment or policy, and like `__` descriptors, resolve entirely at compile time.
+A `___` identifier names a specific field within the permission data tree — mirroring `###` field types. These restrict permission behavior based on environment or policy, and like `__` descriptors, resolve entirely at compile time.
 
 Examples:
 
