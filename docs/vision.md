@@ -6,10 +6,10 @@ updated: 2026-04-10
 
 # The Polyglot Project
 
-Polyglot is an async-centric programming language and platform with two core pillars:
+Polyglot is a trigger-driven programming language and platform — async-centric and parallel-by-design, not as an afterthought — with two core pillars:
 
-1. **Cross-Language Integration** — Enabling developers to write code in multiple programming languages and run them together seamlessly, leveraging the strengths of each language within a unified project.
-2. **Async-Centric Automation** — Providing first-class support for parallelism, concurrency, race condition handling, error handling, and resource management as foundational language features, not afterthoughts.
+1. **Cross-Language Integration** — Enabling developers to utilise well-tested legacy code across multiple programming languages within a unified project, rather than reinventing what already works.
+2. **Trigger-Driven Orchestration** — Providing first-class support for parallelism, concurrency, race condition handling, error handling, and resource management as foundational language features. Every pipeline is triggered, not called — concurrency is the starting point, not an add-on.
 
 The project aims to provide a unified platform for developers to leverage the strengths of different programming languages while maintaining a cohesive development experience. By fostering a collaborative environment for developers, the Polyglot Project seeks to promote innovation and creativity in software development.
 
@@ -23,11 +23,11 @@ The project aims to provide a unified platform for developers to leverage the st
 
 - **The Right Tool for the Right Job** — All programming languages have their own strengths and weaknesses. By allowing developers to use multiple languages within a single project, we can leverage the unique capabilities of each to create more efficient and effective solutions. For example, use Python for data analysis and machine learning, JavaScript for front-end development, and Rust for performance-critical operations. By complementing the strengths of different languages, we can create more powerful applications that would be difficult to achieve with a single language alone.
 
-- **Don't Reinvent the Wheel, Use Legacy Code!** — Many developers have existing codebases in various programming languages. By supporting multiple languages, we allow developers to reuse their existing code and libraries, reducing the need for rewriting and increasing productivity. Legacy code is well-tested and production-proven — it can be more reliable and efficient than code written from scratch. Developers can also leverage their existing knowledge and expertise, making it easier for them to contribute and collaborate.
+- **Don't Reinvent the Wheel — Utilise Legacy Code** — Years of battle-tested, production-proven code already exist across every language ecosystem. Rewriting it introduces new bugs; reusing it leverages decades of fixes, optimisations, and real-world validation. Polyglot's cross-language integration lets developers bring their existing codebases, libraries, and expertise directly into a unified project — no rewrites, no wrappers, no starting from scratch. The safest code is the code that already works.
 
-- **Async-Centric by Design** — Polyglot makes parallel programming **easy, bug-free, safe, and — most importantly — intentional**. The code behaves exactly as the developer designed it to behave, in every situation, because the platform applies Murphy's Law as a design principle: *if something can go wrong, it will go wrong* — so Polyglot proactively covers for it.
+- **Trigger-Driven, Async-Centric, Parallel-by-Design** — Polyglot makes parallel programming **easy, bug-free, safe, and — most importantly — intentional**. Every pipeline is triggered by an event — not called imperatively — and the code behaves exactly as the developer designed it to behave, in every situation, because the platform applies Murphy's Law as a design principle: *if something can go wrong, it will go wrong* — so Polyglot proactively covers for it.
 
-  Traditional approaches build synchronous automation first, then retrofit async handling as an afterthought — leading to complex, error-prone code where race conditions and edge cases surface only in production. Polyglot inverts this: concurrency is the starting point, not an add-on. Developers declare *what* runs in parallel, *how* tasks interact, and *what happens* when things go wrong. The compiler and Polyglot Code enforce the rest.
+  Traditional approaches build synchronous automation first, then retrofit async handling as an afterthought — leading to complex, error-prone code where race conditions and edge cases surface only in production. Polyglot inverts this: triggers and concurrency are the starting point, not an add-on. Developers declare *what* triggers execution, *what* runs in parallel, *how* tasks interact, and *what happens* when things go wrong. The compiler and Polyglot Code enforce the rest.
 
   **The compiler catches problems before code ever runs.** Race conditions, resource conflicts, unhandled parallel interactions, and missing error paths are compile-time errors — not runtime surprises discovered under load at 3 AM. If a developer's concurrent design has a gap, the compiler rejects it. This means every pipeline that compiles is a pipeline where all concurrent paths are accounted for.
 
@@ -35,7 +35,7 @@ The project aims to provide a unified platform for developers to leverage the st
 
   **Intentional behavior under Murphy's Law.** Every conditional must be exhaustive. Every parallel job must have its output collected. Every error path must be handled. Polyglot does not allow "happy path only" code — the developer must address what happens when tasks fail, when resources are unavailable, when race conditions arise. The result is automation that behaves predictably in all situations the developer has covered, because the compiler guarantees there are no uncovered situations.
 
-  Key advantages of async-centric design:
+  Key advantages of trigger-driven, async-centric design:
   - **Compiler-enforced safety** — The compiler verifies concurrent interactions at build time, catching race conditions, resource conflicts, and missing error paths before deployment.
   - **Structured concurrency primitives** — Polyglot Code provides first-class constructs for parallelism that are safe by construction. Developers describe *what* should run concurrently and *how* results combine — the platform handles the rest.
   - **Intentional task behavior** — Developers explicitly define how concurrent tasks interact and how failures are handled, rather than discovering unexpected behaviors in production.
