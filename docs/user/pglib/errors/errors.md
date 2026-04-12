@@ -62,11 +62,21 @@ All user-defined errors live under the `!Error` namespace. `{!} !Name` implicitl
 {!} !Error
    [:] :Validation
       [.] .Empty#Error
+         (-) .MessageTemplate << "Field {field} is required"
+         (-) .Info
+            [:] :field#string
       [.] .TooLong#Error
+         (-) .MessageTemplate << "{field} exceeds {maxLength} characters"
+         (-) .Info
+            [:] :field#string
+            [:] :maxLength#int
       [.] .InvalidEmail#Error
+         (-) .MessageTemplate << "Invalid email format: {email}"
+         (-) .Info
+            [:] :email#string
 ```
 
-This creates `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail` — all carrying the `#Error` struct. Note: the pglib `!Validation` namespace (shown in [[pglib/errors/errors#Built-in Error Namespaces]]) is separate — it has fixed leaves defined by the runtime, not user code.
+This creates `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail` — all carrying the `#Error` struct with their `.MessageTemplate` and `.Info` schema defined at the definition site. The raise site fills `.Info` values only. Note: the pglib `!Validation` namespace (shown in [[pglib/errors/errors#Built-in Error Namespaces]]) is separate — it has fixed leaves defined by the runtime, not user code.
 
 `{!}` creates entries at `%!.Error:Name.*` in the metadata tree. See [[data-is-trees#How Concepts Connect]].
 
@@ -77,83 +87,223 @@ No `[@]` import needed. pglib errors are defined as `{!}` blocks by the runtime:
 ```polyglot
 {!} !File
    [.] .NotFound#Error
+      (-) .MessageTemplate << "File not found: {path}"
+      (-) .Info
+         [:] :path#path
    [.] .ReadError#Error
+      (-) .MessageTemplate << "Cannot read file: {path}"
+      (-) .Info
+         [:] :path#path
    [.] .WriteError#Error
+      (-) .MessageTemplate << "Cannot write file: {path}"
+      (-) .Info
+         [:] :path#path
    [.] .ParseError#Error
+      (-) .MessageTemplate << "Parse error in {path}: {reason}"
+      (-) .Info
+         [:] :path#path
+         [:] :reason#string
 
 {!} !No
    [.] .Input#Error
+      (-) .MessageTemplate << "Missing required input: {name}"
+      (-) .Info
+         [:] :name#string
    [.] .Output#Error
+      (-) .MessageTemplate << "Missing required output: {name}"
+      (-) .Info
+         [:] :name#string
 
 {!} !Timeout
    [.] .Connection#Error
+      (-) .MessageTemplate << "Connection timed out after {duration}"
+      (-) .Info
+         [:] :duration#string
    [.] .Read#Error
+      (-) .MessageTemplate << "Read timed out after {duration}"
+      (-) .Info
+         [:] :duration#string
 
 {!} !Math
    [.] .DivideByZero#Error
+      (-) .MessageTemplate << "Division by zero: {expression}"
+      (-) .Info
+         [:] :expression#string
 
 {!} !Validation
    [.] .Schema#Error
+      (-) .MessageTemplate << "Schema validation failed: {reason}"
+      (-) .Info
+         [:] :reason#string
    [.] .Type#Error
+      (-) .MessageTemplate << "Type mismatch: expected {expected}, got {actual}"
+      (-) .Info
+         [:] :expected#string
+         [:] :actual#string
    [.] .Regex#Error
+      (-) .MessageTemplate << "Value does not match pattern {pattern}: {value}"
+      (-) .Info
+         [:] :pattern#string
+         [:] :value#string
 
 {!} !Field
    [.] .NotFound#Error
+      (-) .MessageTemplate << "Field not found: {field}"
+      (-) .Info
+         [:] :field#string
    [.] .PathError#Error
+      (-) .MessageTemplate << "Invalid field path: {path}"
+      (-) .Info
+         [:] :path#string
 
 {!} !Alias
    [.] .Clash#Error
+      (-) .MessageTemplate << "Alias {alias} clashes with existing name in {namespace}"
+      (-) .Info
+         [:] :alias#string
+         [:] :namespace#string
 
 {!} !Permission
    [.] .File.Denied#Error
+      (-) .MessageTemplate << "File permission denied: {path}"
+      (-) .Info
+         [:] :path#path
    [.] .Web.Denied#Error
+      (-) .MessageTemplate << "Web permission denied: {url}"
+      (-) .Info
+         [:] :url#string
    [.] .Database.Denied#Error
+      (-) .MessageTemplate << "Database permission denied: {connection}"
+      (-) .Info
+         [:] :connection#string
    [.] .System.Denied#Error
+      (-) .MessageTemplate << "System permission denied: {operation}"
+      (-) .Info
+         [:] :operation#string
    [.] .Crypto.Denied#Error
+      (-) .MessageTemplate << "Crypto permission denied: {operation}"
+      (-) .Info
+         [:] :operation#string
    [.] .IPC.Denied#Error
+      (-) .MessageTemplate << "IPC permission denied: {target}"
+      (-) .Info
+         [:] :target#string
    [.] .Device.Denied#Error
+      (-) .MessageTemplate << "Device permission denied: {device}"
+      (-) .Info
+         [:] :device#string
    [.] .Memory.Denied#Error
+      (-) .MessageTemplate << "Memory permission denied: {operation}"
+      (-) .Info
+         [:] :operation#string
 
 {!} !RT
    [.] .CompileError#Error
+      (-) .MessageTemplate << "Compile error in {language}: {reason}"
+      (-) .Info
+         [:] :language#string
+         [:] :reason#string
    [.] .RuntimeError#Error
+      (-) .MessageTemplate << "Runtime error in {language}: {reason}"
+      (-) .Info
+         [:] :language#string
+         [:] :reason#string
    [.] .Timeout#Error
+      (-) .MessageTemplate << "Execution timed out after {duration}"
+      (-) .Info
+         [:] :duration#string
    [.] .EnvironmentError#Error
+      (-) .MessageTemplate << "Environment error in {language}: {reason}"
+      (-) .Info
+         [:] :language#string
+         [:] :reason#string
 
 {!} !Env
    [.] .NotFound#Error
+      (-) .MessageTemplate << "Environment not found: {name}"
+      (-) .Info
+         [:] :name#string
    [.] .VersionMismatch#Error
+      (-) .MessageTemplate << "Environment {name} version mismatch: expected {expected}, got {actual}"
+      (-) .Info
+         [:] :name#string
+         [:] :expected#string
+         [:] :actual#string
    [.] .SetupFailed#Error
+      (-) .MessageTemplate << "Environment setup failed: {name}"
+      (-) .Info
+         [:] :name#string
    [.] .TeardownFailed#Error
+      (-) .MessageTemplate << "Environment teardown failed: {name}"
+      (-) .Info
+         [:] :name#string
    [:] :Dependency
       [.] .Missing#Error
+         (-) .MessageTemplate << "Missing dependency: {dependency}"
+         (-) .Info
+            [:] :dependency#string
       [.] .VersionConflict#Error
+         (-) .MessageTemplate << "Dependency {dependency} version conflict: {expected} vs {actual}"
+         (-) .Info
+            [:] :dependency#string
+            [:] :expected#string
+            [:] :actual#string
       [.] .InstallFailed#Error
+         (-) .MessageTemplate << "Failed to install dependency: {dependency}"
+         (-) .Info
+            [:] :dependency#string
 
 {!} !Storage
    [.] .Space#Error
+      (-) .MessageTemplate << "Insufficient storage space: {required} needed"
+      (-) .Info
+         [:] :required#string
 
 {!} !Text
    [:] :Diff
       [.] .EmptyInput#Error
+         (-) .MessageTemplate << "Diff input is empty: {side}"
+         (-) .Info
+            [:] :side#string
    [:] :Lines
       [.] .Empty#Error
+         (-) .MessageTemplate << "Text has no lines"
    [:] :Append
       [.] .EmptyResult#Error
+         (-) .MessageTemplate << "Append produced empty result"
    [:] :Merge
       [.] .InvalidLineNumber#Error
+         (-) .MessageTemplate << "Invalid line number: {lineNumber}"
+         (-) .Info
+            [:] :lineNumber#int
       [.] .EmptyBase#Error
+         (-) .MessageTemplate << "Merge base text is empty"
 
 {!} !CSV
    [:] :Parse
       [.] .MalformedRow#Error
+         (-) .MessageTemplate << "Malformed CSV row at line {lineNumber}: {reason}"
+         (-) .Info
+            [:] :lineNumber#int
+            [:] :reason#string
       [.] .Empty#Error
+         (-) .MessageTemplate << "CSV input is empty"
       [.] .InvalidDelimiter#Error
+         (-) .MessageTemplate << "Invalid CSV delimiter: {delimiter}"
+         (-) .Info
+            [:] :delimiter#string
    [:] :Collect
       [.] .SchemaMismatch#Error
+         (-) .MessageTemplate << "Row schema does not match header: {reason}"
+         (-) .Info
+            [:] :reason#string
       [.] .EmptyResult#Error
+         (-) .MessageTemplate << "CSV collection produced empty result"
    [:] :Merge
       [.] .HeaderConflict#Error
+         (-) .MessageTemplate << "CSV merge header conflict: {reason}"
+         (-) .Info
+            [:] :reason#string
 ```
 
 ### `!Error` — User-Extensible Namespace
@@ -176,14 +326,29 @@ Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `
    [:] :MyApp
       [:] :Auth
          [.] .Expired#Error
+            (-) .MessageTemplate << "Token for {userId} expired at {expiredAt}"
+            (-) .Info
+               [:] :userId#string
+               [:] :expiredAt#string
          [.] .Invalid#Error
+            (-) .MessageTemplate << "Invalid token format"
       [:] :Data
          [.] .Corrupt#Error
+            (-) .MessageTemplate << "Data corrupted in {source}: {reason}"
+            (-) .Info
+               [:] :source#string
+               [:] :reason#string
          [.] .Missing#Error
+            (-) .MessageTemplate << "Required data not found: {key}"
+            (-) .Info
+               [:] :key#string
       [:] :GeneralFailure#Error
+         (-) .MessageTemplate << "Application error: {reason}"
+         (-) .Info
+            [:] :reason#string
 ```
 
-This creates `!Error:MyApp:Auth.Expired`, `!Error:MyApp:Auth.Invalid`, `!Error:MyApp:Data.Corrupt`, `!Error:MyApp:Data.Missing`, and `!Error:MyApp:GeneralFailure`.
+This creates `!Error:MyApp:Auth.Expired`, `!Error:MyApp:Auth.Invalid`, `!Error:MyApp:Data.Corrupt`, `!Error:MyApp:Data.Missing`, and `!Error:MyApp:GeneralFailure`. Each terminal carries its `.MessageTemplate` and `.Info` schema.
 
 Tree path: `%!.Error:MyApp:Auth.Expired` — `.Error` is Polyglot-defined (fixed), `:MyApp:Auth` are user-extensible (flexible), `.Expired` is a terminal leaf (fixed).
 

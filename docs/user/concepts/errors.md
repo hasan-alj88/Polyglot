@@ -33,14 +33,31 @@ Custom errors are defined with `{!}` blocks (see [[blocks#Definition Elements]])
 {!} !Error
    [:] :Validation
       [.] .Empty#Error
+         (-) .MessageTemplate << "Field {field} is required"
+         (-) .Info
+            [:] :field#string
       [.] .TooLong#Error
+         (-) .MessageTemplate << "{field} exceeds {maxLength} characters"
+         (-) .Info
+            [:] :field#string
+            [:] :maxLength#int
       [.] .InvalidEmail#Error
+         (-) .MessageTemplate << "Invalid email format: {email}"
+         (-) .Info
+            [:] :email#string
    [:] :Auth
       [.] .Expired#Error
+         (-) .MessageTemplate << "Token for {userId} expired at {expiredAt}"
+         (-) .Info
+            [:] :userId#string
+            [:] :expiredAt#string
       [.] .InvalidToken#Error
+         (-) .MessageTemplate << "Invalid token format"
 ```
 
-This creates five error identifiers under `!Error`: `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail`, `!Error:Auth.Expired`, `!Error:Auth.InvalidToken`. Tree paths use `:` for user-extensible branches and `.` for fixed leaves (e.g., `%!.Error:Validation.Empty`). Siblings at the same level must all use the same separator (PGE05001).
+Each terminal declares `.MessageTemplate` (required) and `.Info` schema with typed keys at the definition site. The raise site fills `.Info` values only (see [[errors#Raising Errors (`[!] >>`)]]). `.MessageTemplate` supports `{key}` interpolation — the compiler enforces every `{key}` has a matching key in `.Info` (PGE07008). Terminals without `{key}` placeholders (like `!Auth.InvalidToken`) need no `.Info`.
+
+This creates five error identifiers under `!Error`: `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail`, `!Error:Auth.Expired`, `!Error:Auth.InvalidToken`. Tree paths use `:` for user-extensible branches and `.` for fixed terminals (e.g., `%!.Error:Validation.Empty`). Siblings at the same level must all use the same separator (PGE05001).
 
 pglib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and require no definition — they use fixed `.` leaves and are **not** user-extensible. `!Error` is the only namespace with user-extensible children (see [[pglib/errors/errors#`!Error` — User-Extensible Namespace]]). See [[pglib/errors/errors#Built-in Error Namespaces]] for the complete list.
 
@@ -70,24 +87,23 @@ Error declarations are mandatory — a pipeline without `(-) !...` is non-failab
 
 ## Raising Errors (`[!] >>`)
 
-In the execution body, `[!] >> !ErrorName` raises a declared error. The raise block fills `#Error` fields with `(-)` lines:
+In the execution body, `[!] >> !ErrorName` raises a declared error. The raise block fills `.Info` values for the keys declared in the `{!}` definition:
 
 ```polyglot
 [?] $name =? ""
    [!] >> !Validation.Empty
-      (-) .Message << "Name is required"
       (-) .Info:field << "name"
 [?] $name.length >? 100
    [!] >> !Validation.TooLong
-      (-) .Message << "Name exceeds 100 characters"
       (-) .Info:field << "name"
       (-) .Info:maxLength << 100
+      (-) .Info:actualLength << $name.length   [ ] extra key — allowed
 [?] *?
    [-] >validated << $name
    [-] >status << "ok"
 ```
 
-`.Name` is auto-filled by the runtime (e.g., `"Validation.Empty"`). `.Message` and `.Info` are set at the raise site.
+`.Name` is auto-filled by the runtime (e.g., `"Validation.Empty"`). `.MessageTemplate` is defined at the `{!}` definition site — not the raise site. The raise site fills `.Info` values only. The compiler enforces that all `.Info` keys declared in the `{!}` definition are provided at the raise site (PGE07009). Extra keys beyond the definition schema are allowed for additional context. The runtime resolves the template into a human-readable message by interpolating `.Info` values. System diagnostics (`.Stderr`, `.StackTrace`, `.ExitCode`) are auto-filled by the runtime as `#NullableRecord` — null when not applicable.
 
 **Default behavior:** When `[!] >>` fires, **all pipeline outputs go Failed** unless the raise block provides fallback values (see [[errors#Output Fallback on Raise]]).
 
@@ -97,7 +113,7 @@ Inside a `[!] >>` block, the author can push fallback values to specific outputs
 
 ```polyglot
 [!] >> !Validation.Empty
-   (-) .Message << "Name is required"
+   (-) .Info:field << "name"
    (-) >status << "invalid"
       (>) %FallbackMessage << "Pipeline returns invalid status on empty input"
 
@@ -370,4 +386,6 @@ Error declaration, handling, and fallback rules enforced at compile time. See [[
 | PGW07001 | Error Handler on Non-Failable Call | Declaring Pipeline Errors |
 | PGW07002 | Caller Overrides Pipeline Fallback | Output Fallback on Raise |
 | PGW07003 | Missing Fallback Message | Output Fallback on Raise |
+| PGE07008 | MessageTemplate Key Missing from Info | Defining Custom Errors |
+| PGE07009 | Raise Site Missing Required Info Key | Raising Errors |
 | PGW07004 | Fallback on Non-Failable IO | Error Fallback Operators |
