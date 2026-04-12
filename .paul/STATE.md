@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Handle Archive Docs milestone complete — ready for next milestone
+**Current focus:** Issue #274 — (#) generic input marker + explicit ##Nullable/##Inf fields
 
 ## Current Position
 
-Milestone: Handle Archive Docs — COMPLETE
-Phase: 16 of 16 (Triage & Decision) — Complete
-Plan: 16-01 complete
-Status: Milestone complete, ready for next milestone
-Last activity: 2026-04-11 — Phase 16 complete, milestone finished
+Milestone: Language (issue-driven)
+Phase: Issue #274
+Plan: 274-01 complete
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-12 — Loop closed, SUMMARY created
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -103,14 +103,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #274 — (#) generic input marker + explicit ##Nullable/##Inf fields
+Branch: design/issue-274-generic-input-marker-nullable-inf-fields
+Labels: design, P3-medium
+Started: 2026-04-12
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/274
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -277,13 +281,13 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-11
-Stopped at: Issue #278 merged to main, issue closed
-Next action: /paul:progress or /paul:work-issue for next issue
-Resume file: none
+Last session: 2026-04-12
+Stopped at: Loop closed for plan 274-01
+Next action: /paul:merge to commit and merge branch to main
+Resume file: .paul/phases/274-generic-input-marker-nullable-inf/274-01-SUMMARY.md
 Resume context:
-- Issue #278 complete and merged (43 files, 2506 insertions)
-- On main branch, ready for next issue
+- Issue #274 on branch design/issue-274-generic-input-marker-nullable-inf-fields
+- 2 docs files modified, ready to commit and merge
 
 ---
 *STATE.md — Updated after every significant action*
