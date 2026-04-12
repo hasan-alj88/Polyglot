@@ -12,7 +12,7 @@ updated: 2026-03-25
 <!-- @c:data-is-trees -->
 <!-- @c:pglib/errors/errors -->
 
-Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Polyglot objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[pglib/errors/errors#`#Error` Struct]]).
+Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Polyglot objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[pglib/errors/errors#`#Error` Struct]]). Error messages use `.MessageTemplate` with `{key}` interpolation — the compiler enforces that every `{key}` exists in `.Info#Record` (PGE07008). System diagnostics (`.Stderr`, `.StackTrace`, `.ExitCode`) are auto-filled by the runtime as `#NullableRecord` fields.
 
 ```mermaid
 flowchart LR
