@@ -229,10 +229,12 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
 
 {-} -SayHello
    (-) <name#string
-   [T] -T.Call
+   [T] -T.CLI"--name"
+      (-) >name >> <name
    [Q] -Q.Default
-   [W] -W.Polyglot
-   [-] -Console.Print"Hello, {$name}!"
+   [W] -W.RT.Shell
+   [-] [C]
+      echo "Hello, {$name}!"
 ```
 
 ## Use Cases
