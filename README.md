@@ -10,10 +10,10 @@
 
 ## Overview
 
-Polyglot is an **async-centric programming language and platform** built on two pillars:
+Polyglot is a **trigger-driven programming language and platform** — async-centric and parallel-by-design, not as an afterthought — built on two pillars:
 
-1. **Cross-Language Integration** — Write orchestration logic in Polyglot, execute work in Python, Rust, JavaScript, C++, or any supported runtime.
-2. **Async-Centric Automation** — First-class parallelism, concurrency, queuing, and resource management — designed in, not bolted on.
+1. **Cross-Language Integration** — Utilise well-tested legacy code across Python, Rust, JavaScript, C++, or any supported runtime — don't reinvent what already works.
+2. **Trigger-Driven Orchestration** — First-class parallelism, concurrency, queuing, and resource management. Every pipeline is triggered, not called — concurrency is the starting point, not an add-on.
 
 Think: *what if your API orchestration layer was a programming language?*
 
@@ -22,8 +22,8 @@ For the full project vision, philosophy, and design principles, see **[Project V
 ## Core Philosophy
 
 - **The Right Tool for the Right Job** — Use the best language for each task in a workflow
-- **Don't Reinvent the Wheel, Use Legacy Code** — Bridge existing Python, JavaScript, Rust, C++, and other codebases
-- **Async-Centric by Design** — Every operation is inherently async; task behaviors are intentional, not afterthoughts
+- **Don't Reinvent the Wheel — Utilise Legacy Code** — The safest code is the code that already works; reuse battle-tested codebases instead of rewriting
+- **Trigger-Driven, Async-Centric, Parallel-by-Design** — Every pipeline is triggered by an event; task behaviors are intentional, not afterthoughts
 - **Pipeline-Centric** — Compose workflows through chaining, parallelism, and branching
 - **Everything Is a Tree** — All data, types, pipelines, and metadata are trees on a unified `%` metadata tree
 - **Resource Governance** — Explicit resource management, queuing, and limits
