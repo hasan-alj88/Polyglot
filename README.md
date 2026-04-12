@@ -179,7 +179,7 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
 
 ```polyglot
 { } Execute Python code
-[W] -W.RT.Python:3:14
+[W] -W.Env.Python:3:14
 [-] [C]
    import pandas as pd
    df = pd.read_csv(input_path)
@@ -232,7 +232,7 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
    [T] -T.CLI"--name"
       (-) >name >> <name
    [Q] -Q.Default
-   [W] -W.RT.Shell
+   [W] -W.Env.Shell
    [-] [C]
       echo "Hello, {$name}!"
 ```
