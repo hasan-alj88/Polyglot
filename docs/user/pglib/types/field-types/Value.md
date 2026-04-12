@@ -14,6 +14,23 @@ metadata_definition: "%definition.###:Value"
 
 The leaf stores an actual value of the specified type. This is the most common field type -- any field that carries data rather than acting as a variant selector uses `###Value`.
 
+## Allows
+
+```
+#path [###Value]
+├── .Unix     -> "/usr/bin"#string     ← typed data: #string annotation
+└── .Windows  -> "C:\\bin"#string        each leaf holds a value
+```
+
+## Disallows
+
+```
+#path [###Value]
+├── .Unix     -> "/usr/bin"#string     ✓ typed field
+└── .Default                           ✗ no #type annotation — PGE05005
+                                         siblings must all be same ### kind
+```
+
 ## Declaration
 
 ```polyglot
@@ -26,12 +43,16 @@ Each `[.]` line with a `#type` annotation declares a `###Value` field. The compi
 
 ## Example Types
 
+<!-- @u:pglib/types/path -->
+<!-- @u:pglib/types/Queue -->
+<!-- @u:pglib/types/Job -->
+
 | Type | Field | Annotation | Stored Data |
 |------|-------|------------|-------------|
-| `#path` | `.Unix` | `#string` | Unix path string |
-| `#path` | `.Windows` | `#string` | Windows path string |
-| `#Queue` | `.strategy` | `#QueueStrategy` | Queue strategy enum |
-| `#Job` | `.PID` | `#String` | Process identifier |
+| [[path\|#path]] | `.Unix` | `#string` | Unix path string |
+| [[path\|#path]] | `.Windows` | `#string` | Windows path string |
+| [[Queue\|#Queue]] | `.strategy` | `#QueueStrategy` | Queue strategy enum |
+| [[Job\|#Job]] | `.PID` | `#String` | Process identifier |
 
 ## Metadata
 

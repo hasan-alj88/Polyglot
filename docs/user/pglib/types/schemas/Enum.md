@@ -21,6 +21,33 @@ metadata_definition: "%definition.##:Enum"
    [#] %###Kind << #FieldKind.Enum
 ```
 
+## Allows
+
+```
+#Boolean [##Enum]
+├── .True                  ✓ active      ← exactly one branch active
+└── .False                 ○ inactive      all fields are enum (no #type)
+```
+
+## Disallows
+
+```
+#BadEnum [##Enum]
+├── .Active                ✓ active
+└── .Inactive              ✓ active
+                           ✗ two branches active — #One requires exactly one
+
+#BadEnum [##Enum]
+├── .Name  -> "Alice"#string             ✗ typed field — ##Enum requires
+└── .Status                                 all fields to be enum (no #type)
+
+#BadEnum [##Enum]
+├── .Status
+└── .Detail
+    └── .Code  -> 404      ✗ nesting creates depth 2
+                             ##Enum composes ##Flat (depth 1)
+```
+
 ## Properties Set
 
 | Property | Value | Meaning |
@@ -31,12 +58,21 @@ metadata_definition: "%definition.##:Enum"
 
 ## Used By
 
-- `#Boolean`
-- `#OS`
-- `#PipelineStatus`
-- `#VarState`
-- `#FlexKind`
-- `#ActiveKind`
+<!-- @u:pglib/types/boolean -->
+<!-- @u:pglib/types/OS -->
+<!-- @u:pglib/types/PipelineStatus -->
+<!-- @u:pglib/types/VarState -->
+<!-- @u:pglib/types/ActiveKind -->
+<!-- @u:pglib/types/QueueStrategy -->
+<!-- @u:pglib/types/KillPropagation -->
+
+- [[boolean|#Boolean]]
+- [[OS|#OS]]
+- [[PipelineStatus|#PipelineStatus]]
+- [[VarState|#VarState]]
+- [[ActiveKind|#ActiveKind]]
+- [[QueueStrategy|#QueueStrategy]]
+- [[KillPropagation|#KillPropagation]]
 - All permission enums
 
 ## Metadata

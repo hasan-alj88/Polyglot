@@ -25,5 +25,6 @@ Every field in a `{#}` type definition receives exactly one `###` field type cla
 
 ## Related
 
+- [[properties/INDEX|%## and %### Properties]] -- individual property reference files with allow/disallow trees
 - [[schemas/INDEX|schemas]] -- ## schema types that constrain type structure
 - [[syntax/types/INDEX|types]] -- full type system specification

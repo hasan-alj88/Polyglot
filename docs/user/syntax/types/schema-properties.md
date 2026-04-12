@@ -10,6 +10,12 @@ updated: 2026-04-09
 
 `{#}` definitions gain **schema properties** declared with `[#] %##Property << value`. These are compile-time metadata prefixed with `%##` to explicitly mark them as tree-structure properties. They describe structural constraints on the type's tree shape.
 
+<!-- @c:syntax/types/prefix-system#metadata -->
+
+**`%##` = metadata address.** Each `%##Property` is a relative path into the metadata tree. Inside `{#} #Array`, writing `[#] %##Fields << #Range` resolves to the absolute metadata address `%definition.#:Array.%##Fields -> #Range`. The `%` prefix marks these as compile-time metadata entries — not runtime data. See [[prefix-system#metadata|c:Metadata and the Tree Address System]] for the full address model.
+
+**`##` = named property bundle.** A `##` schema is syntactic sugar for a reusable group of `%##` assignments. Writing `[#] ##Flat` is equivalent to writing `[#] %##Depth.Max << 1` — the compiler expands the schema into its constituent `%##` properties. The `%##` properties are the ground truth; `##` schemas are a convenience layer. See [[prefix-system#named-property-bundles|c:Named Property Bundles]] for expansion examples.
+
 Schema properties apply universally via `[#]`, or branch-wise via `[.]`/`[:]`. Conflict between universal and branch-wise scope raises PGE11001. If a `%##` property is redundant with an inherited value, the compiler raises PGW11001; if it contradicts, the override takes effect with PGW11002.
 
 Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Property}`, making them introspectable at compile time. Schema references (`##`) are only valid inside `{#}` type definitions -- using them outside raises PGE05006.
@@ -22,16 +28,16 @@ Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Proper
 
 | Property | Type | Meaning |
 |----------|------|---------|
-| `%##Fields` | `#FieldsDescriptor` or `##Enum` ref | `#Range` = integer-indexed; enum ref = stamp children from variants |
-| `%##Schema` | list of `##` | Structural schemas children must satisfy (AND-composed) |
-| `%##Active` | `#ActiveKind` | `#All` (every branch present) / `#One` (exactly one active) / `#Partial` (any non-zero subset) |
-| `%##Ordered` | `#Boolean` | Insertion order preserved? |
-| `%##Sorted` | `#Boolean` | Sorted by key? (order derived from key type: numeric, alphabetical, or declaration) |
-| `%##Gap` | `#Boolean` | Gaps allowed in keys? |
-| `%##Count` | `#Bound` | Max children (`#Inf` = unlimited) |
+| [[properties/Fields\|%##Fields]] | `#FieldsDescriptor` or `##Enum` ref | `#Range` = integer-indexed; enum ref = stamp children from variants |
+| [[properties/Schema\|%##Schema]] | list of `##` | Structural schemas children must satisfy (AND-composed) |
+| [[properties/Active\|%##Active]] | `#ActiveKind` | `#All` (every branch present) / `#One` (exactly one active) / `#Partial` (any non-zero subset) |
+| [[properties/Ordered\|%##Ordered]] | `#Boolean` | Insertion order preserved? |
+| [[properties/Sorted\|%##Sorted]] | `#Boolean` | Sorted by key? (order derived from key type: numeric, alphabetical, or declaration) |
+| [[properties/Gap\|%##Gap]] | `#Boolean` | Gaps allowed in keys? |
+| [[properties/Count\|%##Count]] | `#Bound` | Max children (`#Inf` = unlimited) |
 | `%##Count.Min` | `#uint` | Min children (0 if absent) |
-| `%##Propagate` | `#Boolean` | Apply these properties recursively to all levels down to `%##Depth.Max` |
-| `%##Level.N` | scope | Per-level override when `%##Propagate` is `#True` |
+| [[properties/Propagate\|%##Propagate]] | `#Boolean` | Apply these properties recursively to all levels down to `%##Depth.Max` |
+| [[properties/Level\|%##Level.N]] | scope | Per-level override when `%##Propagate` is `#True` |
 
 ### `%##Fields` -- Child Field Descriptor
 
@@ -64,8 +70,8 @@ These properties describe the whole type tree, not individual branches:
 
 | Property | Type | Meaning |
 |----------|------|---------|
-| `%##Depth.Max` | `#Bound` | Max tree depth (0, 1, N, `#Inf`) |
-| `%##Alias` | `#NestedKeyString` | Lowercase shorthand name |
+| [[properties/Depth-Max\|%##Depth.Max]] | `#Bound` | Max tree depth (0, 1, N, `#Inf`) |
+| [[properties/Alias\|%##Alias]] | `#NestedKeyString` | Lowercase shorthand name |
 
 ### %##Depth.Max -- Inference Model
 
@@ -109,9 +115,9 @@ The `%###` properties describe leaf content constraints:
 
 | Property | Type | Meaning |
 |----------|------|---------|
-| `%###Kind` | `#FieldKind` | `###Value` (data) or `###Enum` (identity) |
-| `%###Type` | type ref | Type all leaves must be. `#` = any type. Absent = per-field annotation |
-| `%###Unique` | `#Boolean` | Leaf values must be distinct? |
+| [[properties/Kind\|%###Kind]] | `#FieldKind` | `###Value` (data) or `###Enum` (identity) |
+| [[properties/Type\|%###Type]] | type ref | Type all leaves must be. `#` = any type. Absent = per-field annotation |
+| [[properties/Unique\|%###Unique]] | `#Boolean` | Leaf values must be distinct? |
 
 ## `###` Field Types -- Leaf Content
 
@@ -263,7 +269,10 @@ A type composes multiple schemas to describe its full shape. User-defined schema
 
 ## See Also
 
-- [[syntax/types/prefix-system|Prefix System]] -- three-tier `#`/`##`/`###` overview
+- [[properties/INDEX|%## and %### Properties]] -- individual property files with allow/disallow ASCII trees
+- [[schemas/INDEX|## Schema Types]] -- named bundles of these properties
+- [[field-types/INDEX|### Field Types]] -- leaf content classification
+- [[syntax/types/prefix-system|Prefix System]] -- three-tier `#`/`##`/`###` overview and `%` metadata addressing
 - [[syntax/types/structs|Struct Types]] -- enum vs value fields and struct level rules
 - [[FieldsDescriptor]] -- `#FieldsDescriptor` enum used by `%##Fields`
 - [[ActiveKind]] -- `#ActiveKind` enum used by `%##Active`

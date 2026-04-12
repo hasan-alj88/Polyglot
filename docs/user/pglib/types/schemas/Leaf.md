@@ -12,6 +12,20 @@ metadata_definition: "%definition.##:Leaf"
 
 `##Leaf` constrains a type to zero depth — the type itself is its only node, with no children allowed.
 
+## Allows
+
+```
+RawString  -> "hello"      ← atomic: the value IS the node, no children
+```
+
+## Disallows
+
+```
+#Flag [##Leaf]
+└── .value  -> #True       ✗ any child creates depth 1
+                             ##Leaf requires depth 0
+```
+
 ## Property
 
 | Property | Value | Meaning |

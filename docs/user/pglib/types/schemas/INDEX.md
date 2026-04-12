@@ -59,7 +59,9 @@ These schemas describe collection types using `%##Fields` and other branch-level
 
 ## Related
 
+- [[properties/INDEX|%## and %### Properties]] -- individual property reference files with allow/disallow trees
 - [[syntax/types/schema-properties|Schema Properties]] -- full `%##` / `%###` property reference
+- [[field-types/INDEX|### Field Types]] -- leaf content classification
 - [[scalars]] -- scalar subtypes that compose ##Scalar
 - [[concepts/collections/INDEX|collections]] -- collection types and their schema compositions
 - [[syntax/types/INDEX|types]] -- full type system specification

@@ -12,6 +12,24 @@ metadata_definition: "%definition.##:Scalar"
 
 `##Scalar` constrains a type to one level of fixed `.` children. This is the most common schema for simple types with named fields.
 
+## Allows
+
+```
+#String
+├── .string  -> "hello"    ← one level of fixed children
+└── .regex   -> ".*"
+```
+
+## Disallows
+
+```
+#String [##Scalar]
+├── .string  -> "hello"
+├── .regex   -> ".*"
+└── .metadata                ✗ nesting creates depth 2
+    └── .encoding -> "utf8"    ##Scalar allows only depth 1
+```
+
 ## Property
 
 | Property | Value | Meaning |
@@ -20,10 +38,16 @@ metadata_definition: "%definition.##:Scalar"
 
 ## Used By
 
-- All enum types (#Boolean, #OS, etc.)
-- `#path`
-- `#Queue`
-- `#String` subtypes (`##Int`, `##Float`, etc.)
+<!-- @u:pglib/types/boolean -->
+<!-- @u:pglib/types/OS -->
+<!-- @u:pglib/types/path -->
+<!-- @u:pglib/types/Queue -->
+<!-- @u:pglib/types/scalars -->
+
+- All enum types ([[boolean|#Boolean]], [[OS|#OS]], etc.)
+- [[path|#path]]
+- [[Queue|#Queue]]
+- [[string|#String]] subtypes ([[scalars|#Int, #Float, etc.]])
 - Collection types
 
 ## Metadata

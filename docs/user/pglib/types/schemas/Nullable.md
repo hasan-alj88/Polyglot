@@ -23,6 +23,37 @@ metadata_definition: "%definition.##:Nullable"
    [.] .None
 ```
 
+## Allows
+
+```
+#MaybeInt [##Nullable:#Int]
+├── .Ok                    ✓ active
+│   └── .Value -> 42#int
+└─��� .None                  ○ inactive
+                            value present — .Ok active
+
+#MaybeInt [##Nullable:#Int]
+├── .Ok                    ○ inactive
+│   └── .Value
+└── .None                  ✓ active
+                            absent — .None active
+```
+
+## Disallows
+
+```
+#MaybeInt [##Nullable:#Int]
+├── .Ok                    ✓ active
+│   └── .Value -> 42#int
+└── .None                  ✓ active
+                           ✗ two branches — #One requires exactly one
+
+#MaybeInt [##Nullable:#Int]
+├── .Ok
+│   └── .Value -> "hi"#string  ✗ #string — must be #Int
+└── .None                  ○ inactive
+```
+
 ## Usage
 
 ```polyglot
@@ -33,6 +64,10 @@ metadata_definition: "%definition.##:Nullable"
 ```
 
 The compiler validates that exactly one branch is active at any time (`%##Active << .One`). This provides type-safe null handling without sentinel values.
+
+## Used By
+
+User-defined nullable types compose this schema (e.g., `#MaybeInt`, `#MaybeString`).
 
 ## Metadata
 

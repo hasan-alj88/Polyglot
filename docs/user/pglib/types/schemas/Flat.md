@@ -12,6 +12,25 @@ metadata_definition: "%definition.##:Flat"
 
 `##Flat` constrains a type to one level of flexible `:` children. Both `##Flat` and `##Scalar` set `Depth.Max=1`, but `##Flat` applies to types with flexible `:` children while `##Scalar` applies to types with fixed `.` children.
 
+## Allows
+
+```
+#Job
+├── :taskA  -> "running"    ← one level of flexible children
+├── :taskB  -> "pending"
+└── :taskC  -> "done"
+```
+
+## Disallows
+
+```
+#Job [##Flat]
+├── :taskA  -> "running"
+└── :taskB
+    └── :sub1  -> "nested"  ✗ nesting creates depth 2
+                              ##Flat allows only depth 1
+```
+
 ## Property
 
 | Property | Value | Meaning |
@@ -20,8 +39,11 @@ metadata_definition: "%definition.##:Flat"
 
 ## Used By
 
-- `#Map` (homogeneous and heterogeneous variants)
-- `#Job`
+<!-- @u:pglib/types/Job -->
+
+- [[Job|#Job]]
+- `##Enum` (composes ##Flat)
+- `##Record` (composes ##Flat)
 
 ## Metadata
 

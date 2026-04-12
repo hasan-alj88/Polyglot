@@ -27,6 +27,35 @@ metadata_definition: "%definition.##:Dataframe"
       (#) <#ValueType << <#CellType
 ```
 
+## Allows
+
+```
+#SalesData;Dataframe:#Product
+├── :0                              ← L1: range-indexed rows
+│   ├── :Widget  -> 9.99            ← L2: ##Record (enum-keyed columns)
+│   ├── :Gadget  -> 19.99
+│   ��── :Doohickey -> 4.99
+└── :1
+    ├── :Widget  -> 10.99
+    ├── :Gadget  -> 18.99
+    └── :Doohickey -> 5.49
+```
+
+## Disallows
+
+```
+#SalesData;Dataframe:#Product
+├── :0
+│   ├── :Widget  -> 9.99
+│   └── :Gadget  -> 19.99
+│                               ✗ :Doohickey missing — L2 is ##Record
+│                                 with %##Active << #All
+└── :2                          ✗ gap at :1 — L1 has %##Gap << #False
+    ├── :Widget  -> 10.99
+    ├── :Gadget  -> 18.99
+    └─�� :Doohickey -> 5.49
+```
+
 ## Properties Set
 
 | Property | Value | Meaning |
@@ -41,7 +70,9 @@ The `<#Columns` parameter must satisfy `##Enum` -- column names come from an enu
 
 ## Used By
 
-- `#Dataframe` type composes this schema
+<!-- @u:pglib/types/Dataframe -->
+
+- [[Dataframe|#Dataframe]] type composes this schema
 
 ## Metadata
 

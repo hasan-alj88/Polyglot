@@ -24,6 +24,50 @@ The `#` character is not just for type annotations — it participates in a thre
 
 Schema (`##`) and field (`###`) prefixes are used inside `{#}` type definitions to declare structural properties. They are not used in variable annotations — you always annotate variables with `#`. See [[data-is-trees]] for how these tiers relate to the unified tree.
 
+## `%` — Metadata and the Tree Address System
+
+The `%` prefix means **metadata**. Every `%` reference is a **relative path** into the metadata tree — the compiler resolves it to an absolute address in the tree. For example, `%##Depth.Max` inside a `{#} #Array` definition is a relative reference that resolves to the absolute path `%definition.#:Array.%##Depth.Max`.
+
+This means the prefix tiers (`##`, `###`) and the metadata prefix (`%`) work together:
+
+| You write | Resolves to |
+|-----------|-------------|
+| `[#] %##Depth.Max << 1` | `%definition.#:{Type}.%##Depth.Max -> 1` |
+| `[#] %##Fields << #Range` | `%definition.#:{Type}.%##Fields -> #Range` |
+| `[#] %###Kind << #FieldKind.Value` | `%definition.#:{Type}.%###Kind -> #FieldKind.Value` |
+
+`%##` and `%###` are the metadata forms of `##` and `###` — they address structural properties stored in the metadata tree. The `%` makes explicit that these are **compile-time metadata entries**, not runtime data.
+
+## `##` Schemas — Named Property Bundles
+
+A `##` schema is syntactic sugar for defining a reusable bundle of `%##` properties. When a type composes `[#] ##Flat`, the compiler expands it into the individual `%##` assignments that `##Flat` defines:
+
+```polyglot
+{#} ##Flat
+   [#] %##Depth.Max << 1
+
+[ ] Composing ##Flat:
+[#] ##Flat
+[ ] ...is equivalent to writing:
+[#] %##Depth.Max << 1
+```
+
+A more complex example — `##Enum` bundles four properties:
+
+```polyglot
+{#} ##Enum
+   [#] ##Flat
+   [#] %##Active << #ActiveKind.One
+   [#] %###Kind << #FieldKind.Enum
+
+[ ] Composing ##Enum expands to:
+[#] %##Depth.Max << 1       (from ##Flat)
+[#] %##Active << #ActiveKind.One
+[#] %###Kind << #FieldKind.Enum
+```
+
+Schemas exist so that common structural patterns have names — `##Array`, `##Record`, `##Enum` — instead of requiring every type to repeat the same `%##` assignments. The `%##` properties are the ground truth; `##` schemas are a convenience layer over them.
+
 ## The `<` Operator: Tree Child Access
 
 The `<` character is a tree child accessor. It reads a child from a data tree by key:

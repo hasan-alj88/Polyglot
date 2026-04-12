@@ -22,7 +22,7 @@ Definitions are immutable at runtime — they are resolved entirely at compile t
 
 ## Schema Definition Templates (`%definition.##`)
 
-`##` schema types live at `%definition.##:{SchemaName}` in the metadata tree. Each schema defines tree-structure properties using the `%##` prefix:
+`##` schema types live at `%definition.##:{SchemaName}` in the metadata tree. Each schema defines tree-structure properties using the `%##` prefix. A `##` schema is a named bundle of `%##` properties — composing `[#] ##Flat` expands into the individual `%##` assignments stored at `%definition.##:Flat`. The `%##` properties are the ground truth; schemas are syntactic sugar over them:
 
 ```polyglot
 %definition
@@ -85,7 +85,7 @@ The compiler infers `###Value` or `###Enum` from field declarations. Explicit `[
 
 ## Schema Properties in Type Definitions (`%##`)
 
-When a `{#}` definition includes `[#] %##Property` declarations or composes `##` schemas, the resolved properties appear as fixed fields under the type's definition template. Properties use the `%##` prefix to mark them as branch-level tree-structure metadata:
+When a `{#}` definition includes `[#] %##Property` declarations or composes `##` schemas, the resolved properties appear as fixed fields under the type's definition template. Each `%##Property` written inside a `{#}` block is a relative metadata reference — the compiler resolves it to the absolute path `%definition.#:{TypeName}.%##Property`. The `%` prefix marks these as compile-time metadata entries, not runtime data:
 
 ### Branch-level properties
 

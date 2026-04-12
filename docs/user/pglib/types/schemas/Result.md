@@ -25,6 +25,40 @@ metadata_definition: "%definition.##:Result"
       [.] .Value;#ErrType
 ```
 
+## Allows
+
+```
+#ParseResult [##Result:#Int,!Validation.Type]
+├── .Ok                    ✓ active
+│   └── .Value -> 42#int
+└── .Err                   ○ inactive
+│   └── .Value
+                            success — .Ok active
+
+#ParseResult [##Result:#Int,!Validation.Type]
+├─�� .Ok                    ○ inactive
+│   └── .Value
+└── .Err                   ✓ active
+    └── .Value -> !Validation.Type
+                            failure — .Err active
+```
+
+## Disallows
+
+```
+#ParseResult [##Result:#Int,!Validation.Type]
+├── .Ok                    ✓ active
+│   └── .Value -> 42#int
+└─��� .Err                   ✓ active
+    └── .Value -> !Validation.Type
+                           ✗ two branches — #One requires exactly one
+
+#ParseResult [##Result:#Int,!Validation.Type]
+├���─ .Ok
+│   └── .Value -> "hi"#string  ✗ #string — <#OkType is #Int
+└── .Err                   ○ inactive
+```
+
 ## Usage
 
 ```polyglot
@@ -36,6 +70,10 @@ metadata_definition: "%definition.##:Result"
 ```
 
 The compiler validates that exactly one branch is active at any time (`%##Active << .One`). This provides type-safe error handling at the data level.
+
+## Used By
+
+User-defined result types compose this schema (e.g., `#ParseResult`, `#FetchResult`).
 
 ## Metadata
 

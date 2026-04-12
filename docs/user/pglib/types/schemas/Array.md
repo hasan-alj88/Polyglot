@@ -27,13 +27,49 @@ metadata_definition: "%definition.##:Array"
    [#] %###Type << <#ValueType
 ```
 
+## Allows
+
+```
+#Scores;Array:int
+├── :0  -> 95              ← contiguous integer indices
+├── :1  -> 87                ordered, no gaps
+└── :2  -> 72                all elements #int
+
+#Matrix;Array:float:"2D"
+��── :0                     ← L1: range-indexed rows
+│   ├── :0  -> 1.0         ← L2: range-indexed cols (propagated)
+│   ├── :1  -> 2.0
+│   └── :2  -> 3.0
+└── :1
+    ├── :0  -> 4.0
+    ├��─ :1  -> 5.0
+    └── :2  -> 6.0
+```
+
+## Disallows
+
+```
+#Scores;Array:int
+├── :0  -> 95
+├── :2  -> 72              ✗ gap at :1 — %##Gap << #False
+└── :3  -> 60
+
+#Scores;Array:int
+├── :0  -> 95
+├── :1  -> "high"#string   ✗ #string — %###Type requires #int
+└── :2  -> 72
+
+#Scores;Array:int
+├── :name -> 95            ✗ string key — %##Fields << #Range
+└── :0    -> 72              requires integer indices
+```
+
 ## Properties Set
 
 | Property | Value | Meaning |
 |----------|-------|---------|
 | `%##Gap` | `#False` | No gaps in indices |
 | `%##Ordered` | `#True` | Insertion order preserved |
-| `%##Regular` | `#True` | Same child count per dimension |
 | `%##Depth.Max` | `<Dim` | Dimension count |
 | `%##Propagate` | `#True` | Properties apply to all levels |
 | `%##Fields` | `#Range` | Compiler-generated integer indices |
@@ -41,7 +77,9 @@ metadata_definition: "%definition.##:Array"
 
 ## Used By
 
-- `#Array` type composes this schema
+<!-- @u:pglib/types/Array -->
+
+- [[Array|#Array]] type composes this schema
 
 ## Metadata
 

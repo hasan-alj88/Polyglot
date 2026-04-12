@@ -12,6 +12,26 @@ metadata_definition: "%definition.##:Sorted"
 
 `##Sorted` enforces that children are sorted by key. Order is derived from the key type: numeric keys sort numerically, string keys sort alphabetically (lexicographic), enum keys sort by declaration order.
 
+## Allows
+
+```
+#Leaderboard [##Sorted]
+├── :0  -> 100             ← keys in ascending order
+├── :1  -> 85
+└── :2  -> 72
+                            sorted by integer key
+```
+
+## Disallows
+
+```
+#Leaderboard [##Sorted]
+├── :2  -> 72              ✗ key 2 before key 0
+├── :0  -> 100             ✗ out of order
+└── :1  -> 85
+                            keys must be in ascending order
+```
+
 ## Properties
 
 | Property | Value | Meaning |

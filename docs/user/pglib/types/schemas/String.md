@@ -21,6 +21,31 @@ metadata_definition: "%definition.##:String"
    [#] ###ScalarValue
 ```
 
+## Allows
+
+```
+#Int [##String with regex "^-?[0-9]+$"]
+├── .string  -> "42"       ← matches regex ✓
+└── .regex   -> "^-?[0-9]+$"
+
+#Int
+├── .string  -> "-7"       ← matches regex ✓
+└── .regex   -> "^-?[0-9]+$"
+```
+
+## Disallows
+
+```
+#Int [##String with regex "^-?[0-9]+$"]
+├── .string  -> "hello"    ✗ does not match "^-?[0-9]+$"
+└── .regex   -> "^-?[0-9]+$"
+
+#Int [##String]
+├── .string  -> "42"
+├── .regex   -> "^-?[0-9]+$"
+└── .extra   -> "metadata" ✗ ##Scalar (depth 1) — only .string and .regex allowed
+```
+
 ## Usage
 
 ```polyglot
@@ -32,6 +57,14 @@ metadata_definition: "%definition.##:String"
 ```
 
 The schema generates `.string#RawString` and `.regex#RawString` fields. The compiler validates that `.string` values match the `.regex` pattern. All `#String:*` scalar subtypes use this schema.
+
+## Used By
+
+<!-- @u:pglib/types/string -->
+<!-- @u:pglib/types/scalars -->
+
+- [[string|#String]] foundation type
+- All [[scalars|scalar subtypes]] ([[scalars|#Int]], [[scalars|#Float]], etc.)
 
 ## Metadata
 

@@ -14,6 +14,28 @@ metadata_definition: "%definition.###:ScalarEnum"
 
 A type composes `###ScalarEnum` when it is both an enum (all fields are variants) and a scalar (one level of fixed children).
 
+## Allows
+
+```
+#Boolean [###ScalarEnum]
+├── .True                  ✓ active     ← variant selector in scalar context
+└── .False                 ○ inactive     ##Scalar + ##Enum + no #type
+```
+
+## Disallows
+
+```
+#Boolean [###ScalarEnum — requires ##Scalar]
+├── .True
+├── .False
+└── .Details                           ✗ nesting creates depth 2
+    └── .Reason -> "override"            ##Scalar limits to depth 1
+
+#NotScalar [###ScalarEnum invalid without ##Scalar]
+├── :variant1                          ✗ ###ScalarEnum only valid
+└── :variant2                            with ##Scalar types
+```
+
 ## Declaration
 
 ```polyglot
@@ -29,13 +51,19 @@ The `[#] ###ScalarEnum` line declares the field type for all variant fields in t
 
 ## Example Types
 
+<!-- @u:pglib/types/boolean -->
+<!-- @u:pglib/types/OS -->
+<!-- @u:pglib/types/PipelineStatus -->
+<!-- @u:pglib/types/VarState -->
+<!-- @u:pglib/types/QueueStrategy -->
+
 | Type | Variants | Purpose |
 |------|----------|---------|
-| `#Boolean` | `.True`, `.False` | Boolean logic |
-| `#OS` | `.Unix`, `.Windows` | Operating system target |
-| `#PipelineStatus` | Various | Pipeline lifecycle state |
-| `#VarState` | Various | Variable state tracking |
-| `#QueueStrategy` | Various | Queue dispatch strategy |
+| [[boolean\|#Boolean]] | `.True`, `.False` | Boolean logic |
+| [[OS\|#OS]] | `.Unix`, `.Windows` | Operating system target |
+| [[PipelineStatus\|#PipelineStatus]] | Various | Pipeline lifecycle state |
+| [[VarState\|#VarState]] | Various | Variable state tracking |
+| [[QueueStrategy\|#QueueStrategy]] | Various | Queue dispatch strategy |
 
 All enum types that compose both `##Enum` and `##Scalar` use `###ScalarEnum`.
 

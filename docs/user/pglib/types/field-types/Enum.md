@@ -14,6 +14,24 @@ metadata_definition: "%definition.###:Enum"
 
 This is distinct from the `##Enum` schema. `##Enum` is a schema that constrains an entire type; `###Enum` is the field type assigned to each individual variant leaf within that type.
 
+## Allows
+
+```
+#Boolean [###Enum]
+├── .True                  ✓ active     ← no #type — identity IS the value
+└── .False                 ○ inactive     the active variant is the data
+```
+
+## Disallows
+
+```
+#Boolean [###Enum]
+├── .True
+├── .False
+└── .count -> 0#int        ✗ typed field among enum fields — PGE05005
+                             siblings must all be same ### kind
+```
+
 ## Declaration
 
 ```polyglot
@@ -29,10 +47,13 @@ Each `[.]` line without a `#type` annotation declares a `###Enum` field. The com
 
 ## Example Types
 
+<!-- @u:pglib/types/boolean -->
+<!-- @u:pglib/types/OS -->
+
 | Type | Variants | Purpose |
 |------|----------|---------|
-| `#Boolean` | `.True`, `.False` | Boolean logic |
-| `#OS` | `.Unix`, `.Windows` | Operating system target |
+| [[boolean\|#Boolean]] | `.True`, `.False` | Boolean logic |
+| [[OS\|#OS]] | `.Unix`, `.Windows` | Operating system target |
 | All permission enums | Various | Access control variants |
 
 ## Metadata

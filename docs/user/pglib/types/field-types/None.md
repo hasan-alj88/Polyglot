@@ -12,6 +12,24 @@ metadata_definition: "%definition.###:None"
 
 `###None` classifies a leaf where empty string `""` is the only valid value. This field type is used exclusively by the `#None` type. All other types reject `""` with PGE04021.
 
+## Allows
+
+```
+#None [###None]
+  ""                        ← empty string is the only valid value
+                              no fields, no children
+```
+
+## Disallows
+
+```
+#None [###None]
+  "hello"                   ✗ non-empty string — ###None only accepts ""
+
+$var#string <~ ""           ✗ PGE04021 — empty string on a non-###None type
+                              only ###None types accept ""
+```
+
 ## Declaration
 
 ```polyglot
@@ -29,6 +47,12 @@ The `[#] ###None` line declares the field type. No `[.]` fields are needed -- th
 | Definition | `%definition.###:None` | Field type definition template |
 
 Field types are compile-time leaf content classifiers -- they have no runtime instances.
+
+## Used By
+
+<!-- @u:pglib/types/boolean -->
+
+- [[boolean|#None]] -- the only type using `###None`
 
 ## Related
 
