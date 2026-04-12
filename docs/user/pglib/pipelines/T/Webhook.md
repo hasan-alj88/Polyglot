@@ -18,14 +18,15 @@ Fires on an incoming HTTP request to the specified endpoint. Endpoint path provi
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TWebhook"
    [%] .description << "Fires on an incoming HTTP request to the specified endpoint."
-   <InlineStringLiteral#string <~ ""
+   (-) %InlineString << "{endpoint}"
+   (-) <endpoint#string <~ ""
 ```
 
 ## Inputs
 
 | Name | Type | Description |
 |------|------|-------------|
-| `InlineStringLiteral` | `#string` | Endpoint path to bind (e.g. `"/api/onboarding"`). Provided inline: `-T.Webhook"/api/onboarding"`. Defaults to `""`. |
+| `endpoint` | `#string` | Endpoint path to bind (e.g. `"/api/onboarding"`). Provided inline: `-T.Webhook"/api/onboarding"`. Defaults to `""`. |
 
 ## Outputs
 

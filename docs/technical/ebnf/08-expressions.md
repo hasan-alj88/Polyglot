@@ -57,12 +57,13 @@ value_expr          ::= literal
                       | output_param ;       (* >pipelineOutput as source *)
 
 inline_pipeline_call ::= pipeline_ref string_literal ;
-                      (* e.g., =Path"/tmp/MyApp", =Path"{.}/logs"
+                      (* e.g., -Path"/tmp/MyApp", -Path"{.}/logs"
                          The string literal is interpolated ({$var} resolved first),
-                         then auto-wired into the pipeline's <InlineStringLiteral#string
-                         parameter (must be declared in [=] IO, defaults to "").
-                         Each pipeline defines its own parsing logic for the string.
-                         For =Path, separators / and \ are normalized per OS. *)
+                         then matched against the pipeline's %InlineString template.
+                         The compiler extracts named values from placeholder positions
+                         and wires them to the corresponding declared (-) inputs.
+                         Pipelines must declare (-) %InlineString << "{template}"
+                         to accept inline calls (PGE12003 if missing). *)
 ```
 
 ### 8.2 Comparison Expressions

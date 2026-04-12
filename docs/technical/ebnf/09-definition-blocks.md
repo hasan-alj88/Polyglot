@@ -130,7 +130,14 @@ trigger_ref         ::= pipeline_ref [ string_literal ] ;
 ```ebnf
 io_section          ::= { indent ( io_decl_line | type_input_line ) NEWLINE } ;
 
-io_decl_line        ::= "(-)" typed_io_param [ assignment_op value_expr ] ;
+io_decl_line        ::= "(-)" typed_io_param [ assignment_op value_expr ]
+                      | "(-)" inline_template_decl ;
+
+inline_template_decl ::= "%InlineString" push_left string_literal ;
+                      (* Declares the inline call template for this pipeline.
+                         Placeholders: {name} = required, {name?} = optional.
+                         Each placeholder must match a declared <name input.
+                         Optional placeholders require <~ default on the input. *)
 
 type_input_line     ::= "(-)" "<#" identifier ;
                       (* Type definition as data tree input — same <# syntax as {#} generic params.
