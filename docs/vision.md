@@ -88,7 +88,7 @@ The project aims to provide a unified platform for developers to leverage the st
 
 ## Ways of Integration
 
-- **In-Language Async Calls** — For each supported programming language, we provide a library/package that allows developers to make async calls to Polyglot services. This enables integration of Polyglot features into existing codebases without rewriting — developers adopt the platform incrementally.
+- **In-Language Async Calls** — For each supported programming language, we provide a library called `polyglot-interface` (or the idiomatic variant for that ecosystem) that allows developers to make async calls to Polyglot services. This enables integration of Polyglot features into existing codebases without rewriting — developers adopt the platform incrementally.
 
 - **Polyglot Code** — The Polyglot language is purpose-built to express interactions between automated tasks and define their behaviors while running in parallel. It can define custom triggers, actions, and orchestration flows, enabling highly customized applications.
 
