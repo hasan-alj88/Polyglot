@@ -79,7 +79,7 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 | Accessor | Type | Description |
 |----------|------|-------------|
 | `$name%state` | `#live.#VarState` | Declared, Default, Final, Failed, Released |
-| `$name%sourceError` | `#live.error` | Error that triggered a `<!` fallback, or `!NoError` if no error. See [[errors#Error Fallback Operators]] |
+| `$name%sourceError` | `#live.error` | Error that triggered a `!<` fallback, or `!NoError` if no error. See [[errors#Error Fallback Operators]] |
 
 ### Data (`{#}`)
 

@@ -32,6 +32,13 @@ Collect variables from parallel `[=]` pipeline calls (outside expand scopes).
 
 - [[pglib/collectors/Sync/INDEX|*All / *First / *Nth]] -- collect-all barrier, race collectors, discard
 
+## Collector Definitions (`{*}`)
+
+Collectors are definable as first-class entities using `{*}` blocks. Existing pglib collectors (`*First`, `*All`, etc.) are implemented as `{*}` definitions — collector logic lives in `{*}`, while underlying job management remains native.
+
+- [[technical/spec/collector-definitions|Collector Definitions]] -- `{*}` block specification, ground rules, and examples
+- [[technical/ebnf/16-collector-definitions|EBNF §16]] -- formal grammar for `{*}` blocks
+
 ## Related
 
 - [[pglib/INDEX|pglib Namespace Registry]]

@@ -49,10 +49,11 @@ This document defines the complete formal grammar for Polyglot Code (`.pg` files
 | 6 | [[06-operators]] | Operators |
 | 7 | [[07-io-parameters]] | IO parameters |
 | 8 | [[08-expressions]] | Expressions |
-| 9 | [[09-definition-blocks]] | Definition blocks ({-}, {#}, {T}, {W}, {N}, {Q}, {!}, {_}, {@}) |
+| 9 | [[09-definition-blocks]] | Definition blocks ({-}, {#}, {T}, {W}, {N}, {Q}, {!}, {_}, {@}, {*}) |
 | 10 | [[10-execution]] | Execution statements |
 | 11 | [[11-control-flow]] | Control flow |
 | 12 | [[12-collections]] | Collection operations |
 | 13 | [[13-comments]] | Comments |
 | 14 | [[14-lifecycle]] | Variable lifecycle constraints |
 | 15 | [[15-example]] | Complete file example |
+| 16 | [[16-collector-definitions]] | Collector definitions (`{*}`) |

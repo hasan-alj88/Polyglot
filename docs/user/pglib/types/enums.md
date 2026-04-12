@@ -55,6 +55,17 @@ Enums used by text/CSV collection and merge operators.
 | `#MergeStrategy` | Conflict resolution for k-way merge collectors | [[MergeStrategy]] |
 | `#CollectOrder` | Fragment ordering in append-style collectors | [[CollectOrder]] |
 
+## Collector Enums
+
+Enums used by `{*}` collector definitions. See [[technical/spec/collector-definitions|Collector Definitions]].
+
+| Type | Description | File |
+|------|-------------|------|
+| `#CollectorCategory` | Reconciliation category (Into, Agg, Sync, Race, Discard) | [[CollectorCategory]] |
+| `#CollectorScope` | Invocation context (Expand vs Parallel) | [[CollectorScope]] |
+| `#OverflowStrategy` | Overflow behavior for collector definitions | [[OverflowStrategy]] |
+| `#JobStatus` | Job lifecycle state as observed by collectors | [[JobStatus]] |
+
 ## Related
 
 - [[boolean]] -- #Boolean enum type

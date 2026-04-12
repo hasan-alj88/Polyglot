@@ -9,7 +9,7 @@ status: complete
 
 <!-- @u:line-structure -->
 <!-- @c:identifiers -->
-Three bracket shapes with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native` (see [[data-is-trees]]).
+Three bracket shapes with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native`, `{*}` at `%*` (see [[data-is-trees]]).
 
 > **Notation:** Throughout this document, `X` in `{X}`, `[X]`, and `(X)` is a **placeholder** — it represents any valid marker character, not a literal block. For example, `{X}` means "any definition block" (`{#}`, `{-}`, `{W}`, etc.), `[X]` means "any block element marker," and `(X)` means "any IO bracket."
 
@@ -28,6 +28,7 @@ Define top-level structures. Open a scope that continues with indentation. All d
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
 | `{_}` | Permission object — named, reusable permission policy with `#Ceiling` or `#Grant` intent. Uses `_`/`__`/`___` tier system mirroring `#`/`##`/`###`. See [[permissions]] |
 | `{N}` | Native definition — compiler primitive with no Polyglot body. `[%]` metadata implicitly scopes to `%Native.*`. Non-user-extendable. See [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
+| `{*}` | Collector definition — first-class definable collector logic. Metadata at `%*`. See [[technical/spec/collector-definitions\|Collector Definitions]] |
 | `{ }` | Comment. See [[comments]] |
 
 **Marker declarations on `{-}`:** The `[exe]` marker declares the pipeline as an execution pipeline, invocable via `[-]`, `[=]`, or `[b]`. `{-}` without a marker defaults to `{-}[exe]` — no warning. Subsets like `{-}[b]` (background-only) or `{-}[-=]` (sequential/parallel only) restrict how the pipeline can be invoked. Subtypes (`{T}`, `{W}`, `{Q}`) have fixed implicit markers and cannot take `marker_decl`. See [[concepts/pipelines/INDEX#Marker Declarations|Marker Declarations]] for full details.
@@ -67,6 +68,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `(*) >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `(>)` | Output parameter handling — scoped under `(-)` output line. See [[io#IO Parameter Handling]] |
 | `(<)` | Input parameter handling — scoped under `(-)` input line. See [[io#IO Parameter Handling]] |
+| `(T)` | Trigger IO line — declares arrival data as `$` variables inside `{*}` collector trigger blocks. See [[technical/spec/collector-definitions\|Collector Definitions]] |
 | `($)` | Operation label — names a call's IO for downstream access via `$Label>output`. See [[operation-labels]] |
 | `(.)` | Chain step label — names individual steps within a chain, indented under `($)`. See [[operation-labels#Chain Step Labels]] |
 | `( )` | IO comment — inline annotation within IO blocks. See [[comments]] |
@@ -90,7 +92,8 @@ See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure a
 | `[?]` | Conditional switch flow; match arm (under `[-]` `>>` match). See [[conditionals#Match Syntax]] |
 | `[!]` | Error handling — scoped under `[-]` call. See [[concepts/pipelines/error-handling#Error Handling]] |
 | `[!] >>` | Error raise — raises a declared error. See [[errors#Raising Errors]] |
-| `[T]` | Trigger. See [[concepts/pipelines/io-triggers#Triggers]] |
+| `[T]` | Trigger. In pipelines: [[concepts/pipelines/io-triggers#Triggers]]. In `{*}` collectors: arrival trigger — [[technical/spec/collector-definitions\|Collector Definitions]] |
+| `[*]` | Release — inside `{*}` collector triggers, releases collector claims on jobs (`*Job.Release`, `*Arrive.Job.Release`). See [[technical/spec/collector-definitions\|Collector Definitions]] |
 | `[Q]` | Queue. See [[concepts/pipelines/queue#Queue]] |
 | `[W]` | Wrapper. See [[concepts/pipelines/wrappers#Wrappers]] |
 

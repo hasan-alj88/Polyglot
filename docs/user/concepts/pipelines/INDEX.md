@@ -202,7 +202,7 @@ Three distinct concepts form the execution hierarchy:
 Every job starts and completes based on IO state:
 - **Start:** All input IO must be in Final state. If an input is in Default state, pulling it promotes it to Final (see [[variable-lifecycle#Default]]).
 - **Completion:** All output IO in Final state signals the job is complete.
-- **Error guarantee:** The compiler ensures no output can reach Failed state without handling. Declared errors (`(-) !ErrorName`) must have `[!]` handlers or `<!` fallback operators. Unhandled error paths are a compile error.
+- **Error guarantee:** The compiler ensures no output can reach Failed state without handling. Declared errors (`(-) !ErrorName`) must have `[!]` handlers or `!<` fallback operators. Unhandled error paths are a compile error.
 
 ### Implicit Triggers in the Pipeline Body
 
