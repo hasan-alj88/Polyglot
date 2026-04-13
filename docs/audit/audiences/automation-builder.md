@@ -1,10 +1,11 @@
 ---
 type: audience-rules
-audience: pg-coder
-updated: 2026-04-03
+audience: automation-builder
+classification: external
+updated: 2026-04-13
 ---
 
-# Audience: PG-Coders
+# Audience: Automation Builders
 
 <!-- @c:vision:Core Philosophy -->
 Authority: [[vision#Core Philosophy]]

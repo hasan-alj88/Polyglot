@@ -1,5 +1,5 @@
 ---
-audience: pg-coder
+audience: automation-builder
 type: concept
 updated: 2026-04-10
 status: retired

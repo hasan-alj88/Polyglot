@@ -1,7 +1,8 @@
 ---
 type: audience-rules
 audience: designer
-updated: 2026-04-03
+classification: internal
+updated: 2026-04-13
 ---
 
 # Audience: Designers
@@ -35,7 +36,7 @@ Core Polyglot developers focused on language syntax and semantics: the grammar (
 
 - Include runtime implementation details (Queue Manager, Dispatcher — that's [[audiences/architect]] scope)
 - Leave syntax ambiguous — every construct needs a formal definition
-- Provide hand-holding walkthroughs (that's [[audiences/pg-coder]] scope)
+- Provide hand-holding walkthroughs (that's [[audiences/automation-builder]] scope)
 - Use informal language where formal specification is clearer
 - Contradict [[vision#Language Design]] principles
 

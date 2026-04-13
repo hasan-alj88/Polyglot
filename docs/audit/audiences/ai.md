@@ -1,7 +1,8 @@
 ---
 type: audience-rules
 audience: ai
-updated: 2026-03-14
+classification: internal
+updated: 2026-04-13
 ---
 
 # Audience: AI

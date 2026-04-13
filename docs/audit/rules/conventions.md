@@ -50,7 +50,7 @@ Authority: [[vision]]
 
 ```yaml
 ---
-audience: pg-coder | integrator | architect | designer | ai  # single value or YAML list
+audience: automation-builder | integrator | architect | designer | ai  # single value or YAML list
 type: spec | guide | reference | tutorial | audit-rules
 phase: NN (if part of a milestone phase)
 updated: YYYY-MM-DD
@@ -60,7 +60,7 @@ updated: YYYY-MM-DD
 Multi-audience documents use a YAML list. The first-listed audience drives the tone:
 
 ```yaml
-audience: [pg-coder, integrator]  # tone follows pg-coder rules
+audience: [automation-builder, integrator]  # tone follows automation-builder rules
 ```
 
 ## Document Type Definitions

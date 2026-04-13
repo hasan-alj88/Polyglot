@@ -15,11 +15,11 @@ updated: 2026-04-10
 
 | File | What it tells Claude | When to read |
 |------|---------------------|--------------|
-| [[audiences/pg-coder\|audiences/pg-coder]] | Tone, format, assumptions for .pg code writers | Before writing pg-coder docs |
-| [[audiences/integrator\|audiences/integrator]] | Tone, format, assumptions for SDK/API integrators | Before writing integrator docs |
-| [[audiences/architect\|audiences/architect]] | Tone, format, assumptions for core architecture docs | Before writing architect docs |
-| [[audiences/designer\|audiences/designer]] | Tone, format, assumptions for language design docs | Before writing designer docs |
-| [[audiences/ai\|audiences/ai]] | Tone, format, assumptions for AI-facing docs | Before writing AI docs |
+| [[audiences/automation-builder\|audiences/automation-builder]] | Tone, format, assumptions for .pg code writers (external) | Before writing automation-builder docs |
+| [[audiences/integrator\|audiences/integrator]] | Tone, format, assumptions for SDK/API integrators (external) | Before writing integrator docs |
+| [[audiences/architect\|audiences/architect]] | Tone, format, assumptions for core architecture docs (internal) | Before writing architect docs |
+| [[audiences/designer\|audiences/designer]] | Tone, format, assumptions for language design docs (internal) | Before writing designer docs |
+| [[audiences/ai\|audiences/ai]] | Tone, format, assumptions for AI-facing docs (internal) | Before writing AI docs |
 | [[rules/conventions\|rules/conventions]] | Style, structure, formatting rules | Before writing any doc |
 | [[rules/checklist\|rules/checklist]] | Pre-publish quality checks | Before finalizing any doc |
 | [[reference/glossary\|reference/glossary]] | Authoritative term definitions | When using project terminology |

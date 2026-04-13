@@ -1,6 +1,6 @@
 ---
 type: spec-index
-audience: pg-coder
+audience: automation-builder
 updated: 2026-03-30
 ---
 

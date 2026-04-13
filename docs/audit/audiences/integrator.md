@@ -1,7 +1,8 @@
 ---
 type: audience-rules
 audience: integrator
-updated: 2026-04-03
+classification: external
+updated: 2026-04-13
 ---
 
 # Audience: Integrators
@@ -44,6 +45,6 @@ Developers who integrate their existing codebases (Python, Rust, JavaScript, etc
 - Show host-language code snippets (Python, Rust, JS, etc.)
 - Document SDK/API surfaces with signatures and return types
 - Include expected behavior and output for every example
-- Cross-reference [[audiences/pg-coder]] docs when deeper Polyglot understanding would help
+- Cross-reference [[audiences/automation-builder]] docs when deeper Polyglot understanding would help
 - Note the integration evolution phase ([[vision#Evolution]]) for cross-language features
 - Provide troubleshooting for common integration failures

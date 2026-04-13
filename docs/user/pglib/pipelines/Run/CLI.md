@@ -1,5 +1,5 @@
 ---
-audience: pg-coder
+audience: automation-builder
 type: specification
 updated: 2026-04-13
 status: draft

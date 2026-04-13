@@ -1,5 +1,5 @@
 ---
-audience: [pg-coder, integrator, architect, designer]
+audience: [automation-builder, integrator, architect, designer]
 type: reference
 updated: 2026-04-13
 ---

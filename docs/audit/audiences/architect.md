@@ -1,7 +1,8 @@
 ---
 type: audience-rules
 audience: architect
-updated: 2026-04-03
+classification: internal
+updated: 2026-04-13
 ---
 
 # Audience: Architects
