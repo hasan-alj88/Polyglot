@@ -14,7 +14,7 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** In chain execution (`[-] -A->-B->-C`), each step's `[!]` error handler is scoped to that step only — as if each step were a separate `[-]` call. Error references use the `.N!ErrorName` syntax: a step prefix (`.N` numeric or `.LeafName` name-based) followed by `!` and the error path. The `!` separates the step reference from the error name, eliminating dotted-path ambiguity. Name-based step references must be unambiguous per PGE08004. The handler sees only its step's IO and can provide a replacement value for the chain's output variable.
-**Rationale:** Chain steps are logically separate pipeline calls. Scoping error handlers to their producing step keeps error handling local and explicit. The `.N!Error` syntax mirrors how IO lines use `.N` for step addressing while clearly delimiting the step reference from the error path.
+**Rationale:** Chain steps are logically separate pipeline calls. Scoping error handlers to their producing step keeps error handling local and explicit. The `.N!Error` syntax mirrors how IO lines use `.N` for step addressing while clearly delimiting the step reference from the error path. This extends Polyglot's exhaustive error handling to chains — each step's failure modes must be addressed individually, ensuring the compiler can verify complete coverage across the entire chain.
 **Detection:** The compiler checks that every `[!]` block under a chain `[-]` uses `.N!` or `.LeafName!` syntax. If a chain `[!]` uses the non-chain form (`!ErrorName` without step prefix), PGE07002 fires. If a name-based step reference is ambiguous, PGE08004 fires.
 
 ## Addressing syntax

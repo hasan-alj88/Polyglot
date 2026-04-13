@@ -15,7 +15,7 @@ severity: error
 
 **Statement:** Every `[?]` line must follow the form `[?] $variable <operator> value` or `[?] *?`. A `[?]` line without a comparison operator is a syntax violation. **Exception:** `[?]` lines in match context (indented under `[-] $source >> $target`) use `[?] value >> result` form without a comparison operator — PGE06009 does not apply to match arms. See [[conditionals#Match Syntax]].
 
-**Rationale:** Conditionals are explicit comparison expressions, not switch/match blocks. There is no "subject" line that introduces a value to match against — each arm is a standalone test. Bare `[?] $variable` lines create ambiguity about what comparison is being performed.
+**Rationale:** Conditionals are explicit comparison expressions, not switch/match blocks. There is no "subject" line that introduces a value to match against — each arm is a standalone test. Bare `[?] $variable` lines create ambiguity about what comparison is being performed. Polyglot requires every condition to be explicit and verifiable — the compiler cannot prove exhaustive coverage if it cannot determine what each branch tests.
 
 **Detection:** The compiler checks every `[?]` line. First, it determines whether the `[?]` is in match context — its parent is a `[-] ... >> ...` match header. If so, PGE06009 is suppressed. Otherwise, if the line does not contain a comparison operator (`=?`, `=!?`, `>?`, `<?`, `>=?`, `<=?`, `>!?`, `<!?`, `>=!?`, `<=!?`, `*?`) or a range operator (`?[`, `?(`, `?]`, `?)`), PGE06009 fires.
 

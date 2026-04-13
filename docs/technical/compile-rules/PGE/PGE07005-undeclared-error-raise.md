@@ -15,7 +15,7 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** A `[!] >> !ErrorName` raise statement in a pipeline's execution body must reference an error that the pipeline declares via `(-) !ErrorName` in its IO section. Raising an undeclared error is a compile error — the pipeline's error tree must be complete and explicit.
-**Rationale:** Error declarations form the pipeline's contract with callers. If a pipeline can raise an error, it must declare it so callers can handle it. Undeclared raises break the contract and prevent callers from writing correct error handling code. This also enables the compiler to validate that callers handle all possible errors.
+**Rationale:** Error declarations form the pipeline's contract with callers. If a pipeline can raise an error, it must declare it so callers can handle it. Undeclared raises break the contract and prevent callers from writing correct error handling code. This also enables the compiler to validate that callers handle all possible errors. This is core to Polyglot's "compiles intent" model — the compiler can only enforce exhaustive error handling if every pipeline's error contract is complete and honest.
 **Detection:** The compiler collects all `(-) !ErrorName` declarations in the pipeline's IO section. For each `[!] >> !ErrorName` in the execution body, it checks whether the error is in the declared set. If not, PGE07005 fires.
 
 **See also:**

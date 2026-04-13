@@ -13,7 +13,7 @@ severity: error
 <!-- @u:syntax/types -->
 
 **Statement:** In a `[?]` conditional with compound conditions (`[&]` AND, `[+]` OR, `[^]` XOR), no two branches may cover the same cell in the product space. Overlapping branches are always a compile error, regardless of whether `*?` is present. The compiler must identify the overlapping branches and a concrete input from the shared region.
-**Rationale:** Overlapping compound branches create ambiguity — when an input matches multiple branches, the compiler cannot determine which should execute. This is always a bug. Even with `*?`, overlaps must be resolved.
+**Rationale:** Overlapping compound branches create ambiguity — when an input matches multiple branches, the compiler cannot determine which should execute. This is always a bug. Even with `*?`, overlaps must be resolved. Polyglot's exhaustive coverage model requires that every input maps to exactly one branch — ambiguity is a compile-time error, not a runtime coin flip.
 **Detection:** The compiler builds a partition grid over all tested variables (per the [partition refinement algorithm](../algorithms/compound-exhaustiveness.md)), maps each branch to its covered cells, and checks if any cell is covered by more than one branch. If so, PGE06005 fires with the overlapping branches and a concrete counterexample from the shared cell.
 
 **See also:** PGE06001 (general exhaustiveness), PGE06004 (numeric range overlap), PGE06008 (compound exhaustiveness), PGE06013 (tautological/contradictory branch — prerequisite check), [Partition Refinement Algorithm](../algorithms/compound-exhaustiveness.md), [Overlap Detection Algorithm](../algorithms/overlap-detection.md)

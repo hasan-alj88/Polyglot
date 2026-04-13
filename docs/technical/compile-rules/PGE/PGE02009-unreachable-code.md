@@ -14,7 +14,7 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** Code that appears after all output ports have reached Final state in every code path is unreachable and produces a compile error. The pipeline has terminated — no further statements can have any effect.
-**Rationale:** Unlike dead code that merely wastes space (PGW02005), unreachable code after full pipeline termination indicates a logic error. The developer believes work is being done, but the pipeline has already completed. This is an error rather than a warning because it reveals a misunderstanding of control flow that should be fixed before deployment.
+**Rationale:** Unlike dead code that merely wastes space (PGW02005), unreachable code after full pipeline termination indicates a logic error. The developer believes work is being done, but the pipeline has already completed. This is an error rather than a warning because it reveals a misunderstanding of control flow that should be fixed before deployment. Polyglot's exhaustive coverage model means every code path must be intentional — unreachable code indicates the developer's mental model diverges from the pipeline's actual behaviour.
 **Detection:** The compiler tracks the lifecycle state of all output ports through control flow analysis. When every output port has been pushed to Final — either directly or through exhaustive conditional branches where every branch pushes all remaining ports Final — the pipeline is considered terminated. Any subsequent executable statement triggers PGE02009.
 
 **See also:** PGE02003 (Final Is Push-Once — individual port violation), PGE02008 (Access After Release — scope-based unreachability), PGW02005 (Unreachable Code warning — softer diagnostic for the same pattern)

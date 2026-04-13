@@ -16,7 +16,7 @@ severity: error
 <!-- @u:syntax/types -->
 
 **Statement:** `live`-typed `%` metadata fields are managed by the Polyglot runtime and can only be pulled from. Any push into a `live` `%` field is a compile error. This rule applies only to `live` fields — non-live `%` fields (e.g., `%pipeline.*.description`) are user-assignable and follow normal lifecycle rules.
-**Rationale:** `live` fields reflect runtime state that only the runtime can change (e.g., a variable's lifecycle stage, a pipeline's execution status). Allowing user code to push into `live` metadata would break runtime invariants. Non-live metadata fields are user-defined and follow standard push/pull rules.
+**Rationale:** `live` fields reflect runtime state that only the runtime can change (e.g., a variable's lifecycle stage, a pipeline's execution status). Allowing user code to push into `live` metadata would break runtime invariants. Non-live metadata fields are user-defined and follow standard push/pull rules. This enforces Polyglot's separation between developer intent and runtime state — the compiler protects runtime-managed state from user interference, ensuring the state machine remains trustworthy.
 **Detection:** At any assignment statement where the target uses the `%` accessor on a `live`-typed field — the compiler rejects the push regardless of operator (`<<`, `>>`, `<~`, `~>`).
 
 **Metadata access on Failed-state variables:**

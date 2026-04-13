@@ -14,7 +14,7 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** A call to `-Math.Divide` or `-Math.Modulo` where the divisor input is the literal value `0` is a compile error.
-**Rationale:** Division by zero is always a runtime failure. When the divisor is a literal `0`, the compiler can detect this statically and reject the program. This catches obvious mistakes before deployment.
+**Rationale:** Division by zero is always a runtime failure. When the divisor is a literal `0`, the compiler can detect this statically and reject the program. This catches obvious mistakes before deployment. This exemplifies Polyglot's core principle of offloading runtime crashes to compile time — if a failure is provable before the pipeline runs, the compiler must reject it rather than let it surface in production.
 **Detection:** The compiler inspects all `[-] -Math.Divide` and `[-] -Math.Modulo` calls. If the second positional input (`<< 0`) is the integer literal `0` or float literal `0.0`, the call is rejected.
 
 **See also:** PGE04010 (invalid arithmetic operator — rejects non-math operators), PGE04001 (type mismatch — general type validation)

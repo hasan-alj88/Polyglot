@@ -12,7 +12,7 @@ severity: error
 <!-- @u:syntax/blocks -->
 
 **Statement:** In a `[?]` conditional with numeric branches, no two branches may overlap. Overlapping ranges are always a compile error, regardless of whether `*?` is present. The compiler must identify the overlapping branches and the overlapping interval.
-**Rationale:** Overlapping ranges create ambiguity — when a value falls in the overlap, the compiler cannot determine which branch should execute. This is always a bug. Even with `*?`, overlaps must be resolved.
+**Rationale:** Overlapping ranges create ambiguity — when a value falls in the overlap, the compiler cannot determine which branch should execute. This is always a bug. Even with `*?`, overlaps must be resolved. Polyglot's exhaustive coverage model requires that every value maps to exactly one branch — ambiguity is a compile-time error, not a runtime coin flip.
 **Detection:** The compiler checks all pairs of numeric branch conditions for intersection. If any pair has a non-empty intersection, PGE06004 fires. The error message identifies the two overlapping branches and the overlapping interval.
 
 **See also:** PGE06003 (range not exhaustive), PGE06001 (general exhaustiveness), [Overlap Detection Algorithm](../algorithms/overlap-detection.md)

@@ -14,7 +14,7 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** When calling a failable pipeline (one that declares `(-) !ErrorName`), the caller must address every declared error. If any declared error has no handler and no fallback, PGE07007 fires. This mirrors PGE06001 (Conditional Must Be Exhaustive) — just as every conditional branch must route every value, every failable call must route every error.
-**Rationale:** Unaddressed errors cause silent pipeline termination — the caller believes downstream code will execute, but the pipeline ends without explanation. Explicit handling ensures the developer has acknowledged every failure mode, even if the chosen response is termination. This eliminates a class of "it just stopped" bugs.
+**Rationale:** Unaddressed errors cause silent pipeline termination — the caller believes downstream code will execute, but the pipeline ends without explanation. Explicit handling ensures the developer has acknowledged every failure mode, even if the chosen response is termination. This eliminates a class of "it just stopped" bugs. This is Polyglot's exhaustive coverage principle applied to error paths — the compiler demands that every scenario is accounted for before the pipeline runs, rather than discovering unhandled failures in production.
 **Detection:** The compiler collects the called pipeline's `(-) !ErrorName` declarations. It then checks the caller's handling mechanisms. An error is "addressed" if any of the following cover it:
 
 | Mechanism | Scope |

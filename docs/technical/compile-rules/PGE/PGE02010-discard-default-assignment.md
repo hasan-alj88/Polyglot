@@ -14,7 +14,7 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** The inline discard pattern `$*` only accepts final assignment operators (`<<`, `>>`). Using default operators (`<~`, `~>`) with `$*` is a compile error. A discard is immediately released — setting a default implies the value may be overridden later, which is meaningless for a pattern that is never read.
-**Rationale:** `$*` exists to explicitly acknowledge and discard a value. Discards have no lifecycle beyond the assignment — they skip Declared, jump straight to Released. Default assignment implies the value sits in Default state awaiting possible promotion to Final, but `$*` has no state to promote. Allowing `<~`/`~>` on `$*` would mislead developers into thinking the value persists.
+**Rationale:** `$*` exists to explicitly acknowledge and discard a value. Discards have no lifecycle beyond the assignment — they skip Declared, jump straight to Released. Default assignment implies the value sits in Default state awaiting possible promotion to Final, but `$*` has no state to promote. Allowing `<~`/`~>` on `$*` would mislead developers into thinking the value persists. This reflects Polyglot's "think with intent" philosophy — every operation must express clear, honest intent, and the compiler rejects patterns that mislead the developer about what the code actually does.
 **Detection:** The compiler checks the assignment operator when `$*` appears as the target (left side) or source-side discard (right side via `>>`). If the operator is `<~` or `~>`, PGE02010 fires.
 
 **VALID:**

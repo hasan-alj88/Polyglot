@@ -18,7 +18,7 @@ split_from: PGE06001
 2. **`*?` catch-all (open types):** If any tested variable has an open type (string, RawString, flexible field), the entire compound is open-ended and `*?` is mandatory.
 
 If neither partition proof succeeds nor `*?` is present, PGE06008 fires.
-**Rationale:** Compound conditions combine multiple predicates across a Cartesian product space. For closed types, the compiler can build a complete grid and verify coverage. For open types, the infinite value space makes static proof impossible — `*?` is required.
+**Rationale:** Compound conditions combine multiple predicates across a Cartesian product space. For closed types, the compiler can build a complete grid and verify coverage. For open types, the infinite value space makes static proof impossible — `*?` is required. This enforces Polyglot's exhaustive coverage principle — the compiler must prove that every possible combination of inputs is handled, offloading what would be a runtime crash to a compile-time guarantee.
 **Detection:** The compiler classifies each tested variable as closed or open. If any is open → require `*?`. If all are closed → run the partition refinement algorithm. If the union of branch regions does not cover the full grid and `*?` is absent, PGE06008 fires.
 
 **VALID:**

@@ -12,7 +12,7 @@ severity: error
 <!-- @u:syntax/io -->
 
 **Statement:** `#array` type annotations must specify an element type. Untyped arrays (`#array` without element type) are a compile error — the compiler cannot infer the element type, and all elements must share the same schema.
-**Rationale:** Polyglot is type-safe first. Arrays hold homogeneous elements — every element must conform to the declared element type's schema. Without a declared type, the compiler cannot enforce this constraint, leading to potential runtime type errors.
+**Rationale:** Polyglot is type-safe first. Arrays hold homogeneous elements — every element must conform to the declared element type's schema. Without a declared type, the compiler cannot enforce this constraint, leading to potential runtime type errors. By requiring explicit element types, the compiler can verify schema compatibility across the entire data flow at compile time — including across language boundaries where type mismatches would otherwise surface only at runtime.
 **Detection:** The compiler checks that every `#array` type annotation includes an element type via colon notation (e.g., `#array:int`, `#array:UserRecord`).
 
 **VALID:**
