@@ -160,7 +160,7 @@ Every `{*}` block receives a system-provided input:
 ### Ground Rule 9: Overflow — Three-Tier Chain
 
 <!-- @u:technical/plan/queue-manager/overflow -->
-`{*}` collectors participate in the PPTD overflow system ([[technical/plan/queue-manager/overflow|u:overflow]]). Overflow metadata:
+`{*}` collectors participate in the PPTD (Parallel Processing Temporary Directory) overflow system ([[technical/plan/queue-manager/overflow|u:overflow]]). Overflow metadata:
 
 ```polyglot
 [%] .overflow << #OverflowStrategy.Append
