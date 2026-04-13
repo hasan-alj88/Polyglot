@@ -175,6 +175,8 @@ Record field types drive marshalling through the native dispatch JSON wire forma
 
 **Note:** Binding validation (PGE01033–PGE01036) applies at compile time for `<code.inline` only. When `<code.file` is used, binding validation is deferred to runtime (the file content is not available at compile time).
 
+**File binding rule:** When `<code.file` is used, the compiler records a content hash of the referenced file. If the file changes after compilation, the Polyglot Service revokes the pipeline's permission grant and refuses to execute until the developer recompiles. A file change watcher trigger monitors the referenced path and notifies the developer. See [[concepts/permissions#Compile-Time File Binding|c:Compile-Time File Binding]].
+
 ### Binding Compiler Errors
 
 | Code | Name | Condition |

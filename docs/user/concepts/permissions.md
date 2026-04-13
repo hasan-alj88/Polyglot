@@ -288,6 +288,21 @@ All permission checks are **static analysis** — resolved at compile time, not 
 
 No runtime permission checks exist. If it compiles, the permissions are satisfied.
 
+## Compile-Time File Binding
+
+<!-- @c:vision#No Dynamic Code -->
+Permission grants that reference external files — `<code.file` paths in `-Run.*` pipelines ([[pglib/pipelines/Run/INDEX|u:-Run.*]]), configuration files, data files — are bound to the file's content at compilation time. The compiled output includes a content hash of every referenced file.
+
+If a referenced file changes after compilation:
+
+1. The Polyglot Service **revokes** the associated permission grant
+2. The pipeline **refuses to execute** until the developer recompiles with the updated file
+3. A **file change watcher trigger** monitors all referenced file paths and notifies the developer that recompilation is required
+
+This ensures that no external code or input runs through the platform without having passed through the compiler's analysis. The principle is simple: compilation is a license to launch, and that license is invalidated when the inputs change.
+
+**Note:** `.pg` source files are covered by the same principle implicitly — changing a `.pg` file has no effect until the developer recompiles, at which point the compiler re-analyses the entire package.
+
 ## File Ordering
 
 `{@}` must appear first in every `.pg` file (compiler-enforced). The recommended stylistic ordering for the remaining blocks is:
