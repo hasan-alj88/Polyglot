@@ -43,6 +43,8 @@ IO inputs act as implicit trigger gates based on their assignment operator:
 
 There is no need to validate inputs with `[?]` checks — unfilled required inputs prevent the pipeline from triggering.
 
+This "all gates must be open" model extends beyond IO: permissions (`[_]` references) act as compile-time trigger gates under the same principle — a pipeline missing its required `_Permission` objects will never fire, so the compiler rejects it entirely. See [[permissions#Compile-Time Resolution]] and [[vision#Permissions as Implicit Triggers]].
+
 ## Triggers
 
 Every pipeline must have at least one `[T]` trigger — omitting it is a compile error (PGE01005).
