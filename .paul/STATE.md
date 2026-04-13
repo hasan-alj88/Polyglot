@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — working on #281
-Plan: 281-01 complete
-Status: Loop closed, ready for commit and merge
-Last activity: 2026-04-13 — UNIFY complete for 281-01
+Phase: Issue-driven — ready for next issue
+Plan: —
+Status: Idle
+Last activity: 2026-04-13 — Closed #281, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -96,6 +96,7 @@ Progress:
 - Issue #274: [██████████] 100% (1/1 plans — (#) generic input + ##Nullable/##Inf fields)
 - Issue #275: [██████████] 100% (5/5 plans — collection redesign: ##Record, %##Fields)
 - Issue #280: [██████████] 100% (1/1 plans — %InlineString template system)
+- Issue #281: [██████████] 100% (1/1 plans — -Run.* binding + compile rules)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -105,18 +106,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #281 — Design: -RT.* input binding to native language variables
-Branch: design/issue-281-rt-input-binding-to-native-language-variables
-Labels: design
-Started: 2026-04-13
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/281
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for commit + merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -267,6 +264,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #274 — (#) generic input marker + explicit ##Nullable/##Inf fields | 2026-04-12 | Merged design/issue-274 to main; 2 stale references fixed |
 | Closed #278 — *Into.Text.* and *Into.CSV.* collector operators | 2026-04-11 | Merged design/issue-278-into-text-collector-operators-agg-concat to main; 3 plans, 43 files |
 | Closed #280 — %InlineString template system | 2026-04-12 | Merged design/issue-280 to main; replaces <InlineStringLiteral with structured template extraction |
+| Closed #281 — -Run.* input binding to native language variables | 2026-04-13 | 4 -Run.* pipeline docs, 7 compile rules (PGE01033-01039), Record field names = native vars |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -286,12 +284,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-13
-Stopped at: Loop closed for 281-01
-Next action: Commit and /paul:merge to close issue #281
+Stopped at: Issue #281 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/281-rt-input-binding/281-01-SUMMARY.md
 Resume context:
-- 281-01 complete: 4 -Run.* pipeline docs + 7 compile rules (PGE01033-01039)
-- Ready for commit + merge to main
+- Issue #281 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
