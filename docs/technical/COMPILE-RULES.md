@@ -59,6 +59,13 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01030 | Missing Pipeline Wrapper |
 | PGE01031 | Forbidden Element in Definition |
 | PGE01032 | Missing Trigger Boolean Output |
+| PGE01033 | Unbound Script Variable |
+| PGE01034 | Unbound Script Output |
+| PGE01035 | Unbound Function Argument |
+| PGE01036 | Unbound Function Kwarg |
+| PGE01037 | Bind Schema Mismatch |
+| PGE01038 | Code Source Conflict |
+| PGE01039 | CLI Non-String Argument |
 
 ### 02 — Lifecycle & State
 
