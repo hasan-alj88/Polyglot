@@ -85,5 +85,8 @@ See [[pglib/permissions/INDEX|Generic Permissions INDEX]] for full capability-le
 
 | Prefix | File | Description | Status |
 |--------|------|-------------|--------|
-| `!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT` | [errors/errors.md](errors/errors.md) | Standard error trees | Stable |
-| `!Storage`, `!Text`, `!CSV` | [errors/errors.md](errors/errors.md) | Text/CSV operation errors | Draft |
+| `!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`, `!Env` | [errors/errors.md](errors/errors.md) | Standard error trees (index) | Stable |
+| `!Storage`, `!Text`, `!CSV` | [errors/errors.md](errors/errors.md) | Text/CSV operation errors (index) | Draft |
+| `#Error`, `#NullableRecord` | [errors/error-struct.md](errors/error-struct.md) | Error struct definition | Stable |
+| Custom `{!}` | [errors/custom-errors.md](errors/custom-errors.md) | User-defined error namespaces | Stable |
+| Pipeline `[=] !` | [errors/pipeline-associations.md](errors/pipeline-associations.md) | Which pipelines raise which errors | Stable |

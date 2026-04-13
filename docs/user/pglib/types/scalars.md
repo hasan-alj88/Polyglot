@@ -3,8 +3,6 @@ audience: automation-builder
 type: specification
 updated: 2026-04-09
 status: complete
-metadata_definition: "%definition.##:Int"
-metadata_instance: "%#:String:int"
 ---
 
 # Scalar Subtypes
@@ -27,116 +25,18 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 
 ## Summary Table
 
-| Type | Alias | `.regex` Pattern | Example Values |
-|------|-------|---------------|----------------|
-| `#Int` | `int` | `^-?[0-9]+$` | `42`, `-7`, `007` |
-| `#UnsignedInt` | `uint` | `^[0-9]+$` | `0`, `1`, `42` |
-| `#Float` | `float` | `^-?[0-9]+\.[0-9]+$` | `3.14`, `-0.5`, `007.00` |
-| `#Sci` | `sci` | `^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$` | `1e10`, `3.14e-2` |
-| `#Eng` | `eng` | `^-?[0-9]+(\.[0-9]+)?[kKMGTPE]?$` | `1.5k`, `2.47M` |
-| `#Dimension` | `dim` | `^[0-9]+D$` | `0D`, `1D`, `2D`, `3D` |
-| `#KeyString` | `key` | `^[a-zA-Z_][a-zA-Z0-9_]*$` | `name`, `id`, `my_key` |
-| `#NestedKeyString` | `nestedkey` | `^[a-zA-Z_][a-zA-Z0-9_.]*$` | `File.Permission.Denied` |
-| `#CommaSeparatedList` | `csvlist` | `^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$` | `product,price,quantity` |
-| `#DataTypeString` | `dtstring` | `^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$` | `Array1D:Int`, `Map:String` |
-
----
-
-## #Int
-
-```polyglot
-{#} #Int
-   [%] %alias << "int,integer,Integer"
-   [#] ##String
-      (#) <regex << "^-?[0-9]+$"
-```
-
-## #UnsignedInt
-
-```polyglot
-{#} #UnsignedInt
-   [%] %alias << "uint"
-   [#] ##String
-      (#) <regex << "^[0-9]+$"
-```
-
-## #Float
-
-```polyglot
-{#} #Float
-   [%] %alias << "float"
-   [#] ##String
-      (#) <regex << "^-?[0-9]+\.[0-9]+$"
-```
-
-## #Sci
-
-```polyglot
-{#} #Sci
-   [%] %alias << "sci"
-   [#] ##String
-      (#) <regex << "^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$"
-```
-
-## #Eng
-
-```polyglot
-{#} #Eng
-   [%] %alias << "eng"
-   [#] ##String
-      (#) <regex << "^-?[0-9]+(\.[0-9]+)?[kKMGTPE]?$"
-```
-
-## #Dimension
-
-```polyglot
-{#} #Dimension
-   [%] %alias << "dim"
-   [#] ##String
-      (#) <regex << "^[0-9]+D$"
-```
-
-## #KeyString
-
-```polyglot
-{#} #KeyString
-   [%] %alias << "key"
-   [#] ##String
-      (#) <regex << "^[a-zA-Z_][a-zA-Z0-9_]*$"
-```
-
-`#KeyString` excludes characters reserved by Polyglot syntax. Enum variant names used in `%##Fields` must conform to `#KeyString`; otherwise the compiler raises PGE11004.
-
-## #NestedKeyString
-
-```polyglot
-{#} #NestedKeyString
-   [%] %alias << "nestedkey"
-   [#] ##String
-      (#) <regex << "^[a-zA-Z_][a-zA-Z0-9_.]*$"
-```
-
-`#NestedKeyString` allows `.` separators but still excludes whitespace, `<`, and `>`. Used as the element type for `%##Alias` -- alias values may contain `.` to reference paths in the definition tree.
-
-## #CommaSeparatedList
-
-```polyglot
-{#} #CommaSeparatedList
-   [%] %alias << "csvlist"
-   [#] ##String
-      (#) <regex << "^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$"
-```
-
-## #DataTypeString
-
-```polyglot
-{#} #DataTypeString
-   [%] %alias << "dtstring"
-   [#] ##String
-      (#) <regex << "^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$"
-```
-
-`#DataTypeString` validates `{x}` definition name format -- uppercase-initial segments separated by `:`.
+| Type | Alias | `.regex` Pattern | Example Values | Doc |
+|------|-------|---------------|----------------|-----|
+| `#Int` | `int` | `^-?[0-9]+$` | `42`, `-7`, `007` | [[pglib/types/scalars/int\|#Int]] |
+| `#UnsignedInt` | `uint` | `^[0-9]+$` | `0`, `1`, `42` | [[pglib/types/scalars/unsigned-int\|#UnsignedInt]] |
+| `#Float` | `float` | `^-?[0-9]+\.[0-9]+$` | `3.14`, `-0.5`, `007.00` | [[pglib/types/scalars/float\|#Float]] |
+| `#Sci` | `sci` | `^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$` | `1e10`, `3.14e-2` | [[pglib/types/scalars/sci\|#Sci]] |
+| `#Eng` | `eng` | `^-?[0-9]+(\.[0-9]+)?[kKMGTPE]?$` | `1.5k`, `2.47M` | [[pglib/types/scalars/eng\|#Eng]] |
+| `#Dimension` | `dim` | `^[0-9]+D$` | `0D`, `1D`, `2D`, `3D` | [[pglib/types/scalars/dimension\|#Dimension]] |
+| `#KeyString` | `key` | `^[a-zA-Z_][a-zA-Z0-9_]*$` | `name`, `id`, `my_key` | [[pglib/types/scalars/key-string\|#KeyString]] |
+| `#NestedKeyString` | `nestedkey` | `^[a-zA-Z_][a-zA-Z0-9_.]*$` | `File.Permission.Denied` | [[pglib/types/scalars/nested-key-string\|#NestedKeyString]] |
+| `#CommaSeparatedList` | `csvlist` | `^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$` | `product,price,quantity` | [[pglib/types/scalars/comma-separated-list\|#CommaSeparatedList]] |
+| `#DataTypeString` | `dtstring` | `^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$` | `Array1D:Int`, `Map:String` | [[pglib/types/scalars/data-type-string\|#DataTypeString]] |
 
 ## Metadata
 
