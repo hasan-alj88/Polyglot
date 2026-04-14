@@ -3,6 +3,7 @@ audience: automation-builder
 type: specification
 updated: 2026-04-10
 status: complete
+metadata_definition: "%!.Env"
 ---
 
 # `!Env`
@@ -45,5 +46,13 @@ No `[@]` import needed — pglib built-in.
          (-) .Info
             [:] :dependency#string
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Tree path | `%!.Env` | Fixed error namespace (no instances) |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.
 
 See [[pglib/errors/builtin/rt#`!Env` vs `!RT` — Phase Distinction]] for the distinction between `!Env.*` (wrapper setup) and `!RT.*` (body execution) errors.

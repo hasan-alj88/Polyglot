@@ -2,6 +2,8 @@
 audience: automation-builder
 type: reference
 updated: 2026-04-09
+metadata_definition: "%definition.#:ChineseDate"
+metadata_instance: "%#:ChineseDate:N"
 ---
 
 # Chinese Calendar Types
@@ -67,3 +69,14 @@ updated: 2026-04-09
    [.] .Xu
    [.] .Hai
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:ChineseDate` | Compile-time type template |
+| Instance | `%#:ChineseDate:N` | Runtime instance (N = instance number) |
+| Definition | `%definition.#:HeavenlyStem` | Compile-time type template |
+| Definition | `%definition.#:EarthlyBranch` | Compile-time type template |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

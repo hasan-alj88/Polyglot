@@ -3,6 +3,8 @@ audience: automation-builder
 type: specification
 updated: 2026-04-09
 status: complete
+metadata_definition: "%definition.#:Sci"
+metadata_instance: "%#:String:sci"
 ---
 
 # #Sci
@@ -24,3 +26,5 @@ status: complete
 |-------|------|---------|
 | Definition | `%definition.#:Sci` | Schema descriptor |
 | Instance | `%#:String:sci` | Tree path under `#String` |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

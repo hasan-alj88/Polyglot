@@ -3,6 +3,7 @@ audience: automation-builder
 type: specification
 updated: 2026-04-10
 status: complete
+metadata_definition: "%!.Timeout"
 ---
 
 # `!Timeout`
@@ -20,3 +21,11 @@ No `[@]` import needed — pglib built-in.
       (-) .Info
          [:] :duration#string
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Tree path | `%!.Timeout` | Fixed error namespace (no instances) |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

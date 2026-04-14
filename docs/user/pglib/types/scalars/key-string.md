@@ -3,6 +3,8 @@ audience: automation-builder
 type: specification
 updated: 2026-04-09
 status: complete
+metadata_definition: "%definition.#:KeyString"
+metadata_instance: "%#:String:key"
 ---
 
 # #KeyString
@@ -24,5 +26,7 @@ status: complete
 |-------|------|---------|
 | Definition | `%definition.#:KeyString` | Schema descriptor |
 | Instance | `%#:String:key` | Tree path under `#String` |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.
 
 `#KeyString` excludes characters reserved by Polyglot syntax. Enum variant names used in `%##Fields` must conform to `#KeyString`; otherwise the compiler raises PGE11004.

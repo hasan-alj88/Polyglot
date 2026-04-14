@@ -3,6 +3,8 @@ audience: automation-builder
 type: specification
 updated: 2026-04-09
 status: complete
+metadata_definition: "%definition.#:CommaSeparatedList"
+metadata_instance: "%#:String:csvlist"
 ---
 
 # #CommaSeparatedList
@@ -24,3 +26,5 @@ status: complete
 |-------|------|---------|
 | Definition | `%definition.#:CommaSeparatedList` | Schema descriptor |
 | Instance | `%#:String:csvlist` | Tree path under `#String` |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

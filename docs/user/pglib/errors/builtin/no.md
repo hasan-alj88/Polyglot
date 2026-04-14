@@ -3,6 +3,7 @@ audience: automation-builder
 type: specification
 updated: 2026-04-10
 status: complete
+metadata_definition: "%!.No"
 ---
 
 # `!No`
@@ -20,3 +21,11 @@ No `[@]` import needed — pglib built-in.
       (-) .Info
          [:] :name#string
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Tree path | `%!.No` | Fixed error namespace (no instances) |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

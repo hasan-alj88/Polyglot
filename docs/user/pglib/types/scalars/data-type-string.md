@@ -3,6 +3,8 @@ audience: automation-builder
 type: specification
 updated: 2026-04-09
 status: complete
+metadata_definition: "%definition.#:DataTypeString"
+metadata_instance: "%#:String:dtstring"
 ---
 
 # #DataTypeString
@@ -24,5 +26,7 @@ status: complete
 |-------|------|---------|
 | Definition | `%definition.#:DataTypeString` | Schema descriptor |
 | Instance | `%#:String:dtstring` | Tree path under `#String` |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.
 
 `#DataTypeString` validates `{x}` definition name format -- uppercase-initial segments separated by `:`.

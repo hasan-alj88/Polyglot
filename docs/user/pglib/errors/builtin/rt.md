@@ -3,6 +3,7 @@ audience: automation-builder
 type: specification
 updated: 2026-04-10
 status: complete
+metadata_definition: "%!.RT"
 ---
 
 # `!RT`
@@ -31,6 +32,14 @@ No `[@]` import needed — pglib built-in.
          [:] :language#string
          [:] :reason#string
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Tree path | `%!.RT` | Fixed error namespace (no instances) |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.
 
 ## `!Env` vs `!RT` — Phase Distinction
 
