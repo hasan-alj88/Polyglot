@@ -1,14 +1,14 @@
 # Polyglot
 
 **Version:** 0.2.0-specification
-**Status:** Active Development - Language Specification Phase
+**Status:** Active Development — Language Specification Phase
 **License:** TBD (Apache 2.0 or MIT)
 
 <img src="./Polyglot%20Logo/PNG/Logo.png" width="150" alt="">
 
-> **Important**: Polyglot is currently in the specification phase. The language design is stable but the compiler is not yet built. We're building in public and welcome contributors!
+> **Important**: Polyglot is in the specification phase — the language design is complete but the compiler is not yet built. We're building in public and welcome contributors!
 
-## Overview
+## What Is Polyglot?
 
 Polyglot is a **trigger-driven programming language and platform** — async-centric and parallel-by-design, not as an afterthought — built on two pillars:
 
@@ -19,19 +19,69 @@ Think: *what if your API orchestration layer was a programming language?*
 
 For the full project vision, philosophy, and design principles, see **[Project Vision](docs/vision.md)**.
 
+### There Is No Main Function
+
+Polyglot pipelines are not programs you run — they are reactions you define. Something happens, a trigger fires, work executes. You are not writing a sequence of instructions — you are defining how the system responds to events and conditions.
+
+This is a fundamental shift: traditional approaches build synchronous code first, then retrofit async handling as an afterthought. Polyglot inverts this — triggers and concurrency are the starting point.
+
+## Hello World
+
+**hello.pg**
+```polyglot
+{@} @Local:1000::HelloWorld:v1.0.0
+
+{-} -SayHello
+   (-) <name#string
+   [T] -T.CLI"--name"
+      (-) >name >> <name
+   [Q] -Q.Default
+   [W] -W.Env.Shell
+   [ ]
+   [-] [C]
+      echo "Hello, {$name}!"
+```
+
+**What this shows:**
+- `{@}` — every file declares its package
+- `{-}` — a pipeline definition, not a function
+- `[T]` — this pipeline fires when a CLI argument arrives, not when someone calls it
+- `[Q]` — every pipeline has a queue strategy (even "just run it")
+- `[W]` — a wrapper connects to the Shell runtime
+- `[-] [C]` — the execution body, running shell code
+- No `main()`, no entry point — the trigger *is* the entry point
+
+## Why Polyglot?
+
+### The Problem
+Modern automation often requires:
+- Python for data science and scripting
+- Rust for performance-critical operations
+- JavaScript for web interfaces
+- C++ for legacy system integration
+- Shell scripts for system operations
+
+Existing solutions force you to choose one language or write brittle glue code.
+
+### The Solution
+Polyglot provides:
+- **Unified Syntax** — Single language for multi-language workflows
+- **Three-Bracket System** — `{X}` definitions, `[X]` control flow, `(X)` IO
+- **Trigger-Driven** — React to file changes, schedules, webhooks, or direct calls
+- **Resource Management** — Built-in queuing, throttling, and permission policies
+
 ## Core Philosophy
 
+- **On the Shoulders of Giants — Utilise Legacy Code** — The safest code is the code that already works; reuse battle-tested codebases instead of rewriting
+- **Trigger-Driven, Async-Centric, Parallel-by-Design** — Every pipeline is triggered by an event; task behaviours are intentional, not afterthoughts
 - **The Right Tool for the Right Job** — Use the best language for each task in a workflow
-- **Don't Reinvent the Wheel — Utilise Legacy Code** — The safest code is the code that already works; reuse battle-tested codebases instead of rewriting
-- **Trigger-Driven, Async-Centric, Parallel-by-Design** — Every pipeline is triggered by an event; task behaviors are intentional, not afterthoughts
-- **Pipeline-Centric** — Compose workflows through chaining, parallelism, and branching
 - **Everything Is a Tree** — All data, types, pipelines, and metadata are trees on a unified `%` metadata tree
+- **Implicit Deny** — Nothing runs without explicit, intentional permission. Permissions, concurrency, and pipeline interactions are handled from day one
 - **Resource Governance** — Explicit resource management, queuing, and limits
-- **Security First** — Permissions, concurrency, and pipeline interactions are handled intentionally from day one
 
-## Quick Example
+## A Richer Example
 
-A pipeline that watches for new log files, summarizes them with an LLM, and writes reports:
+A pipeline that watches for new log files, summarises them with an LLM, and writes reports:
 
 ```polyglot
 {@} @Local:1000::LogSummarizer:v1.0.0
@@ -44,6 +94,7 @@ A pipeline that watches for new log files, summarizes them with an LLM, and writ
       (-) >NewFiles >> <NewFiles
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [=] =ForEach.Array.Enumerate
       (=) <Array << $NewFiles
       (=) >item >> $logFile
@@ -76,25 +127,6 @@ A pipeline that watches for new log files, summarizes them with an LLM, and writ
 - `[-]` sequential calls with inline string args (`"{$logFile}"`)
 - `*Agg.Count` collector with `(*)` IO writing to output port
 
-## Why Polyglot?
-
-### The Problem
-Modern automation often requires:
-- Python for data science and scripting
-- Rust for performance-critical operations
-- JavaScript for web interfaces
-- C++ for legacy system integration
-- Shell scripts for system operations
-
-Existing solutions force you to choose one language or write brittle glue code.
-
-### The Solution
-Polyglot provides:
-- **Unified Syntax** — Single language for multi-language workflows
-- **Three-Bracket System** — `{X}` definitions, `[X]` control flow, `(X)` IO
-- **Event-Driven** — React to file changes, schedules, webhooks, or direct calls
-- **Resource Management** — Built-in queuing, throttling, and permission policies
-
 ## Key Features
 
 ### 1. Pipeline Structure
@@ -108,12 +140,13 @@ Every pipeline follows a mandatory structure: trigger, IO, queue, wrapper, execu
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] $result << -Transform
       (-) <data << $input
       (-) >output >> $result
 ```
 
-### 2. Event-Driven Triggers
+### 2. Trigger-Driven Pipelines
 
 ```polyglot
 { } Watch for new CSV files
@@ -187,7 +220,7 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
 
 { } Execute a compiled Rust binary
 [W] -W.Polyglot
-[-] -RT.CLI"./target/release/my_tool --input {$path}"
+[-] -Env.CLI"./target/release/my_tool --input {$path}"
 ```
 
 ## Syntax At a Glance
@@ -221,21 +254,15 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
 | `<~` | DefaultPushLeft | Right to left (one reassignment allowed) |
 | `~>` | DefaultPushRight | Left to right (one reassignment allowed) |
 
-## Minimal Example
+## The Polyglot Ecosystem
 
-**hello.pg**
-```polyglot
-{@} @Local:1000::HelloWorld:v1.0.0
+The **Polyglot Service** is the runtime backbone, consisting of three components:
 
-{-} -SayHello
-   (-) <name#string
-   [T] -T.CLI"--name"
-      (-) >name >> <name
-   [Q] -Q.Default
-   [W] -W.Env.Shell
-   [-] [C]
-      echo "Hello, {$name}!"
-```
+- **Trigger Monitor** — Monitors events and evaluates conditions that initiate automated tasks
+- **Queue Handler** — Manages queue state and dispatches jobs to Runners
+- **Runner** — Executes pipelines, managing the lifecycle of each task from dispatch to completion
+
+The Polyglot Service must be running in the background to handle execution of automated tasks and manage their interactions.
 
 ## Use Cases
 
@@ -256,7 +283,7 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
 
 **Current Phase:** Documentation-first specification (v0.2 complete). The language design is stable with comprehensive specs covering syntax, type system, pipelines, concurrency, error handling, permissions, and the standard library (pglib).
 
-The project previously had a Rust implementation prototype which was reset in favor of a specification-first approach. Next steps: compiler architecture design and implementation.
+The project previously had a Rust implementation prototype which was reset in favour of a specification-first approach. Next steps: compiler architecture design and implementation.
 
 ## Installation
 
