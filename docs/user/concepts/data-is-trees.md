@@ -40,6 +40,8 @@ This means every Polyglot object is ultimately a tree of strings with typed stru
 
 ## Leaf-Only Values
 
+> **Clarification:** "Leaf-only" does not contradict "everything is a tree." A single leaf is a valid tree (depth 1). The invariant below is about **node roles** within a tree — each node is either a branch (structure) or a leaf (data), never both. Even a standalone `RawString` value is a tree with one leaf node.
+
 A universal invariant governs every tree in Polyglot: a node is either a **branch** or a **leaf**, never both.
 
 - **Branch nodes** have children but no value — they exist purely for structure and navigation (namespace or enum grouping)

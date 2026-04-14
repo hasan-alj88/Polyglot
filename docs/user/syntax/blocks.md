@@ -11,7 +11,9 @@ status: complete
 <!-- @c:identifiers -->
 Three bracket shapes with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native`, `{*}` at `%*` (see [[data-is-trees]]).
 
-> **Notation:** Throughout this document, `X` in `{X}`, `[X]`, and `(X)` is a **placeholder** — it represents any valid marker character, not a literal block. For example, `{X}` means "any definition block" (`{#}`, `{-}`, `{W}`, etc.), `[X]` means "any block element marker," and `(X)` means "any IO bracket."
+> **Notation:** Throughout this document, `X` in `{X}`, `[X]`, and `(X)` is a **placeholder** for any valid marker character — not a literal. The `}`, `]`, `)` in this notation are part of the **opening marker itself**, not closing delimiters. For example, `{#}` is one indivisible opening token that means "start a struct definition." There are no separate closing brackets in Polyglot Code.
+
+> **Design note — hybrid scoping model:** Polyglot uses bracket markers to **open** blocks and indentation to **close** them. A marker like `{-}` or `[Q]` appears at the start of a line to declare what begins there; the block ends when indentation returns to the parent level (see [[#Closing: Indentation-Based]]). These are complementary mechanisms, not competing ones.
 
 ## `{X}` — Definition Elements
 
@@ -211,3 +213,5 @@ See [[comments]] for full comment syntax.
 ## Closing: Indentation-Based
 
 Blocks close by returning to the parent indentation level — no explicit closing markers needed for scope termination.
+
+> **Clarification:** Brackets (`{X}`, `[X]`, `(X)`) only appear at the **start** of lines as opening markers. Polyglot has no closing brackets — scope is determined entirely by indentation depth (3 spaces per level). This hybrid model is intentional: markers declare *what* a block is, indentation declares *where* it ends.

@@ -16,7 +16,7 @@ Environment definitions declare what a pipeline needs from its host system — l
 
 ## The `;` Prefix
 
-`;` is the environment identifier prefix:
+`;` is the environment identifier prefix — it names environments the same way `$` names variables or `#` names types. It is **not** a line marker. Line markers are bracket shapes (`{X}`, `[X]`, `(X)`) — see [[line-structure#Ground Truth: Every Line Has a Marker]].
 
 | Prefix | Purpose |
 |--------|---------|

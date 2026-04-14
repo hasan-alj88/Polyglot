@@ -62,4 +62,6 @@ Each `{-}` pipeline must explicitly reference `{_}` grant objects for the permis
 
 ## No Inheritance
 
+> **Clarification:** "Hierarchical scoping" and "no inheritance" are complementary, not contradictory. The hierarchy exists for **constraint validation** — the compiler checks that every grant falls within its package ceiling. "No inheritance" means grants are never automatic — each pipeline must explicitly declare what it needs. This is a security feature: the hierarchy provides bounds, explicit declaration prevents silent privilege escalation.
+
 Permissions are never inherited. Every definition must reference the `{_}` grant objects it requires, even if the package ceiling allows them. This makes each definition's IO footprint explicit and auditable.
