@@ -2,6 +2,8 @@
 audience: automation-builder
 type: reference
 updated: 2026-04-09
+metadata_definition: "%definition.#:HinduDate"
+metadata_instance: "%#:HinduDate:N"
 ---
 
 # Hindu Calendar Types
@@ -70,3 +72,15 @@ updated: 2026-04-09
    [.] .Shukla
    [.] .Krishna
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:HinduDate` | Compile-time type template |
+| Instance | `%#:HinduDate:N` | Runtime instance (N = instance number) |
+| Definition | `%definition.#:HinduEra` | Compile-time type template |
+| Definition | `%definition.#:HinduMonth` | Compile-time type template |
+| Definition | `%definition.#:Paksha` | Compile-time type template |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

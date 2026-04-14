@@ -2,6 +2,8 @@
 audience: automation-builder
 type: reference
 updated: 2026-04-09
+metadata_definition: "%definition.#:CopticDate"
+metadata_instance: "%#:CopticDate:N"
 ---
 
 # Coptic Calendar Types
@@ -43,3 +45,13 @@ updated: 2026-04-09
    [.] .Mesori
    [.] .PiKogiEnavot
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:CopticDate` | Compile-time type template |
+| Instance | `%#:CopticDate:N` | Runtime instance (N = instance number) |
+| Definition | `%definition.#:CopticMonth` | Compile-time type template |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

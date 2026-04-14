@@ -2,6 +2,8 @@
 audience: automation-builder
 type: reference
 updated: 2026-04-09
+metadata_definition: "%definition.#:HijriDate"
+metadata_instance: "%#:HijriDate:N"
 ---
 
 # Hijri Calendar Types
@@ -102,3 +104,16 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
    [.] .Custom
       [:] :rule
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:HijriDate` | Compile-time type template |
+| Instance | `%#:HijriDate:N` | Runtime instance (N = instance number) |
+| Definition | `%definition.#:HijriMonth` | Compile-time type template |
+| Definition | `%definition.#:HijriAuthority` | Compile-time type template |
+| Definition | `%definition.#:HijriMethod` | Compile-time type template |
+| Definition | `%definition.#:HijriLeap` | Compile-time type template |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

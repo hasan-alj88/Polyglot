@@ -3,6 +3,8 @@ audience: automation-builder
 type: specification
 updated: 2026-04-09
 status: complete
+metadata_definition: "%definition.#:NestedKeyString"
+metadata_instance: "%#:String:nestedkey"
 ---
 
 # #NestedKeyString
@@ -24,5 +26,7 @@ status: complete
 |-------|------|---------|
 | Definition | `%definition.#:NestedKeyString` | Schema descriptor |
 | Instance | `%#:String:nestedkey` | Tree path under `#String` |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.
 
 `#NestedKeyString` allows `.` separators but still excludes whitespace, `<`, and `>`. Used as the element type for `%##Alias` -- alias values may contain `.` to reference paths in the definition tree.

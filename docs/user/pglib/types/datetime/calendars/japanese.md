@@ -2,6 +2,8 @@
 audience: automation-builder
 type: reference
 updated: 2026-04-09
+metadata_definition: "%definition.#:JapaneseDate"
+metadata_instance: "%#:JapaneseDate:N"
 ---
 
 # Japanese Calendar Types
@@ -42,3 +44,13 @@ Known modern eras are fixed enum fields. Users can add older historical eras via
    [.] .Meiji
    [:] :historical
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:JapaneseDate` | Compile-time type template |
+| Instance | `%#:JapaneseDate:N` | Runtime instance (N = instance number) |
+| Definition | `%definition.#:JapaneseEra` | Compile-time type template |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

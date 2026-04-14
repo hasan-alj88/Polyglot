@@ -2,6 +2,8 @@
 audience: automation-builder
 type: reference
 updated: 2026-04-09
+metadata_definition: "%definition.#:HebrewDate"
+metadata_instance: "%#:HebrewDate:N"
 ---
 
 # Hebrew Calendar Types
@@ -43,3 +45,13 @@ updated: 2026-04-09
    [.] .Av
    [.] .Elul
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:HebrewDate` | Compile-time type template |
+| Instance | `%#:HebrewDate:N` | Runtime instance (N = instance number) |
+| Definition | `%definition.#:HebrewMonth` | Compile-time type template |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

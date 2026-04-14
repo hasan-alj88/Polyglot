@@ -3,6 +3,7 @@ audience: automation-builder
 type: specification
 updated: 2026-04-10
 status: complete
+metadata_definition: "%!.Text"
 ---
 
 # `!Text`
@@ -30,3 +31,11 @@ No `[@]` import needed — pglib built-in.
       [.] .EmptyBase#Error
          (-) .MessageTemplate << "Merge base text is empty"
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Tree path | `%!.Text` | Fixed error namespace (no instances) |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.

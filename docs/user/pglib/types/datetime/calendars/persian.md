@@ -2,6 +2,8 @@
 audience: automation-builder
 type: reference
 updated: 2026-04-09
+metadata_definition: "%definition.#:PersianDate"
+metadata_instance: "%#:PersianDate:N"
 ---
 
 # Persian Calendar Types
@@ -42,3 +44,13 @@ updated: 2026-04-09
    [.] .Bahman
    [.] .Esfand
 ```
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.#:PersianDate` | Compile-time type template |
+| Instance | `%#:PersianDate:N` | Runtime instance (N = instance number) |
+| Definition | `%definition.#:PersianMonth` | Compile-time type template |
+
+See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.
