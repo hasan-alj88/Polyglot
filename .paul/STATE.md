@@ -10,33 +10,14 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue #283 — =* reassemble operator — Complete
-Plan: 283-01, 283-02 complete (2/2)
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-15 — Loop closed, all plans unified
+Phase: Issue-driven — ready for next issue
+Plan: —
+Status: Idle
+Last activity: 2026-04-15 — Closed #283, merged to main
 
 ## Active Issue
 
-Issue: #283 — Brainstorm: =* reassemble operator (expander + collector)
-Branch: design/issue-283-brainstorm-reassemble-operator
-Labels: design
-Started: 2026-04-15
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/283
-
-## Loop Position
-
-Current loop state:
-```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for /paul:merge]
-```
-
-## Session Continuity
-
-Last session: 2026-04-15
-Stopped at: UNIFY complete
-Next action: /paul:merge to commit, merge to main, and close issue #283
-Resume file: .paul/phases/issue-283-reassemble-operator/
+No active issue. Run /paul:work-issue <number> to start.
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
