@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-03
+updated: 2026-04-15
 ---
 
 # Signal Data Payloads
@@ -31,11 +31,11 @@ command.enqueue
     }?
 }
 
-command.pause.soft  { jobId: string }
-command.pause.hard  { jobId: string }
-command.resume      { jobId: string }
-command.kill.graceful { jobId: string }
-command.kill.hard   { jobId: string }
+command.job.pause.free.cpu.wait  { jobId: string }
+command.job.pause.free.ram      { jobId: string }
+command.job.resume              { jobId: string }
+command.job.kill.with-cleanup   { jobId: string }
+command.job.kill.now            { jobId: string }
 
 command.priority.update
 {
@@ -110,11 +110,11 @@ state.queue.resume.size         { count }
 
 ```text
 control.{jobId}.start           { jobId, pipeline, params }
-control.{jobId}.resume          { jobId }
-control.{jobId}.pause.soft      { jobId }
-control.{jobId}.pause.hard      { jobId }
-control.{jobId}.kill.graceful   { jobId }
-control.{jobId}.kill.hard       { jobId }
+control.{jobId}.job.resume              { jobId }
+control.{jobId}.job.pause.free.cpu.wait { jobId }
+control.{jobId}.job.pause.free.ram      { jobId }
+control.{jobId}.job.kill.with-cleanup   { jobId }
+control.{jobId}.job.kill.now            { jobId }
 ```
 
 ## Runner Signals (Runner → Queue Handler + Trigger Monitor)
@@ -144,9 +144,9 @@ collector.{jobId}.collected
 ### Collector Reconciliation Logic (TM-internal)
 
 <!-- @c:glossary#Reconciliation -->
-Collectors are **Trigger Monitor programs** — algorithms that run inside the TM to determine output selection strategy and job lifecycle policy. The QH has no concept of collectors; it only receives `command.kill.*` and `collector.*.collected` signals.
+Collectors are **Trigger Monitor programs** — algorithms that run inside the TM to determine output selection strategy and job lifecycle policy. The QH has no concept of collectors; it only receives `command.job.kill.*` and `collector.*.collected` signals.
 
-**Core rule:** The TM sends `command.kill.graceful` to a job only when **all** collector claims on that job have been released. Each collector independently decides when to release its claim (based on its own algorithm). The TM tracks the claim count per job and acts only when it reaches zero.
+**Core rule:** The TM sends `command.job.kill.with-cleanup` to a job only when **all** collector claims on that job have been released. Each collector independently decides when to release its claim (based on its own algorithm). The TM tracks the claim count per job and acts only when it reaches zero.
 
 **How the TM processes collectors:**
 
@@ -155,7 +155,7 @@ Collectors are **Trigger Monitor programs** — algorithms that run inside the T
    - `*All`: marks this job's output as received; when all referenced jobs report, emits `collector.*.collected`
    - `*First` / `*Nth`: checks if the Nth result has arrived; if so, emits `collector.*.collected` and **releases its claim** on remaining jobs
    - `*Into.*` / `*Agg.*`: accumulates the per-item result; emits `collector.*.collected` when the expand scope completes
-3. After evaluating collectors, the TM checks each remaining in-flight job: if **zero** collectors still reference it, the TM emits `command.kill.graceful` to the QH
+3. After evaluating collectors, the TM checks each remaining in-flight job: if **zero** collectors still reference it, the TM emits `command.job.kill.with-cleanup` to the QH
 4. If all collectors referencing a job still need it, no kill signal is sent — the job continues
 
 **Compound collector example:** `*First` + `*All` on the same variables. When the first job completes, `*First` is satisfied and releases its claims on the remaining jobs. But `*All` still holds claims on them. The TM sees non-zero claim count → no kill signal. Only when `*All` is also satisfied (all jobs complete) are all claims released.

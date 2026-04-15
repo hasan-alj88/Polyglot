@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-03
+updated: 2026-04-15
 ---
 
 # Dispatch Coordinator
@@ -88,14 +88,14 @@ When a candidate passes all constraints, the Lua script dispatches based on the 
 2. `SADD set:executing {jobId}`
 3. Increment scoped counters
 4. `HSET job:{jobId} status "executing"`
-5. Emit `control.{jobId}.resume → Runner`
+5. Emit `control.{jobId}.job.resume → Runner`
 
 **From Teardown Queue:**
 1. `LPOP queue:teardown`
 2. `SADD set:executing {jobId}`
 3. Increment scoped counters
 4. `HSET job:{jobId} status "teardown.executing"`
-5. Emit `control.{jobId}.kill.graceful → Runner`
+5. Emit `control.{jobId}.job.kill.with-cleanup → Runner`
 
 **Scoped counter increment** (on every dispatch):
 ```text

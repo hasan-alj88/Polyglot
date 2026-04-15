@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-03
+updated: 2026-04-15
 ---
 
 # NATS Subject Namespace
@@ -20,11 +20,11 @@ polyglot.trigger.fire.{pipeline}         — trigger condition met, TM evaluates
 
 ```text
 polyglot.command.enqueue                 — enqueue a job
-polyglot.command.pause.soft.{jobId}      — finish current work, then suspend
-polyglot.command.pause.hard.{jobId}      — suspend immediately
-polyglot.command.resume.{jobId}          — resume from suspended
-polyglot.command.kill.graceful.{jobId}   — queue for [/] cleanup, then terminate
-polyglot.command.kill.hard.{jobId}       — terminate immediately
+polyglot.command.job.pause.free.cpu.wait.{jobId} — finish current work, then suspend
+polyglot.command.job.pause.free.ram.{jobId}      — suspend immediately
+polyglot.command.job.resume.{jobId}              — resume from suspended
+polyglot.command.job.kill.with-cleanup.{jobId}   — queue for [/] cleanup, then terminate
+polyglot.command.job.kill.now.{jobId}            — terminate immediately
 polyglot.command.reassign.{jobId}        — move job between queues
 polyglot.command.dispatch.escalate.{jobId} — escalate dispatch priority
 polyglot.command.drain.{queue}           — stop accepting new enqueues
@@ -37,11 +37,11 @@ polyglot.command.queue.update            — update queue properties
 
 ```text
 polyglot.queue.control.{jobId}.start         — begin execution
-polyglot.queue.control.{jobId}.resume        — resume from suspended state
-polyglot.queue.control.{jobId}.pause.soft    — finish current work, then suspend
-polyglot.queue.control.{jobId}.pause.hard    — suspend immediately
-polyglot.queue.control.{jobId}.kill.graceful — run [/] cleanup, then terminate
-polyglot.queue.control.{jobId}.kill.hard     — terminate immediately
+polyglot.queue.control.{jobId}.job.resume              — resume from suspended state
+polyglot.queue.control.{jobId}.job.pause.free.cpu.wait — finish current work, then suspend
+polyglot.queue.control.{jobId}.job.pause.free.ram      — suspend immediately
+polyglot.queue.control.{jobId}.job.kill.with-cleanup   — run [/] cleanup, then terminate
+polyglot.queue.control.{jobId}.job.kill.now            — terminate immediately
 ```
 
 ## Runner Acknowledgments (Runner → Queue Handler + Trigger Monitor)

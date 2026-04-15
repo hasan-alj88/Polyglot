@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-03
+updated: 2026-04-15
 ---
 
 # End-to-End Flow
@@ -43,14 +43,14 @@ updated: 2026-04-03
 1. Resource Monitor: RAM drops below threshold
    → NATS: publish "polyglot.resource.ram" {available: 2800}
 
-2. Trigger Monitor evaluates -Q.Pause.Hard.RAM.LessThan → condition met for job:001
-   → NATS: publish "command.pause.hard" {jobId: job:001}
+2. Trigger Monitor evaluates -Q.Job.Pause.Free.RAM.RAM.LessThan → condition met for job:001
+   → NATS: publish "command.job.pause.free.ram" {jobId: job:001}
 
-3. Queue Handler receives command.pause.hard
+3. Queue Handler receives command.job.pause.free.ram
    → Redis: SREM set:executing job:001
    → Redis: HSET set:suspended job:001 "hard"
    → Redis: HINCRBY counter:instances ProcessData -1
-   → NATS: publish "polyglot.queue.control.job:001.pause.hard"
+   → NATS: publish "polyglot.queue.control.job:001.job.pause.free.ram"
    → Dispatch Coordinator wakes (slot freed)
 
 4. Runner suspends process, frees CPU+RAM
@@ -62,10 +62,10 @@ updated: 2026-04-03
 6. RAM recovers above threshold
    → NATS: publish "polyglot.resource.ram" {available: 5500}
 
-7. Trigger Monitor evaluates -Q.Resume.RAM.MoreThan → condition met for job:001
-   → NATS: publish "command.resume" {jobId: job:001}
+7. Trigger Monitor evaluates -Q.Job.Resume.RAM.MoreThan → condition met for job:001
+   → NATS: publish "command.job.resume" {jobId: job:001}
 
-8. Queue Handler receives command.resume
+8. Queue Handler receives command.job.resume
    → Redis: HDEL set:suspended job:001
    → Redis: RPUSH queue:resume job:001
    → Dispatch Coordinator wakes (item added to Resume Queue)
@@ -74,16 +74,16 @@ updated: 2026-04-03
    → Tier 2 RR includes Resume Queue → job:001
    → Constraints re-checked → all clear
    → Redis: LPOP queue:resume, SADD set:executing, HINCRBY counter:instances
-   → NATS: publish "polyglot.queue.control.job:001.resume"
+   → NATS: publish "polyglot.queue.control.job:001.job.resume"
 ```
 
 ## Graceful Kill Flow
 
 ```polyglot
-1. Trigger Monitor evaluates -Q.Kill.Graceful condition → met for job:001
-   → NATS: publish "command.kill.graceful" {jobId: job:001}
+1. Trigger Monitor evaluates -Q.Job.Kill.WithCleanup condition → met for job:001
+   → NATS: publish "command.job.kill.with-cleanup" {jobId: job:001}
 
-2. Queue Handler receives command.kill.graceful (job status: executing)
+2. Queue Handler receives command.job.kill.with-cleanup (job status: executing)
    → Redis: SREM set:executing job:001
    → Redis: RPUSH queue:teardown job:001
    → Redis: HINCRBY counter:instances ProcessData -1
@@ -94,7 +94,7 @@ updated: 2026-04-03
 3. Dispatch Coordinator dispatches from Teardown Queue
    → Redis: LPOP queue:teardown, SADD set:executing, HINCRBY counter:instances
    → Redis: HSET job:job:001 status "teardown.executing"
-   → NATS: publish "polyglot.queue.control.job:001.kill.graceful"
+   → NATS: publish "polyglot.queue.control.job:001.job.kill.with-cleanup"
 
 4. Runner finishes current work, runs [/] cleanup, terminates
    → NATS: publish "polyglot.runner.teardown_completed.job:001" → QH + TM
@@ -135,8 +135,8 @@ When a pipeline hits a `[=]`, `[-]`, or `[b]` marker, the Runner sends a `trigge
    → NATS: publish "command.dispatch.escalate" {jobId, queue}
    → QH moves job to next-to-dispatch position (strategy-dependent)
 
-3. Alternative: -Q.Dispatch.Wait.TimeOut.Kill.Graceful
-   → NATS: publish "command.kill.graceful" {jobId}
+3. Alternative: -Q.Dispatch.Wait.TimeOut.Job.Kill.WithCleanup
+   → NATS: publish "command.job.kill.with-cleanup" {jobId}
 
 4. Alternative: -Q.Dispatch.Wait.TimeOut.Reassign
    → NATS: publish "command.reassign" {jobId, fromQueue, toQueue}

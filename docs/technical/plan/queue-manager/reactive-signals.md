@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-03
+updated: 2026-04-15
 ---
 
 # Reactive Signal Table
@@ -38,7 +38,7 @@ Output: state.queue.{queue}.enqueued {jobId, pipeline, queue_size}
 Wake:   Dispatch Coordinator
 ```
 
-## command.pause.soft
+## command.job.pause.free.cpu.wait
 
 ```text
 Input:  {jobId}
@@ -51,12 +51,12 @@ State Write:
 
 Output: state.job.{jobId}.suspended {type: "soft"}
         state.executing.count {n}
-        control.{jobId}.pause.soft → Runner
+        control.{jobId}.job.pause.free.cpu.wait → Runner
 
 Wake:   Dispatch Coordinator (slot freed)
 ```
 
-## command.pause.hard
+## command.job.pause.free.ram
 
 ```text
 Input:  {jobId}
@@ -69,12 +69,12 @@ State Write:
 
 Output: state.job.{jobId}.suspended {type: "hard"}
         state.executing.count {n}
-        control.{jobId}.pause.hard → Runner
+        control.{jobId}.job.pause.free.ram → Runner
 
 Wake:   Dispatch Coordinator (slot freed)
 ```
 
-## command.resume
+## command.job.resume
 
 ```text
 Input:  {jobId}
@@ -90,7 +90,7 @@ Output: state.job.{jobId}.resuming
 Wake:   Dispatch Coordinator (item added to Resume Queue)
 ```
 
-## command.kill.graceful
+## command.job.kill.with-cleanup
 
 ```text
 Input:  {jobId}
@@ -120,7 +120,7 @@ Output: state.job.{jobId}.teardown.pending
 Wake:   Dispatch Coordinator (item added to Teardown Queue; slot freed if was executing)
 ```
 
-## command.kill.hard
+## command.job.kill.now
 
 ```text
 Input:  {jobId}
@@ -143,7 +143,7 @@ State Write:
 
 Output: state.job.{jobId}.killed
         state.executing.count {n} (if was executing)
-        control.{jobId}.kill.hard → Runner (if was executing or teardown.executing)
+        control.{jobId}.job.kill.now → Runner (if was executing or teardown.executing)
 
 Wake:   Dispatch Coordinator (slot freed if was executing)
 ```
@@ -250,7 +250,7 @@ Subsequent `command.enqueue` to a draining queue is rejected.
 
 ## command.flush
 
-Hard kill the entire queue — equivalent to `command.kill.hard` for every job that belongs to this queue, regardless of current state. Fire alarm: everyone leaves immediately.
+Hard kill the entire queue — equivalent to `command.job.kill.now` for every job that belongs to this queue, regardless of current state. Fire alarm: everyone leaves immediately.
 
 ```text
 Input:  {queue}
@@ -276,7 +276,7 @@ State Write:
     SREM queues:registered {queue}
 
 Output: state.queue.{queue}.flushed {killed_count}
-        control.{jobId}.kill.hard → Runner (for each executing/teardown.executing job)
+        control.{jobId}.job.kill.now → Runner (for each executing/teardown.executing job)
 
 Wake:   Dispatch Coordinator (slots freed)
 ```

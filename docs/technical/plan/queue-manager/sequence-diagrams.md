@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-03
+updated: 2026-04-15
 ---
 
 # Sequence Diagrams
@@ -105,9 +105,9 @@ sequenceDiagram
     TM->>NoSQL: Read killPropagation → #Cascade
 
     Note over TM: Cascade: same kill type to all descendants
-    TM->>QH: command.kill.graceful {jobId: parent}
-    TM->>QH: command.kill.graceful {jobId: sub-1}
-    TM->>QH: command.kill.graceful {jobId: sub-2}
+    TM->>QH: command.job.kill.with-cleanup {jobId: parent}
+    TM->>QH: command.job.kill.with-cleanup {jobId: sub-1}
+    TM->>QH: command.job.kill.with-cleanup {jobId: sub-2}
 
     QH->>Redis: SREM set:executing {parent}, HINCRBY -1
     QH->>Redis: RPUSH queue:teardown {parent}
@@ -123,9 +123,9 @@ sequenceDiagram
     QH-->>TM: state.job.{sub-2}.teardown.pending
 
     Note over QH: Dispatch Coordinator dispatches from Teardown Queue
-    QH->>SubRunner: control.{sub-1}.kill.graceful
-    QH->>SubRunner: control.{sub-2}.kill.graceful
-    QH->>Runner: control.{parent}.kill.graceful
+    QH->>SubRunner: control.{sub-1}.job.kill.with-cleanup
+    QH->>SubRunner: control.{sub-2}.job.kill.with-cleanup
+    QH->>Runner: control.{parent}.job.kill.with-cleanup
 
     SubRunner-->>QH: runner.teardown_completed {sub-1}
     SubRunner-->>QH: runner.teardown_completed {sub-2}
@@ -153,8 +153,8 @@ sequenceDiagram
         TM->>QH: command.dispatch.escalate {jobId, queue}
         QH->>Redis: Move job to next-to-dispatch position (strategy-dependent)
         QH-->>TM: state.queue.{queue}.escalated {jobId}
-    else -Q.Dispatch.Wait.TimeOut.Kill.Graceful
-        TM->>QH: command.kill.graceful {jobId}
+    else -Q.Dispatch.Wait.TimeOut.Job.Kill.WithCleanup
+        TM->>QH: command.job.kill.with-cleanup {jobId}
     else -Q.Dispatch.Wait.TimeOut.Reassign
         TM->>QH: command.reassign {jobId, from: queue, to: other}
     end
@@ -169,12 +169,12 @@ sequenceDiagram
     participant Redis
     participant Runner
 
-    Note over TM: RAM drops below threshold → -Q.Pause.Hard.RAM.LessThan fires
-    TM->>QH: command.pause.hard {jobId}
+    Note over TM: RAM drops below threshold → -Q.Job.Pause.Free.RAM.RAM.LessThan fires
+    TM->>QH: command.job.pause.free.ram {jobId}
     QH->>Redis: SREM set:executing {jobId}
     QH->>Redis: HSET set:suspended {jobId} "hard"
     QH->>Redis: HINCRBY counter:instances {pipeline} -1
-    QH->>Runner: control.{jobId}.pause.hard
+    QH->>Runner: control.{jobId}.job.pause.free.ram
     QH-->>TM: state.job.{jobId}.suspended {type: "hard"}
     QH-->>TM: state.executing.count {n}
 
@@ -183,15 +183,15 @@ sequenceDiagram
     QH->>Redis: HSET job:{jobId} confirmed_paused true
     QH-->>TM: state.job.{jobId}.confirmed_suspended
 
-    Note over TM: RAM recovers → -Q.Resume.RAM.MoreThan fires
-    TM->>QH: command.resume {jobId}
+    Note over TM: RAM recovers → -Q.Job.Resume.RAM.MoreThan fires
+    TM->>QH: command.job.resume {jobId}
     QH->>Redis: HDEL set:suspended {jobId}
     QH->>Redis: RPUSH queue:resume {jobId}
     QH-->>TM: state.job.{jobId}.resuming
 
     Note over QH: Dispatch Coordinator wakes: Tier 2 RR includes Resume Queue
     QH->>Redis: LPOP queue:resume, SADD set:executing, HINCRBY counter:instances
-    QH->>Runner: control.{jobId}.resume
+    QH->>Runner: control.{jobId}.job.resume
     QH-->>TM: state.job.{jobId}.executing
 ```
 

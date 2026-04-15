@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-03
+updated: 2026-04-15
 ---
 
 # Design Rationale
@@ -18,7 +18,7 @@ updated: 2026-04-03
 ## Why NATS for Messaging
 
 - **Decoupled services** — Trigger Monitor, Queue Handler, Runner, Resource Monitor communicate only via NATS subjects.
-- **Subject-based routing** — `polyglot.queue.control.{jobId}.pause.soft` routes precisely.
+- **Subject-based routing** — `polyglot.queue.control.{jobId}.job.pause.free.cpu.wait` routes precisely.
 - **JetStream persistence** — critical events can be persisted for crash recovery and replay.
 - **Embeddable** — NATS server can embed in the Polyglot runtime process.
 - **Lightweight** — ~20MB, no external dependencies.
