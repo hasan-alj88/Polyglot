@@ -1,13 +1,20 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
-status: complete
+updated: 2026-04-15
+status: deprecated
 metadata_definition: "%definition.Q:Kill.Graceful"
 metadata_instance: "%Q:Kill.Graceful:N"
 ---
 
 # -Q.Kill.Graceful
+
+<!-- @d:pglib/pipelines/Q/Job.Kill.WithCleanup -->
+**Deprecated.** Replaced by [[pglib/pipelines/Q/Job.Kill.WithCleanup|d:-Q.Job.Kill.WithCleanup]]. Conditions now use `[?]`/`[&]`/`[+]` conditional blocks inside `{Q} #JobRules` definitions instead of pipeline name suffixes.
+
+---
+
+*Original content preserved below for historical reference.*
 
 Direct command: finish work + `[/]` cleanup, then terminate. Signal: `command.kill.graceful`.
 

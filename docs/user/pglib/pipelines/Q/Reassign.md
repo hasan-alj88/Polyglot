@@ -1,13 +1,20 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
-status: complete
+updated: 2026-04-15
+status: deprecated
 metadata_definition: "%definition.Q:Reassign"
 metadata_instance: "%Q:Reassign:N"
 ---
 
 # -Q.Reassign
+
+<!-- @d:pglib/pipelines/Q/Job.Reassign -->
+**Deprecated.** Renamed to [[pglib/pipelines/Q/Job.Reassign|d:-Q.Job.Reassign]] under the scoped naming convention (`-Q.<Scope>.<Action>`).
+
+---
+
+*Original content preserved below for historical reference.*
 
 Move a job to a different queue. Enables host offloading.
 

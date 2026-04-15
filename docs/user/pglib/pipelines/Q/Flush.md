@@ -1,13 +1,20 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
-status: complete
+updated: 2026-04-15
+status: deprecated
 metadata_definition: "%definition.Q:Flush"
 metadata_instance: "%Q:Flush:N"
 ---
 
 # -Q.Flush
+
+<!-- @d:pglib/pipelines/Q/Queue.Flush -->
+**Deprecated.** Renamed to [[pglib/pipelines/Q/Queue.Flush|d:-Q.Queue.Flush]] under the scoped naming convention (`-Q.<Scope>.<Action>`).
+
+---
+
+*Original content preserved below for historical reference.*
 
 Remove all pending jobs from a queue.
 

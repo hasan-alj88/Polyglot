@@ -1,13 +1,20 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
-status: complete
+updated: 2026-04-15
+status: deprecated
 metadata_definition: "%definition.Q:Drain"
 metadata_instance: "%Q:Drain:N"
 ---
 
 # -Q.Drain
+
+<!-- @d:pglib/pipelines/Q/Queue.Drain -->
+**Deprecated.** Renamed to [[pglib/pipelines/Q/Queue.Drain|d:-Q.Queue.Drain]] under the scoped naming convention (`-Q.<Scope>.<Action>`).
+
+---
+
+*Original content preserved below for historical reference.*
 
 Stop accepting new jobs, finish existing.
 

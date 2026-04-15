@@ -1,13 +1,21 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
-status: complete
+updated: 2026-04-15
+status: deprecated
 metadata_definition: "%definition.Q:Pause.Hard"
 metadata_instance: "%Q:Pause.Hard:N"
 ---
 
 # -Q.Pause.Hard
+
+<!-- @d:pglib/pipelines/Q/Job.Pause.Free.RAM -->
+<!-- @d:pglib/pipelines/Q/Job.Pause.Free.All -->
+**Deprecated.** Replaced by [[pglib/pipelines/Q/Job.Pause.Free.RAM|d:-Q.Job.Pause.Free.RAM]] (CPU+RAM) and [[pglib/pipelines/Q/Job.Pause.Free.All|d:-Q.Job.Pause.Free.All]] (everything to disk). The new system provides five granular resource-freeing levels. Conditions now use `[?]`/`[&]`/`[+]` conditional blocks inside `{Q} #JobRules` definitions.
+
+---
+
+*Original content preserved below for historical reference.*
 
 Direct command: immediate suspend. Frees CPU+RAM. Signal: `command.pause.hard`.
 

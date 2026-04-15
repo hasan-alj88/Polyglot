@@ -1,22 +1,40 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-15
 status: complete
 ---
 
 # -Q — Queue Pipelines
 
-<!-- @c:pipelines -->
-Queue pipelines manage the multi-queue execution model: **Dispatch Queues** (pipelines awaiting dispatch, one per `{Q}` definition) and **Executing Set** (pipelines currently running). The **Dispatch Coordinator** reads from all Dispatch Queues simultaneously, faithfully honoring each queue's ordering and concurrency rules. No `[@]` import needed. See [[concepts/pipelines/queue#Queue]] for queue usage rules.
+<!-- @c:concepts/pipelines/queue -->
+Queue pipelines manage the multi-queue execution model. Every `-Q.*` pipeline is a **parameterized instruction** compiled into the behavior contract's signal map. The Trigger Monitor reads the signal map and executes at runtime. No `[@]` import needed. See [[concepts/pipelines/queue|c:Queue]] for queue concepts.
 
-All `-Q.*` pipelines are used via `[Q]` — either in a `{Q}` queue definition (queue-level defaults) or in a pipeline's `[Q]` section (pipeline-specific controls). Controls in `{Q}` apply to all pipelines on that queue. Controls in `[Q]` are pipeline-specific. Contradictions raise PGE01013.
-
-**PRIMITIVE** — Queue pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
+**PRIMITIVE** — Queue pipelines are direct OS/runtime integrations implemented by the Polyglot runtime. They cannot be reimplemented in user `.pg` files.
 
 ## Permissions
 
 No permissions required. All operations are pure computation (queue scheduling and resource management). See [[permissions]].
+
+## `{Q}` Block Types
+
+| Block | Purpose | Actions Allowed | Getters Allowed |
+|-------|---------|-----------------|-----------------|
+| `{Q} #Queue:Name` | Queue configuration | None | None |
+| `{Q} #QueueRules:Name` | Queue-level policy | `-Q.Queue.*` only | `-Q.Queue.*`, `-Q.Host.*`, `-Q.Job.*` (array) |
+| `{Q} #JobRules:Name` | Job-level policy | `-Q.Job.*` only | `-Q.Job.*`, `-Q.Queue.*`, `-Q.Host.*` |
+
+**Scope rule:** You can read anything, you can only act on your scope.
+
+## Three Kinds of `-Q.*` Pipelines
+
+| Kind | Pattern | Purpose |
+|------|---------|---------|
+| **Getter** | `-Q.<Scope>.Get.<Resource>` | Return a resource measurement value |
+| **State** | `-Q.<Scope>.Is.<State>` / `.Idle.*` / `.Active.*` | Return state or idle/active detection |
+| **Action** | `-Q.<Scope>.<Action>` | Execute a control operation |
+
+Where `<Scope>` is `Job`, `Host`, `Queue`, or `Queue.Jobs` (array context in `#QueueRules`).
 
 ## Pipeline Listing
 
@@ -27,80 +45,181 @@ No permissions required. All operations are pure computation (queue scheduling a
 | [[pglib/pipelines/Q/Default\|-Q.Default]] | Standard FIFO queue, no constraints |
 | [[pglib/pipelines/Q/Assign\|-Q.Assign]] | Assign pipeline to a named queue |
 
-### Direct Commands
+### Pause (resumable — Job state preserved)
 
-| Pipeline | Signal | Description |
-|----------|--------|-------------|
-| [[pglib/pipelines/Q/Pause.Soft\|-Q.Pause.Soft]] | command.pause.soft | Finish current work, then suspend. Frees CPU |
-| [[pglib/pipelines/Q/Pause.Hard\|-Q.Pause.Hard]] | command.pause.hard | Immediate suspend. Frees CPU+RAM |
-| [[pglib/pipelines/Q/Resume\|-Q.Resume]] | command.resume | Move from Suspended Set to Resume Queue |
-| [[pglib/pipelines/Q/Kill.Graceful\|-Q.Kill.Graceful]] | command.kill.graceful | Finish work + `[/]` cleanup, terminate |
-| [[pglib/pipelines/Q/Kill.Hard\|-Q.Kill.Hard]] | command.kill.hard | Immediate OS kill, no cleanup |
+| Pipeline | CPU | RAM | FDs/TCP/Locks | Timing |
+|----------|-----|-----|---------------|--------|
+| [[pglib/pipelines/Q/Job.Pause.Free.CPU\|-Q.Job.Pause.Free.CPU]] | Freed | Kept | Kept | `.Now` / `.Wait` |
+| [[pglib/pipelines/Q/Job.Pause.Free.RAM\|-Q.Job.Pause.Free.RAM]] | Freed | Freed | Kept | `.Soft` / `.Hard` x `.Now` / `.Wait` |
+| [[pglib/pipelines/Q/Job.Pause.Free.All\|-Q.Job.Pause.Free.All]] | Freed | Freed | Freed (to disk) | `.Now` / `.Wait` |
 
-### Conditional Pause / Resume / Kill
-
-Conditional variants are documented inside their parent command files: [[pglib/pipelines/Q/Pause.Soft|Pause.Soft]], [[pglib/pipelines/Q/Pause.Hard|Pause.Hard]], [[pglib/pipelines/Q/Resume|Resume]], [[pglib/pipelines/Q/Kill.Graceful|Kill.Graceful]], and [[pglib/pipelines/Q/Kill.Hard|Kill.Hard]].
-
-### Dispatch Timeout
+### Resume
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/Q/Dispatch.Wait.TimeOut\|-Q.Dispatch.Wait.TimeOut]] | What happens when a job exceeds `.maxWaitTime` |
+| [[pglib/pipelines/Q/Job.Resume\|-Q.Job.Resume]] | Resume from CPU or RAM pause (state in memory) |
+| `-Q.Job.Resume.From.Disk` | Restore from `Free.All` image files |
 
-### Queue Admin
+### Kill (terminal — Job state destroyed)
+
+| Pipeline | Cleanup? | Description |
+|----------|----------|-------------|
+| [[pglib/pipelines/Q/Job.Kill.WithCleanup\|-Q.Job.Kill.WithCleanup]] | Yes | SIGTERM, run `[/]` cleanup, then SIGKILL timeout |
+| [[pglib/pipelines/Q/Job.Kill.Now\|-Q.Job.Kill.Now]] | No | SIGKILL — instant termination |
+
+### Resource Adjustment (Job keeps running)
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/Q/Drain\|-Q.Drain]] | Stop accepting new jobs, finish existing |
-| [[pglib/pipelines/Q/Flush\|-Q.Flush]] | Remove all pending jobs from a queue |
-| [[pglib/pipelines/Q/Priority.Update\|-Q.Priority.Update]] | Change a job's priority score |
-| [[pglib/pipelines/Q/Reassign\|-Q.Reassign]] | Move a job to a different queue |
+| [[pglib/pipelines/Q/Job.Throttle\|-Q.Job.Throttle]] | Reduce CPU/RAM/IO allocation |
+| `-Q.Job.Unthrottle` | Restore full allocation |
+| `-Q.Job.Priority.Update` | Change scheduling priority |
 
-### Job Addressing
+### Spatial
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/Q/Job.Branch\|-Q.Job.Branch]] | Names a marker subtree as a branch group for external reference |
+| [[pglib/pipelines/Q/Job.Reassign\|-Q.Job.Reassign]] | Move to different queue (cross-host = CRIU transfer) |
+| [[pglib/pipelines/Q/Job.Snapshot\|-Q.Job.Snapshot]] | Point-in-time state fork to disk |
 
-## Example: Full Queue Definition + Pipeline Assignment
+### Queue-Level Actions
+
+| Pipeline | Description |
+|----------|-------------|
+| [[pglib/pipelines/Q/Queue.Drain\|-Q.Queue.Drain]] | Stop accepting new Jobs, finish existing |
+| [[pglib/pipelines/Q/Queue.Flush\|-Q.Queue.Flush]] | Kill.Now every Job on the queue |
+
+### Observation
+
+| Pipeline | Description |
+|----------|-------------|
+| [[pglib/pipelines/Q/Job.Inspect\|-Q.Job.Inspect]] | Read Job state without affecting it |
+| [[pglib/pipelines/Q/Job.Branch\|-Q.Job.Branch]] | Name a marker subtree for external reference |
+
+### No-Op
+
+| Pipeline | Description |
+|----------|-------------|
+| [[pglib/pipelines/Q/DoNothing\|-Q.DoNothing]] | Satisfies `*?` exhaustiveness. Compiler warns on unhandled states |
+
+### Getter Pipelines
+
+#### `-Q.Job.Get.*` (per-job metrics)
+
+| Getter | Returns | Unit |
+|--------|---------|------|
+| `-Q.Job.Get.RAM.GB` | Job's RAM usage | Gigabytes |
+| `-Q.Job.Get.RAM.MB` | Job's RAM usage | Megabytes |
+| `-Q.Job.Get.CPU.Percent` | Job's CPU usage | Percentage (0-100+) |
+| `-Q.Job.Get.IO.MBps` | Job's IO throughput | MB/s |
+| `-Q.Job.Get.Time` | Job's wall-clock runtime | Duration `#DT` |
+| `-Q.Job.Get.Status` | Job's current `#QueueState` | Enum value |
+| `-Q.Job.Get.Disk.GB` | Disk used by Job's data | Gigabytes |
+
+#### `-Q.Host.Get.*` (host-level metrics)
+
+| Getter | Returns | Unit |
+|--------|---------|------|
+| `-Q.Host.Get.RAM.GB` | Host available RAM | Gigabytes |
+| `-Q.Host.Get.RAM.Used.GB` | Host used RAM | Gigabytes |
+| `-Q.Host.Get.CPU.Percent` | Host CPU utilization | Percentage |
+| `-Q.Host.Get.Disk.GB` | Host available disk | Gigabytes |
+| `-Q.Host.Get.Status` | Host status | Enum (`#Online`, `#Offline`, `#Draining`) |
+| `-Q.Host.Get.GPU.Status` | GPU status | Enum (`#InUse`, `#Free`) |
+
+#### `-Q.Queue.Get.*` (queue-level metrics)
+
+| Getter | Returns | Unit |
+|--------|---------|------|
+| `-Q.Queue.Get.Length` | Number of Jobs in queue | Count |
+| `-Q.Queue.Get.Executing` | Number of executing Jobs | Count |
+| `-Q.Queue.Get.Suspended` | Number of suspended Jobs | Count |
+
+#### `-Q.Queue.Jobs.Get.*` (all jobs — returns array, `#QueueRules` context)
+
+| Getter | Returns | Per-element |
+|--------|---------|-------------|
+| `-Q.Queue.Jobs.Get.RAM.GB` | Array of Job RAM values | Gigabytes |
+| `-Q.Queue.Jobs.Get.CPU.Percent` | Array of Job CPU values | Percentage |
+| `-Q.Queue.Jobs.Get.Idle.All` | Array of Job idle durations | Duration |
+
+### State Guards
+
+State guards are required on action blocks. Without them, the compiler errors — forcing explicit temporal assumptions.
+
+| Guard | Meaning |
+|-------|---------|
+| `-Q.Job.Is.Active` | Job is currently running |
+| `-Q.Job.Is.Paused` | Job is currently paused (any level) |
+| `-Q.Job.Is.Throttled` | Job is currently throttled |
+
+### Idle / Active Detection
+
+| Getter | Returns | Measures |
+|--------|---------|----------|
+| `-Q.Job.Get.Idle.CPU` | Duration | Time since last CPU activity |
+| `-Q.Job.Get.Idle.Network` | Duration | Time since last send/receive |
+| `-Q.Job.Get.Idle.IO` | Duration | Time since last read/write |
+| `-Q.Job.Get.Idle.All` | Duration | All resources simultaneously idle |
+| `-Q.Job.Active.CPU` | Boolean | Job resumed CPU activity |
+| `-Q.Job.Active.Network` | Boolean | Job resumed network activity |
+| `-Q.Job.Active.IO` | Boolean | Job resumed disk activity |
+| `-Q.Job.Active.All` | Boolean | Job resumed any activity |
+
+## Example: Queue Definition + Rules + Pipeline
 
 ```polyglot
-{Q} #Queue:GPUQueue
-   [.] .strategy#QueueStrategy << #LIFO
-   [.] .host#String << "gpu-server-01"
-   [.] .maxInstances#UnsignedInt << 1
-   [.] .killPropagation#KillPropagation << #Downgrade
-   [.] .resourceTags#Array:ResourceTag << [#GPU]
-   [.] .maxWaitTime#String << "30m"
-   [.] .description#String << "GPU-intensive work"
-   [ ] Pause when RAM drops below 3GB
-   [Q] -Q.Pause.Hard.RAM.LessThan
-      (-) <mb << 3072.0
-   [ ] Resume when RAM recovers above 5GB
-   [Q] -Q.Resume.RAM.MoreThan
-      (-) <mb << 5120.0
-   [ ] Kill after 4 hours
-   [Q] -Q.Kill.Graceful.Time.MoreThan
-      (-) <duration << "4h"
+[ ] Queue configuration
+{Q} #Queue:WorkerQueue
+   [.] .tickPeriod << #DT"5s"
+   [.] .resumeDebounce << #DT"10s"
+   [.] .capacity << 50
+   [Q] << #HostFailover
 
-{-} =GPU.RenderFrames
-   (-) <frames#array:serial
-   (-) >rendered#array:serial ~> {}
-   [T] -T.Call
-   [Q] -Q.Assign"GPUQueue"
+[ ] Job-level rule: pause when RAM exceeds threshold
+{Q} #JobRules:RAMGuard
+   (#) $value.GB#int <~ 4
+   (#) $margin.GB#int <~ 1
+   [?] $margin.GB >? $value.GB
+      [!] >> !Queue.InvalidMargin
+   [?] -Q.Job.Is.Active
+   [&] -Q.Job.Get.RAM.GB">? {$value.GB}"
+      [Q] -Q.Job.Pause.Free.RAM.Wait
+   [?] -Q.Job.Is.Paused
+   [&] -Q.Job.Get.RAM.GB"<? {$value.GB}-{$margin.GB}"
+      [Q] -Q.Job.Resume
+   [?] *?
+      [Q] -Q.DoNothing
+
+[ ] Pipeline using the queue and rules
+{-} ProcessData
+   [T] ...
+   [ ] Assign to WorkerQueue
+   [Q] >> #WorkerQueue
+   [ ] Load job rules
+   [Q] << #RAMGuard
+   [Q] << #CPUGuard
    [W] -W.Polyglot
-   [=] =ForEach.Array
-      (=) <Array << $frames
-      (=) >item >> $frame
-      [-] =GPU.Render
-         (-) <frame << $frame
-         (-) >result >> $out
-      [-] *Into.Array
-         (*) <item << $out
-         (*) >Array >> $rendered
+   ...
 ```
+
+## Deprecated Pipelines
+
+The following pipelines have been replaced. See individual files for migration pointers.
+
+| Old | Replacement | Reason |
+|-----|-------------|--------|
+| [[pglib/pipelines/Q/Pause.Soft\|d:-Q.Pause.Soft]] | [[pglib/pipelines/Q/Job.Pause.Free.CPU\|-Q.Job.Pause.Free.CPU]] | Scoped naming, explicit resource level |
+| [[pglib/pipelines/Q/Pause.Hard\|d:-Q.Pause.Hard]] | [[pglib/pipelines/Q/Job.Pause.Free.RAM\|-Q.Job.Pause.Free.RAM]] | Five resource-freeing levels replace two |
+| [[pglib/pipelines/Q/Resume\|d:-Q.Resume]] | [[pglib/pipelines/Q/Job.Resume\|-Q.Job.Resume]] | Pause reason set semantics |
+| [[pglib/pipelines/Q/Kill.Graceful\|d:-Q.Kill.Graceful]] | [[pglib/pipelines/Q/Job.Kill.WithCleanup\|-Q.Job.Kill.WithCleanup]] | "WithCleanup" = `[/]` runs |
+| [[pglib/pipelines/Q/Kill.Hard\|d:-Q.Kill.Hard]] | [[pglib/pipelines/Q/Job.Kill.Now\|-Q.Job.Kill.Now]] | "Now" = instant SIGKILL |
+| [[pglib/pipelines/Q/Drain\|d:-Q.Drain]] | [[pglib/pipelines/Q/Queue.Drain\|-Q.Queue.Drain]] | Scoped naming |
+| [[pglib/pipelines/Q/Flush\|d:-Q.Flush]] | [[pglib/pipelines/Q/Queue.Flush\|-Q.Queue.Flush]] | Scoped naming |
+| [[pglib/pipelines/Q/Reassign\|d:-Q.Reassign]] | [[pglib/pipelines/Q/Job.Reassign\|-Q.Job.Reassign]] | Scoped naming |
+| `.If.<Resource>.<Condition>` suffixes | `[?]`/`[&]`/`[+]` conditional blocks | Conditions belong in Polyglot's conditional system |
 
 ## Related
 
-- [[concepts/pipelines/queue]]
+- [[concepts/pipelines/queue|c:Queue]]
 - [[pglib/INDEX]]

@@ -1,13 +1,20 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
-status: complete
+updated: 2026-04-15
+status: deprecated
 metadata_definition: "%definition.Q:Pause.Soft"
 metadata_instance: "%Q:Pause.Soft:N"
 ---
 
 # -Q.Pause.Soft
+
+<!-- @d:pglib/pipelines/Q/Job.Pause.Free.CPU -->
+**Deprecated.** Replaced by [[pglib/pipelines/Q/Job.Pause.Free.CPU|d:-Q.Job.Pause.Free.CPU]] (`.Wait` variant). Conditions now use `[?]`/`[&]`/`[+]` conditional blocks inside `{Q} #JobRules` definitions instead of pipeline name suffixes.
+
+---
+
+*Original content preserved below for historical reference.*
 
 Direct command: finish current work, then suspend. Frees CPU. Signal: `command.pause.soft`.
 

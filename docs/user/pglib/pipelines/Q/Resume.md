@@ -1,13 +1,20 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
-status: complete
+updated: 2026-04-15
+status: deprecated
 metadata_definition: "%definition.Q:Resume"
 metadata_instance: "%Q:Resume:N"
 ---
 
 # -Q.Resume
+
+<!-- @d:pglib/pipelines/Q/Job.Resume -->
+**Deprecated.** Replaced by [[pglib/pipelines/Q/Job.Resume|d:-Q.Job.Resume]]. Resume now uses pause reason set semantics — "resume" means "this rule no longer wants the Job paused." The Job actually resumes only when no rule wants it paused.
+
+---
+
+*Original content preserved below for historical reference.*
 
 Direct command: move from Suspended Set to Resume Queue. Signal: `command.resume`.
 
