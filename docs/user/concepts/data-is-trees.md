@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: spec
-updated: 2026-04-12
+updated: 2026-04-15
 ---
 
 # Everything is a Tree
@@ -21,16 +21,25 @@ Every `{X}` definition block in Polyglot Code is fundamentally a `{#}` struct �
 - `{T}` is a struct with trigger-specific schema (subtype of `{-}`)
 - `{W}` is a struct with setup/cleanup scope schema (subtype of `{-}`)
 - `{Q}` is a struct with queue dispatch schema
-- `{!}` is a struct with error namespace schema (subtype of `{#}`)
-- `{_}` is a struct with permission policy schema
+- `{!}` is a struct with error namespace schema (subtype of `{#}`). Terminals carry `##Error` schema — if a `{!}` definition's terminals do not have `##Error`, it is a compile error
+- `{_}` is a struct with permission policy schema. A `_Permission` object is a variable `$` with `##Permission` schema
 
 A **datatype** is a description of data tree topology — the shape, depth, field names, field types, and constraints that define how a tree is structured. When Polyglot Code is parsed, it is serialized as data (JSON) and sent to the Polyglot service. The compiler and runtime operate entirely on these serialized data trees.
 
-### Topology Matching
+### Type Identity and Compatibility
 
-The compiler judges that two variables are the **same datatype** if they have the same topology and the same topology rules. Assignment between variables is only allowed when their topologies match. A topology mismatch is a compile error — there is no implicit coercion.
+Data types are defined by the topology of the data tree together with the schema metadata (`%##`) and leaf metadata (`%###`) attached to its nodes.
 
-When a `{#}` definition has all its field values in **Final** state (see [[variable-lifecycle#Final]]), it becomes a concrete variable `$`. The definition describes the tree shape; the variable is a tree instance with all leaves populated.
+**Same type:** Two data trees are the **same datatype** if they have the same topology AND the same `%##` schema metadata AND the same `%###` leaf metadata. Assignment between variables requires same type — anything less is a compile error. There is no implicit coercion.
+
+**Compatible type:** Two data trees are **compatible** if they have the same topology only — meaning there is a correct mapping between the nodes of the two trees, but their `%##` or `%###` metadata may differ. Compatible-but-not-same types cannot be assigned to each other — the compiler raises an error because the metadata mismatch means the data carries different semantic constraints even if the shape is identical.
+
+### Parameterization vs Instantiation
+
+These are independent operations:
+
+- **Parameterization** — `{#}` definitions with `(#)` inputs define a type template. The inputs (`(#) <InputParameter`, `(#) <#InputDatatype`) resolve the template into a concrete type definition. Parameterization does not produce a variable — it produces a type.
+- **Instantiation** — when a `{#}` definition has all its terminal values in **Final** state (see [[variable-lifecycle#Final]]), it becomes a concrete variable `$`. The definition describes the tree shape; the variable is a tree instance with all terminals populated.
 
 ## All Data is Serialized Strings
 
@@ -54,8 +63,8 @@ This is not a per-type property — it is a universal invariant that applies to 
 
 Types describe their tree structure through two additional prefix tiers beyond `#`:
 
-- `##` **schemas** describe tree shape — depth, key types, ordering, uniformity (e.g., `##Scalar`, `##Flat`, `##Contiguous`)
-- `###` **field types** describe leaf content nature — `###Value` for typed data leaves, `###Enum` for variant selector leaves
+- `##` **schema bundles** describe tree shape — depth, key types, ordering, uniformity (e.g., `##Scalar`, `##Flat`, `##Contiguous`). A `##` is syntactic sugar for a reusable group of `%##` metadata assignments
+- `###` **leaf bundles** describe leaf content nature — `###Value` for typed data leaves, `###Enum` for variant selector leaves. A `###` is syntactic sugar for a reusable group of `%###` metadata assignments
 
 Child nodes in a tree are accessed with the `<` operator: `$myMap<name`, `$matrix<0<1`. Fixed fields use `.` as before.
 

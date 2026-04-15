@@ -2,7 +2,7 @@
 audience: ai
 type: audit-reference
 scope: glossary
-updated: 2026-04-12
+updated: 2026-04-15
 ---
 
 # Glossary — Authoritative Definitions
@@ -46,6 +46,8 @@ Source: [[vision]]
 | %##Count | Branch-level schema property taking `#Bound`. Maximum number of children (`#Inf` = unlimited). Replaces `%##Range` for bounds (#275) | Not `%##Range` (retired #275) |
 | #Map | *(Retired #275)* — replaced by ##Record (enum-keyed) or custom `{#}` types | Not active — use ##Record |
 | #Set | *(Retired #275)* — replaced by `#Array` + `%###Unique << #True` | Not active — use #Array with uniqueness constraint |
+| Schema Bundle | A `##` prefix — syntactic sugar for a reusable group of `%##` (branch-level) metadata assignments. Describes tree shape: depth, key types, ordering, uniformity. E.g., `##Scalar`, `##Flat`, `##Record` | Not a data type — a schema bundle describes type properties, it is not itself a `#` type |
+| Leaf Bundle | A `###` prefix — syntactic sugar for a reusable group of `%###` (leaf-level) metadata assignments. Describes leaf content nature: `###Value` for typed data, `###Enum` for variant selectors | Not a schema (`##`) — leaf bundles describe leaf content, not tree shape |
 
 ## Adding Terms
 
