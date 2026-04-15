@@ -52,6 +52,13 @@ All pglib items live on the `%` metadata tree (see [[data-is-trees#How Concepts 
 | `*Agg` | [collectors/Agg.md](collectors/Agg.md) | Reduce to single value (sum, count, average, max, min, concatenate) | Stable |
 | `*All` / `*First` / `*Nth` | [collectors/Sync.md](collectors/Sync.md) | Collect-all and race collectors | Stable |
 
+## Reassemble Operators (=*)
+
+| Prefix | File | Description | Status |
+|--------|------|-------------|--------|
+| `=*Agg` | [reassemblers/Agg/](reassemblers/Agg/) | Expand and reduce to scalar (sum, count, average, max, min, concatenate) | Draft |
+| `=*Into` | [reassemblers/Into/](reassemblers/Into/) | Expand and collect into collection (array, map, dataframe) | Draft |
+
 ## Built-in Types (#)
 
 | Name | File | Description | Status |

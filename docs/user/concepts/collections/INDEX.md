@@ -45,4 +45,5 @@ Collections are **assembled at once** using collect operators (`*` prefix) — n
 | [[dataframe]] | #Dataframe, nested safety |
 | [[expand]] | = expand operators |
 | [[collect]] | * collect operators, collect-all & race |
+| [[reassemble]] | =* reassemble operators (atomic expand + collect) |
 | [[examples]] | Expand/transform/collect examples, fallback |

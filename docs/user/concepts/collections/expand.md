@@ -43,6 +43,7 @@ Unlike `=ForEach.Serial` which iterates all keys, `=ForEach.Level` iterates only
 ## See Also
 
 - [[concepts/collections/collect|Collect Operators]] — `*Into` and `*Agg` collectors that gather expanded items
+- [[concepts/collections/reassemble|Reassemble Operators]] — `=*` atomic expand + collect operators
 - [[concepts/collections/examples|Examples]] — complete expand/transform/collect patterns
 - [[concepts/pipelines/execution|Execution]] — execution body where expand operators are used
 
