@@ -316,6 +316,7 @@ This makes reconciliation safe by construction: parallel jobs are pure readers, 
 ## See Also
 
 - [[concepts/collections/expand|Expand Operators]] — `=` operators that produce items for collectors
+- [[concepts/collections/reassemble|Reassemble Operators]] — `=*` atomic expand + collect operators
 - [[concepts/pipelines/wrappers|Wrappers]] — parallel forking in setup with `[*] *All` in cleanup
 - [[concepts/collections/examples|Examples]] — complete expand/transform/collect patterns
 - [[permissions#Parallel Write Exclusion]] — PGE10008 parallel write exclusion rule

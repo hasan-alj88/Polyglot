@@ -122,4 +122,57 @@ collect_io_line     ::= "(*)" io_param assignment_op value_expr   (* named param
 
 **Rule:** `*Ignore` is an explicit discard collector. It takes `(*) <<` wait inputs only and produces no outputs. Use for parallel output that exists for debugging but is intentionally unused. Prefer `$*` inline discard when the value is never needed.
 
+### 12.3 Reassemble Operators (`=*`)
+
+```ebnf
+reassemble_line         ::= ( "[-]" | "[=]" ) reassemble_invocation NEWLINE
+                             indent reassemble_expand_io NEWLINE
+                             indent reassemble_collect_io NEWLINE ;
+
+reassemble_invocation   ::= '=' '*' reassemble_operator ;
+
+reassemble_operator     ::= reassemble_agg | reassemble_into ;
+
+reassemble_agg          ::= "Agg.Sum"
+                          | "Agg.Count"
+                          | "Agg.Average"
+                          | "Agg.Max"
+                          | "Agg.Min"
+                          | "Agg.Concatenate" ;
+
+reassemble_into         ::= "Into.Array"
+                          | "Into.Map"
+                          | "Into.Dataframe" ;
+
+reassemble_expand_io    ::= "(=)" "<" param_name assignment_op value_expr ;
+                            (* expander input — source collection *)
+
+reassemble_collect_io   ::= "(*)" ">" param_name ">>" variable_ref ;
+                            (* collector output — aggregated result *)
+```
+
+**Rule:** Reassemble operators combine an expander and collector into a single atomic operation. The `=*` prefix reads as "expand, then collect" — fan-out followed by fan-in with no intermediate body logic.
+
+**Rule:** The compiler expands `=*` into the equivalent `=ForEach` + `*` pair. No new runtime instruction is created — `=*` is syntactic sugar.
+
+**Rule:** `=*` has no intermediate body. The expander feeds directly into the collector. If per-item logic is needed (conditionals, pipeline calls, error handling), use the full `=` ... `*` form.
+
+**Rule:** IO brackets follow the operator prefix convention: `(=)` for the expander input, `(*)` for the collector output. This matches the dual nature of the operator.
+
+**Rule:** Execution marker controls the internal expand step: `[-]` runs items sequentially, `[=]` runs items in parallel.
+
+### Reassemble IO Signatures
+
+| Operator | Expander Input `(=)` | Collector Output `(*)` | Equivalent |
+|----------|---------------------|----------------------|------------|
+| `=*Agg.Sum` | `<array` | `>sum` | `=ForEach.Array` + `*Agg.Sum` |
+| `=*Agg.Count` | `<array` | `>count` | `=ForEach.Array` + `*Agg.Count` |
+| `=*Agg.Average` | `<array` | `>average` | `=ForEach.Array` + `*Agg.Average` |
+| `=*Agg.Max` | `<array` | `>max` | `=ForEach.Array` + `*Agg.Max` |
+| `=*Agg.Min` | `<array` | `>min` | `=ForEach.Array` + `*Agg.Min` |
+| `=*Agg.Concatenate` | `<array` | `>result` | `=ForEach.Array` + `*Agg.Concatenate` |
+| `=*Into.Array` | `<Map` \| `<Serial` \| `<Dataframe` | `>Array` | `=ForEach.*` + `*Into.Array` |
+| `=*Into.Map` | `<Array` \| `<Serial` \| `<Dataframe` | `>Map` | `=ForEach.*` + `*Into.Map` |
+| `=*Into.Dataframe` | `<Array` \| `<Map` \| `<Serial` | `>Dataframe` | `=ForEach.*` + `*Into.Dataframe` |
+
 ---

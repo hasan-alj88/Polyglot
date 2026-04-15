@@ -135,3 +135,4 @@ Prefixes, not identifiers. See [[concepts/collections/INDEX|collections]] for fu
 |--------|-----------|-------|
 | `=ForEach` | Expand (iterate) | `=ForEach.Array`. See [[concepts/collections/expand#Expand Operators]] |
 | `*` | Collect (aggregate) | `*Into.Array`, `*Agg.Sum`. See [[concepts/collections/collect#Collect Operators]] |
+| `=*` | Reassemble (atomic expand + collect) | `=*Agg.Sum`, `=*Into.Array`. See [[concepts/collections/reassemble#Reassemble Operators]] |
