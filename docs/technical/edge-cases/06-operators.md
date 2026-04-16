@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-04-16
+updated: 2026-04-17
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -137,4 +137,28 @@ updated: 2026-04-16
    (-) <url << $primary
    (-) >config >> $cfg
       (<) !< -Fetch.Config"/backup" !< -Fetch.Config"/last-resort"
+```
+
+### EC-6.6: Range token `?[` vs conditional `[?]` (X.45)
+
+<!-- @u:ebnf/06-operators -->
+**EBNF ref:** `range_open ::= "?[" | "?("` (§6.3), `control_flow_elem ::= "[?]"` (§5.1)
+
+**What it tests:** The `?[` range token and `[?]` conditional block element share `?` and `[` characters. The lexer disambiguates positionally: `[?]` is a three-character block element at line start; `?[`/`?(` are two-character range tokens in expression context; comparison operators consume `?` greedily.
+
+**Decision:** Accept — lexer context disambiguates; no grammar change needed.
+
+```polyglot
+[ ] ✓ Range in assignment — ?[ is mid-expression after value_expr
+[-] $ok#bool << $score ?[60, 100]
+
+[ ] ✓ Conditional — [?] is line-start block element
+[?] $score >=? 60
+   [-] $grade << "pass"
+
+[ ] ✓ Greedy operator parsing — =? consumed as one comparison token
+[?] $x =? $y
+   [-] $msg << "equal"
+[ ] =?[ would tokenize as =? + [ — the ? is consumed by the comparison operator
+[ ] and cannot start a ?[ range token
 ```

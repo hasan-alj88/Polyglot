@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-16
+updated: 2026-04-17
 ---
 
 <!-- @ebnf/INDEX -->
@@ -54,5 +54,13 @@ range_close         ::= ']' | ')' ;       (* right bound: ] inclusive, ) exclusi
 
 range_expr          ::= value_expr range_open value_expr ',' value_expr range_close ;
 ```
+
+**Lexer Disambiguation:** The `?[` and `?(` range tokens share the `?` character with comparison operators and the `[?]` block element. The lexer resolves this positionally:
+
+- `[?]` is a **three-character block element** token, matched at line start after indentation (§5.1). The `[` precedes the `?`.
+- `?[` and `?(` are **two-character range tokens**, matched in expression context after a `value_expr`. The `?` precedes the bracket.
+- Comparison operators consume `?` **greedily**: `=?[` tokenizes as `=?` (comparison) + `[` (unrelated), never as `=` + `?[` (range open).
+
+No grammar ambiguity exists — the token boundary is determined by whether `?` or `[` appears first, and whether the position is line-start (block element) or mid-expression (range/comparison).
 
 ---

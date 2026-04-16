@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-04-16
+updated: 2026-04-17
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -365,4 +365,39 @@ updated: 2026-04-16
 
 [*] *All
    (*) << $a
+```
+
+### EC-12.18: Reassemble with incompatible IO signatures (X.46)
+
+<!-- @u:ebnf/12-collections -->
+**EBNF ref:** `reassemble_line` (§12.3), reassemble IO signature table (§12.3)
+
+**What it tests:** Reassemble operators combine an expander and collector. The `(=)` expander input is typed to a specific collection schema (e.g., `<Collection.Array` requires `##Array`). The compiler desugars `=*` into `=ForEach.*` + `*` and validates IO wiring using standard type checking. Incompatible IO signatures are caught by `PGE04001` (type mismatch), not by a separate reassemble rule.
+
+**Decision:** Accept — existing type system covers this via schema-typed inputs and desugar + IO wiring validation.
+
+```polyglot
+[ ] ✓ Compatible — Serial yields >key + >value, matches Into.Map collector
+[-] =*Into.Map
+   (=) <Serial << $data
+   (*) >Map >> $result
+
+[ ] ✓ Compatible — Array yields >item, matches Agg.Sum <number (if item is numeric)
+[-] =*Agg.Sum
+   (=) <Array << $numbers
+   (*) >sum >> $total
+```
+
+```polyglot
+[ ] ✗ PGE04001 — Array yields >item (single element), Into.Map needs >key + >value
+[ ] Compiler desugars to =ForEach.Array + *Into.Map, IO wiring fails
+[-] =*Into.Map
+   (=) <Array << $items
+   (*) >Map >> $result
+
+[ ] ✗ PGE04001 — Dataframe yields >row, Agg.Sum needs <number
+[ ] Schema %##Active << #ActiveKind.One determines per-iteration output shape
+[-] =*Agg.Sum
+   (=) <Dataframe << $df
+   (*) >sum >> $total
 ```
