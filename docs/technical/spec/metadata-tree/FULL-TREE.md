@@ -149,7 +149,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   +-- :sci                                %#:String:sci
 |   |   +-- :eng                                %#:String:eng
 |   |   +-- :dim                                %#:String:dim
-|   |   +-- :emailAddress                       %#:String:emailAddress  (user-defined)
+|   |   +-- :email                              %#:String:email
 |   |   +-- :(any)                               extensible — users define new subtypes
 |   |
 |   +-- :PipelineStatus:0                       %#:PipelineStatus:0  (enum — ONE active field)

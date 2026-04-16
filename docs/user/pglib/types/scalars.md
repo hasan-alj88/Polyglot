@@ -37,6 +37,7 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 | `#NestedKeyString` | `nestedkey` | `^[a-zA-Z_][a-zA-Z0-9_.]*$` | `File.Permission.Denied` | [[pglib/types/scalars/nested-key-string\|#NestedKeyString]] |
 | `#CommaSeparatedList` | `csvlist` | `^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$` | `product,price,quantity` | [[pglib/types/scalars/comma-separated-list\|#CommaSeparatedList]] |
 | `#DataTypeString` | `dtstring` | `^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$` | `Array1D:Int`, `Map:String` | [[pglib/types/scalars/data-type-string\|#DataTypeString]] |
+| `#Email` | `email` | `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$` | `user@example.com`, `admin+tag@sub.domain.org` | [[pglib/types/scalars/email\|#Email]] |
 
 ## Metadata
 
@@ -54,6 +55,7 @@ Each scalar subtype has a definition and appears as an instance under #String:
 | `#NestedKeyString` | `%definition.#:NestedKeyString` | `%#:String:nestedkey` |
 | `#CommaSeparatedList` | `%definition.#:CommaSeparatedList` | `%#:String:csvlist` |
 | `#DataTypeString` | `%definition.#:DataTypeString` | `%#:String:dtstring` |
+| `#Email` | `%definition.#:Email` | `%#:String:email` |
 
 ## Related
 

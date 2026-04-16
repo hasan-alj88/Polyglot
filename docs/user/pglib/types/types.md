@@ -24,7 +24,8 @@ RawString (compiler intrinsic) [##Leaf]
     ├── #Dimension (.regex = dimension values — allows 0D)
     ├── #KeyString (.regex = syntax-safe keys)
     ├── #NestedKeyString (.regex = alias-safe paths)
-    └── (user-defined: #emailAddress, #phoneNumber, etc.)
+    ├── #Email (.regex = email addresses)
+    └── (user-defined: #phoneNumber, #zipCode, etc.)
 
 #Boolean (##Enum type — NOT #String) [##Enum, ##Scalar, ###ScalarEnum]
 
@@ -47,7 +48,7 @@ RawString (compiler intrinsic) [##Leaf]
 | Category | File | Types |
 |----------|------|-------|
 | Foundation | [string.md](string.md) | #String |
-| Scalar subtypes | [scalars.md](scalars.md) | #Int, #UnsignedInt, #Float, #Sci, #Eng, #Dimension, #KeyString, #NestedKeyString |
+| Scalar subtypes | [scalars.md](scalars.md) | #Int, #UnsignedInt, #Float, #Sci, #Eng, #Dimension, #KeyString, #NestedKeyString, #Email |
 | Boolean | [boolean.md](boolean.md) | #Boolean, #None |
 | Collections | [collections.md](collections.md) | #Map, #Array, #Dataframe, #Set, #Serial |
 | Enums | [enums.md](enums.md) | #OS, #PipelineStatus, #QueueStrategy, #RetriggerStrategy, #QueueState, #KillPropagation, #ResourceTag, #FileAccess, #VarState, #FieldKind, #FieldsDescriptor, #ActiveKind |

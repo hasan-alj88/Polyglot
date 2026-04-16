@@ -180,7 +180,7 @@ Push atomically clears the previous field and sets the new one. Reading a non-ac
 ```polyglot
 %#:String:int               ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+$")
 %#:String:float             ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+\.[0-9]+$")
-%#:String:emailAddress      ← user-defined: .regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+%#:String:email             ← pglib: .regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
 See [[syntax/types/basic-types#Numeric Types — #String Subtypes]] for details.
