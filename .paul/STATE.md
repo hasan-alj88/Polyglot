@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue-driven development — ready for next issue
+**Current focus:** Issue #284 — Add Git triggers for CI/CD pipelines
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — ready for next issue
-Plan: —
-Status: Idle
-Last activity: 2026-04-16 — Closed #265, merged to main
+Phase: Issue #284 — Git triggers
+Plan: 284-01 complete
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-16 — Created 284-01-SUMMARY.md
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -107,14 +107,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #284 — Add Git triggers for CI/CD pipelines (-T.Git.*)
+Branch: design/issue-284-add-git-triggers-for-ci-cd-pipelines
+Labels: design, pglib, P3-medium
+Started: 2026-04-16
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/284
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -286,12 +290,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: Issue #265 closed and merged
-Next action: Pick next issue with /paul:work-issue or /paul:issues
-Resume file: .paul/phases/265-finalize-queue-handler-design/265-03-SUMMARY.md
+Stopped at: Loop closed, ready for merge
+Next action: Run /paul:merge to commit and merge to main
+Resume file: .paul/phases/284-git-triggers-ci-cd/284-01-SUMMARY.md
 Resume context:
-- Issue #265 closed and merged to main
-- On main branch, ready for next issue
+- Issue #284, branch design/issue-284-add-git-triggers-for-ci-cd-pipelines
+- 5 new files, 3 updated files — all docs, no code
+- Ready to commit and merge
 
 ---
 *STATE.md — Updated after every significant action*
