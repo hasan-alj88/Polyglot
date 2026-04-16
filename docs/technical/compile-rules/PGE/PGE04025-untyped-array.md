@@ -4,30 +4,16 @@ rule: "4.25"
 code: PGE04025
 name: Untyped Array
 severity: error
+status: grammar-enforced
 ---
 
-### Rule 4.25 — Untyped Array
+### Rule 4.25 — Untyped Array (Grammar-Enforced)
 `PGE04025`
 
 <!-- @u:syntax/io -->
 
-**Statement:** `#array` type annotations must specify an element type. Untyped arrays (`#array` without element type) are a compile error — the compiler cannot infer the element type, and all elements must share the same schema.
-**Rationale:** Polyglot is type-safe first. Arrays hold homogeneous elements — every element must conform to the declared element type's schema. Without a declared type, the compiler cannot enforce this constraint, leading to potential runtime type errors. By requiring explicit element types, the compiler can verify schema compatibility across the entire data flow at compile time — including across language boundaries where type mismatches would otherwise surface only at runtime.
-**Detection:** The compiler checks that every `#array` type annotation includes an element type via colon notation (e.g., `#array:int`, `#array:UserRecord`).
+**Status:** Grammar-enforced as of #306. The `array_type` production now requires `element_type_param` — `#array` without an element type is a grammar error, not a semantic compile rule.
 
-**VALID:**
-```polyglot
-[ ] ✓ typed array — element type specified
-(-) <items#array:int
+**Previous behavior:** The compiler checked that every `#array` type annotation included an element type. This is now enforced at the grammar level via `element_type_param ::= basic_type | user_type`.
 
-[ ] ✓ array of user type
-(-) <users#array:UserRecord
-```
-
-**INVALID:**
-```polyglot
-[ ] ✗ PGE04025 — no element type
-(-) <items#array
-```
-
-**Diagnostic:** "Array `$name` requires an element type — use `#array:type` notation"
+**See:** [[technical/ebnf/04-type-system#4.1 Type Annotations]], EC-4.19, EC-4.21.

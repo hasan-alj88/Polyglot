@@ -80,7 +80,7 @@ registry_type       ::= "Local" | "Community" | "Registry" ;
 registry_id         ::= name | digit { digit } ;
 package_name        ::= name ;
 sub_package         ::= name ;
-version             ::= 'v' digit '.' digit '.' digit [ '.' digit ] ;
+version             ::= 'v' digit { digit } '.' digit { digit } '.' digit { digit } [ '.' digit { digit } ] ;
 ```
 
 **Example:** `@Local:999.MyPackage.Sub:v1.2.3.2`

@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-09
+updated: 2026-04-16
 ---
 
 <!-- @ebnf/INDEX -->
@@ -13,13 +13,16 @@ updated: 2026-04-09
 ```ebnf
 type_annotation     ::= '#' type_expr ;
 
-type_expr           ::= basic_type
+concrete_type_expr  ::= basic_type
                       | collection_type
-                      | wildcard_type
-                      | user_type
-                      | live_type ;
+                      | user_type ;
+                      (* All non-live type forms — no wildcard *)
 
-live_type           ::= "live" type_expr ;    (* Polyglot-managed, read-only *)
+live_type           ::= "live" concrete_type_expr ;
+                      (* Polyglot-managed, read-only. Wraps concrete only — no nested live. *)
+
+type_expr           ::= concrete_type_expr
+                      | live_type ;
 
 basic_type          ::= "RawString" | "string" | "int" | "uint" | "float"
                       | "sci" | "eng" | "dim" | "bool" | "path" ;
@@ -31,8 +34,11 @@ basic_type          ::= "RawString" | "string" | "int" | "uint" | "float"
 
 collection_type     ::= array_type | dict_type | dataframe_type | serial_type ;
 
-array_type          ::= "array" [ flex_sep type_param ] [ flex_sep dimension ] ;
-                      (* e.g., #array:int, #array:float:2D, #array:Person *)
+element_type_param  ::= basic_type | user_type ;
+                      (* Element type for arrays — no dimension, no wildcard *)
+array_type          ::= "array" flex_sep element_type_param [ flex_sep dimension ] ;
+                      (* e.g., #array:int, #array:float:2D, #array:Person.
+                         Element type is mandatory — #array alone is a grammar error. *)
 dict_type           ::= "dict" flex_sep type_param flex_sep type_param ;
                       (* e.g., #dict:string:int — key type : value type *)
 dataframe_type      ::= "dataframe" flex_sep enum_type_param flex_sep type_param ;
@@ -40,19 +46,17 @@ dataframe_type      ::= "dataframe" flex_sep enum_type_param flex_sep type_param
                          enum_type_param must resolve to a ###ScalarEnum type (PGE04022 if not). *)
 serial_type         ::= "serial" ;
 
-type_param          ::= basic_type | dimension | user_type | wildcard_type ;
+type_param          ::= basic_type | dimension | user_type ;
                       (* Nested type refs drop the # prefix within type context *)
 enum_type_param     ::= user_type ;
                       (* Must resolve to a ###ScalarEnum type at compile time — PGE04022 if not *)
 dimension           ::= digit { digit } "D" ;
                       (* e.g., :2D, :3D — omitted defaults to 1D *)
 
-wildcard_type       ::= "*" ;                 (* #* — any type; used in generic constraints *)
-
 user_type           ::= dotted_name ;         (* e.g., Person — no # prefix in type annotations *)
 ```
 
-**Rule:** `#` starts a type context. Within that context, nested type references separated by `:` **drop the `#` prefix** — the compiler resolves them. Examples: `$score#int`, `$users#array:Person`, `$map#dict:string:int`, `$matrix#array:float:2D`.
+**Rule:** `#` starts a type context. Within that context, nested type references separated by `:` **drop the `#` prefix** — the compiler resolves them. Examples: `$score#int`, `$users#array:Person`, `$map#dict:string:int`, `$matrix#array:float:2D`. Array element type is mandatory — `#array` alone is a grammar error (previously PGE04025, now grammar-enforced). Multi-type constraints use `##` schemas (e.g., `##Scalar`), not a wildcard type. The `live` modifier wraps concrete types only — `#live live string` is a grammar error.
 
 ### 4.2 Typed Variable
 

@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — #305
-Plan: —
-Status: Idle
-Last activity: 2026-04-16 — Closed #305, merged to main
+Phase: Issue-driven — #306
+Plan: 306-01 complete
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-16 — Loop closed for 306-01
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -113,14 +113,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #306 — EBNF edge cases: type expression degenerate forms
+Branch: design/issue-306-ebnf-type-expression-degenerate-forms
+Labels: design, test, P2-high
+Started: 2026-04-16
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/306
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -279,6 +283,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #288 — Add [!] !*- error suppression sugar | 2026-04-16 | error_wildcard + error_suppress EBNF; PGW07010 warning; user docs |
 | Closed #304 — Fallback ops + parallelism markers | 2026-04-16 | PGE07008 (non-failable fallback), PGE07009 (unterminated chain), PGE01040 (orphan parallel); semantic not grammar |
 | Closed #305 — EBNF arithmetic + inline_data recursion | 2026-04-16 | Removed arithmetic_expr/arithmetic_op from EBNF; inline_value breaks inline_data cycle; PGE08013; EC-6.4 fixed |
+| Issue #306 — EBNF type expression degenerate forms | 2026-04-16 | wildcard_type removed, concrete_type_expr added, mandatory array element type, multi-digit version, 4 edge cases, PGE04025 stub |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -298,12 +303,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: Issue #305 closed and merged
-Next action: Pick next issue with /paul:work-issue or /paul:issues
-Resume file: .paul/phases/305-ebnf-arithmetic-precedence-self-ref-expressions/305-01-SUMMARY.md
+Stopped at: Loop closed for 306-01
+Next action: /paul:merge to commit and merge branch
+Resume file: .paul/phases/306-ebnf-type-expression-degenerate-forms/306-01-SUMMARY.md
 Resume context:
-- Issue #305 closed and merged to main
-- On main branch, ready for next issue
+- Issue #306 loop closed, ready for merge
+- On branch design/issue-306-ebnf-type-expression-degenerate-forms
 
 ---
 *STATE.md — Updated after every significant action*

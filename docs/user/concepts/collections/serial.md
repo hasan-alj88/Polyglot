@@ -28,7 +28,6 @@ By removing all structural constraints, `#Serial` accepts any compilable tree sh
    [#] %##Ordered << #False
    [#] %##Regular << #False
    [#] %##Count << #Inf
-   [:] :*#*
 ```
 
 Access uses chained `<` at unlimited depth:
