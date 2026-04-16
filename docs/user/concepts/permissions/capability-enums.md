@@ -14,7 +14,7 @@ Permission categories use typed enums to prevent nonsensical combinations. Each 
 | `File` | `#FileCapability` | `Read`, `Write`, `Execute`, `Delete`, `Create` |
 | `Web` | `#WebCapability` | `Request`, `Socket`, `Listen` |
 | `Database` | `#DatabaseCapability` | `Connect`, `Read`, `Write` |
-| `System` | `#SystemCapability` | `Env`, `Process`, `Signal` |
+| `System` | `#SystemCapability` | `Env`, `Process`, `Signal`, `Shell` |
 | `Crypto` | `#CryptoCapability` | `Key`, `Sign`, `Encrypt` |
 | `IPC` | `#IPCCapability` | `Send`, `Receive`, `Subscribe` |
 | `Device` | `#DeviceCapability` | `Camera`, `Microphone`, `Location`, `Bluetooth` |

@@ -37,6 +37,7 @@ Category-level generic permission for system-level operations. Takes a capabilit
 | [[Env\|__System.Env]] | `<scope;string` | Access environment variables |
 | [[Process\|__System.Process]] | `<scope;string` | Spawn/manage processes |
 | [[Signal\|__System.Signal]] | `<scope;string` | Send/receive signals |
+| [[Shell\|__System.Shell]] | `<scope;string` | Execute shell commands |
 
 ## Related
 

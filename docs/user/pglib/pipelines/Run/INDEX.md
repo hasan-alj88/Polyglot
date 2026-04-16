@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-13
+updated: 2026-04-16
 status: draft
 ---
 
@@ -9,24 +9,25 @@ status: draft
 
 <!-- @c:pipelines -->
 <!-- @c:glossary#Runner -->
-Foreign code execution pipelines run native code (Python, Rust, etc.) within Polyglot pipelines. Each `-Run.<Lang>.*` pipeline takes a language-specific environment handle from `-W.Env` and executes code in that runtime.
+Foreign code execution pipelines run native code (Python, Rust, etc.) within Polyglot pipelines. Language-specific pipelines (`-Run.<Lang>.*`) take an environment handle from `-W.Env`; the language-agnostic `-Run.Shell` uses `-W.Polyglot` instead.
 
 No `[@]` import needed.
 
 **PRIMITIVE** — pglib runtime pipelines are direct language runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
 
-`<Lang>` is a placeholder for the target language (Python, Rust, etc.). The actual pipeline name uses the concrete language: `-Run.Python.Function`, `-Run.Rust.Script`, etc.
+`<Lang>` is a placeholder for the target language (Python, Rust, etc.). The actual pipeline name uses the concrete language: `-Run.Python.Function`, `-Run.Rust.Script`, etc. `-Run.Shell` is the exception — it is language-agnostic and invokes the system shell directly.
 
 > **Supersedes:** `-RT.*` pipeline family. See [[pglib/pipelines/RT/INDEX|@d:-RT.*]] for the deprecated specification.
 
 ## Permissions
 
 <!-- @c:permissions -->
-All `-Run.*` pipelines require a `{_}` permission object granting System.Process. See [[permissions]] for the permission system.
+All `-Run.*` pipelines require a `{_}` permission object granting System.Process. `-Run.Shell` additionally requires System.Shell (shell execution is a higher privilege than invoking a known binary). See [[permissions]] for the permission system.
 
 | Pipeline | Required Capability | Category |
 |----------|-------------------|----------|
 | `-Run.<Lang>.*` | System.Process | System |
+| `-Run.Shell` | System.Process + System.Shell | System |
 
 ## Pipelines
 
@@ -36,6 +37,7 @@ All `-Run.*` pipelines require a `{_}` permission object granting System.Process
 | [[pglib/pipelines/Run/Script\|-Run.\<Lang\>.Script]] | Run code with Record-typed variable bindings |
 | [[pglib/pipelines/Run/CLI\|-Run.\<Lang\>.CLI]] | Invoke compiled binary with string arguments |
 | [[pglib/pipelines/Run/Bind\|-Run.\<Lang\>.Bind]] | Foreign code imports polyglot lib for data flow |
+| [[pglib/pipelines/Run/Shell\|-Run.Shell]] | Execute shell command strings (pipes, redirections, compound commands) |
 
 ## Code Source — `<code#Code:Source`
 
@@ -66,7 +68,7 @@ The compiler enforces `%##Active` one — providing both `.inline` and `.file` i
 ## Binding Modes
 
 <!-- @u:syntax/blocks#Foreign Code -->
-Four modes define **who controls data flow** between Polyglot and foreign code:
+Four language-specific modes define **who controls data flow** between Polyglot and foreign code. The fifth variant, `.Shell`, is language-agnostic — see [[pglib/pipelines/Run/Shell|-Run.Shell]].
 
 ### `.Function` — Structured Call
 
@@ -172,6 +174,7 @@ Record field types drive marshalling through the native dispatch JSON wire forma
 | `.Script` | `<Bind` / `>Bind` field names exist as identifiers in code |
 | `.CLI` | `<arg` / `<kwarg` fields are all `#string` (PGE01039) |
 | `.Bind` | No validation — `pull()`/`push()` are opaque runtime strings |
+| `.Shell` | No validation — command string is opaque (no `<Bind`, `<arg`, `<kwarg`) |
 
 **Note:** Binding validation (PGE01033–PGE01036) applies at compile time for `<code.inline` only. When `<code.file` is used, binding validation is deferred to runtime (the file content is not available at compile time).
 
