@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-03-30
+updated: 2026-04-16
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -11,7 +11,7 @@ updated: 2026-03-30
 ### EC-8.1: Inline data — multiple elements
 
 <!-- @u:types:Inline Data Shorthand -->
-**EBNF:** `inline_data ::= '{' value_expr { ',' value_expr } '}'`
+**EBNF:** `inline_data ::= '{' inline_value { ',' inline_value } '}'`
 
 **What it tests:** Non-empty inline data with mixed types. See [[syntax/types/structs#Inline Data Shorthand]].
 
@@ -98,4 +98,52 @@ updated: 2026-03-30
 
 [ ] VALID — different variables
 [-] $a#string << $b                     [ ] ✓ different variables, valid assignment
+```
+
+### EC-8.7: Arithmetic precedence — moot (X.35)
+
+<!-- @u:compile-rules/PGE/PGE04010-invalid-arithmetic-operator -->
+**What it tests:** Multi-operator arithmetic expressions that would require precedence rules. Moot because raw arithmetic tokens are compile errors ([[PGE04010|PGE04010]]). The `arithmetic_expr` and `arithmetic_op` productions have been removed from the EBNF.
+
+```polyglot
+[ ] ✗ PGE04010 — precedence question is irrelevant
+[-] $result#int << $a + $b * $c         [ ] ✗ PGE04010 — use -Math.Add / -Math.Multiply
+
+[ ] ✗ PGE04010 — associativity question is irrelevant
+[-] $result#int << $a - $b - $c         [ ] ✗ PGE04010 — use -Math.Subtract
+
+[ ] ✓ explicit pipeline composition replaces operator precedence
+[-] -Math.Multiply
+   (-) << $b
+   (-) << $c
+   (-) >> $bc
+[-] -Math.Add
+   (-) << $a
+   (-) << $bc
+   (-) >> $result
+```
+
+### EC-8.8: Nested inline data (INVALID — X.36)
+
+<!-- @u:EBNF:inline_data -->
+**EBNF:** `inline_data ::= '{' inline_value { ',' inline_value } '}'` — `inline_value` excludes `inline_data`, breaking the cycle.
+
+**What it tests:** Nested `{}` inside inline data. The `inline_data` production uses `inline_value` (not `value_expr`), which excludes nested braces. See [[technical/compile-rules/PGE/PGE08013-nested-inline-data|PGE08013]].
+
+```polyglot
+[ ] ✗ PGE08013 — nested inline data
+[-] $matrix#array:array:int << {{1, 2, 3}, {4, 5, 6}}   [ ] ✗ PGE08013
+
+[ ] ✗ PGE08013 — deeply nested
+[-] $deep << {{{1}}}                                     [ ] ✗ PGE08013
+
+[ ] ✗ PGE08013 — mixed nesting
+[-] $mixed << {1, {2, 3}, 4}                             [ ] ✗ PGE08013
+```
+
+```polyglot
+[ ] ✓ flat inline data — valid
+[-] $nums#array:int << {1, 2, 3, 4, 5}
+[-] $names#array:string << {"Alice", "Bob"}
+(-) >results#array:string ~> {}
 ```

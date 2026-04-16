@@ -53,17 +53,34 @@ updated: 2026-04-16
 [?] $val ?(0,10]
 ```
 
-### EC-6.4: Arithmetic in assignment
+### EC-6.4: Arithmetic in assignment (INVALID)
 
-**EBNF:** `arithmetic_expr ::= value_expr arithmetic_op value_expr`
-
-**What it tests:** `+`, `-`, `*`, `/` used in assignments.
+<!-- @u:compile-rules/PGE/PGE04010-invalid-arithmetic-operator -->
+**What it tests:** Raw arithmetic tokens (`+`, `-`, `*`, `/`) are compile errors. Arithmetic uses `-Math.*` pglib pipelines. See [[PGE04010|PGE04010]].
 
 ```polyglot
-[-] $total#int << $price * $quantity
+[ ] ✗ PGE04010 — raw multiplication
+[-] $total#int << $price * $quantity          [ ] ✗ use -Math.Multiply
+
+[ ] ✗ PGE04010 — raw division
+[-] $avg#float << $sum / $count               [ ] ✗ use -Math.Divide
+
+[ ] ✗ PGE04010 — raw subtraction
+[-] $diff#int << $a - $b                      [ ] ✗ use -Math.Subtract
+
+[ ] ✗ PGE04010 — raw addition
+[-] $total#int << $price + $tax               [ ] ✗ use -Math.Add
+```
+
+```polyglot
+[ ] ✓ arithmetic through pglib pipelines
+[-] -Math.Multiply
+   (-) << $price
+   (-) << $quantity
+   (-) >> $total
+
+[ ] ✓ string interpolation is NOT arithmetic — still valid
 [-] $name#string << "{$first} {$last}"
-[-] $avg#float << $sum / $count
-[-] $diff#int << $a - $b
 ```
 
 ### EC-6.5: Fallback operators in non-error context (X.33)

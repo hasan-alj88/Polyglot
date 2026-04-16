@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — #304
-Plan: —
-Status: Idle
-Last activity: 2026-04-16 — Closed #304, merged to main
+Phase: Issue-driven — #305
+Plan: 305-01 complete
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-16 — UNIFY 305-01 complete
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -112,14 +112,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #305 — EBNF edge cases: arithmetic precedence and self-referential expressions
+Branch: design/issue-305-ebnf-arithmetic-precedence-self-ref-expressions
+Labels: design, test, P1-critical
+Started: 2026-04-16
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/305
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [UNIFY complete, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -277,11 +281,12 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #286 — Add #Email string subtype to pglib | 2026-04-16 | Promoted #emailAddress from user-defined to pglib; alias "email"; 9 files updated |
 | Closed #288 — Add [!] !*- error suppression sugar | 2026-04-16 | error_wildcard + error_suppress EBNF; PGW07010 warning; user docs |
 | Closed #304 — Fallback ops + parallelism markers | 2026-04-16 | PGE07008 (non-failable fallback), PGE07009 (unterminated chain), PGE01040 (orphan parallel); semantic not grammar |
+| Issue #305 — EBNF arithmetic + inline_data recursion | 2026-04-16 | Removed arithmetic_expr/arithmetic_op from EBNF; inline_value breaks inline_data cycle; PGE08013; EC-6.4 fixed |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
 - 9 pglib files remain status: draft despite Stable content (Math, Path, Sys, ForEach, collectors, types)
-- EC-6.4 inconsistency: raw arithmetic in EDGE-CASES vs PGE04010
+- ~~EC-6.4 inconsistency: raw arithmetic in EDGE-CASES vs PGE04010~~ — fixed by #305
 - ~30 technical/ files still use old package address format (migrate on touch)
 
 ### Blockers/Concerns
@@ -296,12 +301,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: Issue #304 closed and merged
-Next action: Pick next issue with /paul:work-issue or /paul:issues
-Resume file: .paul/phases/304-ebnf-fallback-ops-parallelism-markers/304-01-SUMMARY.md
+Stopped at: UNIFY 305-01 complete
+Next action: Run /paul:merge to commit and merge to main
+Resume file: .paul/phases/305-ebnf-arithmetic-precedence-self-ref-expressions/305-01-SUMMARY.md
 Resume context:
-- Issue #304 closed and merged to main
-- On main branch, ready for next issue
+- Issue #305 UNIFY complete on design/issue-305-ebnf-arithmetic-precedence-self-ref-expressions
+- Ready for /paul:merge
 
 ---
 *STATE.md — Updated after every significant action*
