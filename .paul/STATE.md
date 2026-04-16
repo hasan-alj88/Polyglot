@@ -13,8 +13,8 @@ Milestone: Language (issue-driven)
 Phase: Issue-driven — #309
 - Issue #309: [██████████] 100% (1/1 plans — token ambiguity + reassemble IO validation)
 Plan: 309-01 complete
-Status: Ready for merge
-Last activity: 2026-04-17 — Plan 309-01 complete
+Status: Idle
+Last activity: 2026-04-17 — Closed #309, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -117,18 +117,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #309 — EBNF edge cases: token ambiguity and cross-production IO validation
-Branch: design/issue-309-ebnf-token-ambiguity-cross-production-io-validation
-Labels: design, test, P2-high
-Started: 2026-04-16
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/309
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -289,7 +285,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #305 — EBNF arithmetic + inline_data recursion | 2026-04-16 | Removed arithmetic_expr/arithmetic_op from EBNF; inline_value breaks inline_data cycle; PGE08013; EC-6.4 fixed |
 | Closed #306 — EBNF type expression degenerate forms | 2026-04-16 | wildcard_type removed, concrete_type_expr added, mandatory array element type, multi-digit version, 4 edge cases, PGE04025 stub |
 | Closed #307 — EBNF field path separator + match value redundancy | 2026-04-16 | X.41 Accept: mixed separators valid across levels; X.42: cross_pkg_enum removed from match_value; EC-3.8 + EC-11.10; PGE05001 scope clarified |
-| Issue #309 — Token ambiguity + reassemble IO validation | 2026-04-17 | X.45 Accept: lexer disambiguates ?[ vs [?] positionally; X.46 Accept: schema-typed <Collection.* inputs + PGE04001 covers reassemble IO |
+| Closed #309 — Token ambiguity + reassemble IO validation | 2026-04-17 | X.45 Accept: lexer disambiguates ?[ vs [?] positionally; X.46 Accept: schema-typed <Collection.* inputs + PGE04001 covers reassemble IO |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -309,13 +305,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-17
-Stopped at: Issue #309 plan 309-01 complete
-Next action: /paul:merge to commit and merge to main
+Stopped at: Issue #309 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/309-ebnf-token-ambiguity-cross-production-io-validation/309-01-SUMMARY.md
 Resume context:
-- Issue #309 plan complete, 5 files modified
-- On branch design/issue-309-ebnf-token-ambiguity-cross-production-io-validation
-- Ready for commit + merge
+- Issue #309 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
