@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 
 Milestone: Language (issue-driven)
 Phase: Issue-driven — #288
-Plan: 288-01 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-16 — Unified 288-01 (3/3 tasks, 0 deviations)
+Plan: —
+Status: Idle
+Last activity: 2026-04-16 — Closed #288, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -101,6 +101,7 @@ Progress:
 - Issue #284: [██████████] 100% (1/1 plans — Git triggers for CI/CD)
 - Issue #285: [██████████] 100% (1/1 plans — -Run.Shell pipeline + System.Shell)
 - Issue #286: [██████████] 100% (1/1 plans — #Email pglib scalar subtype)
+- Issue #288: [██████████] 100% (1/1 plans — [!] !*- error suppression sugar)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -110,18 +111,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #288 — Add [!] !*- syntax sugar for fire-and-forget error suppression
-Branch: design/issue-288-add-error-suppression-syntax-sugar
-Labels: design
-Started: 2026-04-16
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/288
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for commit + merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -277,6 +274,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #284 — Add Git triggers for CI/CD pipelines | 2026-04-16 | 4 triggers (-T.Git.Hook/Push/PR/Tag), #Git type tree, three-tier model; also created #285 (Run.Shell) and #286 (#Email) |
 | Closed #285 — Add -Run.Shell pipeline for shell command execution | 2026-04-16 | {N} -Run.Shell (language-agnostic), System.Shell capability, Process Lifecycle (Redis job:{UID}:process + QH signals) |
 | Closed #286 — Add #Email string subtype to pglib | 2026-04-16 | Promoted #emailAddress from user-defined to pglib; alias "email"; 9 files updated |
+| Closed #288 — Add [!] !*- error suppression sugar | 2026-04-16 | error_wildcard + error_suppress EBNF; PGW07010 warning; user docs |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -296,13 +294,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: Plan 288-01 unified
-Next action: /paul:merge to commit and merge
+Stopped at: Issue #288 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/288-error-suppression-sugar/288-01-SUMMARY.md
 Resume context:
-- Issue #288 complete, loop closed
-- On design/issue-288-add-error-suppression-syntax-sugar branch
-- Ready for commit + merge to main
+- Issue #288 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
