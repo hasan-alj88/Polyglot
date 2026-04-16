@@ -432,6 +432,40 @@ Both forms are valid and semantically equivalent. The compiler unions all mechan
          [-] $Read>content << "error"
 ```
 
+### Error Suppression Sugar (`[!] !*-`)
+
+For non-critical calls where errors should be silently discarded (logging, metrics, cleanup writes), `[!] !*-` is a one-line shorthand for the common pattern:
+
+```polyglot
+[ ] full form:
+[!] !*
+   [-] -DoNothing
+```
+
+```polyglot
+[ ] sugar form (equivalent):
+[!] !*-
+```
+
+The `-` signals "dismiss" — the call's outputs stay Failed with no replacement value. This is only valid with the `!*` wildcard; suppressing a specific error silently would hide the intent.
+
+```polyglot
+[-] -File.Text.Write
+   (-) <path << -Path"/var/logs/health/latest.txt"
+   (-) <content << $winner
+      (<) !< ""
+   [!] !*-
+```
+
+PGW07010 warns if `[!] !*-` is used on a call whose outputs are consumed downstream, since they would remain Failed with no recovery.
+
+**Complementary tools:**
+
+- `(<) !< ""` — handles Failed-state inputs flowing *into* the call (root cause recovery)
+- `[!] !*-` — handles the call failure *itself* (e.g., write to disk failed, don't care)
+
+These are independent mechanisms and can be used together on the same call as shown above.
+
 ### Rules
 
 - Cannot declare the same error fallback in both scattered and grouped form — PGE07003 (duplicate)
@@ -459,3 +493,4 @@ Error declaration, handling, and fallback rules enforced at compile time. See [[
 | PGE07008 | MessageTemplate Key Missing from Info | Defining Custom Errors |
 | PGE07009 | Raise Site Missing Required Info Key | Raising Errors |
 | PGW07004 | Fallback on Non-Failable IO | Error Fallback Operators |
+| PGW07010 | Suppress on Consumed Output | Error Suppression Sugar |

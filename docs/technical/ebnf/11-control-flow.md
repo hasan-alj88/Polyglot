@@ -50,11 +50,22 @@ match_value         ::= literal
 ### 11.2 Error Handling
 
 ```ebnf
+error_wildcard      ::= "!" "*" ;                          (* !* — matches all declared errors *)
+
 error_block         ::= "[!]" error_id NEWLINE
-                         { indent exec_line NEWLINE } ;
+                         { indent exec_line NEWLINE }
+                      | "[!]" error_wildcard NEWLINE
+                         { indent exec_line NEWLINE }
+                      | error_suppress ;
+
+error_suppress      ::= "[!]" error_wildcard "-" ;         (* [!] !*- — bodyless suppress sugar *)
 ```
 
 **Rule:** `[!]` blocks are scoped to the specific `[-]` call that produces the error. They are indented under that call, after its `(-)` IO lines — never at pipeline level.
+
+**Rule:** `error_wildcard` (`!*`) matches all declared errors from the parent call. It is not an `error_id` — `error_id` uses `dotted_name` for specific error paths; `!*` is a distinct wildcard form.
+
+**Rule:** `error_suppress` (`[!] !*-`) desugars to `[!] !* / [-] -DoNothing`. Outputs of the suppressed call stay Failed — no replacement value is pushed. The `-` suffix is only valid with `!*` wildcard; suppressing a specific error without a body is not allowed. PGW07010 warns if any output of the suppressed call is consumed downstream.
 
 ### 11.3 Error Raise
 

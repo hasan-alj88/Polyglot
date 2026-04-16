@@ -274,6 +274,7 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | PGW07002 | Caller Overrides Pipeline Fallback |
 | PGW07003 | Missing Fallback Message |
 | PGW07004 | Fallback on Non-Failable IO |
+| PGW07010 | Suppress on Consumed Output |
 | PGW08001 | Auto-Wire Succeeded |
 | PGW08002 | Unaddressed Input With Default |
 | PGW08003 | Uncaptured Output With Default/Fallback |
