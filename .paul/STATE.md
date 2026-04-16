@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 
 Milestone: Language (issue-driven)
 Phase: Issue-driven — #286
-Plan: 286-01 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-16 — Closed loop for 286-01
+Plan: —
+Status: Idle
+Last activity: 2026-04-16 — Closed #286, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -110,18 +110,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #286 — Add #Email string subtype to pglib
-Branch: design/issue-286-add-email-string-subtype-to-pglib
-Labels: pglib, P4-low
-Started: 2026-04-16
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/286
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -276,6 +272,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #265 — Finalize Queue Handler design specification | 2026-04-16 | 3 plans: reactive signals/payloads/NATS, cross-doc alignment, signal chain in all -Q.* pipeline docs |
 | Closed #284 — Add Git triggers for CI/CD pipelines | 2026-04-16 | 4 triggers (-T.Git.Hook/Push/PR/Tag), #Git type tree, three-tier model; also created #285 (Run.Shell) and #286 (#Email) |
 | Closed #285 — Add -Run.Shell pipeline for shell command execution | 2026-04-16 | {N} -Run.Shell (language-agnostic), System.Shell capability, Process Lifecycle (Redis job:{UID}:process + QH signals) |
+| Closed #286 — Add #Email string subtype to pglib | 2026-04-16 | Promoted #emailAddress from user-defined to pglib; alias "email"; 9 files updated |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -295,12 +292,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: Loop closed for 286-01
-Next action: Run /paul:merge to commit and merge to main
+Stopped at: Issue #286 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/286-email-string-subtype/286-01-SUMMARY.md
 Resume context:
-- Issue #286 on branch design/issue-286-add-email-string-subtype-to-pglib
-- All work complete, ready to commit and merge
+- Issue #286 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
