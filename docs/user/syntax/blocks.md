@@ -72,8 +72,9 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `(>)` | Output parameter handling — scoped under `(-)` output line. See [[io#IO Parameter Handling]] |
 | `(<)` | Input parameter handling — scoped under `(-)` input line. See [[io#IO Parameter Handling]] |
 | `(T)` | Trigger IO line — declares arrival data as `$` variables inside `{*}` collector trigger blocks. See [[technical/spec/collector-definitions\|Collector Definitions]] |
-| `($)` | Operation label — names a call's IO for downstream access via `$Label>output`. See [[operation-labels]] |
-| `(.)` | Chain step label — names individual steps within a chain, indented under `($)`. See [[operation-labels#Chain Step Labels]] |
+| `(-) $Label` | Operation label — names a call's IO for downstream access via `$Label>output`. The `(-)` marker mirrors the `[-]` pipeline call context. See [[operation-labels]] |
+| `($)` | Variable-scope accessor line — used under `(-) $Label` for grouped fallbacks and variable-scope operations. See [[operation-labels]] |
+| `(.)` | Chain step label — names individual steps within a chain, indented under `(-) $Label`. See [[operation-labels#Chain Step Labels]] |
 | `( )` | IO comment — inline annotation within IO blocks. See [[comments]] |
 
 ### Execution

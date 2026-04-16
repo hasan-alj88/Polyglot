@@ -149,7 +149,7 @@ Inside a `[!] >>` block, the author can push fallback values to specific outputs
       [-] >content << "Error: could not read file"
 ```
 
-The compiler enforces exhaustive error handling (PGE02005): every failable call must have either an `[!]` block that provides a replacement value, or `!<`/`!>` fallback operators on its IO lines. If neither is present, the compiler emits PGE02005.
+The compiler enforces exhaustive error handling (PGE07007): every failable call must have either an `[!]` block that provides a replacement value, or `!<`/`!>` fallback operators on its IO lines. If neither is present, the compiler emits PGE07007. No variable may compile if there is a non-zero probability it can reach Failed state without explicit handling.
 
 ## Error Recovery
 
@@ -368,6 +368,76 @@ When a fallback activates, the error that triggered it is accessible via `$var%s
 ### Compiler Rules
 
 - **PGE07003** — duplicate `!>` / `!<` on same output for same error (or duplicate generic). See [[compile-rules/PGE/PGE07003-duplicate-fallback-assignment]].
+
+## Grouped Fallback Under `(-) $label`
+
+For pipelines with multiple outputs, declaring `(>) !>` under each output line individually is verbose. The `(-) $label` operation label (see [[operation-labels]]) can group all error fallbacks in one block. The `(-)` marker mirrors the `[-]` pipeline call context; `($)` lines inside the group operate on the label's variable-scope accessors.
+
+### Scattered vs Grouped
+
+Both forms are valid and semantically equivalent. The compiler unions all mechanisms for exhaustiveness checking (PGE07007).
+
+**Scattered** — fallbacks under each output line:
+
+```polyglot
+[-] -SomePipeline
+   (-) <input << $in
+   (-) >out1 >> $out1
+      (>) !> ""
+   (-) >out2 >> $out2
+      (>) !> 1
+   (-) >out3 >> $out3
+      (>) !> #None
+```
+
+**Grouped** — fallbacks under `(-) $label`:
+
+```polyglot
+[-] -SomePipeline
+   (-) <input << $in
+   (-) >out1 >> $out1
+   (-) >out2 >> $out2
+   (-) >out3 >> $out3
+   (-) $pipelineParams
+      ($) >out1 !> ""
+      ($) >out2 !> 1
+      ($) >out3 !> #None
+```
+
+### Grouped with Error-Specific Fallbacks
+
+```polyglot
+[-] -SomePipeline
+   (-) <input << $in
+   (-) >out1 >> $out1
+   (-) >out2 >> $out2
+   (-) $pipelineParams
+      ($) >out1 !File.NotFound> ""
+      ($) >out1 !> "other error"
+      ($) >out2 !> 0
+```
+
+### Grouped with `[!]` Blocks
+
+`[!]` handler blocks can appear under `(-) $label`, scoped to the pipeline call:
+
+```polyglot
+[-] -File.Text.Read
+   (-) <path << $file
+   (-) >content >> $out
+   (-) $Read
+      [!] !File.NotFound
+         [-] $Read>content << "not found"
+      [!] !*
+         [-] $Read>content << "error"
+```
+
+### Rules
+
+- Cannot declare the same error fallback in both scattered and grouped form — PGE07003 (duplicate)
+- `($)` lines inside the group reference outputs by port name with `>outputName`
+- Error-specific `!ErrorName>` takes priority over generic `!>`
+- `(-) $label` declares the label in pipeline IO scope; `($)` lines operate through that label
 
 ## Compile Rules
 

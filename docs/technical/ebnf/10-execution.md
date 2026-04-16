@@ -40,15 +40,25 @@ pipeline_ref        ::= pipeline_id                    (* local: -Pipeline.Name 
 
 call_io_line        ::= "(-)" io_param assignment_op value_expr
                          { indent fallback_line NEWLINE }
-                      | operation_label ;
+                      | operation_label
+                      | grouped_fallback ;
 
 fallback_line       ::= "(>)" "!>" value_expr                   (* generic output fallback *)
                       | "(>)" "!" error_id ">" value_expr       (* error-specific output fallback *)
                       | "(<)" "!<" value_expr                   (* generic input fallback *)
                       | "(<)" "!" error_id "<" value_expr ;     (* error-specific input fallback *)
+
+grouped_fallback    ::= "(-)" variable_id NEWLINE               (* (-) $label — pipeline IO scope *)
+                         { indent grouped_fallback_line NEWLINE }
+                         { indent error_block NEWLINE } ;        (* [!] blocks under label *)
+
+grouped_fallback_line ::= "($)" ">" output_name "!>" value_expr           (* generic per-output fallback *)
+                        | "($)" ">" output_name "!" error_id ">" value_expr ; (* error-specific per-output fallback *)
 ```
 
 **Rule:** Fallback lines are indented under the `(-)` IO line they belong to — the output/input reference is inherited from the parent scope. `(>)` is used under output lines with `!>` direction, `(<)` under input lines with `!<` direction. The `!` error sigil always leads, with the direction arrow following — optionally with an error name between: `!Error.Name>` (output) or `!Error.Name<` (input). A generic `!>` / `!<` catches any unhandled error; `!Error.Name>` / `!Error.Name<` catches only the named error. Error-specific fallbacks take priority over the generic. Duplicate generic or duplicate error-specific fallbacks for the same error on the same output are PGE07003. When a fallback activates, `$var%sourceError` is set to the triggering error.
+
+**Rule:** The `grouped_fallback` production provides an alternative to scattered `(>) !>` fallbacks for pipelines with multiple outputs. `(-) $label` declares the label in pipeline IO scope (the `(-)` marker mirrors the `[-]` pipeline call context); `($)` lines inside the group operate on the label's variable-scope accessors, referencing outputs by `>outputName`. `[!]` blocks may also appear under the label, scoped to the pipeline call. Both scattered and grouped forms are valid — the compiler unions all mechanisms for exhaustiveness checking (PGE07007). The same error cannot be declared in both forms (PGE07003).
 
 **Precedence:** `[!]` error blocks are checked before `!<` / `!>` fallbacks. If `[!]` pushes a replacement value, the fallback is not evaluated.
 

@@ -14,7 +14,7 @@ severity: warning
 <!-- @u:concepts/errors -->
 <!-- @u:syntax/operators -->
 
-**Statement:** When an `[!]` error handler provides a replacement value but does not cover all error types, the compiler emits PGW02004 to alert the developer that some error paths may terminate the pipeline. Under the compiler-enforced error handling model (PGE02005), all failable calls must have exhaustive handling — PGW02004 warns about partial coverage before the stricter PGE02005 fires.
+**Statement:** When an `[!]` error handler provides a replacement value but does not cover all error types, the compiler emits PGW02004 to alert the developer that some error paths may terminate the pipeline. Under the compiler-enforced error handling model (PGE07007), all failable calls must have exhaustive handling — PGW02004 warns about partial coverage before the stricter PGE07007 fires.
 **Rationale:** Termination on error may be unintentional. The warning ensures the developer has explicitly considered whether all error types are handled via `[!]` replacement or `!<`/`!>` fallback operators.
 **Detection:** At compile time: for each `[!]` block, check whether it covers all possible error types from the called pipeline. If coverage is partial and no `!<`/`!>` catch-all fallback exists, emit PGW02004.
 

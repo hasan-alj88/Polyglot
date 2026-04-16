@@ -22,7 +22,7 @@ updated: 2026-04-09
 ```polyglot
 [ ] ✓ background label output consumed by a later call
 [b] -Metrics.Log
-   ($) $Log
+   (-) $Log
    (-) <event << $event
 [-] -Audit.Record
    (-) <traceId << $Log>id
@@ -32,7 +32,7 @@ updated: 2026-04-09
 ```polyglot
 [ ] ✓ background block with children that consume the label internally
 [b] -Batch.Process
-   ($) $Batch
+   (-) $Batch
    [-] -Report.Status
       (-) <batchRef << $Batch>handle
 ```
@@ -41,7 +41,7 @@ updated: 2026-04-09
 ```polyglot
 [ ] ✗ PGE02015 — label "$Log" on [b] is never consumed
 [b] -Metrics.Log
-   ($) $Log
+   (-) $Log
    (-) <event << $event
 [-] -Next.Step
    (-) <data << $input

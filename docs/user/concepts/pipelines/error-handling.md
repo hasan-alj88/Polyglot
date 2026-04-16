@@ -36,7 +36,7 @@ For simple "on error, use this value" cases, use `(>) !>` fallback under the `(-
       (>) !File.NotFound> "file not found"
 ```
 
-`[!]` blocks run first; `!<` catches what `[!]` didn't handle. The compiler enforces exhaustive error handling (PGE02005) — every failable call must have either an `[!]` block or `!<`/`!>` fallback. For the full error model — chain error addressing, fallback operators, standard error trees, and the Failed state — see [[errors]]. Errors live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]).
+`[!]` blocks run first; `!<` catches what `[!]` didn't handle. The compiler enforces exhaustive error handling (PGE07007) — every failable call must have either an `[!]` block or `!<`/`!>` fallback. No variable may compile if it can reach Failed state without explicit handling. For the full error model — chain error addressing, fallback operators, standard error trees, and the Failed state — see [[errors]]. Errors live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
 ## See Also
 

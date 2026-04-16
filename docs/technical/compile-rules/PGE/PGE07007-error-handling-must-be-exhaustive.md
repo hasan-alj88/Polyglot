@@ -6,35 +6,216 @@ name: Error Handling Must Be Exhaustive
 severity: error
 ---
 
-### Rule 7.7 — Error Handling Must Be Exhaustive
+# Rule 7.7 — Error Handling Must Be Exhaustive
 `PGE07007`
 
 <!-- @u:syntax/blocks -->
 <!-- @u:syntax/io -->
 <!-- @u:syntax/operators -->
+<!-- @c:compile-rules/PGE/PGE06001-conditional-must-be-exhaustive -->
 
-**Statement:** When calling a failable pipeline (one that declares `(-) !ErrorName`), the caller must address every declared error. If any declared error has no handler and no fallback, PGE07007 fires. This mirrors PGE06001 (Conditional Must Be Exhaustive) — just as every conditional branch must route every value, every failable call must route every error.
+**Statement:** When calling a failable pipeline (one that declares `(-) !ErrorName`), the caller must address every declared error on every output port. If any declared error has no handler and no fallback for any output, PGE07007 fires. **No variable may compile if there is a non-zero probability it can reach Failed state without explicit handling.** This mirrors PGE06001 (Conditional Must Be Exhaustive) — just as every conditional branch must route every value, every failable call must route every error.
 **Rationale:** Unaddressed errors cause silent pipeline termination — the caller believes downstream code will execute, but the pipeline ends without explanation. Explicit handling ensures the developer has acknowledged every failure mode, even if the chosen response is termination. This eliminates a class of "it just stopped" bugs. This is Polyglot's exhaustive coverage principle applied to error paths — the compiler demands that every scenario is accounted for before the pipeline runs, rather than discovering unhandled failures in production.
-**Detection:** The compiler collects the called pipeline's `(-) !ErrorName` declarations. It then checks the caller's handling mechanisms. An error is "addressed" if any of the following cover it:
 
-| Mechanism | Scope |
-|-----------|-------|
-| `[!] !ErrorName` handler block | Addresses that specific error |
-| `[!] !*` wildcard catch-all | Addresses all remaining errors |
-| `(>) !>` generic fallback | Addresses all errors (on that output) |
-| `(>) !Error.Name>` specific fallback | Addresses that specific error (on that output) |
+## Addressing Mechanisms
+
+An error is "addressed" if any of the following cover it:
+
+| Mechanism | Syntax | Scope |
+|-----------|--------|-------|
+| Specific handler | `[!] !ErrorName` block under `[-]` call | Addresses that specific error |
+| Wildcard handler | `[!] !*` block under `[-]` call | Addresses all remaining errors |
+| Specific fallback (scattered) | `(>) !Error.Name>` under `(-)` output line | Addresses that specific error on that output |
+| Generic fallback (scattered) | `(>) !>` under `(-)` output line | Addresses all errors on that output |
+| Specific fallback (grouped) | `($) >outputName !Error.Name>` under `(-) $label` | Addresses that specific error on that output |
+| Generic fallback (grouped) | `($) >outputName !>` under `(-) $label` | Addresses all errors on that output |
 
 If any declared error is not addressed by at least one mechanism, PGE07007 fires.
 
 **Exemption:** `[b]` (fire-and-forget) calls are exempt from PGE07007. The `[b]` marker is an explicit acknowledgment that the caller does not participate in the called pipeline's error handling — the called pipeline handles its own errors internally. See [PGW03002](../PGW/PGW03002-error-handler-on-fire-and-forget.md).
 
+## Exhaustiveness Algorithm
+
+The compiler checks exhaustiveness per `[-]` call (or per chain) in the following steps:
+
+### Step 1 — Collect declared errors
+
+Collect the set **E** of all errors declared by the called pipeline's `(-) !ErrorName` lines:
+
+```
+E = { !E1, !E2, ..., !En }
+```
+
+If **E** is empty (non-failable pipeline), PGE07007 does not apply.
+
+### Step 2 — Collect handler coverage
+
+Collect the set **H** of errors addressed by `[!]` blocks under the call:
+
+- Each `[!] !ErrorName` adds that error to **H**
+- If `[!] !*` is present, **H = E** (wildcard covers all declared errors)
+
+### Step 3 — Collect fallback coverage per output
+
+For each output port **O** of the called pipeline, collect **F(O)** — the set of errors with fallbacks on that output:
+
+- Each `(>) !ErrorName>` on that output's `(-)` line adds that error to **F(O)**
+- If `(>) !>` is present on that output, **F(O) = E** (generic catch-all)
+- Each `($) >outputName !ErrorName>` under `(-) $label` adds that error to **F(O)**
+- If `($) >outputName !>` under `(-) $label`, **F(O) = E**
+
+### Step 4 — Compute coverage per output
+
+For each output port **O**:
+
+```
+Coverage(O) = H ∪ F(O)
+```
+
+`[!]` handlers contribute to all outputs (a handler that pushes a replacement value resolves the error for every output). Fallbacks only contribute to the specific output they are declared on.
+
+### Step 5 — Check completeness
+
+For each output port **O**: if **Coverage(O) ⊊ E** (strict subset), emit PGE07007 for each error in **E \ Coverage(O)**, naming the uncovered output port.
+
+### Summary Table
+
+| Has `[!]` for all errors? | Has fallback on all outputs? | Result |
+|---------------------------|------------------------------|--------|
+| Yes | — | Pass (handlers cover all) |
+| — | Yes (all outputs have `!>`) | Pass (fallbacks cover all) |
+| Partial | Partial (union = E) | Pass (union covers all) |
+| Partial | Partial (union ⊊ E) | **PGE07007** |
+| No | No | **PGE07007** |
+
+## Chain Error Exhaustiveness
+
+In chain calls (`[-] -A->-B->-C`), each step may declare its own errors. The compiler collects all declared errors with step prefixes:
+
+```
+E = E_0 ∪ E_1 ∪ ... ∪ E_n
+  = { .0!E1, .0!E2, .1!E3, ... }
+```
+
+### Wildcard scope
+
+| Wildcard | Scope | Effect |
+|----------|-------|--------|
+| `[!] !*` (global) | All chain steps | **H = E** — covers every error from every step |
+| `[!] .N!*` (step-scoped) | Step N only | Adds all of step N's errors to **H** |
+| `[!] .N!ErrorName` (specific) | One error from step N | Adds that one error to **H** |
+
+Step-scoped and global wildcards can be mixed:
+
+```polyglot
+[ ] ✓ step 0 handled specifically, step 1 caught by global wildcard
+[-] -File.Text.Read->-Text.Parse.CSV
+   (-) >0.path#path << $path
+   (-) <1.rows#string >> >content
+   [!] .0!File.NotFound
+      [-] >content << "file not found"
+   [!] .0!File.ReadError
+      [-] >content << "read error"
+   [!] !*
+      [ ] covers all remaining errors from step 1 (e.g., .1!Parse.InvalidFormat)
+      [-] >content << "parse error"
+```
+
+```polyglot
+[ ] ✓ step-scoped wildcards for each step
+[-] -File.Text.Read->-Text.Parse.CSV
+   (-) >0.path#path << $path
+   (-) <1.rows#string >> >content
+   [!] .0!*
+      [-] >content << "file error"
+   [!] .1!*
+      [-] >content << "parse error"
+```
+
+The same algorithm (Steps 1–5) applies — the error set **E** is the union of all steps' declared errors, and handlers/fallbacks reduce the uncovered set as usual.
+
+## Multi-Output Coverage
+
+When a failable call has multiple outputs, **every output port must have coverage for every declared error**. `[!]` handler blocks that push replacement values cover all outputs (since the handler body can write to any output port). Scattered `(>)` fallbacks and grouped `($)` fallbacks only cover the output they are declared on.
+
+```polyglot
+[ ] ✗ PGE07007 — >status has no coverage for !File.NotFound or !File.ReadError
+{-} -ProcessMultiOutput
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <path#string
+   (-) >content#string
+   (-) >status#string
+   [-] -File.Text.Read
+      (-) <path << $path
+      (-) >content >> $content
+         (>) !> "unavailable"          [ ] ✓ >content covered
+      (-) >status >> $status
+                                        [ ] ✗ PGE07007 — >status: !File.NotFound unaddressed
+                                        [ ] ✗ PGE07007 — >status: !File.ReadError unaddressed
+```
+
+Fix with grouped fallback or `[!]` blocks that write to both outputs:
+
+```polyglot
+[ ] ✓ grouped fallback covers all outputs
+{-} -ProcessMultiOutputFixed
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <path#string
+   (-) >content#string
+   (-) >status#string
+   [-] -File.Text.Read
+      (-) <path << $path
+      (-) >content >> $content
+      (-) >status >> $status
+      (-) $Read
+         ($) >content !> "unavailable"
+         ($) >status !> "error"
+```
+
+```polyglot
+[ ] ✓ [!] blocks push to all outputs — covers everything
+{-} -ProcessMultiOutputHandlers
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <path#string
+   (-) >content#string
+   (-) >status#string
+   [-] -File.Text.Read
+      (-) <path << $path
+      (-) >content >> $content
+      (-) >status >> $status
+      [!] !*
+         [-] >content << "unavailable"
+         [-] >status << "error"
+```
+
+## Diagnostic Format
+
+| Context | Format |
+|---------|--------|
+| Single output | `Unaddressed error '!ErrorName' from failable call '-PipelineName' at line N — add [!] !ErrorName handler, [!] !* wildcard, or (>) !> fallback` |
+| Multi-output | `Output '>portName' has unaddressed error '!ErrorName' from failable call '-PipelineName' at line N` |
+| Chain | `Unaddressed error '.N!ErrorName' from chain step N ('-StepName') at line N` |
+
 **See also:**
 - [PGE06001 — Conditional Must Be Exhaustive](PGE06001-conditional-must-be-exhaustive.md) — the analogous rule for conditionals
 - [PGE07001 — Error Block Scoping](PGE07001-error-block-scoping.md) — `[!]` blocks must be under their producing `[-]`
+- [PGE07002 — Chain Error Scoping](PGE07002-chain-error-scoping.md) — chain `.N!ErrorName` syntax
 - [PGE07005 — Undeclared Error Raise](PGE07005-undeclared-error-raise.md) — pipeline-side: can't raise undeclared errors
 - [PGW07001 — Error Handler on Non-Failable Call](../PGW/PGW07001-error-handler-on-non-failable-call.md) — inverse: handler on non-failable call
+- [PGE02005 — Failed Must Resolve](PGE02005-failed-is-terminal.md) — variable lifecycle consequence of unhandled errors
 
-**VALID:**
+---
+
+## Examples
+
+### VALID
+
 ```polyglot
 [ ] ✓ all declared errors handled with specific [!] blocks
 {-} -Process
@@ -119,7 +300,41 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
    [-] >content << $content
 ```
 
-**INVALID:**
+```polyglot
+[ ] ✓ grouped fallback under (-) $label
+{-} -ProcessGrouped
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <path#string
+   (-) >content#string
+   [-] -File.Text.Read
+      (-) <path << $path
+      (-) >content >> $content
+      (-) $Read
+         ($) >content !> "unavailable"
+```
+
+```polyglot
+[ ] ✓ grouped with error-specific and [!] blocks
+{-} -ProcessGroupedMixed
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   (-) <path#string
+   (-) >content#string
+   [-] -File.Text.Read
+      (-) <path << $path
+      (-) >content >> $content
+      (-) $Read
+         [!] !File.NotFound
+            [-] $Read>content << "not found"
+         [!] !*
+            [-] $Read>content << "error"
+```
+
+### INVALID
+
 ```polyglot
 [ ] ✗ PGE07007 — no error handling on failable call
 {-} -ProcessNone
@@ -169,10 +384,6 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
    [-] >content << $content
 ```
 
-**Diagnostic:** "Unaddressed error `!ErrorName` from failable call `-PipelineName` at line N — add `[!] !ErrorName` handler, `[!] !*` wildcard, or `(>) !>` fallback"
-
 ### See Also
 
 - [[user/concepts/errors|Errors]] — references PGE07007 in declaring pipeline errors
-
-**Open point:** None.

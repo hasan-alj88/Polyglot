@@ -22,9 +22,9 @@ updated: 2026-04-09
 ```polyglot
 [ ] ✓ distinct label names in the same scope
 [-] -File.Text.Read"/input.txt"
-   ($) $Read
+   (-) $Read
 [-] -Serial.JSON.Parse
-   ($) $Parse
+   (-) $Parse
    (-) <raw << $Read>content
 ```
 
@@ -32,9 +32,9 @@ updated: 2026-04-09
 ```polyglot
 [ ] ✗ PGE02012 — duplicate operation label "$Read" in same scope
 [-] -File.Text.Read"/input.txt"
-   ($) $Read
+   (-) $Read
 [-] -File.Text.Read"/other.txt"
-   ($) $Read
+   (-) $Read
 ```
 
 **Diagnostic:** "Duplicate operation label `$Read` — each `($)` label must be unique within its scope"
