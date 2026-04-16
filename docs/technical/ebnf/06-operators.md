@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-03-30
+updated: 2026-04-16
 ---
 
 <!-- @ebnf/INDEX -->
@@ -23,6 +23,8 @@ assignment_op       ::= push_left | push_right | default_push_left | default_pus
 ```
 
 **Rule:** `!<` and `!>` are fallback assignment operators for error recovery. They provide a value when the source pipeline errors, preventing the target variable from entering the Failed state. Fallback operators only activate when an error occurs — they are not evaluated on the success path. The `!` error sigil always leads, with the direction arrow (`<` or `>`) following — optionally with an error name between them (`!Error.Name<`, `!Error.Name>`). See `(>)`/`(<)` IO brackets (§5) and fallback line syntax (§10.2).
+
+**Rule:** The grammar permits `!<`/`!>` in all `assignment_op` positions, but the compiler enforces semantic validity: fallback operators require a **failable source** — the right-hand side must be a pipeline call (an expression that can error at runtime). If the RHS is a literal value or variable reference, `PGE07008` fires — literals and variables cannot error, so the fallback path is dead code. A fallback chain (`!< -Pipeline.A !< -Pipeline.B !< "terminal"`) must terminate at a non-failable expression (literal or variable); if the chain ends at a pipeline call, `PGE07009` fires.
 
 ### 6.2 Comparison Operators
 

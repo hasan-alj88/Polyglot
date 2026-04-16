@@ -66,6 +66,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE01037 | Bind Schema Mismatch |
 | PGE01038 | Code Source Conflict |
 | PGE01039 | CLI Non-String Argument |
+| PGE01040 | Orphan Parallel Marker |
 
 ### 02 — Lifecycle & State
 
@@ -178,6 +179,8 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE07005 | Undeclared Error Raise |
 | PGE07006 | Unused Error Declaration |
 | PGE07007 | Error Handling Must Be Exhaustive |
+| PGE07008 | Fallback on Non-Failable Source |
+| PGE07009 | Unterminated Fallback Chain |
 
 ### 08 — Wiring & Calls
 

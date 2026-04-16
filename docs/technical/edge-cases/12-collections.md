@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-03-30
+updated: 2026-04-16
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -305,4 +305,64 @@ updated: 2026-03-30
 [ ] ✗ PGE03011 — (=) outside expand scope
 (=) <Array << $items
 (=) >item >> $item
+```
+
+### EC-12.17: Orphan parallel marker on collector (X.34)
+
+**EBNF ref:** `collect_line ::= ( "[-]" | "[=]" ) collect_invocation`
+**What it tests:** `[=]` and `[b]` must pair with the next `[=]` or `[b]` sibling. A `[=]` line whose next sibling is not `[=]`/`[b]` fires PGE01040. See also EC-12.15 for PGE01024 (marker compatibility).
+
+```polyglot
+[ ] ✓ two [=] collector siblings — parallel pair
+[=] =ForEach.Array
+   (=) <Array << $items
+   (=) >item >> $item
+
+   [=] *Into.Array
+      (*) <item << $item
+      (*) >Array >> >results
+
+   [=] *Agg.Sum
+      (*) <number << $item.value
+      (*) >sum >> >total
+```
+
+```polyglot
+[ ] ✗ PGE01040 — [=] collector followed by [-] sibling
+[=] =ForEach.Array
+   (=) <Array << $items
+   (=) >item >> $item
+
+   [=] *Into.Array
+      (*) <item << $item
+      (*) >Array >> >results
+
+   [-] *Agg.Sum
+      (*) <number << $item.value
+      (*) >sum >> >total
+```
+
+```polyglot
+[ ] ✓ [-] collectors — both sequential, no parallel claim
+[=] =ForEach.Array
+   (=) <Array << $items
+   (=) >item >> $item
+
+   [-] *Into.Array
+      (*) <item << $item
+      (*) >Array >> >results
+
+   [-] *Agg.Sum
+      (*) <number << $item.value
+      (*) >sum >> >total
+```
+
+```polyglot
+[ ] ✗ PGE01040 — [=] pipeline followed by [*] collector
+[=] -Fetch.A
+   (-) <id << $id
+   (-) >a >> $a
+
+[*] *All
+   (*) << $a
 ```
