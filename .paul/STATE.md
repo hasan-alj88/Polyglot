@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #284 — Add Git triggers for CI/CD pipelines
+**Current focus:** Issue-driven development — ready for next issue
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue #284 — Git triggers
-Plan: 284-01 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-16 — Created 284-01-SUMMARY.md
+Phase: Issue-driven — ready for next issue
+Plan: —
+Status: Idle
+Last activity: 2026-04-16 — Closed #284, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -107,18 +107,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #284 — Add Git triggers for CI/CD pipelines (-T.Git.*)
-Branch: design/issue-284-add-git-triggers-for-ci-cd-pipelines
-Labels: design, pglib, P3-medium
-Started: 2026-04-16
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/284
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -271,6 +267,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #280 — %InlineString template system | 2026-04-12 | Merged design/issue-280 to main; replaces <InlineStringLiteral with structured template extraction |
 | Closed #281 — -Run.* input binding to native language variables | 2026-04-13 | 4 -Run.* pipeline docs, 7 compile rules (PGE01033-01039), Record field names = native vars |
 | Closed #265 — Finalize Queue Handler design specification | 2026-04-16 | 3 plans: reactive signals/payloads/NATS, cross-doc alignment, signal chain in all -Q.* pipeline docs |
+| Closed #284 — Add Git triggers for CI/CD pipelines | 2026-04-16 | 4 triggers (-T.Git.Hook/Push/PR/Tag), #Git type tree, three-tier model; also created #285 (Run.Shell) and #286 (#Email) |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -290,13 +287,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: Loop closed, ready for merge
-Next action: Run /paul:merge to commit and merge to main
+Stopped at: Issue #284 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/284-git-triggers-ci-cd/284-01-SUMMARY.md
 Resume context:
-- Issue #284, branch design/issue-284-add-git-triggers-for-ci-cd-pipelines
-- 5 new files, 3 updated files — all docs, no code
-- Ready to commit and merge
+- Issue #284 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
