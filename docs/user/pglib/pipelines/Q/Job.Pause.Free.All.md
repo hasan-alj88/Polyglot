@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Job.Pause.Free.All"
 metadata_instance: "%Q:Job.Pause.Free.All:N"
@@ -59,6 +59,19 @@ Requires runtime checkpoint/restore capability. If not available, using this act
 - Compile error if non-repairable TCP connections are open (unless the queue has `.tcpRepairable << true`).
 
 Resume with `-Q.Job.Resume.From.Disk`.
+
+## Runtime Behavior
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends command signal |
+| 2. NATS command | `polyglot.command.job.pause.free.all.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
+| 3. QH executes | Queue Handler | SREM set:executing, HSET set:suspended "all", decrement counters, HSET job status "suspended.all" |
+| 4. Control signal | `polyglot.queue.control.{jobId}.job.pause.free.all` | `{jobId, timing}` → Runner |
+| 5. Unix mechanism | Runner | .Now: `criu dump --tree {pid} --images-dir {path}`; .Wait: work unit boundary then `criu dump` |
+| 6. Runner ACK | `polyglot.runner.paused.{jobId}` | `{type: "all", images_dir}` → QH stores `images_dir` on job hash |
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

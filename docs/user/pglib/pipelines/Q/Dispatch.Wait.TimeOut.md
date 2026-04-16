@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Dispatch.Wait.TimeOut"
 metadata_instance: "%Q:Dispatch.Wait.TimeOut:N"
@@ -55,6 +55,30 @@ Used as nested `[Q]` line in a queue definition:
    [Q] -Q.Dispatch.Wait.TimeOut.Reassign
       (-) <queue << "ExpressQueue"
 ```
+
+## Runtime Behavior
+
+### Default (escalate)
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Job exceeded `.maxWaitTime`, sends escalation |
+| 2. NATS command | `polyglot.command.dispatch.escalate.{jobId}` | `{jobId, queue}` |
+| 3. QH executes | Queue Handler | Strategy-aware: ZADD MAX_SCORE (Priority), LREM+LPUSH (FIFO), LREM+RPUSH (LIFO) |
+
+### `.Kill.Graceful` variant
+
+Sends `polyglot.command.job.kill.with-cleanup.{jobId}` — same signal chain as `-Q.Job.Kill.WithCleanup`.
+
+### `.Kill.Hard` variant
+
+Sends `polyglot.command.job.kill.now.{jobId}` — same signal chain as `-Q.Job.Kill.Now`.
+
+### `.Reassign` variant
+
+Sends `polyglot.command.reassign.{jobId}` — same signal chain as `-Q.Job.Reassign`.
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-03
+updated: 2026-04-16
 ---
 
 # Queue Manager Architecture
@@ -21,7 +21,11 @@ The Queue Handler is responsible for dispatching triggered pipelines to executio
 - [[signal-payloads]] — Data payload schemas for command, state, control, runner, and collector signals
 - [[nats-namespace]] — NATS subject naming conventions for all inter-service communication
 - [[end-to-end-flow]] — Step-by-step flows for normal execution, pause/resume, kill, sub-jobs, and timeouts
+- [[resource-controls]] — Resource freeing spectrum, pause levels, throttle, pause reason set, anti-flap mechanisms, compiler rules
+- [[process-isolation]] — PID namespaces, pidfd operations, cgroup integration, CRIU checkpoint/restore, TCP repairability, GPU considerations
+- [[overflow]] — Parallel Processing Temporary Directory (PPTD) three-tier overflow chain for collector intermediate data
 - [[properties]] — Architectural properties: deterministic, reactive, atomic, testable, replayable
 - [[precomputation]] — Constraint pre-evaluation and short-circuit optimizations
+- [[signal-map]] — Consolidated cross-reference mapping every `-Q.*` pipeline to its full signal chain (NATS, payload, Redis, Unix)
 - [[sequence-diagrams]] — Mermaid sequence diagrams for dispatch, sub-jobs, kill propagation, timeouts, and pause/resume
 - [[design-rationale]] — Why Redis for state, why NATS for messaging, and the storage split rationale

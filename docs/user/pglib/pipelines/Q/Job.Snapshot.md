@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Job.Snapshot"
 metadata_instance: "%Q:Job.Snapshot:N"
@@ -43,6 +43,19 @@ None.
 - The forked instance gets a new Job ID. The original keeps its ID.
 - The forked instance starts with zero locks and must re-acquire any it needs.
 - Process identity is distinct. There is no shared mutable state between original and fork.
+
+## Runtime Behavior
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates snapshot condition, sends command signal |
+| 2. NATS command | `polyglot.command.job.snapshot.{jobId}` | `{jobId, targetQueue?}` |
+| 3. QH executes | Queue Handler | Generate forkId, enqueue fork in targetQueue, HSET fork job hash with forked_from |
+| 4. Control signal | `polyglot.queue.control.{jobId}.job.snapshot` | `{jobId, forkId}` → Runner |
+| 5. Unix mechanism | Runner | `criu dump --leave-running` (original continues, fork images saved to disk) |
+| 6. Runner ACK | `polyglot.runner.snapshot_completed.{jobId}` | `{jobId, forkId, images_dir}` → QH stores images_dir on fork job hash |
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

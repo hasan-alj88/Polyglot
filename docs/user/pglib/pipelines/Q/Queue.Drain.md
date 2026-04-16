@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Queue.Drain"
 metadata_instance: "%Q:Queue.Drain:N"
@@ -31,6 +31,18 @@ None.
 ## Errors
 
 None.
+
+## Runtime Behavior
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates drain condition, sends command signal |
+| 2. NATS command | `polyglot.command.drain.{queue}` | `{queue}` |
+| 3. QH executes | Queue Handler | SADD queues:draining {queue} |
+
+No control signal to Runner. No Unix mechanism. Subsequent `command.enqueue` to this queue is rejected. Existing jobs continue normally.
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

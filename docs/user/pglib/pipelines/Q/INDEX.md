@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 ---
 
@@ -106,65 +106,65 @@ Where `<Scope>` is `Job`, `Host`, `Queue`, or `Queue.Jobs` (array context in `#Q
 
 #### `-Q.Job.Get.*` (per-job metrics)
 
-| Getter | Returns | Unit |
-|--------|---------|------|
-| `-Q.Job.Get.RAM.GB` | Job's RAM usage | Gigabytes |
-| `-Q.Job.Get.RAM.MB` | Job's RAM usage | Megabytes |
-| `-Q.Job.Get.CPU.Percent` | Job's CPU usage | Percentage (0-100+) |
-| `-Q.Job.Get.IO.MBps` | Job's IO throughput | MB/s |
-| `-Q.Job.Get.Time` | Job's wall-clock runtime | Duration `#DT` |
-| `-Q.Job.Get.Status` | Job's current `#QueueState` | Enum value |
-| `-Q.Job.Get.Disk.GB` | Disk used by Job's data | Gigabytes |
+| Getter | Returns | Unit | Source |
+|--------|---------|------|--------|
+| `-Q.Job.Get.RAM.GB` | Job's RAM usage | Gigabytes | cgroup `memory.current` |
+| `-Q.Job.Get.RAM.MB` | Job's RAM usage | Megabytes | cgroup `memory.current` |
+| `-Q.Job.Get.CPU.Percent` | Job's CPU usage | Percentage (0-100+) | cgroup `cpu.stat` (`usage_usec` delta) |
+| `-Q.Job.Get.IO.MBps` | Job's IO throughput | MB/s | cgroup `io.stat` (`rbytes`/`wbytes` delta) |
+| `-Q.Job.Get.Time` | Job's wall-clock runtime | Duration `#DT` | Redis `job:{jobId}` `started_at` |
+| `-Q.Job.Get.Status` | Job's current `#QueueState` | Enum value | Redis `job:{jobId}` `status` |
+| `-Q.Job.Get.Disk.GB` | Disk used by Job's data | Gigabytes | `du` on job data directory |
 
 #### `-Q.Host.Get.*` (host-level metrics)
 
-| Getter | Returns | Unit |
-|--------|---------|------|
-| `-Q.Host.Get.RAM.GB` | Host available RAM | Gigabytes |
-| `-Q.Host.Get.RAM.Used.GB` | Host used RAM | Gigabytes |
-| `-Q.Host.Get.CPU.Percent` | Host CPU utilization | Percentage |
-| `-Q.Host.Get.Disk.GB` | Host available disk | Gigabytes |
-| `-Q.Host.Get.Status` | Host status | Enum (`#Online`, `#Offline`, `#Draining`) |
-| `-Q.Host.Get.GPU.Status` | GPU status | Enum (`#InUse`, `#Free`) |
+| Getter | Returns | Unit | Source |
+|--------|---------|------|--------|
+| `-Q.Host.Get.RAM.GB` | Host available RAM | Gigabytes | `/proc/meminfo` `MemAvailable` |
+| `-Q.Host.Get.RAM.Used.GB` | Host used RAM | Gigabytes | `/proc/meminfo` `MemTotal - MemAvailable` |
+| `-Q.Host.Get.CPU.Percent` | Host CPU utilization | Percentage | `/proc/stat` cpu line delta |
+| `-Q.Host.Get.Disk.GB` | Host available disk | Gigabytes | `statvfs()` on data partition |
+| `-Q.Host.Get.Status` | Host status | Enum (`#Online`, `#Offline`, `#Draining`) | Resource Monitor aggregate |
+| `-Q.Host.Get.GPU.Status` | GPU status | Enum (`#InUse`, `#Free`) | `nvidia-smi` / vendor tool |
 
 #### `-Q.Queue.Get.*` (queue-level metrics)
 
-| Getter | Returns | Unit |
-|--------|---------|------|
-| `-Q.Queue.Get.Length` | Number of Jobs in queue | Count |
-| `-Q.Queue.Get.Executing` | Number of executing Jobs | Count |
-| `-Q.Queue.Get.Suspended` | Number of suspended Jobs | Count |
+| Getter | Returns | Unit | Source |
+|--------|---------|------|--------|
+| `-Q.Queue.Get.Length` | Number of Jobs in queue | Count | Redis `LLEN`/`ZCARD queue:dispatch:{queue}` |
+| `-Q.Queue.Get.Executing` | Number of executing Jobs | Count | Redis `SCARD set:executing` filtered by queue |
+| `-Q.Queue.Get.Suspended` | Number of suspended Jobs | Count | Redis `HLEN set:suspended` filtered by queue |
 
 #### `-Q.Queue.Jobs.Get.*` (all jobs — returns array, `#QueueRules` context)
 
-| Getter | Returns | Per-element |
-|--------|---------|-------------|
-| `-Q.Queue.Jobs.Get.RAM.GB` | Array of Job RAM values | Gigabytes |
-| `-Q.Queue.Jobs.Get.CPU.Percent` | Array of Job CPU values | Percentage |
-| `-Q.Queue.Jobs.Get.Idle.All` | Array of Job idle durations | Duration |
+| Getter | Returns | Per-element | Source |
+|--------|---------|-------------|--------|
+| `-Q.Queue.Jobs.Get.RAM.GB` | Array of Job RAM values | Gigabytes | Redis SMEMBERS (queue filter) → per-job cgroup `memory.current` |
+| `-Q.Queue.Jobs.Get.CPU.Percent` | Array of Job CPU values | Percentage | Redis SMEMBERS (queue filter) → per-job cgroup `cpu.stat` |
+| `-Q.Queue.Jobs.Get.Idle.All` | Array of Job idle durations | Duration | Redis SMEMBERS (queue filter) → per-job cgroup stat deltas |
 
 ### State Guards
 
 State guards are required on action blocks. Without them, the compiler errors — forcing explicit temporal assumptions.
 
-| Guard | Meaning |
-|-------|---------|
-| `-Q.Job.Is.Active` | Job is currently running |
-| `-Q.Job.Is.Paused` | Job is currently paused (any level) |
-| `-Q.Job.Is.Throttled` | Job is currently throttled |
+| Guard | Meaning | Source |
+|-------|---------|--------|
+| `-Q.Job.Is.Active` | Job is currently running | Redis `job:{jobId}` `status` == "executing"/"executing.throttled" |
+| `-Q.Job.Is.Paused` | Job is currently paused (any level) | Redis `job:{jobId}` `status` starts with "suspended." |
+| `-Q.Job.Is.Throttled` | Job is currently throttled | Redis `job:{jobId}` `throttled` field |
 
 ### Idle / Active Detection
 
-| Getter | Returns | Measures |
-|--------|---------|----------|
-| `-Q.Job.Get.Idle.CPU` | Duration | Time since last CPU activity |
-| `-Q.Job.Get.Idle.Network` | Duration | Time since last send/receive |
-| `-Q.Job.Get.Idle.IO` | Duration | Time since last read/write |
-| `-Q.Job.Get.Idle.All` | Duration | All resources simultaneously idle |
-| `-Q.Job.Active.CPU` | Boolean | Job resumed CPU activity |
-| `-Q.Job.Active.Network` | Boolean | Job resumed network activity |
-| `-Q.Job.Active.IO` | Boolean | Job resumed disk activity |
-| `-Q.Job.Active.All` | Boolean | Job resumed any activity |
+| Getter | Returns | Measures | Source |
+|--------|---------|----------|--------|
+| `-Q.Job.Get.Idle.CPU` | Duration | Time since last CPU activity | cgroup `cpu.stat` `usage_usec` delta |
+| `-Q.Job.Get.Idle.Network` | Duration | Time since last send/receive | cgroup `io.stat` network bytes delta |
+| `-Q.Job.Get.Idle.IO` | Duration | Time since last read/write | cgroup `io.stat` disk bytes delta |
+| `-Q.Job.Get.Idle.All` | Duration | All resources simultaneously idle | All cgroup stat deltas (minimum) |
+| `-Q.Job.Active.CPU` | Boolean | Job resumed CPU activity | cgroup `cpu.stat` `usage_usec` changed |
+| `-Q.Job.Active.Network` | Boolean | Job resumed network activity | cgroup `io.stat` network bytes changed |
+| `-Q.Job.Active.IO` | Boolean | Job resumed disk activity | cgroup `io.stat` disk bytes changed |
+| `-Q.Job.Active.All` | Boolean | Job resumed any activity | Any cgroup stat delta detected |
 
 ## Example: Queue Definition + Rules + Pipeline
 
