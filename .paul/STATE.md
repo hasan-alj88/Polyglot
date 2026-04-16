@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 
 Milestone: Language (issue-driven)
 Phase: Issue-driven — #305
-Plan: 305-01 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-16 — UNIFY 305-01 complete
+Plan: —
+Status: Idle
+Last activity: 2026-04-16 — Closed #305, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -103,6 +103,7 @@ Progress:
 - Issue #286: [██████████] 100% (1/1 plans — #Email pglib scalar subtype)
 - Issue #288: [██████████] 100% (1/1 plans — [!] !*- error suppression sugar)
 - Issue #304: [██████████] 100% (1/1 plans — fallback validity + parallel marker pairing)
+- Issue #305: [██████████] 100% (1/1 plans — arithmetic EBNF removal + inline_data recursion fix)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -112,18 +113,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #305 — EBNF edge cases: arithmetic precedence and self-referential expressions
-Branch: design/issue-305-ebnf-arithmetic-precedence-self-ref-expressions
-Labels: design, test, P1-critical
-Started: 2026-04-16
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/305
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [UNIFY complete, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -281,7 +278,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #286 — Add #Email string subtype to pglib | 2026-04-16 | Promoted #emailAddress from user-defined to pglib; alias "email"; 9 files updated |
 | Closed #288 — Add [!] !*- error suppression sugar | 2026-04-16 | error_wildcard + error_suppress EBNF; PGW07010 warning; user docs |
 | Closed #304 — Fallback ops + parallelism markers | 2026-04-16 | PGE07008 (non-failable fallback), PGE07009 (unterminated chain), PGE01040 (orphan parallel); semantic not grammar |
-| Issue #305 — EBNF arithmetic + inline_data recursion | 2026-04-16 | Removed arithmetic_expr/arithmetic_op from EBNF; inline_value breaks inline_data cycle; PGE08013; EC-6.4 fixed |
+| Closed #305 — EBNF arithmetic + inline_data recursion | 2026-04-16 | Removed arithmetic_expr/arithmetic_op from EBNF; inline_value breaks inline_data cycle; PGE08013; EC-6.4 fixed |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -301,12 +298,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: UNIFY 305-01 complete
-Next action: Run /paul:merge to commit and merge to main
+Stopped at: Issue #305 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/305-ebnf-arithmetic-precedence-self-ref-expressions/305-01-SUMMARY.md
 Resume context:
-- Issue #305 UNIFY complete on design/issue-305-ebnf-arithmetic-precedence-self-ref-expressions
-- Ready for /paul:merge
+- Issue #305 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
