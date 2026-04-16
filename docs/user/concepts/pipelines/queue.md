@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 ---
 
 <!-- @c:concepts/pipelines/INDEX -->
@@ -379,8 +379,12 @@ The Dispatch Coordinator enforces constraints at multiple scopes. These are decl
 - `.maxInstancesWithinQueue` — max instances of a specific pipeline within this queue
 - `.maxConcurrentWithinQueue` — max total Jobs dispatched from this queue
 - `.resourceTagWithinQueue` — resource exclusion within this queue (e.g., only one `#GPU`-tagged Job)
+
+**Pipeline-level** (declared on `[Q]` in the pipeline):
 - `.maxInstancesAllQueues` — max instances of a pipeline across all queues
-- `.maxConcurrentWithinHost` — max total Jobs on a specific host
+- `.maxInstancesWithinHost` — max instances of a pipeline on a specific host
+- `.maxConcurrentAllQueues` — max total Jobs running globally alongside this pipeline
+- `.maxConcurrentWithinHost` — max total Jobs on a specific host alongside this pipeline
 - `.resourceTagAllQueues` — resource exclusion globally
 - `.resourceTagWithinHost` — resource exclusion per host
 

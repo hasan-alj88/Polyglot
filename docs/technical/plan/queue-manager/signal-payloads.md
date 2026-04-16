@@ -31,11 +31,31 @@ command.enqueue
     }?
 }
 
-command.job.pause.free.cpu.wait  { jobId: string }
-command.job.pause.free.ram      { jobId: string }
-command.job.resume              { jobId: string }
-command.job.kill.with-cleanup   { jobId: string }
-command.job.kill.now            { jobId: string }
+command.job.pause.free.cpu       { jobId: string, timing: "now"|"wait" }
+command.job.pause.free.ram.soft  { jobId: string, timing: "now"|"wait" }
+command.job.pause.free.ram.hard  { jobId: string, timing: "now"|"wait" }
+command.job.pause.free.all       { jobId: string, timing: "now"|"wait" }
+command.job.resume               { jobId: string }
+command.job.kill.with-cleanup    { jobId: string }
+command.job.kill.now             { jobId: string }
+
+command.job.throttle
+{
+    jobId:          string    — job to throttle
+    cpu:            string?   — cpu.max value (e.g., "50000 100000" = 50%)
+    memory:         string?   — memory.high value in bytes
+    io:             string?   — io.max value (e.g., "{major}:{minor} rbps={n} wbps={n}")
+}
+
+command.job.unthrottle           { jobId: string }
+
+command.job.snapshot
+{
+    jobId:          string    — job to snapshot (must be executing)
+    targetQueue:    string?   — queue for the fork (defaults to same queue as original)
+}
+
+command.job.inspect              { jobId: string }
 
 command.priority.update
 {
@@ -84,7 +104,7 @@ command.flush   { queue: string }
 
 ```text
 state.job.{jobId}.executing     { jobId, pipeline, queue }
-state.job.{jobId}.suspended     { jobId, pipeline, type: "soft"|"hard" }
+state.job.{jobId}.suspended     { jobId, pipeline, type: "cpu"|"ram.soft"|"ram.hard"|"all" }
 state.job.{jobId}.resuming      { jobId, pipeline }
 state.job.{jobId}.teardown.pending   { jobId, pipeline }
 state.job.{jobId}.teardown.completed { jobId, pipeline }
@@ -92,7 +112,13 @@ state.job.{jobId}.completed     { jobId, pipeline, result? }
 state.job.{jobId}.failed        { jobId, pipeline, error }
 state.job.{jobId}.killed        { jobId, pipeline }
 state.job.{jobId}.running       { jobId, pipeline, pid }
-state.job.{jobId}.confirmed_suspended { jobId, type: "soft"|"hard" }
+state.job.{jobId}.confirmed_suspended { jobId, type: "cpu"|"ram.soft"|"ram.hard"|"all" }
+state.job.{jobId}.throttled     { jobId, cpu?, memory?, io? }
+state.job.{jobId}.unthrottled   { jobId }
+state.job.{jobId}.inspected     { jobId, status, queue, pipeline, enqueued_at, dispatched_at,
+                                  started_at, suspended_at, pid, throttled, throttle_config,
+                                  confirmed_paused, images_dir }
+state.job.{jobId}.snapshot_ready { jobId (forkId), images_dir }
 
 state.executing.count           { count, members: string[] }
 
@@ -109,13 +135,20 @@ state.queue.resume.size         { count }
 ## Control Signals (Queue Handler → Runner)
 
 ```text
-control.{jobId}.start           { jobId, pipeline, params }
-control.{jobId}.job.resume              { jobId }
-control.{jobId}.job.pause.free.cpu.wait { jobId }
-control.{jobId}.job.pause.free.ram      { jobId }
-control.{jobId}.job.kill.with-cleanup   { jobId }
-control.{jobId}.job.kill.now            { jobId }
+control.{jobId}.start                    { jobId, pipeline, params }
+control.{jobId}.job.resume               { jobId, images_dir? }
+control.{jobId}.job.pause.free.cpu       { jobId, timing: "now"|"wait" }
+control.{jobId}.job.pause.free.ram.soft  { jobId, timing: "now"|"wait" }
+control.{jobId}.job.pause.free.ram.hard  { jobId, timing: "now"|"wait" }
+control.{jobId}.job.pause.free.all       { jobId, timing: "now"|"wait" }
+control.{jobId}.job.throttle             { jobId, cpu?, memory?, io? }
+control.{jobId}.job.unthrottle           { jobId }
+control.{jobId}.job.snapshot             { jobId, forkId }
+control.{jobId}.job.kill.with-cleanup    { jobId }
+control.{jobId}.job.kill.now             { jobId }
 ```
+
+`images_dir` is included in `control.{jobId}.job.resume` only when resuming from Free.All (type "all"). The Runner uses it to locate the CRIU image directory for `criu restore`.
 
 ## Runner Signals (Runner → Queue Handler + Trigger Monitor)
 
@@ -126,7 +159,8 @@ runner.started              { jobId, pid }
 runner.completed            { jobId, result? }
 runner.teardown_completed   { jobId, pipeline }
 runner.failed               { jobId, error }
-runner.paused               { jobId, type: "soft"|"hard" }
+runner.paused               { jobId, type: "cpu"|"ram.soft"|"ram.hard"|"all", images_dir? }
+runner.snapshot_completed   { jobId, forkId, images_dir }
 ```
 
 ## Collector Signals (Trigger Monitor → Runner)

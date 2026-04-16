@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Job.Throttle"
 metadata_instance: "%Q:Job.Throttle:N"
@@ -48,6 +48,30 @@ The Job keeps running. CPU, RAM, and IO allocation are reduced. No state is lost
 ## Unthrottle
 
 `-Q.Job.Unthrottle` removes all throttling limits and restores full resource allocation. The Job continues running without interruption.
+
+## Runtime Behavior
+
+### Throttle
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends throttle command |
+| 2. NATS command | `polyglot.command.job.throttle.{jobId}` | `{jobId, cpu?, memory?, io?}` |
+| 3. QH executes | Queue Handler | HSET job status "executing.throttled", throttled true, throttle_config {cpu, memory, io} |
+| 4. Control signal | `polyglot.queue.control.{jobId}.job.throttle` | `{jobId, cpu, memory, io}` → Runner |
+| 5. Unix mechanism | Runner | `echo {quota} {period} > cpu.max`, `echo {bytes} > memory.high`, `echo {limits} > io.max` |
+
+### Unthrottle
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates condition cleared, sends unthrottle command |
+| 2. NATS command | `polyglot.command.job.unthrottle.{jobId}` | `{jobId}` |
+| 3. QH executes | Queue Handler | HSET job status "executing", throttled false, HDEL throttle_config |
+| 4. Control signal | `polyglot.queue.control.{jobId}.job.unthrottle` | `{jobId}` → Runner |
+| 5. Unix mechanism | Runner | Remove cgroup limits (restore `cpu.max`, `memory.high`, `io.max` to defaults) |
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

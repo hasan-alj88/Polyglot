@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Job.Reassign"
 metadata_instance: "%Q:Job.Reassign:N"
@@ -33,6 +33,20 @@ None.
 ## Errors
 
 None.
+
+## Runtime Behavior
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates reassign condition, sends command signal |
+| 2. NATS command | `polyglot.command.reassign.{jobId}` | `{jobId, fromQueue, toQueue, priority?}` |
+| 3. QH executes | Queue Handler | Lua script: LREM/ZREM from source queue, RPUSH/ZADD to target queue, HSET job queue |
+| 4. Same-host | — | Bookkeeping only — no Runner involvement |
+| 5. Cross-host | Runner | `criu dump` → image transfer (TCP/shared storage) → `criu restore` on target host |
+
+No control signal for same-host reassignment. Cross-host reassignment uses CRIU image transfer handled by the Runner.
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

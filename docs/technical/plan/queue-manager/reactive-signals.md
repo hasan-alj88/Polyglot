@@ -38,48 +38,101 @@ Output: state.queue.{queue}.enqueued {jobId, pipeline, queue_size}
 Wake:   Dispatch Coordinator
 ```
 
-## command.job.pause.free.cpu.wait
+## Pause Signals
+
+All four pause signals share the same QH state write pattern — the only differences are the suspended type written to Redis and the control signal forwarded to the Runner. The `timing` field ("now" or "wait") does not affect the QH state write; it is passed through to the Runner control signal, which determines whether the freeze is immediate or waits for a work unit boundary.
+
+### command.job.pause.free.cpu
 
 ```text
-Input:  {jobId}
+Input:  {jobId, timing: "now"|"wait"}
 
 State Write:
     SREM set:executing {jobId}
-    HSET set:suspended {jobId} "soft"
+    HSET set:suspended {jobId} "cpu"
     HINCRBY counter:instances {pipeline} -1
-    HSET job:{jobId} status "suspended.soft" suspended_at {now}
+    HINCRBY counter:instances:queue:{queue} {pipeline} -1
+    HINCRBY counter:instances:host:{host} {pipeline} -1
+    HSET job:{jobId} status "suspended.cpu" suspended_at {now}
 
-Output: state.job.{jobId}.suspended {type: "soft"}
+Output: state.job.{jobId}.suspended {type: "cpu"}
         state.executing.count {n}
-        control.{jobId}.job.pause.free.cpu.wait → Runner
+        control.{jobId}.job.pause.free.cpu {timing} → Runner
 
 Wake:   Dispatch Coordinator (slot freed)
 ```
 
-## command.job.pause.free.ram
+### command.job.pause.free.ram.soft
 
 ```text
-Input:  {jobId}
+Input:  {jobId, timing: "now"|"wait"}
 
 State Write:
     SREM set:executing {jobId}
-    HSET set:suspended {jobId} "hard"
+    HSET set:suspended {jobId} "ram.soft"
     HINCRBY counter:instances {pipeline} -1
-    HSET job:{jobId} status "suspended.hard" suspended_at {now}
+    HINCRBY counter:instances:queue:{queue} {pipeline} -1
+    HINCRBY counter:instances:host:{host} {pipeline} -1
+    HSET job:{jobId} status "suspended.ram.soft" suspended_at {now}
 
-Output: state.job.{jobId}.suspended {type: "hard"}
+Output: state.job.{jobId}.suspended {type: "ram.soft"}
         state.executing.count {n}
-        control.{jobId}.job.pause.free.ram → Runner
+        control.{jobId}.job.pause.free.ram.soft {timing} → Runner
 
 Wake:   Dispatch Coordinator (slot freed)
 ```
+
+### command.job.pause.free.ram.hard
+
+```text
+Input:  {jobId, timing: "now"|"wait"}
+
+State Write:
+    SREM set:executing {jobId}
+    HSET set:suspended {jobId} "ram.hard"
+    HINCRBY counter:instances {pipeline} -1
+    HINCRBY counter:instances:queue:{queue} {pipeline} -1
+    HINCRBY counter:instances:host:{host} {pipeline} -1
+    HSET job:{jobId} status "suspended.ram.hard" suspended_at {now}
+
+Output: state.job.{jobId}.suspended {type: "ram.hard"}
+        state.executing.count {n}
+        control.{jobId}.job.pause.free.ram.hard {timing} → Runner
+
+Wake:   Dispatch Coordinator (slot freed)
+```
+
+### command.job.pause.free.all
+
+```text
+Input:  {jobId, timing: "now"|"wait"}
+
+State Write:
+    SREM set:executing {jobId}
+    HSET set:suspended {jobId} "all"
+    HINCRBY counter:instances {pipeline} -1
+    HINCRBY counter:instances:queue:{queue} {pipeline} -1
+    HINCRBY counter:instances:host:{host} {pipeline} -1
+    HSET job:{jobId} status "suspended.all" suspended_at {now}
+
+Output: state.job.{jobId}.suspended {type: "all"}
+        state.executing.count {n}
+        control.{jobId}.job.pause.free.all {timing} → Runner
+
+Wake:   Dispatch Coordinator (slot freed)
+```
+
+Note: For Free.All, the Runner performs a CRIU checkpoint and ACKs with `runner.paused {jobId, type: "all", images_dir}`. The QH then stores `images_dir` on the job hash (see `runner.paused` ACK below).
 
 ## command.job.resume
 
+Handles all suspended types. The QH checks the suspended type to determine which control signal to send to the Runner when the job is dispatched from the Resume Queue.
+
 ```text
 Input:  {jobId}
 
 State Write:
+    type = HGET set:suspended {jobId}
     HDEL set:suspended {jobId}
     RPUSH queue:resume {jobId}
     HSET job:{jobId} status "resuming"
@@ -90,6 +143,10 @@ Output: state.job.{jobId}.resuming
 Wake:   Dispatch Coordinator (item added to Resume Queue)
 ```
 
+When the Dispatch Coordinator dispatches this job from the Resume Queue, the control signal varies by prior suspended type:
+- `"cpu"`, `"ram.soft"`, `"ram.hard"` → `control.{jobId}.job.resume` (cgroup thaw)
+- `"all"` → `control.{jobId}.job.resume {images_dir}` (criu restore from disk)
+
 ## command.job.kill.with-cleanup
 
 ```text
@@ -98,13 +155,17 @@ Input:  {jobId}
 State Write:
     status = HGET job:{jobId} status
     SWITCH status:
-        "executing":
+        "executing" | "executing.throttled":
             SREM set:executing {jobId}
             HINCRBY counter:instances {pipeline} -1
+            HINCRBY counter:instances:queue:{queue} {pipeline} -1
+            HINCRBY counter:instances:host:{host} {pipeline} -1
         "teardown.executing":
             SREM set:executing {jobId}
             HINCRBY counter:instances {pipeline} -1
-        "suspended.soft" | "suspended.hard":
+            HINCRBY counter:instances:queue:{queue} {pipeline} -1
+            HINCRBY counter:instances:host:{host} {pipeline} -1
+        "suspended.cpu" | "suspended.ram.soft" | "suspended.ram.hard" | "suspended.all":
             HDEL set:suspended {jobId}
         "resuming":
             LREM queue:resume {jobId}
@@ -128,10 +189,12 @@ Input:  {jobId}
 State Write:
     status = HGET job:{jobId} status
     SWITCH status:
-        "executing" | "teardown.executing":
+        "executing" | "executing.throttled" | "teardown.executing":
             SREM set:executing {jobId}
             HINCRBY counter:instances {pipeline} -1
-        "suspended.soft" | "suspended.hard":
+            HINCRBY counter:instances:queue:{queue} {pipeline} -1
+            HINCRBY counter:instances:host:{host} {pipeline} -1
+        "suspended.cpu" | "suspended.ram.soft" | "suspended.ram.hard" | "suspended.all":
             HDEL set:suspended {jobId}
         "teardown.pending":
             LREM queue:teardown {jobId}
@@ -294,14 +357,18 @@ Output: state.job.{jobId}.running {pipeline, pid}
 
 ## runner.paused (ACK)
 
-```yaml
-Input:  {jobId, type}
+```text
+Input:  {jobId, type: "cpu"|"ram.soft"|"ram.hard"|"all", images_dir?: string}
 
 State Write:
     HSET job:{jobId} confirmed_paused true
+    IF type == "all" AND images_dir:
+        HSET job:{jobId} images_dir {images_dir}
 
 Output: state.job.{jobId}.confirmed_suspended {type}
 ```
+
+For Free.All, the Runner includes `images_dir` — the path to the CRIU image directory. The QH stores this on the job hash so it can be included in the resume control signal later.
 
 ## runner.completed
 
@@ -354,6 +421,106 @@ Output: state.job.{jobId}.failed {pipeline, error}
 
 Wake:   Dispatch Coordinator (slot freed)
 ```
+
+## command.job.throttle
+
+Reduces resource allocation without pausing. The job stays in `set:executing` and keeps its dispatch slot.
+
+```text
+Input:  {jobId, cpu?, memory?, io?}
+
+Precondition:
+    status = HGET job:{jobId} status
+    IF status != "executing" → reject (can only throttle executing jobs)
+
+State Write:
+    HSET job:{jobId} status "executing.throttled"
+                     throttled true
+                     throttle_config {cpu, memory, io}
+
+Output: state.job.{jobId}.throttled {cpu, memory, io}
+        control.{jobId}.job.throttle {cpu, memory, io} → Runner
+```
+
+No Wake — no slot change (job remains executing).
+
+## command.job.unthrottle
+
+Restores full resource allocation.
+
+```text
+Input:  {jobId}
+
+State Write:
+    HSET job:{jobId} status "executing"
+                     throttled false
+    HDEL job:{jobId} throttle_config
+
+Output: state.job.{jobId}.unthrottled
+        control.{jobId}.job.unthrottle → Runner
+```
+
+## command.job.snapshot
+
+Point-in-time state fork. The original job continues running. The QH auto-enqueues the fork as a new job.
+
+```text
+Input:  {jobId, targetQueue?}
+
+Precondition:
+    status = HGET job:{jobId} status
+    IF status != "executing" → reject (can only snapshot executing jobs)
+
+State Write:
+    targetQueue = targetQueue ?? HGET job:{jobId} queue
+    forkId = generate_uid()
+    pipeline = HGET job:{jobId} pipeline
+    IF targetQueue strategy == Priority:
+        ZADD queue:dispatch:{targetQueue} {default_priority} {forkId}
+    ELSE:
+        RPUSH queue:dispatch:{targetQueue} {forkId}
+    HSET job:{forkId} pipeline {pipeline} queue {targetQueue}
+                       status "pending" enqueued_at {now}
+                       forked_from {jobId}
+
+Output: state.job.{forkId}.enqueued {pipeline, queue: targetQueue, forked_from: jobId}
+        state.queue.{targetQueue}.enqueued {forkId, pipeline, queue_size}
+        control.{jobId}.job.snapshot {forkId} → Runner
+
+Wake:   Dispatch Coordinator (item enqueued)
+```
+
+The Runner performs `criu dump --leave-running` and ACKs with `runner.snapshot_completed`. The fork's CRIU images are associated with `forkId` — when `forkId` is dispatched, the Runner uses `criu restore` to start it.
+
+## runner.snapshot_completed (ACK)
+
+```text
+Input:  {jobId, forkId, images_dir}
+
+State Write:
+    HSET job:{forkId} images_dir {images_dir}
+
+Output: state.job.{forkId}.snapshot_ready {images_dir}
+```
+
+## command.job.inspect
+
+Read-only query — no state mutation. Returns the job's Redis hash contents.
+
+```text
+Input:  {jobId}
+
+State Write:
+    (none — read-only)
+
+Output: state.job.{jobId}.inspected {
+            status, queue, pipeline, enqueued_at, dispatched_at,
+            started_at, suspended_at, pid, throttled, throttle_config,
+            confirmed_paused, images_dir
+        }
+```
+
+Resource metrics (CPU, RAM, IO, disk) are not included — those come from the Resource Monitor via separate `polyglot.resource.*` subjects.
 
 ---
 

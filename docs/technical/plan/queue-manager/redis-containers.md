@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-03
+updated: 2026-04-15
 ---
 
 # Containers in Redis
@@ -54,10 +54,17 @@ Jobs currently running. Used for constraint checks (scoped maxInstances, maxConc
 
 ## Suspended Set
 
-Jobs paused (soft or hard). Tracks pause type for resource accounting.
+Jobs paused at any resource-freeing level. Tracks pause type for resume routing and resource accounting. Four distinct types matching the resource-freeing spectrum:
+
+| Type | Meaning | Process State | Resume Mechanism |
+|------|---------|---------------|------------------|
+| `"cpu"` | Free.CPU — cgroup freeze | Alive, frozen in memory | Cgroup thaw |
+| `"ram.soft"` | Free.RAM.Soft — memory.high hint | Alive, pages swapped (best-effort) | Thaw + remove memory.high |
+| `"ram.hard"` | Free.RAM.Hard — memory.max cap | Alive, pages swapped (guaranteed) | Thaw + remove memory.max |
+| `"all"` | Free.All — CRIU checkpoint | Terminated, state on disk | `criu restore` from images_dir |
 
 ```text
-"set:suspended"                   HASH   {jobX: "soft", jobY: "hard"}
+"set:suspended"                   HASH   {jobX: "cpu", jobY: "ram.hard", jobZ: "all"}
 ```
 
 ## Supporting State
@@ -96,6 +103,9 @@ started_at:         string?   — ISO timestamp
 suspended_at:       string?   — ISO timestamp
 pid:                int?      — OS process ID (from Runner ACK)
 confirmed_paused:   bool?     — Runner confirmed suspension
+throttled:          bool?     — true if job is throttled (remains in set:executing)
+throttle_config:    string?   — serialized throttle limits {cpu?, memory?, io?}
+images_dir:         string?   — CRIU image directory (set on Free.All suspend, read on resume)
 ```
 
 ## Job ID Format
@@ -114,17 +124,22 @@ The path doubles as the job's address in the hierarchy — parent/child relation
 Every job has a `status` field with one of these variants:
 
 ```polyglot
-#QueueState (7 variants)
-├── #Pending              — in a Dispatch Queue, waiting for dispatch
+#QueueState (10 variants)
+├── #Pending              — in Dispatch Queue, waiting for dispatch
 ├── #Executing            — in Executing Set, actively running
-├── #Suspended.Soft       — in Suspended Set, CPU freed, RAM kept
-├── #Suspended.Hard       — in Suspended Set, CPU+RAM freed
+├── #Executing.Throttled  — in Executing Set, running with reduced resources (throttled flag set)
+├── #Suspended.CPU        — in Suspended Set ("cpu"), cgroup frozen, RAM in process memory
+├── #Suspended.RAM.Soft   — in Suspended Set ("ram.soft"), cgroup frozen, RAM best-effort swapped
+├── #Suspended.RAM.Hard   — in Suspended Set ("ram.hard"), cgroup frozen, RAM guaranteed freed
+├── #Suspended.All        — in Suspended Set ("all"), CRIU checkpointed, process terminated, state on disk
 ├── #Resuming             — in Resume Queue, waiting for dispatch slot
 ├── #Teardown.Pending     — in Teardown Queue, waiting for cleanup slot
 └── #Teardown.Executing   — in Executing Set, running [/] cleanup
 ```
 
 Each state maps to exactly one container. No `#Killed` or `#Completed` — the job hash is DELeted on those transitions.
+
+**Throttle note:** `#Executing.Throttled` is a sub-state of `#Executing` — the job remains in `set:executing` and keeps its dispatch slot. The `throttled` flag on the job hash distinguishes it from normal execution. Throttle does not affect counter accounting.
 
 Job hierarchy (parentJobId, children) lives ONLY in NoSQL — not in Redis. For kill propagation, the Trigger Monitor reads the hierarchy from NoSQL, pre-computes the full descendant list, and sends individual kill signals for each.
 

@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Queue.Flush"
 metadata_instance: "%Q:Queue.Flush:N"
@@ -31,6 +31,18 @@ None.
 ## Errors
 
 None.
+
+## Runtime Behavior
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates flush condition, sends command signal |
+| 2. NATS command | `polyglot.command.flush.{queue}` | `{queue}` |
+| 3. QH executes | Queue Handler | FOR each job: remove from all sets/queues, DEL job hash, DEL queue, SREM queues:registered |
+| 4. Control signal | `polyglot.queue.control.{jobId}.job.kill.now` | Per executing/teardown.executing job → Runner |
+| 5. Unix mechanism | Runner | `SIGKILL` per executing job — immediate termination |
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

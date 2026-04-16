@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Job.Kill.Now"
 metadata_instance: "%Q:Job.Kill.Now:N"
@@ -43,6 +43,18 @@ Everything freed immediately. No `[/]` cleanup runs. The Job goes directly to De
 | FDs | Freed immediately |
 | TCP | Freed immediately |
 | Locks | Freed immediately |
+
+## Runtime Behavior
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates kill condition, sends command signal |
+| 2. NATS command | `polyglot.command.job.kill.now.{jobId}` | `{jobId}` |
+| 3. QH executes | Queue Handler | Status-aware: remove from current set/queue, DEL job:{jobId} |
+| 4. Control signal | `polyglot.queue.control.{jobId}.job.kill.now` | `{jobId}` → Runner (if was executing/teardown.executing) |
+| 5. Unix mechanism | Runner | `SIGKILL` — immediate termination, no cleanup |
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Priority.Update"
 metadata_instance: "%Q:Priority.Update:N"
@@ -36,6 +36,18 @@ None.
 ## Errors
 
 None.
+
+## Runtime Behavior
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates priority update condition, sends command signal |
+| 2. NATS command | `polyglot.command.priority.update.{jobId}` | `{jobId, score}` |
+| 3. QH executes | Queue Handler | ZADD queue:dispatch:{queue} {score} {jobId} (Priority queues only) |
+
+No control signal to Runner. No Unix mechanism. Redis-only queue position update.
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

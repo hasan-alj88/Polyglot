@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:Job.Pause.Free.CPU"
 metadata_instance: "%Q:Job.Pause.Free.CPU:N"
@@ -46,6 +46,19 @@ None.
 | FDs | Kept |
 | TCP | Kept |
 | Locks | Kept |
+
+## Runtime Behavior
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends command signal |
+| 2. NATS command | `polyglot.command.job.pause.free.cpu.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
+| 3. QH executes | Queue Handler | SREM set:executing, HSET set:suspended "cpu", decrement counters, HSET job status "suspended.cpu" |
+| 4. Control signal | `polyglot.queue.control.{jobId}.job.pause.free.cpu` | `{jobId, timing}` → Runner |
+| 5. Unix mechanism | Runner | .Now: `echo 1 > cgroup.freeze` (atomic freeze); .Wait: `SIGSTOP` after work unit boundary |
+| 6. Runner ACK | `polyglot.runner.paused.{jobId}` | `{type: "cpu"}` → QH + TM |
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 

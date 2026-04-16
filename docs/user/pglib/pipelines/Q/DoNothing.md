@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-15
+updated: 2026-04-16
 status: complete
 metadata_definition: "%definition.Q:DoNothing"
 metadata_instance: "%Q:DoNothing:N"
@@ -35,6 +35,12 @@ None.
 ## Compiler Warning
 
 When a `[Q]` block uses state guards and a `DoNothing` catch-all, the compiler emits a warning listing states not explicitly handled. This ensures the developer sees what they are implicitly ignoring. The warning is informational — sometimes `DoNothing` is genuinely correct.
+
+## Runtime Behavior
+
+No runtime signal. No NATS command. No Redis write. No Unix mechanism. Compiler no-op satisfying exhaustiveness in `*?` catch-all blocks.
+
+See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 
 ## Permissions
 
