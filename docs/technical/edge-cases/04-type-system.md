@@ -327,12 +327,91 @@ updated: 2026-03-30
 
 ### EC-4.19: `#array` without element type
 
-**What it tests:** `#array` type annotation without element type specifier. PGE04025 fires — element type is mandatory. All elements must share the same schema.
+**What it tests:** `#array` type annotation without element type specifier. The grammar requires `element_type_param` — `#array` alone is a grammar error (previously PGE04025, now grammar-enforced).
 
 ```polyglot
-[ ] ✗ PGE04025 — no element type
+[ ] ✗ grammar error — no element type
 (-) <items#array
 
 [ ] ✓ typed array
 (-) <items#array:int
+```
+
+### EC-4.20: Wildcard type `#*` in non-generic context (X.37)
+
+**EBNF ref:** `wildcard_type` removed from `type_expr` and `type_param` (§4.1)
+
+**What it tests:** `#*` is no longer valid in any type annotation position. The grammar does not include a wildcard type. Multi-type constraints use `##` schemas instead (e.g., `##Scalar`, `##Leaf`).
+
+```polyglot
+[ ] ✗ grammar error — wildcard type removed
+[-] $x#* << 42
+
+[ ] ✗ grammar error — no wildcard in field declarations
+{#} #Loose
+   [.] .anything#*
+
+[ ] ✗ grammar error — no wildcard in IO params
+(-) <input#*
+
+[ ] ✓ correct — use ## schema for multi-type constraints
+(#) <#T
+   [<] ##Scalar
+
+[ ] ✓ correct — specific type annotation
+[-] $x#int << 42
+```
+
+### EC-4.21: Dimension without element type in array (X.38)
+
+**EBNF ref:** `array_type ::= "array" flex_sep element_type_param [ flex_sep dimension ]` (§4.1), `element_type_param ::= basic_type \| user_type`
+
+**What it tests:** `element_type_param` excludes `dimension`, so `#array:2D` no longer parses — the first slot only accepts element types, not dimension literals.
+
+```polyglot
+[ ] ✗ grammar error — dimension in element type slot
+[-] $matrix#array:2D
+
+[ ] ✗ grammar error — dimension in both slots
+[-] $weird#array:3D:2D
+
+[ ] ✓ correct — element type then dimension
+[-] $matrix#array:float:2D
+[-] $list#array:string
+[-] $cube#array:int:3D
+```
+
+### EC-4.22: Double `live` type annotation (X.39)
+
+**EBNF ref:** `live_type ::= "live" concrete_type_expr` (��4.1) — `concrete_type_expr` excludes `live_type`
+
+**What it tests:** Nested `live` is a grammar error. `live` wraps `concrete_type_expr` (basic, collection, or user type), not `type_expr`. Double or deeper nesting no longer parses. Note: `live` is an internal compiler/metadata concept, not user-facing.
+
+```polyglot
+[ ] ✗ grammar error — double live
+[-] $x#live live string
+
+[ ] ✗ grammar error — triple live
+[-] $y#live live live int
+
+[ ] ✓ correct — single live
+[-] $z#live string
+```
+
+### EC-4.23: Multi-digit version segments (X.40)
+
+**EBNF ref:** `version ::= 'v' digit { digit } '.' digit { digit } '.' digit { digit } [ '.' digit { digit } ]` (§3.3)
+
+**What it tests:** Version segments now support multi-digit numbers. Previously each segment was limited to a single `digit` (0-9), capping versions at v9.9.9.9.
+
+```polyglot
+[ ] ✓ single-digit segments (unchanged)
+[@] @Registry:Acme.Analytics:v1.2.3
+
+[ ] ✓ multi-digit — now valid
+[@] @Registry:Acme.Analytics:v12.3.4
+[@] @Registry:Acme.Analytics:v1.23.456
+
+[ ] ✓ four-segment with multi-digit
+[@] @Registry:Acme.Analytics:v10.0.0.1
 ```

@@ -26,7 +26,7 @@ Review in batches by section. Each edge case includes:
 | [01-file-structure.md](01-file-structure.md) | S1. File Structure | EC-1.1, EC-1.2 |
 | [02-lexical.md](02-lexical.md) | S2. Lexical Elements | EC-2.1--2.7 |
 | [03-identifiers.md](03-identifiers.md) | S3. Identifiers | EC-3.1--3.7 |
-| [04-type-system.md](04-type-system.md) | S4. Type System | EC-4.1--4.19 |
+| [04-type-system.md](04-type-system.md) | S4. Type System | EC-4.1--4.23 |
 | [05-block-elements.md](05-block-elements.md) | S5. Block Elements | EC-5.1--5.2 |
 | [06-operators.md](06-operators.md) | S6. Operators | EC-6.1--6.4 |
 | [07-io-parameters.md](07-io-parameters.md) | S7. IO Parameters | EC-7.1 |

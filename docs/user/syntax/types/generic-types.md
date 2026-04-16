@@ -144,9 +144,9 @@ Layer 1 types bootstrap without a pipeline engine (string substitution only). La
 
 `%Parent` refers to one level up from `%This` — useful inside nested definition contexts.
 
-## `#*` Wildcard Type
+## Multi-Type Constraints
 
-`#*` is the "any type" wildcard. In parameter defaults, `(#) <#ValueType` with no constraint means "accepts any type." In field declarations, `:*#*` means "any key, any value type."
+For multi-type constraints, use `##` schemas (e.g., `##Scalar`, `##Leaf`). An unconstrained generic parameter `(#) <#ValueType` with no `[<]` constraint accepts any type. There is no wildcard type in the grammar — `##` schemas are the mechanism for expressing type flexibility.
 
 ## `<#type` in Pipeline IO
 

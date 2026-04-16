@@ -24,7 +24,6 @@ Unconstrained collection with unlimited depth. Any keys, any types, any nesting.
    [#] %##Gap << #True
    [#] %##Ordered << #False
    [#] %##Count << #Inf
-   [:] :*#*
 ```
 
 ---

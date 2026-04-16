@@ -127,7 +127,6 @@ Parameterized schema for enum-keyed flat collections:
    [#] %##Depth.Max << #Inf
    [#] %##Count << #Inf
    [#] %##Fields << #Range
-   [:] :*#*
 ```
 
 - No type constraints on keys or values
@@ -167,7 +166,7 @@ Design gaps identified during session review, all resolved:
 | # | Gap | Resolution |
 |---|-----|-----------|
 | 1 | Generic param binding syntax | Generic `{#}` definitions with `(#) <#param`. Type annotations use `:` for positional binding (e.g., `#array:int`) |
-| 2 | `#*` wildcard type + `[<]` constraints | `#*` is "any type" wildcard. `[<]` nested under `(#) <param` in `{#}` constrains via `##` schemas (e.g., `[<] << ##Scalar`) |
+| 2 | `##` schema constraints + `[<]` | Multi-type constraints use `##` schemas. `[<]` nested under `(#) <param` in `{#}` constrains via `##` schemas (e.g., `[<] << ##Scalar`). Wildcard type `#*` removed from grammar. |
 | 3 | Enum vs Value field kind | Implicit from syntax — no `%Kind` property. Document that no `#type` = enum field |
 | 4 | Key uniqueness | Universal tree invariant — duplicate keys always error, including deserialized data. No `%Key.Unique` property |
 | 5 | `[#]` overloading | Keep — prefix after `[#]` disambiguates (`.` field, `<` type param, `%` schema prop) |

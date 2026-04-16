@@ -386,12 +386,10 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
    [#] %##Ordered << #False
    [#] %##Count << #Inf
    [#] %##Fields << #Range
-   [:] :*#*
 
 [ ] PGW11003 — user type with unlimited depth
 {#} #MyFreeform
    [#] %##Depth.Max << #Inf
-   [:] :*#*
 
 [ ] no warning — user type with bounded depth
 {#} #MyNested
