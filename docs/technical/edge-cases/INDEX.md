@@ -59,9 +59,9 @@ Review in batches by section. Each edge case includes:
 | S3 Identifiers | EC-3.1--3.7 | `package_address`, `cross_pkg_enum`, `cross_pkg_pipeline`, `field_path`, sibling homogeneity |
 | S4 Types | EC-4.1--4.19 | `array_type`, `element_type`, `serial_type`, `user_type`, `inline_pipeline_call`, path types, multidimensional arrays, untyped array |
 | S5 Blocks | EC-5.1--5.2 | All block element categories, `[b]` background |
-| S6 Operators | EC-6.1--6.4 | All assignment ops, all comparison ops, range ops, arithmetic |
+| S6 Operators | EC-6.1--6.5 | All assignment ops, all comparison ops, range ops, arithmetic banned (PGE04010), fallback validity |
 | S7 IO | EC-7.1 | `input_param` with field separators |
-| S8 Expressions | EC-8.1--8.6 | `inline_data`, empty `{}`, chained arithmetic, discard default restriction, self-assignment detection |
+| S8 Expressions | EC-8.1--8.8 | `inline_data`, empty `{}`, discard default restriction, self-assignment detection, arithmetic moot (X.35), nested inline data rejected (X.36) |
 | S9 Definitions | EC-9.1--9.19 | Package imports, enum/value fields, pipeline structure, triggers, IO modes, parallel fork, empty definitions, trigger anomalies, wrapper IO discard |
 | S10 Execution | EC-10.1--10.16 | Pipeline call + error, pglib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr, orphan continuation, self-chain, foreign code |
 | S11 Control Flow | EC-11.1--11.9 | Conditional chains, error scoping, logical operators, match syntax, wildcard-only match, variable match, pipeline comparison |

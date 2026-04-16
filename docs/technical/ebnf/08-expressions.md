@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-03-30
+updated: 2026-04-16
 ---
 
 <!-- @ebnf/INDEX -->
@@ -11,7 +11,6 @@ updated: 2026-03-30
 ```ebnf
 expression          ::= assignment_expr
                       | comparison_expr
-                      | arithmetic_expr
                       | call_expr
                       | chain_call
                       | io_line
@@ -53,7 +52,6 @@ value_expr          ::= literal
                       | cross_pkg_enum
                       | inline_data
                       | inline_pipeline_call
-                      | arithmetic_expr
                       | output_param ;       (* >pipelineOutput as source *)
 
 inline_pipeline_call ::= pipeline_ref string_literal ;
@@ -74,16 +72,18 @@ comparison_expr     ::= value_expr comparison_op value_expr
                       | "*?" ;              (* wildcard catch-all *)
 ```
 
-### 8.3 Arithmetic Expressions
+### 8.3 Inline Data
 
 ```ebnf
-arithmetic_expr     ::= value_expr arithmetic_op value_expr ;
-```
+(* Flat subset of value_expr — no inline_data, no inline_pipeline_call. *)
+inline_value        ::= literal
+                      | identifier
+                      | child_access
+                      | io_param
+                      | cross_pkg_enum
+                      | output_param ;
 
-### 8.4 Inline Data
-
-```ebnf
-inline_data         ::= '{' value_expr { ',' value_expr } '}'
+inline_data         ::= '{' inline_value { ',' inline_value } '}'
                       | '{' '}' ;                          (* empty collection *)
 ```
 

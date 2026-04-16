@@ -198,6 +198,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE08010 | IO Direction Mismatch |
 | PGE08011 | Self-Assignment |
 | PGE08012 | Self-Chain Requires Numeric Indexing |
+| PGE08013 | Nested Inline Data |
 
 ### 09 — Imports & Dependencies
 

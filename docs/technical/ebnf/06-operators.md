@@ -55,10 +55,4 @@ range_close         ::= ']' | ')' ;       (* right bound: ] inclusive, ) exclusi
 range_expr          ::= value_expr range_open value_expr ',' value_expr range_close ;
 ```
 
-### 6.4 Arithmetic Operators
-
-```ebnf
-arithmetic_op       ::= '*' | '+' | '-' | '/' ;
-```
-
 ---
