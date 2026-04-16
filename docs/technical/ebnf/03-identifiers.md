@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-05
+updated: 2026-04-16
 ---
 
 <!-- @ebnf/INDEX -->
@@ -55,7 +55,10 @@ flex_path           ::= name { flex_sep name } ;
 (* Metadata access — query metadata on any named object *)
 meta_access         ::= identifier meta_sep name ;
 
-(* A field_path may use fixed OR flexible separators, but NOT both at the same sibling level *)
+(* A field_path may use fixed OR flexible separators, but NOT both at the same sibling level.
+   Mixed separators within a single path are valid when crossing level boundaries —
+   e.g., $config.db:host navigates from a fixed level (.db) into a flexible level (:host).
+   PGE05001 enforces homogeneity per sibling set, not per navigation path. *)
 field_path          ::= name { field_separator name } ;
 
 field_separator     ::= fixed_sep | flex_sep ;

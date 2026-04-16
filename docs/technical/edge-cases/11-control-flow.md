@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-03-30
+updated: 2026-04-16
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -125,7 +125,7 @@ updated: 2026-03-30
 
 ### EC-11.8: Variable as match arm value — must be Final
 
-**EBNF ref:** `match_value ::= literal | identifier | cross_pkg_enum`
+**EBNF ref:** `match_value ::= literal | identifier`
 **What it tests:** Runtime variable in match arm — valid but must be Final state. If the variable could be in Failed state without a fallback, PGE fires.
 
 ```polyglot
@@ -145,4 +145,17 @@ updated: 2026-03-30
 [ ] ✗ PGE04024 — pipeline identifiers cannot be compared
 [?] -Pipeline.A =? -Pipeline.B
    [-] $same << #Boolean.True
+```
+
+### EC-11.10: Cross-package enum in match — via identifier
+
+**EBNF ref:** `match_value ::= literal | identifier`
+**What it tests:** `cross_pkg_enum` (`@alias#DataName.EnumField`) is matched through `identifier` — it was removed from `match_value` as a separate alternative because `identifier` already covers it via `data_id` and `package_id` in §3.1. See [[ebnf/03-identifiers#3.4 Cross-Package References]].
+
+```polyglot
+[ ] ✓ Cross-package enum matched through identifier
+[-] $status >> $label#string
+   [?] @auth#Role.Admin >> "admin"
+   [?] @auth#Role.User >> "user"
+   [?] *? >> "unknown"
 ```

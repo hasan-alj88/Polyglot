@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-03-30
+updated: 2026-04-16
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -83,4 +83,28 @@ updated: 2026-03-30
 [ ] INVALID — mixed separators at same sibling level
 [-] $point.x << 10
 [-] $point:y << 20
+```
+
+### EC-3.8: Mixed separator in single field_path — cross-level boundary
+
+<!-- @u:identifiers:Serialization Rules -->
+**EBNF ref:** `field_path ::= name { field_separator name }`, `field_separator ::= fixed_sep | flex_sep`
+**What it tests:** A single `field_path` can contain both `.` and `:` when crossing from a fixed level to a flexible level. PGE05001 enforces sibling homogeneity per level, not per path. See [[identifiers#Serialization Rules]], [[PGE05001|PGE05001]].
+
+```polyglot
+{#} #Config
+   [.] .db#serial
+   [.] .app#serial
+
+[ ] ✓ Mixed separators crossing level boundaries
+[-] $cfg#Config
+   [-] $cfg.db:host << "localhost"     [ ] . into fixed, : into flexible
+   [-] $cfg.db:port << 5432
+   [-] $cfg.app:version << "1.0"
+
+[ ] ✓ Pure fixed path — all levels schema-defined
+[-] $user.address.city << "London"
+
+[ ] ✓ Pure flexible path — all levels user-defined
+[-] $data:region:country << "UK"
 ```

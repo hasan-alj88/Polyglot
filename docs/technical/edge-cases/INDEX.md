@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-03-30
+updated: 2026-04-16
 ---
 
 # EBNF Edge Cases
@@ -25,7 +25,7 @@ Review in batches by section. Each edge case includes:
 |------|---------|------------|
 | [01-file-structure.md](01-file-structure.md) | S1. File Structure | EC-1.1, EC-1.2 |
 | [02-lexical.md](02-lexical.md) | S2. Lexical Elements | EC-2.1--2.7 |
-| [03-identifiers.md](03-identifiers.md) | S3. Identifiers | EC-3.1--3.7 |
+| [03-identifiers.md](03-identifiers.md) | S3. Identifiers | EC-3.1--3.8 |
 | [04-type-system.md](04-type-system.md) | S4. Type System | EC-4.1--4.23 |
 | [05-block-elements.md](05-block-elements.md) | S5. Block Elements | EC-5.1--5.2 |
 | [06-operators.md](06-operators.md) | S6. Operators | EC-6.1--6.4 |
@@ -33,7 +33,7 @@ Review in batches by section. Each edge case includes:
 | [08-expressions.md](08-expressions.md) | S8. Expressions | EC-8.1--8.6 |
 | [09-definition-blocks.md](09-definition-blocks.md) | S9. Definition Blocks | EC-9.1--9.19 |
 | [10-execution.md](10-execution.md) | S10. Execution Statements | EC-10.1--10.16 |
-| [11-control-flow.md](11-control-flow.md) | S11. Control Flow | EC-11.1--11.9 |
+| [11-control-flow.md](11-control-flow.md) | S11. Control Flow | EC-11.1--11.10 |
 | [12-collections.md](12-collections.md) | S12. Collection Operations | EC-12.1--12.16 |
 | [13-comments.md](13-comments.md) | S13. Comments | EC-13.1--13.3 |
 | [14-lifecycle.md](14-lifecycle.md) | S14. Variable Lifecycle | EC-14.1--14.7 |
@@ -56,7 +56,7 @@ Review in batches by section. Each edge case includes:
 |-------------|-----------|-------------------|
 | S1 File Structure | EC-1.1, EC-1.2 | `file`, `definition` |
 | S2 Lexical | EC-2.1--2.7 | `indent`, `bool_literal`, `int_literal`, `float_literal`, `string_literal`, inline strings, leading zeros, negative zero |
-| S3 Identifiers | EC-3.1--3.7 | `package_address`, `cross_pkg_enum`, `cross_pkg_pipeline`, `field_path`, sibling homogeneity |
+| S3 Identifiers | EC-3.1--3.8 | `package_address`, `cross_pkg_enum`, `cross_pkg_pipeline`, `field_path`, sibling homogeneity, mixed-separator cross-level |
 | S4 Types | EC-4.1--4.19 | `array_type`, `element_type`, `serial_type`, `user_type`, `inline_pipeline_call`, path types, multidimensional arrays, untyped array |
 | S5 Blocks | EC-5.1--5.2 | All block element categories, `[b]` background |
 | S6 Operators | EC-6.1--6.5 | All assignment ops, all comparison ops, range ops, arithmetic banned (PGE04010), fallback validity |
@@ -64,7 +64,7 @@ Review in batches by section. Each edge case includes:
 | S8 Expressions | EC-8.1--8.8 | `inline_data`, empty `{}`, discard default restriction, self-assignment detection, arithmetic moot (X.35), nested inline data rejected (X.36) |
 | S9 Definitions | EC-9.1--9.19 | Package imports, enum/value fields, pipeline structure, triggers, IO modes, parallel fork, empty definitions, trigger anomalies, wrapper IO discard |
 | S10 Execution | EC-10.1--10.16 | Pipeline call + error, pglib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr, orphan continuation, self-chain, foreign code |
-| S11 Control Flow | EC-11.1--11.9 | Conditional chains, error scoping, logical operators, match syntax, wildcard-only match, variable match, pipeline comparison |
+| S11 Control Flow | EC-11.1--11.10 | Conditional chains, error scoping, logical operators, match syntax, wildcard-only match, variable match, pipeline comparison, cross-pkg enum via identifier |
 | S12 Collections | EC-12.1--12.16 | All expand variants, all collect variants, direct output, multiple collectors, collect-all/race collectors, multi-wave, [*] <</>>/semantics, orphaned collectors/markers |
 | S13 Comments | EC-13.1--13.3 | Square, curly, multiline |
 | S14 Lifecycle | EC-14.1--14.7 | Default->Final, Final immutability, leaf-only, all-or-none, Final-then-Default, input immutability, data load schema |
@@ -79,4 +79,4 @@ Review in batches by section. Each edge case includes:
 | S23 Stress Tests | ST-1--ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, wrapper+timer |
 | S24 Datatype Definitions | EC-24.1--24.20 | Scalar regex boundaries, `<~` inheritance, ##/### composition, generic type parameters, %## property completeness |
 
-**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle + 3 literals + 3 control-flow + 2 scope + 4 cross-concern = 133 edge cases across 24 sections.**
+**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle + 3 literals + 3 control-flow + 2 scope + 4 cross-concern + 2 #307 = 135 edge cases across 24 sections.**

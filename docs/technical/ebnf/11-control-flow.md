@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-09
+updated: 2026-04-16
 ---
 
 <!-- @ebnf/INDEX -->
@@ -37,8 +37,9 @@ match_arm           ::= match_value_arm
 match_value_arm     ::= "[?]" match_value ">>" value_expr ;
 
 match_value         ::= literal
-                      | identifier
-                      | cross_pkg_enum ;
+                      | identifier ;
+                      (* cross_pkg_enum removed — already reachable through identifier
+                         via data_id and package_id alternatives in §3.1 *)
 ```
 
 **Rule:** Match is syntactic sugar. `[-] $x >> $y` with indented `[?]` children desugars to a `[?]` chain where each arm becomes `[?] $x =? value` / `[-] $y << result`. All exhaustiveness rules (PGE06001 through PGE06013) apply to the desugared form. Match arms use `*?` for the wildcard catch-all, same as verbose conditionals.
