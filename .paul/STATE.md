@@ -13,8 +13,8 @@ Milestone: Language (issue-driven)
 Phase: Issue-driven — #307
 - Issue #307: [██████████] 100% (1/1 plans — field path separator + match value redundancy)
 Plan: 307-01 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-16 — Created 307-01-SUMMARY.md
+Status: Idle
+Last activity: 2026-04-16 — Closed #307, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -105,6 +105,8 @@ Progress:
 - Issue #288: [██████████] 100% (1/1 plans — [!] !*- error suppression sugar)
 - Issue #304: [██████████] 100% (1/1 plans — fallback validity + parallel marker pairing)
 - Issue #305: [██████████] 100% (1/1 plans — arithmetic EBNF removal + inline_data recursion fix)
+- Issue #306: [██████████] 100% (1/1 plans — wildcard removal + type expression EBNF tightening)
+- Issue #307: [██████████] 100% (1/1 plans — field path separator + match value redundancy)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -114,18 +116,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #307 — EBNF edge cases: field path separator mixing and match value redundancy
-Branch: design/issue-307-ebnf-field-path-separator-match-value-redundancy
-Labels: design, test, P3-medium
-Started: 2026-04-16
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/307
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -285,7 +283,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #304 — Fallback ops + parallelism markers | 2026-04-16 | PGE07008 (non-failable fallback), PGE07009 (unterminated chain), PGE01040 (orphan parallel); semantic not grammar |
 | Closed #305 — EBNF arithmetic + inline_data recursion | 2026-04-16 | Removed arithmetic_expr/arithmetic_op from EBNF; inline_value breaks inline_data cycle; PGE08013; EC-6.4 fixed |
 | Closed #306 — EBNF type expression degenerate forms | 2026-04-16 | wildcard_type removed, concrete_type_expr added, mandatory array element type, multi-digit version, 4 edge cases, PGE04025 stub |
-| Issue #307 — EBNF field path separator + match value redundancy | 2026-04-16 | X.41 Accept: mixed separators valid across levels; X.42: cross_pkg_enum removed from match_value; EC-3.8 + EC-11.10; PGE05001 scope clarified |
+| Closed #307 — EBNF field path separator + match value redundancy | 2026-04-16 | X.41 Accept: mixed separators valid across levels; X.42: cross_pkg_enum removed from match_value; EC-3.8 + EC-11.10; PGE05001 scope clarified |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -305,13 +303,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: UNIFY complete for 307-01
-Next action: /paul:merge to commit and merge to main
+Stopped at: Issue #307 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/307-ebnf-field-path-separator-match-value-redundancy/307-01-SUMMARY.md
 Resume context:
-- Issue #307 complete, 6 files modified
-- X.41: Accept — mixed separators documented
-- X.42: cross_pkg_enum removed from match_value
+- Issue #307 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
