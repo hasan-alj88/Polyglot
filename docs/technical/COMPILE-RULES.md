@@ -265,6 +265,7 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | PGW01001 | Empty Execution Body |
 | PGW01002 | *(Retired — see PGE01021)* |
 | PGW01003 | No Definitions in File |
+| PGW01004 | Orphaned Foreign Code |
 | PGW02001 | Default Pull Across State Change |
 | PGW02002 | Unused Variable |
 | PGW02003 | Unpushed Output Port |
