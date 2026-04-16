@@ -47,6 +47,7 @@ All generics produce `_` objects with `#Grant` intent. For `#Ceiling` objects, w
 | [[System/Env\|__System.Env]] | `<scope;string` | Access environment variables |
 | [[System/Process\|__System.Process]] | `<scope;string` | Spawn/manage processes |
 | [[System/Signal\|__System.Signal]] | `<scope;string` | Send/receive signals |
+| [[System/Shell\|__System.Shell]] | `<scope;string` | Execute shell commands |
 | [[Crypto/Key\|__Crypto.Key]] | `<scope;string` | Key management |
 | [[Crypto/Sign\|__Crypto.Sign]] | `<scope;string` | Signing operations |
 | [[Crypto/Encrypt\|__Crypto.Encrypt]] | `<scope;string` | Encryption operations |
