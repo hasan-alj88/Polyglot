@@ -50,8 +50,12 @@ This "all gates must be open" model extends beyond IO: permissions (`[_]` refere
 Every pipeline must have at least one `[T]` trigger — omitting it is a compile error (PGE01005).
 
 - `-T.Call` — invoked when called from another pipeline
+- `-T.Git.Hook` — fires on local git hook invocation (e.g. `-T.Git.Hook"post-commit"`)
+- `-T.Git.Push` — fires on push to branch, with branch/path filters
+- `-T.Git.PR` — fires on pull request events (remote only)
+- `-T.Git.Tag` — fires on tag creation, with name pattern filters
 - Standard library triggers live under `-T.*` namespace — no `[@]` import needed (see [[packages#Usage]])
-- Triggers with arguments: `-T.Daily"3AM"`, `-T.Webhook"/path"`, `-T.Folder.NewFiles"/dir/"`
+- Triggers with arguments: `-T.Daily"3AM"`, `-T.Webhook"/path"`, `-T.Folder.NewFiles"/dir/"`, `-T.Git.Hook"post-commit"`
 If a trigger's boolean expression evaluates to the same value for all combinations of trigger states, it is a tautology or contradiction (PGE01018).
 
 - Triggers that produce outputs wire them to pipeline inputs via indented `(-)` IO lines:
@@ -61,6 +65,22 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
 [T] -T.Folder.NewFiles"/inbox/"
    (-) >NewFiles >> <NewFiles
 ```
+
+- Git triggers support filter fields and produce typed `#Git.*` outputs:
+
+```polyglot
+(-) <branch#string
+(-) <sha#string
+(-) <commits#array.Git.Commit
+[T] -T.Git.Push
+   (-) >> branch: "main", "develop"
+   (-) >> paths: "src/**"
+   (-) >branch >> <branch
+   (-) >sha >> <sha
+   (-) >commits >> <commits
+```
+
+See [[pglib/pipelines/T/INDEX#Three-Tier Trigger Model]] for how Git triggers work across local hooks and remote webhooks.
 
 ## Retrigger Strategy
 

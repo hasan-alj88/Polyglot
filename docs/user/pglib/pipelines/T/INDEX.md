@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-07
+updated: 2026-04-16
 status: complete
 ---
 
@@ -24,6 +24,10 @@ Most triggers require no permissions. IO-touching triggers require a `{_}` permi
 | `-T.Daily` | None | — |
 | `-T.Folder.NewFiles` | File.Read | File |
 | `-T.Webhook` | Web.Socket | Web |
+| `-T.Git.Hook` | System.Process | System |
+| `-T.Git.Push` | System.Process or Web.Socket | System / Web |
+| `-T.Git.PR` | Web.Socket | Web |
+| `-T.Git.Tag` | System.Process or Web.Socket | System / Web |
 
 ## Pipeline Listing
 
@@ -34,6 +38,27 @@ Most triggers require no permissions. IO-touching triggers require a `{_}` permi
 | [[pglib/pipelines/T/Daily\|-T.Daily]] | Fires once per day at specified time |
 | [[pglib/pipelines/T/Folder.NewFiles\|-T.Folder.NewFiles]] | Fires when new files appear in folder |
 | [[pglib/pipelines/T/Webhook\|-T.Webhook]] | Fires on incoming HTTP request |
+| [[pglib/pipelines/T/Git.Hook\|-T.Git.Hook]] | Fires on local git hook invocation |
+| [[pglib/pipelines/T/Git.Push\|-T.Git.Push]] | Fires on push to branch (with filters) |
+| [[pglib/pipelines/T/Git.PR\|-T.Git.PR]] | Fires on pull request events |
+| [[pglib/pipelines/T/Git.Tag\|-T.Git.Tag]] | Fires on tag creation |
+
+## Three-Tier Trigger Model
+
+Git triggers use a two-layer architecture:
+
+| Tier | Triggers | Source | Description |
+|------|----------|--------|-------------|
+| **Transport** | `-T.Git.Hook`, `-T.Webhook` | Local / Remote | Raw event delivery — hook dispatcher or HTTP POST |
+| **Semantic** | `-T.Git.Push`, `-T.Git.PR`, `-T.Git.Tag` | Either | Unified events — runtime resolves source via `-Env.*` config |
+
+**Transport triggers** deliver raw events. `-T.Git.Hook` installs a shell dispatcher into `.git/hooks/` that POSTs to the local Polyglot runtime on `localhost` — the same HTTP code path as `-T.Webhook`.
+
+**Semantic triggers** abstract over transport. `-T.Git.Push` fires whether the push event arrives from a local hook or a remote GitHub/GitLab webhook. The runtime resolves the source based on environment configuration (`-Env.*`).
+
+Use transport triggers when you need hook-specific behavior. Use semantic triggers for CI/CD workflows that should work across local and hosted setups.
+
+See [[pglib/types/git|#Git Type Tree]] for the typed event payloads produced by these triggers.
 
 ## Related
 
