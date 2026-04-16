@@ -18,12 +18,12 @@ output_param        ::= '>' name { field_separator name } ;
 ### 7.2 Operation Labels
 
 ```ebnf
-operation_label     ::= "($)" variable_id ;
+operation_label     ::= "(-)" variable_id ;
 step_label          ::= "(.)" variable_id ;
 io_comment          ::= "( )" { any_char } ;
 ```
 
-`($)` labels a pipeline call's IO, making outputs accessible via `$Label>outputParam` without intermediate variables. `(.)` labels individual chain steps, indented under `($)`, mapped by position. `( )` introduces an inline comment within IO blocks.
+`(-) $Label` labels a pipeline call's IO, making outputs accessible via `$Label>outputParam` without intermediate variables. The `(-)` marker mirrors the `[-]` pipeline call context (IO mirroring rule). `(.)` labels individual chain steps, indented under `(-) $Label`, mapped by position. `( )` introduces an inline comment within IO blocks.
 
 ### 7.3 Label Accessors
 

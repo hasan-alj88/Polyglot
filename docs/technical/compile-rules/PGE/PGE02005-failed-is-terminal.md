@@ -13,9 +13,9 @@ severity: error
 <!-- @u:concepts/errors -->
 <!-- @u:syntax/operators -->
 
-**Statement:** A variable in Failed state cannot proceed to the next job or task. The compiler enforces exhaustive error handling: every failable call must have an `[!]` error block or `!<`/`!>` fallback operators on its IO lines. If neither is present, the compiler emits PGE02005. At runtime, the Failed state triggers the declared fallback, resolving the variable to Final before downstream code executes.
-**Rationale:** Failed means the producing pipeline errored. The compiler performs static analysis to account for all possible states, including Failed. By enforcing exhaustive handling at compile time, no Failed variable ever reaches downstream code unresolved.
-**Detection:** At compile time: for each `[-]` call that can produce an error, verify that either (1) an `[!]` block provides a replacement value, or (2) `!<`/`!>` fallback operators are declared on the IO lines. If neither exists, emit PGE02005.
+**Statement:** A variable in Failed state is terminal — it will never resolve to Final. The exhaustiveness rules (PGE07007) ensure every failable call is handled at compile time, preventing variables from reaching Failed state. PGE02005 fires if static analysis discovers a code path where a variable could enter Failed without any handler — this is a secondary safety net behind PGE07007.
+**Rationale:** Failed means the producing pipeline errored. The compiler performs static analysis to account for all possible states, including Failed. PGE07007 enforces exhaustive error handling at call sites; PGE02005 verifies the consequence: no Failed variable ever reaches downstream code unresolved.
+**Detection:** At compile time: for each variable that receives its value from a failable call, verify that the call has exhaustive error handling per PGE07007. If PGE07007 is satisfied, PGE02005 is automatically satisfied. PGE02005 serves as a secondary check — if a variable can still reach Failed state through any code path (e.g., complex control flow), the compiler emits PGE02005.
 
 ## Error handling mechanisms
 
@@ -74,3 +74,4 @@ Both produce a Final variable — downstream jobs trigger normally.
 ## See Also
 
 - [[concepts/variable-lifecycle|Variable Lifecycle]] — defines Failed state and references PGE02005
+- [[compile-rules/PGE/PGE07007-error-handling-must-be-exhaustive|PGE07007]] — the exhaustiveness algorithm that prevents variables from reaching Failed state

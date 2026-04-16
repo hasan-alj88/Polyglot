@@ -22,7 +22,7 @@ updated: 2026-04-09
 ```polyglot
 [ ] ✓ label accessed after labeled operation completes
 [-] -File.Text.Read"/input.txt"
-   ($) $Read
+   (-) $Read
 [-] -Serial.JSON.Parse
    (-) <raw << $Read>content
 ```
@@ -33,7 +33,7 @@ updated: 2026-04-09
 [-] -Serial.JSON.Parse
    (-) <raw << $Read>content
 [-] -File.Text.Read"/input.txt"
-   ($) $Read
+   (-) $Read
 ```
 
 **Diagnostic:** "Label accessor `$Read>content` used before labeled operation `$Read` has completed — move the access after the labeled call"

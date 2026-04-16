@@ -25,7 +25,7 @@ updated: 2026-04-09
 [p] -Transform.Each
    [=] $items
       [-] -Parse.Record
-         ($) $Parse
+         (-) $Parse
          (-) <raw << $item
       (-) >result << $Parse>output
    [*] *All
@@ -38,7 +38,7 @@ updated: 2026-04-09
 [p] -Transform.Each
    [=] $items
       [-] -Parse.Record
-         ($) $Parse
+         (-) $Parse
          (-) <raw << $item
 [-] -Next.Step
    (-) <data << $Parse>output

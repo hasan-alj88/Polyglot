@@ -22,7 +22,7 @@ updated: 2026-04-09
 ```polyglot
 [ ] ✓ reading from a label accessor
 [-] -File.Text.Read"/data.txt"
-   ($) $Read
+   (-) $Read
 (-) <data << $Read>content
 ```
 
@@ -30,7 +30,7 @@ updated: 2026-04-09
 ```polyglot
 [ ] ✗ PGE02013 — label accessor is read-only, cannot write
 [-] -File.Text.Read"/data.txt"
-   ($) $Read
+   (-) $Read
 [-] $Read>content << "override"
 ```
 
