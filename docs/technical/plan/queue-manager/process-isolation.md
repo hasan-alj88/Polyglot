@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-15
+updated: 2026-04-16
 ---
 
 # Process Isolation Architecture
@@ -134,10 +134,10 @@ Image transfer is handled by the Runner, not the Queue Handler. The QH only know
 
 | Signal | CRIU Action |
 |--------|------------|
-| `command.job.pause.free.all.now` | `criu dump --tree {pid} --images-dir {path}` — immediate checkpoint |
-| `command.job.pause.free.all.wait` | Wait for work unit boundary → `criu dump` |
-| `command.job.resume.from.disk` | `criu restore --images-dir {path}` — restore PID namespace |
-| `command.job.reassign` (cross-host) | `criu dump` → transfer images → `criu restore` on target host |
+| `command.job.pause.free.all` (timing: "now") | `criu dump --tree {pid} --images-dir {path}` — immediate checkpoint |
+| `command.job.pause.free.all` (timing: "wait") | Wait for work unit boundary → `criu dump` |
+| `command.job.resume` (type was "all") | `criu restore --images-dir {path}` — restore PID namespace |
+| `command.reassign` (cross-host) | `criu dump` → transfer images → `criu restore` on target host |
 | `command.job.snapshot` | `criu dump --leave-running` (fork semantics — original continues) |
 
 ## TCP Repairability

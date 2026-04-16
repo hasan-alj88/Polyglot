@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-15
+updated: 2026-04-16
 ---
 
 # End-to-End Flow
@@ -43,18 +43,21 @@ updated: 2026-04-15
 1. Resource Monitor: RAM drops below threshold
    → NATS: publish "polyglot.resource.ram" {available: 2800}
 
-2. Trigger Monitor evaluates -Q.Job.Pause.Free.RAM.RAM.LessThan → condition met for job:001
-   → NATS: publish "command.job.pause.free.ram" {jobId: job:001}
+2. Trigger Monitor evaluates -Q.Job.Pause.Free.RAM.Hard condition → met for job:001
+   → NATS: publish "command.job.pause.free.ram.hard" {jobId: job:001, timing: "wait"}
 
-3. Queue Handler receives command.job.pause.free.ram
+3. Queue Handler receives command.job.pause.free.ram.hard
    → Redis: SREM set:executing job:001
-   → Redis: HSET set:suspended job:001 "hard"
+   → Redis: HSET set:suspended job:001 "ram.hard"
    → Redis: HINCRBY counter:instances ProcessData -1
-   → NATS: publish "polyglot.queue.control.job:001.job.pause.free.ram"
+   → Redis: HINCRBY counter:instances:queue:DefaultQueue ProcessData -1
+   → Redis: HINCRBY counter:instances:host:{host} ProcessData -1
+   → Redis: HSET job:job:001 status "suspended.ram.hard" suspended_at {now}
+   → NATS: publish "polyglot.queue.control.job:001.job.pause.free.ram.hard"
    → Dispatch Coordinator wakes (slot freed)
 
 4. Runner suspends process, frees CPU+RAM
-   → NATS: publish "polyglot.runner.paused.job:001" → QH + TM
+   → NATS: publish "polyglot.runner.paused.job:001" {type: "ram.hard"} → QH + TM
 
 5. Queue Handler updates state
    → Redis: HSET job:job:001 confirmed_paused true
@@ -66,8 +69,10 @@ updated: 2026-04-15
    → NATS: publish "command.job.resume" {jobId: job:001}
 
 8. Queue Handler receives command.job.resume
+   → Redis: type = HGET set:suspended job:001 → "ram.hard"
    → Redis: HDEL set:suspended job:001
    → Redis: RPUSH queue:resume job:001
+   → Redis: HSET job:job:001 status "resuming"
    → Dispatch Coordinator wakes (item added to Resume Queue)
 
 9. Dispatch Coordinator cycles

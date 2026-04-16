@@ -1,8 +1,8 @@
 ---
 audience: developer
-type: technical
-updated: 2026-04-11
-status: draft
+type: spec
+updated: 2026-04-16
+status: spec
 ---
 
 # Parallel Processing Overflow (PPTD)
