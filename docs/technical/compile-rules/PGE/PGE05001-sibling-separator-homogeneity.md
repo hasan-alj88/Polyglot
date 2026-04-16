@@ -17,6 +17,8 @@ severity: error
 **Rationale:** Each separator carries semantic meaning — `.` means a closed, compile-time-known key set; `:` means an open, runtime-extensible key set. Mixing them at the same level creates ambiguity: is the level fixed or flexible? Enforcing homogeneity per level keeps the schema model unambiguous.
 **Detection:** The compiler groups sibling fields by their parent path and checks that all siblings share the same separator. If any sibling uses a different separator than its peers, PGE05001 fires.
 
+**Scope:** PGE05001 applies per sibling level in definitions and field access — not per navigation path. A single `field_path` like `$config.db:host` that crosses from a fixed level (`.db`) to a flexible level (`:host`) does **not** trigger PGE05001, because the `.` and `:` operate at different tree levels. See EC-3.8.
+
 **VALID:**
 ```polyglot
 [ ] ✓ all siblings use : (flexible)
