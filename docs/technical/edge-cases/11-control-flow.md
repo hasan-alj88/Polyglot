@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-04-16
+updated: 2026-04-17
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -159,3 +159,27 @@ updated: 2026-04-16
    [?] @auth#Role.User >> "user"
    [?] *? >> "unknown"
 ```
+
+### EC-11.11: Comment-only conditional branch — PGE06010 sufficient (X.43 Accept)
+
+**EBNF ref:** `conditional_branch ::= exec_line | comment_line` (§11.1)
+**What it tests:** A `[?]` branch containing only `comment_line` entries parses as valid `conditional_branch`. The grammar allows it because `conditional_branch` includes `comment_line` as an alternative to `exec_line`. PGE06010 catches this semantically — every `[?]` branch must contain at least one executable statement.
+
+**Decision:** Accept. PGE06010 is sufficient. Tightening the grammar to require at least one `exec_line` (e.g., `conditional_branch ::= { comment_line } exec_line { exec_line | comment_line }`) would add complexity without benefit since the semantic check is straightforward. Use `[-] -DoNothing` to explicitly mark intentionally empty branches.
+
+```polyglot
+[ ] ✗ PGE06010 — comment-only branch, no executable
+[?] $mode =? "debug"
+   [ ] TODO: add debug logging
+[?] *?
+   [-] -Process
+
+[ ] ✗ PGE06010 — multiple comments, still no executable
+[?] $status =? "active"
+   [ ] First comment
+   [ ] Second comment
+[?] *?
+   [-] -Fallback
+```
+
+**See also:** [[compile-rules/PGE/PGE06010-empty-conditional-scope|PGE06010 — Empty Conditional Scope]], [[blocks#-DoNothing]]

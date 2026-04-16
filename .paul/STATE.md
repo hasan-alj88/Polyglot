@@ -10,11 +10,11 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — #309
-- Issue #309: [██████████] 100% (1/1 plans — token ambiguity + reassemble IO validation)
-Plan: 309-01 complete
-Status: Idle
-Last activity: 2026-04-17 — Closed #309, merged to main
+Phase: Issue-driven — #308
+- Issue #308: [██████████] 100% (1/1 plans — comment-only branches + orphaned foreign code)
+Plan: 308-01 complete
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-17 — Loop closed, SUMMARY created
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -117,14 +117,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #308 — EBNF edge cases: comment-only branches and unscoped foreign code
+Branch: design/issue-308-ebnf-comment-only-branches-unscoped-foreign-code
+Labels: design, test, P3-medium
+Started: 2026-04-17
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/308
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [Ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -286,6 +290,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #306 — EBNF type expression degenerate forms | 2026-04-16 | wildcard_type removed, concrete_type_expr added, mandatory array element type, multi-digit version, 4 edge cases, PGE04025 stub |
 | Closed #307 — EBNF field path separator + match value redundancy | 2026-04-16 | X.41 Accept: mixed separators valid across levels; X.42: cross_pkg_enum removed from match_value; EC-3.8 + EC-11.10; PGE05001 scope clarified |
 | Closed #309 — Token ambiguity + reassemble IO validation | 2026-04-17 | X.45 Accept: lexer disambiguates ?[ vs [?] positionally; X.46 Accept: schema-typed <Collection.* inputs + PGE04001 covers reassemble IO |
+| Closed #308 — Comment-only branches + orphaned foreign code | 2026-04-17 | X.43 Accept: PGE06010 sufficient; X.44 PGW01004: orphaned [C] warning; 2 edge cases (EC-11.11, EC-22.5); total 137 |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -305,12 +310,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-17
-Stopped at: Issue #309 closed and merged
-Next action: Pick next issue with /paul:work-issue or /paul:issues
-Resume file: .paul/phases/309-ebnf-token-ambiguity-cross-production-io-validation/309-01-SUMMARY.md
+Stopped at: UNIFY complete for 308-01
+Next action: Run /paul:merge to commit and merge to main
+Resume file: .paul/phases/308-ebnf-comment-branch-foreign-code/308-01-SUMMARY.md
 Resume context:
-- Issue #309 closed and merged to main
-- On main branch, ready for next issue
+- Issue #308 loop closed, ready for merge
+- On branch design/issue-308-ebnf-comment-only-branches-unscoped-foreign-code
 
 ---
 *STATE.md — Updated after every significant action*

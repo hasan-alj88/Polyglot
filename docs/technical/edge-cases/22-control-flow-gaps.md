@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-03-30
+updated: 2026-04-17
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -88,3 +88,33 @@ updated: 2026-03-30
 [?] *?
    [-] $elevated#bool << #Boolean.False
 ```
+
+### EC-22.5: [C] foreign code lines valid outside -RT.* scope — PGW01004 (X.44 PGW)
+
+**EBNF ref:** `foreign_code_line ::= "[C]" any_text` (§11.6)
+**What it tests:** `[C]` lines are syntactically valid in any execution scope because `foreign_code_elem` is a general block element (§5). However, the spec says they are only meaningful "passed to `-RT.*` runtime pipelines." Nothing in the grammar restricts `[C]` to appear only as children of `-RT.*` calls. Orphaned `[C]` lines parse fine but serve no purpose.
+
+**Decision:** PGW01004 warns on `[C]` lines not scoped under a `-RT.*` pipeline call. Tightening the EBNF would require the grammar to understand pipeline semantics (which `-` prefixed names are `-RT.*`), so a semantic warning is more practical.
+
+```polyglot
+[ ] ✓ VALID — [C] under -RT.Python.Script (intended use)
+[-] -RT.Python.Script
+   (-) <env << $env
+   (-) <script <<
+      [C] import os
+      [C] print(os.getcwd())
+   (-) >stdout >> $output
+
+[ ] ⚠ PGW01004 — [C] at pipeline top level, not under -RT.* call
+[-] -File.Text.Read
+   (-) <path << "/tmp/data.txt"
+[C] print("orphaned code")
+
+[ ] ⚠ PGW01004 — [C] inside conditional without -RT.* parent
+[?] $mode =? "debug"
+   [C] console.log("debug")
+[?] *?
+   [-] -DoNothing
+```
+
+**See also:** [[compile-rules/PGW/PGW01004-orphaned-foreign-code|PGW01004 — Orphaned Foreign Code]], [[compile-rules/PGE/PGE01027-empty-foreign-code|PGE01027 — Empty Foreign Code Block]], [[ebnf/11-control-flow#11.6 Foreign Code Injection]]

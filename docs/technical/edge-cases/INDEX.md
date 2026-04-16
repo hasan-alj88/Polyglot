@@ -33,7 +33,7 @@ Review in batches by section. Each edge case includes:
 | [08-expressions.md](08-expressions.md) | S8. Expressions | EC-8.1--8.6 |
 | [09-definition-blocks.md](09-definition-blocks.md) | S9. Definition Blocks | EC-9.1--9.19 |
 | [10-execution.md](10-execution.md) | S10. Execution Statements | EC-10.1--10.16 |
-| [11-control-flow.md](11-control-flow.md) | S11. Control Flow | EC-11.1--11.10 |
+| [11-control-flow.md](11-control-flow.md) | S11. Control Flow | EC-11.1--11.11 |
 | [12-collections.md](12-collections.md) | S12. Collection Operations | EC-12.1--12.18 |
 | [13-comments.md](13-comments.md) | S13. Comments | EC-13.1--13.3 |
 | [14-lifecycle.md](14-lifecycle.md) | S14. Variable Lifecycle | EC-14.1--14.7 |
@@ -44,7 +44,7 @@ Review in batches by section. Each edge case includes:
 | [19-collections-gaps.md](19-collections-gaps.md) | S19. Collections -- Gaps | EC-19.1--19.4 |
 | [20-lifecycle-gaps.md](20-lifecycle-gaps.md) | S20. Variable Lifecycle -- Gaps | EC-20.1--20.3 |
 | [21-registry-type.md](21-registry-type.md) | S21. Third Registry Type | EC-21.1 |
-| [22-control-flow-gaps.md](22-control-flow-gaps.md) | S22. Control Flow -- Gaps | EC-22.1--22.4 |
+| [22-control-flow-gaps.md](22-control-flow-gaps.md) | S22. Control Flow -- Gaps | EC-22.1--22.5 |
 | [23-stress-tests.md](23-stress-tests.md) | S23. Stress Tests | ST-1--ST-6 |
 | [24-datatype-defs.md](24-datatype-defs.md) | S24. Datatype Definitions | EC-24.1--24.20 |
 
@@ -64,7 +64,7 @@ Review in batches by section. Each edge case includes:
 | S8 Expressions | EC-8.1--8.8 | `inline_data`, empty `{}`, discard default restriction, self-assignment detection, arithmetic moot (X.35), nested inline data rejected (X.36) |
 | S9 Definitions | EC-9.1--9.19 | Package imports, enum/value fields, pipeline structure, triggers, IO modes, parallel fork, empty definitions, trigger anomalies, wrapper IO discard |
 | S10 Execution | EC-10.1--10.16 | Pipeline call + error, pglib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr, orphan continuation, self-chain, foreign code |
-| S11 Control Flow | EC-11.1--11.10 | Conditional chains, error scoping, logical operators, match syntax, wildcard-only match, variable match, pipeline comparison, cross-pkg enum via identifier |
+| S11 Control Flow | EC-11.1--11.11 | Conditional chains, error scoping, logical operators, match syntax, wildcard-only match, variable match, pipeline comparison, cross-pkg enum via identifier, comment-only branch accept |
 | S12 Collections | EC-12.1--12.18 | All expand variants, all collect variants, direct output, multiple collectors, collect-all/race collectors, multi-wave, [*] <</>>/semantics, orphaned collectors/markers, `reassemble_line` IO validation |
 | S13 Comments | EC-13.1--13.3 | Square, curly, multiline |
 | S14 Lifecycle | EC-14.1--14.7 | Default->Final, Final immutability, leaf-only, all-or-none, Final-then-Default, input immutability, data load schema |
@@ -75,8 +75,8 @@ Review in batches by section. Each edge case includes:
 | S19 Collections -- Gaps | EC-19.1--19.4 | `*Into.Serial`, `*Into.Level`, `*Second`, `[b]` collector |
 | S20 Lifecycle -- Gaps | EC-20.1--20.3 | Declared state, Released state, `~>` on output params |
 | S21 Third Registry Type | EC-21.1 | `Registry` address format |
-| S22 Control Flow -- Gaps | EC-22.1--22.4 | `*?` exhaustiveness, nested conditionals, `%status` switch, `[^]` XOR |
+| S22 Control Flow -- Gaps | EC-22.1--22.5 | `*?` exhaustiveness, nested conditionals, `%status` switch, `[^]` XOR, orphaned `[C]` warning |
 | S23 Stress Tests | ST-1--ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, wrapper+timer |
 | S24 Datatype Definitions | EC-24.1--24.20 | Scalar regex boundaries, `<~` inheritance, ##/### composition, generic type parameters, %## property completeness |
 
-**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle + 3 literals + 3 control-flow + 2 scope + 4 cross-concern + 2 #307 = 135 edge cases across 24 sections.**
+**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle + 3 literals + 3 control-flow + 2 scope + 4 cross-concern + 2 #307 + 2 #308 = 137 edge cases across 24 sections.**

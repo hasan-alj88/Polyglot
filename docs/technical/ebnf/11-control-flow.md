@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-16
+updated: 2026-04-17
 ---
 
 <!-- @ebnf/INDEX -->
@@ -114,5 +114,7 @@ foreign_code_line   ::= "[C]" any_text ;
 ```
 
 **Rule:** `[C]` lines embed foreign code passed to `-RT.*` runtime pipelines. Each `[C]` line is one line of foreign code — raw text, not parsed as Polyglot. The language is determined by which `-RT.*` pipeline is called (e.g., `-RT.Python.Script`, `-RT.JS.Script`). The block ends when a line without `[C]` appears.
+
+**Note:** PGW01004 warns when `[C]` lines appear outside the scope of a `-RT.*` pipeline call. The grammar does not restrict `[C]` placement because `foreign_code_elem` is a general block element; scoping is enforced semantically.
 
 ---
