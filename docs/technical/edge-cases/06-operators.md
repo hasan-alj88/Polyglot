@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: reference
-updated: 2026-03-30
+updated: 2026-04-16
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -64,4 +64,60 @@ updated: 2026-03-30
 [-] $name#string << "{$first} {$last}"
 [-] $avg#float << $sum / $count
 [-] $diff#int << $a - $b
+```
+
+### EC-6.5: Fallback operators in non-error context (X.33)
+
+**EBNF ref:** `assignment_op` includes `fallback_push_left` (`!<`) and `fallback_push_right` (`!>`), used by multiple productions.
+
+**What it tests:** Fallback operators require a failable source (pipeline call). Using `!<`/`!>` with a literal or variable is PGE07008. A fallback chain must terminate at a non-failable value or PGE07009 fires.
+
+```polyglot
+[ ] ✗ PGE07008 — schema property with fallback on literal
+{#} #Sensor
+   [#] %##Depth.Max !< 3
+
+[ ] ✗ PGE07008 — expand IO with fallback on variable
+[=] =ForEach.Array
+   (=) <Array !< $items
+   (=) >item >> $val
+
+[ ] ✗ PGE07008 — collect IO input with fallback on variable
+[-] *Into.Array
+   (*) <item !< $val
+   (*) >Array >> $result
+
+[ ] ✗ PGE07008 — value field definition with fallback on literal
+{#} #User
+   [.] .name#string !< "anonymous"
+
+[ ] ✗ PGE07008 — metadata field with fallback on literal
+[%] .description !< "My pipeline"
+```
+
+```polyglot
+[ ] ✓ fallback on pipeline call — pipeline can fail
+[-] -File.Text.Read
+   (-) <path << $configPath
+   (-) >content >> $data
+      (<) !< "/default/path.txt"
+
+[ ] ✓ data load with inline pipeline fallback
+[#] $config#Settings << -Json.LoadFile"/config.json"
+[ ] ✓ — if the pipeline can fail, add fallback chain:
+[#] $config#Settings !< -Json.LoadFile"/config.json" !< -Json.LoadFile"/defaults.json" !< $hardcodedConfig
+```
+
+```polyglot
+[ ] ✓ fallback chain terminates at literal
+[-] -Fetch.Config
+   (-) <url << $primary
+   (-) >config >> $cfg
+      (<) !< -Fetch.Config"/backup" !< "no config"
+
+[ ] ✗ PGE07009 — fallback chain ends at pipeline call
+[-] -Fetch.Config
+   (-) <url << $primary
+   (-) >config >> $cfg
+      (<) !< -Fetch.Config"/backup" !< -Fetch.Config"/last-resort"
 ```

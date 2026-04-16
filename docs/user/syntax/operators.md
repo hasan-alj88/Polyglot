@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-03-24
+updated: 2026-04-16
 status: complete
 ---
 
@@ -23,6 +23,8 @@ Directional — the arrow indicates data flow. Operators push and pull data acro
 | `~>` | DefaultPushRight | Left → right | `>output ~> ""`. See [[variable-lifecycle#Default]] |
 | `!<` | FallbackPushLeft (Error) | Right → left | `!< "fallback"`. See [[errors#Error Fallback Operators]] |
 | `!>` | FallbackPushRight (Error) | Left → right | `"fallback" !> >output`. See [[errors#Error Fallback Operators]] |
+
+**Fallback validity:** `!<` and `!>` require a failable source — the right-hand side must be a pipeline call that can error at runtime. Using fallback with a literal or variable is a compile error ([[PGE07008\|PGE07008]]). A fallback chain (`!< -Pipeline.A !< -Pipeline.B !< "terminal"`) must terminate at a non-failable value; ending at a pipeline call is a compile error ([[PGE07009\|PGE07009]]).
 | `->` | Chain | Left → right | `-A->-B->-C`. See [[concepts/pipelines/chains#Chain Execution]] |
 
 ## Comparison Operators

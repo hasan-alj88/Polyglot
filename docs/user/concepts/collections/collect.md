@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: spec
-updated: 2026-03-30
+updated: 2026-04-16
 ---
 
 <!-- @concepts/collections/INDEX -->
@@ -13,7 +13,7 @@ Collect operators gather outputs from mini-pipelines back into a single value, a
 
 Collector invocation uses an execution marker (`[-]` sequential, `[=]` parallel) — just like expand operators. Collector IO lines use `(*)` (matching the `*` operator prefix) — see [[io#IO Line Pattern]]. Collectors can write directly to pipeline output ports — see [[io#Direct Output Port Writing]].
 
-Use `[-]` when collectors have dependencies between them, `[=]` when they are independent.
+**Parallel marker pairing:** `[=]` and `[b]` mean "run in parallel with the next `[=]` or `[b]` sibling at the same indentation level." A `[=]` or `[b]` line whose next sibling is not `[=]` or `[b]` is a compile error ([[PGE01040\|PGE01040]]) — there is nothing to parallelize against. Use `[-]` for standalone collectors or when collectors depend on each other; use `[=]` only when multiple sibling collectors are independent.
 
 ```mermaid
 flowchart LR

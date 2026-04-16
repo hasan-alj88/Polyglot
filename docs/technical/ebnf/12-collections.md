@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-09
+updated: 2026-04-16
 ---
 
 <!-- @ebnf/INDEX -->
@@ -87,7 +87,7 @@ collect_io_line     ::= "(*)" io_param assignment_op value_expr   (* named param
                       | "(*)" ">>" variable_ref ;                (* collect output: (*) >> $winner *)
 ```
 
-**Rule:** Collector invocation uses an execution marker (`[-]` sequential, `[=]` parallel) — same as expand. Collector IO lines use `(*)` (matching the `*` operator prefix). Use `[-]` when collectors depend on each other, `[=]` when independent.
+**Rule:** Collector invocation uses an execution marker (`[-]` sequential, `[=]` parallel). `[=]` and `[b]` mean "run in parallel with the next `[=]` or `[b]` sibling at the same indentation level." A `[=]` or `[b]` line whose next sibling does not use `[=]` or `[b]` is a compile error (`PGE01040`) — there is nothing to parallelize against. `[-]` and `[*]` are inherently sequential. Use `[-]` for standalone collectors or when collectors depend on each other; use `[=]` when multiple sibling collectors are independent. Collector IO lines use `(*)` (matching the `*` operator prefix).
 
 **Rule:** IO brackets always match the operator prefix: `(-)` for pipelines, `(=)` for expand, `(*)` for collect.
 
