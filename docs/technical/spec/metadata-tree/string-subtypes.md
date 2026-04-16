@@ -18,7 +18,7 @@ String subtypes live under `%#:String:*` at a flexible level:
 ├── :sci          <- .string#RawString + .regex = scientific notation
 ├── :eng          <- .string#RawString + .regex = engineering notation
 ├── :dim          <- .string#RawString + .regex = "^[1-9][0-9]*$"
-├── :emailAddress <- user-defined: .regex = custom pattern
+├── :email        <- pglib: .regex = email pattern
 └── :(any)        <- extensible — users define new subtypes
 ```
 
@@ -34,7 +34,7 @@ User code `#int` is an alias for `#Int`. The `%##Alias` schema property enables 
 | `#uint` | `#UnsignedInt` | `##UnsignedInt` | `%#:String:uint` |
 | `#float` | `#Float` | `##Float` | `%#:String:float` |
 | `#string` | `#String` | `#String` | `%#:String` |
-| `#emailAddress` | `#String.emailAddress` | `#String.emailAddress` | `%#:String:emailAddress` |
+| `#email` | `#Email` | `##Email` | `%#:String:email` |
 
 **Key distinction (canonical reference):** The single-`#` names (`#Int`, `#Float`, etc.) are **user-facing aliases** — convenient shorthand you write in type annotations. The double-`##` names (`##Int`, `##Float`, etc.) are **schema descriptors** — metadata the compiler enforces on `#String`. `##` describes `#` the way `###` describes leaf fields; a `#` struct can compose multiple `##` schemas as long as they don't contradict. The colon-prefixed names (`:int`, `:float`, etc.) are **metadata tree paths** — flexible-level keys under `%#:String`. Data instances validated by these schemas live at `%#:String:*` on the data tree.
 

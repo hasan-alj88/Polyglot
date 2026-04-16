@@ -66,9 +66,9 @@ See [[scalars]] for all subtypes and [[schemas/String|##String]] for the paramet
 Users can define custom string subtypes with their own `.regex`:
 
 ```polyglot
-{#} #emailAddress
+{#} #phoneNumber
    [#] ##String
-      (#) <regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+      (#) <regex << "^\+?[0-9]{7,15}$"
 ```
 
 ## Metadata

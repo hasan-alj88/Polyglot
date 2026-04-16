@@ -90,9 +90,9 @@ The `##String` parameterized schema provides `##Scalar`, `###ScalarValue`, `.str
 Users can still define custom string subtypes with their own `.regex`:
 
 ```polyglot
-{#} #emailAddress
+{#} #phoneNumber
    [#] ##String
-      (#) <regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+      (#) <regex << "^\+?[0-9]{7,15}$"
 ```
 
 Literal numeric values always match their RE by construction — no error handling needed.

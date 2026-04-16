@@ -51,7 +51,8 @@ RawString (compiler intrinsic) [##Leaf]
 |   +-- #NestedKeyString (.regex = alias-safe paths)
 |   +-- #CommaSeparatedList (.regex = comma-separated identifiers)
 |   +-- #DataTypeString (.regex = valid {x} definition names)
-|   +-- (user-defined: #emailAddress, #phoneNumber, etc.)
+|   +-- #Email (.regex = email addresses)
+|   +-- (user-defined: #phoneNumber, #zipCode, etc.)
 
 #Boolean (##Enum type -- NOT #String) [##Enum, ##Scalar, ###ScalarEnum]
 #None (absence of value -- empty string "") [##Scalar, ###None]
