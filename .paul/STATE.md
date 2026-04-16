@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue #285 — Add -Run.Shell pipeline
-Plan: 285-01 complete (1/1 plans)
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-16 — Closed loop for 285-01
+Phase: Issue-driven — ready for next issue
+Plan: —
+Status: Idle
+Last activity: 2026-04-16 — Closed #285, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -98,6 +98,8 @@ Progress:
 - Issue #280: [██████████] 100% (1/1 plans — %InlineString template system)
 - Issue #281: [██████████] 100% (1/1 plans — -Run.* binding + compile rules)
 - Issue #265: [██████████] 100% (3/3 plans — Queue Handler design spec finalized)
+- Issue #284: [██████████] 100% (1/1 plans — Git triggers for CI/CD)
+- Issue #285: [██████████] 100% (1/1 plans — -Run.Shell pipeline + System.Shell)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -107,18 +109,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #285 — Add -Run.Shell pipeline for shell command execution
-Branch: design/issue-285-add-run-shell-pipeline
-Labels: design, P3-medium, pglib
-Started: 2026-04-16
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/285
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for /paul:merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -272,6 +270,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #281 — -Run.* input binding to native language variables | 2026-04-13 | 4 -Run.* pipeline docs, 7 compile rules (PGE01033-01039), Record field names = native vars |
 | Closed #265 — Finalize Queue Handler design specification | 2026-04-16 | 3 plans: reactive signals/payloads/NATS, cross-doc alignment, signal chain in all -Q.* pipeline docs |
 | Closed #284 — Add Git triggers for CI/CD pipelines | 2026-04-16 | 4 triggers (-T.Git.Hook/Push/PR/Tag), #Git type tree, three-tier model; also created #285 (Run.Shell) and #286 (#Email) |
+| Closed #285 — Add -Run.Shell pipeline for shell command execution | 2026-04-16 | {N} -Run.Shell (language-agnostic), System.Shell capability, Process Lifecycle (Redis job:{UID}:process + QH signals) |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -291,12 +290,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: Loop closed for 285-01
-Next action: Run /paul:merge to commit and merge
+Stopped at: Issue #285 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/285-run-shell-pipeline/285-01-SUMMARY.md
 Resume context:
-- Issue #285 on branch design/issue-285-add-run-shell-pipeline
-- Plan 285-01 loop closed, ready for merge
+- Issue #285 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
