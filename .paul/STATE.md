@@ -13,8 +13,8 @@ Milestone: Language (issue-driven)
 Phase: Issue-driven — #308
 - Issue #308: [██████████] 100% (1/1 plans — comment-only branches + orphaned foreign code)
 Plan: 308-01 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-17 — Loop closed, SUMMARY created
+Status: Idle
+Last activity: 2026-04-17 — Closed #308, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -117,18 +117,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #308 — EBNF edge cases: comment-only branches and unscoped foreign code
-Branch: design/issue-308-ebnf-comment-only-branches-unscoped-foreign-code
-Labels: design, test, P3-medium
-Started: 2026-04-17
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/308
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -310,12 +306,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-17
-Stopped at: UNIFY complete for 308-01
-Next action: Run /paul:merge to commit and merge to main
+Stopped at: Issue #308 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/308-ebnf-comment-branch-foreign-code/308-01-SUMMARY.md
 Resume context:
-- Issue #308 loop closed, ready for merge
-- On branch design/issue-308-ebnf-comment-only-branches-unscoped-foreign-code
+- Issue #308 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
