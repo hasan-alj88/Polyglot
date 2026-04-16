@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-16
+updated: 2026-04-17
 ---
 
 <!-- @ebnf/INDEX -->
@@ -174,5 +174,7 @@ reassemble_collect_io   ::= "(*)" ">" param_name ">>" variable_ref ;
 | `=*Into.Array` | `<Map` \| `<Serial` \| `<Dataframe` | `>Array` | `=ForEach.*` + `*Into.Array` |
 | `=*Into.Map` | `<Array` \| `<Serial` \| `<Dataframe` | `>Map` | `=ForEach.*` + `*Into.Map` |
 | `=*Into.Dataframe` | `<Array` \| `<Map` \| `<Serial` | `>Dataframe` | `=ForEach.*` + `*Into.Dataframe` |
+
+**Schema Enforcement:** The `(=)` expander input is typed to a specific collection schema — `<Collection.Array` requires `##Array`, `<Collection.Serial` requires `##Serial`, etc. Passing an incompatible collection type is caught by standard type checking (`PGE04001`). The per-iteration output shape derives from the collection schema's `%##Active << #ActiveKind.One` property: `##Array` yields a single `>item`, while `##Serial` and `##Record` yield `>key` + `>value` pairs. The compiler desugars `=*` into the equivalent `=ForEach.*` + `*` pair and validates the IO wiring between them using the same type rules as any other pipeline IO. This table documents what the schemas already enforce — no separate reassemble validation layer exists.
 
 ---
