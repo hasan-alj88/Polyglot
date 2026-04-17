@@ -13,8 +13,8 @@ Milestone: Language (issue-driven)
 Phase: Issue-driven — #310
 - Issue #310: [██████████] 100% (1/1 plans — permission-as-resource model)
 Plan: 310-01 complete
-Status: Ready for merge
-Last activity: 2026-04-17 — Permission-as-Resource model documented
+Status: Idle
+Last activity: 2026-04-17 — Closed #310, merged to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -118,18 +118,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #310 — Document [#] data load security model and link to Compile-Time File Binding
-Branch: docs/issue-310-document-data-load-security-model-link-to-comp
-Labels: docs, P3-medium, security
-Started: 2026-04-17
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/310
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Issue #310 ready for merge]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -312,13 +308,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-17
-Stopped at: Issue #310 — UNIFY complete, ready for merge
-Next action: /paul:merge to commit and merge to main
+Stopped at: Issue #310 closed and merged
+Next action: Pick next issue with /paul:work-issue or /paul:issues
 Resume file: .paul/phases/310-permission-as-resource-model/310-01-SUMMARY.md
 Resume context:
-- Issue #310 permission-as-resource model complete
-- On branch docs/issue-310-document-data-load-security-model-link-to-comp
-- ~75 files modified, 2 new compile rules, ready for commit + merge
+- Issue #310 closed and merged to main
+- On main branch, ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
