@@ -24,7 +24,7 @@ Capability-level generic permission for reading files. Sugar over [[INDEX|__File
 ## Usage
 
 ```polyglot
-[_] __File.Read
+(-) __File.Read
    (_) <scope << "/var/log/app/*.log"
 ```
 

@@ -14,7 +14,6 @@ Block elements are square-bracket markers `[X]` that begin each line within a bl
 
 ```ebnf
 block_element       ::= registry_elem
-                      | permission_elem
                       | execution_elem
                       | control_flow_elem
                       | scope_elem
@@ -28,8 +27,9 @@ block_element       ::= registry_elem
 (* Registry *)
 registry_elem       ::= "[@]" ;
 
-(* Permission *)
-permission_elem     ::= "[_]" ;
+(* Permission — RETIRED: [_] block element removed; permissions now use IO markers:
+   (-) _PermName in {-} pipelines, (#) _PermName in {#} definitions,
+   (@) _PermName in {@} packages. See §5.2 IO Brackets. *)
 
 (* Execution *)
 execution_elem      ::= "[-]" | "[=]" | "[b]" | "[#]" ;
@@ -77,7 +77,7 @@ IO brackets use round brackets to distinguish data binding from control instruct
 | `(-)` | Pipeline call (`-Name`) | Pipeline IO — inputs, outputs, errors |
 | `(=)` | Expander (`=ForEach.*`) | Expander IO — expand inputs/outputs |
 | `(*)` | Collector (`*Into.*`, `*All`) | Collector IO — wait/collect bindings |
-| `(_)` | Permission ref (`[_]`) | Permission IO — inputs for `__` generic permissions |
+| `(_)` | Permission ref (under `(-)`, `(#)`, `(@)`) | Permission IO — inputs for `__` generic permissions |
 | `(>)` | Under `(-)` output line | Output parameter handling (fallback) |
 | `(<)` | Under `(-)` input line | Input parameter handling (fallback) |
 | `($)` | Pipeline/chain call | Operation label — names the call for downstream IO access |

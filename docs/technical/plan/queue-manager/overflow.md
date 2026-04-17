@@ -74,8 +74,8 @@ Collectors require `_File.TempWrite` permission for PPTD paths — but **only wh
 
 ```polyglot
 {_} _CollectorOverflow
-   [_] _File.TempWrite
-   [_] .paths << -Q.Overflow.PptdPaths
+   (-) _File.TempWrite
+   (-) .paths << -Q.Overflow.PptdPaths
 ```
 
 ## Error

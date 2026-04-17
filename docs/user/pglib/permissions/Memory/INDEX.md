@@ -25,7 +25,7 @@ Category-level generic permission for memory operations. Takes a capability and 
 ## Usage
 
 ```polyglot
-[_] __Memory
+(-) __Memory
    (_) <capability << .Allocate
    (_) <scope << "512MB"
 ```

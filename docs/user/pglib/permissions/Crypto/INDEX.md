@@ -25,7 +25,7 @@ Category-level generic permission for cryptographic operations. Takes a capabili
 ## Usage
 
 ```polyglot
-[_] __Crypto
+(-) __Crypto
    (_) <capability << .Key
    (_) <scope << "aes-256-gcm"
 ```

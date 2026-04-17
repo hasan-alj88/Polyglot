@@ -25,7 +25,7 @@ Category-level generic permission for inter-process communication. Takes a capab
 ## Usage
 
 ```polyglot
-[_] __IPC
+(-) __IPC
    (_) <capability << .Send
    (_) <scope << "queue://jobs"
 ```

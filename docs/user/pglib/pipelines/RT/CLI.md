@@ -50,14 +50,14 @@ Uses `-W.Polyglot`, not `-W.RT` — no language runtime needed for compiled bina
    [.] .System.Process "*"
 
 {@} @Local:Example.RustBinary
-   [_] _BinaryCeiling
+   (-) _BinaryCeiling
 
 {_} _ToolGrant
    [.] .intent << #Grant
    [.] .System.Process "mytool"
 
 {-} =RunRustTool
-   [_] _ToolGrant
+   (-) _ToolGrant
    (-) <inputPath#path
    (-) >toolOutput#Code:Rust.Output
    [T] -T.Call

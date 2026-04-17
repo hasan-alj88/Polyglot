@@ -24,7 +24,7 @@ Capability-level generic permission for location access. Sugar over [[INDEX|__De
 ## Usage
 
 ```polyglot
-[_] __Device.Location
+(-) __Device.Location
    (_) <scope << "coarse"
 ```
 

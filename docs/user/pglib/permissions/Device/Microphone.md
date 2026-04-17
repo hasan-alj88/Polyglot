@@ -24,7 +24,7 @@ Capability-level generic permission for microphone access. Sugar over [[INDEX|__
 ## Usage
 
 ```polyglot
-[_] __Device.Microphone
+(-) __Device.Microphone
    (_) <scope << "default"
 ```
 

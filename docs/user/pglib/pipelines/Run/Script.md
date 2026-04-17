@@ -94,7 +94,7 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
    [.] .System.Process "python3"
 
 {-} =ResizeImage
-   [_] _ImageGrant
+   (-) _ImageGrant
    (-) <imageFile#path
    (-) <targetWidth#int
    (-) <targetHeight#int

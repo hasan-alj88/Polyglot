@@ -31,5 +31,5 @@ Error declarations are mandatory for failable pipelines. A pipeline without `(-)
 ## See Also
 
 - [[concepts/pipelines/error-handling|Error Handling]] — `[!]` block scoping and fallback patterns
-- [[concepts/pipelines/permissions|Permissions]] — `[_]` permission lines that precede IO
+- [[concepts/pipelines/permissions|Permissions]] — permission IO declarations that precede triggers
 - [[concepts/pipelines/INDEX|Pipeline Structure]] — full pipeline element ordering

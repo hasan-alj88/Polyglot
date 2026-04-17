@@ -120,13 +120,42 @@ data_load           ::= "[#]" assign_target assignment_op ( pipeline_call | data
 
 **In execution:** `[#] $hire#NewHire << $payload` — deserialize serialized data into a typed structure.
 
-**In `{#}` definitions:** `[#]` can load external serialized files:
+**In `{#}` definitions:** `[#]` can load external serialized files. The file access is mediated through a `{_}` permission object declared via `(#)` IO on the definition. The compiler resolves the permission object's `.path` field, reads the file, and content-hashes it at compile time. See [[concepts/permissions/enforcement#Compile-Time File Binding]].
 
 ```polyglot
-[#] #file1 << -Json.LoadFile"/config/appsettings.json"
-[#] #file2 << -Yaml.LoadFile"/config/appsettings.yaml"
+[ ] Permission objects define the file resources
+{_} _AppConfig
+   [.] .intent << #Grant
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/config/appsettings.json"
+   [.] .path "/config/appsettings.json"
+   [.] .format #JSON
+
+{_} _YAMLFile
+   (_) <file#path
+   [.] .intent << #Grant
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "{<file}"
+   [.] .path "{<file}"
+   [.] .format #YAML
+
+[ ] {#} definitions declare file dependencies via (#)
+{#} #Config
+   (#) _AppConfig
+   [#] #file1 << -Json.LoadFile
+      (-) <source << _AppConfig
+   [.] .dbConnection#string <~ #file1.db.connectionString
+
+{#} #Config2
+   (#) _YAMLFile
+      (_) <file << "/config/appsettings.yaml"
+   [#] #file2 << -Yaml.LoadFile
+      (-) <source << _YAMLFile
+   [.] .reportFolder#string <~ #file2.report.folder
 ```
 
-Fields can then reference loaded file data: `.dbConnection#string <~ #file1.db.connectionString`. Default error handling raises a compile error if the file is missing. Value changes propagate across the codebase where referenced.
+Fields reference loaded file data: `.dbConnection#string <~ #file1.db.connectionString`. If the file at `.path` is missing, the compiler raises PGE10010. If the file changes after compilation, the associated permission is revoked and the pipeline refuses to execute until recompiled.
 
 ---

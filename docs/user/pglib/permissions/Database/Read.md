@@ -24,7 +24,7 @@ Capability-level generic permission for reading from databases. Sugar over [[IND
 ## Usage
 
 ```polyglot
-[_] __Database.Read
+(-) __Database.Read
    (_) <scope << "postgres://db.internal/analytics"
 ```
 

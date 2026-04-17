@@ -24,7 +24,7 @@ Capability-level generic permission for deleting files. Sugar over [[INDEX|__Fil
 ## Usage
 
 ```polyglot
-[_] __File.Delete
+(-) __File.Delete
    (_) <scope << "/tmp/cache/*"
 ```
 

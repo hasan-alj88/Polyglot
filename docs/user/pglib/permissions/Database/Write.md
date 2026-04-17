@@ -24,7 +24,7 @@ Capability-level generic permission for writing to databases. Sugar over [[INDEX
 ## Usage
 
 ```polyglot
-[_] __Database.Write
+(-) __Database.Write
    (_) <scope << "postgres://db.internal/analytics"
 ```
 

@@ -24,7 +24,7 @@ Capability-level generic permission for receiving messages. Sugar over [[INDEX|_
 ## Usage
 
 ```polyglot
-[_] __IPC.Receive
+(-) __IPC.Receive
    (_) <scope << "queue://results"
 ```
 

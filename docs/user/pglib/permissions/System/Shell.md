@@ -24,7 +24,7 @@ Capability-level generic permission for shell command execution. Sugar over [[IN
 ## Usage
 
 ```polyglot
-[_] __System.Shell
+(-) __System.Shell
    (_) <scope << "*"
 ```
 

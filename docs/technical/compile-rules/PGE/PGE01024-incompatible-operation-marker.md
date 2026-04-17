@@ -58,4 +58,4 @@ severity: error
 
 **Diagnostic:** "Operation `-Name` is not compatible with `[marker]` — check allowed markers"
 
-**Open point:** pglib pipeline files need `[_]`-style marker compatibility declarations added. Tracked as future work.
+**Open point:** pglib pipeline files need IO-based marker compatibility declarations added. Tracked as future work.

@@ -119,10 +119,26 @@ updated: 2026-04-17
    (-) >content >> $data
       (<) !< "/default/path.txt"
 
-[ ] ✓ data load with inline pipeline fallback
-[#] $config#Settings << -Json.LoadFile"/config.json"
+[ ] ✓ data load with permission-mediated file access
+[ ] Each {_} in the fallback chain is independently content-hashed
+{_} _PrimaryConfig
+   [.] .intent << #Grant
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/config/config.json"
+   [.] .path "/config/config.json"
+   [.] .format #JSON
+
+{_} _DefaultConfig
+   [.] .intent << #Grant
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/config/defaults.json"
+   [.] .path "/config/defaults.json"
+   [.] .format #JSON
+
 [ ] ✓ — if the pipeline can fail, add fallback chain:
-[#] $config#Settings !< -Json.LoadFile"/config.json" !< -Json.LoadFile"/defaults.json" !< $hardcodedConfig
+[#] $config#Settings !< -Json.LoadFile(_PrimaryConfig) !< -Json.LoadFile(_DefaultConfig) !< $hardcodedConfig
 ```
 
 ```polyglot

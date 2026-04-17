@@ -297,6 +297,8 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
     |                                           → [[branches#Permission Branch]], [[permissions]]
     |
     +-- :(name)                                  %_:{name}
+        +-- ._input                              template inputs (if template)
+        |   +-- :(param)                         (_) declared inputs, resolved at compile time
         +-- .intent#PermissionIntent
         +-- .target                              __PermissionTarget
         |   +-- .category#PermissionCategory
@@ -312,12 +314,23 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
         |   +-- .os#OSTarget
         |   +-- .protocol#Protocol
         |   +-- .handle#HandleKind
+        |   +-- .locator                         __ResourceLocator (category-dependent)
+        |       +-- .path#path                   File: required
+        |       +-- .format#SerialFormat         File: optional (YAML, JSON, TOML)
+        |       +-- .host#string                 Database/Web
+        |       +-- .port#int                    Database/Web
+        |       +-- .endpoint#string             Web
+        |       +-- .credentials#path            Database (also content-hashed)
+        |       +-- .database#string             Database
+        |       +-- .table#string                Database
+        |       +-- .command#string              System
+        |       +-- .args#string                 System
         +-- .audit                               __PermissionAudit
             +-- .log#AuditLevel
             +-- .alert#AlertLevel
 
-    Identifier tiers:  _  = permission object
-                        __ = permission descriptor (schema)
+    Identifier tiers:  _  = permission object (instance or resolved template)
+                        __ = permission descriptor (schema/generic template)
                        ___ = constraint descriptor
 ```
 

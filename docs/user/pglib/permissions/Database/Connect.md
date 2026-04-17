@@ -24,7 +24,7 @@ Capability-level generic permission for connecting to databases. Sugar over [[IN
 ## Usage
 
 ```polyglot
-[_] __Database.Connect
+(-) __Database.Connect
    (_) <scope << "postgres://db.internal/analytics"
 ```
 

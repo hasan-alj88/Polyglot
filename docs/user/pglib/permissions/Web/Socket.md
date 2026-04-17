@@ -24,7 +24,7 @@ Capability-level generic permission for WebSocket connections. Sugar over [[INDE
 ## Usage
 
 ```polyglot
-[_] __Web.Socket
+(-) __Web.Socket
    (_) <scope << "wss://stream.example.com/*"
 ```
 
