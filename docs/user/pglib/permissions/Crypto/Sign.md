@@ -24,7 +24,7 @@ Capability-level generic permission for signing operations. Sugar over [[INDEX|_
 ## Usage
 
 ```polyglot
-[_] __Crypto.Sign
+(-) __Crypto.Sign
    (_) <scope << "ed25519"
 ```
 

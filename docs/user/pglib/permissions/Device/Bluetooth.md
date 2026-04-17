@@ -24,7 +24,7 @@ Capability-level generic permission for Bluetooth access. Sugar over [[INDEX|__D
 ## Usage
 
 ```polyglot
-[_] __Device.Bluetooth
+(-) __Device.Bluetooth
    (_) <scope << "ble"
 ```
 

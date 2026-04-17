@@ -14,29 +14,44 @@ severity: error
 <!-- @u:syntax/operators -->
 <!-- @u:syntax/types -->
 
-**Statement:** A `{_}` permission object block may only contain `[.]` field lines. Any other block element marker (`[-]`, `(-)`, `[=]`, `[T]`, `[Q]`, `[W]`, `[b]`, etc.) inside a `{_}` block is a compile error. Permission objects are static declarations — they do not execute pipelines, declare IO, or contain computation.
-**Rationale:** `{_}` blocks define compile-time permission policies using fixed `[.]` field lines: `.intent`, `.Category.Capability`, and schema fields. They have no runtime behavior. Allowing execution markers would confuse the permission model with pipeline execution and create declarations that the compiler cannot enforce as static policies.
-**Detection:** The compiler checks all lines within `{_}` blocks. If any line uses a marker other than `[.]`, PGE10005 fires immediately on the offending line. Valid `{_}` content: `[.] .intent << #Ceiling` or `#Grant`, `[.] .Category.Capability "scope"`, and `[ ]` comment lines.
+**Statement:** A `{_}` permission object block may only contain `[.]` field lines, `(_)` template input declarations, and `[ ]` comment lines. Any other block element marker (`[-]`, `(-)`, `[=]`, `[T]`, `[Q]`, `[W]`, `[b]`, etc.) inside a `{_}` block is a compile error. Permission objects are static declarations — they do not execute pipelines, declare pipeline IO, or contain computation.
+**Rationale:** `{_}` blocks define compile-time permission policies using `[.]` field lines for `.intent`, `.category`, `.capability`, `.scope`, and resource locator fields (`.path`, `.host`, etc.). Template definitions additionally use `(_)` input declarations to parameterize fields. They have no runtime behavior. Allowing execution markers would confuse the permission model with pipeline execution and create declarations that the compiler cannot enforce as static policies.
+**Detection:** The compiler checks all lines within `{_}` blocks. If any line uses a marker other than `[.]`, `(_)`, or `[ ]`, PGE10005 fires immediately on the offending line. Valid `{_}` content: `(_) <param#type` (template input), `[.] .intent << #Ceiling` or `#Grant`, `[.] .field value` (decomposed fields), and `[ ]` comment lines.
 
-**See also:** PGE10003 (unknown permission category), PGE01024 (incompatible operation marker — general), [[permissions#{_} Permission Objects]]
+**See also:** PGE10003 (unknown permission category), PGE01024 (incompatible operation marker — general), PGE10009 (unresolved permission template), [[permissions#{_} Permission Objects]]
 
 **VALID:**
 ```polyglot
-[ ] ✓ {_} block uses only [.] field lines
+[ ] ✓ {_} instance uses only [.] field lines
 {_} _DataAccess
    [.] .intent << #Grant
-   [.] .File.Read "/data/reports/*.csv"
-   [.] .Database.Read "analytics.postgres"
-   [ ] grants read access to reports and analytics DB
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/data/reports/*.csv"
+   [.] .path "/data/reports/q1.csv"
+   [ ] grants read access to reports
 ```
 
 ```polyglot
-[ ] ✓ ceiling uses only [.] field lines with glob patterns
+[ ] ✓ {_} template uses (_) inputs + [.] field lines
+{_} _YAMLFile
+   (_) <file#path
+   [.] .intent << #Grant
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "{<file}"
+   [.] .path "{<file}"
+   [.] .format #YAML
+```
+
+```polyglot
+[ ] ✓ ceiling uses glob patterns
 {_} _AppCeiling
    [.] .intent << #Ceiling
-   [.] .File.Read "/data/*"
-   [.] .File.Write "/tmp/*"
-   [.] .Web.Request "https://api.example.com/*"
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/data/*"
+   [.] .path "/data/*"
 ```
 
 **INVALID:**
@@ -44,16 +59,20 @@ severity: error
 [ ] ✗ PGE10005 — [-] execution marker inside {_} block
 {_} _BadPermission
    [.] .intent << #Grant
-   [.] .File.Read "/data/*"
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/data/*"
    [-] $data << -File.Text.Read >> "/data/test.csv"    [ ] ✗ PGE10005 — [-] not allowed in {_}
 ```
 
 ```polyglot
-[ ] ✗ PGE10005 — (-) IO marker inside {_} block
+[ ] ✗ PGE10005 — (-) pipeline IO marker inside {_} block
 {_} _BadIO
    [.] .intent << #Grant
-   (-) <path#string                                     [ ] ✗ PGE10005 — (-) not allowed in {_}
-   [.] .File.Read "/data/*"
+   (-) <path#string                                     [ ] ✗ PGE10005 — (-) not allowed in {_}; use (_) for template inputs
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/data/*"
 ```
 
 ```polyglot
@@ -61,7 +80,9 @@ severity: error
 {_} _BadTrigger
    [.] .intent << #Grant
    [T] -T.Manual                                        [ ] ✗ PGE10005 — [T] not allowed in {_}
-   [.] .File.Read "/data/*"
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/data/*"
 ```
 
 **Open point:** None.

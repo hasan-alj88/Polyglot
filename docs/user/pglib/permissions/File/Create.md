@@ -24,7 +24,7 @@ Capability-level generic permission for creating files. Sugar over [[INDEX|__Fil
 ## Usage
 
 ```polyglot
-[_] __File.Create
+(-) __File.Create
    (_) <scope << "/tmp/output/*"
 ```
 

@@ -79,7 +79,7 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
    [.] .System.Process "*"
 
 {@} @Local:Example.PythonStats
-   [_] _RuntimeCeiling
+   (-) _RuntimeCeiling
 
 {;} ;PyStats
    [.] .language << "python"
@@ -95,7 +95,7 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
    [.] .stdev#float
 
 {-} =CalculateStats
-   [_] _PythonGrant
+   (-) _PythonGrant
    (-) <numbers#array.float
    (-) >result#Code:Python.Output
    (-) >stats#StatsResult

@@ -78,7 +78,7 @@ No code or binding validation applies to `-Run.Shell`:
    [.] .System.Shell "*"
 
 {@} @Local:Example.GitStatus
-   [_] _ShellCeiling
+   (-) _ShellCeiling
 
 {_} _ShellGrant
    [.] .intent << #Grant
@@ -91,7 +91,7 @@ No code or binding validation applies to `-Run.Shell`:
    [.] .stderr#string
 
 {-} =GetGitStatus
-   [_] _ShellGrant
+   (-) _ShellGrant
    (-) <repoPath#path
    (-) >result#ShellResult
    [T] -T.Call

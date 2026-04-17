@@ -24,7 +24,7 @@ Capability-level generic permission for writing files. Sugar over [[INDEX|__File
 ## Usage
 
 ```polyglot
-[_] __File.Write
+(-) __File.Write
    (_) <scope << "/tmp/reports/*"
 ```
 

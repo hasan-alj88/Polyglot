@@ -25,7 +25,7 @@ Category-level generic permission for device access operations. Takes a capabili
 ## Usage
 
 ```polyglot
-[_] __Device
+(-) __Device
    (_) <capability << .Camera
    (_) <scope << "front"
 ```

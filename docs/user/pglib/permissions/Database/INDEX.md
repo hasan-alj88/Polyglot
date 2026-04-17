@@ -25,7 +25,7 @@ Category-level generic permission for database operations. Takes a capability an
 ## Usage
 
 ```polyglot
-[_] __Database
+(-) __Database
    (_) <capability << .Connect
    (_) <scope << "postgres://db.internal/analytics"
 ```

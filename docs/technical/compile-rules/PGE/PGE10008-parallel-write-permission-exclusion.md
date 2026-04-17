@@ -15,17 +15,20 @@ severity: error
 
 **Statement:** Concurrent parallel jobs (`[=]`) may not hold write permission to the same resource path. If two or more `[=]` jobs in the same parallel scope reference `{_}` grant objects with overlapping write targets (same file path, database table, network endpoint, etc.), the compiler emits PGE10008. Read permission to the same resource is allowed across parallel jobs.
 **Rationale:** Parallel jobs are pure readers by design — write contention is eliminated at compile time through the permission system. This makes [[glossary#Reconciliation|reconciliation]] safe by construction: no runtime locks, mutexes, or transactional memory are needed. Only sequential code after collection can write to shared resources.
-**Detection:** The compiler resolves all `{_}` grant objects referenced by `[_]` in each `[=]` job within a parallel scope. For each write capability (`.File.Write`, `.Database.Write`, etc.), the compiler checks whether any two parallel jobs have overlapping resource paths. Overlap is determined by glob intersection — if the grant patterns of two jobs can match the same concrete path, PGE10008 fires.
+**Detection:** The compiler resolves all `{_}` grant objects referenced by permission IO declarations (`(-) _PermName`) in each `[=]` job within a parallel scope. For each write capability (`.capability #Write` under `.category #File`, `.category #Database`, etc.), the compiler checks whether any two parallel jobs have overlapping resource paths. Overlap is determined by glob intersection — if the grant patterns of two jobs can match the same concrete path, PGE10008 fires.
 
 **VALID:**
 ```polyglot
 { } ✓ parallel jobs read the same file — no write contention
 {_} _ReadGrant
    [.] .intent << #Grant
-   [.] .File.Read "data/input.csv"
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "data/input.csv"
+   [.] .path "data/input.csv"
 
 {-} -ProcessData
-   [_] _ReadGrant
+   (-) _ReadGrant
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
@@ -46,21 +49,27 @@ severity: error
 { } ✓ parallel jobs write to DIFFERENT files — no overlap
 {_} _WriteGrantA
    [.] .intent << #Grant
-   [.] .File.Write "output/stats.json"
+   [.] .category #File
+   [.] .capability #Write
+   [.] .scope "output/stats.json"
+   [.] .path "output/stats.json"
 
 {_} _WriteGrantB
    [.] .intent << #Grant
-   [.] .File.Write "output/schema.json"
+   [.] .category #File
+   [.] .capability #Write
+   [.] .scope "output/schema.json"
+   [.] .path "output/schema.json"
 
 {-} -WriteResults
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
    [=] -Write.Stats
-      [_] _WriteGrantA
+      (-) _WriteGrantA
       (-) <data << $stats
    [=] -Write.Schema
-      [_] _WriteGrantB
+      (-) _WriteGrantB
       (-) <data << $schema
    [*] *All
       (*) << $statsResult
@@ -72,17 +81,20 @@ severity: error
 { } ✗ PGE10008 — two parallel jobs write to the same file
 {_} _WriteGrant
    [.] .intent << #Grant
-   [.] .File.Write "output/result.json"
+   [.] .category #File
+   [.] .capability #Write
+   [.] .scope "output/result.json"
+   [.] .path "output/result.json"
 
 {-} -ConflictingWrites
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
    [=] -Write.PartA
-      [_] _WriteGrant                   [ ] ✗ writes to output/result.json
+      (-) _WriteGrant                   [ ] ✗ writes to output/result.json
       (-) <data << $partA
    [=] -Write.PartB
-      [_] _WriteGrant                   [ ] ✗ PGE10008 — same write target
+      (-) _WriteGrant                   [ ] ✗ PGE10008 — same write target
       (-) <data << $partB
    [*] *All
       (*) << $resultA
@@ -93,20 +105,26 @@ severity: error
 { } ✗ PGE10008 — overlapping glob patterns
 {_} _WriteAll
    [.] .intent << #Grant
-   [.] .File.Write "output/*.json"
+   [.] .category #File
+   [.] .capability #Write
+   [.] .scope "output/*.json"
+   [.] .path "output/*.json"
 
 {_} _WriteReports
    [.] .intent << #Grant
-   [.] .File.Write "output/report-*.json"
+   [.] .category #File
+   [.] .capability #Write
+   [.] .scope "output/report-*.json"
+   [.] .path "output/report-*.json"
 
 {-} -OverlappingWrites
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
    [=] -Write.General
-      [_] _WriteAll                     [ ] ✗ output/*.json
+      (-) _WriteAll                     [ ] ✗ output/*.json
    [=] -Write.Reports
-      [_] _WriteReports                 [ ] ✗ PGE10008 — output/report-*.json ⊂ output/*.json
+      (-) _WriteReports                 [ ] ✗ PGE10008 — output/report-*.json ⊂ output/*.json
    [*] *All
       (*) << $generalResult
       (*) << $reportResult

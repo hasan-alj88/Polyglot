@@ -24,7 +24,7 @@ Capability-level generic permission for sending messages. Sugar over [[INDEX|__I
 ## Usage
 
 ```polyglot
-[_] __IPC.Send
+(-) __IPC.Send
    (_) <scope << "queue://jobs"
 ```
 

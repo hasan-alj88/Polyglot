@@ -24,7 +24,7 @@ Capability-level generic permission for accessing environment variables. Sugar o
 ## Usage
 
 ```polyglot
-[_] __System.Env
+(-) __System.Env
    (_) <scope << "DATABASE_URL"
 ```
 

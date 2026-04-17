@@ -24,7 +24,7 @@ Capability-level generic permission for memory allocation. Sugar over [[INDEX|__
 ## Usage
 
 ```polyglot
-[_] __Memory.Allocate
+(-) __Memory.Allocate
    (_) <scope << "512MB"
 ```
 

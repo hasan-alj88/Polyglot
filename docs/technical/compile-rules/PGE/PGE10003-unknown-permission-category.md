@@ -14,9 +14,9 @@ severity: error
 <!-- @u:syntax/operators -->
 <!-- @u:syntax/types -->
 
-**Statement:** A `{_}` permission object's `[.]` field lines must use a known `category_name.capability_name` pair. Polyglot defines exactly 8 permission categories with fixed capabilities (see [[permissions#Per-Category Capability Enums]]). If a `[.]` field line references a category or capability not in the predefined set, PGE10003 fires.
+**Statement:** A `{_}` permission object's `[.]` field lines must use known field names. The `.category` field must be one of the 8 predefined categories, and the `.capability` field must be a valid capability for that category (see [[permissions#Per-Category Capability Enums]]). If a field references a category or capability not in the predefined set, PGE10003 fires.
 **Rationale:** Permission categories are Polyglot-defined, not user-extensible. An unknown category would create a permission that no IO operation can consume — it cannot grant or restrict anything. Catching this at compile time prevents silent misconfiguration where a developer believes they have granted a capability that does not exist.
-**Detection:** The compiler parses each `[.] .Category.Capability` field line in `{_}` blocks and checks against the known set: File (Read, Write, Execute, Delete), Web (Request, Socket), Database (Connect, Read, Write), System (Env, Process, Signal), Crypto (Key, Sign, Encrypt), IPC (Send, Receive, Subscribe), Device (Camera, Microphone, Location, Bluetooth), Memory (Allocate, Shared). If the category or capability is not in this set, PGE10003 fires.
+**Detection:** The compiler parses each `[.] .category` and `[.] .capability` field in `{_}` blocks and checks against the known set: File (Read, Write, Execute, Delete, Create), Web (Request, Socket, Listen), Database (Connect, Read, Write), System (Env, Process, Signal, Shell), Crypto (Key, Sign, Encrypt), IPC (Send, Receive, Subscribe), Device (Camera, Microphone, Location, Bluetooth), Memory (Allocate, Shared). If the value is not in this set, PGE10003 fires.
 
 **See also:** PGE10004 (undeclared permission — using IO without permission), PGE10006 (duplicate permission), [[permissions#Per-Category Capability Enums]]
 
@@ -25,23 +25,29 @@ severity: error
 [ ] ✓ all permission categories and capabilities are known
 {_} _LogAccess
    [.] .intent << #Ceiling
-   [.] .File.Read "/var/log/*"
-   [.] .Web.Request "https://api.example.com/*"
-   [.] .System.Env "LOG_LEVEL"
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/var/log/*"
+   [.] .path "/var/log/*"
 
 {_} _AppGrant
    [.] .intent << #Grant
-   [.] .File.Read "/var/log/app/*"
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/var/log/app/*"
+   [.] .path "/var/log/app/current.log"
 
 {@} @Local:999.MyApp:v1.0.0
-   [_] _LogAccess
+   (@) _LogAccess
 
 {-} -ReadLogs
-   [_] _AppGrant
+   (-) _AppGrant
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
-   [-] $content << -File.Text.Read >> "/var/log/app/current.log"
+   [-] -File.Text.Read
+      (-) <path << _AppGrant
+      (-) >content >> $content
 ```
 
 **INVALID:**
@@ -49,21 +55,29 @@ severity: error
 [ ] ✗ PGE10003 — unknown category "Network"
 {_} _BadCategory
    [.] .intent << #Grant
-   [.] .Network.Send "*"                       [ ] ✗ PGE10003 — Network is not a known category
+   [.] .category #Network                         [ ] ✗ PGE10003 — Network is not a known category
+   [.] .capability #Send
+   [.] .scope "*"
 ```
 
 ```polyglot
 [ ] ✗ PGE10003 — unknown capability "Rename" under known category File
 {_} _BadCapability
    [.] .intent << #Grant
-   [.] .File.Rename "/tmp/*"                   [ ] ✗ PGE10003 — File.Rename is not a known capability
+   [.] .category #File
+   [.] .capability #Rename                        [ ] ✗ PGE10003 — Rename is not a known File capability
+   [.] .scope "/tmp/*"
+   [.] .path "/tmp/*"
 ```
 
 ```polyglot
 [ ] ✗ PGE10003 — unknown capability "Delete" under known category Web
 {_} _BadWebCap
    [.] .intent << #Grant
-   [.] .Web.Delete "https://api.example.com/*" [ ] ✗ PGE10003 — Web.Delete is not a known capability
+   [.] .category #Web
+   [.] .capability #Delete                        [ ] ✗ PGE10003 — Delete is not a known Web capability
+   [.] .scope "https://api.example.com/*"
+   [.] .host "api.example.com"
 ```
 
 **Open point:** None.

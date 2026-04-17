@@ -24,7 +24,7 @@ Capability-level generic permission for listening on ports. Sugar over [[INDEX|_
 ## Usage
 
 ```polyglot
-[_] __Web.Listen
+(-) __Web.Listen
    (_) <scope << ":8080"
 ```
 

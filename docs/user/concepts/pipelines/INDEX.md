@@ -18,7 +18,7 @@ Every pipeline definition `{-}` (see [[blocks]]) must contain these elements in 
 | Order | Element | Marker | Required |
 |-------|---------|--------|----------|
 | 0 | Metadata | `[%]` | Optional |
-| 1 | Permissions | `[_]` | Optional |
+| 1 | Permissions | `(-) _PermName` | Optional |
 | 2 | Trigger / IO / Errors | `[T]`, `(-)` | `[T]` mandatory†, `(-)` optional |
 | 3 | Queue | `[Q]` | Mandatory† |
 | 4 | Wrapper | `[W]` | Mandatory† |

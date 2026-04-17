@@ -147,7 +147,7 @@ Nested sub-jobs extend the positional path:
 
 ```polyglot
 %_
-+-- :DataCeiling                       <- named {_} permission object
++-- :Secrets                           <- named {_} permission object (instance)
 |   +-- .intent                        #PermissionIntent (Ceiling | Grant)
 |   +-- .target                        __PermissionTarget
 |   |   +-- .category                  #PermissionCategory (File, Web, Database, System, Crypto, IPC, Device, Memory)
@@ -163,21 +163,40 @@ Nested sub-jobs extend the positional path:
 |   |   +-- .os                        #OSTarget (Any, Linux, Windows, MacOS)
 |   |   +-- .protocol                  #Protocol (File, TCP, UDP, HTTPS, IPC, SharedMemory, USB, Bluetooth)
 |   |   +-- .handle                    #HandleKind (Path, ConnectionString, Descriptor, Address, DeviceID)
+|   |   +-- .locator                   __ResourceLocator (category-dependent fields)
+|   |       +-- .path                  #path (File: required)
+|   |       +-- .format                #SerialFormat (File: optional — YAML, JSON, TOML)
+|   |       +-- .host                  #string (Database/Web)
+|   |       +-- .port                  #int (Database/Web)
+|   |       +-- .endpoint              #string (Web)
+|   |       +-- .credentials           #path (Database — also content-hashed)
+|   |       +-- .database              #string (Database)
+|   |       +-- .table                 #string (Database)
+|   |       +-- .command               #string (System)
+|   |       +-- .args                  #string (System)
 |   +-- .audit                         __PermissionAudit
 |       +-- .log                       #AuditLevel (None, OnUse, OnDeny, All)
 |       +-- .alert                     #AlertLevel (None, OnDeny, OnEscalation)
-+-- :ReportReader                      <- another named {_} object
++-- :YAMLFile                          <- named {_} permission template
+|   +-- ._input                        template inputs (resolved at compile time)
+|   |   +-- :file                      #path — caller provides via (_) <file
+|   +-- ...                            (same fields as instance, with {<file} interpolation)
++-- :ProductionDB                      <- another named {_} object
     +-- ...
 ```
 
 ### Key Properties
 
-- **Named objects** — each `{_}` definition creates a named entry under `%_` (e.g., `%_:DataCeiling`). Object names use `:` flexible navigation.
+- **Named objects** — each `{_}` definition creates a named entry under `%_` (e.g., `%_:Secrets`). Object names use `:` flexible navigation.
 - **Fixed subfields (`.`)** — all fields within a permission object use `.` fixed-field navigation. The `__Permission` schema is Polyglot-defined, not user-extensible.
+- **Resource locator fields** — `.resource.locator` carries category-dependent fields (`.path`, `.host`, `.credentials`, etc.) that identify the specific external resource. Pipelines receive the whole `_` object and extract fields they need.
+- **Template inputs** — `{_}` templates have a `._input` subsection listing `(_)` declared parameters. Templates resolve to concrete instances at compile time — "never generic at resolution."
 - **No instances** — permissions are per-definition, resolved at compile time. No `:{instance}` level exists. No runtime metadata.
 - **No `live` fields** — all permission data is static. The compiler resolves permissions entirely during compilation.
 - **Fully filled** — every `{_}` object must have all leaf fields assigned. Empty leaves are a compile error.
-- **Identifier prefixes** — permissions are data trees using `#`/`##`/`###` pattern: `_` = `##Permission` struct instance (all leaves filled), `__` = generic template with `[#]` inputs, `___` = specific field within the permission object.
+- **Content hashing** — for file-category permissions, the compiler reads `.path` and computes a content hash stored in the compiled output. File changes revoke the permission. See [[permissions/enforcement#Compile-Time File Binding]].
+- **Identifier prefixes** — permissions are data trees using `#`/`##`/`###` pattern: `_` = `##Permission` struct instance (all leaves filled), `__` = generic template with `(_)` inputs, `___` = specific field within the permission object.
+- **Permissions as IO** — blocks reference `{_}` objects through their IO markers: `(#) _PermName` on `{#}`, `(-) _PermName` on `{-}`. The `[_]` block-level marker is retired.
 - **Nested under `%@` and `%-`** — permissions also appear as `._` subsections under package (`%@:<address>._`) and pipeline (`%-:<name>:<instance>._`) branches, representing the package ceiling and pipeline-level grant references respectively.
 
 See also: [[io-ports|IO Port Nesting]], [[instance-lifecycle|Instance Lifecycle]], [[object-types|Object Type Branches]]

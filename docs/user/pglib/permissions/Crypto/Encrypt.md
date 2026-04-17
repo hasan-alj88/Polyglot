@@ -24,7 +24,7 @@ Capability-level generic permission for encryption operations. Sugar over [[INDE
 ## Usage
 
 ```polyglot
-[_] __Crypto.Encrypt
+(-) __Crypto.Encrypt
    (_) <scope << "aes-256-gcm"
 ```
 

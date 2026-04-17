@@ -25,7 +25,7 @@ Category-level generic permission for system-level operations. Takes a capabilit
 ## Usage
 
 ```polyglot
-[_] __System
+(-) __System
    (_) <capability << .Env
    (_) <scope << "DATABASE_URL"
 ```

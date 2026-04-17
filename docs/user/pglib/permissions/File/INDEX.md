@@ -25,7 +25,7 @@ Category-level generic permission for file system operations. Takes a capability
 ## Usage
 
 ```polyglot
-[_] __File
+(-) __File
    (_) <capability << .Read
    (_) <scope << "/var/log/*"
 ```

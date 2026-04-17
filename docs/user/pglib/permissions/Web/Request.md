@@ -24,7 +24,7 @@ Capability-level generic permission for HTTP requests. Sugar over [[INDEX|__Web]
 ## Usage
 
 ```polyglot
-[_] __Web.Request
+(-) __Web.Request
    (_) <scope << "https://api.example.com/*"
 ```
 

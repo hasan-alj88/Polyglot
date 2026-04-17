@@ -28,7 +28,7 @@ Define top-level structures. Open a scope that continues with indentation. All d
 | `{W}` | Wrapper definition (subtype of `{-}`). See [[wrappers]] |
 | `{Q}` | Queue — dual-purpose block. `{Q} #Queue:Name` defines a queue instance (subtype of `{#}`, data definition). `{Q} -Q.*` defines a queue pipeline operation (subtype of `{-}`, equivalent to `{-}[Q]`). The identifier prefix (`#` vs `-`) disambiguates. See [[concepts/pipelines/queue#Queue]] |
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
-| `{_}` | Permission object — `##Permission` struct instance with all leaves filled. `_`/`__`/`___` mirror `#`/`##`/`###` (instance, template, field). See [[permissions]] |
+| `{_}` | Permission object — `##Permission` struct instance with all leaves filled. Carries both grant (capability) and resource locator (path, host, etc.). Supports `(_)` input lines for templates. `_`/`__`/`___` mirror `#`/`##`/`###` (instance, template, field). See [[permissions]] |
 | `{N}` | Native definition — compiler primitive with no Polyglot body. `[%]` metadata implicitly scopes to `%Native.*`. Non-user-extendable. See [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
 | `{*}` | Collector definition — first-class definable collector logic. Metadata at `%*`. See [[technical/spec/collector-definitions\|Collector Definitions]] |
 | `{ }` | Comment. See [[comments]] |
@@ -47,15 +47,6 @@ Mark individual lines within blocks.
 |--------|---------|
 | `[@]` | Import/register package |
 
-### Permissions
-
-<!-- @c:permissions -->
-See [[permissions]] for inline/IO forms, permission categories, and hierarchical scoping rules.
-
-| Marker | Meaning |
-|--------|---------|
-| `[_]` | Permission reference — references a named `{_}` permission object by name (e.g., `[_] _MyCeiling`) |
-
 ### Data Flow
 
 <!-- @u:io -->
@@ -66,7 +57,9 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `(-)` | Pipeline IO line — scopes to parent operator via indentation (top-level IO, `[Q]`, `[W]`, `[-]`/`[=]`/`[b]`). See [[io#IO Line Pattern]] |
 | `(=)` | Collection-expand IO line. See [[concepts/collections/expand#Expand Operators]] |
 | `(*)` | Collection-collect IO line. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
-| `(_)` | Permission IO line — scopes to `[_]` permission references for `__` generic permission inputs. See [[permissions#__ Generic Permissions]] |
+| `(_)` | Permission IO line — (1) input declaration inside `{_}` template definitions, (2) template input values when referencing `__` generic permissions or `{_}` templates with `(_)` inputs. See [[permissions#__ Generic Permissions]] |
+| `(#) _PermName` | Permission dependency on `{#}` data definitions — declares that this definition requires the named `{_}` permission object. See [[permissions#Permissions as IO]] |
+| `(-) _PermName` | Permission dependency on `{-}` pipelines — declares that this pipeline requires the named `{_}` permission object. See [[permissions#Permissions as IO]] |
 | `(*) <<` | Wait input — wait for variable to be Final (used inside `(*)` blocks). See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `(*) >>` | Collect output — in race blocks, losing inputs cancelled, output receives winner. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `(>)` | Output parameter handling — scoped under `(-)` output line. See [[io#IO Parameter Handling]] |
@@ -85,7 +78,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `[=]` | Run/execute in parallel — double line (`=`) symbolizes two parallel threads |
 | `[b]` | Run/execute in background (fire and forget) |
 | `[*]` | Invoke a collector operator (`*All`, `*First`, `*Nth`, `*Ignore`). IO lines underneath use `(*)`. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
-| `[#]` | Load serialized data into typed structure |
+| `[#]` | Load serialized data into typed structure. In `{#}` definitions, loads external files at compile time — requires `(#) _PermName` permission input. Subject to [[permissions/enforcement#Compile-Time File Binding]] (content-hashed, permission-revoked on change). See [[ebnf/10-execution#Data Load]] |
 
 ### Control Flow
 

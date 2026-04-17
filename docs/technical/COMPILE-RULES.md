@@ -230,6 +230,8 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE10006 | Duplicate Permission |
 | PGE10007 | Chain Step Label Overflow |
 | PGE10008 | Parallel Write Permission Exclusion |
+| PGE10009 | Unresolved Permission Template |
+| PGE10010 | Permission Resource Not Found |
 
 ### 11 — Schema Properties
 

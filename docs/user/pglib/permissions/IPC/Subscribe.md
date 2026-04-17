@@ -24,7 +24,7 @@ Capability-level generic permission for subscribing to channels. Sugar over [[IN
 ## Usage
 
 ```polyglot
-[_] __IPC.Subscribe
+(-) __IPC.Subscribe
    (_) <scope << "topic://events.*"
 ```
 

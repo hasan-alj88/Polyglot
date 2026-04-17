@@ -24,7 +24,7 @@ Capability-level generic permission for spawning and managing processes. Sugar o
 ## Usage
 
 ```polyglot
-[_] __System.Process
+(-) __System.Process
    (_) <scope << "ffmpeg"
 ```
 

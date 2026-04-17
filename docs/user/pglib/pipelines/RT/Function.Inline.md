@@ -56,14 +56,14 @@ The compiler validates that the `<func` name exists as a function definition in 
    [.] .System.Process "*"
 
 {@} @Local:Example.PythonStats
-   [_] _RuntimeCeiling
+   (-) _RuntimeCeiling
 
 {_} _PythonGrant
    [.] .intent << #Grant
    [.] .System.Process "python3"
 
 {-} =CalculateStats
-   [_] _PythonGrant
+   (-) _PythonGrant
    (-) <numbers#array.string
    (-) >result#Code:Python.Output
    (-) >stats#serial

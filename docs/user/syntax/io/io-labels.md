@@ -41,6 +41,6 @@ The statement marker echoes the parent operator's prefix:
 - `(-)` — IO line for a pipeline (`-`)
 - `(=)` — IO line for a collection-expand operator (`=ForEach`)
 - `(*)` — IO line for a collection-collect operator (`*`)
-- `(_)` — IO line for a permission object (`_`). See [[permissions#__ Generic Permissions]]
+- `(_)` — IO line for a generic permission template (`__`). See [[permissions#__ Generic Permissions]]
 
-**Scoping rule:** IO markers (`(-)`, `(=)`, `(*)`, `(_)`) always scope to their parent operator via indentation — they are not tied to a fixed structural position. `(-)` means "IO for a pipeline reference (`-`)" wherever it appears: top-level pipeline IO, nested under `[Q]` for queue parameters, under `[W]` for wrapper wiring, or under `[-]`/`[=]`/`[b]` for call-site IO. The same principle applies to `(=)` (expand operator IO), `(*)` (collect operator IO), and `(_)` (permission IO under `[_]`).
+**Scoping rule:** IO markers (`(-)`, `(=)`, `(*)`, `(_)`) always scope to their parent operator via indentation — they are not tied to a fixed structural position. `(-)` means "IO for a pipeline reference (`-`)" wherever it appears: top-level pipeline IO, nested under `[Q]` for queue parameters, under `[W]` for wrapper wiring, or under `[-]`/`[=]`/`[b]` for call-site IO. The same principle applies to `(=)` (expand operator IO), `(*)` (collect operator IO), and `(_)` (permission IO for `__` generic permission templates).

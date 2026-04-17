@@ -24,7 +24,7 @@ Capability-level generic permission for sending and receiving signals. Sugar ove
 ## Usage
 
 ```polyglot
-[_] __System.Signal
+(-) __System.Signal
    (_) <scope << "SIGTERM"
 ```
 

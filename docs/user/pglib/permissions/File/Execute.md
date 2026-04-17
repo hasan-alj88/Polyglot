@@ -24,7 +24,7 @@ Capability-level generic permission for executing files. Sugar over [[INDEX|__Fi
 ## Usage
 
 ```polyglot
-[_] __File.Execute
+(-) __File.Execute
    (_) <scope << "/usr/local/bin/ffmpeg"
 ```
 

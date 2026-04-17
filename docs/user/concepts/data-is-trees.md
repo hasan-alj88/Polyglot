@@ -83,7 +83,7 @@ The `%` root has fixed branches for every object type in Polyglot:
 ├── $   Variables         — runtime data ($name, $result)
 ├── !   Errors            — error trees ({!} blocks, pglib !File.*, !No.*, etc.)
 ├── @   Packages          — package addresses (@Local:999::MyPkg)
-├── _   Permissions       — IO capability declarations ([_] blocks)
+├── _   Permissions       — IO capability declarations (permission IO markers)
 └── definition            — compile-time schema templates
 ```
 

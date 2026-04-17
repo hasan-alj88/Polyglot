@@ -73,7 +73,7 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
    [.] .System.Process "python3"
 
 {-} =ProcessWithNativeLib
-   [_] _ProcessGrant
+   (-) _ProcessGrant
    (-) <inputData#serial
    (-) >processLog#Code:Python.Output
    (-) ;PyProcessor

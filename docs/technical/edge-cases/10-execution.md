@@ -46,16 +46,49 @@ updated: 2026-03-30
 
 **EBNF:** `data_load ::= "[#]" assignment_expr`
 
-**What it tests:** `[#]` block element for loading serialized data into typed structures. See [[blocks#Execution]].
+**What it tests:** `[#]` block element for loading serialized data into typed structures. In `{#}` definitions, file access is mediated through `{_}` permission objects. See [[blocks#Execution]], [[concepts/permissions/enforcement#Compile-Time File Binding]].
 
 ```polyglot
 [ ] In execution: deserialize serial into typed data
 [#] $hire#NewHire << $payload
 
-[ ] In {#} definitions: load external config files
+[ ] In {#} definitions: permission-mediated file load
+{_} _AppConfig
+   [.] .intent << #Grant
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "/config/appsettings.json"
+   [.] .path "/config/appsettings.json"
+   [.] .format #JSON
+
 {#} #Config
-   [#] #file1 << -Json.LoadFile"/config/appsettings.json"
+   (#) _AppConfig
+   [#] #file1 << -Json.LoadFile
+      (-) <source << _AppConfig
    [.] .dbConnection#string <~ #file1.db.connectionString
+```
+
+### EC-10.3b: Data load with permission template
+
+**What it tests:** `[#]` file load using a `{_}` template with `(_)` inputs. Template is resolved at compile time; each instantiation produces its own content hash.
+
+```polyglot
+{_} _YAMLFile
+   (_) <file#path
+   [.] .intent << #Grant
+   [.] .category #File
+   [.] .capability #Read
+   [.] .scope "{<file}"
+   [.] .path "{<file}"
+   [.] .format #YAML
+
+{#} #Secrets
+   (#) _YAMLFile
+      (_) <file << "/config/secrets.yaml"
+   [#] #data << -Yaml.LoadFile
+      (-) <source << _YAMLFile
+   [.] .connectionString#string <~ #data.db.connectionString
+   [.] .reportFolder#string <~ #data.report.folder
 ```
 
 ### EC-10.4: Parallel execution
