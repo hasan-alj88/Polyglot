@@ -27,6 +27,7 @@ See [[boolean]] for `#Boolean` (also a `##Enum` type, documented separately).
 | `#FieldKind` | Leaf content field type classifier | [[FieldKind]] |
 | `#FieldsDescriptor` | Child field descriptor | [[FieldsDescriptor]] |
 | `#ActiveKind` | Branch activation classifier | [[ActiveKind]] |
+| `#RotationKind` | Rotation detection strategy | [[RotationKind]] |
 
 ## Permission Enums
 

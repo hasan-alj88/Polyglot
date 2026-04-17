@@ -29,6 +29,15 @@ No `[@]` import needed — pglib built-in.
       (-) .Info
          [:] :path#path
          [:] :reason#string
+   [.] .PermissionDenied#Error
+      (-) .MessageTemplate << "Permission denied: {path}"
+      (-) .Info
+         [:] :path#path
+   [.] .WatchError#Error
+      (-) .MessageTemplate << "File watch failed on {dir}: {reason}"
+      (-) .Info
+         [:] :dir#path
+         [:] :reason#string
 ```
 
 ## Metadata

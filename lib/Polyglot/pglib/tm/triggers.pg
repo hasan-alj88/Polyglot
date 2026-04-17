@@ -36,3 +36,15 @@
    [%] .description << "Fires on incoming HTTP request to endpoint"
    [=] <endpoint#string
    [=] >IsTriggered#bool
+
+{N} =T.File.Rolled
+   [%] .Kind << #NativeKind.Trigger
+   [%] .Rust << "TriggerFileRolled"
+   [%] .description << "Fires when a file rotates, delivering the completed file"
+   [=] <Dir#path
+   [=] <Pattern#string
+   [=] <Strategy#RotationKind <~ #RotationKind.Auto
+   [=] >IsTriggered#bool
+   [=] >RolledFile#path
+   [=] >NewFile#path
+   [=] >RolledSize#int

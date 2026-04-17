@@ -23,6 +23,7 @@ Most triggers require no permissions. IO-touching triggers require a `{_}` permi
 | `-T.Manual` | None | — |
 | `-T.Daily` | None | — |
 | `-T.Folder.NewFiles` | File.Read | File |
+| `-T.File.Rolled` | File.Read | File |
 | `-T.Webhook` | Web.Socket | Web |
 | `-T.Git.Hook` | System.Process | System |
 | `-T.Git.Push` | System.Process or Web.Socket | System / Web |
@@ -37,6 +38,7 @@ Most triggers require no permissions. IO-touching triggers require a `{_}` permi
 | [[pglib/pipelines/T/Manual\|-T.Manual]] | Pipeline invoked manually (CLI or test harness) |
 | [[pglib/pipelines/T/Daily\|-T.Daily]] | Fires once per day at specified time |
 | [[pglib/pipelines/T/Folder.NewFiles\|-T.Folder.NewFiles]] | Fires when new files appear in folder |
+| [[pglib/pipelines/T/File.Rolled\|-T.File.Rolled]] | Fires when a file rotates (log rotation) |
 | [[pglib/pipelines/T/Webhook\|-T.Webhook]] | Fires on incoming HTTP request |
 | [[pglib/pipelines/T/Git.Hook\|-T.Git.Hook]] | Fires on local git hook invocation |
 | [[pglib/pipelines/T/Git.Push\|-T.Git.Push]] | Fires on push to branch (with filters) |

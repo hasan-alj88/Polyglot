@@ -10,6 +10,7 @@ Native implementations for `#NativeKind.Trigger` operations, dispatched by the T
 | `=T.Daily` | `TriggerDaily` | Time-based daily trigger |
 | `=T.Folder.NewFiles` | `TriggerFolderNewFiles` | File system watcher |
 | `=T.Webhook` | `TriggerWebhook` | HTTP webhook receiver |
+| `=T.File.Rolled` | `TriggerFileRolled` | Log rotation watcher |
 
 ## Contract
 
