@@ -5,16 +5,16 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue-driven development — ready for next issue
+**Current focus:** Issue-driven development — #311 (foreign code permission compliance)
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — #310
-- Issue #310: [██████████] 100% (1/1 plans — permission-as-resource model)
-Plan: 310-01 complete
-Status: Idle
-Last activity: 2026-04-17 — Closed #310, merged to main
+Phase: Issue-driven — #311
+- Issue #311: [██████████] 100% (2/2 plans — foreign code permission compliance)
+Plan: 311-01 complete (compile rules), 311-02 complete (technical docs)
+Status: All plans complete, ready for MERGE
+Last activity: 2026-04-18 — Applied+unified both plans: 8 compile rules + 4 technical docs
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -118,14 +118,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #311 — Foreign code permission compliance — AST analysis and enforcement
+Branch: design/issue-311-foreign-code-permission-compliance
+Labels: documentation, design
+Started: 2026-04-18
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/311
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [All plans complete, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -307,13 +311,16 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-17
-Stopped at: Issue #310 closed and merged
-Next action: Pick next issue with /paul:work-issue or /paul:issues
-Resume file: .paul/phases/310-permission-as-resource-model/310-01-SUMMARY.md
+Last session: 2026-04-18
+Stopped at: All plans complete, ready for merge
+Next action: Run /paul:merge to commit and merge to main
+Resume file: .paul/phases/311-foreign-code-permission-compliance/311-02-SUMMARY.md
 Resume context:
-- Issue #310 closed and merged to main
-- On main branch, ready for next issue
+- Issue #311 active on branch design/issue-311-foreign-code-permission-compliance
+- 311-01 COMPLETE: 8 compile rules (PGE10011-14, PGW10002/03/05/06) + index
+- 311-02 COMPLETE: 4 technical docs (algorithm, io-registry, compliance-report, parsers)
+- User docs (foreign-code.md, enforcement.md) already updated in prior work
+- All 12 new files + 1 modified (COMPILE-RULES.md) ready for commit
 
 ---
 *STATE.md — Updated after every significant action*
