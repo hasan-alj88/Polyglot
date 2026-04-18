@@ -118,18 +118,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #313 — System-level job sandbox from {_} permissions
-Branch: design/issue-313-system-level-job-sandbox-from-permissions
-Labels: design, algorithm, security
-Started: 2026-04-18
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/313
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [313-02 loop closed, issue complete — ready for merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -295,7 +291,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #310 — Permission-as-Resource model | 2026-04-17 | {_} carries grant + locator; [_] retired; permissions via IO markers; decomposed fields; PGE10009/PGE10010; ~75 files updated |
 | Closed #311 — Foreign code permission compliance | 2026-04-18 | 8 compile rules (PGE10011-14, PGW10002/03/05/06), 4 technical docs (algorithm, io-registry, compliance-report, parsers); merged to main |
 | Closed #312 — AST-invisible functions registry | 2026-04-18 | Externalized PGE10014 banned list to versioned registry; 32 entries across 5 languages; package extension format; merged to main |
-| Issue #313 — System-level job sandbox complete | 2026-04-18 | 2 plans: sandbox spec + compile rules; PGE10015/PGE10016/PGW10007; sub-issues #316 (resources) + #317 (OTel) |
+| Closed #313 — System-level job sandbox | 2026-04-18 | 2 plans: sandbox spec + compile rules; PGE10015/PGE10016/PGW10007; sub-issues #316 (resources) + #317 (OTel); merged to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -315,13 +311,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: 313-02 loop closed, issue #313 complete
-Next action: Run /paul:merge to merge branch to main and close #313
-Resume file: .paul/phases/313-system-level-job-sandbox/313-02-SUMMARY.md
+Stopped at: Issue #313 merged and closed
+Next action: Run /paul:issues to pick next issue
+Resume file: N/A
 Resume context:
-- Issue #313 complete on branch design/issue-313-system-level-job-sandbox-from-permissions
-- 313-01: job-sandbox.md, enforcement.md, behavior-contract.md
-- 313-02: PGE10015, PGE10016, PGW10007, sub-issues #316/#317
+- #313 merged to main, branch deleted
+- Sub-issues #316 (resource categories) and #317 (OTel logging) open for future work
 
 ---
 *STATE.md — Updated after every significant action*
