@@ -118,18 +118,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #311 — Foreign code permission compliance — AST analysis and enforcement
-Branch: design/issue-311-foreign-code-permission-compliance
-Labels: documentation, design
-Started: 2026-04-18
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/311
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [All plans complete, ready for MERGE]
+  ✓        ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -293,6 +289,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #309 — Token ambiguity + reassemble IO validation | 2026-04-17 | X.45 Accept: lexer disambiguates ?[ vs [?] positionally; X.46 Accept: schema-typed <Collection.* inputs + PGE04001 covers reassemble IO |
 | Closed #308 — Comment-only branches + orphaned foreign code | 2026-04-17 | X.43 Accept: PGE06010 sufficient; X.44 PGW01004: orphaned [C] warning; 2 edge cases (EC-11.11, EC-22.5); total 137 |
 | Issue #310 — Permission-as-Resource model | 2026-04-17 | {_} carries grant + locator; [_] retired; permissions via IO markers; decomposed fields; PGE10009/PGE10010; ~75 files updated |
+| Closed #311 — Foreign code permission compliance | 2026-04-18 | 8 compile rules (PGE10011-14, PGW10002/03/05/06), 4 technical docs (algorithm, io-registry, compliance-report, parsers); merged to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -312,15 +309,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: All plans complete, ready for merge
-Next action: Run /paul:merge to commit and merge to main
-Resume file: .paul/phases/311-foreign-code-permission-compliance/311-02-SUMMARY.md
+Stopped at: Issue #311 merged to main
+Next action: Run /paul:work-issue or /paul:issues to pick next issue
+Resume file: N/A
 Resume context:
-- Issue #311 active on branch design/issue-311-foreign-code-permission-compliance
-- 311-01 COMPLETE: 8 compile rules (PGE10011-14, PGW10002/03/05/06) + index
-- 311-02 COMPLETE: 4 technical docs (algorithm, io-registry, compliance-report, parsers)
-- User docs (foreign-code.md, enforcement.md) already updated in prior work
-- All 12 new files + 1 modified (COMPILE-RULES.md) ready for commit
+- Issue #311 closed and merged to main
+- On main branch, local only (not pushed)
 
 ---
 *STATE.md — Updated after every significant action*
