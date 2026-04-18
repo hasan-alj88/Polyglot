@@ -10,6 +10,8 @@ updated: 2026-04-18
 <!-- @u:concepts/permissions/enforcement -->
 <!-- @c:technical/algorithms/foreign-code-analysis -->
 <!-- @c:technical/spec/otel-permission-events -->
+<!-- @c:technical/spec/otel-foundation -->
+<!-- @c:technical/spec/otel-config -->
 
 The compiler generates a compliance report as part of the Behavior Contract. This document specifies the report structure, verdict types, and privacy considerations.
 
@@ -128,4 +130,6 @@ See [[otel-permission-events]] for the full event format, attribute definitions,
 - [[algorithms/foreign-code-analysis]] — the algorithm that produces these verdicts
 - [[permissions/enforcement]] — how the Behavior Contract uses compliance data
 - [[otel-permission-events]] — runtime OTel events for sandbox and permission operations
+- [[otel-foundation]] — tracing infrastructure, span hierarchy, NATS trace context propagation
+- [[otel-config]] — exporter configuration, sampling strategy, fallback logging
 - PGE10013, PGE10014, PGW10002, PGW10003, PGW10005 — compile rules that generate verdicts

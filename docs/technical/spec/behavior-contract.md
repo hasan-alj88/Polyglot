@@ -14,7 +14,9 @@ updated: 2026-04-14
 <!-- @c:glossary#Job -->
 <!-- @c:glossary#Instance -->
 <!-- @c:technical/spec/otel-permission-events -->
-Related: [[compiler-floor]], [[native-dispatch]], [[otel-permission-events]]
+<!-- @c:technical/spec/otel-foundation -->
+<!-- @c:technical/spec/otel-config -->
+Related: [[compiler-floor]], [[native-dispatch]], [[otel-permission-events]], [[otel-foundation]], [[otel-config]]
 
 ## What Polyglot Compiles To
 
