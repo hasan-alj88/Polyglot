@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-13
+updated: 2026-04-17
 status: draft
 metadata_definition: "%definition.-:Run.<Lang>.Script"
 metadata_instance: "%-:Run.<Lang>.Script:N"
@@ -81,20 +81,48 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
 (-) <code.file#path << "/scripts/cleanup.py"
 ```
 
+## Environment Wiring
+
+The environment is passed inline using `;EnvName` appended to the pipeline reference:
+
+```polyglot
+[-] -Run.Python.Script;PyML
+```
+
+This resolves the `<env` input automatically from the active `-W.Env;PyML` wrapper. No separate `(-) <env` IO line is needed when using inline syntax.
+
+**Verbose form** (equivalent):
+
+```polyglot
+[-] -Run.Python.Script
+   (-) <env#PyEnv << $pyenv
+```
+
 ## Example
 
 ```polyglot
 {;} ;PyML
-   [.] .language << "python"
-   [.] .version << "3.14"
-   [.] .packages << ["Pillow"]
+   [.] .language << #BaseCode.Python
+   [.] .version << ?[3.10, 4.0)
+   [.] .Dependency
+      [.] .packages
+         [:] :Pillow << ">=10.0"
 
-{_} _ImageGrant
+{_} _ImageProcessGrant
    [.] .intent << #Grant
-   [.] .System.Process "python3"
+   [.] .category << #System
+   [.] .capability << #Process
+   [.] .scope << "*"
+
+{_} _ImageScriptGrant
+   [.] .intent << #Grant
+   [.] .category << #ScriptExecution
+   [.] .capability << #Execute
+   [.] .scope << "/scripts/resize.py"
 
 {-} =ResizeImage
-   (-) _ImageGrant
+   (-) _ImageProcessGrant
+   (-) _ImageScriptGrant
    (-) <imageFile#path
    (-) <targetWidth#int
    (-) <targetHeight#int
@@ -103,12 +131,9 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
    (-) ;PyML
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Env
-      (-) <env#; << ;PyML
-
+   [W] -W.Env;PyML
    [ ]
-   [-] -Run.Python.Script
-      (-) <env#PyEnv << $pyenv
+   [-] -Run.Python.Script;PyML
       (-) <Bind#Record
          [.] .input_path#path << $imageFile
          [.] .target_w#int << $targetWidth

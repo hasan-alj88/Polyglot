@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-10
+updated: 2026-04-17
 status: draft
 metadata_definition: "%definition.W:Env"
 metadata_instance: "%W:Env:N"
@@ -34,7 +34,26 @@ None. The wrapper's job is to set up the environment for the duration of the pip
 
 ## Usage
 
-Wire the `{;}` definition to the wrapper on the `[W]` line:
+Wire the `{;}` definition to the wrapper on the `[W]` line using inline `;EnvName` syntax:
+
+```polyglot
+[W] -W.Env;MLPythonEnv
+```
+
+This is the preferred shorthand. The environment name is appended directly to the wrapper reference with the `;` prefix. The compiler resolves `;MLPythonEnv` to the matching `{;}` definition.
+
+### Verbose Form
+
+The equivalent verbose form wires the environment via `(-)` IO:
+
+```polyglot
+[W] -W.Env
+   (-) <env#; << ;MLPythonEnv
+```
+
+The `#;` type represents a reference to a `{;}` environment definition. See [[environments#The #; Type]].
+
+### Full Pipeline Example
 
 ```polyglot
 {-} =ProcessData
@@ -43,13 +62,10 @@ Wire the `{;}` definition to the wrapper on the `[W]` line:
    (-) ;MLPythonEnv
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Env
-      (-) <env#; << ;MLPythonEnv
-   [-]
-      ...
+   [W] -W.Env;MLPythonEnv
+   [ ]
+   [-] ...
 ```
-
-The `#;` type represents a reference to a `{;}` environment definition. See [[environments#The #; Type]].
 
 ## Errors
 
