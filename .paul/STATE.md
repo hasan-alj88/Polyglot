@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 
 Milestone: Language (issue-driven)
 Phase: Issue #319 — Polyglot SDK specification: cross-language type conversion and call protocol
-Plan: 319-01 and 319-02 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-18 — Loop closed: SDK spec + cross-ref updates
+Plan: none
+Status: Ready for next issue
+Last activity: 2026-04-18 — Merged #319 to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -114,6 +114,7 @@ Progress:
 - Issue #314: [██████████] 100% (1/1 plans — resource categories as {_} permissions)
 - Issue #315: [██████████] 100% (1/1 plans — OTel permission/sandbox events)
 - Issue #318: [██████████] 100% (2/2 plans — OTel foundation tracing + cross-refs)
+- Issue #319: [██████████] 100% (2/2 plans — Polyglot SDK spec + cross-ref updates)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -123,18 +124,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #319 — Polyglot SDK specification — cross-language type conversion and call protocol
-Branch: design/issue-319-polyglot-sdk-cross-language-type-conversion-and-call
-Labels: design, documentation, P3-medium
-Started: 2026-04-18
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/319
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for /paul:merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -325,10 +322,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: Issue #319 UNIFY complete
-Next action: /paul:merge to commit and merge branch
-Resume file: .paul/phases/319-polyglot-sdk/319-02-SUMMARY.md
-Resume context: Loop closed, ready for merge
+Stopped at: Issue #319 merged to main
+Next action: /paul:issues or /paul:progress
+Resume file: none
+Resume context: #319 closed; no active issue
 
 ---
 *STATE.md — Updated after every significant action*
