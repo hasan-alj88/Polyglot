@@ -10,9 +10,10 @@ status: complete
 <!-- @c:concepts/permissions/enforcement#Foreign Code Sandbox -->
 <!-- @c:technical/spec/behavior-contract#Permission Manifest -->
 <!-- @c:technical/spec/compiler-floor#Two Kinds of Native -->
+<!-- @c:technical/spec/otel-permission-events -->
 <!-- @u:concepts/permissions/foreign-code -->
 <!-- @u:technical/compiler/compliance-report -->
-Related: [[enforcement]], [[behavior-contract]], [[compiler-floor]], [[foreign-code]], [[compliance-report]], [[resource-controls]]
+Related: [[enforcement]], [[behavior-contract]], [[compiler-floor]], [[foreign-code]], [[compliance-report]], [[resource-controls]], [[otel-permission-events]]
 
 ## Why OS-Level Sandboxing
 
@@ -266,6 +267,6 @@ All sandbox setup operates through **user namespaces** — no root privileges re
 
 ## Future Work
 
-- **OpenTelemetry logging** — structured OTel logs for all permission and sandbox events (violations, setup, resource limits). See the tracked sub-issue.
+- **OpenTelemetry logging** — structured OTel logs for all permission and sandbox events. See [[otel-permission-events]] for the full specification.
 - **GPU device restrictions** — cgroups v2 device controller + vendor-specific APIs for GPU memory limits.
 - **IPC restrictions** — seccomp filters for `shmget`/`msgget` when `#IPC` permissions are formalized.

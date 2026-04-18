@@ -13,7 +13,8 @@ updated: 2026-04-14
 <!-- @c:glossary#Pipeline -->
 <!-- @c:glossary#Job -->
 <!-- @c:glossary#Instance -->
-Related: [[compiler-floor]], [[native-dispatch]]
+<!-- @c:technical/spec/otel-permission-events -->
+Related: [[compiler-floor]], [[native-dispatch]], [[otel-permission-events]]
 
 ## What Polyglot Compiles To
 
@@ -87,6 +88,8 @@ The Permission Manifest for each pipeline contains:
 | Compliance report | AST analysis results | Best-effort analysis findings, warnings, and verdicts |
 
 The manifest is **read-only at runtime** — the Runner uses it to configure the sandbox but never modifies it. Changes to permissions require recompilation and re-registration.
+
+The Permission Manifest drives both sandbox configuration and OTel event emission. At runtime, violations of the declared permissions are logged as structured OTel events per [[otel-permission-events]]. This creates a closed loop: the compiler validates permissions, the manifest configures the sandbox, and the OTel events record what the sandbox enforced.
 
 See [[job-sandbox]] for how the Runner translates the Permission Manifest into OS-level restrictions (Landlock, seccomp-bpf, Linux namespaces, cgroups v2).
 

@@ -9,6 +9,7 @@ updated: 2026-04-18
 
 <!-- @u:concepts/permissions/enforcement -->
 <!-- @c:technical/algorithms/foreign-code-analysis -->
+<!-- @c:technical/spec/otel-permission-events -->
 
 The compiler generates a compliance report as part of the Behavior Contract. This document specifies the report structure, verdict types, and privacy considerations.
 
@@ -108,8 +109,23 @@ Summary: 3 pipelines, 0 errors, 2 warnings, 1 opaque
 ═══════════════════════════════════════
 ```
 
+## Runtime Appendix
+
+The compile-time compliance report is static — it records AST analysis verdicts produced during compilation. At runtime, sandbox violations and resource limit breaches generate OTel events that the Runner collects into a runtime compliance appendix.
+
+The runtime appendix extends the compile-time report with actual execution data:
+
+- **Violation count and warning count** per job execution
+- **Per-violation details:** timestamp, event type, job UID, structured attributes
+- **Storage:** the runtime appendix is stored alongside the Behavior Contract in the NoSQL DB, keyed by job UID
+
+The compile-time report remains immutable. The runtime appendix is a separate record that references the same pipeline and package, enabling operators to compare "what was analyzed" against "what actually happened."
+
+See [[otel-permission-events]] for the full event format, attribute definitions, and appendix schema.
+
 ## Related
 
 - [[algorithms/foreign-code-analysis]] — the algorithm that produces these verdicts
 - [[permissions/enforcement]] — how the Behavior Contract uses compliance data
+- [[otel-permission-events]] — runtime OTel events for sandbox and permission operations
 - PGE10013, PGE10014, PGW10002, PGW10003, PGW10005 — compile rules that generate verdicts
