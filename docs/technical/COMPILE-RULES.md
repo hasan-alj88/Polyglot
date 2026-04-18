@@ -236,6 +236,8 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE10012 | Code File Outside Scope |
 | PGE10013 | Foreign Resource Outside Scope |
 | PGE10014 | AST-Invisible Foreign Code |
+| PGE10015 | Opaque Binary Without Sandbox Acknowledgment |
+| PGE10016 | Missing Mandatory Metadata for Sandbox-Only |
 
 ### 11 — Schema Properties
 
@@ -296,6 +298,7 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | PGW10003 | Bind Mode Opacity |
 | PGW10005 | Unrecognized Foreign Call |
 | PGW10006 | Shell Variable Expansion |
+| PGW10007 | Sandbox-Only Enforcement Active |
 | PGW11001 | Redundant Schema Property *(planned)* |
 | PGW11002 | Contradicting Schema Override *(planned)* |
 | PGW11003 | Unlimited Depth on User Type *(planned)* |

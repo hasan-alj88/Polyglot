@@ -60,21 +60,68 @@ For Polyglot-native code, if it compiles, the permissions are satisfied. For for
 ## Foreign Code Sandbox
 
 <!-- @c:permissions/foreign-code -->
+<!-- @c:technical/spec/job-sandbox -->
 For foreign code in `-Run.*` pipelines ([[permissions/foreign-code|c:Foreign Code Permissions]]), the Polyglot Service applies OS-level restrictions as **defense-in-depth** before spawning the job process. This is not a per-call runtime check (no Java SecurityManager overhead) — it is a one-time load-time sandbox applied before any user code executes.
 
-The compiler emits a **Permission Manifest** as part of the Behavior Contract. The Polyglot Service translates it to OS-level restrictions:
+The compiler emits a **Permission Manifest** as part of the [[technical/spec/behavior-contract#Permission Manifest|Behavior Contract]]. The Runner reads this manifest and configures OS-level restrictions before spawning the job process. The sandbox setup creates an isolated execution environment using Linux kernel features — all without requiring root privileges.
 
-| {_} Category | Sandbox Mechanism |
-|-------------|-------------------|
-| #File | Landlock ruleset — restricts filesystem access to declared `.path` values |
-| #Web | Network namespace — restricts connections to declared `.host`/`.port` |
-| #Database | Network namespace — restricts connections to declared `.host`/`.port` |
-| #System.#Process | seccomp-BPF — allows fork/exec family |
-| #System.#Shell | seccomp-BPF + Landlock for command path |
+### Permission Category Mapping
 
-The sandbox catches violations that AST analysis cannot detect — unresolvable variable paths, IO registry gaps, or new library functions not yet in the registry. If foreign code attempts an operation outside declared permissions, the kernel returns EACCES.
+Each `{_}` permission category maps to specific OS enforcement:
+
+| {\_} Category | {\_} Fields Used | Sandbox Mechanism |
+|---|---|---|
+| #File.#Read | `.path` | Landlock filesystem rules (read-only) + mount namespace |
+| #File.#Write | `.path` | Landlock filesystem rules (read-write) + mount namespace |
+| #File.#Execute | `.path` | Landlock execute rules + seccomp (allow execve) |
+| #File.#Delete | `.path` | Landlock remove rules |
+| #File.#Create | `.path` | Landlock create rules + parent directory |
+| #Web.#Request | `.host`, `.port` | Network namespace + firewall rules for declared endpoints |
+| #Web.#Socket | `.host`, `.port` | Network namespace + firewall rules for declared hosts/ports |
+| #Web.#Listen | `.port` | Network namespace + firewall rules for declared ports |
+| #Database | `.host`, `.port` | Network namespace + firewall rules (DB is TCP) |
+| #System.#Process | (capability flag) | seccomp allows fork/clone/execve |
+| #System.#Shell | (capability flag) | seccomp allows execve + Landlock for shell path |
+| #System.#Env | `.vars` (future) | Runtime prunes environment before exec |
+
+The sandbox catches violations that AST analysis cannot detect — unresolvable variable paths, IO registry gaps, or new library functions not yet in the [[technical/compiler/ast-invisible-registry|registry]]. If foreign code attempts an operation outside declared permissions, the kernel blocks it and the process receives a permission error.
 
 The principle remains: **compilation is a license to launch**. The sandbox narrows that license to exactly what was declared.
+
+### Opaque Code: \_Unsafe.SandboxOnly
+
+When a compiled binary or opaque code cannot be fully analyzed by the compiler (no source code available, no tree-sitter support), the developer must acknowledge sandbox-only enforcement:
+
+```polyglot
+{-} -ProcessData
+   [.] %Authors << "jane.doe@company.com"
+   [.] %Description << "Legacy Go binary for report generation"
+   [.] %Version << "1.2.0"
+   (-) _FileGrant
+   [ ]
+   [-] -Run.Go.CLI;GoEnv "compiled-binary"
+      [!] _Unsafe.SandboxOnly
+      (-) <args#string << "--input /data/in.csv"
+      (-) >output#string >> >result
+```
+
+`_Unsafe.SandboxOnly` does three things:
+
+1. **Activates ALL isolation layers** — every available defense mechanism, even those normally skipped for performance. This is *more* secure than normal pipelines, not less.
+2. **Suppresses AST-invisible errors to warnings** — the compiler still analyzes what it can, but PGE10014 errors become warnings in the [[technical/compiler/compliance-report|compliance report]].
+3. **Requires accountability metadata** — `%Authors`, `%Description`, and `%Version` must be filled (PGE10016).
+
+Without `[!] _Unsafe.SandboxOnly`, a `-Run.*.CLI` pipeline is a compile error (PGE10015). The developer must either provide source code (switch to `.Function`/`.Script`) or acknowledge opaque execution.
+
+### Sandbox Inspection
+
+Developers can inspect the effective sandbox configuration for any pipeline:
+
+```text
+$ polyglot inspect -sandbox -ProcessData
+```
+
+This shows exactly what OS restrictions will be applied — filesystem rules, network rules, syscall filters, and resource limits — without running the pipeline. See [[technical/spec/job-sandbox|job-sandbox]] for the full implementer-facing specification.
 
 ## Compile-Time File Binding
 
