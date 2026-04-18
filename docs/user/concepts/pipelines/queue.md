@@ -56,6 +56,79 @@ Queue data loading supports `[#]` to load and extend a base queue:
       [.] .host#URL << "alternative.host.com"
 ```
 
+### Resource Limit Defaults
+
+<!-- @c:concepts/permissions/enforcement#Resource Limits -->
+<!-- @c:technical/spec/job-sandbox -->
+
+Every job has resource limits. When a pipeline declares `{_}` resource permissions (`#RAM`, `#CPU`, `#GPU`, `#IO`, `#Processes`, `#Duration`), those values are used. When a pipeline omits resource permissions, the Queue Handler applies defaults from its queue configuration.
+
+#### Queue-Level Limit Configuration
+
+Queues configure default limits and limit-exceeded behavior:
+
+```polyglot
+{Q} #Queue:WorkerQueue
+   [.] .strategy#QueueStrategy << #FIFO
+   [.] .host#URL << "worker-host-01"
+   [ ] Resource limit defaults
+   [.] .defaultRAM << "512MB"
+   [.] .defaultCPU << "1.0"
+   [.] .defaultProcesses << 20
+   [.] .defaultDuration << #DT"300s"
+   [ ] Limit-exceeded behavior
+   [.] .onRAMExceed#LimitAction << #Kill
+   [.] .onCPUExceed#LimitAction << #Throttle
+   [.] .onIOExceed#LimitAction << #Throttle
+   [.] .onDurationExceed#LimitAction << #Kill
+   [.] .onProcessesExceed#LimitAction << #Kill
+   [.] .limitGracePeriod#Duration << #DT"10s"
+```
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `.defaultRAM` | `#string` | `"512MB"` | Default memory limit when pipeline omits `{_} #RAM` |
+| `.defaultCPU` | `#string` | `"1.0"` | Default CPU limit (cores) when pipeline omits `{_} #CPU` |
+| `.defaultProcesses` | `#int` | `20` | Default max child processes |
+| `.defaultDuration` | `#Duration` | `300s` | Default max execution time |
+| `.onRAMExceed` | `#LimitAction` | `#Kill` | Action when memory limit exceeded |
+| `.onCPUExceed` | `#LimitAction` | `#Throttle` | Action when CPU limit exceeded |
+| `.onIOExceed` | `#LimitAction` | `#Throttle` | Action when IO limit exceeded |
+| `.onDurationExceed` | `#LimitAction` | `#Kill` | Action when execution time exceeded |
+| `.onProcessesExceed` | `#LimitAction` | `#Kill` | Action when process limit exceeded |
+| `.limitGracePeriod` | `#Duration` | `10s` | Grace period between SIGTERM and SIGKILL for `#Kill` actions |
+
+> **Constraint:** `#Throttle` is only valid for `#CPU` and `#IO`. Using `#Throttle` with `#RAM`, `#GPU`, `#Processes`, or `#Duration` is a compile error — these resources can only be killed or retried, not throttled.
+
+#### Pipeline-Level Override
+
+Pipelines override defaults by declaring `{_}` resource permissions:
+
+```polyglot
+{_} _RAMLimit
+   [.] .intent << #Grant
+   [.] .category << #RAM
+   [.] .capability << #Limit
+   [.] .max << "1GB"
+
+{_} _CPULimit
+   [.] .intent << #Grant
+   [.] .category << #CPU
+   [.] .capability << #Limit
+   [.] .max << "2.0"
+
+{-} -HeavyProcessing
+   (-) _RAMLimit
+   (-) _CPULimit
+   [T] -T.Call
+   [Q] -Q.Default
+   [W] -W.Polyglot
+   [ ]
+   [-] ...
+```
+
+When `{_}` resource permissions are declared, they replace the queue defaults for that category. Categories not declared fall back to queue defaults.
+
 ### Defining Rules (`{Q} #JobRules:Name` / `{Q} #QueueRules:Name`)
 
 <!-- @c:glossary#Trigger Monitor -->

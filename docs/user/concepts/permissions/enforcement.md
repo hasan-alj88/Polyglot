@@ -83,6 +83,14 @@ Each `{_}` permission category maps to specific OS enforcement:
 | #System.#Process | (capability flag) | seccomp allows fork/clone/execve |
 | #System.#Shell | (capability flag) | seccomp allows execve + Landlock for shell path |
 | #System.#Env | `.vars` (future) | Runtime prunes environment before exec |
+| #RAM.#Limit | `.max` | cgroups v2 `memory.max` — only declared memory available |
+| #CPU.#Limit | `.max` | cgroups v2 `cpu.max` — only declared CPU available |
+| #CPU.#Weight | `.weight` | cgroups v2 `cpu.weight` — scheduling priority |
+| #GPU.#Limit | `.max` | cgroups v2 device controller + vendor API — only declared GPU memory |
+| #GPU.#Device | `.device` | cgroups v2 device controller — only declared GPU device |
+| #IO.#Limit | `.maxBps`, `.maxIops` | cgroups v2 `io.max` — only declared IO bandwidth |
+| #Processes.#Limit | `.max` | cgroups v2 `pids.max` — only declared process count |
+| #Duration.#Limit | `.max` | Timer-based SIGTERM/SIGKILL — only declared execution time |
 
 The sandbox catches violations that AST analysis cannot detect — unresolvable variable paths, IO registry gaps, or new library functions not yet in the [[technical/compiler/ast-invisible-registry|registry]]. If foreign code attempts an operation outside declared permissions, the kernel blocks it and the process receives a permission error.
 
@@ -122,6 +130,23 @@ $ polyglot inspect -sandbox -ProcessData
 ```
 
 This shows exactly what OS restrictions will be applied — filesystem rules, network rules, syscall filters, and resource limits — without running the pipeline. See [[technical/spec/job-sandbox|job-sandbox]] for the full implementer-facing specification.
+
+## Resource Limits
+
+Resource limits are permissions — permission to use a certain amount of a resource. Six resource categories extend the permission model:
+
+| Category | Enforcement | Default Limit-Exceeded Behavior |
+|----------|-------------|--------------------------------|
+| `#RAM` | cgroups v2 `memory.max` | OOM kill → job Failed |
+| `#CPU` | cgroups v2 `cpu.max` / `cpu.weight` | Throttle |
+| `#GPU` | cgroups v2 device controller | Kill |
+| `#IO` | cgroups v2 `io.max` | Throttle |
+| `#Processes` | cgroups v2 `pids.max` | Fork fails (EAGAIN) |
+| `#Duration` | Timer-based SIGTERM/SIGKILL | Kill after grace period |
+
+When a pipeline does not declare `{_}` resource permissions, the Queue Handler applies defaults from its configuration. Every job has resource limits — explicit or QH-defaulted. Limit-exceeded behavior is configurable per-queue via `{Q}` definitions using `#LimitAction`. See [[concepts/pipelines/queue#Resource Limit Defaults|Queue — Resource Limit Defaults]].
+
+For the full cgroups v2 mapping and sandbox implementation, see [[technical/spec/job-sandbox#Permission Category to Sandbox Mapping|job-sandbox]].
 
 ## Compile-Time File Binding
 

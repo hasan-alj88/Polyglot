@@ -31,6 +31,12 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
    [.] .IPC
    [.] .Device
    [.] .Memory
+   [.] .RAM
+   [.] .CPU
+   [.] .GPU
+   [.] .IO
+   [.] .Processes
+   [.] .Duration
 ```
 
 | Variant | Description |
@@ -43,6 +49,12 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
 | `.IPC` | Inter-process communication |
 | `.Device` | Device access operations |
 | `.Memory` | Memory operations |
+| `.RAM` | Memory resource limits (cgroups v2) |
+| `.CPU` | CPU resource limits (cgroups v2) |
+| `.GPU` | GPU resource limits (device controller) |
+| `.IO` | IO bandwidth/IOPS limits (cgroups v2) |
+| `.Processes` | Process count limits (cgroups v2) |
+| `.Duration` | Execution time limits (timer-based) |
 
 > **Note:** Each category maps to a permission namespace in !Permission errors.
 

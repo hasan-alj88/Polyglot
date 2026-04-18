@@ -39,7 +39,7 @@ When the Runner spawns a foreign code job, it applies restrictions in this order
 5.  Configure network namespace:
     - If {_} #Web or #Database permissions exist: veth pair + nftables for declared hosts/ports
     - If no network permissions: empty namespace (all network fails)
-6.  Move process to job-specific cgroup (resource limits)
+6.  Move process to job-specific cgroup (apply {_} resource limits: memory.max, cpu.max, cpu.weight, io.max, pids.max from declared #RAM/#CPU/#IO/#Processes categories)
 7.  landlock_create_ruleset()
     - Add path rules for each {_} #File .path
     - Add port rules for each {_} #Web/#Database .port (Landlock ABI v4+)
@@ -74,6 +74,14 @@ Each `{_}` permission category maps to specific OS-level enforcement mechanisms:
 | #System.#Shell | (capability flag) | seccomp allows execve + Landlock for /bin/sh path | Without this, no shell invocation |
 | #System.#Env | `.vars` (future) | Runtime prunes environment before exec | Only declared env vars visible |
 | #Crypto | (capability flag) | No OS restriction needed (crypto is pure computation) | — |
+| #RAM.#Limit | `.max` | cgroups v2 `memory.max` | OOM kill if exceeded |
+| #CPU.#Limit | `.max` | cgroups v2 `cpu.max` | Throttle or kill (configurable via {Q}) |
+| #CPU.#Weight | `.weight` | cgroups v2 `cpu.weight` | Scheduling priority relative to other jobs |
+| #GPU.#Limit | `.max` | cgroups v2 device controller + vendor API | Kill if GPU memory exceeded |
+| #GPU.#Device | `.device` | cgroups v2 device controller | Restrict to declared GPU device |
+| #IO.#Limit | `.maxBps`, `.maxIops` | cgroups v2 `io.max` | Throttle if bandwidth/IOPS exceeded |
+| #Processes.#Limit | `.max` | cgroups v2 `pids.max` | Fork fails with EAGAIN |
+| #Duration.#Limit | `.max` | Timer-based SIGTERM → SIGKILL | Kill after grace period |
 
 **Layered enforcement:** Landlock provides filesystem and port-level restrictions. Network namespaces provide host-level isolation. seccomp-bpf provides syscall-level filtering. The combination is defense-in-depth — each layer catches what the others miss.
 
@@ -181,10 +189,10 @@ Sandbox Configuration:
     ALLOWED: fork, clone (has #System.#Process)
 
   Resources (cgroups v2):
-    RAM:       512MB (from _JobResources)
+    RAM:       512MB (from _RAMLimit)
     CPU:       1.0 core (from _CPULimit)
-    Processes: 10 (QH default)
-    Duration:  300s (QH default)
+    Processes: 20 (from _ProcessLimit)
+    Duration:  300s (from _DurationLimit)
 
   Opaque: No (AST analysis active)
 
@@ -258,7 +266,6 @@ All sandbox setup operates through **user namespaces** — no root privileges re
 
 ## Future Work
 
-- **Resource categories in {\_}** — `#RAM`, `#CPU`, `#GPU`, `#IO`, `#Processes`, `#Duration` as top-level `{_}` permission categories, with `#LimitAction` enum for limit-exceeded behavior. See the tracked sub-issue.
 - **OpenTelemetry logging** — structured OTel logs for all permission and sandbox events (violations, setup, resource limits). See the tracked sub-issue.
 - **GPU device restrictions** — cgroups v2 device controller + vendor-specific APIs for GPU memory limits.
 - **IPC restrictions** — seccomp filters for `shmget`/`msgget` when `#IPC` permissions are formalized.

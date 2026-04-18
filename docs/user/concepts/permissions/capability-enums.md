@@ -19,8 +19,14 @@ Permission categories use typed enums to prevent nonsensical combinations. Each 
 | `IPC` | `#IPCCapability` | `Send`, `Receive`, `Subscribe` |
 | `Device` | `#DeviceCapability` | `Camera`, `Microphone`, `Location`, `Bluetooth` |
 | `Memory` | `#MemoryCapability` | `Allocate`, `Shared` |
+| `RAM` | `#RAMCapability` | `Limit` |
+| `CPU` | `#CPUCapability` | `Limit`, `Weight` |
+| `GPU` | `#GPUCapability` | `Limit`, `Device` |
+| `IO` | `#IOCapability` | `Limit`, `Iops` |
+| `Processes` | `#ProcessCapability` | `Limit` |
+| `Duration` | `#DurationCapability` | `Limit` |
 
-Eight predefined categories cover all IO capabilities. Categories and capabilities are Polyglot-defined — not user-extensible. The enum type prevents invalid combinations like `.Device.Read` (devices don't have a `Read` capability).
+Fourteen predefined categories cover all IO capabilities. Categories and capabilities are Polyglot-defined — not user-extensible. The enum type prevents invalid combinations like `.Device.Read` (devices don't have a `Read` capability).
 
 ## Per-Category Resource Fields
 
@@ -36,6 +42,12 @@ Each category defines which resource locator fields are valid in `{_}` objects. 
 | `IPC` | — | — |
 | `Device` | — | — |
 | `Memory` | — | — |
+| `RAM` | `.max` | — |
+| `CPU` | `.max` | `.weight` |
+| `GPU` | `.max` | `.device` |
+| `IO` | — | `.maxBps`, `.maxIops` |
+| `Processes` | `.max` | — |
+| `Duration` | `.max` | — |
 
 Resource fields carry the **locator** — the specific external resource the permission targets. Pipelines receive the whole `_` permission object and extract the fields they need: `-Yaml.LoadFile` reads `.path` and `.format`, `-DB.Query` reads `.host`, `.port`, `.database`, and `.credentials`.
 
