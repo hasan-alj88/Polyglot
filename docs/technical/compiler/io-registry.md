@@ -217,4 +217,5 @@ Extensions follow the same format as the built-in registry and are merged at com
 ## Related
 
 - [[algorithms/foreign-code-analysis]] — detection algorithm that consumes this registry
+- [[compiler/ast-invisible-registry]] — companion registry for *banned* constructs (PGE10014) — functions that evade AST analysis entirely, vs this registry which maps *analyzable* IO calls to permission categories
 - PGW10005 — fires when a function is not in this registry or the known-pure list

@@ -13,29 +13,11 @@ severity: error
 
 **Statement:** Foreign code in `-Run.*` pipelines or `[C]` blocks that contains dynamic execution constructs — functions that generate or execute code at runtime, bypassing AST analysis — is a compile error. The compiler cannot verify permission compliance for code it cannot parse.
 **Rationale:** Same security logic as SQL injection prevention. If the compiler cannot parse and verify what code does, that code must not run. Dynamic execution constructs are the foreign code equivalent of SQL string concatenation — they create an unanalyzable channel that could perform any IO operation regardless of declared permissions. Banning these constructs ensures the compiler's AST walk sees every possible code path.
-**Detection:** During Phase 1 of the foreign code analysis algorithm, the compiler walks every node in the foreign AST and checks against the `BANNED_CONSTRUCTS` table for the target language. If any match is found, PGE10014 fires immediately — no further analysis is performed on the file.
+**Detection:** During Phase 2.1 of the foreign code analysis algorithm, the compiler walks every node in the foreign AST and checks against the AST-invisible registry (`ast-invisible-registry.toml`) for the target language. If any match is found, PGE10014 fires immediately — no further analysis is performed on the file.
 
-**Banned constructs per language:**
+<!-- @c:technical/compiler/ast-invisible-registry -->
 
-| Language | Banned Construct | Why |
-|----------|-----------------|-----|
-| Python | `eval()` | Executes arbitrary expression from string |
-| Python | `exec()` | Executes arbitrary statement from string |
-| Python | `importlib.import_module()` | Dynamic module loading bypasses import analysis |
-| Python | `__import__()` | Same as importlib — dynamic import |
-| Python | `getattr(module, 'func')()` | Indirect function call — callee not in AST |
-| Python | `ctypes.CDLL()` / `ctypes.cdll.LoadLibrary()` | Loads native library — arbitrary syscalls |
-| Rust | `unsafe` block containing raw syscalls | Bypasses Rust's safety guarantees |
-| Rust | `libloading::Library::new()` / `dlopen` | Dynamic library loading |
-| C/C++ | `dlopen()` / `dlsym()` | Dynamic library loading and symbol resolution |
-| C/C++ | `asm` / `__asm__` / `__asm` | Inline assembly — arbitrary CPU instructions |
-| C/C++ | `system()` without matching `{_}` | Shell execution (redirects to PGE10011 if `{_}` present) |
-| JavaScript | `eval()` | Executes arbitrary code from string |
-| JavaScript | `new Function()` | Creates function from string — equivalent to eval |
-| JavaScript | Dynamic `require(variable)` | Module path not statically known |
-| JavaScript | Dynamic `import(variable)` | Same as require — dynamic module loading |
-| Shell | `eval` builtin | Executes string as shell command |
-| Shell | Backtick substitution with variables | `` `$cmd` `` — command not statically known |
+**Banned constructs:** See [[compiler/ast-invisible-registry]] for the complete per-language banned constructs table. The registry covers dynamic execution (`eval`, `exec`, `compile`), dynamic loading (`importlib`, `dlopen`), inline assembly, FFI (`ctypes`, `libloading`), reflection-based indirect calls, and serialization-based execution (`pickle`, `marshal`) across Python, Rust, C/C++, JavaScript, and Shell.
 
 **See also:** PGE10013 (foreign resource outside scope — for analyzable code), PGW10003 (Bind mode opacity — a different kind of unanalyzable code), [[permissions/foreign-code#No AST-Invisible Code]]
 
