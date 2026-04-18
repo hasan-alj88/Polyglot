@@ -1,13 +1,14 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-07
+updated: 2026-04-18
 status: draft
 ---
 
 # Native Dispatch
 
 <!-- @c:spec/type-identity -->
+<!-- @c:spec/polyglot-sdk -->
 <!-- @concepts/pipelines/INDEX -->
 <!-- @c:pglib/types/NativeKind -->
 
@@ -162,6 +163,8 @@ For each `{N}` definition, the compiler extracts:
   ]
 }
 ```
+
+The `inputs` and `outputs` arrays in the registry entry serve as **type mapping descriptors** — the [[polyglot-sdk|c:Polyglot SDK]] uses these same descriptors to determine how to serialize/deserialize values for each IO port. See [[polyglot-sdk#Type Mapping Descriptors]] for how the SDK consumes these descriptors.
 
 ### Runtime Loading
 
@@ -661,7 +664,7 @@ The `integrator/` folder contains the bidirectional SDK for each language:
 - Receive serialized inputs from Polyglot
 - Return serialized outputs to Polyglot
 
-The integrator SDK uses the same JSON wire format as native dispatch. This means an integrator's callback functions follow the identical [[#Native Function Contract]].
+The integrator SDK uses the same JSON wire format as native dispatch. This means an integrator's callback functions follow the identical [[#Native Function Contract]]. For the SDK's public API and serialization algorithm, see [[polyglot-sdk]].
 
 ### Adding a New Language
 
@@ -768,6 +771,7 @@ Runner                 Native Function       Error Handler
 | [[pglib/types/NativeKind\|#NativeKind]] | The 5 kind variants |
 | [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] | High-level distinction |
 | [[spec/type-identity\|Type Identity]] | "All data is serialized strings" foundation |
+| [[spec/polyglot-sdk\|Polyglot SDK]] | SDK public API, type mapping, and serialization algorithm |
 | [[spec/metadata-tree/branches\|Metadata Tree Branches]] | Pipeline/job structure |
 | [[queue-manager/end-to-end-flow\|End-to-End Flow]] | Where native dispatch fits in execution |
 | [[pglib/pipelines/#\|-#.* Pipelines]] | Intrinsic catalog source |

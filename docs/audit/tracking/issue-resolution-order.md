@@ -96,38 +96,44 @@ These dependencies connect milestones to each other and to pre-existing issues.
 | NATS Security (M5, all) | #267 Implement TM | Blocks — TM signal dispatch must use secure NATS |
 | NATS Security (M5, all) | #268 Implement QH | Blocks — QH must validate payloads and verify senders |
 | NATS Security (M5, all) | #269 Implement Runner | Blocks — Runner ACKs must use authenticated NATS |
-| #301 Fault domains | #264 Finalize TM design | Informs — crash detection is a TM responsibility |
-| #301 Fault domains | #266 Finalize Runner design | Informs — crash recovery must be in Runner spec |
-| #264 TM design | #267 Implement TM | Blocks — design before implementation |
-| #266 Runner design | #269 Implement Runner | Blocks — design before implementation |
-| #270 Syntax spec | #271 Compiler architecture | Blocks — parser needs finalized syntax |
 | #319 SDK spec | #320 NATS -T.Call signal path | Blocks — call protocol before signal flow |
 | #319 SDK spec | #321 -Run.Bridge syntax | Blocks — type mapping before bridge pipeline |
+| #321 -Run.Bridge syntax | #270 Finalize syntax | Blocks — bridge syntax must be designed before syntax finalization |
+| #320 -T.Call signal path | #264 Finalize TM design | Blocks — TM handles -T.Call signals, needs signal path defined |
+| #321 -Run.Bridge syntax | #266 Finalize Runner design | Blocks — Runner executes bridge pipelines, needs syntax defined |
+| #301 Fault domains | #264 Finalize TM design | Blocks — crash detection answers open TM design questions |
+| #301 Fault domains | #266 Finalize Runner design | Blocks — crash recovery answers open Runner design questions |
+| #270 Syntax spec | #271 Compiler architecture | Blocks — parser needs finalized syntax |
+| #264 TM design | #267 Implement TM | Blocks — design before implementation |
+| #266 Runner design | #269 Implement Runner | Blocks — design before implementation |
 | #320 NATS -T.Call | NATS Security (M5) | Informs — call signal topics need security hardening |
 
 ## Recommended Overall Sequence
 
 ```text
-Phase 1: Language Spec
-  #270 Finalize syntax spec
-  #271 Finalize compiler architecture
-
-Phase 2: Design & Architecture
-  #264 Finalize TM design (+ #301 fault domain input)
-  #266 Finalize Runner design (+ #301 fault domain input)
+Phase 1: Foundations (no dependencies — can work in parallel)
   #319 Polyglot SDK spec (cross-language integration)
+  #301 Design fault domain behavior (crash recovery)
+
+Phase 2: New Syntax + Signal Architecture (depends on Phase 1)
+  #321 -Run.Bridge pipeline syntax (depends on #319)
   #320 -T.Call NATS signal path (depends on #319)
 
-Phase 3: Language Features
-  #321 -Run.Bridge pipeline syntax (depends on #319)
+Phase 3: Finalize Designs (depends on Phase 2)
+  #270 Finalize syntax spec (after #321 bridge syntax designed)
+  #264 Finalize TM design (after #301 + #320)
+  #266 Finalize Runner design (after #301 + #321)
 
-Phase 4: NATS Security (M5)
+Phase 4: Compiler Architecture (depends on Phase 3)
+  #271 Finalize compiler architecture (depends on #270)
+
+Phase 5: NATS Security (M5)
   Wave 1: #289, #294, #296
   Wave 2: #290, #292, #293
   Wave 3: #291, #297
   Wave 4: #295
 
-Phase 5: Service Implementation
+Phase 6: Service Implementation (depends on Phase 3–5)
   #267 Implement TM
   #268 Implement QH
   #269 Implement Runner
@@ -135,8 +141,8 @@ Phase 5: Service Implementation
   #164–#185 Implement trigger/queue pglib operations (parallel with above)
   #186–#263 Implement remaining pglib operations (parallel with above)
 
-Phase 6: Deployment & Operations (M6)
-  Wave 1: #300, #301, #303
+Phase 7: Deployment & Operations (M6)
+  Wave 1: #300, #303
   Wave 2: #298, #299
   Wave 3: #302
 ```
