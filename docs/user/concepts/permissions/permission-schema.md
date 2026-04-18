@@ -36,6 +36,11 @@ __Permission
 |       +-- .table             #string                 <- Database: table name
 |       +-- .command           #string                 <- System: command to execute
 |       +-- .args              #string                 <- System: command arguments
+|       +-- .max              #string                 <- RAM/CPU/GPU/Processes/Duration: resource limit value
+|       +-- .weight           #int                    <- CPU: scheduling weight (1-10000)
+|       +-- .device           #string                 <- GPU: device identifier
+|       +-- .maxBps           #string                 <- IO: max bytes per second
+|       +-- .maxIops          #int                    <- IO: max IO operations per second
 +-- .audit                     __PermissionAudit
     +-- .log                   #AuditLevel             <- enum: None, OnUse, OnDeny, All
     +-- .alert                 #AlertLevel             <- enum: None, OnDeny, OnEscalation
@@ -57,6 +62,12 @@ The `.resource.locator` section carries **category-dependent** fields that ident
 | IPC | — | — |
 | Device | — | — |
 | Memory | — | — |
+| RAM | `.max` | — |
+| CPU | `.max` | `.weight` |
+| GPU | `.max` | `.device` |
+| IO | — | `.maxBps`, `.maxIops` |
+| Processes | `.max` | — |
+| Duration | `.max` | — |
 
 The permission object is the **sole gateway to external resources**. Pipelines receive the whole `_` object via IO and extract the fields they need — `-Yaml.LoadFile` reads `.path` and `.format`, `-DB.Query` reads `.host`, `.port`, `.credentials`, and `.database`. No hardcoded resource identifiers exist outside `{_}` definitions.
 

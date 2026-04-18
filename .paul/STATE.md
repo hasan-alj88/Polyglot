@@ -5,16 +5,16 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue-driven development — #313 (System-level job sandbox)
+**Current focus:** Issue-driven development — #314 (Resource categories as {_} permissions)
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — #313
-- Issue #313: [██████████] 100% (2/2 plans — System-level job sandbox)
-Plan: 313-02 unified (compile rules + sub-issues)
-Status: 313-02 loop closed, issue #313 complete — ready for merge
-Last activity: 2026-04-18 — Unified 313-02: PGE10015, PGE10016, PGW10007, sub-issues #316/#317
+Phase: Issue-driven — #314
+- Issue #314: [██████████] 100% (1/1 plans — Resource categories as {_} permissions)
+Plan: 314-01 complete
+Status: 314-01 loop closed, issue #314 complete — ready for merge
+Last activity: 2026-04-18 — 314-01: 6 resource categories, #LimitAction, cgroups v2 mapping, queue defaults
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -118,14 +118,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #314 — Resource categories (#RAM, #CPU, #GPU) as top-level {_} permissions
+Branch: design/issue-314-resource-categories-permissions
+Labels: design, security
+Started: 2026-04-18
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/314
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [ready for merge]
 ```
 
 ## Accumulated Context
@@ -292,6 +296,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #311 — Foreign code permission compliance | 2026-04-18 | 8 compile rules (PGE10011-14, PGW10002/03/05/06), 4 technical docs (algorithm, io-registry, compliance-report, parsers); merged to main |
 | Closed #312 — AST-invisible functions registry | 2026-04-18 | Externalized PGE10014 banned list to versioned registry; 32 entries across 5 languages; package extension format; merged to main |
 | Closed #313 — System-level job sandbox | 2026-04-18 | 2 plans: sandbox spec + compile rules; PGE10015/PGE10016/PGW10007; sub-issues #316 (resources) + #317 (OTel); merged to main |
+| Issue #314 — Resource categories as {_} permissions | 2026-04-18 | 6 resource categories (#RAM, #CPU, #GPU, #IO, #Processes, #Duration), #LimitAction enum, #LimitConfig struct, cgroups v2 mapping, queue defaults; #316 closed as duplicate |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -311,12 +316,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: Issue #313 merged and closed
-Next action: Run /paul:issues to pick next issue
-Resume file: N/A
+Stopped at: 314-01 UNIFY complete
+Next action: Run /paul:merge to merge branch
+Resume file: .paul/phases/314-resource-categories-permissions/314-01-SUMMARY.md
 Resume context:
-- #313 merged to main, branch deleted
-- Sub-issues #316 (resource categories) and #317 (OTel logging) open for future work
+- Issue #314 complete, 14 files (8 new + 6 edited), ready for merge
+- Branch: design/issue-314-resource-categories-permissions
+- #316 closed as duplicate of #314
 
 ---
 *STATE.md — Updated after every significant action*
