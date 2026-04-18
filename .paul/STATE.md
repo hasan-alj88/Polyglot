@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue-driven development — no active issue
+**Current focus:** Issue-driven development — Issue #315 active
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — awaiting next issue
-Plan: N/A
-Status: Ready for next issue
-Last activity: 2026-04-18 — Issue #314 merged and closed
+Phase: Issue #315 — OTel permission/sandbox events
+Plan: 315-01 complete
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-18 — Plan 315-01 unified (all AC passed)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -112,6 +112,7 @@ Progress:
 - Issue #312: [██████████] 100% (1/1 plans — AST-invisible functions registry)
 - Issue #313: [██████████] 100% (2/2 plans — system-level job sandbox)
 - Issue #314: [██████████] 100% (1/1 plans — resource categories as {_} permissions)
+- Issue #315: [██████████] 100% (1/1 plans — OTel permission/sandbox events)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -121,14 +122,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #315 — OpenTelemetry logging for permission and sandbox events
+Branch: design/issue-315-otel-permission-sandbox-logging
+Labels: design, implementation
+Started: 2026-04-18
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/315
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [UNIFY complete, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -296,6 +301,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #312 — AST-invisible functions registry | 2026-04-18 | Externalized PGE10014 banned list to versioned registry; 32 entries across 5 languages; package extension format; merged to main |
 | Closed #313 — System-level job sandbox | 2026-04-18 | 2 plans: sandbox spec + compile rules; PGE10015/PGE10016/PGW10007; sub-issues #316 (resources) + #317 (OTel); merged to main |
 | Issue #314 — Resource categories as {_} permissions | 2026-04-18 | 6 resource categories (#RAM, #CPU, #GPU, #IO, #Processes, #Duration), #LimitAction enum, #LimitConfig struct, cgroups v2 mapping, queue defaults; #316 closed as duplicate |
+| Issue #315 — OTel permission/sandbox events | 2026-04-18 | 8 OTel log events (sandbox setup/violation, resource exceeded/kill, AST suppressed, opaque activated, compliance generated); 9 polyglot.* attributes; span hierarchy; runtime compliance appendix; 1 new + 3 updated files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -315,10 +321,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: Issue #314 merged and closed
-Next action: Run /paul:issues to pick next issue
-Resume file: N/A
-Resume context: #314 merged to main, branch deleted
+Stopped at: Plan 315-01 unified — all AC passed
+Next action: /paul:merge to commit and merge branch
+Resume file: .paul/phases/issue-315-otel-permission-sandbox/315-01-SUMMARY.md
+Resume context: Issue #315 complete on branch design/issue-315-otel-permission-sandbox-logging
 
 ---
 *STATE.md — Updated after every significant action*
