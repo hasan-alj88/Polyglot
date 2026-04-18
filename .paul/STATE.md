@@ -5,16 +5,16 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue-driven development — #312 (AST-invisible functions registry)
+**Current focus:** Issue-driven development — #313 (System-level job sandbox)
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — #312
-- Issue #312: [██████████] 100% (1/1 plans — AST-invisible functions registry)
-Plan: 312-01 complete (registry + doc updates)
-Status: All plans complete, ready for MERGE
-Last activity: 2026-04-18 — Unified 312-01: 32-entry registry + 4 doc updates
+Phase: Issue-driven — #313
+- Issue #313: [██████████] 100% (2/2 plans — System-level job sandbox)
+Plan: 313-02 unified (compile rules + sub-issues)
+Status: 313-02 loop closed, issue #313 complete — ready for merge
+Last activity: 2026-04-18 — Unified 313-02: PGE10015, PGE10016, PGW10007, sub-issues #316/#317
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -118,14 +118,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #313 — System-level job sandbox from {_} permissions
+Branch: design/issue-313-system-level-job-sandbox-from-permissions
+Labels: design, algorithm, security
+Started: 2026-04-18
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/313
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [313-02 loop closed, issue complete — ready for merge]
 ```
 
 ## Accumulated Context
@@ -291,6 +295,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #310 — Permission-as-Resource model | 2026-04-17 | {_} carries grant + locator; [_] retired; permissions via IO markers; decomposed fields; PGE10009/PGE10010; ~75 files updated |
 | Closed #311 — Foreign code permission compliance | 2026-04-18 | 8 compile rules (PGE10011-14, PGW10002/03/05/06), 4 technical docs (algorithm, io-registry, compliance-report, parsers); merged to main |
 | Closed #312 — AST-invisible functions registry | 2026-04-18 | Externalized PGE10014 banned list to versioned registry; 32 entries across 5 languages; package extension format; merged to main |
+| Issue #313 — System-level job sandbox complete | 2026-04-18 | 2 plans: sandbox spec + compile rules; PGE10015/PGE10016/PGW10007; sub-issues #316 (resources) + #317 (OTel) |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -310,12 +315,13 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: Issue #312 merged to main
-Next action: Run /paul:work-issue or /paul:issues to pick next issue
-Resume file: N/A
+Stopped at: 313-02 loop closed, issue #313 complete
+Next action: Run /paul:merge to merge branch to main and close #313
+Resume file: .paul/phases/313-system-level-job-sandbox/313-02-SUMMARY.md
 Resume context:
-- Issue #312 closed and merged to main
-- On main branch, local only (not pushed)
+- Issue #313 complete on branch design/issue-313-system-level-job-sandbox-from-permissions
+- 313-01: job-sandbox.md, enforcement.md, behavior-contract.md
+- 313-02: PGE10015, PGE10016, PGW10007, sub-issues #316/#317
 
 ---
 *STATE.md — Updated after every significant action*

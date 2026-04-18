@@ -45,14 +45,50 @@ The Behavior Contract is transmitted via NATS messaging in TOON format (chosen f
 
 ## Contract Structure
 
-The contract is organized into four top-level sections:
+The contract is organized into five top-level sections:
 
 1. **Triggers** — listener configuration for the Trigger Monitor
 2. **Queue** — dispatch rules and active queue commands
 3. **Wrappers** — resource lifecycle configuration
 4. **Execution** — the async function jobs and flow control
+5. **Permissions** — resolved `{_}` grants and sandbox configuration
 
 Within each section, the `[X]` markers from Polyglot Code inform the kind of action. The compiler transforms these into the serialized signal map — encoding when to send trigger signals between jobs, when to fan out in parallel, which branches receive "go" signals based on conditions or error states.
+
+## Permission Manifest
+
+<!-- @c:concepts/permissions/enforcement#Foreign Code Sandbox -->
+<!-- @c:technical/spec/job-sandbox -->
+
+The compiler emits a **Permission Manifest** as part of the Behavior Contract. It contains the resolved `{_}` grants for each pipeline — the concrete permission declarations after template resolution and ceiling validation.
+
+### Manifest Flow
+
+```text
+Compiler validates {_} grants
+    → resolves templates ((_) inputs substituted)
+    → validates against {@} ceiling
+    → emits Permission Manifest per pipeline
+        → stored alongside signal map in NoSQL DB
+            → Runner reads manifest before spawning job
+                → translates to OS-level sandbox configuration
+```
+
+### Manifest Contents
+
+The Permission Manifest for each pipeline contains:
+
+| Content | Source | Purpose |
+|---|---|---|
+| Resolved `{_}` grants | Template resolution + ceiling validation | Per-pipeline list of permissions (category, capability, scope/path/host/port) |
+| File content hashes | Compile-Time File Binding | SHA-256 hashes of referenced files — invalidated if files change |
+| `_Unsafe.SandboxOnly` flag | `[!] _Unsafe.SandboxOnly` in pipeline | Signals Runner to activate all isolation layers |
+| Accountability metadata | `%Authors`, `%Description`, `%Version` | Required when `_Unsafe.SandboxOnly` is active (PGE10016) |
+| Compliance report | AST analysis results | Best-effort analysis findings, warnings, and verdicts |
+
+The manifest is **read-only at runtime** — the Runner uses it to configure the sandbox but never modifies it. Changes to permissions require recompilation and re-registration.
+
+See [[job-sandbox]] for how the Runner translates the Permission Manifest into OS-level restrictions (Landlock, seccomp-bpf, Linux namespaces, cgroups v2).
 
 ## Compile-Time Signal Map Validation
 
@@ -151,6 +187,7 @@ Pipeline definition lookup is a microservice action.
 | Non-callable pipelines | Registered with required inputs (not supplied by triggers) | Registration |
 | Callable pipelines | Callable pipeline registry per package | Registration |
 | Collectors (`{*}`) | Special callable pipelines | Registration |
+| Permission Manifest | Part of Behavior Contract in NoSQL DB | Compile time (per pipeline) |
 | Enable flag | NoSQL DB | User sets; Trigger Monitor checks before firing |
 
 ### Re-registration Rules
