@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-17
+updated: 2026-04-18
 status: complete
 ---
 
@@ -55,7 +55,26 @@ All permission checks are **static analysis** — resolved at compile time, not 
 6. **Template resolution** — all `(_)` inputs must be provided; unresolved template inputs are a compile error (PGE10009)
 7. **Resource validation** — file-category `{_}` objects must point to files that exist at compile time (PGE10010)
 
-No runtime permission checks exist. If it compiles, the permissions are satisfied.
+For Polyglot-native code, if it compiles, the permissions are satisfied. For foreign code (`[C]` blocks, `-Run.*` pipelines), the compiler performs AST analysis to verify compliance — see [[permissions/foreign-code|u:Foreign Code Permissions]].
+
+## Foreign Code Sandbox
+
+<!-- @c:permissions/foreign-code -->
+For foreign code in `-Run.*` pipelines ([[permissions/foreign-code|c:Foreign Code Permissions]]), the Polyglot Service applies OS-level restrictions as **defense-in-depth** before spawning the job process. This is not a per-call runtime check (no Java SecurityManager overhead) — it is a one-time load-time sandbox applied before any user code executes.
+
+The compiler emits a **Permission Manifest** as part of the Behavior Contract. The Polyglot Service translates it to OS-level restrictions:
+
+| {_} Category | Sandbox Mechanism |
+|-------------|-------------------|
+| #File | Landlock ruleset — restricts filesystem access to declared `.path` values |
+| #Web | Network namespace — restricts connections to declared `.host`/`.port` |
+| #Database | Network namespace — restricts connections to declared `.host`/`.port` |
+| #System.#Process | seccomp-BPF — allows fork/exec family |
+| #System.#Shell | seccomp-BPF + Landlock for command path |
+
+The sandbox catches violations that AST analysis cannot detect — unresolvable variable paths, IO registry gaps, or new library functions not yet in the registry. If foreign code attempts an operation outside declared permissions, the kernel returns EACCES.
+
+The principle remains: **compilation is a license to launch**. The sandbox narrows that license to exactly what was declared.
 
 ## Compile-Time File Binding
 

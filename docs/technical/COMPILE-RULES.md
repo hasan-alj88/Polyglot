@@ -232,6 +232,10 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE10008 | Parallel Write Permission Exclusion |
 | PGE10009 | Unresolved Permission Template |
 | PGE10010 | Permission Resource Not Found |
+| PGE10011 | Shell Without Capability |
+| PGE10012 | Code File Outside Scope |
+| PGE10013 | Foreign Resource Outside Scope |
+| PGE10014 | AST-Invisible Foreign Code |
 
 ### 11 — Schema Properties
 
@@ -288,6 +292,10 @@ Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a develo
 | PGW09001 | Deprecated Pipeline Reference |
 | PGW09002 | Unused Import |
 | PGW10001 | Unused Permission |
+| PGW10002 | Unverifiable Foreign IO |
+| PGW10003 | Bind Mode Opacity |
+| PGW10005 | Unrecognized Foreign Call |
+| PGW10006 | Shell Variable Expansion |
 | PGW11001 | Redundant Schema Property *(planned)* |
 | PGW11002 | Contradicting Schema Override *(planned)* |
 | PGW11003 | Unlimited Depth on User Type *(planned)* |
