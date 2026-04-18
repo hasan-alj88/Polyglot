@@ -5,16 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue-driven development — #314 (Resource categories as {_} permissions)
+**Current focus:** Issue-driven development — no active issue
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — #314
-- Issue #314: [██████████] 100% (1/1 plans — Resource categories as {_} permissions)
-Plan: 314-01 complete
-Status: 314-01 loop closed, issue #314 complete — ready for merge
-Last activity: 2026-04-18 — 314-01: 6 resource categories, #LimitAction, cgroups v2 mapping, queue defaults
+Phase: Issue-driven — awaiting next issue
+Plan: N/A
+Status: Ready for next issue
+Last activity: 2026-04-18 — Issue #314 merged and closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -109,6 +108,10 @@ Progress:
 - Issue #307: [██████████] 100% (1/1 plans — field path separator + match value redundancy)
 - Issue #309: [██████████] 100% (1/1 plans — token ambiguity + reassemble IO validation)
 - Issue #310: [██████████] 100% (1/1 plans — permission-as-resource model + [_] retirement)
+- Issue #311: [██████████] 100% (1/1 plans — foreign code permission compliance)
+- Issue #312: [██████████] 100% (1/1 plans — AST-invisible functions registry)
+- Issue #313: [██████████] 100% (2/2 plans — system-level job sandbox)
+- Issue #314: [██████████] 100% (1/1 plans — resource categories as {_} permissions)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -118,18 +121,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #314 — Resource categories (#RAM, #CPU, #GPU) as top-level {_} permissions
-Branch: design/issue-314-resource-categories-permissions
-Labels: design, security
-Started: 2026-04-18
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/314
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [ready for merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -316,13 +315,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: 314-01 UNIFY complete
-Next action: Run /paul:merge to merge branch
-Resume file: .paul/phases/314-resource-categories-permissions/314-01-SUMMARY.md
-Resume context:
-- Issue #314 complete, 14 files (8 new + 6 edited), ready for merge
-- Branch: design/issue-314-resource-categories-permissions
-- #316 closed as duplicate of #314
+Stopped at: Issue #314 merged and closed
+Next action: Run /paul:issues to pick next issue
+Resume file: N/A
+Resume context: #314 merged to main, branch deleted
 
 ---
 *STATE.md — Updated after every significant action*
