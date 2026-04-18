@@ -11,9 +11,11 @@ status: complete
 <!-- @c:technical/spec/behavior-contract#Permission Manifest -->
 <!-- @c:technical/spec/compiler-floor#Two Kinds of Native -->
 <!-- @c:technical/spec/otel-permission-events -->
+<!-- @c:technical/spec/otel-foundation -->
+<!-- @c:technical/spec/otel-config -->
 <!-- @u:concepts/permissions/foreign-code -->
 <!-- @u:technical/compiler/compliance-report -->
-Related: [[enforcement]], [[behavior-contract]], [[compiler-floor]], [[foreign-code]], [[compliance-report]], [[resource-controls]], [[otel-permission-events]]
+Related: [[enforcement]], [[behavior-contract]], [[compiler-floor]], [[foreign-code]], [[compliance-report]], [[resource-controls]], [[otel-permission-events]], [[otel-foundation]], [[otel-config]]
 
 ## Why OS-Level Sandboxing
 

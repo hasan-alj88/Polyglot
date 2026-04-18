@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue-driven development — no active issue
+**Current focus:** Issue #318 — OTel foundation
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue #315 — OTel permission/sandbox events
-Plan: 315-01 complete
-Status: Issue #315 merged and closed
-Last activity: 2026-04-18 — Merged design/issue-315-otel-permission-sandbox-logging to main
+Phase: Issue #318 — OTel foundation: tracing infrastructure, exporter config, semantic conventions
+Plan: 318-02 complete
+Status: Loop closed, issue #318 complete — ready for merge
+Last activity: 2026-04-18 — Plan 318-02 SUMMARY created
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -122,14 +122,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #318 — OTel foundation: tracing infrastructure, exporter config, semantic conventions
+Branch: design/issue-318-otel-foundation-tracing-infrastructure
+Labels: design
+Started: 2026-04-18
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/318
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop complete — ready for merge]
 ```
 
 ## Accumulated Context
@@ -317,10 +321,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: Issue #315 merged to main and closed
-Next action: /paul:issues or /paul:progress
-Resume file: —
-Resume context: No active issue
+Stopped at: Plan 318-02 loop closed
+Next action: /paul:merge to merge issue branch to main (closes #318)
+Resume file: .paul/phases/issue-318-otel-foundation/318-02-SUMMARY.md
+Resume context: Issue #318 complete (2 plans); ready to merge design/issue-318-otel-foundation-tracing-infrastructure to main
 
 ---
 *STATE.md — Updated after every significant action*

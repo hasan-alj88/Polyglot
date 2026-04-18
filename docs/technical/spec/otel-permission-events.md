@@ -11,13 +11,15 @@ updated: 2026-04-18
 <!-- @c:technical/compiler/compliance-report -->
 <!-- @c:technical/spec/behavior-contract#Permission Manifest -->
 <!-- @c:technical/plan/queue-manager/resource-controls -->
+<!-- @c:technical/spec/otel-foundation -->
+<!-- @c:technical/spec/otel-config -->
 <!-- @u:concepts/permissions/enforcement -->
 <!-- @u:concepts/permissions/foreign-code -->
-Related: [[job-sandbox]], [[compliance-report]], [[behavior-contract]], [[resource-controls]], [[enforcement]], [[foreign-code]]
+Related: [[job-sandbox]], [[compliance-report]], [[behavior-contract]], [[resource-controls]], [[enforcement]], [[foreign-code]], [[otel-foundation]], [[otel-config]]
 
 This specification defines the 8 OpenTelemetry log events emitted by the Runner and Queue Handler for permission and sandbox operations. It covers event names, trigger conditions, severity levels, structured attributes, span hierarchy, and runtime compliance report integration.
 
-**Scope boundary:** This document defines *what* is logged and *when*. Where logs go (OTLP endpoint, stdout, JSON files) is configured by the user per #318 (OTel foundation). The Runner emits OTel data; the exporter routes it. This spec is exporter-independent.
+**Scope boundary:** This document defines *what* is logged and *when*. Where logs go (OTLP endpoint, stdout, JSON files) is configured by the user in [[otel-config]]. The tracing infrastructure (crate stack, span hierarchy, NATS propagation) is defined in [[otel-foundation]]. The Runner emits OTel data; the exporter routes it. This spec is exporter-independent.
 
 ## Event Summary
 
@@ -494,8 +496,10 @@ The runtime appendix is stored alongside the Behavior Contract in the NoSQL DB. 
 | Mutability | Immutable after compilation | One entry per job execution |
 | Storage | Part of Behavior Contract | Alongside Behavior Contract, keyed by job UID |
 
-## Open Questions
+## Resolved by #318
 
-- **Fallback logging:** When the OTel exporter is unavailable (network failure, misconfiguration), should the Runner fall back to stderr JSON output? This ensures violations are never silently lost but adds a second log path to maintain.
-- **Sampling:** Sandbox setup spans are high-volume for pipelines that run frequently. Should these spans be sampled differently from normal execution spans? Tail-based sampling (keep spans with violations, sample others) is a candidate strategy.
-- **NATS trace context:** NATS messages currently carry job UIDs but not `traceparent` headers. Adding W3C trace context to NATS messages enables cross-service correlation (Trigger Monitor -> Queue Handler -> Runner) in a single trace. This requires NATS client instrumentation in #318.
+The following open questions were resolved by the OTel foundation specification (#318):
+
+- **Fallback logging:** Resolved — stderr JSON fallback activates when the primary exporter is unavailable. Violations are never silently lost. See [[otel-config#Fallback Logging]] for configuration and format.
+- **Sampling:** Resolved — tail-based sampling is the default strategy. Spans containing error or violation events are always retained (`keep_errors = true`), while routine spans (e.g., `permission.sandbox.setup` INFO) are sampled at the configured ratio. See [[otel-config#Sampling Strategy]] for full details.
+- **NATS trace context:** Resolved — W3C `traceparent` headers are injected into all 3 NATS message hops (TM→QH, QH→Runner, Runner→QH), enabling single distributed traces across all services. See [[otel-foundation#NATS Trace Context Propagation]] for the inject/extract pattern.
