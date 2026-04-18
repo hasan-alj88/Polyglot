@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 
 Milestone: Language (issue-driven)
 Phase: Issue #318 — OTel foundation: tracing infrastructure, exporter config, semantic conventions
-Plan: 318-02 complete
-Status: Loop closed, issue #318 complete — ready for merge
-Last activity: 2026-04-18 — Plan 318-02 SUMMARY created
+Plan: none
+Status: Ready for next issue
+Last activity: 2026-04-18 — Merged #318 to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -113,6 +113,7 @@ Progress:
 - Issue #313: [██████████] 100% (2/2 plans — system-level job sandbox)
 - Issue #314: [██████████] 100% (1/1 plans — resource categories as {_} permissions)
 - Issue #315: [██████████] 100% (1/1 plans — OTel permission/sandbox events)
+- Issue #318: [██████████] 100% (2/2 plans — OTel foundation tracing + cross-refs)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -122,18 +123,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #318 — OTel foundation: tracing infrastructure, exporter config, semantic conventions
-Branch: design/issue-318-otel-foundation-tracing-infrastructure
-Labels: design
-Started: 2026-04-18
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/318
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete — ready for merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -302,6 +299,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #313 — System-level job sandbox | 2026-04-18 | 2 plans: sandbox spec + compile rules; PGE10015/PGE10016/PGW10007; sub-issues #316 (resources) + #317 (OTel); merged to main |
 | Issue #314 — Resource categories as {_} permissions | 2026-04-18 | 6 resource categories (#RAM, #CPU, #GPU, #IO, #Processes, #Duration), #LimitAction enum, #LimitConfig struct, cgroups v2 mapping, queue defaults; #316 closed as duplicate |
 | Closed #315 — OTel permission/sandbox events | 2026-04-18 | 8 OTel log events, 9 polyglot.* attributes, span hierarchy, runtime compliance appendix; merged to main |
+| Closed #318 — OTel foundation | 2026-04-18 | 2 spec docs (tracing infra + exporter config), 4 cross-ref updates, 3 open questions resolved; merged to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -321,10 +319,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: Plan 318-02 loop closed
-Next action: /paul:merge to merge issue branch to main (closes #318)
-Resume file: .paul/phases/issue-318-otel-foundation/318-02-SUMMARY.md
-Resume context: Issue #318 complete (2 plans); ready to merge design/issue-318-otel-foundation-tracing-infrastructure to main
+Stopped at: Issue #318 merged to main
+Next action: /paul:issues or /paul:progress
+Resume file: none
+Resume context: #318 closed; no active issue
 
 ---
 *STATE.md — Updated after every significant action*
