@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #318 — OTel foundation
+**Current focus:** Issue #319 — Polyglot SDK specification
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue #318 — OTel foundation: tracing infrastructure, exporter config, semantic conventions
-Plan: none
-Status: Ready for next issue
-Last activity: 2026-04-18 — Merged #318 to main
+Phase: Issue #319 — Polyglot SDK specification: cross-language type conversion and call protocol
+Plan: 319-01 and 319-02 complete
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-18 — Loop closed: SDK spec + cross-ref updates
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -123,14 +123,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #319 — Polyglot SDK specification — cross-language type conversion and call protocol
+Branch: design/issue-319-polyglot-sdk-cross-language-type-conversion-and-call
+Labels: design, documentation, P3-medium
+Started: 2026-04-18
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/319
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Ready for /paul:merge]
 ```
 
 ## Accumulated Context
@@ -300,6 +304,8 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Issue #314 — Resource categories as {_} permissions | 2026-04-18 | 6 resource categories (#RAM, #CPU, #GPU, #IO, #Processes, #Duration), #LimitAction enum, #LimitConfig struct, cgroups v2 mapping, queue defaults; #316 closed as duplicate |
 | Closed #315 — OTel permission/sandbox events | 2026-04-18 | 8 OTel log events, 9 polyglot.* attributes, span hierarchy, runtime compliance appendix; merged to main |
 | Closed #318 — OTel foundation | 2026-04-18 | 2 spec docs (tracing infra + exporter config), 4 cross-ref updates, 3 open questions resolved; merged to main |
+| Issue #319 — Polyglot SDK specification | 2026-04-18 | SDK spec (polyglot-sdk.md), type mapping descriptors in behavior-contract, FFI→-Run.Bridge in integrator docs; 1 created, 4 updated |
+| SDK uses universal string only, no FFI | 2026-04-18 | FFI requires dynamic code gen; deferred to -Run.Bridge (#321); trade-off documented |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -319,10 +325,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: Issue #318 merged to main
-Next action: /paul:issues or /paul:progress
-Resume file: none
-Resume context: #318 closed; no active issue
+Stopped at: Issue #319 UNIFY complete
+Next action: /paul:merge to commit and merge branch
+Resume file: .paul/phases/319-polyglot-sdk/319-02-SUMMARY.md
+Resume context: Loop closed, ready for merge
 
 ---
 *STATE.md — Updated after every significant action*

@@ -1,7 +1,7 @@
 ---
 audience: integrator
 type: guide
-updated: 2026-04-12
+updated: 2026-04-18
 ---
 
 # The `polyglot-interface` Library
@@ -9,8 +9,9 @@ updated: 2026-04-12
 <!-- @c:vision#Ways of Integration -->
 <!-- @c:glossary#Polyglot Service -->
 <!-- @c:glossary#Cross-Language Integration -->
+<!-- @c:spec/polyglot-sdk -->
 
-Not all users need to write Polyglot Code to use the Polyglot Service. For each supported programming language, a library called `polyglot-interface` (or the idiomatic variant for that ecosystem) provides direct code-to-code integration. This was the original vision for the Polyglot project: abstract away FFIs and the setup needed to interface one codebase with another.
+Not all users need to write Polyglot Code to use the Polyglot Service. For each supported programming language, a library called `polyglot-interface` (or the idiomatic variant for that ecosystem) provides direct code-to-code integration. The SDK achieves this through universal string serialization — all data crosses language boundaries as typed JSON envelopes through the Polyglot Service's NoSQL store, eliminating the need for per-language FFI setup. For performance-critical pairwise integration, see `-Run.Bridge` ([[spec/polyglot-sdk#Design Decisions]]).
 
 The [[glossary#Polyglot Service|c:Polyglot Service]] runs as a standalone service (server or local). The `polyglot-interface` library is the interface between your application and that service. It handles all communication and data translation between programming languages, so you write code in your preferred language and interact with code written in other languages seamlessly.
 
@@ -55,3 +56,4 @@ In the Polyglot source tree, the `polyglot-interface` library implementations li
 
 - [[vision#Ways of Integration|c:Ways of Integration]] — high-level integration strategy
 - [[vision#Evolution|c:Evolution]] — Phase 1 (orchestration) and Phase 2 (variable-level) roadmap
+- [[polyglot-sdk]] — SDK specification, type mapping, and serialization algorithm

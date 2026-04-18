@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-14
+updated: 2026-04-18
 ---
 
 # The Behavior Contract
@@ -16,7 +16,8 @@ updated: 2026-04-14
 <!-- @c:technical/spec/otel-permission-events -->
 <!-- @c:technical/spec/otel-foundation -->
 <!-- @c:technical/spec/otel-config -->
-Related: [[compiler-floor]], [[native-dispatch]], [[otel-permission-events]], [[otel-foundation]], [[otel-config]]
+<!-- @c:technical/spec/polyglot-sdk -->
+Related: [[compiler-floor]], [[native-dispatch]], [[otel-permission-events]], [[otel-foundation]], [[otel-config]], [[polyglot-sdk]]
 
 ## What Polyglot Compiles To
 
@@ -55,6 +56,7 @@ The contract is organized into five top-level sections:
 3. **Wrappers** — resource lifecycle configuration
 4. **Execution** — the async function jobs and flow control
 5. **Permissions** — resolved `{_}` grants and sandbox configuration
+6. **Type Mapping Descriptors** — per-IO-port type mappings for SDK serialization
 
 Within each section, the `[X]` markers from Polyglot Code inform the kind of action. The compiler transforms these into the serialized signal map — encoding when to send trigger signals between jobs, when to fan out in parallel, which branches receive "go" signals based on conditions or error states.
 
@@ -94,6 +96,16 @@ The manifest is **read-only at runtime** — the Runner uses it to configure the
 The Permission Manifest drives both sandbox configuration and OTel event emission. At runtime, violations of the declared permissions are logged as structured OTel events per [[otel-permission-events]]. This creates a closed loop: the compiler validates permissions, the manifest configures the sandbox, and the OTel events record what the sandbox enforced.
 
 See [[job-sandbox]] for how the Runner translates the Permission Manifest into OS-level restrictions (Landlock, seccomp-bpf, Linux namespaces, cgroups v2).
+
+## Type Mapping Descriptors
+
+<!-- @c:technical/spec/polyglot-sdk#Type Mapping Descriptors -->
+
+The compiler emits **type mapping descriptors** alongside the signal map and permission manifest. These descriptors specify the Polyglot type for each IO port in every pipeline, enabling the Runner and [[polyglot-sdk|c:Polyglot SDK]] to serialize and deserialize values without runtime type inspection.
+
+The descriptors are derived from the native registry's IO schema (see [[native-dispatch#Registry Entry Schema]]). For each IO port, the descriptor records the port name, direction, Polyglot type, and whether it carries an array.
+
+See [[polyglot-sdk#Type Mapping Descriptors]] for the descriptor schema and examples.
 
 ## Compile-Time Signal Map Validation
 
