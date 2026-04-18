@@ -59,16 +59,20 @@ capability_map = {
 
 ### 2.1 — Reject AST-Invisible Code
 
-The first pass walks every AST node and checks against the `BANNED_CONSTRUCTS` table for the target language. If any match is found, PGE10014 fires immediately and compilation aborts.
+<!-- @c:technical/compiler/ast-invisible-registry -->
+
+The first pass walks every AST node and checks against the AST-invisible registry for the target language. The registry is loaded from `ast-invisible-registry.toml` at compiler startup ([[compiler/ast-invisible-registry]]) and contains per-language tables of banned constructs organized by category (dynamic execution, dynamic loading, inline assembly, FFI, reflection, serialization). If any match is found, PGE10014 fires immediately and compilation aborts.
 
 ```text
+LOAD ast-invisible-registry.toml → BANNED_CONSTRUCTS[language]
+
 FOR each node IN ast.walk():
   IF node matches BANNED_CONSTRUCTS[language]:
-    EMIT PGE10014(node)
+    EMIT PGE10014(node, construct_name, category, reason)
     ABORT compilation
 ```
 
-See PGE10014 for the complete banned constructs table per language.
+See [[compiler/ast-invisible-registry]] for the complete per-language banned constructs tables.
 
 ### 2.2 — Resolve Import Aliases
 

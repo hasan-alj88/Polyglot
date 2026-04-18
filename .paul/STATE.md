@@ -5,16 +5,16 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue-driven development — #311 (foreign code permission compliance)
+**Current focus:** Issue-driven development — #312 (AST-invisible functions registry)
 
 ## Current Position
 
 Milestone: Language (issue-driven)
-Phase: Issue-driven — #311
-- Issue #311: [██████████] 100% (2/2 plans — foreign code permission compliance)
-Plan: 311-01 complete (compile rules), 311-02 complete (technical docs)
+Phase: Issue-driven — #312
+- Issue #312: [██████████] 100% (1/1 plans — AST-invisible functions registry)
+Plan: 312-01 complete (registry + doc updates)
 Status: All plans complete, ready for MERGE
-Last activity: 2026-04-18 — Applied+unified both plans: 8 compile rules + 4 technical docs
+Last activity: 2026-04-18 — Unified 312-01: 32-entry registry + 4 doc updates
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -118,14 +118,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #312 — Add AST-invisible functions registry for compile-time detection
+Branch: design/issue-312-ast-invisible-functions-registry
+Labels: design
+Started: 2026-04-18
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/312
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ✓     [ready for next issue]
+  ✓        ✓        ✓        ○     [ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -290,6 +294,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #308 — Comment-only branches + orphaned foreign code | 2026-04-17 | X.43 Accept: PGE06010 sufficient; X.44 PGW01004: orphaned [C] warning; 2 edge cases (EC-11.11, EC-22.5); total 137 |
 | Issue #310 — Permission-as-Resource model | 2026-04-17 | {_} carries grant + locator; [_] retired; permissions via IO markers; decomposed fields; PGE10009/PGE10010; ~75 files updated |
 | Closed #311 — Foreign code permission compliance | 2026-04-18 | 8 compile rules (PGE10011-14, PGW10002/03/05/06), 4 technical docs (algorithm, io-registry, compliance-report, parsers); merged to main |
+| Issue #312 — AST-invisible functions registry | 2026-04-18 | Externalized PGE10014 banned list to versioned registry; 32 entries across 5 languages; package extension format; io-registry companion |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -309,12 +314,12 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-18
-Stopped at: Issue #311 merged to main
-Next action: Run /paul:work-issue or /paul:issues to pick next issue
-Resume file: N/A
+Stopped at: Issue #312 unified, ready for MERGE
+Next action: Run /paul:merge to commit and merge to main
+Resume file: .paul/phases/312-ast-invisible-functions-registry/312-01-SUMMARY.md
 Resume context:
-- Issue #311 closed and merged to main
-- On main branch, local only (not pushed)
+- Issue #312 all plans complete on branch design/issue-312-ast-invisible-functions-registry
+- 5 files changed (1 created, 4 modified), ready for commit + merge
 
 ---
 *STATE.md — Updated after every significant action*

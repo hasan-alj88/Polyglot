@@ -54,15 +54,17 @@ The compiler detects `pd.read_csv("/data/reports/q1.csv")` as a `#File.#Read` op
 <!-- @c:technical/compile-rules/PGE/PGE10014-ast-invisible-foreign-code -->
 Foreign code that evades AST analysis is a compile error ([[technical/compile-rules/PGE/PGE10014-ast-invisible-foreign-code|PGE10014]]). This follows the same security logic as SQL injection prevention — if the system cannot parse and verify what code does, that code must not run.
 
-**Banned constructs:**
+**Banned constructs** (maintained in the AST-invisible registry — [[technical/compiler/ast-invisible-registry]]):
 
-| Language | Banned Constructs |
-|----------|------------------|
-| Python | `eval()`, `exec()`, `importlib.import_module()`, `getattr(os, 'system')`, `ctypes.CDLL()`, `__import__()` |
-| Rust | `unsafe` blocks with raw syscalls, `dlopen`/`dlsym` |
-| C/C++ | `dlopen`/`dlsym`, inline assembly (`asm`), `system()` without matching `{_}` |
-| JavaScript | `eval()`, `new Function()`, dynamic `require(variable)`, dynamic `import()` |
-| Shell | backtick substitution with variables, `eval` builtin |
+| Language | Example Banned Constructs |
+|----------|--------------------------|
+| Python | `eval()`, `exec()`, `compile()`, `importlib.import_module()`, `__import__()`, `getattr(obj, name)()`, `ctypes.CDLL()`, `pickle.loads()`, `marshal.loads()` |
+| Rust | `asm!()` macro, `unsafe` blocks with raw syscalls, `libloading::Library::new()`, `dlopen`/`dlsym` |
+| C/C++ | `dlopen()`/`dlsym()`, `GetProcAddress()`, `LoadLibrary()`, inline assembly (`asm`/`__asm__`), `system()` without matching `{_}` |
+| JavaScript | `eval()`, `new Function()`, `Function.prototype.constructor(string)`, indirect eval, dynamic `require(variable)`, dynamic `import(variable)` |
+| Shell | `eval` builtin, backtick substitution with variables, `${!variable}` indirect expansion |
+
+The complete list is maintained in the AST-invisible registry and grows independently of compiler releases. Packages can declare additional banned wrappers via `ast-invisible-registry-ext.toml`.
 
 ## Permission Violation Detection
 
