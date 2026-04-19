@@ -43,6 +43,7 @@ See [[pglib/types/Variable|#Variable]] for the language-tagged variable type tha
       [.] .f64
       [.] .String
       [.] .bool
+      [.] .Vec_u8
       [.] .Vec
       [.] .PathBuf
       [.] .HashMap
@@ -52,12 +53,14 @@ See [[pglib/types/Variable|#Variable]] for the language-tagged variable type tha
       [.] .float64
       [.] .string
       [.] .bool
+      [.] .byte_slice
       [.] .slice
       [.] .map
    :JavaScript
       [.] .number
       [.] .string
       [.] .boolean
+      [.] .Uint8Array
       [.] .Array
       [.] .Object
       [.] .null
@@ -81,7 +84,8 @@ The Bridge conversion algorithm uses this table to determine how to convert betw
 | `#serial` | `dict` | `serde_json::Value` | `map[string]any` | `Object` |
 | `#array.T` | `list[T]` | `Vec<T>` | `[]T` | `Array` |
 | `#Record` | `dict` | `HashMap<String, _>` | `map[string]any` | `Object` |
-| (none) | `bytes` | `Vec<u8>` | `[]byte` | `Uint8Array` |
+| `#bytes` | `bytes` | `Vec<u8>` | `[]byte` | `Uint8Array` |
+| `#dt` | `int` | `i64` | `int64` | `number` |
 | (none) | `NoneType` | `Option::None` | `nil` | `null` |
 
 **Key rule:** All values cross the boundary as strings using the JSON wire format defined in [[spec/native-dispatch#Serialization Protocol]]. The marshalling table determines which native constructor to use on the receiving side.
