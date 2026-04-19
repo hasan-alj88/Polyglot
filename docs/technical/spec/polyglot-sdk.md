@@ -10,6 +10,8 @@ status: draft
 <!-- @c:spec/native-dispatch -->
 <!-- @c:spec/behavior-contract -->
 <!-- @c:spec/type-identity -->
+<!-- @c:pglib/types/schemas/Inf -->
+<!-- @c:pglib/types/schemas/Nullable -->
 <!-- @c:spec/compiler-floor -->
 <!-- @c:glossary#Polyglot Service -->
 <!-- @c:glossary#Runner -->
@@ -820,22 +822,88 @@ const status = fromPolyglotEnum(envelope, statusVariants);
 | **How type is determined** | Runtime switch on envelope | Compiler analyzes foreign AST or user declares type explicitly; Behavior Contract pre-selects the decode function |
 | **Error on mismatch** | Possible but rare (dynamic) | Required — `TypeMismatch` error if envelope type != expected |
 
-### Normalization Rules
+### Wire Format Conventions
 
-**Boolean:** `"True"` / `"False"` (Python capitalization, per [[native-dispatch]]). All SDKs normalize to this convention regardless of language-native boolean string forms (`"true"`/`"false"` in JS/Go/Rust).
+<!-- @c:spec/native-dispatch#Value Encoding -->
+Related: [[native-dispatch#Value Encoding]], [[pglib/types/schemas/Inf\|##Inf]], [[pglib/types/schemas/Nullable\|##Nullable]]
 
-**Float special values:** Governed by schema — `##Nullable` enables `""` (none), `##Inf` enables `"Infinity"` / `"-Infinity"` / `"NaN"`. SDKs normalize on write, accept language-native variants on read.
+The SDK normalizes all values to canonical wire format strings before serialization. Each SDK must produce identical wire output regardless of language-native representations. The canonical forms are defined by [[native-dispatch#Value Encoding]] — the SDK is a consumer of that protocol.
 
-| Value | String Representation | Schema Requirement |
+#### Boolean
+
+Canonical wire format: `"True"` / `"False"` (Python capitalization).
+
+All SDKs normalize to this convention regardless of language-native boolean string forms. The canonical form is defined in [[native-dispatch#Value Encoding]].
+
+| Language | Native `true` | Native `false` | SDK Writes |
+|---|---|---|---|
+| Python | `True` | `False` | `"True"` / `"False"` (no conversion needed) |
+| Rust | `true` | `false` | `"True"` / `"False"` |
+| Go | `true` | `false` | `"True"` / `"False"` |
+| JavaScript | `true` | `false` | `"True"` / `"False"` |
+
+On deserialization (`from_polyglot`), SDKs accept only the canonical forms `"True"` and `"False"`. Any other string (e.g., `"true"`, `"1"`, `"yes"`) produces `!SDK.InvalidValue`.
+
+#### Float Special Values
+
+Float special values are **governed by schema** — not all float fields support them. The schema properties [[pglib/types/schemas/Nullable\|##Nullable]] and [[pglib/types/schemas/Inf\|##Inf]] control which special values a field accepts:
+
+- `##Nullable` enables `""` (empty string = none/null)
+- `##Inf` enables `"Infinity"`, `"-Infinity"`, `"NaN"`
+
+A float field without these schema properties rejects special values at compile time.
+
+**Canonical wire forms and schema requirements:**
+
+| Value | Canonical Wire String | Schema Requirement |
 |---|---|---|
 | None/null | `""` | Field must have `##Nullable` |
 | +Infinity | `"Infinity"` | Field must have `##Inf` |
 | -Infinity | `"-Infinity"` | Field must have `##Inf` |
 | NaN | `"NaN"` | Field must have `##Inf` |
 
-**Bytes:** Base64-encoded string. The SDK converts between native byte types (`bytes`, `Vec<u8>`, `[]byte`, `Uint8Array`) and the Base64 string representation transparently.
+**Per-language normalization (encode — `to_polyglot`):**
 
-**DateTime:** Epoch seconds as string (e.g., `"1712494800"`). UTC only, seconds precision.
+SDKs must normalize language-native representations to the canonical wire forms on serialization:
+
+| Value | Canonical | Python produces | Rust produces | Go produces | JS produces |
+|---|---|---|---|---|---|
+| +Infinity | `"Infinity"` | `"inf"` | `"inf"` | `"+Inf"` | `"Infinity"` |
+| -Infinity | `"-Infinity"` | `"-inf"` | `"-inf"` | `"-Inf"` | `"-Infinity"` |
+| NaN | `"NaN"` | `"nan"` | `"NaN"` | `"NaN"` | `"NaN"` |
+
+Python, Rust, and Go SDKs must detect their native special value strings and replace them with the canonical form before writing to the wire. JavaScript already produces canonical forms natively.
+
+**Per-language acceptance (decode — `from_polyglot`):**
+
+On deserialization, SDKs accept all common variants and convert to the native special value:
+
+| Canonical | Also Accepted | Python Result | Rust Result | Go Result | JS Result |
+|---|---|---|---|---|---|
+| `"Infinity"` | `"inf"`, `"+Inf"`, `"+inf"` | `float('inf')` | `f64::INFINITY` | `math.Inf(1)` | `Infinity` |
+| `"-Infinity"` | `"-inf"`, `"-Inf"` | `float('-inf')` | `f64::NEG_INFINITY` | `math.Inf(-1)` | `-Infinity` |
+| `"NaN"` | `"nan"`, `"NAN"` | `float('nan')` | `f64::NAN` | `math.NaN()` | `NaN` |
+
+#### Null/None
+
+Wire format: empty string `""` with type `"none"`. This is consistent with `###None` field type semantics — the absence of a value is represented as an empty string, not a JSON `null`.
+
+| Language | Native Null | Wire Encoding |
+|---|---|---|
+| Python | `None` | `{ "type": "none", "value": "" }` |
+| Rust | `Option::None` | `{ "type": "none", "value": "" }` |
+| Go | `nil` | `{ "type": "none", "value": "" }` |
+| JavaScript | `null` | `{ "type": "none", "value": "" }` |
+
+On deserialization, SDKs detect either `type == "none"` or an empty `value` string and return the language-native null type. Both conditions independently signal none — this provides resilience against partial envelope construction.
+
+#### Bytes
+
+Base64-encoded string. The SDK converts between native byte types (`bytes`, `Vec<u8>`, `[]byte`, `Uint8Array`) and the Base64 string representation transparently.
+
+#### DateTime
+
+Epoch seconds as string (e.g., `"1712494800"`). UTC only, seconds precision.
 
 | Language | Encode | Decode | Precision |
 |---|---|---|---|
@@ -844,9 +912,9 @@ const status = fromPolyglotEnum(envelope, statusVariants);
 | Go | `strconv.FormatInt(value, 10)` | `strconv.ParseInt(value, 10, 64)` | seconds |
 | JavaScript | `String(Math.floor(value / 1000))` (Date.now() is ms) | `parseInt(value, 10)` | seconds |
 
-**Null/None:** Empty string `""` with type `"none"`.
+#### JavaScript Integer Overflow
 
-**JavaScript integer overflow:** The SDK errors on values exceeding 2^53 - 1 (`Number.MAX_SAFE_INTEGER`) rather than allowing silent precision loss.
+The SDK errors on values exceeding 2^53 - 1 (`Number.MAX_SAFE_INTEGER`) rather than allowing silent precision loss.
 
 ### Behavior Contract Type Selection
 

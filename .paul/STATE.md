@@ -5,7 +5,7 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #329 — Document per-language SDK encode/decode algorithms
+**Current focus:** Issue #330 — Document canonical float/null/boolean wire format conventions
 
 ## Current Position
 
@@ -119,6 +119,7 @@ Progress:
 - Issue #321: [██████████] 100% (2/2 plans — -Run.Bridge pairwise cross-language binding)
 - Issue #328: [██████████] 100% (1/1 plans — #bytes and #dt binding types)
 - Issue #329: [██████████] 100% (1/1 plans — per-language SDK encode/decode)
+  - Issue #330: [██████████] 100% (1/1 plans — wire format conventions)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -128,14 +129,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #330 — Document canonical float/null/boolean wire format conventions
+Branch: docs/issue-330-document-canonical-float-null-boolean-wire-format
+Labels: docs
+Started: 2026-04-19
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/330
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -330,10 +335,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-19
-Stopped at: Issue #329 merged to main
-Next action: Pick next issue with /paul:issues or /paul:progress
-Resume file: none
-Resume context: #329 closed; branch merged; ready for next issue
+Stopped at: Issue #330 loop closed
+Next action: Run /paul:merge to commit and merge branch
+Resume file: .paul/phases/330-wire-format-conventions/330-01-SUMMARY.md
+Resume context: #330 unified; ready for commit + merge to main
 
 ---
 *STATE.md — Updated after every significant action*
