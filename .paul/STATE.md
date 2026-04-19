@@ -117,6 +117,7 @@ Progress:
 - Issue #319: [██████████] 100% (2/2 plans — Polyglot SDK spec + cross-ref updates)
 - Issue #320: [██████████] 100% (1/1 plans — -T.Call NATS signal path + cross-ref updates)
 - Issue #321: [██████████] 100% (2/2 plans — -Run.Bridge pairwise cross-language binding)
+- Issue #328: [██████████] 100% (1/1 plans — #bytes and #dt binding types)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -126,18 +127,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #328 — Add #bytes and #dt binding types to marshalling tables
-Branch: design/issue-328-bytes-dt-binding-types
-Labels: docs, design
-Started: 2026-04-19
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/328
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -311,7 +308,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | SDK uses universal string only, no FFI | 2026-04-18 | FFI requires dynamic code gen; deferred to -Run.Bridge (#321); trade-off documented |
 | Closed #320 — -T.Call NATS signal path | 2026-04-19 | Merged design/issue-320-t-call-nats-signal-path to main; TM-side signal processing, Redis keys, NATS namespace updated |
 | Closed #321 — -Run.Bridge specification | 2026-04-19 | Merged design/issue-321-run-bridge-pairwise-cross-language-binding to main; 2 plans, 18 files, 6 implementation issues #322-#327 |
-| Issue #328 — #bytes and #dt binding types | 2026-04-19 | #bytes (Base64) and #dt (epoch seconds) added to NativeType.md, polyglot-sdk.md, native-dispatch.md; 3 enum fields added |
+| Closed #328 — #bytes and #dt binding types | 2026-04-19 | Merged design/issue-328-bytes-dt-binding-types to main; #bytes (Base64) and #dt (epoch seconds) in 3 marshalling tables |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -331,10 +328,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-19
-Stopped at: Issue #328 fully specified, ready for MERGE
-Next action: Run /paul:merge to merge branch and close issue
-Resume file: .paul/phases/328-bytes-dt-binding-types/328-01-SUMMARY.md
-Resume context: #328 complete; 3 files updated; ready for merge
+Stopped at: Issue #328 merged to main
+Next action: Pick next issue with /paul:issues or /paul:progress
+Resume file: none
+Resume context: #328 closed; branch merged; ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
