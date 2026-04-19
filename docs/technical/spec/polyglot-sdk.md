@@ -337,6 +337,531 @@ Bindings use only primitive types — no custom or user-defined types cross the 
 - `#bytes` is Base64-encoded in the JSON envelope. The SDK converts to/from native byte types (e.g., Python `bytes`, Rust `Vec<u8>`).
 - `#dt` represents DateTime as epoch seconds (integer string, e.g., `"1712494800"`). UTC only, seconds precision. The SDK converts to/from native integer types.
 
+## Per-Language Encode/Decode
+
+<!-- @c:spec/native-dispatch#Value Encoding -->
+Related: [[native-dispatch#Value Encoding]]
+
+The Primitive Type Mapping Table above shows type correspondences between Polyglot and each supported language. This section shows how each SDK actually serializes and deserializes values — the concrete encode and decode functions that implement the universal string algorithm.
+
+### Python
+
+**String representation:**
+
+| Polyglot Type | Native Type | String Representation | Example |
+|---|---|---|---|
+| `#RawString` | `str` | Value as-is | `"hello world"` |
+| `#string` | `str` | Value as-is | `"hello world"` |
+| `#int` | `int` | `str(value)` | `"42"`, `"-7"`, `"0"` |
+| `#float` | `float` | `repr(value)` (full precision) | `"3.14"`, `"-0.001"`, `"inf"`, `"nan"` |
+| `#bool` | `bool` | `"True"` / `"False"` (Python capitalization) | `"True"` |
+| `#path` | `str` | OS-native path string | `"/home/user/file.txt"` |
+| `#dt` | `int` | Epoch seconds as string | `"1712494800"` |
+| `#serial` | `dict` | Nested typed JSON object | `{ "key": { "type": "string", "value": "v" } }` |
+| `#array:T` | `list[T]` | JSON array of typed values | `[{ "type": "int", "value": "1" }, ...]` |
+| `#bytes` | `bytes` | Base64-encoded string | `"SGVsbG8="` |
+| enum | `str` | Variant name as string | `"Active"` |
+| (none) | `NoneType` | Empty string `""` | `""` |
+
+**Encode (Python -> Polyglot String):**
+
+```python
+def to_polyglot(value, polyglot_type: str) -> str:
+    """Serialize a Python value to Polyglot universal string."""
+    match polyglot_type:
+        case "RawString" | "string" | "path":
+            return str(value)
+        case "int":
+            return str(int(value))
+        case "float":
+            return repr(float(value))  # full precision
+        case "bool":
+            return "True" if value else "False"
+        case "bytes":
+            return base64.b64encode(value).decode("ascii")
+        case "dt":
+            return str(int(value))  # epoch seconds
+        case "none":
+            return ""
+        case _:
+            # enum — variant name as string
+            # value is a Python str matching the enum variant
+            return str(value)
+```
+
+**Decode (Polyglot String -> Python):**
+
+```python
+def from_polyglot(envelope: dict) -> Any:
+    """Deserialize Polyglot universal string to Python value."""
+    t, v = envelope["type"], envelope["value"]
+    match t:
+        case "RawString" | "string" | "path":
+            return v
+        case "int":
+            return int(v)
+        case "float":
+            return float(v)  # handles "inf", "-inf", "nan"
+        case "bool":
+            return v == "True"
+        case "bytes":
+            return base64.b64decode(v)
+        case "dt":
+            return int(v)  # epoch seconds
+        case "none":
+            return None
+        case "serial":
+            return {k: from_polyglot(child) for k, child in v.items()}
+        case _ if t.startswith("array:"):
+            return [from_polyglot(item) for item in v]
+        case _:
+            # enum — return variant name as string
+            return v
+```
+
+**Enum handling:** Python represents enums as plain strings. The Behavior Contract lists valid variants — the SDK can optionally validate against them, but the base decode returns the string. Users who want `enum.Enum` types wrap the result themselves.
+
+### Rust
+
+**String representation:**
+
+| Polyglot Type | Native Type | String Representation | Example |
+|---|---|---|---|
+| `#RawString` | `String` | Value as-is | `"hello world"` |
+| `#string` | `String` | Value as-is | `"hello world"` |
+| `#int` | `i64` | `value.to_string()` | `"42"`, `"-7"`, `"0"` |
+| `#float` | `f64` | Full-precision decimal (`format!("{}", value)`) | `"3.14"`, `"-0.001"` |
+| `#bool` | `bool` | `"True"` / `"False"` (Polyglot convention, NOT Rust's `"true"`) | `"True"` |
+| `#path` | `PathBuf` | `value.to_string_lossy()` | `"/home/user/file.txt"` |
+| `#dt` | `i64` | Epoch seconds as string | `"1712494800"` |
+| `#serial` | `serde_json::Value` | Nested typed JSON object | `{ "key": { "type": "string", "value": "v" } }` |
+| `#array:T` | `Vec<T>` | JSON array of typed values | `[{ "type": "int", "value": "1" }, ...]` |
+| `#bytes` | `Vec<u8>` | Base64-encoded string | `"SGVsbG8="` |
+| enum | `String` | Variant name as string | `"Active"` |
+| (none) | `Option::None` | Empty string `""` | `""` |
+
+**Encode (`ToPolyglot` trait):**
+
+```rust
+pub trait ToPolyglot {
+    fn to_polyglot(&self, polyglot_type: &str) -> Result<String, PolyglotError>;
+}
+
+impl ToPolyglot for i64 {
+    fn to_polyglot(&self, _: &str) -> Result<String, PolyglotError> {
+        Ok(self.to_string())  // "42"
+    }
+}
+
+impl ToPolyglot for f64 {
+    fn to_polyglot(&self, _: &str) -> Result<String, PolyglotError> {
+        Ok(format!("{}", self))  // ryu-style shortest round-trip
+    }
+}
+
+impl ToPolyglot for bool {
+    fn to_polyglot(&self, _: &str) -> Result<String, PolyglotError> {
+        Ok(if *self { "True" } else { "False" }.to_string())
+    }
+}
+
+impl ToPolyglot for String {
+    fn to_polyglot(&self, _: &str) -> Result<String, PolyglotError> {
+        Ok(self.clone())  // string, RawString, path, enum
+    }
+}
+
+impl ToPolyglot for PathBuf {
+    fn to_polyglot(&self, _: &str) -> Result<String, PolyglotError> {
+        Ok(self.to_string_lossy().into_owned())
+    }
+}
+
+impl ToPolyglot for Vec<u8> {
+    fn to_polyglot(&self, _: &str) -> Result<String, PolyglotError> {
+        Ok(base64::encode(self))
+    }
+}
+
+impl<T: ToPolyglot> ToPolyglot for Vec<T> {
+    fn to_polyglot(&self, polyglot_type: &str) -> Result<String, PolyglotError> {
+        // Serialized as JSON array of typed envelopes by the caller
+        // Each element calls T::to_polyglot individually
+        unimplemented!("array serialization handled by Envelope builder")
+    }
+}
+
+impl<T: ToPolyglot> ToPolyglot for Option<T> {
+    fn to_polyglot(&self, polyglot_type: &str) -> Result<String, PolyglotError> {
+        match self {
+            Some(v) => v.to_polyglot(polyglot_type),
+            None => Ok(String::new()),  // ""
+        }
+    }
+}
+// HashMap<String, serde_json::Value> — serialized as nested typed JSON by Envelope builder
+```
+
+**Decode (`FromPolyglot` trait):**
+
+```rust
+pub fn from_polyglot<T: FromPolyglot>(envelope: &Envelope) -> Result<T, PolyglotError> {
+    T::from_polyglot(envelope)
+}
+
+pub trait FromPolyglot: Sized {
+    fn from_polyglot(envelope: &Envelope) -> Result<Self, PolyglotError>;
+}
+
+impl FromPolyglot for i64 {
+    fn from_polyglot(envelope: &Envelope) -> Result<Self, PolyglotError> {
+        match envelope.type_name.as_str() {
+            "int" => envelope.value.parse::<i64>()
+                .map_err(|_| PolyglotError::TypeOverflow),
+            _ => Err(PolyglotError::TypeMismatch),
+        }
+    }
+}
+
+impl FromPolyglot for f64 {
+    fn from_polyglot(envelope: &Envelope) -> Result<Self, PolyglotError> {
+        match envelope.type_name.as_str() {
+            "float" => {
+                match envelope.value.as_str() {
+                    "Infinity" | "inf" | "+Inf" => Ok(f64::INFINITY),
+                    "-Infinity" | "-inf" | "-Inf" => Ok(f64::NEG_INFINITY),
+                    "NaN" | "nan" => Ok(f64::NAN),
+                    v => v.parse::<f64>().map_err(|_| PolyglotError::InvalidValue),
+                }
+            }
+            _ => Err(PolyglotError::TypeMismatch),
+        }
+    }
+}
+
+impl FromPolyglot for bool {
+    fn from_polyglot(envelope: &Envelope) -> Result<Self, PolyglotError> {
+        match envelope.value.as_str() {
+            "True" => Ok(true),
+            "False" => Ok(false),
+            _ => Err(PolyglotError::InvalidValue),
+        }
+    }
+}
+
+impl FromPolyglot for String {
+    fn from_polyglot(envelope: &Envelope) -> Result<Self, PolyglotError> {
+        match envelope.type_name.as_str() {
+            "string" | "RawString" | "path" => Ok(envelope.value.clone()),
+            _ => Err(PolyglotError::TypeMismatch),
+        }
+    }
+}
+
+impl FromPolyglot for PathBuf {
+    fn from_polyglot(envelope: &Envelope) -> Result<Self, PolyglotError> {
+        match envelope.type_name.as_str() {
+            "path" => Ok(PathBuf::from(&envelope.value)),
+            _ => Err(PolyglotError::TypeMismatch),
+        }
+    }
+}
+
+impl FromPolyglot for Vec<u8> {
+    fn from_polyglot(envelope: &Envelope) -> Result<Self, PolyglotError> {
+        match envelope.type_name.as_str() {
+            "bytes" => base64::decode(&envelope.value)
+                .map_err(|_| PolyglotError::InvalidValue),
+            _ => Err(PolyglotError::TypeMismatch),
+        }
+    }
+}
+
+impl<T: FromPolyglot> FromPolyglot for Option<T> {
+    fn from_polyglot(envelope: &Envelope) -> Result<Self, PolyglotError> {
+        if envelope.type_name == "none" || envelope.value.is_empty() {
+            Ok(None)
+        } else {
+            T::from_polyglot(envelope).map(Some)
+        }
+    }
+}
+// Vec<T> and HashMap deserialization handled by Envelope parser
+// (walks JSON array/object, calls T::from_polyglot per element)
+```
+
+**Enum handling:** The compiler code-generates native Rust enum types from the Behavior Contract's variant list. The SDK provides a `#[derive(PolyglotEnum)]` macro to generate both `ToPolyglot` and `FromPolyglot` trait implementations automatically.
+
+**Design note:** No `PolyglotValue` enum is needed. The Behavior Contract tells the Runner which type each port expects, so the SDK always calls with the correct generic parameter. Runtime type switching is unnecessary.
+
+### Go
+
+**String representation:**
+
+| Polyglot Type | Native Type | String Representation | Example |
+|---|---|---|---|
+| `#RawString` | `string` | Value as-is | `"hello world"` |
+| `#string` | `string` | Value as-is | `"hello world"` |
+| `#int` | `int64` | `strconv.FormatInt(value, 10)` | `"42"`, `"-7"`, `"0"` |
+| `#float` | `float64` | `strconv.FormatFloat(value, 'g', -1, 64)` | `"3.14"`, `"-0.001"` |
+| `#bool` | `bool` | `"True"` / `"False"` (Polyglot convention, NOT Go's `"true"`) | `"True"` |
+| `#path` | `string` | OS-native path string | `"/home/user/file.txt"` |
+| `#dt` | `int64` | Epoch seconds as string | `"1712494800"` |
+| `#serial` | `map[string]any` | Nested typed JSON object | `{ "key": { "type": "string", "value": "v" } }` |
+| `#array:T` | `[]T` | JSON array of typed values | `[{ "type": "int", "value": "1" }, ...]` |
+| `#bytes` | `[]byte` | Base64-encoded string | `"SGVsbG8="` |
+| enum | `string` | Variant name as string | `"Active"` |
+| (none) | `nil` | Empty string `""` | `""` |
+
+**Encode (`ToPolyglot` function with type switch):**
+
+```go
+func ToPolyglot(value any, polyglotType string) (string, error) {
+    switch polyglotType {
+    case "RawString", "string", "path":
+        return value.(string), nil
+    case "int":
+        return strconv.FormatInt(value.(int64), 10), nil
+    case "float":
+        return strconv.FormatFloat(value.(float64), 'g', -1, 64), nil
+    case "bool":
+        if value.(bool) { return "True", nil }
+        return "False", nil
+    case "bytes":
+        return base64.StdEncoding.EncodeToString(value.([]byte)), nil
+    case "dt":
+        return strconv.FormatInt(value.(int64), 10), nil  // epoch seconds
+    case "none":
+        return "", nil
+    default:
+        // enum — variant name as string
+        return value.(string), nil
+    }
+}
+// serial, array encoding handled by Envelope builder
+// (walks map/slice recursively, calls ToPolyglot per element)
+```
+
+**Decode (per-type functions):**
+
+```go
+func FromPolyglotInt(envelope Envelope) (int64, error) {
+    if envelope.Type != "int" {
+        return 0, ErrTypeMismatch
+    }
+    return strconv.ParseInt(envelope.Value, 10, 64)
+}
+
+func FromPolyglotFloat(envelope Envelope) (float64, error) {
+    if envelope.Type != "float" {
+        return 0, ErrTypeMismatch
+    }
+    return strconv.ParseFloat(envelope.Value, 64)
+}
+
+func FromPolyglotBool(envelope Envelope) (bool, error) {
+    switch envelope.Value {
+    case "True":  return true, nil
+    case "False": return false, nil
+    default:      return false, ErrInvalidValue
+    }
+}
+
+func FromPolyglotBytes(envelope Envelope) ([]byte, error) {
+    if envelope.Type != "bytes" {
+        return nil, ErrTypeMismatch
+    }
+    return base64.StdEncoding.DecodeString(envelope.Value)
+}
+
+func FromPolyglotString(envelope Envelope) (string, error) {
+    switch envelope.Type {
+    case "string", "RawString", "path":
+        return envelope.Value, nil
+    default:
+        return "", ErrTypeMismatch
+    }
+}
+
+func FromPolyglotDt(envelope Envelope) (int64, error) {
+    if envelope.Type != "dt" {
+        return 0, ErrTypeMismatch
+    }
+    return strconv.ParseInt(envelope.Value, 10, 64)
+}
+
+func FromPolyglotNone(envelope Envelope) (bool, error) {
+    if envelope.Type == "none" || envelope.Value == "" {
+        return true, nil
+    }
+    return false, nil
+}
+
+func FromPolyglotEnum(envelope Envelope) (string, error) {
+    return envelope.Value, nil
+}
+
+// FromPolyglotSerial and FromPolyglotArray require recursive
+// envelope parsing — the Envelope parser walks the JSON structure
+// and calls the appropriate FromPolyglot* function per element.
+```
+
+**Enum handling:** The compiler code-generates `type Status string` with a const block and a validation map from the Behavior Contract's variant list.
+
+### JavaScript
+
+**String representation:**
+
+| Polyglot Type | Native Type | String Representation | Example |
+|---|---|---|---|
+| `#RawString` | `string` | Value as-is | `"hello world"` |
+| `#string` | `string` | Value as-is | `"hello world"` |
+| `#int` | `number` | `String(value)` | `"42"`, `"-7"`, `"0"` |
+| `#float` | `number` | `String(value)` | `"3.14"`, `"-0.001"` |
+| `#bool` | `boolean` | `"True"` / `"False"` (Polyglot convention, NOT JS `"true"`) | `"True"` |
+| `#path` | `string` | OS-native path string | `"/home/user/file.txt"` |
+| `#dt` | `number` | Epoch seconds as string | `"1712494800"` |
+| `#serial` | `Object` | Nested typed JSON object | `{ "key": { "type": "string", "value": "v" } }` |
+| `#array:T` | `Array` | JSON array of typed values | `[{ "type": "int", "value": "1" }, ...]` |
+| `#bytes` | `Uint8Array` | Base64-encoded string | `"SGVsbG8="` |
+| enum | `string` | Variant name as string | `"Active"` |
+| (none) | `null` | Empty string `""` | `""` |
+
+**Encode (`toPolyglot` function):**
+
+```javascript
+function toPolyglot(value, polyglotType) {
+    switch (polyglotType) {
+        case "RawString": case "string": case "path":
+            return String(value);
+        case "int":
+            if (!Number.isSafeInteger(value)) throw new PolyglotError("TypeOverflow");
+            return String(value);
+        case "float":
+            return String(value);
+        case "bool":
+            return value ? "True" : "False";
+        case "bytes":
+            // value is Uint8Array
+            return btoa(String.fromCharCode(...value));
+        case "dt":
+            return String(Math.floor(value));  // epoch seconds
+        case "none":
+            return "";
+        default:
+            // enum — variant name as string
+            return String(value);
+    }
+}
+```
+
+**Decode (`fromPolyglot` function):**
+
+```javascript
+function fromPolyglot(envelope) {
+    const { type, value } = envelope;
+    switch (type) {
+        case "RawString": case "string": case "path":
+            return value;
+        case "int": {
+            const n = parseInt(value, 10);
+            if (n > Number.MAX_SAFE_INTEGER || n < Number.MIN_SAFE_INTEGER) {
+                throw new PolyglotError("TypeOverflow");
+            }
+            return n;
+        }
+        case "float":
+            return parseFloat(value);  // handles "Infinity", "-Infinity", "NaN"
+        case "bool":
+            return value === "True";
+        case "bytes":
+            return Uint8Array.from(atob(value), c => c.charCodeAt(0));
+        case "dt":
+            return parseInt(value, 10);  // epoch seconds
+        case "none":
+            return null;
+        case "serial":
+            return Object.fromEntries(
+                Object.entries(value).map(([k, v]) => [k, fromPolyglot(v)])
+            );
+        default:
+            if (type.startsWith("array:")) {
+                return value.map(item => fromPolyglot(item));
+            }
+            // enum — return variant name as string
+            return value;
+    }
+}
+```
+
+**Enum handling:** JavaScript represents enums as plain strings (like Python). For optional validation, the SDK can accept a `validVariants` set:
+
+```javascript
+function fromPolyglotEnum(envelope, validVariants) {
+    if (validVariants && !validVariants.has(envelope.value)) {
+        throw new PolyglotError("InvalidVariant");
+    }
+    return envelope.value;
+}
+
+// Usage with Behavior Contract variant list:
+const statusVariants = new Set(["Active", "Inactive", "Pending"]);
+const status = fromPolyglotEnum(envelope, statusVariants);
+```
+
+### Strongly vs Weakly Typed Design Summary
+
+| Concern | Weakly Typed (Python, JS) | Strongly Typed (Rust, Go) |
+|---|---|---|
+| **Encode** | Single function, `polyglot_type` param selects branch | Trait/interface per type, or type-switch on `any` |
+| **Decode** | Single function returning dynamic type, switch on `type` field | Per-type functions or generics, caller specifies target type |
+| **Type safety** | Runtime — caller must cast/check the return | Compile-time — wrong type = compile error (Rust) or wrong function call (Go) |
+| **Who knows the type?** | The envelope's `type` field at runtime | The Behavior Contract at compile time; envelope `type` validated at runtime |
+| **How type is determined** | Runtime switch on envelope | Compiler analyzes foreign AST or user declares type explicitly; Behavior Contract pre-selects the decode function |
+| **Error on mismatch** | Possible but rare (dynamic) | Required — `TypeMismatch` error if envelope type != expected |
+
+### Normalization Rules
+
+**Boolean:** `"True"` / `"False"` (Python capitalization, per [[native-dispatch]]). All SDKs normalize to this convention regardless of language-native boolean string forms (`"true"`/`"false"` in JS/Go/Rust).
+
+**Float special values:** Governed by schema — `##Nullable` enables `""` (none), `##Inf` enables `"Infinity"` / `"-Infinity"` / `"NaN"`. SDKs normalize on write, accept language-native variants on read.
+
+| Value | String Representation | Schema Requirement |
+|---|---|---|
+| None/null | `""` | Field must have `##Nullable` |
+| +Infinity | `"Infinity"` | Field must have `##Inf` |
+| -Infinity | `"-Infinity"` | Field must have `##Inf` |
+| NaN | `"NaN"` | Field must have `##Inf` |
+
+**Bytes:** Base64-encoded string. The SDK converts between native byte types (`bytes`, `Vec<u8>`, `[]byte`, `Uint8Array`) and the Base64 string representation transparently.
+
+**DateTime:** Epoch seconds as string (e.g., `"1712494800"`). UTC only, seconds precision.
+
+| Language | Encode | Decode | Precision |
+|---|---|---|---|
+| Python | `str(int(value.timestamp()))` | `int(value)` | seconds |
+| Rust | `value.to_string()` (i64 epoch) | `value.parse::<i64>()` | seconds |
+| Go | `strconv.FormatInt(value, 10)` | `strconv.ParseInt(value, 10, 64)` | seconds |
+| JavaScript | `String(Math.floor(value / 1000))` (Date.now() is ms) | `parseInt(value, 10)` | seconds |
+
+**Null/None:** Empty string `""` with type `"none"`.
+
+**JavaScript integer overflow:** The SDK errors on values exceeding 2^53 - 1 (`Number.MAX_SAFE_INTEGER`) rather than allowing silent precision loss.
+
+### Behavior Contract Type Selection
+
+<!-- @c:spec/behavior-contract#Type Mapping Descriptors -->
+Related: [[behavior-contract#Type Mapping Descriptors]]
+
+The encode/decode functions above are not selected at random — the Behavior Contract drives the selection:
+
+1. The compiler emits type mapping descriptors in the Behavior Contract for every IO port in every pipeline.
+2. At job dispatch time, the Runner reads these descriptors to determine the Polyglot type of each port.
+3. The SDK uses the descriptor's type to call the correct encode or decode function for that port.
+4. Strongly typed SDKs (Rust, Go) never need runtime type guessing — the Behavior Contract determines the type at compile time and the SDK calls the appropriate typed function directly.
+
+This means the `type` field in the JSON envelope is redundant for strongly typed SDKs — it serves as a runtime validation check, not a dispatch mechanism. For weakly typed SDKs (Python, JS), the `type` field is the primary dispatch mechanism since these languages lack compile-time type selection.
+
 ## Type Mapping Descriptors
 
 The compiler emits **type mapping descriptors** as part of the [[behavior-contract|c:Behavior Contract]]. These descriptors tell the Runner and SDK exactly how to serialize/deserialize each IO port — no runtime type inspection needed.
