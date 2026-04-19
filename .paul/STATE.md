@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #320 — Document -T.Call signal path via NATS request-reply
+**Current focus:** Issue #320 closed — -T.Call signal path documented
 
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
 Phase: Issue #320 — Document -T.Call signal path via NATS request-reply
-Plan: 320-01 complete
-Status: Loop closed, ready for MERGE
-Last activity: 2026-04-19 — UNIFY complete, SUMMARY created
+Plan: none
+Status: Ready for next issue
+Last activity: 2026-04-19 — Merged #320 to main
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -115,6 +115,7 @@ Progress:
 - Issue #315: [██████████] 100% (1/1 plans — OTel permission/sandbox events)
 - Issue #318: [██████████] 100% (2/2 plans — OTel foundation tracing + cross-refs)
 - Issue #319: [██████████] 100% (2/2 plans — Polyglot SDK spec + cross-ref updates)
+- Issue #320: [██████████] 100% (1/1 plans — -T.Call NATS signal path + cross-ref updates)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -124,18 +125,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #320 — Document -T.Call signal path via NATS request-reply
-Branch: design/issue-320-t-call-nats-signal-path
-Labels: design, documentation, P3-medium
-Started: 2026-04-19
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/320
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -307,6 +304,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #318 — OTel foundation | 2026-04-18 | 2 spec docs (tracing infra + exporter config), 4 cross-ref updates, 3 open questions resolved; merged to main |
 | Issue #319 — Polyglot SDK specification | 2026-04-18 | SDK spec (polyglot-sdk.md), type mapping descriptors in behavior-contract, FFI→-Run.Bridge in integrator docs; 1 created, 4 updated |
 | SDK uses universal string only, no FFI | 2026-04-18 | FFI requires dynamic code gen; deferred to -Run.Bridge (#321); trade-off documented |
+| Closed #320 — -T.Call NATS signal path | 2026-04-19 | Merged design/issue-320-t-call-nats-signal-path to main; TM-side signal processing, Redis keys, NATS namespace updated |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -326,10 +324,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-19
-Stopped at: Loop closed — SUMMARY created
-Next action: /paul:merge
-Resume file: .paul/phases/320-t-call-signal-path/320-01-SUMMARY.md
-Resume context: #320 complete; ready to commit and merge to main
+Stopped at: Issue #320 merged to main
+Next action: /paul:issues or /paul:progress
+Resume file: none
+Resume context: #320 closed; no active issue
 
 ---
 *STATE.md — Updated after every significant action*
