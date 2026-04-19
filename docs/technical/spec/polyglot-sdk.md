@@ -325,6 +325,8 @@ Bindings use only primitive types — no custom or user-defined types cross the 
 | `#path` | `str` | `PathBuf` | `string` | `string` |
 | `#array:T` | `list[T]` | `Vec<T>` | `[]T` | `T[]` |
 | `#serial` | `dict` | `serde_json::Value` | `map[string]any` | `object` |
+| `#bytes` | `bytes` | `Vec<u8>` | `[]byte` | `Uint8Array` |
+| `#dt` | `int` | `i64` | `int64` | `number` |
 
 **Notes:**
 - `#int` and `#float` are encoded as strings in the JSON envelope to preserve precision. The SDK converts to/from native numeric types.
@@ -332,6 +334,8 @@ Bindings use only primitive types — no custom or user-defined types cross the 
 - `#serial` is Polyglot's unconstrained nested key-value type. It maps to the most general dictionary/map type in each language.
 - `#array:T` preserves element type information. The `T` must be one of the other primitive types in this table.
 - JavaScript's `number` type covers both `#int` and `#float`. The SDK uses the envelope's `type` field to distinguish them during deserialization.
+- `#bytes` is Base64-encoded in the JSON envelope. The SDK converts to/from native byte types (e.g., Python `bytes`, Rust `Vec<u8>`).
+- `#dt` represents DateTime as epoch seconds (integer string, e.g., `"1712494800"`). UTC only, seconds precision. The SDK converts to/from native integer types.
 
 ## Type Mapping Descriptors
 

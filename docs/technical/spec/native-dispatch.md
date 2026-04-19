@@ -349,7 +349,8 @@ Each value in `inputs` and `outputs` is a typed JSON object:
 | `#float` | string (preserves precision) | `"3.14"` |
 | `#bool` | string | `"True"` or `"False"` |
 | `#path` | string | `"/home/user/file.txt"` |
-| `#dt` | string (ISO 8601) | `"2026-04-07T12:00:00Z"` |
+| `#bytes` | string (Base64) | `"SGVsbG8gV29ybGQ="` |
+| `#dt` | string (epoch seconds) | `"1712494800"` |
 | `#serial` | object (nested key-value) | `{ "key": { "type": "string", "value": "val" } }` |
 | `#array:T` | array of typed values | `[{ "type": "string", "value": "a" }, ...]` |
 | enum | string (variant name) | `"Active"` |
