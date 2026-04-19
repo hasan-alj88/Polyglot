@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-18
+updated: 2026-04-19
 status: draft
 ---
 
@@ -214,6 +214,8 @@ Response payload (error):
   }
 }
 ```
+
+For the Trigger Monitor's processing of these NATS messages — including pipeline matching, binding storage in the NoSQL variable store, and result collection — see [[native-dispatch#-T.Call Signal Path]].
 
 **Language Signatures:**
 

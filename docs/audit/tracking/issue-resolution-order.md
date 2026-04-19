@@ -67,25 +67,49 @@ Recommended execution order for open GitHub issues based on dependency analysis.
 
 ## Milestone: Design & Architecture Spec (M2)
 
-### Wave 1 — Cross-Language Integration (no dependencies)
+### Wave 1 — Signal Architecture (no open dependencies)
 
 | # | Title | Priority | Notes |
 |---|-------|----------|-------|
-| #319 | Polyglot SDK specification — cross-language type conversion and call protocol | P3-medium | Foundation — defines universal string algorithm, SDK interface, type mapping table |
+| #320 | Document -T.Call signal path via NATS request-reply | P3-medium | Unblocked — #319 (SDK spec) closed 2026-04-18 |
 
-### Wave 2 — Signal Architecture (depends on Wave 1)
+### Wave 2 — Finalize Designs (depends on Wave 1 + M6 #301)
 
 | # | Title | Priority | Blocked By |
 |---|-------|----------|------------|
-| #320 | Document -T.Call signal path via NATS request-reply | P3-medium | #319 (SDK call protocol must be defined before signal path) |
+| #264 | Finalize Trigger Monitor design specification | P1-critical | #320 (-T.Call signal path) + #301 (fault domains) |
+| #270 | Finalize Polyglot syntax specification | P1-critical | #321 (bridge syntax must be designed first) |
+| #266 | Finalize Runner design specification | P1-critical | #321 (bridge pipelines) + #301 (fault domains) |
+
+### Wave 3 — Compiler Architecture (depends on Wave 2)
+
+| # | Title | Priority | Blocked By |
+|---|-------|----------|------------|
+| #271 | Finalize compiler architecture and algorithm | P1-critical | #270 (parser needs finalized syntax) |
 
 ## Milestone: Language (M4)
 
-### Cross-Language Integration (depends on M2 #319)
+### Wave 1 — Cross-Language Integration (no open dependencies)
+
+| # | Title | Priority | Notes |
+|---|-------|----------|-------|
+| #321 | -Run.Bridge pipeline — pairwise cross-language binding syntax | P3-medium | Unblocked — #319 (SDK spec) closed 2026-04-18 |
+
+### Wave 2 — Service Implementation (depends on M2 Wave 3 + M5)
 
 | # | Title | Priority | Blocked By |
 |---|-------|----------|------------|
-| #321 | -Run.Bridge pipeline — pairwise cross-language binding syntax | P3-medium | #319 (SDK and type mapping must exist before bridge syntax) |
+| #267 | Implement Trigger Monitor | P1-critical | #264 (TM design) + NATS Security (M5) |
+| #268 | Implement Queue Handler | P1-critical | NATS Security (M5, all) |
+| #269 | Implement Runner | P1-critical | #266 (Runner design) + NATS Security (M5) |
+
+### Wave 3 — stdlib Implementation (parallel with Wave 2)
+
+| # | Title | Priority | Notes |
+|---|-------|----------|-------|
+| #38–#45, #59 | File stdlib operations (8 + 1 issues) | — | No design dependencies; can start after compiler architecture |
+| #164–#185 | Trigger/queue pglib operations (22 issues) | — | Parallel with service implementation |
+| #186–#263 | Remaining pglib operations (78 issues) | — | Parallel with service implementation |
 
 ## Cross-Milestone Dependencies
 
@@ -96,8 +120,8 @@ These dependencies connect milestones to each other and to pre-existing issues.
 | NATS Security (M5, all) | #267 Implement TM | Blocks — TM signal dispatch must use secure NATS |
 | NATS Security (M5, all) | #268 Implement QH | Blocks — QH must validate payloads and verify senders |
 | NATS Security (M5, all) | #269 Implement Runner | Blocks — Runner ACKs must use authenticated NATS |
-| #319 SDK spec | #320 NATS -T.Call signal path | Blocks — call protocol before signal flow |
-| #319 SDK spec | #321 -Run.Bridge syntax | Blocks — type mapping before bridge pipeline |
+| ~~#319 SDK spec~~ | #320 NATS -T.Call signal path | ~~Blocks~~ — RESOLVED (closed 2026-04-18) |
+| ~~#319 SDK spec~~ | #321 -Run.Bridge syntax | ~~Blocks~~ — RESOLVED (closed 2026-04-18) |
 | #321 -Run.Bridge syntax | #270 Finalize syntax | Blocks — bridge syntax must be designed before syntax finalization |
 | #320 -T.Call signal path | #264 Finalize TM design | Blocks — TM handles -T.Call signals, needs signal path defined |
 | #321 -Run.Bridge syntax | #266 Finalize Runner design | Blocks — Runner executes bridge pipelines, needs syntax defined |
@@ -112,14 +136,14 @@ These dependencies connect milestones to each other and to pre-existing issues.
 
 ```text
 Phase 1: Foundations (no dependencies — can work in parallel)
-  #319 Polyglot SDK spec (cross-language integration)
+  ✓ #319 Polyglot SDK spec (CLOSED 2026-04-18)
   #301 Design fault domain behavior (crash recovery)
 
 Phase 2: New Syntax + Signal Architecture (depends on Phase 1)
-  #321 -Run.Bridge pipeline syntax (depends on #319)
-  #320 -T.Call NATS signal path (depends on #319)
+  #321 -Run.Bridge pipeline syntax (UNBLOCKED — #319 closed)
+  #320 -T.Call NATS signal path (UNBLOCKED — #319 closed)
 
-Phase 3: Finalize Designs (depends on Phase 2)
+Phase 3: Finalize Designs (depends on Phase 2 + #301)
   #270 Finalize syntax spec (after #321 bridge syntax designed)
   #264 Finalize TM design (after #301 + #320)
   #266 Finalize Runner design (after #301 + #321)
@@ -127,7 +151,7 @@ Phase 3: Finalize Designs (depends on Phase 2)
 Phase 4: Compiler Architecture (depends on Phase 3)
   #271 Finalize compiler architecture (depends on #270)
 
-Phase 5: NATS Security (M5)
+Phase 5: NATS Security (M5) — can start in parallel with Phases 1–4
   Wave 1: #289, #294, #296
   Wave 2: #290, #292, #293
   Wave 3: #291, #297
