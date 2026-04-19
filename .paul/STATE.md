@@ -5,7 +5,7 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #328 — Add #bytes and #dt binding types to marshalling tables
+**Current focus:** Issue #329 — Document per-language SDK encode/decode algorithms
 
 ## Current Position
 
@@ -118,6 +118,7 @@ Progress:
 - Issue #320: [██████████] 100% (1/1 plans — -T.Call NATS signal path + cross-ref updates)
 - Issue #321: [██████████] 100% (2/2 plans — -Run.Bridge pairwise cross-language binding)
 - Issue #328: [██████████] 100% (1/1 plans — #bytes and #dt binding types)
+- Issue #329: [██████████] 100% (1/1 plans — per-language SDK encode/decode)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -127,14 +128,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #329 — Document per-language SDK encode/decode algorithms
+Branch: design/issue-329-document-per-language-sdk-encode-decode-algorithms
+Labels: docs, design
+Started: 2026-04-19
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/329
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop complete, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -328,10 +333,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-19
-Stopped at: Issue #328 merged to main
-Next action: Pick next issue with /paul:issues or /paul:progress
-Resume file: none
-Resume context: #328 closed; branch merged; ready for next issue
+Stopped at: Plan 329-01 unified
+Next action: Run /paul:merge to merge branch and close issue #329
+Resume file: .paul/phases/329-sdk-encode-decode/329-01-SUMMARY.md
+Resume context: Issue #329 fully specified; ready for MERGE
 
 ---
 *STATE.md — Updated after every significant action*
