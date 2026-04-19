@@ -126,18 +126,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #321 — -Run.Bridge pipeline — pairwise cross-language binding syntax
-Branch: design/issue-321-run-bridge-pairwise-cross-language-binding
-Labels: design, P3-medium
-Started: 2026-04-19
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/321
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [321-01 + 321-02 complete, ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -310,7 +306,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #319 — Polyglot SDK specification | 2026-04-18 | SDK spec (polyglot-sdk.md), type mapping descriptors in behavior-contract, FFI→-Run.Bridge in integrator docs; 1 created, 4 updated |
 | SDK uses universal string only, no FFI | 2026-04-18 | FFI requires dynamic code gen; deferred to -Run.Bridge (#321); trade-off documented |
 | Closed #320 — -T.Call NATS signal path | 2026-04-19 | Merged design/issue-320-t-call-nats-signal-path to main; TM-side signal processing, Redis keys, NATS namespace updated |
-| Issue #321 — -Run.Bridge specification complete | 2026-04-19 | 2 plans: types/pipelines/algorithm (321-01), examples/cross-refs/issues (321-02); 6 implementation issues #322-#327; Implementation milestone created |
+| Closed #321 — -Run.Bridge specification | 2026-04-19 | Merged design/issue-321-run-bridge-pairwise-cross-language-binding to main; 2 plans, 18 files, 6 implementation issues #322-#327 |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -330,10 +326,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-19
-Stopped at: UNIFY complete — issue #321 fully specified
-Next action: Run /paul:merge to merge branch to main
-Resume file: .paul/phases/321-run-bridge/321-02-SUMMARY.md
-Resume context: Issue #321 complete (2/2 plans); branch ready for merge
+Stopped at: Issue #321 merged to main
+Next action: Pick next issue with /paul:issues or /paul:progress
+Resume file: none
+Resume context: #321 closed; branch merged; ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
