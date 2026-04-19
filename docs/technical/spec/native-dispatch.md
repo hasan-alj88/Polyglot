@@ -434,7 +434,7 @@ Each `#NativeKind` variant routes to a specific subsystem and dispatch context.
 
 **Dispatched by:** Runner
 **When:** Pipeline body encounters `[-]`, `[=]`, or `[b]` call to a `{N}` Execution pipeline
-**Examples:** `-File.Text.Read`, `-Math.Add`, `-DB.Query`, `-DT.Now`
+**Examples:** `-File.Text.Read`, `-Math.Add`, `-DB.Query`, `-DT.Now`, `-Run.Bridge.Function`, `-Run.Bridge.Script`
 
 ```text
 Runner receives job.start signal
@@ -443,6 +443,8 @@ Runner receives job.start signal
    → Runner dispatches to native: FileTextRead(JSON)
    → Result flows back into pipeline variables
 ```
+
+**Bridge dispatch note:** `-Run.Bridge.Function` and `-Run.Bridge.Script` are Execution-kind operations dispatched by the Runner. The Runner handles dual-env setup by dispatching two environment wrappers (one per language) before executing the Bridge call. See [[pglib/pipelines/Run/Bridge.Function]] and [[pglib/pipelines/Run/Bridge.Script]] for the pipeline definitions, and [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] for the type conversion flow.
 
 ### Trigger
 
@@ -968,3 +970,6 @@ Runner                 Native Function       Error Handler
 | [[spec/metadata-tree/branches\|Metadata Tree Branches]] | Pipeline/job structure |
 | [[queue-manager/end-to-end-flow\|End-to-End Flow]] | Where native dispatch fits in execution |
 | [[pglib/pipelines/#\|-#.* Pipelines]] | Intrinsic catalog source |
+| [[pglib/pipelines/Run/Bridge.Function]] | `-Run.Bridge.Function` — cross-language function call |
+| [[pglib/pipelines/Run/Bridge.Script]] | `-Run.Bridge.Script` — cross-language variable binding |
+| [[technical/algorithms/bridge-conversion]] | Bridge conversion algorithm for pairwise type mapping |

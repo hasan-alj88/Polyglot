@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-16
+updated: 2026-04-19
 status: draft
 ---
 
@@ -9,7 +9,9 @@ status: draft
 
 <!-- @c:pipelines -->
 <!-- @c:glossary#Runner -->
-Foreign code execution pipelines run native code (Python, Rust, etc.) within Polyglot pipelines. Language-specific pipelines (`-Run.<Lang>.*`) take an environment handle from `-W.Env`; the language-agnostic `-Run.Shell` uses `-W.Polyglot` instead.
+<!-- @c:pglib/types/Variable -->
+<!-- @c:pglib/types/NativeType -->
+Foreign code execution pipelines run native code (Python, Rust, etc.) within Polyglot pipelines. Language-specific pipelines (`-Run.<Lang>.*`) take an environment handle from `-W.Env`; the language-agnostic `-Run.Shell` uses `-W.Polyglot` instead. Cross-language Bridge pipelines (`-Run.Bridge.*`) take two `-W.Env` wrappers and convert variables between languages automatically.
 
 No `[@]` import needed.
 
@@ -27,6 +29,7 @@ All `-Run.*` pipelines require a `{_}` permission object granting System.Process
 | Pipeline | Required Capability | Category |
 |----------|-------------------|----------|
 | `-Run.<Lang>.*` | System.Process | System |
+| `-Run.Bridge.*` | System.Process (both envs) | System |
 | `-Run.Shell` | System.Process + System.Shell | System |
 
 ## Pipelines
@@ -37,6 +40,8 @@ All `-Run.*` pipelines require a `{_}` permission object granting System.Process
 | [[pglib/pipelines/Run/Script\|-Run.\<Lang\>.Script]] | Run code with Record-typed variable bindings |
 | [[pglib/pipelines/Run/CLI\|-Run.\<Lang\>.CLI]] | Invoke compiled binary with string arguments |
 | [[pglib/pipelines/Run/Bind\|-Run.\<Lang\>.Bind]] | Foreign code imports polyglot lib for data flow |
+| [[pglib/pipelines/Run/Bridge.Function\|-Run.Bridge.Function]] | Call a named function across language boundaries |
+| [[pglib/pipelines/Run/Bridge.Script\|-Run.Bridge.Script]] | Run code with cross-language variable bindings |
 | [[pglib/pipelines/Run/Shell\|-Run.Shell]] | Execute shell command strings (pipes, redirections, compound commands) |
 
 ## Code Source — `<code#Code:Source`
@@ -118,6 +123,53 @@ Foreign code imports the polyglot lib and calls `pull("name")`/`push("name", val
 | `>output` | `#Code:<Lang>.Output` | `.stdout`, `.stderr` capture |
 | `<code` | `#Code:Source` | Code with polyglot lib imports (inline `[C]` or file) |
 
+### `.Bridge.Function` — Cross-Language Structured Call
+
+Call a named function where caller and callee run in **different** language environments. Arguments and return values are `#Variable` instances — language-tagged values that the Bridge converts automatically using [[pglib/pipelines/Variable/Convert|-Variable.Convert]].
+
+| IO | Type | Purpose |
+|----|------|---------|
+| `<func` | `#string` | Function name in callee code (compiler-validated) |
+| `<arg` | `#array.Variable` | Positional arguments — each tagged with caller's language type |
+| `<kwarg` | `#Record.String.Variable` | Named arguments — field names = parameter names |
+| `>Bind` | `#array.Variable` | Return values tagged with callee's language type |
+| `>output` | `#Code:Output` | `.stdout`, `.stderr` capture |
+| `<code` | `#Code:Source` | Function definition in callee language |
+
+See [[pglib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] for the full specification.
+
+### `.Bridge.Script` — Cross-Language Variable Binding
+
+Run code in one language with variables originating from another language. Each `#Variable` instance's `.name` field becomes a native local variable in the callee code after conversion.
+
+| IO | Type | Purpose |
+|----|------|---------|
+| `<Bind` | `#array.Variable` | Input variables — converted from caller to callee language |
+| `>Bind` | `#array.Variable` | Output variables — converted from callee back to caller language |
+| `>output` | `#Code:Output` | `.stdout`, `.stderr` capture |
+| `<code` | `#Code:Source` | Script code in callee language |
+
+See [[pglib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for the full specification.
+
+### Dual-Wrapper Pattern (Bridge Only)
+
+Bridge pipelines require **two** `-W.Env` wrappers — one per language environment. The `;Caller;Callee` syntax on the `[-]` call line specifies both:
+
+```polyglot
+[W] -W.Env;PyEnv
+[W] -W.Env;RsEnv
+
+[ ]
+[-] -Run.Bridge.Function;PyEnv;RsEnv
+```
+
+**Lifecycle rules:**
+- **Setup** (top-to-bottom): Caller env starts first, then callee env
+- **Cleanup** (bottom-to-top): Callee env shuts down first, then caller env
+- **Skip-if-running**: If an environment is already active from an outer wrapper scope, setup is skipped
+
+See [[technical/algorithms/bridge-conversion#Dual-Wrapper Lifecycle]] for the full lifecycle algorithm.
+
 ## Record Binding — The `%InlineString` Pattern
 
 <!-- @c:types/generic-types -->
@@ -174,6 +226,8 @@ Record field types drive marshalling through the native dispatch JSON wire forma
 | `.Script` | `<Bind` / `>Bind` field names exist as identifiers in code |
 | `.CLI` | `<arg` / `<kwarg` fields are all `#string` (PGE01039) |
 | `.Bind` | No validation — `pull()`/`push()` are opaque runtime strings |
+| `.Bridge.Function` | `<func` in callee code; two envs required; same-language rejected; type compatibility |
+| `.Bridge.Script` | `<Bind`/`>Bind` names in callee code; two envs required; same-language rejected; type compatibility |
 | `.Shell` | No validation — command string is opaque (no `<Bind`, `<arg`, `<kwarg`) |
 
 **Note:** Binding validation (PGE01033–PGE01036) applies at compile time for `<code.inline` only. When `<code.file` is used, binding validation is deferred to runtime (the file content is not available at compile time).
@@ -191,6 +245,9 @@ Record field types drive marshalling through the native dispatch JSON wire forma
 | PGE01037 | Bind Schema Mismatch | Assigned value doesn't match Record schema topology |
 | PGE01038 | Code Source Conflict | Both `<code.inline` and `<code.file` provided |
 | PGE01039 | CLI Non-String Argument | `.CLI` `<arg`/`<kwarg` Record field is not `#string` |
+| PGE01041 | Same Language Bridge | Both `;Caller` and `;Callee` resolve to the same language |
+| PGE01042 | Incompatible Native Type | A `#Variable` type has no mapping to the target language |
+| PGE01043 | Missing Bridge Env | Bridge pipeline missing second `;` environment on `[-]` call line |
 
 ## Scope Isolation
 
@@ -202,7 +259,11 @@ The `-W.Env` wrapper manages the **environment** (interpreter process, installed
 
 - [[pglib/pipelines/W/Env|-W.Env]] — wrapper that manages runtime environments
 - [[pglib/types/rt|Runtime types]] — `#Code`, `#PyEnv`, `#RsEnv`
+- [[pglib/types/Variable|#Variable]] — language-tagged variable for Bridge pipelines
+- [[pglib/types/NativeType|#NativeType]] — native type classifier per host language
+- [[pglib/pipelines/Variable/Convert|-Variable.Convert]] — pairwise variable conversion
 - [[pglib/errors/errors|errors]] — `!Run` error namespace
 - [[syntax/blocks|blocks]] — `[C]` inline foreign code element
+- [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] — dual-wrapper lifecycle and conversion internals
 
 NOTE: Retry/timeout/rate-limiting are `[Q]` queue strategies, not runtime pipeline concerns.
