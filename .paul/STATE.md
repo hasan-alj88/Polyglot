@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #319 — Polyglot SDK specification
+**Current focus:** Issue #320 — Document -T.Call signal path via NATS request-reply
 
 ## Current Position
 
-Milestone: Language (issue-driven)
-Phase: Issue #319 — Polyglot SDK specification: cross-language type conversion and call protocol
-Plan: none
-Status: Ready for next issue
-Last activity: 2026-04-18 — Merged #319 to main
+Milestone: Design & Architecture Spec (M2) (issue-driven)
+Phase: Issue #320 — Document -T.Call signal path via NATS request-reply
+Plan: 320-01 complete
+Status: Loop closed, ready for MERGE
+Last activity: 2026-04-19 — UNIFY complete, SUMMARY created
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -124,14 +124,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #320 — Document -T.Call signal path via NATS request-reply
+Branch: design/issue-320-t-call-nats-signal-path
+Labels: design, documentation, P3-medium
+Started: 2026-04-19
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/320
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -321,11 +325,11 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-18
-Stopped at: Issue #319 merged to main
-Next action: /paul:issues or /paul:progress
-Resume file: none
-Resume context: #319 closed; no active issue
+Last session: 2026-04-19
+Stopped at: Loop closed — SUMMARY created
+Next action: /paul:merge
+Resume file: .paul/phases/320-t-call-signal-path/320-01-SUMMARY.md
+Resume context: #320 complete; ready to commit and merge to main
 
 ---
 *STATE.md — Updated after every significant action*

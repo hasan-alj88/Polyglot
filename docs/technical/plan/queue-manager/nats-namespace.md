@@ -1,7 +1,7 @@
 ---
 audience: architect
 type: spec
-updated: 2026-04-15
+updated: 2026-04-19
 ---
 
 # NATS Subject Namespace
@@ -15,6 +15,21 @@ All inter-service communication flows through NATS subjects:
 ```text
 polyglot.trigger.fire.{pipeline}         — trigger condition met, TM evaluates and enqueues
 ```
+
+## SDK Call Signals (SDK ↔ Trigger Monitor)
+
+<!-- @c:spec/polyglot-sdk -->
+<!-- @c:spec/native-dispatch -->
+Related: [[polyglot-sdk#call]], [[native-dispatch#-T.Call Signal Path]]
+
+These subjects implement the SDK `call()` function's NATS request-reply protocol. The SDK publishes a call request; the TM processes it, enqueues the job, and publishes the result back after execution completes.
+
+```text
+polyglot.call.{pipeline}                 — SDK publishes call request, TM subscribes and processes
+polyglot.result.{correlation_id}         — TM publishes result, SDK subscribes (request-reply)
+```
+
+See [[polyglot-sdk#call]] for the request/response payload schema and [[native-dispatch#-T.Call Signal Path]] for the TM-side processing logic including pipeline matching, Redis binding storage, and result collection.
 
 ## Lifecycle Control (Trigger Monitor → Queue Handler)
 
