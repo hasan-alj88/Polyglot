@@ -469,9 +469,9 @@ FFI (Foreign Function Interface) between language pairs is significantly faster 
 
 3. **Complexity vs. universality.** The universal string algorithm works identically for every supported language. FFI would require per-pair implementations, testing matrices, and maintenance — complexity that scales quadratically with language count.
 
-**The trade-off is acknowledged:** FFI is faster. For performance-critical pairwise integration, Polyglot provides `-Run.Bridge` — a separate pipeline designed for direct code-to-code binding between specific language pairs. See [issue #321](https://github.com/hasan-alj88/Polyglot/issues/321) for the `-Run.Bridge` specification.
+**The trade-off is acknowledged:** FFI is faster. For performance-critical pairwise integration, Polyglot provides `-Run.Bridge` — a separate pipeline designed for direct code-to-code binding between specific language pairs. See [[pglib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] for cross-language function calls and [[pglib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for cross-language variable binding.
 
-The SDK and `-Run.Bridge` serve different needs: the SDK provides universal, zero-configuration integration; `-Run.Bridge` provides optimized, per-pair integration where performance justifies the setup cost.
+The SDK and `-Run.Bridge` serve different needs: the SDK provides universal, zero-configuration integration; `-Run.Bridge` provides optimized, per-pair integration where performance justifies the setup cost. See [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] for the full conversion algorithm.
 
 ## Related
 
@@ -485,3 +485,6 @@ The SDK and `-Run.Bridge` serve different needs: the SDK provides universal, zer
 | [[spec/type-identity]] | "All data is serialized strings" foundation |
 | [[pglib/pipelines/T/Call]] | `-T.Call` trigger used by `call()` |
 | [[pglib/pipelines/Run/Bind]] | `-Run.*.Bind` pipeline used by `pull()`/`push()` |
+| [[pglib/pipelines/Run/Bridge.Function]] | `-Run.Bridge.Function` — cross-language function call |
+| [[pglib/pipelines/Run/Bridge.Script]] | `-Run.Bridge.Script` — cross-language variable binding |
+| [[technical/algorithms/bridge-conversion]] | Bridge conversion algorithm for pairwise type mapping |

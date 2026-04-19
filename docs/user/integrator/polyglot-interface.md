@@ -1,7 +1,7 @@
 ---
 audience: integrator
 type: guide
-updated: 2026-04-18
+updated: 2026-04-19
 ---
 
 # The `polyglot-interface` Library
@@ -47,6 +47,46 @@ The same pattern applies to other languages — Rust, JavaScript, Go — with id
 ## What `create_environment` Does
 
 `create_environment` prepares the runtime and dependencies for code-to-code integration. It does **not** compile or build the target codebase — it expects a pre-built artifact or existing source. The `code_base_path` parameter locates the codebase so the environment can be configured accordingly.
+
+## Bridge Integration
+
+<!-- @c:pglib/pipelines/Run/Bridge.Function -->
+<!-- @c:pglib/pipelines/Run/Bridge.Script -->
+
+For performance-critical pairwise integration, Polyglot provides `-Run.Bridge` pipelines that convert data directly between two language type systems -- bypassing the universal string serialization used by the SDK.
+
+Bridge pipelines are written in Polyglot code (`.pg` files) and require two `-W.Env` wrappers, one per language. The SDK caller invokes Bridge pipelines the same way as any other pipeline -- through `call()`:
+
+```python
+# Python calling a Bridge pipeline that runs Rust code
+result = await pg.call("CrossLangProcess", {
+    "inputData": [1.5, 2.7, 3.14, 4.0]
+})
+```
+
+```go
+// Go calling a Bridge pipeline that runs Python ML code
+result, err := pg.Call(ctx, "GoToPythonML", map[string]interface{}{
+    "features":  []float64{1.0, 2.0, 3.0, 4.0, 5.0},
+    "modelName": "linear_demo",
+})
+```
+
+The SDK caller does not manage language environments or type conversion directly -- the Bridge handles that inside the Polyglot Service.
+
+### SDK vs Bridge
+
+| Aspect | SDK (`call`/`pull`/`push`) | Bridge (`-Run.Bridge.*`) |
+|--------|----------------------------|--------------------------|
+| Serialization | Universal string (JSON envelopes) | Pairwise native type conversion |
+| Setup cost | Zero -- works for all supported languages | Per-pair: requires `.pg` pipeline with two `{;}` environments |
+| Performance | JSON serialization overhead | Direct type mapping, minimal overhead |
+| Language coverage | All supported languages | Only implemented language pairs |
+| Who writes it | Integrator (host-language code only) | Automation builder (Polyglot code) |
+
+**Use the SDK** when you need universal integration across many languages with minimal setup. **Use Bridge** when a specific language pair is a performance bottleneck and the conversion overhead of JSON serialization is unacceptable.
+
+See [[pglib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] and [[pglib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for the full Polyglot-side specification.
 
 ## Codebase Location
 

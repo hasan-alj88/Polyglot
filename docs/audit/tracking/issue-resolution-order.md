@@ -67,21 +67,15 @@ Recommended execution order for open GitHub issues based on dependency analysis.
 
 ## Milestone: Design & Architecture Spec (M2)
 
-### Wave 1 — Signal Architecture (no open dependencies)
-
-| # | Title | Priority | Notes |
-|---|-------|----------|-------|
-| #320 | Document -T.Call signal path via NATS request-reply | P3-medium | Unblocked — #319 (SDK spec) closed 2026-04-18 |
-
-### Wave 2 — Finalize Designs (depends on Wave 1 + M6 #301)
+### Wave 1 — Finalize Designs (depends on M4 #321 + M6 #301)
 
 | # | Title | Priority | Blocked By |
 |---|-------|----------|------------|
-| #264 | Finalize Trigger Monitor design specification | P1-critical | #320 (-T.Call signal path) + #301 (fault domains) |
+| #264 | Finalize Trigger Monitor design specification | P1-critical | #301 (fault domains) — #320 closed 2026-04-19 |
 | #270 | Finalize Polyglot syntax specification | P1-critical | #321 (bridge syntax must be designed first) |
 | #266 | Finalize Runner design specification | P1-critical | #321 (bridge pipelines) + #301 (fault domains) |
 
-### Wave 3 — Compiler Architecture (depends on Wave 2)
+### Wave 2 — Compiler Architecture (depends on Wave 1)
 
 | # | Title | Priority | Blocked By |
 |---|-------|----------|------------|
@@ -123,7 +117,7 @@ These dependencies connect milestones to each other and to pre-existing issues.
 | ~~#319 SDK spec~~ | #320 NATS -T.Call signal path | ~~Blocks~~ — RESOLVED (closed 2026-04-18) |
 | ~~#319 SDK spec~~ | #321 -Run.Bridge syntax | ~~Blocks~~ — RESOLVED (closed 2026-04-18) |
 | #321 -Run.Bridge syntax | #270 Finalize syntax | Blocks — bridge syntax must be designed before syntax finalization |
-| #320 -T.Call signal path | #264 Finalize TM design | Blocks — TM handles -T.Call signals, needs signal path defined |
+| ~~#320 -T.Call signal path~~ | #264 Finalize TM design | ~~Blocks~~ — RESOLVED (closed 2026-04-19) |
 | #321 -Run.Bridge syntax | #266 Finalize Runner design | Blocks — Runner executes bridge pipelines, needs syntax defined |
 | #301 Fault domains | #264 Finalize TM design | Blocks — crash detection answers open TM design questions |
 | #301 Fault domains | #266 Finalize Runner design | Blocks — crash recovery answers open Runner design questions |
@@ -141,7 +135,7 @@ Phase 1: Foundations (no dependencies — can work in parallel)
 
 Phase 2: New Syntax + Signal Architecture (depends on Phase 1)
   #321 -Run.Bridge pipeline syntax (UNBLOCKED — #319 closed)
-  #320 -T.Call NATS signal path (UNBLOCKED — #319 closed)
+  ✓ #320 -T.Call NATS signal path (CLOSED 2026-04-19)
 
 Phase 3: Finalize Designs (depends on Phase 2 + #301)
   #270 Finalize syntax spec (after #321 bridge syntax designed)
