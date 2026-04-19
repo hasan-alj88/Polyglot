@@ -128,18 +128,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #329 — Document per-language SDK encode/decode algorithms
-Branch: design/issue-329-document-per-language-sdk-encode-decode-algorithms
-Labels: docs, design
-Started: 2026-04-19
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/329
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete, ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -314,6 +310,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #320 — -T.Call NATS signal path | 2026-04-19 | Merged design/issue-320-t-call-nats-signal-path to main; TM-side signal processing, Redis keys, NATS namespace updated |
 | Closed #321 — -Run.Bridge specification | 2026-04-19 | Merged design/issue-321-run-bridge-pairwise-cross-language-binding to main; 2 plans, 18 files, 6 implementation issues #322-#327 |
 | Closed #328 — #bytes and #dt binding types | 2026-04-19 | Merged design/issue-328-bytes-dt-binding-types to main; #bytes (Base64) and #dt (epoch seconds) in 3 marshalling tables |
+| Closed #329 — Per-language SDK encode/decode algorithms | 2026-04-19 | Merged design/issue-329 to main; Python/Rust/Go/JS encode/decode, normalization rules, strongly vs weakly typed summary |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -333,10 +330,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-19
-Stopped at: Plan 329-01 unified
-Next action: Run /paul:merge to merge branch and close issue #329
-Resume file: .paul/phases/329-sdk-encode-decode/329-01-SUMMARY.md
-Resume context: Issue #329 fully specified; ready for MERGE
+Stopped at: Issue #329 merged to main
+Next action: Pick next issue with /paul:issues or /paul:progress
+Resume file: none
+Resume context: #329 closed; branch merged; ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
