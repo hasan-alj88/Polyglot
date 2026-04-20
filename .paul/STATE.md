@@ -5,7 +5,7 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #330 — Document canonical float/null/boolean wire format conventions
+**Current focus:** Issue #331 — Restructure vision.md into docs/philosophy/ folder
 
 ## Current Position
 
@@ -129,14 +129,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #331 — Restructure vision.md into docs/philosophy/ folder
+Branch: docs/issue-331-restructure-vision-philosophy-folder
+Labels: documentation
+Started: 2026-04-20
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/331
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop complete, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -313,6 +317,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #328 — #bytes and #dt binding types | 2026-04-19 | Merged design/issue-328-bytes-dt-binding-types to main; #bytes (Base64) and #dt (epoch seconds) in 3 marshalling tables |
 | Closed #329 — Per-language SDK encode/decode algorithms | 2026-04-19 | Merged design/issue-329 to main; Python/Rust/Go/JS encode/decode, normalization rules, strongly vs weakly typed summary |
 | Closed #330 — Wire format conventions | 2026-04-19 | Merged docs/issue-330 to main; Boolean/Float/Null normalization tables, ##Inf/##Nullable schema dependency |
+| Issue #331 — Restructure vision.md into docs/philosophy/ | 2026-04-20 | Created philosophy/ folder; extracted Core Philosophy + Language Design; added The Problem/Who/What Not; Observability by Design value |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -331,11 +336,11 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-19
-Stopped at: Issue #330 merged to main
-Next action: Pick next issue with /paul:issues or /paul:progress
-Resume file: none
-Resume context: #330 closed; branch merged; ready for next issue
+Last session: 2026-04-20
+Stopped at: Plan 331-01 unified
+Next action: Run /paul:merge to merge branch to main
+Resume file: .paul/phases/331-restructure-vision-philosophy/331-01-SUMMARY.md
+Resume context: Issue #331 fully specified; ready for MERGE
 
 ---
 *STATE.md — Updated after every significant action*
