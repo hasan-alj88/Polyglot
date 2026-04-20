@@ -134,18 +134,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #335 — Add philosophy/error-philosophy.md — Murphy's Law and exhaustive error handling
-Branch: docs/issue-335-error-philosophy
-Labels: documentation
-Started: 2026-04-20
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/335
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -326,6 +322,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #332 — Symbol design rationale | 2026-04-20 | Merged docs/issue-332-symbology-rationale to main; symbology.md in philosophy/ |
 | Closed #333 — Accountability philosophy page | 2026-04-20 | Merged docs/issue-333-accountability-human-inspection to main; accountability.md in philosophy/ |
 | Closed #334 — Cybersecurity philosophy page | 2026-04-20 | Merged docs/issue-334-zero-trust-black-box-monitoring to main; cybersecurity.md in philosophy/ |
+| Closed #335 — Error philosophy page | 2026-04-20 | Merged docs/issue-335-error-philosophy to main; error-philosophy.md in philosophy/ |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -345,10 +342,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Plan 335-01 unified
-Next action: Run /paul:merge to merge branch to main
-Resume file: .paul/phases/issue-335-error-philosophy/335-01-SUMMARY.md
-Resume context: Issue #335 — loop closed, ready for MERGE
+Stopped at: Issue #335 merged to main
+Next action: Run /paul:issues or /paul:progress to pick next issue
+Resume file: none
+Resume context: Issue #335 closed; no active issue
 
 ---
 *STATE.md — Updated after every significant action*
