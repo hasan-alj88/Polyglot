@@ -135,18 +135,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #337 — Replace old geometric logo with new octopus design
-Branch: docs/issue-337-replace-logo-with-octopus-design
-Labels: documentation
-Started: 2026-04-20
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/337
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -329,7 +325,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #334 — Cybersecurity philosophy page | 2026-04-20 | Merged docs/issue-334-zero-trust-black-box-monitoring to main; cybersecurity.md in philosophy/ |
 | Closed #335 — Error philosophy page | 2026-04-20 | Merged docs/issue-335-error-philosophy to main; error-philosophy.md in philosophy/ |
 | Closed #336 — Remaining philosophy files | 2026-04-20 | Merged docs/issue-336-add-remaining-philosophy-files to main; 5 philosophy pages; resource management philosophy; vision.md 11 links |
-| Issue #337 — Replace logo format exports | 2026-04-20 | 8 exports regenerated (PNG/JPG/PDF/EPS) via rsvg-convert; logo.py deleted; AI/ deferred (needs Adobe) |
+| Closed #337 — Replace logo with octopus design | 2026-04-20 | Merged docs/issue-337-replace-logo-with-octopus-design to main; 24 format exports (light+dark), logo.py deleted, AI/ deferred |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -349,10 +345,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Plan 337-01 unified
-Next action: Run /paul:merge to merge branch and close issue #337
-Resume file: .paul/phases/issue-337-replace-logo/337-01-SUMMARY.md
-Resume context: Loop closed; 8 exports regenerated, logo.py deleted, AI/ deferred; ready for merge
+Stopped at: Issue #337 merged to main
+Next action: Run /paul:issues or /paul:progress to pick next issue
+Resume file: none
+Resume context: Issue #337 closed; no active issue
 
 ---
 *STATE.md — Updated after every significant action*
