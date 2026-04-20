@@ -5,6 +5,9 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:concepts/data-is-trees -->
+<!-- @u:technical/spec/metadata-tree/INDEX -->
+<!-- @u:syntax/types/basic-types#RawString -->
 # Everything Is a Tree
 
 > Polyglot's entire data model rests on one structural decision: everything is a tree. This page explains why trees are the right foundation for a cross-language platform. See [[vision]] for the broader project context. For the spec-level details, see [[concepts/data-is-trees]].

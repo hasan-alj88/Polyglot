@@ -13,6 +13,8 @@ updated: 2026-04-18
 <!-- @c:glossary#Pipeline -->
 <!-- @c:glossary#Job -->
 <!-- @c:glossary#Instance -->
+<!-- @u:philosophy/behavioral-contract -->
+<!-- @u:concepts/pipelines/INDEX#Pipeline, Instance, and Job -->
 <!-- @c:technical/spec/otel-permission-events -->
 <!-- @c:technical/spec/otel-foundation -->
 <!-- @c:technical/spec/otel-config -->

@@ -9,6 +9,8 @@ status: draft
 
 <!-- @u:errors:Error Fallback Operators -->
 <!-- @u:operators -->
+<!-- @u:variable-lifecycle#Failed -->
+<!-- @u:technical/ebnf/07-io-parameters -->
 The `(>)` (output) and `(<)` (input) block markers handle IO parameters scoped under `(-)` IO lines (see [[blocks#Data Flow]]). Currently, fallback is the primary use case: providing a value when a pipeline call errors, preventing the variable from entering the Failed state. Fallback uses the `!<` / `!>` operators (see [[operators#Assignment Operators]]). The `!` error sigil always leads, with the direction arrow (`<` or `>`) following.
 
 ## Fallback Line Pattern

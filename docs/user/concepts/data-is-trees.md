@@ -8,6 +8,9 @@ updated: 2026-04-15
 
 <!-- @c:types:RawString -->
 <!-- @u:identifiers:Serialized Identifiers -->
+<!-- @u:technical/spec/metadata-tree/INDEX -->
+<!-- @u:metadata -->
+<!-- @u:philosophy/data-trees -->
 
 All Polyglot data is serialized strings. Every object — structs, pipelines, variables, collections, errors, packages — is a branch on one unified tree rooted at `%`. Understanding this tree is the key to understanding how every concept in Polyglot Code connects.
 

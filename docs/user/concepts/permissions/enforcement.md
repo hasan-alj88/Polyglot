@@ -10,6 +10,8 @@ status: complete
 ## Parallel Write Exclusion
 
 <!-- @c:glossary#Reconciliation -->
+<!-- @u:technical/spec/job-sandbox -->
+<!-- @u:technical/spec/otel-permission-events -->
 Concurrent parallel jobs (`[=]`) may not hold write permission to the same resource path — this is a compile error (PGE10008). Read permission to the same resource is allowed across parallel jobs.
 
 This rule makes [[glossary#Reconciliation|reconciliation]] safe by construction: parallel jobs are pure readers, and only sequential code after collection can write to shared resources. No runtime locks, mutexes, or transactional memory are needed — the permission system eliminates write contention at compile time.

@@ -5,6 +5,10 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:concepts/permissions -->
+<!-- @u:concepts/permissions/enforcement -->
+<!-- @u:concepts/permissions/foreign-code -->
+<!-- @u:technical/spec/job-sandbox -->
 # Cybersecurity
 
 > Polyglot orchestrates code across language boundaries — including compiled binaries and foreign scripts that the compiler cannot fully analyse. That power demands a security model built on distrust, not convenience. This page defines how Polyglot treats security as a design principle. See [[vision]] for the broader project context.

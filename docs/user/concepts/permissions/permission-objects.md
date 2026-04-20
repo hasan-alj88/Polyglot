@@ -9,6 +9,8 @@ status: complete
 
 <!-- @c:identifiers -->
 <!-- @c:blocks -->
+<!-- @u:permissions/permission-prefixes -->
+<!-- @u:permissions/permission-schema -->
 
 Permissions are declared as named `{_}` blocks — first-class, reusable permission objects. Each `{_}` block defines a permission policy with a name, intent, and one or more capability grants. The permission object carries both the **grant** (what you're allowed to do) and the **resource locator** (where — file path, DB connection, etc.).
 

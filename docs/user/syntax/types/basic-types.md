@@ -7,6 +7,8 @@ updated: 2026-04-09
 # Basic Types
 
 <!-- @syntax/types/INDEX -->
+<!-- @u:technical/ebnf/04-type-system -->
+<!-- @u:data-is-trees -->
 
 ## Basic Types
 

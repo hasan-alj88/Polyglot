@@ -5,6 +5,9 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:concepts/permissions -->
+<!-- @u:concepts/permissions/enforcement -->
+<!-- @u:syntax/packages -->
 # Accountability
 
 > Polyglot exists to orchestrate code across language boundaries. That power demands a clear answer to one question: **who is responsible when something goes wrong?** This page defines Polyglot's answer. See [[vision]] for the broader project context.

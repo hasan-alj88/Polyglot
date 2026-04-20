@@ -9,6 +9,9 @@ updated: 2026-03-30
 <!-- @syntax/types/INDEX -->
 <!-- @c:blocks -->
 <!-- @c:identifiers -->
+<!-- @u:technical/ebnf/04-type-system -->
+<!-- @u:technical/edge-cases/24-datatype-defs -->
+<!-- @u:data-is-trees#Schema vs Instance -->
 
 ## Struct Types
 

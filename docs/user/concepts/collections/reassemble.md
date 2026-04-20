@@ -7,6 +7,8 @@ status: draft
 
 <!-- @c:concepts/collections/expand -->
 <!-- @c:concepts/collections/collect -->
+<!-- @u:operators#Collection Operators -->
+<!-- @u:technical/ebnf/12-collections -->
 
 ## Reassemble Operators (`=*`)
 

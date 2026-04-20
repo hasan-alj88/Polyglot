@@ -10,6 +10,7 @@ status: draft
 <!-- @u:operators -->
 <!-- @c:pipelines -->
 <!-- @c:identifiers -->
+<!-- @u:technical/ebnf/07-io-parameters -->
 
 ## IO Labels
 

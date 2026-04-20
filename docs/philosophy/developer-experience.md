@@ -5,6 +5,9 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:concepts/errors -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:concepts/variable-lifecycle -->
 # Developer Experience
 
 > Polyglot's developer experience is built around one loop: write, compile, fix, deploy. The compiler is not a gatekeeper — it is a collaborator that catches what you missed. This page explains why that trade-off pays off. See [[vision]] for the broader project context.

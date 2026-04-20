@@ -8,6 +8,10 @@ updated: 2026-03-31
 
 <!-- @c:glossary:Polyglot Service -->
 <!-- @c:data-is-trees -->
+<!-- @u:technical/spec/metadata-tree/INDEX -->
+<!-- @u:technical/edge-cases/15-metadata-blocks -->
+<!-- @u:blocks#Metadata -->
+<!-- @u:variable-lifecycle#Querying Lifecycle State -->
 
 Every Polyglot object carries metadata — descriptive fields you declare and runtime fields the system manages. You interact with metadata through two mechanisms:
 

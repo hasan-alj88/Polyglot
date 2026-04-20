@@ -8,6 +8,7 @@ status: draft
 # Error Declaration
 
 <!-- @u:errors:Declaring Pipeline Errors -->
+<!-- @u:variable-lifecycle#Failed -->
 Pipelines that can raise errors declare them in the IO section using `(-) !ErrorName`:
 
 ```polyglot

@@ -9,6 +9,8 @@ status: draft
 
 <!-- @c:vision:Core Philosophy -->
 <!-- @c:glossary:Polyglot Service -->
+<!-- @u:pipelines:Pipeline Structure -->
+<!-- @u:blocks#Definition Elements -->
 
 Environment definitions declare what a pipeline needs from its host system — language runtime, version, dependencies, and configuration. The compiler validates environment availability at every call site, ensuring no runtime surprises.
 

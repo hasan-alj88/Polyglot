@@ -9,6 +9,10 @@ status: complete
 
 <!-- @u:line-structure -->
 <!-- @c:identifiers -->
+<!-- @u:technical/ebnf/05-block-elements -->
+<!-- @u:technical/ebnf/09-definition-blocks -->
+<!-- @u:technical/edge-cases/05-block-elements -->
+<!-- @u:technical/edge-cases/09-definition-blocks -->
 Three bracket shapes with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native`, `{*}` at `%*` (see [[data-is-trees]]).
 
 > **Notation:** Throughout this document, `X` in `{X}`, `[X]`, and `(X)` is a **placeholder** for any valid marker character — not a literal. The `}`, `]`, `)` in this notation are part of the **opening marker itself**, not closing delimiters. For example, `{#}` is one indivisible opening token that means "start a struct definition." There are no separate closing brackets in Polyglot Code.

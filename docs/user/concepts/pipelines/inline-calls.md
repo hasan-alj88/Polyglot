@@ -5,6 +5,7 @@ updated: 2026-04-12
 ---
 
 <!-- @concepts/pipelines/INDEX -->
+<!-- @u:technical/ebnf/08-expressions -->
 
 ## Inline Pipeline Calls
 

@@ -8,6 +8,8 @@ status: draft
 # Collection Operators
 
 <!-- @u:collections -->
+<!-- @u:technical/ebnf/12-collections -->
+<!-- @u:technical/edge-cases/12-collections -->
 Two operator prefixes for collection processing. For the full operator reference and semantics, see [[concepts/collections/INDEX|collections]].
 
 | Prefix | Operation | Example |

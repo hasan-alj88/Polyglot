@@ -13,6 +13,11 @@ status: complete
 <!-- @u:io -->
 <!-- @u:operators -->
 <!-- @c:variable-lifecycle -->
+<!-- @u:technical/ebnf/09-definition-blocks -->
+<!-- @u:technical/ebnf/10-execution -->
+<!-- @u:technical/edge-cases/09-definition-blocks -->
+<!-- @u:technical/edge-cases/10-execution -->
+<!-- @u:technical/spec/behavior-contract -->
 Every pipeline definition `{-}` (see [[blocks]]) must contain these elements in order. IO lines use [[io]] parameters with [[operators]] for assignment. Variable states follow [[variable-lifecycle]].
 
 | Order | Element | Marker | Required |

@@ -5,6 +5,10 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:concepts/pipelines/INDEX -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:concepts/errors -->
+<!-- @u:concepts/collections/INDEX -->
 # Language Design Principles
 
 > This page expands the language design principles summarized in [[vision]]. It is the authoritative source for Polyglot's design rationale and safety model.

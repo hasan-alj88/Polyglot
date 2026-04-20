@@ -9,6 +9,9 @@ status: complete
 
 <!-- @c:identifiers -->
 <!-- @c:blocks -->
+<!-- @u:technical/ebnf/01-file-structure#1.2 -->
+<!-- @u:technical/edge-cases/01-file-structure -->
+<!-- @u:technical/edge-cases/21-registry-type -->
 Mandatory first block in every `.pg` file — exactly one `{@}` per file. Multiple `{#}` and `{-}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses use `::` to separate the registry from the package name, with `:` (flexible) separators throughout. Packages live at `%@` in the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
 ```polyglot

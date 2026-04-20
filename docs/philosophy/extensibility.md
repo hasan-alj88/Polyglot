@@ -5,6 +5,8 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:syntax/packages -->
+<!-- @u:concepts/pipelines/INDEX#Native vs Derived -->
 # Extensibility
 
 > Polyglot is designed to grow safely. The same compile-time guarantees that protect core pipelines extend to every package in the ecosystem. This page explains how extensibility works without compromising safety. See [[vision]] for the broader project context.

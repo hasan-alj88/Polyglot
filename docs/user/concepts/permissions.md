@@ -9,6 +9,9 @@ status: complete
 
 <!-- @c:identifiers -->
 <!-- @c:blocks -->
+<!-- @u:technical/spec/job-sandbox -->
+<!-- @u:philosophy/cybersecurity -->
+<!-- @u:philosophy/accountability -->
 
 Polyglot uses an implicit-deny permission system. Every pipeline starts with zero IO capabilities. To perform any IO — read a file, make a web request, access a database — the block must declare a named `{_}` permission object via its IO markers (`(#)` for `{#}` definitions, `(-)` for `{-}` pipelines). The `{_}` object carries both the capability grant and the resource locator (path, host, credentials, etc.).
 

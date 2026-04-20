@@ -9,6 +9,8 @@ status: complete
 
 <!-- @c:types -->
 <!-- @c:packages -->
+<!-- @u:technical/ebnf/03-identifiers -->
+<!-- @u:technical/edge-cases/03-identifiers -->
 ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address format, [[syntax/types/INDEX|types]] for `#` type annotations:
 
 | Prefix | Type | Example |

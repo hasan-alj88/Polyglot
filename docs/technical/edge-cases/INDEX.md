@@ -7,6 +7,13 @@ updated: 2026-04-17
 # EBNF Edge Cases
 
 <!-- @u:EBNF -->
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/identifiers -->
+<!-- @u:concepts/pipelines/INDEX -->
+<!-- @u:concepts/collections/INDEX -->
+<!-- @u:concepts/conditionals -->
+<!-- @u:concepts/variable-lifecycle -->
 Structured edge case catalog for validating the Polyglot Code grammar ([[technical/ebnf/INDEX|EBNF]]). Each case maps to an EBNF production rule and tests a boundary condition, ambiguity, or interaction between rules.
 
 ## How to Use

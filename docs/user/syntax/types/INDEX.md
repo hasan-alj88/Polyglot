@@ -10,6 +10,9 @@ status: complete
 <!-- @syntax/types/INDEX -->
 <!-- @c:identifiers -->
 <!-- @c:variable-lifecycle -->
+<!-- @u:technical/ebnf/04-type-system -->
+<!-- @u:technical/edge-cases/04-type-system -->
+<!-- @u:data-is-trees -->
 
 ## Ground Truths
 

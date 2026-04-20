@@ -9,6 +9,10 @@ status: draft
 
 <!-- @c:blocks -->
 <!-- @c:identifiers -->
+<!-- @u:technical/ebnf/01-file-structure -->
+<!-- @u:technical/ebnf/02-lexical -->
+<!-- @u:technical/edge-cases/01-file-structure -->
+<!-- @u:technical/edge-cases/02-lexical -->
 
 ## Ground Truth: Every Line Has a Marker
 

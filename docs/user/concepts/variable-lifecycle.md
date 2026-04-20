@@ -10,6 +10,11 @@ status: complete
 <!-- @c:glossary:Polyglot Code -->
 <!-- @c:identifiers -->
 <!-- @c:pipelines -->
+<!-- @u:technical/ebnf/14-lifecycle -->
+<!-- @u:technical/edge-cases/14-lifecycle -->
+<!-- @u:technical/edge-cases/20-lifecycle-gaps -->
+<!-- @u:errors#Failed State -->
+<!-- @u:collections/collect#Collect Operators -->
 Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through five lifecycle stages. Variables are [[identifiers]] with the `$` prefix. For how lifecycle applies to IO parameters, see [[concepts/pipelines/io-triggers#IO as Implicit Triggers]].
 
 ## Stages

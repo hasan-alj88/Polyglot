@@ -9,6 +9,8 @@ status: draft
 
 <!-- @c:blocks -->
 <!-- @u:io -->
+<!-- @u:errors#Grouped Fallback Under `(-) $label` -->
+<!-- @u:technical/ebnf/10-execution#Operation Labels -->
 Operation labels attach a reusable name to a pipeline call's IO, allowing downstream operations to reference outputs, inputs, errors, and permissions without intermediate variables. The label declaration marker follows the IO mirroring rule: `(-)` under `[-]` pipeline calls (mirrors the `-` pipeline prefix). `($)` lines under the label operate on variable-scope accessors.
 
 ## Overview

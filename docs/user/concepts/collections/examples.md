@@ -5,6 +5,8 @@ updated: 2026-03-30
 ---
 
 <!-- @concepts/collections/INDEX -->
+<!-- @u:operators#Collection Operators -->
+<!-- @u:io/collection-operators -->
 
 ## Example: Expand, Transform, and Collect
 

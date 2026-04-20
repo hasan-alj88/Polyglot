@@ -7,6 +7,8 @@ status: draft
 
 # IO Inputs as Variables
 
+<!-- @u:variable-lifecycle#Final -->
+<!-- @u:technical/ebnf/07-io-parameters -->
 IO inputs declared with `(-)` become `$`-prefixed variables in the execution body once filled. There is no need to redeclare them:
 
 ```polyglot

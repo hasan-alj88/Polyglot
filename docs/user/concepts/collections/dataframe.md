@@ -5,6 +5,8 @@ updated: 2026-04-09
 ---
 
 <!-- @concepts/collections/INDEX -->
+<!-- @u:syntax/types/generic-types -->
+<!-- @u:collections/expand#=ForEach.Dataframe -->
 
 ## #Dataframe -- Two-Level Table
 

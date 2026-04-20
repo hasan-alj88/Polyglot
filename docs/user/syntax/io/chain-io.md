@@ -8,6 +8,7 @@ status: draft
 # Chain IO Addressing
 
 <!-- @u:pipelines:Chain Execution -->
+<!-- @u:technical/ebnf/10-execution#Chain -->
 In chain execution (`[-] -A->-B->-C`), IO parameters are addressed by step reference — a numeric index (0-based) or pipeline leaf name, followed by `.` and the parameter name. See [[concepts/pipelines/chains#Chain Execution]] for full chain semantics.
 
 `<` and `>` always describe the port from the pipeline's own viewpoint — `<` marks the pipeline's input, `>` marks its output — whether in a definition, a call site, or a chain step reference.

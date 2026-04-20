@@ -5,6 +5,8 @@ updated: 2026-04-09
 ---
 
 <!-- @concepts/collections/INDEX -->
+<!-- @u:syntax/types/generic-types -->
+<!-- @u:data-is-trees -->
 
 ## #Array -- Range-Indexed Collection
 

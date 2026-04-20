@@ -11,6 +11,10 @@ changes: "[+] is OR block — unified for both triggers and conditionals"
 <!-- @u:operators -->
 <!-- @u:blocks:Control Flow -->
 <!-- @u:blocks:Logical -->
+<!-- @u:technical/ebnf/11-control-flow -->
+<!-- @u:technical/edge-cases/11-control-flow -->
+<!-- @u:technical/edge-cases/22-control-flow-gaps -->
+<!-- @u:technical/compile-rules/algorithms/compound-exhaustiveness -->
 
 Conditionals in Polyglot Code use `[?]` block elements to branch execution based on comparisons. Each branch is a standalone test — there is no "subject" line that introduces a value to match against. See [[operators#Comparison Operators]] for the full operator table and [[blocks#Control Flow]] for marker reference.
 

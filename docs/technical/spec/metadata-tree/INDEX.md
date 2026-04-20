@@ -9,6 +9,8 @@ updated: 2026-04-03
 <!-- @c:user/concepts/data-is-trees -->
 <!-- @c:user/concepts/metadata -->
 <!-- @u:EBNF -->
+<!-- @u:philosophy/data-trees -->
+<!-- @u:syntax/blocks#Metadata -->
 
 This document formally specifies the `%` metadata tree — the unified structure that organizes all Polyglot objects. For the user-friendly introduction, see [[data-is-trees|user/concepts/data-is-trees]]. For field listings and access patterns, see [[metadata|user/concepts/metadata]].
 

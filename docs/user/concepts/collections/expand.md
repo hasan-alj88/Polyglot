@@ -5,6 +5,8 @@ updated: 2026-03-30
 ---
 
 <!-- @concepts/collections/INDEX -->
+<!-- @u:technical/ebnf/12-collections -->
+<!-- @u:io/collection-operators -->
 
 ## Expand Operators (`=`)
 

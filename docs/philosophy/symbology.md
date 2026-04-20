@@ -5,6 +5,10 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:syntax/identifiers -->
+<!-- @u:syntax/blocks -->
+<!-- @u:syntax/operators -->
+<!-- @u:syntax/line-structure -->
 # Symbol Design Rationale
 
 > This page expands the syntax design choices summarized in [[vision]]. It explains *why* Polyglot's symbols look the way they do — not what they mean (see [[syntax/identifiers]] and [[syntax/blocks]] for that).

@@ -5,6 +5,8 @@ updated: 2026-03-31
 ---
 
 <!-- @concepts/pipelines/INDEX -->
+<!-- @u:technical/ebnf/09-definition-blocks#9.3 -->
+<!-- @u:technical/edge-cases/18-macro-structure -->
 
 ## Wrappers
 

@@ -10,6 +10,10 @@ status: complete
 <!-- @c:variable-lifecycle -->
 <!-- @u:io -->
 <!-- @u:collections -->
+<!-- @u:technical/ebnf/06-operators -->
+<!-- @u:technical/edge-cases/06-operators -->
+<!-- @u:conditionals#Comparison Operators -->
+<!-- @u:errors#Error Fallback Operators -->
 
 ## Assignment Operators
 

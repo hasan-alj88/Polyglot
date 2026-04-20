@@ -9,6 +9,8 @@ updated: 2026-04-14
 <!-- @c:glossary#RawString -->
 <!-- @c:glossary#Polyglot Service -->
 <!-- @c:glossary#Trigger Monitor -->
+<!-- @u:philosophy/behavioral-contract -->
+<!-- @u:concepts/data-is-trees -->
 Related: [[behavior-contract]], [[native-dispatch]]
 
 ## The Dictionary Problem

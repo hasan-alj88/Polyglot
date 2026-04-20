@@ -5,6 +5,9 @@ updated: 2026-04-16
 ---
 
 <!-- @concepts/collections/INDEX -->
+<!-- @u:technical/ebnf/12-collections -->
+<!-- @u:technical/spec/collector-definitions -->
+<!-- @u:variable-lifecycle#Released -->
 
 ## Collect Operators (`*`)
 

@@ -5,6 +5,9 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:concepts/pipelines/INDEX -->
+<!-- @u:concepts/pipelines/queue -->
+<!-- @u:concepts/permissions -->
 # How Polyglot Differs
 
 > Polyglot is not the first tool to address workflow orchestration, cross-language integration, or automation. But it is the first to make these concerns foundational language features rather than bolted-on libraries. This page explains what that distinction means in practice. See [[vision]] for the broader project context.

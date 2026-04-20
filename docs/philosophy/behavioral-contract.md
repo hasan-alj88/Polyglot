@@ -5,6 +5,9 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:technical/spec/behavior-contract -->
+<!-- @u:technical/spec/compiler-floor -->
+<!-- @u:concepts/pipelines/INDEX -->
 # The Behavioral Contract
 
 > Polyglot does not compile to a binary. It compiles to a complete specification of how the system should behave — the Behavioral Contract. This page explains what that means and why it matters. See [[vision]] for the broader project context.

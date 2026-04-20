@@ -5,6 +5,7 @@ updated: 2026-03-30
 ---
 
 <!-- @concepts/collections/INDEX -->
+<!-- @u:syntax/types/structs -->
 
 ## User-Defined Struct
 

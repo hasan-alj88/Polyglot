@@ -5,6 +5,9 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:concepts/errors -->
+<!-- @u:concepts/variable-lifecycle#Failed -->
+<!-- @u:syntax/operators#Fallback -->
 # Error Handling Philosophy
 
 > Polyglot treats error handling as a first-class design concern, not an afterthought bolted onto working code. This page explains why. See [[vision]] for the broader project context.

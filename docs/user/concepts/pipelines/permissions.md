@@ -5,6 +5,8 @@ updated: 2026-04-17
 ---
 
 <!-- @concepts/pipelines/INDEX -->
+<!-- @u:philosophy/cybersecurity -->
+<!-- @u:philosophy/accountability -->
 
 ## Permissions
 

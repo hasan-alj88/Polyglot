@@ -5,6 +5,8 @@ updated: 2026-04-16
 ---
 
 <!-- @c:concepts/pipelines/INDEX -->
+<!-- @u:technical/plan/queue-manager/INDEX -->
+<!-- @u:technical/ebnf/09-definition-blocks#9.6 -->
 
 ## Queue
 

@@ -5,6 +5,10 @@ updated: 2026-04-20
 ---
 
 <!-- @c:vision -->
+<!-- @u:concepts/pipelines/INDEX -->
+<!-- @u:concepts/permissions/implicit-deny -->
+<!-- @u:concepts/data-is-trees -->
+<!-- @u:technical/spec/behavior-contract -->
 # Core Philosophy
 
 > This page expands the core philosophy summarized in [[vision]]. It is the authoritative source for Polyglot's mind-shift, values, and evolution strategy.

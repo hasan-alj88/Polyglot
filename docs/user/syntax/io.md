@@ -10,6 +10,8 @@ status: draft
 <!-- @u:operators -->
 <!-- @c:pipelines -->
 <!-- @c:identifiers -->
+<!-- @u:technical/ebnf/07-io-parameters -->
+<!-- @u:technical/edge-cases/07-io-parameters -->
 Input and output parameters bind data into and out of operators. IO labels are [[identifiers#Serialized Identifiers]]. Assignment uses [[operators]] (`<<`, `>>`, `<~`, `~>`). For how IO assignment mode controls pipeline triggering, see [[concepts/pipelines/io-triggers#IO as Implicit Triggers]]. IO ports live as nested typed sections in the metadata tree at `%-:{name}:{instance}.<` (inputs) and `.>` (outputs) — see [[data-is-trees#IO Ports — Nested Typed Sections]].
 
 ## Sections

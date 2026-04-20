@@ -5,6 +5,8 @@ updated: 2026-04-09
 ---
 
 <!-- @concepts/collections/INDEX -->
+<!-- @u:data-is-trees -->
+<!-- @u:collections/expand#=ForEach.Serial -->
 
 ## #Serial -- Unconstrained Tree
 

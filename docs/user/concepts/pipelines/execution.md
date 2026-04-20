@@ -5,6 +5,8 @@ updated: 2026-03-30
 ---
 
 <!-- @concepts/pipelines/INDEX -->
+<!-- @u:technical/ebnf/10-execution -->
+<!-- @u:technical/edge-cases/10-execution -->
 
 ## Execution
 
