@@ -82,4 +82,4 @@ For technical details on content-bound permissions, see [[user/concepts/permissi
 
 - [[philosophy/core-philosophy]] — Mind-shift, values, and evolution
 - [[philosophy/language-design]] — Design principles and safety model
-- [[philosophy/cybersecurity]] — Zero trust and black box monitoring (planned — #334)
+- [[philosophy/cybersecurity]] — Zero trust and black box monitoring

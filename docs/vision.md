@@ -56,7 +56,7 @@ For the full philosophy behind Polyglot's design decisions, see the dedicated ph
 - [[philosophy/language-design]] — Design principles: right tool, legacy reuse, trigger-driven safety
 - [[philosophy/symbology]] — Symbol design rationale
 - [[philosophy/accountability]] — Human inspection and no dynamic code
-- [[philosophy/cybersecurity]] — Zero trust and black box monitoring (planned — #334)
+- [[philosophy/cybersecurity]] — Zero trust and black box monitoring
 - [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling (planned — #335)
 
 ---
