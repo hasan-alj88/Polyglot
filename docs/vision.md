@@ -58,6 +58,11 @@ For the full philosophy behind Polyglot's design decisions, see the dedicated ph
 - [[philosophy/accountability]] — Human inspection and no dynamic code
 - [[philosophy/cybersecurity]] — Zero trust and black box monitoring
 - [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling
+- [[philosophy/data-trees]] — Everything is a tree: three-tier data model and universal strings
+- [[philosophy/behavioral-contract]] — The "building permit" compilation model
+- [[philosophy/developer-experience]] — Write, compile, fix, deploy: the iterative loop
+- [[philosophy/extensibility]] — pglib, community packages, and permission ceilings
+- [[philosophy/how-polyglot-differs]] — Positioning against Airflow, Temporal, Prefect, and gRPC
 
 ---
 
