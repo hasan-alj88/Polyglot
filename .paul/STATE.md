@@ -131,18 +131,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #332 — Add philosophy/symbology.md — Symbol design rationale
-Branch: docs/issue-332-symbology-rationale
-Labels: documentation
-Started: 2026-04-20
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/332
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete, ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -320,7 +316,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #329 — Per-language SDK encode/decode algorithms | 2026-04-19 | Merged design/issue-329 to main; Python/Rust/Go/JS encode/decode, normalization rules, strongly vs weakly typed summary |
 | Closed #330 — Wire format conventions | 2026-04-19 | Merged docs/issue-330 to main; Boolean/Float/Null normalization tables, ##Inf/##Nullable schema dependency |
 | Closed #331 — Restructure vision.md into docs/philosophy/ | 2026-04-20 | Merged docs/issue-331 to main; philosophy/ folder, vision.md restructured as entry point |
-| Issue #332 — Symbol design rationale | 2026-04-20 | symbology.md created; 11 prefix symbols, three-bracket system, assignment direction documented |
+| Closed #332 — Symbol design rationale | 2026-04-20 | Merged docs/issue-332-symbology-rationale to main; symbology.md in philosophy/ |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -340,10 +336,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Plan 332-01 unified
-Next action: Run /paul:merge to merge branch and close issue
-Resume file: .paul/phases/332-symbology-rationale/332-01-SUMMARY.md
-Resume context: Issue #332 loop complete; branch docs/issue-332-symbology-rationale ready for merge
+Stopped at: Issue #332 merged to main
+Next action: Pick next issue with /paul:issues or /paul:progress
+Resume file: none
+Resume context: #332 closed; branch merged; ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
