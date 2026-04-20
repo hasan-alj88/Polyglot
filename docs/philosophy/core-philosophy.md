@@ -71,4 +71,4 @@ This requires a fundamental shift in how developers think about their code:
 - [[philosophy/symbology]] — Symbol design rationale
 - [[philosophy/accountability]] — Human inspection and no dynamic code
 - [[philosophy/cybersecurity]] — Zero trust and black box monitoring
-- [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling (planned — #335)
+- [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling

@@ -34,4 +34,4 @@ Traditional approaches build synchronous automation first, then retrofit async h
 ## Related Philosophy
 
 - [[philosophy/core-philosophy]] — Mind-shift, values, and evolution
-- [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling (planned — #335)
+- [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling

@@ -57,7 +57,7 @@ For the full philosophy behind Polyglot's design decisions, see the dedicated ph
 - [[philosophy/symbology]] — Symbol design rationale
 - [[philosophy/accountability]] — Human inspection and no dynamic code
 - [[philosophy/cybersecurity]] — Zero trust and black box monitoring
-- [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling (planned — #335)
+- [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling
 
 ---
 
