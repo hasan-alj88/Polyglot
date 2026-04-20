@@ -25,6 +25,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | Find a real-world automation scenario | [[user/scenarios/INDEX]] |
 | Check documentation writing rules | [[audit/README]] |
 | See the product vision | [[vision]] |
+| Understand the project philosophy | [[philosophy/core-philosophy]] |
 | Track documentation gaps | [[audit/tracking/coverage-gaps]] |
 
 ## By Polyglot Object
@@ -100,8 +101,15 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 
 | File | Audience | Type | Description |
 |------|----------|------|-------------|
-| vision.md | all | vision | Product vision and philosophy (highest authority) |
+| vision.md | all | vision | Product vision and entry point (highest authority) |
 | INDEX.md | all | master-index | This file — documentation entry point |
+
+### docs/philosophy/
+
+| File | Audience | Type | Description |
+|------|----------|------|-------------|
+| core-philosophy.md | all | reference | Core philosophy: mind-shift, values, evolution |
+| language-design.md | all | reference | Language design principles and safety model |
 
 ### docs/audit/
 
