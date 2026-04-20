@@ -120,6 +120,7 @@ Progress:
 - Issue #328: [██████████] 100% (1/1 plans — #bytes and #dt binding types)
 - Issue #329: [██████████] 100% (1/1 plans — per-language SDK encode/decode)
   - Issue #330: [██████████] 100% (1/1 plans — wire format conventions)
+  - Issue #331: [██████████] 100% (1/1 plans — vision.md → philosophy/ restructure)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -129,18 +130,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #331 — Restructure vision.md into docs/philosophy/ folder
-Branch: docs/issue-331-restructure-vision-philosophy-folder
-Labels: documentation
-Started: 2026-04-20
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/331
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop complete, ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -317,7 +314,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #328 — #bytes and #dt binding types | 2026-04-19 | Merged design/issue-328-bytes-dt-binding-types to main; #bytes (Base64) and #dt (epoch seconds) in 3 marshalling tables |
 | Closed #329 — Per-language SDK encode/decode algorithms | 2026-04-19 | Merged design/issue-329 to main; Python/Rust/Go/JS encode/decode, normalization rules, strongly vs weakly typed summary |
 | Closed #330 — Wire format conventions | 2026-04-19 | Merged docs/issue-330 to main; Boolean/Float/Null normalization tables, ##Inf/##Nullable schema dependency |
-| Issue #331 — Restructure vision.md into docs/philosophy/ | 2026-04-20 | Created philosophy/ folder; extracted Core Philosophy + Language Design; added The Problem/Who/What Not; Observability by Design value |
+| Closed #331 — Restructure vision.md into docs/philosophy/ | 2026-04-20 | Merged docs/issue-331 to main; philosophy/ folder, vision.md restructured as entry point |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -337,10 +334,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Plan 331-01 unified
-Next action: Run /paul:merge to merge branch to main
-Resume file: .paul/phases/331-restructure-vision-philosophy/331-01-SUMMARY.md
-Resume context: Issue #331 fully specified; ready for MERGE
+Stopped at: Issue #331 merged to main
+Next action: Pick next issue with /paul:issues or /paul:progress
+Resume file: none
+Resume context: #331 closed; branch merged; ready for next issue
 
 ---
 *STATE.md — Updated after every significant action*
