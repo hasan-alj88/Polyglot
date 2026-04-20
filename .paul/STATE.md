@@ -5,7 +5,7 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #336 — Add remaining philosophy files (data-trees, behavioral-contract, DX, extensibility, how-differs)
+**Current focus:** Issue #337 — Replace old geometric logo with new octopus design
 
 ## Current Position
 
@@ -135,14 +135,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #337 — Replace old geometric logo with new octopus design
+Branch: docs/issue-337-replace-logo-with-octopus-design
+Labels: documentation
+Started: 2026-04-20
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/337
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -325,6 +329,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #334 — Cybersecurity philosophy page | 2026-04-20 | Merged docs/issue-334-zero-trust-black-box-monitoring to main; cybersecurity.md in philosophy/ |
 | Closed #335 — Error philosophy page | 2026-04-20 | Merged docs/issue-335-error-philosophy to main; error-philosophy.md in philosophy/ |
 | Closed #336 — Remaining philosophy files | 2026-04-20 | Merged docs/issue-336-add-remaining-philosophy-files to main; 5 philosophy pages; resource management philosophy; vision.md 11 links |
+| Issue #337 — Replace logo format exports | 2026-04-20 | 8 exports regenerated (PNG/JPG/PDF/EPS) via rsvg-convert; logo.py deleted; AI/ deferred (needs Adobe) |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -344,10 +349,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Issue #336 merged to main
-Next action: Run /paul:issues or /paul:progress to pick next issue
-Resume file: none
-Resume context: Issue #336 closed; no active issue
+Stopped at: Plan 337-01 unified
+Next action: Run /paul:merge to merge branch and close issue #337
+Resume file: .paul/phases/issue-337-replace-logo/337-01-SUMMARY.md
+Resume context: Loop closed; 8 exports regenerated, logo.py deleted, AI/ deferred; ready for merge
 
 ---
 *STATE.md — Updated after every significant action*
