@@ -2,7 +2,7 @@
 audience: ai
 type: audit-tracking
 scope: issue-resolution-order
-updated: 2026-04-19
+updated: 2026-04-21
 ---
 
 # Issue Resolution Order
@@ -67,13 +67,13 @@ Recommended execution order for open GitHub issues based on dependency analysis.
 
 ## Milestone: Design & Architecture Spec (M2)
 
-### Wave 1 — Finalize Designs (depends on M4 #321 + M6 #301)
+### Wave 1 — Finalize Designs (depends on M6 #301)
 
 | # | Title | Priority | Blocked By |
 |---|-------|----------|------------|
+| #270 | Finalize Polyglot syntax specification | P1-critical | ~~#321~~ — UNBLOCKED (#321 closed 2026-04-19) |
 | #264 | Finalize Trigger Monitor design specification | P1-critical | #301 (fault domains) — #320 closed 2026-04-19 |
-| #270 | Finalize Polyglot syntax specification | P1-critical | #321 (bridge syntax must be designed first) |
-| #266 | Finalize Runner design specification | P1-critical | #321 (bridge pipelines) + #301 (fault domains) |
+| #266 | Finalize Runner design specification | P1-critical | #301 (fault domains) — #321 closed 2026-04-19 |
 
 ### Wave 2 — Compiler Architecture (depends on Wave 1)
 
@@ -81,15 +81,25 @@ Recommended execution order for open GitHub issues based on dependency analysis.
 |---|-------|----------|------------|
 | #271 | Finalize compiler architecture and algorithm | P1-critical | #270 (parser needs finalized syntax) |
 
-## Milestone: Language (M4)
+## Milestone: SDK & Bridge Design (unassigned) — COMPLETE
 
-### Wave 1 — Cross-Language Integration (no open dependencies)
+### Wave 1 — SDK Documentation (COMPLETE)
 
 | # | Title | Priority | Notes |
 |---|-------|----------|-------|
-| #321 | -Run.Bridge pipeline — pairwise cross-language binding syntax | P3-medium | Unblocked — #319 (SDK spec) closed 2026-04-18 |
+| ~~#328~~ | ~~Add #bytes and #dt binding types to marshalling tables~~ | — | CLOSED 2026-04-19 |
+| ~~#329~~ | ~~Document per-language SDK encode/decode algorithms~~ | — | CLOSED 2026-04-19 |
+| ~~#330~~ | ~~Document canonical float/null/boolean wire format conventions~~ | — | CLOSED 2026-04-19 |
 
-### Wave 2 — Service Implementation (depends on M2 Wave 3 + M5)
+## Milestone: Language (M4)
+
+### Wave 1 — Cross-Language Integration (COMPLETE)
+
+| # | Title | Priority | Notes |
+|---|-------|----------|-------|
+| ~~#321~~ | ~~-Run.Bridge pipeline~~ | ~~P3-medium~~ | CLOSED 2026-04-19 |
+
+### Wave 2 — Service Implementation (depends on M2 Wave 2 + M5)
 
 | # | Title | Priority | Blocked By |
 |---|-------|----------|------------|
@@ -105,6 +115,30 @@ Recommended execution order for open GitHub issues based on dependency analysis.
 | #164–#185 | Trigger/queue pglib operations (22 issues) | — | Parallel with service implementation |
 | #186–#263 | Remaining pglib operations (78 issues) | — | Parallel with service implementation |
 
+### Wave 4 — Bridge Implementation (depends on Wave 2 + compiler)
+
+| # | Title | Priority | Blocked By |
+|---|-------|----------|------------|
+| #322 | Python-Rust Bridge implementation | — | #271 (compiler) + #269 (Runner) |
+| #323 | Python-Go Bridge implementation | — | #271 (compiler) + #269 (Runner) |
+| #324 | Python-JavaScript Bridge implementation | — | #271 (compiler) + #269 (Runner) |
+| #325 | Rust-Go Bridge implementation | — | #271 (compiler) + #269 (Runner) |
+| #326 | Rust-JavaScript Bridge implementation | — | #271 (compiler) + #269 (Runner) |
+| #327 | Go-JavaScript Bridge implementation | — | #271 (compiler) + #269 (Runner) |
+
+## Standalone Documentation (no milestone) — COMPLETE
+
+### Wave 1 — Philosophy Pages (COMPLETE)
+
+| # | Title | Priority | Notes |
+|---|-------|----------|-------|
+| ~~#331~~ | ~~Restructure vision.md into docs/philosophy/~~ | — | CLOSED 2026-04-20 |
+| ~~#332~~ | ~~Add philosophy/symbology.md — Symbol design rationale~~ | — | CLOSED 2026-04-20 |
+| ~~#333~~ | ~~Add philosophy/accountability.md — Human inspection and no dynamic code~~ | — | CLOSED 2026-04-20 |
+| ~~#334~~ | ~~Add philosophy/cybersecurity.md — Zero trust and black box monitoring~~ | — | CLOSED 2026-04-20 |
+| ~~#335~~ | ~~Add philosophy/error-philosophy.md — Murphy's Law and exhaustive error handling~~ | — | CLOSED 2026-04-20 |
+| ~~#336~~ | ~~Add remaining philosophy files (data-trees, behavioral-contract, DX, extensibility, how-differs)~~ | — | CLOSED 2026-04-20 |
+
 ## Cross-Milestone Dependencies
 
 These dependencies connect milestones to each other and to pre-existing issues.
@@ -116,9 +150,9 @@ These dependencies connect milestones to each other and to pre-existing issues.
 | NATS Security (M5, all) | #269 Implement Runner | Blocks — Runner ACKs must use authenticated NATS |
 | ~~#319 SDK spec~~ | #320 NATS -T.Call signal path | ~~Blocks~~ — RESOLVED (closed 2026-04-18) |
 | ~~#319 SDK spec~~ | #321 -Run.Bridge syntax | ~~Blocks~~ — RESOLVED (closed 2026-04-18) |
-| #321 -Run.Bridge syntax | #270 Finalize syntax | Blocks — bridge syntax must be designed before syntax finalization |
+| ~~#321 -Run.Bridge syntax~~ | #270 Finalize syntax | ~~Blocks~~ — RESOLVED (closed 2026-04-19) |
 | ~~#320 -T.Call signal path~~ | #264 Finalize TM design | ~~Blocks~~ — RESOLVED (closed 2026-04-19) |
-| #321 -Run.Bridge syntax | #266 Finalize Runner design | Blocks — Runner executes bridge pipelines, needs syntax defined |
+| ~~#321 -Run.Bridge syntax~~ | #266 Finalize Runner design | ~~Blocks~~ — RESOLVED (closed 2026-04-19) |
 | #301 Fault domains | #264 Finalize TM design | Blocks — crash detection answers open TM design questions |
 | #301 Fault domains | #266 Finalize Runner design | Blocks — crash recovery answers open Runner design questions |
 | #270 Syntax spec | #271 Compiler architecture | Blocks — parser needs finalized syntax |
@@ -133,14 +167,19 @@ Phase 1: Foundations (no dependencies — can work in parallel)
   ✓ #319 Polyglot SDK spec (CLOSED 2026-04-18)
   #301 Design fault domain behavior (crash recovery)
 
-Phase 2: New Syntax + Signal Architecture (depends on Phase 1)
-  #321 -Run.Bridge pipeline syntax (UNBLOCKED — #319 closed)
+Phase 2: New Syntax + Signal Architecture (COMPLETE)
+  ✓ #321 -Run.Bridge pipeline syntax (CLOSED 2026-04-19)
   ✓ #320 -T.Call NATS signal path (CLOSED 2026-04-19)
 
-Phase 3: Finalize Designs (depends on Phase 2 + #301)
-  #270 Finalize syntax spec (after #321 bridge syntax designed)
-  #264 Finalize TM design (after #301 + #320)
-  #266 Finalize Runner design (after #301 + #321)
+Phase 3: Finalize Designs (depends on #301 — #320/#321 both closed)
+  #270 Finalize syntax spec (UNBLOCKED — #321 closed)
+  #264 Finalize TM design (blocked by #301)
+  #266 Finalize Runner design (blocked by #301)
+
+Phase 3.5: SDK Documentation (COMPLETE)
+  ✓ #328 Add #bytes and #dt binding types (CLOSED 2026-04-19)
+  ✓ #329 Document per-language SDK encode/decode algorithms (CLOSED 2026-04-19)
+  ✓ #330 Document canonical float/null/boolean wire format (CLOSED 2026-04-19)
 
 Phase 4: Compiler Architecture (depends on Phase 3)
   #271 Finalize compiler architecture (depends on #270)
@@ -151,13 +190,16 @@ Phase 5: NATS Security (M5) — can start in parallel with Phases 1–4
   Wave 3: #291, #297
   Wave 4: #295
 
-Phase 6: Service Implementation (depends on Phase 3–5)
+Phase 6: Service Implementation (depends on Phase 4 + Phase 5)
   #267 Implement TM
   #268 Implement QH
   #269 Implement Runner
   #38–#45, #59 Implement File stdlib operations (parallel with above)
   #164–#185 Implement trigger/queue pglib operations (parallel with above)
   #186–#263 Implement remaining pglib operations (parallel with above)
+
+Phase 6.5: Bridge Implementation (depends on Phase 6)
+  #322–#327 Six language-pair Bridge implementations
 
 Phase 7: Deployment & Operations (M6)
   Wave 1: #300, #303

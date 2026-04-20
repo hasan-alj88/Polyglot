@@ -85,7 +85,7 @@ These 9 attributes are defined authoritatively in [[otel-permission-events#Attri
 
 ### Registry Extensibility
 
-The `polyglot.*` namespace is extensible. Future event specifications (pipeline lifecycle, trigger monitor, job lifecycle — see [Future Event Sets](#future-event-sets)) will register additional attributes in this namespace. Each event spec document owns its attribute definitions; this document maintains the cross-reference index.
+The `polyglot.*` namespace is extensible. Future event specifications (pipeline lifecycle, trigger monitor, job lifecycle — see the Future Event Sets section below) will register additional attributes in this namespace. Each event spec document owns its attribute definitions; this document maintains the cross-reference index.
 
 **Current total: 12 attributes** (9 permission/sandbox + 3 service-wide).
 
