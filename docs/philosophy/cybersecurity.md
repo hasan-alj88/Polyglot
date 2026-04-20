@@ -72,4 +72,4 @@ The accountability chain (see [[philosophy/accountability]]) ensures that every 
 - [[philosophy/core-philosophy]] — Mind-shift, values, and evolution
 - [[philosophy/language-design]] — Design principles and safety model
 - [[philosophy/accountability]] — Human inspection and no dynamic code
-- [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling (planned -- #335)
+- [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling
