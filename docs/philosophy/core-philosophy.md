@@ -68,7 +68,7 @@ This requires a fundamental shift in how developers think about their code:
 ## Related Philosophy
 
 - [[philosophy/language-design]] — Language design principles and safety model
-- [[philosophy/symbology]] — Symbol design rationale (planned — #332)
+- [[philosophy/symbology]] — Symbol design rationale
 - [[philosophy/accountability]] — Human inspection and no dynamic code (planned — #333)
 - [[philosophy/cybersecurity]] — Zero trust and black box monitoring (planned — #334)
 - [[philosophy/error-philosophy]] — Murphy's Law and exhaustive error handling (planned — #335)
