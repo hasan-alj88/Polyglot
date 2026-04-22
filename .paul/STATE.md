@@ -141,20 +141,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #346 — Tracking: Documentation compliance sweep (62% → 100%)
-Branch: docs/issue-346-documentation-compliance-sweep
-Labels: docs, P2-high
-Started: 2026-04-22
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/346
-
-Sub-issues: #347 (P1), #348 (P2), #349 (P2), #350 (P2), #351 (P3), #352 (P3)
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [346 complete, branch ready for merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -344,6 +338,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #343/#344 — Constructor compile errors + docs transition | 2026-04-22 | Merged design/issue-343-344-constructor-compile-errors-docs to main |
 | Closed #354 — Decision history system | 2026-04-22 | Merged docs/issue-354-decision-history-tracking to main |
 | Closed #353 — Audience tier restructure | 2026-04-22 | Merged docs/issue-353-update-audience-tiers to main; 6-audience model |
+| Closed #346 — Documentation compliance sweep | 2026-04-22 | Merged docs/issue-346-documentation-compliance-sweep to main; 6/6 sub-issues |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -363,10 +358,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Issue #346 complete — all loops closed
-Next action: Run /paul:merge to merge branch to main
-Resume file: .paul/phases/346-docs-compliance-sweep/346-02-SUMMARY.md
-Resume context: Issue #346 fully closed (6/6 sub-issues + tracking issue). Branch docs/issue-346-documentation-compliance-sweep ready for merge.
+Stopped at: Merged #346 to main
+Next action: Push to origin, then /paul:issues or /paul:progress
+Resume file: n/a
+Resume context: #346 merged to main. No active issue.
 
 ---
 *STATE.md — Updated after every significant action*
