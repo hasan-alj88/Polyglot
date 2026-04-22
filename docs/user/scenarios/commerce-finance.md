@@ -49,7 +49,7 @@ Automation scenarios for e-commerce, financial operations, legal workflows, real
 | 195 | Payroll processor | Scheduled | Calculate pay, deductions, taxes; generate pay stubs |
 | 196 | Financial close checklist | Scheduled | Track month-end close tasks, notify owners, report status |
 | 197 | Vendor payment scheduler | Scheduled | Batch vendor payments by due date, optimize cash flow |
-| 198 | Audit trail logger | Event | Log all financial transactions with user, timestamp, details |
+| 198 | Audit trail logger | Signal | Log all financial transactions with user, timestamp, details |
 | 199 | Cash flow forecaster | Scheduled | Project cash flow from AR, AP, and recurring expenses |
 | 200 | Credit note issuer | Webhook | Generate and send credit notes for approved adjustments |
 | 201 | Intercompany reconciler | Scheduled | Match and reconcile transactions between business entities |
@@ -113,7 +113,7 @@ Automation scenarios for e-commerce, financial operations, legal workflows, real
 | 474 | Concierge request handler | Webhook | Route guest requests to appropriate department |
 | 475 | Revenue management updater | Scheduled | Adjust dynamic pricing based on occupancy and demand |
 | 476 | Group booking coordinator | Webhook | Manage room blocks, track pickup, adjust allocations |
-| 477 | Housekeeping scheduler | Event | Generate cleaning assignments from checkout and check-in times |
+| 477 | Housekeeping scheduler | Signal | Generate cleaning assignments from checkout and check-in times |
 | 478 | Travel expense reconciler | Scheduled | Match credit card charges to bookings, flag discrepancies |
 | 479 | Guest feedback aggregator | Scheduled | Collect reviews from all platforms, generate sentiment report |
 | 480 | Lost and found tracker | Webhook | Log found items, match to guest inquiries, arrange shipping |

@@ -24,7 +24,7 @@ trigger_def_body    ::= { ( metadata_line | comment_line ) NEWLINE }
 - `{T}` defines a trigger pipeline — a subtype of `{-}` constrained to IO-only bodies.
 - Trigger identifier must use the `-T.` prefix.
 - Must include `>IsTriggered#bool` output (mandatory). May include additional outputs.
-- No execution body, no `[Q]`, no `[W]` — triggers define event sources, not execution logic.
+- No execution body, no `[Q]`, no `[W]` — triggers define signal sources, not execution logic.
 - `[T]` invokes a trigger inside a pipeline (see 9.3.1).
 
 **Example:**

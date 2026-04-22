@@ -16,10 +16,10 @@ Automation scenarios for customer support, sales, marketing, HR, and project man
 | # | Scenario | Trigger | Description |
 |---|----------|---------|-------------|
 | 103 | Ticket auto-triage | Webhook | Classify tickets by urgency and topic, route to correct queue |
-| 104 | SLA timer tracker | Event | Start SLA countdown on ticket creation, escalate before breach |
+| 104 | SLA timer tracker | Signal | Start SLA countdown on ticket creation, escalate before breach |
 | 105 | Satisfaction survey sender | Webhook | Send CSAT survey after ticket resolution |
 | 106 | Knowledge base suggester | Webhook | Match ticket content to KB articles, suggest to agent |
-| 107 | Escalation notifier | Event | Alert managers when tickets hit escalation threshold |
+| 107 | Escalation notifier | Signal | Alert managers when tickets hit escalation threshold |
 | 108 | Multi-channel ticket merger | Webhook | Merge tickets from same customer across email, chat, phone |
 | 109 | Agent workload balancer | Scheduled | Redistribute ticket queues to balance agent load |
 | 110 | Feedback aggregator | Scheduled | Collect feedback from surveys, reviews, social; generate report |

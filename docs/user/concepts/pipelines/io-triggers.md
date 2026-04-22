@@ -8,7 +8,7 @@ updated: 2026-03-30
 
 ## Trigger Definitions
 
-`{T}` defines a trigger pipeline — a specialized subtype of `{-}` that contains only IO declarations. Triggers define event sources: they detect conditions and signal when a pipeline should fire. `{T}` is syntactic sugar for `{-}[T]`.
+`{T}` defines a trigger pipeline — a specialized subtype of `{-}` that contains only IO declarations. Triggers define signal sources: they detect conditions and signal when a pipeline should fire. `{T}` is syntactic sugar for `{-}[T]`.
 
 Every trigger must output `>IsTriggered#bool`. Triggers can produce additional outputs that wire to the consuming pipeline's inputs via indented `(-)` IO lines under `[T]`.
 

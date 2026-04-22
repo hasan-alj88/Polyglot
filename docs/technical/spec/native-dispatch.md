@@ -36,7 +36,7 @@ Four subsystems dispatch native operations. Each subsystem dispatches its own `#
 
 | Subsystem | Dispatches | #NativeKind |
 |-----------|-----------|-------------|
-| Trigger Monitor (TM) | Event evaluation | `.Trigger` |
+| Trigger Monitor (TM) | Signal evaluation | `.Trigger` |
 | Queue Handler (QH) | Scheduling decisions | `.Queue` |
 | Runner | Pipeline execution + wrapper lifecycle | `.Execution`, `.Wrapper` |
 | PGCompiler | Lexing, parsing, compile rule enforcement | (not dispatched — see below) |
@@ -648,7 +648,7 @@ SDK              NATS                  TM                Redis              QH  
 
 | Aspect | -T.Call | Other Triggers (-T.Daily, -T.Webhook, ...) |
 |--------|--------|---------------------------------------------|
-| Signal source | SDK via NATS `polyglot.call.*` | TM evaluation loop (polling/event) |
+| Signal source | SDK via NATS `polyglot.call.*` | TM evaluation loop (polling/signal) |
 | Response | Synchronous request-reply via NATS | None (fire-and-forget) |
 | Input bindings | SDK provides via request payload | Trigger native provides `>IsTriggered` + outputs |
 | Correlation | Per-call UUID tracks request→response | None — no caller waiting |
