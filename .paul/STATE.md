@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
 Phase: Issue #346 — Documentation compliance sweep
-Plan: 346-02 created, awaiting approval
-Status: PLAN created, ready for APPLY
-Last activity: 2026-04-22 — Created 346-02-PLAN.md (commit + close #346)
+Plan: 346-02 complete
+Status: UNIFY complete, issue #346 fully closed
+Last activity: 2026-04-22 — Unified 346-02: SUMMARY created, #346 closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -131,6 +131,7 @@ Progress:
 - Issues #343/#344: [██████████] 100% (2/2 plans — PGE14xxx constructor errors + docs transition)
 - Issue #353: [██████████] 100% (1/1 plans — audience tier restructure)
 - Issue #354: [██████████] 100% (1/1 plans — decision history system)
+- Issue #346: [██████████] 100% (2/2 plans — documentation compliance sweep)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -152,8 +153,8 @@ Sub-issues: #347 (P1), #348 (P2), #349 (P2), #350 (P2), #351 (P3), #352 (P3)
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ○        ○     [346-02 plan created, awaiting approval]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [346 complete, branch ready for merge]
 ```
 
 ## Accumulated Context
@@ -362,10 +363,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Plan 346-02 created
-Next action: Review and approve plan, then run /paul:apply 346-02
-Resume file: .paul/phases/346-docs-compliance-sweep/346-02-PLAN.md
-Resume context: All 6 sub-issues closed. 346-02 commits unstaged 346-01 work and closes #346.
+Stopped at: Issue #346 complete — all loops closed
+Next action: Run /paul:merge to merge branch to main
+Resume file: .paul/phases/346-docs-compliance-sweep/346-02-SUMMARY.md
+Resume context: Issue #346 fully closed (6/6 sub-issues + tracking issue). Branch docs/issue-346-documentation-compliance-sweep ready for merge.
 
 ---
 *STATE.md — Updated after every significant action*
