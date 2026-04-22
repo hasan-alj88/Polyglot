@@ -27,6 +27,7 @@ updated: 2026-04-10
 | [[tracking/inconsistencies\|tracking/inconsistencies]] | Contradictions between docs (IC) | When logging or fixing inconsistencies |
 | [[tracking/progress\|tracking/progress]] | What areas have been audited | Before starting audit of an area |
 | [[tracking/decisions\|tracking/decisions]] | Decisions made during auditing | When making or reviewing audit decisions |
+| [[decisions/README\|decisions/]] | Decision history with before/after impact | When making or reviewing design decisions |
 | [[tracking/audience-migration\|tracking/audience-migration]] | Audience system migration progress | When continuing audience restructure work |
 | [[rules/workflows\|rules/workflows]] | Fix, Sweep, Gate workflows for doc quality | Before starting any doc audit or fix work |
 

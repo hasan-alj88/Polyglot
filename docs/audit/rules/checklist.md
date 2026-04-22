@@ -47,6 +47,13 @@ Run before finalizing any new or modified documentation.
 | examples-valid | Examples compile/run (or clearly marked pseudocode) |
 | dual-refs | @-imports paired with [[wikilinks]] |
 
+## Decision Record Check
+
+| ID | Check |
+|----|-------|
+| decision-trigger | If PR changes syntax, compiler rules, type system, or audience: decision record exists in [[decisions/README\|decisions/]] |
+| decision-format | Decision record follows template (Summary, Before, After, Impact, Rationale, Related) |
+
 ## Cross-Reference Check
 
 | ID | Check | Source |

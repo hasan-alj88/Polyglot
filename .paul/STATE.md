@@ -5,7 +5,7 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issues #343 + #344 — Constructor compile errors + docs update
+**Current focus:** Issue #354 — Decision history with before/after impact tracking
 
 ## Current Position
 
@@ -13,7 +13,7 @@ Milestone: Design & Architecture Spec (M2) (issue-driven)
 Phase: Issues #343 + #344 — Constructor compile errors + docs update
 Plan: 343-01 complete, 344-01 complete
 Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-22 — Summaries created, loop closed
+Last activity: 2026-04-22 — 354-01 UNIFY complete, loop closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -138,14 +138,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #354 — Add docs/audit/decisions/ — decision history with before/after impact tracking
+Branch: docs/issue-354-decision-history-tracking
+Labels: docs, P2-high
+Started: 2026-04-22
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/354
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [UNIFY complete, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -352,10 +356,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Loop closed (UNIFY complete)
-Next action: Run /paul:merge to commit and close issues #343 + #344
-Resume file: .paul/phases/343-344-constructor-errors-docs/343-01-SUMMARY.md
-Resume context: Both plans executed and summarized; ready for git commit + issue closure
+Stopped at: Loop closed (UNIFY complete for #354)
+Next action: Run /paul:merge to commit and close issue #354
+Resume file: .paul/phases/issue-354-decision-history/354-01-SUMMARY.md
+Resume context: Decision history system created (4 new files, 2 modified); ready for git commit + issue closure
 
 ---
 *STATE.md — Updated after every significant action*
