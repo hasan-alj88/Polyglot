@@ -32,6 +32,16 @@ No permissions required. All operations are pure computation. See [[permissions]
 
 See also: [types.md §Path Type](../syntax/types.md)
 
+## Three-Context Rule
+
+| Context | Mechanism | Syntax |
+|---|---|---|
+| `[T]`/`[Q]`/`[W]` Infrastructure | Inline pipeline config | `-Path"/tmp/logs"` |
+| Pipeline body — known values | Constructor | `$Path"/tmp/logs"` |
+| Pipeline body — dynamic values | Pipeline call | `[-] -Path.Parse` |
+
+On infrastructure lines, `-Path"..."` inline notation remains valid. In the execution body, use the `$Path` constructor for known literals (compile-time guaranteed, no error handling) or `-Path.Parse` for dynamic/untrusted strings (error handling required). See [[constructors/Path|$Path constructor]] and [[Path.Parse|-Path.Parse]].
+
 ## Metadata
 
 | Path | Pattern | Description |

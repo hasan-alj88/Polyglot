@@ -41,4 +41,4 @@ Quick Reference:
 
 ---
 *Created: 2026-02-27*
-*Updated: 2026-04-11 after Handle Archive Docs milestone complete*
+*Updated: 2026-04-22 after Issue #342 (pglib constructors) complete*
