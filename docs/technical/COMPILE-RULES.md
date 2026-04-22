@@ -264,6 +264,22 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE12009 | Template Type Coercion Failure |
 | PGE12010 | Optional Placeholder Without Default |
 
+### 14 — Constructors
+
+| Code | Name |
+|------|------|
+| PGE14001 | Ambiguous Constructor Overload |
+| PGE14002 | Duplicate Constructor Keyword |
+| PGE14003 | Missing Capture Regex |
+| PGE14004 | Structural Integrity Violation |
+| PGE14005 | Target Type Mismatch |
+| PGE14006 | Failable Pipeline In Constructor |
+| PGE14007 | Incomplete Field Mapping |
+| PGE14010 | No Constructor Overload Match |
+| PGE14011 | Non-Literal Interpolation |
+| PGE14012 | Undefined Constructor |
+| PGE14013 | Interpolation Source Not Final |
+
 ## Warning Code Reference (PGW)
 
 Warning codes use the `PGWxxNNN` format. Category numbers mirror PGE so a developer can immediately see which domain a warning relates to.

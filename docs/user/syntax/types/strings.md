@@ -49,26 +49,26 @@ At runtime, the Polyglot runtime resolves `$AppDir` to the correct subfield base
 
 Assigning only one subfield triggers a portability warning (PGW04001). If the missing subfield is for the current OS, the compiler raises an error (PGE04008).
 
-A plain string cannot be assigned to a `#path` variable — `[-] $dir#path << "/tmp"` is a type mismatch (PGE04001). Use `-Path"..."` instead.
+A plain string cannot be assigned to a `#path` variable — `[-] $dir#path << "/tmp"` is a type mismatch (PGE04001). Use `$Path"..."` constructor instead.
 
-### `-Path"..."` Inline Notation
+### `$Path"..."` Constructor Notation
 
-`-Path"..."` is an inline pipeline call ([[pglib/pipelines/Path|-Path]], [[concepts/pipelines/inline-calls#Inline Pipeline Calls]]) that creates a `#path` value from a string:
+`$Path"..."` is a constructor call ([[syntax/constructors]]) that creates a `#path` value from a string literal. On infrastructure lines (`[T]`/`[Q]`/`[W]`), the inline pipeline form `-Path"..."` remains valid — see [[pglib/pipelines/Path|-Path]].
 
 ```polyglot
-[-] $LogDir#path << -Path"/tmp/MyApp/logs"
-[-] $AppDir#path << -Path"{.}/MyApp"
+[-] $LogDir#path << $Path"/tmp/MyApp/logs"
+[-] $AppDir#path << $Path"{.}/MyApp"
 ```
 
 Both `/` and `\` are treated as path separators and normalized to the correct separator for the current OS. These two lines produce identical results:
 
 ```polyglot
-[-] $a#path << -Path"{.}\MyApp\logs"
-[-] $b#path << -Path"{.}/MyApp/logs"
+[-] $a#path << $Path"{.}\MyApp\logs"
+[-] $b#path << $Path"{.}/MyApp/logs"
 [ ] $a and $b resolve to the same path on any OS
 ```
 
-`{$var}` interpolation works inside `-Path"..."` strings — interpolated variables must be `#path` values with both OS subfields defined (e.g., `{.}`, `{..}`, or a user-defined `#path` variable). `{{` and `}}` produce literal brace characters, same as in regular string interpolation.
+`{$var}` interpolation works inside `$Path"..."` strings — interpolated variables must be constructor-sourced `#path` values (e.g., `{.}`, `{..}`, or a user-defined `#path` variable from another `$Path` call). `{{` and `}}` produce literal brace characters, same as in regular string interpolation. For dynamic/untrusted path strings, use `-Path.Parse` with error handling.
 
 ### Path Roots and Interpolation
 
@@ -80,10 +80,10 @@ Define a root path, then build on it with interpolation:
    [.] .Windows << "C:"
 
 [ ] renders as "/tmp/MyApp" on Unix, "C:\MyApp" on Windows
-[-] $AppDir#path << -Path"{$Root}/MyApp"
+[-] $AppDir#path << $Path"{$Root}/MyApp"
 ```
 
-Path interpolation with `{$pathVar}` inside `-Path"..."` resolves the path variable to its OS-appropriate subfield.
+Path interpolation with `{$pathVar}` inside `$Path"..."` resolves the path variable to its OS-appropriate subfield.
 
 ### File Path Shorthands
 

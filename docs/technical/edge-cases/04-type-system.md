@@ -51,29 +51,31 @@ updated: 2026-03-30
 [-] $hire#NewHire << <payload
 ```
 
-### EC-4.5: `-Path"..."` inline path creation
+### EC-4.5: `$Path"..."` constructor path creation
 
-**What it tests:** `-Path"..."` inline pipeline call creating `#path` values. See [[syntax/types/strings#-Path Inline Notation]], [[pglib/pipelines/Path|-Path]].
+**What it tests:** `$Path"..."` constructor call creating `#path` values in execution body. On infrastructure lines (`[T]`/`[Q]`/`[W]`), the inline form `-Path"..."` remains valid. See [[syntax/types/strings#$Path Constructor Notation]], [[syntax/constructors]], [[pglib/pipelines/Path|-Path]].
 
 ```polyglot
-[ ] Basic usage
-[-] $dir#path << -Path"/tmp/MyApp"
+[ ] Basic usage — constructor in execution body
+[-] $dir#path << $Path"/tmp/MyApp"
 
 [ ] With {.} shorthand
-[-] $logDir#path << -Path"{.}/logs"
+[-] $logDir#path << $Path"{.}/logs"
 
 [ ] Separator equivalence — both resolve identically
-[-] $a#path << -Path"{.}\MyApp\logs"
-[-] $b#path << -Path"{.}/MyApp/logs"
+[-] $a#path << $Path"{.}\MyApp\logs"
+[-] $b#path << $Path"{.}/MyApp/logs"
 
-[ ] Interpolation with user-defined path variable
-[-] $root#path
-   [.] .Unix << "/opt"
-   [.] .Windows << "D:"
-[-] $appDir#path << -Path"{$root}/MyApp"
+[ ] Interpolation with constructor-sourced path variable
+[-] $root#path << $Path"/opt"
+[-] $appDir#path << $Path"{$root}/MyApp"
 
 [ ] Literal braces in path string
-[-] $weird#path << -Path"/tmp/{{backup}}/files"
+[-] $weird#path << $Path"/tmp/{{backup}}/files"
+
+[ ] Infrastructure line — inline form still valid
+[W] -W.Env
+   (-) <scriptDir#path << -Path"./scripts"
 ```
 
 ### EC-4.6: Single-platform path (PGW04001 / PGE04008)
@@ -108,29 +110,31 @@ updated: 2026-03-30
 [ ] PGE04001 — string != path, no implicit coercion
 [-] $dir#path << "/tmp/MyApp"
 
-[ ] correct — use -Path"..." instead
-[-] $dir#path << -Path"/tmp/MyApp"
+[ ] correct — use $Path"..." constructor
+[-] $dir#path << $Path"/tmp/MyApp"
 ```
 
-### EC-4.8: Inline pipeline call — single output
+### EC-4.8: Inline pipeline call — single output (infrastructure context)
 
 **EBNF:** `inline_pipeline_call ::= pipeline_ref string_literal`
 
-**What it tests:** An inline pipeline call with one output evaluates to that output's type directly.
+**What it tests:** An inline pipeline call on an infrastructure line with one output evaluates to that output's type directly. In execution body, use constructors for known values.
 
 ```polyglot
-[ ] -Path has one output >result#path — value is #path
-[-] $dir#path << -Path"/tmp/MyApp"
+[ ] infrastructure line — inline pipeline config
+[W] -W.Env
+   (-) <dir#path << -Path"/tmp/MyApp"
 
-[ ] inline call as comparison operand
-[?] $dir =? -Path"/expected"
+[ ] execution body — use $Path constructor instead
+[-] $dir#path << $Path"/tmp/MyApp"
 ```
 
-### EC-4.9: Inline pipeline call — multiple outputs
+### EC-4.9: Inline pipeline call — multiple outputs (infrastructure context)
 
-**What it tests:** An inline pipeline call with multiple outputs evaluates to `#serial` with output parameter names as keys.
+**What it tests:** An inline pipeline call with multiple outputs evaluates to `#serial` with output parameter names as keys. This is an infrastructure-context pattern — `-ParsePair` uses `%InlineString` for infrastructure configuration.
 
 ```polyglot
+( ) -ParsePair is an infrastructure pipeline with %InlineString
 {-} -ParsePair
    (-) %InlineString << "{key}-{value}"
    (-) <key#string
@@ -142,25 +146,31 @@ updated: 2026-03-30
    [W] -W.Polyglot
    [ ] ... parsing logic ...
 
-[ ] multiple outputs -> #serial with keys "key" and "value"
-[-] $result#serial << -ParsePair"name-Alice"
+[ ] infrastructure line usage — multiple outputs -> #serial
+[W] -W.Custom
+   (-) <config#serial << -ParsePair"name-Alice"
 ```
 
-### EC-4.10: Inline pipeline call — type mismatch
+### EC-4.10: Inline pipeline call — type mismatch (infrastructure context)
 
-**What it tests:** Target type must match the inline pipeline's output type.
+**What it tests:** Target type must match the inline pipeline's output type on infrastructure lines.
 
 ```polyglot
 [ ] PGE04001 — -Path returns #path, not #string
-[-] $name#string << -Path"/tmp"
+[W] -W.Env
+   (-) <name#string << -Path"/tmp"
 
 [ ] matching types
-[-] $dir#path << -Path"/tmp"
+[W] -W.Env
+   (-) <dir#path << -Path"/tmp"
+
+[ ] execution body — use $Path constructor
+[-] $dir#path << $Path"/tmp"
 ```
 
-### EC-4.11: Inline pipeline call — user-defined pipeline
+### EC-4.11: Inline pipeline call — user-defined infrastructure pipeline
 
-**What it tests:** User-defined pipelines can accept inline calls by declaring `%InlineString` with a template.
+**What it tests:** User-defined pipelines can accept inline calls on infrastructure lines by declaring `%InlineString` with a template. In execution body, use constructors for known values or `[-]` pipeline calls for dynamic values.
 
 ```polyglot
 {-} -Greeting
@@ -172,18 +182,19 @@ updated: 2026-03-30
    [W] -W.Polyglot
    [-] >message << "Hello {$name}"
 
-[ ] inline call — compiler extracts "Alice" into <name
-[-] $msg#string << -Greeting"Alice"
+[ ] infrastructure line — inline call valid
+[W] -W.Custom
+   (-) <greeting << -Greeting"Alice"
 
-[ ] normal call — <name wired directly
+[ ] execution body — normal call (inline calls are infrastructure-only)
 [-] -Greeting
    (-) <name << "Alice"
    (-) >message >> $msg
 ```
 
-### EC-4.12: Pipeline without `%InlineString` called inline
+### EC-4.12: Pipeline without `%InlineString` called inline (infrastructure context)
 
-**What it tests:** Calling a pipeline inline when it has not declared a `%InlineString` template.
+**What it tests:** Calling a pipeline inline on an infrastructure line when it has not declared a `%InlineString` template. This rule (PGE12003) applies to infrastructure inline calls only — for constructor errors in execution body, see PGE14xxx.
 
 ```polyglot
 {-} -NormalPipeline
@@ -194,8 +205,9 @@ updated: 2026-03-30
    [W] -W.Polyglot
    [-] >output << $input
 
-[ ] PGE12003 — -NormalPipeline has no %InlineString declaration
-[-] $result#string << -NormalPipeline"test"
+[ ] PGE12003 — -NormalPipeline has no %InlineString declaration (infrastructure line)
+[W] -W.Custom
+   (-) <result << -NormalPipeline"test"
 ```
 
 ### EC-4.13: Typed flexible wildcard — basic inference

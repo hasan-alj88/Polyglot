@@ -11,11 +11,13 @@ severity: error
 
 <!-- @u:concepts/pipelines/inline-calls -->
 
-**Statement:** When the compiler extracts a value from a `%InlineString` template placeholder and the extracted string cannot be coerced to the target input's declared type, the call is a compile error.
+**Statement:** When the compiler extracts a value from a `%InlineString` template placeholder on an infrastructure line (`[T]`, `[Q]`, `[W]`) and the extracted string cannot be coerced to the target input's declared type, the call is a compile error.
 **Rationale:** Template extraction always produces strings. If the target input expects a non-string type (e.g., `#int`, `#float`, `#path`), the compiler applies type coercion. When coercion fails (e.g., extracting `"abc"` for an `#int` input), the error is caught at compile time rather than causing a runtime failure.
 **Detection:** After template extraction, the compiler attempts to coerce each extracted string value to the corresponding input's declared type. If coercion fails, PGE12009 is raised at the call site. Coercion follows the standard `#String` subtype rules.
 
-**See also:** PGE12005 (format mismatch — string doesn't match template pattern), PGE04001 (general type mismatch)
+> **Scope:** This rule applies to infrastructure inline calls only. For constructor errors in execution body, see PGE14xxx ([[syntax/constructors|Constructors]] category).
+
+**See also:** PGE12005 (format mismatch — string doesn't match template pattern), PGE04001 (general type mismatch), PGE14005 (target type mismatch — analogous for `{$}` constructors)
 
 ---
 

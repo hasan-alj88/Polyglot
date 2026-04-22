@@ -13,31 +13,35 @@ severity: error
 <!-- @u:syntax/io -->
 <!-- @u:concepts/pipelines/inline-calls -->
 
-**Statement:** When an inline pipeline call `-Foo"arg"` targets a pipeline that does not declare `(-) %InlineString << "{template}"` in its IO section, the call is a compile error.
+**Statement:** When an inline pipeline call `-Foo"arg"` on an infrastructure line (`[T]`, `[Q]`, `[W]`) targets a pipeline that does not declare `(-) %InlineString << "{template}"` in its IO section, the call is a compile error.
 **Rationale:** Inline calls require a `%InlineString` template to extract named values from the string argument and wire them to declared inputs. Without a template, the compiler cannot determine how to parse the argument. This catches calls to pipelines that were never designed for inline usage.
 **Detection:** The compiler checks the target pipeline's `(-)` IO declarations for a `%InlineString` line. If absent and the pipeline is called with an inline argument (`-Foo"..."`), PGE12003 is raised.
 
-**See also:** PGE12005 (inline format mismatch), PGW12001 (template with no placeholders)
+> **Scope:** This rule applies to infrastructure inline calls only. For constructor errors in execution body, see PGE14xxx ([[syntax/constructors|Constructors]] category).
+
+**See also:** PGE12005 (inline format mismatch), PGW12001 (template with no placeholders), PGE14012 (undefined constructor — analogous for `{$}` constructors)
 
 ---
 
 **VALID:**
 ```polyglot
-[ ] ✓ pipeline declares %InlineString — inline call accepted
-{-} -Greeting
-   (-) %InlineString << "{name}"
-   (-) <name#string <~ "World"
-   (-) >message#string
+[ ] ✓ infrastructure inline call — pipeline declares %InlineString
+{-} -MyWrapper
+   (-) %InlineString << "{envName}"
+   (-) <envName#string
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
-   [-] >message << "Hello {$name}"
+   [ ] ...
 
-[-] $msg#string << -Greeting"Alice"
+{-} -MyPipeline
+   [T] -T.Daily"9AM"
+   [Q] -Q.Default
+   [W] -MyWrapper"production"
 ```
 
 ```polyglot
-[ ] ✓ normal call to pipeline without %InlineString — no error
+[ ] ✓ normal call to pipeline without %InlineString — no error (not inline)
 {-} -NormalPipeline
    (-) <input#string
    (-) >output#string
@@ -53,16 +57,18 @@ severity: error
 
 **INVALID:**
 ```polyglot
-[ ] ✗ PGE12003 — -NormalPipeline has no %InlineString declaration
-{-} -NormalPipeline
-   (-) <input#string
-   (-) >output#string
+[ ] ✗ PGE12003 — -MyWrapper has no %InlineString declaration
+{-} -MyWrapper
+   (-) <envName#string
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
-   [-] >output << $input
+   [ ] ...
 
-[-] $result#string << -NormalPipeline"test"
+{-} -MyPipeline
+   [T] -T.Daily"9AM"
+   [Q] -Q.Default
+   [W] -MyWrapper"production"
 ```
 
 **Open point:** None.
