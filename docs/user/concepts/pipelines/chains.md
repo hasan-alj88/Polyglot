@@ -1,109 +1,34 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-03-30
+status: retired
+updated: 2026-04-22
 ---
 
 <!-- @concepts/pipelines/INDEX -->
-<!-- @u:technical/ebnf/10-execution#Chain -->
 
-## Chain Execution
+## Chain Execution (Retired)
 
-<!-- @u:io:Chain IO Addressing -->
-<!-- @u:operators -->
-<!-- @u:errors#Chain Error Addressing -->
-Every step in a chain must be a pipeline reference — non-pipeline values are a compile error (PGE08006). Chain execution wires multiple pipelines in sequence on a single `[-]` line, with `->` separating each step (no spaces — the chain is one continuous expression). IO lines under the chain address individual steps by **numeric index** (0-based) or **leaf name** (the last segment of the pipeline's dotted name).
+The `->` chain operator has been retired from Polyglot. Chains connected pipelines in sequence on a single `[-]` line (`-A->-B->-C`), with step-addressed IO and chain-specific error handling. This syntax has been replaced by **labeled `[-]` calls** using operation labels, which are strictly more powerful.
 
-```polyglot
-[-] -Pipeline1->-Pipeline2->-Pipeline3
-   (-) >0.inputParam#path << $file
-   (-) <0.outputResult >> <1.inputParam
-   (-) <2.outputResult >> >output
-```
+### Why Retired
 
-### Step Addressing
+Three existing mechanisms already handle sequential pipeline composition:
 
-IO parameters in a chain are prefixed with a step reference and `.`:
+| Mechanism | Role |
+|---|---|
+| `[-]` marker | Declares sequential execution intent |
+| `(-) $Label` + `$Label>output` | Names steps and addresses their IO |
+| Trigger model (launched + inputs Final) | Orders execution by data readiness |
 
-| Syntax | Meaning |
-|--------|---------|
-| `>N.param` | Push into step N's input (pipeline perspective) |
-| `<N.param` | Pull from step N's output (pipeline perspective) |
-| `>LeafName.param` | Same as `>N` but using pipeline's leaf name |
-| `<LeafName.param` | Same as `<N` but using pipeline's leaf name |
+Chains were a redundant syntactic overlay. Labeled `[-]` calls support any-to-any wiring (not just linear N-to-N+1), use standard `[!]` error scoping (no special `.N!ErrorName` syntax), and require no additional EBNF grammar.
 
-The direction convention is **pipeline-perspective**: `<` and `>` describe the port from the step's own viewpoint — `<` marks the step's input, `>` marks its output. This is consistent with how `(-)` IO works in regular pipeline calls. See [[io#Chain IO Addressing]].
+### Replacement Pattern
 
-**Leaf name alternative:** When pipeline names are long, use the leaf name (last segment) instead of numeric index. Leaf names must be unambiguous within the chain — duplicate leaf names require numeric indices. An ambiguous step reference is PGE08004; an unresolved step reference is PGE08005.
-
-```polyglot
-[-] -File.List->-Data.Transform.Rows->-Report.Format
-   (-) >List.folder#path << $folder
-   (-) <List.files >> <Rows.input
-   (-) <Format.result >> >report
-```
-
-Numeric and leaf name references can be mixed in the same chain.
-
-### Auto-Wire
-
-```mermaid
-sequenceDiagram
-    participant P as Pipeline
-    participant S0 as Step 0<br/>File.Text.Read
-    participant S1 as Step 1<br/>Text.Transform
-    participant S2 as Step 2<br/>Text.Format
-
-    P->>S0: (-) path (path) from $path
-    S0-->>S1: auto: content (string)
-    S1-->>S2: auto: content (string)
-    S2->>P: (-) formatted (string) to output
-```
-
-When a step has exactly one output and the next step has exactly one input, and both share the same data type, the wire between them is implicit — no `(-)` line is needed. Only entry IO (first step's inputs) and exit IO (last step's outputs) must be declared.
-
-```polyglot
-[-] -File.Text.Read->-Text.Transform->-Text.Format
-   [ ] Each step: one output#string → one input#string — auto-wired
-   (-) >0.path#path << $path
-   (-) <2.formatted#string >> >formatted
-```
-
-Auto-wire requires:
-- Exactly one output on the source step
-- Exactly one input on the target step
-- Matching data types between them
-
-When multiple ports exist, auto-wire succeeds only if each type has exactly one match on each side — no ambiguity:
-
-```mermaid
-sequenceDiagram
-    participant P as Pipeline
-    participant S0 as Step 0<br/>3 outputs
-    participant S1 as Step 1<br/>3 inputs
-
-    P->>S0: (-) entry IO
-    Note over S0,S1: Each type has exactly one pair — auto-wire OK
-    S0-->>S1: auto: name (string)
-    S0-->>S1: auto: record (UserRecord)
-    S0-->>S1: auto: count (int)
-    Note over S0,S1: PGE08002 if two outputs share a type with one input
-    S1->>P: (-) exit IO
-```
-
-A type mismatch between auto-wired ports is PGE08001. When multiple ports could match, the wire is ambiguous (PGE08002). An unmatched parameter with no valid auto-wire candidate is PGE08003. Note that successful auto-wire emits a warning (PGW08001) — explicit `(-)` wiring is preferred.
-
-If any condition is not met, explicit `(-)` wiring is required.
-
-### Error Handling in Chains
-
-Errors in chains use the `!` prefix with a step index or leaf name, followed by the error name. `[!]` blocks are scoped under the chain `[-]` call, after the `(-)` IO lines. See [[concepts/pipelines/error-handling|error handling]] for standard error scoping rules.
-
-**Prefer numeric indices** — they are always unambiguous:
-
+**Before (chain):**
 ```polyglot
 [-] -File.Text.Read->-Text.Parse.CSV
-   (-) >0.path#path << $path
+   (-) >0.path#path << $file
    (-) <1.rows#string >> >content
    [!] !0.File.NotFound
       [-] >content << "Error: file not found"
@@ -111,41 +36,43 @@ Errors in chains use the `!` prefix with a step index or leaf name, followed by 
       [-] >content << "Error: invalid CSV"
 ```
 
-**Leaf name ambiguity:** When a leaf name shares a segment with the error name, the boundary is ambiguous. For example, `!Read.File.NotFound` is unclear — is the step `Read` (with error `File.NotFound`) or `Read.File` (with error `NotFound`)? In these cases, extend the step ref by one level up to disambiguate:
-
+**After (labeled calls):**
 ```polyglot
-[ ] Ambiguous — "Read" + error "File.NotFound" looks like step "Read.File"
-[!] !Read.File.NotFound
+[ ] Step 1: read file
+[-] -File.Text.Read
+   (-) $Read
+   (-) <path#path << $file
+   (-) >content#string >> $fileContent
+   [!] !File.NotFound
+      [-] $fileContent << "Error: file not found"
 
-[ ] Unambiguous — extended step ref "Text.Read" is distinct from error "File.NotFound"
-[!] !Text.Read.File.NotFound
-
-[ ] Always safe — numeric index avoids all ambiguity
-[!] !0.File.NotFound
+[ ] Step 2: parse CSV — triggers when $fileContent is Final
+[-] -Text.Parse.CSV
+   (-) $Parse
+   (-) <input#string << $fileContent
+   (-) >rows#string >> >content
+   [!] !Parse.InvalidFormat
+      [-] >content << "Error: invalid CSV"
 ```
 
-### Fallback in Chains
+Each `[-]` call has its own `[!]` error blocks using standard scoping. No step indices, no chain-specific syntax. The trigger model ensures `-Text.Parse.CSV` runs only after `-File.Text.Read` completes, because `$fileContent` must be Final before the second call triggers.
 
-In chain execution, `(>)`/`(<)` markers cannot carry step addressing. Use the `(-)` explicit form with `!<` instead:
+### What Was Retired
 
-```polyglot
-[-] -File.Text.Read->-Text.Parse.CSV
-   (-) >0.path << $file
-   (-) <1.rows >> $rows
-   (-) <0.content !< ""
-   (-) <1.rows !< ""
-   [!] !0.File.NotFound
-      (-) <0.content !< "missing"
-```
+| Retired Syntax | Replacement |
+|---|---|
+| `->` chain operator | Sequential `[-]` calls |
+| `($)` / `(.)` step labels | `(-) $Label` operation labels |
+| `>N.param` / `<N.param` step addressing | `$Label>output` / `$Label<input` |
+| `.N!ErrorName` chain error addressing | Standard `[!]` blocks per call |
+| Chain auto-wire | Explicit `(-)` wiring (wildcard auto-wire `<* << $A>*` in #345) |
 
-See [[errors#Error Fallback Operators]] for the full fallback model.
+### Related Compile Rules (Retired)
 
-### Type Annotations on Wires
-
-Type annotations (`#type`) on chain IO lines are **optional**. When present, the compiler validates that connected ports have matching types. When omitted, types are inferred from the pipeline definitions.
+PGE07002, PGE08004, PGE08005, PGE08006, PGE08012, PGE10007 — all retired with chains.
 
 ## See Also
 
-- [[concepts/pipelines/error-handling|Error Handling]] — `[!]` block scoping rules referenced by chain errors
+- [[syntax/operation-labels|Operation Labels]] — `(-) $Label` naming and `$Label>output` addressing
 - [[concepts/pipelines/execution|Execution]] — execution body markers and rules
-- [[concepts/pipelines/inline-calls|Inline Calls]] — where inline calls are not valid in chains
+- [[concepts/pipelines/inline-calls|Inline Calls]] — inline pipeline calls in execution body

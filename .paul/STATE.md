@@ -135,14 +135,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #340 — Refine chain pipeline syntax for multi-line and multi-step chains
+Branch: design/issue-340-refine-chain-pipeline-syntax-for-multi-line
+Labels: design
+Started: 2026-04-22
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/340
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop closed, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -326,6 +330,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #335 — Error philosophy page | 2026-04-20 | Merged docs/issue-335-error-philosophy to main; error-philosophy.md in philosophy/ |
 | Closed #336 — Remaining philosophy files | 2026-04-20 | Merged docs/issue-336-add-remaining-philosophy-files to main; 5 philosophy pages; resource management philosophy; vision.md 11 links |
 | Closed #337 — Replace logo with octopus design | 2026-04-20 | Merged docs/issue-337-replace-logo-with-octopus-design to main; 24 format exports (light+dark), logo.py deleted, AI/ deferred |
+| Issue #340 — Retire -> chain operator (plan 340-01) | 2026-04-22 | EBNF §10.3 removed, chains.md rewritten, chain-io.md retired, 6 compile rules retired, glossary updated; 11 files |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -344,11 +349,11 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-20
-Stopped at: Issue #337 merged to main
-Next action: Run /paul:issues or /paul:progress to pick next issue
-Resume file: none
-Resume context: Issue #337 closed; no active issue
+Last session: 2026-04-22
+Stopped at: Plan 340-01 unified — loop closed
+Next action: Run /paul:merge to merge branch to main
+Resume file: .paul/phases/340-chain-retirement/340-01-SUMMARY.md
+Resume context: Issue #340 plan 340-01 complete; ready for MERGE
 
 ---
 *STATE.md — Updated after every significant action*
