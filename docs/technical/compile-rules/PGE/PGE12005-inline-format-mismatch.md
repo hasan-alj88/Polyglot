@@ -11,11 +11,13 @@ severity: error
 
 <!-- @u:concepts/pipelines/inline-calls -->
 
-**Statement:** When an inline pipeline call `-Foo"arg"` provides a string that does not match the structural pattern of the pipeline's `%InlineString` template, the call is a compile error. The rendered string must be parseable against the template to extract all required placeholders.
+**Statement:** When an inline pipeline call `-Foo"arg"` on an infrastructure line (`[T]`, `[Q]`, `[W]`) provides a string that does not match the structural pattern of the pipeline's `%InlineString` template, the call is a compile error. The rendered string must be parseable against the template to extract all required placeholders.
 **Rationale:** The `%InlineString` template defines the expected format for inline arguments. If the rendered string cannot be decomposed into the template's fixed parts and placeholder values, the compiler cannot wire inputs correctly. Catching format mismatches at compile time prevents runtime extraction failures.
 **Detection:** After string interpolation (`{$var}` resolved), the compiler matches the rendered string against the `%InlineString` template pattern. If the fixed (non-placeholder) portions of the template do not align with the rendered string, PGE12005 is raised.
 
-**See also:** PGE12003 (no template declared), PGE12009 (type coercion failure after extraction)
+> **Scope:** This rule applies to infrastructure inline calls only. For constructor errors in execution body, see PGE14xxx ([[syntax/constructors|Constructors]] category).
+
+**See also:** PGE12003 (no template declared), PGE12009 (type coercion failure after extraction), PGE14010 (no constructor overload match — analogous for `{$}` constructors)
 
 ---
 

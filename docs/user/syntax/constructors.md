@@ -202,6 +202,31 @@ Constructor definitions create branches on the `%` metadata tree:
 
 See [[metadata]] for the full `%` tree and access patterns.
 
+## Compile Rules
+
+Constructor validation errors enforced at compile time. See [[COMPILE-RULES#14 — Constructors]] for full definitions.
+
+### Definition-Time Errors
+
+| Code | Name | What It Catches |
+|------|------|-----------------|
+| PGE14001 | Ambiguous Constructor Overload | Two `{$}` overloads with overlapping regex match sets |
+| PGE14002 | Duplicate Constructor Keyword | Two keyword overloads with the same literal string |
+| PGE14003 | Missing Capture Regex | Capture slot declared without `.re` validation |
+| PGE14004 | Structural Integrity Violation | Slot `.re` can match pattern separator characters |
+| PGE14005 | Target Type Mismatch | `[.]` field mapping to nonexistent field on target type |
+| PGE14006 | Failable Pipeline In Constructor | User `{$}` contains `[-]` pipeline call (pglib only) |
+| PGE14007 | Incomplete Field Mapping | Not all required fields of target type are mapped |
+
+### Call-Site Errors
+
+| Code | Name | What It Catches |
+|------|------|-----------------|
+| PGE14010 | No Constructor Overload Match | Input string matches no overload's compiled regex |
+| PGE14011 | Non-Literal Interpolation | Interpolated variable not produced by another constructor |
+| PGE14012 | Undefined Constructor | No `{$}` definition exists for the referenced name |
+| PGE14013 | Interpolation Source Not Final | Interpolated constructor-sourced variable not in Final state |
+
 ## What Constructors Are NOT
 
 - **Not pipelines** — no `[T]`, `[Q]`, `[W]`. No trigger, no queue, no wrapper, no async execution.

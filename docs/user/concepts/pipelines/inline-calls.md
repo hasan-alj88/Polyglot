@@ -7,14 +7,14 @@ updated: 2026-04-22
 <!-- @concepts/pipelines/INDEX -->
 <!-- @u:technical/ebnf/08-expressions -->
 
-## Inline Pipeline Calls (Infrastructure Lines Only)
+## Inline Pipeline Calls (Infrastructure Configuration)
 
-> **Scope change:** Inline pipeline calls (`-Pipeline"string"`) are now scoped to **infrastructure lines only** — `[T]` triggers, `[Q]` queue config, and `[W]` wrapper config. For value construction in pipeline execution body, use `{$}` **Constructor blocks** — see [[syntax/constructors]]. For dynamic value parsing in execution body, use standard `[-]` pipeline calls with error handling.
+Inline pipeline calls (`-Pipeline"string"`) configure pipeline infrastructure — triggers, queues, and wrappers. They appear exclusively on `[T]`, `[Q]`, and `[W]` lines. A trigger wrapping a schedule, a queue wrapping a Redis config, or a wrapper wrapping an environment all look the same at the call site. The caller writes `-T.Daily"3AM"` and expresses intent; Polyglot handles the wiring underneath.
 
-Polyglot's power comes from reusing battle-tested code that already works — not reinventing it. Inline pipeline calls are where this philosophy meets ergonomics on infrastructure lines: a trigger wrapping a schedule, a queue wrapping a Redis config, or a wrapper wrapping an environment all look the same at the call site. The caller writes `-T.Daily"3AM"` and expresses intent; Polyglot handles the wiring underneath.
+For value construction in the execution body, use `{$}` **Constructor blocks** — see [[syntax/constructors]]. For dynamic value parsing, use standard `[-]` pipeline calls with error handling. See [[syntax/constructors#The Three-Context Rule|The Three-Context Rule]].
 
 <!-- @c:types -->
-An inline pipeline call evaluates a pipeline configuration as a single value on infrastructure lines (`[T]`, `[Q]`, `[W]`). The syntax is `-Pipeline"string"` — a pipeline reference immediately followed by a string literal. Inline calls on infrastructure lines configure pipeline behavior at definition time — they are not execution body operations and have no error handling semantics (triggered-or-not).
+An inline pipeline call configures pipeline infrastructure as a single value on `[T]`, `[Q]`, and `[W]` lines. The syntax is `-Pipeline"string"` — a pipeline reference immediately followed by a string literal. These calls configure pipeline behavior at definition time — they are not execution body operations.
 
 ```polyglot
 [ ] Infrastructure lines — inline calls valid
@@ -23,8 +23,6 @@ An inline pipeline call evaluates a pipeline configuration as a single value on 
 [W] -W.Env
    (-) <env#; << ;MyEnv
 ```
-
-> **Superseded:** Inline calls in execution body (e.g., `[-] $dir << -Path"/tmp"`) are replaced by constructors (`[-] $dir << $Path"/tmp"`) for known values, or standard pipeline calls (`[-] -Pipeline` with `[!]` error handling) for dynamic values. See [[syntax/constructors#The Three-Context Rule]].
 
 ### `%InlineString` Template Declaration (Infrastructure Pipelines)
 
@@ -57,11 +55,11 @@ Polyglot builds on the async foundations of languages like Python, Rust, and Jav
 
 ```mermaid
 flowchart LR
-    RAW["-Path&quot;/tmp/{$app}&quot;"]
-    INTERP["1. Interpolate\n/tmp/MyApp"]
-    EXTRACT["2. Template extraction\n%InlineString: {path}\npath = /tmp/MyApp"]
-    WIRE["3. Wire to inputs\n<path << /tmp/MyApp"]
-    RESULT["4. Result returned\n#path value"]
+    RAW["-T.Daily&quot;9AM&quot;"]
+    INTERP["1. Interpolate\n9AM"]
+    EXTRACT["2. Template extraction\n%InlineString: {time}\ntime = 9AM"]
+    WIRE["3. Wire to inputs\n<time << 9AM"]
+    RESULT["4. Trigger configured"]
 
     RAW --> INTERP --> EXTRACT --> WIRE --> RESULT
 ```
@@ -92,9 +90,12 @@ Inline calls shine when wrapping legacy code from other languages. The caller do
 ```
 
 ```polyglot
-[ ] Caller — one line, no knowledge of Python underneath
-[-] $resolved#path << -Py.Path.Resolve"/tmp/{$app}/data"
+[ ] Caller on infrastructure line — one line, no knowledge of Python underneath
+[W] -W.Env
+   (-) <resolved#path << -Py.Path.Resolve"/tmp/{$app}/data"
 ```
+
+> **Execution body:** For known paths, use `$Path` constructor. For dynamic resolution, call `-Py.Path.Resolve` via `[-]` with error handling.
 
 **Rust — SHA-256 hash via a crypto library:**
 
@@ -118,9 +119,12 @@ Inline calls shine when wrapping legacy code from other languages. The caller do
 ```
 
 ```polyglot
-[ ] Caller — same inline syntax, Rust runs underneath
-[-] $hash#string << -Crypto.SHA256"{$password}{$salt}"
+[ ] Caller on infrastructure line — same inline syntax, Rust runs underneath
+[W] -W.Env
+   (-) <hash#string << -Crypto.SHA256"{$password}{$salt}"
 ```
+
+> **Execution body:** For dynamic hashing, call `-Crypto.SHA256` via `[-]` with error handling.
 
 Both pipelines {-} define a `%InlineString` template, both use [-] to call `-RT.<Lang>.Function.File` with the appropriate `-W.Env` wrapper, and both produce a single output. The caller sees only `-Pipeline"value"` — the language boundary is invisible.
 
@@ -152,41 +156,43 @@ Use `{name?}` for optional parts of the template. The matched input **must** hav
 ```
 
 ```polyglot
-[ ] All placeholders filled
-[-] $conn << -DB.Connect"myhost:3306/mydb"
+[ ] All placeholders filled — infrastructure line
+[W] -W.DB
+   (-) <conn << -DB.Connect"myhost:3306/mydb"
 
 [ ] Optional placeholder omitted — $port uses default "5432"
-[-] $conn << -DB.Connect"myhost:/mydb"
+[W] -W.DB
+   (-) <conn << -DB.Connect"myhost:/mydb"
 ```
 
 The compiler enforces that optional placeholders have defaults (`<~`) — every code path produces a value. You handle the edge case at definition time, not when a production connection fails silently.
 
 ### Dual-Mode Pipelines
 
-Since `%InlineString` is only used during inline calls, a pipeline can support both normal calls and inline calls with no special branching. The same inputs are wired either way:
+Since `%InlineString` is only used during inline calls, an infrastructure pipeline can support both normal calls and inline calls with no special branching. The same inputs are wired either way:
 
 ```polyglot
-{-} -Greeting
-   [%] .description << "Generates a greeting message"
-   (-) %InlineString << "{name}"
-   (-) <name#string <~ "World"
-   (-) >message#string
-   [T] -T.Call
+{-} -MyTrigger
+   [%] .description << "Custom trigger with configurable topic"
+   (-) %InlineString << "{topic}"
+   (-) <topic#string <~ "default"
+   (-) >triggered#boolean
+   [T] -T.NATS
    [Q] -Q.Default
    [W] -W.Polyglot
-   [-] >message << "Hello {$name}"
+   [-] >triggered << #True
 ```
 
-A pipeline wrapping a legacy Python library can be called inline for quick one-liners or with full `[-]` wiring for complex orchestration — same pipeline, same compile-time checks, zero duplication. Both calling forms work:
+Both calling forms work — inline on infrastructure lines, or normal `[-]` wiring:
 
 ```polyglot
-[ ] Inline call — compiler extracts "Alice" and wires to <name
-[-] $msg#string << -Greeting"Alice"
+[ ] Inline call on infrastructure line
+[T] -MyTrigger"orders"
 
-[ ] Normal call — caller wires <name directly
-[-] -Greeting
-   (-) <name << "Alice"
-   (-) >message >> $msg
+[ ] Normal call — caller wires <topic directly
+[-] -MyTrigger
+   (-) <topic << "orders"
+   (-) >triggered >> $result
 ```
 
 ### Where Inline Calls Are NOT Valid
@@ -213,7 +219,7 @@ Inputs with defaults that are not addressed by the caller emit a warning (PGW080
 
 ## Compile Rules
 
-Pipeline structure, chain execution, and call site rules enforced at compile time. Every rule in this table is a class of bug that other languages discover at runtime — Polyglot catches them before your code ever runs. See [[compile-rules/PGE/{code}|{code}]] for full definitions.
+Pipeline structure and call site rules enforced at compile time. These rules apply to infrastructure inline calls on `[T]`/`[Q]`/`[W]` lines. For constructor compile rules (`{$}` blocks and `$Constructor"..."` calls in execution body), see [[syntax/constructors#Compile Rules|Constructor Compile Rules]] (PGE14xxx category).
 
 | Code | Name | Section |
 |------|------|---------|
@@ -251,6 +257,7 @@ Pipeline structure, chain execution, and call site rules enforced at compile tim
 
 ## See Also
 
+- [[syntax/constructors]] — `{$}` constructor blocks for execution body value construction
 - [[concepts/pipelines/INDEX|Pipeline Structure]] — required pipeline elements and ordering
-- [[syntax/types/strings|String Interpolation]] — `-Path"..."` inline notation example
+- [[syntax/types/strings|String Interpolation]] — string interpolation and `$Path"..."` constructor notation
 - [[concepts/pipelines/chains|Chain Execution]] — where inline calls are not valid

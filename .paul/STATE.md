@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #342 — pglib: Define {$} constructors for core types (+ #343, #344)
+**Current focus:** Issues #343 + #344 — Constructor compile errors + docs update
 
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
-Phase: Issue #342 — pglib: Define {$} constructors for core types
-Plan: 342-01 COMPLETE, 342-02 COMPLETE, 342-03 COMPLETE
-Status: Issue #342 fully specified, ready for MERGE
-Last activity: 2026-04-22 — Phase transition: Issue #342 complete (3/3 plans)
+Phase: Issues #343 + #344 — Constructor compile errors + docs update
+Plan: 343-01 complete, 344-01 complete
+Status: UNIFY complete, ready for MERGE
+Last activity: 2026-04-22 — Summaries created, loop closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -128,6 +128,7 @@ Progress:
   - Issue #336: [██████████] 100% (1/1 plans — remaining philosophy files)
 - Issue #341: [██████████] 100% (closed — {$} constructor blocks spec)
 - Issue #342: [██████████] 100% (3/3 plans — pglib {$} constructors for core types)
+- Issues #343/#344: [██████████] 100% (2/2 plans — PGE14xxx constructor errors + docs transition)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -137,19 +138,20 @@ Progress:
 
 ## Active Issue
 
-Issue: #342 — pglib: Define {$} constructors for core types
-Branch: design/issue-342-pglib-constructors-core-types
-Labels: design, P2-high, pglib
+Issue: #343 — Compiler: Constructor compile error codes (PGE for {$} blocks)
+Issue: #344 — Docs: Update inline-calls.md and pglib docs to reflect {$} constructor design
+Branch: design/issue-343-344-constructor-compile-errors-docs
+Labels: compiler, design, docs, P2-high
 Started: 2026-04-22
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/342
-Related: #343 (compile error codes), #344 (docs updates) — same loop
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/343
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/344
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [Loop complete — all 3 plans done, phase transition required]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Loop closed — ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -335,6 +337,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #337 — Replace logo with octopus design | 2026-04-20 | Merged docs/issue-337-replace-logo-with-octopus-design to main; 24 format exports (light+dark), logo.py deleted, AI/ deferred |
 | Closed #340 — Retire -> chain operator | 2026-04-22 | Merged design/issue-340 to main; EBNF §10.3 removed, chains.md rewritten, 6 compile rules retired, 11 files |
 | Issue #342 — pglib {$} constructors complete | 2026-04-22 | 3 plans: Tier 1 ($DT,$Path), Tier 2a ($Re,$MIME,$Dur), Tier 2b ($Ver,$URL,$IP,$Color); 9 constructors, 4 type defs, 9 parse pipelines, INDEX registry |
+| Closed #342 — pglib {$} constructors for core types | 2026-04-22 | Merged design/issue-342-pglib-constructors-core-types to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -354,10 +357,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Issue #342 complete, phase transition done
-Next action: /paul:merge to merge branch to main, then /paul:work-issue for #343 or #344
-Resume file: .paul/ROADMAP.md
-Resume context: Issue #342 fully specified (9 constructors); related issues #343 (compile errors) and #344 (docs updates) remain
+Stopped at: Loop closed (UNIFY complete)
+Next action: Run /paul:merge to commit and close issues #343 + #344
+Resume file: .paul/phases/343-344-constructor-errors-docs/343-01-SUMMARY.md
+Resume context: Both plans executed and summarized; ready for git commit + issue closure
 
 ---
 *STATE.md — Updated after every significant action*
