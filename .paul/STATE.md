@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #341 — Design: {$} Constructor blocks — replace inline pipelines in execution body
+**Current focus:** Issue #342 — pglib: Define {$} constructors for core types (+ #343, #344)
 
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
-Phase: Issue #321 — -Run.Bridge pairwise cross-language binding syntax
-Plan: 321-01 COMPLETE, 321-02 COMPLETE
-Status: Issue #321 fully specified, ready for MERGE
-Last activity: 2026-04-19 — Unified plans 321-01 and 321-02
+Phase: Issue #342 — pglib: Define {$} constructors for core types
+Plan: 342-01 COMPLETE, 342-02 COMPLETE, 342-03 COMPLETE
+Status: Issue #342 fully specified, ready for MERGE
+Last activity: 2026-04-22 — Phase transition: Issue #342 complete (3/3 plans)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -126,6 +126,8 @@ Progress:
   - Issue #334: [██████████] 100% (1/1 plans — philosophy/cybersecurity.md zero trust)
   - Issue #335: [██████████] 100% (1/1 plans — philosophy/error-philosophy.md error handling)
   - Issue #336: [██████████] 100% (1/1 plans — remaining philosophy files)
+- Issue #341: [██████████] 100% (closed — {$} constructor blocks spec)
+- Issue #342: [██████████] 100% (3/3 plans — pglib {$} constructors for core types)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -135,18 +137,19 @@ Progress:
 
 ## Active Issue
 
-Issue: #341 — Design: {$} Constructor blocks — replace inline pipelines in execution body
-Branch: design/issue-341-constructor-blocks-replace-inline-pipelines
-Labels: enhancement, design, P1-critical
+Issue: #342 — pglib: Define {$} constructors for core types
+Branch: design/issue-342-pglib-constructors-core-types
+Labels: design, P2-high, pglib
 Started: 2026-04-22
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/341
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/342
+Related: #343 (compile error codes), #344 (docs updates) — same loop
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Plans 341-01 + 341-02 complete; ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [Loop complete — all 3 plans done, phase transition required]
 ```
 
 ## Accumulated Context
@@ -331,6 +334,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #336 — Remaining philosophy files | 2026-04-20 | Merged docs/issue-336-add-remaining-philosophy-files to main; 5 philosophy pages; resource management philosophy; vision.md 11 links |
 | Closed #337 — Replace logo with octopus design | 2026-04-20 | Merged docs/issue-337-replace-logo-with-octopus-design to main; 24 format exports (light+dark), logo.py deleted, AI/ deferred |
 | Closed #340 — Retire -> chain operator | 2026-04-22 | Merged design/issue-340 to main; EBNF §10.3 removed, chains.md rewritten, 6 compile rules retired, 11 files |
+| Issue #342 — pglib {$} constructors complete | 2026-04-22 | 3 plans: Tier 1 ($DT,$Path), Tier 2a ($Re,$MIME,$Dur), Tier 2b ($Ver,$URL,$IP,$Color); 9 constructors, 4 type defs, 9 parse pipelines, INDEX registry |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -350,10 +354,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Plan 341-02 unified — SUMMARY created
-Next action: /paul:merge or pause
-Resume file: .paul/phases/341-constructor-blocks/341-02-SUMMARY.md
-Resume context: Issue #341 fully specified (341-01 user spec + 341-02 EBNF/metadata); ready for MERGE to main
+Stopped at: Issue #342 complete, phase transition done
+Next action: /paul:merge to merge branch to main, then /paul:work-issue for #343 or #344
+Resume file: .paul/ROADMAP.md
+Resume context: Issue #342 fully specified (9 constructors); related issues #343 (compile errors) and #344 (docs updates) remain
 
 ---
 *STATE.md — Updated after every significant action*

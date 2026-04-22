@@ -13,16 +13,28 @@ DateTime pipelines for construction, calendar conversion, arithmetic, comparison
 
 All `-DT.*` pipelines are native definitions (`{N}` blocks). They operate on `#dt` (alias for `#DateTime`).
 
-**Inline notation:** `-DT"..."` and `=DateTime"..."` are sugar for `-DT.From.ISO`. This follows the `-Path"..."` precedent.
+**Three-Context Rule** for DateTime values:
+
+| Context | Mechanism | Syntax |
+|---|---|---|
+| `[T]`/`[Q]`/`[W]` Infrastructure | Inline pipeline config | `-DT"2026-03-20T12:00:00Z"` |
+| Pipeline body — known values | Constructor | `$DT"2026-03-20"` |
+| Pipeline body — dynamic values | Pipeline call | `[-] -DT.Parse` |
+
+On infrastructure lines (`[T]`, `[Q]`, `[W]`), `-DT"..."` and `=DateTime"..."` remain valid as sugar for `-DT.From.ISO`. In the execution body, use the `$DT` constructor for known literals (no error handling needed) or `-DT.Parse` for dynamic/untrusted strings (error handling required). See [[constructors/DT|$DT constructor]] and [[DT/Parse|-DT.Parse]].
 
 ```polyglot
-[ ] These three are equivalent:
-[-] $deadline#dt << =DateTime"2026-03-20T12:00:00Z"
-[-] $deadline#dt << -DT"2026-03-20T12:00:00Z"
-[-] $deadline#dt
-   [-] -DT.From.ISO
-      (-) <iso << "2026-03-20T12:00:00Z"
-      (-) >dt >> $deadline
+[ ] infrastructure line — inline notation valid
+[T] -T.Cron"0 9 * * *"
+
+[ ] execution body — constructor (compile-time guaranteed)
+[-] $deadline << $DT"2026-04-22"
+
+[ ] execution body — dynamic string (error handling required)
+[-] $parsed#dt << -DT.Parse
+   (<) <raw#string << $userInput
+   [!] !Parse.DateTime.InvalidFormat
+      [-] $parsed << $DT"Today"
 ```
 
 ## Permissions
@@ -46,6 +58,8 @@ All `-DT.*` pipelines are pure computation and require no `{_}` permission objec
 - [[DT/From.Epoch|-DT.From.Epoch]]
 - [[DT/From.ISO|-DT.From.ISO]]
 - [[DT/From.Parts|-DT.From.Parts]]
+- [[DT/Parse|-DT.Parse]]
+- [[pglib/pipelines/Dur.Parse|-Dur.Parse]] -- duration parsing (separate from DT, at pipelines/ root)
 
 ### Calendar Conversion
 
