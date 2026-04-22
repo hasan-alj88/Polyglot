@@ -1,5 +1,5 @@
 ---
-audience: designer
+audience: design
 rule: "10.7"
 code: PGE10007
 name: Chain Step Label Overflow

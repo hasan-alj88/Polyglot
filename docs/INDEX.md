@@ -1,5 +1,5 @@
 ---
-audience: [automation-builder, integrator, architect, designer]
+audience: [automation-builder, integrator, design]
 type: master-index
 scope: all-documentation
 updated: 2026-04-03

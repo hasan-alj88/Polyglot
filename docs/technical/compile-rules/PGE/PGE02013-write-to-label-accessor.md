@@ -1,5 +1,5 @@
 ---
-audience: designer
+audience: design
 rule: "2.13"
 code: PGE02013
 name: Write To Label Accessor

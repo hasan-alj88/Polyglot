@@ -1,5 +1,5 @@
 ---
-audience: designer
+audience: design
 rule: "2.15"
 code: PGE02015
 name: Unused Background Label

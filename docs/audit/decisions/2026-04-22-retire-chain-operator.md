@@ -1,5 +1,5 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-reference
 scope: decision-record
 category: syntax

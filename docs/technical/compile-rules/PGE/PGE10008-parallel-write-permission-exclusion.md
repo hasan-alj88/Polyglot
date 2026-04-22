@@ -1,5 +1,5 @@
 ---
-audience: designer
+audience: design
 rule: "10.8"
 code: PGE10008
 name: Parallel Write Permission Exclusion

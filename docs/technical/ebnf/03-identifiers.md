@@ -1,5 +1,5 @@
 ---
-audience: designer
+audience: design
 type: spec
 updated: 2026-04-16
 ---

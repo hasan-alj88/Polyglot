@@ -1,14 +1,14 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-tracking
 scope: audience-migration
-updated: 2026-04-13
+updated: 2026-04-22
 ---
 
 # Audience Migration Tracker
 
 <!-- @audit/README -->
-Migration from 3-audience (user/developer/ai) to 5-audience system, now with external/internal classification. See [[audiences/automation-builder]], [[audiences/integrator]], [[audiences/architect]], [[audiences/designer]], [[audiences/ai]].
+Migration from 3-audience (user/developer/ai) to 6-audience system. See [[audiences/automation-builder]], [[audiences/integrator]], [[audiences/product]], [[audiences/design]], [[audiences/developer]], [[audiences/ai-finder]].
 
 ## Status Key
 
@@ -29,6 +29,23 @@ Migration from 3-audience (user/developer/ai) to 5-audience system, now with ext
 | 3 | Migrate frontmatter | Done | All files migrated |
 | 4 | Verify | Done | All 9 checks passed |
 | 5 | Rename pg-coder → automation-builder + classify audiences | Done | External: automation-builder, integrator. Internal: architect, designer, ai |
+| 6 | Second restructure: merge architect+designer, add product+developer, rename ai | Done | External unchanged. Internal: product, design, developer, ai-finder |
+
+## Phase 6 — Second Audience Restructure (2026-04-22)
+
+| Task | Status | File |
+|------|--------|------|
+| Merge architect.md + designer.md → design.md | Done | audiences/design.md |
+| Create product.md | Done | audiences/product.md |
+| Create developer.md | Done | audiences/developer.md |
+| Rename ai.md → ai-finder.md | Done | audiences/ai-finder.md |
+| Delete architect.md, designer.md, ai.md | Done | git rm |
+| Update glossary.md (Audience Tiers table) | Done | reference/glossary.md |
+| Update conventions.md (frontmatter template) | Done | rules/conventions.md |
+| Update checklist.md (tone-match refs) | Done | rules/checklist.md |
+| Update README.md (file index) | Done | audit/README.md |
+| Update audience-migration.md | Done | tracking/audience-migration.md |
+| Bulk migrate frontmatter: architect/designer → design, ai → ai-finder | Done | ~113 files in docs/ |
 
 ## Phase 5 — Audience Rename & Classification (2026-04-13)
 

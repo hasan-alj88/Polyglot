@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #354 — Decision history with before/after impact tracking
+**Current focus:** Issue #353 — Update audience tiers: add product, merge architect+designer, rename ai→ai-finder
 
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
 Phase: Issues #343 + #344 — Constructor compile errors + docs update
-Plan: 343-01 complete, 344-01 complete
+Plan: 353-01 complete
 Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-22 — 354-01 UNIFY complete, loop closed
+Last activity: 2026-04-22 — Unified 353-01: all 3 ACs passed, SUMMARY created
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -129,6 +129,8 @@ Progress:
 - Issue #341: [██████████] 100% (closed — {$} constructor blocks spec)
 - Issue #342: [██████████] 100% (3/3 plans — pglib {$} constructors for core types)
 - Issues #343/#344: [██████████] 100% (2/2 plans — PGE14xxx constructor errors + docs transition)
+- Issue #353: [██████████] 100% (1/1 plans — audience tier restructure)
+- Issue #354: [██████████] 100% (1/1 plans — decision history system)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -138,18 +140,18 @@ Progress:
 
 ## Active Issue
 
-Issue: #354 — Add docs/audit/decisions/ — decision history with before/after impact tracking
-Branch: docs/issue-354-decision-history-tracking
+Issue: #353 — Update audience tiers: add product, merge architect+designer, rename ai→ai-finder
+Branch: docs/issue-353-update-audience-tiers
 Labels: docs, P2-high
 Started: 2026-04-22
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/354
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/353
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [UNIFY complete, ready for MERGE]
+  ✓        ✓        ✓        ○     [Unify complete, ready for MERGE]
 ```
 
 ## Accumulated Context
@@ -337,6 +339,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #342 — pglib {$} constructors complete | 2026-04-22 | 3 plans: Tier 1 ($DT,$Path), Tier 2a ($Re,$MIME,$Dur), Tier 2b ($Ver,$URL,$IP,$Color); 9 constructors, 4 type defs, 9 parse pipelines, INDEX registry |
 | Closed #342 — pglib {$} constructors for core types | 2026-04-22 | Merged design/issue-342-pglib-constructors-core-types to main |
 | Closed #343/#344 — Constructor compile errors + docs transition | 2026-04-22 | Merged design/issue-343-344-constructor-compile-errors-docs to main |
+| Closed #354 — Decision history system | 2026-04-22 | Merged docs/issue-354-decision-history-tracking to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -356,10 +359,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Loop closed (UNIFY complete for #354)
-Next action: Run /paul:merge to commit and close issue #354
-Resume file: .paul/phases/issue-354-decision-history/354-01-SUMMARY.md
-Resume context: Decision history system created (4 new files, 2 modified); ready for git commit + issue closure
+Stopped at: Plan 353-01 unified
+Next action: Run /paul:merge to merge branch and close issue #353
+Resume file: .paul/phases/issue-353-audience-tiers/353-01-SUMMARY.md
+Resume context: All ACs passed; SUMMARY created; branch ready for merge
 
 ---
 *STATE.md — Updated after every significant action*

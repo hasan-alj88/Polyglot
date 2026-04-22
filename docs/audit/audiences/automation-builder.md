@@ -34,7 +34,7 @@ Developers who write Polyglot code (.pg files). They author pipelines, define da
 
 ## NEVER
 
-- Expose runtime architecture internals (Queue Manager, Trigger Monitor implementation — that's [[audiences/architect]] scope)
+- Expose runtime architecture internals (Queue Manager, Trigger Monitor implementation — that's [[audiences/design]] scope)
 - Assume Polyglot-specific knowledge upfront — introduce each concept
 - Skip code examples — every concept needs a .pg snippet
 - Leave syntax ambiguous — every construct must have a clear definition
