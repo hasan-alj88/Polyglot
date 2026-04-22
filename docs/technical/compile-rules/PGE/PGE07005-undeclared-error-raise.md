@@ -35,10 +35,10 @@ severity: error
    [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty                [ ] ✓ declared above
-         (-) .Message << "Name is required"
+         (!) .Message << "Name is required"
    [?] $name.length >? 100
       [!] >> !Validation.TooLong              [ ] ✓ declared above
-         (-) .Message << "Name exceeds limit"
+         (!) .Message << "Name exceeds limit"
    [?] *?
       [-] >validated << $name
 ```
@@ -55,10 +55,10 @@ severity: error
    [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty
-         (-) .Message << "Name is required"
+         (!) .Message << "Name is required"
    [?] $name =!? *?"*@*"
       [!] >> !Validation.InvalidEmail         [ ] ✗ PGE07005 — not in (-) !... declarations
-         (-) .Message << "Invalid email format"
+         (!) .Message << "Invalid email format"
    [?] *?
       [-] >validated << $name
 ```

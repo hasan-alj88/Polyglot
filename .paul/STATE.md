@@ -138,20 +138,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #343 — Compiler: Constructor compile error codes (PGE for {$} blocks)
-Issue: #344 — Docs: Update inline-calls.md and pglib docs to reflect {$} constructor design
-Branch: design/issue-343-344-constructor-compile-errors-docs
-Labels: compiler, design, docs, P2-high
-Started: 2026-04-22
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/343
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/344
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed — ready for MERGE]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -338,6 +332,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #340 — Retire -> chain operator | 2026-04-22 | Merged design/issue-340 to main; EBNF §10.3 removed, chains.md rewritten, 6 compile rules retired, 11 files |
 | Issue #342 — pglib {$} constructors complete | 2026-04-22 | 3 plans: Tier 1 ($DT,$Path), Tier 2a ($Re,$MIME,$Dur), Tier 2b ($Ver,$URL,$IP,$Color); 9 constructors, 4 type defs, 9 parse pipelines, INDEX registry |
 | Closed #342 — pglib {$} constructors for core types | 2026-04-22 | Merged design/issue-342-pglib-constructors-core-types to main |
+| Closed #343/#344 — Constructor compile errors + docs transition | 2026-04-22 | Merged design/issue-343-344-constructor-compile-errors-docs to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train

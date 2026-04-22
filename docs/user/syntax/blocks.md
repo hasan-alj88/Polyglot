@@ -73,6 +73,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `(-) $Label` | Operation label — names a call's IO for downstream access via `$Label>output`. The `(-)` marker mirrors the `[-]` pipeline call context. See [[operation-labels]] |
 | `($)` | (1) Variable-scope accessor line — used under `(-) $Label` for grouped fallbacks and variable-scope operations. See [[operation-labels]]. (2) Constructor IO line — inside `{$}` definitions, declares regex-validated capture parameters: `($) <name.re << "pattern"`. Context disambiguates: under `(-) $Label` = variable-scope, under `{$}` = constructor IO. See [[constructors]] |
 | `(.)` | Chain step label — names individual steps within a chain, indented under `(-) $Label`. See [[operation-labels#Chain Step Labels]] |
+| `(!)` | Error raise IO line — fills `.Info` values inside `[!] >>` raise blocks. See [[errors#Raising Errors]] |
 | `( )` | IO comment — inline annotation within IO blocks. See [[comments]] |
 
 ### Execution

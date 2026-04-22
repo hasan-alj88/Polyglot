@@ -96,12 +96,12 @@ In the execution body, `[!] >> !ErrorName` raises a declared error. The raise bl
 ```polyglot
 [?] $name =? ""
    [!] >> !Validation.Empty
-      (-) .Info:field << "name"
+      (!) .Info:field << "name"
 [?] $name.length >? 100
    [!] >> !Validation.TooLong
-      (-) .Info:field << "name"
-      (-) .Info:maxLength << 100
-      (-) .Info:actualLength << $name.length   [ ] extra key — allowed
+      (!) .Info:field << "name"
+      (!) .Info:maxLength << 100
+      (!) .Info:actualLength << $name.length   [ ] extra key — allowed
 [?] *?
    [-] >validated << $name
    [-] >status << "ok"
@@ -117,8 +117,8 @@ Inside a `[!] >>` block, the author can push fallback values to specific outputs
 
 ```polyglot
 [!] >> !Validation.Empty
-   (-) .Info:field << "name"
-   (-) >status << "invalid"
+   (!) .Info:field << "name"
+   (!) >status << "invalid"
       (>) %FallbackMessage << "Pipeline returns invalid status on empty input"
 
    [ ] >validated not mentioned — goes Failed

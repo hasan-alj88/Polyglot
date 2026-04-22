@@ -70,8 +70,8 @@ severity: warning
 Where `-ValidateUser` contains:
 ```polyglot
 [!] >> !Validation.Empty
-   (-) .Message << "Name is required"
-   (-) >status << "invalid"
+   (!) .Message << "Name is required"
+   (!) >status << "invalid"
       (>) %FallbackMessage << "Pipeline returns invalid status on empty input"
 ```
 

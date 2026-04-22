@@ -34,10 +34,10 @@ severity: error
    [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty                [ ] ✓ matches declaration
-         (-) .Message << "Name is required"
+         (!) .Message << "Name is required"
    [?] $name.length >? 100
       [!] >> !Validation.TooLong              [ ] ✓ matches declaration
-         (-) .Message << "Name exceeds limit"
+         (!) .Message << "Name exceeds limit"
    [?] *?
       [-] >validated << $name
 ```
@@ -55,7 +55,7 @@ severity: error
    [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty
-         (-) .Message << "Name is required"
+         (!) .Message << "Name is required"
    [?] *?
       [-] >validated << $name
 ```

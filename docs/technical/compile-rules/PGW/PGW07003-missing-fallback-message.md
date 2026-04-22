@@ -34,8 +34,8 @@ severity: warning
    [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty
-         (-) .Message << "Name is required"
-         (-) >status << "invalid"
+         (!) .Message << "Name is required"
+         (!) >status << "invalid"
             (>) %FallbackMessage << "Pipeline returns invalid status on empty input"
    [?] *?
       [-] >validated << $name
@@ -53,8 +53,8 @@ severity: warning
    [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty
-         (-) .Message << "Name is required"
-         (-) >status << "invalid"
+         (!) .Message << "Name is required"
+         (!) >status << "invalid"
             (>) %FallbackMessage << ""
    [?] *?
       [-] >status << "ok"
@@ -72,8 +72,8 @@ severity: warning
    [W] -W.Polyglot
    [?] $name =? ""
       [!] >> !Validation.Empty
-         (-) .Message << "Name is required"
-         (-) >status << "invalid"             [ ] ⚠ PGW07003 — missing %FallbackMessage
+         (!) .Message << "Name is required"
+         (!) >status << "invalid"             [ ] ⚠ PGW07003 — missing %FallbackMessage
    [?] *?
       [-] >status << "ok"
 ```
