@@ -1,7 +1,7 @@
 ---
 audience: [automation-builder, integrator, design]
 type: reference
-updated: 2026-04-20
+updated: 2026-04-22
 ---
 
 <!-- @c:vision -->
@@ -9,15 +9,17 @@ updated: 2026-04-20
 <!-- @u:syntax/blocks -->
 <!-- @u:syntax/operators -->
 <!-- @u:syntax/line-structure -->
+<!-- @c:philosophy/data-trees -->
+<!-- @c:audit/reference/glossary -->
 # Symbol Design Rationale
 
-> This page expands the syntax design choices summarized in [[vision]]. It explains *why* Polyglot's symbols look the way they do — not what they mean (see [[syntax/identifiers]] and [[syntax/blocks]] for that).
+> This page expands the syntax design choices summarized in [[vision]]. It explains *why* Polyglot's symbols look the way they do — not what they mean (see [[user/syntax/identifiers]] and [[user/syntax/blocks]] for that).
 
 Polyglot's syntax is visual by design. Every prefix character, bracket shape, and assignment arrow was chosen so that code self-documents its intent. A developer reading Polyglot code can identify what each line *is* — a variable, a type, a pipeline call, an error — before reading a single word of the identifier name. This is not decoration; it is a parsing strategy for both humans and the compiler.
 
 ## Why Prefixes?
 
-Every Polyglot identifier starts with a prefix character. This serves three purposes:
+Every [[glossary#Polyglot Code|Polyglot Code]] identifier starts with a prefix character. This serves three purposes:
 
 - **Human parsing** — the eye recognises `$` as "variable" and `#` as "type" without reading the name. In a trigger-driven language where pipelines, queues, wrappers, triggers, permissions, and execution all coexist, prefixes prevent ambiguity at a glance.
 
@@ -53,7 +55,7 @@ Each prefix was chosen for visual resonance with its meaning:
 | `;` | Environment | Semicolon — symbolic of foreign code line terminators (C++, Java, JS, Rust, Go) |
 | `~` | Continuation | Tilde — `[~]` continues the line above, `.~` iterates levels. Wave = "keep going" |
 
-The prefix set is closed — no new prefixes will be added. Every prefix participates in the `%` metadata tree (see [[data-is-trees]]).
+The prefix set is closed — no new prefixes will be added. Every prefix participates in the `%` metadata tree (see [[user/concepts/data-is-trees]] and [[glossary#Data Tree|Data Tree]]).
 
 ## The Three-Bracket System
 

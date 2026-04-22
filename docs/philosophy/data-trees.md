@@ -1,16 +1,17 @@
 ---
 audience: [automation-builder, integrator, design]
 type: reference
-updated: 2026-04-20
+updated: 2026-04-22
 ---
 
 <!-- @c:vision -->
 <!-- @u:concepts/data-is-trees -->
 <!-- @u:technical/spec/metadata-tree/INDEX -->
 <!-- @u:syntax/types/basic-types#RawString -->
+<!-- @c:audit/reference/glossary -->
 # Everything Is a Tree
 
-> Polyglot's entire data model rests on one structural decision: everything is a tree. This page explains why trees are the right foundation for a cross-language platform. See [[vision]] for the broader project context. For the spec-level details, see [[concepts/data-is-trees]].
+> Polyglot's entire data model rests on one structural decision: everything is a [[glossary#Data Tree|Data Tree]]. This page explains why trees are the right foundation for a cross-language platform. See [[vision]] for the broader project context. For the spec-level details, see [[user/concepts/data-is-trees]].
 
 ## Why Trees
 
@@ -32,7 +33,7 @@ These three tiers are independent. You can change a tree's schema without changi
 
 ## Strings Are the Universal Value
 
-At the bottom of every tree — at every leaf — sits a `RawString`: a sequence of literal raw characters. This is Polyglot's one true primitive. Everything else — `#String`, `int`, `float`, `#Boolean`, arrays, user structs — is built on top of `RawString` through schemas that constrain how the string is interpreted.
+At the bottom of every tree — at every leaf — sits a [[glossary#RawString|RawString]]: a sequence of literal raw characters. This is Polyglot's one true primitive. Everything else — [[glossary##String|#String]], `int`, `float`, `#Boolean`, arrays, user structs — is built on top of `RawString` through schemas that constrain how the string is interpreted.
 
 This is not a limitation. It is a deliberate design choice rooted in one observation: *strings are the universal interface between programming languages.* Every language reads strings, writes strings, serializes to strings, deserializes from strings. By making strings the foundation, Polyglot avoids the complexity of bespoke type marshalling between language runtimes. Python's `str`, Rust's `String`, JavaScript's `string`, Go's `string` — they all understand strings. The cross-language data exchange problem reduces to: send a tree of strings, let the receiving side interpret them according to the schema.
 

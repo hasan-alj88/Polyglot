@@ -1,26 +1,27 @@
 ---
 audience: [automation-builder, integrator, design]
 type: reference
-updated: 2026-04-20
+updated: 2026-04-22
 ---
 
 <!-- @c:vision -->
 <!-- @u:concepts/errors -->
 <!-- @u:concepts/conditionals -->
 <!-- @u:concepts/variable-lifecycle -->
+<!-- @c:audit/reference/glossary -->
 # Developer Experience
 
 > Polyglot's developer experience is built around one loop: write, compile, fix, deploy. The compiler is not a gatekeeper — it is a collaborator that catches what you missed. This page explains why that trade-off pays off. See [[vision]] for the broader project context.
 
 ## The Compile Loop
 
-The Polyglot development workflow is deliberately iterative:
+The Polyglot development workflow is a deliberately iterative **compile loop**:
 
-1. **Write** — Express your intent in `.pg` files. Define pipelines, triggers, permissions, error handling. Focus on *what* should happen, not *how*.
+1. **Write** — Express your intent in [[glossary#.pg files|.pg files]]. Define [[glossary#Pipeline|pipelines]], triggers, permissions, error handling. Focus on *what* should happen, not *how*.
 2. **Compile** — The compiler analyses your code and reports every gap it finds. Missing error handlers, unsatisfied permissions, race conditions in parallel blocks, type mismatches across language boundaries.
 3. **Fix** — Address each compiler error. Add the missing error path. Grant the required permission. Resolve the type mismatch. Each fix makes the pipeline more complete.
 4. **Compile again** — When the compiler reports no errors, the pipeline is ready. Every scenario is accounted for.
-5. **Deploy** — The compiled Behavioral Contract is registered with the Polyglot Service. What you deploy is exactly what the compiler verified.
+5. **Deploy** — The compiled [[glossary#Behavioral Contract|Behavioral Contract]] is registered with the [[glossary#Polyglot Service|Polyglot Service]]. What you deploy is exactly what the compiler verified.
 
 This loop may feel unfamiliar to developers used to "write and run" workflows. But it is the same principle that makes Rust's borrow checker valuable, or that makes TypeScript's type system worth the annotation overhead. The investment is upfront; the payoff is in production.
 

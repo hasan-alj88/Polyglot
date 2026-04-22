@@ -1,10 +1,12 @@
 ---
 audience: [automation-builder, integrator, design]
 type: reference
-updated: 2026-04-20
+updated: 2026-04-22
 ---
 
 <!-- @c:vision -->
+<!-- @c:philosophy/behavioral-contract -->
+<!-- @c:audit/reference/glossary -->
 <!-- @u:concepts/permissions -->
 <!-- @u:concepts/permissions/enforcement -->
 <!-- @u:syntax/packages -->
@@ -14,12 +16,12 @@ updated: 2026-04-20
 
 ## The Accountability Chain
 
-Every piece of code that runs through Polyglot passes through five gates, in order. No gate can be skipped.
+Every piece of code that runs through the [[glossary#Polyglot Service|Polyglot Service]] passes through five gates — the **Accountability Chain**. No gate can be skipped.
 
 1. **Author** — A person writes the code. The author's identity is recorded. Authorship is not anonymous.
 2. **Inspector** — A human reads the code and takes personal responsibility for approving it. The inspector is not the compiler — it is a named person who decides "this should run."
 3. **Compiler** — The Polyglot compiler validates the code exhaustively: type safety, permission coverage, error handling, concurrency correctness. The compiler catches what humans miss, but it does not replace human judgement.
-4. **Permission Grant** — The compiled output includes explicit `{_}` permission objects that declare what the pipeline is allowed to do. No permission, no execution. Grants are bound to the compiled content — any change invalidates them.
+4. **Permission Grant** — The compiled output includes explicit `{_}` permission objects that declare what the [[glossary#Pipeline|pipeline]] is allowed to do. No permission, no execution. Grants are bound to the compiled content — any change invalidates them.
 5. **Execution** — Only after all four preceding gates are satisfied does the Polyglot Service execute the pipeline.
 
 The compiler is powerful, but it answers "is this code correct?" — not "should this code exist?" That second question requires a human.
@@ -66,7 +68,7 @@ AI systems are increasingly capable of writing code. Polyglot's position is clea
 
 ## Compile-Time File Binding
 
-Polyglot enforces the Accountability Chain through **content-bound permissions**. Any pipeline input that references a source file — `<code.file` in `-Run.*` pipelines, configuration files, data files — has its permission grant bound to the file's content hash at compilation time.
+Polyglot enforces the Accountability Chain through **compile-time file binding** — **content-bound permissions**. Any pipeline input that references a source file — `<code.file` in `-Run.*` pipelines, configuration files, data files — has its permission grant bound to the file's content hash at compilation time.
 
 If the file changes after compilation:
 

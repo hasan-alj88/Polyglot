@@ -1,7 +1,7 @@
 ---
 audience: [automation-builder, integrator, design]
 type: reference
-updated: 2026-04-20
+updated: 2026-04-22
 ---
 
 <!-- @c:vision -->
@@ -9,15 +9,16 @@ updated: 2026-04-20
 <!-- @u:concepts/permissions/enforcement -->
 <!-- @u:concepts/permissions/foreign-code -->
 <!-- @u:technical/spec/job-sandbox -->
+<!-- @c:audit/reference/glossary -->
 # Cybersecurity
 
 > Polyglot orchestrates code across language boundaries — including compiled binaries and foreign scripts that the compiler cannot fully analyse. That power demands a security model built on distrust, not convenience. This page defines how Polyglot treats security as a design principle. See [[vision]] for the broader project context.
 
 ## Zero Trust on Executed Code
 
-Polyglot's security model starts from a single premise: **no code is trusted until proven safe, and no proof lasts forever.**
+Polyglot's **zero-trust** security model starts from a single premise: **no code is trusted until proven safe, and no proof lasts forever.**
 
-The compiler performs exhaustive static analysis — type safety, permission coverage, error handling, concurrency correctness. For Polyglot-native code, if it compiles, the permissions are satisfied. But the compiler is only one gate. The Polyglot Service enforces permissions independently at runtime, using OS-level mechanisms that operate below the language layer. Even if code somehow bypasses compile-time checks, the runtime rejects unauthorized actions.
+The compiler performs exhaustive static analysis — type safety, permission coverage, error handling, concurrency correctness. For Polyglot-native code, if it compiles, the permissions are satisfied. But the compiler is only one gate. The [[glossary#Polyglot Service|Polyglot Service]] enforces permissions independently at runtime, using OS-level mechanisms that operate below the language layer. Even if code somehow bypasses compile-time checks, the runtime rejects unauthorized actions.
 
 This is not defense-in-depth as a buzzword — it is a structural property. The compiler and the runtime enforce the same permission model through independent mechanisms. The compiler validates statically; the runtime constrains dynamically. Neither trusts the other's verdict. A compiled binary that attempts to read a file outside its declared `{_}` grant is blocked by the kernel, regardless of what the compiler approved.
 
@@ -56,7 +57,7 @@ See [[technical/spec/otel-permission-events]] for the 8 security events and [[te
 
 ## Black Box Trust Metric
 
-Every black box in the Polyglot ecosystem is tracked. Compiled binaries via `-Run.*`, code using AST-invisible functions from the [[technical/compiler/ast-invisible-registry|banned registry]], and any pipeline running under `_Unsafe.SandboxOnly` — all accumulate a runtime history.
+Every **black box** in the Polyglot ecosystem is tracked. Compiled binaries via `-Run.*`, code using AST-invisible functions from the [[technical/compiler/ast-invisible-registry|banned registry]], and any pipeline running under `_Unsafe.SandboxOnly` — all accumulate a runtime history.
 
 The metrics that matter are:
 

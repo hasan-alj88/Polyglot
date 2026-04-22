@@ -1,13 +1,14 @@
 ---
 audience: [automation-builder, integrator, design]
 type: reference
-updated: 2026-04-20
+updated: 2026-04-22
 ---
 
 <!-- @c:vision -->
 <!-- @u:concepts/errors -->
 <!-- @u:concepts/variable-lifecycle#Failed -->
 <!-- @u:syntax/operators#Fallback -->
+<!-- @c:audit/reference/glossary -->
 # Error Handling Philosophy
 
 > Polyglot treats error handling as a first-class design concern, not an afterthought bolted onto working code. This page explains why. See [[vision]] for the broader project context.
@@ -36,13 +37,13 @@ The alternative is familiar to anyone who has operated distributed systems: a pi
 
 In traditional programming, an unhandled error crashes the process. The stack unwinds, context is lost, and the developer is left with a stack trace and a prayer.
 
-In Polyglot, `Failed` is a variable lifecycle state — one of five states in the lifecycle: Declared, Default, Final, Failed, Released. When a variable enters the Failed state, the data still exists. The pipeline still knows about it. The error metadata is accessible via `$var%sourceError`. Error handlers can inspect the failure, route it, replace the value, or escalate it to a downstream consumer.
+In Polyglot, **Failed** is a variable lifecycle state — one of five states in the lifecycle: Declared, Default, Final, Failed, Released. When a variable enters the Failed state, the data still exists. The pipeline still knows about it. The error metadata is accessible via `$var%sourceError`. Error handlers can inspect the failure, route it, replace the value, or escalate it to a downstream consumer.
 
 This is fundamentally different from exception-based error handling. There is no stack unwinding. There is no "where did the error come from?" mystery. The error is attached to the variable that failed, in the pipeline that produced it, with full metadata about what went wrong. The `[!]` error block scopes directly under the operation that produced the error, making the relationship between failure and handler explicit and visible.
 
-Failed is terminal — a Failed variable cannot receive further pushes (see [[technical/compile-rules/PGE/PGE02005-failed-is-terminal|PGE02005]]). But terminal does not mean lost. It means the variable's value is settled as an error, and the pipeline must deal with that error through its declared handlers. Errors are data flowing through the tree, not exceptions blowing up the stack.
+**Failed is terminal** — a Failed variable cannot receive further pushes (see [[technical/compile-rules/PGE/PGE02005-failed-is-terminal|PGE02005]]). But terminal does not mean lost. It means the variable's value is settled as an error, and the pipeline must deal with that error through its declared handlers. Errors are data flowing through the tree, not exceptions blowing up the stack.
 
-See [[concepts/variables/variable-lifecycle|Variable Lifecycle]] for the full state machine.
+See [[user/concepts/variable-lifecycle|Variable Lifecycle]] for the full state machine.
 
 ## No Happy Path Only Code
 
@@ -50,7 +51,7 @@ Polyglot does not allow developers to write code that only handles the success c
 
 - **Failable calls require error handling.** Every call to a failable pipeline must have an `[!]` error block, a fallback operator (`!<` or `!>`), or an explicit error suppression (`!*-`) with a compiler warning. There is no implicit error swallowing.
 
-- **Parallel jobs require collection.** Every `[=]` expand that fans out work must have a matching collector — `*All`, `*First`, `*Nth`, or a custom collector. Orphaned parallel jobs are a compile error (see [[technical/compile-rules/PGE/PGE01040-orphan-parallel|PGE01040]]).
+- **Parallel jobs require collection.** Every `[=]` expand that fans out work must have a matching collector — `*All`, `*First`, `*Nth`, or a custom collector. Orphaned parallel [[glossary#Job|jobs]] are a compile error (see [[technical/compile-rules/PGE/PGE01040-orphan-parallel-marker|PGE01040]]).
 
 - **Conditionals require exhaustive branches.** Every `[?]` conditional must cover all possible values, with `*?` as the mandatory catch-all for any values not explicitly matched. An incomplete conditional is a compile error.
 
@@ -76,7 +77,7 @@ The Polyglot compiler catches an entire class of errors that traditional languag
 
 The compiler is not a gatekeeper. It is a collaborator. It tells you what you missed before production tells you — and production's feedback comes as downtime, data loss, and 3am pages. The compiler's feedback comes as a compile error with a specific rule reference and a clear path to resolution.
 
-This connects to the "building permit" analogy from the [[philosophy/core-philosophy|core philosophy]]: the Polyglot compiler produces a behavioural contract — a complete specification of how to react and behave across all possible scenarios. Compilation is a license to launch. The compiler rejects incomplete specifications not because it is pedantic, but because the Polyglot Service needs instructions for every scenario. A pipeline with gaps is a pipeline that will eventually encounter a situation it has no instructions for — and in an async, trigger-driven system, "eventually" means "soon."
+This connects to the "building permit" analogy from the [[philosophy/core-philosophy|core philosophy]]: the Polyglot compiler produces a [[glossary#Behavioral Contract|Behavioral Contract]] — a complete specification of how to react and behave across all possible scenarios. Compilation is a license to launch. The compiler rejects incomplete specifications not because it is pedantic, but because the Polyglot Service needs instructions for every scenario. A pipeline with gaps is a pipeline that will eventually encounter a situation it has no instructions for — and in an async, trigger-driven system, "eventually" means "soon."
 
 ---
 
