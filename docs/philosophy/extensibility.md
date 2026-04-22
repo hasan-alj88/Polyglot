@@ -1,10 +1,12 @@
 ---
 audience: [automation-builder, integrator, design]
 type: reference
-updated: 2026-04-20
+updated: 2026-04-22
 ---
 
 <!-- @c:vision -->
+<!-- @c:philosophy/language-design -->
+<!-- @c:audit/reference/glossary -->
 <!-- @u:syntax/packages -->
 <!-- @u:concepts/pipelines/INDEX#Native vs Derived -->
 # Extensibility
@@ -13,7 +15,7 @@ updated: 2026-04-20
 
 ## pglib: The Standard Library
 
-Polyglot ships with `pglib` — a standard library of battle-tested operations that cover common automation needs. File operations, data transformations, date/time handling, collection operators, trigger types, queue strategies — these are not user-defined pipelines. They are compiler-known operations backed by native implementations, validated by the same exhaustive checks as any other pipeline.
+Polyglot ships with **pglib** — a standard library of battle-tested operations that cover common automation needs. File operations, data transformations, date/time handling, collection operators, trigger types, queue strategies — these are not user-defined pipelines. They are compiler-known operations backed by native implementations, validated by the same exhaustive checks as any other [[glossary#Pipeline|pipeline]].
 
 pglib exists because automation has common patterns. Reading a file, parsing JSON, iterating over a collection, handling a cron trigger — every automation project needs these. Rather than forcing every developer to rewrite them (and reintroduce the bugs that come with reimplementation), Polyglot provides them as first-class language features with full compiler support.
 
@@ -27,7 +29,7 @@ The critical property: **packages receive the same compile-time validation as co
 
 Packages cannot exceed the permissions granted by the importing pipeline. This is the **permission ceiling** — a structural guarantee that prevents packages from escalating access.
 
-When a pipeline imports a package with `[@]`, the package's pipelines inherit the importing pipeline's `{_}` permission grants as an upper bound. If the importing pipeline has no file-write permission, no package it imports can write files — regardless of what permissions the package declares internally. The compiler enforces this ceiling at import time, not at runtime.
+When a pipeline imports a package with `[@]`, the package's [[glossary#Pipeline|pipelines]] inherit the importing pipeline's `{_}` permission grants as an upper bound. If the importing pipeline has no file-write permission, no package it imports can write files — regardless of what permissions the package declares internally. The compiler enforces this ceiling at import time, not at runtime.
 
 This means developers can import third-party packages without auditing every line of their source code for permission abuse. The ceiling ensures that a package designed for data transformation cannot secretly open a network connection, and a package designed for file operations cannot exceed the specific file paths the importing pipeline grants. The permission model is not just access control — it is a trust boundary enforced by the compiler.
 

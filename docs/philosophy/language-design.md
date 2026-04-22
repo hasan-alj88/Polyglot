@@ -1,7 +1,7 @@
 ---
 audience: [automation-builder, integrator, design]
 type: reference
-updated: 2026-04-20
+updated: 2026-04-22
 ---
 
 <!-- @c:vision -->
@@ -9,13 +9,14 @@ updated: 2026-04-20
 <!-- @u:concepts/conditionals -->
 <!-- @u:concepts/errors -->
 <!-- @u:concepts/collections/INDEX -->
+<!-- @c:audit/reference/glossary -->
 # Language Design Principles
 
 > This page expands the language design principles summarized in [[vision]]. It is the authoritative source for Polyglot's design rationale and safety model.
 
 ## The Right Tool for the Right Job
 
-All programming languages have their own strengths and weaknesses. By allowing developers to use multiple languages within a single project, we can leverage the unique capabilities of each to create more efficient and effective solutions. For example, use Python for data analysis and machine learning, JavaScript for front-end development, and Rust for performance-critical operations.
+All programming languages have their own strengths and weaknesses. By allowing developers to use multiple languages within a single project through [[glossary#Cross-Language Integration|Cross-Language Integration]], we can leverage the unique capabilities of each to create more efficient and effective solutions. For example, use Python for data analysis and machine learning, JavaScript for front-end development, and Rust for performance-critical operations.
 
 ## On the Shoulders of Giants — Utilise Legacy Code
 
@@ -23,7 +24,7 @@ Years of battle-tested, production-proven code already exist across every langua
 
 ## Trigger-Driven, Async-Centric, Parallel-by-Design
 
-Polyglot makes parallel programming **easy, bug-free, safe, and — most importantly — intentional**. The platform applies Murphy's Law as a design principle: *if something can go wrong, it will go wrong* — so Polyglot proactively covers for it.
+[[glossary#Polyglot|Polyglot]] makes parallel programming — **trigger-driven**, **[[glossary#Async-Centric Automation|async-centric]]**, and **parallel-by-design** — **easy, bug-free, safe, and — most importantly — intentional**. The platform applies Murphy's Law as a design principle: *if something can go wrong, it will go wrong* — so Polyglot proactively covers for it.
 
 Polyglot's concurrency model builds on the async foundations established by languages like Python (`asyncio`), Rust (`tokio`), JavaScript (Promises), and Go (goroutines). These are powerful mechanisms — Polyglot does not replace them or claim superiority over them. What Polyglot adds is a layer of abstraction that lets developers express *what* should happen concurrently without managing the underlying synchronisation primitives directly.
 

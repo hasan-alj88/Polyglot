@@ -1,10 +1,12 @@
 ---
 audience: [automation-builder, integrator, design]
 type: reference
-updated: 2026-04-20
+updated: 2026-04-22
 ---
 
 <!-- @c:vision -->
+<!-- @c:philosophy/error-philosophy -->
+<!-- @c:audit/reference/glossary -->
 <!-- @u:technical/spec/behavior-contract -->
 <!-- @u:technical/spec/compiler-floor -->
 <!-- @u:concepts/pipelines/INDEX -->
@@ -14,11 +16,11 @@ updated: 2026-04-20
 
 ## The Building Permit
 
-Think of the Polyglot compiler as a building inspector, and the Behavioral Contract as a building permit.
+Think of the Polyglot compiler as a building inspector, and the [[glossary#Behavioral Contract|Behavioral Contract]] as a building permit.
 
 Before any construction can start, the permit must account for every disaster scenario and every building code requirement. What happens during an earthquake? Where are the fire exits? What is the load capacity of each floor? How does the electrical system handle a surge? The inspector does not approve construction until every scenario is addressed. There is no "we'll figure it out when it happens."
 
-The Polyglot compiler works the same way. Before a pipeline can run, the compiler must verify that every possible execution path is accounted for. What happens when this trigger fires? What if that input is missing? What if two parallel jobs race to the same resource? What if the foreign code throws an exception? The compiler produces the Behavioral Contract only when every scenario has an answer. Compilation is a license to launch.
+The Polyglot compiler works the same way. Before a [[glossary#Pipeline|pipeline]] can run, the compiler must verify that every possible execution path is accounted for. What happens when this trigger fires? What if that input is missing? What if two parallel jobs race to the same resource? What if the foreign code throws an exception? The compiler produces the Behavioral Contract only when every scenario has an answer. Compilation is a license to launch.
 
 ## Single Source of Truth
 
@@ -31,7 +33,7 @@ The Behavioral Contract is the single, authoritative specification of runtime be
 - **Permission grants** — what resources each job is allowed to access, and at what capacity
 - **Dispatch rules** — concurrency limits, queue strategy, wrapper lifecycle, host selection
 
-This is not a sequential step list. It is a signal map — a complete description of all possible execution states and transitions. The Trigger Monitor reads this map and orchestrates execution in an async environment.
+This is not a sequential step list. It is a signal map — a complete description of all possible execution states and transitions. The [[glossary#Trigger Monitor|Trigger Monitor]] reads this map and orchestrates execution in an async environment.
 
 ## Properties
 
@@ -49,7 +51,7 @@ The Behavioral Contract has four properties that distinguish it from traditional
 
 The compilation flow is a one-way handoff:
 
-1. The developer writes Polyglot Code (`.pg` files)
+1. The developer writes [[glossary#Polyglot Code|Polyglot Code]] ([[glossary#.pg files|.pg files]])
 2. The compiler validates signal logic — buggy concurrency, missing error paths, and permission violations are compile errors
 3. The compiler produces a Behavioral Contract — a serialized signal map for each pipeline
 4. The contract is registered in the Polyglot Service's database
