@@ -22,6 +22,7 @@ updated: 2026-04-09
 | 9.10 | `{ }` Comment Block | [[definition-blocks/09-10-comment\|09-10-comment]] |
 | 9.11 | `[%]` Metadata Block | [[definition-blocks/09-11-metadata\|09-11-metadata]] |
 | 9.12 | `{*}` Collector Definition | [[definition-blocks/09-12-collector\|09-12-collector]] |
+| 9.13 | `{$}` Constructor Definition | [[definition-blocks/09-13-constructor\|09-13-constructor]] |
 
 ## Related User Documentation
 
@@ -38,3 +39,4 @@ updated: 2026-04-09
 | 9.9 `{_}` Permission | [[concepts/permissions\|permissions]] |
 | 9.11 `[%]` Metadata | [[concepts/metadata\|metadata]] |
 | 9.12 `{*}` Collector | [[technical/spec/collector-definitions\|collector-definitions]] |
+| 9.13 `{$}` Constructor | [[syntax/constructors\|constructors]] |

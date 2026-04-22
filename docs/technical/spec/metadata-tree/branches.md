@@ -199,4 +199,39 @@ Nested sub-jobs extend the positional path:
 - **Permissions as IO** — blocks reference `{_}` objects through their IO markers: `(#) _PermName` on `{#}`, `(-) _PermName` on `{-}`. The `[_]` block-level marker is retired.
 - **Nested under `%@` and `%-`** — permissions also appear as `._` subsections under package (`%@:<address>._`) and pipeline (`%-:<name>:<instance>._`) branches, representing the package ceiling and pipeline-level grant references respectively.
 
+## Constructor Branch
+
+`%definition.$` stores constructor definitions (`{$}`). Constructors are compile-time-only — they produce typed Final values with no error surface. Unlike pipelines, constructors have **no runtime instances** (`%$` is the variable branch, not constructors). Constructor definitions live entirely under `%definition.$`.
+
+### Structure
+
+```polyglot
+%definition.$:DT:0                          <- overload 0: keyword "Today"
+├── .pattern                                <- compiled regex ("^Today$")
+├── .targetType                             <- #DT.Date
+├── .kind                                   <- #ConstructorKind.Keyword
+└── .captures                               <- (empty — keyword overload)
+
+%definition.$:DT:1                          <- overload 1: "{hours}:{min}:{seconds}"
+├── .pattern                                <- compiled regex
+├── .targetType                             <- #DT.Time
+├── .kind                                   <- #ConstructorKind.StringParsing
+└── .captures                               <- capture parameter definitions
+    ├── :hours                              <- capture name
+    │   └── .re                             <- "[0-9][0-9]"
+    ├── :min
+    │   └── .re                             <- "[0-9][0-9]"
+    └── :seconds
+        └── .re                             <- "[0-9][0-9]"
+```
+
+### Key Properties
+
+- **Definition-only** — constructors live under `%definition.$`, not as runtime instances. Constructor invocations produce `%$` variables (the existing variable branch).
+- **Overload-indexed** — each overload of a constructor name gets a sequential index: `%definition.$:DT:0`, `%definition.$:DT:1`, etc. The index is assigned in source order.
+- **Fixed fields** — `.pattern` (compiled regex), `.targetType` (type reference), `.kind` (`#ConstructorKind`), `.captures` (capture parameter definitions).
+- **Capture parameters** — stored under `.captures` with flexible `:name` fields, each containing a `.re` regex pattern.
+- **No `live` fields** — all constructor data is static. The compiler resolves constructors entirely during compilation.
+- **Cross-package visibility** — constructor definitions from imported packages are visible via `[@]` imports. Overload ambiguity across packages is a compile error at the import site.
+
 See also: [[io-ports|IO Port Nesting]], [[instance-lifecycle|Instance Lifecycle]], [[object-types|Object Type Branches]]

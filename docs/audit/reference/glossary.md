@@ -2,7 +2,7 @@
 audience: ai
 type: audit-reference
 scope: glossary
-updated: 2026-04-15
+updated: 2026-04-22
 ---
 
 # Glossary — Authoritative Definitions
@@ -47,6 +47,7 @@ Source: [[vision]]
 | #Map | *(Retired #275)* — replaced by ##Record (enum-keyed) or custom `{#}` types | Not active — use ##Record |
 | #Set | *(Retired #275)* — replaced by `#Array` + `%###Unique << #True` | Not active — use #Array with uniqueness constraint |
 | Schema Bundle | A `##` prefix — syntactic sugar for a reusable group of `%##` (branch-level) metadata assignments. Describes tree shape: depth, key types, ordering, uniformity. E.g., `##Scalar`, `##Flat`, `##Record` | Not a data type — a schema bundle describes type properties, it is not itself a `#` type |
+| Constructor | A `{$}` definition that produces a compile-time-guaranteed Final value with no error surface. Invoked as `$Name"literal"` in pipeline body. Two forms: string-parsing (regex captures via `($)` IO lines) and native pipeline (pglib only, `[-]` infallible calls). Uses `[$]` for target type binding. Metadata at `%$` | Not a pipeline — no trigger, queue, or wrapper. Not a type definition — it defines a construction path for an existing type. Not auto-derived from `{#}` |
 | Leaf Bundle | A `###` prefix — syntactic sugar for a reusable group of `%###` (leaf-level) metadata assignments. Describes leaf content nature: `###Value` for typed data, `###Enum` for variant selectors | Not a schema (`##`) — leaf bundles describe leaf content, not tree shape |
 
 ## Adding Terms
