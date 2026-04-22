@@ -1,6 +1,6 @@
 ---
 type: spec-index
-audience: [architect, designer]
+audience: design
 updated: 2026-03-30
 ---
 
@@ -12,9 +12,9 @@ updated: 2026-03-30
 
 Internal specifications for Polyglot project contributors. These documents describe how Polyglot Code is parsed, validated, and processed.
 
-## For Designers (Language Syntax & Semantics)
+## For Design (Language Syntax & Semantics)
 
-Designers own grammar, type system, compile rules, and edge cases. See [[audiences/designer]] for writing rules.
+Design owns grammar, type system, compile rules, and edge cases. See [[audiences/design]] for writing rules.
 
 | Area | Path | Content |
 |------|------|---------|
@@ -26,9 +26,9 @@ Designers own grammar, type system, compile rules, and edge cases. See [[audienc
 | Algorithms | compile-rules/algorithms/ | Cycle detection, overlap detection, compound exhaustiveness |
 | Type Identity | spec/type-identity.md | Structural type matching rules |
 
-## For Architects (Runtime & Service Architecture)
+## For Design (Runtime & Service Architecture)
 
-Architects own runtime execution, metadata, and service design. See [[audiences/architect]] for writing rules.
+Design owns runtime execution, metadata, and service design. See [[audiences/design]] for writing rules.
 
 | Area | Path | Content |
 |------|------|---------|

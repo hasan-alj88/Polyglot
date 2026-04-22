@@ -1,5 +1,5 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-tracking
 scope: issue-resolution-order
 updated: 2026-04-21

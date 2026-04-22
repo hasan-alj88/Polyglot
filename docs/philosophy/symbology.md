@@ -1,5 +1,5 @@
 ---
-audience: [automation-builder, integrator, architect, designer]
+audience: [automation-builder, integrator, design]
 type: reference
 updated: 2026-04-20
 ---

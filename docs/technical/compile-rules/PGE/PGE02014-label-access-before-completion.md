@@ -1,5 +1,5 @@
 ---
-audience: designer
+audience: design
 rule: "2.14"
 code: PGE02014
 name: Label Access Before Completion

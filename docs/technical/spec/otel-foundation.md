@@ -1,5 +1,5 @@
 ---
-audience: architect
+audience: design
 type: spec
 status: complete
 updated: 2026-04-18

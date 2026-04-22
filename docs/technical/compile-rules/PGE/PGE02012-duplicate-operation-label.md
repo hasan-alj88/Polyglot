@@ -1,5 +1,5 @@
 ---
-audience: designer
+audience: design
 rule: "2.12"
 code: PGE02012
 name: Duplicate Operation Label

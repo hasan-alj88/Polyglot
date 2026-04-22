@@ -1,8 +1,8 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-rules
 scope: writing-conventions
-updated: 2026-04-10
+updated: 2026-04-22
 ---
 
 # Writing Conventions
@@ -50,7 +50,7 @@ Authority: [[vision]]
 
 ```yaml
 ---
-audience: automation-builder | integrator | architect | designer | ai  # single value or YAML list
+audience: automation-builder | integrator | product | design | developer | ai-finder  # single value or YAML list
 type: spec | guide | reference | tutorial | audit-rules
 phase: NN (if part of a milestone phase)
 updated: YYYY-MM-DD

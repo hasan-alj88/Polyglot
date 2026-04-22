@@ -1,5 +1,5 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-reference
 scope: decision-record
 category: audience
@@ -13,7 +13,9 @@ updated: 2026-04-22
 
 Polyglot's documentation audience system was restructured from a flat three-tier model (user/developer/ai) into a two-group, five-audience model: two external audiences (automation-builder, integrator) and three internal audiences (architect, designer, ai). This gives each audience a distinct tone, scope, and set of assumptions.
 
-## Before
+**Revision (2026-04-22):** Further restructured to support Agile development workflow — see #353. architect + designer merged into "design"; "ai" renamed to "ai-finder"; "product" added; "developer" added.
+
+## Before (original)
 
 Three audiences with broad, overlapping scope:
 
@@ -23,7 +25,7 @@ Three audiences with broad, overlapping scope:
 
 The "user" audience conflated two very different needs: developers writing `.pg` files and developers integrating existing codebases via SDKs. The "developer" audience covered both architecture decisions and implementation details. "pg-coder" was used inconsistently as an alias for "user."
 
-## After
+## After (first restructure)
 
 Five audiences in two groups:
 
@@ -37,6 +39,22 @@ Five audiences in two groups:
 - **architect** — core architecture, system design, infrastructure decisions
 - **designer** — language spec, philosophy, syntax design, type system decisions
 - **ai** — AI-facing documentation, indexes, retrieval metadata
+
+## After (second restructure — #353)
+
+Six audiences in two groups:
+
+**External** (unchanged):
+
+- **automation-builder** — developers who write `.pg` files
+- **integrator** — developers who connect existing codebases via SDKs/APIs
+
+**Internal** (revised):
+
+- **product** — PRDs, user stories, acceptance criteria, roadmap
+- **design** — language spec, philosophy, architecture, design decisions (merges former architect + designer)
+- **developer** — implementation, compile rules, pglib, tests
+- **ai-finder** — discoverability layer: indexes, summaries, retrieval metadata for AI navigation
 
 Each audience has a dedicated file in `docs/audit/audiences/` with tone rules, format assumptions, and content guidelines.
 

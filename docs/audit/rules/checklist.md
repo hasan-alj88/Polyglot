@@ -1,8 +1,8 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-rules
 scope: quality-checklist
-updated: 2026-04-10
+updated: 2026-04-22
 ---
 
 # Documentation Quality Checklist
@@ -35,7 +35,7 @@ Run before finalizing any new or modified documentation.
 | ID | Check | Source |
 |----|-------|--------|
 | audience-declared | One or more audiences from allowed set declared in frontmatter | [[conventions#frontmatter]] |
-| tone-match | Tone matches first-listed audience rules | [[audiences/automation-builder]] \| [[audiences/integrator]] \| [[audiences/architect]] \| [[audiences/designer]] \| [[audiences/ai]] |
+| tone-match | Tone matches first-listed audience rules | [[audiences/automation-builder]] \| [[audiences/integrator]] \| [[audiences/product]] \| [[audiences/design]] \| [[audiences/developer]] \| [[audiences/ai-finder]] |
 | no-leak | Does not expose concerns outside declared audience set | Audience files |
 
 ## Completeness Check

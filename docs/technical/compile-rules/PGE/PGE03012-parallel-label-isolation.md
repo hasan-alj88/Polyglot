@@ -1,5 +1,5 @@
 ---
-audience: designer
+audience: design
 rule: "3.12"
 code: PGE03012
 name: Parallel Label Isolation

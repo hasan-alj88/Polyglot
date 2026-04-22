@@ -1,5 +1,5 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-reference
 scope: glossary
 updated: 2026-04-22
@@ -49,6 +49,17 @@ Source: [[vision]]
 | Schema Bundle | A `##` prefix — syntactic sugar for a reusable group of `%##` (branch-level) metadata assignments. Describes tree shape: depth, key types, ordering, uniformity. E.g., `##Scalar`, `##Flat`, `##Record` | Not a data type — a schema bundle describes type properties, it is not itself a `#` type |
 | Constructor | A `{$}` definition that produces a compile-time-guaranteed Final value with no error surface. Invoked as `$Name"literal"` in pipeline body. Two forms: string-parsing (regex captures via `($)` IO lines) and native pipeline (pglib only, `[-]` infallible calls). Uses `[$]` for target type binding. Metadata at `%$` | Not a pipeline — no trigger, queue, or wrapper. Not a type definition — it defines a construction path for an existing type. Not auto-derived from `{#}` |
 | Leaf Bundle | A `###` prefix — syntactic sugar for a reusable group of `%###` (leaf-level) metadata assignments. Describes leaf content nature: `###Value` for typed data, `###Enum` for variant selectors | Not a schema (`##`) — leaf bundles describe leaf content, not tree shape |
+
+## Audience Tiers
+
+| Audience | Group | Description |
+|----------|-------|-------------|
+| automation-builder | External | Developers who write .pg files |
+| integrator | External | Developers who connect existing codebases via SDKs/APIs without writing .pg code |
+| product | Internal | PRDs, user stories, acceptance criteria, roadmap |
+| design | Internal | Language spec, philosophy, architecture, design decisions |
+| developer | Internal | Implementation, compile rules, pglib, tests |
+| ai-finder | Internal | Indexes, summaries, retrieval metadata for AI navigation |
 
 ## Adding Terms
 

@@ -1,5 +1,5 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-reference
 scope: decision-history
 updated: 2026-04-22
@@ -46,7 +46,7 @@ Examples:
 
 ```yaml
 ---
-audience: ai
+audience: ai-finder
 type: audit-reference
 scope: decision-record
 category: syntax | compiler-rule | compiler-operation | type-system | runtime | audience | process

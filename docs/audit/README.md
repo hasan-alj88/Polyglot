@@ -1,8 +1,8 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-index
 scope: all-documentation
-updated: 2026-04-10
+updated: 2026-04-22
 ---
 
 # Audit — Claude's Documentation Ground Truth
@@ -17,9 +17,10 @@ updated: 2026-04-10
 |------|---------------------|--------------|
 | [[audiences/automation-builder\|audiences/automation-builder]] | Tone, format, assumptions for .pg code writers (external) | Before writing automation-builder docs |
 | [[audiences/integrator\|audiences/integrator]] | Tone, format, assumptions for SDK/API integrators (external) | Before writing integrator docs |
-| [[audiences/architect\|audiences/architect]] | Tone, format, assumptions for core architecture docs (internal) | Before writing architect docs |
-| [[audiences/designer\|audiences/designer]] | Tone, format, assumptions for language design docs (internal) | Before writing designer docs |
-| [[audiences/ai\|audiences/ai]] | Tone, format, assumptions for AI-facing docs (internal) | Before writing AI docs |
+| [[audiences/product\|audiences/product]] | Tone, format, assumptions for product docs (internal) | Before writing product docs |
+| [[audiences/design\|audiences/design]] | Tone, format, assumptions for language + architecture design docs (internal) | Before writing design docs |
+| [[audiences/developer\|audiences/developer]] | Tone, format, assumptions for implementation docs (internal) | Before writing developer docs |
+| [[audiences/ai-finder\|audiences/ai-finder]] | Tone, format, assumptions for AI discoverability docs (internal) | Before writing AI-finder docs |
 | [[rules/conventions\|rules/conventions]] | Style, structure, formatting rules | Before writing any doc |
 | [[rules/checklist\|rules/checklist]] | Pre-publish quality checks | Before finalizing any doc |
 | [[reference/glossary\|reference/glossary]] | Authoritative term definitions | When using project terminology |

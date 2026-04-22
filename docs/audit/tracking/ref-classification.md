@@ -1,5 +1,5 @@
 ---
-audience: ai
+audience: ai-finder
 type: audit-tracking
 scope: cross-reference-classification
 updated: 2026-04-10
