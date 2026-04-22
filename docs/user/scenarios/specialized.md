@@ -46,7 +46,7 @@ Automation scenarios for monitoring, API management, security, healthcare, suppl
 | 292 | OAuth token refresher | Scheduled | Pre-refresh expiring OAuth tokens to avoid downtime |
 | 293 | API usage analytics | Scheduled | Aggregate endpoint usage, latency, error rates into dashboard |
 | 294 | Swagger doc generator | Webhook | Regenerate API documentation on schema changes |
-| 295 | Third-party API failover | Event | Switch to backup provider when primary API is down |
+| 295 | Third-party API failover | Signal | Switch to backup provider when primary API is down |
 | 296 | API gateway config sync | Webhook | Propagate routing rules across gateway instances |
 | 297 | Payload transformation proxy | Webhook | Translate between API versions for backward compatibility |
 | 298 | API changelog publisher | Webhook | Document API changes and notify subscribed consumers |
@@ -87,10 +87,10 @@ Automation scenarios for monitoring, API management, security, healthcare, suppl
 | 388 | Patient intake form processor | Webhook | Digitize intake forms, populate EHR fields |
 | 389 | Insurance verification | Webhook | Verify patient coverage before appointments via payer API |
 | 390 | Clinical trial enrollment | Webhook | Match patients to eligible trials, notify coordinators |
-| 391 | HIPAA audit logger | Event | Log all PHI access events for compliance reporting |
+| 391 | HIPAA audit logger | Signal | Log all PHI access events for compliance reporting |
 | 392 | Medication interaction checker | Webhook | Check new prescriptions against current meds for interactions |
 | 393 | Referral management | Webhook | Process referrals, schedule with specialist, update PCP |
-| 394 | Waitlist manager | Event | Notify waitlisted patients when slots open |
+| 394 | Waitlist manager | Signal | Notify waitlisted patients when slots open |
 | 395 | Telehealth session setup | Scheduled | Send video links and prep instructions before virtual visits |
 | 396 | Medical device alert handler | Webhook | Process FDA alerts, identify affected devices in inventory |
 | 397 | Patient satisfaction surveyor | Webhook | Send surveys post-visit, aggregate scores |

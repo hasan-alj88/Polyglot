@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** No active issue — ready for next work item
+**Current focus:** Issue #346 — Documentation compliance sweep
 
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
-Phase: Issues #343 + #344 — Constructor compile errors + docs update
-Plan: 353-01 complete
-Status: UNIFY complete, ready for MERGE
-Last activity: 2026-04-22 — Unified 353-01: all 3 ACs passed, SUMMARY created
+Phase: Issue #346 — Documentation compliance sweep
+Plan: 346-02 created, awaiting approval
+Status: PLAN created, ready for APPLY
+Last activity: 2026-04-22 — Created 346-02-PLAN.md (commit + close #346)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -140,14 +140,20 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #346 — Tracking: Documentation compliance sweep (62% → 100%)
+Branch: docs/issue-346-documentation-compliance-sweep
+Labels: docs, P2-high
+Started: 2026-04-22
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/346
+
+Sub-issues: #347 (P1), #348 (P2), #349 (P2), #350 (P2), #351 (P3), #352 (P3)
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+  ✓        ○        ○     [346-02 plan created, awaiting approval]
 ```
 
 ## Accumulated Context
@@ -356,10 +362,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Issue #353 merged and closed
-Next action: Run /paul:issues or /paul:progress to pick next work
-Resume file: none
-Resume context: Issue #353 complete; audience tiers migrated to 6-audience model
+Stopped at: Plan 346-02 created
+Next action: Review and approve plan, then run /paul:apply 346-02
+Resume file: .paul/phases/346-docs-compliance-sweep/346-02-PLAN.md
+Resume context: All 6 sub-issues closed. 346-02 commits unstaged 346-01 work and closes #346.
 
 ---
 *STATE.md — Updated after every significant action*

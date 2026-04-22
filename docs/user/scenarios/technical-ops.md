@@ -43,7 +43,7 @@ Automation scenarios for file management, IT operations, DevOps, cloud infrastru
 | 55 | Disk space monitor | Scheduled | Poll servers for disk usage, alert and clean temp if threshold hit |
 | 56 | DNS record updater | Webhook | Update DNS records via API when infrastructure changes |
 | 57 | Patch compliance checker | Scheduled | Scan systems for missing patches, generate compliance report |
-| 58 | Service restart handler | Event | Detect crashed service, attempt restart, escalate if repeated |
+| 58 | Service restart handler | Signal | Detect crashed service, attempt restart, escalate if repeated |
 | 59 | Firewall rule auditor | Scheduled | Export firewall rules, diff against baseline, flag deviations |
 | 60 | Backup verification | Scheduled | Restore latest backup to test environment, run integrity checks |
 | 61 | Asset inventory sync | Scheduled | Scan network for devices, update CMDB with discoveries |
@@ -77,18 +77,18 @@ Many DevOps scenarios below are natural fits for `-T.Git.*` triggers (`-T.Git.Pu
 | 82 | Performance regression detector | Webhook | Compare benchmark results against baseline, flag regressions |
 | 83 | Terraform plan reviewer | Webhook | Run terraform plan on PR, post diff as comment |
 | 84 | Artifact cleanup | Scheduled | Delete old build artifacts exceeding retention policy |
-| 85 | Canary deploy monitor | Event | Watch error rate during canary rollout, auto-rollback if spike |
+| 85 | Canary deploy monitor | Signal | Watch error rate during canary rollout, auto-rollback if spike |
 
 ## 16. Cloud Infrastructure
 
 | # | Scenario | Trigger | Description |
 |---|----------|---------|-------------|
-| 252 | Auto-scaling trigger | Event | Scale instances based on CPU/memory threshold alerts |
+| 252 | Auto-scaling trigger | Signal | Scale instances based on CPU/memory threshold alerts |
 | 253 | Unused resource finder | Scheduled | Identify unattached EBS volumes, idle instances, stale IPs |
 | 254 | Cloud cost optimizer | Scheduled | Recommend reserved instances and savings plans |
 | 255 | Tag compliance enforcer | Scheduled | Find untagged resources, apply defaults, notify owners |
 | 256 | Multi-cloud inventory sync | Scheduled | Aggregate resource inventories across AWS, GCP, Azure |
-| 257 | Spot instance manager | Event | Handle spot interruptions, migrate workloads, relaunch |
+| 257 | Spot instance manager | Signal | Handle spot interruptions, migrate workloads, relaunch |
 | 258 | S3 lifecycle policy auditor | Scheduled | Verify lifecycle rules match retention requirements |
 | 259 | CloudFormation drift detector | Scheduled | Check stacks for drift, alert on manual changes |
 | 260 | IAM access reviewer | Scheduled | Report overly permissive IAM policies, suggest tightening |
@@ -98,7 +98,7 @@ Many DevOps scenarios below are natural fits for `-T.Git.*` triggers (`-T.Git.Pu
 | 264 | Cloud backup scheduler | Scheduled | Trigger snapshots of volumes and databases per policy |
 | 265 | CDN cache invalidator | Webhook | Purge CDN cache on content deployment |
 | 266 | Cross-region replication checker | Scheduled | Verify replication lag and consistency across regions |
-| 267 | Kubernetes node scaler | Event | Add or remove nodes based on pod scheduling pressure |
+| 267 | Kubernetes node scaler | Signal | Add or remove nodes based on pod scheduling pressure |
 | 268 | Cloud network latency monitor | Scheduled | Measure inter-region latency, alert on degradation |
 
 ## 17. Database Operations
@@ -118,7 +118,7 @@ Many DevOps scenarios below are natural fits for `-T.Git.*` triggers (`-T.Git.Pu
 | 279 | Partition maintenance | Scheduled | Create new partitions, drop expired ones per schedule |
 | 280 | Cross-database sync | Scheduled | Replicate selected tables between different database engines |
 | 281 | Deadlock detector | Stream | Parse logs for deadlocks, alert with query details |
-| 282 | Read replica promoter | Event | Promote read replica to primary on primary failure |
+| 282 | Read replica promoter | Signal | Promote read replica to primary on primary failure |
 | 283 | Statistics updater | Scheduled | Run ANALYZE on tables with significant data changes |
 | 284 | Temp table cleanup | Scheduled | Drop orphaned temporary tables from long-running sessions |
 | 285 | Parameter tuning advisor | Scheduled | Analyze workload, recommend config parameter changes |

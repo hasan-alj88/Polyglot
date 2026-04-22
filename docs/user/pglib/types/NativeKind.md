@@ -35,7 +35,7 @@ See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] f
 
 | Variant | Role | Example |
 |---------|------|---------|
-| `.Trigger` | Event source — fires pipeline execution | `-T.Call`, `-T.Daily`, `-T.Webhook` |
+| `.Trigger` | Signal source — fires pipeline execution | `-T.Call`, `-T.Daily`, `-T.Webhook` |
 | `.Queue` | Queue strategy — controls dispatch ordering | `-Q.Default`, `-Q.Pause.Hard` |
 | `.Wrapper` | Resource lifecycle — setup/teardown around body | `-W.Polyglot`, `-W.RT` |
 | `.Execution` | Data operation — reads, writes, transforms | `-File.Text.Read`, `=DB.Query`, `-Math.Add` |

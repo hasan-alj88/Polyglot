@@ -119,7 +119,7 @@ Nested sub-jobs extend the positional path:
 
 ## Trigger Branch
 
-`%T` stores trigger definitions (`{T}`). Triggers are specialized pipeline subtypes that define event sources with IO-only bodies. Each `[T]` invocation in a pipeline creates a new trigger instance.
+`%T` stores trigger definitions (`{T}`). Triggers are specialized pipeline subtypes that define signal sources with IO-only bodies. Each `[T]` invocation in a pipeline creates a new trigger instance.
 
 ### Structure
 

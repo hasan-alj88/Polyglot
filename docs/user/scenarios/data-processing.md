@@ -40,9 +40,9 @@ Automation scenarios for ETL pipelines, AI/ML operations, IoT sensor data, repor
 | 320 | Model training pipeline | Scheduled | Fetch data, preprocess, train, evaluate, version model |
 | 321 | Model performance monitor | Scheduled | Track prediction accuracy, alert on drift |
 | 322 | Feature store updater | Scheduled | Compute and refresh feature values from raw data |
-| 323 | A/B model experiment | Event | Route traffic between model versions, collect metrics |
+| 323 | A/B model experiment | Signal | Route traffic between model versions, collect metrics |
 | 324 | Data labeling dispatcher | Scheduled | Queue unlabeled data, distribute to annotators |
-| 325 | GPU cluster scaler | Event | Scale GPU nodes based on training job queue depth |
+| 325 | GPU cluster scaler | Signal | Scale GPU nodes based on training job queue depth |
 | 326 | Model registry updater | Webhook | Register trained models, update metadata and lineage |
 | 327 | Inference endpoint deployer | Webhook | Deploy approved models to serving infrastructure |
 | 328 | Training data validator | Scheduled | Check for label quality, class imbalance, data leakage |
@@ -67,7 +67,7 @@ Automation scenarios for ETL pipelines, AI/ML operations, IoT sensor data, repor
 | 342 | Geofence event processor | Stream | Trigger actions when tracked assets enter/exit zones |
 | 343 | Energy consumption optimizer | Scheduled | Analyze usage patterns, adjust HVAC/lighting schedules |
 | 344 | Environmental compliance logger | Stream | Record environmental readings for regulatory reporting |
-| 345 | Smart lock access logger | Event | Log access events, detect anomalous entry patterns |
+| 345 | Smart lock access logger | Signal | Log access events, detect anomalous entry patterns |
 | 346 | Fleet tracking dashboard | Stream | Aggregate vehicle GPS data, calculate routes and ETA |
 | 347 | Water leak detector | Stream | Monitor flow sensors, alert on anomalous usage patterns |
 | 348 | Air quality monitor | Stream | Track AQI sensors, alert building management on poor readings |
@@ -106,7 +106,7 @@ Automation scenarios for ETL pipelines, AI/ML operations, IoT sensor data, repor
 | 403 | Grade book sync | Webhook | Sync grades between LMS and student information system |
 | 404 | Certificate generator | Webhook | Generate completion certificates with unique IDs |
 | 405 | Plagiarism check submitter | Webhook | Submit assignments to plagiarism service, log results |
-| 406 | Attendance tracker | Event | Record attendance from check-in events, flag absences |
+| 406 | Attendance tracker | Signal | Record attendance from check-in events, flag absences |
 | 407 | Tutor matching engine | Webhook | Match tutoring requests to available tutors by subject |
 | 408 | Learning path recommender | Scheduled | Suggest next courses based on completion history |
 | 409 | Student progress reporter | Scheduled | Generate progress reports for parents/advisors |

@@ -29,7 +29,7 @@ Automation scenarios for email, social media, messaging platforms, and media pro
 | 46 | Invoice email extractor | Email | Detect invoices in email, extract amounts and dates, log to sheet |
 | 47 | Follow-up reminder | Scheduled | Check sent emails with no reply after N days, send follow-up |
 | 48 | Shared mailbox dispatcher | Email | Triage shared inbox, assign to team members by topic |
-| 49 | Out-of-office sync | Event | Detect calendar OOO events, enable auto-reply, notify team |
+| 49 | Out-of-office sync | Signal | Detect calendar OOO events, enable auto-reply, notify team |
 | 50 | Email compliance archiver | Email | Archive all emails matching regulatory keywords to vault |
 | 51 | Bulk email validator | Manual | Verify email list for deliverability, remove invalid addresses |
 
