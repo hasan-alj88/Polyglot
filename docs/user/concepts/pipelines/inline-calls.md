@@ -1,28 +1,36 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-12
+updated: 2026-04-22
 ---
 
 <!-- @concepts/pipelines/INDEX -->
 <!-- @u:technical/ebnf/08-expressions -->
 
-## Inline Pipeline Calls
+## Inline Pipeline Calls (Infrastructure Lines Only)
 
-Polyglot's power comes from reusing battle-tested code that already works — not reinventing it. Inline pipeline calls are where this philosophy meets ergonomics: a pipeline wrapping Python's `pathlib`, a Rust hashing function, or a database connector all look the same at the call site. The caller writes `-Pipeline"value"` and expresses intent; Polyglot handles the wiring, type checking, and concurrency underneath. The language running behind the pipeline is an implementation detail the caller never needs to know.
+> **Scope change:** Inline pipeline calls (`-Pipeline"string"`) are now scoped to **infrastructure lines only** — `[T]` triggers, `[Q]` queue config, and `[W]` wrapper config. For value construction in pipeline execution body, use `{$}` **Constructor blocks** — see [[syntax/constructors]]. For dynamic value parsing in execution body, use standard `[-]` pipeline calls with error handling.
+
+Polyglot's power comes from reusing battle-tested code that already works — not reinventing it. Inline pipeline calls are where this philosophy meets ergonomics on infrastructure lines: a trigger wrapping a schedule, a queue wrapping a Redis config, or a wrapper wrapping an environment all look the same at the call site. The caller writes `-T.Daily"3AM"` and expresses intent; Polyglot handles the wiring underneath.
 
 <!-- @c:types -->
-An inline pipeline call evaluates a pipeline as a single value. The syntax is `-Pipeline"string"` — a pipeline reference immediately followed by a string literal. Inline calls are valid anywhere a `value_expr` is expected: assignment RHS, comparison operands, etc. See [[syntax/types/strings#`-Path"..."` Inline Notation]] for the `-Path` example. Whether the target pipeline wraps a Python library, a Rust function, or a database connector, the inline call looks the same — the syntax abstracts away what language runs underneath.
+An inline pipeline call evaluates a pipeline configuration as a single value on infrastructure lines (`[T]`, `[Q]`, `[W]`). The syntax is `-Pipeline"string"` — a pipeline reference immediately followed by a string literal. Inline calls on infrastructure lines configure pipeline behavior at definition time — they are not execution body operations and have no error handling semantics (triggered-or-not).
 
 ```polyglot
-[-] $dir#path << -Path"/tmp/MyApp"
-[-] $msg#string << -Greeting"Hello {$name}"
-[?] $dir =? -Path"/expected"
+[ ] Infrastructure lines — inline calls valid
+[T] -T.Daily"9AM"
+[Q] -Q.Name"my-queue-config"
+[W] -W.Env
+   (-) <env#; << ;MyEnv
 ```
 
-### `%InlineString` Template Declaration
+> **Superseded:** Inline calls in execution body (e.g., `[-] $dir << -Path"/tmp"`) are replaced by constructors (`[-] $dir << $Path"/tmp"`) for known values, or standard pipeline calls (`[-] -Pipeline` with `[!]` error handling) for dynamic values. See [[syntax/constructors#The Three-Context Rule]].
 
-To accept inline calls, a pipeline declares a `%InlineString` template in its `(-)` IO section:
+### `%InlineString` Template Declaration (Infrastructure Pipelines)
+
+`%InlineString` is used by trigger (`{T}`), queue (`{Q}`), and wrapper (`{W}`) pipeline definitions to accept inline configuration strings. It is **not** used by `{-}` execution pipelines — value construction in execution body uses `{$}` constructors instead (see [[syntax/constructors]]).
+
+To accept inline calls, an infrastructure pipeline declares a `%InlineString` template in its `(-)` IO section:
 
 ```polyglot
 (-) %InlineString << "{path}"

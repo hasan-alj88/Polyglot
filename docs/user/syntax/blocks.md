@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-05
+updated: 2026-04-22
 status: complete
 ---
 
@@ -13,7 +13,7 @@ status: complete
 <!-- @u:technical/ebnf/09-definition-blocks -->
 <!-- @u:technical/edge-cases/05-block-elements -->
 <!-- @u:technical/edge-cases/09-definition-blocks -->
-Three bracket shapes with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native`, `{*}` at `%*` (see [[data-is-trees]]).
+Three bracket shapes with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native`, `{*}` at `%*`, `{$}` at `%$` (see [[data-is-trees]]).
 
 > **Notation:** Throughout this document, `X` in `{X}`, `[X]`, and `(X)` is a **placeholder** for any valid marker character — not a literal. The `}`, `]`, `)` in this notation are part of the **opening marker itself**, not closing delimiters. For example, `{#}` is one indivisible opening token that means "start a struct definition." There are no separate closing brackets in Polyglot Code.
 
@@ -35,6 +35,7 @@ Define top-level structures. Open a scope that continues with indentation. All d
 | `{_}` | Permission object — `##Permission` struct instance with all leaves filled. Carries both grant (capability) and resource locator (path, host, etc.). Supports `(_)` input lines for templates. `_`/`__`/`___` mirror `#`/`##`/`###` (instance, template, field). See [[permissions]] |
 | `{N}` | Native definition — compiler primitive with no Polyglot body. `[%]` metadata implicitly scopes to `%Native.*`. Non-user-extendable. See [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
 | `{*}` | Collector definition — first-class definable collector logic. Metadata at `%*`. See [[technical/spec/collector-definitions\|Collector Definitions]] |
+| `{$}` | Constructor definition — produces compile-time-guaranteed Final values with no error surface. Two overload forms: string-parsing (`($)` regex captures mapped to `[$]` target type) and native pipeline (pglib only, `[-]` infallible calls). Prefix symmetry: `{#}` → `#Type`, `{-}` → `-Pipeline`, `{$}` → `$Constructor`. Metadata at `%$`. See [[constructors]] |
 | `{ }` | Comment. See [[comments]] |
 
 **Marker declarations on `{-}`:** The `[exe]` marker declares the pipeline as an execution pipeline, invocable via `[-]`, `[=]`, or `[b]`. `{-}` without a marker defaults to `{-}[exe]` — no warning. Subsets like `{-}[b]` (background-only) or `{-}[-=]` (sequential/parallel only) restrict how the pipeline can be invoked. Subtypes (`{T}`, `{W}`, `{Q}`) have fixed implicit markers and cannot take `marker_decl`. See [[concepts/pipelines/INDEX#Marker Declarations|Marker Declarations]] for full details.
@@ -70,7 +71,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `(<)` | Input parameter handling — scoped under `(-)` input line. See [[io#IO Parameter Handling]] |
 | `(T)` | Trigger IO line — declares arrival data as `$` variables inside `{*}` collector trigger blocks. See [[technical/spec/collector-definitions\|Collector Definitions]] |
 | `(-) $Label` | Operation label — names a call's IO for downstream access via `$Label>output`. The `(-)` marker mirrors the `[-]` pipeline call context. See [[operation-labels]] |
-| `($)` | Variable-scope accessor line — used under `(-) $Label` for grouped fallbacks and variable-scope operations. See [[operation-labels]] |
+| `($)` | (1) Variable-scope accessor line — used under `(-) $Label` for grouped fallbacks and variable-scope operations. See [[operation-labels]]. (2) Constructor IO line — inside `{$}` definitions, declares regex-validated capture parameters: `($) <name.re << "pattern"`. Context disambiguates: under `(-) $Label` = variable-scope, under `{$}` = constructor IO. See [[constructors]] |
 | `(.)` | Chain step label — names individual steps within a chain, indented under `(-) $Label`. See [[operation-labels#Chain Step Labels]] |
 | `( )` | IO comment — inline annotation within IO blocks. See [[comments]] |
 
@@ -83,6 +84,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `[b]` | Run/execute in background (fire and forget) |
 | `[*]` | Invoke a collector operator (`*All`, `*First`, `*Nth`, `*Ignore`). IO lines underneath use `(*)`. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `[#]` | Load serialized data into typed structure. In `{#}` definitions, loads external files at compile time — requires `(#) _PermName` permission input. Subject to [[permissions/enforcement#Compile-Time File Binding]] (content-hashed, permission-revoked on change). See [[ebnf/10-execution#Data Load]] |
+| `[$]` | Constructor type binding — inside `{$}` definitions, declares the target type: `[$] #TargetType`. Exactly one per overload. Must appear after all `($)` IO lines and before `[.]` field assignments. See [[constructors]] |
 
 ### Control Flow
 

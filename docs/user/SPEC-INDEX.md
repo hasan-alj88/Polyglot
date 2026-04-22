@@ -1,7 +1,7 @@
 ---
 type: spec-index
 audience: automation-builder
-updated: 2026-03-30
+updated: 2026-04-22
 ---
 
 # Polyglot Language Reference
@@ -31,6 +31,7 @@ flowchart LR
 | 2 | comments.md | [ ] and { } single-line, [ ]< multi-line |
 | 3 | identifiers.md | Prefixes (@#=$!%), . fixed / : flexible separators |
 | 4 | blocks.md | {X} definitions, [X] block elements, full registry |
+| 4b | constructors.md | {$} constructor blocks — compile-time guaranteed values, no error surface |
 | 5 | types/INDEX.md | Type system, RawString, #String, structs, enums (read INDEX then sub-pages) |
 | 6 | operators.md | Assignment (<<, >>, <~, ~>), comparison, negation, range, arithmetic |
 | 7 | io.md | < input / > output parameters, IO line patterns |

@@ -94,6 +94,25 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   +-- :(name)                             %definition.Q:{name}
 |   |       +-- .strategy, .host, ...            → [[branches#Queue Branch]]
 |   |
+|   +-- .$                                      Constructor definitions
+|   |   |                                       → [[definition-templates#Constructor Definition Templates]]
+|   |   |                                       → [[branches#Constructor Branch]]
+|   |   +-- :DT:0                               %definition.$:DT:0  ("Today" keyword)
+|   |   |   +-- .pattern                        "^Today$"
+|   |   |   +-- .targetType                     #DT.Date
+|   |   |   +-- .kind                           #ConstructorKind.Keyword
+|   |   |   +-- .captures                       (empty)
+|   |   +-- :DT:1                               %definition.$:DT:1  ("{hours}:{min}:{seconds}")
+|   |   |   +-- .pattern                        compiled regex
+|   |   |   +-- .targetType                     #DT.Time
+|   |   |   +-- .kind                           #ConstructorKind.StringParsing
+|   |   |   +-- .captures
+|   |   |       +-- :hours  (.re "[0-9][0-9]")
+|   |   |       +-- :min    (.re "[0-9][0-9]")
+|   |   |       +-- :seconds (.re "[0-9][0-9]")
+|   |   +-- :Path:0                             %definition.$:Path:0
+|   |   +-- :(any user-defined):N
+|   |
 |   +-- .##                                     Schema definitions
 |   |   |                                       → [[definition-templates#Schema Definition Templates]]
 |   |   |

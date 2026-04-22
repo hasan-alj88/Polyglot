@@ -32,10 +32,12 @@ registry_elem       ::= "[@]" ;
    (@) _PermName in {@} packages. See §5.2 IO Brackets. *)
 
 (* Execution *)
-execution_elem      ::= "[-]" | "[=]" | "[b]" | "[#]" ;
-                      (* [-] sequential, [=] parallel, [b] background, [#] data load.
+execution_elem      ::= "[-]" | "[=]" | "[b]" | "[#]" | "[$]" ;
+                      (* [-] sequential, [=] parallel, [b] background, [#] data load,
+                         [$] constructor type binding.
                          [#] is dual-context: execution element in {-} pipeline bodies,
-                         schema/type declaration element in {#} definition bodies — see §4.3, §9.2 *)
+                         schema/type declaration element in {#} definition bodies — see §4.3, §9.2.
+                         [$] appears only inside {$} constructor definitions — see §9.13 *)
 
 (* Control Flow *)
 control_flow_elem   ::= "[?]" | "[!]" | "[T]" | "[Q]" | "[W]" ;
@@ -80,7 +82,7 @@ IO brackets use round brackets to distinguish data binding from control instruct
 | `(_)` | Permission ref (under `(-)`, `(#)`, `(@)`) | Permission IO — inputs for `__` generic permissions |
 | `(>)` | Under `(-)` output line | Output parameter handling (fallback) |
 | `(<)` | Under `(-)` input line | Input parameter handling (fallback) |
-| `($)` | Pipeline/chain call | Operation label — names the call for downstream IO access |
+| `($)` | Pipeline/chain call; `{$}` definition | Dual-context: (1) Operation label — names a call for downstream IO access (under `(-) $Label`). (2) Constructor IO — regex capture parameter declaration (under `{$}` — see §9.13) |
 | `(.)` | Under `($)` in chains | Chain step label — names individual chain steps by position |
 | `( )` | Any IO context | IO comment — inline annotation |
 

@@ -20,6 +20,34 @@ updated: 2026-04-09
 
 Definitions are immutable at runtime — they are resolved entirely at compile time.
 
+## Constructor Definition Templates (`%definition.$`)
+
+`{$}` constructor definitions live at `%definition.$:{ConstructorName}:{OverloadIndex}`. Each overload of a constructor name gets its own sequential index. Constructor definitions are compile-time-only — they have no runtime instances (constructor invocations produce `%$` variables).
+
+| Definition path | Ensures |
+|-----------------|---------|
+| `%definition.$:DT:0` | "Today" keyword overload → `#DT.Date` |
+| `%definition.$:DT:1` | "{hours}:{min}:{seconds}" string-parsing overload → `#DT.Time` |
+| `%definition.$:Path:0` | "/{segments}" string-parsing overload → `#path` |
+
+Each overload stores:
+
+```polyglot
+%definition.$:DT:1
+├── .pattern                                <- compiled regex from pattern string
+├── .targetType                             <- #DT.Time (from [$] binding)
+├── .kind                                   <- #ConstructorKind (StringParsing, Keyword, NativePipeline)
+└── .captures                               <- capture parameter definitions
+    ├── :hours                              <- named capture
+    │   └── .re                             <- regex pattern "[0-9][0-9]"
+    ├── :min
+    │   └── .re                             <- "[0-9][0-9]"
+    └── :seconds
+        └── .re                             <- "[0-9][0-9]"
+```
+
+Constructor definitions are immutable compile-time templates. The compiler uses them for overload resolution (regex matching), structural integrity checks (capture regex vs literal separators), and interpolation validation (only constructor-sourced `$var` allowed).
+
 ## Schema Definition Templates (`%definition.##`)
 
 `##` schema types live at `%definition.##:{SchemaName}` in the metadata tree. Each schema defines tree-structure properties using the `%##` prefix. A `##` schema is a named bundle of `%##` properties — composing `[#] ##Flat` expands into the individual `%##` assignments stored at `%definition.##:Flat`. The `%##` properties are the ground truth; schemas are syntactic sugar over them:
