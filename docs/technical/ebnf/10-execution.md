@@ -1,7 +1,7 @@
 ---
 audience: designer
 type: spec
-updated: 2026-04-09
+updated: 2026-04-22
 ---
 
 <!-- @ebnf/INDEX -->
@@ -17,7 +17,6 @@ background_line     ::= "[b]" exec_expr ;
 
 exec_expr           ::= assignment_expr
                       | pipeline_call
-                      | chain_call
                       | expand_invocation ;
 
 (* Bare identifiers and literals are not valid exec_expr — see PGE01020. *)
@@ -74,44 +73,7 @@ grouped_fallback_line ::= "($)" ">" output_name "!>" value_expr           (* gen
       (-) <mb << 2048.0
 ```
 
-### 10.3 Chain Execution
-
-```ebnf
-chain_call          ::= pipeline_ref "->" pipeline_ref { "->" pipeline_ref } NEWLINE
-                         [ indent chain_label_block ]
-                         { indent chain_io_line NEWLINE }
-                         { indent chain_error_block NEWLINE } ;
-
-chain_label_block   ::= operation_label NEWLINE
-                         { indent step_label NEWLINE } ;
-
-step_ref            ::= step_index | step_leaf_name | step_label_ref ;
-step_label_ref      ::= variable_id ;
-step_index          ::= digit { digit } ;              (* 0-based position in chain *)
-step_leaf_name      ::= name ;                          (* last segment of pipeline dotted name *)
-
-chain_io_param      ::= ( '<' | '>' ) step_ref fixed_sep name { field_separator name }
-                         [ type_annotation ] ;
-
-chain_io_line       ::= "(-)" chain_io_param assignment_op ( value_expr | chain_io_param )
-                      | "(-)" chain_io_param "!<" value_expr ;
-
-chain_error_block   ::= "[!]" '!' step_ref fixed_sep error_name NEWLINE
-                         { indent exec_line NEWLINE } ;
-
-error_name          ::= dotted_name ;
-```
-
-**Rules:**
-- `>N.param` pushes into step N's input (pipeline perspective).
-- `<N.param` pulls from step N's output (pipeline perspective).
-- `step_leaf_name` is the final segment of a pipeline's dotted name and must be unambiguous within the chain.
-- **Auto-wire:** When step N has exactly one output and step N+1 has exactly one input of the same type, the `chain_io_line` between them may be omitted.
-- Type annotations on `chain_io_param` are optional — types are inferred from pipeline definitions.
-- Errors reference the step that produces them: `!0.File.NotFound` or `!Read.File.NotFound`.
-- **Chain fallback:** In chains, fallback uses `!<` directly on `(-)` chain IO lines (not `(>)`/`(<)` block markers, since those cannot carry step references). Example: `(-) <0.content !< ""`. Same precedence and duplicate rules (PGE07003) apply.
-
-### 10.4 Data Load
+### 10.3 Data Load
 
 ```ebnf
 data_load           ::= "[#]" assign_target assignment_op ( pipeline_call | data_id ) ;

@@ -173,7 +173,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | Code | Name |
 |------|------|
 | PGE07001 | `[!]` Error Block Scoping |
-| PGE07002 | Chain Error Scoping |
+| PGE07002 | Chain Error Scoping (Retired) |
 | PGE07003 | Duplicate Fallback Assignment |
 | PGE07004 | Duplicate Error Handler |
 | PGE07005 | Undeclared Error Raise |
@@ -189,15 +189,15 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE08001 | Auto-Wire Type Mismatch |
 | PGE08002 | Auto-Wire Ambiguous Type |
 | PGE08003 | Auto-Wire Unmatched Parameter |
-| PGE08004 | Ambiguous Step Reference |
-| PGE08005 | Unresolved Step Reference |
-| PGE08006 | Non-Pipeline Step in Chain |
+| PGE08004 | Ambiguous Step Reference (Retired) |
+| PGE08005 | Unresolved Step Reference (Retired) |
+| PGE08006 | Non-Pipeline Step in Chain (Retired) |
 | PGE08007 | Invalid Assignment Target |
 | PGE08008 | Missing Required Input at Call Site |
 | PGE08009 | Uncaptured Required Output at Call Site |
 | PGE08010 | IO Direction Mismatch |
 | PGE08011 | Self-Assignment |
-| PGE08012 | Self-Chain Requires Numeric Indexing |
+| PGE08012 | Self-Chain Requires Numeric Indexing (Retired) |
 | PGE08013 | Nested Inline Data |
 
 ### 09 — Imports & Dependencies
@@ -228,7 +228,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE10004 | Undeclared Permission |
 | PGE10005 | Invalid Permission Block Marker |
 | PGE10006 | Duplicate Permission |
-| PGE10007 | Chain Step Label Overflow |
+| PGE10007 | Chain Step Label Overflow (Retired) |
 | PGE10008 | Parallel Write Permission Exclusion |
 | PGE10009 | Unresolved Permission Template |
 | PGE10010 | Permission Resource Not Found |
