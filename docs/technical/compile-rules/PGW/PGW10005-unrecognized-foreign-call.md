@@ -6,7 +6,7 @@ name: Unrecognized Foreign Call
 severity: warning
 ---
 
-### Rule 9.6 — Unrecognized Foreign Call
+# Rule 9.6 — Unrecognized Foreign Call
 `PGW10005`
 
 <!-- @u:concepts/permissions/foreign-code -->

@@ -6,7 +6,7 @@ name: "[b] Called Pipeline Has Discarded Outputs"
 severity: warning
 ---
 
-### Rule 3.5w — `[b]` Called Pipeline Has Discarded Outputs
+# Rule 3.5w — `[b]` Called Pipeline Has Discarded Outputs
 `PGW03001`
 
 <!-- @u:syntax/io -->

@@ -6,7 +6,7 @@ name: Invalid Range Bounds
 severity: error
 ---
 
-### Rule 4.12 — Invalid Range Bounds
+# Rule 4.12 — Invalid Range Bounds
 `PGE04013`
 
 <!-- @u:syntax/blocks -->
@@ -116,6 +116,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[syntax/operators|Operators]] — range bound ordering rules in conditionals

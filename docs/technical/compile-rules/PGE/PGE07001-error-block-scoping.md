@@ -6,7 +6,7 @@ name: Error Block Scoping
 severity: error
 ---
 
-### Rule 7.1 — `[!]` Error Block Scoping
+# Rule 7.1 — `[!]` Error Block Scoping
 `PGE07001`
 
 <!-- @u:syntax/blocks -->
@@ -71,6 +71,6 @@ severity: error
       [-] -NoOp
 ```
 
-### See Also
+## See Also
 
 - [[user/concepts/errors|Errors]] — references PGE07001 in error scoping rules

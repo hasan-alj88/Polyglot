@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #345 — Wildcard auto-wire: <* << $A>* bijective type-topology matching
+**Current focus:** Issue #356 — Audit fixes: docs/technical/compiler and docs/technical/compile-rules
 
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
-Phase: No active issue
-Plan: —
-Status: Ready for next issue
-Last activity: 2026-04-23 — #345 merged to main, issue closed
+Phase: Issue #356 — Audit fixes: compiler + compile-rules (3/3 plans COMPLETE — all loops closed; phase transition in progress)
+Plan: 356-03 UNIFY complete — last plan in phase
+Status: Phase #356 complete — ready for commit + MERGE to main
+Last activity: 2026-04-23 — Plan 356-03 UNIFY: reconciled plan vs actual, SUMMARY finalized, all 6 ACs pass with 1 documented anomaly
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -134,6 +134,7 @@ Progress:
 - Issue #346: [██████████] 100% (2/2 plans — documentation compliance sweep)
 - Issue #355: [██████████] 100% (1/1 plans — philosophy compliance sweep)
 - Issue #345: [██████████] 100% (1/1 plans — wildcard auto-wire `<* << $A>*`; merged)
+- Issue #356: [██████████] 100% (3/3 plans complete — 356-01 headings + 356-02 indexes committed; 356-03 UNIFY complete, ready for commit + merge)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -143,14 +144,18 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #356 — Audit fixes: docs/technical/compiler and docs/technical/compile-rules
+Branch: docs/issue-356-audit-compiler-compile-rules
+Labels: docs, P3-medium, docs-inconsistency
+Started: 2026-04-23
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/356
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Plan 356-03 loop closed — phase #356 ready for commit + merge]
 ```
 
 ## Accumulated Context
@@ -343,6 +348,9 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #346 — Documentation compliance sweep | 2026-04-22 | Merged docs/issue-346-documentation-compliance-sweep to main; 6/6 sub-issues |
 | Issue #345 — Wildcard auto-wire complete | 2026-04-23 | EBNF §7.4 productions + §10.2 alt, PGE08001/02/03/PGW08001 rewritten for wildcard context, `auto-wire.md` user doc, EC-10.17-20, glossary; PGE08003 reframed as Port Count Mismatch; 11 files |
 | Closed #345 — Wildcard auto-wire | 2026-04-23 | Merged design/issue-345-wildcard-auto-wire to main |
+| Plan 356-01 — Heading + frontmatter normalization | 2026-04-23 | 195 files: H3→H1 rule titles (187 files, incl. 4 See Also outliers), PGE12xxx rule-number fix (9 files); completes #136 sweep precedent across full corpus |
+| Plan 356-02 — Directory indexes | 2026-04-23 | 5 new INDEX.md (compile-rules root, PGE/187, PGW/30, algorithms/3, compiler/4); frontmatter-driven generation; 0 existing files modified; all 17 wikilink targets verified |
+| Plan 356-03 — Stub removal + glossary + wikilinks | 2026-04-23 | Deleted TYPE-IDENTITY.md stub (10 refs retargeted to [[type-identity]]); added "Behavior Contract" glossary row; body-level [[wikilink]] retrofit on PGE01005/06/07 + PGE03025; reciprocal @c: + body link between io-registry.md ↔ ast-invisible-registry.md; 1 deletion + 18 modifications; all 6 ACs pass; anomaly: conversions.md had an 11th stub ref not in plan-time grep |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -362,10 +370,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-23
-Stopped at: #345 merged to main, issue closed, branch deleted
-Next action: Run /paul:issues to pick the next issue
-Resume file: —
-Resume context: Issue #345 wildcard auto-wire merged and closed. 12 local commits ahead of origin/main (pending push). No active issue.
+Stopped at: Plan 356-03 UNIFY complete — all 3 plans in phase #356 now have closed loops; SUMMARY reconciles plan vs actual.
+Next action: Commit plan 356-03 changes (1 deletion + 18 modifications) with docs: prefix matching 356-01/02 pattern, then run /paul:merge to merge docs/issue-356-audit-compiler-compile-rules to main (closes #356)
+Resume file: .paul/phases/356-audit-compiler-compile-rules/356-03-SUMMARY.md
+Resume context: Phase #356 complete. Branch docs/issue-356-audit-compiler-compile-rules has 2 existing plan commits (f8eacb3 356-01, 04be91c 356-02); plan 356-03 work is staged/modified but not yet committed. Next: commit 356-03 as its own docs: commit, then merge the full branch to main. After merge, #356 closes on GitHub, and the 356 audit phase is fully shipped. P2 deferred items ("Enforced by" back-refs sweep, cycle-detection.md audience reconciliation, rule-definition template) remain open for future issues.
 
 ---
 *STATE.md — Updated after every significant action*

@@ -73,7 +73,7 @@ The compiler performs best-effort static analysis:
       [-] >user << $defaultUser
 ```
 
-See [TYPE-IDENTITY](../../technical/compile-rules/TYPE-IDENTITY.md) rules 5 and 6, [PGE04009](../../technical/compile-rules/PGE/PGE04009-unhandled-serial-struct-conversion.md).
+See [[type-identity|Type Identity]] rules 5 and 6, [[PGE04009-unhandled-serial-struct-conversion|PGE04009]].
 
 ## See Also
 

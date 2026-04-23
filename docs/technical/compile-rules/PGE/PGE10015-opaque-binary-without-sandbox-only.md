@@ -6,7 +6,7 @@ name: Opaque Binary Without Sandbox Acknowledgment
 severity: error
 ---
 
-### Rule 9.29 — Opaque Binary Without Sandbox Acknowledgment
+# Rule 9.29 — Opaque Binary Without Sandbox Acknowledgment
 `PGE10015`
 
 <!-- @c:technical/spec/job-sandbox#Opaque Code -->

@@ -8,7 +8,7 @@ type: spec
 updated: 2026-04-09
 ---
 
-### Rule 2.13 — Write To Label Accessor
+# Rule 2.13 — Write To Label Accessor
 `PGE02013`
 
 <!-- @u:syntax/blocks -->

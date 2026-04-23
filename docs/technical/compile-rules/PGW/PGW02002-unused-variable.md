@@ -6,7 +6,7 @@ name: Unused Variable
 severity: warning
 ---
 
-### Rule 2.2 — Unused Variable
+# Rule 2.2 — Unused Variable
 `PGW02002`
 
 <!-- @u:syntax/blocks -->

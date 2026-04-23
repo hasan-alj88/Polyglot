@@ -6,7 +6,7 @@ name: Undeclared Permission
 severity: error
 ---
 
-### Rule 9.18 — Undeclared Permission
+# Rule 9.18 — Undeclared Permission
 `PGE10004`
 
 <!-- @u:syntax/blocks -->

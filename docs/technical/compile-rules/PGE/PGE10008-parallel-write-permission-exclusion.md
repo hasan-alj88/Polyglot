@@ -6,7 +6,7 @@ name: Parallel Write Permission Exclusion
 severity: error
 ---
 
-### Rule 10.8 — Parallel Write Permission Exclusion
+# Rule 10.8 — Parallel Write Permission Exclusion
 `PGE10008`
 
 <!-- @u:syntax/io -->
@@ -132,7 +132,7 @@ severity: error
 
 **Note:** This rule applies only to `[=]` parallel jobs within the same parallel scope. Sequential `[-]` jobs can write to the same resource because they execute in order. `[b]` fire-and-forget jobs are also subject to this rule if they share a parallel scope with other `[=]` or `[b]` jobs.
 
-### See Also
+## See Also
 
 - [[concepts/collections/collect#Permission Safety]] — user-facing explanation of parallel write exclusion
 - [[concepts/permissions#Parallel Write Exclusion]] — permission system integration

@@ -6,7 +6,7 @@ name: Unresolved Pipeline Reference
 severity: error
 ---
 
-### Rule 9.3 — Unresolved Pipeline Reference
+# Rule 9.3 — Unresolved Pipeline Reference
 `PGE09003`
 
 <!-- @u:syntax/blocks -->
@@ -97,7 +97,7 @@ severity: error
       (-) <input#string << $data
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09003 in dependency rules
 

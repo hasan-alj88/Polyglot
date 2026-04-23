@@ -6,7 +6,7 @@ name: Duplicate IO Parameter Name
 severity: error
 ---
 
-### Rule 1.11 — Duplicate IO Parameter Name
+# Rule 1.11 — Duplicate IO Parameter Name
 `PGE01011`
 
 <!-- @u:syntax/blocks -->
@@ -69,6 +69,6 @@ severity: error
 
 **Open point:** Parent-child overlap (`<person` + `<person.age` in the same IO section) is a separate concern — not covered by this rule.
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/inline-calls|Inline Calls]] — documents duplicate IO wiring constraint, references PGE01011

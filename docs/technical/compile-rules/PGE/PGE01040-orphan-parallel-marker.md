@@ -154,7 +154,7 @@ severity: error
    (-) <event << $event
 ```
 
-### See Also
+## See Also
 
 - [[compile-rules/PGE/PGE01024-incompatible-operation-marker|PGE01024]] — operation used with incompatible marker
 - [[compile-rules/PGE/PGE03005-b-has-no-collectible-output|PGE03005]] — `[b]` has no collectible output

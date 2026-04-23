@@ -6,7 +6,7 @@ name: Duplicate Permission
 severity: error
 ---
 
-### Rule 9.20 — Duplicate Permission
+# Rule 9.20 — Duplicate Permission
 `PGE10006`
 
 <!-- @u:syntax/blocks -->

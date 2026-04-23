@@ -6,7 +6,7 @@ name: Wrong Block Element Marker
 severity: error
 ---
 
-### Rule 1.17 — Wrong Block Element Marker
+# Rule 1.17 — Wrong Block Element Marker
 `PGE01017`
 
 <!-- @u:syntax/blocks -->
@@ -78,7 +78,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/execution|Execution]] — documents (-) vs [-] marker distinction, references PGE01017
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01017

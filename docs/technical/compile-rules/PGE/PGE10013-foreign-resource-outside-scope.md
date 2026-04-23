@@ -6,7 +6,7 @@ name: Foreign Resource Outside Scope
 severity: error
 ---
 
-### Rule 9.27 — Foreign Resource Outside Scope
+# Rule 9.27 — Foreign Resource Outside Scope
 `PGE10013`
 
 <!-- @u:concepts/permissions/foreign-code -->

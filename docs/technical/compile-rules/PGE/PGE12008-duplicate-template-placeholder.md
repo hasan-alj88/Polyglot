@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "10.2"
+rule: "12.8"
 code: PGE12008
 name: Duplicate Template Placeholder
 severity: error
 ---
 
-# Rule 10.2 — Duplicate Template Placeholder
+# Rule 12.8 — Duplicate Template Placeholder
 `PGE12008`
 
 <!-- @u:concepts/pipelines/inline-calls -->

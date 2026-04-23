@@ -6,7 +6,7 @@ name: Bind Schema Mismatch
 severity: error
 ---
 
-### Rule 1.37 — Bind Schema Mismatch
+# Rule 1.37 — Bind Schema Mismatch
 `PGE01037`
 
 <!-- @u:pglib/pipelines/Run/INDEX -->

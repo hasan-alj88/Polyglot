@@ -6,7 +6,7 @@ name: Nested Inline Data
 severity: error
 ---
 
-### Rule 8.13 — Nested Inline Data
+# Rule 8.13 — Nested Inline Data
 `PGE08013`
 
 <!-- @u:EBNF:inline_data -->
@@ -39,7 +39,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[technical/ebnf/08-expressions|EBNF §8.3 — Inline Data]] — `inline_value` production
 - [[technical/edge-cases/08-expressions|EC-8.8 — Nested inline data (INVALID)]]

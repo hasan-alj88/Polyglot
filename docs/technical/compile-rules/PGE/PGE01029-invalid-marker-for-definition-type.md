@@ -6,7 +6,7 @@ name: Invalid Marker for Definition Type
 severity: error
 ---
 
-### Rule 1.29 — Invalid Marker for Definition Type
+# Rule 1.29 — Invalid Marker for Definition Type
 `PGE01029`
 
 <!-- @c:brainstorming:marker-declarations §4 Rule A -->
@@ -58,7 +58,7 @@ severity: error
 
 **Diagnostic:** "Definition `{X}` does not accept marker `[Y]` — [reason per type]"
 
-### See Also
+## See Also
 
 - [[marker-declarations|Marker Declarations Brainstorming]] — §4 Rule A, valid/invalid examples
 - [[09-definition-blocks|EBNF §9]] — `marker_decl` grammar and implicit marker rules

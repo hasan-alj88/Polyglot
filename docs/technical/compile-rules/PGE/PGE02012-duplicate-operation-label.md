@@ -8,7 +8,7 @@ type: spec
 updated: 2026-04-09
 ---
 
-### Rule 2.12 — Duplicate Operation Label
+# Rule 2.12 — Duplicate Operation Label
 `PGE02012`
 
 <!-- @u:syntax/blocks -->

@@ -6,7 +6,7 @@ name: Unhandled Serial→Struct Conversion
 severity: error
 ---
 
-### Rule 4.9 — Unhandled Serial→Struct Conversion
+# Rule 4.9 — Unhandled Serial→Struct Conversion
 `PGE04009`
 
 <!-- @u:syntax/blocks -->
@@ -101,10 +101,10 @@ severity: error
 **See also:**
 - [PGE04002 — Schema Mismatch](PGE04002-schema-mismatch.md) — provable static mismatch
 - [PGE02005 — Failed Must Resolve](PGE02005-failed-is-terminal.md) — compiler-enforced error handling
-- [TYPE-IDENTITY](../TYPE-IDENTITY.md) — rule 6 (serial→struct)
+- [[type-identity|Type Identity]] — rule 6 (serial→struct)
 - [serial-to-struct-matching](../../brainstorming/serial-to-struct-matching.md) — decision rationale
 
-### See Also
+## See Also
 
 - [[syntax/types/conversions|Type Conversions]] — user-facing summary of serial-to-struct rules (this rule is authoritative)
 - [[concepts/pipelines/error-handling|Error Handling]] — `[!]` blocks and `!<`/`!>` fallback operators

@@ -7,7 +7,7 @@ severity: error
 status: grammar-enforced
 ---
 
-### Rule 4.25 — Untyped Array (Grammar-Enforced)
+# Rule 4.25 — Untyped Array (Grammar-Enforced)
 `PGE04025`
 
 <!-- @u:syntax/io -->

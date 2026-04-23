@@ -6,7 +6,7 @@ name: Caller Overrides Pipeline Fallback
 severity: warning
 ---
 
-### Rule 7.2w — Caller Overrides Pipeline Fallback
+# Rule 7.2w — Caller Overrides Pipeline Fallback
 `PGW07002`
 
 <!-- @u:syntax/blocks -->

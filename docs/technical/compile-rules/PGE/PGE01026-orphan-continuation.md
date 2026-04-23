@@ -6,7 +6,7 @@ name: Orphan Continuation Line
 severity: error
 ---
 
-### Rule 1.26 — Orphan Continuation Line
+# Rule 1.26 — Orphan Continuation Line
 `PGE01026`
 
 <!-- @u:syntax/blocks -->

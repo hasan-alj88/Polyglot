@@ -6,7 +6,7 @@ name: Pipeline Section Misordering
 severity: error
 ---
 
-### Rule 1.1 — Pipeline Section Misordering
+# Rule 1.1 — Pipeline Section Misordering
 `PGE01001`
 
 <!-- @u:syntax/blocks -->
@@ -53,7 +53,7 @@ severity: error
 
 **Diagnostic:** "Pipeline `-Process` sections are misordered — expected `(-),[T]` → `[Q]` → setup → body → cleanup"
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/INDEX|Pipelines Overview]] — references PGE01001 in pipeline section ordering
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01001

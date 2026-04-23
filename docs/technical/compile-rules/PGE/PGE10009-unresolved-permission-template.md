@@ -6,7 +6,7 @@ name: Unresolved Permission Template
 severity: error
 ---
 
-### Rule 9.23 — Unresolved Permission Template
+# Rule 9.23 — Unresolved Permission Template
 `PGE10009`
 
 <!-- @u:syntax/blocks -->

@@ -6,7 +6,7 @@ name: Missing Fallback Message
 severity: warning
 ---
 
-### Rule 7.3w — Missing Fallback Message
+# Rule 7.3w — Missing Fallback Message
 `PGW07003`
 
 <!-- @u:syntax/blocks -->

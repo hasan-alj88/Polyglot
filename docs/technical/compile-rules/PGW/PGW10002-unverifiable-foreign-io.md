@@ -6,7 +6,7 @@ name: Unverifiable Foreign IO
 severity: warning
 ---
 
-### Rule 9.4 — Unverifiable Foreign IO
+# Rule 9.4 — Unverifiable Foreign IO
 `PGW10002`
 
 <!-- @u:concepts/permissions/foreign-code -->

@@ -6,7 +6,7 @@ name: Live Metadata Fields Are Pull-Only
 severity: error
 ---
 
-### Rule 2.6 — `live` Metadata Fields Are Pull-Only
+# Rule 2.6 — `live` Metadata Fields Are Pull-Only
 `PGE02006`
 
 <!-- @u:syntax/blocks -->
@@ -69,6 +69,6 @@ severity: error
 [-] -Pipeline%status <~ #Running   [ ] ✗ PGE02006 — %status is live, cannot push
 ```
 
-### See Also
+## See Also
 
 - [[concepts/metadata|Metadata]] — documents `live` field pull-only semantics and references PGE02006

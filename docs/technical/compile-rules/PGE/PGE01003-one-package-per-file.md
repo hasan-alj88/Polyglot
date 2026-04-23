@@ -5,7 +5,7 @@ code: PGE01003
 name: One Package Declaration Per File
 ---
 
-### Rule 1.3 — One Package Declaration Per File
+# Rule 1.3 — One Package Declaration Per File
 `PGE01003`
 
 <!-- @u:syntax/blocks -->

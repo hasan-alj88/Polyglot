@@ -6,7 +6,7 @@ name: Empty Conditional Scope
 severity: error
 ---
 
-### Rule 6.10 — Empty Conditional Scope
+# Rule 6.10 — Empty Conditional Scope
 `PGE06010`
 
 <!-- @u:syntax/blocks -->
@@ -60,6 +60,6 @@ severity: error
 - [PGW01001 — Empty Execution Body](../PGW/PGW01001-empty-execution-body.md) — warning for empty pipeline body (different scope)
 - [PGE06001 — Conditional Must Be Exhaustive](PGE06001-conditional-must-be-exhaustive.md) — exhaustiveness rule
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — empty branch rules reference PGE06010

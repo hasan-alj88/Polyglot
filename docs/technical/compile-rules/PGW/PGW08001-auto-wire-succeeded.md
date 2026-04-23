@@ -7,7 +7,7 @@ severity: warning
 updated: 2026-04-23
 ---
 
-### Rule 8.1 — Auto-Wire Succeeded
+# Rule 8.1 — Auto-Wire Succeeded
 `PGW08001`
 
 <!-- @u:syntax/blocks -->

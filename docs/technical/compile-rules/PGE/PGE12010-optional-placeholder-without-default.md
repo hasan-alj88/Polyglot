@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "10.2"
+rule: "12.10"
 code: PGE12010
 name: Optional Placeholder Without Default
 severity: error
 ---
 
-# Rule 10.2 — Optional Placeholder Without Default
+# Rule 12.10 — Optional Placeholder Without Default
 `PGE12010`
 
 <!-- @u:concepts/pipelines/inline-calls -->

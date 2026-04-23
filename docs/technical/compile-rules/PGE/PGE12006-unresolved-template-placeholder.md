@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "10.2"
+rule: "12.6"
 code: PGE12006
 name: Unresolved Template Placeholder
 severity: error
 ---
 
-# Rule 10.2 — Unresolved Template Placeholder
+# Rule 12.6 — Unresolved Template Placeholder
 `PGE12006`
 
 <!-- @u:concepts/pipelines/inline-calls -->

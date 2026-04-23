@@ -6,7 +6,7 @@ name: Wrapper Must Reference Wrapper Definition
 severity: error
 ---
 
-### Rule 1.8 — Wrapper Must Reference Wrapper Definition
+# Rule 1.8 — Wrapper Must Reference Wrapper Definition
 `PGE01008`
 
 <!-- @u:syntax/blocks -->
@@ -68,7 +68,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/wrappers|Wrappers]] — documents wrapper usage, references PGE01008
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01008

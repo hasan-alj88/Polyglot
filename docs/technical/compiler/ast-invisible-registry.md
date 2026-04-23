@@ -17,6 +17,8 @@ The AST-invisible registry maps foreign function names and constructs that evade
 
 Unlike the IO registry (which maps *analyzable* IO calls to permission categories), this registry lists constructs that **cannot be analyzed at all**. These are functions that generate, load, or execute code at runtime — the compiler cannot see what they will do, so they must be banned outright.
 
+For the analyzable side of the analysis surface, see [[io-registry|IO Registry]] — together they form the complete foreign-code analysis input.
+
 The registry is a separate configuration file (`ast-invisible-registry.toml`) that ships with the compiler but is versioned independently. It contains:
 
 - **Banned constructs** — per-language tables of functions/constructs that evade AST analysis

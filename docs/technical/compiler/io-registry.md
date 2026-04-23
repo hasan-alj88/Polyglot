@@ -9,6 +9,7 @@ updated: 2026-04-18
 
 <!-- @c:technical/algorithms/foreign-code-analysis -->
 <!-- @u:concepts/permissions/foreign-code -->
+<!-- @c:technical/compiler/ast-invisible-registry -->
 
 The IO registry maps foreign function names to permission categories with the parameter position that holds the resource argument. It is the core data structure behind the compiler's foreign code analysis.
 
@@ -19,6 +20,8 @@ The registry is a separate configuration file (`io-registry.toml`) that ships wi
 - **Sink tables** — per-language, per-category function→resource mappings
 - **Known-pure functions** — builtins that are silently skipped during analysis
 - **Deferred categories** — future expansion areas
+
+**Companion registry:** [[ast-invisible-registry|AST-Invisible Functions Registry]] is the dual to this file — it lists foreign constructs that **cannot** be analyzed (eval/exec/dynamic codegen). Together they cover the foreign-code analysis surface: this file maps analyzable IO to permission categories; the AST-invisible registry bans the unanalyzable.
 
 ## Registry Structure
 

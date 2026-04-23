@@ -6,7 +6,7 @@ name: Invalid Permission Block Marker
 severity: error
 ---
 
-### Rule 9.19 — Invalid Permission Block Marker
+# Rule 9.19 — Invalid Permission Block Marker
 `PGE10005`
 
 <!-- @u:syntax/blocks -->

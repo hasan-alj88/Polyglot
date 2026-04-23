@@ -6,7 +6,7 @@ name: Default Pull Across State Change
 severity: warning
 ---
 
-### Rule 2.7 — Default Pull Across State Change
+# Rule 2.7 — Default Pull Across State Change
 `PGW02001`
 
 <!-- @u:syntax/blocks -->

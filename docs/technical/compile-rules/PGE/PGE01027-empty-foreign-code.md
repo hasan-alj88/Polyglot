@@ -6,7 +6,7 @@ name: Empty Foreign Code Block
 severity: error
 ---
 
-### Rule 1.27 — Empty Foreign Code Block
+# Rule 1.27 — Empty Foreign Code Block
 `PGE01027`
 
 <!-- @u:syntax/blocks -->

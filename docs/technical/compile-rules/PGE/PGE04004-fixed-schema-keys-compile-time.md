@@ -6,7 +6,7 @@ name: Fixed-Schema Keys Are Compile-Time Only
 severity: error
 ---
 
-### Rule 4.4 — Fixed-Schema Keys Are Compile-Time Only
+# Rule 4.4 — Fixed-Schema Keys Are Compile-Time Only
 `PGE04004`
 
 <!-- @u:syntax/blocks -->

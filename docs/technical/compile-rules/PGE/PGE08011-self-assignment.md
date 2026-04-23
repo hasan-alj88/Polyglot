@@ -6,7 +6,7 @@ name: Self-Assignment
 severity: error
 ---
 
-### Rule 8.11 — Self-Assignment
+# Rule 8.11 — Self-Assignment
 `PGE08011`
 
 <!-- @u:syntax/blocks -->
@@ -46,7 +46,7 @@ severity: error
 
 **Diagnostic:** "Self-assignment of `{identifier}` — target and source are the same identifier, producing no state change"
 
-### See Also
+## See Also
 
 - [[technical/compile-rules/PGE/PGE02010-discard-default-assignment|PGE02010]] — Discard Default Assignment (related no-op pattern)
 - [[technical/compile-rules/PGE/PGE02003-final-is-push-once|PGE02003]] — Final Is Push-Once (lifecycle context)

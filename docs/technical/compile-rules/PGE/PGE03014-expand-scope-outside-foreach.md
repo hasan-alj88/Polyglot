@@ -6,7 +6,7 @@ name: Expand-Scoped Collector Outside ForEach
 severity: error
 ---
 
-### Rule 3.14 — Expand-Scoped Collector Outside ForEach
+# Rule 3.14 — Expand-Scoped Collector Outside ForEach
 `PGE03014`
 
 <!-- @u:technical/spec/collector-definitions -->
@@ -35,7 +35,7 @@ severity: error
    (*) >sum >> $total
 ```
 
-### See Also
+## See Also
 
 - [[PGE03015-parallel-scope-inside-foreach]] — inverse rule
 - [[concepts/collections/collect|Collect Operators]] — scope semantics

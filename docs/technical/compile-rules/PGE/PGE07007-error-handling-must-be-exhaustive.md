@@ -384,6 +384,6 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [-] >content << $content
 ```
 
-### See Also
+## See Also
 
 - [[user/concepts/errors|Errors]] — references PGE07007 in declaring pipeline errors

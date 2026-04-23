@@ -6,7 +6,7 @@ name: Undeclared Error Raise
 severity: error
 ---
 
-### Rule 7.5 — Undeclared Error Raise
+# Rule 7.5 — Undeclared Error Raise
 `PGE07005`
 
 <!-- @u:syntax/blocks -->
@@ -63,7 +63,7 @@ severity: error
       [-] >validated << $name
 ```
 
-### See Also
+## See Also
 
 - [[user/concepts/errors|Errors]] — references PGE07005 in raising errors section
 

@@ -6,7 +6,7 @@ name: Tautological or Contradictory Branch Condition
 severity: error
 ---
 
-### Rule 6.13 — Tautological or Contradictory Branch Condition
+# Rule 6.13 — Tautological or Contradictory Branch Condition
 `PGE06013`
 
 <!-- @u:syntax/blocks -->
@@ -73,6 +73,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — tautological/contradictory branch rules reference PGE06013

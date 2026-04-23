@@ -6,7 +6,7 @@ name: Pipeline Terminates on Error
 severity: warning
 ---
 
-### Rule 2.5w — Pipeline Terminates on Error
+# Rule 2.5w — Pipeline Terminates on Error
 `PGW02004`
 
 <!-- @u:syntax/blocks -->

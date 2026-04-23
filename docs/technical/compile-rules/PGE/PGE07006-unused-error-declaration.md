@@ -6,7 +6,7 @@ name: Unused Error Declaration
 severity: error
 ---
 
-### Rule 7.6 — Unused Error Declaration
+# Rule 7.6 — Unused Error Declaration
 `PGE07006`
 
 <!-- @u:syntax/blocks -->
@@ -60,7 +60,7 @@ severity: error
       [-] >validated << $name
 ```
 
-### See Also
+## See Also
 
 - [[user/concepts/errors|Errors]] — references PGE07006 in declaring pipeline errors
 

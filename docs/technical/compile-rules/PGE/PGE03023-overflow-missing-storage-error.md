@@ -6,7 +6,7 @@ name: Overflow Strategy Missing Storage Error
 severity: error
 ---
 
-### Rule 3.23 — Overflow Strategy Missing Storage Error
+# Rule 3.23 — Overflow Strategy Missing Storage Error
 `PGE03023`
 
 <!-- @u:technical/spec/collector-definitions -->
@@ -34,7 +34,7 @@ severity: error
    ...
 ```
 
-### See Also
+## See Also
 
 - [[technical/spec/collector-definitions|Collector Definitions]] — Ground Rule 9
 - [[pglib/types/OverflowStrategy|#OverflowStrategy]] — overflow variants

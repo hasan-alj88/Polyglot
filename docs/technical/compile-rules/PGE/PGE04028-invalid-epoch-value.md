@@ -6,7 +6,7 @@ name: Invalid Epoch Value
 severity: error
 ---
 
-### Rule 4.28 — Invalid Epoch Value
+# Rule 4.28 — Invalid Epoch Value
 `PGE04028`
 
 <!-- @u:syntax/blocks -->
@@ -36,7 +36,7 @@ severity: error
 [ ] ✗ PGE04028 — epoch value outside representable range
 ```
 
-### See Also
+## See Also
 
 - [[pglib/types/datetime|DateTime Types]] — `#DateTime.Instant` definition
 - [[pglib/pipelines/DT/From.Epoch|-DT.From.Epoch]] — epoch-to-DateTime pipeline

@@ -6,7 +6,7 @@ name: Unknown Permission Category
 severity: error
 ---
 
-### Rule 9.17 — Unknown Permission Category
+# Rule 9.17 — Unknown Permission Category
 `PGE10003`
 
 <!-- @u:syntax/blocks -->

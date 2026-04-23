@@ -6,7 +6,7 @@ name: Parallel Output Must Be Collected
 severity: error
 ---
 
-### Rule 3.2 — Parallel Output Must Be Collected
+# Rule 3.2 — Parallel Output Must Be Collected
 `PGE03002`
 
 <!-- @u:syntax/blocks -->
@@ -99,7 +99,7 @@ severity: error
                                       [ ] ✗ PGE03002 — $b not in any collector
 ```
 
-### See Also
+## See Also
 
 - [[concepts/collections/collect|Collect]] — documents collector requirement for `[=]` outputs (references PGE03002)
 - [[concepts/collections/examples|Collection Examples]] — error table mapping PGE03002 to example scenarios

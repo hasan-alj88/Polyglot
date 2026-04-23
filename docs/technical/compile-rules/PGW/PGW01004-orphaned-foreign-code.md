@@ -6,7 +6,7 @@ name: Orphaned Foreign Code
 severity: warning
 ---
 
-### Rule W1.4 — Orphaned Foreign Code
+# Rule W1.4 — Orphaned Foreign Code
 `PGW01004`
 
 <!-- @u:syntax/blocks -->

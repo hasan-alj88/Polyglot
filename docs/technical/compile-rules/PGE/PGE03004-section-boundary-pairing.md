@@ -6,7 +6,7 @@ name: Section-Boundary Pairing
 severity: error
 ---
 
-### Rule 3.4 — Section-Boundary Pairing
+# Rule 3.4 — Section-Boundary Pairing
 `PGE03004`
 
 <!-- @u:syntax/blocks -->
@@ -82,7 +82,7 @@ severity: error
 
 **Note:** `[\]` setup and `[/]` cleanup form one scope with a mandatory sequential body execution between them. Parallel branches launched in either section must be collected somewhere within that scope (setup, cleanup, or `[\]`↔`[/]` pairing) before the scope ends — otherwise it's a compile error. Same-section internal pairing (e.g., `[=]` and `(*)` both in `[\]`) is valid. See resolved design issue 004 (git history: `docs/technical/compiler_issues/004-setup-internal-parallel-collection.md`).
 
-### See Also
+## See Also
 
 - [[concepts/collections/collect|Collect]] — documents section-boundary pairing constraint (references PGE03004)
 - [[concepts/collections/examples|Collection Examples]] — error table mapping PGE03004 to example scenarios

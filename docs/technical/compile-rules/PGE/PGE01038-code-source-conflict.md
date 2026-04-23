@@ -6,7 +6,7 @@ name: Code Source Conflict
 severity: error
 ---
 
-### Rule 1.38 — Code Source Conflict
+# Rule 1.38 — Code Source Conflict
 `PGE01038`
 
 <!-- @u:pglib/pipelines/Run/INDEX -->

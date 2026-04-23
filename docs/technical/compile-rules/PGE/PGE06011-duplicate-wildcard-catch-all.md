@@ -6,7 +6,7 @@ name: Duplicate Wildcard Catch-All
 severity: error
 ---
 
-### Rule 6.11 — Duplicate Wildcard Catch-All
+# Rule 6.11 — Duplicate Wildcard Catch-All
 `PGE06011`
 
 <!-- @u:syntax/blocks -->
@@ -66,6 +66,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — wildcard catch-all rules reference PGE06011

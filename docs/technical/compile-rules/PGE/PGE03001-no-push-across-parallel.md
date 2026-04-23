@@ -6,7 +6,7 @@ name: No Push Across Parallel Boundaries
 severity: error
 ---
 
-### Rule 3.1 — No Push Across Parallel Boundaries
+# Rule 3.1 — No Push Across Parallel Boundaries
 `PGE03001`
 
 <!-- @u:syntax/blocks -->
@@ -65,6 +65,6 @@ severity: error
 
 **Open point:** None — applies to all push operators (`<<`, `>>`, `<~`, `~>`). The boundary is the `[=]` scope; inputs to the parallel (`<` parameters) are pushed from the prime before the parallel starts, which is valid.
 
-### See Also
+## See Also
 
 - [[concepts/collections/INDEX|Collections]] — user-facing collection and parallel documentation (references PGE03001)

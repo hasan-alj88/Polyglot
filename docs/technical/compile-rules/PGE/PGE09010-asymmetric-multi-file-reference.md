@@ -6,7 +6,7 @@ name: Asymmetric Multi-File Reference
 severity: error
 ---
 
-### Rule 9.11 — Asymmetric Multi-File Reference
+# Rule 9.11 — Asymmetric Multi-File Reference
 `PGE09010`
 
 <!-- @u:syntax/operators -->
@@ -73,7 +73,7 @@ severity: error
    [ ] ✗ PGE09010 — file-03.pg does not reference file-02.pg
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09010 in multi-file package rules
 

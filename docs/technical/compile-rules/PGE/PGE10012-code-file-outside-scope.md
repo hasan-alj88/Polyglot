@@ -6,7 +6,7 @@ name: Code File Outside Scope
 severity: error
 ---
 
-### Rule 9.26 — Code File Outside Scope
+# Rule 9.26 — Code File Outside Scope
 `PGE10012`
 
 <!-- @u:concepts/permissions/foreign-code -->

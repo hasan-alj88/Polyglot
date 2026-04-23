@@ -6,7 +6,7 @@ name: Multi-File Reference Not Found
 severity: error
 ---
 
-### Rule 9.9 — Multi-File Reference Not Found
+# Rule 9.9 — Multi-File Reference Not Found
 `PGE09008`
 
 <!-- @u:syntax/operators -->
@@ -53,7 +53,7 @@ severity: error
    [@] << "{.}\empty-dir"             [ ] ✗ PGE09008 — directory contains no .pg files
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09008 in multi-file package rules
 

@@ -6,7 +6,7 @@ name: Collect Operator IO Mismatch
 severity: error
 ---
 
-### Rule 3.8 — Collect Operator IO Mismatch
+# Rule 3.8 — Collect Operator IO Mismatch
 `PGE03008`
 
 <!-- @u:syntax/blocks -->
@@ -80,7 +80,7 @@ Missing, extra, or misnamed IO lines fire PGE03008.
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/collections/expand|Expand]] — documents collect operator IO contract (references PGE03008)
 - [[concepts/collections/examples|Collection Examples]] — error table mapping PGE03008 to example scenarios

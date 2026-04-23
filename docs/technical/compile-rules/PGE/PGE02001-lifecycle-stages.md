@@ -5,7 +5,7 @@ code: PGE02001
 name: Lifecycle Stages
 ---
 
-### Rule 2.1 — Lifecycle Stages
+# Rule 2.1 — Lifecycle Stages
 `PGE02001`
 
 <!-- @u:syntax/blocks -->

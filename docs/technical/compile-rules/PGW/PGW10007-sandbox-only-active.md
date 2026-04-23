@@ -6,7 +6,7 @@ name: Sandbox-Only Enforcement Active
 severity: warning
 ---
 
-### Rule 9.8 — Sandbox-Only Enforcement Active
+# Rule 9.8 — Sandbox-Only Enforcement Active
 `PGW10007`
 
 <!-- @c:technical/spec/job-sandbox#Opaque Code -->

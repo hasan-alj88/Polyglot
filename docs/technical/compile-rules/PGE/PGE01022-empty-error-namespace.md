@@ -6,7 +6,7 @@ name: Empty Error Namespace
 severity: error
 ---
 
-### Rule 1.22 — Empty Error Namespace
+# Rule 1.22 — Empty Error Namespace
 `PGE01022`
 
 <!-- @u:syntax/operators -->

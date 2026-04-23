@@ -6,7 +6,7 @@ name: Duplicate Data Field Name
 severity: error
 ---
 
-### Rule 4.13 — Duplicate Data Field Name
+# Rule 4.13 — Duplicate Data Field Name
 `PGE05003`
 
 <!-- @u:syntax/blocks -->

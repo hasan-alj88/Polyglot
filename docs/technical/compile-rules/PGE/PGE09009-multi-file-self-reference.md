@@ -6,7 +6,7 @@ name: Multi-File Self-Reference
 severity: error
 ---
 
-### Rule 9.10 — Multi-File Self-Reference
+# Rule 9.10 — Multi-File Self-Reference
 `PGE09009`
 
 <!-- @u:syntax/operators -->
@@ -43,7 +43,7 @@ severity: error
    [@] << "{.}\file-02.pg"
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09009 in multi-file package rules
 

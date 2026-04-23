@@ -50,7 +50,7 @@ wildcard_input      ::= "<*" ;
 
 `wildcard_output` (`$Label>*`) denotes **all outputs** of a labeled operation. `wildcard_input` (`<*`) denotes **all inputs** of the target pipeline call. Together they form the wildcard auto-wire construct `<* << $Label>*` used in `call_io_line` (see §10.2).
 
-**Rule:** `<* << $Label>*` requires **bijective type-topology matching**. The compiler pairs each output of `$Label` with exactly one input of the target pipeline by [TYPE-IDENTITY](../TYPE-IDENTITY.md). The match must be bijective and onto: every output maps to exactly one input, every input receives exactly one output. If the match cannot be determined uniquely (ambiguous types, mismatched types, or port-count mismatch), the compiler raises PGE08001, PGE08002, or PGE08003 — the developer must fall back to explicit per-port wiring.
+**Rule:** `<* << $Label>*` requires **bijective type-topology matching**. The compiler pairs each output of `$Label` with exactly one input of the target pipeline by [[type-identity|Type Identity]]. The match must be bijective and onto: every output maps to exactly one input, every input receives exactly one output. If the match cannot be determined uniquely (ambiguous types, mismatched types, or port-count mismatch), the compiler raises PGE08001, PGE08002, or PGE08003 — the developer must fall back to explicit per-port wiring.
 
 **Rule:** `<* << $Label>*` implicitly requires **all** of `$Label`'s outputs to be Final before the target pipeline triggers. This naturally produces completion-wait behavior between the two operations without any explicit synchronization marker.
 

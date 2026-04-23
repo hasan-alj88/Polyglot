@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "10.2"
+rule: "12.9"
 code: PGE12009
 name: Template Type Coercion Failure
 severity: error
 ---
 
-# Rule 10.2 — Template Type Coercion Failure
+# Rule 12.9 — Template Type Coercion Failure
 `PGE12009`
 
 <!-- @u:concepts/pipelines/inline-calls -->

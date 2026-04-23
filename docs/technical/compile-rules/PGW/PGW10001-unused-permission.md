@@ -6,7 +6,7 @@ name: Unused Permission
 severity: warning
 ---
 
-### Rule 9.3 — Unused Permission
+# Rule 9.3 — Unused Permission
 `PGW10001`
 
 <!-- @u:syntax/blocks -->

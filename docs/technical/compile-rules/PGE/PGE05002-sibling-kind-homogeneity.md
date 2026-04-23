@@ -6,7 +6,7 @@ name: Sibling Kind Homogeneity
 severity: error
 ---
 
-### Rule 5.2 — Sibling Kind Homogeneity in `{#}`
+# Rule 5.2 — Sibling Kind Homogeneity in `{#}`
 `PGE05002`
 
 <!-- @u:syntax/operators -->
@@ -62,6 +62,6 @@ severity: error
    [.] .uptime#int                     [ ] ✗ PGE05002 — value field among enum siblings
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/types/structs|Structs]] — field homogeneity rules reference PGE05002

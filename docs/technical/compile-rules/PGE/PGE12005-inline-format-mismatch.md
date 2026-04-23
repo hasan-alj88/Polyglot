@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "10.2"
+rule: "12.5"
 code: PGE12005
 name: Inline Format Mismatch
 severity: error
 ---
 
-# Rule 10.2 — Inline Format Mismatch
+# Rule 12.5 — Inline Format Mismatch
 `PGE12005`
 
 <!-- @u:concepts/pipelines/inline-calls -->

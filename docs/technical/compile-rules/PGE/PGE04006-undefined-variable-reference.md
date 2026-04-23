@@ -6,7 +6,7 @@ name: Undefined Variable Reference
 severity: error
 ---
 
-### Rule 4.6 — Undefined Variable Reference
+# Rule 4.6 — Undefined Variable Reference
 `PGE04006`
 
 <!-- @u:syntax/blocks -->

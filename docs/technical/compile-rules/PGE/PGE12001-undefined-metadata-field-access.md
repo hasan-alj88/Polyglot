@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "10.1"
+rule: "12.1"
 code: PGE12001
 name: Undefined Metadata Field Access
 severity: error
 ---
 
-# Rule 10.1 — Undefined Metadata Field Access
+# Rule 12.1 — Undefined Metadata Field Access
 `PGE12001`
 
 <!-- @u:syntax/blocks -->

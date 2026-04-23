@@ -6,7 +6,7 @@ name: Circular Pipeline Call
 severity: error
 ---
 
-### Rule 9.14 — Circular Pipeline Call
+# Rule 9.14 — Circular Pipeline Call
 `PGE09013`
 
 <!-- @u:syntax/blocks -->
@@ -125,7 +125,7 @@ severity: error
 
 **Diagnostic:** "Circular pipeline call detected: `-A → -B → -C → -A` — Polyglot does not support recursion"
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09013 in dependency rules
 

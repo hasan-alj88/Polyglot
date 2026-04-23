@@ -6,7 +6,7 @@ name: Multi-File Package Name Mismatch
 severity: error
 ---
 
-### Rule 9.6 — Multi-File Package Name Mismatch
+# Rule 9.6 — Multi-File Package Name Mismatch
 `PGE09006`
 
 <!-- @u:syntax/operators -->
@@ -51,7 +51,7 @@ severity: error
    [@] << "{.}\file-01.pg"
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09006 in multi-file package rules
 

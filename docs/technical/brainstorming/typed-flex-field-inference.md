@@ -72,6 +72,6 @@ Path: `$config.sections:auth:timeout.value`
 ## Related
 
 - [types.md §Typed Flexible Fields](../../user/syntax/types.md) — user-facing docs
-- [TYPE-IDENTITY.md](../compile-rules/TYPE-IDENTITY.md) — structural matching rules
+- [[type-identity|Type Identity]] — structural matching rules
 - PGE04001 — Type Mismatch
 - PGE04002 — Schema Mismatch

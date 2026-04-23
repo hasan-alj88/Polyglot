@@ -6,7 +6,7 @@ name: Unaddressed Input With Default
 severity: warning
 ---
 
-### Rule 8.8w — Unaddressed Input With Default
+# Rule 8.8w — Unaddressed Input With Default
 `PGW08002`
 
 <!-- @u:syntax/blocks -->

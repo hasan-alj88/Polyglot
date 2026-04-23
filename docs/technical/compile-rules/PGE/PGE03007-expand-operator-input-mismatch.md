@@ -6,7 +6,7 @@ name: Expand Operator Input Mismatch
 severity: error
 ---
 
-### Rule 3.7 — Expand Operator Input Mismatch
+# Rule 3.7 — Expand Operator Input Mismatch
 `PGE03007`
 
 <!-- @u:syntax/blocks -->
@@ -70,7 +70,7 @@ Missing or extra IO lines fire PGE03007.
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/collections/expand|Expand]] — documents expand operator IO signature requirements (references PGE03007)
 - [[concepts/collections/examples|Collection Examples]] — error table mapping PGE03007 to example scenarios

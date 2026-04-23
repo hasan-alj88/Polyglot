@@ -6,7 +6,7 @@ name: Bind Mode Opacity
 severity: warning
 ---
 
-### Rule 9.5 — Bind Mode Opacity
+# Rule 9.5 — Bind Mode Opacity
 `PGW10003`
 
 <!-- @u:concepts/permissions/foreign-code -->

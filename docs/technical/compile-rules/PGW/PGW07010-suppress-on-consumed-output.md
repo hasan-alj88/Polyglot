@@ -6,7 +6,7 @@ name: Suppress on Consumed Output
 severity: warning
 ---
 
-### Rule 7.10w — Suppress on Consumed Output
+# Rule 7.10w — Suppress on Consumed Output
 `PGW07010`
 
 <!-- @u:syntax/blocks -->

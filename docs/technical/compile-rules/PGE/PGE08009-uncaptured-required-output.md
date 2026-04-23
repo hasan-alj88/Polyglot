@@ -6,7 +6,7 @@ name: Uncaptured Required Output at Call Site
 severity: error
 ---
 
-### Rule 8.9 — Uncaptured Required Output at Call Site
+# Rule 8.9 — Uncaptured Required Output at Call Site
 `PGE08009`
 
 <!-- @u:syntax/blocks -->
@@ -102,7 +102,7 @@ severity: error
 
 **Diagnostic:** "Uncaptured output `>{name}` on {operator type} call to `={PipelineName}` at line {N} — output has no fallback and must be wired (use `$*` to discard)"
 
-### See Also
+## See Also
 
 - [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE08009 in call site rules
 

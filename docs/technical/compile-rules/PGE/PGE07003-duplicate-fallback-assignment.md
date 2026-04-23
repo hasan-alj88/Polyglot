@@ -6,7 +6,7 @@ name: Duplicate Fallback Assignment
 severity: error
 ---
 
-### Rule 7.3 — Duplicate Fallback Assignment
+# Rule 7.3 — Duplicate Fallback Assignment
 `PGE07003`
 
 <!-- @u:syntax/blocks -->

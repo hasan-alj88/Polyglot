@@ -6,7 +6,7 @@ name: Numeric Range Not Exhaustive
 severity: error
 ---
 
-### Rule 6.3 — Numeric Range Not Exhaustive
+# Rule 6.3 — Numeric Range Not Exhaustive
 `PGE06003`
 
 <!-- @u:syntax/blocks -->
@@ -60,6 +60,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — numeric range exhaustiveness rules reference PGE06003

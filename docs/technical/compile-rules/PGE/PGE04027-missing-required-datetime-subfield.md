@@ -6,7 +6,7 @@ name: Missing Required DateTime Subfield
 severity: error
 ---
 
-### Rule 4.27 — Missing Required DateTime Subfield
+# Rule 4.27 — Missing Required DateTime Subfield
 `PGE04027`
 
 <!-- @u:syntax/blocks -->
@@ -41,7 +41,7 @@ severity: error
 [ ] ✗ PGE04027 — .Instant.epoch is missing; use -DT.From.Parts instead
 ```
 
-### See Also
+## See Also
 
 - [[pglib/types/datetime|DateTime Types]] — `#DateTime.Instant.epoch` definition
 - [[pglib/pipelines/DT/From.Parts|-DT.From.Parts]] — human-readable DateTime construction

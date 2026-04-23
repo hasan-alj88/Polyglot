@@ -6,7 +6,7 @@ name: Variable Isolation Until Collection
 severity: error
 ---
 
-### Rule 3.3 — Pull Isolation Until Collection
+# Rule 3.3 — Pull Isolation Until Collection
 `PGE03003`
 
 <!-- @u:syntax/blocks -->
@@ -73,7 +73,7 @@ severity: error
 
 **Note:** `live` metadata (`$data%state`) **can** be inspected before collection. PGE03003 isolates user-assignable push/pull operations only. `live` fields are runtime-managed and read-only (PGE02006), so no data race is possible. See resolved design issue 003 (git history: `docs/technical/compiler_issues/003-metadata-access-before-collection.md`).
 
-### See Also
+## See Also
 
 - [[concepts/collections/collect|Collect]] — documents pull isolation constraint for `[=]` outputs (references PGE03003)
 - [[concepts/collections/examples|Collection Examples]] — error table mapping PGE03003 to example scenarios
