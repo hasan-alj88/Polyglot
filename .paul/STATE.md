@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
-Phase: Issue #345 — Wildcard auto-wire
-Plan: 345-01 unified
-Status: Loop closed, ready for MERGE
-Last activity: 2026-04-23 — UNIFY complete, SUMMARY finalized
+Phase: No active issue
+Plan: —
+Status: Ready for next issue
+Last activity: 2026-04-23 — #345 merged to main, issue closed
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -133,7 +133,7 @@ Progress:
 - Issue #354: [██████████] 100% (1/1 plans — decision history system)
 - Issue #346: [██████████] 100% (2/2 plans — documentation compliance sweep)
 - Issue #355: [██████████] 100% (1/1 plans — philosophy compliance sweep)
-- Issue #345: [██████████] 100% (1/1 plans — wildcard auto-wire `<* << $A>*`; pending merge)
+- Issue #345: [██████████] 100% (1/1 plans — wildcard auto-wire `<* << $A>*`; merged)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -143,18 +143,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #345 — Wildcard auto-wire: <* << $A>* bijective type-topology matching
-Branch: design/issue-345-wildcard-auto-wire
-Labels: design
-Started: 2026-04-22
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/345
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Loop closed, ready for /paul:merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -345,7 +341,8 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Closed #354 — Decision history system | 2026-04-22 | Merged docs/issue-354-decision-history-tracking to main |
 | Closed #353 — Audience tier restructure | 2026-04-22 | Merged docs/issue-353-update-audience-tiers to main; 6-audience model |
 | Closed #346 — Documentation compliance sweep | 2026-04-22 | Merged docs/issue-346-documentation-compliance-sweep to main; 6/6 sub-issues |
-| Issue #345 — Wildcard auto-wire complete | 2026-04-23 | EBNF §7.4 productions + §10.2 alt, PGE08001/02/03/PGW08001 rewritten for wildcard context, `auto-wire.md` user doc, EC-10.17-20, glossary; PGE08003 reframed as Port Count Mismatch; 11 files; pending merge |
+| Issue #345 — Wildcard auto-wire complete | 2026-04-23 | EBNF §7.4 productions + §10.2 alt, PGE08001/02/03/PGW08001 rewritten for wildcard context, `auto-wire.md` user doc, EC-10.17-20, glossary; PGE08003 reframed as Port Count Mismatch; 11 files |
+| Closed #345 — Wildcard auto-wire | 2026-04-23 | Merged design/issue-345-wildcard-auto-wire to main |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -365,10 +362,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-23
-Stopped at: Plan 345-01 UNIFY complete (loop closed)
-Next action: Run /paul:merge to merge design/issue-345-wildcard-auto-wire to main and close #345
-Resume file: .paul/phases/345-wildcard-auto-wire/345-01-SUMMARY.md
-Resume context: Issue #345 loop closed — PLAN ✓, APPLY ✓, UNIFY ✓. 11 files modified, all 4 AC passed, all 8 verification checks passed. One notable design refinement recorded: PGE08003 renamed from "Unmatched Parameter" to "Port Count Mismatch" (code unchanged). No decision record needed (plan-scoped; #340 retirement record already covers #345 as follow-up). Ready for merge.
+Stopped at: #345 merged to main, issue closed, branch deleted
+Next action: Run /paul:issues to pick the next issue
+Resume file: —
+Resume context: Issue #345 wildcard auto-wire merged and closed. 12 local commits ahead of origin/main (pending push). No active issue.
 
 ---
 *STATE.md — Updated after every significant action*
