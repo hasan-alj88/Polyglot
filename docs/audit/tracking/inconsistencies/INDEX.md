@@ -17,8 +17,6 @@ Contradictions found between documentation files. Individual issues are tracked 
 
 | ID | Severity | Tag | Summary | Status |
 |----|----------|-----|---------|--------|
-| [[inconsistencies/IC-008\|IC-008]] | Low | convention | Archived draft.md references PGE-XXX placeholder codes | Won't Fix |
-| [[inconsistencies/IC-010\|IC-010]] | Medium | definition | Missing "Wrappers" [W] in Vision pillars | Active |
 
 ## Resolved History
 
@@ -31,4 +29,6 @@ Contradictions found between documentation files. Individual issues are tracked 
 | [[inconsistencies/IC-005\|IC-005]] | Medium | Enums mislabeled as structs in structs.md | 2026-04-01 |
 | [[inconsistencies/IC-006\|IC-006]] | Medium | Missing @-imports in index files | 2026-03-30 |
 | [[inconsistencies/IC-007\|IC-007]] | Low | TBD stub in metadata.md tree diagram | 2026-03-30 |
+| [[inconsistencies/IC-008\|IC-008]] | Low | Draft references outdated placeholders | 2026-04-23 |
 | [[inconsistencies/IC-009\|IC-009]] | High | Logic Creep: Constructors vs. "Glue not Bricks" | 2026-04-23 |
+| [[inconsistencies/IC-010\|IC-010]] | Medium | Rejected "Wrappers [W]" as an architecture component | 2026-04-23 |
