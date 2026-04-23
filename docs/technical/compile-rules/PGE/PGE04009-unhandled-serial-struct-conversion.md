@@ -101,7 +101,7 @@ severity: error
 **See also:**
 - [PGE04002 — Schema Mismatch](PGE04002-schema-mismatch.md) — provable static mismatch
 - [PGE02005 — Failed Must Resolve](PGE02005-failed-is-terminal.md) — compiler-enforced error handling
-- [TYPE-IDENTITY](../TYPE-IDENTITY.md) — rule 6 (serial→struct)
+- [[type-identity|Type Identity]] — rule 6 (serial→struct)
 - [serial-to-struct-matching](../../brainstorming/serial-to-struct-matching.md) — decision rationale
 
 ## See Also

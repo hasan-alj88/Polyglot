@@ -12,6 +12,7 @@ severity: error
 <!-- @u:technical/spec/collector-definitions -->
 
 **Statement:** Every code path through a `{*}` collector definition must release ALL jobs `[0,N]`. If any code path exits without releasing every job, this is a compile error.
+**Related rule:** Companion to [[PGE03024-release-no-remaining-claims|PGE03024]] (which catches over-release / orphan release). See [[technical/spec/collector-definitions|Collector Definitions]] Ground Rule 5 for the spec wording.
 **Rationale:** Unreleased jobs become orphans — the Trigger Monitor cannot terminate them, and their resources are never reclaimed. This is the collector equivalent of a resource leak.
 **Detection:** The compiler performs reachability analysis on all `[T]` blocks within the `{*}` definition. For each possible execution path (including error handlers), it verifies that a release covering `[0,N]` is reached. If any path exits without full release, PGE03025 fires.
 

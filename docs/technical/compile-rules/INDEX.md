@@ -27,7 +27,3 @@ Codes use the form `PG{E,W}<range><ordinal>` — `<range>` is a two-digit catego
 | `PGE/` | Compile errors (halt compilation) | 187 | [[PGE/INDEX\|PGE Index]] |
 | `PGW/` | Compile warnings (non-halting) | 30 | [[PGW/INDEX\|PGW Index]] |
 | `algorithms/` | Shared detection strategies used by multiple rules | 3 | [[algorithms/INDEX\|Algorithms Index]] |
-
-## Legacy files
-
-- `TYPE-IDENTITY.md` — five-line redirect stub pointing at `spec/type-identity.md`. Scheduled for removal by plan 356-03 (issue #356); do not add new references to it.

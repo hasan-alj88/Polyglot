@@ -13,6 +13,7 @@ split_from: PGE01001
 <!-- @u:syntax/blocks -->
 
 **Statement:** Every `{-}` pipeline must contain a `[T]` trigger section. A pipeline without a trigger has no way to start execution and is a compile error.
+**Related rule:** Originally part of [[PGE01001-pipeline-execution-order|PGE01001 Pipeline Execution Order]]; split out to fire a more targeted diagnostic. See sibling rules [[PGE01006-missing-queue|PGE01006]], [[PGE01007-missing-setup-cleanup|PGE01007]].
 **Rationale:** The trigger defines what signal initiates the pipeline. Without it, the pipeline cannot be invoked — it would exist as dead code with no entry point.
 **Detection:** The compiler checks that every `{-}` block contains exactly one `[T]` section.
 

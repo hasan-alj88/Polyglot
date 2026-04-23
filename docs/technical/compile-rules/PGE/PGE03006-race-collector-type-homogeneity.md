@@ -13,7 +13,7 @@ severity: error
 <!-- @u:syntax/operators -->
 <!-- @u:syntax/types -->
 
-**Statement:** All `(*) <<` candidate inputs to `*First`, `*Second`, or `*Nth` race collectors must match the target variable's schema (per [TYPE-IDENTITY](../TYPE-IDENTITY.md)). Mixed-schema candidates are a compile error. The `(*) >>` output inherits the target schema. This rule does not apply to `*All` (collect-all) — `*All` has no type constraint since it does not merge values into a single output.
+**Statement:** All `(*) <<` candidate inputs to `*First`, `*Second`, or `*Nth` race collectors must match the target variable's schema (per [[type-identity|Type Identity]]). Mixed-schema candidates are a compile error. The `(*) >>` output inherits the target schema. This rule does not apply to `*All` (collect-all) — `*All` has no type constraint since it does not merge values into a single output.
 **Rationale:** Race collectors pick a winner from competing parallels. The caller receives one value via `(*) >>` — if candidates have different schemas, the output type is ambiguous. Schema matching per PGE04001 eliminates runtime type confusion.
 **Detection:** The compiler resolves the target variable's schema, then compares each `(*) <<` input's schema against it per PGE04001. If any input's schema differs from the target, PGE03006 fires.
 
@@ -74,7 +74,7 @@ severity: error
    (*) >> $winner
 ```
 
-**Note:** Type matching is schema-based, not name-based — per [TYPE-IDENTITY.md](../TYPE-IDENTITY.md). Two differently-named `{#}` types with identical field structures are the same type. See resolved design issue 005 (git history: `docs/technical/compiler_issues/005-race-type-matching-semantics.md`) for the design decision.
+**Note:** Type matching is schema-based, not name-based — per [[type-identity|Type Identity]]. Two differently-named `{#}` types with identical field structures are the same type. See resolved design issue 005 (git history: `docs/technical/compiler_issues/005-race-type-matching-semantics.md`) for the design decision.
 
 ## See Also
 

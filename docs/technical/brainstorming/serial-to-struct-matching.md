@@ -49,7 +49,7 @@ A failed serial→struct match at runtime fires the `[!]` error block or `!<` fa
 - Serial has **fewer** fields than struct requires → **error**. Missing fields mean the struct schema cannot be fulfilled.
 
 Rationale:
-- Structural matching (TYPE-IDENTITY rule 1) checks that the required schema is present, not that shapes are identical
+- Structural matching ([[type-identity|Type Identity]] rule 1) checks that the required schema is present, not that shapes are identical
 - Serial is inherently open-ended — requiring exact match would defeat its purpose
 
 ### Summary
@@ -65,7 +65,7 @@ Rationale:
 
 ## Related
 
-- [TYPE-IDENTITY.md](../compile-rules/TYPE-IDENTITY.md) — rules 5 and 6
+- [[type-identity|Type Identity]] — rules 5 and 6
 - PGE04001 — Type Mismatch
 - PGE04002 — Schema Mismatch
 - PGE04009 — Unhandled serial→struct conversion (new)

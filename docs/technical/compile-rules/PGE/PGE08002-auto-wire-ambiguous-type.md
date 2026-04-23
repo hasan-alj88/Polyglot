@@ -15,7 +15,7 @@ updated: 2026-04-23
 <!-- @u:syntax/operators -->
 <!-- @u:syntax/io/auto-wire -->
 
-**Statement:** In wildcard auto-wire (`(-) <* << $Label>*`), PGE08002 fires when two or more outputs (or inputs) share the same type-identity (per [TYPE-IDENTITY](../TYPE-IDENTITY.md)), making the bijective mapping non-unique — the compiler cannot determine which output feeds which input.
+**Statement:** In wildcard auto-wire (`(-) <* << $Label>*`), PGE08002 fires when two or more outputs (or inputs) share the same type-identity (per [[type-identity|Type Identity]]), making the bijective mapping non-unique — the compiler cannot determine which output feeds which input.
 **Rationale:** Wildcard auto-wire must be deterministic. When multiple ports share a type on either side, any of several bijections would satisfy the types, so the choice becomes implementation-defined. The developer must wire explicitly to disambiguate.
 **Detection:** After confirming every type has at least one match (no PGE08001), the compiler checks for duplicate type-identities on either side. If any duplicates exist, PGE08002 fires.
 
