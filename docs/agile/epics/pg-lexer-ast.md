@@ -33,28 +33,29 @@ These intentional language design choices dramatically simplify lexical analysis
   - Code generation or compilation into target languages (handled downstream).
   - Semantic validation (e.g., type checking, checking if referenced variables exist) beyond lexical syntax.
 
-## Features Breakdown
-*Note: Due to the size of the lexer components, development will be split into manageable features. User stories and specific execution tasks will be determined and assigned once these features are finalized.*
+## Features Breakdown & Pipeline Architecture
+To ensure strict separation of concerns, the transformation of `*.pg` files follows an explicit timeline. This Epic is divided into features mapping directly to the 5 distinct architectural steps. Each feature will serve as a parent for executing specific development tasks.
 
-### Feature 1: Core Line Reader & Indentation Tracker
-- Scan `*.pg` source code files line by line.
-- Extract leading whitespace/indentation perfectly to track scope.
-- Manage an internal stack to properly open and close parent nodes in the AST structure based on indent increases/decreases.
+### Feature 1: Lexer (Token Stream Generator)
+- Scans `*.pg` source code files line by line (ignore entirely blank lines).
+- Evaluates scope: Indentation is **strictly 3 spaces per level**. If an indentation is not a multiple of 3, immediately trigger a compile syntax error.
+- Enforces syntactic boundaries: Explicitly isolates markers bound by `{X}`, `[X]`, or `(X)`.
+- Handles Comments: If the bracket is empty (`{}`, `[]`, or `()`), treats the entire line as a comment and ignores it.
+- Extracts the remaining `{1 expression}` safely.
+- Emits a linear, predictable stream of primitive syntax tokens (Indentation changes, specific Marker tags, and raw Expression strings).
+- Attaches source maps for meaningful syntax error messages (line number and column precision).
 
-### Feature 2: Tokenizer (Marker & Prefix Isolation)
-- Identify and isolate the `{marker}` segment of the line.
-- Extract the remaining `{1 expression}`.
-- Identify known prefixes for Polyglot objects within the expression to rapidly tag their types without needing complex context.
+### Feature 2: AST Parser
+- Consumes the Token Stream to build a hierarchical *Abstract Syntax Tree*.
+- Represents structural parent-child relationships solely based on indentations and marker scopes.
+- Contains no domain logic—only structural integrity (`[{scope_level, marker_type, expression_ast_node}]`).
 
-### Feature 3: Expression Parser
-- Evaluate the `{1 expression}` dynamically based on the preceding marker and token type.
-- Handle literals, string captures, object references, and arithmetic/logic primitives, ensuring the predictable single-expression rule is upheld.
+### Feature 3: Compiler
+- Traverses the raw structural AST layer.
+- Applies domain-specific evaluation and resolves complex relationships between the structural markers.
+- Evaluates the expressions deeper based on marker types and identifiable object prefixes.
 
-### Feature 4: AST JSON Serialization
-- Accumulate the hierarchical nodes parsed from Features 1-3.
-- Map the syntax constructs (Indent -> Hierarchy, Marker -> Node Type, Expression -> Values/Children) to an optimized JSON schema.
-- Export to `.json` files.
-
-### Feature 5: Error Handling & Source Mapping
-- Provide meaningful syntax error messages pointing to the exact line number, column, and unexpected token.
-- Handle corrupted indentation, invalid prefixes, or multiple expressions per line gracefully by failing fast to assist developers.
+### Feature 4: Behavioral Contract JSON Export
+- Outputs the final formatted domain functionality.
+- Maps the Compiler's analyzed objects into the strict JSON schema.
+- For a Pipeline object, enforces the mapping of logical blocks into `Inputs`, `Outputs`, `Triggers`, `QueueJobRules`, `Setup`, `Execution`, and `Cleanup`.
