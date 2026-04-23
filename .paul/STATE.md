@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
-Phase: Issue #356 — Audit fixes: compiler + compile-rules (1/3 plans)
-Plan: 356-01 complete (loop closed); plans 356-02/03 pending
-Status: Loop closed for 356-01; ready for next plan
-Last activity: 2026-04-23 — Plan 356-01 UNIFY complete (195 files, all ACs pass)
+Phase: Issue #356 — Audit fixes: compiler + compile-rules (2/3 plans complete)
+Plan: 356-02 loop closed; plan 356-03 pending
+Status: Loop closed for 356-02; ready for next plan
+Last activity: 2026-04-23 — Plan 356-02 UNIFY complete (5 INDEX files, all ACs pass)
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -134,7 +134,7 @@ Progress:
 - Issue #346: [██████████] 100% (2/2 plans — documentation compliance sweep)
 - Issue #355: [██████████] 100% (1/1 plans — philosophy compliance sweep)
 - Issue #345: [██████████] 100% (1/1 plans — wildcard auto-wire `<* << $A>*`; merged)
-- Issue #356: [███░░░░░░░] 33% (1/3 plans — 356-01 heading/frontmatter normalization complete; 02 indexes, 03 glossary/stub/wikilinks pending)
+- Issue #356: [██████░░░░] 67% (2/3 plans — 356-01 heading/frontmatter normalization + 356-02 directory indexes complete; 03 glossary/stub/wikilinks pending)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -155,7 +155,7 @@ GitHub: https://github.com/hasan-alj88/Polyglot/issues/356
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Plan 356-01 loop closed; next: Plan 356-02 (indexes)]
+  ✓        ✓        ✓        ○     [Plan 356-02 loop closed; next: Plan 356-03 or commit]
 ```
 
 ## Accumulated Context
@@ -349,6 +349,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Issue #345 — Wildcard auto-wire complete | 2026-04-23 | EBNF §7.4 productions + §10.2 alt, PGE08001/02/03/PGW08001 rewritten for wildcard context, `auto-wire.md` user doc, EC-10.17-20, glossary; PGE08003 reframed as Port Count Mismatch; 11 files |
 | Closed #345 — Wildcard auto-wire | 2026-04-23 | Merged design/issue-345-wildcard-auto-wire to main |
 | Plan 356-01 — Heading + frontmatter normalization | 2026-04-23 | 195 files: H3→H1 rule titles (187 files, incl. 4 See Also outliers), PGE12xxx rule-number fix (9 files); completes #136 sweep precedent across full corpus |
+| Plan 356-02 — Directory indexes | 2026-04-23 | 5 new INDEX.md (compile-rules root, PGE/187, PGW/30, algorithms/3, compiler/4); frontmatter-driven generation; 0 existing files modified; all 17 wikilink targets verified |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -368,10 +369,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-23
-Stopped at: Plan 356-01 loop closed (PLAN ✓ APPLY ✓ UNIFY ✓); 195 files uncommitted on branch
-Next action: Commit 356-01 changes, then /paul:plan for 356-02 (directory indexes: compile-rules/, PGE/, PGW/, algorithms/, compiler/)
-Resume file: .paul/phases/356-audit-compiler-compile-rules/356-01-SUMMARY.md
-Resume context: Issue #356 active on branch docs/issue-356-audit-compiler-compile-rules. Plan 356-01 scope: (a) promote H3→H1 rule titles + H3→H2 "See Also" across 183 PGE/PGW files, (b) fix stale `rule:` frontmatter + heading text in 9 PGE12xxx files (PGE12001–03, 05–10). PGE14xxx already correct; PGE12004 already correct. Deferred to later plans: 356-02 (directory indexes: compile-rules, PGE, PGW, algorithms, compiler), 356-03 (delete TYPE-IDENTITY stub, add "Behavior Contract" to glossary, retrofit wikilinks in PGE01005/06/07/PGE03025 chain, reciprocal io-registry↔ast-invisible-registry link). P2 (cycle-detection audience, "Enforced by" back-refs, rule template) deferred or skipped based on user preference.
+Stopped at: Plan 356-02 loop closed (PLAN ✓ APPLY ✓ UNIFY ✓); 5 INDEX.md files uncommitted on branch
+Next action: Commit 356-02 changes, then /paul:plan for 356-03 (glossary/stub/wikilinks) — recommend FRESH SESSION for 356-03 (context critical at ~21%)
+Resume file: .paul/phases/356-audit-compiler-compile-rules/356-02-SUMMARY.md
+Resume context: Issue #356 on branch docs/issue-356-audit-compiler-compile-rules. Plan 356-01 committed (f8eacb3). Plan 356-02 uncommitted: 5 new INDEX.md (compile-rules/INDEX.md, PGE/INDEX.md [187 rules, 12 ranges], PGW/INDEX.md [30 rules, 9 ranges], algorithms/INDEX.md [3 algos + consumes: wikilinks], compiler/INDEX.md [4 docs]). Zero existing files modified — AC-8 boundary held. All 17 wikilink targets verified. Plan 356-03 scope: (a) delete TYPE-IDENTITY.md stub + update PGE04001 link to [[type-identity]], (b) add "Behavior Contract" entry to docs/audit/reference/glossary.md, (c) retrofit [[wikilink]] prose cross-refs in PGE01005/06/07/PGE03025 chain, (d) add reciprocal io-registry ↔ ast-invisible-registry link in compiler/. P2 deferred: "Enforced by" back-refs, cycle-detection audience alignment, rule-definition template.
 
 ---
 *STATE.md — Updated after every significant action*
