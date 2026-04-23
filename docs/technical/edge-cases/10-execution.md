@@ -1,7 +1,7 @@
 ---
 audience: design
 type: reference
-updated: 2026-03-30
+updated: 2026-04-23
 ---
 
 <!-- @edge-cases/INDEX -->
@@ -289,4 +289,84 @@ updated: 2026-03-30
    (-) <env << $env
    (-) <script <<
    (-) >stdout >> $output
+```
+
+### EC-10.17: Wildcard auto-wire — valid bijective match
+
+<!-- @u:syntax/io/auto-wire -->
+**EBNF ref:** `call_io_line ::= ... | "(-)" wildcard_input "<<" wildcard_output`
+**What it tests:** `<* << $Label>*` with a single unique-type pairing — the simplest successful wildcard auto-wire. PGW08001 fires (valid but explicit wiring preferred). See [[user/syntax/io/auto-wire]].
+
+```polyglot
+[ ] ✓ valid — one #string output bijectively maps to one #string input
+[ ] ⚠ PGW08001 — auto-wire succeeded, explicit wiring preferred
+[-] -File.Text.Read
+   (-) $Read
+   (-) <path#path << $path
+   (-) >content#string
+
+[-] -Text.Transform
+   (-) <* << $Read>*
+   (-) >formatted#string >> >output
+```
+
+### EC-10.18: Wildcard auto-wire — type mismatch (INVALID)
+
+<!-- @u:syntax/io/auto-wire -->
+**EBNF ref:** `wildcard_input`, `wildcard_output` — bijective type-identity required
+**What it tests:** `<* << $A>*` where `$A` has an output with no corresponding input type on the target. PGE08001 fires. See [[technical/compile-rules/PGE/PGE08001-auto-wire-type-mismatch|PGE08001]].
+
+```polyglot
+[ ] ✗ PGE08001 — >total#int has no matching <…#int input
+[-] -Count.Items
+   (-) $A
+   (-) <list#array:string << $items
+   (-) >total#int
+
+[-] -Format.Label
+   (-) <* << $A>*
+   (-) <text#string
+   (-) >formatted#string >> >output
+```
+
+### EC-10.19: Wildcard auto-wire — ambiguous types (INVALID)
+
+<!-- @u:syntax/io/auto-wire -->
+**EBNF ref:** `wildcard_input`, `wildcard_output` — unique type-identity required per side
+**What it tests:** Multiple outputs share a type-identity, making the bijection non-unique. PGE08002 fires. See [[technical/compile-rules/PGE/PGE08002-auto-wire-ambiguous-type|PGE08002]].
+
+```polyglot
+[ ] ✗ PGE08002 — two #string outputs compete for one #string input
+[-] -Fetch.Both
+   (-) $A
+   (-) <url#string << $url
+   (-) >name#string
+   (-) >label#string
+
+[-] -Process.Single
+   (-) <* << $A>*
+   (-) <text#string
+   (-) >result#string >> >output
+```
+
+### EC-10.20: Wildcard auto-wire — port count mismatch (INVALID)
+
+<!-- @u:syntax/io/auto-wire -->
+**EBNF ref:** `wildcard_input`, `wildcard_output` — cardinality must match
+**What it tests:** `$A` has more outputs than the target has inputs, so the bijection cannot be onto. PGE08003 fires. See [[technical/compile-rules/PGE/PGE08003-auto-wire-unmatched-parameter|PGE08003]].
+
+```polyglot
+[ ] ✗ PGE08003 — 3 outputs, 2 inputs
+[-] -Fetch.Data
+   (-) $A
+   (-) <url#string << $url
+   (-) >content#string
+   (-) >count#int
+   (-) >status#string
+
+[-] -Transform.Text
+   (-) <* << $A>*
+   (-) <text#string
+   (-) <flag#int
+   (-) >result#string >> >output
 ```

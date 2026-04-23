@@ -1,7 +1,7 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-10
+updated: 2026-04-23
 status: draft
 ---
 
@@ -25,5 +25,6 @@ Input and output parameters bind data into and out of operators. IO labels are [
 | [[syntax/io/pipeline-call\|Pipeline Call IO]] | `[-]` execution with `(-)` IO lines |
 | [[syntax/io/chain-io\|Chain IO Addressing]] | Step references, pipeline-perspective `<`/`>`, auto-wire |
 | [[syntax/io/operation-labels\|Operation Labels]] | `($)` labels, `$Label>output` access, chain step labels |
+| [[syntax/io/auto-wire\|Wildcard Auto-Wire]] | `<* << $Label>*` bijective type-topology matching |
 | [[syntax/io/collection-operators\|Collection Operators]] | `=ForEach` expand, `*` collect, wait/collect IO |
 | [[syntax/io/io-parameter-handling\|IO Parameter Handling]] | `(>)`/`(<)` fallback, error-specific fallback, chain exception |
