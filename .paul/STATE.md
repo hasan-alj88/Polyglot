@@ -5,15 +5,15 @@
 See: .paul/PROJECT.md (updated 2026-04-11)
 
 **Core value:** Building a new async programming language that can asynchronously compile other programming languages
-**Current focus:** Issue #356 — Audit fixes: docs/technical/compiler and docs/technical/compile-rules
+**Current focus:** No active issue — run /paul:issues or /paul:work-issue <number> to start
 
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
-Phase: Issue #356 — Audit fixes: compiler + compile-rules (3/3 plans COMPLETE — all loops closed; phase transition in progress)
-Plan: 356-03 UNIFY complete — last plan in phase
-Status: Phase #356 complete — ready for commit + MERGE to main
-Last activity: 2026-04-23 — Plan 356-03 UNIFY: reconciled plan vs actual, SUMMARY finalized, all 6 ACs pass with 1 documented anomaly
+Phase: No active phase
+Plan: No active plan
+Status: Ready for next issue
+Last activity: 2026-04-23 — Merged docs/issue-356-audit-compiler-compile-rules to main (c1707e8); issue #356 closed on GitHub; branch deleted
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -134,7 +134,7 @@ Progress:
 - Issue #346: [██████████] 100% (2/2 plans — documentation compliance sweep)
 - Issue #355: [██████████] 100% (1/1 plans — philosophy compliance sweep)
 - Issue #345: [██████████] 100% (1/1 plans — wildcard auto-wire `<* << $A>*`; merged)
-- Issue #356: [██████████] 100% (3/3 plans complete — 356-01 headings + 356-02 indexes committed; 356-03 UNIFY complete, ready for commit + merge)
+- Issue #356: [██████████] 100% (3/3 plans — 356-01 headings + 356-02 indexes + 356-03 stub/wikilinks; merged)
 - Docs-Inconsistency Batch (#141-#159): [██████████] 100% (19/19 issues)
   - Group 1 (EBNF/Compiler): 5/5 COMPLETE
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
@@ -144,18 +144,14 @@ Progress:
 
 ## Active Issue
 
-Issue: #356 — Audit fixes: docs/technical/compiler and docs/technical/compile-rules
-Branch: docs/issue-356-audit-compiler-compile-rules
-Labels: docs, P3-medium, docs-inconsistency
-Started: 2026-04-23
-GitHub: https://github.com/hasan-alj88/Polyglot/issues/356
+No active issue. Run /paul:work-issue <number> to start.
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
-  ✓        ✓        ✓        ○     [Plan 356-03 loop closed — phase #356 ready for commit + merge]
+PLAN ──▶ APPLY ──▶ UNIFY
+  ✓        ✓        ✓     [ready for next issue]
 ```
 
 ## Accumulated Context
@@ -351,6 +347,7 @@ PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
 | Plan 356-01 — Heading + frontmatter normalization | 2026-04-23 | 195 files: H3→H1 rule titles (187 files, incl. 4 See Also outliers), PGE12xxx rule-number fix (9 files); completes #136 sweep precedent across full corpus |
 | Plan 356-02 — Directory indexes | 2026-04-23 | 5 new INDEX.md (compile-rules root, PGE/187, PGW/30, algorithms/3, compiler/4); frontmatter-driven generation; 0 existing files modified; all 17 wikilink targets verified |
 | Plan 356-03 — Stub removal + glossary + wikilinks | 2026-04-23 | Deleted TYPE-IDENTITY.md stub (10 refs retargeted to [[type-identity]]); added "Behavior Contract" glossary row; body-level [[wikilink]] retrofit on PGE01005/06/07 + PGE03025; reciprocal @c: + body link between io-registry.md ↔ ast-invisible-registry.md; 1 deletion + 18 modifications; all 6 ACs pass; anomaly: conversions.md had an 11th stub ref not in plan-time grep |
+| Closed #356 — Audit fixes: compiler + compile-rules | 2026-04-23 | Merged docs/issue-356-audit-compiler-compile-rules to main (c1707e8); 3 plan commits; branch deleted |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -370,10 +367,10 @@ Protected elements for current milestone:
 ## Session Continuity
 
 Last session: 2026-04-23
-Stopped at: Plan 356-03 UNIFY complete — all 3 plans in phase #356 now have closed loops; SUMMARY reconciles plan vs actual.
-Next action: Commit plan 356-03 changes (1 deletion + 18 modifications) with docs: prefix matching 356-01/02 pattern, then run /paul:merge to merge docs/issue-356-audit-compiler-compile-rules to main (closes #356)
-Resume file: .paul/phases/356-audit-compiler-compile-rules/356-03-SUMMARY.md
-Resume context: Phase #356 complete. Branch docs/issue-356-audit-compiler-compile-rules has 2 existing plan commits (f8eacb3 356-01, 04be91c 356-02); plan 356-03 work is staged/modified but not yet committed. Next: commit 356-03 as its own docs: commit, then merge the full branch to main. After merge, #356 closes on GitHub, and the 356 audit phase is fully shipped. P2 deferred items ("Enforced by" back-refs sweep, cycle-detection.md audience reconciliation, rule-definition template) remain open for future issues.
+Stopped at: Issue #356 merged to main (c1707e8) and closed on GitHub. Branch docs/issue-356-audit-compiler-compile-rules deleted.
+Next action: Run /paul:issues to pick the next issue, or /paul:progress to review milestone status.
+Resume file: (none)
+Resume context: No active work. Main is 16 commits ahead of origin/main (awaiting push). P2 deferred items from the #356 audit ("Enforced by" back-refs sweep, cycle-detection.md audience reconciliation, rule-definition template) remain open for future issues.
 
 ---
 *STATE.md — Updated after every significant action*
