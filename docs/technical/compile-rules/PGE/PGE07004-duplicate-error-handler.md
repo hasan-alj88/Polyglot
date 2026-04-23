@@ -6,7 +6,7 @@ name: Duplicate Error Handler
 severity: error
 ---
 
-### Rule 7.4 — Duplicate Error Handler
+# Rule 7.4 — Duplicate Error Handler
 `PGE07004`
 
 <!-- @u:syntax/blocks -->
@@ -65,7 +65,7 @@ severity: error
       [-] >data << "fallback 2"
 ```
 
-### See Also
+## See Also
 
 - [[user/concepts/errors|Errors]] — references PGE07004 in error scoping rules
 

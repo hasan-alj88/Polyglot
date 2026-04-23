@@ -6,7 +6,7 @@ name: Compound Condition Overlap
 severity: error
 ---
 
-### Rule 6.5 — Compound Condition Overlap
+# Rule 6.5 — Compound Condition Overlap
 `PGE06005`
 
 <!-- @u:syntax/blocks -->
@@ -57,6 +57,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — compound condition overlap rules reference PGE06005

@@ -7,7 +7,7 @@ severity: error
 supersedes: PGW01002
 ---
 
-### Rule 1.21 — Empty Data Definition
+# Rule 1.21 — Empty Data Definition
 `PGE01021`
 
 <!-- @u:syntax/operators -->

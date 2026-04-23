@@ -6,7 +6,7 @@ name: Discard Default Assignment
 severity: error
 ---
 
-### Rule 2.10 — Discard Default Assignment
+# Rule 2.10 — Discard Default Assignment
 `PGE02010`
 
 <!-- @u:syntax/blocks -->
@@ -39,7 +39,7 @@ severity: error
 
 **Diagnostic:** "Discard `$*` does not support default assignment `<~`/`~>` — use final `<<`/`>>` instead (value is immediately released)"
 
-### See Also
+## See Also
 
 - [[concepts/variable-lifecycle|Variable Lifecycle]] — discard skips lifecycle, goes straight to Released
 - [[technical/compile-rules/PGE/PGE02003-final-is-push-once|PGE02003]] — Final Is Push-Once (lifecycle rules for `<<`/`>>`)

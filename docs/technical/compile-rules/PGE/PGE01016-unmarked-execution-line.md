@@ -6,7 +6,7 @@ name: Unmarked Execution Line
 severity: error
 ---
 
-### Rule 1.16 — Unmarked Execution Line
+# Rule 1.16 — Unmarked Execution Line
 `PGE01016`
 
 <!-- @u:syntax/blocks -->
@@ -80,7 +80,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/execution|Execution]] — documents block element marker requirement, references PGE01016
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01016

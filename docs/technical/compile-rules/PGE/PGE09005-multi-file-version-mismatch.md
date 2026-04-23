@@ -6,7 +6,7 @@ name: Multi-File Version Mismatch
 severity: error
 ---
 
-### Rule 9.5 — Multi-File Version Mismatch
+# Rule 9.5 — Multi-File Version Mismatch
 `PGE09005`
 
 <!-- @u:syntax/operators -->
@@ -58,7 +58,7 @@ severity: error
    [@] << "{.}\file-02.pg"
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09005 in multi-file package rules
 

@@ -6,7 +6,7 @@ name: Single-Platform Path
 severity: warning
 ---
 
-### Rule 4.8w — Single-Platform Path
+# Rule 4.8w — Single-Platform Path
 `PGW04001`
 
 <!-- @u:syntax/blocks -->

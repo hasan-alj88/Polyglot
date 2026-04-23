@@ -6,7 +6,7 @@ name: Invalid Pipeline Input Literal
 severity: error
 ---
 
-### Rule 4.16 — Invalid Pipeline Input Literal
+# Rule 4.16 — Invalid Pipeline Input Literal
 `PGE04016`
 
 <!-- @u:syntax/blocks -->

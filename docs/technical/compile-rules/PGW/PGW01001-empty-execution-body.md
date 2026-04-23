@@ -7,7 +7,7 @@ severity: warning
 split_from: PGE01001
 ---
 
-### Rule 1.1 — Empty Execution Body
+# Rule 1.1 — Empty Execution Body
 `PGW01001`
 
 <!-- @u:syntax/blocks -->

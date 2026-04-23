@@ -6,7 +6,7 @@ name: Missing Path Platform Subfield
 severity: error
 ---
 
-### Rule 4.8 — Missing Path Platform Subfield
+# Rule 4.8 — Missing Path Platform Subfield
 `PGE04008`
 
 <!-- @u:syntax/blocks -->
@@ -46,7 +46,7 @@ severity: error
    [.] .Unix << "/tmp/MyApp"             [ ] ✗ PGE04008 — .Windows missing, current OS is Windows
 ```
 
-### See Also
+## See Also
 
 - [[syntax/types/strings|String Types]] — missing path platform subfield references
 - [[pglib/types/structs|Struct Types]] — `#path` platform subfield examples

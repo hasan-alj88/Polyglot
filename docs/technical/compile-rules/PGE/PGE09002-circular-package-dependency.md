@@ -6,7 +6,7 @@ name: Circular Package Dependency
 severity: error
 ---
 
-### Rule 9.2 — Circular Package Dependency
+# Rule 9.2 — Circular Package Dependency
 `PGE09002`
 
 <!-- @u:syntax/operators -->
@@ -45,7 +45,7 @@ severity: error
    [@] @a << @Local:999.A:v1.0.0      [ ] ✗ PGE09002 — B depends on A, creating cycle
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09002 in dependency rules
 

@@ -6,7 +6,7 @@ name: Queue Definition Must Use #Queue: Prefix
 severity: error
 ---
 
-### Rule 1.12 — Queue Definition Must Use #Queue: Prefix
+# Rule 1.12 — Queue Definition Must Use #Queue: Prefix
 `PGE01012`
 
 <!-- @u:syntax/operators -->
@@ -39,7 +39,7 @@ severity: error
 
 **Diagnostic:** "Queue definition `{Q}` must use `#Queue:` prefix — got `#GPUQueue`, expected `#Queue:GPUQueue`"
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/queue|Queue]] — documents #Queue: prefix requirement, references PGE01012
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01012

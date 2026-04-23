@@ -6,7 +6,7 @@ name: Undefined Interpolation Variable
 severity: error
 ---
 
-### Rule 4.5 — Undefined Interpolation Variable
+# Rule 4.5 — Undefined Interpolation Variable
 `PGE04005`
 
 <!-- @u:syntax/blocks -->
@@ -47,6 +47,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[syntax/operators|Operators]] — string interpolation and undefined variable references

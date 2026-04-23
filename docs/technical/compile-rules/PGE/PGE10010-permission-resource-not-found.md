@@ -6,7 +6,7 @@ name: Permission Resource Not Found
 severity: error
 ---
 
-### Rule 9.24 — Permission Resource Not Found
+# Rule 9.24 — Permission Resource Not Found
 `PGE10010`
 
 <!-- @u:syntax/blocks -->

@@ -6,7 +6,7 @@ name: Parallel-Scoped Collector Inside ForEach
 severity: error
 ---
 
-### Rule 3.15 — Parallel-Scoped Collector Inside ForEach
+# Rule 3.15 — Parallel-Scoped Collector Inside ForEach
 `PGE03015`
 
 <!-- @u:technical/spec/collector-definitions -->
@@ -38,7 +38,7 @@ severity: error
       (*) << $someVar
 ```
 
-### See Also
+## See Also
 
 - [[PGE03014-expand-scope-outside-foreach]] — inverse rule
 - [[concepts/collections/collect|Collect Operators]] — scope semantics

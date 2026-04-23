@@ -6,7 +6,7 @@ name: Unused Import
 severity: warning
 ---
 
-### Rule 9.2 — Unused Import
+# Rule 9.2 — Unused Import
 `PGW09002`
 
 <!-- @u:syntax/blocks -->

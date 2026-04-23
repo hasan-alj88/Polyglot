@@ -6,7 +6,7 @@ name: Unresolved Import Pipeline Reference
 severity: error
 ---
 
-### Rule 9.4 — Unresolved Import Pipeline Reference
+# Rule 9.4 — Unresolved Import Pipeline Reference
 `PGE09004`
 
 <!-- @u:syntax/blocks -->
@@ -74,7 +74,7 @@ severity: error
       (-) <input#string << $data
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09004 in import usage rules
 

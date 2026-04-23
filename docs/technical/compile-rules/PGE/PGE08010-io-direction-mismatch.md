@@ -6,7 +6,7 @@ name: IO Direction Mismatch
 severity: error
 ---
 
-### Rule 8.10 — IO Direction Mismatch
+# Rule 8.10 — IO Direction Mismatch
 `PGE08010`
 
 <!-- @u:syntax/blocks -->
@@ -61,7 +61,7 @@ severity: error
 
 **Diagnostic:** `"IO direction mismatch at line {N} — {<input|>output} <{name}> on call to ={PipelineName} uses {<<|>>} but {inputs accept << only|outputs provide >> only} at call sites"`
 
-### See Also
+## See Also
 
 - [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE08010 in call site rules
 

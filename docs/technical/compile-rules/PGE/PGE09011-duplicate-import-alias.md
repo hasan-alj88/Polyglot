@@ -6,7 +6,7 @@ name: Duplicate Import Alias
 severity: error
 ---
 
-### Rule 9.12 — Duplicate Import Alias
+# Rule 9.12 — Duplicate Import Alias
 `PGE09011`
 
 <!-- @u:syntax/blocks -->
@@ -58,7 +58,7 @@ severity: error
    [@] @lib << @Local:999.SharedLib:v1.0.0      [ ] ✗ PGE09011 — duplicate alias @lib (even identical target)
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09011 in import rules
 

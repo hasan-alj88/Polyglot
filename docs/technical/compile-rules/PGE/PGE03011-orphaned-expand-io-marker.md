@@ -6,7 +6,7 @@ name: Orphaned Expand IO Marker
 severity: error
 ---
 
-### Rule 3.12 — Orphaned Expand IO Marker
+# Rule 3.12 — Orphaned Expand IO Marker
 `PGE03011`
 
 <!-- @u:syntax/io -->

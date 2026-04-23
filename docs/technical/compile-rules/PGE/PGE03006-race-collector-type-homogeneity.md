@@ -6,7 +6,7 @@ name: Race Collector Type Homogeneity
 severity: error
 ---
 
-### Rule 3.6 — Race Collector Type Homogeneity
+# Rule 3.6 — Race Collector Type Homogeneity
 `PGE03006`
 
 <!-- @u:syntax/io -->
@@ -76,7 +76,7 @@ severity: error
 
 **Note:** Type matching is schema-based, not name-based — per [TYPE-IDENTITY.md](../TYPE-IDENTITY.md). Two differently-named `{#}` types with identical field structures are the same type. See resolved design issue 005 (git history: `docs/technical/compiler_issues/005-race-type-matching-semantics.md`) for the design decision.
 
-### See Also
+## See Also
 
 - [[concepts/collections/collect|Collect]] — documents race collector type constraint (references PGE03006)
 - [[concepts/collections/examples|Collection Examples]] — error table mapping PGE03006 to example scenarios

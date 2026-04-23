@@ -6,7 +6,7 @@ name: Unbound Script Variable
 severity: error
 ---
 
-### Rule 1.33 — Unbound Script Variable
+# Rule 1.33 — Unbound Script Variable
 `PGE01033`
 
 <!-- @u:pglib/pipelines/Run/INDEX -->

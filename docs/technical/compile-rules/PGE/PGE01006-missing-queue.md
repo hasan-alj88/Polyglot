@@ -7,7 +7,7 @@ severity: error
 split_from: PGE01001
 ---
 
-### Rule 1.6 — Missing Pipeline Queue
+# Rule 1.6 — Missing Pipeline Queue
 `PGE01006`
 
 <!-- @u:syntax/blocks -->
@@ -38,7 +38,7 @@ split_from: PGE01001
 
 **Diagnostic:** "Pipeline `-Process` has no queue — add `[Q]` after `[T]`/`(-)` section"
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/queue|Queue]] — documents mandatory queue requirement, references PGE01006
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01006

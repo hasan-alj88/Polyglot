@@ -8,7 +8,7 @@ type: spec
 updated: 2026-04-09
 ---
 
-### Rule 3.12 — Parallel Label Isolation
+# Rule 3.12 — Parallel Label Isolation
 `PGE03012`
 
 <!-- @u:syntax/blocks -->

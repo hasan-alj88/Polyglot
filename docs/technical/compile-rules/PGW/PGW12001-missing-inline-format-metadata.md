@@ -6,7 +6,7 @@ name: Template With No Placeholders
 severity: warning
 ---
 
-### Rule 10.2 — Template With No Placeholders
+# Rule 10.2 — Template With No Placeholders
 `PGW12001`
 
 <!-- @u:syntax/blocks -->

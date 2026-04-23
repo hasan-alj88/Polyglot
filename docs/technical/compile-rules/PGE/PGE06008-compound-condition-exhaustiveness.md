@@ -7,7 +7,7 @@ severity: error
 split_from: PGE06001
 ---
 
-### Rule 6.8 — Compound Condition Exhaustiveness
+# Rule 6.8 — Compound Condition Exhaustiveness
 `PGE06008`
 
 <!-- @u:syntax/blocks -->
@@ -71,6 +71,6 @@ If neither partition proof succeeds nor `*?` is present, PGE06008 fires.
 - [Compound Exhaustiveness Algorithm](../algorithms/compound-exhaustiveness.md) — partition refinement algorithm spec
 - [PGE06013 — Tautological or Contradictory Branch Condition](PGE06013-tautological-branch-condition.md) — prerequisite check
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — compound condition exhaustiveness rules reference PGE06008

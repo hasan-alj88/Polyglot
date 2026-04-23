@@ -6,7 +6,7 @@ name: Wrapper IO Mismatch
 severity: error
 ---
 
-### Rule 1.9 — Wrapper IO Mismatch
+# Rule 1.9 — Wrapper IO Mismatch
 `PGE01009`
 
 <!-- @u:syntax/blocks -->
@@ -118,7 +118,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/wrappers|Wrappers]] — documents wrapper IO wiring contract, references PGE01009
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01009

@@ -6,7 +6,7 @@ name: Queue Control Contradicts Queue Default
 severity: error
 ---
 
-### Rule 1.13 — Queue Control Contradicts Queue Default
+# Rule 1.13 — Queue Control Contradicts Queue Default
 `PGE01013`
 
 <!-- @u:syntax/blocks -->
@@ -51,7 +51,7 @@ severity: error
 
 **Diagnostic:** "Pipeline `-BatchJob` sets `maxInstances << 5` but queue `#Queue:BatchQueue` defines `maxInstances << 1` — remove the pipeline override or change the queue default"
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/queue|Queue]] — documents queue control contradiction rule, references PGE01013
 - [[pglib/pipelines/Q|-Q.* pglib Pipelines]] — references PGE01013 in queue control context

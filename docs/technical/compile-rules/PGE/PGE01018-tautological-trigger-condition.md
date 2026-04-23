@@ -6,7 +6,7 @@ name: Tautological or Contradictory Trigger Condition
 severity: error
 ---
 
-### Rule 1.18 — Tautological or Contradictory Trigger Condition
+# Rule 1.18 — Tautological or Contradictory Trigger Condition
 `PGE01018`
 
 <!-- @u:syntax/blocks -->
@@ -73,7 +73,7 @@ severity: error
 
 **Diagnostic:** `"Trigger condition on pipeline ={PipelineName} is always {true|false} — {tautological condition means trigger fires unconditionally|contradictory condition means pipeline can never trigger}"`
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/io-triggers|IO & Triggers]] — documents trigger tautology/contradiction, references PGE01018
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01018

@@ -6,7 +6,7 @@ name: Deprecated Pipeline Reference
 severity: warning
 ---
 
-### Rule 9.1 — Deprecated Pipeline Reference
+# Rule 9.1 — Deprecated Pipeline Reference
 `PGW09001`
 
 <!-- @u:syntax/blocks -->

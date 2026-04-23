@@ -6,7 +6,7 @@ name: Non-Value Comparison
 severity: error
 ---
 
-### Rule 4.24 — Non-Value Comparison
+# Rule 4.24 — Non-Value Comparison
 `PGE04024`
 
 <!-- @u:syntax/blocks -->

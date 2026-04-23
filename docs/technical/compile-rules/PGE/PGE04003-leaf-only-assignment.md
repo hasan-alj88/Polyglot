@@ -6,7 +6,7 @@ name: Leaf-Only Assignment
 severity: error
 ---
 
-### Rule 4.3 — Leaf-Only Assignment
+# Rule 4.3 — Leaf-Only Assignment
 `PGE04003`
 
 <!-- @u:syntax/blocks -->

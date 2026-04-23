@@ -6,7 +6,7 @@ name: Missing Pipeline Wrapper
 severity: error
 ---
 
-### Rule 1.30 — Missing Pipeline Wrapper
+# Rule 1.30 — Missing Pipeline Wrapper
 `PGE01030`
 
 <!-- @c:brainstorming:marker-declarations §4 Rule B -->
@@ -38,7 +38,7 @@ severity: error
 
 **Diagnostic:** "Pipeline `-Bad.NoWrapper` has no wrapper — add `[W]` (use `-W.Polyglot` if no setup/cleanup needed)"
 
-### See Also
+## See Also
 
 - [[PGE01005-missing-trigger|PGE01005]] — missing `[T]` (same pattern)
 - [[PGE01006-missing-queue|PGE01006]] — missing `[Q]` (same pattern)

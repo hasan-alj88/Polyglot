@@ -6,7 +6,7 @@ name: Pipeline IO Name Mismatch
 severity: error
 ---
 
-### Rule 1.10 — Pipeline IO Name Mismatch
+# Rule 1.10 — Pipeline IO Name Mismatch
 `PGE01010`
 
 <!-- @u:syntax/blocks -->
@@ -89,6 +89,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/inline-calls|Inline Calls]] — documents IO name matching rules, references PGE01010

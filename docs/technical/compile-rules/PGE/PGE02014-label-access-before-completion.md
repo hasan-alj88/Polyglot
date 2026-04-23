@@ -8,7 +8,7 @@ type: spec
 updated: 2026-04-09
 ---
 
-### Rule 2.14 — Label Access Before Completion
+# Rule 2.14 — Label Access Before Completion
 `PGE02014`
 
 <!-- @u:syntax/blocks -->

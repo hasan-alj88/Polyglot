@@ -6,7 +6,7 @@ name: CLI Non-String Argument
 severity: error
 ---
 
-### Rule 1.39 — CLI Non-String Argument
+# Rule 1.39 — CLI Non-String Argument
 `PGE01039`
 
 <!-- @u:pglib/pipelines/Run/INDEX -->

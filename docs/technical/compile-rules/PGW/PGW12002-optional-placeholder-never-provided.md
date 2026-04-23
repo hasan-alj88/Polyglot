@@ -6,7 +6,7 @@ name: Optional Placeholder Never Provided
 severity: warning
 ---
 
-### Rule 10.2 — Optional Placeholder Never Provided
+# Rule 10.2 — Optional Placeholder Never Provided
 `PGW12002`
 
 <!-- @u:concepts/pipelines/inline-calls -->

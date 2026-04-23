@@ -6,7 +6,7 @@ name: Empty Metadata Alias
 severity: error
 ---
 
-### Rule 12.4 — Empty Metadata Alias
+# Rule 12.4 — Empty Metadata Alias
 `PGE12004`
 
 <!-- @u:syntax/types -->

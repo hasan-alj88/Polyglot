@@ -6,7 +6,7 @@ name: Unbound Function Argument
 severity: error
 ---
 
-### Rule 1.35 — Unbound Function Argument
+# Rule 1.35 — Unbound Function Argument
 `PGE01035`
 
 <!-- @u:pglib/pipelines/Run/INDEX -->

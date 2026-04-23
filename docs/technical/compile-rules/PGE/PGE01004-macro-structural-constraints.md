@@ -6,7 +6,7 @@ name: Wrapper Structural Constraints
 severity: error
 ---
 
-### Rule 1.4 — Wrapper Structural Constraints
+# Rule 1.4 — Wrapper Structural Constraints
 `PGE01004`
 
 <!-- @u:syntax/blocks -->
@@ -153,7 +153,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/wrappers|Wrappers]] — user-facing wrapper documentation (references PGE01004)
 - [[concepts/macros|Macros (Retired)]] — macros retired; replaced by parameterized `##` schemas

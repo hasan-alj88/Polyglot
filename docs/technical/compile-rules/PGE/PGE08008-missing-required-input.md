@@ -6,7 +6,7 @@ name: Missing Required Input at Call Site
 severity: error
 ---
 
-### Rule 8.8 — Missing Required Input at Call Site
+# Rule 8.8 — Missing Required Input at Call Site
 `PGE08008`
 
 <!-- @u:syntax/blocks -->
@@ -113,7 +113,7 @@ severity: error
 
 **Diagnostic:** "Missing required input `<{name}` on {operator type} call to `={PipelineName}` at line {N} — input has no default and must be wired"
 
-### See Also
+## See Also
 
 - [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE08008 in call site rules
 

@@ -6,7 +6,7 @@ name: Invalid Assignment Target
 severity: error
 ---
 
-### Rule 8.7 — Invalid Assignment Target
+# Rule 8.7 — Invalid Assignment Target
 `PGE08007`
 
 <!-- @u:syntax/blocks -->
@@ -85,7 +85,7 @@ severity: error
 
 **Diagnostic:** "Invalid assignment target at line N — left-hand side must be a variable (`$`), output port (`>`), or field path, not a value expression"
 
-### See Also
+## See Also
 
 - [[user/concepts/pipelines/inline-calls|Inline Calls]] — references PGE08007 in call site rules
 

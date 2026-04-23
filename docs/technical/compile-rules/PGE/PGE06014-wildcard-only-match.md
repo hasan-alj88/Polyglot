@@ -6,7 +6,7 @@ name: Wildcard-Only Match
 severity: error
 ---
 
-### Rule 6.14 — Wildcard-Only Match
+# Rule 6.14 — Wildcard-Only Match
 `PGE06014`
 
 <!-- @u:syntax/blocks -->

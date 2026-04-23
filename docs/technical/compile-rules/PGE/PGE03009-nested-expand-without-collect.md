@@ -6,7 +6,7 @@ name: Nested Expand Without Collect
 severity: error
 ---
 
-### Rule 3.9 — Nested Expand Without Collect
+# Rule 3.9 — Nested Expand Without Collect
 `PGE03009`
 
 <!-- @u:syntax/blocks -->
@@ -84,7 +84,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/collections/expand|Expand]] — documents nested expand/collect pairing requirement (references PGE03009)
 - [[concepts/collections/examples|Collection Examples]] — error table mapping PGE03009 to example scenarios

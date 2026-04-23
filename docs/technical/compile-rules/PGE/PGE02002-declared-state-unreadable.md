@@ -6,7 +6,7 @@ name: Declared State Is Unreadable
 severity: error
 ---
 
-### Rule 2.2 — Declared State Is Unreadable
+# Rule 2.2 — Declared State Is Unreadable
 `PGE02002`
 
 <!-- @u:syntax/blocks -->
@@ -33,6 +33,6 @@ severity: error
    (-) <who << >name        [ ] ✗ PGE02002 — >name is still Declared
 ```
 
-### See Also
+## See Also
 
 - [[concepts/variable-lifecycle|Variable Lifecycle]] — defines Declared state and references PGE02002

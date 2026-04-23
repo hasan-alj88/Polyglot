@@ -6,7 +6,7 @@ name: Duplicate Definition
 severity: error
 ---
 
-### Rule 9.7 — Duplicate Definition
+# Rule 9.7 — Duplicate Definition
 `PGE09007`
 
 <!-- @u:syntax/blocks -->
@@ -128,7 +128,7 @@ severity: error
 
 **Diagnostic:** "Duplicate {definition type} `{name}` in package `{package}:{version}` — first defined in {file}:{line}, duplicate at {file}:{line}"
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09007 in multi-file package rules
 

@@ -6,7 +6,7 @@ name: Invalid Arithmetic Operator
 severity: error
 ---
 
-### Rule 4.10 — Invalid Arithmetic Operator
+# Rule 4.10 — Invalid Arithmetic Operator
 `PGE04010`
 
 <!-- @u:syntax/blocks -->
@@ -56,7 +56,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[syntax/types/basic-types|Basic Types]] — regex validation catches invalid literals at compile time
 - [[syntax/operators|Operators]] — arithmetic through `-Math.*` pglib pipelines

@@ -6,7 +6,7 @@ name: Forbidden Element in Definition
 severity: error
 ---
 
-### Rule 1.31 — Forbidden Element in Definition
+# Rule 1.31 — Forbidden Element in Definition
 `PGE01031`
 
 <!-- @c:brainstorming:marker-declarations §4 Rule C -->
@@ -83,7 +83,7 @@ severity: error
 
 **Diagnostic:** "`{X}` definition `-Name` cannot contain `[Y]` — [element] is forbidden in [type] definitions"
 
-### See Also
+## See Also
 
 - [[PGE01029-invalid-marker-for-definition-type|PGE01029]] — invalid markers on definition line (complementary rule)
 - [[PGE01032-missing-trigger-boolean-output|PGE01032]] — `{T}` required output constraint

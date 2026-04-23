@@ -6,7 +6,7 @@ name: Discard in Wrapper IO
 severity: error
 ---
 
-### Rule 1.25 — Discard in Wrapper IO
+# Rule 1.25 — Discard in Wrapper IO
 `PGE01025`
 
 <!-- @u:syntax/io -->

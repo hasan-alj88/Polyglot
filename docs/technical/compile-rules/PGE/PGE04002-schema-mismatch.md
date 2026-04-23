@@ -6,7 +6,7 @@ name: Schema Mismatch
 severity: error
 ---
 
-### Rule 4.2 — Schema Mismatch
+# Rule 4.2 — Schema Mismatch
 `PGE04002`
 
 <!-- @u:syntax/blocks -->
@@ -74,6 +74,6 @@ severity: error
    [ ] .host and .protocol missing — ✗ PGE04002
 ```
 
-### See Also
+## See Also
 
 - [[syntax/types/conversions|Type Conversions]] — provable schema mismatch in serial-to-struct conversion

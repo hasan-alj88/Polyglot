@@ -6,7 +6,7 @@ name: Collector Metadata Required
 severity: error
 ---
 
-### Rule 3.13 — Collector Metadata Required
+# Rule 3.13 — Collector Metadata Required
 `PGE03013`
 
 <!-- @u:technical/spec/collector-definitions -->
@@ -34,6 +34,6 @@ severity: error
    ...
 ```
 
-### See Also
+## See Also
 
 - [[technical/spec/collector-definitions|Collector Definitions]] — `{*}` block specification

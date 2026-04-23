@@ -6,7 +6,7 @@ name: Negative Array Index Literal
 severity: error
 ---
 
-### Rule 4.11 — Negative Array Index Literal
+# Rule 4.11 — Negative Array Index Literal
 `PGE04011`
 
 <!-- @u:syntax/blocks -->

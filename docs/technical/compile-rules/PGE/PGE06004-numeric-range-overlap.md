@@ -6,7 +6,7 @@ name: Numeric Range Overlap
 severity: error
 ---
 
-### Rule 6.4 — Numeric Range Overlap
+# Rule 6.4 — Numeric Range Overlap
 `PGE06004`
 
 <!-- @u:syntax/blocks -->
@@ -56,6 +56,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — numeric range overlap rules reference PGE06004

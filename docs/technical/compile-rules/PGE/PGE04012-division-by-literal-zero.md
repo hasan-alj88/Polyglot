@@ -6,7 +6,7 @@ name: Division by Literal Zero
 severity: error
 ---
 
-### Rule 4.11 — Division by Literal Zero
+# Rule 4.11 — Division by Literal Zero
 `PGE04011`
 
 <!-- @u:syntax/blocks -->
@@ -55,6 +55,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[syntax/operators|Operators]] — division and modulo by literal zero compile error

@@ -6,7 +6,7 @@ name: Effectless Execution Expression
 severity: error
 ---
 
-### Rule 1.20 — Effectless Execution Expression
+# Rule 1.20 — Effectless Execution Expression
 `PGE01020`
 
 <!-- @u:syntax/blocks -->
@@ -92,7 +92,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[technical/ebnf/10-execution|Execution EBNF]] — `exec_expr` production (identifier removed)
 - [[technical/compile-rules/PGE/PGE01016-unmarked-execution-line|PGE01016]] — missing block element marker (complementary rule)

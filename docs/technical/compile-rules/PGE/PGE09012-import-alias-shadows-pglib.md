@@ -6,7 +6,7 @@ name: Import Alias Shadows Standard Library
 severity: error
 ---
 
-### Rule 9.13 — Import Alias Shadows Standard Library
+# Rule 9.13 — Import Alias Shadows Standard Library
 `PGE09012`
 
 <!-- @u:syntax/blocks -->
@@ -62,7 +62,7 @@ severity: error
 
 The reserved namespace list is maintained in [`docs/user/pglib/INDEX.md`](../../../user/pglib/INDEX.md). Any top-level namespace listed there is reserved. Current reserved prefixes: `File`, `Path`, `Sys`, `T`, `Q`, `W`.
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09012 in import rules
 - [[user/pglib/INDEX|pglib INDEX]] — authoritative reserved namespace list, references PGE09012

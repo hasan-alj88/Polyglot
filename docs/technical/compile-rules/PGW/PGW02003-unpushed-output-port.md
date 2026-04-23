@@ -6,7 +6,7 @@ name: Unpushed Output Port
 severity: warning
 ---
 
-### Rule 2.3 — Unpushed Output Port
+# Rule 2.3 — Unpushed Output Port
 `PGW02003`
 
 <!-- @u:syntax/blocks -->

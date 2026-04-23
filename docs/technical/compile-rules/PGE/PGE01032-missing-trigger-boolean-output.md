@@ -6,7 +6,7 @@ name: Missing Trigger Boolean Output
 severity: error
 ---
 
-### Rule 1.32 — Missing Trigger Boolean Output
+# Rule 1.32 — Missing Trigger Boolean Output
 `PGE01032`
 
 <!-- @c:brainstorming:marker-declarations §4 Rule G -->
@@ -52,7 +52,7 @@ severity: error
 - Missing: "Trigger `-T.Bad.NoSignal` must include output `>IsTriggered#bool`"
 - Wrong type: "Trigger `-T.Bad.WrongType` output `>IsTriggered` must be `#bool`, found `#string`"
 
-### See Also
+## See Also
 
 - [[PGE01031-forbidden-element-in-definition|PGE01031]] — element restrictions per definition type
 - [[PGE01024-incompatible-operation-marker|PGE01024]] — `[T]` invocation must target a `{T}` pipeline

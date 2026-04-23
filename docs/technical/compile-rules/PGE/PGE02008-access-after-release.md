@@ -6,7 +6,7 @@ name: Access After Release
 severity: error
 ---
 
-### Rule 2.8 — Access After Release
+# Rule 2.8 — Access After Release
 `PGE02008`
 
 <!-- @u:syntax/blocks -->
@@ -78,6 +78,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/variable-lifecycle|Variable Lifecycle]] — defines Released state and references PGE02008

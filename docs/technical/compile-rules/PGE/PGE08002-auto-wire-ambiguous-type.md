@@ -7,7 +7,7 @@ severity: error
 updated: 2026-04-23
 ---
 
-### Rule 8.2 — Auto-Wire Ambiguous Type
+# Rule 8.2 — Auto-Wire Ambiguous Type
 `PGE08002`
 
 <!-- @u:syntax/blocks -->
@@ -37,7 +37,7 @@ updated: 2026-04-23
    (-) >result#string >> >output
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/io/auto-wire|Wildcard Auto-Wire]] — user-facing explanation of `<* << $Label>*`
 - [[technical/ebnf/07-io-parameters#7.4 Wildcard IO (Auto-Wire)]] — grammar productions

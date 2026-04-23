@@ -7,7 +7,7 @@ severity: error
 split_from: PGE01001
 ---
 
-### Rule 1.5 — Missing Pipeline Trigger
+# Rule 1.5 — Missing Pipeline Trigger
 `PGE01005`
 
 <!-- @u:syntax/blocks -->
@@ -37,7 +37,7 @@ split_from: PGE01001
 
 **Diagnostic:** "Pipeline `-Process` has no trigger — add `[T]` before `[Q]`"
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/io-triggers|IO & Triggers]] — documents mandatory trigger requirement, references PGE01005
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01005

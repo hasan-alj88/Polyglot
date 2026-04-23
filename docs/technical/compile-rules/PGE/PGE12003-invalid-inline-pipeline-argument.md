@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "10.2"
+rule: "12.3"
 code: PGE12003
 name: Undefined Inline Template
 severity: error
 ---
 
-# Rule 10.2 — Undefined Inline Template
+# Rule 12.3 — Undefined Inline Template
 `PGE12003`
 
 <!-- @u:syntax/blocks -->

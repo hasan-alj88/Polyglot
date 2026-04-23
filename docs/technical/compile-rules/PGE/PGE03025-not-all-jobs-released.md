@@ -6,7 +6,7 @@ name: Not All Jobs Released
 severity: error
 ---
 
-### Rule 3.25 — Not All Jobs Released
+# Rule 3.25 — Not All Jobs Released
 `PGE03025`
 
 <!-- @u:technical/spec/collector-definitions -->
@@ -38,6 +38,6 @@ severity: error
       [*] *Job.Release"0"                [ ] ✗ only releases job 0
 ```
 
-### See Also
+## See Also
 
 - [[technical/spec/collector-definitions|Collector Definitions]] — Ground Rule 5

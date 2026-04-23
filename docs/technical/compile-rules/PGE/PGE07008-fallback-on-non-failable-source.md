@@ -101,7 +101,7 @@ This means the same production (e.g., `expand_io_line`, `schema_property`, `coll
 [#] $config#Settings !< "raw-string"
 ```
 
-### See Also
+## See Also
 
 - [[compile-rules/PGE/PGE07009-unterminated-fallback-chain|PGE07009]] — fallback chain must terminate at non-failable value
 - [[compile-rules/PGE/PGE07003-duplicate-fallback-assignment|PGE07003]] — duplicate fallback on same output

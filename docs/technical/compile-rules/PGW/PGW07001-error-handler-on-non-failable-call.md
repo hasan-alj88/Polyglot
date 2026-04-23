@@ -6,7 +6,7 @@ name: Error Handler on Non-Failable Call
 severity: warning
 ---
 
-### Rule 7.1w — Error Handler on Non-Failable Call
+# Rule 7.1w — Error Handler on Non-Failable Call
 `PGW07001`
 
 <!-- @u:syntax/blocks -->

@@ -6,7 +6,7 @@ name: Sibling Separator Homogeneity
 severity: error
 ---
 
-### Rule 5.1 — Sibling Separator Homogeneity
+# Rule 5.1 — Sibling Separator Homogeneity
 `PGE05001`
 
 <!-- @u:syntax/blocks -->
@@ -60,7 +60,7 @@ severity: error
    [:] :tag#string                     [ ] ✗ PGE05001 — : among . siblings
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/types/structs|Structs]] — field homogeneity rules reference PGE05001
 - [[user/syntax/types/flexible-fields|Typed Flexible Fields]] — structs with both fixed and flexible levels

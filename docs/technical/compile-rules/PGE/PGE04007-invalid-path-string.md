@@ -6,7 +6,7 @@ name: Invalid Path String
 severity: error
 ---
 
-### Rule 4.7 — Invalid Path String
+# Rule 4.7 — Invalid Path String
 `PGE04007`
 
 <!-- @u:syntax/blocks -->
@@ -86,7 +86,7 @@ The compiler statically infers whether a `-Path"..."` expression is provably cro
       [-] >dir << $defaultDir
 ```
 
-### See Also
+## See Also
 
 - [[syntax/types/strings|String Types]] — path validation error references
 - [[pglib/types/structs|Struct Types]] — `#path` invalid path string examples

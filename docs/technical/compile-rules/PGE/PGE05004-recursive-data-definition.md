@@ -6,7 +6,7 @@ name: Recursive Data Definition
 severity: error
 ---
 
-### Rule 4.14 — Recursive Data Definition
+# Rule 4.14 — Recursive Data Definition
 `PGE05004`
 
 <!-- @u:syntax/types -->

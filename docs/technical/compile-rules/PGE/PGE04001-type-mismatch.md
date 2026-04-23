@@ -6,7 +6,7 @@ name: Type Mismatch
 severity: error
 ---
 
-### Rule 4.1 — Type Mismatch
+# Rule 4.1 — Type Mismatch
 `PGE04001`
 
 <!-- @u:syntax/blocks -->
@@ -105,7 +105,7 @@ Type identity is defined in [TYPE-IDENTITY.md](../TYPE-IDENTITY.md) — "same ty
    (-) <numerator#float << $total    [ ] ✗ PGE04001 — int ≠ float
 ```
 
-### See Also
+## See Also
 
 - [[syntax/types/strings|String Types]] — plain string to `#path` type mismatch
 - [[pglib/types/structs|Struct Types]] — `#path` type mismatch examples

@@ -6,7 +6,7 @@ name: Incompatible Operation Marker
 severity: error
 ---
 
-### Rule 1.24 — Incompatible Operation Marker
+# Rule 1.24 — Incompatible Operation Marker
 `PGE01024`
 
 <!-- @u:syntax/blocks -->

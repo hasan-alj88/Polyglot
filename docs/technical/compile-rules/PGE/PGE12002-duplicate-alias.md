@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "10.2"
+rule: "12.2"
 code: PGE12002
 name: Duplicate Alias
 severity: error
 ---
 
-### Rule 10.2 — Duplicate Alias
+# Rule 12.2 — Duplicate Alias
 `PGE12002`
 
 <!-- @u:syntax/operators -->
@@ -89,7 +89,7 @@ severity: error
          [:] "FileDenied"              [ ] ✗ PGE12002 — "FileDenied" already aliases !Permission.File.Denied
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/blocks|Blocks]] — references PGE12002 in metadata alias uniqueness
 - [[user/concepts/metadata|Metadata]] — references PGE12002 in `%alias` field description

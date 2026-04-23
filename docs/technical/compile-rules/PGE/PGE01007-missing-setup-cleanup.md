@@ -7,7 +7,7 @@ severity: error
 split_from: PGE01001
 ---
 
-### Rule 1.7 — Missing Pipeline Setup/Cleanup
+# Rule 1.7 — Missing Pipeline Setup/Cleanup
 `PGE01007`
 
 <!-- @u:syntax/blocks -->
@@ -49,7 +49,7 @@ split_from: PGE01001
 
 **Diagnostic:** "Pipeline `-Process` has no setup/cleanup — add `[W]` or explicit `[\]/[/]`"
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/wrappers|Wrappers]] — documents mandatory setup/cleanup requirement, references PGE01007
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01007

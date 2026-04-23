@@ -6,7 +6,7 @@ name: Shell Variable Expansion
 severity: warning
 ---
 
-### Rule 9.7 — Shell Variable Expansion
+# Rule 9.7 — Shell Variable Expansion
 `PGW10006`
 
 <!-- @u:concepts/permissions/foreign-code -->

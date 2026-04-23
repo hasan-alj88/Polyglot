@@ -84,7 +84,7 @@ The compiler validates:
       (<) !< -Fetch.Config"/fallback"
 ```
 
-### See Also
+## See Also
 
 - [[compile-rules/PGE/PGE07008-fallback-on-non-failable-source|PGE07008]] — fallback on non-failable source (the per-expression rule)
 - [[compile-rules/PGE/PGE07003-duplicate-fallback-assignment|PGE07003]] — duplicate fallback on same output

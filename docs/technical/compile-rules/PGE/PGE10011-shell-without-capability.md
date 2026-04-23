@@ -6,7 +6,7 @@ name: Shell Without Capability
 severity: error
 ---
 
-### Rule 9.25 — Shell Without Capability
+# Rule 9.25 — Shell Without Capability
 `PGE10011`
 
 <!-- @u:concepts/permissions/foreign-code -->

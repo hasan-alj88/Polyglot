@@ -6,7 +6,7 @@ name: Undefined Import Alias
 severity: error
 ---
 
-### Rule 9.1 — Undefined Import Alias
+# Rule 9.1 — Undefined Import Alias
 `PGE09001`
 
 <!-- @u:syntax/blocks -->
@@ -48,7 +48,7 @@ severity: error
       (-) <input << $data
 ```
 
-### See Also
+## See Also
 
 - [[user/syntax/packages|Packages]] — references PGE09001 in import usage rules
 

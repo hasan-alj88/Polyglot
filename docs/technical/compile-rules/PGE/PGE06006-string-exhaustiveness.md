@@ -7,7 +7,7 @@ severity: error
 split_from: PGE06001
 ---
 
-### Rule 6.6 — String Exhaustiveness
+# Rule 6.6 — String Exhaustiveness
 `PGE06006`
 
 <!-- @u:syntax/blocks -->
@@ -43,6 +43,6 @@ split_from: PGE06001
 - [PGE06001 — Conditional Must Be Exhaustive](PGE06001-conditional-must-be-exhaustive.md) — parent rule
 - [PGE06002 — Enum Exhaustiveness](PGE06002-enum-exhaustiveness.md) — closed-set counterpart
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — string exhaustiveness rules reference PGE06006

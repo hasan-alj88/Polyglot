@@ -6,7 +6,7 @@ name: Unbound Function Kwarg
 severity: error
 ---
 
-### Rule 1.36 — Unbound Function Kwarg
+# Rule 1.36 — Unbound Function Kwarg
 `PGE01036`
 
 <!-- @u:pglib/pipelines/Run/INDEX -->

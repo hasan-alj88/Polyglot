@@ -6,7 +6,7 @@ name: Missing Mandatory Metadata for Sandbox-Only
 severity: error
 ---
 
-### Rule 9.30 — Missing Mandatory Metadata for Sandbox-Only
+# Rule 9.30 — Missing Mandatory Metadata for Sandbox-Only
 `PGE10016`
 
 <!-- @c:technical/spec/job-sandbox#Opaque Code -->

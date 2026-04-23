@@ -5,7 +5,7 @@ code: PGE01002
 name: IO Before Trigger
 ---
 
-### Rule 1.2 — IO Before Trigger
+# Rule 1.2 — IO Before Trigger
 `PGE01002`
 
 <!-- @u:syntax/blocks -->
@@ -42,7 +42,7 @@ name: IO Before Trigger
       (-) >content >> >content
 ```
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/INDEX|Pipelines Overview]] — references PGE01002 in IO declaration ordering
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01002

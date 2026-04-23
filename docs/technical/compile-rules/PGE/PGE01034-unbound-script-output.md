@@ -6,7 +6,7 @@ name: Unbound Script Output
 severity: error
 ---
 
-### Rule 1.34 — Unbound Script Output
+# Rule 1.34 — Unbound Script Output
 `PGE01034`
 
 <!-- @u:pglib/pipelines/Run/INDEX -->

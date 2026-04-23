@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "10.2"
+rule: "12.7"
 code: PGE12007
 name: Required Input Not In Template
 severity: error
 ---
 
-# Rule 10.2 — Required Input Not In Template
+# Rule 12.7 — Required Input Not In Template
 `PGE12007`
 
 <!-- @u:concepts/pipelines/inline-calls -->

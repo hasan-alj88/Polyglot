@@ -6,7 +6,7 @@ name: Collector Without Expand
 severity: error
 ---
 
-### Rule 3.11 — Collector Without Expand
+# Rule 3.11 — Collector Without Expand
 `PGE03010`
 
 <!-- @u:syntax/blocks -->
@@ -49,7 +49,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/collections/expand|Expand]] — documents collector-must-be-inside-expand constraint (references PGE03010)
 - [[concepts/collections/examples|Collection Examples]] — error table mapping PGE03010 to example scenarios

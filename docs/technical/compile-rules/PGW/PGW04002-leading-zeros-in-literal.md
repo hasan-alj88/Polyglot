@@ -6,7 +6,7 @@ name: Leading Zeros in Literal
 severity: warning
 ---
 
-### Rule 4.2w — Leading Zeros in Literal
+# Rule 4.2w — Leading Zeros in Literal
 `PGW04002`
 
 <!-- @u:syntax/blocks -->

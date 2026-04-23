@@ -6,7 +6,7 @@ name: Invalid IANA Timezone
 severity: error
 ---
 
-### Rule 4.26 — Invalid IANA Timezone
+# Rule 4.26 — Invalid IANA Timezone
 `PGE04026`
 
 <!-- @u:syntax/blocks -->
@@ -48,7 +48,7 @@ severity: error
    [.] .iana << "NewYork"          [ ] ✗ PGE04026 — missing Area/ prefix
 ```
 
-### See Also
+## See Also
 
 - [[pglib/types/datetime|DateTime Types]] — `#Zone` definition
 - [[pglib/pipelines/DT/Zone.Set|-DT.Zone.Set]], [[pglib/pipelines/DT/Zone.Convert|-DT.Zone.Convert]] — timezone pipelines

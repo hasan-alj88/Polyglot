@@ -6,7 +6,7 @@ name: Error Handler on Fire-and-Forget
 severity: warning
 ---
 
-### Rule 3.5w — Error Handler on Fire-and-Forget
+# Rule 3.5w — Error Handler on Fire-and-Forget
 `PGW03002`
 
 <!-- @u:syntax/blocks -->

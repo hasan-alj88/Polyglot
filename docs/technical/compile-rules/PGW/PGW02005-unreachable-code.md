@@ -6,7 +6,7 @@ name: Unreachable Code
 severity: warning
 ---
 
-### Rule 2.9 — Unreachable Code
+# Rule 2.9 — Unreachable Code
 `PGW02005`
 
 <!-- @u:syntax/blocks -->

@@ -7,7 +7,7 @@ severity: retired
 redirect: "#272"
 ---
 
-### Rule 1.23 — Parameterless Macro (RETIRED)
+# Rule 1.23 — Parameterless Macro (RETIRED)
 `PGE01023`
 
 <!-- @u:syntax/types -->

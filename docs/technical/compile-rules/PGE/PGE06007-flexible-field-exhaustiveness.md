@@ -7,7 +7,7 @@ severity: error
 split_from: PGE06001
 ---
 
-### Rule 6.7 — Flexible Field Exhaustiveness
+# Rule 6.7 — Flexible Field Exhaustiveness
 `PGE06007`
 
 <!-- @u:syntax/blocks -->
@@ -41,6 +41,6 @@ split_from: PGE06001
 - [PGE06001 — Conditional Must Be Exhaustive](PGE06001-conditional-must-be-exhaustive.md) — parent rule
 - [PGE06002 — Enum Exhaustiveness](PGE06002-enum-exhaustiveness.md) — fixed field (`.`) uses enum rules
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — flexible field exhaustiveness rules reference PGE06007

@@ -6,7 +6,7 @@ name: AST-Invisible Foreign Code
 severity: error
 ---
 
-### Rule 9.28 — AST-Invisible Foreign Code
+# Rule 9.28 — AST-Invisible Foreign Code
 `PGE10014`
 
 <!-- @u:concepts/permissions/foreign-code -->

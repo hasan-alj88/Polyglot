@@ -6,7 +6,7 @@ name: Duplicate Metadata Field
 severity: error
 ---
 
-### Rule 1.15 — Duplicate Metadata Field
+# Rule 1.15 — Duplicate Metadata Field
 `PGE01015`
 
 <!-- @u:syntax/blocks -->
@@ -95,7 +95,7 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/INDEX|Pipelines Overview]] — documents metadata uniqueness constraint, references PGE01015
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01015

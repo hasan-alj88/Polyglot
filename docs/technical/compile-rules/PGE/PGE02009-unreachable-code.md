@@ -6,7 +6,7 @@ name: Unreachable Code
 severity: error
 ---
 
-### Rule 2.9 — Unreachable Code
+# Rule 2.9 — Unreachable Code
 `PGE02009`
 
 <!-- @u:syntax/blocks -->
@@ -106,6 +106,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[concepts/variable-lifecycle|Variable Lifecycle]] — references PGE02009 for code after variable release

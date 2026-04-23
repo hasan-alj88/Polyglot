@@ -6,7 +6,7 @@ name: Data Load Schema Mismatch
 severity: error
 ---
 
-### Rule 2.11 — Data Load Schema Mismatch
+# Rule 2.11 — Data Load Schema Mismatch
 `PGE02011`
 
 <!-- @u:syntax/blocks -->

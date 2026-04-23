@@ -6,7 +6,7 @@ name: "[b] Has No Collectible Output"
 severity: error
 ---
 
-### Rule 3.5 — `[b]` Has No Collectible Output
+# Rule 3.5 — `[b]` Has No Collectible Output
 `PGE03005`
 
 <!-- @u:syntax/io -->
@@ -55,7 +55,7 @@ severity: error
    (*) << $bgResult                  [ ] ✗ PGE03005 — $bgResult is from [b]
 ```
 
-### See Also
+## See Also
 
 - [[concepts/collections/collect|Collect]] — documents `[b]` fire-and-forget having no collectible output (references PGE03005)
 - [[concepts/collections/examples|Collection Examples]] — error table mapping PGE03005 to example scenarios

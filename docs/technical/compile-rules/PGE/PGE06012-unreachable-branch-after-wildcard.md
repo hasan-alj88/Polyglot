@@ -6,7 +6,7 @@ name: Unreachable Branch After Wildcard
 severity: error
 ---
 
-### Rule 6.12 — Unreachable Branch After Wildcard
+# Rule 6.12 — Unreachable Branch After Wildcard
 `PGE06012`
 
 <!-- @u:syntax/blocks -->
@@ -62,6 +62,6 @@ severity: error
 
 **Open point:** None.
 
-### See Also
+## See Also
 
 - [[user/concepts/conditionals|Conditionals]] — unreachable branch rules reference PGE06012

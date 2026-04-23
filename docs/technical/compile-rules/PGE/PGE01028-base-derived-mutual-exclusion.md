@@ -6,7 +6,7 @@ name: Native/Derived Block Mutual Exclusion
 severity: error
 ---
 
-### Rule 1.28 — Native/Derived Block Mutual Exclusion
+# Rule 1.28 — Native/Derived Block Mutual Exclusion
 `PGE01028`
 
 <!-- @u:syntax/blocks -->

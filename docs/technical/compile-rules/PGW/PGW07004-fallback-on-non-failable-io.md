@@ -6,7 +6,7 @@ name: Fallback on Non-Failable IO
 severity: warning
 ---
 
-### Rule 7.4w — Fallback on Non-Failable IO
+# Rule 7.4w — Fallback on Non-Failable IO
 `PGW07004`
 
 <!-- @u:syntax/blocks -->

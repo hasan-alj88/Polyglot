@@ -6,7 +6,7 @@ name: Uncaptured Output With Default/Fallback
 severity: warning
 ---
 
-### Rule 8.9w — Uncaptured Output With Default/Fallback
+# Rule 8.9w — Uncaptured Output With Default/Fallback
 `PGW08003`
 
 <!-- @u:syntax/blocks -->

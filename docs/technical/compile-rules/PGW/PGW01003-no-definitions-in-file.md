@@ -6,7 +6,7 @@ name: No Definitions in File
 severity: warning
 ---
 
-### Rule 1.3w — No Definitions in File
+# Rule 1.3w — No Definitions in File
 `PGW01003`
 
 <!-- @u:syntax/blocks -->

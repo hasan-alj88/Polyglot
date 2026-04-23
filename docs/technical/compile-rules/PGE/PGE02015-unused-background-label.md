@@ -8,7 +8,7 @@ type: spec
 updated: 2026-04-09
 ---
 
-### Rule 2.15 — Unused Background Label
+# Rule 2.15 — Unused Background Label
 `PGE02015`
 
 <!-- @u:syntax/blocks -->

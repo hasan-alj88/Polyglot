@@ -6,7 +6,7 @@ name: Unresolved Queue Reference
 severity: error
 ---
 
-### Rule 1.14 — Unresolved Queue Reference
+# Rule 1.14 — Unresolved Queue Reference
 `PGE01014`
 
 <!-- @u:syntax/blocks -->
@@ -51,7 +51,7 @@ severity: error
 
 **Diagnostic:** "Pipeline `-RenderJob` references queue `#Queue:GPUQueue` which is not defined in this package or imported — define it with `{Q}` or import the package that contains it"
 
-### See Also
+## See Also
 
 - [[concepts/pipelines/queue|Queue]] — documents queue reference resolution, references PGE01014
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01014
