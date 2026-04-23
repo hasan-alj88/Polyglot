@@ -53,11 +53,29 @@ The string-parsing form defines capture slots with regex validation and maps the
 ```
 
 **Element roles:**
-- `($)` — IO line declaring a capture parameter. Each `($) <name.re << "regex"` declares one named capture with its regex validation pattern. The `.re` field is **mandatory** — every capture must have a regex constraint.
+- `($)` — IO line declaring a capture parameter. Each `($) <name.re << "regex"` declares one named capture with its regex validation pattern. The `($)` line is **required** only when the capture's target field cannot supply a regex itself. When the target field ([[`.]`] assignment) is a typed subtype of `#String` that carries its own regex (e.g., `#uint`, `#int`, or any user-defined `#String` subtype with `.re`), the capture inherits the target field's regex and the `($)` declaration may be omitted. See [[#Implicit Regex from Typed Target Fields]].
 - `[$]` — Action line binding the target type. Exactly one `[$] #TargetType` per overload. Must appear after all `($)` lines and before `[.]` field assignments.
 - `[.]` — Fixed field assignment, mapping captured values to type fields. Same syntax as in `{#}` definitions.
 
 **Ordering:** `($)` IO lines first, then `[$]` type binding, then `[.]` field mapping. This follows the same top-down flow as pipeline definitions: IO declarations before body.
+
+### Implicit Regex from Typed Target Fields
+
+When a capture maps (via `[.] .field << <capture`) to a field whose type is a typed `#String` subtype with its own regex, the capture's regex is inherited from the target field's type. In that case the `($)` line may be omitted entirely — only captures mapping to plain `#string` fields (or captures that need a stricter constraint than the type default) require an explicit `($) <name.re << "..."`.
+
+```polyglot
+{ } Semver constructor — only <label needs an explicit ($) line
+{ } because #uint provides "[0-9]+" implicitly for the numeric captures.
+{$} $Release"v{major}.{minor}.{patch}-{label}"
+   ($) <label.re << "[a-z]+"
+   [$] #Release
+   [.] .major << <major         [ ] .major#uint — regex inherited from #uint
+   [.] .minor << <minor         [ ] .minor#uint — regex inherited from #uint
+   [.] .patch << <patch         [ ] .patch#uint — regex inherited from #uint
+   [.] .label << <label         [ ] .label#string — explicit ($) required
+```
+
+Use the explicit `($)` form when you need to narrow the regex below the type's default — e.g., `"[0-9][0-9]"` to force exactly two digits where `#uint` would accept any number of digits. Structural-integrity checks apply to the effective regex, whether explicit or inherited.
 
 ### Keyword Overload
 
@@ -212,7 +230,7 @@ Constructor validation errors enforced at compile time. See [[COMPILE-RULES#14 �
 |------|------|-----------------|
 | PGE14001 | Ambiguous Constructor Overload | Two `{$}` overloads with overlapping regex match sets |
 | PGE14002 | Duplicate Constructor Keyword | Two keyword overloads with the same literal string |
-| PGE14003 | Missing Capture Regex | Capture slot declared without `.re` validation |
+| PGE14003 | Missing Capture Regex | Capture slot declared without `.re` validation AND target field provides no type-inherited regex |
 | PGE14004 | Structural Integrity Violation | Slot `.re` can match pattern separator characters |
 | PGE14005 | Target Type Mismatch | `[.]` field mapping to nonexistent field on target type |
 | PGE14006 | Failable Pipeline In Constructor | User `{$}` contains `[-]` pipeline call (pglib only) |
