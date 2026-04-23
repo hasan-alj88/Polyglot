@@ -2,7 +2,7 @@
 audience: [automation-builder, integrator, design]
 type: master-index
 scope: all-documentation
-updated: 2026-04-03
+updated: 2026-04-23
 ---
 
 # Polyglot Documentation — Master Index
@@ -82,6 +82,14 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 |------|---------|
 | [[technical/INDEX]] | Complete technical documentation index (all areas) |
 
+### For AI Tools
+
+| Path | Content |
+|------|---------|
+| [[ai-retrieval-index]] | Query-shaped retrieval layer (by construct, compile-rule range, pglib namespace, type, error, philosophy, audit area) |
+| [[source-tree-analysis]] | Repository shape map with ASCII tree diagrams per major directory |
+| [[component-inventory]] | Flat categorical inventory (blocks, pglib, types, rules, philosophy, audit) |
+
 ### For Documentation Authors
 
 | Path | Content |
@@ -103,6 +111,12 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 |------|----------|------|-------------|
 | vision.md | all | vision | Product vision and entry point (highest authority) |
 | INDEX.md | all | master-index | This file — documentation entry point |
+| project-overview.md | product | reference | Product-shaped overview — what Polyglot is, who it's for, status |
+| architecture.md | design | spec | Consolidated architecture read — language, compiler, service, runtime |
+| ai-retrieval-index.md | ai-finder | reference | Query-shaped retrieval layer for AI tools |
+| source-tree-analysis.md | ai-finder | reference | Repository shape map with ASCII tree diagrams |
+| component-inventory.md | ai-finder | reference | Flat categorical inventory of every Polyglot component |
+| development-guide.md | developer | guide | Contributor onboarding — prerequisites, docs-first mindset, PAUL workflow |
 
 ### docs/philosophy/
 
