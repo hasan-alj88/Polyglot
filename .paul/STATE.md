@@ -10,10 +10,10 @@ See: .paul/PROJECT.md (updated 2026-04-11)
 ## Current Position
 
 Milestone: Design & Architecture Spec (M2) (issue-driven)
-Phase: No active phase
-Plan: No active plan
-Status: Ready for next issue
-Last activity: 2026-04-23 — Merged docs/issue-356-audit-compiler-compile-rules to main (c1707e8); issue #356 closed on GitHub; branch deleted
+Phase: issue-338-regenerate-project-docs — UNIFY complete, MERGE pending
+Plan: 338-01 unified
+Status: PLAN ✓ APPLY ✓ UNIFY ✓ — ready for MERGE
+Last activity: 2026-04-23 — Plan 338-01 UNIFY complete: SUMMARY reconciled (all 5 ACs Pass, no follow-ups, no authority-chain issues); handoff HANDOFF-issue-338-mid-apply.md archived; skill audit clean (no required skills in SPECIAL-FLOWS); no design decisions requiring `docs/audit/decisions/` records
 
 Progress:
 - v0.1 Language Spec: [██████████] 100%
@@ -144,14 +144,20 @@ Progress:
 
 ## Active Issue
 
-No active issue. Run /paul:work-issue <number> to start.
+Issue: #338 — Review generated project docs against audit conventions
+Branch: issue/338-regenerate-project-docs
+Labels: (none)
+Started: 2026-04-23
+GitHub: https://github.com/hasan-alj88/Polyglot/issues/338
+
+Note: Original bmad-document-project workflow no longer exists (removed 2026-03-12). Scope pivoted to 2a — use `bmm-codebase-analyzer` / `bmm:analyze` to regenerate the 6 target files against current docs/ state, then audit-review against docs/audit/ (audience, frontmatter, @c:/@u:/@d: refs, glossary compliance). Key conflict to resolve: new `docs/index.md` vs existing [[docs/INDEX.md]].
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [ready for next issue]
+PLAN ──▶ APPLY ──▶ UNIFY ──▶ MERGE
+  ✓        ✓        ✓        ○     [Plan 338-01 loop closed via UNIFY; ready for /paul:merge]
 ```
 
 ## Accumulated Context
@@ -348,6 +354,8 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Plan 356-02 — Directory indexes | 2026-04-23 | 5 new INDEX.md (compile-rules root, PGE/187, PGW/30, algorithms/3, compiler/4); frontmatter-driven generation; 0 existing files modified; all 17 wikilink targets verified |
 | Plan 356-03 — Stub removal + glossary + wikilinks | 2026-04-23 | Deleted TYPE-IDENTITY.md stub (10 refs retargeted to [[type-identity]]); added "Behavior Contract" glossary row; body-level [[wikilink]] retrofit on PGE01005/06/07 + PGE03025; reciprocal @c: + body link between io-registry.md ↔ ast-invisible-registry.md; 1 deletion + 18 modifications; all 6 ACs pass; anomaly: conversions.md had an 11th stub ref not in plan-time grep |
 | Closed #356 — Audit fixes: compiler + compile-rules | 2026-04-23 | Merged docs/issue-356-audit-compiler-compile-rules to main (c1707e8); 3 plan commits; branch deleted |
+| 2026-04-23: Issue #338 triage — keep all 6, rename index → ai-retrieval-index.md | Phase issue-338 | Avoids case-insensitive collision with [[INDEX]]; retains full issue intent; 6 new docs + INDEX wiring |
+| Plan 338-01 unified | 2026-04-23 | 6 audit-compliant docs produced (product/design/developer/ai-finder); all ACs Pass; deviation: direct Write calls replaced failed parallel-agent approach (same outcome); ready for /paul:merge |
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
@@ -366,11 +374,11 @@ Protected elements for current milestone:
 
 ## Session Continuity
 
-Last session: 2026-04-23
-Stopped at: Issue #356 merged to main (c1707e8) and closed on GitHub. Branch docs/issue-356-audit-compiler-compile-rules deleted.
-Next action: Run /paul:issues to pick the next issue, or /paul:progress to review milestone status.
-Resume file: (none)
-Resume context: No active work. Main is 16 commits ahead of origin/main (awaiting push). P2 deferred items from the #356 audit ("Enforced by" back-refs sweep, cycle-detection.md audience reconciliation, rule-definition template) remain open for future issues.
+Last session: 2026-04-23 (UNIFY closed loop for plan 338-01)
+Stopped at: UNIFY complete — SUMMARY reconciled, STATE updated, handoff archived
+Next action: /paul:merge
+Resume file: .paul/phases/issue-338-regenerate-project-docs/338-01-SUMMARY.md
+Resume context: Branch `issue/338-regenerate-project-docs`. All 5 ACs Pass; no follow-ups; no design decisions needing records; handoff archived to `.paul/handoffs/archive/`. Run `/paul:merge` to squash-merge to main and close #338.
 
 ---
 *STATE.md — Updated after every significant action*
