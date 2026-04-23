@@ -24,8 +24,8 @@ updated: 2026-04-22
 | [[rules/conventions\|rules/conventions]] | Style, structure, formatting rules | Before writing any doc |
 | [[rules/checklist\|rules/checklist]] | Pre-publish quality checks | Before finalizing any doc |
 | [[reference/glossary\|reference/glossary]] | Authoritative term definitions | When using project terminology |
-| [[tracking/coverage-gaps\|tracking/coverage-gaps]] | Structural documentation gaps (UG/TG/MX/OR) | When logging or resolving coverage gaps |
-| [[tracking/inconsistencies\|tracking/inconsistencies]] | Contradictions between docs (IC) | When logging or fixing inconsistencies |
+| [[tracking/coverage-gaps/INDEX\|tracking/coverage-gaps/INDEX]] | Structural documentation gaps (UG/TG/MX/OR) | When logging or resolving coverage gaps |
+| [[tracking/inconsistencies/INDEX\|tracking/inconsistencies/INDEX]] | Contradictions between docs (IC) | When logging or fixing inconsistencies |
 | [[tracking/progress\|tracking/progress]] | What areas have been audited | Before starting audit of an area |
 | [[tracking/decisions\|tracking/decisions]] | Decisions made during auditing | When making or reviewing audit decisions |
 | [[decisions/README\|decisions/]] | Decision history with before/after impact | When making or reviewing design decisions |
