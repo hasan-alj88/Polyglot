@@ -1,7 +1,7 @@
 ---
 audience: design
 type: spec
-updated: 2026-04-22
+updated: 2026-04-23
 ---
 
 <!-- @ebnf/INDEX -->
@@ -39,6 +39,7 @@ pipeline_ref        ::= pipeline_id                    (* local: -Pipeline.Name 
 
 call_io_line        ::= "(-)" io_param assignment_op value_expr
                          { indent fallback_line NEWLINE }
+                      | "(-)" wildcard_input "<<" wildcard_output   (* wildcard auto-wire — §7.4 *)
                       | operation_label
                       | grouped_fallback ;
 
@@ -60,6 +61,8 @@ grouped_fallback_line ::= "($)" ">" output_name "!>" value_expr           (* gen
 **Rule:** The `grouped_fallback` production provides an alternative to scattered `(>) !>` fallbacks for pipelines with multiple outputs. `(-) $label` declares the label in pipeline IO scope (the `(-)` marker mirrors the `[-]` pipeline call context); `($)` lines inside the group operate on the label's variable-scope accessors, referencing outputs by `>outputName`. `[!]` blocks may also appear under the label, scoped to the pipeline call. Both scattered and grouped forms are valid — the compiler unions all mechanisms for exhaustiveness checking (PGE07007). The same error cannot be declared in both forms (PGE07003).
 
 **Precedence:** `[!]` error blocks are checked before `!<` / `!>` fallbacks. If `[!]` pushes a replacement value, the fallback is not evaluated.
+
+**Wildcard auto-wire:** `(-) <* << $Label>*` passes **all** outputs of a labeled operation as inputs to the current pipeline call, resolved at compile time via bijective type-topology matching (see [[technical/ebnf/07-io-parameters#7.4 Wildcard IO (Auto-Wire)]]). The form requires all of `$Label`'s outputs to be Final before the target triggers, producing implicit completion-wait semantics. Compile failures surface as PGE08001 (type mismatch), PGE08002 (ambiguous type), or PGE08003 (port count mismatch). See [[user/syntax/io/auto-wire|Wildcard Auto-Wire]].
 
 **Rule:** Standard library pipelines (`-File.*`, `-T.*`, `-Q.*`, `-W.*`) are built-in and do not require `[@]` import. Only user/external packages need import.
 

@@ -2,7 +2,7 @@
 audience: ai-finder
 type: audit-reference
 scope: glossary
-updated: 2026-04-22
+updated: 2026-04-23
 ---
 
 # Glossary — Authoritative Definitions
@@ -49,6 +49,7 @@ Source: [[vision]]
 | Schema Bundle | A `##` prefix — syntactic sugar for a reusable group of `%##` (branch-level) metadata assignments. Describes tree shape: depth, key types, ordering, uniformity. E.g., `##Scalar`, `##Flat`, `##Record` | Not a data type — a schema bundle describes type properties, it is not itself a `#` type |
 | Constructor | A `{$}` definition that produces a compile-time-guaranteed Final value with no error surface. Invoked as `$Name"literal"` in pipeline body. Two forms: string-parsing (regex captures via `($)` IO lines) and native pipeline (pglib only, `[-]` infallible calls). Uses `[$]` for target type binding. Metadata at `%$` | Not a pipeline — no trigger, queue, or wrapper. Not a type definition — it defines a construction path for an existing type. Not auto-derived from `{#}` |
 | Leaf Bundle | A `###` prefix — syntactic sugar for a reusable group of `%###` (leaf-level) metadata assignments. Describes leaf content nature: `###Value` for typed data, `###Enum` for variant selectors | Not a schema (`##`) — leaf bundles describe leaf content, not tree shape |
+| Wildcard auto-wire | `(-) <* << $Label>*` — passes **all** outputs of a labeled operation as inputs to the target pipeline call, with the compiler resolving the mapping by **bijective type-topology matching**: every output pairs with exactly one input by type-identity, the pairing must be 1-to-1 and onto. Failure modes: PGE08001 (type mismatch), PGE08002 (ambiguous types), PGE08003 (port count mismatch). Success triggers PGW08001 (valid but explicit wiring preferred). Recovered from `->` chain auto-wire (retired #340) as a general feature (#345). See [[auto-wire]] | Not a variant of `*All` / collect operators — wildcard auto-wire is a compile-time IO-wiring shorthand, not a runtime reconciliation mechanism. Not an alias for "wire everything" — the match must be bijective or it fails to compile |
 
 ## Audience Tiers
 

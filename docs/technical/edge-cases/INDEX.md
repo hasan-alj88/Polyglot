@@ -1,7 +1,7 @@
 ---
 audience: design
 type: reference
-updated: 2026-04-17
+updated: 2026-04-23
 ---
 
 # EBNF Edge Cases
@@ -39,7 +39,7 @@ Review in batches by section. Each edge case includes:
 | [07-io-parameters.md](07-io-parameters.md) | S7. IO Parameters | EC-7.1 |
 | [08-expressions.md](08-expressions.md) | S8. Expressions | EC-8.1--8.6 |
 | [09-definition-blocks.md](09-definition-blocks.md) | S9. Definition Blocks | EC-9.1--9.19 |
-| [10-execution.md](10-execution.md) | S10. Execution Statements | EC-10.1--10.16 |
+| [10-execution.md](10-execution.md) | S10. Execution Statements | EC-10.1--10.20 |
 | [11-control-flow.md](11-control-flow.md) | S11. Control Flow | EC-11.1--11.11 |
 | [12-collections.md](12-collections.md) | S12. Collection Operations | EC-12.1--12.18 |
 | [13-comments.md](13-comments.md) | S13. Comments | EC-13.1--13.3 |
@@ -70,7 +70,7 @@ Review in batches by section. Each edge case includes:
 | S7 IO | EC-7.1 | `input_param` with field separators |
 | S8 Expressions | EC-8.1--8.8 | `inline_data`, empty `{}`, discard default restriction, self-assignment detection, arithmetic moot (X.35), nested inline data rejected (X.36) |
 | S9 Definitions | EC-9.1--9.19 | Package imports, enum/value fields, pipeline structure, triggers, IO modes, parallel fork, empty definitions, trigger anomalies, wrapper IO discard |
-| S10 Execution | EC-10.1--10.16 | Pipeline call + error, pglib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr, orphan continuation, self-chain, foreign code |
+| S10 Execution | EC-10.1--10.20 | Pipeline call + error, pglib call, chain execution, chain IO, chain auto-wire, chain errors, serial load, parallel, effectless exec_expr, orphan continuation, self-chain, foreign code, wildcard auto-wire (valid + PGE08001/02/03) |
 | S11 Control Flow | EC-11.1--11.11 | Conditional chains, error scoping, logical operators, match syntax, wildcard-only match, variable match, pipeline comparison, cross-pkg enum via identifier, comment-only branch accept |
 | S12 Collections | EC-12.1--12.18 | All expand variants, all collect variants, direct output, multiple collectors, collect-all/race collectors, multi-wave, [*] <</>>/semantics, orphaned collectors/markers, `reassemble_line` IO validation |
 | S13 Comments | EC-13.1--13.3 | Square, curly, multiline |
@@ -86,4 +86,4 @@ Review in batches by section. Each edge case includes:
 | S23 Stress Tests | ST-1--ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, wrapper+timer |
 | S24 Datatype Definitions | EC-24.1--24.20 | Scalar regex boundaries, `<~` inheritance, ##/### composition, generic type parameters, %## property completeness |
 
-**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle + 3 literals + 3 control-flow + 2 scope + 4 cross-concern + 2 #307 + 2 #308 = 137 edge cases across 24 sections.**
+**Total: 51 original + 33 new + 18 datatype + 2 exec_expr + 3 assignment + 5 empty-def + 3 trigger + 3 collection-scope + 3 lifecycle + 3 literals + 3 control-flow + 2 scope + 4 cross-concern + 2 #307 + 2 #308 + 4 #345 = 141 edge cases across 24 sections.**
