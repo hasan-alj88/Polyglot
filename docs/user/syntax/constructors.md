@@ -37,45 +37,23 @@ A constructor definition uses the `{$}` block type. The definition header specif
 
 The `$` prefix follows Polyglot's prefix symmetry: `{#}` defines `#Type`, `{-}` defines `-Pipeline`, `{$}` defines `$Constructor`.
 
-### String-Parsing Overload
+### Simple Pattern Overload
 
-The string-parsing form defines capture slots with regex validation and maps them to fields of the target type:
+The simple pattern form defines capture slots within literal strings but delegates their validation entirely to their mapped data types. To prevent Polyglot from reinventing complex string parsing (see [[vision#The Problem|c:Vision]]), constructors do not support explicit regex configuration.
 
 ```polyglot
-{$} $DT"{hours}:{min}:{seconds}"
-   ($) <hours.re << "[0-9][0-9]"
-   ($) <min.re << "[0-9][0-9]"
-   ($) <seconds.re << "[0-9][0-9]"
+{$} $DT"{hours}:{minutes}:{seconds}"
    [$] #DT.Time
    [.] .hours << <hours
-   [.] .minutes << <min
+   [.] .minutes << <minutes
    [.] .seconds << <seconds
 ```
 
 **Element roles:**
-- `($)` — IO line declaring a capture parameter. Each `($) <name.re << "regex"` declares one named capture with its regex validation pattern. The `($)` line is **required** only when the capture's target field cannot supply a regex itself. When the target field ([[`.]`] assignment) is a typed subtype of `#String` that carries its own regex (e.g., `#uint`, `#int`, or any user-defined `#String` subtype with `.re`), the capture inherits the target field's regex and the `($)` declaration may be omitted. See [[#Implicit Regex from Typed Target Fields]].
-- `[$]` — Action line binding the target type. Exactly one `[$] #TargetType` per overload. Must appear after all `($)` lines and before `[.]` field assignments.
-- `[.]` — Fixed field assignment, mapping captured values to type fields. Same syntax as in `{#}` definitions.
+- `[$]` — Action line binding the target type. Exactly one `[$] #TargetType` per overload. Must appear before `[.]` field assignments.
+- `[.]` — Fixed field assignment, mapping captured values to type fields. When a capture maps to a strictly typed field (e.g., `#uint`, `#int`, or a domain `#String`), the capture implicitly inherits the target field's embedded structural validation boundaries.
 
-**Ordering:** `($)` IO lines first, then `[$]` type binding, then `[.]` field mapping. This follows the same top-down flow as pipeline definitions: IO declarations before body.
-
-### Implicit Regex from Typed Target Fields
-
-When a capture maps (via `[.] .field << <capture`) to a field whose type is a typed `#String` subtype with its own regex, the capture's regex is inherited from the target field's type. In that case the `($)` line may be omitted entirely — only captures mapping to plain `#string` fields (or captures that need a stricter constraint than the type default) require an explicit `($) <name.re << "..."`.
-
-```polyglot
-{ } Semver constructor — only <label needs an explicit ($) line
-{ } because #uint provides "[0-9]+" implicitly for the numeric captures.
-{$} $Release"v{major}.{minor}.{patch}-{label}"
-   ($) <label.re << "[a-z]+"
-   [$] #Release
-   [.] .major << <major         [ ] .major#uint — regex inherited from #uint
-   [.] .minor << <minor         [ ] .minor#uint — regex inherited from #uint
-   [.] .patch << <patch         [ ] .patch#uint — regex inherited from #uint
-   [.] .label << <label         [ ] .label#string — explicit ($) required
-```
-
-Use the explicit `($)` form when you need to narrow the regex below the type's default — e.g., `"[0-9][0-9]"` to force exactly two digits where `#uint` would accept any number of digits. Structural-integrity checks apply to the effective regex, whether explicit or inherited.
+Constructors do NOT support `($)` IO lines explicitly defining `.re` extraction logic. If you need to parse a complex string that requires explicit character-range definitions or custom logic (like decoding a semantic version or custom token), it cannot be written as a user-defined constructor. You must delegate building this type to a pipeline call backed by the appropriate legacy Bricks language.
 
 ### Keyword Overload
 
@@ -107,7 +85,7 @@ Only pglib constructors may use `[-]` pipeline calls inside `{$}`. The called pi
    [.] .seconds << $sec
 ```
 
-User-defined constructors cannot use `[-]` calls — they are limited to string-parsing with regex captures. This restriction ensures the no-error-surface guarantee holds: regex-to-tree mapping is provably safe, while pipeline calls introduce async complexity that only pglib's native operations can guarantee infallible.
+User-defined constructors cannot use `[-]` calls — they are limited to mapping simple string patterns. This restriction ensures the no-error-surface guarantee holds: simple string-to-tree mappings are provably safe at compile time for string literals, while pipeline calls introduce async complexity that only pglib's native operations can guarantee infallible.
 
 ## Constructor Contract
 
@@ -136,9 +114,9 @@ A constructor name (e.g., `$DT`) can have multiple `{$}` definitions — each is
 
 ### Structural Integrity Check
 
-At definition compile time, the compiler verifies that no capture slot's `.re` can match the pattern's literal separators. This prevents values from breaking pattern structure — analogous to SQL injection prevention.
+At definition compile time, the compiler verifies that no capture slot's inherited structural constraints can match the pattern's literal separators. This prevents values from breaking pattern structure — analogous to SQL injection prevention.
 
-Example: if the pattern is `"{hours}:{minutes}"` and the separator is `:`, then `<hours.re` must not accept strings containing `:`. If it could, a single input value might span multiple capture slots, breaking the pattern's structural integrity.
+Example: if the pattern is `"{hours}:{minutes}"` and the separator is `:`, then the underlying type bound to `hours` must intrinsically reject strings containing `:`. If it could accept the separator, a single input value might span multiple capture slots, breaking the structural integrity of the simple pattern.
 
 This safety guarantee is **verified at definition time** — every call site inherits the guarantee automatically. One proof, used everywhere.
 
@@ -230,8 +208,7 @@ Constructor validation errors enforced at compile time. See [[COMPILE-RULES#14 �
 |------|------|-----------------|
 | PGE14001 | Ambiguous Constructor Overload | Two `{$}` overloads with overlapping regex match sets |
 | PGE14002 | Duplicate Constructor Keyword | Two keyword overloads with the same literal string |
-| PGE14003 | Missing Capture Regex | Capture slot declared without `.re` validation AND target field provides no type-inherited regex |
-| PGE14004 | Structural Integrity Violation | Slot `.re` can match pattern separator characters |
+| PGE14004 | Structural Integrity Violation | Slot's inherited structural constraint can match pattern separators |
 | PGE14005 | Target Type Mismatch | `[.]` field mapping to nonexistent field on target type |
 | PGE14006 | Failable Pipeline In Constructor | User `{$}` contains `[-]` pipeline call (pglib only) |
 | PGE14007 | Incomplete Field Mapping | Not all required fields of target type are mapped |
