@@ -1,6 +1,6 @@
 ---
 epic: "Polyglot Lexer & AST Generator"
-github-issue-link: "#"
+github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/361"
 status: "backlog"
 assignee: "@scrum_master"
 dependencies: ["F003-Compiler"]

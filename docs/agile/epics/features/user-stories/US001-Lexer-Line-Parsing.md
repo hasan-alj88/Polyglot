@@ -1,6 +1,6 @@
 ---
 feature: "F001-Lexer"
-github-issue-link: "#"
+github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/362"
 status: "planning"
 assignee: "@product_owner"
 ---
@@ -20,3 +20,4 @@ assignee: "@product_owner"
 ## Tasks
 - [TASK001: Implement 3-Space Indentation Scope Tracker](./tasks/TASK001-Lexer-3Space-Indentation.md)
 - [TASK002: Implement Bracket Marker & Expression Isolation](./tasks/TASK002-Lexer-Tokenizer.md)
+- [TASK003: Identify Tokens](./tasks/TASK003-Lexer-Identify-Tokens.md)

@@ -13,6 +13,7 @@ This directory serves as the memory and tracking backbone for Polyglot's AI Agil
     - `user-stories/`: Scenarios framing the exact user flows and requirements.
       - `tasks/`: Executable units of work assigned to the **Development Team**.
 
-## How to Use these Files
-1. **GitHub Linkage:** Ensure all item files (epic, feature, user-story, task) contain a YAML frontmatter mapping it to the corresponding GitHub Issue.
-2. **State & Dependencies:** Keep track of blockers, dependencies, and `status` natively within the frontmatter to give agents contextual memory of progressing workflows.
+## How to Use these Files & Establish Workflows
+1. **GitHub Issue Enforcement:** Every newly defined Epic, Feature, User Story, and Task **must** have an associated GitHub Issue created (`gh issue create`). 
+2. **Dependency Linkage:** When raising the GitHub issue, the body must contain a reference to its hierarchical dependencies (e.g., `Parent #IssueNum` or `Depends on #IssueNum`). This tracks progress and guarantees the pipeline doesn't decouple.
+3. **Yaml Sync:** Upon creating the GitHub Issue, ensure the local `.md` file's YAML frontmatter replaces `github-issue-link: "#"` with the live issue URL to give agents contextual memory of progressing workflows.

@@ -1,5 +1,5 @@
 ---
-github-issue-link: "#"
+github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/357"
 status: "planning"
 assignee: "@product_owner"
 dependencies: []
