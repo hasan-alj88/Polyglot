@@ -1,7 +1,7 @@
 ---
 audience: design
 type: spec
-updated: 2026-03-30
+updated: 2026-04-24
 ---
 
 <!-- @ebnf/INDEX -->
@@ -11,10 +11,6 @@ updated: 2026-03-30
 ```ebnf
 comment_line        ::= "[ ]" comment_text ;
 comment_curly       ::= "{ }" comment_text ;
-
-multiline_comment   ::= "[ ]<" NEWLINE
-                         { any_text NEWLINE }
-                         "[ ]>" ;
 
 comment_text        ::= { any_char } ;
 ```
