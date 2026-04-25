@@ -11,18 +11,34 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
 
         // Phase 1: Indent (every 3 spaces is a TokIndent)
         let mut indent_spaces = 0;
+        let mut has_tab = false;
         let mut chars = line.chars().peekable();
         while let Some(&c) = chars.peek() {
             if c == ' ' {
                 indent_spaces += 1;
-                chars.next();
-                if indent_spaces == 3 {
-                    tokens.push(Spanned::new(PolyglotToken::TokIndent, line_num, col_idx + 1));
-                    indent_spaces = 0;
-                }
                 col_idx += 1;
+                chars.next();
+            } else if c == '\t' {
+                has_tab = true;
+                col_idx += 1;
+                chars.next();
             } else {
                 break;
+            }
+        }
+
+        if has_tab {
+            tokens.push(Spanned::new(PolyglotToken::IncorrectIndent, line_num, 1));
+        } else {
+            let indent_count = indent_spaces / 3;
+            let remainder = indent_spaces % 3;
+            
+            for i in 0..indent_count {
+                tokens.push(Spanned::new(PolyglotToken::TokIndent, line_num, (i * 3) + 1));
+            }
+            if remainder > 0 {
+                // If there are 1 or 2 leftover spaces, it's an illegal indent depth
+                tokens.push(Spanned::new(PolyglotToken::IncorrectIndent, line_num, (indent_count * 3) + 1));
             }
         }
 
@@ -102,5 +118,27 @@ mod tests {
         println!("=============================\n");
 
         assert!(!tokens.is_empty(), "Token stream should not be empty");
+    }
+
+    #[test]
+    fn test_lex_incorrect_indent() {
+        // Line 1: 4 spaces = 1 TokIndent + 1 IncorrectIndent
+        // Line 2: Tab character = IncorrectIndent
+        let script = "    [-] -Transform.Data\n\t[#] $payload << #Data";
+        
+        let tokens = lex(script);
+        
+        println!("\n=== Incorrect Indent Stream ===");
+        for t in &tokens {
+            println!("[L{:02}:C{:02}] {:?}", t.line, t.col, t.value);
+        }
+        println!("===============================\n");
+        
+        // Assertions for exact coordinates to prove algorithmic safety
+        assert_eq!(tokens[0].value, PolyglotToken::TokIndent);
+        assert_eq!(tokens[1].value, PolyglotToken::IncorrectIndent);
+        assert_eq!(tokens[1].col, 4); // The extra space
+        
+        assert_eq!(tokens[5].value, PolyglotToken::IncorrectIndent); // The \t on line 2
     }
 }
