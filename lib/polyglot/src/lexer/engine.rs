@@ -208,4 +208,36 @@ mod tests {
         // Since there is NO space, the algorithm contiguous-slurps the entire `<<#Config._database` block!
         assert_eq!(tokens[5].value, PolyglotToken::InvalidPattern("<<#Config._database".to_string()));
     }
+
+    #[test]
+    fn test_cli_execution() {
+        use std::process::Command;
+        use std::path::Path;
+        use std::fs;
+
+        let output_file = "tests/fixtures/cli_output_test.pgts";
+        let _ = fs::remove_file(output_file); // Ensure clean state before start
+
+        let status = Command::new("cargo")
+            .args([
+                "run", "--bin", "polyglot", "--",
+                "--lexer",
+                "-c", "tests/fixtures/basic_pipeline.pg",
+                "-t", output_file
+            ])
+            .status()
+            .expect("Failed to execute CLI binary via cargo");
+
+        assert!(status.success(), "CLI command returned a non-zero exit code");
+        assert!(Path::new(output_file).exists(), "CLI failed to generate the .pgts output file");
+
+        let generated_content = fs::read_to_string(output_file).expect("Failed to read generated .pgts");
+        
+        // Assert that the CLI fundamentally parses and formats identically to the organic lex() core
+        assert!(generated_content.contains("[L02:C01] ActionExecSeq"));
+        assert!(generated_content.contains("Pipeline(\"Transform.Data\")"));
+        
+        // Cleanup organic test artifact
+        let _ = fs::remove_file(output_file);
+    }
 }
