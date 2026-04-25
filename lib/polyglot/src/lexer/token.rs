@@ -14,7 +14,7 @@ impl<T> Spanned<T> {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PolyglotToken {
     // Structural
-    TokIndent,
+    Scope(usize),
     TokNewline,
     TokSpace,
 
