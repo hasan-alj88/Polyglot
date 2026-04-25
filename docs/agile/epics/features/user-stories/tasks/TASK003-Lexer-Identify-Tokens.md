@@ -165,8 +165,6 @@ Note: `#Boolean.True` and `#Boolean.False` are tokenized as `DATA("Boolean.True"
 ### Inline Boundaries
 | Token | Lexeme |
 |-------|--------|
-| `SYM_INLINE_COLL_START` | `{` |
-| `SYM_INLINE_COLL_END` | `}` |
 | `SYM_COMMA` | `,` |
 | `SYM_INTERP_START` | `{` (inside strings) |
 | `SYM_INTERP_END` | `}` (inside strings) |

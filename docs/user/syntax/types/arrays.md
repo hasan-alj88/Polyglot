@@ -14,15 +14,31 @@ updated: 2026-04-09
 
 ## Element-Typed Arrays
 
-Arrays specify their element type using `:` (flexible field) notation:
+Arrays specify their element type using `:` (flexible field) notation, and are initialized via **Vertical Block Expansion** using the `(#)` Data IO bracket. This reflects that array elements are data inputs binding to the array sequence.
 
+### Auto-Incrementing Append
+For a standard sequence, assign `#Array` and push elements sequentially using `(#) <<`. The compiler automatically assigns the next `#Range` index (`:0`, `:1`, ...).
 ```polyglot
-[-] $files#array:path <~ {}
-[-] $names#array:string <~ {}
-[-] $scores#array:int <~ {}
+[-] $names#array:string << #Array
+   (#) << "Alice"
+   (#) << "Bob"
 ```
 
-This constrains the array to hold only elements of the specified type.
+### Explicit Indexing
+You can specify the `#Range` index explicitly on the `(#)` bracket:
+```polyglot
+[-] $scores#array:int << #Array
+   (#) :0 << 95
+   (#) :1 << 82
+```
+**Important**: `#Array` is structurally defined as a *contiguous* sequence. Specifying explicit sparse indices (e.g. jumping from `:1` to `:10`) will cause a compilation error. Sparse arrays require a different underlying schema.
+
+### Empty Arrays
+To declare an empty array efficiently, use the constructor format `$` rather than opening a block:
+```polyglot
+[-] $files#array:path <~ $Array""
+[-] $names#array:string <~ $Array"Empty"
+```
 
 ## Multidimensional Arrays
 
@@ -48,7 +64,7 @@ Element access uses `<` (the tree child accessor) with integer indices. The numb
 A `0D` array is a scalar container — it holds exactly one element with no indexing. Access is direct (no `<N` index):
 
 ```polyglot
-[-] $scalar#array:int:0D <~ {42}
+[-] $scalar#array:int:0D <~ $Array"42"
 [-] $val#int << $scalar              [ ] direct access — no index
 [-] $bad << $scalar<0                [ ] ✗ PGE04017 — no indices on 0D
 ```

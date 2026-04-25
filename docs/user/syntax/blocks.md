@@ -63,6 +63,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `(=)` | Collection-expand IO line. See [[concepts/collections/expand#Expand Operators]] |
 | `(*)` | Collection-collect IO line. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `(_)` | Permission IO line — (1) input declaration inside `{_}` template definitions, (2) template input values when referencing `__` generic permissions or `{_}` templates with `(_)` inputs. See [[permissions#__ Generic Permissions]] |
+| `(#)` | Data input binding — (1) generic parameter declaration inside `{#}` definitions, (2) vertical array element appending/assignment. See [[generic-types]] and [[syntax/types/arrays]] |
 | `(#) _PermName` | Permission dependency on `{#}` data definitions — declares that this definition requires the named `{_}` permission object. See [[permissions#Permissions as IO]] |
 | `(-) _PermName` | Permission dependency on `{-}` pipelines — declares that this pipeline requires the named `{_}` permission object. See [[permissions#Permissions as IO]] |
 | `(*) <<` | Wait input — wait for variable to be Final (used inside `(*)` blocks). See [[concepts/collections/collect#Collect-All & Race Collectors]] |

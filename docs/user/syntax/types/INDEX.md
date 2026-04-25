@@ -36,7 +36,10 @@ Types are annotated on variables using the `#` character. The `#` starts a **typ
 ```polyglot
 [-] $IntValue#int <~ 42
 [-] $StringValue#string <~ "Hello World"
-[-] $ArrayValue#array <~ {1, 2, 3, 4, 5}
+[-] $ArrayValue#array << #Array
+   (#) << 1
+   (#) << 2
+   (#) << 3
 ```
 
 Each special character has one job:
