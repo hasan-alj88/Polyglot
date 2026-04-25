@@ -151,7 +151,6 @@ Field references after `.` or `:` separators. Prefix is stripped.
 | `ERROR_ELSE` | `!*` | Matches all declared errors |
 | `ALL_INPUT` | `<*` | All inputs of target pipeline |
 | `ALL_OUTPUTS` | `>*` | All outputs of labeled operation |
-| `SYM_SUPPRESS` | `-` | Error suppression suffix (`!*-`) |
 
 ### Literals
 | Token | Example |
