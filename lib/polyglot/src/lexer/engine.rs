@@ -42,6 +42,10 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
             tokens.push(Spanned::new(PolyglotToken::ActionDataLoad, line_num, col_idx + 1));
             expression = &expression[3..];
             col_idx += 3;
+        } else if !expression.trim().is_empty() {
+            // A Polyglot line must have a structural marker leading the expression.
+            // If we don't match one but the line isn't empty, we flag the gap and proceed.
+            tokens.push(Spanned::new(PolyglotToken::MissingMarker, line_num, col_idx + 1));
         }
 
         // We clean any glue space before feeding to macro-matcher
@@ -77,4 +81,26 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
     }
 
     tokens
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_lex_basic_pipeline() {
+        // A standard Polyglot snippet containing multiple indented patterns.
+        // We start with a completely empty line (index 0) to avoid trimming issues.
+        let script = "\n[-] -Transform.Data\n   [#] $payload << #Users.NewHire\n   >> !Network.Timeout";
+        
+        let tokens = lex(script);
+        
+        println!("\n=== Polyglot Token Stream ===");
+        for t in &tokens {
+            println!("[L{:02}:C{:02}] {:?}", t.line, t.col, t.value);
+        }
+        println!("=============================\n");
+
+        assert!(!tokens.is_empty(), "Token stream should not be empty");
+    }
 }

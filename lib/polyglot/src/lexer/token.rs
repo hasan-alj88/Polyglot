@@ -80,5 +80,6 @@ pub enum PolyglotToken {
     IoParamInFallback,
 
     // Fallback/Error
+    MissingMarker,
     TokUnrecognized(char),
 }

@@ -39,6 +39,7 @@ lazy_static! {
     static ref RE_TYPED_VAR: Regex = Regex::new(r"^\$(?P<var>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z][a-zA-Z0-9]*)*)#(?P<type>[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
     static ref RE_ASSIGN_DATA: Regex = Regex::new(r"^\$(?P<var>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z][a-zA-Z0-9]*)*) +<< +#(?P<data>[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
     static ref RE_RAISE_ERROR: Regex = Regex::new(r"^>> +!(?P<err>[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
+    static ref RE_PIPELINE: Regex = Regex::new(r"^-(?P<pipe>[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
     static ref RE_ISOLATED_DATA: Regex = Regex::new(r"^#(?P<data>[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
     static ref RE_STANDALONE_VAR: Regex = Regex::new(r"^\$(?P<var>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
 }
@@ -78,6 +79,13 @@ pub fn get_patterns() -> Vec<PatternRule> {
             regex: &RE_ISOLATED_DATA,
             extractor: |caps| vec![
                 PolyglotToken::Data(caps["data"].to_string()),
+            ],
+        },
+        PatternRule {
+            label: "Pipeline_Call",
+            regex: &RE_PIPELINE,
+            extractor: |caps| vec![
+                PolyglotToken::Pipeline(caps["pipe"].to_string()),
             ],
         },
         PatternRule {
