@@ -1,0 +1,4 @@
+
+[ ] Whole line comment
+[-] -Pipe   [ ] Inline comment
+[-] -Pipe   [ ] $fakeVar << #FakeData
