@@ -81,6 +81,6 @@ pub enum PolyglotToken {
 
     // Fallback/Error
     MissingMarker,
-    IncorrectIndent,
+    IncorrectIndent(String),
     TokUnrecognized(char),
 }

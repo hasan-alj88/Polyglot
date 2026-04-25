@@ -28,7 +28,8 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
         }
 
         if has_tab {
-            tokens.push(Spanned::new(PolyglotToken::IncorrectIndent, line_num, 1));
+            let invalid_str = line[0..col_idx].to_string();
+            tokens.push(Spanned::new(PolyglotToken::IncorrectIndent(invalid_str), line_num, 1));
         } else {
             let indent_count = indent_spaces / 3;
             let remainder = indent_spaces % 3;
@@ -38,7 +39,7 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
             }
             if remainder > 0 {
                 // If there are 1 or 2 leftover spaces, it's an illegal indent depth
-                tokens.push(Spanned::new(PolyglotToken::IncorrectIndent, line_num, (indent_count * 3) + 1));
+                tokens.push(Spanned::new(PolyglotToken::IncorrectIndent(" ".repeat(remainder)), line_num, (indent_count * 3) + 1));
             }
         }
 
@@ -136,9 +137,9 @@ mod tests {
         
         // Assertions for exact coordinates to prove algorithmic safety
         assert_eq!(tokens[0].value, PolyglotToken::TokIndent);
-        assert_eq!(tokens[1].value, PolyglotToken::IncorrectIndent);
+        assert_eq!(tokens[1].value, PolyglotToken::IncorrectIndent(" ".to_string()));
         assert_eq!(tokens[1].col, 4); // The extra space
         
-        assert_eq!(tokens[5].value, PolyglotToken::IncorrectIndent); // The \t on line 2
+        assert_eq!(tokens[5].value, PolyglotToken::IncorrectIndent("\t".to_string())); // The \t on line 2
     }
 }
