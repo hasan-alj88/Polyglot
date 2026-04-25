@@ -42,6 +42,9 @@ lazy_static! {
     static ref RE_PIPELINE: Regex = Regex::new(r"^-(?P<pipe>[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
     static ref RE_ISOLATED_DATA: Regex = Regex::new(r"^#(?P<data>[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
     static ref RE_STANDALONE_VAR: Regex = Regex::new(r"^\$(?P<var>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
+    static ref RE_COMMENT_ACTION: Regex = Regex::new(r"^\[ \] *(?P<text>.*)").unwrap();
+    static ref RE_COMMENT_DEF: Regex = Regex::new(r"^\{ \} *(?P<text>.*)").unwrap();
+    static ref RE_COMMENT_IO: Regex = Regex::new(r"^\( \) *(?P<text>.*)").unwrap();
 }
 
 pub fn get_patterns() -> Vec<PatternRule> {
@@ -93,6 +96,33 @@ pub fn get_patterns() -> Vec<PatternRule> {
             regex: &RE_STANDALONE_VAR,
             extractor: |caps| vec![
                 PolyglotToken::Variable(caps["var"].to_string()),
+            ],
+        },
+        PatternRule {
+            label: "Action_Comment",
+            regex: &RE_COMMENT_ACTION,
+            extractor: |caps| vec![
+                PolyglotToken::ActionComment,
+                PolyglotToken::TokSpace,
+                PolyglotToken::CommentText(caps["text"].to_string()),
+            ],
+        },
+        PatternRule {
+            label: "Definition_Comment",
+            regex: &RE_COMMENT_DEF,
+            extractor: |caps| vec![
+                PolyglotToken::DefComment,
+                PolyglotToken::TokSpace,
+                PolyglotToken::CommentText(caps["text"].to_string()),
+            ],
+        },
+        PatternRule {
+            label: "IO_Comment",
+            regex: &RE_COMMENT_IO,
+            extractor: |caps| vec![
+                PolyglotToken::IoComment,
+                PolyglotToken::TokSpace,
+                PolyglotToken::CommentText(caps["text"].to_string()),
             ],
         },
     ]

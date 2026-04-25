@@ -66,6 +66,7 @@ pub enum PolyglotToken {
     TerminalData(String),
     FixedSubField(String),
     FlexibleSubField(String),
+    CommentText(String),
     // (Other identifiers can be added here)
 
     // Operators
@@ -78,6 +79,7 @@ pub enum PolyglotToken {
     IoPipeline,
     IoParamOutFallback,
     IoParamInFallback,
+    IoComment,
 
     // Fallback/Error
     MissingMarker,

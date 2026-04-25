@@ -73,7 +73,9 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
         col_idx += trimmed_len;
         
         // Phase 3: Expression Phase (Delegating to Pattern Registry)
-        if !expression.is_empty() {
+        // By looping here, we allow multiple macros to be matched on the same line,
+        // which powers our inline-comment parsing.
+        while !expression.is_empty() {
             let mut matched = false;
             for pattern in &patterns {
                 if let Some(caps) = pattern.regex.captures(expression) {
@@ -82,16 +84,34 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
                         tokens.push(Spanned::new(t, line_num, col_idx + 1));
                     }
                     matched = true;
-                    // For Lexer structural PoC, the macro consumes the whole statement string. 
+                    
+                    // Advance the expression and col pointers by the length of the matched string
+                    let match_len = caps.get(0).unwrap().end();
+                    expression = &expression[match_len..];
+                    col_idx += match_len;
+                    
+                    // Consume any glue spaces between parts
+                    let trimmed_len = expression.len() - expression.trim_start().len();
+                    expression = expression.trim_start();
+                    col_idx += trimmed_len;
+                    
                     break;
                 }
             }
 
             if !matched {
                 // Stabilized Fallback parsing: Unrecognized syntax gets swallowed, avoiding panic.
-                for (i, c) in expression.chars().enumerate() {
-                    tokens.push(Spanned::new(PolyglotToken::TokUnrecognized(c), line_num, col_idx + 1 + i));
-                }
+                let c = expression.chars().next().unwrap();
+                tokens.push(Spanned::new(PolyglotToken::TokUnrecognized(c), line_num, col_idx + 1));
+                
+                let c_len = c.len_utf8();
+                expression = &expression[c_len..];
+                col_idx += c_len;
+                
+                // Clean trailing spaces to prevent infinite loops on spaces if not matched
+                let trimmed_len = expression.len() - expression.trim_start().len();
+                expression = expression.trim_start();
+                col_idx += trimmed_len;
             }
         }
 
@@ -144,5 +164,19 @@ mod tests {
         
         assert_eq!(tokens[5].value, PolyglotToken::Scope(0)); // Start of line 2
         assert_eq!(tokens[6].value, PolyglotToken::IncorrectIndent("\t".to_string())); // The \t on line 2
+    }
+
+    #[test]
+    fn test_lex_comments() {
+        let script = "
+[ ] Whole line comment
+[-] -Pipe   [ ] Inline comment
+";
+        let tokens = lex(script);
+        println!("\n=== Polyglot Comments Stream ===");
+        for t in &tokens {
+            println!("[L{:02}:C{:02}] {:?}", t.line, t.col, t.value);
+        }
+        println!("================================\n");
     }
 }
