@@ -45,6 +45,7 @@ lazy_static! {
     static ref RE_COMMENT_ACTION: Regex = Regex::new(r"^\[ \] *(?P<text>.*)").unwrap();
     static ref RE_COMMENT_DEF: Regex = Regex::new(r"^\{ \} *(?P<text>.*)").unwrap();
     static ref RE_COMMENT_IO: Regex = Regex::new(r"^\( \) *(?P<text>.*)").unwrap();
+    static ref RE_INVALID_FIELD: Regex = Regex::new(r"^[.:]_[a-zA-Z0-9_]*").unwrap();
 }
 
 pub fn get_patterns() -> Vec<PatternRule> {
@@ -96,6 +97,13 @@ pub fn get_patterns() -> Vec<PatternRule> {
             regex: &RE_STANDALONE_VAR,
             extractor: |caps| vec![
                 PolyglotToken::Variable(caps["var"].to_string()),
+            ],
+        },
+        PatternRule {
+            label: "Invalid_Identifier",
+            regex: &RE_INVALID_FIELD,
+            extractor: |caps| vec![
+                PolyglotToken::InvalidIdentifier(caps[0].to_string()),
             ],
         },
         PatternRule {

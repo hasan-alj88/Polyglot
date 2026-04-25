@@ -67,6 +67,7 @@ pub enum PolyglotToken {
     FixedSubField(String),
     FlexibleSubField(String),
     CommentText(String),
+    InvalidIdentifier(String),
     // (Other identifiers can be added here)
 
     // Operators
@@ -84,5 +85,5 @@ pub enum PolyglotToken {
     // Fallback/Error
     MissingMarker,
     IncorrectIndent(String),
-    TokUnrecognized(char),
+    InvalidPattern(String),
 }

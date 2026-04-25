@@ -6,6 +6,10 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
     let patterns = get_patterns();
 
     for (line_idx, line) in script.lines().enumerate() {
+        if line.trim().is_empty() {
+            continue;
+        }
+
         let line_num = line_idx + 1;
         let mut col_idx = 0;
 
@@ -100,13 +104,21 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
             }
 
             if !matched {
-                // Stabilized Fallback parsing: Unrecognized syntax gets swallowed, avoiding panic.
-                let c = expression.chars().next().unwrap();
-                tokens.push(Spanned::new(PolyglotToken::TokUnrecognized(c), line_num, col_idx + 1));
+                // Stabilized Fallback parsing: Unrecognized syntax gets swallowed as a contiguous block.
+                let mut invalid_len = 0;
+                for c in expression.chars() {
+                    if c == ' ' { break; } // prevent swallowing separate elements
+                    invalid_len += c.len_utf8();
+                }
+                if invalid_len == 0 {
+                    invalid_len = expression.chars().next().unwrap().len_utf8();
+                }
+
+                let invalid_str = &expression[..invalid_len];
+                tokens.push(Spanned::new(PolyglotToken::InvalidPattern(invalid_str.to_string()), line_num, col_idx + 1));
                 
-                let c_len = c.len_utf8();
-                expression = &expression[c_len..];
-                col_idx += c_len;
+                expression = &expression[invalid_len..];
+                col_idx += invalid_len;
                 
                 // Clean trailing spaces to prevent infinite loops on spaces if not matched
                 let trimmed_len = expression.len() - expression.trim_start().len();
@@ -195,5 +207,31 @@ mod tests {
         // Assert that the string "$fakeVar << #FakeData" was slurped entirely by CommentText
         // instead of firing the Assignment macro!
         assert_eq!(tokens[5].value, PolyglotToken::CommentText("$fakeVar << #FakeData".to_string()));
+    }
+
+    #[test]
+    fn test_lex_edge_cases() {
+        let script = "
+
+[-] -Transform @@@ $var<<#Config._database \t
+";
+        let tokens = lex(script);
+        println!("\n=== Polyglot Edge Cases Stream ===");
+        for t in &tokens {
+            println!("[L{:02}:C{:02}] {:?}", t.line, t.col, t.value);
+        }
+        println!("======================================\n");
+        
+        // Assert ghost line (L02) skip
+        assert_eq!(tokens[0].line, 3);
+        
+        // Assert contiguous InvalidPattern slurp for @@@
+        assert_eq!(tokens[3].value, PolyglotToken::InvalidPattern("@@@".to_string()));
+        
+        // Assert missing spaces triggers standalone and pushes invalid operators!
+        assert_eq!(tokens[4].value, PolyglotToken::Variable("var".to_string()));
+        
+        // Since there is NO space, the algorithm contiguous-slurps the entire `<<#Config._database` block!
+        assert_eq!(tokens[5].value, PolyglotToken::InvalidPattern("<<#Config._database".to_string()));
     }
 }
