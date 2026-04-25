@@ -179,4 +179,21 @@ mod tests {
         }
         println!("================================\n");
     }
+
+    #[test]
+    fn test_lex_comment_nested_patterns() {
+        // Here we attempt to trick the lexer with valid code sitting inside an inline comment!
+        let script = "[-] -Pipe   [ ] $fakeVar << #FakeData";
+        let tokens = lex(script);
+        
+        println!("\n=== Polyglot Nested Comment Stream ===");
+        for t in &tokens {
+            println!("[L{:02}:C{:02}] {:?}", t.line, t.col, t.value);
+        }
+        println!("======================================\n");
+        
+        // Assert that the string "$fakeVar << #FakeData" was slurped entirely by CommentText
+        // instead of firing the Assignment macro!
+        assert_eq!(tokens[5].value, PolyglotToken::CommentText("$fakeVar << #FakeData".to_string()));
+    }
 }
