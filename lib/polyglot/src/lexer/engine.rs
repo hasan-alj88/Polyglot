@@ -57,6 +57,10 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
             tokens.push(Spanned::new(PolyglotToken::ActionExecSeq, line_num, col_idx + 1));
             expression = &expression[3..];
             col_idx += 3;
+        } else if expression.starts_with("{@}") {
+            tokens.push(Spanned::new(PolyglotToken::DefPackage, line_num, col_idx + 1));
+            expression = &expression[3..];
+            col_idx += 3;
         } else if expression.starts_with("{#}") {
             tokens.push(Spanned::new(PolyglotToken::DefData, line_num, col_idx + 1));
             expression = &expression[3..];
@@ -67,8 +71,10 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
             col_idx += 3;
         } else if !expression.trim().is_empty() {
             // A Polyglot line must have a structural marker leading the expression.
-            // If we don't match one but the line isn't empty, we flag the gap and proceed.
-            tokens.push(Spanned::new(PolyglotToken::MissingMarker, line_num, col_idx + 1));
+            // If we don't match one, check if it's a known Phase-3-bound comment marker.
+            if !(expression.starts_with("[ ]") || expression.starts_with("{ }") || expression.starts_with("( )")) {
+                tokens.push(Spanned::new(PolyglotToken::MissingMarker, line_num, col_idx + 1));
+            }
         }
 
         // We clean any glue space before feeding to macro-matcher
@@ -239,5 +245,27 @@ mod tests {
         
         // Cleanup organic test artifact
         let _ = fs::remove_file(output_file);
+    }
+
+    #[test]
+    fn test_lex_valid_code() {
+        let script = std::fs::read_to_string("tests/fixtures/valid_code.pg").unwrap();
+        let tokens = lex(&script);
+        println!("\n=== Polyglot Valid Code Stream ===");
+        for t in &tokens {
+            println!("[L{:02}:C{:02}] {:?}", t.line, t.col, t.value);
+            
+            // Assert absolutely zero fallback patterns were generated!
+            if let PolyglotToken::InvalidPattern(s) = &t.value {
+                panic!("Lexer generated InvalidPattern: {}", s);
+            }
+            if let PolyglotToken::IncorrectIndent(s) = &t.value {
+                panic!("Lexer generated IncorrectIndent: {}", s);
+            }
+            if let PolyglotToken::MissingMarker = t.value {
+                panic!("Lexer generated MissingMarker on completely valid semantic code.");
+            }
+        }
+        println!("======================================\n");
     }
 }

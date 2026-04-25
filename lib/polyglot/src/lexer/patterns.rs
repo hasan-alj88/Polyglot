@@ -46,6 +46,7 @@ lazy_static! {
     static ref RE_COMMENT_DEF: Regex = Regex::new(r"^\{ \} *(?P<text>.*)").unwrap();
     static ref RE_COMMENT_IO: Regex = Regex::new(r"^\( \) *(?P<text>.*)").unwrap();
     static ref RE_INVALID_FIELD: Regex = Regex::new(r"^[.:]_[a-zA-Z0-9_]*").unwrap();
+    static ref RE_PACKAGE: Regex = Regex::new(r"^@(?P<pkg>[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
 }
 
 pub fn get_patterns() -> Vec<PatternRule> {
@@ -131,6 +132,13 @@ pub fn get_patterns() -> Vec<PatternRule> {
                 PolyglotToken::IoComment,
                 PolyglotToken::TokSpace,
                 PolyglotToken::CommentText(caps["text"].to_string()),
+            ],
+        },
+        PatternRule {
+            label: "Package_Name",
+            regex: &RE_PACKAGE,
+            extractor: |caps| vec![
+                PolyglotToken::Package(caps["pkg"].to_string()),
             ],
         },
     ]

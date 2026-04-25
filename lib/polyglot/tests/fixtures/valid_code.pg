@@ -1,0 +1,8 @@
+{@} @App.Config
+{#} #App.Settings
+[ ] The global application configuration block
+
+[-] -System.Initialize
+   [#] $config << #Environment.Variables
+   [-] -Logger.Start   [ ] Boot the logging daemon
+   [#] $status << #Service.Active

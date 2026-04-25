@@ -62,6 +62,7 @@ pub enum PolyglotToken {
     DataType(String),
     Pipeline(String),
     Error(String),
+    Package(String),
     InputParameter(String),
     TerminalData(String),
     FixedSubField(String),
