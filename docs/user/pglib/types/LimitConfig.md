@@ -11,7 +11,7 @@ metadata_instance: "%#:LimitConfig:N"
 
 <!-- @c:types -->
 
-Configuration for resource limit-exceeded behavior. Used in `{Q}` queue definitions. See [[concepts/pipelines/queue|Queue]].
+Configuration for resource limit-exceeded behavior. Used in `{Q}` queue definitions. See [[concepts/pipelines/queue/INDEX|Queue]].
 
 ## Definition
 
@@ -40,4 +40,4 @@ Configuration for resource limit-exceeded behavior. Used in `{Q}` queue definiti
 ## Related
 
 - [[LimitAction]] -- limit action enum
-- [[concepts/pipelines/queue|Queue]] -- queue limit-exceeded behavior
+- [[concepts/pipelines/queue/INDEX|Queue]] -- queue limit-exceeded behavior

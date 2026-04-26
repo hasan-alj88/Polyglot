@@ -53,6 +53,6 @@ severity: error
 
 ## See Also
 
-- [[concepts/pipelines/queue|Queue]] — documents queue control contradiction rule, references PGE01013
+- [[concepts/pipelines/queue/INDEX|Queue]] — documents queue control contradiction rule, references PGE01013
 - [[pglib/pipelines/Q|-Q.* pglib Pipelines]] — references PGE01013 in queue control context
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01013

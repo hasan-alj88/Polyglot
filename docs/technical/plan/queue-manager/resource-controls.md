@@ -135,12 +135,12 @@ Throttling reduces resource allocation without pausing. The job keeps running wi
 
 The Trigger Monitor maintains a **pause reason set** per job. Each `#JobRules` rule that wants a job paused adds its reason to the set. Each rule that no longer wants the job paused removes its reason. The job actually resumes only when the set is **empty**.
 
-**How it works:**
+**How it works (Trigger-Driven):**
 
-1. RAM guard fires: pause reason set = `{ram.hard}`
-2. CPU guard also fires: pause reason set = `{ram.hard, cpu}`
-3. CPU guard clears: pause reason set = `{ram.hard}` — job stays paused
-4. RAM guard clears: pause reason set = `{}` — job resumes
+1. RAM guard trigger fires (`-QT.Job.Resource.Exceeds.RAM`): rule executes `-Q.Job.Pause.Free.RAM.Hard`. TM adds `{ram.hard}` to set.
+2. CPU guard trigger fires: rule executes `-Q.Job.Pause.Free.CPU`. TM adds `{cpu}` to set.
+3. CPU recovery trigger fires: rule executes `-Q.Job.Resume`. TM removes `{cpu}` from set. Job stays paused because `{ram.hard}` remains.
+4. RAM recovery trigger fires: rule executes `-Q.Job.Resume`. TM removes `{ram.hard}` from set. Set is `{}` — job actually resumes.
 
 **Conflicting pause levels:** When multiple reasons exist at different levels, the **highest level wins**:
 
@@ -150,7 +150,7 @@ Free.All > Free.RAM.Hard > Free.RAM.Soft > Free.CPU
 
 If the set contains `{cpu, ram.hard}`, the job is paused at `Free.RAM.Hard` level. When `ram.hard` is removed and only `cpu` remains, the job transitions to `Free.CPU` level (cgroup thaw of memory controls, CPU still frozen).
 
-**Implementation:** Redis set `job:{jobId}:pause_reasons`. The TM evaluates all rules atomically per tick, rebuilds the set, and sends the appropriate pause/resume commands based on the delta.
+**Implementation:** Redis set `job:{jobId}:pause_reasons`. The Trigger Monitor is fully reactive; it listens for `-Q.*` control signals emitted by triggered rules and applies the delta to the set, sending the actual OS pause/resume commands only when the high-water mark changes or the set empties.
 
 ## Anti-Flap Mechanisms
 
@@ -187,16 +187,16 @@ The pause reason set must be empty for a configured duration before the job actu
 
 Even if the resource recovers and the pause reason set empties, the TM waits 10 seconds of sustained empty-set before issuing `command.job.resume`. If a reason reappears within that window, the debounce resets.
 
-### Atomic Tick Evaluation
+### Reactive Event Evaluation
 
-All `#QueueRules` and `#JobRules` evaluate in the same tick (atomic). The pause reason set is rebuilt from scratch each cycle. The tick period is configurable per-queue:
+Because Polyglot uses a reactive trigger architecture (`-QT.*`), there is no generic "tick period" that evaluates every rule sequentially. Rules are compiled into signal maps and evaluate only when the underlying resource monitor emits a state change or edge trigger.
+
+Smallest possible resolution depends on the resource watcher's polling interval, which is configurable per-queue:
 
 ```polyglot
 {Q} #Queue:WorkerQueue
-   [.] .tickPeriod << #DT"5s"
+   [.] .pollPeriod << #DT"5s"
 ```
-
-Smallest possible = every resource reading cycle (expensive). The `#DT` datatype controls precision.
 
 ## Default Queue Behaviors
 
@@ -220,15 +220,11 @@ Override by setting the default to false:
 
 ## Compiler Rules
 
-### `-Q.DoNothing` Uncovered State Warning
+### Implicit Exhaustiveness via Triggers
 
-`-Q.DoNothing` satisfies exhaustiveness in `*?` catch-alls. However, the compiler emits a **warning** (not error) when a `[Q]` block uses state guards and a `DoNothing` catch-all, listing states not explicitly handled:
+Because rules are trigger-driven (`[T]`), you do not need `*?` wildcards or `-Q.DoNothing` blocks to handle states you don't care about. If a trigger doesn't fire, the rule simply doesn't wake up.
 
-```
-PGW: States not explicitly handled: Throttled, Idle.CPU. Covered by *? DoNothing.
-```
-
-This ensures the developer sees what they are implicitly ignoring. Sometimes `DoNothing` is genuinely correct — the warning is informational.
+This removes the need for the compiler to warn about "Uncovered States" in Queue logic, as non-firing triggers naturally represent the absence of an action.
 
 ### Free.RAM.Hard OOM-Kill Risk
 

@@ -53,5 +53,5 @@ severity: error
 
 ## See Also
 
-- [[concepts/pipelines/queue|Queue]] — documents queue reference resolution, references PGE01014
+- [[concepts/pipelines/queue/INDEX|Queue]] — documents queue reference resolution, references PGE01014
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01014

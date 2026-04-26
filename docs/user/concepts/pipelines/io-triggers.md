@@ -103,6 +103,6 @@ The Trigger Monitor reads the `[Q]` retrigger policy before acting. The Queue Ha
 ## See Also
 
 - [[concepts/pipelines/INDEX|Pipeline Structure]] — full pipeline element ordering
-- [[concepts/pipelines/queue|Queue]] — queue configuration that follows triggers
+- [[concepts/pipelines/queue/INDEX|Queue]] — queue configuration that follows triggers
 - [[concepts/pipelines/inline-calls|Inline Calls]] — trigger string argument syntax
 - [[technical/ebnf/09-definition-blocks#9.4a|EBNF §9.4a]] — formal trigger definition grammar

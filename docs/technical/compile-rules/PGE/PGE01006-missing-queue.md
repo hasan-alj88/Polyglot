@@ -41,5 +41,5 @@ split_from: PGE01001
 
 ## See Also
 
-- [[concepts/pipelines/queue|Queue]] — documents mandatory queue requirement, references PGE01006
+- [[concepts/pipelines/queue/INDEX|Queue]] — documents mandatory queue requirement, references PGE01006
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01006

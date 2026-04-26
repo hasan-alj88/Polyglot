@@ -33,7 +33,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | Object | Prefix | User Concept | pglib Reference | EBNF Grammar | Edge Cases |
 |--------|--------|-------------|-----------------|-------------|------------|
 | Pipeline | `=` | [[user/concepts/pipelines/INDEX]] | [[user/pglib/pipelines/]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
-| Queue | `{Q}` | [[user/concepts/pipelines/queue]] | [[user/pglib/pipelines/Q]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
+| Queue | `{Q}` | [[user/concepts/pipelines/queue/INDEX]] | [[user/pglib/pipelines/Q]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 | Trigger | `{T}` | [[user/concepts/pipelines/io-triggers]] | [[user/pglib/pipelines/T]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 | Wrapper | `{W}` | [[user/concepts/pipelines/wrappers]] | [[user/pglib/pipelines/W]] | [[technical/ebnf/09-definition-blocks]] | [[technical/edge-cases/09-definition-blocks]] |
 | Expander | `=` | [[user/concepts/collections/expand]] | [[user/pglib/expanders/]] | [[technical/ebnf/12-collections]] | [[technical/edge-cases/12-collections]] |

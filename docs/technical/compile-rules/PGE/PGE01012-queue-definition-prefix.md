@@ -41,5 +41,5 @@ severity: error
 
 ## See Also
 
-- [[concepts/pipelines/queue|Queue]] — documents #Queue: prefix requirement, references PGE01012
+- [[concepts/pipelines/queue/INDEX|Queue]] — documents #Queue: prefix requirement, references PGE01012
 - [[concepts/pipelines/inline-calls|Inline Calls]] — compile rule quick-reference table includes PGE01012

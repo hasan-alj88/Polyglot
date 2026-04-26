@@ -7,8 +7,8 @@ status: complete
 
 # -Q — Queue Pipelines
 
-<!-- @c:concepts/pipelines/queue -->
-Queue pipelines manage the multi-queue execution model. Every `-Q.*` pipeline is a **parameterized instruction** compiled into the behavior contract's signal map. The Trigger Monitor reads the signal map and executes at runtime. No `[@]` import needed. See [[concepts/pipelines/queue|c:Queue]] for queue concepts.
+<!-- @c:concepts/pipelines/queue/INDEX -->
+Queue pipelines manage the multi-queue execution model. Every `-Q.*` pipeline is a **parameterized instruction** compiled into the behavior contract's signal map. The Trigger Monitor reads the signal map and executes at runtime. No `[@]` import needed. See [[concepts/pipelines/queue/INDEX|c:Queue]] for queue concepts.
 
 **PRIMITIVE** — Queue pipelines are direct OS/runtime integrations implemented by the Polyglot runtime. They cannot be reimplemented in user `.pg` files.
 
@@ -82,12 +82,26 @@ Where `<Scope>` is `Job`, `Host`, `Queue`, or `Queue.Jobs` (array context in `#Q
 | [[pglib/pipelines/Q/Job.Reassign\|-Q.Job.Reassign]] | Move to different queue (cross-host = CRIU transfer) |
 | [[pglib/pipelines/Q/Job.Snapshot\|-Q.Job.Snapshot]] | Point-in-time state fork to disk |
 
-### Queue-Level Actions
+### Queue Door Controls (Ingress Fate & Dispatch)
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/Q/Queue.Drain\|-Q.Queue.Drain]] | Stop accepting new Jobs, finish existing |
-| [[pglib/pipelines/Q/Queue.Flush\|-Q.Queue.Flush]] | Kill.Now every Job on the queue |
+| `-Q.Queue.Ingress.Accept` | Open the queue door to new jobs |
+| `-Q.Queue.Ingress.Kill.<Timing>` | Accept new jobs but immediately queue them for termination |
+| `-Q.Queue.Ingress.Pause.<Level>.<Timing>` | Accept new jobs but start them in a suspended state |
+| `-Q.Queue.Ingress.Divert"{#TargetQueue}"` | Accept new jobs but route their fate to another queue |
+| `-Q.Queue.Dispatch.Pause` | Stop dispatching jobs to execution (they wait in queue) |
+| `-Q.Queue.Dispatch.Resume` | Resume dispatching jobs to execution |
+
+### Bulk Job Controls (Queue-Level)
+
+| Pipeline | Description |
+|----------|-------------|
+| `-Q.Queue.Jobs.Pause.<Level>.<Timing>` | Bulk pause all jobs tied to this queue |
+| `-Q.Queue.Jobs.Resume` | Bulk resume all jobs tied to this queue |
+| `-Q.Queue.Jobs.Throttle` | Bulk throttle all jobs tied to this queue |
+| `-Q.Queue.Jobs.Unthrottle` | Lift bulk throttle from all jobs tied to this queue |
+| `-Q.Queue.Jobs.Kill.<Timing>` | Bulk kill all jobs tied to this queue |
 
 ### Observation
 
@@ -143,28 +157,24 @@ Where `<Scope>` is `Job`, `Host`, `Queue`, or `Queue.Jobs` (array context in `#Q
 | `-Q.Queue.Jobs.Get.CPU.Percent` | Array of Job CPU values | Percentage | Redis SMEMBERS (queue filter) → per-job cgroup `cpu.stat` |
 | `-Q.Queue.Jobs.Get.Idle.All` | Array of Job idle durations | Duration | Redis SMEMBERS (queue filter) → per-job cgroup stat deltas |
 
-### State Guards
+### Triggers (`-QT.*`)
 
-State guards are required on action blocks. Without them, the compiler errors — forcing explicit temporal assumptions.
+Rules rely on triggers rather than continuous evaluation loops.
 
-| Guard | Meaning | Source |
-|-------|---------|--------|
-| `-Q.Job.Is.Active` | Job is currently running | Redis `job:{jobId}` `status` == "executing"/"executing.throttled" |
-| `-Q.Job.Is.Paused` | Job is currently paused (any level) | Redis `job:{jobId}` `status` starts with "suspended." |
-| `-Q.Job.Is.Throttled` | Job is currently throttled | Redis `job:{jobId}` `throttled` field |
+| Trigger Category | Examples | Usage |
+|------------------|----------|-------|
+| **Edge Triggers** | `-QT.Job.Resource.Exceeds.RAM"{val}"`, `-QT.Job.Parent.Terminated` | Wakes the rule via `[T]` |
+| **State Triggers** | `-QT.Job.State.Is.Paused`, `-QT.Job.State.Is.Active` | Validates condition via `[&]` |
 
-### Idle / Active Detection
+### Compile-Time Predicates (`?` Prefix)
 
-| Getter | Returns | Measures | Source |
-|--------|---------|----------|--------|
-| `-Q.Job.Get.Idle.CPU` | Duration | Time since last CPU activity | cgroup `cpu.stat` `usage_usec` delta |
-| `-Q.Job.Get.Idle.Network` | Duration | Time since last send/receive | cgroup `io.stat` network bytes delta |
-| `-Q.Job.Get.Idle.IO` | Duration | Time since last read/write | cgroup `io.stat` disk bytes delta |
-| `-Q.Job.Get.Idle.All` | Duration | All resources simultaneously idle | All cgroup stat deltas (minimum) |
-| `-Q.Job.Active.CPU` | Boolean | Job resumed CPU activity | cgroup `cpu.stat` `usage_usec` changed |
-| `-Q.Job.Active.Network` | Boolean | Job resumed network activity | cgroup `io.stat` network bytes changed |
-| `-Q.Job.Active.IO` | Boolean | Job resumed disk activity | cgroup `io.stat` disk bytes changed |
-| `-Q.Job.Active.All` | Boolean | Job resumed any activity | Any cgroup stat delta detected |
+Used for structural validation before the program compiles.
+
+| Predicate | Evaluates To | Usage |
+|-----------|--------------|-------|
+| `?Queue.Host.IsEqual"{#TargetQueue}"` | `#Boolean` | `[?] ?Queue.Host.IsEqual"{#TargetQueue}"` |
+| `?Queue.Strategy.IsEqual"{#Strategy}"` | `#Boolean` | `[?] ?Queue.Strategy.IsEqual"{#Strategy}"` |
+| `?Queue.Supports.TCPRepair` | `#Boolean` | `[?] ?Queue.Supports.TCPRepair` |
 
 ## Example: Queue Definition + Rules + Pipeline
 
@@ -180,17 +190,22 @@ State guards are required on action blocks. Without them, the compiler errors �
 {Q} #JobRules:RAMGuard
    (#) $value.GB#int <~ 4
    (#) $margin.GB#int <~ 1
-   [?] $margin.GB >? $value.GB
+   
+   [ ] Compile-time validation: margin must be strictly less than value
+   [?] -Math.IsGreater"{$margin.GB}", "{$value.GB}" =? #Boolean.True
       [!] >> !Queue.InvalidMargin
-   [?] -Q.Job.Is.Active
-   [&] -Q.Job.Get.RAM.GB">? {$value.GB}"
+      
+   [ ] Trigger when RAM exceeds threshold AND Job is Active
+   [T] -QT.Job.State.Is.Active
+   [&] -QT.Job.Resource.Exceeds.RAM"{$value.GB}GB"
+   [&] -QT.Host.Resource.DropsBelow.RAM.Available"{$value.GB}GB+{$margin.GB}GB"
       [Q] -Q.Job.Pause.Free.RAM.Wait
-   [?] -Q.Job.Is.Paused
-   [&] -Q.Job.Get.RAM.GB"<? {$value.GB}-{$margin.GB}"
+      
+   [ ] Trigger when EITHER the Job drops RAM OR the Host recovers
+   [T] -QT.Job.State.Is.Paused
+   [&] -QT.Job.Resource.DropsBelow.RAM"{$value.GB}GB"
+   [+] -QT.Host.Resource.Exceeds.RAM.Available"{$value.GB}GB+{$margin.GB}GB"
       [Q] -Q.Job.Resume
-   [?] *?
-      [Q] -Q.DoNothing
-
 [ ] Pipeline using the queue and rules
 {-} ProcessData
    [T] ...
@@ -221,5 +236,5 @@ The following pipelines have been replaced. See individual files for migration p
 
 ## Related
 
-- [[concepts/pipelines/queue|c:Queue]]
+- [[concepts/pipelines/queue/INDEX|c:Queue]]
 - [[pglib/INDEX]]

@@ -11,7 +11,7 @@ metadata_instance: "%#:LimitAction:N"
 
 <!-- @c:types -->
 
-Action to take when a resource limit is exceeded. Used in `{Q}` queue configuration for limit-exceeded behavior. See [[concepts/permissions|Permissions]], [[concepts/pipelines/queue|Queue]].
+Action to take when a resource limit is exceeded. Used in `{Q}` queue configuration for limit-exceeded behavior. See [[concepts/permissions|Permissions]], [[concepts/pipelines/queue/INDEX|Queue]].
 
 ## Definition
 
@@ -46,5 +46,5 @@ Action to take when a resource limit is exceeded. Used in `{Q}` queue configurat
 ## Related
 
 - [[LimitConfig]] -- limit configuration struct
-- [[concepts/pipelines/queue|Queue]] -- queue limit-exceeded behavior
+- [[concepts/pipelines/queue/INDEX|Queue]] -- queue limit-exceeded behavior
 - [[concepts/permissions|Permissions]] -- permission system overview

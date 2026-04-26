@@ -116,5 +116,5 @@ See [[pglib/INDEX#Pipeline Namespaces|Wrappers]] for the full wrapper catalog.
 ## See Also
 
 - [[concepts/pipelines/execution|Execution]] — execution body that runs between setup and cleanup
-- [[concepts/pipelines/queue|Queue]] — `[Q]` queue that precedes the wrapper declaration
+- [[concepts/pipelines/queue/INDEX|Queue]] — `[Q]` queue that precedes the wrapper declaration
 - [[concepts/collections/collect|Collect Operators]] — `*All` collect-all used in `[/]` cleanup for parallel forking

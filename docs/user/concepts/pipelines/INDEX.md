@@ -252,7 +252,7 @@ Flow control via `[?]` conditionals and `[!]` error handlers also affect trigger
 
 ### Queue Configuration Inheritance
 
-Every job passes through a queue. Pipeline-level `[Q]` sets the default for all jobs (same host as the pipeline). Individual `[-]`/`[=]` calls can have per-job `[Q]` that **extends** the pipeline-level config for that specific job — it does not replace it. Contradictions between job-level and pipeline-level `[Q]` raise PGE01013. See [[queue#Job-Level Queue Conditions]].
+Every job passes through a queue. Pipeline-level `[Q]` sets the default for all jobs (same host as the pipeline). Individual `[-]`/`[=]` calls can have per-job `[Q]` that **extends** the pipeline-level config for that specific job — it does not replace it. Contradictions between job-level and pipeline-level `[Q]` raise PGE01013. See [[queue/INDEX#Queue Assignment]].
 
 ## Sub-Pages
 
@@ -262,7 +262,9 @@ Every job passes through a queue. Pipeline-level `[Q]` sets the default for all 
 | [[error-handling]] | Error handling |
 | [[io-triggers]] | IO as implicit triggers, trigger configuration |
 | [[permissions]] | Pipeline permissions |
-| [[queue]] | Queue configuration |
+| [[queue/INDEX]] | Queue configuration |
+| [[queue/rules]] | Queue Rules & Triggers |
+| [[queue/internals]] | Queue Internals |
 | [[wrappers]] | Wrapper structure |
 | [[execution]] | Execution body |
 | [[chains]] | Chain execution |
