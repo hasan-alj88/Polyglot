@@ -285,3 +285,32 @@ fn test_lex_recently_added_patterns() {
     assert!(found_fallback_pull, "FallBackPullFrom missing");
     assert!(found_fallback_push, "FallBackPushInto missing");
 }
+
+#[test]
+fn test_lex_boolean_predicate() {
+    let script = "[?] ?Queue.Host.IsEqual\"{#TargetQueue}\" =? #Boolean.True";
+    let tokens = lex(script);
+
+    let mut found_cond_switch = false;
+    let mut found_predicate = false;
+    let mut found_inline_string = false;
+    let mut found_is_equal = false;
+    let mut found_data = false;
+
+    for t in tokens {
+        match t.value {
+            PolyglotToken::ActionCondSwitch => found_cond_switch = true,
+            PolyglotToken::BooleanPredicate(ref id) if id == "Queue.Host.IsEqual" => found_predicate = true,
+            PolyglotToken::InlineString(ref s) if s == "{#TargetQueue}" => found_inline_string = true,
+            PolyglotToken::IsItEqual => found_is_equal = true,
+            PolyglotToken::Data(ref d) if d == "Boolean.True" => found_data = true,
+            _ => {}
+        }
+    }
+
+    assert!(found_cond_switch, "ActionCondSwitch missing");
+    assert!(found_predicate, "BooleanPredicate missing");
+    assert!(found_inline_string, "InlineString missing");
+    assert!(found_is_equal, "IsItEqual missing");
+    assert!(found_data, "Data missing");
+}

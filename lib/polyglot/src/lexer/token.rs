@@ -90,6 +90,7 @@ pub enum PolyglotToken {
     RangeFrom(String),
     RangeTo(String),
     ForeignCode(String),
+    BooleanPredicate(String),
     // (Other identifiers can be added here)
 
     // Operators

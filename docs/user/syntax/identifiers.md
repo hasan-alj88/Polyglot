@@ -20,12 +20,15 @@ ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address f
 | `-` | Pipelines | `-ProcessData`, `-Pipeline.Name` |
 | `$` | Variables | `$name`, `$result:status`, `$*` (discard) |
 | `!` | Errors | `!No.Input`, `!Timeout:Connection` |
+| `?` | Boolean Predicates | `?Queue.Host.IsEqual` |
 | `_` | Permission object | `_DataCeiling`, `_ReportReader` |
 | `__` | Permission descriptor | `__Permission`, `__PermissionTarget` |
 | `___` | Permission constraint | `___Unix`, `___Sandboxed`, `___ReadOnly` |
 | `%` | Metadata accessor | `-Pipeline%status`, `$var%state` |
 
 **Permission identifiers (`_`/`__`/`___`)** — permissions are data trees using the same `#`/`##`/`###` pattern: `_` = `##Permission` struct instance (all leaves filled, e.g., `_DataCeiling`), `__` = generic permission template with `[#]` inputs (e.g., `__FileReader`), `___` = specific field within the permission object (e.g., `___Unix`). `{_}` blocks define permission objects; IO markers reference them by name — `(-) _PermName` in `{-}` pipelines, `(#) _PermName` in `{#}` definitions, `(@) _PermName` in `{@}` packages. No permission IO declarations = pure computation, zero IO. See [[permissions]] for the full permission system.
+
+**Boolean Predicates (`?`)** — represent compile-time assertions evaluated strictly before execution to enforce structural and topological safety. Unlike `-` pipelines which are evaluated at runtime or via triggers, `?` predicates ensure configurations (like queue failover chains) are logically sound at compilation. See [[pglib/predicates/INDEX|Compile-Time Predicates]].
 
 **pglib pipeline namespaces** — pglib pipelines use dotted names after the `-` prefix. The first segment indicates the subsystem: `-W.*` (wrappers), `-Q.*` (queues), `-T.*` (triggers), `-#.*` (schema validation/extraction), `-RT.*` (runtime execution), `-File.*` (file operations), `-Math.*` (arithmetic), `-DT.*` (datetime). The `-#.*` namespace uses `#` as a name segment referring to schema operations — `-#.Column` is a pipeline named `#.Column`, not a compound `-` + `#` prefix. See [[pglib/pipelines/Schema/INDEX|-# Schema Pipelines]].
 

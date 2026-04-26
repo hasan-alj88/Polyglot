@@ -56,6 +56,9 @@ lazy_static! {
     static ref RE_ISOLATED_DATA: Regex = Regex::new(r"^#(?P<data>[a-zA-Z0-9.]+)").unwrap();
     static ref RE_METADATA: Regex = Regex::new(r"^%(?P<meta>[a-zA-Z0-9.]+)").unwrap();
 
+    // Boolean Predicates
+    static ref RE_PREDICATE: Regex = Regex::new(r#"^\?(?P<ident>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z][a-zA-Z0-9]*)*)(?P<has_string>"(?P<str>.*?)")?"#).unwrap();
+
     // Comments
     static ref RE_COMMENT_ACTION: Regex = Regex::new(r"^\[ \] *(?P<text>.*)").unwrap();
     static ref RE_COMMENT_DEF: Regex = Regex::new(r"^\{ \} *(?P<text>.*)").unwrap();
@@ -229,6 +232,20 @@ pub fn get_patterns() -> Vec<PatternRule> {
             label: "Isolated_Data",
             regex: &RE_ISOLATED_DATA,
             extractor: |caps, _| vec![PolyglotToken::Data(caps["data"].to_string())],
+        },
+        PatternRule {
+            label: "Boolean_Predicate",
+            regex: &RE_PREDICATE,
+            extractor: |caps, _| {
+                let mut tokens = Vec::new();
+                let ident = caps.name("ident").unwrap().as_str().to_string();
+                tokens.push(PolyglotToken::BooleanPredicate(ident));
+                if let Some(_str_match) = caps.name("has_string") {
+                    let inner = caps.name("str").unwrap().as_str();
+                    tokens.extend(extract_inline_string(inner, true));
+                }
+                tokens
+            },
         },
         PatternRule {
             label: "MetaData",
