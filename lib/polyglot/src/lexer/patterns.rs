@@ -40,6 +40,8 @@ lazy_static! {
     static ref RE_PUSH: Regex = Regex::new(r"^>>").unwrap();
     static ref RE_DEFAULT_PULL: Regex = Regex::new(r"^<~").unwrap();
     static ref RE_DEFAULT_PUSH: Regex = Regex::new(r"^~>").unwrap();
+    static ref RE_FALLBACK_PULL_LEFT: Regex = Regex::new(r"^!<").unwrap();
+    static ref RE_FALLBACK_PUSH_RIGHT: Regex = Regex::new(r"^!>").unwrap();
 
     // Compression Operators
     static ref RE_COMPRESSION: Regex = Regex::new(r"^(?P<op>=\?|=!\?|>\?|>\!\?|<\?|<\!\?|\*\?)").unwrap();
@@ -280,6 +282,16 @@ pub fn get_patterns() -> Vec<PatternRule> {
             label: "Default_Push",
             regex: &RE_DEFAULT_PUSH,
             extractor: |_, _| vec![PolyglotToken::DefaultPushInto],
+        },
+        PatternRule {
+            label: "Fallback_Pull_Left",
+            regex: &RE_FALLBACK_PULL_LEFT,
+            extractor: |_, _| vec![PolyglotToken::FallBackPullFrom],
+        },
+        PatternRule {
+            label: "Fallback_Push_Right",
+            regex: &RE_FALLBACK_PUSH_RIGHT,
+            extractor: |_, _| vec![PolyglotToken::FallBackPushInto],
         },
         PatternRule {
             label: "Compression",

@@ -258,3 +258,26 @@ fn test_lex_valid_code() {
         "Generated token stream does not match tests/fixtures/valid_code.pgts"
     );
 }
+
+#[test]
+fn test_lex_recently_added_patterns() {
+    let script = "{T} $Trigger\n{W} $Wrapper\n{N} $Native\n{Q} $Queue\n{!} $Error\n{_} $Perm\n{*} $Coll\n{$} $Const\n[b] -Bg\n[?] -Cond\n[!] -Err\n[.] -Fixed\n[:] -Flex\n[&] -And\n[|] -Or\n[^] -Xor\n[c] -Code\n[C] -Code\n[%] -Meta\n[-] -Pipe !< #Data\n[-] -Pipe !> #Data";
+    
+    let tokens = lex(script);
+
+    let mut found_fallback_pull = false;
+    let mut found_fallback_push = false;
+
+    for t in &tokens {
+        match &t.value {
+            PolyglotToken::InvalidPattern(s) => panic!("Lexer generated InvalidPattern: {}", s),
+            PolyglotToken::MissingMarker => panic!("Lexer generated MissingMarker!"),
+            PolyglotToken::FallBackPullFrom => found_fallback_pull = true,
+            PolyglotToken::FallBackPushInto => found_fallback_push = true,
+            _ => {}
+        }
+    }
+    
+    assert!(found_fallback_pull, "FallBackPullFrom missing");
+    assert!(found_fallback_push, "FallBackPushInto missing");
+}

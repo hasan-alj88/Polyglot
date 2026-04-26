@@ -96,8 +96,8 @@ pub enum PolyglotToken {
     PushInto,
     DefaultPullFrom,
     DefaultPushInto,
-    OpFallbackPushLeft,
-    OpFallbackPushRight,
+    FallBackPullFrom,
+    FallBackPushInto,
 
     // Compression Operators
     IsItEqual,
