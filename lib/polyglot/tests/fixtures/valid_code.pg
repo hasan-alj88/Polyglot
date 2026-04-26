@@ -1,8 +1,51 @@
-{@} @App.Config
-{#} #App.Settings
-[ ] The global application configuration block
+{@} @Company:MyCompany<Jobs.Stocks
+   [@] @StocksDBop << @MyCompany.DB
+   [@] @HR << @MyCompany.HR.Traders
+   [@] ;StocksDB << @StocksDBop;StocksDB
 
-[-] -System.Initialize
-   [#] $config << #Environment.Variables
-   [-] -Logger.Start   [ ] Boot the logging daemon
-   [#] $status << #Service.Active
+
+{-} -FetchAndNotifyStocks
+   (-) >SendEmails@HR#EmailSend
+   [T] -T.Daily"3AM"
+   [Q] -Q.Default
+   [W] -W.DB;StocksDB
+   [ ]
+   [ ] Run 3 API calls in parallel
+   [=] -API.Vantage.GetPrice
+      (-) <ticker << "AAPL"
+      (-) >price >> $priceVantage
+   [ ]      
+   [=] -API.Polygon.GetPrice
+      (-) <ticker << "AAPL"
+      (-) >price >> $pricePolygon
+   [ ]    
+   [=] -API.Yahoo.GetPrice
+      (-) <ticker << "AAPL"
+      (-) >price >> $priceYahoo 
+   [ ]
+   [=] @StocksDBop-DB.Traders.GetAllMails;StocksDB
+      (-) >emails >> $traderEmails
+   [ ]
+   [ ] 3. Race Collector - take the first API to respond
+   [*] *First
+      (*) << $priceVantage
+      (*) << $pricePolygon
+      (*) << $priceYahoo
+      (*) >> $Price
+   [ ]
+   [ ] 4. Fetch trader emails from the database
+   [*] *All
+      (*) << $traderEmails
+   [ ]
+   [ ] 5. Add the resulting price into the stock DB
+   [-] @StocksDBop-DB.Stocks.InsertPrice;StocksDB
+      (-) <ticker << "AAPL"
+      (-) <price << $winningPrice
+      (-) <timestamp << %this.TriggeredAt  ( ) Use pipeline metadata
+   [ ]
+   [ ] 6. Email the winning price to all traders
+   [-] -Email.SendBulk
+      (-) <targetList << $traderEmails
+      (-) <subject << "Daily Stock Price: AAPL"
+      (-) <body << "The price for AAPL at 3AM is {$Price}$"
+      (-) >SendStatus >> >SendEmails

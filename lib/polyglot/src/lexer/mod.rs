@@ -1,6 +1,6 @@
-pub mod token;
+pub mod lexer_engine;
 pub mod patterns;
-pub mod engine;
+pub mod token;
 
+pub use lexer_engine::lex;
 pub use token::{PolyglotToken, Spanned};
-pub use engine::lex;
