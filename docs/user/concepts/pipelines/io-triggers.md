@@ -82,6 +82,22 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
 
 See [[pglib/pipelines/T/INDEX#Three-Tier Trigger Model]] for how Git triggers work across local hooks and remote webhooks.
 
+## Trigger Spans
+
+Triggers in Polyglot are not just instantaneous events; they operate over **spans** of time. For example, a state trigger spans as long as the state is active, while an event trigger (like a file being created) might be instantaneous or permeate change infinitely. 
+
+A pipeline triggers only when the spans of all its required trigger conditions overlap—acting like a temporal AND gate. If a pipeline has three required triggers, it fires exactly at the moment their active spans intersect:
+
+```text
+    |-------------------|                 (Trigger A Span)
+       |--------------------------------  (Trigger B Span)
+             |-------|                    (Trigger C Span)
+             ^
+             the pipeline will trigger here
+```
+
+This intersection model makes asynchronous orchestration highly declarative, as you don't need to write complex nested `if` statements to evaluate combinations of events and states over time.
+
 ## Retrigger Strategy
 
 When a pipeline's trigger conditions are met again while the pipeline is already queued or executing, `#RetriggerStrategy` controls what happens. It is a queue configuration — declared on `[Q]` — but the Trigger Monitor enforces it, deciding whether to send an enqueue signal.

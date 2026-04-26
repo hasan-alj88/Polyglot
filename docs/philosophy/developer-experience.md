@@ -51,4 +51,10 @@ Polyglot inverts this. Every failure mode the compiler catches is a failure that
 
 This is not a theoretical benefit. It is a structural property of the system. The Behavioral Contract that the Service executes is the same contract the compiler verified. There is no gap between "what the compiler checked" and "what runs in production." The deployed behaviour is exactly the verified behaviour.
 
+## Testing Philosophy
+
+Because Polyglot pipelines do not have a `main()` function, testing operates differently than in traditional languages. Polyglot encourages testing in a dedicated test environment where the Behavioral Contract remains 100% faithful to production. 
+
+Crucially, **triggers should remain identical to production**. Instead of altering the code to test it, the Polyglot platform provides a Debug/Testing mode that allows developers to manually *spoof* the environmental conditions—such as mocking the time, injecting file events, or artificially setting state flags. By spoofing the environment rather than the pipeline, the compiled contract tested is exactly the contract that will be deployed.
+
 See [[error-philosophy]] for the Murphy's Law principle that drives exhaustive error handling, and [[behavioral-contract]] for what the compiler produces.

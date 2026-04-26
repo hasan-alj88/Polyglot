@@ -41,7 +41,7 @@ In Polyglot, **Failed** is a variable lifecycle state — one of five states in 
 
 This is fundamentally different from exception-based error handling. There is no stack unwinding. There is no "where did the error come from?" mystery. The error is attached to the variable that failed, in the pipeline that produced it, with full metadata about what went wrong. The `[!]` error block scopes directly under the operation that produced the error, making the relationship between failure and handler explicit and visible.
 
-**Failed is terminal** — a Failed variable cannot receive further pushes (see [[technical/compile-rules/PGE/PGE02005-failed-is-terminal|PGE02005]]). But terminal does not mean lost. It means the variable's value is settled as an error, and the pipeline must deal with that error through its declared handlers. Errors are data flowing through the tree, not exceptions blowing up the stack.
+**Failed is terminal** — a Failed variable cannot receive further pushes (see [[technical/compile-rules/PGE/PGE02005-failed-is-terminal|PGE02005]]). But terminal does not mean lost. It means the variable's value is settled as an error, and the pipeline must deal with that error through its declared handlers. To ensure errors do not stay in limbo, Polyglot provides built-in mechanisms, including retries, to handle the `Failed` state and explicitly drive it toward a `Final` state. Errors are data flowing through the tree, not exceptions blowing up the stack.
 
 See [[user/concepts/variable-lifecycle|Variable Lifecycle]] for the full state machine.
 
