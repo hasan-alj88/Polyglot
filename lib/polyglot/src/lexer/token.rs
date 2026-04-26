@@ -89,6 +89,7 @@ pub enum PolyglotToken {
     InlineString(String),
     RangeFrom(String),
     RangeTo(String),
+    ForeignCode(String),
     // (Other identifiers can be added here)
 
     // Operators
@@ -129,4 +130,8 @@ pub enum PolyglotToken {
     MissingMarker,
     IncorrectIndent(String),
     InvalidPattern(String),
+    InvalidDefinitionMarker(String),
+    InvalidActionMarker(String),
+    InvalidIOMarker(String),
+    UnknownPolyglotObject(String),
 }

@@ -1,49 +1,59 @@
-[ ] --- Valid Syntax: Constructors ---
-{$} $Path"{dir}/{file}.ext"
-   [$] #Path.File
-   [.] .dir << <dir
-   [.] .fileName << <file
+{P} System.QA.Tests
 
-[ ] Valid Keyword Constructor
-{$} $DT"Today"
-   [$] #DT.Date
-   [.] .year << %Runtime.Date.Year
-   [.] .month << %Runtime.Date.Month
-   [.] .day << %Runtime.Date.Day
+{D} TestData
+   [@] std/io
+   [#] loadData > localData
+   [?] localData == "value"
+      [!] "Error condition met"
+   [.] field access
+   [:] flex field
+   [&] and condition
+   [|] or condition
+   [^] xor condition
+   [%] metadata "version 1.0"
+   [C] foreign rust code
+   [c] raw code block
+   [b] background_task
+   [~] continuation
+   [#] var !< "fallback"
+   [#] res !> "fallback_out"
+   [#] (#)
+      item1
+      item2
 
-[ ] --- Valid Syntax: JobRules ---
-{Q} #JobRules:RAMGuard
-   (#) $value.GB#int <~ 4
-   (#) $margin.GB#int <~ 1
-   [?] $margin.GB >? $value.GB
-      [!] >> !Queue.InvalidMargin
-   [?] -Q.Job.Is.Active
-   [&] -Q.Job.Get.RAM.GB">? {$value.GB}"
-      [Q] -Q.Job.Pause.Free.RAM.Wait
-   [?] -Q.Job.Is.Paused
-   [&] -Q.Job.Get.RAM.GB"<? {$value.GB}-{$margin.GB}"
-      [Q] -Q.Job.Resume
-   [?] *?
-      [Q] -Q.DoNothing
+{T} QA_Trigger
+   (P) ^Pipeline1
+   (I) > localData
+   (I) !> localDataFallback
+   (O) < result
+   (O) !< resultFallback
 
-[ ] --- Ambiguous/Invalid Syntax for Stress Testing ---
-[ ] Missing target type in constructor
-{$} $InvalidConst"test"
-   [.] .field << "value"
+{W} QA_Wrapper
+   [@] std/http
+   [b] wrap_service
 
-[ ] JobRules missing parameters
-{Q} #JobRules:Empty
+{N} QA_Native
+   [#] native_call > result
 
-[ ] Nested block error simulation
-   [?] -Q.Job.Is.Active
-         [&] invalid_indentation
-            [!] >> !Error
+{Q} QA_Queue
+   [#] queue_push > queue
 
-[ ] Unknown markers
-{X} ?UnknownBlock
-   [~] .what << "is this"
+{!} QA_Error
+   [#] handle_error > log
 
-[ ] Broken Array assignment
-   (#) <array << (#)
-      - item1
-      - item2
+{_} QA_Permission
+   [#] check_auth > is_authed
+
+{*} QA_Collector
+   (C) < collection
+   (O) < stream
+
+{$} QA_Constructor
+   [#] build_instance > instance
+
+// Intentional Edge Cases and Invalid Syntax:
+{X} InvalidDefinitionMarker
+   [x] InvalidActionMarker
+   [#] Missing arrow
+   (X) Invalid IO marker
+   [#] {nested} [markers]

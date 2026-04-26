@@ -71,7 +71,7 @@ fn test_lex_edge_cases() {
     // Assert contiguous InvalidPattern slurp for @@@
     assert_eq!(
         tokens[3].value,
-        PolyglotToken::InvalidPattern("@@@".to_string())
+        PolyglotToken::UnknownPolyglotObject("@@@".to_string())
     );
 
     // Assert missing spaces triggers standalone and pushes invalid operators!
@@ -83,7 +83,7 @@ fn test_lex_edge_cases() {
     assert_eq!(tokens[6].value, PolyglotToken::Data("Config.".to_string()));
     assert_eq!(
         tokens[7].value,
-        PolyglotToken::InvalidPattern("_database".to_string())
+        PolyglotToken::UnknownPolyglotObject("_database".to_string())
     );
 }
 
@@ -239,6 +239,9 @@ fn test_lex_valid_code() {
         if let PolyglotToken::InvalidPattern(s) = &t.value {
             panic!("Lexer generated InvalidPattern: {}", s);
         }
+        if let PolyglotToken::UnknownPolyglotObject(s) = &t.value {
+            panic!("Lexer generated UnknownPolyglotObject: {}", s);
+        }
         if let PolyglotToken::IncorrectIndent(s) = &t.value {
             panic!("Lexer generated IncorrectIndent: {}", s);
         }
@@ -271,6 +274,7 @@ fn test_lex_recently_added_patterns() {
     for t in &tokens {
         match &t.value {
             PolyglotToken::InvalidPattern(s) => panic!("Lexer generated InvalidPattern: {}", s),
+            PolyglotToken::UnknownPolyglotObject(s) => panic!("Lexer generated UnknownPolyglotObject: {}", s),
             PolyglotToken::MissingMarker => panic!("Lexer generated MissingMarker!"),
             PolyglotToken::FallBackPullFrom => found_fallback_pull = true,
             PolyglotToken::FallBackPushInto => found_fallback_push = true,

@@ -125,11 +125,37 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
                 || expression.starts_with("{ }")
                 || expression.starts_with("( )"))
             {
-                tokens.push(Spanned::new(
-                    PolyglotToken::MissingMarker,
-                    line_num,
-                    col_idx + 1,
-                ));
+                if expression.len() >= 3 && expression[..3].starts_with('{') && expression[..3].ends_with('}') {
+                    tokens.push(Spanned::new(
+                        PolyglotToken::InvalidDefinitionMarker(expression[..3].to_string()),
+                        line_num,
+                        col_idx + 1,
+                    ));
+                    expression = &expression[3..];
+                    col_idx += 3;
+                } else if expression.len() >= 3 && expression[..3].starts_with('[') && expression[..3].ends_with(']') {
+                    tokens.push(Spanned::new(
+                        PolyglotToken::InvalidActionMarker(expression[..3].to_string()),
+                        line_num,
+                        col_idx + 1,
+                    ));
+                    expression = &expression[3..];
+                    col_idx += 3;
+                } else if expression.len() >= 3 && expression[..3].starts_with('(') && expression[..3].ends_with(')') {
+                    tokens.push(Spanned::new(
+                        PolyglotToken::InvalidIOMarker(expression[..3].to_string()),
+                        line_num,
+                        col_idx + 1,
+                    ));
+                    expression = &expression[3..];
+                    col_idx += 3;
+                } else {
+                    tokens.push(Spanned::new(
+                        PolyglotToken::MissingMarker,
+                        line_num,
+                        col_idx + 1,
+                    ));
+                }
             }
         }
 
@@ -137,6 +163,26 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
         let trimmed_len = expression.len() - expression.trim_start().len();
         expression = expression.trim_start();
         col_idx += trimmed_len;
+
+        if line_action == Some(PolyglotToken::ActionForeignCode) {
+            if !expression.is_empty() {
+                if trimmed_len == 0 {
+                    tokens.push(Spanned::new(
+                        PolyglotToken::InvalidPattern(expression.to_string()),
+                        line_num,
+                        col_idx + 1,
+                    ));
+                } else {
+                    tokens.push(Spanned::new(
+                        PolyglotToken::ForeignCode(expression.to_string()),
+                        line_num,
+                        col_idx + 1,
+                    ));
+                }
+                col_idx += expression.len();
+                expression = "";
+            }
+        }
 
         // Phase 3: Expression Phase (Delegating to Pattern Registry)
         // By looping here, we allow multiple macros to be matched on the same line,
@@ -180,7 +226,7 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
 
                 let invalid_str = &expression[..invalid_len];
                 tokens.push(Spanned::new(
-                    PolyglotToken::InvalidPattern(invalid_str.to_string()),
+                    PolyglotToken::UnknownPolyglotObject(invalid_str.to_string()),
                     line_num,
                     col_idx + 1,
                 ));
