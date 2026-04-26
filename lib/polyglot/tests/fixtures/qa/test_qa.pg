@@ -1,0 +1,49 @@
+[ ] --- Valid Syntax: Constructors ---
+{$} $Path"{dir}/{file}.ext"
+   [$] #Path.File
+   [.] .dir << <dir
+   [.] .fileName << <file
+
+[ ] Valid Keyword Constructor
+{$} $DT"Today"
+   [$] #DT.Date
+   [.] .year << %Runtime.Date.Year
+   [.] .month << %Runtime.Date.Month
+   [.] .day << %Runtime.Date.Day
+
+[ ] --- Valid Syntax: JobRules ---
+{Q} #JobRules:RAMGuard
+   (#) $value.GB#int <~ 4
+   (#) $margin.GB#int <~ 1
+   [?] $margin.GB >? $value.GB
+      [!] >> !Queue.InvalidMargin
+   [?] -Q.Job.Is.Active
+   [&] -Q.Job.Get.RAM.GB">? {$value.GB}"
+      [Q] -Q.Job.Pause.Free.RAM.Wait
+   [?] -Q.Job.Is.Paused
+   [&] -Q.Job.Get.RAM.GB"<? {$value.GB}-{$margin.GB}"
+      [Q] -Q.Job.Resume
+   [?] *?
+      [Q] -Q.DoNothing
+
+[ ] --- Ambiguous/Invalid Syntax for Stress Testing ---
+[ ] Missing target type in constructor
+{$} $InvalidConst"test"
+   [.] .field << "value"
+
+[ ] JobRules missing parameters
+{Q} #JobRules:Empty
+
+[ ] Nested block error simulation
+   [?] -Q.Job.Is.Active
+         [&] invalid_indentation
+            [!] >> !Error
+
+[ ] Unknown markers
+{X} ?UnknownBlock
+   [~] .what << "is this"
+
+[ ] Broken Array assignment
+   (#) <array << (#)
+      - item1
+      - item2
