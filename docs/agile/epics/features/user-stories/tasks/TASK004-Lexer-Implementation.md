@@ -1,7 +1,7 @@
 ---
 user-story: "US001-Lexer-Line-Parsing"
 github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/365"
-status: "todo"
+status: "done"
 assignee: "@developer"
 ---
 
@@ -35,8 +35,8 @@ Translate the lexical definitions, whitespace rules, prefix mapping, and token e
    - Validate whitespace rule behavior surrounding `{`, `[`, and `#`.
 
 ## Acceptance Criteria
-- [ ] `PolyglotToken` enum accurately matches the catalog in `TASK003`.
-- [ ] Prefixes for monolithic identifiers are stripped during the extraction step.
-- [ ] The lexer correctly tracks coordinates (`Line` / `Col`).
-- [ ] Unrecognized garbage characters emit `TOK_UNRECOGNIZED` and don't panic the lexer thread.
-- [ ] Core unit tests for extraction regex compliance are passing.
+- [x] `PolyglotToken` enum accurately matches the catalog in `TASK003`.
+- [x] Prefixes for monolithic identifiers are stripped during the extraction step.
+- [x] The lexer correctly tracks coordinates (`Line` / `Col`).
+- [x] Unrecognized garbage characters emit `TOK_UNRECOGNIZED` and don't panic the lexer thread.
+- [x] Core unit tests for extraction regex compliance are passing.

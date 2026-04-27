@@ -1,11 +1,11 @@
 ---
 epic: "Polyglot Lexer & AST Generator"
 github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/361"
-status: "backlog"
+status: "planning"
 assignee: "@scrum_master"
 dependencies: ["F003-Compiler"]
 ---
-# Feature: Behavioral Contract JSON Export
+# Feature: Compiler Compilation
 
 ## Objective
 Map the Compiler's output into the strict JSON schema required for downstream execution.

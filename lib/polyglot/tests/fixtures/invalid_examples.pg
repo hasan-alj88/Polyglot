@@ -1,0 +1,6 @@
+{!} #BadDef
+   [X] -BadAction
+   (Y) <BadIO
+   [=] $var << #BadPattern!!!
+   NoMarkerHere
+   [#] @UnknownObject

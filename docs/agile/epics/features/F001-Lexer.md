@@ -1,7 +1,7 @@
 ---
 epic: "Polyglot Lexer & AST Generator"
 github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/358"
-status: "planning"
+status: "done"
 assignee: "@scrum_master"
 dependencies: []
 ---

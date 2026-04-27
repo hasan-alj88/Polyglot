@@ -1,7 +1,7 @@
 ---
 user-story: "US001-Lexer-Line-Parsing"
 github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/363"
-status: "todo"
+status: "done"
 assignee: "@developer"
 ---
 # Task: Implement 3-Space Indentation Scope Tracker
