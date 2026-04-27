@@ -4,11 +4,12 @@
    [@] @Mail << @Community:sendgrid<Mailer.Service:3.0.0
 
 {-} -RunDailyCampaign
-   [ ] IO before triggers
-   (-) <campaignDate#DT << $DT"today"
    [ ] Lesson 002: Pipeline Triggers
    [T] -T.Daily"8AM"
    [Q] -Q.HighPriority
+   [ ]
+   [ ] ERR: IO definitions must happen BEFORE triggers
+   (-) <campaignDate#DT << $DT"today"
    [ ]
    [ ] Parallel fetch from two different CRM segments
    [=] @CRM-API.Users.GetSegment
@@ -33,16 +34,15 @@
       (#) << $churnedUsers
    [ ]
    [ ] Lesson 005: String Interpolation
-   [ ] Default assignment operator <~, ~> for 
-   [ ] if varible might to be pushed once more 
-   [ ] if the value is final use <<, >>
-   [-] $emailSubject << "Daily Campaign Report for {<campaignDate}"
+   [ ] ERR: Used <~ (mutable) instead of << (final assignment)
+   [-] $emailSubject <~ "Daily Campaign Report for {<campaignDate}"
    [ ]
    [-] @Mail-API.Email.SendAdminReport
-      (-) $EmailOperation
+      [ ] ERR: Action not explicitly named, error handling wasn't idiomatic, missing typed outputs
       (-) <subject << $emailSubject
       (-) <data << $allSegments
-      (-) >status >> @Mail#Status.Delivered
-         (>) >! @Mail#Status.FailedToSend
+      [ ] Lesson 006: Error Handling Blocks
+      [!] *!
+         [-] >status >> "FailedToSend"
    [ ]
-   [-] >finalStatus >> $EmailOperation>status
+   [-] >finalStatus >> "Success"

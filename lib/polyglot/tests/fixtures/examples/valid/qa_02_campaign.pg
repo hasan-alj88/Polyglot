@@ -13,13 +13,13 @@
    [ ] Parallel fetch from two different CRM segments
    [=] @CRM-API.Users.GetSegment
       (-) <segment << "Active"
-      (-) >users >> $activeUsers#array:string:1D
+      (-) >users#array:string:1D >> $activeUsers
          [ ] Lesson 007: Output Fallbacks
          (>) >! $Array.String:1D"Empty"
    [ ]
    [=] @CRM-API.Users.GetSegment
       (-) <segment << "Churned"
-      (-) >users >> $churnedUsers#array:string:1D
+      (-) >users#array:string:1D >> $churnedUsers
          (>) >! $Array.String:1D"Empty"
    [ ]
    [ ] Lesson 003: Parallel Collectors (Wait for both parallel fetches)
