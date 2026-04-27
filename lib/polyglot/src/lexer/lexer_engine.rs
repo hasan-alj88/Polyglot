@@ -191,6 +191,27 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
         // which powers our inline-comment parsing.
         while !expression.is_empty() {
             let mut matched = false;
+
+            for (prefix, _) in marker_map.iter() {
+                if expression.starts_with(prefix) {
+                    tokens.push(Spanned::new(
+                        PolyglotToken::MisplacedMarker(prefix.to_string()),
+                        line_num,
+                        col_idx + 1,
+                    ));
+                    matched = true;
+                    expression = &expression[prefix.len()..];
+                    col_idx += prefix.len();
+                    
+                    let trimmed_len = expression.len() - expression.trim_start().len();
+                    expression = expression.trim_start();
+                    col_idx += trimmed_len;
+                    break;
+                }
+            }
+
+            if matched { continue; }
+
             for pattern in &patterns {
                 if let Some(caps) = pattern.regex.captures(expression) {
                     let extracted = (pattern.extractor)(&caps, line_action.as_ref());

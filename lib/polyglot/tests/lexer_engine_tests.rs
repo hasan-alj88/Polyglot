@@ -80,10 +80,10 @@ fn test_lex_edge_cases() {
     // Since there is NO space, the algorithm previously slurped `<<#Config._database`.
     // Now it correctly splits `<<` as PullFrom, `#Config.` as Data, and `_database` as InvalidIdentifier!
     assert_eq!(tokens[5].value, PolyglotToken::PullFrom);
-    assert_eq!(tokens[6].value, PolyglotToken::Data("Config.".to_string()));
+    assert_eq!(tokens[6].value, PolyglotToken::Data("Config".to_string()));
     assert_eq!(
         tokens[7].value,
-        PolyglotToken::UnknownPolyglotObject("_database".to_string())
+        PolyglotToken::DataField("_database".to_string())
     );
 }
 
@@ -189,7 +189,7 @@ fn test_lex_advanced_operators() {
             PolyglotToken::DataInput => found_data_input = true,
             PolyglotToken::DefaultPullFrom => found_default_pull = true,
             PolyglotToken::Constructor(ref id) if id == "DT" => found_constructor = true,
-            PolyglotToken::InlineString(ref s) if s == "Now" => found_inline_str = true,
+            PolyglotToken::ConstructorInlineString(ref s) if s == "Now" => found_inline_str = true,
             PolyglotToken::DefaultPushInto => found_default_push = true,
 
             PolyglotToken::ContinueActionLine => found_continue_action = true,
@@ -264,7 +264,7 @@ fn test_lex_valid_code() {
 
 #[test]
 fn test_lex_recently_added_patterns() {
-    let script = "{T} $Trigger\n{W} $Wrapper\n{N} $Native\n{Q} $Queue\n{!} $Error\n{_} $Perm\n{*} $Coll\n{$} $Const\n[b] -Bg\n[?] -Cond\n[!] -Err\n[.] -Fixed\n[:] -Flex\n[&] -And\n[|] -Or\n[^] -Xor\n[c] -Code\n[C] -Code\n[%] -Meta\n[-] -Pipe !< #Data\n[-] -Pipe !> #Data";
+    let script = "{T} $Trigger\n{W} $Wrapper\n{N} $Native\n{Q} $Queue\n{!} $Error\n{_} $Perm\n{*} $Coll\n{$} $Const\n[b] -Bg\n[?] -Cond\n[!] -Err\n[.] -Fixed\n[:] -Flex\n[&] -And\n[|] -Or\n[^] -Xor\n[c] -Code\n[C] -Code\n[%] -Meta\n[-] -Pipe <! #Data\n[-] -Pipe >! #Data";
     
     let tokens = lex(script);
 
