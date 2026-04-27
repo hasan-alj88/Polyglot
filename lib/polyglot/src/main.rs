@@ -7,6 +7,8 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     let mut is_lexer = false;
+    let mut is_validate = false;
+    let mut keep_comments = false;
     let mut input_file: Option<String> = None;
     let mut target_file: Option<String> = None;
 
@@ -15,6 +17,14 @@ fn main() {
         match args[i].as_str() {
             "--lexer" => {
                 is_lexer = true;
+                i += 1;
+            }
+            "--validate" => {
+                is_validate = true;
+                i += 1;
+            }
+            "--comments" => {
+                keep_comments = true;
                 i += 1;
             }
             "-c" => {
@@ -42,8 +52,8 @@ fn main() {
         }
     }
 
-    if !is_lexer || input_file.is_none() {
-        eprintln!("Usage: polyglot --lexer -c <input.pg> [-t <output.pgts>]");
+    if (!is_lexer && !is_validate) || input_file.is_none() {
+        eprintln!("Usage: polyglot [--lexer | --validate] -c <input.pg> [-t <output.pgts>]");
         std::process::exit(1);
     }
 
@@ -69,7 +79,28 @@ fn main() {
         }
     };
 
-    let tokens = lex(&script);
+    let mut tokens = lex(&script);
+
+    if !keep_comments {
+        use polyglot::lexer::token::PolyglotToken;
+        tokens.retain(|t| {
+            !matches!(t.value, 
+                PolyglotToken::CommentText(_) | 
+                PolyglotToken::DefComment | 
+                PolyglotToken::ActionComment | 
+                PolyglotToken::IoComment
+            )
+        });
+    }
+
+    if is_validate {
+        let report = polyglot::compiler::validator::validate(&tokens, &script, &input_path_str);
+        report.print_report();
+        if report.total_errors > 0 {
+            std::process::exit(1);
+        }
+        std::process::exit(0);
+    }
 
     let mut out_string = String::new();
     out_string.push_str("=== Polyglot Token Stream ===\n");
