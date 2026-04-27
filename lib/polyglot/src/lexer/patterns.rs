@@ -9,14 +9,14 @@ pub struct PatternRule {
 }
 
 lazy_static! {
-    static ref RE_TYPED_VAR: Regex = Regex::new(r"^\$(?P<var>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z][a-zA-Z0-9]*)*)#(?P<type>[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
-    static ref RE_STANDALONE_VAR: Regex = Regex::new(r"^\$(?P<var>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z][a-zA-Z0-9]*)*)").unwrap();
+    static ref RE_TYPED_VAR: Regex = Regex::new(r"^\$(?P<var>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z0-9]+)*)#(?P<type>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z0-9]+)*)").unwrap();
+    static ref RE_STANDALONE_VAR: Regex = Regex::new(r"^\$(?P<var>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z0-9]+)*)").unwrap();
 
     // String literals with potential variable substitutions
     static ref RE_STRING: Regex = Regex::new(r#"^"(?P<inner>.*?)""#).unwrap();
 
     // Registry and Package definitions with optional version
-    static ref RE_REGISTRY_PKG: Regex = Regex::new(r"^@(?P<reg>[a-zA-Z0-9]+:[a-zA-Z0-9]+)<(?P<pkg>[a-zA-Z0-9.]+)(?:@(?P<ver>[a-zA-Z0-9.]+))?").unwrap();
+    static ref RE_REGISTRY_PKG: Regex = Regex::new(r"^@(?P<reg>[a-zA-Z0-9]+:[a-zA-Z0-9]+)<(?P<pkg>[a-zA-Z0-9.]+)(?::(?P<ver>[a-zA-Z0-9.]+))?").unwrap();
 
     // Generic packages
     static ref RE_PACKAGE: Regex = Regex::new(r"^@(?P<pkg>[a-zA-Z0-9.]+)").unwrap();
@@ -29,7 +29,7 @@ lazy_static! {
 
     // Constructors
     // Also matched for standalone variables if they don't have `#type` or `""` attached
-    static ref RE_CONSTRUCTOR: Regex = Regex::new(r#"^\$(?P<ident>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z][a-zA-Z0-9]*)*)(?P<has_string>"(?P<str>.*?)")?"#).unwrap();
+    static ref RE_CONSTRUCTOR: Regex = Regex::new(r#"^\$(?P<ident>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z0-9]+)*)(?P<has_string>"(?P<str>.*?)")?"#).unwrap();
 
     // IO Parameters
     static ref RE_INPUT_PARAM: Regex = Regex::new(r"^<(?P<param>[a-zA-Z0-9.]+)").unwrap();
@@ -40,8 +40,8 @@ lazy_static! {
     static ref RE_PUSH: Regex = Regex::new(r"^>>").unwrap();
     static ref RE_DEFAULT_PULL: Regex = Regex::new(r"^<~").unwrap();
     static ref RE_DEFAULT_PUSH: Regex = Regex::new(r"^~>").unwrap();
-    static ref RE_FALLBACK_PULL_LEFT: Regex = Regex::new(r"^!<").unwrap();
-    static ref RE_FALLBACK_PUSH_RIGHT: Regex = Regex::new(r"^!>").unwrap();
+    static ref RE_FALLBACK_PULL: Regex = Regex::new(r"^>!").unwrap();
+    static ref RE_FALLBACK_PUSH: Regex = Regex::new(r"^<!").unwrap();
 
     // Compression Operators
     static ref RE_COMPRESSION: Regex = Regex::new(r"^(?P<op>=\?|=!\?|>\?|>\!\?|<\?|<\!\?|\*\?)").unwrap();
@@ -53,7 +53,8 @@ lazy_static! {
     static ref RE_COLLECTOR: Regex = Regex::new(r"^\*(?P<coll>[a-zA-Z0-9.]+)").unwrap();
 
     // Data and Metadata
-    static ref RE_ISOLATED_DATA: Regex = Regex::new(r"^#(?P<data>[a-zA-Z0-9.]+)").unwrap();
+    static ref RE_DATA_TYPE: Regex = Regex::new(r"^#(?P<type>[a-z][a-zA-Z0-9]*(?:[.:][a-zA-Z0-9]+)*)").unwrap();
+    static ref RE_ISOLATED_DATA: Regex = Regex::new(r"^#(?P<data>[A-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z0-9]+)*)").unwrap();
     static ref RE_METADATA: Regex = Regex::new(r"^%(?P<meta>[a-zA-Z0-9.]+)").unwrap();
 
     // Boolean Predicates
@@ -74,7 +75,7 @@ pub fn extract_inline_string(inner: &str, is_inline_token: bool) -> Vec<Polyglot
     while let Some(start) = current.find("{$") {
         if start > 0 {
             if is_inline_token {
-                tokens.push(PolyglotToken::InlineString(current[..start].to_string()));
+                tokens.push(PolyglotToken::ConstructorInlineString(current[..start].to_string()));
             } else {
                 tokens.push(PolyglotToken::StringLiteral(current[..start].to_string()));
             }
@@ -86,7 +87,7 @@ pub fn extract_inline_string(inner: &str, is_inline_token: bool) -> Vec<Polyglot
             current = &after_start[end + 1..];
         } else {
             if is_inline_token {
-                tokens.push(PolyglotToken::InlineString(current[start..].to_string()));
+                tokens.push(PolyglotToken::ConstructorInlineString(current[start..].to_string()));
             } else {
                 tokens.push(PolyglotToken::StringLiteral(current[start..].to_string()));
             }
@@ -96,7 +97,7 @@ pub fn extract_inline_string(inner: &str, is_inline_token: bool) -> Vec<Polyglot
     }
     if !current.is_empty() {
         if is_inline_token {
-            tokens.push(PolyglotToken::InlineString(current.to_string()));
+            tokens.push(PolyglotToken::ConstructorInlineString(current.to_string()));
         } else {
             tokens.push(PolyglotToken::StringLiteral(current.to_string()));
         }
@@ -147,7 +148,9 @@ pub fn get_patterns() -> Vec<PatternRule> {
                     PolyglotToken::Registry(caps["reg"].to_string()),
                     PolyglotToken::PackageName(caps["pkg"].to_string()),
                 ];
-                if caps.name("ver").is_none() {
+                if let Some(ver) = caps.name("ver") {
+                    tokens.push(PolyglotToken::PackageVersion(format!(":{}", ver.as_str())));
+                } else {
                     tokens.push(PolyglotToken::NoVersion);
                 }
                 tokens
@@ -229,6 +232,11 @@ pub fn get_patterns() -> Vec<PatternRule> {
             extractor: |caps, _| vec![PolyglotToken::Collector(caps["coll"].to_string())],
         },
         PatternRule {
+            label: "Data_Type",
+            regex: &RE_DATA_TYPE,
+            extractor: |caps, _| vec![PolyglotToken::DataType(caps["type"].to_string())],
+        },
+        PatternRule {
             label: "Isolated_Data",
             regex: &RE_ISOLATED_DATA,
             extractor: |caps, _| vec![PolyglotToken::Data(caps["data"].to_string())],
@@ -301,13 +309,13 @@ pub fn get_patterns() -> Vec<PatternRule> {
             extractor: |_, _| vec![PolyglotToken::DefaultPushInto],
         },
         PatternRule {
-            label: "Fallback_Pull_Left",
-            regex: &RE_FALLBACK_PULL_LEFT,
+            label: "Fallback_Pull",
+            regex: &RE_FALLBACK_PULL,
             extractor: |_, _| vec![PolyglotToken::FallBackPullFrom],
         },
         PatternRule {
-            label: "Fallback_Push_Right",
-            regex: &RE_FALLBACK_PUSH_RIGHT,
+            label: "Fallback_Push",
+            regex: &RE_FALLBACK_PUSH,
             extractor: |_, _| vec![PolyglotToken::FallBackPushInto],
         },
         PatternRule {

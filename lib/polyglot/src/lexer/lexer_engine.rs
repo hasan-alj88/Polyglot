@@ -77,6 +77,8 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
             ("{-}", PolyglotToken::DefPipeline),
             ("(-)", PolyglotToken::PipelineIO),
             ("(#)", PolyglotToken::DataInput),
+            ("(<)", PolyglotToken::InputParameterProperty),
+            ("(>)", PolyglotToken::OutputParameterProperty),
             ("(=)", PolyglotToken::ExpanderIO),
             ("(*)", PolyglotToken::CollectorIO),
             ("(~)", PolyglotToken::ContinueIOLine),
