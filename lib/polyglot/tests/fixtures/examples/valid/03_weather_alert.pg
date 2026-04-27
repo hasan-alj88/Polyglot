@@ -1,0 +1,56 @@
+{@} @Local:7777<QA:Test.WeatherAlert:1.0.0
+   [@] @Mail << @Community:mailservice<Mail.Sender:2.1.0
+   [@] @Weather << @Community:weatherapi<Weather.Sensor:1.0.0
+
+
+
+{ } not a compile error more like a stylistic choice
+{ } to keep 3 new lines between definations {x}
+{-} -AlertPipeline
+   [ ] IO must be declared before triggers (Lesson 008)
+   (-) <threshold#float << 95.0
+   [ ] Another stylistic choice to keep defination scope conntected 
+   [ ] with comment brackets 
+   [ ]
+   [T] -T.Hourly [ ] -T.Every"1H" equals -T.Hourly
+   [Q] -Q.Default [ ] madatory 
+   [W] -W.Polyglot [ ] madatory
+   [ ]
+   [=] @Weather-API.Sensor.GetRegion
+      (-) <regionId << "North"
+      (-) >matrix >> $northTemp#array:float:3D
+         (>) >! $Array.Float:3D"Empty" [ ] constructors are $name"..."
+   [ ]
+   [=] @Weather-API.Sensor.GetRegion
+      (-) <regionId << "South"
+      (-) >matrix >> $southTemp#array:float:3D
+         (>) >! $Array.Float:3D"Empty"
+   [ ] if the object is to put the pallel varibles in an Array
+   [ ] there a collector that does that
+   [*] *Into:Array
+      (*) << $northTemp
+      (*) << $southTemp
+      (*) >> $worldTemp#array:float:3D
+   [ ] 
+   [-] =*Agg.Flat.Max
+      (=) << $worldTemp
+      (*) #float >> $maxTemp
+   
+   [ ] Boolean Predicate
+   [?] $maxTemp >? <threshold 
+      [=] @Mail-API.Email.SendAlert
+         (-) $SendEmailOp
+         (-) <subject << "High Temp Warning"
+         (-) <body << "ALERT: Temperature is {<maxTemp}!"
+         (-) >status >> @Mail#Status.Delivered
+            (>) >! @Mail#Status.FailedToSend
+      [?] $SendEmailOp>status =? @Mail#Status.FailedToSend
+         [-] -File.CSV.Log
+            (-) <file#Path << "alerts_failed.csv"
+               (<) <! ""
+            (-) <data << $alertMessage
+            
+   [?] *?
+      [ ] if conditionals are not exshsitive compile Error
+      [ ] Must handle all paths
+      [-] -Do.Noting

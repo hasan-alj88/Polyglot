@@ -1,0 +1,59 @@
+{@} @Local:7777<QA:Test.WeatherAlert:1.0.0
+[@] @Mail << @Community:mailservice<Mail.Sender:2.1.0
+[@] @Weather << @Community:weatherapi<Weather.Sensor:1.0.0
+
+{-} -AlertPipeline
+   [ ] IO must be declared before triggers (Lesson 008)
+   (-) <threshold#float << 95.0
+   
+   [T] -T.Hourly"1H"
+   [ ] ERROR: MISSING [Q] and [W] blocks. They are mandatory.
+   
+   [ ] Parallel collection (Lesson 003)
+   [=] @Weather-API.Sensor.GetRegion
+      (-) <regionId << "North"
+      (-) >matrix >> $northTemp#array:float:3D
+         [ ] ERROR: Types use #, constructors use $. This should be $Array.Float...
+         (>) >! #Array.Float:3D"Empty"
+   [ ]
+   [=] @Weather-API.Sensor.GetRegion
+      (-) <regionId << "South"
+      (-) >matrix >> $southTemp#array:float:3D
+         (>) >! #Array.Float:3D"Empty"
+   [ ]
+   [ ] ERROR: Use `[*] *Into:Array` instead of `[*] *All` to push parallel results into an array.
+   [*] *All
+      (*) << $northTemp
+      (*) << $southTemp
+      
+   [ ] Explicit array dimension (Lesson 004)
+   [-] $worldTemp#array:float:3D << #Array.Float:3D
+      (#) << $northTemp
+      (#) << $southTemp
+      
+   [ ] ERROR: Aggregations should use `[-] =*Agg.Flat.Max`
+   [-] $maxTemp << $worldTemp.Max()
+   
+   [ ] ERROR: Boolean Predicate blocks should be used instead of inline assignment
+   [?] $isHot << $maxTemp > $threshold
+   
+   [-] $alertMessage <~ "ALERT: Temperature is {<maxTemp}!"
+   
+   [=] @Mail-API.Email.SendAlert
+      [?] $isHot
+      (-) $SendEmailOp
+      (-) <subject << "High Temp Warning"
+      (-) <body << $alertMessage
+      (-) >status >> @Mail#Status.Delivered
+         (>) >! @Mail#Status.FailedToSend
+         
+   [-] -File.CSV.Log
+      [ ] ERROR: Conditional blocks should nest the actions and use `=?` for equality.
+      [?] $SendEmailOp>status == @Mail#Status.FailedToSend
+      (-) <file << "alerts_failed.csv"
+      [ ] ERROR: Use input fallbacks `(<) <! ""` instead of `[!] *!`
+      (-) <data << $alertMessage
+      [!] *!
+         [-] >file >> ""
+         
+   [ ] ERROR: Conditionals must be exhaustive, missing `[?] *?` block.
