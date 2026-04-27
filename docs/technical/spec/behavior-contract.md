@@ -51,7 +51,7 @@ The Behavior Contract is transmitted via NATS messaging in TOON format (chosen f
 
 ## Contract Structure
 
-The contract is organized into five top-level sections:
+The contract is organized into six top-level sections:
 
 1. **Triggers** — listener configuration for the Trigger Monitor
 2. **Queue** — dispatch rules and active queue commands

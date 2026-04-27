@@ -71,7 +71,7 @@ severity: error
    (*) << $data
 ```
 
-**Note:** `live` metadata (`$data%state`) **can** be inspected before collection. PGE03003 isolates user-assignable push/pull operations only. `live` fields are runtime-managed and read-only (PGE02006), so no data race is possible. See resolved design issue 003 (git history: `docs/technical/compiler_issues/003-metadata-access-before-collection.md`).
+**Note:** While `live` metadata (`$data%state`) **can** theoretically be inspected before collection without triggering PGE03003 (which isolates user-assignable push/pull operations only), its use is generally not recommended. All Polyglot states live in the NoSQL DB with read-only privileges; only the core Polyglot code can change these values (they are not writable via user code). This guarantees that `%state` transitions are atomic across the Trigger Monitor, Runner, and NATS boundary. However, if there are scenarios that seem to require direct inspection of `%state` before collection, the core Polyglot development team should instead create new syntax that negates the need for it. See resolved design issue 003 (git history: `docs/technical/compiler_issues/003-metadata-access-before-collection.md`).
 
 ## See Also
 

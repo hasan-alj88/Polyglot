@@ -47,6 +47,6 @@ updated: 2026-04-09
    (-) <data << $input
 ```
 
-**Diagnostic:** "Operation label `$Log` on `[b]` background call is never consumed — remove the label or use its outputs"
+**Diagnostic:** "Operation label `$Log` on `[b]` background call is never consumed — remove the unused label"
 
 **Related:** PGE02009 (Unreachable Code), PGE03005 ([b] Has No Collectible Output)

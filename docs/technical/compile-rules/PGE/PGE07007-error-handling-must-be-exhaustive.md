@@ -36,7 +36,7 @@ If any declared error is not addressed by at least one mechanism, PGE07007 fires
 
 ## Exhaustiveness Algorithm
 
-The compiler checks exhaustiveness per `[-]` call (or per chain) in the following steps:
+The compiler checks exhaustiveness per `[-]` call in the following steps:
 
 ### Step 1 — Collect declared errors
 
@@ -87,52 +87,6 @@ For each output port **O**: if **Coverage(O) ⊊ E** (strict subset), emit PGE07
 | Partial | Partial (union = E) | Pass (union covers all) |
 | Partial | Partial (union ⊊ E) | **PGE07007** |
 | No | No | **PGE07007** |
-
-## Chain Error Exhaustiveness
-
-In chain calls (`[-] -A->-B->-C`), each step may declare its own errors. The compiler collects all declared errors with step prefixes:
-
-```
-E = E_0 ∪ E_1 ∪ ... ∪ E_n
-  = { .0!E1, .0!E2, .1!E3, ... }
-```
-
-### Wildcard scope
-
-| Wildcard | Scope | Effect |
-|----------|-------|--------|
-| `[!] !*` (global) | All chain steps | **H = E** — covers every error from every step |
-| `[!] .N!*` (step-scoped) | Step N only | Adds all of step N's errors to **H** |
-| `[!] .N!ErrorName` (specific) | One error from step N | Adds that one error to **H** |
-
-Step-scoped and global wildcards can be mixed:
-
-```polyglot
-[ ] ✓ step 0 handled specifically, step 1 caught by global wildcard
-[-] -File.Text.Read->-Text.Parse.CSV
-   (-) >0.path#path << $path
-   (-) <1.rows#string >> >content
-   [!] .0!File.NotFound
-      [-] >content << "file not found"
-   [!] .0!File.ReadError
-      [-] >content << "read error"
-   [!] !*
-      [ ] covers all remaining errors from step 1 (e.g., .1!Parse.InvalidFormat)
-      [-] >content << "parse error"
-```
-
-```polyglot
-[ ] ✓ step-scoped wildcards for each step
-[-] -File.Text.Read->-Text.Parse.CSV
-   (-) >0.path#path << $path
-   (-) <1.rows#string >> >content
-   [!] .0!*
-      [-] >content << "file error"
-   [!] .1!*
-      [-] >content << "parse error"
-```
-
-The same algorithm (Steps 1–5) applies — the error set **E** is the union of all steps' declared errors, and handlers/fallbacks reduce the uncovered set as usual.
 
 ## Multi-Output Coverage
 
@@ -200,12 +154,10 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
 |---------|--------|
 | Single output | `Unaddressed error '!ErrorName' from failable call '-PipelineName' at line N — add [!] !ErrorName handler, [!] !* wildcard, or (>) !> fallback` |
 | Multi-output | `Output '>portName' has unaddressed error '!ErrorName' from failable call '-PipelineName' at line N` |
-| Chain | `Unaddressed error '.N!ErrorName' from chain step N ('-StepName') at line N` |
 
 **See also:**
 - [PGE06001 — Conditional Must Be Exhaustive](PGE06001-conditional-must-be-exhaustive.md) — the analogous rule for conditionals
 - [PGE07001 — Error Block Scoping](PGE07001-error-block-scoping.md) — `[!]` blocks must be under their producing `[-]`
-- [PGE07002 — Chain Error Scoping](PGE07002-chain-error-scoping.md) — chain `.N!ErrorName` syntax
 - [PGE07005 — Undeclared Error Raise](PGE07005-undeclared-error-raise.md) — pipeline-side: can't raise undeclared errors
 - [PGW07001 — Error Handler on Non-Failable Call](../PGW/PGW07001-error-handler-on-non-failable-call.md) — inverse: handler on non-failable call
 - [PGE02005 — Failed Must Resolve](PGE02005-failed-is-terminal.md) — variable lifecycle consequence of unhandled errors
