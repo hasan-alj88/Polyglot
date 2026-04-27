@@ -1,0 +1,55 @@
+[ ] Lesson 001: Mixed Valid and Invalid Code
+
+{@} @Company:AcmeCorp<Marketing.Campaigns:2.1.0
+{-} -ValidPipeline
+
+   [ ] Valid assignment sequence
+   [-] $myVar << #Array.String:1D
+   
+   [ ] PGE01049: Invalid Definition Target and PGE01053: Definition Scope Violation
+   {-} $invalidTarget
+   
+   [ ] PGE01050: Invalid IO Target
+   (-) -PipelineAsIO
+   
+   [ ] PGE01052: Invalid Operator Target
+   [=] $badOp >> (-)
+
+   [ ] PGE01051: Missing Operator Target
+   [-] $incompleteVar <<
+
+[ ] Additional PGE01049 tests
+{#} -MyData
+{Q} $MyQueue
+
+   [ ] Additional PGE01050 tests
+   (#) -MyPipeline
+   
+   [ ] PGE01050 with Action marker stress test
+   (#) [-]
+   
+   [ ] PGE01052 Fallback Operator target stress test
+   [-] $myVar >! {-}
+   
+   [ ] Valid Fallback IO Usage
+   (#) <~ #DefaultData
+   (#) >! #FallbackData
+   
+   [ ] Context Aware IO Validation (PGE01055)
+{Q} #MyQueue
+   (#) <~ #DefaultData
+   
+{-} -Pipeline
+   (-) <input#datatype
+   [-] -pipeline
+      (-) <input << $val
+         (<) <! 0
+      (-) >status#Status
+         (>) >! #Status.Failed
+         
+   [ ] PGE01055 Context Mismatch Invalid cases
+{#} -MyData
+   (-) <input#datatype
+   
+{-} -Pipeline
+   (#) <~ #DefaultData

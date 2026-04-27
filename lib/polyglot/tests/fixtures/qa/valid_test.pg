@@ -1,0 +1,15 @@
+{@} @Company:ValidTest<Processing.QueueWorker:1.0.0
+
+{#} #Payload
+   [#] .user#String
+   [#] .id#Int
+
+{Q} -MyQueue
+   [#] <~ #DefaultQueueConfig
+
+{-} -ProcessJobs
+   [T] -T.Manual
+   [W] -W.Polyglot
+   [Q] -MyQueue
+   (<) <input#Payload
+   [-] $userId << <input.user

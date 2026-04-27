@@ -1,48 +1,50 @@
-[ ] Lesson 001: Package Declarations
-{@} @Company:AcmeCorp<Marketing.Campaigns:2.1.0
-   [@] @CRM << @Company:AcmeCorp<Internal.CRM:1.0.0
-   [@] @Mail << @Community:sendgrid<Mailer.Service:3.0.0
+{@} @Company:DataCo<Processing.QueueWorker:1.0.0
 
-{-} -RunDailyCampaign
-   [ ] IO before triggers
-   (-) <campaignDate#DT << $DT"today"
-   [ ] Lesson 002: Pipeline Triggers
-   [T] -T.Daily"8AM"
-   [Q] -Q.HighPriority
+{ } Define the structure of our payload data
+{#} #Payload
+   ( ) unused input parameter in data definition compile Error
+   (#) <user#String
+   (#) <id#Int
+   [ ] You meant to add Fields like this
+   [ ] please recommend help message that explain this as possible solution
+   [#] .user#String
+   [#] .id#Int
+
+{ } Define our job queue
+{Q} -JobQueue
+   [#] <~ #DefaultQueueConfig
+
+{ } The main pipeline worker
+{-} -ProcessJobs
+   (-) <input#Payload
+   [ ] No Triggers! Compile Error
+   [T] -T.Every"1h"
+   [ ] No Queue config! Compile Error
+   [Q] -Q.Default
+   [ ] No Wrapper OR Setup\Cleanup pair! Compile Error
+   [W] -W.Polyglot
    [ ]
-   [ ] Parallel fetch from two different CRM segments
-   [=] @CRM-API.Users.GetSegment
-      (-) <segment << "Active"
-      (-) >users >> $activeUsers#array:string:1D
-         [ ] Lesson 007: Output Fallbacks
-         (>) >! $Array.String:1D"Empty"
-   [ ]
-   [=] @CRM-API.Users.GetSegment
-      (-) <segment << "Churned"
-      (-) >users >> $churnedUsers#array:string:1D
-         (>) >! $Array.String:1D"Empty"
-   [ ]
-   [ ] Lesson 003: Parallel Collectors (Wait for both parallel fetches)
-   [*] *All
-      (*) << $activeUsers
-      (*) << $churnedUsers
-   [ ]
-   [ ] Lesson 004: Array Dimension Initialization (explicit :2D on right side)
-   [-] $allSegments#array:string:2D << #Array.String:2D
-      (#) << $activeUsers
-      (#) << $churnedUsers
-   [ ]
-   [ ] Lesson 005: String Interpolation
-   [ ] Default assignment operator <~, ~> for 
-   [ ] if varible might to be pushed once more 
-   [ ] if the value is final use <<, >>
-   [-] $emailSubject << "Daily Campaign Report for {<campaignDate}"
-   [ ]
-   [-] @Mail-API.Email.SendAdminReport
-      (-) $EmailOperation
-      (-) <subject << $emailSubject
-      (-) <data << $allSegments
-      (-) >status >> @Mail#Status.Delivered
-         (>) >! @Mail#Status.FailedToSend
-   [ ]
-   [-] >finalStatus >> $EmailOperation>status
+   [ ] Begin execution
+   [ ] is this pglib pipeline? if not Compile Error Ref not found
+   [ ] suggest adding @ to import ( and that import is declared) 
+   [ ] We have not implemented registry for the import yet 
+   [ ] where the compiler can get pipelines from the import to 
+   [ ] validate that its in there, hence for now add the function
+   [ ] but let it yield yes as in it exist in the package.
+   [ ] So when we have the architecture to fetch the imports we can just 
+   [ ] update that function and the rest as is. add those comments in it.
+   [-] -ValidationStep
+      (-) <input << $job
+      ( ) the input property should be in the input scope else compile error
+      (>) >! #Status.Failed
+   [ ] is this in pglib? No? then compile Error
+   [-] ?IsValid
+      (-) <input << $job
+      ( ) the input property should be in the input scope else compile error
+      (<) <! #Zero
+      [ ] Process the job
+      [-] -Processor
+         (-) <input << $job
+         ( ) the input property should be in the input scope else compile error
+         (>) >! #Status.Failed
+   [ ] where is the exhaustive logic? not there? then compile Error
