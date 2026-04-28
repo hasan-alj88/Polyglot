@@ -56,7 +56,9 @@ stateDiagram-v2
 
 ### Declared
 
-A variable enters the Declared stage when it appears in a block without an assignment operator. It exists but holds no value. Pulling (reading) from a Declared variable is a compile error (PGE02002).
+A variable enters the Declared stage when it appears in a block without an assignment operator. It exists but holds no value. 
+- Variables MUST be declared with a datatype (e.g., `$var#type`) on their first appearance. A declaration without a datatype is a compile error (PGE02001).
+- Pulling (reading) from a Declared variable is a compile error (PGE02002).
 
 ### Default
 

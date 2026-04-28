@@ -5,6 +5,7 @@ pub mod lexical_structural;
 pub mod io_semantics;
 pub mod pipeline_semantics;
 pub mod algorithms;
+pub mod variable_state;
 
 pub trait Rule {
     fn validate(&self, ctx: &AnalysisContext, report: &mut ValidationReport);
@@ -23,5 +24,8 @@ pub fn get_all_rules() -> Vec<Box<dyn Rule>> {
 
         // Algorithm 4: Graph and Cycle Algorithms
         Box::new(algorithms::PipelineAlgorithms),
+
+        // Algorithm 5: Variable State Validation
+        Box::new(variable_state::VariableStateAlgorithm),
     ]
 }
