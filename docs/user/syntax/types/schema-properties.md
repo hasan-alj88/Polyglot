@@ -32,10 +32,8 @@ Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Proper
 | [[properties/Schema\|%##Schema]] | list of `##` | Structural schemas children must satisfy (AND-composed) |
 | [[properties/TerminalType\|%##TerminalType]] | type ref | Type all terminal branches must conform to (any depth — unlike `%###Type` which is scalar only). Mutually exclusive with `%###Type` (PGE11004) |
 | [[properties/Active\|%##Active]] | `#ActiveKind` | `#All` (every branch present) / `#One` (exactly one active) / `#Partial` (any non-zero subset) |
-| [[properties/Ordered\|%##Ordered]] | `#Boolean` | Insertion order preserved? |
-| [[properties/Sorted\|%##Sorted]] | `#Boolean` | Sorted by key? (order derived from key type: numeric, alphabetical, or declaration) |
 | [[properties/Gap\|%##Gap]] | `#Boolean` | Gaps allowed in keys? |
-| [[properties/Count\|%##Count]] | `#Bound` | Max children (`#Inf` = unlimited) |
+| [[properties/Count\|%##Count]] | `#Bound` | Max children (`#Inf` = unlimited. Note: bound natively by `usize::MAX`) |
 | `%##Count.Min` | `#uint` | Min children (0 if absent) |
 | [[properties/Propagate\|%##Propagate]] | `#Boolean` | Apply these properties recursively to all levels down to `%##Depth.Max` |
 | [[properties/Level\|%##Level.N]] | scope | Per-level override when `%##Propagate` is `#True` |
@@ -71,7 +69,7 @@ These properties describe the whole type tree, not individual branches:
 
 | Property | Type | Meaning |
 |----------|------|---------|
-| [[properties/Depth-Max\|%##Depth.Max]] | `#Bound` | Max tree depth (0, 1, N, `#Inf`) |
+| [[properties/Depth-Max\|%##Depth.Max]] | `#Bound` | Max tree depth (0, 1, N, `#Inf`. Note: bound natively by `usize::MAX`) |
 | [[properties/Alias\|%##Alias]] | `#NestedKeyString` | Lowercase shorthand name |
 
 ### %##Depth.Max -- Inference Model
@@ -191,13 +189,7 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
 
 `##Inf` adds an `.Inf` variant to a type. It is a schema, not a type -- compose it into `#` types that need an unbounded option (e.g., `#Bound`).
 
-### Structure Schemas
 
-```polyglot
-{#} ##Sorted
-   [#] %##Sorted << #True
-   [#] %##Ordered << #True
-```
 
 ### Classification Schemas
 
@@ -227,7 +219,6 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
    (#) <Dim##Dimension <~ "1D"
    [#] %##Depth.Max << <Dim
    [#] %##Fields << #Range
-   [#] %##Ordered << #True
    [#] %##Gap << #False
    [#] %##Propagate << #True
    [#] %###Type << <#ValueType
@@ -238,7 +229,6 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
    (#) <#CellType <~ #
    [#] %##Depth.Max << 2
    [#] %##Fields << #Range
-   [#] %##Ordered << #True
    [#] %##Gap << #False
    [#] %##Level.2 ##Record
       (#) <#Fields << <#Columns
@@ -263,7 +253,7 @@ A type composes multiple schemas to describe its full shape. User-defined schema
 |--------|-------------|--------|
 | `##Map` | `##Record` | Enum-keyed records replace sparse key-value maps |
 | `##Set` | `##Array` + `%###Unique << #True` | Sets are arrays with uniqueness constraint |
-| `##Contiguous` | `%##Gap << #False`, `%##Ordered << #True` | Properties stated directly |
+| `##Contiguous` | `%##Gap << #False` | Properties stated directly |
 | `##Rectangular` | `%##Propagate << #True`, `%##Count` | Properties stated directly |
 | `##Sparse` | `%##Gap << #True` | Property stated directly |
 | `##Deep` | `%##Depth.Max << #Inf` | Property stated directly |
