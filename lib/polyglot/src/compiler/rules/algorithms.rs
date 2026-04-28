@@ -2,10 +2,11 @@ use crate::compiler::error::{ValidationReport, ValidationError};
 use crate::compiler::utils::AnalysisContext;
 use super::Rule;
 
-pub struct CircularPipelineRule;
+pub struct PipelineAlgorithms;
 
-impl Rule for CircularPipelineRule {
+impl Rule for PipelineAlgorithms {
     fn validate(&self, ctx: &AnalysisContext, report: &mut ValidationReport) {
+        // PGE09013: Circular Pipeline
         let cycles = crate::compiler::algorithms::cycle_detection::detect_cycles(ctx.tokens);
         if !cycles.is_empty() {
             for cycle in cycles {

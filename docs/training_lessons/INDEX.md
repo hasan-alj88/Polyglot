@@ -22,3 +22,6 @@ Whenever a piece of code or lexer token stream is corrected, the specific lesson
 - [014: Aggregation Actions](file:///home/hhj/RustroverProjects/Polyglot/docs/training_lessons/014_aggregation_actions.md)
 - [015: Boolean Predicate Blocks](file:///home/hhj/RustroverProjects/Polyglot/docs/training_lessons/015_boolean_predicate_blocks.md)
 - [016: Input Fallbacks](file:///home/hhj/RustroverProjects/Polyglot/docs/training_lessons/016_input_fallbacks.md)
+- [017: Package and Connections](file:///home/hhj/RustroverProjects/Polyglot/docs/training_lessons/017_package_and_connections.md)
+- [018: IO Markers](file:///home/hhj/RustroverProjects/Polyglot/docs/training_lessons/018_io_markers.md)
+- [019: Error Blocks](file:///home/hhj/RustroverProjects/Polyglot/docs/training_lessons/019_error_blocks.md)
