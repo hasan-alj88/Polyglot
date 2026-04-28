@@ -1,4 +1,3 @@
-pub mod string;
 pub mod tree;
 pub mod datatype;
 pub mod schema;
@@ -6,7 +5,6 @@ pub mod schema;
 #[cfg(test)]
 mod tests;
 
-pub use string::PolyglotString;
-pub use tree::{PolyglotDataTree, PolyglotLeafData, PolyglotDataState};
+pub use tree::{PolyglotDataTree, PolyglotDataLeaf, PolyglotDataState, PolyglotLeafValue};
 pub use datatype::{ComparisonResult, DatatypeComparator};
 pub use schema::{PolyglotSchema, SchemaPropertyValue, ActiveKind, LeafKind};

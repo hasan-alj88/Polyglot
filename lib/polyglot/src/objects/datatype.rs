@@ -1,4 +1,4 @@
-use super::tree::{PolyglotDataTree, PolyglotDataState, PolyglotLeafData};
+use super::tree::{PolyglotDataTree, PolyglotDataState, PolyglotDataLeaf, PolyglotLeafValue};
 use std::collections::HashSet;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -15,7 +15,8 @@ impl DatatypeComparator {
     /// Evaluates if the `target` theoretical topology can match the `source` topology.
     pub fn is_compatible(target: &PolyglotDataTree, source: &PolyglotDataTree) -> ComparisonResult {
         // 1. Check if source is instantiated (Final or Default)
-        if source.state != PolyglotDataState::Final && source.state != PolyglotDataState::Default {
+        let source_state = source.state();
+        if source_state != PolyglotDataState::Final && source_state != PolyglotDataState::Default {
             return ComparisonResult::SourceNotInstantiated;
         }
 
@@ -43,33 +44,29 @@ impl DatatypeComparator {
         for key in target_keys {
             let target_leaf = target.nodes.get(key).unwrap();
             let source_leaf = source.nodes.get(key).unwrap();
+            
+            let t_val = match target_leaf {
+                PolyglotDataLeaf::Default(v) | PolyglotDataLeaf::Final(v) => Some(v),
+                _ => None, // It's Declared, Failed, or Released
+            };
+            
+            let s_val = match source_leaf {
+                PolyglotDataLeaf::Default(v) | PolyglotDataLeaf::Final(v) => Some(v),
+                _ => None,
+            };
 
-            match (target_leaf, source_leaf) {
-                (PolyglotLeafData::StringData(_), PolyglotLeafData::StringData(_)) => {
-                    // Topologies match (both are strings at this path)
-                }
-                (
-                    PolyglotLeafData::EnumSelector { valid_variants: target_vars, .. },
-                    PolyglotLeafData::EnumSelector { valid_variants: source_vars, .. }
-                ) => {
-                    // Enum topology: valid variants must match to be considered same topology
-                    let mut t_vars = target_vars.clone();
-                    let mut s_vars = source_vars.clone();
-                    t_vars.sort();
-                    s_vars.sort();
-
-                    if t_vars != s_vars {
+            // If target is Declared, it just structurally expects a value here.
+            // If both have concrete values, verify they are structurally similar.
+            if let (Some(t), Some(s)) = (t_val, s_val) {
+                match (t, s) {
+                    (PolyglotLeafValue::String { .. }, PolyglotLeafValue::String { .. }) => {},
+                    (PolyglotLeafValue::Enum, PolyglotLeafValue::Enum) => {},
+                    _ => {
                         return ComparisonResult::Mismatch(format!(
-                            "Enum topology mismatch at path '{}'. Target variants: {:?}, Source variants: {:?}",
-                            key, t_vars, s_vars
+                            "Leaf type mismatch at path '{}'. Target and source have different leaf data structures.",
+                            key
                         ));
                     }
-                }
-                _ => {
-                    return ComparisonResult::Mismatch(format!(
-                        "Leaf type mismatch at path '{}'. Target and source have different leaf data structures.",
-                        key
-                    ));
                 }
             }
         }

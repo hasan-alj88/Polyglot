@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::sync::Arc;
-use super::tree::PolyglotLeafData;
+use super::tree::{PolyglotDataLeaf, PolyglotLeafValue};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ActiveKind { All, One, Partial }
@@ -85,10 +85,58 @@ impl PolyglotSchema {
     }
 
     /// Central validation logic against a data tree instance
-    pub fn validate_tree(&self, _tree_nodes: &HashMap<String, PolyglotLeafData>) -> Result<(), String> {
+    pub fn validate_tree(&self, tree_nodes: &HashMap<String, PolyglotDataLeaf>) -> Result<(), String> {
         // Validation sweeps per property type based on the defined spec
-        // TODO: Implement full validation logic
+        
+        for (path, leaf) in tree_nodes {
+            let is_enum = match leaf {
+                PolyglotDataLeaf::Default(PolyglotLeafValue::Enum) |
+                PolyglotDataLeaf::Final(PolyglotLeafValue::Enum) => true,
+                _ => false,
+            };
+            
+            if is_enum {
+                // 1. Resolve the runtime path (e.g., "%#:Person:0.Role.Admin") 
+                //    back to its schema branch (e.g., "#Person.Role")
+                // TODO: Implement actual runtime-to-schema path resolution
+                let schema_branch = Self::resolve_to_schema_path_placeholder(path);
+                
+                // 2. Look up the %##Active property for this branch
+                let active_prop = self.get_property(&schema_branch, "##", "Active");
+                
+                // 3. Enforce the invariant: Enums MUST belong to an ActiveKind::One branch
+                match active_prop {
+                    Some(SchemaPropertyValue::Active(ActiveKind::One)) => {
+                        // Valid! This branch enforces exactly 1 active child.
+                    },
+                    Some(SchemaPropertyValue::Active(kind)) => {
+                        // INVALID! The schema allows Active > 1 (All or Partial)
+                        return Err(format!(
+                            "Validation Error: Path '{}' is an Enum variant, but its parent branch allows ActiveKind::{:?}. Enums require ActiveKind::One.", 
+                            path, kind
+                        ));
+                    },
+                    None => {
+                        // The spec says default %##Active is ActiveKind::All
+                        // So if it's missing, it defaults to All, which is invalid for Enums.
+                        return Err(format!(
+                            "Validation Error: Path '{}' is an Enum variant, but its parent branch has no %##Active property (defaults to All). Enums require ActiveKind::One.", 
+                            path
+                        ));
+                    }
+                    _ => {}
+                }
+            }
+        }
+        
         Ok(())
+    }
+
+    /// Placeholder for converting a runtime path like "%#:Person:0.Role.Admin" to "#Person.Role"
+    fn resolve_to_schema_path_placeholder(runtime_path: &str) -> String {
+        // Just a dummy implementation for now to make it compile.
+        // Needs real parsing logic to strip instances and terminal nodes.
+        runtime_path.to_string()
     }
 }
 

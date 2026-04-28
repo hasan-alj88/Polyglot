@@ -214,9 +214,19 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
    [#] %###Type << <#ValueType
    [#] %###Kind << #FieldKind.Value
 
+{#} ##Map
+   (#) <#KeyType <~ #
+   (#) <#ValueType <~ #
+   [#] ##Flat
+   [#] %##Fields << <#KeyType
+   [#] %##Active << #ActiveKind.All
+   [#] %###Type << <#ValueType
+   [#] %###Kind << #FieldKind.Value
+
 {#} ##Array
    (#) <#ValueType
-   (#) <Dim##Dimension <~ "1D"
+   (#) <Dim##Dimension <~ 1
+   (#) <Range##Range <~ #Inf
    [#] %##Depth.Max << <Dim
    [#] %##Fields << #Range
    [#] %##Gap << #False
@@ -224,18 +234,36 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
    [#] %###Type << <#ValueType
    [#] %###Kind << #FieldKind.Value
 
+{#} ##Set
+   (#) <#ValueType
+   [#] ##Array
+      (#) <#ValueType << <#ValueType
+   [#] %###Unique << #True
+
 {#} ##Dataframe
    (#) <#Columns << ##Enum
    (#) <#CellType <~ #
+   (#) <Rows##Range <~ #Inf
    [#] %##Depth.Max << 2
    [#] %##Fields << #Range
    [#] %##Gap << #False
    [#] %##Level.2 ##Record
       (#) <#Fields << <#Columns
       (#) <#ValueType << <#CellType
+
+{#} ##TimeSeries
+   (#) <#ValueType
+   [#] ##Map
+      (#) <#KeyType << #uint
+      (#) <#ValueType << <#ValueType
 ```
 
-`##Record` is enum-keyed: the compiler reads `%##Fields << #SomeEnum` and stamps one `:` child per variant. `##Array` is range-indexed: `%##Fields << #Range` means integer-indexed children. `##Dataframe` is two-level: L1 range-indexed rows, L2 `##Record` columns.
+- **`##Record`** is enum-keyed: the compiler reads `%##Fields << #SomeEnum` and stamps one `:` child per variant. Keys are static at compile-time.
+- **`##Map`** is dynamically keyed: `%##Fields << <#KeyType` allows runtime keys that conform to a type (like `#string`).
+- **`##Array`** is range-indexed: `%##Fields << #Range` means integer-indexed children, ordered contiguously.
+- **`##Set`** is a 1D `##Array` with `%###Unique << #True` structurally enforced.
+- **`##Dataframe`** is two-level: L1 range-indexed rows, L2 `##Record` columns.
+- **`##TimeSeries`** is a specialized `##Map` where the keys are strictly Epoch Time Unix Unsigned Integers (`#uint`), granting O(1) timestamp lookups.
 
 ### Other Parameterized Schemas
 
@@ -251,8 +279,6 @@ A type composes multiple schemas to describe its full shape. User-defined schema
 
 | Schema | Replacement | Reason |
 |--------|-------------|--------|
-| `##Map` | `##Record` | Enum-keyed records replace sparse key-value maps |
-| `##Set` | `##Array` + `%###Unique << #True` | Sets are arrays with uniqueness constraint |
 | `##Contiguous` | `%##Gap << #False` | Properties stated directly |
 | `##Rectangular` | `%##Propagate << #True`, `%##Count` | Properties stated directly |
 | `##Sparse` | `%##Gap << #True` | Property stated directly |

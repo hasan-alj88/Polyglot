@@ -1,78 +1,81 @@
 ---
 audience: automation-builder
 type: specification
-updated: 2026-04-09
+updated: 2026-04-28
 ---
 
 # Arrays
 
 <!-- @syntax/types/INDEX -->
 
-## Alias
+In Polyglot, arrays are not defined inline. All arrays must be explicitly defined as a structural data tree using the `##Array` schema bundle inside a `{#}` type definition.
 
-`#array` is a lowercase alias for `#Array`, following the same convention as `#int`/`#Int` and `#string`/`#String`. In type annotations, use lowercase `#array`; in prose or definition references, use PascalCase `#Array`. The alias is registered via `%##Alias` in the `#Array` generic type definition (see [[pglib/types/collections|Collection Types]]).
+## Defining an Array Type
 
-## Element-Typed Arrays
+To create an array type, define a `{#}` block, assign the `##Array` schema, and parameterize it using the `(#)` input block:
 
-Arrays specify their element type using `:` (flexible field) notation, and are initialized via **Vertical Block Expansion** using the `(#)` Data IO bracket. This reflects that array elements are data inputs binding to the array sequence.
+```polyglot
+{#} #StringList
+   [#] ##Array
+      (#) <#ValueType << #string
+
+{#} #ScoreMatrix
+   [#] ##Array
+      (#) <#ValueType << #int
+      (#) <Dimension#uint << 2
+```
+
+### Schema Parameters
+
+The `##Array` schema accepts the following parameters:
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `<#ValueType` | Type Ref | *(Required)* | The type of data contained in the array's leaves. |
+| `<Dimension#uint` | `#uint` | `1` | The number of dimensions (e.g., `1` for list, `2` for matrix). |
+| `<Range#uint` | `#uint` | `#Inf` | The maximum number of elements allowed per dimension. |
+
+## Initializing Arrays
+
+Once defined, you use your custom array type to type variables and initialize them via **Vertical Block Expansion** using the `(#)` Data IO bracket. 
 
 ### Auto-Incrementing Append
-For a standard sequence, assign `#Array.<Type>` and push elements sequentially using `(#) <<`. The compiler automatically assigns the next `#Range` index (`:0`, `:1`, ...).
+Push elements sequentially using `(#) <<`. The compiler automatically assigns the next `#Range` index (`:0`, `:1`, ...).
+
 ```polyglot
-[-] $names#array:string << #Array.String
+[-] $names#StringList << {}
    (#) << "Alice"
    (#) << "Bob"
 ```
 
 ### Explicit Indexing
 You can specify the `#Range` index explicitly on the `(#)` bracket:
-```polyglot
-[-] $scores#array:int << #Array.Int
-   (#) :0 << 95
-   (#) :1 << 82
-```
-**Important**: `#Array` is structurally defined as a *contiguous* sequence. Specifying explicit sparse indices (e.g. jumping from `:1` to `:10`) will cause a compilation error. Sparse arrays require a different underlying schema.
-
-### Empty Arrays
-To declare an empty array efficiently, use the constructor format `$` rather than opening a block:
-```polyglot
-[-] $files#array:path <~ $Array.Path""
-[-] $names#array:string <~ $Array.String"Empty"
-```
-
-## Multidimensional Arrays
-
-Arrays support a dimension specifier using an `<N>D` suffix. Omitting the dimension defaults to 1D:
 
 ```polyglot
-(-) <items#array:string              [ ] 1D array (default)
-(-) <matrix#array:float:2D           [ ] 2D matrix of floats
-(-) <cube#array:int:3D               [ ] 3D cube of ints
-(-) <hyper#array:float:4D            [ ] 4D hypercube of floats
+[-] $scores#ScoreMatrix << {}
+   (#) :0<0 << 95
+   (#) :0<1 << 82
+   (#) :1<0 << 77
 ```
 
-Element access uses `<` (the tree child accessor) with integer indices. The number of indices must match the declared dimension count:
+**Important**: `##Array` is structurally defined as a *contiguous* sequence (`%##Gap << #False`). Specifying explicit sparse indices (e.g. jumping from `:1` to `:10`) will cause a compilation error. If you need dynamic or sparse keys, use the `##Map` schema instead.
+
+## Element Access
+
+Element access uses `<` (the tree child accessor) with integer indices. The number of indices must match the declared `<Dimension#uint` count:
 
 ```polyglot
-[-] $val << $items<0                 [ ] 1 index for 1D
-[-] $val << $matrix<0<1              [ ] 2 indices for :2D
-[-] $val << $cube<2<3<0              [ ] 3 indices for :3D
+[-] $val << $names<0                 [ ] 1 index for 1D Array
+[-] $val << $scores<0<1              [ ] 2 indices for 2D Matrix
 ```
 
-`:ND` in the type annotation is a declaration-time dimension specifier (using `:` as a flexible schema field). `<` is the runtime tree child accessor used for element access. Declaration and access use different separators because `:` marks flexible schema fields while `<` navigates tree children — this follows the same pattern as all Polyglot data access (see [[concepts/data-is-trees]]).
+The compiler strictly enforces access depth — providing too many or too few indices compared to the array's declared `<Dimension` triggers PGE04017.
 
-A `0D` array is a scalar container — it holds exactly one element with no indexing. Access is direct (no `<N` index):
+## Deprecation Notice
 
-```polyglot
-[-] $scalar#array:int:0D <~ $Array.Int"42"
-[-] $val#int << $scalar              [ ] direct access — no index
-[-] $bad << $scalar<0                [ ] ✗ PGE04017 — no indices on 0D
-```
-
-The compiler enforces access depth — too many or too few indices triggers PGE04017. Nested array types (`#array:#array:X`) remain banned (PGE04013) — use `:ND` instead.
+The legacy inline array syntax (e.g., `#array:string:2D`) has been permanently removed from Polyglot. All sequences must be formally declared as `{#}` data types to ensure consistent structural tree metadata across the project.
 
 ## See Also
 
 - [[syntax/types/INDEX|Type System Overview]] — ground truths and type annotation rules
-- [[concepts/collections/array|#Array Collection]] -- generic type, cartesian keys, and collection access
-- [[syntax/types/schema-properties|Schema Properties]] — `%##Depth.Max` and dimensional constraints
+- [[syntax/types/schema-properties|Schema Properties]] — The underlying `%##` properties that `##Array` configures

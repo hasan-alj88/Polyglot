@@ -4,20 +4,20 @@ use std::sync::Arc;
 #[test]
 fn test_polyglot_string_validation() {
     // Empty regex (#RawString case)
-    let raw = PolyglotString::new("any value here", "");
-    assert!(raw.validate());
+    let raw = PolyglotLeafValue::new_string("any value here", "");
+    assert!(raw.is_ok());
 
     // Valid numeric regex
-    let num_valid = PolyglotString::new("123", "^[0-9]+$");
-    assert!(num_valid.validate());
+    let num_valid = PolyglotLeafValue::new_string("123", "^[0-9]+$");
+    assert!(num_valid.is_ok());
 
     // Invalid numeric regex match
-    let num_invalid = PolyglotString::new("abc", "^[0-9]+$");
-    assert!(!num_invalid.validate());
+    let num_invalid = PolyglotLeafValue::new_string("abc", "^[0-9]+$");
+    assert!(num_invalid.is_err());
 
     // Invalid regex syntax fails safely
-    let bad_regex = PolyglotString::new("abc", "[0-9");
-    assert!(!bad_regex.validate());
+    let bad_regex = PolyglotLeafValue::new_string("abc", "[0-9");
+    assert!(bad_regex.is_err());
 }
 
 #[test]
@@ -25,34 +25,41 @@ fn test_datatype_comparator_state_check() {
     let mut t1 = PolyglotDataTree::new(PolyglotDataState::Declared, Arc::new(PolyglotSchema::new()));
     let mut t2 = PolyglotDataTree::new(PolyglotDataState::Declared, Arc::new(PolyglotSchema::new()));
 
+    // Empty tree is Declared state
+    assert_eq!(t2.state(), PolyglotDataState::Declared);
+
     // If source (t2) is not Final or Default, it should return SourceNotInstantiated
     let res = DatatypeComparator::is_compatible(&t1, &t2);
     assert_eq!(res, ComparisonResult::SourceNotInstantiated);
 
-    // If we make source Final, it should check topology
-    t2.state = PolyglotDataState::Final;
+    // If we make source Final by adding a final leaf, it should check topology
+    t2.nodes.insert("some_path".to_string(), PolyglotDataLeaf::Final(PolyglotLeafValue::new_string_unchecked("a", "")));
+    // We must also match target topology for a match!
+    t1.nodes.insert("some_path".to_string(), PolyglotDataLeaf::Final(PolyglotLeafValue::new_string_unchecked("a", "")));
+    
     let res2 = DatatypeComparator::is_compatible(&t1, &t2);
-    assert_eq!(res2, ComparisonResult::Match); // Empty trees match
+    assert_eq!(res2, ComparisonResult::Match);
 }
 
 #[test]
 fn test_datatype_comparator_topology() {
     let mut target = PolyglotDataTree::new(PolyglotDataState::Declared, Arc::new(PolyglotSchema::new()));
-    let mut source = PolyglotDataTree::new(PolyglotDataState::Final, Arc::new(PolyglotSchema::new()));
+    let mut source = PolyglotDataTree::new(PolyglotDataState::Declared, Arc::new(PolyglotSchema::new()));
 
     target.nodes.insert(
         "#Person.Name".to_string(), 
-        PolyglotLeafData::StringData(PolyglotString::new("Alice", ""))
+        PolyglotDataLeaf::Final(PolyglotLeafValue::new_string_unchecked("Alice", ""))
     );
     
     // Mismatch because source is empty
     let res1 = DatatypeComparator::is_compatible(&target, &source);
-    assert!(matches!(res1, ComparisonResult::Mismatch(_)));
+    // SourceNotInstantiated because empty tree is Declared
+    assert_eq!(res1, ComparisonResult::SourceNotInstantiated);
 
     // Make source topology match
     source.nodes.insert(
         "#Person.Name".to_string(), 
-        PolyglotLeafData::StringData(PolyglotString::new("Bob", ""))
+        PolyglotDataLeaf::Final(PolyglotLeafValue::new_string_unchecked("Bob", ""))
     );
     let res2 = DatatypeComparator::is_compatible(&target, &source);
     assert_eq!(res2, ComparisonResult::Match);
@@ -60,10 +67,7 @@ fn test_datatype_comparator_topology() {
     // Add enum to target but not source
     target.nodes.insert(
         "#Person.Role".to_string(),
-        PolyglotLeafData::EnumSelector { 
-            valid_variants: vec!["Admin".to_string(), "User".to_string()],
-            active_variant: None 
-        }
+        PolyglotDataLeaf::Final(PolyglotLeafValue::Enum)
     );
     let res3 = DatatypeComparator::is_compatible(&target, &source);
     assert!(matches!(res3, ComparisonResult::Mismatch(_)));
@@ -71,10 +75,7 @@ fn test_datatype_comparator_topology() {
     // Add matching enum to source
     source.nodes.insert(
         "#Person.Role".to_string(),
-        PolyglotLeafData::EnumSelector { 
-            valid_variants: vec!["Admin".to_string(), "User".to_string()],
-            active_variant: Some("User".to_string()) 
-        }
+        PolyglotDataLeaf::Final(PolyglotLeafValue::Enum)
     );
     let res4 = DatatypeComparator::is_compatible(&target, &source);
     assert_eq!(res4, ComparisonResult::Match);
@@ -91,7 +92,7 @@ fn test_datatype_comparator_topology() {
 #[test]
 fn test_generate_array_1d() {
     let mut tree = PolyglotDataTree::new(PolyglotDataState::Declared, Arc::new(PolyglotSchema::new()));
-    tree.generate_array("#MyArray", 1, 3);
+    tree.generate_array("#MyArray", 1, 3, "#string");
     
     assert_eq!(tree.nodes.len(), 3);
     assert!(tree.nodes.contains_key("#MyArray:0"));
@@ -102,7 +103,7 @@ fn test_generate_array_1d() {
 #[test]
 fn test_generate_array_2d() {
     let mut tree = PolyglotDataTree::new(PolyglotDataState::Declared, Arc::new(PolyglotSchema::new()));
-    tree.generate_array("#Matrix", 2, 2);
+    tree.generate_array("#Matrix", 2, 2, "#string");
     
     // 2 dimensions, range 2 -> 2x2 = 4 elements
     assert_eq!(tree.nodes.len(), 4);
@@ -116,7 +117,7 @@ fn test_generate_array_2d() {
 fn test_generate_record() {
     let mut tree = PolyglotDataTree::new(PolyglotDataState::Declared, Arc::new(PolyglotSchema::new()));
     let fields = vec!["Name".to_string(), "Age".to_string(), "Role".to_string()];
-    tree.generate_record("#Person", &fields);
+    tree.generate_record("#Person", &fields, "#string");
     
     assert_eq!(tree.nodes.len(), 3);
     assert!(tree.nodes.contains_key("#Person:Name"));
