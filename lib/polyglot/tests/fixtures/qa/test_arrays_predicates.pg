@@ -23,6 +23,7 @@
    [ ]   
    [ ] Test 1D array assignment with auto-increment
    [ ] Array of what? 
+   [ ]
    [-] $items#array:string << #Array.String
       (#) << "alpha"
       (#) << "beta"

@@ -24,5 +24,6 @@ A pipeline with no `_` IO declarations is **pure computation** — it can transf
    [Q] -Q.Default
    [W] -W.Polyglot
    [ ] no permission IO — this pipeline cannot do IO
+   [ ]
    [-] $result#int << -Math.Add $a $b
 ```

@@ -30,6 +30,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
 
+   [ ]
    [-] $t << $DT"Today"
 ```
 
@@ -41,6 +42,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
 
+   [ ]
    [-] $x << $Foo"bar"
 ```
 

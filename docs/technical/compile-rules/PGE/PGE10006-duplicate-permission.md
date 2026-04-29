@@ -48,6 +48,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << _FileHandler
       (-) >content >> $content
@@ -80,6 +81,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << _AppLogRead
       (-) >content >> $content
@@ -107,6 +109,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << _ReadGrant
       (-) >content >> $content
@@ -131,6 +134,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] $data << -File.Text.Read >> "/var/log/app.log"
 ```
 

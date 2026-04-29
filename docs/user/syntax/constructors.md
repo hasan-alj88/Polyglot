@@ -174,6 +174,7 @@ Constructors are invoked with `[-]` assignment, using `$Constructor"literal"` as
    [W] -W.Polyglot
 
    [ ] constructor — no error handling needed
+   [ ]
    [-] $reportDate << $DT"2026-04-21"
 
    [ ] constructor chain — interpolation from constructor source

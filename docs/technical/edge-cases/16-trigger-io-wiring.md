@@ -22,6 +22,7 @@ updated: 2026-03-30
       (-) >NewFiles >> <NewFiles
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] $count#int << 0
 ```
 
@@ -38,6 +39,7 @@ updated: 2026-03-30
       (-) >headers >> <headers
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] $type#string << $payload:eventType
 ```
 
@@ -54,5 +56,6 @@ updated: 2026-03-30
    [Q] -Q.Default
    [W] -W.Polyglot
    [ ] $options uses default {}; $file comes from trigger
+   [ ]
    [-] $name#string << "{$file}"
 ```

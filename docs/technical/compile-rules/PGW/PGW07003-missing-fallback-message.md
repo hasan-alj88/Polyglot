@@ -32,6 +32,7 @@ severity: warning
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [?] $name =? ""
       [!] >> !Validation.Empty
          (!) .Message << "Name is required"
@@ -51,6 +52,7 @@ severity: warning
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [?] $name =? ""
       [!] >> !Validation.Empty
          (!) .Message << "Name is required"
@@ -70,6 +72,7 @@ severity: warning
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [?] $name =? ""
       [!] >> !Validation.Empty
          (!) .Message << "Name is required"

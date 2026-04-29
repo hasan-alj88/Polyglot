@@ -26,6 +26,7 @@ severity: error
    [W] -W.Polyglot
    (-) <data#string
    (-) >data#string
+   [ ]
    [-] >data << $data
 
 [ ] ✓ <data and >data share a base name but differ in direction — allowed
@@ -39,6 +40,7 @@ severity: error
    (-) <person.name#string
    (-) <person.age#int
    (-) >result#string
+   [ ]
    [-] >result << "{$person.name} is {$person.age}"
 
 [ ] ✓ <person.name and <person.age are distinct serialized identifiers — allowed
@@ -53,6 +55,7 @@ severity: error
    (-) <data#string
    (-) <data#int                               [ ] ✗ PGE01011 — <data declared twice
    (-) >result#string
+   [ ]
    [-] >result << $data
 ```
 
@@ -64,6 +67,7 @@ severity: error
    (-) <input#string
    (-) >output#string
    (-) >output#int                             [ ] ✗ PGE01011 — >output declared twice
+   [ ]
    [-] >output << $input
 ```
 

@@ -39,6 +39,7 @@ If the source is non-failable, PGW07004 fires.
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -54,6 +55,7 @@ If the source is non-failable, PGW07004 fires.
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -70,6 +72,7 @@ If the source is non-failable, PGW07004 fires.
    [W] -W.Polyglot
    (-) <path#string
    (-) >result#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $text
@@ -89,6 +92,7 @@ If the source is non-failable, PGW07004 fires.
    [W] -W.Polyglot
    (-) <input#string
    (-) >result#string
+   [ ]
    [-] -Format
       (-) <text << $input
       (-) >formatted >> $out
@@ -103,6 +107,7 @@ If the source is non-failable, PGW07004 fires.
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >result#string
+   [ ]
    [-] -Process
       (-) <data << "hello"
          (>) !> "fallback"                   [ ] ⚠ PGW07004 — source is a literal, cannot fail
@@ -117,6 +122,7 @@ If the source is non-failable, PGW07004 fires.
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >greeting#string
+   [ ]
    [-] $name << "Alice"
    [-] -Greet
       (-) <name << $name

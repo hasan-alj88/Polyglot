@@ -213,14 +213,19 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
 ```polyglot
 { } Execute Python code
 [W] -W.Env.Python:3:14
+[ ]
 [-] [C]
    import pandas as pd
    df = pd.read_csv(input_path)
    result = df.describe().to_dict()
 
-{ } Execute a compiled Rust binary
-[W] -W.Polyglot
-[-] -Env.CLI"./target/release/my_tool --input {$path}"
+ { } Execute a compiled Rust binary
+ [W] -W.Polyglot
+ [ ]
+ [-] -Run.Rust.CLI
+    (-) <binary#path << -Path"./target/release/my_tool"
+    (-) <arg#Record
+       [.] .input#string << "{$path}"
 ```
 
 ## Syntax At a Glance

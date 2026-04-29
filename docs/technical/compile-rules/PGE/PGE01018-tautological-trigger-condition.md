@@ -30,6 +30,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >result#string
+   [ ]
    [-] >result << "processed"
 ```
 
@@ -42,6 +43,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] >out << "triggered"
 ```
 
@@ -54,6 +56,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] >out << "unreachable"
 [ ] -T.Daily"3AM" AND -T.Daily"5PM" — never co-fire, always False
 ```
@@ -67,6 +70,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] >out << "unreachable"
 [ ] A ⊕ A = False for all values of A
 ```

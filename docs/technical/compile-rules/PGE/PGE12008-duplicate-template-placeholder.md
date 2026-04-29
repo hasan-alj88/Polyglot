@@ -30,6 +30,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >full << "{$first} {$last}"
 ```
 
@@ -43,6 +44,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >out << "{$name}-{$name}"
 ```
 

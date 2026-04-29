@@ -20,6 +20,7 @@ updated: 2026-03-30
    [T] -T.Call
    [W] -W.Polyglot
 
+   [ ]
    [-] =ForEach.Array
    (=) <Array << $items
    (=) >item >> $item

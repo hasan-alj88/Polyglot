@@ -33,6 +33,7 @@ severity: error
    (-) <data#string
    (-) >result#string
    (-) >count#int
+   [ ]
    [-] >result << $data
    [-] >count << 1
 
@@ -41,6 +42,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -Process
       (-) <data << "hello"
       (-) >result >> $res                  [ ] ✓ captured
@@ -55,6 +57,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -Process
       (-) <data << "hello"
       (-) >result >> >out
@@ -68,6 +71,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) <data#string
+   [ ]
    [b] -Logger                             [ ] ✓ [b] exempt — outputs not required
       (-) <message << $data
 ```
@@ -80,6 +84,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -Process
       (-) <data << "hello"
       (-) >result >> >out
@@ -93,6 +98,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [=] -Process
       (-) <data << "hello"
       (-) >result >> $res

@@ -24,6 +24,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -DoWork
 ```
 
@@ -36,6 +37,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Assign"WorkQueue"
    [W] -W.Polyglot
+   [ ]
    [-] -DoWork
 ```
 
@@ -46,6 +48,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Assign"GPUQueue"
    [W] -W.Polyglot
+   [ ]
    [-] -DoWork
 ```
 

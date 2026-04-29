@@ -37,6 +37,7 @@ updated: 2026-03-30
    [W] -W.Polyglot
 
    [ ] Parallel provisioning — all three fire at once
+   [ ]
    [=] @AD-Account.Create
       (-) <name << $hire.name
       (-) <email << $hire.email
@@ -104,6 +105,7 @@ updated: 2026-03-30
    [W] -W.Polyglot
 
    [ ] High risk: score > 80 AND (not verified OR flags > 2)
+   [ ]
    [?] $score >? 80
    [&] $verified =!? #Boolean.True
       [-] >tier << "high"
@@ -159,6 +161,7 @@ updated: 2026-03-30
    [W] -W.Polyglot
 
    [ ] Fire three search engines in parallel
+   [ ]
    [=] -Search.Engine.Fast
       (-) <q << $query
       (-) >result >> $fast
@@ -207,6 +210,7 @@ updated: 2026-03-30
       (-) $dbConn >> $dbConn
 
    [ ] Wave 1: fetch metadata for the batch in parallel
+   [ ]
    [=] -Batch.FetchMetadata
       (-) <conn << $dbConn
       (-) <items << $items
@@ -268,6 +272,7 @@ updated: 2026-03-30
    [W] -W.Polyglot
 
    [ ] Outer expand — one mini-pipeline per category
+   [ ]
    [=] =ForEach.Array
       (=) <Array << $categories
       (=) >item >> $category
@@ -334,6 +339,7 @@ updated: 2026-03-30
       (-) $spanId >> $spanId
 
    [ ] $spanId and $parseDuration from wrapper outputs
+   [ ]
    [-] -JSON.Parse
       (-) <input << $raw
       (-) >parsed >> >invoice

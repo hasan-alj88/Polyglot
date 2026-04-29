@@ -124,6 +124,7 @@
 
   // Nested scope for complex logic
   [~]
+    [ ]
     [?] .value >? 100
       [r] .category << "high"
     [X]

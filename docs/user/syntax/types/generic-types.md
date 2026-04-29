@@ -160,6 +160,7 @@ The `<#` syntax extends from `{#}` generic type inputs to `{-}` pipeline IO decl
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -#.Validate
       (-) <data << $data
       (-) <#type << <#type

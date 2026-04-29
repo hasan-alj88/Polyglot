@@ -29,6 +29,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >output#string
+   [ ]
    [-] -Transform
       (-) <data << $input
       (-) >result >> $cleaned
@@ -43,6 +44,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] -Worker
       (-) <data << $input                     [ ] ✓ (-) wires IO on -Worker
       (-) >result >> >out                     [ ] ✓ (-) wires IO on -Worker
@@ -68,6 +70,7 @@ severity: error
    [W] -W.Polyglot
    (-) <data#string
    (-) >output#string
+   [ ]
    [?] $data =? "ok"
       (-) >output << $data                    [ ] ✗ PGE01017 — should be [-]
    [?] *?

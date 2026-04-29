@@ -29,6 +29,7 @@ severity: error
    [W] -W.Polyglot
    (-) <score#int
    (-) >label#string
+   [ ]
    [?] $score
       [?] ?[0,59]
          [-] >label << "fail"
@@ -46,6 +47,7 @@ severity: error
    [W] -W.Polyglot
    (-) <count#int
    (-) >out#string
+   [ ]
    [?] $count
       [?] ?[5,5]                        [ ] ✓ matches exactly 5
          [-] >out << "five"
@@ -61,6 +63,7 @@ severity: error
    [W] -W.Polyglot
    (-) <temp#float
    (-) >out#string
+   [ ]
    [?] $temp
       [?] ?(0.0,100.0)
          [-] >out << "in range"
@@ -77,6 +80,7 @@ severity: error
    [W] -W.Polyglot
    (-) <score#int
    (-) >out#string
+   [ ]
    [?] $score
       [?] ?[100,0]                      [ ] ✗ PGE04013 — lo (100) > hi (0)
          [-] >out << "impossible"
@@ -92,6 +96,7 @@ severity: error
    [W] -W.Polyglot
    (-) <temp#float
    (-) >out#string
+   [ ]
    [?] $temp
       [?] ?(5.0,5.0)                   [ ] ✗ PGE04013 — lo (5.0) >= hi (5.0) for exclusive
          [-] >out << "impossible"
@@ -107,6 +112,7 @@ severity: error
    [W] -W.Polyglot
    (-) <value#int
    (-) >out#string
+   [ ]
    [?] $value
       [?] ?[10,3)                       [ ] ✗ PGE04013 — lo (10) > hi (3)
          [-] >out << "impossible"

@@ -31,6 +31,7 @@ severity: error
    (-) <denominator#int
       (<) %constraint#array:RawString << {"0"}
    (-) >result#float
+   [ ]
    [-] >result << $numerator / $denominator
 ```
 

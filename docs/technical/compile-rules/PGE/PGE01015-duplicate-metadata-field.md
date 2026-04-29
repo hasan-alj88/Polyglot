@@ -32,6 +32,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] >out << "done"
 ```
 
@@ -46,6 +47,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] >out << "done"
 ```
 
@@ -70,6 +72,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] >out << "done"
 ```
 
@@ -82,6 +85,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] >out << "done"
 ```
 

@@ -31,7 +31,7 @@ Call a named function in inline foreign code.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `<env` | `#<Lang>Env` | Runtime environment from `-W.RT` |
+| `<env` | `#<Lang>Env` | Runtime environment from `-W.Env` |
 | `<func` | `#string` | Function name (compiler-validated against `[C]` block) |
 | `<arg` | `#array.string` | Positional arguments |
 | `<kwarg` | `#map:string:string` | Keyword arguments (optional) |
@@ -69,9 +69,10 @@ The compiler validates that the `<func` name exists as a function definition in 
    (-) >stats#serial
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.RT:Python:3:14
+   [W] -W.Env:Python:3:14
       (-) >RTpy#PyEnv >> $pyenv
 
+   [ ]
    [-] -RT.Python.Function.Inline
       (-) <env#PyEnv << $pyenv
       (-) <func#string << "calculate"

@@ -29,6 +29,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] @utils-Validate                    [ ] ✓ @utils resolves (PGE09001), -Validate found in package (PGE09004)
       (-) <input#string << $data
       (-) >result#string >> $validated
@@ -44,6 +45,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] @utils-NonExistent                 [ ] ✗ PGE09004 — no {-} -NonExistent in @Local:999.Utilities:v1.0.0
       (-) <input#string << $data
 ```
@@ -57,6 +59,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] @utils-Validte                     [ ] ✗ PGE09004 — typo: -Validte not found (did you mean -Validate?)
       (-) <input#string << $data
 ```
@@ -70,6 +73,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] @utils-OldPipeline                 [ ] ✗ PGE09004 — -OldPipeline no longer exists in @Local:999.Utilities:v1.0.0
       (-) <input#string << $data
 ```

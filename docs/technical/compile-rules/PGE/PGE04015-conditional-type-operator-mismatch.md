@@ -114,6 +114,7 @@ severity: error
    [W] -W.Polyglot
    (-) <score#int
    (-) >label#string
+   [ ]
    [?] $score
       [?] ?[0,59]
          [-] >label << "fail"
@@ -131,6 +132,7 @@ severity: error
    [W] -W.Polyglot
    (-) <status#Status
    (-) >action#string
+   [ ]
    [?] $status
       [?] =? .Active
          [-] >action << "proceed"
@@ -148,6 +150,7 @@ severity: error
    [W] -W.Polyglot
    (-) <temp#int
    (-) >alert#string
+   [ ]
    [?] $temp
       [?] ?[0.0,36.9]
          [-] >alert << "hypothermia"
@@ -166,6 +169,7 @@ severity: error
    [W] -W.Polyglot
    (-) <name#string
    (-) >out#string
+   [ ]
    [?] $name
       [?] ?[1,10]                       [ ] ✗ PGE04015 — range requires numeric
          [-] >out << "short"
@@ -181,6 +185,7 @@ severity: error
    [W] -W.Polyglot
    (-) <count#int
    (-) >out#string
+   [ ]
    [?] $count
       [?] =? .Active                   [ ] ✗ PGE04015 — enum match requires enum type
          [-] >out << "yes"
@@ -196,6 +201,7 @@ severity: error
    [W] -W.Polyglot
    (-) <count#int
    (-) >out#string
+   [ ]
    [?] $count
       [?] =? "five"                    [ ] ✗ PGE04015 — string operand on int subject
          [-] >out << "matched"

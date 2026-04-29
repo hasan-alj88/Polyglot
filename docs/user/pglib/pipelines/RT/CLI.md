@@ -9,7 +9,7 @@ metadata_instance: "%-:RT.<Lang>.CLI:N"
 
 # -RT.\<Lang\>.CLI
 
-Invoke a compiled binary. No language runtime needed — uses `-W.Polyglot`, not `-W.RT`. No `<env` parameter.
+Invoke a compiled binary. No language runtime needed — uses `-W.Polyglot`, not `-W.Env`. No `<env` parameter.
 
 ## Definition
 
@@ -40,7 +40,7 @@ Invoke a compiled binary. No language runtime needed — uses `-W.Polyglot`, not
 
 ## Notes
 
-Uses `-W.Polyglot`, not `-W.RT` — no language runtime needed for compiled binaries.
+Uses `-W.Polyglot`, not `-W.Env` — no language runtime needed for compiled binaries.
 
 ## Example
 
@@ -64,6 +64,7 @@ Uses `-W.Polyglot`, not `-W.RT` — no language runtime needed for compiled bina
    [Q] -Q.Default
    [W] -W.Polyglot
 
+   [ ]
    [-] -RT.Rust.CLI
       (-) <binary#path << -Path"/usr/local/bin/mytool"
       (-) <arg#array.string << ["{$inputPath}"]

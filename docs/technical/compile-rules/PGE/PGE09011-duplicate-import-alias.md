@@ -30,6 +30,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] @utils-Validate
       (-) <input#string << $data
    [-] @auth-CheckToken
@@ -47,6 +48,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] @utils-Validate                          [ ] ambiguous — which @utils?
       (-) <input#string << $data
 ```

@@ -29,6 +29,7 @@ severity: error
    (-) <input#string
    (-) >main#string
    (-) >log#string
+   [ ]
    [-] >main << $input                         [ ] >main is Final
    [ ] ✓ reachable — >log is still open
    [-] -Format
@@ -46,6 +47,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >result#string
+   [ ]
    [-] >result << $input                       [ ] >result is now Final
    [-] -Log                                    [ ] ✗ PGE02009 — unreachable
       (-) <msg << "this never runs"
@@ -59,6 +61,7 @@ severity: error
    [W] -W.Polyglot
    (-) <data#string
    (-) >output#string
+   [ ]
    [?] $data =? "ok"
       [-] >output << $data
    [?] *?
@@ -77,6 +80,7 @@ severity: error
    (-) <input#string
    (-) >main#string
    (-) >log#string
+   [ ]
    [-] >main << $input                         [ ] >main is Final
    [-] >log << "done"                          [ ] >log is Final
    [ ] all output ports are now Final
@@ -95,6 +99,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >result#string
+   [ ]
    [-] >result << $input                       [ ] >result is Final
    [ ] ✓ no dead code — cleanup handles post-finalization work
    [/] cleanup

@@ -32,6 +32,7 @@ severity: error
       [Q] -Q.Pause.Soft
          (-) <CPU.MoreThan#float << 90.0
    [W] -W.Polyglot
+   [ ]
    [-] -DoWork
 ```
 
@@ -46,6 +47,7 @@ severity: error
    [Q] -Q.Assign"BatchQueue"
       (-) <maxInstances#int << 5
    [W] -W.Polyglot
+   [ ]
    [-] -DoWork
 ```
 

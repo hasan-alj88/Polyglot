@@ -27,6 +27,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >result#string
+   [ ]
    [-] -Transform
       (-) <data << "raw"
       (-) >clean >> $cleaned
@@ -62,6 +63,7 @@ severity: error
    [W] -W.Polyglot
    (-) <data#string
    (-) >result#string
+   [ ]
    [-] -Recurse                         [ ] ✗ PGE09013 — calls itself
       (-) <data << $data
       (-) >result >> >result
@@ -75,6 +77,7 @@ severity: error
    [W] -W.Polyglot
    (-) <msg#string
    (-) >out#string
+   [ ]
    [-] -Pong                            [ ] ✗ PGE09013 — Ping→Pong→Ping
       (-) <msg << $msg
       (-) >out >> >out
@@ -85,6 +88,7 @@ severity: error
    [W] -W.Polyglot
    (-) <msg#string
    (-) >out#string
+   [ ]
    [-] -Ping
       (-) <msg << $msg
       (-) >out >> >out
@@ -98,6 +102,7 @@ severity: error
    [W] -W.Polyglot
    (-) <in#string
    (-) >out#string
+   [ ]
    [-] -StepB
       (-) <in << $in
       (-) >out >> >out
@@ -108,6 +113,7 @@ severity: error
    [W] -W.Polyglot
    (-) <in#string
    (-) >out#string
+   [ ]
    [-] -StepC
       (-) <in << $in
       (-) >out >> >out
@@ -118,6 +124,7 @@ severity: error
    [W] -W.Polyglot
    (-) <in#string
    (-) >out#string
+   [ ]
    [-] -StepA                           [ ] ✗ PGE09013 — StepA→StepB→StepC→StepA
       (-) <in << $in
       (-) >out >> >out

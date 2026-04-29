@@ -29,6 +29,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >message << "Hello {$name}"
 ```
 
@@ -42,6 +43,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >message << "Hello {$name}"
 ```
 

@@ -48,6 +48,7 @@ error[PGE14011]: constructor interpolation requires constructor-sourced variable
    [Q] -Q.Default
    [W] -W.Polyglot
 
+   [ ]
    [-] $basePath << $Path"/reports"
    [-] $fullPath << $Path"{$basePath}/daily"
 ```
@@ -61,6 +62,7 @@ error[PGE14011]: constructor interpolation requires constructor-sourced variable
    [Q] -Q.Default
    [W] -W.Polyglot
 
+   [ ]
    [-] $parsed << $Path"{$userInput}"
 ```
 

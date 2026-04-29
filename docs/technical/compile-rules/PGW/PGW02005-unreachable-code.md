@@ -28,6 +28,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >output#string
+   [ ]
    [?] $input =? "fast"
       [-] -ProcessFast
          (-) <data << $input
@@ -51,6 +52,7 @@ severity: warning
    (-) <input#string
    (-) >main#string
    (-) >log#string
+   [ ]
    [-] >main << $input                          [ ] >main is Final
    [ ] ✓ reachable — >log is still open
    [-] -Format
@@ -67,6 +69,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >result#string
+   [ ]
    [-] >result << $input                        [ ] >result is now Final
    [-] -Log                                    [ ] ⚠ PGW02005 — unreachable
       (-) <msg << "this never runs"
@@ -80,6 +83,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <data#string
    (-) >output#string
+   [ ]
    [?] $data =? "ok"
       [-] >output << $data
    [?] *?
@@ -98,6 +102,7 @@ severity: warning
    (-) <input#string
    (-) >main#string
    (-) >log#string
+   [ ]
    [-] >main << $input                          [ ] >main is Final
    [-] >log << "done"                           [ ] >log is Final
    [ ] all output ports are now Final
@@ -116,6 +121,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >result#string
+   [ ]
    [-] >result << $input                       [ ] >result is Final
    [ ] ✓ no dead code — cleanup handles post-finalization work
    [/] cleanup

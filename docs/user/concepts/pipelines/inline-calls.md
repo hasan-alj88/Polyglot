@@ -81,6 +81,7 @@ Inline calls shine when wrapping legacy code from other languages. The caller do
    [Q] -Q.Default
    [W] -W.Env
       (-) <env#; << ;PyPathEnv
+   [ ]
    [-] -RT.Python.Function.File
       (-) <env#PyEnv << $env
       (-) <func#string << "resolve_path"
@@ -110,6 +111,7 @@ Inline calls shine when wrapping legacy code from other languages. The caller do
    [Q] -Q.Default
    [W] -W.Env
       (-) <env#; << ;RsCryptoEnv
+   [ ]
    [-] -RT.Rust.Function.File
       (-) <env#RsEnv << $env
       (-) <func#string << "sha256_hex"
@@ -180,6 +182,7 @@ Since `%InlineString` is only used during inline calls, an infrastructure pipeli
    [T] -T.NATS
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >triggered << #True
 ```
 

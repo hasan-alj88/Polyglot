@@ -266,6 +266,7 @@ updated: 2026-04-23
 
 ```polyglot
 [ ] ✓ self-chain with numeric indexing
+[ ]
 [-] -Process -> -Process
    (-) >0.input << $data
    (-) <1.result >> >output

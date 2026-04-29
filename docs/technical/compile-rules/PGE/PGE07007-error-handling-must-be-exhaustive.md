@@ -101,6 +101,7 @@ When a failable call has multiple outputs, **every output port must have coverag
    (-) <path#string
    (-) >content#string
    (-) >status#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -121,6 +122,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    (-) <path#string
    (-) >content#string
    (-) >status#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -139,6 +141,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    (-) <path#string
    (-) >content#string
    (-) >status#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -176,6 +179,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -194,6 +198,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -210,6 +215,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -225,6 +231,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -244,6 +251,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -260,6 +268,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -275,6 +284,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -295,6 +305,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read                              [ ] declares !File.NotFound, !File.ReadError
       (-) <path << $path
       (-) >content >> $content
@@ -311,6 +322,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -328,6 +340,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [W] -W.Polyglot
    (-) <path#string
    (-) >content#string
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content

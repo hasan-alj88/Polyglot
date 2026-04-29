@@ -5,16 +5,19 @@
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -T.Dummy
 {-} -Agg.Flat.Max
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -T.Dummy
 {-} -Do.Nothing
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -T.Dummy
 
 {-} -ScoreProcessingPipeline
@@ -22,6 +25,7 @@
    [Q] -Q.Default
    [W] -W.Polyglot
 
+   [ ]
    [-] @DB-Students.GetTestScores
       (-) $ScoresQuery
       (>) >status >> @DB#Status.Success

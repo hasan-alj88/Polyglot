@@ -29,6 +29,7 @@ severity: warning
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >out << $input
 
 [-] $result#string << -StaticCall"anything"     [ ] ⚠ PGW12001 — no extraction occurs

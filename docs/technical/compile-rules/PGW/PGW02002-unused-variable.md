@@ -29,6 +29,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] -Transform
       (-) <data << $input
       (-) >result >> $cleaned
@@ -43,6 +44,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] -SideEffect
       (-) <data << $input
       (-) >result >> $*                 [ ] ✓ $* explicit discard — no warning
@@ -57,6 +59,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <status#Status
    (-) >out#string
+   [ ]
    [-] -Lookup
       (-) <key << $status
       (-) >code >> $code
@@ -76,6 +79,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] -Transform
       (-) <data << $input
       (-) >result >> $cleaned
@@ -93,6 +97,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] $temp <~ "placeholder"           [ ] ⚠ PGW02002 — $temp never read
    [-] >out << $input
 ```

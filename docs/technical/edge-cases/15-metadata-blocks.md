@@ -24,6 +24,7 @@ updated: 2026-03-30
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] $done#bool << #Boolean.True
 ```
 
@@ -47,6 +48,7 @@ updated: 2026-03-30
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] $x#int << 1
 ```
 
@@ -79,6 +81,7 @@ updated: 2026-03-30
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] $x#int << 1
 ```
 

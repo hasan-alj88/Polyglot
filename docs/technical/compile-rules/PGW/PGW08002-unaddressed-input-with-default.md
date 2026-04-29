@@ -30,6 +30,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <text#string
    (-) <locale#string
+   [ ]
    [-] $locale <~ "en-US"                  [ ] default value
    (-) >formatted#string
    [-] >formatted << "{$text} ({$locale})"
@@ -39,6 +40,7 @@ severity: warning
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -Format
       (-) <text << "Hello"
       (-) <locale << "fr-FR"               [ ] ✓ explicitly overrides default — no warning
@@ -53,6 +55,7 @@ severity: warning
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -Format
       (-) <text << "Hello"
                                             [ ] ⚠ PGW08002 — <locale uses default "en-US"
@@ -67,6 +70,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <url#string
    (-) <timeout#int
+   [ ]
    [-] $timeout <~ 30
    (-) >body#string
    [-] >body << "response"
@@ -76,6 +80,7 @@ severity: warning
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [=] -Fetch
       (-) <url << "https://example.com"
                                             [ ] ⚠ PGW08002 — <timeout uses default 30

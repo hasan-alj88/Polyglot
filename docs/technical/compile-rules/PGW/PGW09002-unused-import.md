@@ -33,6 +33,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] @auth-Validate                   [ ] ✓ @auth used
       (-) <token << $input
       (-) >ok >> $valid
@@ -51,6 +52,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] >out << $input
 ```
 
@@ -67,6 +69,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] @auth-Validate
       (-) <token << $input
       (-) >ok >> >out
@@ -84,6 +87,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] >out << $input
 ```
 

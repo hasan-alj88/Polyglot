@@ -44,6 +44,7 @@ error_decl_line     ::= "(-)" error_id ;
    (-) <message#string
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Append"{$logPath}"
       (-) <text << $message
 ```

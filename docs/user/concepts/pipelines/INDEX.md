@@ -79,6 +79,7 @@ A marker declaration on `{-}` specifies the pipeline's invocation context — wh
    (-) <message#string
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Append"{$logPath}"
       (-) <text << $message
 ```
@@ -128,7 +129,7 @@ Every pipeline definition is either **native** or **derived**. The distinction d
 |------|-------------|---------|
 | `.Trigger` | Fires pipeline execution | `-T.Call`, `-T.Folder.NewFiles`, `-T.Webhook` |
 | `.Queue` | Manages job scheduling | `-Q.Default`, `-Q.Pause.Soft`, `-Q.Kill.Graceful` |
-| `.Wrapper` | Setup/cleanup around execution | `-W.Polyglot`, `-W.DB.Connection`, `-W.RT.Python:3:14` |
+| `.Wrapper` | Setup/cleanup around execution | `-W.Polyglot`, `-W.DB.Connection`, `-W.Env.Python:3:14` |
 | `.Execution` | Performs actual work (IO, compute) | `-File.Text.Read`, `-Math.Add`, `-DB.Query` |
 | `.Intrinsic` | Compiler-internal operations | `-#.JSON.Parse`, `-DT.Now`, `-#.Validate` |
 
@@ -177,6 +178,7 @@ All `{N}` definitions must include a `.<Language>` binding for the language reso
    (-) >result#string
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << $input
       (-) >content >> $result

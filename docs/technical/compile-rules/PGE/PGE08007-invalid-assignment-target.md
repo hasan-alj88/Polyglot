@@ -32,6 +32,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] >out << $input
 ```
 
@@ -48,6 +49,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#path
+   [ ]
    [-] $p <~ -Path"/tmp/data"
    [-] >out << $p
 ```
@@ -60,6 +62,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) <value#string
+   [ ]
    [-] -Path"/tmp" << $value            [ ] ✗ PGE08007 — value expr, not a variable
 ```
 
@@ -70,6 +73,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) <value#string
+   [ ]
    [-] -Path"/tmp" <~ $value            [ ] ✗ PGE08007 — value expr, not a variable
 ```
 
@@ -80,6 +84,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) <value#string
+   [ ]
    [-] "hello" << $value                [ ] ✗ PGE08007 — literal is not a variable
 ```
 

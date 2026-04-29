@@ -45,6 +45,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << _AppGrant
       (-) >content >> $content

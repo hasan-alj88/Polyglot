@@ -29,6 +29,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >output#string
+   [ ]
    [-] >output << $input
 
 [ ] ✓ -Transform is defined in the same package
@@ -36,6 +37,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -Transform
       (-) <input#string << "hello"
       (-) >output#string >> $result
@@ -47,6 +49,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path#path << $filePath
       (-) >content#string >> $text
@@ -61,6 +64,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -Process                            [ ] ✗ PGE09003 — no {-} -Process in package, not pglib
       (-) <data#string << $input
 ```
@@ -75,12 +79,14 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >output#string
+   [ ]
    [-] >output << $input
 
 {-} -Main
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -Transfrom                          [ ] ✗ PGE09003 — typo: -Transfrom not found (did you mean -Transform?)
       (-) <input#string << "hello"
 ```
@@ -93,6 +99,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -Validate                           [ ] ✗ PGE09003 — -Validate is in another package; use @alias-Validate with [@] import
       (-) <input#string << $data
 ```

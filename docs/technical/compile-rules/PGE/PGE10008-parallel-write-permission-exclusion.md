@@ -33,6 +33,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >result#string
+   [ ]
    [=] -Analyze.Stats
       (-) <path << "data/input.csv"
       (-) >stats >> $stats
@@ -65,6 +66,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [=] -Write.Stats
       (-) _WriteGrantA
       (-) <data << $stats
@@ -90,6 +92,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [=] -Write.PartA
       (-) _WriteGrant                   [ ] ✗ writes to output/result.json
       (-) <data << $partA
@@ -121,6 +124,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [=] -Write.General
       (-) _WriteAll                     [ ] ✗ output/*.json
    [=] -Write.Reports

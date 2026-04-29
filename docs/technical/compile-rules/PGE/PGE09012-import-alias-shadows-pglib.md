@@ -30,6 +30,7 @@ severity: error
    [T] -T.Manual                                [ ] ✓ pglib trigger — no conflict
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] @triggers-OnSchedule                     [ ] ✓ unambiguous — @triggers is not a pglib name
       (-) <cron#string << "0 * * * *"
    [-] @fileUtils-ReadConfig                    [ ] ✓ unambiguous — @fileUtils is not a pglib name

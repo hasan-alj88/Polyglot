@@ -29,6 +29,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <name#string
    (-) >result#string
+   [ ]
    [-] -ValidateUser
       (-) <name << $name
       (-) >status >> $status
@@ -43,6 +44,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <name#string
    (-) >result#string
+   [ ]
    [-] -ValidateUser
       (-) <name << $name
       (-) >status >> $status
@@ -60,6 +62,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <name#string
    (-) >result#string
+   [ ]
    [-] -ValidateUser
       (-) <name << $name
       (-) >status >> $status

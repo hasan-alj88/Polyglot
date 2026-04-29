@@ -28,6 +28,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >output#string
+   [ ]
    [-] >output << $input
 
 [ ] ✓ no warning — -Transform is not deprecated
@@ -46,6 +47,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <data#string
    (-) >result#string
+   [ ]
    [-] >result << $data
 
 [ ] ⚠ PGW09001 — -OldProcess is deprecated: "Use -NewProcess instead"
@@ -62,6 +64,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <url#string
    (-) >content#string
+   [ ]
    [-] >content << "stub"
 
 [ ] ⚠ PGW09001 — -LegacyFetch is deprecated (no message provided)

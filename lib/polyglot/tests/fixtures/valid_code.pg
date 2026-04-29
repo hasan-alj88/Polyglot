@@ -11,6 +11,7 @@
    [W] -W.DB;StocksDB
    [ ]
    [ ] Run 3 API calls in parallel
+   [ ]
    [=] -API.Vantage.GetPrice
       (-) <ticker << "AAPL"
       (-) >price >> $priceVantage

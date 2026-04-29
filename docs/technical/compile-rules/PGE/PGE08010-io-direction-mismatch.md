@@ -34,6 +34,7 @@ severity: error
    [W] -W.Polyglot
    (-) <x#int
    (-) >result#int
+   [ ]
    [-] >result << $x
 ```
 

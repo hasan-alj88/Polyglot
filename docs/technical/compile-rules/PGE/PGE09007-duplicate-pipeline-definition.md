@@ -31,6 +31,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >data#string
+   [ ]
    [-] >data << "loaded"
 
 {#} #Config
@@ -46,6 +47,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) <data#string
+   [ ]
    [-] ...
 
 {#} #User
@@ -68,6 +70,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >output#string
+   [ ]
    [-] >output << $input
 
 { } file-02.pg
@@ -80,6 +83,7 @@ severity: error
    [W] -W.Polyglot
    (-) <data#string
    (-) >result#string
+   [ ]
    [-] >result << $data
 ```
 

@@ -33,6 +33,7 @@ severity: error
    (-) <name#string
    (-) <title#string
    (-) >greeting#string
+   [ ]
    [-] >greeting << "Hello, {$title} {$name}!"
 
 {-} -UseGreet
@@ -40,6 +41,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -Greet
       (-) <name << "Alice"                 [ ] ✓ required input wired
       (-) <title << "Dr."                  [ ] ✓ required input wired
@@ -54,6 +56,7 @@ severity: error
    [W] -W.Polyglot
    (-) <items#array:string
    (-) >results#array:string
+   [ ]
    [=] =ForEach.Array
       (=) <Array << $items
       (=) >item >> $item
@@ -75,6 +78,7 @@ severity: error
    (-) <name#string
    (-) <title#string
    (-) >greeting#string
+   [ ]
    [-] >greeting << "Hello, {$title} {$name}!"
 
 {-} -UseGreet
@@ -82,6 +86,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -Greet
       (-) <name << "Alice"
                                             [ ] ✗ PGE08008 — <title not wired, has no default
@@ -97,6 +102,7 @@ severity: error
    (-) <data#string
    (-) <mode#string
    (-) >result#string
+   [ ]
    [-] >result << $data
 
 {-} -BatchTransform
@@ -104,6 +110,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [=] -Transform
       (-) <data << "hello"
                                             [ ] ✗ PGE08008 — <mode not wired, has no default

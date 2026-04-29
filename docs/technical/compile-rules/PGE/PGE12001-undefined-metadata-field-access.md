@@ -80,6 +80,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [?] $input%state
       [?] =? .Final
          [-] >out << $input
@@ -94,6 +95,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [?] -Worker%status
       [?] =? .Running
          [-] >out << "active"
@@ -109,6 +111,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] >out << -Documented%description
 ```
 
@@ -121,6 +124,7 @@ severity: error
    [W] -W.Polyglot
    (-) <count#int
    (-) >out#string
+   [ ]
    [-] >out << $count%description       [ ] ✗ PGE12001 — $var has no .description
 ```
 
@@ -131,6 +135,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] >out << -Worker%memory           [ ] ✗ PGE12001 — no .memory in pipeline schema
 ```
 
@@ -142,6 +147,7 @@ severity: error
    [W] -W.Polyglot
    (-) <data#string
    (-) >out#string
+   [ ]
    [?] $data%isSuccess                  [ ] ✗ PGE12001 — .isSuccess is pipeline metadata
       [?] =? .True
          [-] >out << "ok"

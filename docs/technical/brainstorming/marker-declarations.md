@@ -22,7 +22,7 @@ updated: 2026-04-05
 | `{Q}` Dual-Purpose | #113 |
 | Metadata Tree `%T` | #114 |
 | §5 `-RT.*` Pipelines | #78 (existing) |
-| §5 `-W.RT` Wrapper | #76 (existing) |
+| §5 `-W.Env` Wrapper | #76 (existing) |
 | §5 `!RT` Errors | #77 (existing) |
 
 ---
@@ -267,6 +267,7 @@ data alongside the fire signal.
       [W] -W.DB.Connection
          (-) $connectionString << $connectionString
          (-) $dbConn >> $conn
+      [ ]
       [-] -DB.BeginTransaction
          (-) <conn << $conn
          (-) >handle >> $txHandle
@@ -290,6 +291,7 @@ data alongside the fire signal.
       (-) $txHandle >> $txHandle
    (-) <invoice#Invoice
    (-) >savedId#string
+   [ ]
    [-] -DB.Insert
       (-) <conn << $txHandle
       (-) <data << $invoice
@@ -380,6 +382,7 @@ data alongside the fire signal.
       (-) $dbConn >> $dbConn
    (-) <config#string
    (-) >IsTriggered#bool
+   [ ]
    [-] -DB.Query
       (-) <conn << $dbConn
       (-) <sql << "SELECT ready FROM system"
@@ -442,6 +445,7 @@ data alongside the fire signal.
    [T] -T.Custom
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -Worker
       (-) <data << $input
       (-) >result >> >output
@@ -467,6 +471,7 @@ data alongside the fire signal.
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -DoWork
 
 [ ] ✗ — {T} is NOT the default, must use {T} explicitly
@@ -494,6 +499,7 @@ Note: `{-}` defaults to `{-}[exe]` — only execution gets the implicit default.
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -DoSomething                [ ] ✗ — has body, cannot also be base
 
 [ ] ✗ — derived {W} wrapper cannot have .baseCode
@@ -537,6 +543,7 @@ into the execution pipeline's inputs, supplying data alongside the fire signal.
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >IsTriggered#bool
+   [ ]
    [-] -CheckCondition
       (-) >ready >> >IsTriggered
 
@@ -639,6 +646,7 @@ The `<script` input accepts either a `#path` to a file OR inline `[C]` lines.
    (-) >greeting#string ~> ""
 
    [ ] Run external Python script
+   [ ]
    [-] -RT.Python.Script
       (-) <env << $env
       (-) <script << "{$config.pythonDeps:directory}/hello.py"
@@ -655,6 +663,7 @@ The `<script` input accepts either a `#path` to a file OR inline `[C]` lines.
    (-) >greeting#string ~> ""
 
    [ ] Inline Python code via [C] marker
+   [ ]
    [-] -RT.Python.Script
       (-) <env << $env
       (-) <script <<
@@ -674,6 +683,7 @@ The `<script` input accepts either a `#path` to a file OR inline `[C]` lines.
    (-) >greeting#string ~> ""
 
    [ ] Call a specific function from a Python file
+   [ ]
    [-] -RT.Python.Function
       (-) <env << $env
       (-) <file << "./greetings.py"

@@ -35,6 +35,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << _LogReader
       (-) >content >> $data
@@ -49,6 +50,7 @@ severity: error
    (-) <a#int
    (-) <b#int
    (-) >sum#int
+   [ ]
    [-] >sum << -Math.Add $a $b
 ```
 
@@ -76,6 +78,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read                                  [ ] ✗ PGE10004 — no {_} grants File.Read
       (-) <path << "/var/log/app.log"
       (-) >content >> $data
@@ -95,6 +98,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << _InnerRead
       (-) >content >> $data
@@ -103,6 +107,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -Inner                                           [ ] ✗ PGE10004 — -Outer calls -Inner which uses File.Read, but -Outer has no permission granting File.Read
 ```
 

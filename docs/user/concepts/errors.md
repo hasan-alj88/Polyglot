@@ -94,6 +94,7 @@ Error declarations are mandatory — a pipeline without `(-) !...` is non-failab
 In the execution body, `[!] >> !ErrorName` raises a declared error. The raise block fills `.Info` values for the keys declared in the `{!}` definition:
 
 ```polyglot
+[ ]
 [?] $name =? ""
    [!] >> !Validation.Empty
       (!) .Info:field << "name"

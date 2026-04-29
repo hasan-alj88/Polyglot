@@ -32,6 +32,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >IsTriggered#bool
+   [ ]
    [-] -CheckCondition
       (-) >ready >> >IsTriggered
 ```

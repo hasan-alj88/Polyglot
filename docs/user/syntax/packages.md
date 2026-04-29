@@ -126,6 +126,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >config#Config
+   [ ]
    [-] >config << ...
 ```
 
@@ -140,6 +141,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) <config#Config
+   [ ]
    [-] ...
 ```
 

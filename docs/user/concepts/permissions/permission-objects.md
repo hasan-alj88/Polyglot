@@ -131,6 +131,7 @@ A `{-}` pipeline declares its resource dependencies via `(-)`:
    [T] -T.Schedule.Cron "0 * * * *"
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -DB.Query
       (-) <connection << _ProductionDB
       (-) <sql << "SELECT * FROM orders WHERE status = 'pending'"

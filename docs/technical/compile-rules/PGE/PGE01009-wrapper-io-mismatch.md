@@ -57,6 +57,7 @@ severity: error
    (-) <timeout;int
    (-) >txHandle;string
    [\]
+      [ ]
       [-] -DB.Connect
          (-) <connStr << $connStr
          (-) <timeout << $timeout
@@ -80,6 +81,7 @@ severity: error
    (-) <input;string
    (-) >output;string
    [\]
+      [ ]
       [-] -Transform
          (-) <in << $input
          (-) >out >> $output
@@ -101,6 +103,7 @@ severity: error
    (-) <input;string
    (-) >output;string
    [\]
+      [ ]
       [-] -Transform
          (-) <in << $input
          (-) >out >> $output

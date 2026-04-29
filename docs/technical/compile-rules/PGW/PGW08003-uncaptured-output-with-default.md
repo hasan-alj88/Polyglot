@@ -31,6 +31,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <key#string
    (-) >value#string
+   [ ]
    [-] $value <~ "unknown"                 [ ] default value
    (-) >found#bool
    [-] $found <~ .False                    [ ] default value
@@ -42,6 +43,7 @@ severity: warning
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -Lookup
       (-) <key << "user.name"
       (-) >value >> $val                   [ ] ✓ captured
@@ -57,6 +59,7 @@ severity: warning
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -Lookup
       (-) <key << "user.name"
       (-) >value >> >out
@@ -73,6 +76,7 @@ severity: warning
    (-) >content#string
    (-) !File.NotFound
    (-) !File.ReadError
+   [ ]
    [-] -File.Text.Read
       (-) <path << $path
       (-) >content >> $content
@@ -84,6 +88,7 @@ severity: warning
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >out#string
+   [ ]
    [-] -ReadFile
       (-) <path << "/tmp/data.txt"
                                             [ ] ⚠ PGW08003 — >content has fallback "unavailable"

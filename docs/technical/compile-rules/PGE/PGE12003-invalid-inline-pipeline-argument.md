@@ -48,6 +48,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >output << $input
 
 [-] -NormalPipeline

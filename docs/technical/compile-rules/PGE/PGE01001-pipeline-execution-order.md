@@ -24,6 +24,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -DoWork
       (-) <result >> >result
 ```

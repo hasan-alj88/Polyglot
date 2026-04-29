@@ -47,6 +47,7 @@ severity: error
       [W] -W.DB.Connection
          (-) $connStr << $connStr
          (-) $conn >> $conn
+      [ ]
       [-] -DB.BeginTransaction
          (-) <conn << $conn
          (-) >handle >> $txHandle

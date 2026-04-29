@@ -35,6 +35,7 @@ severity: error
    [ ] ...
 
 [ ] ✓ matches template pattern: host=localhost, port=3306, db=mydb
+[ ]
 [-] $conn << -DB.Connect"localhost:3306/mydb"
 ```
 

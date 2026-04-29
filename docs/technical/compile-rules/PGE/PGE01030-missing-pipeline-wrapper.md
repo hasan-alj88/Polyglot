@@ -23,6 +23,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) <input#string
+   [ ]
    [-] -DoWork
 ```
 

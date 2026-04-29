@@ -45,6 +45,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -DoWork
 
 [ ] ✓ native trigger — {N} with Trigger kind
@@ -100,6 +101,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -DoSomething
 
 [ ] ✗ PGE01028c — native definition must declare Kind

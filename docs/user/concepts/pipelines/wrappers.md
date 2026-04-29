@@ -82,6 +82,7 @@ flowchart LR
 
    [\]
       [ ] Sequential: open session — blocks before body starts
+      [ ]
       [-] -Tracer.Open
          (-) <id << $traceId
          (-) >session >> $session

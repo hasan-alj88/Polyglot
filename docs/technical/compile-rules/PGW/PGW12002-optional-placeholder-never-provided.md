@@ -31,6 +31,7 @@ severity: warning
    [ ] ...
 
 [ ] ⚠ PGW12002 — {port?} always empty; $port always uses default "5432"
+[ ]
 [-] $conn1 << -DB.Connect"host1:/db1"
 [-] $conn2 << -DB.Connect"host2:/db2"
 [-] $conn3 << -DB.Connect"host3:/db3"

@@ -26,6 +26,7 @@ severity: error
    [W] -W.Polyglot
    (-) <name#string
    (-) >greeting#string
+   [ ]
    [-] >greeting << "Hello, {$name}!"
 
 [ ] ✓ IO names match the pipeline declaration
@@ -41,6 +42,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >output#string
+   [ ]
    [-] >output << $input
 
 [ ] ✓ parallel fork with correct IO names
@@ -57,6 +59,7 @@ severity: error
    [W] -W.Polyglot
    (-) <name#string
    (-) >greeting#string
+   [ ]
    [-] >greeting << "Hello, {$name}!"
 
 [ ] ✗ PGE01010 — input name doesn't exist in target pipeline
@@ -79,6 +82,7 @@ severity: error
    [W] -W.Polyglot
    (-) <data#string
    (-) >result#string
+   [ ]
    [-] >result << $data
 
 [ ] ✗ PGE01010 — typo in parameter name

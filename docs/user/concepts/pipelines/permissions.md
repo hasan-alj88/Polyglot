@@ -29,6 +29,7 @@ Pipelines declare permissions by referencing named `{_}` grant objects via `(-)`
    (-) <logPath#path
    (-) >summary#string
 
+   [ ]
    [-] -File.Text.Read
       (-) <path << _LogGrant
       (-) >content >> $content

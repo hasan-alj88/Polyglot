@@ -29,6 +29,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] >out << $input
 ```
 
@@ -40,6 +41,7 @@ severity: error
    [W] -W.Polyglot
    (-) >out#Config
    [#] $cfg#Config << "config.json"
+   [ ]
    [-] >out << $cfg
 ```
 

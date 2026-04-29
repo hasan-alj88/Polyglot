@@ -91,6 +91,7 @@ updated: 2026-03-30
    (-) >output#string ~> ""
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >output << <input
 ```
 
@@ -102,6 +103,7 @@ updated: 2026-03-30
 {-} -Minimal
    [T] -T.Call
    [W] -W.Polyglot
+   [ ]
    [-] $x#int << 1
 ```
 
@@ -245,6 +247,7 @@ updated: 2026-03-30
    [T] -T.Webhook"/api/ready"
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -DoWork
 ```
 

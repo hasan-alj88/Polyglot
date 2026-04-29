@@ -29,6 +29,7 @@ severity: warning
    (-) <input#string
    (-) >result#string
    (-) >count#int
+   [ ]
    [-] -Parse
       (-) <data << $input
       (-) >parsed >> $clean
@@ -44,6 +45,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <status#int
    (-) >message#string
+   [ ]
    [?] $status
       [?] ?[200,299]
          [-] >message << "ok"           [ ] ✓ pushed in this branch
@@ -61,6 +63,7 @@ severity: warning
    (-) <input#string
    (-) >result#string
    (-) >forgotten#string               [ ] ⚠ PGW02003 — never pushed to
+   [ ]
    [-] >result << $input
 ```
 
@@ -73,6 +76,7 @@ severity: warning
    (-) <flag#bool
    (-) >result#string
    (-) >count#int                       [ ] ⚠ PGW02003 — not pushed in *? branch
+   [ ]
    [?] $flag
       [?] =? .True
          [-] >result << "yes"
@@ -91,6 +95,7 @@ severity: warning
    (-) <data#string
    (-) >out#string
    (-) >debug#string                    [ ] ⚠ PGW02003 — >debug never pushed to
+   [ ]
    [-] -Process
       (-) <input << $data
       (-) >result >> >out

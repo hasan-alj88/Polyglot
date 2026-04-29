@@ -40,6 +40,7 @@ severity: error
    (-) <config#string
    (-) >IsTriggered#bool
    (-) >systemState#serial
+   [ ]
    [-] -DB.Query
       (-) <conn << $dbConn
       (-) <sql << "SELECT ready FROM system"
@@ -78,6 +79,7 @@ severity: error
 [ ] ✗ PGE01031 — {Q} cannot have execution body
 {Q} -Q.Bad.WithBody
    (-) <threshold#float
+   [ ]
    [-] -SomeWork
 ```
 

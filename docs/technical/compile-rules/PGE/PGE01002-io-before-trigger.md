@@ -23,6 +23,7 @@ name: IO Before Trigger
       (-) >NewFiles >> <filepath
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << <filepath
       (-) >content >> >content
@@ -37,6 +38,7 @@ name: IO Before Trigger
    (-) <filepath#path
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << <filepath
       (-) >content >> >content

@@ -35,6 +35,7 @@ severity: warning
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << _LogIO
       (-) >content >> $content                                     [ ] ✓ exercises File.Read
@@ -49,6 +50,7 @@ severity: warning
    (-) <a#int
    (-) <b#int
    (-) >sum#int
+   [ ]
    [-] >sum << -Math.Add $a $b
 ```
 
@@ -75,6 +77,7 @@ severity: warning
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] -File.Text.Read
       (-) <path << _FileGrant
       (-) >content >> $content                                     [ ] ✓ exercises File.Read from _FileGrant
@@ -104,6 +107,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >output#string
+   [ ]
    [-] >output << $input                                           [ ] no IO calls at all
 ```
 

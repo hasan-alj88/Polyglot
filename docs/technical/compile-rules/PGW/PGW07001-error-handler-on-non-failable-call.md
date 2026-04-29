@@ -30,6 +30,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <name#string
    (-) >result#string
+   [ ]
    [-] -ValidateUser
       (-) <name << $name
       (-) >validated >> $validated
@@ -47,6 +48,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <name#string
    (-) >result#string
+   [ ]
    [-] -DoNothing
       [!] !SomeError                          [ ] ⚠ PGW07001 — -DoNothing is non-failable
          [-] >result << "this never fires"
@@ -61,6 +63,7 @@ severity: warning
    [W] -W.Polyglot
    (-) <input#string
    (-) >result#string
+   [ ]
    [-] -Format
       (-) <text << $input
       (-) >formatted >> $out

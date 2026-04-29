@@ -28,6 +28,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] -Transform
       (-) <data << $input
       (-) >result >> $cleaned
@@ -42,6 +43,7 @@ severity: error
    [W] -W.Polyglot
    (-) <input#string
    (-) >out#string
+   [ ]
    [-] >out << $input
 ```
 
@@ -53,6 +55,7 @@ severity: error
    [W] -W.Polyglot
    (-) <name#string
    (-) <email#string
+   [ ]
    [=] -Account.Create
       (-) <name << $name
    [=] -Mailbox.Provision
@@ -66,6 +69,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] 42                                 [ ] ✗ PGE01020 — bare literal, no effect
 ```
 
@@ -75,6 +79,7 @@ severity: error
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] "orphaned string"                  [ ] ✗ PGE01020 — bare literal, no effect
 ```
 
@@ -85,6 +90,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) <input#string
+   [ ]
    [-] #UserRecord                        [ ] ✗ PGE01020 — data type, not a pipeline call
    [=] $existingVar                       [ ] ✗ PGE01020 — variable, not a pipeline call
    [b] @AD                               [ ] ✗ PGE01020 — package alias, not a pipeline call

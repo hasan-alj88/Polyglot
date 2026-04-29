@@ -12,4 +12,5 @@
    [W] -W.Polyglot
    [Q] -MyQueue
    (<) <input#Payload
+   [ ]
    [-] $userId << <input.user

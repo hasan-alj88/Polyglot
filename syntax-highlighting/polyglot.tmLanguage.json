@@ -56,7 +56,7 @@
         },
         {
           "name": "keyword.control.execution.polyglot",
-          "match": "\\[r\\]|\\[p\\]|\\[b\\]|\\[s\\]|\\[Y\\]"
+          "match": "\\[r\\]|\\[p\\]|\\[b\\]|\\[s\\]|\\[Y\\]|\\[C\\]|\\[c\\]"
         },
         {
           "name": "keyword.control.flow.polyglot",
@@ -72,7 +72,7 @@
         },
         {
           "name": "keyword.control.special.polyglot",
-          "match": "\\[X\\]|\\[A\\]|\\[\\*\\]"
+          "match": "\\[X\\]|\\[A\\]|\\[\\*\\]|\\[%\\]"
         }
       ]
     },
@@ -178,7 +178,7 @@
         },
         {
           "name": "storage.type.wrapper.polyglot",
-          "match": "\\bRT\\.(Python|Rust|Node|Go)\\b"
+          "match": "\\bEnv\\.(Python|Rust|Node|Go|Shell|CLI)\\b"
         }
       ]
     },

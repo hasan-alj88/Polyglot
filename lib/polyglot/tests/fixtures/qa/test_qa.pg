@@ -6,6 +6,7 @@
    [Q] -Q.Default
    [W] -W.Polyglot
 
+   [ ]
    [-] @DB.Students.GetTestScores
       (-) $ScoresQuery
       (-) >status >> @DB#Status.Success

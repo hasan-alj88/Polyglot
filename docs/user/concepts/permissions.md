@@ -72,6 +72,7 @@ A full package showing the ceiling-to-grant flow:
    [Q] -Q.Default
    [W] -W.Polyglot
    (-) >reports#array.Report
+   [ ]
    [-] -File.Serial.CSV.Parse
       (-) <path << _ReportReader
       (-) >data >> $reports
@@ -84,6 +85,7 @@ A full package showing the ceiling-to-grant flow:
    [W] -W.Polyglot
    (-) <data#Report
    (-) >result#string
+   [ ]
    [-] -File.Serial.JSON.Serialize
       (-) <data << $data
       (-) <destination << _OutputWriter

@@ -84,6 +84,7 @@ updated: 2026-03-30
 
 ```polyglot
 [ ] PGW04001 — single platform, but matches current OS (Unix)
+[ ]
 [-] $dir#path
    [.] .Unix << "/tmp/MyApp"
 
@@ -126,6 +127,7 @@ updated: 2026-03-30
    (-) <dir#path << -Path"/tmp/MyApp"
 
 [ ] execution body — use $Path constructor instead
+[ ]
 [-] $dir#path << $Path"/tmp/MyApp"
 ```
 
@@ -165,6 +167,7 @@ updated: 2026-03-30
    (-) <dir#path << -Path"/tmp"
 
 [ ] execution body — use $Path constructor
+[ ]
 [-] $dir#path << $Path"/tmp"
 ```
 
@@ -180,6 +183,7 @@ updated: 2026-03-30
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >message << "Hello {$name}"
 
 [ ] infrastructure line — inline call valid
@@ -187,6 +191,7 @@ updated: 2026-03-30
    (-) <greeting << -Greeting"Alice"
 
 [ ] execution body — normal call (inline calls are infrastructure-only)
+[ ]
 [-] -Greeting
    (-) <name << "Alice"
    (-) >message >> $msg
@@ -203,6 +208,7 @@ updated: 2026-03-30
    [T] -T.Call
    [Q] -Q.Default
    [W] -W.Polyglot
+   [ ]
    [-] >output << $input
 
 [ ] PGE12003 — -NormalPipeline has no %InlineString declaration (infrastructure line)

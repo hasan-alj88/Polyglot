@@ -31,6 +31,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
 
+   [ ]
    [-] $base << $Path"/reports"
    [-] $full << $Path"{$base}/daily"
 ```
@@ -43,6 +44,7 @@ severity: error
    [Q] -Q.Default
    [W] -W.Polyglot
 
+   [ ]
    [-] $base#path
    [-] $full << $Path"{$base}/daily"
    [-] $base << $Path"/reports"

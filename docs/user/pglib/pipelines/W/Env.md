@@ -9,7 +9,7 @@ metadata_instance: "%W:Env:N"
 
 # -W.Env
 
-Sets up a language environment on setup, tears it down on cleanup. Replaces the deprecated [[pglib/pipelines/W/RT|-W.RT]] wrapper.
+Sets up a language environment on setup, tears it down on cleanup. Replaces the deprecated [[pglib/pipelines/W/RT|-W.Env]] wrapper.
 
 The wrapper receives a `{;}` environment definition as input and handles all platform-level setup: runtime installation, dependency resolution, virtual environment creation, and environment variable injection. See [[environments]] for the `{;}` definition syntax.
 
@@ -112,5 +112,5 @@ System.Process
 
 - [[environments]] — `{;}` environment definition syntax
 - [[pglib/pipelines/W/INDEX|-W.* Wrappers]]
-- [[pglib/pipelines/W/RT|-W.RT]] (deprecated — use `-W.Env`)
+- [[pglib/pipelines/W/RT|-W.Env]] (deprecated — use `-W.Env`)
 - [[pglib/errors/errors#Built-in Error Namespaces]] — `!Env.*` errors

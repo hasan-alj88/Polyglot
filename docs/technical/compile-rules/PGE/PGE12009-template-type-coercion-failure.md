@@ -34,6 +34,7 @@ severity: error
    [ ] ...
 
 [ ] ✓ "3" coerces to #int
+[ ]
 [-] $out << -Repeat"hello:3"
 ```
 
