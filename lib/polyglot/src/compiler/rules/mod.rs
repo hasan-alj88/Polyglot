@@ -1,7 +1,9 @@
 use crate::compiler::error::ValidationReport;
 use crate::compiler::utils::AnalysisContext;
 
-pub mod lexical_structural;
+pub mod file_structure;
+pub mod invalid_tokens;
+pub mod definition_semantics;
 pub mod io_semantics;
 pub mod pipeline_semantics;
 pub mod algorithms;
@@ -13,8 +15,14 @@ pub trait Rule {
 
 pub fn get_all_rules() -> Vec<Box<dyn Rule>> {
     vec![
-        // Algorithm 1: Lexical and Structural checks
-        Box::new(lexical_structural::LexicalStructuralAlgorithm),
+        // Algorithm 1.1: File Structure checks
+        Box::new(file_structure::FileStructureAlgorithm),
+
+        // Algorithm 1.2: Invalid Tokens checks
+        Box::new(invalid_tokens::InvalidTokensAlgorithm),
+
+        // Algorithm 1.3: Definition Semantics checks
+        Box::new(definition_semantics::DefinitionSemanticsAlgorithm),
 
         // Algorithm 2: IO Semantics checks
         Box::new(io_semantics::IOSemanticsAlgorithm),
