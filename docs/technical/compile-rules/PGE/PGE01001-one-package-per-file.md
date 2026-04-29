@@ -1,12 +1,12 @@
 ---
 audience: developer
-rule: "1.3"
-code: PGE01003
+rule: "1.1"
+code: PGE01001
 name: One Package Declaration Per File
 ---
 
-# Rule 1.3 — One Package Declaration Per File
-`PGE01003`
+# Rule 1.1 — One Package Declaration Per File
+`PGE01001`
 
 <!-- @u:syntax/blocks -->
 <!-- @u:syntax/operators -->

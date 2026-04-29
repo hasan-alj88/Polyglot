@@ -2,20 +2,19 @@
 
 ## Summary
 
-- **Total Rules Documented:** 240
-- **Implemented:** 28
-- **Remaining:** 212
+- **Total Rules Documented:** 234
+- **Implemented:** 30
+- **Remaining:** 204
 - **Undocumented (in code only):** 0
 
 | PGE/PGW | Documented | Implemented |
 | --- | --- | --- |
-| PGE01001 | ✅ | ❌ |
-| PGE01002 | ✅ | ❌ |
-| PGE01003 | ✅ | ❌ |
-| PGE01004 | ✅ | ❌ |
-| PGE01005 | ✅ | ❌ |
-| PGE01006 | ✅ | ❌ |
-| PGE01007 | ✅ | ❌ |
+| PGE01001 | ✅ | ✅ |
+| PGE01002 | ✅ | ✅ |
+| PGE01003 | ✅ | ✅ |
+| PGE01004 | ✅ | ✅ |
+| PGE01005 | ✅ | ✅ |
+| PGE01006 | ✅ | ✅ |
 | PGE01008 | ✅ | ❌ |
 | PGE01009 | ✅ | ❌ |
 | PGE01010 | ✅ | ❌ |
@@ -63,13 +62,9 @@
 | PGE01054 | ✅ | ✅ |
 | PGE01055 | ✅ | ✅ |
 | PGE01056 | ✅ | ✅ |
-| PGE01057 | ✅ | ✅ |
-| PGE01058 | ✅ | ✅ |
-| PGE01059 | ✅ | ✅ |
 | PGE01060 | ✅ | ✅ |
 | PGE01061 | ✅ | ✅ |
 | PGE01062 | ✅ | ✅ |
-| PGE01063 | ✅ | ✅ |
 | PGE02001 | ✅ | ✅ |
 | PGE02002 | ✅ | ✅ |
 | PGE02003 | ✅ | ✅ |
@@ -173,7 +168,6 @@
 | PGE08013 | ✅ | ❌ |
 | PGE09001 | ✅ | ❌ |
 | PGE09002 | ✅ | ❌ |
-| PGE09003 | ✅ | ❌ |
 | PGE09004 | ✅ | ❌ |
 | PGE09005 | ✅ | ❌ |
 | PGE09006 | ✅ | ❌ |

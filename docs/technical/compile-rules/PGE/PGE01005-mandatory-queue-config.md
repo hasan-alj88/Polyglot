@@ -1,13 +1,13 @@
 ---
 audience: developer
-rule: "1.58"
-code: PGE01058
-name: Missing Mandatory Queue Config
+rule: "1.5"
+code: PGE01005
+name: Mandatory Queue Config
 severity: error
 ---
 
-# Rule 1.58 — Missing Mandatory Queue Config
-`PGE01058`
+# Rule 1.5 — Mandatory Queue Config
+`PGE01005`
 
 **Statement:** Every pipeline block `{-}` must explicitly declare a Queue configuration block `[Q]`. If standard execution behavior is desired, `[Q] -Q.Default` must be explicitly specified.
 **Rationale:** Concurrency and backpressure are first-class concepts in Polyglot. Implicit queues hide critical architectural behavior. By requiring an explicit `[Q]`, the developer is forced to acknowledge the pipeline's operational execution limits and concurrency constraints.
@@ -17,6 +17,8 @@ severity: error
 ```polyglot
 [ ] ✓ Queue is explicitly defined
 {-} -ProcessData
+   (-) <#None
+   (-) >#None
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
@@ -25,11 +27,13 @@ severity: error
 
 **INVALID:**
 ```polyglot
-[ ] ✗ PGE01058 — Missing Queue block
+[ ] ✗ PGE01005 — Missing Queue block
 {-} -ProcessData
+   (-) <#None
+   (-) >#None
    [T] -T.Manual
-   [W] -W.Polyglot
-   [-] >run                                  [ ] ✗ PGE01058 — Missing [Q] block
+   [W] -W.Polyglot                            [ ] ✗ PGE01005 — Missing [Q] block
+   [-] >run
 ```
 
 **Diagnostic:** "Pipeline lacks a mandatory Queue Configuration `[Q]` block. All pipelines must define a Queue Config `[Q]`. To use standard behavior, specify `[Q] -Q.Default`."

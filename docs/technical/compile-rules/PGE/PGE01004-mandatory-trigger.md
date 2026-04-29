@@ -1,13 +1,13 @@
 ---
 audience: developer
-rule: "1.57"
-code: PGE01057
-name: Missing Mandatory Trigger
+rule: "1.4"
+code: PGE01004
+name: Mandatory Trigger
 severity: error
 ---
 
-# Rule 1.57 — Missing Mandatory Trigger
-`PGE01057`
+# Rule 1.4 — Mandatory Trigger
+`PGE01004`
 
 **Statement:** Every pipeline block `{-}` must explicitly declare a Trigger configuration block `[T]`. If the pipeline should not be automatically triggered, `[T] -T.Manual` must be explicitly specified.
 **Rationale:** Polyglot embraces explicit operational semantics. Omitting the trigger configuration makes it ambiguous how and when a pipeline is executed. By forcing the developer to declare `[T]`, the entry points and execution circumstances of the application remain unambiguous.
@@ -17,6 +17,8 @@ severity: error
 ```polyglot
 [ ] ✓ Trigger is explicitly defined
 {-} -ProcessData
+   (-) <#None
+   (-) >#None
    [T] -T.Manual
    [Q] -Q.Default
    [W] -W.Polyglot
@@ -25,11 +27,13 @@ severity: error
 
 **INVALID:**
 ```polyglot
-[ ] ✗ PGE01057 — Missing Trigger block
+[ ] ✗ PGE01004 — Missing Trigger block
 {-} -ProcessData
-   [Q] -Q.Default
+   (-) <#None
+   (-) >#None
+   [Q] -Q.Default                            [ ] ✗ PGE01004 — Missing [T] block
    [W] -W.Polyglot
-   [-] >run                                  [ ] ✗ PGE01057 — Missing [T] block
+   [-] >run
 ```
 
 **Diagnostic:** "Pipeline lacks a mandatory Trigger `[T]` block. All pipelines must define a Trigger `[T]`. To disable automatic triggering, specify `[T] -T.Manual`."

@@ -73,14 +73,17 @@ impl Rule for PipelineSemanticsAlgorithm {
                 }
             }
 
-            // Pipeline Body validation (PGE01057, PGE01058, PGE01059, PGE01062, PGE01063)
+            // Pipeline Body validation
             if let PolyglotToken::DefPipeline = token_val {
+                let mut has_io = false;
                 let mut has_trigger = false;
                 let mut has_queue = false;
                 let mut has_wrapper = false;
+                let mut has_setup = false;
+                let mut has_teardown = false;
                 let mut has_execution = false;
                 
-                // Track marker order: 0=start, 1=seen T, 2=seen Q, 3=seen W, 4=seen Exec
+                // Track marker order: 0=start, 1=seen T, 2=seen Q, 3=seen W or \, 4=seen Exec, 5=seen /
                 let mut order_state = 0;
 
                 let mut j = i + 1;
@@ -95,18 +98,35 @@ impl Rule for PipelineSemanticsAlgorithm {
                                 let action_token = &ctx.tokens[j+1].value;
                                 
                                 match action_token {
+                                    PolyglotToken::PipelineIO | PolyglotToken::DataInput | PolyglotToken::ExpanderIO 
+                                    | PolyglotToken::CollectorIO | PolyglotToken::InputParameterProperty 
+                                    | PolyglotToken::OutputParameterProperty => {
+                                        has_io = true;
+                                        if order_state > 0 {
+                                            report.add_error(ValidationError {
+                                                context_snippets: vec![],
+                                                code: "PGE01002".to_string(),
+                                                name: "Pipeline Section Misordering".to_string(),
+                                                message: "IO parameter declaration must appear before the Trigger `[T]`.".to_string(),
+                                                line: child_token.line,
+                                                col: child_token.col,
+                                                snippet: get_snippet(child_token.line, ctx.lines),
+                                                help: Some("The required marker order is IO -> `[T]` -> `[Q]` -> `[W]` or `[\\]` -> execution actions -> `[/]`.".to_string()),
+                                            });
+                                        }
+                                    }
                                     PolyglotToken::ActionTrigger => {
                                         has_trigger = true;
                                         if order_state > 0 {
                                             report.add_error(ValidationError {
                                                 context_snippets: vec![],
-                                                code: "PGE01063".to_string(),
-                                                name: "Invalid Pipeline Marker Order".to_string(),
-                                                message: "Trigger `[T]` must appear first in the pipeline.".to_string(),
+                                                code: "PGE01002".to_string(),
+                                                name: "Pipeline Section Misordering".to_string(),
+                                                message: "Trigger `[T]` must appear after IO parameters but before Queue `[Q]`.".to_string(),
                                                 line: child_token.line,
                                                 col: child_token.col,
                                                 snippet: get_snippet(child_token.line, ctx.lines),
-                                                help: Some("The required marker order is `[T]`, then `[Q]`, then `[W]`, followed by execution actions.".to_string()),
+                                                help: Some("The required marker order is IO -> `[T]` -> `[Q]` -> `[W]` or `[\\]` -> execution actions -> `[/]`.".to_string()),
                                             });
                                         } else {
                                             order_state = 1;
@@ -117,13 +137,13 @@ impl Rule for PipelineSemanticsAlgorithm {
                                         if order_state > 1 {
                                             report.add_error(ValidationError {
                                                 context_snippets: vec![],
-                                                code: "PGE01063".to_string(),
-                                                name: "Invalid Pipeline Marker Order".to_string(),
-                                                message: "Queue `[Q]` must appear after Trigger `[T]` but before Wrapper `[W]`.".to_string(),
+                                                code: "PGE01002".to_string(),
+                                                name: "Pipeline Section Misordering".to_string(),
+                                                message: "Queue `[Q]` must appear after Trigger `[T]` but before Wrapper `[W]` or Setup `[\\]`.".to_string(),
                                                 line: child_token.line,
                                                 col: child_token.col,
                                                 snippet: get_snippet(child_token.line, ctx.lines),
-                                                help: Some("The required marker order is `[T]`, then `[Q]`, then `[W]`, followed by execution actions.".to_string()),
+                                                help: Some("The required marker order is IO -> `[T]` -> `[Q]` -> `[W]` or `[\\]` -> execution actions -> `[/]`.".to_string()),
                                             });
                                         } else {
                                             order_state = 2;
@@ -134,36 +154,76 @@ impl Rule for PipelineSemanticsAlgorithm {
                                         if order_state > 2 {
                                             report.add_error(ValidationError {
                                                 context_snippets: vec![],
-                                                code: "PGE01063".to_string(),
-                                                name: "Invalid Pipeline Marker Order".to_string(),
+                                                code: "PGE01002".to_string(),
+                                                name: "Pipeline Section Misordering".to_string(),
                                                 message: "Wrapper `[W]` must appear after Queue `[Q]` and before execution actions.".to_string(),
                                                 line: child_token.line,
                                                 col: child_token.col,
                                                 snippet: get_snippet(child_token.line, ctx.lines),
-                                                help: Some("The required marker order is `[T]`, then `[Q]`, then `[W]`, followed by execution actions.".to_string()),
+                                                help: Some("The required marker order is IO -> `[T]` -> `[Q]` -> `[W]` or `[\\]` -> execution actions -> `[/]`.".to_string()),
                                             });
                                         } else {
                                             order_state = 3;
                                         }
                                     }
+                                    PolyglotToken::ActionScopeIn => {
+                                        has_setup = true;
+                                        if order_state > 2 {
+                                            report.add_error(ValidationError {
+                                                context_snippets: vec![],
+                                                code: "PGE01002".to_string(),
+                                                name: "Pipeline Section Misordering".to_string(),
+                                                message: "Setup `[\\]` must appear after Queue `[Q]` and before execution actions.".to_string(),
+                                                line: child_token.line,
+                                                col: child_token.col,
+                                                snippet: get_snippet(child_token.line, ctx.lines),
+                                                help: Some("The required marker order is IO -> `[T]` -> `[Q]` -> `[W]` or `[\\]` -> execution actions -> `[/]`.".to_string()),
+                                            });
+                                        } else {
+                                            order_state = 3;
+                                        }
+                                    }
+                                    PolyglotToken::ActionScopeOut => {
+                                        has_teardown = true;
+                                        if order_state < 4 {
+                                            report.add_error(ValidationError {
+                                                context_snippets: vec![],
+                                                code: "PGE01002".to_string(),
+                                                name: "Pipeline Section Misordering".to_string(),
+                                                message: "Teardown `[/]` must appear after execution actions.".to_string(),
+                                                line: child_token.line,
+                                                col: child_token.col,
+                                                snippet: get_snippet(child_token.line, ctx.lines),
+                                                help: Some("The required marker order is IO -> `[T]` -> `[Q]` -> `[W]` or `[\\]` -> execution actions -> `[/]`.".to_string()),
+                                            });
+                                        }
+                                        order_state = 5;
+                                    }
                                     tok if is_execution_action(tok) => {
                                         has_execution = true;
-                                        if order_state < 3 {
-                                            // The problem here is that they started execution before finishing T Q W.
-                                            // We won't spam PGE01063 for every single action, we just note it once by clamping order_state.
-                                            if order_state != 4 {
-                                                report.add_error(ValidationError {
-                                                    context_snippets: vec![],
-                                                    code: "PGE01063".to_string(),
-                                                    name: "Invalid Pipeline Marker Order".to_string(),
-                                                    message: "Execution actions must appear after the setup markers `[T]`, `[Q]`, and `[W]`.".to_string(),
-                                                    line: child_token.line,
-                                                    col: child_token.col,
-                                                    snippet: get_snippet(child_token.line, ctx.lines),
-                                                    help: Some("Ensure the pipeline header has `[T]`, `[Q]`, and `[W]` declared before starting execution.".to_string()),
-                                                });
-                                                order_state = 4;
-                                            }
+                                        if order_state < 2 {
+                                            report.add_error(ValidationError {
+                                                context_snippets: vec![],
+                                                code: "PGE01002".to_string(),
+                                                name: "Pipeline Section Misordering".to_string(),
+                                                message: "Execution actions must appear after the setup markers `[T]`, `[Q]`, and `[W]` (or `[\\]`).".to_string(),
+                                                line: child_token.line,
+                                                col: child_token.col,
+                                                snippet: get_snippet(child_token.line, ctx.lines),
+                                                help: Some("Ensure the pipeline header has `[T]`, `[Q]`, and `[W]` declared before starting execution.".to_string()),
+                                            });
+                                            order_state = 4;
+                                        } else if order_state == 5 {
+                                            report.add_error(ValidationError {
+                                                context_snippets: vec![],
+                                                code: "PGE01002".to_string(),
+                                                name: "Pipeline Section Misordering".to_string(),
+                                                message: "Execution actions cannot appear after Teardown `[/]`.".to_string(),
+                                                line: child_token.line,
+                                                col: child_token.col,
+                                                snippet: get_snippet(child_token.line, ctx.lines),
+                                                help: Some("The required marker order is IO -> `[T]` -> `[Q]` -> `[W]` or `[\\]` -> execution actions -> `[/]`.".to_string()),
+                                            });
                                         } else {
                                             order_state = 4;
                                         }
@@ -176,11 +236,21 @@ impl Rule for PipelineSemanticsAlgorithm {
                     j += 1;
                 }
 
+                if !has_io {
+                    report.add_error(ValidationError {
+                        context_snippets: vec![],
+                        code: "PGE01003".to_string(),
+                        name: "Mandatory IO".to_string(),
+                        message: "Pipeline lacks mandatory IO declarations.".to_string(),
+                        line, col, snippet: get_snippet(line, ctx.lines),
+                        help: Some("You must declare inputs and outputs before the `[T]` trigger. If the pipeline has no input, use `(-) <#None`. If it has no output, use `(-) >#None`.".to_string()),
+                    });
+                }
                 if !has_trigger {
                     report.add_error(ValidationError {
                         context_snippets: vec![],
-                        code: "PGE01057".to_string(),
-                        name: "Missing Mandatory Trigger".to_string(),
+                        code: "PGE01004".to_string(),
+                        name: "Mandatory Trigger".to_string(),
                         message: "Pipeline lacks a mandatory Trigger `[T]` block.".to_string(),
                         line, col, snippet: get_snippet(line, ctx.lines),
                         help: Some("All pipelines must define a Trigger `[T]`. To disable automatic triggering, specify `[T] -T.Manual`.".to_string()),
@@ -189,21 +259,21 @@ impl Rule for PipelineSemanticsAlgorithm {
                 if !has_queue {
                     report.add_error(ValidationError {
                         context_snippets: vec![],
-                        code: "PGE01058".to_string(),
-                        name: "Missing Mandatory Queue Config".to_string(),
+                        code: "PGE01005".to_string(),
+                        name: "Mandatory Queue Config".to_string(),
                         message: "Pipeline lacks a mandatory Queue Configuration `[Q]` block.".to_string(),
                         line, col, snippet: get_snippet(line, ctx.lines),
                         help: Some("All pipelines must define a Queue Config `[Q]`. To use standard behavior, specify `[Q] -Q.Default`.".to_string()),
                     });
                 }
-                if !has_wrapper {
+                if !has_wrapper && !(has_setup && has_teardown) {
                     report.add_error(ValidationError {
                         context_snippets: vec![],
-                        code: "PGE01059".to_string(),
-                        name: "Missing Mandatory Wrapper".to_string(),
-                        message: "Pipeline lacks a mandatory Wrapper `[W]` block.".to_string(),
+                        code: "PGE01006".to_string(),
+                        name: "Mandatory Setup/Cleanup".to_string(),
+                        message: "Pipeline lacks environmental integration.".to_string(),
                         line, col, snippet: get_snippet(line, ctx.lines),
-                        help: Some("All pipelines must define a Wrapper `[W]`. To use the default setup/cleanup, specify `[W] -W.Polyglot`.".to_string()),
+                        help: Some("You must define either a Wrapper `[W]` (e.g., `[W] -W.Polyglot`) or explicitly provide an inline Setup `[\\]` and Teardown `[/]` block pair.".to_string()),
                     });
                 }
                 if !has_execution {

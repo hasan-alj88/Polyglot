@@ -107,6 +107,8 @@ pub fn lex(script: &str) -> Vec<Spanned<PolyglotToken>> {
             ("[c]", PolyglotToken::ActionForeignCode),
             ("[C]", PolyglotToken::ActionForeignCode),
             ("[%]", PolyglotToken::ActionMetadata),
+            ("[\\]", PolyglotToken::ActionScopeIn),
+            ("[/]", PolyglotToken::ActionScopeOut),
         ];
 
         for (prefix, token) in marker_map.iter() {

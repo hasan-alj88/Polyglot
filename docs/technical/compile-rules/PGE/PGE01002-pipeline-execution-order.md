@@ -1,13 +1,13 @@
 ---
 audience: developer
-rule: "1.1"
-code: PGE01001
+rule: "1.2"
+code: PGE01002
 name: Pipeline Section Misordering
 severity: error
 ---
 
-# Rule 1.1 — Pipeline Section Misordering
-`PGE01001`
+# Rule 1.2 — Pipeline Section Misordering
+`PGE01002`
 
 <!-- @u:syntax/blocks -->
 <!-- @u:syntax/io -->
