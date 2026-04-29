@@ -1,3 +1,6 @@
+> [!WARNING]
+> **DEPRECATED:** This general rule has been deprecated and split into specific edge-case rules for stricter compiler enforcement.
+
 ---
 audience: developer
 rule: "2.1"

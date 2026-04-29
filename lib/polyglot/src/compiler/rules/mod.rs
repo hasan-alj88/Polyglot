@@ -6,6 +6,7 @@ pub mod invalid_tokens;
 pub mod definition_semantics;
 pub mod io_semantics;
 pub mod pipeline_semantics;
+pub mod queue_semantics;
 pub mod algorithms;
 pub mod variable_state;
 
@@ -29,6 +30,9 @@ pub fn get_all_rules() -> Vec<Box<dyn Rule>> {
 
         // Algorithm 3: Pipeline Semantics checks
         Box::new(pipeline_semantics::PipelineSemanticsAlgorithm),
+
+        // Algorithm 3.5: Queue Semantics checks
+        Box::new(queue_semantics::QueueSemanticsAlgorithm),
 
         // Algorithm 4: Graph and Cycle Algorithms
         Box::new(algorithms::PipelineAlgorithms),

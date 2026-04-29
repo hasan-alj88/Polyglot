@@ -1,3 +1,6 @@
+> [!WARNING]
+> **DEPRECATED:** This general rule has been deprecated and split into granular queue constraint rules (PGE01064 - PGE01070).
+
 ---
 audience: developer
 rule: "1.13"
