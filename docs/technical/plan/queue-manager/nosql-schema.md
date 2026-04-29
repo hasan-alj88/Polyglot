@@ -4,11 +4,11 @@ type: spec
 updated: 2026-04-03
 ---
 
-# NoSQL Schema (definitions)
+# Database Schema (definitions)
 
 <!-- @c:queue-manager/infrastructure -->
 
-## Queue Definition (from `{Q} #Queue:Name`)
+## Queue Definition (Stored in PostgreSQL JSONB)
 
 ```polyglot
 Stored at: %Queue.DispatchQueue:Name
@@ -24,7 +24,7 @@ description:        string             — human-readable
 controls:           [Q] nested         — -Q.Pause.*, -Q.Resume.*, -Q.Kill.*
 ```
 
-## Job Hierarchy (runtime tree)
+## Job Hierarchy (Stored in Redis)
 
 ```polyglot
 Stored as: job tree rooted at pipeline instance
@@ -37,7 +37,7 @@ Stored as: job tree rooted at pipeline instance
 └── status:         #QueueState        — current state
 ```
 
-Only the Trigger Monitor reads the hierarchy — to pre-compute kill lists and manage collector logic (`*First`/`*Nth`/`*All`). The Queue Handler never queries NoSQL.
+Only the Trigger Monitor reads the hierarchy — to pre-compute kill lists and manage collector logic (`*First`/`*Nth`/`*All`). The Queue Handler never queries PostgreSQL.
 
 ---
 
