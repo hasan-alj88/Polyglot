@@ -35,7 +35,7 @@ pipeline_ref        ::= pipeline_id                    (* local: -Pipeline.Name 
 
 (* All pipeline references use the - prefix — no exceptions.
    pglib pipelines (-File.*, -T.*, -Q.*, -W.*) are pipeline_id: -File.Text.Read, -T.Call, etc.
-   All Polyglot identifiers have a prefix; pipelines always use -. *)
+   All Aljam3 identifiers have a prefix; pipelines always use -. *)
 
 call_io_line        ::= "(-)" io_param assignment_op value_expr
                          { indent fallback_line NEWLINE }
@@ -68,7 +68,7 @@ grouped_fallback_line ::= "($)" ">" output_name "!>" value_expr           (* gen
 
 **Job-level `[Q]`:** `queue_control_line` (defined in §9.3.3) may appear nested under `[-]`, `[=]`, or `[b]` pipeline calls. This scopes queue conditions to that specific job and its sub-jobs, extending (not replacing) the pipeline-level `[Q]`. See [[concepts/pipelines/queue#Job-Level Queue Conditions]].
 
-```polyglot
+```aljam3
 [=] -Transform
    (-) << $fetched
    (-) >> $transformed
@@ -87,7 +87,7 @@ data_load           ::= "[#]" assign_target assignment_op ( pipeline_call | data
 
 **In `{#}` definitions:** `[#]` can load external serialized files. The file access is mediated through a `{_}` permission object declared via `(#)` IO on the definition. The compiler resolves the permission object's `.path` field, reads the file, and content-hashes it at compile time. See [[concepts/permissions/enforcement#Compile-Time File Binding]].
 
-```polyglot
+```aljam3
 [ ] Permission objects define the file resources
 {_} _AppConfig
    [.] .intent << #Grant

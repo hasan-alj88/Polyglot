@@ -13,7 +13,7 @@ Row indices are auto-assigned (0, 1, 2...) like `*Into.Array`. The resulting dat
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Into.Dataframe
    (*) <row << $filteredRow
    (*) >Dataframe >> $result

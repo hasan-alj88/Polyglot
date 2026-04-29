@@ -11,7 +11,7 @@ Reduces mini-pipeline string outputs by joining them into a single string.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Agg.Concatenate
    (*) <string << $fragment
    (*) <separator << "\n"

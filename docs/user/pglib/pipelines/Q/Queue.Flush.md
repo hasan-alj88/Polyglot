@@ -13,7 +13,7 @@ Kill.Now every Job on the queue. All Jobs immediately terminated with no cleanup
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Queue.Flush
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QQueueFlush"
@@ -37,9 +37,9 @@ None.
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates flush condition, sends command signal |
-| 2. NATS command | `polyglot.command.flush.{queue}` | `{queue}` |
+| 2. NATS command | `aljam3.command.flush.{queue}` | `{queue}` |
 | 3. QH executes | Queue Handler | FOR each job: remove from all sets/queues, DEL job hash, DEL queue, SREM queues:registered |
-| 4. Control signal | `polyglot.queue.control.{jobId}.job.kill.now` | Per executing/teardown.executing job → Runner |
+| 4. Control signal | `aljam3.queue.control.{jobId}.job.kill.now` | Per executing/teardown.executing job → Runner |
 | 5. Unix mechanism | Runner | `SIGKILL` per executing job — immediate termination |
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.

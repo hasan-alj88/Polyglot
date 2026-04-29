@@ -22,7 +22,7 @@ updated: 2026-04-23
 **See also:** PGE08001 (type mismatch), PGE08003 (port count mismatch), PGW08001 (auto-wire succeeded)
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE08002 — two outputs share #string, ambiguous mapping
 [ ] -Fetch.Both outputs: >name#string, >label#string  (two #string)
 [ ] -Process.Single inputs:  <text#string             (one #string)

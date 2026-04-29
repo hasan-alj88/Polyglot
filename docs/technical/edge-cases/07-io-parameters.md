@@ -15,7 +15,7 @@ updated: 2026-03-30
 
 **What it tests:** Dot-navigated IO parameters. See [[io]].
 
-```polyglot
+```aljam3
 (-) <config.timeout#int << 30
 (-) >result.status#string >> $status
 ```

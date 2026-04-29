@@ -13,7 +13,7 @@ Fires on tag creation. Supports tag name pattern filters. This is a **semantic t
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -T.Git.Tag
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TGitTag"
@@ -34,7 +34,7 @@ Fires on tag creation. Supports tag name pattern filters. This is a **semantic t
 
 Filters are provided via `(-) >>` lines under the `[T]` block:
 
-```polyglot
+```aljam3
 [T] -T.Git.Tag
    (-) >> pattern: "v*"
    (-) >name >> <tagName

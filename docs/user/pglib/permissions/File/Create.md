@@ -13,7 +13,7 @@ Capability-level generic permission for creating files. Sugar over [[INDEX|__Fil
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __File.Create
    [#] <scope;path
 
@@ -23,7 +23,7 @@ Capability-level generic permission for creating files. Sugar over [[INDEX|__Fil
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __File.Create
    (_) <scope << "/tmp/output/*"
 ```

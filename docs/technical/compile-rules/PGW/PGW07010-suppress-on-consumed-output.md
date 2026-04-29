@@ -25,7 +25,7 @@ severity: warning
 - [PGW03002 — Error Handler on Fire-and-Forget](PGW03002-error-handler-on-fire-and-forget.md) — `[b]` fire-and-forget is a different mechanism (detached execution, no error propagation)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ [!] !*- on pure side-effect call — no outputs consumed
 [-] -File.Text.Write
    (-) <path << $logPath
@@ -33,7 +33,7 @@ severity: warning
    [!] !*-
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [!] !*- with (>) !> fallback on consumed output — fallback provides recovery
 [-] -File.Text.Read
    (-) <path << $configPath
@@ -43,7 +43,7 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW07010 — !*- on call with consumed output $data, no fallback
 [-] -File.Text.Read
    (-) <path << $file
@@ -55,7 +55,7 @@ severity: warning
    (-) <input << $data
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW07010 — !*- on call with consumed output $result
 [-] -API.Call
    (-) <url << $endpoint
@@ -72,7 +72,7 @@ severity: warning
 
 **Fix:** Add `(>) !>` fallback on each consumed output to provide recovery values, or replace `[!] !*-` with a full `[!] !*` block that pushes replacements:
 
-```polyglot
+```aljam3
 [ ] ✓ Fix option 1: add (>) !> fallback per consumed output
 [-] -File.Text.Read
    (-) <path << $file
@@ -81,7 +81,7 @@ severity: warning
    [!] !*-
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Fix option 2: use full [!] !* block with replacement pushes
 [-] -File.Text.Read
    (-) <path << $file

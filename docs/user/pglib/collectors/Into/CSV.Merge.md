@@ -11,7 +11,7 @@ K-way merge collector for CSV data. Applies multiple diff sets against a shared 
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Into.CSV.Merge
    (*) <diffs << $csvDiffs
    (*) <base << $originalCsv

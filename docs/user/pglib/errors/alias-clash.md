@@ -15,7 +15,7 @@ status: complete
 
 In `{#}` generic type definitions, the `(#) <Alias` parameter can provide a fallback chain of alternative alias values using `[<] !Alias.Clash`. The compiler tries each value in order until one succeeds:
 
-```polyglot
+```aljam3
 (#) <Alias << "int"
    [<] !Alias.Clash << "integer"
    [<] !Alias.Clash << "Integer"

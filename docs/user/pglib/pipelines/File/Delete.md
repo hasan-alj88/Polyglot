@@ -13,7 +13,7 @@ Delete a file at the given path.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Delete
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileDelete"

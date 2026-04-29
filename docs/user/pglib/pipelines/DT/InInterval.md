@@ -13,7 +13,7 @@ Returns `#bool` -- true when `source` falls within the given `#Interval`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.InInterval
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtInInterval"

@@ -15,7 +15,7 @@ All pipelines accept both `#int` and `#float` operands. When any input is `#floa
 
 ## Usage Example
 
-```polyglot
+```aljam3
 [ ] Add three values (positional IO — no names)
 [-] -Math.Add
    (-) << $a

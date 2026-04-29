@@ -13,7 +13,7 @@ Constructs a `#dt` from explicit date-time components. Hour, minute, second, nan
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.From.Parts
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtFromParts"

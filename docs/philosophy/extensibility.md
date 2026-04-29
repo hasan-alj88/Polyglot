@@ -11,13 +11,13 @@ updated: 2026-04-22
 <!-- @u:concepts/pipelines/INDEX#Native vs Derived -->
 # Extensibility
 
-> Polyglot is designed to grow safely. The same compile-time guarantees that protect core pipelines extend to every package in the ecosystem. This page explains how extensibility works without compromising safety. See [[vision]] for the broader project context.
+> Aljam3 is designed to grow safely. The same compile-time guarantees that protect core pipelines extend to every package in the ecosystem. This page explains how extensibility works without compromising safety. See [[vision]] for the broader project context.
 
 ## pglib: The Standard Library
 
-Polyglot ships with **pglib** — a standard library of battle-tested operations that cover common automation needs. File operations, data transformations, date/time handling, collection operators, trigger types, queue strategies — these are not user-defined pipelines. They are compiler-known operations backed by native implementations, validated by the same exhaustive checks as any other [[glossary#Pipeline|pipeline]].
+Aljam3 ships with **pglib** — a standard library of battle-tested operations that cover common automation needs. File operations, data transformations, date/time handling, collection operators, trigger types, queue strategies — these are not user-defined pipelines. They are compiler-known operations backed by native implementations, validated by the same exhaustive checks as any other [[glossary#Pipeline|pipeline]].
 
-pglib exists because automation has common patterns. Reading a file, parsing JSON, iterating over a collection, handling a cron trigger — every automation project needs these. Rather than forcing every developer to rewrite them (and reintroduce the bugs that come with reimplementation), Polyglot provides them as first-class language features with full compiler support.
+pglib exists because automation has common patterns. Reading a file, parsing JSON, iterating over a collection, handling a cron trigger — every automation project needs these. Rather than forcing every developer to rewrite them (and reintroduce the bugs that come with reimplementation), Aljam3 provides them as first-class language features with full compiler support.
 
 ## Community Packages
 
@@ -35,12 +35,12 @@ This means developers can import third-party packages without auditing every lin
 
 ## No Resource Hogging
 
-Polyglot treats compute resources with the same discipline it applies to file access, network connections, and external APIs. Permissions are not just about *what* a job can access — they also govern *how much* of the host's resources a job can consume.
+Aljam3 treats compute resources with the same discipline it applies to file access, network connections, and external APIs. Permissions are not just about *what* a job can access — they also govern *how much* of the host's resources a job can consume.
 
-Any resource at 100% utilisation is system death. A job that consumes all available RAM starves every other process on the host — not just other Polyglot jobs, but the operating system, monitoring agents, and any other software sharing the machine. The same applies to CPU, GPU, disk I/O, and network bandwidth.
+Any resource at 100% utilisation is system death. A job that consumes all available RAM starves every other process on the host — not just other Aljam3 jobs, but the operating system, monitoring agents, and any other software sharing the machine. The same applies to CPU, GPU, disk I/O, and network bandwidth.
 
-Polyglot enforces **default breathing margins** on every resource category. Jobs are prevented from exceeding a configurable ceiling that reserves capacity for the host's other processes. These margins exist by default — developers must explicitly raise them if they have a justified reason, and raising them requires explicit `{_}` permission grants with resource category declarations. The compiler validates that resource grants do not exceed the host's declared capacity, and the runtime enforces the limits through OS-level mechanisms (cgroups on Linux).
+Aljam3 enforces **default breathing margins** on every resource category. Jobs are prevented from exceeding a configurable ceiling that reserves capacity for the host's other processes. These margins exist by default — developers must explicitly raise them if they have a justified reason, and raising them requires explicit `{_}` permission grants with resource category declarations. The compiler validates that resource grants do not exceed the host's declared capacity, and the runtime enforces the limits through OS-level mechanisms (cgroups on Linux).
 
-Exceeding a resource limit is not silent. It produces an error that requires handling — the same philosophy that governs every other error in Polyglot. A job that hits its RAM ceiling triggers a `!Resource.Exceeded` error with the same mandatory handling rules as any other error. There is no "the job just slows down" or "the OS kills it without notice." Resource exhaustion is a first-class error condition.
+Exceeding a resource limit is not silent. It produces an error that requires handling — the same philosophy that governs every other error in Aljam3. A job that hits its RAM ceiling triggers a `!Resource.Exceeded` error with the same mandatory handling rules as any other error. There is no "the job just slows down" or "the OS kills it without notice." Resource exhaustion is a first-class error condition.
 
 See [[cybersecurity]] for the zero-trust model that underpins the permission system, and [[error-philosophy]] for why resource errors demand explicit handling.

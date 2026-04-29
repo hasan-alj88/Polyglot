@@ -4,13 +4,13 @@ audience: design
 updated: 2026-03-30
 ---
 
-# Polyglot Technical Documentation
+# Aljam3 Technical Documentation
 
 <!-- @c:vision:Core Philosophy -->
-<!-- @c:glossary:Polyglot Service -->
+<!-- @c:glossary:Aljam3 Service -->
 <!-- @audit/README -->
 
-Internal specifications for Polyglot project contributors. These documents describe how Polyglot Code is parsed, validated, and processed.
+Internal specifications for Aljam3 project contributors. These documents describe how Aljam3 Code is parsed, validated, and processed.
 
 ## For Design (Language Syntax & Semantics)
 
@@ -77,7 +77,7 @@ Semantic constraints enforced at compile time — beyond what EBNF grammar captu
 
 ## Issue Tracking
 
-Compiler issues, design decisions, and project tracking are managed via [GitHub Issues](https://github.com/hasan-alj88/Polyglot/issues). Resolved design issues (001–030) are preserved in git history under `docs/technical/compiler_issues/`.
+Compiler issues, design decisions, and project tracking are managed via [GitHub Issues](https://github.com/hasan-alj88/Aljam3/issues). Resolved design issues (001–030) are preserved in git history under `docs/technical/compiler_issues/`.
 
 ## Language Reference
 

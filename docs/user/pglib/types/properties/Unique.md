@@ -17,7 +17,7 @@ metadata_definition: "%###Unique"
 #Tags [%###Unique << #True]
 ├── :0  -> "rust"
 ├── :1  -> "async"
-└── :2  -> "polyglot"
+└── :2  -> "aljam3"
                      ← all values distinct ✓
 ```
 
@@ -37,7 +37,7 @@ metadata_definition: "%###Unique"
 #Tags [%###Unique << #True]
 ├── :0  -> "rust"
 ├── :1  -> "async"
-├── :2  -> "polyglot"
+├── :2  -> "aljam3"
 └── :3  -> "rust"      ✗ duplicate "rust" — uniqueness violated
 ```
 

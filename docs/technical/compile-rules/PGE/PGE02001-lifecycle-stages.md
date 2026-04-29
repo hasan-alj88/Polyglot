@@ -18,7 +18,7 @@ name: Lifecycle Stages
 **Rationale:** The lifecycle encodes write-once semantics and propagation guarantees. Each stage transition is intentional — accidental reassignment or reading an uninitialized variable are caught before they propagate through the pipeline.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Declared → Final via <<
 (-) >result#string
 [-] -Compute
@@ -31,7 +31,7 @@ name: Lifecycle Stages
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02001 — backwards transition: attempting to re-enter Default after Final
 (-) >result#string
 [-] -Compute

@@ -19,7 +19,7 @@ When pushing to a typed flexible field (`[:] :*#Type`), must the user explicitly
 - **Omitted** — compiler infers from `[:] :*#Type` declaration
 - **Stated and contradicts** — PGE04001 (type mismatch)
 
-```polyglot
+```aljam3
 {#} #Registry
    [.] .plugins
       [:] :*#Handler
@@ -43,7 +43,7 @@ This documents how the compiler resolves types on flexible field paths — neede
 
 For nested typed flexible fields, the compiler resolves one level at a time. Each `:` level resolves its wildcard type, then uses that type's definition to continue resolution.
 
-```polyglot
+```aljam3
 {#} #Config
    [.] .sections
       [:] :*#Section

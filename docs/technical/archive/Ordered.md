@@ -26,7 +26,7 @@ metadata_definition: "%##Ordered"
 ```
 #Tags
 ├── :0  -> "rust"         ← iteration order
-├── :1  -> "polyglot"       unspecified —
+├── :1  -> "aljam3"       unspecified —
 └── :2  -> "async"          may differ from insertion
                            order not preserved
 ```

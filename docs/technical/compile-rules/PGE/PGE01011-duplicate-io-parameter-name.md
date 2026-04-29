@@ -19,11 +19,11 @@ severity: error
 **See also:** PGE01010 (pipeline IO name mismatch — checks call-site names against declaration), PGE01009 (wrapper IO mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 {-} -Transfer
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >data#string
    [ ]
@@ -32,11 +32,11 @@ severity: error
 [ ] ✓ <data and >data share a base name but differ in direction — allowed
 ```
 
-```polyglot
+```aljam3
 {-} -ProcessPerson
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <person.name#string
    (-) <person.age#int
    (-) >result#string
@@ -47,11 +47,11 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {-} -Broken
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) <data#int                               [ ] ✗ PGE01011 — <data declared twice
    (-) >result#string
@@ -59,11 +59,11 @@ severity: error
    [-] >result << $data
 ```
 
-```polyglot
+```aljam3
 {-} -AlsoBroken
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >output#string
    (-) >output#int                             [ ] ✗ PGE01011 — >output declared twice

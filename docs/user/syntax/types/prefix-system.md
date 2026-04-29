@@ -42,7 +42,7 @@ This means the prefix tiers (`##`, `###`) and the metadata prefix (`%`) work tog
 
 A `##` schema is syntactic sugar for defining a reusable bundle of `%##` properties. When a type composes `[#] ##Flat`, the compiler expands it into the individual `%##` assignments that `##Flat` defines:
 
-```polyglot
+```aljam3
 {#} ##Flat
    [#] %##Depth.Max << 1
 
@@ -54,7 +54,7 @@ A `##` schema is syntactic sugar for defining a reusable bundle of `%##` propert
 
 A more complex example — `##Enum` bundles four properties:
 
-```polyglot
+```aljam3
 {#} ##Enum
    [#] ##Flat
    [#] %##Active << #ActiveKind.One

@@ -21,12 +21,12 @@ severity: warning
 **See also:** PGE02001 (lifecycle stages), PGE02002 (declared state is unreadable), PGW02003 (unpushed output port — analogous for output ports)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ variable assigned and consumed
 {-} -Process
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
@@ -36,12 +36,12 @@ severity: warning
    [-] >out << $cleaned                 [ ] ✓ $cleaned is consumed
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ discard pattern — intentionally unused
 {-} -FireAndForget
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
@@ -51,12 +51,12 @@ severity: warning
    [-] >out << "done"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ variable used in conditional
 {-} -Route
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <status#Status
    (-) >out#string
    [ ]
@@ -71,12 +71,12 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW02002 — $unused assigned but never consumed
 {-} -Wasteful
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
@@ -89,12 +89,12 @@ severity: warning
    [-] >out << $cleaned
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW02002 — $temp assigned but never consumed
 {-} -DeadAssignment
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]

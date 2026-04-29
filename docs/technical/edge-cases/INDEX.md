@@ -14,7 +14,7 @@ updated: 2026-04-23
 <!-- @u:concepts/collections/INDEX -->
 <!-- @u:concepts/conditionals -->
 <!-- @u:concepts/variable-lifecycle -->
-Structured edge case catalog for validating the Polyglot Code grammar ([[technical/ebnf/INDEX|EBNF]]). Each case maps to an EBNF production rule and tests a boundary condition, ambiguity, or interaction between rules.
+Structured edge case catalog for validating the Aljam3 Code grammar ([[technical/ebnf/INDEX|EBNF]]). Each case maps to an EBNF production rule and tests a boundary condition, ambiguity, or interaction between rules.
 
 ## How to Use
 
@@ -22,7 +22,7 @@ Review in batches by section. Each edge case includes:
 - **EBNF ref** — production rule being tested
 - **What it tests** — the boundary or ambiguity
 - **Cross-refs** — related spec files that govern the behavior
-- **Example** — minimal Polyglot Code snippet
+- **Example** — minimal Aljam3 Code snippet
 
 ---
 

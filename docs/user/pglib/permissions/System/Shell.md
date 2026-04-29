@@ -13,7 +13,7 @@ Capability-level generic permission for shell command execution. Sugar over [[IN
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __System.Shell
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for shell command execution. Sugar over [[IN
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __System.Shell
    (_) <scope << "*"
 ```

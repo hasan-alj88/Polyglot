@@ -10,7 +10,7 @@ metadata_instance: "%#:CopticDate:N"
 
 ## #CopticDate
 
-```polyglot
+```aljam3
 {#} #CopticDate
    [%] .description << "Coptic calendar date"
    [%] .version << "1.0.0"
@@ -24,7 +24,7 @@ metadata_instance: "%#:CopticDate:N"
 
 ## #CopticMonth
 
-```polyglot
+```aljam3
 {#} #CopticMonth
    [%] .description << "Coptic calendar month"
    [%] .version << "1.0.0"

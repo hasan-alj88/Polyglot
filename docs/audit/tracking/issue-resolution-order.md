@@ -71,7 +71,7 @@ Recommended execution order for open GitHub issues based on dependency analysis.
 
 | # | Title | Priority | Blocked By |
 |---|-------|----------|------------|
-| #270 | Finalize Polyglot syntax specification | P1-critical | ~~#321~~ — UNBLOCKED (#321 closed 2026-04-19) |
+| #270 | Finalize Aljam3 syntax specification | P1-critical | ~~#321~~ — UNBLOCKED (#321 closed 2026-04-19) |
 | #264 | Finalize Trigger Monitor design specification | P1-critical | #301 (fault domains) — #320 closed 2026-04-19 |
 | #266 | Finalize Runner design specification | P1-critical | #301 (fault domains) — #321 closed 2026-04-19 |
 
@@ -164,7 +164,7 @@ These dependencies connect milestones to each other and to pre-existing issues.
 
 ```text
 Phase 1: Foundations (no dependencies — can work in parallel)
-  ✓ #319 Polyglot SDK spec (CLOSED 2026-04-18)
+  ✓ #319 Aljam3 SDK spec (CLOSED 2026-04-18)
   #301 Design fault domain behavior (crash recovery)
 
 Phase 2: New Syntax + Signal Architecture (COMPLETE)

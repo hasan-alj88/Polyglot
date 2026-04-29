@@ -8,11 +8,11 @@ status: complete
 # -RT — Runtime Execution
 
 <!-- @c:pipelines -->
-Runtime execution pipelines run foreign code (Python, Rust, etc.) within Polyglot pipelines. Each `-RT.<Lang>.*` pipeline takes a language-specific environment handle from `-W.RT` and executes code in that runtime.
+Runtime execution pipelines run foreign code (Python, Rust, etc.) within Aljam3 pipelines. Each `-RT.<Lang>.*` pipeline takes a language-specific environment handle from `-W.RT` and executes code in that runtime.
 
 No `[@]` import needed.
 
-**PRIMITIVE** — pglib runtime pipelines are direct language runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
+**PRIMITIVE** — pglib runtime pipelines are direct language runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.aj3` files.
 
 `<Lang>` is a placeholder for the target language (Python, Rust, etc.). The actual pipeline name uses the concrete language: `-RT.Python.Function.Inline`, `-RT.Rust.CLI`, etc.
 
@@ -51,15 +51,15 @@ All `-RT.*` pipelines require a `{_}` permission object granting System.Process.
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/RT/Bind.Inline\|-RT.\<Lang\>.Bind.Inline]] | Native code imports polyglot lib (inline) |
-| [[pglib/pipelines/RT/Bind.File\|-RT.\<Lang\>.Bind.File]] | Native code imports polyglot lib (file) |
+| [[pglib/pipelines/RT/Bind.Inline\|-RT.\<Lang\>.Bind.Inline]] | Native code imports aljam3 lib (inline) |
+| [[pglib/pipelines/RT/Bind.File\|-RT.\<Lang\>.Bind.File]] | Native code imports aljam3 lib (file) |
 
 ## `.Script` vs `.Bind` — Binding Origin
 
 Both `.Script` and `.Bind` execute code without a named function entry point. The difference is **who controls the data flow**:
 
-- **`.Script`** — Polyglot-controlled binding. `<Bind#serial` injects Polyglot data as named variables before execution. `>Bind#serial` captures their final state after execution. The compiler can validate bound variable names exist in the code.
-- **`.Bind`** — Foreign-code-controlled binding. Native code imports the polyglot lib and calls `pull("name")`/`push("name", value)` at arbitrary points during execution. The compiler cannot validate these — they are opaque runtime strings.
+- **`.Script`** — Aljam3-controlled binding. `<Bind#serial` injects Aljam3 data as named variables before execution. `>Bind#serial` captures their final state after execution. The compiler can validate bound variable names exist in the code.
+- **`.Bind`** — Foreign-code-controlled binding. Native code imports the aljam3 lib and calls `pull("name")`/`push("name", value)` at arbitrary points during execution. The compiler cannot validate these — they are opaque runtime strings.
 
 ## Multiple `[W]` Wrappers
 

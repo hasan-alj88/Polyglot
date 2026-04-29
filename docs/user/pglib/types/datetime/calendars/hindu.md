@@ -10,7 +10,7 @@ metadata_instance: "%#:HinduDate:N"
 
 ## #HinduDate
 
-```polyglot
+```aljam3
 {#} #HinduDate
    [%] .description << "Hindu calendar date with era and lunar fortnight"
    [%] .version << "1.0.0"
@@ -26,7 +26,7 @@ metadata_instance: "%#:HinduDate:N"
 
 ## #HinduEra
 
-```polyglot
+```aljam3
 {#} #HinduEra
    [%] .description << "Hindu calendar era system"
    [%] .version << "1.0.0"
@@ -39,7 +39,7 @@ metadata_instance: "%#:HinduDate:N"
 
 ## #HinduMonth
 
-```polyglot
+```aljam3
 {#} #HinduMonth
    [%] .description << "Hindu calendar month"
    [%] .version << "1.0.0"
@@ -62,7 +62,7 @@ metadata_instance: "%#:HinduDate:N"
 
 ## #Paksha
 
-```polyglot
+```aljam3
 {#} #Paksha
    [%] .description << "Hindu lunar fortnight"
    [%] .version << "1.0.0"

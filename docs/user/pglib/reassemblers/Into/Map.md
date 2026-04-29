@@ -11,7 +11,7 @@ Expands a collection and collects items into a map (key-value pairs).
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =*Into.Map
    (=) <Array << $records
    (*) >Map >> $index
@@ -31,7 +31,7 @@ Expands a collection and collects items into a map (key-value pairs).
 
 ## Equivalent Expand-Collect
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $records
    (=) >item >> $record

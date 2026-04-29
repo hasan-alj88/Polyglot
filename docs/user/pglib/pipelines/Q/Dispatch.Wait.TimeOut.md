@@ -13,7 +13,7 @@ What happens when a job exceeds `.maxWaitTime` in the queue. Default behavior: e
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Dispatch.Wait.TimeOut
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QDispatchWaitTimeOut"
@@ -47,7 +47,7 @@ If no `-Q.Dispatch.Wait.TimeOut.*` is specified, the default is priority escalat
 
 Used as nested `[Q]` line in a queue definition:
 
-```polyglot
+```aljam3
 {Q} #Queue:BatchQueue
    [.] .strategy#QueueStrategy << #FIFO
    [.] .maxWaitTime#String << "30m"
@@ -63,20 +63,20 @@ Used as nested `[Q]` line in a queue definition:
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Job exceeded `.maxWaitTime`, sends escalation |
-| 2. NATS command | `polyglot.command.dispatch.escalate.{jobId}` | `{jobId, queue}` |
+| 2. NATS command | `aljam3.command.dispatch.escalate.{jobId}` | `{jobId, queue}` |
 | 3. QH executes | Queue Handler | Strategy-aware: ZADD MAX_SCORE (Priority), LREM+LPUSH (FIFO), LREM+RPUSH (LIFO) |
 
 ### `.Kill.Graceful` variant
 
-Sends `polyglot.command.job.kill.with-cleanup.{jobId}` — same signal chain as `-Q.Job.Kill.WithCleanup`.
+Sends `aljam3.command.job.kill.with-cleanup.{jobId}` — same signal chain as `-Q.Job.Kill.WithCleanup`.
 
 ### `.Kill.Hard` variant
 
-Sends `polyglot.command.job.kill.now.{jobId}` — same signal chain as `-Q.Job.Kill.Now`.
+Sends `aljam3.command.job.kill.now.{jobId}` — same signal chain as `-Q.Job.Kill.Now`.
 
 ### `.Reassign` variant
 
-Sends `polyglot.command.reassign.{jobId}` — same signal chain as `-Q.Job.Reassign`.
+Sends `aljam3.command.reassign.{jobId}` — same signal chain as `-Q.Job.Reassign`.
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 

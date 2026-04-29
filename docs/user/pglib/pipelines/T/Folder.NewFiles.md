@@ -13,7 +13,7 @@ Fires when new files appear in the specified folder. Folder path provided via in
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -T.Folder.NewFiles
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TFolderNewFiles"

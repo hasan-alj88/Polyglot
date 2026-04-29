@@ -18,37 +18,37 @@ severity: error
 **See also:** PGE09005 (version mismatch), PGE09010 (asymmetric multi-file reference)
 
 **VALID:**
-```polyglot
-{ } file-01.pg
+```aljam3
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-02.aj3"
 
-{ } file-02.pg
+{ } file-02.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-01.pg"
+   [@] << "{.}\file-01.aj3"
 
 [ ] ✓ both files declare @Local:1000.MyApp
 ```
 
 **INVALID:**
-```polyglot
-{ } file-01.pg
+```aljam3
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-02.aj3"
 
-{ } file-02.pg — different package name
+{ } file-02.aj3 — different package name
 {@} @Local:1000.MyOtherApp:v1.0.0         [ ] ✗ PGE09006 — MyOtherApp ≠ MyApp
-   [@] << "{.}\file-01.pg"
+   [@] << "{.}\file-01.aj3"
 ```
 
-```polyglot
-{ } file-01.pg
+```aljam3
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-02.aj3"
 
-{ } file-02.pg — typo in package name
+{ } file-02.aj3 — typo in package name
 {@} @Local:1000.MyAp:v1.0.0               [ ] ✗ PGE09006 — MyAp ≠ MyApp (typo?)
-   [@] << "{.}\file-01.pg"
+   [@] << "{.}\file-01.aj3"
 ```
 
 ## See Also

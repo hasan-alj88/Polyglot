@@ -13,7 +13,7 @@ Capability-level generic permission for receiving messages. Sugar over [[INDEX|_
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __IPC.Receive
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for receiving messages. Sugar over [[INDEX|_
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __IPC.Receive
    (_) <scope << "queue://results"
 ```

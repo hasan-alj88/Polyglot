@@ -92,7 +92,7 @@ resourceTagWithinHost:    string[]?
 
 ## job:{jobId} (HASH)
 
-```polyglot
+```aljam3
 pipeline:           string    — pipeline name
 queue:              string    — assigned Dispatch Queue
 status:             string    — current #QueueState variant
@@ -123,7 +123,7 @@ The path doubles as the job's address in the hierarchy — parent/child relation
 
 Every job has a `status` field with one of these variants:
 
-```polyglot
+```aljam3
 #QueueState (10 variants)
 ├── #Pending              — in Dispatch Queue, waiting for dispatch
 ├── #Executing            — in Executing Set, actively running

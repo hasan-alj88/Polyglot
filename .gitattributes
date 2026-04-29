@@ -1,12 +1,12 @@
-# Polyglot Language Definition for GitHub Linguist
-*.pg linguist-language=Polyglot linguist-detectable=true
+# Aljam3 Language Definition for GitHub Linguist
+*.aj3 linguist-language=Aljam3 linguist-detectable=true
 
 # Documentation
 *.md linguist-documentation
 
 # Test files
-test-samples/*.pg linguist-vendored=false
-docs/project/examples/*.pg linguist-vendored=false
+test-samples/*.aj3 linguist-vendored=false
+docs/project/examples/*.aj3 linguist-vendored=false
 
 # Syntax highlighting files
 syntax-highlighting/* linguist-vendored=false

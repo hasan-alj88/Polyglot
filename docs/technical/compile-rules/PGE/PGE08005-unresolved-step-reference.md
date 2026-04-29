@@ -10,4 +10,4 @@ status: retired
 # Rule 8.5 — Unresolved Step Reference (Retired)
 `PGE08005`
 
-**Retired:** 2026-04-22. The `->` chain operator has been removed from Polyglot. Step references no longer exist. Labeled `[-]` calls with operation labels replace chains. See [[concepts/pipelines/chains]].
+**Retired:** 2026-04-22. The `->` chain operator has been removed from Aljam3. Step references no longer exist. Labeled `[-]` calls with operation labels replace chains. See [[concepts/pipelines/chains]].

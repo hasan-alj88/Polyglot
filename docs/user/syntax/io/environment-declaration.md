@@ -10,7 +10,7 @@ status: draft
 <!-- @c:environments -->
 Every pipeline declares its environment requirement using `(-) ;EnvName`. This is mandatory — the compiler raises PGE01036 if missing. See [[environments]] for `{;}` definition syntax.
 
-```polyglot
+```aljam3
 (-) <data#serial
 (-) >result#string
 (-) !File.NotFound
@@ -19,9 +19,9 @@ Every pipeline declares its environment requirement using `(-) ;EnvName`. This i
 
 **Reading order in `(-)`:** inputs (`<`), outputs (`>`), errors (`!`), environments (`;`).
 
-Pure Polyglot pipelines use `(-) ;Polyglot`. Foreign-environment pipelines reference a user-defined `{;}` environment and wire it through the [[pglib/pipelines/W/Env|-W.Env]] wrapper:
+Pure Aljam3 pipelines use `(-) ;Aljam3`. Foreign-environment pipelines reference a user-defined `{;}` environment and wire it through the [[pglib/pipelines/W/Env|-W.Env]] wrapper:
 
-```polyglot
+```aljam3
 {-} =ProcessData
    (-) <data#serial
    (-) >result#string
@@ -40,7 +40,7 @@ Pure Polyglot pipelines use `(-) ;Polyglot`. Foreign-environment pipelines refer
 
 A pipeline can declare multiple `(-) ;` lines when it calls sub-pipelines requiring different environments. Multiple declarations on separate lines are implicitly AND (all required). Use `(+)` on a new line with the same `;` prefix for OR (alternative environments):
 
-```polyglot
+```aljam3
 (-) ;PythonML
 (-) ;RustCore
 ```

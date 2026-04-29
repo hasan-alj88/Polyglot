@@ -13,7 +13,7 @@ Acquires file lock on setup, releases on cleanup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.File.Lock
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WFileLock"

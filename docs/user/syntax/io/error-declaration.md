@@ -11,7 +11,7 @@ status: draft
 <!-- @u:variable-lifecycle#Failed -->
 Pipelines that can raise errors declare them in the IO section using `(-) !ErrorName`:
 
-```polyglot
+```aljam3
 (-) <name#string
 (-) >validated#string
 (-) !Validation.Empty

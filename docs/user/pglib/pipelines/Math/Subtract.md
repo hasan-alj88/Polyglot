@@ -13,7 +13,7 @@ Subtracts the subtrahend from the minuend. Accepts exactly two inputs in positio
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Math.Subtract
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathSubtract"

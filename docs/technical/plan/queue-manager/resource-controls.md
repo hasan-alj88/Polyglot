@@ -9,7 +9,7 @@ updated: 2026-04-15
 <!-- @c:queue-manager/reactive-signals -->
 <!-- @c:queue-manager/process-isolation -->
 
-This document specifies the full resource control architecture for Polyglot's `-Q.Job.*` system: pause levels, throttling, the pause reason set, anti-flap mechanisms, default queue behaviors, compiler rules, and snapshot safety.
+This document specifies the full resource control architecture for Aljam3's `-Q.Job.*` system: pause levels, throttling, the pause reason set, anti-flap mechanisms, default queue behaviors, compiler rules, and snapshot safety.
 
 ## Resource Freeing Spectrum
 
@@ -154,13 +154,13 @@ If the set contains `{cpu, ram.hard}`, the job is paused at `Free.RAM.Hard` leve
 
 ## Anti-Flap Mechanisms
 
-Resource values fluctuate. Without hysteresis, a value oscillating around a threshold causes rapid pause/resume cycles (flapping). Polyglot provides two anti-flap mechanisms:
+Resource values fluctuate. Without hysteresis, a value oscillating around a threshold causes rapid pause/resume cycles (flapping). Aljam3 provides two anti-flap mechanisms:
 
 ### Spatial Hysteresis: `<margin` Parameter
 
 Different thresholds for pausing vs resuming. The `<margin` parameter on getter comparisons creates a gap:
 
-```polyglot
+```aljam3
 {Q} #JobRules:RAMGuard
    (#) <margin #float <~ 500.0
 
@@ -180,7 +180,7 @@ The 500 MB gap prevents flapping around the threshold.
 
 The pause reason set must be empty for a configured duration before the job actually resumes:
 
-```polyglot
+```aljam3
 {Q} #Queue:WorkerQueue
    [.] .resumeDebounce << #DT"10s"
 ```
@@ -189,11 +189,11 @@ Even if the resource recovers and the pause reason set empties, the TM waits 10 
 
 ### Reactive Event Evaluation
 
-Because Polyglot uses a reactive trigger architecture (`-QT.*`), there is no generic "tick period" that evaluates every rule sequentially. Rules are compiled into signal maps and evaluate only when the underlying resource monitor emits a state change or edge trigger.
+Because Aljam3 uses a reactive trigger architecture (`-QT.*`), there is no generic "tick period" that evaluates every rule sequentially. Rules are compiled into signal maps and evaluate only when the underlying resource monitor emits a state change or edge trigger.
 
 Smallest possible resolution depends on the resource watcher's polling interval, which is configurable per-queue:
 
-```polyglot
+```aljam3
 {Q} #Queue:WorkerQueue
    [.] .pollPeriod << #DT"5s"
 ```
@@ -213,7 +213,7 @@ Every queue includes these built-in rules unless explicitly overridden. They are
 
 Override by setting the default to false:
 
-```polyglot
+```aljam3
 {Q} #Queue:MyQueue
    [.] .defaults.ramOverflow << false
 ```

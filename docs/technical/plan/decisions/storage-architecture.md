@@ -11,7 +11,7 @@ updated: 2026-04-28
 
 ## Context
 
-Polyglot requires highly scalable storage solutions for two distinct domains:
+Aljam3 requires highly scalable storage solutions for two distinct domains:
 1. **Queues & Job Orchestration**: High-throughput, sub-millisecond dispatching, tracking of active/suspended jobs, and parent-child job hierarchy for kill propagation.
 2. **Metadata Data Tree (`%`)**: Central registry for all schema definitions (`%definition`), runtime variable instances (`%$`), and packages (`%@`). This tree is heavily path-based (`%-:ProcessData:0.<.filepath`) and dynamically expands at runtime.
 
@@ -28,13 +28,13 @@ Redis will be the exclusive store for all orchestration data.
 
 ### 2. PostgreSQL (JSONB) for the `%` Metadata Data Tree
 PostgreSQL replaces the ambiguous "NoSQL" requirement. It serves as the persistent, canonical document store.
-- **`%` Tree Storage**: All Polyglot serialized objects, schemas, and live instances are saved into `JSONB` columns, leveraging Postgres's native JSON path operators.
+- **`%` Tree Storage**: All Aljam3 serialized objects, schemas, and live instances are saved into `JSONB` columns, leveraging Postgres's native JSON path operators.
 - **Memory Safety**: Writing the massive data tree to disk entirely eliminates the RAM-exhaustion risks associated with storing millions of variable instances in an in-memory database like Redis.
 - **Rust Integration**: The system will utilize `sqlx` to guarantee compile-time query verification against the Postgres schema.
 
 ## Alternatives Considered
 
-- **ValkeyJSON (Unified Stack)**: Rejected due to the risk of server RAM exhaustion when Polyglot processes gigabyte-sized variable instances.
+- **ValkeyJSON (Unified Stack)**: Rejected due to the risk of server RAM exhaustion when Aljam3 processes gigabyte-sized variable instances.
 - **SurrealDB**: Native graph and document store. Rejected because its BSL 1.1 license is not strictly OSI-approved Open Source, which conflicts with project philosophy.
 - **MongoDB**: Elite document store. Rejected due to its restrictive SSPL license and lack of lightweight "local-first" ergonomics.
 

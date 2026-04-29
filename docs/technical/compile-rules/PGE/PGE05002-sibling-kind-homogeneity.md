@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler inspects each nesting level within a `{#}` block and checks whether all siblings have `;type` (value) or none do (enum). A mix triggers PGE05002.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all enum fields at top level
 {#} #Severity
    [.] .Critical
@@ -26,7 +26,7 @@ severity: error
    [.] .Info
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ all value fields at top level
 {#} #UserRecord
    [.] .name#string
@@ -34,7 +34,7 @@ severity: error
    [.] .email#string
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ enum at top level with nested value sub-fields — different levels
 {#} #Severity
    [.] .Critical
@@ -47,14 +47,14 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE05002 — mixing enum and value fields at the same level
 {#} #Bad
    [.] .Active                         [ ] enum field (no ;type)
    [.] .count#int <~ 0                 [ ] ✗ PGE05002 — value field among enum siblings
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE05002 — mixing kinds at same level
 {#} #Status
    [.] .Running

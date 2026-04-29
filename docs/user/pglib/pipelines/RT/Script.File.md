@@ -13,7 +13,7 @@ Run a source file with variable bindings.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -RT.<Lang>.Script.File
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RtScriptFile"
@@ -46,7 +46,7 @@ The compiler validates that `<Bind` variable names exist as identifiers in the s
 
 ## Example
 
-```polyglot
+```aljam3
 [-] -RT.Python.Script.File
    (-) <env#PyEnv << $pyenv
    (-) <Bind#serial << {"target_dir": $targetDir}

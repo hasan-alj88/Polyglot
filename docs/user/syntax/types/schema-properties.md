@@ -51,7 +51,7 @@ When `%##Fields` receives an enum reference, the compiler reads the enum's varia
 
 `#FieldsDescriptor` is the enum that governs `%##Fields`:
 
-```polyglot
+```aljam3
 {#} #FieldsDescriptor
    [#] ##Scalar
    [#] %##Active << #ActiveKind.One
@@ -97,7 +97,7 @@ Collections used as value types require explicit `%##Depth.Max` -- the compiler 
 
 `#Bound` is the type used by `%##Count` and `%##Depth.Max`. It has an `.Inf` variant aliased as `#Inf`, following the `#Boolean.True` → `#True` pattern:
 
-```polyglot
+```aljam3
 {#} #Bound
    [#] ##Int
    [#] ##Inf
@@ -143,7 +143,7 @@ The `###` prefix describes the nature of leaf content in a type's fields. There 
 
 Examples from the type hierarchy:
 
-```polyglot
+```aljam3
 {#} #Boolean
    [#] ##Enum
    [#] ###ScalarEnum
@@ -169,7 +169,7 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
 
 ### Depth Schemas
 
-```polyglot
+```aljam3
 {#} ##Leaf
    [#] %##Depth.Max << 0
 
@@ -182,7 +182,7 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
 
 ### Value Schema
 
-```polyglot
+```aljam3
 {#} ##Inf
    [.] .Inf
 ```
@@ -193,7 +193,7 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
 
 ### Classification Schemas
 
-```polyglot
+```aljam3
 {#} ##Enum
    [#] ##Flat
    [#] %##Active << #ActiveKind.One
@@ -204,7 +204,7 @@ Schema types are `{#}` definitions that set `%##` properties to describe common 
 
 ### Collection Schemas
 
-```polyglot
+```aljam3
 {#} ##Record
    (#) <#Fields << ##Enum
    (#) <#ValueType <~ #

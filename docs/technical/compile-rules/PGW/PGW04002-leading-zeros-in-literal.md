@@ -12,12 +12,12 @@ severity: warning
 <!-- @u:syntax/blocks -->
 <!-- @u:syntax/operators -->
 
-**Statement:** An `int` or `float` literal with unnecessary leading zeros produces a warning. Polyglot has no octal notation — `007` is decimal seven, not octal seven — but leading zeros may confuse developers familiar with languages that use `0`-prefixed octal.
+**Statement:** An `int` or `float` literal with unnecessary leading zeros produces a warning. Aljam3 has no octal notation — `007` is decimal seven, not octal seven — but leading zeros may confuse developers familiar with languages that use `0`-prefixed octal.
 **Rationale:** Leading zeros are syntactically valid per the EBNF but can cause confusion. The value is always interpreted as decimal. This warning encourages clearer literal formatting.
 **Detection:** The compiler checks if an `int` or `float` literal starts with `0` followed by additional digits (excluding `0.` for floats, which is normal notation).
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ no leading zeros
 [-] $x#int << 7
 [-] $y#float << 0.50
@@ -25,7 +25,7 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW04002 — leading zeros in int literal
 [-] $x#int << 007
 
@@ -36,4 +36,4 @@ severity: warning
 [-] $z#int << 0042
 ```
 
-**Diagnostic:** "Literal `007` has leading zeros — Polyglot uses decimal only (not octal)"
+**Diagnostic:** "Literal `007` has leading zeros — Aljam3 uses decimal only (not octal)"

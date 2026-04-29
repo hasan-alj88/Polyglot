@@ -10,7 +10,7 @@ updated: 2026-04-09
 
 ### #Precision
 
-```polyglot
+```aljam3
 {#} #Precision
    [%] .description << "Date-time resolution level"
    [%] .version << "1.0.0"
@@ -32,7 +32,7 @@ updated: 2026-04-09
 
 `#RecurrencePattern.Custom` has a nested `.rule#string` value sub-field for user-defined recurrence rules (cron-like or RRULE).
 
-```polyglot
+```aljam3
 {#} #RecurrencePattern
    [%] .description << "Recurrence frequency pattern"
    [%] .version << "1.0.0"
@@ -49,7 +49,7 @@ updated: 2026-04-09
 
 ### #CalendarSystem
 
-```polyglot
+```aljam3
 {#} #CalendarSystem
    [%] .description << "Supported calendar system identifier"
    [%] .version << "1.0.0"
@@ -71,7 +71,7 @@ updated: 2026-04-09
 
 ### #Weekday
 
-```polyglot
+```aljam3
 {#} #Weekday
    [%] .description << "Day of the week"
    [%] .version << "1.0.0"
@@ -91,7 +91,7 @@ updated: 2026-04-09
 
 Gregorian month names. Other calendars define their own month enums.
 
-```polyglot
+```aljam3
 {#} #Month
    [%] .description << "Gregorian calendar month"
    [%] .version << "1.0.0"
@@ -114,7 +114,7 @@ Gregorian month names. Other calendars define their own month enums.
 
 ### #DayBoundary
 
-```polyglot
+```aljam3
 {#} #DayBoundary
    [%] .description << "When a calendar day begins"
    [%] .version << "1.0.0"
@@ -131,7 +131,7 @@ Gregorian month names. Other calendars define their own month enums.
 
 Each variant carries a `.config#BusinessWeek` sub-field that defines the week configuration for that system.
 
-```polyglot
+```aljam3
 {#} #WeekSystem
    [%] .description << "Week system standard"
    [%] .version << "1.0.0"
@@ -152,7 +152,7 @@ Each variant carries a `.config#BusinessWeek` sub-field that defines the week co
 
 All fields must be explicitly set by the user. No defaults are assumed for regional norms.
 
-```polyglot
+```aljam3
 {#} #BusinessWeek
    [%] .description << "Configurable work/off day schedule"
    [%] .version << "1.0.0"
@@ -167,7 +167,7 @@ All fields must be explicitly set by the user. No defaults are assumed for regio
 
 ### #MonthStructure
 
-```polyglot
+```aljam3
 {#} #MonthStructure
    [%] .description << "How a calendar organizes month lengths"
    [%] .version << "1.0.0"

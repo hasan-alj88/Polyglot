@@ -21,7 +21,7 @@ pglib structs with value fields include `#path`, `#Queue`, and `#DateTime` (see 
 
 In type annotations (after `#`), nested type refs drop the `#` prefix — the compiler knows `#` starts a type context:
 
-```polyglot
+```aljam3
 [-] $user#UserRecord <~ ...
 [-] $users#array:UserRecord <~ {}
 (-) <incoming#Alert
@@ -38,7 +38,7 @@ Each level in a struct must be homogeneous in two ways (see [[identifiers#Serial
 
 A field whose type is itself a struct defines the later levels. It is invalid to declare sub-levels after a field typed as a struct — the struct's definition already specifies those levels.
 
-```polyglot
+```aljam3
 {#} #Config
    [.] .timeout#int
    [.] .server#ServerInfo      [ ] later levels defined by #ServerInfo
@@ -52,7 +52,7 @@ A field whose type is itself a struct defines the later levels. It is invalid to
 
 Curly braces with comma-separated values create inline data:
 
-```polyglot
+```aljam3
 [-] $values#array <~ {1, 2, 3, 4, 5}
 ```
 
@@ -73,7 +73,7 @@ In `{#}` struct definitions, fields are either **enum fields** (`###Enum`) or **
 - All siblings at the same level must be the same kind — mixing raises PGE05005
 - Enum fields can nest value sub-fields
 
-```polyglot
+```aljam3
 {#} #Severity
    [.] .Critical
    [.] .Error

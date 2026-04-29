@@ -13,7 +13,7 @@ Immediately terminate a Job with no cleanup. Terminal — Job state destroyed in
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Kill.Now
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobKillNow"
@@ -49,9 +49,9 @@ Everything freed immediately. No `[/]` cleanup runs. The Job goes directly to De
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates kill condition, sends command signal |
-| 2. NATS command | `polyglot.command.job.kill.now.{jobId}` | `{jobId}` |
+| 2. NATS command | `aljam3.command.job.kill.now.{jobId}` | `{jobId}` |
 | 3. QH executes | Queue Handler | Status-aware: remove from current set/queue, DEL job:{jobId} |
-| 4. Control signal | `polyglot.queue.control.{jobId}.job.kill.now` | `{jobId}` → Runner (if was executing/teardown.executing) |
+| 4. Control signal | `aljam3.queue.control.{jobId}.job.kill.now` | `{jobId}` → Runner (if was executing/teardown.executing) |
 | 5. Unix mechanism | Runner | `SIGKILL` — immediate termination, no cleanup |
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.

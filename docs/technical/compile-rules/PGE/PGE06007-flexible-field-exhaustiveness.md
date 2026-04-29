@@ -17,7 +17,7 @@ split_from: PGE06001
 **Detection:** When a `[?]` block branches on a flexible field (`:` type), the compiler checks for a `[?] *?` branch. If absent, PGE06007 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ flexible field — *? required
 [?] $config:mode
    [?] "fast"
@@ -27,7 +27,7 @@ split_from: PGE06001
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE06007 — flexible field without *?
 [?] $config:mode
    [?] "fast"

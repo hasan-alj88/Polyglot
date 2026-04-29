@@ -13,7 +13,7 @@ Serialize a data tree to a structured data file. Format is auto-detected from th
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Serial.Write
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileSerialWrite"

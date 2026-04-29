@@ -8,25 +8,25 @@ status: draft
 # Native Dispatch
 
 <!-- @c:spec/type-identity -->
-<!-- @c:spec/polyglot-sdk -->
+<!-- @c:spec/aljam3-sdk -->
 <!-- @concepts/pipelines/INDEX -->
 <!-- @c:pglib/types/NativeKind -->
 
-The native dispatch layer bridges Polyglot's runtime and host-language functions. When a subsystem encounters a call to a `{N}` native pipeline, the dispatch layer resolves the function, serializes inputs, executes the native function, and deserializes outputs back into Polyglot variables.
+The native dispatch layer bridges Aljam3's runtime and host-language functions. When a subsystem encounters a call to a `{N}` native pipeline, the dispatch layer resolves the function, serializes inputs, executes the native function, and deserializes outputs back into Aljam3 variables.
 
 ## Terminology
 
 | Term | Definition |
 |------|-----------|
-| Native pipeline | A `{N}` definition — implemented in a host language, not Polyglot Code |
-| Derived pipeline | A `{-}` definition — full Polyglot execution body |
+| Native pipeline | A `{N}` definition — implemented in a host language, not Aljam3 Code |
+| Derived pipeline | A `{-}` definition — full Aljam3 execution body |
 | Host language | The programming language implementing a native function (Rust, Go, etc.) |
 | Native registry | Compile-time lookup table mapping pipeline names to native function bindings |
 | Wire format | JSON — the serialization format for data crossing the native boundary |
 | Dispatch | The act of resolving a native function name, serializing inputs, calling the function, and deserializing outputs |
-| Subsystem | One of four Polyglot Service components: Trigger Monitor, Queue Handler, Runner, PGCompiler |
+| Subsystem | One of four Aljam3 Service components: Trigger Monitor, Queue Handler, Runner, PGCompiler |
 
-See [[reference/glossary]] for canonical Polyglot terminology.
+See [[reference/glossary]] for canonical Aljam3 terminology.
 
 ## Subsystem Architecture
 
@@ -61,7 +61,7 @@ Queue Handler
 
 Runner
    → dispatches -File.Text.Read, -Math.Add, -DB.Query, ... (Execution)
-   → dispatches -W.Polyglot, -W.DB.Connection, ... (Wrapper — at [\] and [/] boundaries)
+   → dispatches -W.Aljam3, -W.DB.Connection, ... (Wrapper — at [\] and [/] boundaries)
 
 PGCompiler
    → not runtime dispatch — reads {N} definitions at compile time
@@ -70,7 +70,7 @@ PGCompiler
 
 ## YAML Configuration
 
-The Polyglot service configuration file selects which host language implements each native operation. The config uses **subsystem defaults with per-operation overrides**.
+The Aljam3 service configuration file selects which host language implements each native operation. The config uses **subsystem defaults with per-operation overrides**.
 
 ### Schema
 
@@ -124,7 +124,7 @@ At service startup, each subsystem validates its registry entries:
 
 ### Compile-Time Construction
 
-The compiler scans all pglib `.pg` files, collects `{N}` definitions, and emits a **native registry** — a lookup table included in the compiled output.
+The compiler scans all pglib `.aj3` files, collects `{N}` definitions, and emits a **native registry** — a lookup table included in the compiled output.
 
 For each `{N}` definition, the compiler extracts:
 
@@ -164,7 +164,7 @@ For each `{N}` definition, the compiler extracts:
 }
 ```
 
-The `inputs` and `outputs` arrays in the registry entry serve as **type mapping descriptors** — the [[polyglot-sdk|c:Polyglot SDK]] uses these same descriptors to determine how to serialize/deserialize values for each IO port. See [[polyglot-sdk#Type Mapping Descriptors]] for how the SDK consumes these descriptors.
+The `inputs` and `outputs` arrays in the registry entry serve as **type mapping descriptors** — the [[aljam3-sdk|c:Aljam3 SDK]] uses these same descriptors to determine how to serialize/deserialize values for each IO port. See [[aljam3-sdk#Type Mapping Descriptors]] for how the SDK consumes these descriptors.
 
 ### Runtime Loading
 
@@ -190,7 +190,7 @@ Step 2: Registry lookup
    │  Validates call-site IO matches registered IO
    ▼
 Step 3: Serialize inputs
-   │  Converts Polyglot $ variables → JSON data tree
+   │  Converts Aljam3 $ variables → JSON data tree
    │  Applies type annotations from IO schema
    ▼
 Step 4: Execute
@@ -202,7 +202,7 @@ Step 5: Receive output
    │  Subsystem reads the result
    ▼
 Step 6: Deserialize
-   │  Parses JSON output → Polyglot $ variables
+   │  Parses JSON output → Aljam3 $ variables
    │  Applies type annotations from IO schema
    │  Variables become Final in the pipeline
 ```
@@ -230,7 +230,7 @@ The compiler has already validated call-site IO at compile time (PGE08008, PGE08
 
 ### Step 3 — Serialize Inputs
 
-All Polyglot data is serialized strings (see [[spec/type-identity]]). The dispatch layer serializes pipeline inputs into a JSON envelope:
+All Aljam3 data is serialized strings (see [[spec/type-identity]]). The dispatch layer serializes pipeline inputs into a JSON envelope:
 
 ```json
 {
@@ -255,7 +255,7 @@ The subsystem invokes the native function. The invocation mechanism is host-lang
 | Go | Function pointer from shared library or plugin |
 | C/C++ | FFI call via C ABI |
 
-The native function receives the JSON input as a string (or byte buffer). It runs entirely within its host language runtime. The function has no access to Polyglot runtime state — only the serialized inputs.
+The native function receives the JSON input as a string (or byte buffer). It runs entirely within its host language runtime. The function has no access to Aljam3 runtime state — only the serialized inputs.
 
 ### Step 5 — Receive Output
 
@@ -287,7 +287,7 @@ The native function returns one of two results:
 
 ### Step 6 — Deserialize
 
-On success, the subsystem deserializes JSON outputs into Polyglot `$` variables. Each output becomes Final in the pipeline's IO state.
+On success, the subsystem deserializes JSON outputs into Aljam3 `$` variables. Each output becomes Final in the pipeline's IO state.
 
 On error, the subsystem validates the `error.id` against the declared errors for this `{N}` definition:
 - **Declared error** → propagates to the pipeline's `[!]` error handler or `!<` / `!>` fallback
@@ -336,12 +336,12 @@ Each value in `inputs` and `outputs` is a typed JSON object:
 
 ```json
 {
-  "type": "<polyglot_type>",
+  "type": "<aljam3_type>",
   "value": <json_value>
 }
 ```
 
-| Polyglot Type | JSON `value` | Example |
+| Aljam3 Type | JSON `value` | Example |
 |---------------|-------------|---------|
 | `#RawString` | string | `"hello"` |
 | `#string` | string | `"hello"` |
@@ -355,7 +355,7 @@ Each value in `inputs` and `outputs` is a typed JSON object:
 | `#array:T` | array of typed values | `[{ "type": "string", "value": "a" }, ...]` |
 | enum | string (variant name) | `"Active"` |
 
-**Key rule:** All leaf values are strings. This preserves Polyglot's "all data is serialized strings" principle (see [[spec/type-identity]]) across the native boundary. Numeric types use string representation to avoid floating-point precision loss.
+**Key rule:** All leaf values are strings. This preserves Aljam3's "all data is serialized strings" principle (see [[spec/type-identity]]) across the native boundary. Numeric types use string representation to avoid floating-point precision loss.
 
 ### Nested Data Trees
 
@@ -390,7 +390,7 @@ function execute(request_json: string) -> string
 
 - **Input:** JSON string matching the request envelope
 - **Output:** JSON string matching the response envelope (success or error)
-- The function is pure from Polyglot's perspective — no side-channel access to Polyglot state
+- The function is pure from Aljam3's perspective — no side-channel access to Aljam3 state
 
 ### Language-Specific Signatures
 
@@ -465,29 +465,29 @@ Trigger natives receive trigger configuration as input and return `>IsTriggered#
 
 ### -T.Call Signal Path
 
-<!-- @c:spec/polyglot-sdk -->
+<!-- @c:spec/aljam3-sdk -->
 <!-- @u:queue-manager/nats-namespace -->
 <!-- @u:queue-manager/reactive-signals -->
-Related: [[polyglot-sdk]], [[queue-manager/nats-namespace]], [[queue-manager/reactive-signals]]
+Related: [[aljam3-sdk]], [[queue-manager/nats-namespace]], [[queue-manager/reactive-signals]]
 
-`-T.Call` is unique among triggers. Other triggers (`-T.Daily`, `-T.Webhook`, `-T.Folder.NewFiles`) are evaluated by the TM in its polling loop — fire-and-forget events that enqueue jobs with no caller waiting for a response. `-T.Call` uses **NATS request-reply**: the [[polyglot-sdk|c:Polyglot SDK]] publishes a call request, the TM processes it, and the TM publishes the result back to the SDK. The caller blocks until the response arrives.
+`-T.Call` is unique among triggers. Other triggers (`-T.Daily`, `-T.Webhook`, `-T.Folder.NewFiles`) are evaluated by the TM in its polling loop — fire-and-forget events that enqueue jobs with no caller waiting for a response. `-T.Call` uses **NATS request-reply**: the [[aljam3-sdk|c:Aljam3 SDK]] publishes a call request, the TM processes it, and the TM publishes the result back to the SDK. The caller blocks until the response arrives.
 
 #### TM Subscription
 
 At startup, the Trigger Monitor subscribes to the NATS wildcard subject:
 
 ```text
-polyglot.call.*
+aljam3.call.*
 ```
 
-When a message arrives on `polyglot.call.{pipeline_name}`, the TM extracts the pipeline name from the subject suffix and begins processing the call request.
+When a message arrives on `aljam3.call.{pipeline_name}`, the TM extracts the pipeline name from the subject suffix and begins processing the call request.
 
 #### Pipeline Matching
 
 The TM searches its trigger registry for a pipeline whose trigger declaration matches the requested name:
 
 ```text
-Requested subject: polyglot.call.ProcessData
+Requested subject: aljam3.call.ProcessData
     → TM looks for pipeline with: [T] -T.Call
     → Pipeline name matches "ProcessData"
     → Found: proceed to binding storage
@@ -506,7 +506,7 @@ If no pipeline with `-T.Call` matches the requested name, the TM publishes an er
 }
 ```
 
-The response is published to `polyglot.result.{correlation_id}` using the correlation ID from the request payload. See [[polyglot-sdk#call]] for the full request/response payload schema.
+The response is published to `aljam3.result.{correlation_id}` using the correlation ID from the request payload. See [[aljam3-sdk#call]] for the full request/response payload schema.
 
 #### Binding Storage
 
@@ -515,7 +515,7 @@ The TM writes SDK-provided input bindings to the NoSQL variable store (Redis). E
 ```text
 job:{UID}:port:{port_name}    — one key per input binding (typed JSON envelope)
 job:{UID}:meta:correlation_id  — the SDK's correlation UUID for result routing
-job:{UID}:meta:caller_topic    — polyglot.result.{correlation_id} (pre-computed)
+job:{UID}:meta:caller_topic    — aljam3.result.{correlation_id} (pre-computed)
 ```
 
 The `{UID}` is generated by the TM at this point — the SDK does not control job IDs. Each port value is stored as the typed JSON envelope exactly as received from the SDK (see [[native-dispatch#Value Encoding]]).
@@ -526,15 +526,15 @@ The `{UID}` is generated by the TM at this point — the SDK does not control jo
 HSET job:abc123:port:input_path  '{"type": "path", "value": "/data/raw.csv"}'
 HSET job:abc123:port:batch_size  '{"type": "int", "value": "100"}'
 SET  job:abc123:meta:correlation_id  "550e8400-e29b-41d4-a716-446655440000"
-SET  job:abc123:meta:caller_topic    "polyglot.result.550e8400-e29b-41d4-a716-446655440000"
+SET  job:abc123:meta:caller_topic    "aljam3.result.550e8400-e29b-41d4-a716-446655440000"
 ```
 
 #### Enqueue
 
-After storing bindings, the TM emits the standard `polyglot.command.enqueue` signal with the job metadata. From this point, the job follows the normal QH → Runner execution path — the QH and Runner have no knowledge that this job originated from an SDK call.
+After storing bindings, the TM emits the standard `aljam3.command.enqueue` signal with the job metadata. From this point, the job follows the normal QH → Runner execution path — the QH and Runner have no knowledge that this job originated from an SDK call.
 
 ```text
-polyglot.command.enqueue {
+aljam3.command.enqueue {
   jobId: "abc123",
   pipeline: "ProcessData",
   queue: <from pipeline's {Q} declaration>,
@@ -550,8 +550,8 @@ See [[queue-manager/reactive-signals#command.enqueue]] for the full signal schem
 The TM subscribes to Runner acknowledgment signals for the job:
 
 ```text
-polyglot.runner.completed.{jobId}   — job finished successfully
-polyglot.runner.failed.{jobId}      — job failed with error
+aljam3.runner.completed.{jobId}   — job finished successfully
+aljam3.runner.failed.{jobId}      — job failed with error
 ```
 
 **On success (`runner.completed`):**
@@ -571,7 +571,7 @@ polyglot.runner.failed.{jobId}      — job failed with error
 }
 ```
 
-4. TM publishes to `polyglot.result.{correlation_id}`
+4. TM publishes to `aljam3.result.{correlation_id}`
 
 **On failure (`runner.failed`):**
 
@@ -590,9 +590,9 @@ polyglot.runner.failed.{jobId}      — job failed with error
 }
 ```
 
-4. TM publishes to `polyglot.result.{correlation_id}`
+4. TM publishes to `aljam3.result.{correlation_id}`
 
-The SDK wraps pipeline errors as `!SDK.PipelineError` — see [[polyglot-sdk#call]] for error handling on the SDK side.
+The SDK wraps pipeline errors as `!SDK.PipelineError` — see [[aljam3-sdk#call]] for error handling on the SDK side.
 
 #### Sequence Diagram
 
@@ -600,14 +600,14 @@ The SDK wraps pipeline errors as `!SDK.PipelineError` — see [[polyglot-sdk#cal
 SDK              NATS                  TM                Redis              QH              Runner
  │                │                    │                   │                 │                │
  │  call("ProcessData", bindings)      │                   │                 │                │
- │  serialize via to_polyglot()        │                   │                 │                │
+ │  serialize via to_aljam3()        │                   │                 │                │
  │                │                    │                   │                 │                │
- │  PUBLISH polyglot.call.ProcessData  │                   │                 │                │
+ │  PUBLISH aljam3.call.ProcessData  │                   │                 │                │
  │───────────────>│                    │                   │                 │                │
  │                │  deliver           │                   │                 │                │
  │                │───────────────────>│                   │                 │                │
  │                │                    │                   │                 │                │
- │  SUBSCRIBE polyglot.result.{uuid}   │  match pipeline   │                 │                │
+ │  SUBSCRIBE aljam3.result.{uuid}   │  match pipeline   │                 │                │
  │───────────────>│                    │  "ProcessData"    │                 │                │
  │                │                    │  has [T] -T.Call   │                 │                │
  │                │                    │                   │                 │                │
@@ -634,13 +634,13 @@ SDK              NATS                  TM                Redis              QH  
  │                │                    │  GET job:{UID}:meta:caller_topic    │                │
  │                │                    │──────────────────>│                 │                │
  │                │                    │                   │                 │                │
- │                │  PUBLISH polyglot.result.{uuid}        │                 │                │
+ │                │  PUBLISH aljam3.result.{uuid}        │                 │                │
  │                │<───────────────────│                   │                 │                │
  │                │                    │                   │                 │                │
  │  receive result│                    │                   │                 │                │
  │<───────────────│                    │                   │                 │                │
  │                │                    │                   │                 │                │
- │  deserialize via from_polyglot()    │                   │                 │                │
+ │  deserialize via from_aljam3()    │                   │                 │                │
  │  return to foreign code             │                   │                 │                │
 ```
 
@@ -648,11 +648,11 @@ SDK              NATS                  TM                Redis              QH  
 
 | Aspect | -T.Call | Other Triggers (-T.Daily, -T.Webhook, ...) |
 |--------|--------|---------------------------------------------|
-| Signal source | SDK via NATS `polyglot.call.*` | TM evaluation loop (polling/signal) |
+| Signal source | SDK via NATS `aljam3.call.*` | TM evaluation loop (polling/signal) |
 | Response | Synchronous request-reply via NATS | None (fire-and-forget) |
 | Input bindings | SDK provides via request payload | Trigger native provides `>IsTriggered` + outputs |
 | Correlation | Per-call UUID tracks request→response | None — no caller waiting |
-| TM subscription | `polyglot.call.*` wildcard | Internal evaluation schedule |
+| TM subscription | `aljam3.call.*` wildcard | Internal evaluation schedule |
 | Redis metadata | `job:{UID}:meta:correlation_id`, `caller_topic` | None — no result routing needed |
 | Error routing | Errors published to SDK via NATS | Errors logged, job state updated |
 
@@ -673,7 +673,7 @@ Trigger Monitor evaluates resource condition
 
 **Dispatched by:** Runner
 **When:** Runner enters `[\]` setup or `[/]` cleanup phase of a wrapper
-**Examples:** `-W.Polyglot`, `-W.DB.Connection`, `-W.RT.Python`
+**Examples:** `-W.Aljam3`, `-W.DB.Connection`, `-W.RT.Python`
 
 ```text
 Runner starts pipeline execution
@@ -701,9 +701,9 @@ Intrinsics are `{N}` definitions with `#NativeKind.Intrinsic`. They have no host
 
 ### -DoNothing
 
-No-op pipeline. Produces no output, performs no action. Used as an explicit empty branch (`[-] -DoNothing` in `[?]` conditionals) and as the default wrapper body (`-W.Polyglot` calls `-DoNothing` for setup/cleanup).
+No-op pipeline. Produces no output, performs no action. Used as an explicit empty branch (`[-] -DoNothing` in `[?]` conditionals) and as the default wrapper body (`-W.Aljam3` calls `-DoNothing` for setup/cleanup).
 
-```polyglot
+```aljam3
 {N} -DoNothing
    [%] .Kind << #NativeKind.Intrinsic
    [%] .description << "No-op pipeline"
@@ -818,7 +818,7 @@ The `lib/` directory contains host-language packages organized by language and s
 ```text
 lib/
 ├── rust/
-│   ├── integrator/        SDK: call Polyglot + be called by Polyglot
+│   ├── integrator/        SDK: call Aljam3 + be called by Aljam3
 │   ├── tm/                Trigger Monitor native operations
 │   ├── qh/                Queue Handler native operations
 │   ├── runner/            Runner native operations (Execution + Wrapper)
@@ -850,17 +850,17 @@ Each native function in these folders must implement the [[#Native Function Cont
 
 The `integrator/` folder contains the bidirectional SDK for each language:
 
-**Host → Polyglot (call direction):**
-- Connect to the Polyglot Service
+**Host → Aljam3 (call direction):**
+- Connect to the Aljam3 Service
 - Submit pipeline execution requests
 - Receive pipeline results
 
-**Polyglot → Host (callback direction):**
+**Aljam3 → Host (callback direction):**
 - Register native functions callable by `-RT.*` runtime pipelines
-- Receive serialized inputs from Polyglot
-- Return serialized outputs to Polyglot
+- Receive serialized inputs from Aljam3
+- Return serialized outputs to Aljam3
 
-The integrator SDK uses the same JSON wire format as native dispatch. This means an integrator's callback functions follow the identical [[#Native Function Contract]]. For the SDK's public API and serialization algorithm, see [[polyglot-sdk]].
+The integrator SDK uses the same JSON wire format as native dispatch. This means an integrator's callback functions follow the identical [[#Native Function Contract]]. For the SDK's public API and serialization algorithm, see [[aljam3-sdk]].
 
 ### Adding a New Language
 
@@ -869,7 +869,7 @@ To add support for a new host language (e.g., Go):
 1. Create `lib/go/` with the standard subfolder structure
 2. Implement the native function contract in Go (JSON in → JSON out)
 3. Implement each native function listed in the native registry for the target subsystem(s)
-4. Add `.<Language>` bindings to `{N}` definitions in pglib `.pg` files (e.g., `[%] .Go << "FileTextRead"`)
+4. Add `.<Language>` bindings to `{N}` definitions in pglib `.aj3` files (e.g., `[%] .Go << "FileTextRead"`)
 5. Update the YAML config to reference the new language in `defaults` or `overrides`
 6. Build the integrator SDK for bidirectional communication
 
@@ -881,8 +881,8 @@ The JSON wire format ensures all languages use the same boundary protocol. No ch
 |---------|------|----------|----------|
 | Registry miss | Pipeline name not in dispatch table | Startup error | Fix YAML config or add `{N}` definition |
 | Missing binding | `{N}` has no `.<Language>` for configured language | Startup error (PGE01028e at compile time) | Add `.<Language>` field to `{N}` definition |
-| Serialization failure | Polyglot variable cannot be encoded to JSON | Runtime fatal: `!RT.SerializationError` | Bug in serializer — fix type mapping |
-| Deserialization failure | Native output JSON cannot be parsed to Polyglot types | Runtime fatal: `!RT.DeserializationError` | Native function returned malformed JSON |
+| Serialization failure | Aljam3 variable cannot be encoded to JSON | Runtime fatal: `!RT.SerializationError` | Bug in serializer — fix type mapping |
+| Deserialization failure | Native output JSON cannot be parsed to Aljam3 types | Runtime fatal: `!RT.DeserializationError` | Native function returned malformed JSON |
 | Undeclared error | Native function returns error not in `(-) !` declarations | Runtime fatal: `!RT.NativeUndeclaredError` | Fix native function to only return declared errors |
 | Native crash | Host function panics, segfaults, or throws unhandled exception | Runtime fatal: `!RT.NativeCrash` | Fix native function implementation |
 | Timeout | Native function exceeds execution time limit | Runtime fatal: `!RT.NativeTimeout` | Fix native function or increase timeout |
@@ -967,7 +967,7 @@ Runner                 Native Function       Error Handler
 | [[pglib/types/NativeKind\|#NativeKind]] | The 5 kind variants |
 | [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] | High-level distinction |
 | [[spec/type-identity\|Type Identity]] | "All data is serialized strings" foundation |
-| [[spec/polyglot-sdk\|Polyglot SDK]] | SDK public API, type mapping, and serialization algorithm |
+| [[spec/aljam3-sdk\|Aljam3 SDK]] | SDK public API, type mapping, and serialization algorithm |
 | [[spec/metadata-tree/branches\|Metadata Tree Branches]] | Pipeline/job structure |
 | [[queue-manager/end-to-end-flow\|End-to-End Flow]] | Where native dispatch fits in execution |
 | [[pglib/pipelines/#\|-#.* Pipelines]] | Intrinsic catalog source |

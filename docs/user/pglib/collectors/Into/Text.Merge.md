@@ -11,7 +11,7 @@ K-way merge collector that applies multiple diff sets against a shared base text
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Into.Text.Merge
    (*) <diffs << $myDiffs
    (*) <base << $originalText
@@ -57,7 +57,7 @@ The `<conflict` parameter accepts a [[pglib/types/MergeStrategy\|#MergeStrategy]
 
 The canonical pattern pairs `=Text.Diff` with `*Into.Text.Merge`:
 
-```polyglot
+```aljam3
 [=] =ForEach.Text.Lines
    (=) <text << $originalText
    (=) >line >> $line

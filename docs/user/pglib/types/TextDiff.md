@@ -19,7 +19,7 @@ A single diff entry representing one line-level change in a text comparison. Pro
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #TextDiff
    [%] .description << "Single line-level diff entry"
    [#] ##Flat

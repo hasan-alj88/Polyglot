@@ -11,7 +11,7 @@ Expands a collection and reduces all numeric values to their arithmetic mean.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =*Agg.Average
    (=) <array << $values
    (*) >average >> $mean
@@ -31,7 +31,7 @@ Expands a collection and reduces all numeric values to their arithmetic mean.
 
 ## Equivalent Expand-Collect
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $values
    (=) >item >> $value

@@ -22,7 +22,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 {-} -Repeat
    (-) %InlineString << "{text}:{count}"
    (-) <text#string
@@ -30,7 +30,7 @@ severity: error
    (-) >result#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 
 [ ] ✓ "3" coerces to #int
@@ -39,7 +39,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12009 — "abc" cannot coerce to #int for <count
 [-] $out << -Repeat"hello:abc"
 

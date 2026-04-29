@@ -9,14 +9,14 @@ updated: 2026-04-22
 
 ## Inline Pipeline Calls (Infrastructure Configuration)
 
-Inline pipeline calls (`-Pipeline"string"`) configure pipeline infrastructure — triggers, queues, and wrappers. They appear exclusively on `[T]`, `[Q]`, and `[W]` lines. A trigger wrapping a schedule, a queue wrapping a Redis config, or a wrapper wrapping an environment all look the same at the call site. The caller writes `-T.Daily"3AM"` and expresses intent; Polyglot handles the wiring underneath.
+Inline pipeline calls (`-Pipeline"string"`) configure pipeline infrastructure — triggers, queues, and wrappers. They appear exclusively on `[T]`, `[Q]`, and `[W]` lines. A trigger wrapping a schedule, a queue wrapping a Redis config, or a wrapper wrapping an environment all look the same at the call site. The caller writes `-T.Daily"3AM"` and expresses intent; Aljam3 handles the wiring underneath.
 
 For value construction in the execution body, use `{$}` **Constructor blocks** — see [[syntax/constructors]]. For dynamic value parsing, use standard `[-]` pipeline calls with error handling. See [[syntax/constructors#The Three-Context Rule|The Three-Context Rule]].
 
 <!-- @c:types -->
 An inline pipeline call configures pipeline infrastructure as a single value on `[T]`, `[Q]`, and `[W]` lines. The syntax is `-Pipeline"string"` — a pipeline reference immediately followed by a string literal. These calls configure pipeline behavior at definition time — they are not execution body operations.
 
-```polyglot
+```aljam3
 [ ] Infrastructure lines — inline calls valid
 [T] -T.Daily"9AM"
 [Q] -Q.Name"my-queue-config"
@@ -30,7 +30,7 @@ An inline pipeline call configures pipeline infrastructure as a single value on 
 
 To accept inline calls, an infrastructure pipeline declares a `%InlineString` template in its `(-)` IO section:
 
-```polyglot
+```aljam3
 (-) %InlineString << "{path}"
 ```
 
@@ -51,7 +51,7 @@ The compiler validates the template at compile time — a malformed inline call 
 4. **Pipeline executes** — the pipeline runs with its inputs populated from the template extraction
 5. **Result returned** — the pipeline's output becomes the value of the expression
 
-Polyglot builds on the async foundations of languages like Python, Rust, and JavaScript — but abstracts away the concurrency mechanism complexity. You express intent; the platform handles synchronization.
+Aljam3 builds on the async foundations of languages like Python, Rust, and JavaScript — but abstracts away the concurrency mechanism complexity. You express intent; the platform handles synchronization.
 
 ```mermaid
 flowchart LR
@@ -66,11 +66,11 @@ flowchart LR
 
 ### Cross-Language Inline Calls
 
-Inline calls shine when wrapping legacy code from other languages. The caller does not need to know whether `-Py.Path.Resolve` runs Python underneath or `-Crypto.SHA256` calls Rust — the inline syntax is identical. You get the battle-tested reliability of existing libraries with the composability and compile-time safety of Polyglot.
+Inline calls shine when wrapping legacy code from other languages. The caller does not need to know whether `-Py.Path.Resolve` runs Python underneath or `-Crypto.SHA256` calls Rust — the inline syntax is identical. You get the battle-tested reliability of existing libraries with the composability and compile-time safety of Aljam3.
 
 **Python — resolve a filesystem path using `pathlib`:**
 
-```polyglot
+```aljam3
 {-} -Py.Path.Resolve
    [%] .description << "Resolve a filesystem path using Python pathlib"
    (-) %InlineString << "{path}"
@@ -90,7 +90,7 @@ Inline calls shine when wrapping legacy code from other languages. The caller do
       (-) <file#path << -Path"./scripts/path_utils.py"
 ```
 
-```polyglot
+```aljam3
 [ ] Caller on infrastructure line — one line, no knowledge of Python underneath
 [W] -W.Env
    (-) <resolved#path << -Py.Path.Resolve"/tmp/{$app}/data"
@@ -100,7 +100,7 @@ Inline calls shine when wrapping legacy code from other languages. The caller do
 
 **Rust — SHA-256 hash via a crypto library:**
 
-```polyglot
+```aljam3
 {-} -Crypto.SHA256
    [%] .description << "SHA-256 hash via Rust crypto library"
    (-) %InlineString << "{input}"
@@ -120,7 +120,7 @@ Inline calls shine when wrapping legacy code from other languages. The caller do
       (-) <file#path << -Path"./lib/crypto.rs"
 ```
 
-```polyglot
+```aljam3
 [ ] Caller on infrastructure line — same inline syntax, Rust runs underneath
 [W] -W.Env
    (-) <hash#string << -Crypto.SHA256"{$password}{$salt}"
@@ -143,7 +143,7 @@ If the target type does not match the inline pipeline's output type, the compile
 
 Use `{name?}` for optional parts of the template. The matched input **must** have a `<~` default:
 
-```polyglot
+```aljam3
 {-} -DB.Connect
    [%] .description << "Connect to a database"
    (-) %InlineString << "{host}:{port?}/{db}"
@@ -153,11 +153,11 @@ Use `{name?}` for optional parts of the template. The matched input **must** hav
    (-) >connection#DBConnection
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ... connection logic using $host, $port, $db ...
 ```
 
-```polyglot
+```aljam3
 [ ] All placeholders filled — infrastructure line
 [W] -W.DB
    (-) <conn << -DB.Connect"myhost:3306/mydb"
@@ -173,7 +173,7 @@ The compiler enforces that optional placeholders have defaults (`<~`) — every 
 
 Since `%InlineString` is only used during inline calls, an infrastructure pipeline can support both normal calls and inline calls with no special branching. The same inputs are wired either way:
 
-```polyglot
+```aljam3
 {-} -MyTrigger
    [%] .description << "Custom trigger with configurable topic"
    (-) %InlineString << "{topic}"
@@ -181,14 +181,14 @@ Since `%InlineString` is only used during inline calls, an infrastructure pipeli
    (-) >triggered#boolean
    [T] -T.NATS
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >triggered << #True
 ```
 
 Both calling forms work — inline on infrastructure lines, or normal `[-]` wiring:
 
-```polyglot
+```aljam3
 [ ] Inline call on infrastructure line
 [T] -MyTrigger"orders"
 
@@ -207,7 +207,7 @@ These restrictions exist because the compiler must resolve whether an expression
 
 ## Call Site Rules
 
-Call site rules are the compiler's contract with you: wire your IO correctly, and the pipeline executes correctly. This is Polyglot's barrier against the parallel programming bugs that plague concurrent code — missing inputs, uncaptured outputs, direction mismatches. Yes, satisfying the compiler is a headache. It is a dramatically smaller headache than debugging silent data loss in production at 3 AM when you have no time or energy to handle it.
+Call site rules are the compiler's contract with you: wire your IO correctly, and the pipeline executes correctly. This is Aljam3's barrier against the parallel programming bugs that plague concurrent code — missing inputs, uncaptured outputs, direction mismatches. Yes, satisfying the compiler is a headache. It is a dramatically smaller headache than debugging silent data loss in production at 3 AM when you have no time or energy to handle it.
 
 When calling a pipeline (via `[-]`, `[=]`, `[b]`, or chain step), the compiler enforces IO wiring constraints:
 

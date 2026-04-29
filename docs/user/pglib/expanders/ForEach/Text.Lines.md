@@ -11,7 +11,7 @@ Iterates over each line in a text string, producing a mini-pipeline per line. Th
 
 ## Syntax
 
-```polyglot
+```aljam3
 [=] =ForEach.Text.Lines
    (=) <text << $myText
    (=) >line >> $line

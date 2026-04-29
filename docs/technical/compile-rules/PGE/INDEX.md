@@ -7,9 +7,9 @@ status: stable
 
 <!-- @compile-rules/PGE/INDEX -->
 
-# Polyglot Error Codes (PGE)
+# Aljam3 Error Codes (PGE)
 
-Compile errors halt compilation. Each rule below defines a condition under which the Polyglot compiler refuses to produce an executable. Rules are grouped by thousand-range category; see the [[../INDEX|Compile Rules Index]] for the full directory map.
+Compile errors halt compilation. Each rule below defines a condition under which the Aljam3 compiler refuses to produce an executable. Rules are grouped by thousand-range category; see the [[../INDEX|Compile Rules Index]] for the full directory map.
 
 **Code scheme:** `PGE<range><ordinal>` — `<range>` is a two-digit category bucket (thousand-range), `<ordinal>` is the three-digit position within that range. Files are named `PGE<code>-<slug>.md` and link to this index via `[[../INDEX|Compile Rules]]`.
 

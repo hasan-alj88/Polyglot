@@ -11,7 +11,7 @@ metadata_instance: "%#:String:float"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #Float
    [%] %alias << "float"
    [#] ##String

@@ -16,7 +16,7 @@ severity: error
 **Detection:** The compiler checks that each `[%] %alias` block contains at least one `[:] "name"` child line.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ alias with names
 {#} #UserRecord
    [%] %alias
@@ -26,7 +26,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12004 — empty alias declaration
 {#} #MyType
    [%] %alias

@@ -34,7 +34,7 @@ This is distinct from the `##Enum` schema. `##Enum` is a schema that constrains 
 
 ## Declaration
 
-```polyglot
+```aljam3
 {#} #Boolean
    [#] ##Enum
    [#] ##Scalar

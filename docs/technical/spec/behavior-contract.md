@@ -6,7 +6,7 @@ updated: 2026-04-18
 
 # The Behavior Contract
 
-<!-- @c:glossary#Polyglot Service -->
+<!-- @c:glossary#Aljam3 Service -->
 <!-- @c:glossary#Trigger Monitor -->
 <!-- @c:glossary#Queue Handler -->
 <!-- @c:glossary#Runner -->
@@ -18,13 +18,13 @@ updated: 2026-04-18
 <!-- @c:technical/spec/otel-permission-events -->
 <!-- @c:technical/spec/otel-foundation -->
 <!-- @c:technical/spec/otel-config -->
-<!-- @c:technical/spec/polyglot-sdk -->
-Related: [[compiler-floor]], [[native-dispatch]], [[otel-permission-events]], [[otel-foundation]], [[otel-config]], [[polyglot-sdk]]
+<!-- @c:technical/spec/aljam3-sdk -->
+Related: [[compiler-floor]], [[native-dispatch]], [[otel-permission-events]], [[otel-foundation]], [[otel-config]], [[aljam3-sdk]]
 
-## What Polyglot Compiles To
+## What Aljam3 Compiles To
 
 <!-- @c:vision#Core Philosophy -->
-Polyglot does not compile to a binary. It compiles to a **Behavior Contract** — a serialized signal logic map that the [[glossary#Trigger Monitor|c:Trigger Monitor]] reads and orchestrates.
+Aljam3 does not compile to a binary. It compiles to a **Behavior Contract** — a serialized signal logic map that the [[glossary#Trigger Monitor|c:Trigger Monitor]] reads and orchestrates.
 
 The Behavior Contract encodes:
 
@@ -39,7 +39,7 @@ This is not a sequential step list. It is a signal map that the Trigger Monitor 
 ### Compilation Pipeline
 
 ```text
-Polyglot Code (.pg)
+Aljam3 Code (.aj3)
     → PGCompiler (validates signal logic — buggy concurrency = compile error)
         → Behavior Contract (serialized signal map, one per pipeline)
             → stored in NoSQL DB (registration)
@@ -60,7 +60,7 @@ The contract is organized into six top-level sections:
 5. **Permissions** — resolved `{_}` grants and sandbox configuration
 6. **Type Mapping Descriptors** — per-IO-port type mappings for SDK serialization
 
-Within each section, the `[X]` markers from Polyglot Code inform the kind of action. The compiler transforms these into the serialized signal map — encoding when to send trigger signals between jobs, when to fan out in parallel, which branches receive "go" signals based on conditions or error states.
+Within each section, the `[X]` markers from Aljam3 Code inform the kind of action. The compiler transforms these into the serialized signal map — encoding when to send trigger signals between jobs, when to fan out in parallel, which branches receive "go" signals based on conditions or error states.
 
 ## Permission Manifest
 
@@ -101,13 +101,13 @@ See [[job-sandbox]] for how the Runner translates the Permission Manifest into O
 
 ## Type Mapping Descriptors
 
-<!-- @c:technical/spec/polyglot-sdk#Type Mapping Descriptors -->
+<!-- @c:technical/spec/aljam3-sdk#Type Mapping Descriptors -->
 
-The compiler emits **type mapping descriptors** alongside the signal map and permission manifest. These descriptors specify the Polyglot type for each IO port in every pipeline, enabling the Runner and [[polyglot-sdk|c:Polyglot SDK]] to serialize and deserialize values without runtime type inspection.
+The compiler emits **type mapping descriptors** alongside the signal map and permission manifest. These descriptors specify the Aljam3 type for each IO port in every pipeline, enabling the Runner and [[aljam3-sdk|c:Aljam3 SDK]] to serialize and deserialize values without runtime type inspection.
 
-The descriptors are derived from the native registry's IO schema (see [[native-dispatch#Registry Entry Schema]]). For each IO port, the descriptor records the port name, direction, Polyglot type, and whether it carries an array.
+The descriptors are derived from the native registry's IO schema (see [[native-dispatch#Registry Entry Schema]]). For each IO port, the descriptor records the port name, direction, Aljam3 type, and whether it carries an array.
 
-See [[polyglot-sdk#Type Mapping Descriptors]] for the descriptor schema and examples.
+See [[aljam3-sdk#Type Mapping Descriptors]] for the descriptor schema and examples.
 
 ## Compile-Time Signal Map Validation
 
@@ -133,7 +133,7 @@ The compiler validates the signal map before the Behavior Contract is produced. 
 
 ### Cycle and Infinite Loop Detection
 
-- **PGE09013** — Circular [[glossary#Pipeline|c:pipeline]] calls detected via DFS on call graph (no recursion in Polyglot)
+- **PGE09013** — Circular [[glossary#Pipeline|c:pipeline]] calls detected via DFS on call graph (no recursion in Aljam3)
 - **PGE05004** — Recursive data definitions without indirection
 
 ### Dead-End and Unreachable Path Detection
@@ -151,8 +151,8 @@ If the signal logic leads to buggy concurrency — race conditions, orphaned job
 
 ## Service Execution
 
-<!-- @c:glossary#Polyglot Service -->
-All components of the [[glossary#Polyglot Service|c:Polyglot Service]] communicate via NATS as a pub-sub hub. NATS messages carry both signal information and output data.
+<!-- @c:glossary#Aljam3 Service -->
+All components of the [[glossary#Aljam3 Service|c:Aljam3 Service]] communicate via NATS as a pub-sub hub. NATS messages carry both signal information and output data.
 
 ### Trigger Monitor — The Decision-Maker
 
@@ -172,7 +172,7 @@ The Trigger Monitor is currently a single instance. Redundancy and clustering ar
 
 The [[glossary#Queue Handler|c:Queue Handler]] manages dispatch ordering, concurrency, pause/resume. Most queue rules are instructions the Queue Handler follows from the contract; active commands (pause, resume) invoke async functions.
 
-The [[glossary#Runner|c:Runner]] executes async functions when the Trigger Monitor triggers them via NATS. It manages wrapper lifecycle and has built-in behavior for `-W.Polyglot`.
+The [[glossary#Runner|c:Runner]] executes async functions when the Trigger Monitor triggers them via NATS. It manages wrapper lifecycle and has built-in behavior for `-W.Aljam3`.
 
 ### Communication Flow
 
@@ -229,7 +229,7 @@ Collectors differ from regular callable pipelines:
 ## How User Code Relates to the Floor
 
 ```text
-User writes:           Polyglot Code (.pg files)
+User writes:           Aljam3 Code (.aj3 files)
                            ↓ compiles to
 Compiler produces:     Behavior Contract (signal map: instructions + async function refs)
                            ↓ validated by
@@ -240,7 +240,7 @@ Persistence:           NoSQL DB (one contract per pipeline, definitions in % tre
 Service executes:      Trigger Monitor reads signal map, orchestrates via NATS
 ```
 
-Polyglot Code is a high-level shield over the Behavior Contract. The `[X]` markers in `.pg` code inform the kind of action; the compiler transforms them into serialized signal logic that the Trigger Monitor interprets in an async environment.
+Aljam3 Code is a high-level shield over the Behavior Contract. The `[X]` markers in `.aj3` code inform the kind of action; the compiler transforms them into serialized signal logic that the Trigger Monitor interprets in an async environment.
 
 ## Future Work
 

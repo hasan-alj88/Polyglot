@@ -11,7 +11,7 @@ Iterates over each row in a dataframe with its positional index. The execution m
 
 ## Syntax
 
-```polyglot
+```aljam3
 [=] =ForEach.Dataframe.Enumerate
    (=) <Dataframe << $sales
    (=) >index >> $idx

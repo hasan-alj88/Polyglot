@@ -15,7 +15,7 @@ Action to take when a resource limit is exceeded. Used in `{Q}` queue configurat
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #LimitAction
    [%] .description << "Action when resource limit exceeded"
    [%] .version << "1.0.0"

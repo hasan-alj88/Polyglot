@@ -9,12 +9,12 @@ updated: 2026-04-23
 <!-- @c:audit/README -->
 <!-- @c:audit/reference/glossary -->
 <!-- @u:INDEX -->
-This document is a repository-shape map for AI tools navigating Polyglot. It lists every directory under the project root that contains documentation or tooling, with file counts and authoritative sub-indexes. All paths are relative to the repository root. Directory contents can change; file counts in tables are accurate as of the `updated` date in the frontmatter. Authoritative navigation remains [[INDEX|u:INDEX]]; this file serves retrieval, not learning.
+This document is a repository-shape map for AI tools navigating Aljam3. It lists every directory under the project root that contains documentation or tooling, with file counts and authoritative sub-indexes. All paths are relative to the repository root. Directory contents can change; file counts in tables are accurate as of the `updated` date in the frontmatter. Authoritative navigation remains [[INDEX|u:INDEX]]; this file serves retrieval, not learning.
 
 ## Repository Root
 
 ```text
-Polyglot/
+Aljam3/
 ├── .paul/                      PAUL project management — state, plans, handoffs
 ├── docs/                       Documentation corpus (Obsidian vault)
 ├── scripts/                    Shell and Python tooling for docs / PDF
@@ -71,7 +71,7 @@ docs/philosophy/
 ├── developer-experience.md     Developer UX goals
 ├── error-philosophy.md         Error-as-data, compile-time enforcement
 ├── extensibility.md            Open/closed boundaries
-├── how-polyglot-differs.md     Comparative positioning
+├── how-aljam3-differs.md     Comparative positioning
 ├── language-design.md          Language design principles
 └── symbology.md                Symbol and prefix rationale
 ```
@@ -86,7 +86,7 @@ docs/philosophy/
 | `developer-experience.md` | Authoring ergonomics and guard rails |
 | `error-philosophy.md` | Errors are data; compile-time exhaustiveness |
 | `extensibility.md` | What is extensible (user pipelines) vs locked (grammar) |
-| `how-polyglot-differs.md` | Contrast with general-purpose languages |
+| `how-aljam3-differs.md` | Contrast with general-purpose languages |
 | `language-design.md` | Language design principles |
 | `symbology.md` | Why the `@`, `#`, `=`, `$`, `!`, `%`, `{`, `[`, `(` symbols |
 
@@ -105,7 +105,7 @@ docs/audit/
 ```text
 docs/audit/audiences/
 ├── ai-finder.md                Internal — AI retrieval layer
-├── automation-builder.md       External — writes .pg files
+├── automation-builder.md       External — writes .aj3 files
 ├── design.md                   Internal — grammar, compile rules, philosophy
 ├── developer.md                Internal — compiler and runtime implementers
 ├── integrator.md               External — connects codebases via SDK
@@ -227,7 +227,7 @@ docs/user/pglib/pipelines/
 ├── T/                          11 files — triggers (HTTP, Queue, Git, Time)
 ├── Text/                       1 file  — text operations
 ├── Variable/                   2 files — variable introspection
-├── W/                          14 files — wrappers (RT, Env, Retry, Polyglot)
+├── W/                          14 files — wrappers (RT, Env, Retry, Aljam3)
 ├── Path.md, Sys.md             Standalone pglib pipelines
 ├── Color.Parse.md, Dur.Parse.md, IP.Parse.md, MIME.Parse.md,
 ├── Path.Parse.md, Re.Parse.md, URL.Parse.md, Ver.Parse.md
@@ -312,7 +312,7 @@ docs/user/scenarios/
 
 ```text
 docs/user/integrator/
-└── polyglot-interface.md       Integrator-facing interface reference
+└── aljam3-interface.md       Integrator-facing interface reference
 ```
 
 ## docs/technical/ — Internal-Audience Spec
@@ -401,7 +401,7 @@ docs/technical/spec/
 ├── otel-foundation.md          OTel tracing foundation
 ├── otel-permission-events.md   OTel permission/sandbox events
 ├── otel-config.md              OTel exporter configuration
-├── polyglot-sdk.md             Polyglot SDK (encode/decode, call, pull, push)
+├── aljam3-sdk.md             Aljam3 SDK (encode/decode, call, pull, push)
 ├── collector-definitions.md    Collector-definition spec
 └── metadata-tree/              Full % metadata-tree spec (11 files)
 ```

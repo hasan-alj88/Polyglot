@@ -22,12 +22,12 @@ severity: warning
 - PGW08003 (uncaptured output with default — analogous for outputs)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ default input explicitly wired — no warning
 {-} -Format
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <text#string
    (-) <locale#string
    [ ]
@@ -38,7 +38,7 @@ severity: warning
 {-} -UseFormat
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -Format
@@ -48,12 +48,12 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW08002 — <locale not wired, using default "en-US"
 {-} -UseFormatDefault
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -Format
@@ -62,12 +62,12 @@ severity: warning
       (-) >formatted >> >out
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW08002 — <timeout not wired on parallel pipeline call, using default 30
 {-} -Fetch
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <url#string
    (-) <timeout#int
    [ ]
@@ -78,7 +78,7 @@ severity: warning
 {-} -BatchFetch
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [=] -Fetch

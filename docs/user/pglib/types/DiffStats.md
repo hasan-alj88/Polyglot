@@ -17,7 +17,7 @@ Summary statistics from a `=Text.Diff` comparison. Reports the count of addition
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #DiffStats
    [%] .description << "Summary statistics from text diff comparison"
    [#] ##Flat

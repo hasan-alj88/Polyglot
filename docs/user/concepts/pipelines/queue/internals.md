@@ -156,7 +156,7 @@ The compiler verifies resource capabilities at compile time. Using an action bey
 
 TCP repairability is declared on the queue:
 
-```polyglot
+```aljam3
 {Q} #Queue:MigrateableQueue
    [.] .tcpRepairable << true
 ```

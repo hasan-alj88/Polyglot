@@ -15,7 +15,7 @@ updated: 2026-04-17
 
 **What it tests:** A conditional on a string/int value (open set) requires `*?`. Missing `*?` is a compile error. See [[operators#Comparison Operators]].
 
-```polyglot
+```aljam3
 [ ] VALID — open set needs *?
 [?] $code =? 200
    [-] $status#string << "ok"
@@ -41,7 +41,7 @@ updated: 2026-04-17
 
 **What it tests:** A `[?]` block inside another `[?]` branch — each nesting level is independently exhaustive.
 
-```polyglot
+```aljam3
 [?] $role =? #Role.Admin
    [?] $region =? #Region.EU
       [-] $policy#string << "GDPR"
@@ -59,7 +59,7 @@ updated: 2026-04-17
 
 **What it tests:** `[?]` on a live metadata field; inner `[?]` checks enum variants. All branches plus `*?`. See [[syntax/types/hierarchy#Live Type Modifier]], [[concepts/pipelines/chains#Querying Pipeline Status]].
 
-```polyglot
+```aljam3
 [?] -DataSync%status
    [?] #AwaitTrigger
       [-] $msg#string << "idle"
@@ -80,7 +80,7 @@ updated: 2026-04-17
 <!-- @u:blocks:Logical -->
 **What it tests:** XOR condition — true when exactly one of two conditions holds. See [[blocks#Logical]].
 
-```polyglot
+```aljam3
 [ ] Exactly one of $isAdmin or $isSudo — not both, not neither
 [?] $isAdmin =? #Boolean.True
 [^] $isSudo =? #Boolean.True
@@ -96,7 +96,7 @@ updated: 2026-04-17
 
 **Decision:** PGW01004 warns on `[C]` lines not scoped under a `-RT.*` pipeline call. Tightening the EBNF would require the grammar to understand pipeline semantics (which `-` prefixed names are `-RT.*`), so a semantic warning is more practical.
 
-```polyglot
+```aljam3
 [ ] ✓ VALID — [C] under -RT.Python.Script (intended use)
 [-] -RT.Python.Script
    (-) <env << $env

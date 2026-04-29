@@ -11,13 +11,13 @@ updated: 2026-04-05
 
 ## Context
 
-All Polyglot data is serialized strings. `int` and `float` were already described as "matched via regular expression patterns" (see decision: numeric-re-patterns). The question was how to formalize the RE mechanism for all string-based types.
+All Aljam3 data is serialized strings. `int` and `float` were already described as "matched via regular expression patterns" (see decision: numeric-re-patterns). The question was how to formalize the RE mechanism for all string-based types.
 
 ## Decisions
 
 ### RawString is the True Primitive
 
-`RawString` is the most primitive datatype in Polyglot — a compiler intrinsic. It is a sequence of literal raw characters with no interpolation, no substitutions, no escaping. Every character is literal.
+`RawString` is the most primitive datatype in Aljam3 — a compiler intrinsic. It is a sequence of literal raw characters with no interpolation, no substitutions, no escaping. Every character is literal.
 
 `RawString` literals use inline pipeline syntax: `=RawString"..."` or aliased `=rs"..."`.
 
@@ -25,7 +25,7 @@ All Polyglot data is serialized strings. `int` and `float` were already describe
 
 What `#string` refers to in type annotations is `#String` — a struct built on `RawString`:
 
-```polyglot
+```aljam3
 {#} #String
    [.] .string#RawString
    [.] .regex#RawString
@@ -40,7 +40,7 @@ What `#string` refers to in type annotations is `#String` — a struct built on 
 
 `int` and `float` are not separate struct types. They are flexible-level subtypes of `#String`:
 
-```polyglot
+```aljam3
 #String
    [:] :*  ← flexible level for subtypes
       :int    (.regex << "^-?[0-9]+$")
@@ -54,7 +54,7 @@ Full metadata path for `int`: `%#:String:int` (`;int` is an alias for `;String.i
 
 Users can define custom string subtypes:
 
-```polyglot
+```aljam3
 {#} #String.emailAddress
    [.] .string#RawString
    [.] .regex#RawString << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
@@ -68,7 +68,7 @@ Users can define custom string subtypes:
 
 No new grammar needed. RE is declared via standard subfield assignment:
 
-```polyglot
+```aljam3
 {#} #Email
    [.] .address#string
       [.] .regex << "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"

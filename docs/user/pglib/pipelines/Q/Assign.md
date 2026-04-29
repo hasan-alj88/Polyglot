@@ -13,7 +13,7 @@ Assign a pipeline to a named queue. The string argument is the name of a `{Q}` d
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Assign
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QAssign"
@@ -22,7 +22,7 @@ Assign a pipeline to a named queue. The string argument is the name of a `{Q}` d
 
 ## Usage
 
-```polyglot
+```aljam3
 [Q] -Q.Assign"GPUQueue"
 ```
 

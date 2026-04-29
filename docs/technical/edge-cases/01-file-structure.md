@@ -13,11 +13,11 @@ updated: 2026-03-30
 <!-- @u:EBNF:file -->
 **EBNF:** `file ::= package_block { definition }` — the `{ }` repetition allows zero or more definitions after the package block.
 
-**What it tests:** A single `.pg` file containing `{@}`, `{#}`, `{-}`, and `{ }` definitions together.
+**What it tests:** A single `.aj3` file containing `{@}`, `{#}`, `{-}`, and `{ }` definitions together.
 
 **Cross-refs:** [[packages]] (package block), [[blocks]] (definition elements)
 
-```polyglot
+```aljam3
 {@} @Local:001.Multi:v1.0.0
 
 {#} #Status
@@ -25,19 +25,19 @@ updated: 2026-03-30
 
 {-} -First
    [T] -T.Call
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
 {-} -Second
    [T] -T.Call
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 ```
 
 ### EC-1.2: File with only package block (no definitions)
 
 **EBNF:** `file ::= package_block { definition }` — zero definitions is valid.
 
-**What it tests:** Minimal valid `.pg` file.
+**What it tests:** Minimal valid `.aj3` file.
 
-```polyglot
+```aljam3
 {@} @Local:001.Empty:v1.0.0
 ```

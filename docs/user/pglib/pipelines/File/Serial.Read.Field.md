@@ -15,7 +15,7 @@ The `<field` input uses `<` as the path separator (e.g. `"database<host"` extrac
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Serial.Read.Field
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileSerialReadField"

@@ -16,7 +16,7 @@ severity: error
 **Detection:** The compiler checks that every `{T}` block has an `(-) >IsTriggered#bool` declaration. If missing entirely, or if the type is not `#bool`, PGE01032 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ — mandatory output only
 {T} -T.Minimal
    (-) >IsTriggered#bool
@@ -30,7 +30,7 @@ severity: error
 [ ] ✓ — trigger with body still needs >IsTriggered#bool
 {T} -T.WithBody
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >IsTriggered#bool
    [ ]
    [-] -CheckCondition
@@ -38,7 +38,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01032 — missing >IsTriggered#bool entirely
 {T} -T.Bad.NoSignal
    (-) <config#string

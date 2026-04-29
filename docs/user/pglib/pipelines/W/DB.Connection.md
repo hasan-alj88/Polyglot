@@ -13,7 +13,7 @@ Opens DB connection on setup, closes on cleanup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.DB.Connection
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WDbConnection"

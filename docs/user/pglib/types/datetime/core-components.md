@@ -10,7 +10,7 @@ updated: 2026-04-09
 
 ### #Date
 
-```polyglot
+```aljam3
 {#} #Date
    [%] .description << "Calendar date with year, month, day"
    [%] .version << "1.0.0"
@@ -24,7 +24,7 @@ updated: 2026-04-09
 
 ### #Time
 
-```polyglot
+```aljam3
 {#} #Time
    [%] .description << "Time of day with nanosecond precision"
    [%] .version << "1.0.0"
@@ -39,7 +39,7 @@ updated: 2026-04-09
 
 ### #Zone
 
-```polyglot
+```aljam3
 {#} #Zone
    [%] .description << "Timezone with IANA identifier, offset, and DST flag"
    [%] .version << "1.0.0"
@@ -53,7 +53,7 @@ updated: 2026-04-09
 
 ### #ZoneOffset
 
-```polyglot
+```aljam3
 {#} #ZoneOffset
    [%] .description << "UTC offset in hours and minutes"
    [%] .version << "1.0.0"
@@ -66,7 +66,7 @@ updated: 2026-04-09
 
 ### #Duration
 
-```polyglot
+```aljam3
 {#} #Duration
    [%] .description << "Absolute time span in seconds and nanoseconds"
    [%] .version << "1.0.0"
@@ -79,7 +79,7 @@ updated: 2026-04-09
 
 ### #Period
 
-```polyglot
+```aljam3
 {#} #Period
    [%] .description << "Calendar-relative time span in years, months, weeks, days"
    [%] .version << "1.0.0"
@@ -94,7 +94,7 @@ updated: 2026-04-09
 
 ### #Interval
 
-```polyglot
+```aljam3
 {#} #Interval
    [%] .description << "Start/end date-time range with inclusivity flags"
    [%] .version << "1.0.0"
@@ -109,7 +109,7 @@ updated: 2026-04-09
 
 ### #Recurrence
 
-```polyglot
+```aljam3
 {#} #Recurrence
    [%] .description << "Repeating date-time pattern with optional end"
    [%] .version << "1.0.0"

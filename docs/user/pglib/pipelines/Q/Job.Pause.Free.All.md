@@ -13,7 +13,7 @@ Pause a Job, serializing all state to disk. Everything freed from memory. Availa
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Pause.Free.All
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobPauseFreeAll"
@@ -65,11 +65,11 @@ Resume with `-Q.Job.Resume.From.Disk`.
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends command signal |
-| 2. NATS command | `polyglot.command.job.pause.free.all.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
+| 2. NATS command | `aljam3.command.job.pause.free.all.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
 | 3. QH executes | Queue Handler | SREM set:executing, HSET set:suspended "all", decrement counters, HSET job status "suspended.all" |
-| 4. Control signal | `polyglot.queue.control.{jobId}.job.pause.free.all` | `{jobId, timing}` → Runner |
+| 4. Control signal | `aljam3.queue.control.{jobId}.job.pause.free.all` | `{jobId, timing}` → Runner |
 | 5. Unix mechanism | Runner | .Now: `criu dump --tree {pid} --images-dir {path}`; .Wait: work unit boundary then `criu dump` |
-| 6. Runner ACK | `polyglot.runner.paused.{jobId}` | `{type: "all", images_dir}` → QH stores `images_dir` on job hash |
+| 6. Runner ACK | `aljam3.runner.paused.{jobId}` | `{type: "all", images_dir}` → QH stores `images_dir` on job hash |
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 

@@ -9,7 +9,7 @@ updated: 2026-04-09
 
 # Collections
 
-<!-- @c:glossary:Polyglot Code -->
+<!-- @c:glossary:Aljam3 Code -->
 <!-- @u:operators -->
 <!-- @c:blocks -->
 <!-- @u:technical/ebnf/12-collections -->
@@ -17,11 +17,11 @@ updated: 2026-04-09
 <!-- @u:technical/edge-cases/19-collections-gaps -->
 <!-- @u:io/collection-operators -->
 <!-- @u:technical/spec/collector-definitions -->
-Collections in Polyglot Code ([[glossary#Polyglot Code]]) are data structures that hold multiple items. They are processed using expand (`=`) and collect (`*`) operators — see [[operators#Collection Operators]] and [[blocks#Data Flow]] for block element reference. Expand operators live at `%=` and collect operators at `%*` in the metadata tree — see [[data-is-trees#How Concepts Connect]].
+Collections in Aljam3 Code ([[glossary#Aljam3 Code]]) are data structures that hold multiple items. They are processed using expand (`=`) and collect (`*`) operators — see [[operators#Collection Operators]] and [[blocks#Data Flow]] for block element reference. Expand operators live at `%=` and collect operators at `%*` in the metadata tree — see [[data-is-trees#How Concepts Connect]].
 
 ## Collection Hierarchy
 
-Every collection in Polyglot is a tree. `#Map` is the universal flat key-value collection. `#Array` is a `#Map` variant where keys are contiguous integer enums. `#Serial` drops all schema constraints — it accepts any compilable tree.
+Every collection in Aljam3 is a tree. `#Map` is the universal flat key-value collection. `#Array` is a `#Map` variant where keys are contiguous integer enums. `#Serial` drops all schema constraints — it accepts any compilable tree.
 
 | Type | Is a | Key type | Key structure |
 |------|------|----------|--------------|

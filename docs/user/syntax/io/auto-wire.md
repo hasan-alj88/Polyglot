@@ -15,11 +15,11 @@ status: draft
 
 `<* << $Label>*` wires **all** outputs of a labeled operation into **all** inputs of the next pipeline call, with the compiler picking the mapping by type. No per-port line needed — the shape on both sides must line up exactly.
 
-> **Symbol note.** `*` already means "collect all" in Polyglot (`*All`, `*First`, `(*) <<`, `(*) >>`). `<*` reads as "all inputs" and `$Label>*` reads as "all outputs of `$Label`" — same collect-everything intuition, applied to IO.
+> **Symbol note.** `*` already means "collect all" in Aljam3 (`*All`, `*First`, `(*) <<`, `(*) >>`). `<*` reads as "all inputs" and `$Label>*` reads as "all outputs of `$Label`" — same collect-everything intuition, applied to IO.
 
 ## Form
 
-```polyglot
+```aljam3
 [-] -TargetPipeline
    (-) <* << $Label>*
 ```
@@ -53,7 +53,7 @@ If any of these fail, the compiler refuses to auto-wire and you must fall back t
 
 ### Valid — one output → one input, same type
 
-```polyglot
+```aljam3
 [-] -File.Text.Read
    (-) $Read
    (-) <path#path << $path
@@ -66,7 +66,7 @@ If any of these fail, the compiler refuses to auto-wire and you must fall back t
 
 ### Valid — multiple ports, all types unique
 
-```polyglot
+```aljam3
 [-] -Fetch.User
    (-) $Fetch
    (-) <id#int << $userId
@@ -80,7 +80,7 @@ If any of these fail, the compiler refuses to auto-wire and you must fall back t
 
 ### Explicit per-port wiring — always valid, no warning
 
-```polyglot
+```aljam3
 [-] -Fetch.User
    (-) $Fetch
    (-) <id#int << $userId
@@ -95,7 +95,7 @@ If any of these fail, the compiler refuses to auto-wire and you must fall back t
 
 ### Invalid — type mismatch (PGE08001)
 
-```polyglot
+```aljam3
 [-] -Count.Items
    (-) $A
    (-) <list#array:string << $items
@@ -109,7 +109,7 @@ If any of these fail, the compiler refuses to auto-wire and you must fall back t
 
 ### Invalid — ambiguous types (PGE08002)
 
-```polyglot
+```aljam3
 [-] -Fetch.Both
    (-) $A
    (-) <url#string << $url
@@ -124,7 +124,7 @@ If any of these fail, the compiler refuses to auto-wire and you must fall back t
 
 ### Invalid — port count mismatch (PGE08003)
 
-```polyglot
+```aljam3
 [-] -Fetch.Data
    (-) $A
    (-) <url#string << $url

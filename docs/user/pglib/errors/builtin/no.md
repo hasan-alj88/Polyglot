@@ -10,7 +10,7 @@ metadata_definition: "%!.No"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !No
    [.] .Input#Error
       (-) .MessageTemplate << "Missing required input: {name}"

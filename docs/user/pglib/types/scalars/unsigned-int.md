@@ -11,7 +11,7 @@ metadata_instance: "%#:String:uint"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #UnsignedInt
    [%] %alias << "uint"
    [#] ##String

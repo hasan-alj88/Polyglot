@@ -7,4 +7,4 @@ assignee: "@product_owner"
 **Audience**: Internal Agile Personas
 
 ## Objective
-Implement the Trigger Monitor as defined in the Polyglot specs.
+Implement the Trigger Monitor as defined in the Aljam3 specs.

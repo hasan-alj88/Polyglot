@@ -30,7 +30,7 @@ updated: 2026-03-30
 
 **What it tests:** Fire-and-forget execution. See [[blocks#Execution]].
 
-```polyglot
+```aljam3
 [b] -Logging.SendMetric
    (-) <event << "user_created"
 ```

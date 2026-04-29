@@ -15,7 +15,7 @@ For known literals in execution body, use the `$Path` constructor instead — it
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Path.Parse
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "PathParse"
@@ -49,7 +49,7 @@ None required. Pure computation pipeline.
 
 ## Usage
 
-```polyglot
+```aljam3
 [-] $parsed#path << -Path.Parse
    (<) <raw#string << $userInput
    [!] !Parse.Path.InvalidCharacter

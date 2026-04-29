@@ -17,7 +17,7 @@ An unresolved conflict from a k-way merge operation. When multiple parallel jobs
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #MergeConflict
    [%] .description << "Unresolved conflict from k-way merge"
    [#] ##Flat

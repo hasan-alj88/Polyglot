@@ -14,7 +14,7 @@ metadata_definition: "%definition.##:Dataframe"
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Dataframe
    (#) <#Columns << ##Enum
    (#) <#CellType <~ #

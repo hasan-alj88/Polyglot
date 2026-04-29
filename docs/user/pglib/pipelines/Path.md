@@ -11,7 +11,7 @@ metadata_instance: "%-:Path:N"
 
 Creates a `#path` value from a string argument. No `[@]` import needed.
 
-```polyglot
+```aljam3
 -Path
    (-) %InlineString << "{path}"
    (-) <path#path

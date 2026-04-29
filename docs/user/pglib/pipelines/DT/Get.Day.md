@@ -13,7 +13,7 @@ Extracts the day component from a `#dt` value.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Get.Day
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtGetDay"

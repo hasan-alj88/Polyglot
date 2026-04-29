@@ -19,7 +19,7 @@ severity: error
 **Detection:** The compiler checks the body of every `[?]` branch (including `[?] *?` catch-all). If no executable statement is found, PGE06010 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ each branch has an executable statement
 [?] $age =? #FileAge.Old
    [-] -File.Delete
@@ -30,7 +30,7 @@ severity: error
    [-] -DoNothing
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ comments alongside executable statement are fine
 [?] $status =? #PipelineStatus.Running
    [ ] Pipeline is still running — wait
@@ -40,7 +40,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE06010 — catch-all branch has only a comment, no executable
 [?] $age =? #FileAge.Old
    [-] -File.Delete
@@ -49,7 +49,7 @@ severity: error
    [ ] File is not old enough — skip
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE06010 — branch is completely empty
 [?] $mode =? "debug"
 [?] *?

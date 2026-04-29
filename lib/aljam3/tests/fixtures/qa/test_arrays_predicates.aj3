@@ -1,0 +1,42 @@
+[ ]{@} @Test.ArraysAndPredicates
+[ ] @Test is not valid Registory 
+[ ] Valid Registories are @Local:{port}<{package dot hierarchy}:{version}
+[ ] or @Community:{username}<{package dot hierarchy}:{version}
+[ ] or @Company:{registered Company}<{package dot hierarchy}:{version}
+{@} @Local:5678<QA:Test.ArraysAndPredicates:1.0.0
+
+
+{Q} #QueueRules:MyQueue
+   (#) <FailoverQueue#Queue <~ #SomeOtherQueue
+   ( ) Queues are #Queue Data Type
+   [ ] Compile-time safety check
+   [?] ?Queue.Host.IsEqual"{<FailoverQueue}"
+   [ ] the whole point of predicte operators is to replace comparesion operators
+      [!] >>!Queue.InvalidFailoverTarget
+
+{-} -ProcessData
+   (-) >output#string
+   [ ] pipeline without {(-), [T]}, [Q], {[W], or ([\],[/])} is invalid.
+   [T] -T.Call
+   [Q] -Q.Default 
+   [W] -W.Aljam3
+   [ ]   
+   [ ] Test 1D array assignment with auto-increment
+   [ ] Array of what? 
+   [ ]
+   [-] $items##Array
+      (#) <#string
+      (#) <Dim << 1
+      (<) << "alpha"
+      (<) << "beta"
+      (<) << "gamma"
+      
+   [ ] Test explicit indexing
+   [-] $scores##Array
+      (#) <#int
+      (#) <Dim << 1
+      (<) :0 << 95
+      (<) :1 << 82
+      
+   [ ] Test reading from array
+   [-] $firstItem << $items<0

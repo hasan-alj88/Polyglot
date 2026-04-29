@@ -1,6 +1,6 @@
 ---
-epic: "Polyglot Lexer & AST Generator"
-github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/358"
+epic: "Aljam3 Lexer & AST Generator"
+github-issue-link: "https://github.com/hasan-alj88/Aljam3/issues/358"
 status: "done"
 assignee: "@scrum_master"
 dependencies: []
@@ -8,10 +8,10 @@ dependencies: []
 # Feature: Lexer (Token Stream Generator)
 
 ## Objective
-Consume `*.pg` files and emit a predictable, linear stream of primitive syntax tokens that structural parsers can consume. This layer validates lexical constraints like spacing and bracket syntax.
+Consume `*.aj3` files and emit a predictable, linear stream of primitive syntax tokens that structural parsers can consume. This layer validates lexical constraints like spacing and bracket syntax.
 
 ## Requirements
-- Scan `*.pg` source code files line by line (ignore entirely blank lines).
+- Scan `*.aj3` source code files line by line (ignore entirely blank lines).
 - Evaluate scope: Indentation is **strictly 3 spaces per level**. If not a multiple of 3, trigger a compile syntax error.
 - Enforce syntactic boundaries: Isolate markers bound by `{X}`, `[X]`, or `(X)`.
 - Handle Comments: Completely empty brackets (`{}`, `[]`, or `()`) treat the entire line as a comment.

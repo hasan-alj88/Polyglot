@@ -10,7 +10,7 @@ metadata_instance: "%#:PersianDate:N"
 
 ## #PersianDate
 
-```polyglot
+```aljam3
 {#} #PersianDate
    [%] .description << "Persian (Solar Hijri) calendar date"
    [%] .version << "1.0.0"
@@ -24,7 +24,7 @@ metadata_instance: "%#:PersianDate:N"
 
 ## #PersianMonth
 
-```polyglot
+```aljam3
 {#} #PersianMonth
    [%] .description << "Persian calendar month"
    [%] .version << "1.0.0"

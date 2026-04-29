@@ -21,7 +21,7 @@ severity: error
 **See also:** PGE01003 (one package per file), PGE09002 (circular dependency)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ alias declared before use
 {@} @Local:999.MyApp:v1.0.0
    [@] @utils << @Local:999.Utilities:v1.0.0
@@ -29,14 +29,14 @@ severity: error
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] @utils-Validate                [ ] ✓ @utils declared in [@]
       (-) <input << $data
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE09001 — @unknown never declared
 {@} @Local:999.MyApp:v1.0.0
    [@] @utils << @Local:999.Utilities:v1.0.0
@@ -44,7 +44,7 @@ severity: error
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] @unknown-Validate              [ ] ✗ PGE09001 — @unknown not in any [@] declaration
       (-) <input << $data

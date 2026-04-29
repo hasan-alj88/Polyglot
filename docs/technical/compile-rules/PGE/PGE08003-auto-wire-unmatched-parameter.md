@@ -22,7 +22,7 @@ updated: 2026-04-23
 **See also:** PGE08001 (type mismatch), PGE08002 (ambiguous type), PGW08001 (auto-wire succeeded)
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE08003 — 3 outputs but only 2 inputs
 [ ] -Fetch.Data outputs: >content#string, >count#int, >status#string  (3)
 [ ] -Transform.Text inputs:  <text#string, <flag#int                  (2)

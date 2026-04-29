@@ -13,7 +13,7 @@ Generic race collector -- waits for the Nth arriving value and cancels all remai
 
 ## Syntax
 
-```polyglot
+```aljam3
 [*] *Nth
    (*) <n << 2
    (*) << $candidateA

@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler parses the function signature of `<func` in the `[C]` block and checks that each `<kwarg#Record` field name matches a keyword parameter (or `**kwargs` catch-all). Applies at compile time for `<code.inline` only; deferred to runtime for `<code.file`.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] kwarg field names match function keyword parameters
 [-] -Run.Python.Function
    (-) <env#PyEnv << $pyenv
@@ -31,7 +31,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] PGE01036 — .surname not a keyword parameter of format_name()
 [-] -Run.Python.Function
    (-) <env#PyEnv << $pyenv

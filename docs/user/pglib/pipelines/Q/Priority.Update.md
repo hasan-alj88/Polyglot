@@ -13,7 +13,7 @@ Change a job's priority score.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Priority.Update
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QPriorityUpdate"
@@ -42,7 +42,7 @@ None.
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates priority update condition, sends command signal |
-| 2. NATS command | `polyglot.command.priority.update.{jobId}` | `{jobId, score}` |
+| 2. NATS command | `aljam3.command.priority.update.{jobId}` | `{jobId, score}` |
 | 3. QH executes | Queue Handler | ZADD queue:dispatch:{queue} {score} {jobId} (Priority queues only) |
 
 No control signal to Runner. No Unix mechanism. Redis-only queue position update.

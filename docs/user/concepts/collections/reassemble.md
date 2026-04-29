@@ -14,7 +14,7 @@ status: draft
 
 Reassemble operators combine an [[concepts/collections/expand|expander]] (`=`) and a [[concepts/collections/collect|collector]] (`*`) into a single atomic operation. The `=*` prefix reads as "expand, then collect" — fan-out followed by fan-in with no intermediate body logic.
 
-```polyglot
+```aljam3
 [ ] Sum RAM across all jobs
 [-] =*Agg.Sum
    (=) <array << $jobRAMs
@@ -23,7 +23,7 @@ Reassemble operators combine an [[concepts/collections/expand|expander]] (`=`) a
 
 The equivalent expand-collect form requires three blocks:
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $jobRAMs
    (=) >item >> $ram
@@ -49,7 +49,7 @@ Use `=*` when the operation is a direct collection-to-scalar or collection-to-co
 
 Reassemble operators use both `(=)` (expander input) and `(*)` (collector output) IO markers. The expander feeds directly into the collector — no `(=) >item` output is declared.
 
-```polyglot
+```aljam3
 [-] =*OperatorName
    (=) <inputName << $source       [ ] expander input
    (*) >outputName >> $result      [ ] collector output

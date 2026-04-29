@@ -12,12 +12,12 @@ updated: 2026-03-30
 
 **What it tests:** Full production-grade pipeline combining package imports, `-T.Call` trigger, parallel execution, `*All` collect-all, chain execution, and per-call error handling.
 
-```polyglot
+```aljam3
 {@} @Local:001.HR.Onboarding:v2.0.0
    [@] @AD << @Local:001.ActiveDirectory:v2.1.0
    [@] @Mail << @Local:001.EmailSystem:v1.5.0
    [@] @HR << @Local:001.HRSystem:v3.0.0
-   [@] @Slack << @Community:polyglot-tools.SlackAdmin:v1.3.0
+   [@] @Slack << @Community:aljam3-tools.SlackAdmin:v1.3.0
 
 {#} #NewHire
    [.] .id#string
@@ -34,7 +34,7 @@ updated: 2026-03-30
    (-) >success#bool ~> #Boolean.False
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ] Parallel provisioning — all three fire at once
    [ ]
@@ -93,7 +93,7 @@ updated: 2026-03-30
 
 **What it tests:** Nested range checks, all logical operators, negation operators, XOR, and mandatory `*?`. Every branch path is non-trivial.
 
-```polyglot
+```aljam3
 {-} -Risk.Classify
    (-) <score#int
    (-) <flags#int
@@ -102,7 +102,7 @@ updated: 2026-03-30
    (-) >action#string ~> "review"
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ] High risk: score > 80 AND (not verified OR flags > 2)
    [ ]
@@ -151,14 +151,14 @@ updated: 2026-03-30
 
 **What it tests:** Three parallel pipelines racing, winner fed directly into a chain via `(*) >>` collect output, then chain processed with explicit IO wiring and error handling.
 
-```polyglot
+```aljam3
 {-} -Search.BestResult
    (-) <query#string
    (-) >result#serial ~> {}
    (-) >source#string ~> "none"
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ] Fire three search engines in parallel
    [ ]
@@ -199,7 +199,7 @@ updated: 2026-03-30
 
 **What it tests:** Two parallel waves separated by `*All` barrier, followed by an expand+collect pipeline, all inside a DB transaction wrapper.
 
-```polyglot
+```aljam3
 {-} -Batch.Process
    (-) <items#array:serial
    (-) >summary#serial ~> {}
@@ -263,13 +263,13 @@ updated: 2026-03-30
 
 **What it tests:** Expand nested inside a conditional branch, which is itself inside another expand. Tests 4+ levels of indentation, per-level collector scoping, and `*?` at each conditional level.
 
-```polyglot
+```aljam3
 {-} -Tree.Flatten
    (-) <categories#array:serial
    (-) >flat#array:string ~> {}
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ] Outer expand — one mini-pipeline per category
    [ ]
@@ -296,7 +296,7 @@ updated: 2026-03-30
 
 **What it tests:** The `[=]` in `[\]` with no `*All` — timer runs concurrently with body. `[/]` uses `*All` with `(*) <<` wait input to collect timer handle before stopping it. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
 
-```polyglot
+```aljam3
 {W} -W.Traced
    (-) <operationId;string
    (-) >durationMs;int

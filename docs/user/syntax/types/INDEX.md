@@ -16,9 +16,9 @@ status: complete
 
 ## Ground Truths
 
-These axioms define Polyglot's data model. All type system design follows from these facts:
+These axioms define Aljam3's data model. All type system design follows from these facts:
 
-1. **GT-1: ALL Polyglot objects are data trees with `#RawString` leafs** — types, definitions, pipelines, expanders, collectors, errors — everything is a tree
+1. **GT-1: ALL Aljam3 objects are data trees with `#RawString` leafs** — types, definitions, pipelines, expanders, collectors, errors — everything is a tree
 2. **GT-2: ALL data has a `%` metadata address** — both compile-time and runtime data lives on the unified metadata tree (future: backed by NoSQL DB)
 3. **GT-3: `##` schemas are data trees that describe tree structure and constraints** — shape, depth, key patterns, ordering, uniformity, regex patterns. A `#` struct may have multiple `##` schema specifications. `##` schemas are NOT structs — they describe properties of structs
 4. **GT-4: `#RawString` is the only primitive** — its limitations match the compiler host language; currently assumed theoretically unlimited
@@ -33,7 +33,7 @@ These axioms define Polyglot's data model. All type system design follows from t
 
 Types are annotated on variables using the `#` character. The `#` starts a **type context** — it signals "what type this holds." See [[identifiers]] for prefix rules and [[variable-lifecycle]] for how typed variables move through lifecycle stages:
 
-```polyglot
+```aljam3
 [-] $IntValue#int <~ 42
 [-] $StringValue#string <~ "Hello World"
 [-] $ArrayValue#array << #Array
@@ -54,7 +54,7 @@ Each special character has one job:
 
 `#` starts the type context. Within that context, nested type references separated by `:` **drop the `#` prefix** — the compiler resolves them:
 
-```polyglot
+```aljam3
 [ ] #int resolves to #Int via alias
 [-] $score#int <~ 0
 

@@ -13,7 +13,7 @@ Category-level generic permission for memory operations. Takes a capability and 
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Memory
    [#] <capability;MemoryCapability
    [#] <scope;string
@@ -24,7 +24,7 @@ Category-level generic permission for memory operations. Takes a capability and 
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Memory
    (_) <capability << .Allocate
    (_) <scope << "512MB"

@@ -14,7 +14,7 @@ updated: 2026-04-17
 <!-- @c:variable-lifecycle -->
 **What it tests:** Each operator used in its correct context. See [[operators]], [[variable-lifecycle]].
 
-```polyglot
+```aljam3
 [.] .name#string <~ "default"
 (-) >count#int ~> 0
 [-] $x#int << 42
@@ -27,7 +27,7 @@ updated: 2026-04-17
 
 **What it tests:** Each comparison in a conditional.
 
-```polyglot
+```aljam3
 [?] $a =? 0
 [?] $b >? 10
 [?] $c <? 5
@@ -42,7 +42,7 @@ updated: 2026-04-17
 
 **What it tests:** All four range combinations — mixing `[` (inclusive) and `(` (exclusive) on each bound. Mathematical interval notation.
 
-```polyglot
+```aljam3
 [ ] Inclusive-inclusive: 1 <= val <= 10
 [?] $val ?[1,10]
 [ ] Exclusive-exclusive: 0 < val < 100
@@ -58,7 +58,7 @@ updated: 2026-04-17
 <!-- @u:compile-rules/PGE/PGE04010-invalid-arithmetic-operator -->
 **What it tests:** Raw arithmetic tokens (`+`, `-`, `*`, `/`) are compile errors. Arithmetic uses `-Math.*` pglib pipelines. See [[PGE04010|PGE04010]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04010 — raw multiplication
 [-] $total#int << $price * $quantity          [ ] ✗ use -Math.Multiply
 
@@ -72,7 +72,7 @@ updated: 2026-04-17
 [-] $total#int << $price + $tax               [ ] ✗ use -Math.Add
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ arithmetic through pglib pipelines
 [-] -Math.Multiply
    (-) << $price
@@ -89,7 +89,7 @@ updated: 2026-04-17
 
 **What it tests:** Fallback operators require a failable source (pipeline call). Using `!<`/`!>` with a literal or variable is PGE07008. A fallback chain must terminate at a non-failable value or PGE07009 fires.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07008 — schema property with fallback on literal
 {#} #Sensor
    [#] %##Depth.Max !< 3
@@ -112,7 +112,7 @@ updated: 2026-04-17
 [%] .description !< "My pipeline"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ fallback on pipeline call — pipeline can fail
 [-] -File.Text.Read
    (-) <path << $configPath
@@ -141,7 +141,7 @@ updated: 2026-04-17
 [#] $config#Settings !< -Json.LoadFile(_PrimaryConfig) !< -Json.LoadFile(_DefaultConfig) !< $hardcodedConfig
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ fallback chain terminates at literal
 [-] -Fetch.Config
    (-) <url << $primary
@@ -164,7 +164,7 @@ updated: 2026-04-17
 
 **Decision:** Accept — lexer context disambiguates; no grammar change needed.
 
-```polyglot
+```aljam3
 [ ] ✓ Range in assignment — ?[ is mid-expression after value_expr
 [-] $ok#bool << $score ?[60, 100]
 

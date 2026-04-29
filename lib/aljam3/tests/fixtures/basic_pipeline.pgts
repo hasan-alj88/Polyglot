@@ -1,0 +1,20 @@
+=== Aljam3 Token Stream ===
+[L02:C01] Scope(0)
+[L02:C01] ActionExecSeq
+[L02:C05] Pipeline("Transform.Data")
+[L02:C20] TokNewline
+[L03:C01] Scope(1)
+[L03:C04] ActionDataLoad
+[L03:C08] Variable("payload")
+[L03:C08] TokSpace
+[L03:C08] OpPushLeft
+[L03:C08] TokSpace
+[L03:C08] Data("Users.NewHire")
+[L03:C34] TokNewline
+[L04:C01] Scope(1)
+[L04:C04] MissingMarker
+[L04:C04] OpPushRight
+[L04:C04] TokSpace
+[L04:C04] Error("Network.Timeout")
+[L04:C23] TokNewline
+=============================

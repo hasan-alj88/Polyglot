@@ -21,7 +21,7 @@ Permission objects are data trees — the same `#`/`##`/`###` pattern applied to
 
 A `_` object is a `#` struct instance whose schema is `##Permission`. Every leaf must be filled — either Final or Default (which becomes Final when pulled). This is a data tree, not a special construct.
 
-```polyglot
+```aljam3
 {_} _WebAccess
    [.] .intent << #Ceiling
    [.] .category #Web
@@ -43,7 +43,7 @@ pglib ships generic permissions at two levels:
 - **Category-level** (`__File`, `__Web`, ...) — takes capability + scope + resource fields
 - **Capability-level** (`__File.Read`, `__Web.Request`, ...) — takes only scope + resource fields (capability is baked in)
 
-```polyglot
+```aljam3
 [ ] Category-level — specify capability, scope, and resource fields
 {_} __File
    (_) <capability#Capability
@@ -72,7 +72,7 @@ See [[pglib/permissions/INDEX|pglib Generic Permissions]] for the full list of 8
 
 Users define custom `{_}` templates with `(_)` input lines:
 
-```polyglot
+```aljam3
 [ ] Template definition — parameterized file permission
 {_} _YAMLFile
    (_) <file#path

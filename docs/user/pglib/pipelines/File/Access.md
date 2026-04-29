@@ -13,7 +13,7 @@ Check file access permissions at the given path. Returns a `#FileAccess` value d
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Access
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileAccess"

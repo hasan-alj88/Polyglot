@@ -14,18 +14,18 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** Pipelines within the same package must not call each other in a cycle — directly or transitively. Self-calls and mutual call loops are compile errors.
-**Rationale:** Polyglot has no recursion mechanism — no base case construct, no call stack, and no way to terminate a recursive cycle. A circular call graph would execute forever. Cross-package call cycles are already caught by PGE09002 (circular package dependency); this rule covers intra-package cycles.
+**Rationale:** Aljam3 has no recursion mechanism — no base case construct, no call stack, and no way to terminate a recursive cycle. A circular call graph would execute forever. Cross-package call cycles are already caught by PGE09002 (circular package dependency); this rule covers intra-package cycles.
 **Detection:** The compiler builds a directed call graph: each `{-}` pipeline in the package is a node, each `[-]`/`[=]`/`[b]` reference to another same-package pipeline is an edge. A topological sort is attempted — if it fails, a cycle exists. The diagnostic reports the full cycle path (e.g., `-A → -B → -C → -A`). Cross-package calls are excluded (covered by PGE09002).
 
 **See also:** PGE09002 (circular package dependency — cross-package import cycles)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ linear call chain — no cycle
 {-} -Ingest
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >result#string
    [ ]
    [-] -Transform
@@ -38,7 +38,7 @@ severity: error
 {-} -Transform
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >clean#string
    $clean <~ $data
@@ -47,7 +47,7 @@ severity: error
 {-} -Store
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <item#string
    (-) >ok#string
    $ok <~ "stored"
@@ -55,12 +55,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE09013 — self-call
 {-} -Recurse
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >result#string
    [ ]
@@ -69,12 +69,12 @@ severity: error
       (-) >result >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE09013 — direct mutual recursion
 {-} -Ping
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <msg#string
    (-) >out#string
    [ ]
@@ -85,7 +85,7 @@ severity: error
 {-} -Pong
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <msg#string
    (-) >out#string
    [ ]
@@ -94,12 +94,12 @@ severity: error
       (-) >out >> >out
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE09013 — transitive cycle (A→B→C→A)
 {-} -StepA
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <in#string
    (-) >out#string
    [ ]
@@ -110,7 +110,7 @@ severity: error
 {-} -StepB
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <in#string
    (-) >out#string
    [ ]
@@ -121,7 +121,7 @@ severity: error
 {-} -StepC
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <in#string
    (-) >out#string
    [ ]
@@ -130,7 +130,7 @@ severity: error
       (-) >out >> >out
 ```
 
-**Diagnostic:** "Circular pipeline call detected: `-A → -B → -C → -A` — Polyglot does not support recursion"
+**Diagnostic:** "Circular pipeline call detected: `-A → -B → -C → -A` — Aljam3 does not support recursion"
 
 ## See Also
 

@@ -15,9 +15,9 @@ status: complete
 <!-- @u:technical/edge-cases/09-definition-blocks -->
 Three bracket shapes with distinct roles. Each line within a block follows [[line-structure]] rules. Expressions use [[identifiers]] with prefix sigils. Every `{X}` definition creates a branch on the `%` metadata tree — `{#}` at `%#`, `{-}` at `%-`, `{T}` at `%T`, `{W}` at `%W`, `{Q}` at `%Q`, `{!}` at `%!`, `{_}` at `%_`, `{N}` at `%Native`, `{*}` at `%*`, `{$}` at `%$` (see [[data-is-trees]]).
 
-> **Notation:** Throughout this document, `X` in `{X}`, `[X]`, and `(X)` is a **placeholder** for any valid marker character — not a literal. The `}`, `]`, `)` in this notation are part of the **opening marker itself**, not closing delimiters. For example, `{#}` is one indivisible opening token that means "start a struct definition." There are no separate closing brackets in Polyglot Code.
+> **Notation:** Throughout this document, `X` in `{X}`, `[X]`, and `(X)` is a **placeholder** for any valid marker character — not a literal. The `}`, `]`, `)` in this notation are part of the **opening marker itself**, not closing delimiters. For example, `{#}` is one indivisible opening token that means "start a struct definition." There are no separate closing brackets in Aljam3 Code.
 
-> **Design note — hybrid scoping model:** Polyglot uses bracket markers to **open** blocks and indentation to **close** them. A marker like `{-}` or `[Q]` appears at the start of a line to declare what begins there; the block ends when indentation returns to the parent level (see [[#Closing: Indentation-Based]]). These are complementary mechanisms, not competing ones.
+> **Design note — hybrid scoping model:** Aljam3 uses bracket markers to **open** blocks and indentation to **close** them. A marker like `{-}` or `[Q]` appears at the start of a line to declare what begins there; the block ends when indentation returns to the parent level (see [[#Closing: Indentation-Based]]). These are complementary mechanisms, not competing ones.
 
 ## `{X}` — Definition Elements
 
@@ -33,7 +33,7 @@ Define top-level structures. Open a scope that continues with indentation. All d
 | `{Q}` | Queue — dual-purpose block. `{Q} #Queue:Name` defines a queue instance (subtype of `{#}`, data definition). `{Q} -Q.*` defines a queue pipeline operation (subtype of `{-}`, equivalent to `{-}[Q]`). The identifier prefix (`#` vs `-`) disambiguates. See [[concepts/pipelines/queue#Queue]] |
 | `{!}` | Error tree definition (subtype of `{#}`). See [[errors#Defining Custom Errors]] |
 | `{_}` | Permission object — `##Permission` struct instance with all leaves filled. Carries both grant (capability) and resource locator (path, host, etc.). Supports `(_)` input lines for templates. `_`/`__`/`___` mirror `#`/`##`/`###` (instance, template, field). See [[permissions]] |
-| `{N}` | Native definition — compiler primitive with no Polyglot body. `[%]` metadata implicitly scopes to `%Native.*`. Non-user-extendable. See [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
+| `{N}` | Native definition — compiler primitive with no Aljam3 body. `[%]` metadata implicitly scopes to `%Native.*`. Non-user-extendable. See [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] |
 | `{*}` | Collector definition — first-class definable collector logic. Metadata at `%*`. See [[technical/spec/collector-definitions\|Collector Definitions]] |
 | `{$}` | Constructor definition — produces compile-time-guaranteed Final values with no error surface. Two overload forms: string-parsing (`($)` regex captures mapped to `[$]` target type) and native pipeline (pglib only, `[-]` infallible calls). Prefix symmetry: `{#}` → `#Type`, `{-}` → `-Pipeline`, `{$}` → `$Constructor`. Metadata at `%$`. See [[constructors]] |
 | `{ }` | Comment. See [[comments]] |
@@ -123,7 +123,7 @@ See [[concepts/pipelines/INDEX|pipelines]] for trigger/queue/wrapper structure a
 |--------|---------|
 | `[%]` | Definition metadata and aliases |
 
-`[%]` lives inside any `{x}` definition (`{#}`, `{-}`, `{W}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Polyglot-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE12002).
+`[%]` lives inside any `{x}` definition (`{#}`, `{-}`, `{W}`, `{Q}`). One definition = one metadata set (class-level). Two kinds of fields: user-declared (via `<<` assignment) and Aljam3-managed (`live`, read-only). Aliases use `[%] %alias` with `[:]` children — each child is a `#NestedKeyString` alias name. Multiple aliases per definition are allowed; all must be globally unique (PGE12002).
 
 See [[metadata]] for the full metadata tree, field listings, `live` semantics, and access patterns.
 
@@ -146,7 +146,7 @@ See [[metadata]] for the full metadata tree, field listings, `live` semantics, a
 |---------|----------------|
 | `{#} #ThisName` | `"ThisName"` |
 | `{-} -Pipeline.Name` | `"Pipeline.Name"` |
-| `{W} -W.Polyglot` | `"W.Polyglot"` |
+| `{W} -W.Aljam3` | `"W.Aljam3"` |
 
 `%name.Last` splits by `.` and returns the final segment — `{-} -Pipeline.Name` yields `%name.Last` = `"Name"`.
 
@@ -177,7 +177,7 @@ See [[metadata]] for the full metadata tree, field listings, `live` semantics, a
 
 The originating line keeps its normal block marker. Only continuation lines get `[~]`. The parser joins all `[~]` lines with the preceding logical line. Strings can span across `[~]` boundaries (multi-line string content preserved). `[~]` is only valid when the preceding expression is incomplete.
 
-```polyglot
+```aljam3
 [-] .complex_result#string
 [~] << "suffix
 [~]  more"
@@ -190,11 +190,11 @@ The originating line keeps its normal block marker. Only continuation lines get 
 | `[C]` | Inline foreign code — embed another language's code lines within an `-RT.*` pipeline call |
 
 <!-- @concepts/pipelines/INDEX -->
-`[C]` is a block element (not a block type) for embedding foreign code lines passed to `-RT.*` runtime pipelines. Each `[C]` line is one line of foreign code — raw text, not parsed as Polyglot. The language is determined by which `-RT.*` pipeline is called (e.g., `-RT.Python.Script.Inline`, `-RT.JS.Script.Inline`). The block ends when a line without `[C]` appears.
+`[C]` is a block element (not a block type) for embedding foreign code lines passed to `-RT.*` runtime pipelines. Each `[C]` line is one line of foreign code — raw text, not parsed as Aljam3. The language is determined by which `-RT.*` pipeline is called (e.g., `-RT.Python.Script.Inline`, `-RT.JS.Script.Inline`). The block ends when a line without `[C]` appears.
 
 `[C]` lines are passed as the `<code` input to the `-RT.*` pipeline call:
 
-```polyglot
+```aljam3
 [-] -RT.Python.Script.Inline
    (-) <env << $env
    (-) >output#Code:Python.Output >> $output
@@ -216,4 +216,4 @@ See [[comments]] for full comment syntax.
 
 Blocks close by returning to the parent indentation level — no explicit closing markers needed for scope termination.
 
-> **Clarification:** Brackets (`{X}`, `[X]`, `(X)`) only appear at the **start** of lines as opening markers. Polyglot has no closing brackets — scope is determined entirely by indentation depth (3 spaces per level). This hybrid model is intentional: markers declare *what* a block is, indentation declares *where* it ends.
+> **Clarification:** Brackets (`{X}`, `[X]`, `(X)`) only appear at the **start** of lines as opening markers. Aljam3 has no closing brackets — scope is determined entirely by indentation depth (3 spaces per level). This hybrid model is intentional: markers declare *what* a block is, indentation declares *where* it ends.

@@ -33,7 +33,7 @@ severity: error
 ## User-Defined Enum
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #Severity
    [.] .Critical
    [.] .Error
@@ -52,7 +52,7 @@ severity: error
       [-] -Log.Info
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ partial coverage + *? covers the rest
 [?] $level#Severity
    [?] #Severity.Critical
@@ -62,7 +62,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {#} #Severity
    [.] .Critical
    [.] .Error
@@ -86,7 +86,7 @@ severity: error
 `#Boolean` is a system-provided enum with exactly two variants. PGE06002 treats it identically to any user-defined enum. When both variants are listed, `*?` is optional.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ both variants listed — no *? needed
 [?] $isActive#bool
    [?] #Boolean.True
@@ -95,7 +95,7 @@ severity: error
       [-] -Handle.Inactive
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ one variant + *? covers the other
 [?] $isActive#bool
    [?] #Boolean.True
@@ -105,7 +105,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE06002 — #Boolean.False not covered, no *?
 [?] $isActive#bool
    [?] #Boolean.True
@@ -121,7 +121,7 @@ severity: error
 When an enum variant contains value sub-fields, PGE06002 checks only the **top-level variants**. Sub-field values are accessed after matching the variant, not as part of the exhaustiveness check.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #Result
    [.] .Success
       [.] .message#string <~ ""
@@ -146,7 +146,7 @@ When an enum variant contains value sub-fields, PGE06002 checks only the **top-l
 When branching on an enum imported from another package, use the `@alias#EnumName.Variant` form. PGE06002 resolves the enum definition across packages.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ imported enum — all variants covered, no *? needed
 [?] $status;@models#OrderStatus
    [?] @models#OrderStatus.Pending

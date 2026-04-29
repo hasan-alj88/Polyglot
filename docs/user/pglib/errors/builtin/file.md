@@ -10,7 +10,7 @@ metadata_definition: "%!.File"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !File
    [.] .NotFound#Error
       (-) .MessageTemplate << "File not found: {path}"

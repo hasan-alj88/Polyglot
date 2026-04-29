@@ -17,7 +17,7 @@ Output from `*Into.Text.Merge` and `*Into.CSV.Merge` collectors. Contains the me
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #MergeResult
    [%] .description << "Output from k-way merge collector"
    [#] ##Flat

@@ -9,7 +9,7 @@ status: complete
 
 <!-- @c:types -->
 
-pglib struct types available in every `.pg` file. These are non-enum, non-collection structs with typed value fields.
+pglib struct types available in every `.aj3` file. These are non-enum, non-collection structs with typed value fields.
 
 | Type | Description | File |
 |------|-------------|------|

@@ -20,7 +20,7 @@ severity: error
 **See also:** PGE04001 (type mismatch), PGE04005 (undefined interpolation variable)
 
 **VALID:**
-```polyglot
+```aljam3
 [-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
@@ -28,7 +28,7 @@ severity: error
 [ ] ✓ both paths are valid for their respective OS
 ```
 
-```polyglot
+```aljam3
 [-] $LogFile#path
    [.] .Unix << "/var/log/app.log"
    [.] .Windows << "C:\ProgramData\App\app.log"
@@ -37,19 +37,19 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [-] $BadPath#path
    [.] .Unix << "/tmp//MyApp"           [ ] ✗ PGE04007 — double separator in Unix path
    [.] .Windows << "C:\MyApp"
 ```
 
-```polyglot
+```aljam3
 [-] $BadPath#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\My<App"          [ ] ✗ PGE04007 — illegal character '<' in Windows path
 ```
 
-```polyglot
+```aljam3
 [-] $BadPath#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "MyApp"              [ ] ✗ PGE04007 — Windows path missing drive letter or UNC prefix
@@ -66,7 +66,7 @@ The compiler statically infers whether a `-Path"..."` expression is provably cro
   1. Define explicit dual-OS subfields (`.Unix` + `.Windows`)
   2. Handle with `[!]` block or `!<` fallback
 
-```polyglot
+```aljam3
 [ ] ✓ provably cross-platform — {.} is dual-OS
 [-] $LogDir#path << -Path"{.}/logs"
 

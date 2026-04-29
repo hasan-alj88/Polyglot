@@ -17,7 +17,7 @@ Runtime environment handle produced by `-W.RT:Rust:*` wrapper setup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #RsEnv
    [.] .version#string
    [.] .handle#RawString

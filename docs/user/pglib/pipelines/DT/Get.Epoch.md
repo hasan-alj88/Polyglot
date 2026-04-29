@@ -13,7 +13,7 @@ Returns epoch seconds as `#int` from a `#dt` value.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Get.Epoch
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtGetEpoch"

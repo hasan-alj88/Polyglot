@@ -12,7 +12,7 @@ Authority: [[vision#Core Philosophy]]
 
 ## Who They Are
 
-Product managers and owners who define what Polyglot should do and why. They write PRDs, user stories, acceptance criteria, and roadmap items. They translate user needs into actionable requirements and prioritize work across the project.
+Product managers and owners who define what Aljam3 should do and why. They write PRDs, user stories, acceptance criteria, and roadmap items. They translate user needs into actionable requirements and prioritize work across the project.
 
 ## Writing Rules
 
@@ -22,7 +22,7 @@ Product managers and owners who define what Polyglot should do and why. They wri
 | Voice | Active voice, present tense, user-centric framing |
 | Format | User stories, acceptance criteria (Given/When/Then), prioritized backlogs, decision records |
 | Structure | Problem -> user need -> solution -> acceptance criteria -> priority |
-| Vocabulary | Use [[glossary]] terms for Polyglot concepts. Product management terminology expected |
+| Vocabulary | Use [[glossary]] terms for Aljam3 concepts. Product management terminology expected |
 | Code | No code examples required. Reference feature names and user-facing behaviors |
 
 ## ASSUME
@@ -30,13 +30,13 @@ Product managers and owners who define what Polyglot should do and why. They wri
 - Agile/Scrum familiarity
 - Product management background
 - Understanding of user personas and value delivery
-- Awareness of Polyglot's vision and positioning (from [[vision]])
+- Awareness of Aljam3's vision and positioning (from [[vision]])
 - No deep knowledge of syntax, EBNF, or compiler internals
 
 ## NEVER
 
 - Include implementation details (code, EBNF, compile rules — that's [[audiences/design]] and [[audiences/developer]] scope)
-- Use Polyglot-internal jargon without defining it in user terms
+- Use Aljam3-internal jargon without defining it in user terms
 - Leave acceptance criteria unmeasurable or untestable
 - Mix technical specification with product requirements
 - Contradict [[vision#Core Philosophy]] principles

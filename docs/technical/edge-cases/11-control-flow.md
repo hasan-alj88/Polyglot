@@ -15,7 +15,7 @@ updated: 2026-04-17
 
 **What it tests:** Sequential `[?]` blocks acting as switch-case. See [[blocks#Control Flow]].
 
-```polyglot
+```aljam3
 {#} #Status
    [.] .Ok
    [.] .Warn
@@ -36,7 +36,7 @@ updated: 2026-04-17
 
 **What it tests:** `[!]` indentation must be under the specific `[-]` call, after its `(-)` IO lines. See [[concepts/pipelines/error-handling#Error Handling]].
 
-```polyglot
+```aljam3
 [ ] CORRECT — error scoped under call
 [-] -SomeCall
 (-) <in << $val
@@ -53,7 +53,7 @@ updated: 2026-04-17
 
 **What it tests:** Compound conditions using `[&]`, `[+]`, `[-]`, `[^]`.
 
-```polyglot
+```aljam3
 [ ] AND: both conditions must be true
 [?] $age >=? 18
 [&] $verified =? #Boolean.True
@@ -77,7 +77,7 @@ updated: 2026-04-17
 
 **What it tests:** Match syntax as sugar for repeated `[?]` conditional assignment. Source must be Final, arms are assignment-only.
 
-```polyglot
+```aljam3
 [ ] Match: maps $code to $status via value >> result arms
 [-] $code >> $status#string
    [?] 200 >> "ok"
@@ -92,7 +92,7 @@ updated: 2026-04-17
 
 **What it tests:** Enum match with all variants listed — no `*` required, same as verbose form (PGE06002).
 
-```polyglot
+```aljam3
 [ ] All #Direction variants covered — no *? needed
 [-] $dir >> $label#string
    [?] #Direction.North >> "N"
@@ -107,7 +107,7 @@ updated: 2026-04-17
 
 **What it tests:** `[-] $x >> $y` without indented `[?]` children is a plain assignment, not a match header.
 
-```polyglot
+```aljam3
 [ ] No [?] children — this is a plain assignment, not a match
 [-] $source >> $target#string
 ```
@@ -117,7 +117,7 @@ updated: 2026-04-17
 **EBNF ref:** `match_line ::= "[-]" value_expr ">>" assign_target { match_arm }`
 **What it tests:** Match with only `[?] *?` — always produces the same result. PGE06014 fires.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE06014 — wildcard-only match is tautological
 [-] $code >> $msg#string
    [?] *? >> "always this"
@@ -128,7 +128,7 @@ updated: 2026-04-17
 **EBNF ref:** `match_value ::= literal | identifier`
 **What it tests:** Runtime variable in match arm — valid but must be Final state. If the variable could be in Failed state without a fallback, PGE fires.
 
-```polyglot
+```aljam3
 [ ] ✓ Final variable as match value
 [-] $threshold#int << 100
 [-] $input >> $label#string
@@ -141,7 +141,7 @@ updated: 2026-04-17
 **EBNF ref:** `comparison_expr ::= value_expr comparison_op value_expr`
 **What it tests:** Pipeline identifiers are not value types. PGE04024 fires.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04024 — pipeline identifiers cannot be compared
 [?] -Pipeline.A =? -Pipeline.B
    [-] $same << #Boolean.True
@@ -152,7 +152,7 @@ updated: 2026-04-17
 **EBNF ref:** `match_value ::= literal | identifier`
 **What it tests:** `cross_pkg_enum` (`@alias#DataName.EnumField`) is matched through `identifier` — it was removed from `match_value` as a separate alternative because `identifier` already covers it via `data_id` and `package_id` in §3.1. See [[ebnf/03-identifiers#3.4 Cross-Package References]].
 
-```polyglot
+```aljam3
 [ ] ✓ Cross-package enum matched through identifier
 [-] $status >> $label#string
    [?] @auth#Role.Admin >> "admin"
@@ -167,7 +167,7 @@ updated: 2026-04-17
 
 **Decision:** Accept. PGE06010 is sufficient. Tightening the grammar to require at least one `exec_line` (e.g., `conditional_branch ::= { comment_line } exec_line { exec_line | comment_line }`) would add complexity without benefit since the semantic check is straightforward. Use `[-] -DoNothing` to explicitly mark intentionally empty branches.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE06010 — comment-only branch, no executable
 [?] $mode =? "debug"
    [ ] TODO: add debug logging

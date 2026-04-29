@@ -12,7 +12,7 @@ updated: 2026-04-09
 
 Types can be generic — they accept `(#) <param` inputs that the compiler resolves at use time through `:` positional binding (GT-10). A generic `{#}` definition declares parameters with `(#) <param` lines and composes `##` schemas that use those parameters:
 
-```polyglot
+```aljam3
 {#} #Record
    (#) <#Fields << ##Enum
    (#) <#ValueType <~ #
@@ -40,7 +40,7 @@ Default values (`<~`) fill unfilled positions. Missing required params = compile
 
 ### More Examples
 
-```polyglot
+```aljam3
 {#} #Array
    (#) <#ValueType
    (#) <Dim##Dimension <~ "1D"
@@ -67,7 +67,7 @@ Non-generic types like `#Int` and `#Boolean` compose schemas without declaring `
 
 `##` schemas can also accept `(#) <param` inputs (GT-9). A parameterized schema generates structural constraints at compose time:
 
-```polyglot
+```aljam3
 {#} ##Record
    (#) <#Fields << ##Enum
    (#) <#ValueType <~ #
@@ -101,7 +101,7 @@ When a `{#}` type composes a parameterized `##` schema via `[#] ##Schema`, it pa
 
 `(<)` blocks nested under `(#) <Param` declarations constrain parameters via `%` schema properties:
 
-```polyglot
+```aljam3
 {#} #Array
    (#) <#ValueType
       (<) ##Scalar
@@ -116,7 +116,7 @@ Generic types are compiled in a staged sequence:
 
 | Layer | What | Capabilities | Cannot Use |
 |-------|------|-------------|------------|
-| 0 -- Hardcoded | `#RawString`, `#String`, generic engine | Compiler intrinsics -- not defined in Polyglot code | N/A |
+| 0 -- Hardcoded | `#RawString`, `#String`, generic engine | Compiler intrinsics -- not defined in Aljam3 code | N/A |
 | 1 -- Self-hosted | `##String` schema, all `##Scalar` types | `{$var}` interpolation, `{%This}` metadata access | `[-] -Pipeline` calls |
 | 2 -- Full generics | `#Array`, `#Record`, `#Dataframe` | `-String.Lower`, `-UID`, `-#list.into.Enum` -- full pipeline execution | N/A |
 
@@ -138,7 +138,7 @@ Layer 1 types bootstrap without a pipeline engine (string substitution only). La
 |---------|----------------|
 | `{#} #ThisName` | `"ThisName"` |
 | `{-} -Pipeline.Name` | `"Pipeline.Name"` |
-| `{W} -W.Polyglot` | `"W.Polyglot"` |
+| `{W} -W.Aljam3` | `"W.Aljam3"` |
 
 `%name.Last` splits by `.` and returns the last segment.
 
@@ -152,14 +152,14 @@ For multi-type constraints, use `##` schemas (e.g., `##Scalar`, `##Leaf`). An un
 
 The `<#` syntax extends from `{#}` generic type inputs to `{-}` pipeline IO declarations. A pipeline can receive a type definition's `%` metadata tree as input using `(-) <#type`:
 
-```polyglot
+```aljam3
 {-} -ValidateConfig
    (-) <data#serial
    (-) <#type
    (-) >valid#bool
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -#.Validate
       (-) <data << $data

@@ -42,7 +42,7 @@ The compiler validates:
 
 ### VALID
 
-```polyglot
+```aljam3
 [ ] ✓ chain terminates at literal
 [-] -File.Text.Read
    (-) <path << $primary
@@ -50,7 +50,7 @@ The compiler validates:
       (<) !< -File.Text.Read"/backup.txt" !< "no content available"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ chain terminates at variable
 [-] -Fetch.Config
    (-) <url << $primaryUrl
@@ -58,7 +58,7 @@ The compiler validates:
       (<) !< -Fetch.Config"/fallback" !< $defaultConfig
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ single fallback to literal — trivially terminated
 [-] -File.Text.Read
    (-) <path << $path
@@ -68,7 +68,7 @@ The compiler validates:
 
 ### INVALID
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07009 — chain ends at pipeline call
 [-] -File.Text.Read
    (-) <path << $primary
@@ -76,7 +76,7 @@ The compiler validates:
       (<) !< -File.Text.Read"/backup.txt" !< -File.Text.Read"/last-resort.txt"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07009 — single fallback to pipeline with no further fallback
 [-] -Fetch.Config
    (-) <url << $primaryUrl

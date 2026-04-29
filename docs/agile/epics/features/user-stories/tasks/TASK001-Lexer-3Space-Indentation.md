@@ -1,6 +1,6 @@
 ---
 user-story: "US001-Lexer-Line-Parsing"
-github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/363"
+github-issue-link: "https://github.com/hasan-alj88/Aljam3/issues/363"
 status: "done"
 assignee: "@developer"
 ---

@@ -21,7 +21,7 @@ severity: warning
 **See also:** PGE09001 (undefined import alias — the inverse: using an alias that was never declared)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all imports are referenced
 {@} @MyPackage
    [@] @auth << "com.example.auth"
@@ -30,7 +30,7 @@ severity: warning
 {-} -Process
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
@@ -42,14 +42,14 @@ severity: warning
       (-) >result >> >out
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ no imports — leaf package using only pglib
 {@} @LeafPackage
 
 {-} -Simple
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
@@ -57,7 +57,7 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW09002 — @data imported but never referenced
 {@} @MyPackage
    [@] @auth << "com.example.auth"
@@ -66,7 +66,7 @@ severity: warning
 {-} -Process
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
@@ -75,7 +75,7 @@ severity: warning
       (-) >ok >> >out
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW09002 — all imports unused
 {@} @Abandoned
    [@] @old << "com.example.legacy"     [ ] ⚠ PGW09002 — @old never used
@@ -84,7 +84,7 @@ severity: warning
 {-} -NoExternalCalls
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]

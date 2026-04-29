@@ -30,7 +30,7 @@ Intermediate Representation (IR) design, type system architecture, and cross-lan
 - [Database Schema](./01-database-schema.md) - IR storage tables
 
 ### Language Specification
-- [BNF Grammar](../language/bnf/polyglot grammer.md) - Complete grammar
+- [BNF Grammar](../language/bnf/aljam3 grammer.md) - Complete grammar
 - [Type System](../language/02-type-system.md) - Type specifications
 - [Complete Syntax](../language/01-syntax-complete.md) - Full syntax reference
 
@@ -41,7 +41,7 @@ Intermediate Representation (IR) design, type system architecture, and cross-lan
 ### Database-Centric Storage
 
 <!-- @c:reference/glossary#pipeline -->
-Rather than storing IR as JSON blobs, Polyglot uses **normalized relational tables** to represent the AST structure. This enables:
+Rather than storing IR as JSON blobs, Aljam3 uses **normalized relational tables** to represent the AST structure. This enables:
 
 1. **Efficient Querying:** Components can query IR using SQL
 2. **Indexing & Optimization:** Database can optimize common queries
@@ -52,7 +52,7 @@ Rather than storing IR as JSON blobs, Polyglot uses **normalized relational tabl
 
 **Strongly Typed:**
 - No implicit type conversions across language boundaries
-- All type conversions explicit in `.pg` code
+- All type conversions explicit in `.aj3` code
 - Type checking at compile time (IR generation)
 
 **IDE-Friendly:**
@@ -69,11 +69,11 @@ Rather than storing IR as JSON blobs, Polyglot uses **normalized relational tabl
 **Syntax:** `language\type`
 
 **Examples:**
-- `pg\int` - Polyglot integer
-- `pg\string` - Polyglot string
-- `pg\bool` - Polyglot boolean
-- `pg\dt` - Polyglot datetime
-- `pg\path` - Polyglot path type
+- `pg\int` - Aljam3 integer
+- `pg\string` - Aljam3 string
+- `pg\bool` - Aljam3 boolean
+- `pg\dt` - Aljam3 datetime
+- `pg\path` - Aljam3 path type
 - `py\int` - Python integer
 - `py\str` - Python string
 - `py\dict` - Python dictionary
@@ -86,7 +86,7 @@ Rather than storing IR as JSON blobs, Polyglot uses **normalized relational tabl
 **Syntax:** `language.mutable\type`
 
 **Examples:**
-- `pg.mutable\int` - Mutable Polyglot integer
+- `pg.mutable\int` - Mutable Aljam3 integer
 - `py.mutable\list` - Mutable Python list
 
 ### Collection Types
@@ -117,7 +117,7 @@ pg\dt → ISO 8601 string → py\datetime
 ## IR Generation Process
 
 ```
-.pg Source Files
+.aj3 Source Files
       ↓
    Lexer (tokenization)
       ↓
@@ -241,9 +241,9 @@ VALUES
 
 ## Type Conversion Examples
 
-### Polyglot → Python
+### Aljam3 → Python
 
-```polyglot
+```aljam3
 [i] .count: pg\int << 42
 [r] |U.Python.Print
 [<] .value: py\int << .count  // Type conversion: pg\int → py\int
@@ -261,7 +261,7 @@ VALUES
 
 ### Python → Rust
 
-```polyglot
+```aljam3
 [r] |ProcessData
 [>] .result: py\dict >> .data
 
@@ -295,7 +295,7 @@ INSERT INTO ir_nodes (pipeline_definition_id, parent_node_id, node_order, node_t
 VALUES
   ('uuid-pkg', 'uuid-enum', 1, 'enum_field', '.host', 'pg\string', '{"value": "localhost"}'),
   ('uuid-pkg', 'uuid-enum', 2, 'enum_field', '.port', 'pg\int', '{"value": 5432}'),
-  ('uuid-pkg', 'uuid-enum', 3, 'enum_field', '.database', 'pg\string', '{"value": "polyglot_db"}');
+  ('uuid-pkg', 'uuid-enum', 3, 'enum_field', '.database', 'pg\string', '{"value": "aljam3_db"}');
 ```
 
 ---

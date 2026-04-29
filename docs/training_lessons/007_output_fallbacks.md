@@ -10,7 +10,7 @@ When receiving an output from an action, you can specify a fallback value that w
 ### The Fallback Syntax
 Use the `(>) >! [FallbackValue]` syntax immediately below the standard output mapping `(-) >output >> $variable`.
 
-```polyglot
+```aljam3
    [=] @Weather-API.Sensor.GetRegion
       (-) <regionId << "North"
       (-) >matrix >> $northTemp#array:float:2D

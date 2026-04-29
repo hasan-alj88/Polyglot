@@ -20,7 +20,7 @@ This is the cross-language counterpart of [[pglib/pipelines/Run/Script|-Run.\<La
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Run.Bridge.Script
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RunBridgeScript"
@@ -53,7 +53,7 @@ This is the cross-language counterpart of [[pglib/pipelines/Run/Script|-Run.\<La
 
 Bridge pipelines require two `-W.Env` wrappers. The `;Caller;Callee` dual-env syntax specifies both on the `[-]` call line:
 
-```polyglot
+```aljam3
 [-] -Run.Bridge.Script;PyEnv;GoEnv
 ```
 
@@ -93,7 +93,7 @@ After execution, `>Bind` variables are read back and converted from the callee's
 
 A Go pipeline injects variables into a Python ML script:
 
-```polyglot
+```aljam3
 {@} @Registry:PG<MLBridge<1.0
    [.] .name << "MLBridge"
 
@@ -149,16 +149,16 @@ A Go pipeline injects variables into a Python ML script:
 In this example:
 - `$features` and `$modelName` originate in a Go context (caller is `;GoApp`)
 - `<Bind` variables are tagged with `#NativeType.Go` types
-- The Bridge converts `Go []float64 → Polyglot #array.float → Python list` and `Go string → Polyglot #string → Python str`
+- The Bridge converts `Go []float64 → Aljam3 #array.float → Python list` and `Go string → Aljam3 #string → Python str`
 - The Python script receives `features` and `model_name` as native Python variables
 - `>Bind` reads `predictions` back, tagged with `#NativeType.Python`, converted to Go type
 
 ### SDK Caller Side
 
-From the Go application, the same pipeline is invoked through the [[polyglot-interface|c:polyglot-interface]] SDK:
+From the Go application, the same pipeline is invoked through the [[aljam3-interface|c:aljam3-interface]] SDK:
 
 ```go
-import pg "polyglot.dev/sdk"
+import pg "aljam3.dev/sdk"
 
 result, err := pg.Call(ctx, "GoToPythonML", map[string]interface{}{
     "features":  []float64{1.0, 2.0, 3.0, 4.0, 5.0},
@@ -168,7 +168,7 @@ result, err := pg.Call(ctx, "GoToPythonML", map[string]interface{}{
 // result["log"] — stdout/stderr from the Python environment
 ```
 
-The SDK serializes inputs using the universal string algorithm, publishes a NATS request to `-T.Call`, and deserializes the response. The Bridge conversion between Go and Python happens inside the Polyglot Service -- the SDK caller does not manage language environments directly.
+The SDK serializes inputs using the universal string algorithm, publishes a NATS request to `-T.Call`, and deserializes the response. The Bridge conversion between Go and Python happens inside the Aljam3 Service -- the SDK caller does not manage language environments directly.
 
 ## When to Use
 
@@ -176,7 +176,7 @@ The SDK serializes inputs using the universal string algorithm, publishes a NATS
 |----------|-----|-----|
 | Inject variables into a script in a **different** language | `-Run.Bridge.Script` | Pairwise conversion avoids JSON round-trip overhead |
 | Run a script in the **same** language with variable injection | `-Run.<Lang>.Script` | No cross-language conversion needed |
-| Call a Polyglot pipeline from external code | SDK `call()` | Universal string, zero per-pair setup |
+| Call a Aljam3 pipeline from external code | SDK `call()` | Universal string, zero per-pair setup |
 | ML/data science workloads across language boundaries | `-Run.Bridge.Script` | Direct type mapping for arrays, no string serialization |
 | Universal integration across many languages | SDK `call()` | Works for all supported languages without per-pair config |
 

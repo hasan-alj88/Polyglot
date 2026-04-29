@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler checks that the identifier following `{Q}` matches the pattern `#Queue:<name>`.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ correct prefix
 {Q} #Queue:GPUQueue
    [.] .strategy#QueueStrategy << #LIFO
@@ -25,13 +25,13 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01012 — missing #Queue: prefix
 {Q} #GPUQueue
    [.] .strategy#QueueStrategy << #LIFO
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01012 — wrong prefix
 {Q} -Q.MyQueue
    [.] .strategy#QueueStrategy << #LIFO

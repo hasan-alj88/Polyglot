@@ -13,7 +13,7 @@ Projects a `#dt` value into an Ethiopian date structure. Projections are not cac
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Ethiopian
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToEthiopian"

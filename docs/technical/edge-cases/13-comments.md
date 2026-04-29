@@ -12,7 +12,7 @@ updated: 2026-03-30
 
 **EBNF:** `comment_line ::= "[ ]" comment_text`
 
-```polyglot
+```aljam3
 [ ] This is a comment
 ```
 
@@ -20,7 +20,7 @@ updated: 2026-03-30
 
 **EBNF:** `comment_curly ::= "{ }" comment_text`
 
-```polyglot
+```aljam3
 { } This is a top-level comment between definitions
 ```
 
@@ -28,7 +28,7 @@ updated: 2026-03-30
 
 **EBNF:** `multiline_comment ::= "[ ]<" NEWLINE { any_text NEWLINE } "[ ]>"`
 
-```polyglot
+```aljam3
 [ ]<
 This is a multiline comment.
 It can span multiple lines.

@@ -21,7 +21,7 @@ Pipelines using `[C]` foreign code blocks ([[blocks#Foreign Code|u:Foreign Code]
 
 The compiler parses foreign code into an AST and walks it to detect IO calls. Each detected call is cross-referenced against the pipeline's declared `{_}` permissions.
 
-```polyglot
+```aljam3
 {_} _DataRead
    [.] .intent << #Grant
    [.] .category << #File
@@ -96,4 +96,4 @@ Both `<code.inline` (with `[C]` blocks) and `<code.file` are AST-analyzed at com
 ## Sandbox Defense-in-Depth
 
 <!-- @c:permissions/enforcement#Foreign Code Sandbox -->
-In addition to compile-time AST analysis, the Polyglot Service applies OS-level restrictions (Landlock, seccomp) before spawning the job process. See [[permissions/enforcement#Foreign Code Sandbox|c:Foreign Code Sandbox]] for details.
+In addition to compile-time AST analysis, the Aljam3 Service applies OS-level restrictions (Landlock, seccomp) before spawning the job process. See [[permissions/enforcement#Foreign Code Sandbox|c:Foreign Code Sandbox]] for details.

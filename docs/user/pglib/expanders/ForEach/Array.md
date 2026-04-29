@@ -11,7 +11,7 @@ Iterates over each item in an array, producing a mini-pipeline per item. The exe
 
 ## Syntax
 
-```polyglot
+```aljam3
 [=] =ForEach.Array
    (=) <Array << $myArray
    (=) >item >> $item

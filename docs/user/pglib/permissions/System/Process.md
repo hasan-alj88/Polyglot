@@ -13,7 +13,7 @@ Capability-level generic permission for spawning and managing processes. Sugar o
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __System.Process
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for spawning and managing processes. Sugar o
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __System.Process
    (_) <scope << "ffmpeg"
 ```

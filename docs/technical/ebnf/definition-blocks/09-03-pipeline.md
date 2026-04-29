@@ -38,12 +38,12 @@ error_decl_line     ::= "(-)" error_id ;
 
 **Example** — background-only pipeline:
 
-```polyglot
+```aljam3
 {-}[b] -LogEvent
    [T] -T.Call
    (-) <message#string
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Append"{$logPath}"
       (-) <text << $message
@@ -114,7 +114,7 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
 Simple: `[Q] -Q.Default`
 
 With active controls:
-```polyglot
+```aljam3
 [Q] -Q.Assign"GPUQueue"
    [Q] -Q.Pause.Hard.RAM.LessThan
       (-) <mb << 3072.0
@@ -135,7 +135,7 @@ wrapper_io_line     ::= "(-)" variable_id assignment_op value_expr ;
 
 **Rule:** `[W]` references a wrapper (`{W}`). Wrapper IO is wired using `(-)` with `$` variables. See 9.5 for wrapper definition syntax and IO wiring details.
 
-**Examples:** `[W] -W.Polyglot`, `[W] -W.DB.Connection` with `(-) $connectionString << $connStr`
+**Examples:** `[W] -W.Aljam3`, `[W] -W.DB.Connection` with `(-) $connectionString << $connStr`
 
 ### 9.3.5 Execution Section
 

@@ -15,7 +15,7 @@ Run code with Record-typed variable bindings. Field names become native local va
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Run.<Lang>.Script
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RunScript"
@@ -46,9 +46,9 @@ Run code with Record-typed variable bindings. Field names become native local va
 
 `<Bind#Record` field names map **exactly** to native local variables. The compiler validates that every field name exists as an identifier in the code (PGE01033). `>Bind#Record` field names are read back after execution (PGE01034).
 
-This is the primary mechanism for passing Polyglot data into foreign code:
+This is the primary mechanism for passing Aljam3 data into foreign code:
 
-| Polyglot Record Field | Native Variable |
+| Aljam3 Record Field | Native Variable |
 |-----------------------|-----------------|
 | `.input_path#path` | `input_path` |
 | `.target_w#int` | `target_w` |
@@ -69,14 +69,14 @@ The compiler validates that:
 
 Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, never both (PGE01038):
 
-```polyglot
+```aljam3
 [ ] inline via [C] blocks
 (-) <code.inline <<
    [C] import os
    [C] result = os.listdir(target_dir)
 ```
 
-```polyglot
+```aljam3
 [ ] file reference
 (-) <code.file#path << "/scripts/cleanup.py"
 ```
@@ -85,7 +85,7 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
 
 The environment is passed inline using `;EnvName` appended to the pipeline reference:
 
-```polyglot
+```aljam3
 [-] -Run.Python.Script;PyML
 ```
 
@@ -93,14 +93,14 @@ This resolves the `<env` input automatically from the active `-W.Env;PyML` wrapp
 
 **Verbose form** (equivalent):
 
-```polyglot
+```aljam3
 [-] -Run.Python.Script
    (-) <env#PyEnv << $pyenv
 ```
 
 ## Example
 
-```polyglot
+```aljam3
 {;} ;PyML
    [.] .language << #BaseCode.Python
    [.] .version << ?[3.10, 4.0)
@@ -151,7 +151,7 @@ This resolves the `<env` input automatically from the active `-W.Env;PyML` wrapp
 
 In this example:
 - `input_path`, `target_w`, `target_h` are injected as Python local variables from `<Bind`
-- `resized_path` is read back into Polyglot via `>Bind`
+- `resized_path` is read back into Aljam3 via `>Bind`
 - The compiler validates all four names exist in the `[C]` block
 
 ## Scope Isolation

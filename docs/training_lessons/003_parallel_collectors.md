@@ -12,7 +12,7 @@ If the variables produced by parallel execution (e.g., `$northTemp` and `$southT
 ### The `[*] *All` Collector
 To synchronize the outputs, use the `[*] *All` block. This block waits for all specified parallel variables to be populated before execution proceeds.
 
-```polyglot
+```aljam3
    [=] @Weather-API.Sensor.GetRegion
       (-) <regionId << "North"
       (-) >matrix >> $northTemp#array:float:2D

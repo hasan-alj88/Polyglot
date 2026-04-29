@@ -19,38 +19,38 @@ severity: error
 **See also:** PGE04001 (type mismatch), PGE04011 (negative array index literal), PGE04017 (array dimension access mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ 1D array (default — :1D implied)
 (-) >items#array:string
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ array of structs
 (-) <records#array:UserRecord
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ 2D matrix using :ND dimension specifier
 (-) >matrix#array:float:2D
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ 3D cube
 (-) <cube#array:int:3D
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE04013 — nested array type
 (-) >matrix#array:array.string                [ ] ✗ PGE04013 — use #array:string:2D instead
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04013 — nested array type
 (-) <data#array:array.int                     [ ] ✗ PGE04013 — use #array:int:2D instead
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04013 — deeply nested array type
 (-) <cube#array:array.array.float             [ ] ✗ PGE04013 — use #array:float:3D instead
 ```

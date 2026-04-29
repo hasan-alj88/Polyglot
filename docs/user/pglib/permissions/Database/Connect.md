@@ -13,7 +13,7 @@ Capability-level generic permission for connecting to databases. Sugar over [[IN
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Database.Connect
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for connecting to databases. Sugar over [[IN
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Database.Connect
    (_) <scope << "postgres://db.internal/analytics"
 ```

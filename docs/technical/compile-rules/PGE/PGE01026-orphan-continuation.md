@@ -18,7 +18,7 @@ severity: error
 **Detection:** The compiler tracks whether the previous line ended with an incomplete expression (e.g., an open string interpolation, a pipeline call awaiting IO). If `[~]` appears with no such context, PGE01026 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ continuation of long string interpolation
 [-] $msg#string << "Hello {$firstName}"
    [~] " {$lastName}, welcome to"
@@ -26,12 +26,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01026 — [~] with no preceding expression
 {-} -Bad
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [~] "orphan continuation"
 ```
 

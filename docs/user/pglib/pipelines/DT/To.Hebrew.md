@@ -13,7 +13,7 @@ Projects a `#dt` value into a Hebrew date structure. Projections are not cached 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Hebrew
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToHebrew"

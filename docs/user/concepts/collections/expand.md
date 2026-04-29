@@ -35,7 +35,7 @@ Every expand scope must contain at least one [[concepts/collections/collect|coll
 
 Unlike `=ForEach.Serial` which iterates all keys, `=ForEach.Level` iterates only the siblings at a specific level of a serialized structure. The `.=` suffix on the input path marks the level iteration point — analogous to `.*` wildcard, `.=` means "expand siblings at this level":
 
-```polyglot
+```aljam3
 [-] =ForEach.Level
    (=) <level << #SomeData.SubField.=
    (=) >key >> $key

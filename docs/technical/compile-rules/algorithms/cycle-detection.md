@@ -12,7 +12,7 @@ updated: 2026-03-24
 <!-- @u:syntax/io -->
 <!-- @u:syntax/types -->
 
-Detects circular call chains among `{-}` pipelines within the same package. Polyglot has no recursion — no base case construct, no call stack, no termination mechanism. A circular call graph executes forever and is always a compile error ([[PGE09013-circular-pipeline-call|PGE09013]]).
+Detects circular call chains among `{-}` pipelines within the same package. Aljam3 has no recursion — no base case construct, no call stack, no termination mechanism. A circular call graph executes forever and is always a compile error ([[PGE09013-circular-pipeline-call|PGE09013]]).
 
 Cross-package cycles are excluded — those are caught by [[PGE09002-circular-package-dependency|PGE09002]] at the import level.
 
@@ -103,7 +103,7 @@ A back edge (GRAY → GRAY) proves a cycle. The cycle path is recovered by walki
 
 Given pipelines: `-StepA → -StepB → -StepC → -StepA`
 
-```polyglot
+```aljam3
 DFS starts at -StepA (WHITE → GRAY)
   Visit -StepB (WHITE → GRAY)
     Visit -StepC (WHITE → GRAY)
@@ -120,7 +120,7 @@ Result: cycle [-StepA, -StepB, -StepC, -StepA]
 
 Given pipeline: `-Recurse` calls `-Recurse`
 
-```polyglot
+```aljam3
 DFS starts at -Recurse (WHITE → GRAY)
   Visit -Recurse — already GRAY → back edge (self-edge)
   Extract: -Recurse → -Recurse
@@ -190,8 +190,8 @@ In practice, V and E are small (packages typically contain fewer than 50 pipelin
 
 When a cycle is detected, the compiler emits:
 
-```polyglot
-PGE09013: Circular pipeline call detected: -A → -B → -C → -A — Polyglot does not support recursion
+```aljam3
+PGE09013: Circular pipeline call detected: -A → -B → -C → -A — Aljam3 does not support recursion
 ```
 
 Format: the full cycle path with `→` separators, starting and ending at the same node.

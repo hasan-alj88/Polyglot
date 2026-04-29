@@ -9,7 +9,7 @@ updated: 2026-04-16
 <!-- @c:technical/plan/deployment/INDEX -->
 <!-- @c:technical/plan/queue-manager/infrastructure -->
 
-This document specifies how to produce the `polyglot` system package (.deb and .rpm) from source. The package bundles all Polyglot binaries, vendor dependencies (Redis, NATS), Queue Handler Lua scripts, systemd unit files, and default configuration into a single installable artifact.
+This document specifies how to produce the `aljam3` system package (.deb and .rpm) from source. The package bundles all Aljam3 binaries, vendor dependencies (Redis, NATS), Queue Handler Lua scripts, systemd unit files, and default configuration into a single installable artifact.
 
 ## Build Tool
 
@@ -29,10 +29,10 @@ nfpm package --packager rpm --target dist/
 ### Rust Binaries (build from source)
 
 ```bash
-cargo build --release --bin polyglot
-cargo build --release --bin polyglot-tm
-cargo build --release --bin polyglot-runner
-cargo build --release --bin polyglot-ctl
+cargo build --release --bin aljam3
+cargo build --release --bin aljam3-tm
+cargo build --release --bin aljam3-runner
+cargo build --release --bin aljam3-ctl
 ```
 
 All four binaries compile from the same Cargo workspace. Target: `x86_64-unknown-linux-gnu` (primary), `aarch64-unknown-linux-gnu` (secondary).
@@ -58,17 +58,17 @@ nats=2.11.1
 
 ### Queue Handler Lua Scripts
 
-Hand-written Lua scripts in `lib/qh/`. Loaded into Redis at service startup by `polyglot-ctl setup`.
+Hand-written Lua scripts in `lib/qh/`. Loaded into Redis at service startup by `aljam3-ctl setup`.
 
 ## Package Contents
 
 ```text
-/opt/polyglot/
+/opt/aljam3/
 ├── bin/
-│   ├── polyglot                # Compiler CLI
-│   ├── polyglot-tm             # Trigger Monitor daemon
-│   ├── polyglot-runner         # Runner daemon
-│   ├── polyglot-ctl            # Management CLI
+│   ├── aljam3                # Compiler CLI
+│   ├── aljam3-tm             # Trigger Monitor daemon
+│   ├── aljam3-runner         # Runner daemon
+│   ├── aljam3-ctl            # Management CLI
 │   ├── redis-server            # Bundled Redis (TLS-enabled build)
 │   └── nats-server             # Bundled NATS JetStream
 ├── lib/
@@ -77,9 +77,9 @@ Hand-written Lua scripts in `lib/qh/`. Loaded into Redis at service startup by `
 │       ├── constraints.lua
 │       └── state.lua
 ├── etc/
-│   ├── polyglot.conf           # Main configuration
-│   ├── redis.conf              # Pre-configured for Polyglot
-│   └── nats.conf               # Pre-configured for Polyglot
+│   ├── aljam3.conf           # Main configuration
+│   ├── redis.conf              # Pre-configured for Aljam3
+│   └── nats.conf               # Pre-configured for Aljam3
 ├── share/
 │   └── certs/                  # Generated certificates (empty at install)
 └── var/
@@ -91,13 +91,13 @@ Hand-written Lua scripts in `lib/qh/`. Loaded into Redis at service startup by `
 ## nfpm Configuration
 
 ```yaml
-name: polyglot
+name: aljam3
 arch: amd64
 version: "${VERSION}"
-maintainer: "Polyglot Team <team@polyglot.dev>"
-description: "Polyglot async programming language — compiler and runtime service"
-vendor: "Polyglot Project"
-homepage: "https://polyglot.dev"
+maintainer: "Aljam3 Team <team@aljam3.dev>"
+description: "Aljam3 async programming language — compiler and runtime service"
+vendor: "Aljam3 Project"
+homepage: "https://aljam3.dev"
 license: "Apache-2.0"
 
 depends:
@@ -110,88 +110,88 @@ recommends:
 
 contents:
   # Rust binaries
-  - src: target/release/polyglot
-    dst: /opt/polyglot/bin/polyglot
+  - src: target/release/aljam3
+    dst: /opt/aljam3/bin/aljam3
     file_info:
       mode: 0755
-  - src: target/release/polyglot-tm
-    dst: /opt/polyglot/bin/polyglot-tm
+  - src: target/release/aljam3-tm
+    dst: /opt/aljam3/bin/aljam3-tm
     file_info:
       mode: 0755
-  - src: target/release/polyglot-runner
-    dst: /opt/polyglot/bin/polyglot-runner
+  - src: target/release/aljam3-runner
+    dst: /opt/aljam3/bin/aljam3-runner
     file_info:
       mode: 0755
-  - src: target/release/polyglot-ctl
-    dst: /opt/polyglot/bin/polyglot-ctl
+  - src: target/release/aljam3-ctl
+    dst: /opt/aljam3/bin/aljam3-ctl
     file_info:
       mode: 0755
 
   # Vendor binaries
   - src: vendor/redis-server
-    dst: /opt/polyglot/bin/redis-server
+    dst: /opt/aljam3/bin/redis-server
     file_info:
       mode: 0755
   - src: vendor/nats-server
-    dst: /opt/polyglot/bin/nats-server
+    dst: /opt/aljam3/bin/nats-server
     file_info:
       mode: 0755
 
   # QH Lua scripts
   - src: lib/qh/
-    dst: /opt/polyglot/lib/qh/
+    dst: /opt/aljam3/lib/qh/
 
   # Configuration
-  - src: etc/polyglot.conf
-    dst: /opt/polyglot/etc/polyglot.conf
+  - src: etc/aljam3.conf
+    dst: /opt/aljam3/etc/aljam3.conf
     type: config|noreplace
   - src: etc/redis.conf
-    dst: /opt/polyglot/etc/redis.conf
+    dst: /opt/aljam3/etc/redis.conf
     type: config|noreplace
   - src: etc/nats.conf
-    dst: /opt/polyglot/etc/nats.conf
+    dst: /opt/aljam3/etc/nats.conf
     type: config|noreplace
 
   # systemd units
-  - src: systemd/polyglot-redis.service
-    dst: /etc/systemd/system/polyglot-redis.service
-  - src: systemd/polyglot-nats.service
-    dst: /etc/systemd/system/polyglot-nats.service
-  - src: systemd/polyglot-tm.service
-    dst: /etc/systemd/system/polyglot-tm.service
-  - src: systemd/polyglot-runner.service
-    dst: /etc/systemd/system/polyglot-runner.service
+  - src: systemd/aljam3-redis.service
+    dst: /etc/systemd/system/aljam3-redis.service
+  - src: systemd/aljam3-nats.service
+    dst: /etc/systemd/system/aljam3-nats.service
+  - src: systemd/aljam3-tm.service
+    dst: /etc/systemd/system/aljam3-tm.service
+  - src: systemd/aljam3-runner.service
+    dst: /etc/systemd/system/aljam3-runner.service
 
   # PATH symlink
-  - src: target/release/polyglot
-    dst: /usr/local/bin/polyglot
+  - src: target/release/aljam3
+    dst: /usr/local/bin/aljam3
     type: symlink
-  - src: target/release/polyglot-ctl
-    dst: /usr/local/bin/polyglot-ctl
+  - src: target/release/aljam3-ctl
+    dst: /usr/local/bin/aljam3-ctl
     type: symlink
 
   # Empty directories
-  - dst: /opt/polyglot/share/certs/
+  - dst: /opt/aljam3/share/certs/
     type: dir
     file_info:
       mode: 0700
-      owner: polyglot
-      group: polyglot
-  - dst: /opt/polyglot/var/redis/
+      owner: aljam3
+      group: aljam3
+  - dst: /opt/aljam3/var/redis/
     type: dir
     file_info:
-      owner: polyglot
-      group: polyglot
-  - dst: /opt/polyglot/var/nats/
+      owner: aljam3
+      group: aljam3
+  - dst: /opt/aljam3/var/nats/
     type: dir
     file_info:
-      owner: polyglot
-      group: polyglot
-  - dst: /opt/polyglot/var/contracts/
+      owner: aljam3
+      group: aljam3
+  - dst: /opt/aljam3/var/contracts/
     type: dir
     file_info:
-      owner: polyglot
-      group: polyglot
+      owner: aljam3
+      group: aljam3
 
 scripts:
   postinstall: scripts/postinstall.sh
@@ -200,20 +200,20 @@ scripts:
 
 ## systemd Unit Files
 
-### polyglot-redis.service
+### aljam3-redis.service
 
 ```ini
 [Unit]
-Description=Polyglot Redis (bundled state store)
+Description=Aljam3 Redis (bundled state store)
 After=network.target
-ConditionPathExists=/opt/polyglot/etc/redis.conf
+ConditionPathExists=/opt/aljam3/etc/redis.conf
 
 [Service]
 Type=notify
-User=polyglot
-Group=polyglot
-ExecStart=/opt/polyglot/bin/redis-server /opt/polyglot/etc/redis.conf
-ExecStop=/opt/polyglot/bin/redis-server shutdown
+User=aljam3
+Group=aljam3
+ExecStart=/opt/aljam3/bin/redis-server /opt/aljam3/etc/redis.conf
+ExecStop=/opt/aljam3/bin/redis-server shutdown
 Restart=on-failure
 RestartSec=5s
 LimitNOFILE=65535
@@ -222,19 +222,19 @@ LimitNOFILE=65535
 WantedBy=multi-user.target
 ```
 
-### polyglot-nats.service
+### aljam3-nats.service
 
 ```ini
 [Unit]
-Description=Polyglot NATS JetStream (bundled messaging)
+Description=Aljam3 NATS JetStream (bundled messaging)
 After=network.target
-ConditionPathExists=/opt/polyglot/etc/nats.conf
+ConditionPathExists=/opt/aljam3/etc/nats.conf
 
 [Service]
 Type=exec
-User=polyglot
-Group=polyglot
-ExecStart=/opt/polyglot/bin/nats-server -c /opt/polyglot/etc/nats.conf
+User=aljam3
+Group=aljam3
+ExecStart=/opt/aljam3/bin/nats-server -c /opt/aljam3/etc/nats.conf
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 RestartSec=5s
@@ -243,19 +243,19 @@ RestartSec=5s
 WantedBy=multi-user.target
 ```
 
-### polyglot-tm.service
+### aljam3-tm.service
 
 ```ini
 [Unit]
-Description=Polyglot Trigger Monitor
-After=polyglot-redis.service polyglot-nats.service
-Requires=polyglot-redis.service polyglot-nats.service
+Description=Aljam3 Trigger Monitor
+After=aljam3-redis.service aljam3-nats.service
+Requires=aljam3-redis.service aljam3-nats.service
 
 [Service]
 Type=exec
-User=polyglot
-Group=polyglot
-ExecStart=/opt/polyglot/bin/polyglot-tm --config /opt/polyglot/etc/polyglot.conf
+User=aljam3
+Group=aljam3
+ExecStart=/opt/aljam3/bin/aljam3-tm --config /opt/aljam3/etc/aljam3.conf
 Restart=on-failure
 RestartSec=5s
 Environment=RUST_LOG=info
@@ -264,19 +264,19 @@ Environment=RUST_LOG=info
 WantedBy=multi-user.target
 ```
 
-### polyglot-runner.service
+### aljam3-runner.service
 
 ```ini
 [Unit]
-Description=Polyglot Runner
-After=polyglot-nats.service
-Requires=polyglot-nats.service
+Description=Aljam3 Runner
+After=aljam3-nats.service
+Requires=aljam3-nats.service
 
 [Service]
 Type=exec
-User=polyglot
-Group=polyglot
-ExecStart=/opt/polyglot/bin/polyglot-runner --config /opt/polyglot/etc/polyglot.conf
+User=aljam3
+Group=aljam3
+ExecStart=/opt/aljam3/bin/aljam3-runner --config /opt/aljam3/etc/aljam3.conf
 Restart=on-failure
 RestartSec=5s
 AmbientCapabilities=CAP_SYS_ADMIN CAP_NET_ADMIN CAP_DAC_OVERRIDE
@@ -294,26 +294,26 @@ The Runner service uses `AmbientCapabilities` to grant kernel-level access witho
 #!/bin/bash
 set -e
 
-# Create polyglot system user (no login shell, no home)
-if ! id -u polyglot >/dev/null 2>&1; then
-    useradd --system --no-create-home --shell /usr/sbin/nologin polyglot
+# Create aljam3 system user (no login shell, no home)
+if ! id -u aljam3 >/dev/null 2>&1; then
+    useradd --system --no-create-home --shell /usr/sbin/nologin aljam3
 fi
 
 # Set ownership on data directories
-chown -R polyglot:polyglot /opt/polyglot/var/
-chown -R polyglot:polyglot /opt/polyglot/share/certs/
+chown -R aljam3:aljam3 /opt/aljam3/var/
+chown -R aljam3:aljam3 /opt/aljam3/share/certs/
 
 # Reload systemd
 systemctl daemon-reload
 
 # Load QH Lua scripts into Redis (if Redis is running)
-if systemctl is-active --quiet polyglot-redis; then
-    /opt/polyglot/bin/polyglot-ctl load-qh-scripts
+if systemctl is-active --quiet aljam3-redis; then
+    /opt/aljam3/bin/aljam3-ctl load-qh-scripts
 fi
 
 echo ""
-echo "Polyglot installed to /opt/polyglot/"
-echo "Run 'polyglot-ctl setup' to configure and start services."
+echo "Aljam3 installed to /opt/aljam3/"
+echo "Run 'aljam3-ctl setup' to configure and start services."
 echo ""
 ```
 
@@ -324,7 +324,7 @@ echo ""
 set -e
 
 # Stop and disable all services
-for svc in polyglot-runner polyglot-tm polyglot-nats polyglot-redis; do
+for svc in aljam3-runner aljam3-tm aljam3-nats aljam3-redis; do
     systemctl stop "$svc" 2>/dev/null || true
     systemctl disable "$svc" 2>/dev/null || true
 done
@@ -332,8 +332,8 @@ done
 systemctl daemon-reload
 
 echo ""
-echo "Polyglot services stopped."
-echo "Data preserved in /opt/polyglot/var/ — remove manually if no longer needed."
+echo "Aljam3 services stopped."
+echo "Data preserved in /opt/aljam3/var/ — remove manually if no longer needed."
 echo ""
 ```
 
@@ -346,8 +346,8 @@ apt-repo/
 ├── pool/
 │   └── main/
 │       └── p/
-│           └── polyglot/
-│               └── polyglot_0.1.0_amd64.deb
+│           └── aljam3/
+│               └── aljam3_0.1.0_amd64.deb
 ├── dists/
 │   └── stable/
 │       ├── Release
@@ -357,7 +357,7 @@ apt-repo/
 │           └── binary-amd64/
 │               ├── Packages
 │               └── Packages.gz
-└── polyglot.gpg              # Public GPG key
+└── aljam3.gpg              # Public GPG key
 ```
 
 ### reprepro Setup
@@ -366,8 +366,8 @@ apt-repo/
 # Initialize repo
 mkdir -p apt-repo/conf
 cat > apt-repo/conf/distributions <<'EOF'
-Origin: Polyglot
-Label: Polyglot
+Origin: Aljam3
+Label: Aljam3
 Suite: stable
 Codename: stable
 Architectures: amd64 arm64
@@ -376,7 +376,7 @@ SignWith: <GPG-KEY-ID>
 EOF
 
 # Add package
-reprepro -b apt-repo includedeb stable dist/polyglot_0.1.0_amd64.deb
+reprepro -b apt-repo includedeb stable dist/aljam3_0.1.0_amd64.deb
 ```
 
 ### GPG Key Management
@@ -386,14 +386,14 @@ reprepro -b apt-repo includedeb stable dist/polyglot_0.1.0_amd64.deb
 gpg --batch --gen-key <<'EOF'
 Key-Type: RSA
 Key-Length: 4096
-Name-Real: Polyglot Package Signing
-Name-Email: packages@polyglot.dev
+Name-Real: Aljam3 Package Signing
+Name-Email: packages@aljam3.dev
 Expire-Date: 0
 %no-protection
 EOF
 
 # Export public key for users
-gpg --export --armor packages@polyglot.dev > apt-repo/polyglot.gpg
+gpg --export --armor packages@aljam3.dev > apt-repo/aljam3.gpg
 ```
 
 ### CI/CD Integration

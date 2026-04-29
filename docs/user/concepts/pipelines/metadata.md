@@ -8,13 +8,13 @@ updated: 2026-03-30
 
 ## Pipeline Metadata
 
-Every pipeline carries implicit `live` metadata fields populated by the Polyglot runtime. Pipeline metadata lives at `%-:{name}:{instance}` in the unified tree — see [[data-is-trees#How Concepts Connect]]. Query built-in metadata via the `%` accessor instead of creating custom booleans. See [[metadata]] for the full metadata tree, field listings, and access patterns.
+Every pipeline carries implicit `live` metadata fields populated by the Aljam3 runtime. Pipeline metadata lives at `%-:{name}:{instance}` in the unified tree — see [[data-is-trees#How Concepts Connect]]. Query built-in metadata via the `%` accessor instead of creating custom booleans. See [[metadata]] for the full metadata tree, field listings, and access patterns.
 
 ### Error Trees
 
 Every failable pipeline **must** declare its errors with `(-) !ErrorName` in the IO section. This is the pipeline's error tree — a structured list of every error it can raise:
 
-```polyglot
+```aljam3
 {-} -ValidateUser
    (-) <name#string
    (-) >validated#string
@@ -22,7 +22,7 @@ Every failable pipeline **must** declare its errors with `(-) !ErrorName` in the
    (-) !Validation.TooLong
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    ...
 ```
 

@@ -9,11 +9,11 @@ metadata_instance: "%-:RT.<Lang>.CLI:N"
 
 # -RT.\<Lang\>.CLI
 
-Invoke a compiled binary. No language runtime needed — uses `-W.Polyglot`, not `-W.Env`. No `<env` parameter.
+Invoke a compiled binary. No language runtime needed — uses `-W.Aljam3`, not `-W.Env`. No `<env` parameter.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -RT.<Lang>.CLI
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RtCli"
@@ -40,11 +40,11 @@ Invoke a compiled binary. No language runtime needed — uses `-W.Polyglot`, not
 
 ## Notes
 
-Uses `-W.Polyglot`, not `-W.Env` — no language runtime needed for compiled binaries.
+Uses `-W.Aljam3`, not `-W.Env` — no language runtime needed for compiled binaries.
 
 ## Example
 
-```polyglot
+```aljam3
 {_} _BinaryCeiling
    [.] .intent << #Ceiling
    [.] .System.Process "*"
@@ -62,7 +62,7 @@ Uses `-W.Polyglot`, not `-W.Env` — no language runtime needed for compiled bin
    (-) >toolOutput#Code:Rust.Output
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] -RT.Rust.CLI

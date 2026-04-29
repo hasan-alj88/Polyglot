@@ -20,7 +20,7 @@ Direct command: immediate OS kill, no cleanup. Signal: `command.kill.hard`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Kill.Hard
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QKillHard"

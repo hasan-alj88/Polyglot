@@ -30,7 +30,7 @@ severity: error
 **Note:** `{T}` triggers may have execution body, `[Q]`, and `[W]`. These are optional (not required like in `{-}[exe]`). The only structural requirement unique to `{T}` is `>IsTriggered#bool` (see PGE01032).
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ — derived trigger with full execution body
 {T} -T.Complex.SystemReady
    [Q] -Q.Default
@@ -57,7 +57,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01031 — {W} cannot have [T]
 {W} -W.Bad.WithTrigger
    [T] -T.Call
@@ -74,7 +74,7 @@ severity: error
 
 [ ] ✗ PGE01031 — {Q} cannot have [W]
 {Q} -Q.Bad.WithWrapper
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
 [ ] ✗ PGE01031 — {Q} cannot have execution body
 {Q} -Q.Bad.WithBody

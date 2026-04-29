@@ -1,9 +1,9 @@
 {
-  "name": "polyglot-language-support",
-  "displayName": "Polyglot Language Support",
-  "description": "Syntax highlighting and language support for Polyglot automation language",
-  "version": "0.1.0",
-  "publisher": "polyglot-lang",
+  "name": "aljam3-language-support",
+  "displayName": "Aljam3 Language Support",
+  "description": "Syntax highlighting and language support for Aljam3 automation language",
+  "version": "0.1.2",
+  "publisher": "aljam3-lang",
   "license": "MIT",
   "engines": {
     "vscode": "^1.60.0"
@@ -12,7 +12,7 @@
     "Programming Languages"
   ],
   "keywords": [
-    "polyglot",
+    "aljam3",
     "automation",
     "pipeline",
     "workflow",
@@ -20,47 +20,60 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/polyglot-lang/polyglot"
+    "url": "https://github.com/aljam3-lang/aljam3"
   },
   "contributes": {
     "languages": [
       {
-        "id": "polyglot",
+        "id": "aljam3",
         "aliases": [
-          "Polyglot",
-          "polyglot"
+          "Aljam3",
+          "aljam3"
         ],
         "extensions": [
-          ".pg"
+          ".aj3"
         ],
-        "configuration": "./language-configuration.json",
-        "icon": {
-          "light": "./icons/polyglot-icon.svg",
-          "dark": "./icons/polyglot-icon.svg"
-        }
+        "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
       {
-        "language": "polyglot",
-        "scopeName": "source.polyglot",
-        "path": "./syntaxes/polyglot.tmLanguage.json"
+        "language": "aljam3",
+        "scopeName": "source.aljam3",
+        "path": "./syntaxes/aljam3.tmLanguage.json"
       },
       {
-        "scopeName": "markdown.polyglot.codeblock",
-        "path": "./syntaxes/polyglot.markdown.injection.json",
+        "scopeName": "markdown.aljam3.codeblock",
+        "path": "./syntaxes/aljam3.markdown.injection.json",
         "injectTo": [
           "text.html.markdown"
         ],
         "embeddedLanguages": {
-          "meta.embedded.block.polyglot": "polyglot"
+          "meta.embedded.block.aljam3": "aljam3"
         }
       }
     ],
     "snippets": [
       {
-        "language": "polyglot",
-        "path": "./snippets/polyglot.json"
+        "language": "aljam3",
+        "path": "./snippets/aljam3.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "Aljam3 Dracula",
+        "uiTheme": "vs-dark",
+        "path": "./themes/aljam3-dracula-color-theme.json"
+      },
+      {
+        "label": "Aljam3 One Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/aljam3-onedark-color-theme.json"
+      },
+      {
+        "label": "Aljam3 Monokai",
+        "uiTheme": "vs-dark",
+        "path": "./themes/aljam3-monokai-color-theme.json"
       }
     ]
   },

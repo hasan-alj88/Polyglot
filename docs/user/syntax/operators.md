@@ -59,7 +59,7 @@ Any comparison operator can be negated by inserting `!` before `?`. This replace
 | `<=!?` | Not less-or-equal | equivalent to `>` |
 | `>=!?` | Not greater-or-equal | equivalent to `<` |
 
-```polyglot
+```aljam3
 [ ] Not less than — age is at least 18
 [?] $age <!? 18
    [-] $eligible#bool << #Boolean.True
@@ -100,7 +100,7 @@ The lower bound must not exceed the upper bound ([[PGE04013|PGE04013]]). For inc
 
 ## Arithmetic
 
-Polyglot does not have raw arithmetic operators. Arithmetic is performed through `-Math.*` pglib pipelines — raw tokens `+`, `-`, `*`, `/` in expression context are a compile error ([[PGE04010|PGE04010]]). This design keeps all operations inside the pipeline execution model (trigger → queue → wrapper → body) and avoids conflicts with existing operator meanings (`*` is a collector prefix).
+Aljam3 does not have raw arithmetic operators. Arithmetic is performed through `-Math.*` pglib pipelines — raw tokens `+`, `-`, `*`, `/` in expression context are a compile error ([[PGE04010|PGE04010]]). This design keeps all operations inside the pipeline execution model (trigger → queue → wrapper → body) and avoids conflicts with existing operator meanings (`*` is a collector prefix).
 
 | Operation | pglib Pipeline | Arity |
 |-----------|----------------|-------|
@@ -115,7 +115,7 @@ Polyglot does not have raw arithmetic operators. Arithmetic is performed through
 
 All accept `#int` and `#float` operands. When any input is `#float`, the output is `#float`. Division or modulo with a literal `0` divisor is a compile error ([[PGE04011|PGE04011]]).
 
-```polyglot
+```aljam3
 [ ] Addition
 [-] -Math.Add
    (-) << $price

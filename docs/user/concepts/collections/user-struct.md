@@ -11,7 +11,7 @@ updated: 2026-03-30
 
 User-defined structs declare fixed fields with `[.]`. The `##` schema is optional — the compiler infers it from field declarations.
 
-```polyglot
+```aljam3
 {#} #Person
    [.] .name#string
    [.] .age#int
@@ -19,7 +19,7 @@ User-defined structs declare fixed fields with `[.]`. The `##` schema is optiona
 
 Fixed fields use the `.` accessor:
 
-```polyglot
+```aljam3
 [-] $userName#string << $user.name
 [-] $userAge#int << $user.age
 ```

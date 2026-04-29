@@ -5,12 +5,12 @@
 
 ## Lesson Summary
 
-Instead of using a full error block (`[!] *!`) to recover from missing or failed input assignments, Polyglot provides a dedicated input fallback syntax using `(<) <!`.
+Instead of using a full error block (`[!] *!`) to recover from missing or failed input assignments, Aljam3 provides a dedicated input fallback syntax using `(<) <!`.
 
 ### Correct Usage
 If the primary assignment `(-) <file#Path << "alerts_failed.csv"` fails, the value provided to `(<) <! ""` will be used instead.
 
-```polyglot
+```aljam3
    [-] -File.CSV.Log
       (-) <file#Path << "alerts_failed.csv"
          (<) <! ""

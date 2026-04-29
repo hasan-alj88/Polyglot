@@ -13,7 +13,7 @@ Returns the absolute value of the input. Accepts exactly one input. When the inp
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Math.Abs
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathAbs"

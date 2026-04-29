@@ -15,7 +15,7 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #AuditLevel
    [%] .description << "Permission audit logging level"
    [%] .version << "1.0.0"

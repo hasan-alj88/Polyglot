@@ -10,7 +10,7 @@ metadata_instance: "%#:ChineseDate:N"
 
 ## #ChineseDate
 
-```polyglot
+```aljam3
 {#} #ChineseDate
    [%] .description << "Chinese calendar date with stem-branch cycle"
    [%] .version << "1.0.0"
@@ -28,7 +28,7 @@ metadata_instance: "%#:ChineseDate:N"
 
 ## #HeavenlyStem
 
-```polyglot
+```aljam3
 {#} #HeavenlyStem
    [%] .description << "Chinese celestial stem in the sexagenary cycle"
    [%] .version << "1.0.0"
@@ -49,7 +49,7 @@ metadata_instance: "%#:ChineseDate:N"
 
 ## #EarthlyBranch
 
-```polyglot
+```aljam3
 {#} #EarthlyBranch
    [%] .description << "Chinese terrestrial branch in the sexagenary cycle"
    [%] .version << "1.0.0"

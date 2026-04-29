@@ -13,7 +13,7 @@ Converts a `#dt` into Hindu traditional time units (prahara/muhurta). These pipe
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.HinduTime
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToHinduTime"

@@ -15,7 +15,7 @@ severity: error
 <!-- @u:syntax/types -->
 
 **Statement:** Native `{N}` and derived `{-}` block types are mutually exclusive. A `{N}` definition cannot have an execution body; a `{-}` definition cannot have `%Native.*` metadata. A `{N}` definition without `%Native.Kind` is also an error (exception: `{T}` and `{Q}` are IO-only subtypes of `{-}` by design).
-**Rationale:** Native definitions delegate to host language code — a Polyglot execution body would conflict with the native implementation. Derived definitions are pure Polyglot — `%Native.*` metadata would create ambiguity about which implementation runs. A `{N}` block without `.Kind` has no subsystem role, making it unresolvable.
+**Rationale:** Native definitions delegate to host language code — a Aljam3 execution body would conflict with the native implementation. Derived definitions are pure Aljam3 — `%Native.*` metadata would create ambiguity about which implementation runs. A `{N}` block without `.Kind` has no subsystem role, making it unresolvable.
 **Detection:** The compiler checks for mutual exclusion between `{N}` block type and execution body elements (`[T]`, `[Q]`, `[W]`, `[-]`, `[=]`, `[b]`, `[s]`, `[\]`, `[/]`). It also validates that `{N}` blocks declare `%Native.Kind` with a valid `#NativeKind` variant and have a `.<Language>` field matching the language resolved for the operation's subsystem (via `native.defaults` or `native.overrides` in the service config).
 
 **Sub-conditions:**
@@ -29,7 +29,7 @@ severity: error
 | e | `{N}` without `.<Language>` for resolved subsystem language | Config resolves `Rust` for this operation but `{N}` has no `.Rust` field |
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ native execution pipeline — {N} with %Native metadata, no body
 {N} -File.Text.Read
    [%] .Kind << #NativeKind.Execution
@@ -40,11 +40,11 @@ severity: error
    (-) !File.NotFound
    (-) !File.PermissionDenied
 
-[ ] ✓ derived execution pipeline — {-} with full Polyglot body
+[ ] ✓ derived execution pipeline — {-} with full Aljam3 body
 {-} -ProcessData
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 
@@ -62,10 +62,10 @@ severity: error
    (-) >IsTriggered#bool
 
 [ ] ✓ native wrapper — {N} with Wrapper kind
-{N} -W.Polyglot
+{N} -W.Aljam3
    [%] .Kind << #NativeKind.Wrapper
-   [%] .Rust << "WrapperPolyglot"
-   [%] .description << "Default Polyglot wrapper"
+   [%] .Rust << "WrapperAljam3"
+   [%] .description << "Default Aljam3 wrapper"
 
 [ ] ✓ derived wrapper — {W} with body, no %Native
 {W} -W.DB.Connection
@@ -86,7 +86,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01028a — native definition cannot have execution body
 {N} -Bad.NativeWithBody
    [%] .Kind << #NativeKind.Execution
@@ -100,7 +100,7 @@ severity: error
    [%] .Kind << #NativeKind.Execution
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoSomething
 

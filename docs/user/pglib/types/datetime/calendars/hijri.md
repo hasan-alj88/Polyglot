@@ -12,7 +12,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
 
 ## #HijriDate
 
-```polyglot
+```aljam3
 {#} #HijriDate
    [%] .description << "Islamic Hijri calendar date"
    [%] .version << "1.0.0"
@@ -29,7 +29,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
 
 ## #HijriMonth
 
-```polyglot
+```aljam3
 {#} #HijriMonth
    [%] .description << "Islamic Hijri calendar month"
    [%] .version << "1.0.0"
@@ -54,7 +54,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
 
 `#HijriAuthority.Custom` has a nested `.name#string` value sub-field and flexible `:rules` for user-defined sighting or calculation rules.
 
-```polyglot
+```aljam3
 {#} #HijriAuthority
    [%] .description << "Authority that determines Hijri month start"
    [%] .version << "1.0.0"
@@ -73,7 +73,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
 
 `#HijriMethod.Custom` has a nested `.name#string` value sub-field and flexible `:logic` for user-defined calculation or sighting logic.
 
-```polyglot
+```aljam3
 {#} #HijriMethod
    [%] .description << "Method for determining Hijri month start"
    [%] .version << "1.0.0"
@@ -92,7 +92,7 @@ The Hijri calendar is regional -- month starts depend on moon sighting authority
 
 `#HijriLeap.Custom` uses flexible `:rule` for user-defined leap calculation.
 
-```polyglot
+```aljam3
 {#} #HijriLeap
    [%] .description << "Hijri leap year calculation method"
    [%] .version << "1.0.0"

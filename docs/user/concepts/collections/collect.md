@@ -133,7 +133,7 @@ No type constraint on inputs.
 
 **Positional implicit IO:** Each `(*) << $var` line maps to a positional input parameter (`<args.0`, `<args.1`, ...) inferred by the compiler from the variable's type.
 
-```polyglot
+```aljam3
 [=] -Fetch.Profile
    (-) <id << $userId
    (-) >profile >> $profile
@@ -163,7 +163,7 @@ All `(*) <<` inputs must be the **same type** (PGE03006). `(*) >>` output is req
 
 **Positional implicit IO:** Like `*All`, each `(*) << $var` maps to a positional input (`<args.0`, `<args.1`, ...). For single-output collectors (`*First`, `*Second`), the compiler infers the output type from the input type — the `(*) >> $winner` declaration is explicit but its type is implicit.
 
-```polyglot
+```aljam3
 [=] -Search.EngineA
    (-) <query << $query
    (-) >result >> $resultA
@@ -198,7 +198,7 @@ Two ways to intentionally discard output from a `[=]` parallel pipeline, both sa
 
 **`$*` — inline discard.** Use when you never need the value. No variable is created — the output is immediately released at the declaration site:
 
-```polyglot
+```aljam3
 [=] -Audit.Log
    (-) <event << $event
    (-) >auditId >> $*              [ ] discarded inline — no variable created
@@ -206,7 +206,7 @@ Two ways to intentionally discard output from a `[=]` parallel pipeline, both sa
 
 **`*Ignore` — explicit collector discard.** Use when you want a named variable for debugging or future code changes. The variable exists but is explicitly released:
 
-```polyglot
+```aljam3
 [=] -Audit.Log
    (-) <event << $event
    (-) >auditId >> $auditId
@@ -226,7 +226,7 @@ Prefer `$*` for clean discards. Prefer `*Ignore` when the variable may be needed
 
 Multiple `[*] *All` barriers create sequential waves of parallel work:
 
-```polyglot
+```aljam3
 [ ] Wave 1
 [=] -Fetch.A ...
 [=] -Fetch.B ...
@@ -278,7 +278,7 @@ A parallel job can be referenced by multiple collectors. The rule:
 
 When `*First` is satisfied, it releases its claim on remaining jobs — but does not issue a cancel signal. If `*All` also references those jobs, they continue running until `*All` is also satisfied. A job is cancelled only when it has zero remaining collector claims.
 
-```polyglot
+```aljam3
 [=] -Search.A
    (-) >result >> $a
 [=] -Search.B

@@ -23,7 +23,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all required fields of #DT.Time are mapped
 {$} $DT"(?<hours>\d{2}):(?<minutes>\d{2}):(?<seconds>\d{2})"
     ($) <hours.re << "\d{2}"
@@ -36,7 +36,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14007 — .minutes and .seconds are required but unmapped
 {$} $DT"(?<hours>\d{2})"
     ($) <hours.re << "\d{2}"

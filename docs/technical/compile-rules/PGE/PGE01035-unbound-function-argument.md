@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler parses the function signature of `<func` in the `[C]` block and checks that `<arg#Record` field count and names match the positional parameters. Applies at compile time for `<code.inline` only; deferred to runtime for `<code.file`.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] field matches function parameter
 [-] -Run.Python.Function
    (-) <env#PyEnv << $pyenv
@@ -30,7 +30,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] PGE01035 — .full_name not a parameter of greet()
 [-] -Run.Python.Function
    (-) <env#PyEnv << $pyenv

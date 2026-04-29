@@ -1,0 +1,233 @@
+=== Aljam3 Token Stream ===
+[L01:C01] Scope(0)
+[L01:C01] DefPackage
+[L01:C05] Registry("Company:DataCo")
+[L01:C05] PackageName("Processing.QueueWorker")
+[L01:C05] PackageVersion(":1.0.0")
+[L01:C49] TokNewline
+[L03:C01] Scope(0)
+[L03:C01] DefComment
+[L03:C01] TokSpace
+[L03:C01] CommentText("Define the structure of our payload data")
+[L03:C45] TokNewline
+[L04:C01] Scope(0)
+[L04:C01] DefData
+[L04:C05] Data("Payload")
+[L04:C13] TokNewline
+[L05:C01] Scope(1)
+[L05:C04] IoComment
+[L05:C04] TokSpace
+[L05:C04] CommentText("unused input parameter in data definition compile Error")
+[L05:C63] TokNewline
+[L06:C01] Scope(1)
+[L06:C04] IoComment
+[L06:C04] TokSpace
+[L06:C04] CommentText("(#) <user#String")
+[L06:C23] TokNewline
+[L07:C01] Scope(1)
+[L07:C04] IoComment
+[L07:C04] TokSpace
+[L07:C04] CommentText("(#) <id#Int")
+[L07:C18] TokNewline
+[L08:C01] Scope(1)
+[L08:C04] ActionComment
+[L08:C04] TokSpace
+[L08:C04] CommentText("You meant to add Fields like this")
+[L08:C41] TokNewline
+[L09:C01] Scope(1)
+[L09:C04] ActionComment
+[L09:C04] TokSpace
+[L09:C04] CommentText("please recommend help message that explain this as possible solution")
+[L09:C76] TokNewline
+[L10:C01] Scope(1)
+[L10:C04] ActionDataLoad
+[L10:C08] DataField("user")
+[L10:C13] Data("String")
+[L10:C20] TokNewline
+[L11:C01] Scope(1)
+[L11:C04] ActionDataLoad
+[L11:C08] DataField("id")
+[L11:C11] Data("Int")
+[L11:C15] TokNewline
+[L13:C01] Scope(0)
+[L13:C01] DefComment
+[L13:C01] TokSpace
+[L13:C01] CommentText("Define our job queue")
+[L13:C25] TokNewline
+[L14:C01] Scope(0)
+[L14:C01] DefQueue
+[L14:C05] QueueConfig("JobQueue")
+[L14:C14] TokNewline
+[L15:C01] Scope(1)
+[L15:C04] ActionDataLoad
+[L15:C08] DefaultPullFrom
+[L15:C11] Data("DefaultQueueConfig")
+[L15:C30] TokNewline
+[L17:C01] Scope(0)
+[L17:C01] DefComment
+[L17:C01] TokSpace
+[L17:C01] CommentText("The main pipeline worker")
+[L17:C29] TokNewline
+[L18:C01] Scope(0)
+[L18:C01] DefPipeline
+[L18:C05] Pipeline("ProcessJobs")
+[L18:C17] TokNewline
+[L19:C01] Scope(1)
+[L19:C04] PipelineIO
+[L19:C08] InputParameter("input")
+[L19:C14] Data("Payload")
+[L19:C22] TokNewline
+[L20:C01] Scope(1)
+[L20:C04] ActionComment
+[L20:C04] TokSpace
+[L20:C04] CommentText("No Triggers! Compile Error")
+[L20:C34] TokNewline
+[L21:C01] Scope(1)
+[L21:C04] ActionTrigger
+[L21:C08] InlineInstruction("T.Every")
+[L21:C08] ConstructorInlineString("1h")
+[L21:C20] TokNewline
+[L22:C01] Scope(1)
+[L22:C04] ActionComment
+[L22:C04] TokSpace
+[L22:C04] CommentText("No Queue config! Compile Error")
+[L22:C38] TokNewline
+[L23:C01] Scope(1)
+[L23:C04] ActionQueue
+[L23:C08] QueueConfig("Q.Default")
+[L23:C18] TokNewline
+[L24:C01] Scope(1)
+[L24:C04] ActionComment
+[L24:C04] TokSpace
+[L24:C04] CommentText("No Wrapper OR Setup\\Cleanup pair! Compile Error")
+[L24:C55] TokNewline
+[L25:C01] Scope(1)
+[L25:C04] ActionWrapper
+[L25:C08] Wrapper("W.Aljam3")
+[L25:C19] TokNewline
+[L26:C01] Scope(1)
+[L26:C04] ActionComment
+[L26:C04] TokSpace
+[L26:C04] CommentText("")
+[L26:C07] TokNewline
+[L27:C01] Scope(1)
+[L27:C04] ActionComment
+[L27:C04] TokSpace
+[L27:C04] CommentText("Begin execution")
+[L27:C23] TokNewline
+[L28:C01] Scope(1)
+[L28:C04] ActionComment
+[L28:C04] TokSpace
+[L28:C04] CommentText("is this pglib pipeline? if not Compile Error Ref not found")
+[L28:C66] TokNewline
+[L29:C01] Scope(1)
+[L29:C04] ActionComment
+[L29:C04] TokSpace
+[L29:C04] CommentText("suggest adding @ to import ( and that import is declared) ")
+[L29:C66] TokNewline
+[L30:C01] Scope(1)
+[L30:C04] ActionComment
+[L30:C04] TokSpace
+[L30:C04] CommentText("We have not implemented registry for the import yet ")
+[L30:C60] TokNewline
+[L31:C01] Scope(1)
+[L31:C04] ActionComment
+[L31:C04] TokSpace
+[L31:C04] CommentText("where the compiler can get pipelines from the import to ")
+[L31:C64] TokNewline
+[L32:C01] Scope(1)
+[L32:C04] ActionComment
+[L32:C04] TokSpace
+[L32:C04] CommentText("validate that its in there, hence for now add the function")
+[L32:C66] TokNewline
+[L33:C01] Scope(1)
+[L33:C04] ActionComment
+[L33:C04] TokSpace
+[L33:C04] CommentText("but let it yield yes as in it exist in the package.")
+[L33:C59] TokNewline
+[L34:C01] Scope(1)
+[L34:C04] ActionComment
+[L34:C04] TokSpace
+[L34:C04] CommentText("So when we have the architecture to fetch the imports we can just ")
+[L34:C74] TokNewline
+[L35:C01] Scope(1)
+[L35:C04] ActionComment
+[L35:C04] TokSpace
+[L35:C04] CommentText("update that function and the rest as is. add those comments in it.")
+[L35:C74] TokNewline
+[L36:C01] Scope(1)
+[L36:C04] ActionExecSeq
+[L36:C08] Pipeline("ValidationStep")
+[L36:C23] TokNewline
+[L37:C01] Scope(2)
+[L37:C07] PipelineIO
+[L37:C11] InputParameter("input")
+[L37:C18] PullFrom
+[L37:C21] Variable("job")
+[L37:C25] TokNewline
+[L38:C01] Scope(2)
+[L38:C07] IoComment
+[L38:C07] TokSpace
+[L38:C07] CommentText("the input property should be in the input scope else compile error")
+[L38:C77] TokNewline
+[L39:C01] Scope(2)
+[L39:C07] OutputParameterProperty
+[L39:C11] FallBackPullFrom
+[L39:C14] Data("Status.Failed")
+[L39:C28] TokNewline
+[L40:C01] Scope(1)
+[L40:C04] ActionComment
+[L40:C04] TokSpace
+[L40:C04] CommentText("is this in pglib? No? then compile Error")
+[L40:C48] TokNewline
+[L41:C01] Scope(1)
+[L41:C04] ActionExecSeq
+[L41:C08] BooleanPredicate("IsValid")
+[L41:C16] TokNewline
+[L42:C01] Scope(2)
+[L42:C07] PipelineIO
+[L42:C11] InputParameter("input")
+[L42:C18] PullFrom
+[L42:C21] Variable("job")
+[L42:C25] TokNewline
+[L43:C01] Scope(2)
+[L43:C07] IoComment
+[L43:C07] TokSpace
+[L43:C07] CommentText("the input property should be in the input scope else compile error")
+[L43:C77] TokNewline
+[L44:C01] Scope(2)
+[L44:C07] InputParameterProperty
+[L44:C11] FallBackPushInto
+[L44:C14] Data("Zero")
+[L44:C19] TokNewline
+[L45:C01] Scope(2)
+[L45:C07] ActionComment
+[L45:C07] TokSpace
+[L45:C07] CommentText("Process the job")
+[L45:C26] TokNewline
+[L46:C01] Scope(2)
+[L46:C07] ActionExecSeq
+[L46:C11] Pipeline("Processor")
+[L46:C21] TokNewline
+[L47:C01] Scope(3)
+[L47:C10] PipelineIO
+[L47:C14] InputParameter("input")
+[L47:C21] PullFrom
+[L47:C24] Variable("job")
+[L47:C28] TokNewline
+[L48:C01] Scope(3)
+[L48:C10] IoComment
+[L48:C10] TokSpace
+[L48:C10] CommentText("the input property should be in the input scope else compile error")
+[L48:C80] TokNewline
+[L49:C01] Scope(3)
+[L49:C10] OutputParameterProperty
+[L49:C14] FallBackPullFrom
+[L49:C17] Data("Status.Failed")
+[L49:C31] TokNewline
+[L50:C01] Scope(1)
+[L50:C04] ActionComment
+[L50:C04] TokSpace
+[L50:C04] CommentText("where is the exhaustive logic? not there? then compile Error")
+[L50:C68] TokNewline
+=============================

@@ -17,7 +17,7 @@ Unconstrained collection with unlimited depth. Any keys, any types, any nesting.
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Serial
    [#] %##Alias << "serial"
    [#] %##Depth.Max << #Inf

@@ -13,7 +13,7 @@ Append text content to the end of an existing file.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Text.Append
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextAppend"

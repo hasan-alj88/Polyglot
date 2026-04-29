@@ -18,7 +18,7 @@ This rule makes [[glossary#Reconciliation|reconciliation]] safe by construction:
 
 The compiler checks for overlapping write targets by comparing the `.scope` and `.path` fields in `{_}` grant objects across all `[=]` jobs in the same parallel scope. Overlap is determined by glob intersection — if two grants can match the same concrete path, PGE10008 fires.
 
-```polyglot
+```aljam3
 {_} _WriteGrant
    [.] .intent << #Grant
    [.] .category #File
@@ -57,13 +57,13 @@ All permission checks are **static analysis** — resolved at compile time, not 
 6. **Template resolution** — all `(_)` inputs must be provided; unresolved template inputs are a compile error (PGE10009)
 7. **Resource validation** — file-category `{_}` objects must point to files that exist at compile time (PGE10010)
 
-For Polyglot-native code, if it compiles, the permissions are satisfied. For foreign code (`[C]` blocks, `-Run.*` pipelines), the compiler performs AST analysis to verify compliance — see [[permissions/foreign-code|u:Foreign Code Permissions]].
+For Aljam3-native code, if it compiles, the permissions are satisfied. For foreign code (`[C]` blocks, `-Run.*` pipelines), the compiler performs AST analysis to verify compliance — see [[permissions/foreign-code|u:Foreign Code Permissions]].
 
 ## Foreign Code Sandbox
 
 <!-- @c:permissions/foreign-code -->
 <!-- @c:technical/spec/job-sandbox -->
-For foreign code in `-Run.*` pipelines ([[permissions/foreign-code|c:Foreign Code Permissions]]), the Polyglot Service applies OS-level restrictions as **defense-in-depth** before spawning the job process. This is not a per-call runtime check (no Java SecurityManager overhead) — it is a one-time load-time sandbox applied before any user code executes.
+For foreign code in `-Run.*` pipelines ([[permissions/foreign-code|c:Foreign Code Permissions]]), the Aljam3 Service applies OS-level restrictions as **defense-in-depth** before spawning the job process. This is not a per-call runtime check (no Java SecurityManager overhead) — it is a one-time load-time sandbox applied before any user code executes.
 
 The compiler emits a **Permission Manifest** as part of the [[technical/spec/behavior-contract#Permission Manifest|Behavior Contract]]. The Runner reads this manifest and configures OS-level restrictions before spawning the job process. The sandbox setup creates an isolated execution environment using Linux kernel features — all without requiring root privileges.
 
@@ -102,7 +102,7 @@ The principle remains: **compilation is a license to launch**. The sandbox narro
 
 When a compiled binary or opaque code cannot be fully analyzed by the compiler (no source code available, no tree-sitter support), the developer must acknowledge sandbox-only enforcement:
 
-```polyglot
+```aljam3
 {-} -ProcessData
    [.] %Authors << "jane.doe@company.com"
    [.] %Description << "Legacy Go binary for report generation"
@@ -128,7 +128,7 @@ Without `[!] _Unsafe.SandboxOnly`, a `-Run.*.CLI` pipeline is a compile error (P
 Developers can inspect the effective sandbox configuration for any pipeline:
 
 ```text
-$ polyglot inspect -sandbox -ProcessData
+$ aljam3 inspect -sandbox -ProcessData
 ```
 
 This shows exactly what OS restrictions will be applied — filesystem rules, network rules, syscall filters, and resource limits — without running the pipeline. See [[technical/spec/job-sandbox|job-sandbox]] for the full implementer-facing specification.
@@ -173,7 +173,7 @@ When the compiler encounters a `_` permission reference in any block's IO:
 
 If a referenced file changes after compilation:
 
-1. The Polyglot Service **revokes** the associated permission grant
+1. The Aljam3 Service **revokes** the associated permission grant
 2. The pipeline **refuses to execute** until the developer recompiles with the updated file
 3. A **file change watcher trigger** monitors all referenced file paths and notifies the developer that recompilation is required
 
@@ -189,4 +189,4 @@ This ensures that no external code or input runs through the platform without ha
 
 Templates contribute to hashing after resolution — each instantiation produces its own hash based on the resolved `.path`.
 
-**Note:** `.pg` source files are covered by the same principle implicitly — changing a `.pg` file has no effect until the developer recompiles, at which point the compiler re-analyses the entire package.
+**Note:** `.aj3` source files are covered by the same principle implicitly — changing a `.aj3` file has no effect until the developer recompiles, at which point the compiler re-analyses the entire package.

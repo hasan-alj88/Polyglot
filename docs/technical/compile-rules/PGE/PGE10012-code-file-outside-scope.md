@@ -25,7 +25,7 @@ severity: error
 **See also:** PGE10010 (permission resource not found — the file must also exist), PGE10013 (foreign resource outside scope — IO calls within the code), [[permissions/enforcement#Compile-Time File Binding]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ <code.file within declared {_} .scope
 {_} _ScriptGrant
    [.] .intent << #Grant
@@ -48,7 +48,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10012 — <code.file path outside declared scope
 {_} _ScriptGrant
    [.] .intent << #Grant
@@ -70,7 +70,7 @@ severity: error
       (-) >Bind#Code:Python.Output >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10012 — path traversal attempt
 {_} _ScriptGrant
    [.] .intent << #Grant

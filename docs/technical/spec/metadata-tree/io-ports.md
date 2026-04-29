@@ -10,7 +10,7 @@ updated: 2026-04-03
 
 `.<` (inputs) and `.>` (outputs) are fixed typed data sections within each pipeline, expander, and collector instance:
 
-```polyglot
+```aljam3
 %-:ProcessData:0
 ├── .<                      <- input ports
 │   ├── .filepath#path
@@ -23,7 +23,7 @@ Parameter names within `.<` and `.>` are flexible — they follow the pipeline's
 
 Wrappers use `.<` (inputs) and `.>` (outputs) — same as pipelines:
 
-```polyglot
+```aljam3
 %W:DB.Connection:0
 ├── .<                       <- wrapper inputs
 │   └── .connectionString#string

@@ -21,12 +21,12 @@ severity: warning
 - [PGW07003 — Missing Fallback Message](PGW07003-missing-fallback-message.md) — author-side warning for missing `%FallbackMessage`
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ No override — caller does not provide (>) !> on >status
 {-} -Caller
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) >result#string
    [ ]
@@ -36,12 +36,12 @@ severity: warning
    [-] >result << $status
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Override allowed — author suppressed with %FallbackMessage << ""
 {-} -CallerOverrideOk
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) >result#string
    [ ]
@@ -53,13 +53,13 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW07002 — caller overrides pipeline-defined fallback on >status
 [ ]   Author: "Pipeline returns invalid status on empty input"
 {-} -CallerOverrideBad
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) >result#string
    [ ]
@@ -71,7 +71,7 @@ severity: warning
 ```
 
 Where `-ValidateUser` contains:
-```polyglot
+```aljam3
 [!] >> !Validation.Empty
    (!) .Message << "Name is required"
    (!) >status << "invalid"

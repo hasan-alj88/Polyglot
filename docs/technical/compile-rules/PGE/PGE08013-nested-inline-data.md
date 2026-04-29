@@ -18,7 +18,7 @@ severity: error
 **Detection:** The parser encounters `{` inside an `inline_data` context. PGE08013 fires immediately.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ flat inline data
 [-] $nums#array:int << {1, 2, 3, 4, 5}
 [-] $names#array:string << {"Alice", "Bob", "Charlie"}
@@ -26,7 +26,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE08013 — nested inline data
 [-] $matrix#array:array:int << {{1, 2, 3}, {4, 5, 6}}
 

@@ -15,7 +15,7 @@ Configuration for resource limit-exceeded behavior. Used in `{Q}` queue definiti
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #LimitConfig
    [%] .description << "Resource limit exceeded configuration"
    [%] .version << "1.0.0"

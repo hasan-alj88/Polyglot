@@ -14,18 +14,18 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** Code that appears after all output ports have reached Final state in every code path is unreachable and produces a compile error. The pipeline has terminated — no further statements can have any effect.
-**Rationale:** Unlike dead code that merely wastes space (PGW02005), unreachable code after full pipeline termination indicates a logic error. The developer believes work is being done, but the pipeline has already completed. This is an error rather than a warning because it reveals a misunderstanding of control flow that should be fixed before deployment. Polyglot's exhaustive coverage model means every code path must be intentional — unreachable code indicates the developer's mental model diverges from the pipeline's actual behaviour.
+**Rationale:** Unlike dead code that merely wastes space (PGW02005), unreachable code after full pipeline termination indicates a logic error. The developer believes work is being done, but the pipeline has already completed. This is an error rather than a warning because it reveals a misunderstanding of control flow that should be fixed before deployment. Aljam3's exhaustive coverage model means every code path must be intentional — unreachable code indicates the developer's mental model diverges from the pipeline's actual behaviour.
 **Detection:** The compiler tracks the lifecycle state of all output ports through control flow analysis. When every output port has been pushed to Final — either directly or through exhaustive conditional branches where every branch pushes all remaining ports Final — the pipeline is considered terminated. Any subsequent executable statement triggers PGE02009.
 
 **See also:** PGE02003 (Final Is Push-Once — individual port violation), PGE02008 (Access After Release — scope-based unreachability), PGW02005 (Unreachable Code warning — softer diagnostic for the same pattern)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ code between partial Final pushes — still reachable
 {-} -MultiStage
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >main#string
    (-) >log#string
@@ -39,12 +39,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02009 — code after single output pushed Final
 {-} -DeadAfterFinal
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >result#string
    [ ]
@@ -53,12 +53,12 @@ severity: error
       (-) <msg << "this never runs"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE02009 — code after exhaustive conditional terminates all outputs
 {-} -DeadAfterExhaustive
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >output#string
    [ ]
@@ -71,12 +71,12 @@ severity: error
       (-) <msg << "dead code"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE02009 — multiple outputs, all Final
 {-} -MultiOutDead
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >main#string
    (-) >log#string
@@ -91,12 +91,12 @@ severity: error
 **Fix:** If post-finalization work is needed (logging, cleanup, resource release), move it to the `[/]` cleanup section. Cleanup executes after all output ports are finalized (or after the execution scope ends if the pipeline has no outputs).
 
 **VALID (fix):**
-```polyglot
+```aljam3
 [ ] ✓ post-finalization work in [/] cleanup
 {-} -CorrectCleanup
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >result#string
    [ ]

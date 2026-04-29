@@ -11,7 +11,7 @@ Expands a collection and produces the maximum numeric value.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =*Agg.Max
    (=) <array << $values
    (*) >max >> $highest
@@ -31,7 +31,7 @@ Expands a collection and produces the maximum numeric value.
 
 ## Equivalent Expand-Collect
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $values
    (=) >item >> $value

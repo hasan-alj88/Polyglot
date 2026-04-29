@@ -19,7 +19,7 @@ System-provided input type for `{*}` collector definitions. Every `{*}` block mu
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #IncomingDataFrame
    [%] .description << "System input for collector definitions — arrival-ordered variable data"
    [#] ##Dataframe

@@ -11,7 +11,7 @@ status: complete
 <!-- @c:packages -->
 <!-- @u:technical/ebnf/03-identifiers -->
 <!-- @u:technical/edge-cases/03-identifiers -->
-ALL Polyglot identifiers require a prefix — see [[packages]] for `@` address format, [[syntax/types/INDEX|types]] for `#` type annotations:
+ALL Aljam3 identifiers require a prefix — see [[packages]] for `@` address format, [[syntax/types/INDEX|types]] for `#` type annotations:
 
 | Prefix | Type | Example |
 |--------|------|---------|
@@ -43,7 +43,7 @@ ALL identifiers are **serialized data**. Two field separators distinguish schema
 | `%` | Metadata | Read-only runtime metadata | `-Pipeline%status` — live pipeline status |
 
 **Fixed fields (`.`)** — keys predefined by either:
-- **Polyglot standard** — built-in types, errors, enums (`#Boolean.True`, `pg.string`, `!No.Input`)
+- **Aljam3 standard** — built-in types, errors, enums (`#Boolean.True`, `pg.string`, `!No.Input`)
 - **User-defined structs** — fields declared via `{#}` blocks (`#UserRecord.name`, `#UserRecord.age`)
 
 **Flexible fields (`:`)** — user-defined, any key accepted:
@@ -51,7 +51,7 @@ ALL identifiers are **serialized data**. Two field separators distinguish schema
 - `$config:timeout:value` — nested custom fields
 - `$result:data:items` — arbitrary depth
 
-**Metadata fields (`%`)** — Polyglot-managed, read-only:
+**Metadata fields (`%`)** — Aljam3-managed, read-only:
 - `-ProcessInvoice%status` — pipeline instance status
 - `$myVar%state` — variable lifecycle state
 - `#Record%lastModified` — data type metadata
@@ -65,13 +65,13 @@ The `%` accessor reads `live`-typed metadata that the runtime populates. Users c
 
 The prefix (`$`, `@`, `!`, `#`, `-`, `_`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[syntax/types/structs#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[concepts/collections/INDEX#Collection Types]].
 
-These serialized paths — `#Boolean.True`, `$user:name`, `-Pipeline%status` — are all branches on one unified tree. Every Polyglot object lives in the `%` metadata tree, organized by its prefix. After learning the core concepts, see [[data-is-trees]] for how everything connects.
+These serialized paths — `#Boolean.True`, `$user:name`, `-Pipeline%status` — are all branches on one unified tree. Every Aljam3 object lives in the `%` metadata tree, organized by its prefix. After learning the core concepts, see [[data-is-trees]] for how everything connects.
 
 ## Serialization Rules
 
 1. **Sibling homogeneity** — all siblings at the same level must use the same separator. No mixing `.` and `:` among siblings. Different nesting levels may use different separators — see [[technical/compile-rules/PGE/PGE05001-sibling-separator-homogeneity|PGE05001]].
 
-```polyglot
+```aljam3
 [ ] VALID:   $user:name, $user:age        [ ] all flexible
 [ ] VALID:   #Boolean.True, #Boolean.False [ ] all fixed
 [ ] INVALID: $user.name, $user:age         [ ] mixed separators at same level
@@ -79,7 +79,7 @@ These serialized paths — `#Boolean.True`, `$user:name`, `-Pipeline%status` —
 
 2. **Sibling kind homogeneity** — all siblings at the same level must be the same kind: all enum fields or all value fields (have `#type`). Assignment within value fields is individually optional — unassigned value fields are in **Declared** state.
 
-```polyglot
+```aljam3
 [ ] VALID:   all value fields, all assigned
 [.] .timeout#int <~ 30
 [.] .retries#int <~ 3
@@ -101,7 +101,7 @@ These serialized paths — `#Boolean.True`, `$user:name`, `-Pipeline%status` —
 
 3. **Leaf-only assignment** — only leaf fields (no children) can have values assigned. Branch fields are structural only. More broadly, the serialized tree (struct schema) must match — pushing serialized data into a mismatched schema is a compile error. The field type (`.` fixed vs `:` flexible) determines schema compatibility.
 
-```polyglot
+```aljam3
 [ ] VALID:   assign to leaf
 [-] $user:name << "Alice"
 

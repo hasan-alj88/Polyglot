@@ -15,7 +15,7 @@ The `$Path` constructor produces `#path` values from string literals and keyword
 
 ### Path String
 
-```polyglot
+```aljam3
 {$} $Path"{path}"
    ($) <path.re << "[^\x00]+"
    [$] #path
@@ -27,7 +27,7 @@ Accepts any non-null string as a path. The runtime normalizes separators per OS 
 
 Interpolation is supported when the interpolated variable was produced by another constructor:
 
-```polyglot
+```aljam3
 [-] $base << $Path"/reports"
 [-] $full << $Path"{$base}/daily"
 ```
@@ -36,7 +36,7 @@ Interpolation is supported when the interpolated variable was produced by anothe
 
 ### Current Directory
 
-```polyglot
+```aljam3
 {$} $Path"."
    [$] #path
    [.] .Unix << %Runtime.CWD.Unix
@@ -47,7 +47,7 @@ Produces the current working directory. The runtime resolves the actual path at 
 
 ### Parent Directory
 
-```polyglot
+```aljam3
 {$} $Path".."
    [$] #path
    [.] .Unix << %Runtime.CWD.Parent.Unix
@@ -68,7 +68,7 @@ Keywords are tested first (exact match). Any non-matching string falls through t
 
 ## Usage
 
-```polyglot
+```aljam3
 [ ] compile-time guaranteed — no error handling
 [-] $logDir << $Path"/var/log/myapp"
 [-] $cwd << $Path"."

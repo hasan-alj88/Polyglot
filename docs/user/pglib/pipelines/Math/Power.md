@@ -13,7 +13,7 @@ Raises the base to the power of the exponent. Accepts exactly two inputs in posi
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Math.Power
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathPower"

@@ -11,13 +11,13 @@ metadata_instance: "%#:CollectorCategory:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.pg` file. Classifies the reconciliation strategy of a `{*}` collector definition.
+Runtime `##Enum` type available in every `.aj3` file. Classifies the reconciliation strategy of a `{*}` collector definition.
 
 ---
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #CollectorCategory
    [%] .description << "Reconciliation category for collector definitions"
    [#] ##Enum

@@ -13,7 +13,7 @@ Detailed validation -- checks data against type and reports all mismatches as a 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -#.Validate
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaValidate"

@@ -24,7 +24,7 @@ severity: error
 **See also:** PGE10004 (undeclared permission — general case), PGW10006 (shell variable expansion warning), [[permissions/foreign-code#Shell Analysis]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ -Run.Shell with matching {_} #System.#Shell grant
 {_} _DeployShell
    [.] .intent << #Grant
@@ -46,7 +46,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10011 — -Run.Shell with no {_} #System.#Shell permission
 {_} _FileOnly
    [.] .intent << #Grant
@@ -68,7 +68,7 @@ severity: error
       (-) >Bind#Code:Shell.Output >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10011 — -Run.Shell with no permission declarations at all
 {-} -NakedShell
    (-) ;Bash

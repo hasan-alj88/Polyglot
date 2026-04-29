@@ -15,7 +15,7 @@ Capability enum for `#Processes` permission category. See [[concepts/permissions
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #ProcessCapability
    [%] .description << "Process count limit capabilities"
    [%] .version << "1.0.0"

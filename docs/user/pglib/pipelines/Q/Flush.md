@@ -20,7 +20,7 @@ Remove all pending jobs from a queue.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Flush
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QFlush"

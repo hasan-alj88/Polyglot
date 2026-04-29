@@ -24,12 +24,12 @@ severity: error
 | `-T.Call`, `-T.Daily`, `-T.Webhook` | `[T]` |
 | `-File.Text.Read`, `-DB.Query` | `[-]`, `[=]`, `[b]` |
 | `-Q.Default`, `-Q.Pause.Hard` | `[Q]` |
-| `-W.Polyglot`, `-W.DB.Connection` | `[W]` |
+| `-W.Aljam3`, `-W.DB.Connection` | `[W]` |
 | `*Into.Array`, `*Agg.Sum` | `[-]`, `[=]` (collectors) |
 | `=ForEach.Array` | expand context |
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ trigger pipeline used with [T]
 [T] -T.Call
 
@@ -45,7 +45,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01024 — -File.Text.Read is not a trigger pipeline
 [T] -File.Text.Read
 

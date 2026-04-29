@@ -24,7 +24,7 @@ severity: error
 **See also:** PGE01008 (wrapper must reference wrapper definition), PGE04001 (type mismatch), PGE04002 (schema mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all wrapper inputs provided, types match, output captured
 {W} -W.DB.Transaction
    (-) <connStr;string
@@ -50,7 +50,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01009 — missing required wrapper input
 {W} -W.DB.Transaction
    (-) <connStr;string
@@ -75,7 +75,7 @@ severity: error
       (-) $txHandle >> $txHandle
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01009 — extra input not in wrapper contract
 {W} -W.Simple
    (-) <input;string
@@ -97,7 +97,7 @@ severity: error
       (-) $output >> $output
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01009 — capturing nonexistent output
 {W} -W.Simple
    (-) <input;string

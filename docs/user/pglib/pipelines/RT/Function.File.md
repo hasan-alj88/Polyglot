@@ -13,7 +13,7 @@ Call a named function in a source file.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -RT.<Lang>.Function.File
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RtFunctionFile"
@@ -50,7 +50,7 @@ The compiler validates that the `<func` name exists as a function definition in 
 
 ## Example
 
-```polyglot
+```aljam3
 [-] -RT.Python.Function.File
    (-) <env#PyEnv << $pyenv
    (-) <func#string << "calculate"

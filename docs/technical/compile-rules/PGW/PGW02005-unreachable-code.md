@@ -23,12 +23,12 @@ severity: warning
 **See also:** PGE02009 (Unreachable Code error — same detection, error severity), PGW01001 (Empty Execution Body — covers empty bodies; this rule covers non-empty bodies with dead code)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ code after non-terminal conditional — reachable
 {-} -Process
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >output#string
    [ ]
@@ -46,12 +46,12 @@ severity: warning
    [-] >output << $fast
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ multiple outputs — only one is Final, code still reachable
 {-} -MultiOut
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >main#string
    (-) >log#string
@@ -64,12 +64,12 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW02005 — statement after output is Final
 {-} -DeadAfterFinal
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >result#string
    [ ]
@@ -78,12 +78,12 @@ severity: warning
       (-) <msg << "this never runs"
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW02005 — code after every branch terminates
 {-} -DeadAfterExhaustive
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >output#string
    [ ]
@@ -96,12 +96,12 @@ severity: warning
       (-) <msg << "dead code"
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW02005 — all outputs Final across multiple pushes
 {-} -MultiOutDead
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >main#string
    (-) >log#string
@@ -116,12 +116,12 @@ severity: warning
 **Fix:** If post-finalization work is needed (logging, cleanup, resource release), move it to the `[/]` cleanup section. Cleanup executes after all output ports are finalized (or after the execution scope ends if the pipeline has no outputs).
 
 **VALID (fix):**
-```polyglot
+```aljam3
 [ ] ✓ post-finalization work in [/] cleanup
 {-} -CorrectCleanup
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >result#string
    [ ]

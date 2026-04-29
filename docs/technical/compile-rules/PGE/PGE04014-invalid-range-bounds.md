@@ -21,12 +21,12 @@ severity: error
 **See also:** PGE06003 (numeric range not exhaustive), PGE06004 (numeric range overlap), PGE04015 (conditional type-operator mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ valid inclusive range — lo < hi
 {-} -Grade
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <score#int
    (-) >label#string
    [ ]
@@ -39,12 +39,12 @@ severity: error
          [-] >label << "unknown"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ single-point inclusive range — lo == hi is valid
 {-} -Exact
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <count#int
    (-) >out#string
    [ ]
@@ -55,12 +55,12 @@ severity: error
          [-] >out << "other"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ valid exclusive range — lo < hi with room between
 {-} -Between
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <temp#float
    (-) >out#string
    [ ]
@@ -72,12 +72,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE04013 — inverted inclusive range
 {-} -BadInclusive
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <score#int
    (-) >out#string
    [ ]
@@ -88,12 +88,12 @@ severity: error
          [-] >out << "always here"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04013 — empty exclusive range (lo == hi)
 {-} -BadExclusive
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <temp#float
    (-) >out#string
    [ ]
@@ -104,12 +104,12 @@ severity: error
          [-] >out << "always here"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04013 — inverted mixed range
 {-} -BadMixed
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <value#int
    (-) >out#string
    [ ]

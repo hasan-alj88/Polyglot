@@ -10,39 +10,39 @@ severity: error
 `PGE01003`
 
 **Statement:** Every pipeline `{-}` must explicitly declare its input and output contract before defining its trigger, queue, or setup. Even if a pipeline processes no input or returns no output, it must explicitly declare `(-) <#None` and/or `(-) >#None`. 
-**Rationale:** Polyglot requires explicit operational semantics to prevent accidental omission of data flow definitions. By forcing an explicit statement of IO (even when there is none), the compiler ensures the developer consciously designed the pipeline's boundaries, making the code self-documenting and eliminating ambiguity.
+**Rationale:** Aljam3 requires explicit operational semantics to prevent accidental omission of data flow definitions. By forcing an explicit statement of IO (even when there is none), the compiler ensures the developer consciously designed the pipeline's boundaries, making the code self-documenting and eliminating ambiguity.
 **Detection:** The compiler checks the top of the pipeline block for IO markers (`(-)` or directional markers). If it reaches a configuration block (like `[T]`) or an execution block without encountering an input and output declaration, `PGE01003` is raised.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Explicit IO defined
 {-} -ProcessData
    (-) <data#string
    (-) >status#int
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [-] >run
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Explicitly declaring NO IO
 {-} -PingService
    (-) <#None
    (-) >#None
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [-] -Do.Ping
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01003 — Missing IO declarations
 {-} -PingService
    [T] -T.Manual                           [ ] ✗ PGE01003 — Reached [T] without seeing IO declarations
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [-] -Do.Ping
 ```
 

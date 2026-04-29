@@ -8,13 +8,13 @@ updated: 2026-04-28
 
 <!-- @syntax/types/INDEX -->
 
-In Polyglot, arrays are not defined inline. All arrays must be explicitly defined as a structural data tree using the `##Array` schema bundle inside a `{#}` type definition.
+In Aljam3, arrays are not defined inline. All arrays must be explicitly defined as a structural data tree using the `##Array` schema bundle inside a `{#}` type definition.
 
 ## Defining an Array Type
 
 To create an array type, define a `{#}` block, assign the `##Array` schema, and parameterize it using the `(#)` input block:
 
-```polyglot
+```aljam3
 {#} #StringList
    [#] ##Array
       (#) <#ValueType << #string
@@ -42,7 +42,7 @@ Once defined, you use your custom array type to type variables and initialize th
 ### Auto-Incrementing Append
 Push elements sequentially using `(#) <<`. The compiler automatically assigns the next `#Range` index (`:0`, `:1`, ...).
 
-```polyglot
+```aljam3
 [-] $names#StringList << {}
    (#) << "Alice"
    (#) << "Bob"
@@ -51,7 +51,7 @@ Push elements sequentially using `(#) <<`. The compiler automatically assigns th
 ### Explicit Indexing
 You can specify the `#Range` index explicitly on the `(#)` bracket:
 
-```polyglot
+```aljam3
 [-] $scores#ScoreMatrix << {}
    (#) :0<0 << 95
    (#) :0<1 << 82
@@ -64,7 +64,7 @@ You can specify the `#Range` index explicitly on the `(#)` bracket:
 
 Element access uses `<` (the tree child accessor) with integer indices. The number of indices must match the declared `<Dimension#uint` count:
 
-```polyglot
+```aljam3
 [-] $val << $names<0                 [ ] 1 index for 1D Array
 [-] $val << $scores<0<1              [ ] 2 indices for 2D Matrix
 ```
@@ -73,7 +73,7 @@ The compiler strictly enforces access depth — providing too many or too few in
 
 ## Deprecation Notice
 
-The legacy inline array syntax (e.g., `#array:string:2D`) has been permanently removed from Polyglot. All sequences must be formally declared as `{#}` data types to ensure consistent structural tree metadata across the project.
+The legacy inline array syntax (e.g., `#array:string:2D`) has been permanently removed from Aljam3. All sequences must be formally declared as `{#}` data types to ensure consistent structural tree metadata across the project.
 
 ## See Also
 

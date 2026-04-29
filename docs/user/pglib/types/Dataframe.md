@@ -17,7 +17,7 @@ Two-level tabular collection. Level 1 is range-indexed rows (like `##Array`). Le
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Dataframe
    (#) <#Columns << ##Enum
    (#) <#CellType <~ #
@@ -50,7 +50,7 @@ The `<#Columns` parameter must satisfy `##Enum` -- column names come from an enu
 
 Access uses double `<` -- first for row index, second for column name:
 
-```polyglot
+```aljam3
 {#} #SalesColumns
    [#] ##Enum
    [#] ##Scalar

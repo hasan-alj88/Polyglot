@@ -20,21 +20,21 @@ supersedes: PGW01002
 **Supersedes:** PGW01002 — Empty Data Definition (warning). The grammar now rejects empty `{#}` at parse time.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ data definition with fields
 {#} #UserRecord
    [.] .name#string
    [.] .email#string
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ enum definition — enum variants count as fields
 {#} #Status
    [.] .Active
    [.] .Inactive
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ schema composition provides structure
 {#} #MyArray
    [#] ##Array
@@ -42,18 +42,18 @@ supersedes: PGW01002
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01021 — no fields
 {#} #EmptyRecord
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01021 — comment-only is still empty
 {#} #Placeholder
    [ ] TODO: add fields later
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01021 — metadata-only is still empty
 {#} #Tagged
    [%] .description << "a type with no fields"

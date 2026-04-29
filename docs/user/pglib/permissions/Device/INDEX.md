@@ -13,7 +13,7 @@ Category-level generic permission for device access operations. Takes a capabili
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Device
    [#] <capability;DeviceCapability
    [#] <scope;string
@@ -24,7 +24,7 @@ Category-level generic permission for device access operations. Takes a capabili
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Device
    (_) <capability << .Camera
    (_) <scope << "front"

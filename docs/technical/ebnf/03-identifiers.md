@@ -45,7 +45,7 @@ fixed_sep           ::= '.' ;
 (* Flexible fields — user-defined keys *)
 flex_sep            ::= ':' ;
 
-(* Metadata fields — read-only, Polyglot-managed *)
+(* Metadata fields — read-only, Aljam3-managed *)
 meta_sep            ::= '%' ;
 
 dotted_name         ::= name { fixed_sep name } ;

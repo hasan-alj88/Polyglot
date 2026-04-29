@@ -22,7 +22,7 @@ severity: error
 **Detection:** The compiler compares each `[Q]` IO parameter and nested `[Q]` control against the referenced `{Q}` definition. A contradiction is any parameter that directly conflicts with a queue-level default.
 
 **VALID:**
-```polyglot
+```aljam3
 {Q} #Queue:BatchQueue
    [.] .strategy#QueueStrategy << #FIFO
    [.] .maxInstances#int << 5
@@ -34,13 +34,13 @@ severity: error
       (-) <maxConcurrent#int << 10
       [Q] -Q.Pause.Soft
          (-) <CPU.MoreThan#float << 90.0
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {Q} #Queue:BatchQueue
    [.] .maxInstances#int << 1
 
@@ -49,7 +49,7 @@ severity: error
    [T] -T.Call
    [Q] -Q.Assign"BatchQueue"
       (-) <maxInstances#int << 5
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 ```

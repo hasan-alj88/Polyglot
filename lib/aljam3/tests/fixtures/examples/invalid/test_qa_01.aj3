@@ -1,0 +1,39 @@
+[+] package acme.edu.scoring
+[+] version 1.0.0
+
+{-} -ScoreProcessingPipeline
+   [T] -T.Daily"5PM"
+   [Q] -Q.Default
+   [W] -W.Aljam3
+
+   [ ]
+   [-] @DB.Students.GetTestScores
+      (-) $ScoresQuery
+      (-) >status >> @DB#Status.Success
+         (>) >! @DB#Status.Failed
+
+   [?] $ScoresQuery>status =? @DB#Status.Failed
+      [-] -File.CSV.Log
+         (-) <file#Path << "db_failed_{<today}.csv"
+            (<) <! "db_failed_default.csv"
+         [!] *!
+            [-] >status >> @Log#Status.Failed
+   [?] *?
+      [*] *Into:Array
+         (*) << $ScoresQuery>data>math
+         (*) << $ScoresQuery>data>science
+         (*) >> $allScores#array:float:1D
+         
+      [-] =*Agg.Flat.Max
+         (=) << $allScores
+         (*) #float >> $maxScore
+         
+      [?] $maxScore >? 95.0
+         [-] @Mail-API.Email.SendAlert
+            (-) $EmailOperation
+            (-) <recipient << "admin@acme.edu"
+               (<) <! "backup@acme.edu"
+            (-) <subject << "New high score!"
+            (-) <message << "A student achieved {$maxScore}."
+      [?] *?
+         [-] -Do.Nothing

@@ -9,7 +9,7 @@ When declaring and initializing a multidimensional array, the explicit type assi
 
 ### Correct Usage
 If you are declaring a `3D` array, the initialization type must explicitly be `#Array.Type:3D`.
-```polyglot
+```aljam3
 [-] $worldTemp#array:float:3D << #Array.Float:3D
    (#) << $northTemp
    (#) << $southTemp
@@ -17,6 +17,6 @@ If you are declaring a `3D` array, the initialization type must explicitly be `#
 
 ### Incorrect Usage
 Omitting the `:3D` dimension specifier on the right side will cause an error or fallback to a default 1D array type mismatch.
-```polyglot
+```aljam3
 [-] $worldTemp#array:float:3D << #Array.Float
 ```

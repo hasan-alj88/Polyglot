@@ -18,17 +18,17 @@ severity: error
 **See also:** PGE09008 (file not found), PGE09010 (asymmetric reference)
 
 **VALID:**
-```polyglot
-{ } file-01.pg — references only other files
+```aljam3
+{ } file-01.aj3 — references only other files
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-02.pg"
-   [@] << "{.}\file-03.pg"
+   [@] << "{.}\file-02.aj3"
+   [@] << "{.}\file-03.aj3"
 
 [ ] ✓ no self-reference
 ```
 
-```polyglot
-{ } file-01.pg — folder shorthand auto-excludes self
+```aljam3
+{ } file-01.aj3 — folder shorthand auto-excludes self
 {@} @Local:1000.MyApp:v1.0.0
    [@] << "{.}"
 
@@ -36,11 +36,11 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
-{ } file-01.pg
+```aljam3
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-01.pg"            [ ] ✗ PGE09009 — file references itself
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-01.aj3"            [ ] ✗ PGE09009 — file references itself
+   [@] << "{.}\file-02.aj3"
 ```
 
 ## See Also

@@ -14,7 +14,7 @@ updated: 2026-03-30
 <!-- @u:identifiers:Serialization Rules -->
 **What it tests:** A value field with no assignment is in **Declared** state. Pulling from it before assignment is a compile error. Assignment within value siblings is individually optional. See [[identifiers#Serialization Rules]].
 
-```polyglot
+```aljam3
 [ ] VALID — declared field, pushed to later
 {#} #Request
    [.] .id#string
@@ -35,7 +35,7 @@ updated: 2026-03-30
 
 **What it tests:** Variables declared inside `=ForEach` body are Released when the mini-pipeline ends. Accessing them outside is a compile error. See [[concepts/collections/expand#Expand Operators]].
 
-```polyglot
+```aljam3
 [=] =ForEach.Array
    (=) <Array << $items
    (=) >item >> $item
@@ -60,14 +60,14 @@ updated: 2026-03-30
 <!-- @u:operators -->
 **What it tests:** `~>` sets a default on an **output** parameter — if execution does not push a value, the default is used. See [[operators#Assignment Operators]].
 
-```polyglot
+```aljam3
 {-} -Safe.Lookup
    (-) <key#string
    (-) >result#string ~> "not_found"
    (-) >found#bool ~> #Boolean.False
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] -Cache.Get

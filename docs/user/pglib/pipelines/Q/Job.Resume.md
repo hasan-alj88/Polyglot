@@ -13,7 +13,7 @@ Resume a paused Job. "Resume" means "this rule no longer wants the Job paused." 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Resume
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobResume"
@@ -48,10 +48,10 @@ None.
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Pause reason set is empty for this rule, sends resume command |
-| 2. NATS command | `polyglot.command.job.resume.{jobId}` | `{jobId}` |
+| 2. NATS command | `aljam3.command.job.resume.{jobId}` | `{jobId}` |
 | 3. QH executes | Queue Handler | HDEL set:suspended, RPUSH queue:resume, HSET job status "resuming" |
 | 4. DC dispatches | Dispatch Coordinator | Picks job from resume queue, sends control signal based on prior suspended type |
-| 5. Control signal | `polyglot.queue.control.{jobId}.job.resume` | cpu/ram.soft/ram.hard: `{jobId}`; all: `{jobId, images_dir}` |
+| 5. Control signal | `aljam3.queue.control.{jobId}.job.resume` | cpu/ram.soft/ram.hard: `{jobId}`; all: `{jobId, images_dir}` |
 | 6. Unix mechanism | Runner | cpu/ram: `echo 0 > cgroup.freeze` (+ remove memory limits); all: `criu restore --images-dir {path}` |
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.

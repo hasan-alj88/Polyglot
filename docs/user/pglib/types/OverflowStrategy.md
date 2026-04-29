@@ -12,13 +12,13 @@ metadata_instance: "%#:OverflowStrategy:N"
 <!-- @c:types -->
 <!-- @u:technical/plan/queue-manager/overflow -->
 
-Runtime `##Enum` type available in every `.pg` file. Controls how a `{*}` collector handles intermediate data that exceeds RAM capacity, participating in the PPTD (Parallel Processing Temporary Directory) overflow system ([[technical/plan/queue-manager/overflow|u:overflow]]).
+Runtime `##Enum` type available in every `.aj3` file. Controls how a `{*}` collector handles intermediate data that exceeds RAM capacity, participating in the PPTD (Parallel Processing Temporary Directory) overflow system ([[technical/plan/queue-manager/overflow|u:overflow]]).
 
 ---
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #OverflowStrategy
    [%] .description << "Overflow behavior for collector definitions"
    [#] ##Enum

@@ -12,7 +12,7 @@ updated: 2026-03-30
 
 Expand an array of integers in parallel, double each value, collect the doubled values into a new array, and compute the sum:
 
-```polyglot
+```aljam3
 ...
 {-} -DoubleAndSum
 [ ] Triggers, queue config, and wrapper assumed defined
@@ -48,7 +48,7 @@ Expand an array of integers in parallel, double each value, collect the doubled 
 
 Expand a map of ticker->price pairs, multiply each price by 1.1 using `-Math.Multiply`, and collect into a new map:
 
-```polyglot
+```aljam3
 ...
 {-} -AdjustPrices
 [ ] Triggers, queue config, and wrapper assumed defined
@@ -83,7 +83,7 @@ Expand a map of ticker->price pairs, multiply each price by 1.1 using `-Math.Mul
 <!-- @u:errors:Error Fallback Operators -->
 When a pipeline call inside an expand scope may error, use `(>) !>` fallback to provide a default value per iteration instead of failing the entire expand:
 
-```polyglot
+```aljam3
 [=] =ForEach.Array
    (=) <Array << $files
    (=) >item >> $file

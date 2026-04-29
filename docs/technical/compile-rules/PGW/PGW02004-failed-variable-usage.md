@@ -21,7 +21,7 @@ severity: warning
 **Suppression:** `[ ] Ignore PGW02004` comment above the `[!]` block.
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW02004 — partial error coverage
 (-) >data#string
 [-] -Fetch
@@ -33,7 +33,7 @@ severity: warning
    [ ] ⚠ PGW02004 — other errors from -Fetch not handled
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW02004 suppressed via comment
 (-) >data#string
 [-] -Fetch
@@ -48,7 +48,7 @@ severity: warning
 ```
 
 **VALID (no warning):**
-```polyglot
+```aljam3
 [ ] ✓ [!] pushes replacement — no warning
 (-) >data#string
 [-] -Fetch
@@ -59,7 +59,7 @@ severity: warning
    (-) <input << >data             [ ] ✓ always Final
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ !> catch-all fallback — no warning
 (-) >data#string
 [-] -Fetch

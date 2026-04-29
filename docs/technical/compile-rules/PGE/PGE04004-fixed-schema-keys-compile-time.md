@@ -18,7 +18,7 @@ severity: error
 **Detection:** The compiler tracks which fields belong to fixed (`.`) schema levels. Any attempt to access or assign a `.`-separated field not declared in the `{#}` definition triggers PGE04004. For `:` fields, no such check is performed — they are open by design.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
@@ -29,7 +29,7 @@ severity: error
    [-] $user.age << 30
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ flexible fields — adding keys at runtime is allowed
 [-] $meta#serial
    [-] $meta:source << "api"
@@ -37,7 +37,7 @@ severity: error
    [-] $meta:custom_tag << "urgent"     [ ] ✓ new : key added dynamically
 ```
 
-```polyglot
+```aljam3
 {#} #Config
    [.] .timeout#int
    [.] .info#serial
@@ -50,7 +50,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
@@ -62,7 +62,7 @@ severity: error
    [-] $user.email << "alice@example.com" [ ] ✗ PGE04004 — fixed schema is closed
 ```
 
-```polyglot
+```aljam3
 {#} #Point
    [.] .x#float
    [.] .y#float

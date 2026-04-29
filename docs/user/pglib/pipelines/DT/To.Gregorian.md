@@ -13,7 +13,7 @@ Projects a `#dt` value into a Gregorian date structure. Projections are not cach
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Gregorian
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToGregorian"

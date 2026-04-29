@@ -20,7 +20,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all required inputs appear in template
 {-} -DB.Connect
    (-) %InlineString << "{host}:{port?}/{db}"
@@ -30,11 +30,11 @@ severity: error
    (-) >connection#serial
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ <port has default — optional placeholder {port?} is fine
 {-} -DB.Connect
    (-) %InlineString << "{host}/{db}"
@@ -44,12 +44,12 @@ severity: error
    (-) >connection#serial
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12007 — <db is required but not in template
 {-} -DB.Connect
    (-) %InlineString << "{host}:{port}"
@@ -59,7 +59,7 @@ severity: error
    (-) >connection#serial
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 ```
 

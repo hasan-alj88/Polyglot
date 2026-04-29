@@ -18,7 +18,7 @@ See [[syntax/constructors]] for the `$MIME` constructor.
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #MIME
    [%] .description << "Internet media type (RFC 6838)"
    [#] ##Scalar

@@ -19,11 +19,11 @@ severity: error
 **See also:** PGE01009 (wrapper IO mismatch — same concept for `[W]` wrappers), PGE04001 (type mismatch — types match but names assumed correct), PGE08005 (unresolved step reference — same concept for chain step names)
 
 **VALID:**
-```polyglot
+```aljam3
 {-} -Greet
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) >greeting#string
    [ ]
@@ -35,11 +35,11 @@ severity: error
    (-) >greeting#string >> $result        [ ] ✓ >greeting exists in -Greet
 ```
 
-```polyglot
+```aljam3
 {-} -Transform
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >output#string
    [ ]
@@ -52,11 +52,11 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {-} -Greet
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) >greeting#string
    [ ]
@@ -68,18 +68,18 @@ severity: error
    (-) >greeting#string >> $result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01010 — output name doesn't exist in target pipeline
 [-] -Greet
    (-) <name#string << "Alice"
    (-) >message#string >> $result         [ ] ✗ PGE01010 — -Greet has >greeting, not >message
 ```
 
-```polyglot
+```aljam3
 {-} -Process
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >result#string
    [ ]

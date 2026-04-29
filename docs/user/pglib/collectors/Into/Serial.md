@@ -11,7 +11,7 @@ Gathers key-value outputs from mini-pipelines back into a single serial, accessi
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Into.Serial
    (*) <key << $key
    (*) <value << $value

@@ -28,7 +28,7 @@ See [[pglib/types/Map|##Record]] for the full definition and [[syntax/types/gene
 
 Use `<` to access fields by enum variant name:
 
-```polyglot
+```aljam3
 {#} #Colors
    [#] ##Enum
    [#] ##Scalar

@@ -9,7 +9,7 @@ status: deprecated
 
 **Deprecated:** With the row-oriented Dataframe redesign (Issue #94), column iteration is no longer an expander operation. Use the `-#.Column` pipeline to extract an entire column as an array, then `=ForEach.Array` to iterate it.
 
-```polyglot
+```aljam3
 [ ] Extract column, then iterate
 [-] -#.Column
    (-) <data << $sales

@@ -7,7 +7,7 @@ status: stable
 
 <!-- @compile-rules/PGW/INDEX -->
 
-# Polyglot Warning Codes (PGW)
+# Aljam3 Warning Codes (PGW)
 
 Compile warnings surface concerns without halting compilation. Rules are grouped by thousand-range, paralleling the PGE categories but covering narrower or softer conditions. See the [[../INDEX|Compile Rules Index]] for the full directory map and the [[../PGE/INDEX|PGE Index]] for the error-severity counterparts.
 

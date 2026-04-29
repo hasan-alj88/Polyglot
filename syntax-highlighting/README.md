@@ -1,28 +1,28 @@
-# Polyglot Syntax Highlighting
+# Aljam3 Syntax Highlighting
 
-This directory contains syntax highlighting definitions for the Polyglot automation language.
+This directory contains syntax highlighting definitions for the Aljam3 automation language.
 
 ## Files
 
-- **polyglot.tmLanguage.json**: TextMate grammar definition for Polyglot syntax
-- **vscode-extension/**: VSCode extension for Polyglot syntax highlighting (optional)
+- **aljam3.tmLanguage.json**: TextMate grammar definition for Aljam3 syntax
+- **vscode-extension/**: VSCode extension for Aljam3 syntax highlighting (optional)
 
 ## Using the TextMate Grammar
 
 ### For VSCode
 
-1. Copy `polyglot.tmLanguage.json` to your VSCode extensions directory:
-   - Linux: `~/.vscode/extensions/polyglot-syntax/syntaxes/`
-   - macOS: `~/.vscode/extensions/polyglot-syntax/syntaxes/`
-   - Windows: `%USERPROFILE%\.vscode\extensions\polyglot-syntax\syntaxes\`
+1. Copy `aljam3.tmLanguage.json` to your VSCode extensions directory:
+   - Linux: `~/.vscode/extensions/aljam3-syntax/syntaxes/`
+   - macOS: `~/.vscode/extensions/aljam3-syntax/syntaxes/`
+   - Windows: `%USERPROFILE%\.vscode\extensions\aljam3-syntax\syntaxes\`
 
 2. Create a `package.json` in the extension root with the following content:
 
 ```json
 {
-  "name": "polyglot-syntax",
-  "displayName": "Polyglot Language Support",
-  "description": "Syntax highlighting for Polyglot automation language",
+  "name": "aljam3-syntax",
+  "displayName": "Aljam3 Language Support",
+  "description": "Syntax highlighting for Aljam3 automation language",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.60.0"
@@ -30,15 +30,15 @@ This directory contains syntax highlighting definitions for the Polyglot automat
   "categories": ["Programming Languages"],
   "contributes": {
     "languages": [{
-      "id": "polyglot",
-      "aliases": ["Polyglot", "polyglot"],
-      "extensions": [".pg"],
+      "id": "aljam3",
+      "aliases": ["Aljam3", "aljam3"],
+      "extensions": [".aj3"],
       "configuration": "./language-configuration.json"
     }],
     "grammars": [{
-      "language": "polyglot",
-      "scopeName": "source.polyglot",
-      "path": "./syntaxes/polyglot.tmLanguage.json"
+      "language": "aljam3",
+      "scopeName": "source.aljam3",
+      "path": "./syntaxes/aljam3.tmLanguage.json"
     }]
   }
 }
@@ -52,20 +52,20 @@ To enable syntax highlighting in markdown fenced code blocks, you need to regist
 
 #### Option 1: VSCode Extension with Markdown Injection
 
-Create a second grammar file `polyglot.markdown.injection.json`:
+Create a second grammar file `aljam3.markdown.injection.json`:
 
 ```json
 {
-  "scopeName": "markdown.polyglot.codeblock",
+  "scopeName": "markdown.aljam3.codeblock",
   "injectionSelector": "L:markup.fenced_code.block.markdown",
   "patterns": [
     {
-      "include": "#fenced_code_block_polyglot"
+      "include": "#fenced_code_block_aljam3"
     }
   ],
   "repository": {
-    "fenced_code_block_polyglot": {
-      "begin": "(^|\\G)(\\s*)(`{3,}|~{3,})\\s*(?i:(polyglot|pg)(\\s+[^`~]*)?$)",
+    "fenced_code_block_aljam3": {
+      "begin": "(^|\\G)(\\s*)(`{3,}|~{3,})\\s*(?i:(aljam3|pg)(\\s+[^`~]*)?$)",
       "name": "markup.fenced_code.block.markdown",
       "end": "(^|\\G)(\\2|\\s{0,3})(\\3)\\s*$",
       "beginCaptures": {
@@ -85,10 +85,10 @@ Create a second grammar file `polyglot.markdown.injection.json`:
         {
           "begin": "(^|\\G)(\\s*)(.*)",
           "while": "(^|\\G)(?!\\s*([`~]{3,})\\s*$)",
-          "contentName": "meta.embedded.block.polyglot",
+          "contentName": "meta.embedded.block.aljam3",
           "patterns": [
             {
-              "include": "source.polyglot"
+              "include": "source.aljam3"
             }
           ]
         }
@@ -103,16 +103,16 @@ Add to `package.json`:
 ```json
 "grammars": [
   {
-    "language": "polyglot",
-    "scopeName": "source.polyglot",
-    "path": "./syntaxes/polyglot.tmLanguage.json"
+    "language": "aljam3",
+    "scopeName": "source.aljam3",
+    "path": "./syntaxes/aljam3.tmLanguage.json"
   },
   {
-    "scopeName": "markdown.polyglot.codeblock",
-    "path": "./syntaxes/polyglot.markdown.injection.json",
+    "scopeName": "markdown.aljam3.codeblock",
+    "path": "./syntaxes/aljam3.markdown.injection.json",
     "injectTo": ["text.html.markdown"],
     "embeddedLanguages": {
-      "meta.embedded.block.polyglot": "polyglot"
+      "meta.embedded.block.aljam3": "aljam3"
     }
   }
 ]
@@ -123,25 +123,25 @@ Add to `package.json`:
 For GitHub/GitLab syntax highlighting, add to repository's `.gitattributes`:
 
 ```
-*.pg linguist-language=Polyglot
+*.aj3 linguist-language=Aljam3
 ```
 
 And create `.github/linguist.yml` (if using a custom grammar repository):
 
 ```yaml
-Polyglot:
+Aljam3:
   type: programming
   color: "#7e57c2"
   extensions:
-    - ".pg"
-  tm_scope: source.polyglot
+    - ".aj3"
+  tm_scope: source.aljam3
   ace_mode: text
 ```
 
 ### For Other Editors
 
-- **Sublime Text**: Copy `polyglot.tmLanguage.json` to `Packages/User/`
-- **Atom**: Create a package with the grammar in `grammars/polyglot.json`
+- **Sublime Text**: Copy `aljam3.tmLanguage.json` to `Packages/User/`
+- **Atom**: Create a package with the grammar in `grammars/aljam3.json`
 - **TextMate**: Convert JSON to plist format and install in `~/Library/Application Support/TextMate/Bundles/`
 
 ## Syntax Highlighting Scopes
@@ -149,44 +149,44 @@ Polyglot:
 The grammar defines the following scope categories:
 
 ### Block Markers
-- **Registry**: `[@]`, `[|]`, `[#]`, `[!]`, `[M]` - `keyword.control.registry.polyglot`
-- **Data Flow**: `[i]`, `[o]`, `[<]`, `[>]` - `keyword.control.dataflow.polyglot`
-- **Execution**: `[r]`, `[p]`, `[b]`, `[s]`, `[Y]` - `keyword.control.execution.polyglot`
-- **Control Flow**: `[?]`, `[t]`, `[Q]`, `[W]` - `keyword.control.flow.polyglot`
-- **Scope**: `[~]`, `[\]`, `[/]`, `[{]`, `[}]` - `keyword.control.scope.polyglot`
-- **Logical**: `[&]`, `[+]`, `[-]`, `[^]`, `[.]` - `keyword.operator.logical.polyglot`
-- **Special**: `[X]`, `[A]`, `[*]` - `keyword.control.special.polyglot`
+- **Registry**: `[@]`, `[|]`, `[#]`, `[!]`, `[M]` - `keyword.control.registry.aljam3`
+- **Data Flow**: `[i]`, `[o]`, `[<]`, `[>]` - `keyword.control.dataflow.aljam3`
+- **Execution**: `[r]`, `[p]`, `[b]`, `[s]`, `[Y]` - `keyword.control.execution.aljam3`
+- **Control Flow**: `[?]`, `[t]`, `[Q]`, `[W]` - `keyword.control.flow.aljam3`
+- **Scope**: `[~]`, `[\]`, `[/]`, `[{]`, `[}]` - `keyword.control.scope.aljam3`
+- **Logical**: `[&]`, `[+]`, `[-]`, `[^]`, `[.]` - `keyword.operator.logical.aljam3`
+- **Special**: `[X]`, `[A]`, `[*]` - `keyword.control.special.aljam3`
 
 ### Operators
-- **Push**: `<<` - `keyword.operator.dataflow.push.polyglot`
-- **Pull**: `>>` - `keyword.operator.dataflow.pull.polyglot`
-- **Default**: `<~` - `keyword.operator.dataflow.default.polyglot`
-- **Comparison**: `=?`, `>?`, `<?`, `>=?`, `<=?`, `!?` - `keyword.operator.comparison.polyglot`
-- **Range**: `?[`, `?(` - `keyword.operator.range.polyglot`
-- **Collection**: `~*`, `~Y.*` - `keyword.operator.collection.polyglot`
+- **Push**: `<<` - `keyword.operator.dataflow.push.aljam3`
+- **Pull**: `>>` - `keyword.operator.dataflow.pull.aljam3`
+- **Default**: `<~` - `keyword.operator.dataflow.default.aljam3`
+- **Comparison**: `=?`, `>?`, `<?`, `>=?`, `<=?`, `!?` - `keyword.operator.comparison.aljam3`
+- **Range**: `?[`, `?(` - `keyword.operator.range.aljam3`
+- **Collection**: `~*`, `~Y.*` - `keyword.operator.collection.aljam3`
 
 ### Identifiers
-- **Pipeline**: `|PipelineName` - `entity.name.function.pipeline.polyglot`
-- **Enumeration**: `#EnumName` - `entity.name.type.enumeration.polyglot`
-- **Error**: `!ErrorName` - `entity.name.type.error.polyglot`
-- **Variable**: `.variableName` - `variable.other.polyglot`
-- **Package**: `@package/name` - `entity.name.package.polyglot`
+- **Pipeline**: `|PipelineName` - `entity.name.function.pipeline.aljam3`
+- **Enumeration**: `#EnumName` - `entity.name.type.enumeration.aljam3`
+- **Error**: `!ErrorName` - `entity.name.type.error.aljam3`
+- **Variable**: `.variableName` - `variable.other.aljam3`
+- **Package**: `@package/name` - `entity.name.package.aljam3`
 
 ### Types
-- **Namespace**: `pg\`, `rs\`, `py\`, `js\`, `go\` - `storage.type.namespace.polyglot`
-- **Primitive**: `int`, `float`, `string`, `bool`, `path`, `url`, `datetime` - `storage.type.primitive.polyglot`
-- **Collection**: `array`, `map`, `set` - `storage.type.collection.polyglot`
-- **Runtime Wrapper**: `RT.Python`, `RT.Rust`, etc. - `storage.type.wrapper.polyglot`
+- **Namespace**: `pg\`, `rs\`, `py\`, `js\`, `go\` - `storage.type.namespace.aljam3`
+- **Primitive**: `int`, `float`, `string`, `bool`, `path`, `url`, `datetime` - `storage.type.primitive.aljam3`
+- **Collection**: `array`, `map`, `set` - `storage.type.collection.aljam3`
+- **Runtime Wrapper**: `RT.Python`, `RT.Rust`, etc. - `storage.type.wrapper.aljam3`
 
 ### Literals
-- **String**: `"text"` - `string.quoted.double.polyglot`
-- **DateTime String**: `DT"2025-12-03"` - `string.quoted.datetime.polyglot`
-- **Number**: `123`, `45.67` - `constant.numeric.*.polyglot`
-- **Reserved Enums**: `#Boolean.True`, `#None`, `#PgVar.States.Ready` - `constant.language.*.polyglot`
-- **Error Markers**: `!No.Input`, `!No.Output` - `constant.language.error.polyglot`
+- **String**: `"text"` - `string.quoted.double.aljam3`
+- **DateTime String**: `DT"2025-12-03"` - `string.quoted.datetime.aljam3`
+- **Number**: `123`, `45.67` - `constant.numeric.*.aljam3`
+- **Reserved Enums**: `#Boolean.True`, `#None`, `#PgVar.States.Ready` - `constant.language.*.aljam3`
+- **Error Markers**: `!No.Input`, `!No.Output` - `constant.language.error.aljam3`
 
 ### Comments
-- **Line Comment**: `// comment` - `comment.line.double-slash.polyglot`
+- **Line Comment**: `// comment` - `comment.line.double-slash.aljam3`
 
 ## Customizing Colors
 
@@ -196,20 +196,20 @@ To customize syntax highlighting colors, add theme overrides to your VSCode `set
 "editor.tokenColorCustomizations": {
   "textMateRules": [
     {
-      "scope": "keyword.control.registry.polyglot",
+      "scope": "keyword.control.registry.aljam3",
       "settings": {
         "foreground": "#C792EA",
         "fontStyle": "bold"
       }
     },
     {
-      "scope": "keyword.operator.dataflow.polyglot",
+      "scope": "keyword.operator.dataflow.aljam3",
       "settings": {
         "foreground": "#89DDFF"
       }
     },
     {
-      "scope": "entity.name.function.pipeline.polyglot",
+      "scope": "entity.name.function.pipeline.aljam3",
       "settings": {
         "foreground": "#82AAFF",
         "fontStyle": "italic"
@@ -221,9 +221,9 @@ To customize syntax highlighting colors, add theme overrides to your VSCode `set
 
 ## Testing
 
-Test the grammar with sample Polyglot code:
+Test the grammar with sample Aljam3 code:
 
-```polyglot
+```aljam3
 [@] @example/hello-world
 
 [|] |HelloWorld
@@ -242,7 +242,7 @@ Test the grammar with sample Polyglot code:
 
 To extend the grammar:
 
-1. Add new patterns to the appropriate repository section in `polyglot.tmLanguage.json`
+1. Add new patterns to the appropriate repository section in `aljam3.tmLanguage.json`
 2. Assign appropriate scope names following TextMate conventions
 3. Test with sample code
 4. Update this README with new scope documentation

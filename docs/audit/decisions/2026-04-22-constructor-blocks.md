@@ -58,7 +58,7 @@ Key constraints:
 
 ## Rationale
 
-Issue #339 identified the tension: Polyglot's error philosophy demands all errors be handled, but requiring error handling for known-valid literals (like `$path"/usr/local/bin"`) was pure ceremony.
+Issue #339 identified the tension: Aljam3's error philosophy demands all errors be handled, but requiring error handling for known-valid literals (like `$path"/usr/local/bin"`) was pure ceremony.
 
 Constructors are not pipelines — they have different semantics:
 

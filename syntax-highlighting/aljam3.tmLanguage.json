@@ -1,0 +1,135 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Aljam3",
+  "scopeName": "source.aljam3",
+  "fileTypes": [".aj3"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#inline-strings" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#markers" },
+    { "include": "#identifiers" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.aljam3",
+          "match": "^\\s*(\\{\\s*\\}|\\[\\s*\\]|\\(\\s*\\)).*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.aljam3",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.aljam3",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "inline-strings": {
+      "patterns": [
+        {
+          "match": "([\\$\\-#_!%@][A-Za-z0-9_:\\.]+)(\"[^\"]*\")",
+          "captures": {
+            "1": { "name": "support.function.aljam3" },
+            "2": { "name": "string.quoted.double.inline.aljam3" }
+          }
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.aljam3",
+          "match": "\\b\\d+\\.\\d+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.aljam3",
+          "match": "\\b\\d+\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.assignment.aljam3",
+          "match": "<<|<~|<-"
+        },
+        {
+          "name": "keyword.operator.accessor.aljam3",
+          "match": "<|>"
+        }
+      ]
+    },
+    "markers": {
+      "patterns": [
+        {
+          "name": "keyword.control.aljam3",
+          "match": "\\[-\\]|\\{-\\}|\\(-\\)|\\[=\\]|\\{=\\}|\\(=\\)"
+        },
+        {
+          "name": "keyword.control.conditional.aljam3",
+          "match": "\\[\\*\\]|\\{\\*\\}|\\(\\*\\)|\\[!\\]|\\{!\\}|\\(!\\)|\\[\\?\\]|\\{\\?\\}|\\(\\?\\)"
+        },
+        {
+          "name": "support.class.aljam3",
+          "match": "\\[T\\]|\\{T\\}|\\(T\\)|\\[Q\\]|\\{Q\\}|\\(Q\\)|\\[W\\]|\\{W\\}|\\(W\\)"
+        },
+        {
+          "name": "entity.name.tag.aljam3",
+          "match": "\\[@\\]|\\{@\\}|\\(@\\)"
+        },
+        {
+          "name": "entity.name.type.aljam3",
+          "match": "\\[##\\]|\\{##\\}|\\(##\\)|\\[#\\]|\\{#\\}|\\(#\\)"
+        },
+        {
+          "name": "keyword.operator.aljam3",
+          "match": "\\(>\\)|\\(<\\)"
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "name": "support.function.aljam3",
+          "match": "-[A-Za-z0-9.]+"
+        },
+        {
+          "name": "entity.name.tag.aljam3",
+          "match": "@[A-Za-z0-9:.]+"
+        },
+        {
+          "name": "variable.language.aljam3",
+          "match": "\\$[A-Za-z0-9:_.]+|\\$\\*"
+        },
+        {
+          "name": "entity.name.type.aljam3",
+          "match": "###[A-Za-z0-9]+|##[A-Za-z0-9]+|#[A-Za-z0-9:.]+"
+        },
+        {
+          "name": "constant.language.aljam3",
+          "match": "%[#A-Za-z0-9.]+"
+        },
+        {
+          "name": "keyword.control.exception.aljam3",
+          "match": "![A-Za-z0-9:.]+"
+        },
+        {
+          "name": "keyword.operator.logical.aljam3",
+          "match": "\\?[A-Za-z0-9.]+"
+        }
+      ]
+    }
+  }
+}

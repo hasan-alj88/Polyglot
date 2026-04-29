@@ -11,7 +11,7 @@ Reduces mini-pipeline numeric outputs to the maximum value.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Agg.Max
    (*) <number << $value
    (*) >max >> $highest

@@ -15,7 +15,7 @@ The `$Color` constructor produces `#Color` values from hex strings or named colo
 
 ### Hex RGB (6-digit)
 
-```polyglot
+```aljam3
 {$} $Color"#{hex}"
    ($) <hex.re << "[0-9a-fA-F]{6}"
    [-] -Color.HexToRGB
@@ -33,7 +33,7 @@ Matches 6-digit hex color strings like `"#FF8800"`. The `#` prefix is a literal 
 
 ### Hex RGBA (8-digit)
 
-```polyglot
+```aljam3
 {$} $Color"#{hex}"
    ($) <hex.re << "[0-9a-fA-F]{8}"
    [-] -Color.HexToRGBA
@@ -53,7 +53,7 @@ Matches 8-digit hex color strings like `"#FF880080"`. The last two hex digits en
 
 ### Named Color
 
-```polyglot
+```aljam3
 {$} $Color"{name}"
    ($) <name.re << "[a-z]+"
    [$] #Color
@@ -77,7 +77,7 @@ Resolution order: hex overloads first (anchored by `#` literal prefix), then nam
 
 ## Usage
 
-```polyglot
+```aljam3
 [ ] compile-time guaranteed — no error handling
 [-] $primary << $Color"#3366CC"
 [-] $transparent << $Color"#FF000080"

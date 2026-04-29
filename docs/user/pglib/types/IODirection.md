@@ -15,7 +15,7 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #IODirection
    [%] .description << "IO direction for permission scoping"
    [%] .version << "1.0.0"

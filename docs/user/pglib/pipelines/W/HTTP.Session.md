@@ -13,7 +13,7 @@ Creates HTTP client on setup, closes on cleanup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.HTTP.Session
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WHttpSession"

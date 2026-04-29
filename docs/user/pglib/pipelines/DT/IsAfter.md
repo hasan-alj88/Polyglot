@@ -13,7 +13,7 @@ Returns `#bool` -- true when `a` is later than `b`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.IsAfter
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtIsAfter"

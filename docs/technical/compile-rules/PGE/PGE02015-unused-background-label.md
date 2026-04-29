@@ -19,7 +19,7 @@ updated: 2026-04-09
 **Detection:** The compiler scans all accessor references (`$Label>param`, `$Label<param`) in the enclosing scope. If a `($)` label on a `[b]` call has zero references, the error is raised.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ background label output consumed by a later call
 [b] -Metrics.Log
    (-) $Log
@@ -29,7 +29,7 @@ updated: 2026-04-09
 ```
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ background block with children that consume the label internally
 [b] -Batch.Process
    (-) $Batch
@@ -38,7 +38,7 @@ updated: 2026-04-09
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02015 — label "$Log" on [b] is never consumed
 [b] -Metrics.Log
    (-) $Log

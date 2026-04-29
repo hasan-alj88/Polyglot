@@ -11,7 +11,7 @@ Reduces mini-pipeline numeric outputs to the minimum value.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Agg.Min
    (*) <number << $value
    (*) >min >> $lowest

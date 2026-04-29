@@ -13,7 +13,7 @@ Returns the remainder of dividing the dividend by the divisor. Accepts exactly t
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Math.Modulo
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathModulo"

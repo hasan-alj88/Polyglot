@@ -13,7 +13,7 @@ Returns the current instant from the system clock.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Now
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtNow"

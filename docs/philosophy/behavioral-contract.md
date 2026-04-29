@@ -12,19 +12,19 @@ updated: 2026-04-22
 <!-- @u:concepts/pipelines/INDEX -->
 # The Behavioral Contract
 
-> Polyglot does not compile to a binary. It compiles to a complete specification of how the system should behave — the Behavioral Contract. This page explains what that means and why it matters. See [[vision]] for the broader project context.
+> Aljam3 does not compile to a binary. It compiles to a complete specification of how the system should behave — the Behavioral Contract. This page explains what that means and why it matters. See [[vision]] for the broader project context.
 
 ## The Building Permit
 
-Think of the Polyglot compiler as a building inspector, and the [[glossary#Behavioral Contract|Behavioral Contract]] as a building permit.
+Think of the Aljam3 compiler as a building inspector, and the [[glossary#Behavioral Contract|Behavioral Contract]] as a building permit.
 
 Before any construction can start, the permit must account for every disaster scenario and every building code requirement. What happens during an earthquake? Where are the fire exits? What is the load capacity of each floor? How does the electrical system handle a surge? The inspector does not approve construction until every scenario is addressed. There is no "we'll figure it out when it happens."
 
-The Polyglot compiler works the same way. Before a [[glossary#Pipeline|pipeline]] can run, the compiler must verify that every possible execution path is accounted for. What happens when this trigger fires? What if that input is missing? What if two parallel jobs race to the same resource? What if the foreign code throws an exception? The compiler produces the Behavioral Contract only when every scenario has an answer. Compilation is a license to launch.
+The Aljam3 compiler works the same way. Before a [[glossary#Pipeline|pipeline]] can run, the compiler must verify that every possible execution path is accounted for. What happens when this trigger fires? What if that input is missing? What if two parallel jobs race to the same resource? What if the foreign code throws an exception? The compiler produces the Behavioral Contract only when every scenario has an answer. Compilation is a license to launch.
 
 ## Single Source of Truth
 
-The Behavioral Contract is the single, authoritative specification of runtime behaviour. It captures everything the Polyglot Service needs to orchestrate execution:
+The Behavioral Contract is the single, authoritative specification of runtime behaviour. It captures everything the Aljam3 Service needs to orchestrate execution:
 
 - **Signal routing** — when one job finishes, which jobs receive the trigger signal next
 - **Parallelism** — which jobs run concurrently, which run sequentially, and how their outputs are collected
@@ -51,10 +51,10 @@ The Behavioral Contract has four properties that distinguish it from traditional
 
 The compilation flow is a one-way handoff:
 
-1. The developer writes [[glossary#Polyglot Code|Polyglot Code]] ([[glossary#.pg files|.pg files]])
+1. The developer writes [[glossary#Aljam3 Code|Aljam3 Code]] ([[glossary#.aj3 files|.aj3 files]])
 2. The compiler validates signal logic — buggy concurrency, missing error paths, and permission violations are compile errors
 3. The compiler produces a Behavioral Contract — a serialized signal map for each pipeline
-4. The contract is registered in the Polyglot Service's database
+4. The contract is registered in the Aljam3 Service's database
 5. The developer enables the pipeline
 6. The Trigger Monitor reads the contract and orchestrates execution
 

@@ -18,7 +18,7 @@ Rules are **parameterized reactive listeners** compiled into the behavior contra
 
 Rules accept parameters with `(#)` inputs. `<~` sets defaults (overridable), `<<` sets finals.
 
-```polyglot
+```aljam3
 {Q} #JobRules:RAMGuard
    (#) $value.GB#int <~ 4
    (#) $margin.GB#int <~ 1
@@ -26,14 +26,14 @@ Rules accept parameters with `(#)` inputs. `<~` sets defaults (overridable), `<<
 
 Parameters support validation inside the rule:
 
-```polyglot
+```aljam3
    [?] -Math.IsGreater"{$margin.GB}", "{$value.GB}" =? #Boolean.True
       [!] >> !Queue.InvalidMargin
 ```
 
 Override parameters when loading a rule into a pipeline:
 
-```polyglot
+```aljam3
 [Q] #RAMGuard
    (#) <value.GB << 8
    (#) >> $customRAMGuard
@@ -42,7 +42,7 @@ Override parameters when loading a rule into a pipeline:
 
 ## Triggers (`[T]` and `[&]`)
 
-Queue rules use Polyglot's trigger system rather than continuous procedural loops. 
+Queue rules use Aljam3's trigger system rather than continuous procedural loops. 
 
 | Marker | Meaning |
 |--------|---------|
@@ -61,7 +61,7 @@ For structural validation *before* the program runs, you can use Boolean Predica
 | `?Queue.Host.IsEqual"{#TargetQueue}"` | Prevents routing loops by ensuring queues are on different hosts |
 | `?Queue.Strategy.IsEqual"{#FIFO}"` | Asserts the queue strategy |
 
-```polyglot
+```aljam3
 {Q} #QueueRules:Failover
    (#) <FailoverQueue#Queue <~ {#BackupHostQueue}
    [ ] Compile-time safety check
@@ -75,7 +75,7 @@ For structural validation *before* the program runs, you can use Boolean Predica
 
 Instead of evaluating Job RAM every tick, we trigger strictly when thresholds are crossed.
 
-```polyglot
+```aljam3
 {Q} #JobRules:RAMGuard
    (#) $value.GB#int <~ 4
    (#) $margin.GB#int <~ 1
@@ -97,7 +97,7 @@ Instead of evaluating Job RAM every tick, we trigger strictly when thresholds ar
 
 Queue rules handle bulk actions and ingress flow.
 
-```polyglot
+```aljam3
 {Q} #QueueRules:OverloadProtection
    [ ] Assert Overload state when over threshold
    [T] -QT.Queue.Jobs.Aggregate.Exceeds.RAM"32.0GB"
@@ -130,7 +130,7 @@ Conflicting pause levels: the **highest level wins** (Free.All > Free.RAM > Free
 
 Because execution relies entirely on the reactive engine, there is no generic "tick period". The runtime registers cgroup/system watches. Note that some values (like periodic redis length checks) may internally use a configurable poll rate:
 
-```polyglot
+```aljam3
 {Q} #Queue:WorkerQueue
    [.] .pollPeriod << #DT"5s"
 ```
@@ -150,7 +150,7 @@ Every queue includes built-in rules unless explicitly overridden:
 
 Override by setting the default to false:
 
-```polyglot
+```aljam3
 {Q} #Queue:MyQueue
    [.] .defaults.ramOverflow << false
 ```

@@ -23,7 +23,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all [.] fields exist on the [$] target type
 {$} $DT"(?<hours>\d{2}):(?<minutes>\d{2}):(?<seconds>\d{2})"
     ($) <hours.re << "\d{2}"
@@ -36,7 +36,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14005 — .nonexistent is not a field of #DT.Time
 {$} $DT"(?<hours>\d{2}):(?<minutes>\d{2}):(?<seconds>\d{2})"
     ($) <hours.re << "\d{2}"

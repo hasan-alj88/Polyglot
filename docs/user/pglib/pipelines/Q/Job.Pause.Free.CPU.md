@@ -13,7 +13,7 @@ Pause a Job, freeing CPU. Available in `.Now` (immediate) and `.Wait` (after cur
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Pause.Free.CPU
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobPauseFreeCPU"
@@ -52,11 +52,11 @@ None.
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends command signal |
-| 2. NATS command | `polyglot.command.job.pause.free.cpu.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
+| 2. NATS command | `aljam3.command.job.pause.free.cpu.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
 | 3. QH executes | Queue Handler | SREM set:executing, HSET set:suspended "cpu", decrement counters, HSET job status "suspended.cpu" |
-| 4. Control signal | `polyglot.queue.control.{jobId}.job.pause.free.cpu` | `{jobId, timing}` → Runner |
+| 4. Control signal | `aljam3.queue.control.{jobId}.job.pause.free.cpu` | `{jobId, timing}` → Runner |
 | 5. Unix mechanism | Runner | .Now: `echo 1 > cgroup.freeze` (atomic freeze); .Wait: `SIGSTOP` after work unit boundary |
-| 6. Runner ACK | `polyglot.runner.paused.{jobId}` | `{type: "cpu"}` → QH + TM |
+| 6. Runner ACK | `aljam3.runner.paused.{jobId}` | `{type: "cpu"}` → QH + TM |
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 

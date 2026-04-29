@@ -27,7 +27,7 @@ No `[@]` import needed.
 
 `$*` is the inline discard syntax -- no variable created, output immediately released. This is a language construct, not a collector operator.
 
-```polyglot
+```aljam3
 [=] -SomePipeline
    (-) >result >> $*
 ```

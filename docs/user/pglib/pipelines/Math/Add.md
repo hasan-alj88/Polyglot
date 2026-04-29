@@ -13,7 +13,7 @@ Adds two or more numeric values. Accepts variadic input (2 or more operands). Wh
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Math.Add
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathAdd"

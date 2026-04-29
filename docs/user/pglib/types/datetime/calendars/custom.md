@@ -10,7 +10,7 @@ metadata_instance: "%#:CustomCalendar:N"
 
 User-extensible calendar type. Fixed fields define the basic structure; flexible fields allow user-defined month names, leap rules, and epoch offset.
 
-```polyglot
+```aljam3
 {#} #CustomCalendar
    [%] .description << "User-defined calendar system"
    [%] .version << "1.0.0"

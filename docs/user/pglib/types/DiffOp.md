@@ -11,13 +11,13 @@ metadata_instance: "%#:DiffOp:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.pg` file. Classifies the operation type in a text diff entry — whether a line was added, deleted, or replaced relative to the original text.
+Runtime `##Enum` type available in every `.aj3` file. Classifies the operation type in a text diff entry — whether a line was added, deleted, or replaced relative to the original text.
 
 ---
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #DiffOp
    [%] .description << "Text diff operation type"
    [#] ##Enum

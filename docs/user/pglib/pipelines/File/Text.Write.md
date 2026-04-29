@@ -13,7 +13,7 @@ Write text content to a file, replacing any existing content.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Text.Write
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextWrite"

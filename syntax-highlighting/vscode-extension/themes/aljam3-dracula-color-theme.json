@@ -1,0 +1,120 @@
+{
+  "name": "Aljam3 Dracula",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#282a36",
+    "editor.foreground": "#f8f8f2",
+    "editor.selectionBackground": "#44475a",
+    "editor.lineHighlightBackground": "#44475a80",
+    "editorCursor.foreground": "#f8f8f0",
+    "editorWhitespace.foreground": "#3B3A32"
+  },
+  "tokenColors": [
+    {
+      "name": "Comments",
+      "scope": "comment.line.aljam3",
+      "settings": {
+        "foreground": "#6272a4"
+      }
+    },
+    {
+      "name": "Pipelines",
+      "scope": "entity.name.function.aljam3",
+      "settings": {
+        "foreground": "#50fa7b"
+      }
+    },
+    {
+      "name": "Variables",
+      "scope": "variable.other.aljam3",
+      "settings": {
+        "foreground": "#f8f8f2"
+      }
+    },
+    {
+      "name": "DataType",
+      "scope": "entity.name.type.aljam3",
+      "settings": {
+        "foreground": "#8be9fd"
+      }
+    },
+    {
+      "name": "Schema and Terminals",
+      "scope": "support.type.aljam3",
+      "settings": {
+        "foreground": "#8be9fd",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Packages",
+      "scope": "entity.name.namespace.aljam3",
+      "settings": {
+        "foreground": "#ffb86c"
+      }
+    },
+    {
+      "name": "Errors",
+      "scope": "keyword.control.exception.aljam3",
+      "settings": {
+        "foreground": "#ff5555"
+      }
+    },
+    {
+      "name": "Permissions",
+      "scope": "support.class.aljam3",
+      "settings": {
+        "foreground": "#bd93f9"
+      }
+    },
+    {
+      "name": "Metadata",
+      "scope": "variable.language.special.aljam3",
+      "settings": {
+        "foreground": "#f1fa8c"
+      }
+    },
+    {
+      "name": "Expanders and Assignment",
+      "scope": "keyword.operator.assignment.aljam3",
+      "settings": {
+        "foreground": "#ff79c6"
+      }
+    },
+    {
+      "name": "Predicates",
+      "scope": "keyword.operator.logical.aljam3",
+      "settings": {
+        "foreground": "#ff79c6"
+      }
+    },
+    {
+      "name": "Collections",
+      "scope": "keyword.control.loop.aljam3",
+      "settings": {
+        "foreground": "#ff79c6"
+      }
+    },
+    {
+      "name": "Strings",
+      "scope": ["string.quoted.double.aljam3", "string.quoted.double.inline.aljam3"],
+      "settings": {
+        "foreground": "#f1fa8c"
+      }
+    },
+    {
+      "name": "Numbers",
+      "scope": ["constant.numeric.float.aljam3", "constant.numeric.integer.aljam3"],
+      "settings": {
+        "foreground": "#bd93f9"
+      }
+    },
+    {
+      "name": "Separators and Accessors",
+      "scope": ["punctuation.separator.aljam3", "keyword.operator.accessor.aljam3"],
+      "settings": {
+        "foreground": "#f8f8f2"
+      }
+    }
+  ]
+}

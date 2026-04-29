@@ -16,8 +16,8 @@ updated: 2026-03-30
 
 **What it tests:** Third registry type `Registry` uses a different ID format from `Local` (numeric) and `Community` (username). See [[identifiers]], [[packages]].
 
-```polyglot
+```aljam3
 {@} @Local:001.App:v1.0.0
-   [@] @Slack << @Community:polyglot-tools.SlackAdmin:v1.3.0
+   [@] @Slack << @Community:aljam3-tools.SlackAdmin:v1.3.0
    [@] @Payments << @Registry:stripe.PaymentsAPI:v3.0.0
 ```

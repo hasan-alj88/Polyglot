@@ -2,7 +2,7 @@
 set -e
 
 echo "============================================="
-echo " Polyglot Dev Infrastructure Setup (Ubuntu/Debian) "
+echo " Aljam3 Dev Infrastructure Setup (Ubuntu/Debian) "
 echo "============================================="
 
 # Ensure sudo privileges upfront
@@ -20,14 +20,14 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# 0. Create Polyglot UNIX User
-echo -e "\n[0/4] Checking Polyglot UNIX user..."
-if id "polyglot" &>/dev/null; then
-    echo "✅ UNIX user 'polyglot' already exists."
+# 0. Create Aljam3 UNIX User
+echo -e "\n[0/4] Checking Aljam3 UNIX user..."
+if id "aljam3" &>/dev/null; then
+    echo "✅ UNIX user 'aljam3' already exists."
 else
-    echo "❌ UNIX user 'polyglot' not found. Creating..."
-    sudo useradd -r -s /bin/false -d /opt/polyglot -m polyglot
-    echo "✅ UNIX user 'polyglot' created."
+    echo "❌ UNIX user 'aljam3' not found. Creating..."
+    sudo useradd -r -s /bin/false -d /opt/aljam3 -m aljam3
+    echo "✅ UNIX user 'aljam3' created."
 fi
 
 # 1. Check & Install PostgreSQL
@@ -43,19 +43,19 @@ else
 fi
 
 # Configure PostgreSQL Database & User
-echo "Checking PostgreSQL 'polyglot' role and database..."
-if sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='polyglot'" | grep -q 1; then
-    echo "✅ PostgreSQL user 'polyglot' already exists."
+echo "Checking PostgreSQL 'aljam3' role and database..."
+if sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='aljam3'" | grep -q 1; then
+    echo "✅ PostgreSQL user 'aljam3' already exists."
 else
-    echo "Creating PostgreSQL user 'polyglot'..."
-    sudo -u postgres psql -c "CREATE USER polyglot WITH PASSWORD 'polyglot';"
+    echo "Creating PostgreSQL user 'aljam3'..."
+    sudo -u postgres psql -c "CREATE USER aljam3 WITH PASSWORD 'aljam3';"
 fi
 
-if sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -qw polyglot; then
-    echo "✅ PostgreSQL database 'polyglot' already exists."
+if sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -qw aljam3; then
+    echo "✅ PostgreSQL database 'aljam3' already exists."
 else
-    echo "Creating PostgreSQL database 'polyglot'..."
-    sudo -u postgres psql -c "CREATE DATABASE polyglot OWNER polyglot;"
+    echo "Creating PostgreSQL database 'aljam3'..."
+    sudo -u postgres psql -c "CREATE DATABASE aljam3 OWNER aljam3;"
 fi
 
 # 2. Check & Install Redis
@@ -94,10 +94,10 @@ Description=NATS Server
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/nats-server -js -sd /opt/polyglot/nats
+ExecStart=/usr/local/bin/nats-server -js -sd /opt/aljam3/nats
 Restart=always
-User=polyglot
-Group=polyglot
+User=aljam3
+Group=aljam3
 LimitNOFILE=65536
 
 [Install]
@@ -105,8 +105,8 @@ WantedBy=multi-user.target
 EOF
 
     # Create NATS storage directory
-    sudo mkdir -p /opt/polyglot/nats
-    sudo chown -R polyglot:polyglot /opt/polyglot/nats
+    sudo mkdir -p /opt/aljam3/nats
+    sudo chown -R aljam3:aljam3 /opt/aljam3/nats
     
     sudo systemctl daemon-reload
     sudo systemctl enable --now nats
@@ -118,8 +118,8 @@ fi
 
 echo -e "\n============================================="
 echo "🎉 Setup Complete!"
-echo "Your local Polyglot dev environment is ready."
-echo "- PostgreSQL: localhost:5432 (User: polyglot, DB: polyglot)"
+echo "Your local Aljam3 dev environment is ready."
+echo "- PostgreSQL: localhost:5432 (User: aljam3, DB: aljam3)"
 echo "- Redis: localhost:6379"
 echo "- NATS: localhost:4222"
 echo "============================================="

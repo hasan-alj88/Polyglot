@@ -20,7 +20,7 @@ severity: error
 **See also:** PGE09001 (undefined import alias), PGE09011 (duplicate import alias), packages.md (pglib pipelines don't require import)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ aliases do not shadow pglib namespaces
 {@} @Local:999.MyApp:v1.0.0
    [@] @triggers << @Local:999.CustomTriggers:v1.0.0
@@ -29,7 +29,7 @@ severity: error
 {-} -Main
    [T] -T.Manual                                [ ] ✓ pglib trigger — no conflict
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] @triggers-OnSchedule                     [ ] ✓ unambiguous — @triggers is not a pglib name
       (-) <cron#string << "0 * * * *"
@@ -38,7 +38,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE09012 — @T shadows pglib namespace -T.*
 {@} @Local:999.MyApp:v1.0.0
    [@] @T << @Local:999.CustomTriggers:v1.0.0   [ ] ✗ PGE09012 — T is a reserved pglib namespace
@@ -46,16 +46,16 @@ severity: error
 {-} -Main
    [T] -T.Manual                                [ ] ambiguous — pglib -T or imported @T?
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE09012 — @File shadows pglib namespace -File.*
 {@} @Local:999.MyApp:v1.0.0
    [@] @File << @Local:999.FileUtils:v1.0.0     [ ] ✗ PGE09012 — File is a reserved pglib namespace
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE09012 — @W shadows pglib namespace -W.*
 {@} @Local:999.MyApp:v1.0.0
    [@] @W << @Local:999.Wrappers:v1.0.0         [ ] ✗ PGE09012 — W is a reserved pglib namespace

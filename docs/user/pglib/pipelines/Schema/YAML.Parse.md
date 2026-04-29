@@ -13,7 +13,7 @@ Parses a YAML string into a `#serial` data tree. Compiler intrinsic -- not user-
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -#.YAML.Parse
    [%] .Kind << #NativeKind.Compiler
    [%] .Rust << "SchemaYamlParse"

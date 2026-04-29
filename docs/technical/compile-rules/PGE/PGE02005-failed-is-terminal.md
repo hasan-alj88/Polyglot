@@ -30,7 +30,7 @@ Two ways to handle Failed state:
 Both produce a Final variable — downstream jobs trigger normally.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ [!] handles the failure — direct replacement value
 (-) >result#string
 [-] -Compute
@@ -41,7 +41,7 @@ Both produce a Final variable — downstream jobs trigger normally.
    (-) <msg << >result             [ ] ✓ >result is Final (either from success or error handler)
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ !> fallback on IO line — compiler satisfied
 (-) >data#string
 [-] -Fetch
@@ -51,7 +51,7 @@ Both produce a Final variable — downstream jobs trigger normally.
    (-) <input << >data             [ ] ✓ >data always Final
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ !ErrorName> — specific error fallback
 (-) >data#string
 [-] -Fetch
@@ -63,7 +63,7 @@ Both produce a Final variable — downstream jobs trigger normally.
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02005 — no error handling for failable call
 (-) >result#string
 [-] -Compute

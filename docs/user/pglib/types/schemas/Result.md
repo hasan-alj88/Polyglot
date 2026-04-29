@@ -14,7 +14,7 @@ metadata_definition: "%definition.##:Result"
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Result
    (#) <#OkType
    (#) <#ErrType
@@ -61,7 +61,7 @@ metadata_definition: "%definition.##:Result"
 
 ## Usage
 
-```polyglot
+```aljam3
 {#} #ParseResult
    [#] ##Result
       (#) <#OkType << #Int

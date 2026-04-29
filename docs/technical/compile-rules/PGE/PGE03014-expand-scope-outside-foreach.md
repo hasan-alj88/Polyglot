@@ -17,7 +17,7 @@ severity: error
 **Detection:** At collector invocation site, the compiler checks the enclosing scope. If no `=ForEach` ancestor exists and the collector's `{*}` definition has `.scope == #CollectorScope.Expand`, PGE03014 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [=] =ForEach.Array
    (=) <Array << $items
    (=) >item >> $item
@@ -28,7 +28,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03014 — *Agg.Sum used outside =ForEach
 [-] *Agg.Sum
    (*) <number << $someValue

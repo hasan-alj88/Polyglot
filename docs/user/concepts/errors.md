@@ -16,7 +16,7 @@ updated: 2026-03-25
 <!-- @u:io/error-declaration -->
 <!-- @u:io/io-parameter-handling#Fallback -->
 
-Errors in Polyglot Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Polyglot objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[pglib/errors/errors#`#Error` Struct]]). Error messages use `.MessageTemplate` with `{key}` interpolation — the compiler enforces that every `{key}` exists in `.Info#Record` (PGE07008). System diagnostics (`.Stderr`, `.StackTrace`, `.ExitCode`) are auto-filled by the runtime as `#NullableRecord` fields.
+Errors in Aljam3 Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Aljam3 objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[pglib/errors/errors#`#Error` Struct]]). Error messages use `.MessageTemplate` with `{key}` interpolation — the compiler enforces that every `{key}` exists in `.Info#Record` (PGE07008). System diagnostics (`.Stderr`, `.StackTrace`, `.ExitCode`) are auto-filled by the runtime as `#NullableRecord` fields.
 
 ```mermaid
 flowchart LR
@@ -33,7 +33,7 @@ flowchart LR
 
 Custom errors are defined with `{!}` blocks (see [[blocks#Definition Elements]]). All user-defined errors live under the `!Error` namespace — `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. `{!}` is effectively a `{#}` data tree with `%##TerminalType << #Error` — every terminal branch must be an `#Error` instance (see [[pglib/types/properties/TerminalType|%##TerminalType]]). Use `[:]` for extensible branches and `[.]` for terminals (typed `#Error`):
 
-```polyglot
+```aljam3
 {!} !Error
    [:] :Validation
       [.] .Empty#Error
@@ -69,7 +69,7 @@ pglib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Fi
 
 A pipeline that can raise errors **must** declare them in its IO section using `(-) !ErrorName`:
 
-```polyglot
+```aljam3
 {-} -ValidateUser
    (-) <name#string
    (-) >validated#string
@@ -78,7 +78,7 @@ A pipeline that can raise errors **must** declare them in its IO section using `
    (-) !Validation.TooLong
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    ...
 ```
 
@@ -93,7 +93,7 @@ Error declarations are mandatory — a pipeline without `(-) !...` is non-failab
 
 In the execution body, `[!] >> !ErrorName` raises a declared error. The raise block fills `.Info` values for the keys declared in the `{!}` definition:
 
-```polyglot
+```aljam3
 [ ]
 [?] $name =? ""
    [!] >> !Validation.Empty
@@ -116,7 +116,7 @@ In the execution body, `[!] >> !ErrorName` raises a declared error. The raise bl
 
 Inside a `[!] >>` block, the author can push fallback values to specific outputs. Outputs not mentioned go Failed:
 
-```polyglot
+```aljam3
 [!] >> !Validation.Empty
    (!) .Info:field << "name"
    (!) >status << "invalid"
@@ -144,7 +144,7 @@ Inside a `[!] >>` block, the author can push fallback values to specific outputs
 
 `[!]` error blocks are scoped to the specific `[-]` call that can produce them (PGE07001), indented under the call (after its `(-)` IO lines). Under a single `[-]` call, no two `[!]` blocks may handle the same error name (PGE07004).
 
-```polyglot
+```aljam3
 [-] @FS-File.Text.Read
    (-) <path << <filepath
    (-) >content >> >content
@@ -168,7 +168,7 @@ Three patterns for error handling:
 
 **`[!]` block replacement:**
 
-```polyglot
+```aljam3
 [-] -Fetch
    (-) >payload >> >data
    [!] !FetchError
@@ -181,7 +181,7 @@ Three patterns for error handling:
 
 **`!>` fallback on IO line:**
 
-```polyglot
+```aljam3
 [-] -Fetch
    (-) >payload >> >data
    (>) !> "default"                [ ] catch-all fallback → Final
@@ -191,7 +191,7 @@ Three patterns for error handling:
 
 **`!ErrorName>` specific error fallback:**
 
-```polyglot
+```aljam3
 [-] -Fetch
    (-) >payload >> >data
    (>) !FetchError> "unavailable"  [ ] specific fallback
@@ -204,7 +204,7 @@ In chain execution (`[-] -A->-B->-C`), errors are prefixed with a step reference
 
 **Prefer numeric indices** — always unambiguous:
 
-```polyglot
+```aljam3
 [-] -File.Text.Read->-Text.Parse.CSV
    (-) >0.path#path << $path
    (-) <1.rows#string >> >content
@@ -216,7 +216,7 @@ In chain execution (`[-] -A->-B->-C`), errors are prefixed with a step reference
 
 **Leaf name ambiguity:** When a leaf name shares a segment with the error name, extend the step reference by one level up to disambiguate:
 
-```polyglot
+```aljam3
 [ ] Ambiguous — "Read" + "File.NotFound" looks like step "Read.File"
 [!] !Read.File.NotFound
 
@@ -269,7 +269,7 @@ The `!<` and `!>` operators (see [[operators#Assignment Operators]]) provide inl
 
 A `(>) !> value` line catches **any** error not handled by an `[!]` block:
 
-```polyglot
+```aljam3
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
@@ -282,7 +282,7 @@ If `-File.Text.Read` errors (any error), `$out` becomes Final with `"generic fal
 
 `!Error.Name>` places the error name between `!` and the direction arrow, providing a fallback only for that specific error:
 
-```polyglot
+```aljam3
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
@@ -297,7 +297,7 @@ Error-specific fallbacks take priority over the generic fallback.
 
 Fallback accepts any `value_expr` — not just literals:
 
-```polyglot
+```aljam3
 (-) >profile >> $profile
    (>) !> $defaultProfile
    (>) !> -LoadCached"{$userId}"
@@ -341,7 +341,7 @@ flowchart TD
    - No fallback exists → existing behavior (pipeline terminates or variable is Failed)
 5. When any fallback activates: `$var%sourceError` is set to the error that occurred
 
-```polyglot
+```aljam3
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
@@ -362,7 +362,7 @@ Here `!File.NotFound` is fully handled by `[!]` (it pushes a replacement). `!Fil
 
 When a fallback activates, the error that triggered it is accessible via `$var%sourceError` (`#live.error`). If no error occurred, `%sourceError` is `!NoError`. See [[metadata#Variable (`$`)]].
 
-```polyglot
+```aljam3
 [?] $content%sourceError =!? !NoError
    [-] -LogWarning
       (-) <msg << "Used fallback for {$file}: {$content%sourceError}"
@@ -384,7 +384,7 @@ Both forms are valid and semantically equivalent. The compiler unions all mechan
 
 **Scattered** — fallbacks under each output line:
 
-```polyglot
+```aljam3
 [-] -SomePipeline
    (-) <input << $in
    (-) >out1 >> $out1
@@ -397,7 +397,7 @@ Both forms are valid and semantically equivalent. The compiler unions all mechan
 
 **Grouped** — fallbacks under `(-) $label`:
 
-```polyglot
+```aljam3
 [-] -SomePipeline
    (-) <input << $in
    (-) >out1 >> $out1
@@ -411,7 +411,7 @@ Both forms are valid and semantically equivalent. The compiler unions all mechan
 
 ### Grouped with Error-Specific Fallbacks
 
-```polyglot
+```aljam3
 [-] -SomePipeline
    (-) <input << $in
    (-) >out1 >> $out1
@@ -426,7 +426,7 @@ Both forms are valid and semantically equivalent. The compiler unions all mechan
 
 `[!]` handler blocks can appear under `(-) $label`, scoped to the pipeline call:
 
-```polyglot
+```aljam3
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
@@ -441,20 +441,20 @@ Both forms are valid and semantically equivalent. The compiler unions all mechan
 
 For non-critical calls where errors should be silently discarded (logging, metrics, cleanup writes), `[!] !*-` is a one-line shorthand for the common pattern:
 
-```polyglot
+```aljam3
 [ ] full form:
 [!] !*
    [-] -DoNothing
 ```
 
-```polyglot
+```aljam3
 [ ] sugar form (equivalent):
 [!] !*-
 ```
 
 The `-` signals "dismiss" — the call's outputs stay Failed with no replacement value. This is only valid with the `!*` wildcard; suppressing a specific error silently would hide the intent.
 
-```polyglot
+```aljam3
 [-] -File.Text.Write
    (-) <path << -Path"/var/logs/health/latest.txt"
    (-) <content << $winner

@@ -19,7 +19,7 @@ severity: error
 **See also:** PGE06004 (overlapping ranges), PGE06001 (general exhaustiveness)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ ranges cover -∞ to +∞ — no *? needed
 [?] $val
    [?] $val <? 0
@@ -30,7 +30,7 @@ severity: error
       [-] -High
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ partial ranges + *? fills the gap
 [?] $val ?[0,100]
    [?] #Boolean.True
@@ -40,7 +40,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE06003 — gap in coverage at [0, 100]
 [?] $val
    [?] $val <? 0
@@ -50,7 +50,7 @@ severity: error
    [ ] ✗ PGE06003 — [0, 100] not covered, no *?
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE06003 — only one range, rest uncovered
 [?] $score >=? 90
    [?] #Boolean.True

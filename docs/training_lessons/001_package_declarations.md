@@ -1,7 +1,7 @@
 # Lesson 001: Package Declarations
 
 **Date**: 2026-04-27
-**Context**: Defining the package scope and importing dependencies in a Polyglot file.
+**Context**: Defining the package scope and importing dependencies in a Aljam3 file.
 
 ## Lesson Summary
 

@@ -19,7 +19,7 @@ severity: error
 **See also:** PGW04001 (single-platform path warning), PGE04007 (invalid path string), PGE04001 (type mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
@@ -27,20 +27,20 @@ severity: error
 [ ] ✓ both OS subfields assigned — works everywhere
 ```
 
-```polyglot
+```aljam3
 [-] $LogDir#path << -Path"{.}/logs"
 
 [ ] ✓ -Path"..." resolves separators per OS — no explicit subfields needed
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] compiling on Unix:
 [-] $AppDir#path
    [.] .Windows << "C:\MyApp"            [ ] ✗ PGE04008 — .Unix missing, current OS is Unix
 ```
 
-```polyglot
+```aljam3
 [ ] compiling on Windows:
 [-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"             [ ] ✗ PGE04008 — .Windows missing, current OS is Windows

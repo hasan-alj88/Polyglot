@@ -11,7 +11,7 @@ Gathers outputs from mini-pipelines back into a single array, accessible one lev
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Into.Array
    (*) <item << $doubled
    (*) >Array >> $results

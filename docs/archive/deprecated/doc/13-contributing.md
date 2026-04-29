@@ -23,7 +23,7 @@ replaced_by: none
 
 ## Overview
 
-Polyglot pipelines execute through a well-defined sequence of phases, from trigger activation to final output. Understanding this execution model is crucial for writing efficient and correct pipelines.
+Aljam3 pipelines execute through a well-defined sequence of phases, from trigger activation to final output. Understanding this execution model is crucial for writing efficient and correct pipelines.
 
 **Key Principles:**
 <!-- @c:reference/glossary#pipeline -->
@@ -133,7 +133,7 @@ Polyglot pipelines execute through a well-defined sequence of phases, from trigg
 
 All triggers are monitored in parallel. The pipeline activates only when **ALL** triggers are satisfied.
 
-```polyglot
+```aljam3
 [|] MultiTrigger
 [i] data: py\dict          \\ Implicit trigger: data provided
 [t] |T.FileCreated << "*.csv"  \\ Explicit: file created
@@ -149,7 +149,7 @@ All three conditions must be true:
 
 Queue conditions are checked in parallel:
 
-```polyglot
+```aljam3
 [Q] |Q.Priority << 2
 [Q] |Q.CpuAvailable << 75.0
 [Q] |Q.MemoryAvailable << 8192
@@ -161,7 +161,7 @@ If all pass, execution begins immediately. Otherwise, pipeline enters queue.
 
 Setup runs **sequentially** - each operation waits for the previous one:
 
-```polyglot
+```aljam3
 [\] |ConnectDatabase >> db_conn
 [\] |LoadConfiguration >> config
 [\] |InitializeResources << config >> resources
@@ -174,14 +174,14 @@ Execution order: ConnectDatabase → LoadConfiguration → InitializeResources
 The main execution phase supports both sequential and parallel operations.
 
 **Sequential:**
-```polyglot
+```aljam3
 [r] |Step1 >> result1
 [r] |Step2 << result1 >> result2
 [r] |Step3 << result2 >> result3
 ```
 
 **Parallel (Forks):**
-```polyglot
+```aljam3
 [f] |ProcessA >> resultA
 [f] |ProcessB >> resultB
 [f] |ProcessC >> resultC
@@ -189,7 +189,7 @@ The main execution phase supports both sequential and parallel operations.
 ```
 
 **Background:**
-```polyglot
+```aljam3
 [b] |LogMetrics  \\ Fire-and-forget, doesn't join
 ```
 
@@ -197,7 +197,7 @@ The main execution phase supports both sequential and parallel operations.
 
 All forked branches must complete before continuing:
 
-```polyglot
+```aljam3
 [j] |JoinAll     \\ Wait for all [f] branches
 [j] |JoinFirst   \\ Continue when first completes
 [j] |JoinLast    \\ Continue when last completes
@@ -210,7 +210,7 @@ Background branches (`[b]`) never join - they run independently.
 
 Cleanup runs **sequentially**, even if errors occurred:
 
-```polyglot
+```aljam3
 [/] |DisconnectDatabase << db_conn
 [/] |FreeResources << resources
 [/] |LogCompletion
@@ -220,7 +220,7 @@ Cleanup runs **sequentially**, even if errors occurred:
 
 Outputs are collected **sequentially**:
 
-```polyglot
+```aljam3
 [o] >> result
 [o] >> metadata
 [o] >> timestamp
@@ -232,7 +232,7 @@ Outputs are collected **sequentially**:
 
 Forked branches execute in parallel, each with isolated state:
 
-```polyglot
+```aljam3
 [r] shared_data: py\dict >> data
 
 [f] |Branch1
@@ -257,7 +257,7 @@ Forked branches execute in parallel, each with isolated state:
 
 Forks can be nested:
 
-```polyglot
+```aljam3
 [f] |Branch1
 [~][r] |Operation1
 [~][f] |NestedBranch1A
@@ -277,7 +277,7 @@ Forks can be nested:
 
 The `<|<` operator creates explicit dependencies between parallel branches:
 
-```polyglot
+```aljam3
 [r] |DataValidation >> validated_data
 
 [f] |ProcessA <|< DataValidation
@@ -298,7 +298,7 @@ Both `ProcessA` and `ProcessB` wait for `DataValidation` to complete before star
 <!-- @c:reference/glossary#Queue Manager -->
 During execution, the Kill Condition Manager continuously monitors:
 
-```polyglot
+```aljam3
 [Q] |Q.Kill.CPULimit << 90.0
 [Q] |Q.Kill.MemoryLimit << 95.0
 [Q] |Q.Kill.ExecTimeout << T"30:"
@@ -349,7 +349,7 @@ Cleanup Phase (even on error):
 
 Variables defined in `[i]` are available throughout the pipeline:
 
-```polyglot
+```aljam3
 [|] Example
 [i] config: py\dict  \\ Available everywhere
 
@@ -362,7 +362,7 @@ Variables defined in `[i]` are available throughout the pipeline:
 
 Variables flow sequentially:
 
-```polyglot
+```aljam3
 [r] |Step1 >> result1       \\ result1 created
 [r] |Step2 << result1 >> result2  \\ result1 available
 [r] |Step3 << result2 >> result3  \\ result2 available, result1 still in scope
@@ -372,7 +372,7 @@ Variables flow sequentially:
 
 Forked branches receive copies of variables:
 
-```polyglot
+```aljam3
 [r] data: py\dict << original_data
 
 [f] |Branch1
@@ -391,7 +391,7 @@ Forked branches receive copies of variables:
 
 After join, variables from all branches are available:
 
-```polyglot
+```aljam3
 [f] |Branch1
 [~][o] >> result1
 
@@ -420,7 +420,7 @@ After join, variables from all branches are available:
 ### Optimization Strategies
 
 **1. Minimize Forks:**
-```polyglot
+```aljam3
 \\ ❌ Excessive forking
 [f] |Task1
 [f] |Task2
@@ -436,7 +436,7 @@ After join, variables from all branches are available:
 ```
 
 **2. Use Background Branches for Non-Critical Work:**
-```polyglot
+```aljam3
 [r] |CriticalOperation >> result
 
 [b] |LogMetrics  \\ Don't wait for this
@@ -446,14 +446,14 @@ After join, variables from all branches are available:
 ```
 
 **3. Cache Type Conversions:**
-```polyglot
+```aljam3
 \\ Conversion cached automatically
 [r] py_data: py\dict >> |RustOperation >> rust_result
 [r] rust_result >> |AnotherRustOp  \\ No reconversion
 ```
 
 **4. Reuse Runtime Processes:**
-Polyglot keeps language runtimes warm in process pools to avoid cold start overhead.
+Aljam3 keeps language runtimes warm in process pools to avoid cold start overhead.
 
 ### Execution Metrics
 

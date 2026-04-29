@@ -10,7 +10,7 @@ metadata_definition: "%!.Math"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !Math
    [.] .DivideByZero#Error
       (-) .MessageTemplate << "Division by zero: {expression}"

@@ -17,7 +17,7 @@ Ordered, range-indexed collection with typed elements and N-dimensional support.
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Array
    (#) <#ValueType
    (#) <Dim##Dimension <~ "1D"
@@ -52,7 +52,7 @@ The `<#ValueType` parameter sets the element type. The `<Dim` parameter sets the
 
 The `:` separator binds positionally to `(#) <param` declarations:
 
-```polyglot
+```aljam3
 [ ] #array:int -- ValueType=Int, Dim=1D (default)
 [-] $scores#array:int <~ {}
 
@@ -64,7 +64,7 @@ The `:` separator binds positionally to `(#) <param` declarations:
 
 ## Access
 
-```polyglot
+```aljam3
 [ ] 1D array access
 [-] $first << $myArray<0
 

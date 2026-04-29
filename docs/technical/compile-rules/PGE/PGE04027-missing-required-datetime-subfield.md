@@ -13,13 +13,13 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** When constructing a `#DateTime` via direct field assignment (not via `-DT.From.*` pipelines), the `.Instant.epoch` subfield is mandatory. A `#DateTime` without `.Instant.epoch` is incomplete and triggers PGE04027. Other subfields (`.Civil`, `.Calendar`, etc.) are optional — the runtime derives them from epoch when accessed.
-**Rationale:** `.Instant.epoch` is the single source of truth in `#DateTime`. All calendar projections, civil representations, and time unit conversions are computed from the epoch value. Without it, no conversions are possible. Polyglot's exhaustive coverage extends to data construction — the compiler ensures every type is fully initialized before use, catching incomplete data at compile time rather than producing silent failures when a downstream pipeline tries to access a missing field.
+**Rationale:** `.Instant.epoch` is the single source of truth in `#DateTime`. All calendar projections, civil representations, and time unit conversions are computed from the epoch value. Without it, no conversions are possible. Aljam3's exhaustive coverage extends to data construction — the compiler ensures every type is fully initialized before use, catching incomplete data at compile time rather than producing silent failures when a downstream pipeline tries to access a missing field.
 **Detection:** When the compiler encounters a `#dt` variable being constructed via direct field assignment, it checks that `.Instant.epoch` is assigned before the variable reaches Final state. Missing `.Instant.epoch` at the point of finalization triggers PGE04027.
 
 **See also:** PGE04002 (schema mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [-] $event#dt
    [.] .Instant
       [.] .epoch << 1711929600
@@ -30,7 +30,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [-] $event#dt
    [.] .Civil
       [.] .date

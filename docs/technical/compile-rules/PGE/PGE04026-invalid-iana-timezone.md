@@ -20,14 +20,14 @@ severity: error
 **See also:** PGE04001 (type mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [-] $zone#Zone
    [.] .iana << "America/New_York"
 
 [ ] ✓ valid IANA timezone identifier
 ```
 
-```polyglot
+```aljam3
 [-] $event#dt
    [-] -DT.Zone.Set
       (-) <source << $event
@@ -38,12 +38,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [-] $zone#Zone
    [.] .iana << "EST"              [ ] ✗ PGE04026 — not a valid IANA identifier (use America/New_York)
 ```
 
-```polyglot
+```aljam3
 [-] $zone#Zone
    [.] .iana << "NewYork"          [ ] ✗ PGE04026 — missing Area/ prefix
 ```

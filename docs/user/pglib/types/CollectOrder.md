@@ -11,13 +11,13 @@ metadata_instance: "%#:CollectOrder:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.pg` file. Controls the ordering of collected fragments in append-style collectors (`*Into.Text.Append`, `*Into.CSV.Rows`).
+Runtime `##Enum` type available in every `.aj3` file. Controls the ordering of collected fragments in append-style collectors (`*Into.Text.Append`, `*Into.CSV.Rows`).
 
 ---
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #CollectOrder
    [%] .description << "Ordering strategy for collected fragments"
    [#] ##Enum

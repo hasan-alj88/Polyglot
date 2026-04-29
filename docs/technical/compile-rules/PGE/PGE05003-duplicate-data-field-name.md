@@ -20,7 +20,7 @@ severity: error
 **See also:** PGE05001 (sibling separator homogeneity — same-level separator check), PGE05002 (sibling kind homogeneity — same-level kind check), PGE01011 (duplicate IO parameter name — analogous rule for pipeline IO)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ unique field names at each level
 {#} #UserRecord
    [.] .name#string
@@ -28,7 +28,7 @@ severity: error
    [.] .email#string
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ same name at different levels is fine
 {#} #Config
    [.] .db
@@ -37,7 +37,7 @@ severity: error
       [.] .name#string           [ ] ✓ .db.name and .cache.name are distinct paths
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ unique field pushes on a struct variable
 [-] $user#UserRecord
    [-] $user.name << "Alice"
@@ -46,7 +46,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE05003 — duplicate field name in {#} definition
 {#} #Broken
    [.] .name#string
@@ -54,7 +54,7 @@ severity: error
    [.] .age#int
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE05003 — duplicate field push on struct variable
 [-] $user#UserRecord
    [-] $user.name << "Alice"
@@ -62,7 +62,7 @@ severity: error
    [-] $user.age << 30
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE05003 — duplicate flexible field name
 {#} #Registry
    [:] :http#Handler

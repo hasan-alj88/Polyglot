@@ -13,7 +13,7 @@ Converts a `#dt` to French Republican decimal time. These pipelines convert a `#
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.DecimalTime
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToDecimalTime"

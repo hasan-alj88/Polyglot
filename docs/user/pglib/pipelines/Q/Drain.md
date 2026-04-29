@@ -20,7 +20,7 @@ Stop accepting new jobs, finish existing.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Drain
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QDrain"

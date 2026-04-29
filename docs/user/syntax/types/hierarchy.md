@@ -10,7 +10,7 @@ updated: 2026-04-09
 
 ## Live Type Modifier
 
-`live` is a type modifier reserved for `[%]` metadata fields managed by the Polyglot runtime. Users can read `live` fields via the `%` accessor but never assign to them. The type uses dot notation: `#live.#PipelineStatus`, `#live.int`, `#live.array:error`.
+`live` is a type modifier reserved for `[%]` metadata fields managed by the Aljam3 runtime. Users can read `live` fields via the `%` accessor but never assign to them. The type uses dot notation: `#live.#PipelineStatus`, `#live.int`, `#live.array:error`.
 
 `live` fields are **implicit** on every `{-}` pipeline, `$` variable, and `{#}` struct. They do not need to be declared -- the runtime populates them automatically and updates them in real-time.
 
@@ -20,7 +20,7 @@ See [[metadata]] for the full metadata tree, all `live` field listings, and acce
 
 Types use dot notation for namespaces -- these are fixed schema fields. Namespacing is optional for basic types but available when needed (e.g., referencing enumeration fields from `{#}` definitions).
 
-```polyglot
+```aljam3
 [ ] Direct type annotation -- most common
 [-] $score#int <~ 0
 
@@ -38,7 +38,7 @@ In type annotations (after `#`), nested type refs drop the `#` prefix -- the com
 
 ## Type Hierarchy Summary
 
-```polyglot
+```aljam3
 RawString (compiler intrinsic) [##Leaf]
 +-- #String (foundation -- .string + .regex) [##Scalar, ###ScalarValue]
 |   +-- #Int (.regex = signed integers) -- composes ##String

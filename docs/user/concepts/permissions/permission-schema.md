@@ -9,7 +9,7 @@ status: complete
 
 The `__Permission` descriptor defines the full structure of a permission object:
 
-```polyglot
+```aljam3
 __Permission
 +-- .target                    __PermissionTarget
 |   +-- .category              #PermissionCategory     <- enum: File, Web, Database, System, Crypto, IPC, Device, Memory
@@ -46,7 +46,7 @@ __Permission
     +-- .alert                 #AlertLevel             <- enum: None, OnDeny, OnEscalation
 ```
 
-All fields use `.` fixed-field navigation — permission schemas are Polyglot-defined, not user-extensible.
+All fields use `.` fixed-field navigation — permission schemas are Aljam3-defined, not user-extensible.
 
 ## Resource Locator Fields
 
@@ -83,7 +83,7 @@ All resource locator fields are resolved at compile time:
 
 In `{_}` blocks, users write decomposed fields directly:
 
-```polyglot
+```aljam3
 {_} _LogReader
    [.] .intent << #Grant
    [.] .category #File

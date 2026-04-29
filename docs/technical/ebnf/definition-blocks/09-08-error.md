@@ -28,7 +28,7 @@ error_body_line     ::= "[.]" fixed_field "#Error"       (* terminal leaf *)
 User-defined `{!} !Name` implicitly nests under `!Error` in the metadata tree, creating `!Error:Name.*`. Only `{!} !Error` allows `[:]` flexible children for user-extensible branches. All other `{!}` namespaces use `[.]` fixed leaves only.
 
 **pglib example** (runtime-defined, fixed leaves):
-```polyglot
+```aljam3
 {!} !Validation
    [.] .Schema#Error
    [.] .Type#Error
@@ -36,7 +36,7 @@ User-defined `{!} !Name` implicitly nests under `!Error` in the metadata tree, c
 ```
 
 **User example** (extensible branches under `!Error`):
-```polyglot
+```aljam3
 {!} !Error
    [:] :MyApp
       [:] :Auth

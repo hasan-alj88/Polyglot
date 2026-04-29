@@ -13,7 +13,7 @@ Standard FIFO queue, no constraints. The only queue that does not require a `{Q}
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Default
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QDefault"

@@ -11,7 +11,7 @@ metadata_instance: "%#:RotationKind:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.pg` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
+Runtime `##Enum` type available in every `.aj3` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
 
 Specifies how `-T.File.Rolled` detects that a file has been rotated.
 
@@ -19,7 +19,7 @@ Specifies how `-T.File.Rolled` detects that a file has been rotated.
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #RotationKind
    [%] .description << "Rotation detection strategy"
    [%] .version << "1.0.0"

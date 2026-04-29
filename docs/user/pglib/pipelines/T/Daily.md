@@ -13,7 +13,7 @@ Fires once per day at the specified time. Time string provided via inline call: 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -T.Daily
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TDaily"

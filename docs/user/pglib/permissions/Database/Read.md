@@ -13,7 +13,7 @@ Capability-level generic permission for reading from databases. Sugar over [[IND
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Database.Read
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for reading from databases. Sugar over [[IND
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Database.Read
    (_) <scope << "postgres://db.internal/analytics"
 ```

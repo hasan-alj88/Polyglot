@@ -14,7 +14,7 @@ status: complete
 
 Permissions are declared as named `{_}` blocks — first-class, reusable permission objects. Each `{_}` block defines a permission policy with a name, intent, and one or more capability grants. The permission object carries both the **grant** (what you're allowed to do) and the **resource locator** (where — file path, DB connection, etc.).
 
-```polyglot
+```aljam3
 {_} _DataCeiling
    [.] .intent << #Ceiling
    [.] .category #File
@@ -56,7 +56,7 @@ Permission objects come in two forms:
 
 A `{_}` instance has all fields resolved to concrete values. It points to one specific resource:
 
-```polyglot
+```aljam3
 {_} _Secrets
    [.] .intent << #Grant
    [.] .category #File
@@ -70,7 +70,7 @@ A `{_}` instance has all fields resolved to concrete values. It points to one sp
 
 A `{_}` template has `(_)` input lines. The caller provides the missing values, and the compiler resolves the template into a concrete instance at compile time:
 
-```polyglot
+```aljam3
 {_} _YAMLFile
    (_) <file#path
    [.] .intent << #Grant
@@ -95,7 +95,7 @@ Permission objects are referenced through the **IO markers** of the block that u
 
 A `{#}` data definition declares its file dependencies via `(#)`:
 
-```polyglot
+```aljam3
 [ ] Instance — no inputs needed
 {#} #Config
    (#) _Secrets
@@ -116,7 +116,7 @@ A `{#}` data definition declares its file dependencies via `(#)`:
 
 A `{-}` pipeline declares its resource dependencies via `(-)`:
 
-```polyglot
+```aljam3
 {_} _ProductionDB
    [.] .intent << #Grant
    [.] .category #Database
@@ -130,7 +130,7 @@ A `{-}` pipeline declares its resource dependencies via `(-)`:
    (-) _ProductionDB
    [T] -T.Schedule.Cron "0 * * * *"
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DB.Query
       (-) <connection << _ProductionDB

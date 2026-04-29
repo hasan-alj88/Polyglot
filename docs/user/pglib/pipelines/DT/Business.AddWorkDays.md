@@ -13,7 +13,7 @@ Adds `N` work days to a `#dt`, skipping non-work days. Requires an explicit `#Bu
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Business.AddWorkDays
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtBusinessAddWorkDays"

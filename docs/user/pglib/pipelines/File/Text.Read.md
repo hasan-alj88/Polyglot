@@ -13,7 +13,7 @@ Read the full text content of a file at the given path.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Text.Read
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextRead"

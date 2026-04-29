@@ -8,7 +8,7 @@
 String interpolation is performed by enclosing the variable access with `{}` inside the string literal. The variable access includes the standard `<` tree child accessor or identifier syntax.
 
 ### Syntax Example
-```polyglot
+```aljam3
    [-] $file <~ "~/Data/{<today}/worldTemp.csv"
 ```
 In this example, the value of `$today` (or `<today` depending on scope access) is injected into the string path.

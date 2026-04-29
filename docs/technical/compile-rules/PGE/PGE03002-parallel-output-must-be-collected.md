@@ -18,7 +18,7 @@ severity: error
 **Detection:** After parsing the full pipeline body, the compiler checks that every `[=]` output variable appears as a `(*) <<` input in a `(*)` collector block.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ parallel output collected via *All
 [=] -Fetch.Data
    (-) <id << $userId
@@ -31,7 +31,7 @@ severity: error
    (-) <input << $data
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ multiple parallels, all collected
 [=] -Fetch.A
    (-) >result >> $a
@@ -44,7 +44,7 @@ severity: error
    (*) << $b
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ race collector — all candidates listed
 [=] -Search.Fast
    (-) >result >> $fast
@@ -58,14 +58,14 @@ severity: error
    (*) >> $winner
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ $* inline discard — no variable created
 [=] -Audit.Log
    (-) <event << $event
    (-) >auditId >> $*              [ ] ✓ discarded at declaration site
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ *Ignore explicitly discards named variable
 [=] -Audit.Log
    (-) <event << $event
@@ -76,7 +76,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03002 — parallel output with no collector
 [=] -Fetch.Data
    (-) <id << $userId
@@ -86,7 +86,7 @@ severity: error
    (-) <input << $data             [ ] also PGE03003 — use before collection
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03002 — one of two parallel outputs not collected
 [=] -Fetch.A
    (-) >result >> $a

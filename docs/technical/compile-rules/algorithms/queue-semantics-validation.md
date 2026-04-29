@@ -65,6 +65,6 @@ If a pipeline attempts to override a defined queue limit, the algorithm throws t
 ## Code Implementation Reference
 
 The algorithm is fully implemented in the Rust compiler core:
-- **File**: `lib/polyglot/src/compiler/rules/queue_semantics.rs`
+- **File**: `lib/aljam3/src/compiler/rules/queue_semantics.rs`
 - **Struct**: `QueueSemanticsAlgorithm`
 - **Pass Structure**: Executed sequentially as "Algorithm 3.5" in the validation pipeline, ensuring it runs after baseline file and syntax validation, but before variable state validation.

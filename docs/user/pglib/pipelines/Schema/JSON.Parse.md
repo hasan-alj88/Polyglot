@@ -13,7 +13,7 @@ Parses a JSON string into a `#serial` data tree. Compiler intrinsic -- not user-
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -#.JSON.Parse
    [%] .Kind << #NativeKind.Compiler
    [%] .Rust << "SchemaJsonParse"

@@ -20,7 +20,7 @@ The `%` root has fixed branches for each object type prefix:
 | `%$` | Variables | Flexible (`:name`) | All `$`-prefixed variables |
 | `%W` | Wrappers | Flexible (`:name`) | All `{W}` wrapper definitions |
 | `%Q` | Queues | Flexible (`:name`) | All `{Q}` queue definitions |
-| `%!` | Errors | Fixed (`.namespace`) | Polyglot-defined namespaces; `.Error` has flexible `:` children (uses `error_path`) |
+| `%!` | Errors | Fixed (`.namespace`) | Aljam3-defined namespaces; `.Error` has flexible `:` children (uses `error_path`) |
 | `%@` | Packages | Flexible (`:<registry>:<id>::<name>`) | All `@`-prefixed package addresses; `::` separates registry from name (uses `package_path`) |
 | `%_` | Permissions | Flexible (`:name`), then fixed (`.`) | Named `{_}` permission objects (`_`/`__`/`___` tiers); no instances, object names via `:`, subfields via `.` (uses `permission_path`) |
 

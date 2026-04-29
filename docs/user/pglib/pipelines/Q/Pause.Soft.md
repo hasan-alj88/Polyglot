@@ -20,7 +20,7 @@ Direct command: finish current work, then suspend. Frees CPU. Signal: `command.p
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Pause.Soft
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QPauseSoft"

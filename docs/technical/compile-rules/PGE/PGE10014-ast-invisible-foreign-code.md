@@ -22,7 +22,7 @@ severity: error
 **See also:** PGE10013 (foreign resource outside scope — for analyzable code), PGW10003 (Bind mode opacity — a different kind of unanalyzable code), [[permissions/foreign-code#No AST-Invisible Code]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ standard library calls — fully visible to AST analysis
 {_} _DataRead
    [.] .intent << #Grant
@@ -50,7 +50,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10014 — eval() generates code at runtime
 {_} _DataRead
    [.] .intent << #Grant
@@ -74,7 +74,7 @@ severity: error
          [.] .result#string >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10014 — exec() executes arbitrary statements
 {-} -ExecScript
    (-) _DataRead
@@ -92,7 +92,7 @@ severity: error
          [.] .result#string >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10014 — __import__() bypasses import analysis
 {-} -DynamicImport
    (-) _DataRead

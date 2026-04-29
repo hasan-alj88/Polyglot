@@ -11,7 +11,7 @@ Reduces mini-pipeline numeric outputs to their arithmetic mean.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Agg.Average
    (*) <number << $value
    (*) >average >> $mean

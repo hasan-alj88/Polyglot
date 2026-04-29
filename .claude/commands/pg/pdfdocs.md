@@ -5,7 +5,7 @@ allowed-tools: [Bash, Read]
 ---
 
 <objective>
-Generate all Polyglot documentation PDFs: the monolithic book and all per-audience editions.
+Generate all Aljam3 documentation PDFs: the monolithic book and all per-audience editions.
 
 **When to use:** After editing docs, to regenerate everything in one go.
 </objective>
@@ -24,7 +24,7 @@ Script: scripts/generate-docs-pdf.sh
 Template: scripts/doc-template.typ
 
 Outputs:
-- Monolithic: Polyglot-Documentation.pdf (repo root)
+- Monolithic: Aljam3-Documentation.pdf (repo root)
 - Per-audience: docs/pdf/{audience}.pdf (pg-coder, developer, designer, architect, integrator)
 
 Audiences excluded: ai (machine-facing)

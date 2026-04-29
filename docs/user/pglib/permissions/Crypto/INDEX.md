@@ -13,7 +13,7 @@ Category-level generic permission for cryptographic operations. Takes a capabili
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Crypto
    [#] <capability;CryptoCapability
    [#] <scope;string
@@ -24,7 +24,7 @@ Category-level generic permission for cryptographic operations. Takes a capabili
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Crypto
    (_) <capability << .Key
    (_) <scope << "aes-256-gcm"

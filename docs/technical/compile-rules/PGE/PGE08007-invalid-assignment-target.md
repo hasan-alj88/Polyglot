@@ -27,30 +27,30 @@ severity: error
 - PGE08006 (non-pipeline step in chain — same principle, different context)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ variable on LHS — valid assignment target
 {-} -Store
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
    [-] >out << $input
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ field path on LHS — valid assignment target
 [-] $user.name << "Alice"
 [-] $user.age << 30
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ inline call on RHS — value expressions are valid as sources
 {-} -MakePath
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#path
    [ ]
    [-] $p <~ -Path"/tmp/data"
@@ -58,34 +58,34 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE08007 — inline pipeline call as assignment target
 {-} -BadInline
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <value#string
    [ ]
    [-] -Path"/tmp" << $value            [ ] ✗ PGE08007 — value expr, not a variable
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08007 — inline call as default assignment target
 {-} -BadDefault
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <value#string
    [ ]
    [-] -Path"/tmp" <~ $value            [ ] ✗ PGE08007 — value expr, not a variable
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08007 — literal as assignment target
 {-} -BadLiteral
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <value#string
    [ ]
    [-] "hello" << $value                [ ] ✗ PGE08007 — literal is not a variable

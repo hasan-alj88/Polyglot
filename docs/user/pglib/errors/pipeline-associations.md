@@ -11,7 +11,7 @@ status: complete
 
 Each pglib pipeline declares the errors it can raise via `[=] !ErrorName` (see [[concepts/pipelines/metadata#Error Trees]]):
 
-```polyglot
+```aljam3
 =File.Text.Read
    [=] !File.NotFound
    [=] !File.ReadError

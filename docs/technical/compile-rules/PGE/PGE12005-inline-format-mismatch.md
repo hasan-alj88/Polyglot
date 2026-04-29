@@ -22,7 +22,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 {-} -DB.Connect
    (-) %InlineString << "{host}:{port}/{db}"
    (-) <host#string
@@ -31,7 +31,7 @@ severity: error
    (-) >connection#serial
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 
 [ ] ✓ matches template pattern: host=localhost, port=3306, db=mydb
@@ -40,7 +40,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12005 — no ":" or "/" found; cannot match "{host}:{port}/{db}"
 [-] $conn << -DB.Connect"just-a-hostname"
 

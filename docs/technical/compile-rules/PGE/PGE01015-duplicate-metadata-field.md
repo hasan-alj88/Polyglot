@@ -21,7 +21,7 @@ severity: error
 **See also:** PGE05003 (duplicate data field name — analogous rule for `{#}` fields), PGE01011 (duplicate IO parameter name — analogous rule for pipeline IO), PGE12001 (undefined metadata field access), PGE12002 (duplicate alias)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ each fixed field appears once
 {-} -Payments
    [%] .description << "Processes payments"
@@ -30,13 +30,13 @@ severity: error
    [%] .license << "MIT"
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] >out << "done"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ flexible :info fields can have multiple distinct keys
 {-} -Tagged
    [%] .description << "Tagged pipeline"
@@ -45,13 +45,13 @@ severity: error
       :priority << "high"              [ ] ✓ different keys under :info
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] >out << "done"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ same field name in different definitions is fine
 {#} #Invoice
    [%] .description << "Invoice record"
@@ -63,33 +63,33 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01015 — duplicate .description
 {-} -BadMeta
    [%] .description << "First description"
    [%] .description << "Second description"  [ ] ✗ PGE01015 — .description appears twice
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] >out << "done"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01015 — duplicate .version
 {-} -AlsoBad
    [%] .version << "1.0.0"
    [%] .version << "2.0.0"              [ ] ✗ PGE01015 — .version appears twice
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] >out << "done"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01015 — duplicate .deprecated
 {#} #OldRecord
    [%] .deprecated << .True

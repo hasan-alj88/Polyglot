@@ -18,7 +18,7 @@ See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$URL` c
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #URL
    [%] .description << "Uniform Resource Locator (RFC 3986)"
    [#] ##Scalar

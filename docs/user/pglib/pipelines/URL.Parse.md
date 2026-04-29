@@ -15,7 +15,7 @@ For known literals in execution body, use the `$URL` constructor instead — it 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -URL.Parse
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "UrlParse"
@@ -49,7 +49,7 @@ None required. Pure computation pipeline.
 
 ## Usage
 
-```polyglot
+```aljam3
 [-] $endpoint#url << -URL.Parse
    (<) <raw#string << $userInput
    [!] !Parse.URL.InvalidFormat

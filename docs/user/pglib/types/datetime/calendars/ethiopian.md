@@ -10,7 +10,7 @@ metadata_instance: "%#:EthiopianDate:N"
 
 ## #EthiopianDate
 
-```polyglot
+```aljam3
 {#} #EthiopianDate
    [%] .description << "Ethiopian calendar date"
    [%] .version << "1.0.0"
@@ -24,7 +24,7 @@ metadata_instance: "%#:EthiopianDate:N"
 
 ## #EthiopianMonth
 
-```polyglot
+```aljam3
 {#} #EthiopianMonth
    [%] .description << "Ethiopian calendar month"
    [%] .version << "1.0.0"

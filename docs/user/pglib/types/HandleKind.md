@@ -15,7 +15,7 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #HandleKind
    [%] .description << "Resource handle type for permission descriptors"
    [%] .version << "1.0.0"

@@ -5,10 +5,10 @@
 
 ## Lesson Summary
 
-In Polyglot, error execution blocks are opened using the `[!]` ActionError marker followed by the specific pipeline or action to execute on failure. Using standalone generic identifiers like `*!` is invalid and will fail validation (PGE01047).
+In Aljam3, error execution blocks are opened using the `[!]` ActionError marker followed by the specific pipeline or action to execute on failure. Using standalone generic identifiers like `*!` is invalid and will fail validation (PGE01047).
 
 ### Correct Usage
-```polyglot
+```aljam3
    [-] -File.CSV.Log
       (<) <file.Path << "data.csv"
       [!] -Do.Nothing

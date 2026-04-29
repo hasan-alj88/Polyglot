@@ -21,24 +21,24 @@ severity: error
 **See also:** PGE01001 (pipeline section misordering), PGE01005 (missing trigger), PGE01006 (missing queue)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ assignment under [-] marker
 {-} -Example
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
    [-] >out << $input
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ data load under [#] marker
 {-} -LoadConfig
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#Config
    [#] $cfg#Config << "config.json"
    [ ]
@@ -46,33 +46,33 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01016 — bare assignment without marker
 {-} -Bad
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    $out <~ $input                       [ ] ✗ PGE01016 — missing block element marker
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01016 — bare inline pipeline call without marker
 {-} -AlsoBad
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#path
    -Path"/tmp/data"                     [ ] ✗ PGE01016 — missing [-] marker
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01016 — bare pipeline call without marker
 {-} -NoPrefixCall
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >out#string
    -Transform                           [ ] ✗ PGE01016 — missing [-], [=], or [b] marker

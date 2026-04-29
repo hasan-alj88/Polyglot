@@ -60,7 +60,7 @@ constructor_native_call ::= "[-]" "-" pipeline_ref NEWLINE
 
 String-parsing overload:
 
-```polyglot
+```aljam3
 {$} $DT"{hours}:{min}:{seconds}"
    ($) <hours.re << "[0-9][0-9]"
    ($) <min.re << "[0-9][0-9]"
@@ -73,7 +73,7 @@ String-parsing overload:
 
 Keyword overload:
 
-```polyglot
+```aljam3
 {$} $DT"Today"
    [$] #DT.Date
    [.] .year << %Runtime.Date.Year
@@ -83,7 +83,7 @@ Keyword overload:
 
 Native pipeline overload (pglib only):
 
-```polyglot
+```aljam3
 {$} $DT"Now"
    [-] -DT.Current
       (-) >hours >> $hrs

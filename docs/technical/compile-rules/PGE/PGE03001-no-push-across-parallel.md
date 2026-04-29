@@ -18,7 +18,7 @@ severity: error
 **Detection:** At any push statement in the prime pipeline (or a sibling parallel) that targets a variable declared inside a `[=]` parallel scope.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ parallel produces output, prime collects via (*)
 [=] -Fetch.Profile
    (-) <id << $userId
@@ -38,7 +38,7 @@ severity: error
    (-) <history << $history
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ prime pushes into parallel's INPUT (not its internal vars)
 [=] -Compute
    (-) <input << $data            [ ] ✓ pushing into <input from prime is valid
@@ -46,7 +46,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03001 — prime pushes into a parallel's output variable
 [=] -Fetch.Data
    (-) >result >> $fetchResult
@@ -54,7 +54,7 @@ severity: error
 [-] $fetchResult << "override"    [ ] ✗ PGE03001 — $fetchResult belongs to the parallel
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03001 — sibling parallel pushes into another parallel's variable
 [=] -TaskA
    (-) >output >> $resultA

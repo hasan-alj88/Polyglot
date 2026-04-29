@@ -24,7 +24,7 @@ severity: warning
 **See also:** PGE10011 (shell without capability — must have `{_}` first), PGW10002 (unverifiable foreign IO — equivalent for non-shell languages), [[permissions/foreign-code#Shell Analysis]]
 
 **VALID (no warning):**
-```polyglot
+```aljam3
 [ ] ✓ no variable expansion in IO context
 {_} _ShellGrant
    [.] .intent << #Grant
@@ -47,7 +47,7 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW10006 — variable expansion in file IO context
 {_} _ShellGrant
    [.] .intent << #Grant
@@ -69,7 +69,7 @@ severity: warning
       (-) >Bind#Code:Shell.Output >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW10006 — variable expansion in network context
 {_} _ShellGrant
    [.] .intent << #Grant

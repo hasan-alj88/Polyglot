@@ -18,7 +18,7 @@ severity: error
 **Detection:** The compiler resolves the target variable's schema, then compares each `(*) <<` input's schema against it per PGE04001. If any input's schema differs from the target, PGE03006 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all candidates are #string
 [=] -Search.EngineA
    (-) >result#string >> $resultA
@@ -32,7 +32,7 @@ severity: error
    (*) >> $fastest                   [ ] ✓ type is #string
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ *All has no type constraint — mixed types allowed
 [=] -Fetch.Profile
    (-) >profile#UserProfile >> $profile
@@ -46,7 +46,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03006 — mixed types in *First
 [=] -Search.Fast
    (-) >result#string >> $fast
@@ -60,7 +60,7 @@ severity: error
    (*) >> $winner
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03006 — array.string ≠ array.int
 [=] -Fetch.Names
    (-) >list#array:string >> $names

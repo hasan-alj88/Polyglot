@@ -11,7 +11,7 @@ Sugar for `*Nth` with n=1. Takes the first arriving value; all other inputs are 
 
 ## Syntax
 
-```polyglot
+```aljam3
 [*] *First
    (*) << $candidateA
    (*) << $candidateB

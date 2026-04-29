@@ -11,7 +11,7 @@ metadata_instance: "%#:String:email"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #Email
    [%] %alias << "email"
    [#] ##String

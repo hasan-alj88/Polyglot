@@ -15,7 +15,7 @@ updated: 2026-04-09
 <!-- @c:types -->
 <!-- @c:data-is-trees -->
 
-All Polyglot data is trees of `#String` leaves (which have `RawString` leaves). The existing `.regex#RawString` field on `#String` ([[syntax/types/basic-types#Numeric Types — #String Subtypes]]) constrains **leaf values** via regex. However, **structural constraints** — key patterns, ordering, depth limits, openness — were implicit in compiler rules (PGE04001, PGE05001, PGE05002) with no declarative representation.
+All Aljam3 data is trees of `#String` leaves (which have `RawString` leaves). The existing `.regex#RawString` field on `#String` ([[syntax/types/basic-types#Numeric Types — #String Subtypes]]) constrains **leaf values** via regex. However, **structural constraints** — key patterns, ordering, depth limits, openness — were implicit in compiler rules (PGE04001, PGE05001, PGE05002) with no declarative representation.
 
 Collection types (`;array`, `;serial`, and the new `;dict`) need structural constraints that `.regex` cannot express. Rather than hardcoding each collection's rules in the compiler, we need a declarative mechanism.
 
@@ -43,7 +43,7 @@ Schema properties live in the metadata tree at `%definition.#:{TypeName}.{Proper
 
 Generic `{#}` definitions declare parameters with `(#) <#Param` (type input) and `(#) <Param` (value input). The `:` separator in type annotations binds positionally to parameters:
 
-```polyglot
+```aljam3
 {#} #Array
    (#) <#ValueType
    (#) <Dim##Dimension <~ "1D"
@@ -58,7 +58,7 @@ Generic `{#}` definitions declare parameters with `(#) <#Param` (type input) and
 
 The `{#}` definition at `%definition.#:{Type}` IS the schema. No separate `.schema#RawString` field is needed. The `#String` struct remains:
 
-```polyglot
+```aljam3
 {#} #String
    [.] .string#RawString
    [.] .regex#RawString
@@ -76,7 +76,7 @@ Schema properties are part of the definition metadata, not part of string instan
 
 Generic `{#}` definition:
 
-```polyglot
+```aljam3
 {#} #Array
    (#) <#ValueType
    (#) <Dim##Dimension <~ "1D"
@@ -102,7 +102,7 @@ Generic `{#}` definition:
 
 Parameterized schema for enum-keyed flat collections:
 
-```polyglot
+```aljam3
 {#} ##Record
    (#) <#Fields << ##Enum
    (#) <#ValueType <~ #
@@ -120,7 +120,7 @@ Parameterized schema for enum-keyed flat collections:
 
 ### `#Serial`
 
-```polyglot
+```aljam3
 {#} #Serial
    [#] %##Gap << #True
    [#] %##Ordered << #False
@@ -136,7 +136,7 @@ Parameterized schema for enum-keyed flat collections:
 
 ### Regular Structs (No Schema Properties Needed)
 
-```polyglot
+```aljam3
 {#} #Person
    [.] .name#string
    [.] .age;int
@@ -148,7 +148,7 @@ Structs with `[.]` fixed fields are self-describing — their field declarations
 
 Schema properties become fields on the definition template:
 
-```polyglot
+```aljam3
 %definition.#:Array
 ├── .Key
 │   ├── .Type          → #Int
@@ -179,7 +179,7 @@ These emerged during gap resolution and significantly evolve the original design
 
 ### `;` Retired — `#` for Type Annotations
 
-`#` replaces `;` as the type annotation character. Rationale: `#` = schema = datatype in Polyglot. Using a different symbol caused disconnect. Within `#type` context, nested type refs drop the `#` prefix (e.g., `#dict:string:int`).
+`#` replaces `;` as the type annotation character. Rationale: `#` = schema = datatype in Aljam3. Using a different symbol caused disconnect. Within `#type` context, nested type refs drop the `#` prefix (e.g., `#dict:string:int`).
 
 ### Schema Inheritance via `<~`
 
@@ -187,7 +187,7 @@ These emerged during gap resolution and significantly evolve the original design
 
 ### `%Open` Property Removed
 
-Collections are assembled at once via `*` collectors, not incrementally at runtime. `%Open` is not meaningful in Polyglot's async-collect model.
+Collections are assembled at once via `*` collectors, not incrementally at runtime. `%Open` is not meaningful in Aljam3's async-collect model.
 
 ### `%Alias` Schema Property
 
@@ -196,7 +196,7 @@ New `[#] %Alias` property allows lowercase shorthand names (e.g., `%Alias << "in
 ### `[<]` Type Parameter Constraints
 
 Block marker nested under `(#) <param` declarations in generic `{#}` definitions. Constrains parameters via `##` schema references:
-```polyglot
+```aljam3
 (#) <#ValueType
    [<] ##Scalar
    [ ] ValueType must satisfy ##Scalar schema

@@ -14,24 +14,24 @@ severity: error
 **Detection:** The compiler tracks variable state. If a variable is in the `Default` state and encounters a `DefaultPush` operator targeting it, `PGE02004` is triggered.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Default followed by Final
 {-} -ProcessData
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $var#int <~ 1
    [-] $var << 2
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02004 — Double Default assignment
 {-} -ProcessData
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $var#int <~ 1
    [-] $var <~ 2                            [ ] ✗ PGE02004 — Double default push

@@ -24,12 +24,12 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ $base is Final after constructor assignment — interpolation accepted
 {-} -MyPipeline
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] $base << $Path"/reports"
@@ -37,12 +37,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14013 — $base is Declared (no assignment yet) at point of use
 {-} -MyPipeline
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] $base#path

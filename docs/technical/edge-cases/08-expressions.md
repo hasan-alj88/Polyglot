@@ -15,7 +15,7 @@ updated: 2026-04-16
 
 **What it tests:** Non-empty inline data with mixed types. See [[syntax/types/structs#Inline Data Shorthand]].
 
-```polyglot
+```aljam3
 [-] $nums#array << {1, 2, 3, 4, 5}
 [-] $services#array:string << {"AD", "Email", "Slack"}
 ```
@@ -26,7 +26,7 @@ updated: 2026-04-16
 
 **What it tests:** Empty `{}` as valid collection initializer.
 
-```polyglot
+```aljam3
 (-) >results#array:string ~> {}
 ```
 
@@ -37,7 +37,7 @@ updated: 2026-04-16
 
 **What it tests:** Variable interpolation inside string literals using `{$var}` syntax. See [[syntax/types/strings#String Interpolation]].
 
-```polyglot
+```aljam3
 [-] $msg#string << "Hello {$first} {$last}!"
 [-] $path#string << "/users/{$userId}/profile"
 [ ] Escaped literal braces
@@ -51,7 +51,7 @@ updated: 2026-04-16
 
 **What it tests:** `$*` is immediately released — setting a default (`<~`/`~>`) implies the value persists for later override, which is meaningless for a discard. See [[technical/compile-rules/PGE/PGE02010-discard-default-assignment|PGE02010]].
 
-```polyglot
+```aljam3
 [ ] INVALID — DefaultPushLeft into discard
 [-] $*#string <~ "never used"           [ ] ✗ PGE02010 — discard cannot hold a default
 
@@ -74,7 +74,7 @@ updated: 2026-04-16
 
 **What it tests:** Same output parameter on both sides of an assignment within the same operation scope — no state change. See [[technical/compile-rules/PGE/PGE08011-self-assignment|PGE08011]].
 
-```polyglot
+```aljam3
 [ ] INVALID — same output param on both sides
 (-) >result#string
 [-] >result << >result                  [ ] ✗ PGE08011 — self-assignment, no state change
@@ -92,7 +92,7 @@ updated: 2026-04-16
 
 **What it tests:** Same variable on both sides of an assignment — a no-op. See [[technical/compile-rules/PGE/PGE08011-self-assignment|PGE08011]].
 
-```polyglot
+```aljam3
 [ ] INVALID — same variable on both sides
 [-] $name#string << $name               [ ] ✗ PGE08011 — self-assignment, no-op
 
@@ -105,7 +105,7 @@ updated: 2026-04-16
 <!-- @u:compile-rules/PGE/PGE04010-invalid-arithmetic-operator -->
 **What it tests:** Multi-operator arithmetic expressions that would require precedence rules. Moot because raw arithmetic tokens are compile errors ([[PGE04010|PGE04010]]). The `arithmetic_expr` and `arithmetic_op` productions have been removed from the EBNF.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04010 — precedence question is irrelevant
 [-] $result#int << $a + $b * $c         [ ] ✗ PGE04010 — use -Math.Add / -Math.Multiply
 
@@ -130,7 +130,7 @@ updated: 2026-04-16
 
 **What it tests:** Nested `{}` inside inline data. The `inline_data` production uses `inline_value` (not `value_expr`), which excludes nested braces. See [[technical/compile-rules/PGE/PGE08013-nested-inline-data|PGE08013]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08013 — nested inline data
 [-] $matrix#array:array:int << {{1, 2, 3}, {4, 5, 6}}   [ ] ✗ PGE08013
 
@@ -141,7 +141,7 @@ updated: 2026-04-16
 [-] $mixed << {1, {2, 3}, 4}                             [ ] ✗ PGE08013
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ flat inline data — valid
 [-] $nums#array:int << {1, 2, 3, 4, 5}
 [-] $names#array:string << {"Alice", "Bob"}

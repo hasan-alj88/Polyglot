@@ -13,7 +13,7 @@ Gathers key-value outputs from mini-pipelines back into a single `#Map`, accessi
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Into.Map
    (*) <key << $ticker
    (*) <value << $adjusted

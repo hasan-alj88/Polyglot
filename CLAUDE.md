@@ -1,4 +1,4 @@
-# Polyglot — Claude Code Instructions
+# Aljam3 — Claude Code Instructions
 
 ## Documentation Rules
 

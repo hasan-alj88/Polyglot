@@ -10,7 +10,7 @@ To perform aggregations (like finding the maximum value in an array), do not use
 This block takes input using `(=) <<` and outputs the result using `(*) [type] >>`.
 
 ### Correct Usage
-```polyglot
+```aljam3
    [-] =*Agg.Flat.Max
       (=) << $worldTemp
       (*) #float >> $maxTemp

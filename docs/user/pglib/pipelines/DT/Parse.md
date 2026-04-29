@@ -15,7 +15,7 @@ For known literals in execution body, use the `$DT` constructor instead — it g
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Parse
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtParse"
@@ -49,7 +49,7 @@ None required. Pure computation pipeline.
 
 ## Usage
 
-```polyglot
+```aljam3
 [-] $parsed#dt << -DT.Parse
    (<) <raw#string << $userInput
    [!] !Parse.DateTime.InvalidFormat

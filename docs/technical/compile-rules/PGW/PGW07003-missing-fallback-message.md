@@ -22,7 +22,7 @@ severity: warning
 - [PGW07002 — Caller Overrides Pipeline Fallback](PGW07002-caller-overrides-pipeline-fallback.md) — caller-side warning when overriding documented fallbacks
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Fallback with %FallbackMessage — documented intent
 {-} -ValidateUser
    (-) <name#string
@@ -31,7 +31,7 @@ severity: warning
    (-) !Validation.Empty
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [?] $name =? ""
       [!] >> !Validation.Empty
@@ -43,7 +43,7 @@ severity: warning
       [-] >status << "ok"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Fallback with empty %FallbackMessage — intentionally allows silent override
 {-} -ValidateUserPermissive
    (-) <name#string
@@ -51,7 +51,7 @@ severity: warning
    (-) !Validation.Empty
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [?] $name =? ""
       [!] >> !Validation.Empty
@@ -63,7 +63,7 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW07003 — output fallback without %FallbackMessage
 {-} -ValidateUserBad
    (-) <name#string
@@ -71,7 +71,7 @@ severity: warning
    (-) !Validation.Empty
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [?] $name =? ""
       [!] >> !Validation.Empty

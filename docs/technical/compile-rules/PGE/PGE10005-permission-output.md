@@ -21,7 +21,7 @@ severity: error
 **See also:** PGE10003 (unknown permission category), PGE01024 (incompatible operation marker — general), PGE10009 (unresolved permission template), [[permissions#{_} Permission Objects]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ {_} instance uses only [.] field lines
 {_} _DataAccess
    [.] .intent << #Grant
@@ -32,7 +32,7 @@ severity: error
    [ ] grants read access to reports
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ {_} template uses (_) inputs + [.] field lines
 {_} _YAMLFile
    (_) <file#path
@@ -44,7 +44,7 @@ severity: error
    [.] .format #YAML
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ ceiling uses glob patterns
 {_} _AppCeiling
    [.] .intent << #Ceiling
@@ -55,7 +55,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10005 — [-] execution marker inside {_} block
 {_} _BadPermission
    [.] .intent << #Grant
@@ -65,7 +65,7 @@ severity: error
    [-] $data << -File.Text.Read >> "/data/test.csv"    [ ] ✗ PGE10005 — [-] not allowed in {_}
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10005 — (-) pipeline IO marker inside {_} block
 {_} _BadIO
    [.] .intent << #Grant
@@ -75,7 +75,7 @@ severity: error
    [.] .scope "/data/*"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10005 — [T] trigger marker inside {_} block
 {_} _BadTrigger
    [.] .intent << #Grant

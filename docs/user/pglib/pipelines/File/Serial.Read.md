@@ -13,7 +13,7 @@ Read and parse a structured data file. Format is auto-detected from file extensi
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Serial.Read
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileSerialRead"

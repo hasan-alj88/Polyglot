@@ -15,7 +15,7 @@ updated: 2026-03-30
 
 **What it tests:** `[%]` lines appear before `[T]` (position 0). Fixed fields `.description`, `.version`, `.authors` assigned via `<<`. See [[blocks#Metadata]].
 
-```polyglot
+```aljam3
 {-} -Invoice.Process
    [%] .description << "Processes incoming invoices and routes to accounting"
    [%] .version << "2.1.0"
@@ -23,7 +23,7 @@ updated: 2026-03-30
    [%] .license << "MIT"
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $done#bool << #Boolean.True
 ```
@@ -34,7 +34,7 @@ updated: 2026-03-30
 
 **What it tests:** `%alias` field makes a definition reachable via multiple shorthand names. Each alias is a `#NestedKeyString` — allows `.` and `:` for nested paths. All aliases must be globally unique (PGE12002).
 
-```polyglot
+```aljam3
 {#} #SystemConfig
    [%] %alias
       [:] "Config"
@@ -47,7 +47,7 @@ updated: 2026-03-30
       [:] "ProvisionUser"
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $x#int << 1
 ```
@@ -56,7 +56,7 @@ updated: 2026-03-30
 
 **What it tests:** Alias values can contain `.` and `:` to reference nested paths in the definition tree. Useful for cross-tree aliases (e.g., error aliases reachable from multiple namespaces).
 
-```polyglot
+```aljam3
 {!} !Permission
    [.] .File
       [.] .Denied#Error
@@ -71,7 +71,7 @@ updated: 2026-03-30
 
 **What it tests:** `.info#serial` opens a `:` flexible scope for arbitrary tooling metadata. See [[blocks#Metadata]].
 
-```polyglot
+```aljam3
 {-} -Report.Generate
    [%] .description << "Generates monthly report"
    [%] .info#serial
@@ -80,7 +80,7 @@ updated: 2026-03-30
       [:] :runbook << "https://wiki/runbooks/report"
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $x#int << 1
 ```
@@ -92,7 +92,7 @@ updated: 2026-03-30
 
 **What it tests:** `%` accessor reads live runtime fields. Read-only — no assignment. See [[syntax/types/hierarchy#Live Type Modifier]], [[identifiers]].
 
-```polyglot
+```aljam3
 [ ] Pipeline live fields
 [?] -Invoice.Process%status
    [?] #AwaitTrigger
@@ -121,7 +121,7 @@ updated: 2026-03-30
 **EBNF ref:** `metadata_alias` — requires at least one `flex_sep string_literal`
 **What it tests:** `[%] %alias` with no `:` children. PGE12004 fires.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE12004 — empty alias declaration
 {#} #MyType
    [%] %alias

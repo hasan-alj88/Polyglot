@@ -18,7 +18,7 @@ severity: warning
 **See also:** PGW08002 (unaddressed input with default — similar concept for normal calls)
 
 **WARNING:**
-```polyglot
+```aljam3
 {-} -DB.Connect
    (-) %InlineString << "{host}:{port?}/{db}"
    (-) <host#string
@@ -27,7 +27,7 @@ severity: warning
    (-) >connection#serial
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 
 [ ] ⚠ PGW12002 — {port?} always empty; $port always uses default "5432"

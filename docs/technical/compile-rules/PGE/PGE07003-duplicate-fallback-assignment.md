@@ -14,11 +14,11 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** Each output port may have at most one generic `!<` fallback and at most one `!Error.Name>` fallback per specific error. Duplicate generic fallbacks or duplicate error-specific fallbacks for the same error on the same output are compile errors.
-**Rationale:** Multiple fallbacks for the same condition create ambiguity — which value should the runtime use? A single, deterministic fallback per error condition keeps the behavior predictable and explicit. Polyglot's compiler enforces determinism by construction — in a system where pipelines run concurrently, ambiguous fallback resolution would make pipeline behaviour non-reproducible.
+**Rationale:** Multiple fallbacks for the same condition create ambiguity — which value should the runtime use? A single, deterministic fallback per error condition keeps the behavior predictable and explicit. Aljam3's compiler enforces determinism by construction — in a system where pipelines run concurrently, ambiguous fallback resolution would make pipeline behaviour non-reproducible.
 **Detection:** The compiler collects all `(>)`/`(<)` fallback lines scoped under each `(-)` output. If two or more generic `!>` or two or more `!Error.Name>` with the same error name are found, PGE07003 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ one generic + distinct error-specific fallbacks
 [-] -File.Text.Read
    (-) <path << $file
@@ -28,7 +28,7 @@ severity: error
       (>) !File.ReadError> "error"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ error-specific only, no generic
 [-] -File.Text.Read
    (-) <path << $file
@@ -37,7 +37,7 @@ severity: error
       (>) !File.ReadError> "error"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ generic only
 [-] -File.Text.Read
    (-) <path << $file
@@ -46,7 +46,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE07003 — duplicate generic fallback on same output
 [-] -File.Text.Read
    (-) <path << $file
@@ -55,7 +55,7 @@ severity: error
       (>) !> "second"              [ ] ✗ PGE07003
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07003 — duplicate error-specific fallback for same error
 [-] -File.Text.Read
    (-) <path << $file

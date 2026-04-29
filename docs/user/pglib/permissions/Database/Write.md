@@ -13,7 +13,7 @@ Capability-level generic permission for writing to databases. Sugar over [[INDEX
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Database.Write
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for writing to databases. Sugar over [[INDEX
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Database.Write
    (_) <scope << "postgres://db.internal/analytics"
 ```

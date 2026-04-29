@@ -25,7 +25,7 @@ severity: error
 **Error Message:**
 ```
 error[PGE14011]: constructor interpolation requires constructor-sourced variable
-  --> src/pipeline.pg:12:25
+  --> src/pipeline.aj3:12:25
    |
 12 |    [-] $date << $DT"{$userInput}"
    |                      ^^^^^^^^^^ '$userInput' is from trigger IO input
@@ -41,12 +41,12 @@ error[PGE14011]: constructor interpolation requires constructor-sourced variable
 ```
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ $basePath is constructor-sourced — interpolation allowed
 {-} -MyPipeline
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] $basePath << $Path"/reports"
@@ -54,13 +54,13 @@ error[PGE14011]: constructor interpolation requires constructor-sourced variable
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14011 — $userInput is IO-sourced, not constructor-sourced
 {-} -MyPipeline
    (-) <userInput#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] $parsed << $Path"{$userInput}"

@@ -13,7 +13,7 @@ Schema introspection -- returns a type's full schema (properties, fields, constr
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -#.Describe
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaDescribe"

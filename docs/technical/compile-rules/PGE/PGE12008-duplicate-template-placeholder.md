@@ -20,7 +20,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ each placeholder name appears once
 {-} -FormatName
    (-) %InlineString << "{first} {last}"
@@ -29,13 +29,13 @@ severity: error
    (-) >full#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >full << "{$first} {$last}"
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12008 — placeholder {name} appears twice
 {-} -EchoTwice
    (-) %InlineString << "{name}-{name}"
@@ -43,7 +43,7 @@ severity: error
    (-) >out#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >out << "{$name}-{$name}"
 ```

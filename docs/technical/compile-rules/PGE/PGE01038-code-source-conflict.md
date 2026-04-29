@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler checks that exactly one of `.inline` or `.file` is assigned within the `<code#Code:Source` input.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] inline code only
 [-] -Run.Python.Script
    (-) <env#PyEnv << $pyenv
@@ -31,7 +31,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] PGE01038 — both .inline and .file provided
 [-] -Run.Python.Script
    (-) <env#PyEnv << $pyenv

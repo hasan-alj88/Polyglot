@@ -22,7 +22,7 @@ severity: error
 **See also:** PGE10016 (missing mandatory metadata — fires when `_Unsafe.SandboxOnly` is present but metadata is incomplete), PGW10007 (informational warning when `_Unsafe.SandboxOnly` is active), PGE10014 (AST-invisible constructs — suppressed to warning under `_Unsafe.SandboxOnly`), [[spec/job-sandbox#Opaque Code]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ _Unsafe.SandboxOnly acknowledges opaque binary
 {_} _FileGrant
    [.] .intent << #Grant
@@ -47,7 +47,7 @@ severity: error
       (-) >output#string >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ source code available — switch to .Function, no _Unsafe.SandboxOnly needed
 {_} _FileGrant
    [.] .intent << #Grant
@@ -73,7 +73,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10015 — opaque binary without _Unsafe.SandboxOnly
 {_} _FileGrant
    [.] .intent << #Grant
@@ -94,7 +94,7 @@ severity: error
       (-) >output#string >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10015 — unsupported language has no tree-sitter parser
 {_} _FileGrant
    [.] .intent << #Grant

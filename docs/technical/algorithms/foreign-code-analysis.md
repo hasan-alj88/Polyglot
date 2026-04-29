@@ -12,7 +12,7 @@ updated: 2026-04-18
 <!-- @c:technical/compiler/io-registry -->
 <!-- @c:technical/compiler/foreign-code-parsers -->
 
-The Polyglot compiler analyzes foreign code in `-Run.*` pipelines and `[C]` blocks to verify permission compliance. This document specifies the detection algorithm, scope matching rules, and variable tracing strategy.
+The Aljam3 compiler analyzes foreign code in `-Run.*` pipelines and `[C]` blocks to verify permission compliance. This document specifies the detection algorithm, scope matching rules, and variable tracing strategy.
 
 ## Overview
 
@@ -176,7 +176,7 @@ TRACE_ASSIGNMENT(variable_name, scope):
   
   // Check function parameters (from <Bind)
   IF variable_name IN bind_parameters:
-    RETURN bind_parameters[variable_name].type  // known from Polyglot IO
+    RETURN bind_parameters[variable_name].type  // known from Aljam3 IO
   
   RETURN Unresolvable
 ```

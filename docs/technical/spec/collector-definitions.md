@@ -63,7 +63,7 @@ Collectors have two parallel access paths because a single job can produce multi
 
 `{*}` blocks have **no external trigger declarations** (no `=T.Call`, `=T.Folder.NewFiles`, etc.). The triggers are arrivals, and each `[T]` block is a **mini-pipeline** with its own IO:
 
-```polyglot
+```aljam3
 [T] *Arrive"0"
    (T) >var       (* the arrived variable — becomes $var *)
    (T) >job       (* the associated job — becomes $job *)
@@ -80,7 +80,7 @@ Collectors have two parallel access paths because a single job can produce multi
 
 For **range triggers**, the outputs are collections processable via `=ForEach`:
 
-```polyglot
+```aljam3
 [T] *Arrive"[0,N]"
    (T) >vars      (* all arrived variables — iterable *)
    (T) >jobs       (* all associated jobs — iterable *)
@@ -93,7 +93,7 @@ For **range triggers**, the outputs are collections processable via `=ForEach`:
 
 For **job-centric triggers**:
 
-```polyglot
+```aljam3
 [T] *Job.Arrive"0"
    (T) >job        (* the arrived job *)
    (T) >vars       (* all variables from this job *)
@@ -114,7 +114,7 @@ For **job-centric triggers**:
 
 Every code path through the `{*}` block must release ALL jobs `[0,N]`. No orphaned jobs.
 
-```polyglot
+```aljam3
 [*] *Job.Release"[0,N]"              (* release all — job-centric *)
 [*] *Arrive.Job.Release"[0,N]"       (* release all — variable-centric *)
 ```
@@ -129,7 +129,7 @@ Even if a collector only triggers on `*Arrive"0"`, it must still release every j
 
 All work inside `{*}` uses `[-]` sequential execution. Variable declarations also use `[-]`:
 
-```polyglot
+```aljam3
 [-] $accumulator <~ 0
 ```
 
@@ -141,7 +141,7 @@ The `<Incoming#IncomingDataFrame` is processed using standard `=ForEach` expande
 
 Every `{*}` block receives a system-provided input:
 
-```polyglot
+```aljam3
 (*) <Incoming#IncomingDataFrame
 ```
 
@@ -162,7 +162,7 @@ Every `{*}` block receives a system-provided input:
 <!-- @u:technical/plan/queue-manager/overflow -->
 `{*}` collectors participate in the PPTD (Parallel Processing Temporary Directory) overflow system ([[technical/plan/queue-manager/overflow|u:overflow]]). Overflow metadata:
 
-```polyglot
+```aljam3
 [%] .overflow << #OverflowStrategy.Append
 [%] .batchable << #bool.True
 ```
@@ -197,7 +197,7 @@ Every `{*}` block receives a system-provided input:
 
 ### `*First` — Race Collector
 
-```polyglot
+```aljam3
 {*} *First
    [%] .category << #CollectorCategory.Race
    [%] .scope << #CollectorScope.Parallel
@@ -215,7 +215,7 @@ Every `{*}` block receives a system-provided input:
 
 ### `*Second` — Race Collector (2nd arrival)
 
-```polyglot
+```aljam3
 {*} *Second
    [%] .category << #CollectorCategory.Race
    [%] .scope << #CollectorScope.Parallel
@@ -233,7 +233,7 @@ Every `{*}` block receives a system-provided input:
 
 ### `*All` — Collect-All Barrier
 
-```polyglot
+```aljam3
 {*} *All
    [%] .category << #CollectorCategory.Sync
    [%] .scope << #CollectorScope.Parallel
@@ -249,7 +249,7 @@ Every `{*}` block receives a system-provided input:
 
 ### `*Nth` — Generic Race Collector
 
-```polyglot
+```aljam3
 {*} *Nth
    [%] .category << #CollectorCategory.Race
    [%] .scope << #CollectorScope.Parallel
@@ -268,7 +268,7 @@ Every `{*}` block receives a system-provided input:
 
 ### `*Agg.Sum` — Aggregation Collector
 
-```polyglot
+```aljam3
 {*} *Agg.Sum
    [%] .category << #CollectorCategory.Agg
    [%] .scope << #CollectorScope.Expand
@@ -291,7 +291,7 @@ Every `{*}` block receives a system-provided input:
 
 ### `*Into.Text.Append` — Data Collector with Overflow
 
-```polyglot
+```aljam3
 {*} *Into.Text.Append
    [%] .category << #CollectorCategory.Into
    [%] .scope << #CollectorScope.Expand
@@ -321,7 +321,7 @@ Every `{*}` block receives a system-provided input:
 
 ### `*Ignore` — Discard Collector
 
-```polyglot
+```aljam3
 {*} *Ignore
    [%] .category << #CollectorCategory.Discard
    [%] .scope << #CollectorScope.Parallel

@@ -13,7 +13,7 @@ Connects cache on setup, flushes + disconnects on cleanup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.Cache.Scope
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WCacheScope"

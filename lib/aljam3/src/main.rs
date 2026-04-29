@@ -1,0 +1,120 @@
+use aljam3::lexer::lex;
+use std::env;
+use std::fs;
+use std::path::{Path, PathBuf};
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let mut is_lexer = false;
+    let mut is_validate = false;
+    let mut keep_comments = false;
+    let mut input_file: Option<String> = None;
+    let mut target_file: Option<String> = None;
+
+    let mut i = 1;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--lexer" => {
+                is_lexer = true;
+                i += 1;
+            }
+            "--validate" => {
+                is_validate = true;
+                i += 1;
+            }
+            "--comments" => {
+                keep_comments = true;
+                i += 1;
+            }
+            "-c" => {
+                if i + 1 < args.len() {
+                    input_file = Some(args[i + 1].clone());
+                    i += 2;
+                } else {
+                    eprintln!("Error: -c requires a file path");
+                    std::process::exit(1);
+                }
+            }
+            "-t" => {
+                if i + 1 < args.len() {
+                    target_file = Some(args[i + 1].clone());
+                    i += 2;
+                } else {
+                    eprintln!("Error: -t requires a file path");
+                    std::process::exit(1);
+                }
+            }
+            _ => {
+                eprintln!("Unknown argument: {}", args[i]);
+                std::process::exit(1);
+            }
+        }
+    }
+
+    if (!is_lexer && !is_validate) || input_file.is_none() {
+        eprintln!("Usage: aljam3 [--lexer | --validate] -c <input.aj3> [-t <output.aj3ts>]");
+        std::process::exit(1);
+    }
+
+    let input_path_str = input_file.unwrap();
+    let path = Path::new(&input_path_str);
+
+    if !path.exists() || !path.is_file() {
+        eprintln!("Error: Cannot find file {}", input_path_str);
+        std::process::exit(1);
+    }
+
+    let out_path = if let Some(t) = target_file {
+        PathBuf::from(t)
+    } else {
+        path.with_extension("pgts")
+    };
+
+    let script = match fs::read_to_string(path) {
+        Ok(s) => s,
+        Err(e) => {
+            eprintln!("Error reading {}: {}", input_path_str, e);
+            std::process::exit(1);
+        }
+    };
+
+    let mut tokens = lex(&script);
+
+    if !keep_comments {
+        use aljam3::lexer::token::Aljam3Token;
+        tokens.retain(|t| {
+            !matches!(t.value, 
+                Aljam3Token::CommentText(_) | 
+                Aljam3Token::DefComment | 
+                Aljam3Token::ActionComment | 
+                Aljam3Token::IoComment
+            )
+        });
+    }
+
+    if is_validate {
+        let report = aljam3::compiler::validator::validate(&tokens, &script, &input_path_str);
+        report.print_report();
+        if report.total_errors > 0 {
+            std::process::exit(1);
+        }
+        std::process::exit(0);
+    }
+
+    let mut out_string = String::new();
+    out_string.push_str("=== Aljam3 Token Stream ===\n");
+    for t in &tokens {
+        // Output formatting mirrors the unit test layout precisely
+        out_string.push_str(&format!("[L{:02}:C{:02}] {:?}\n", t.line, t.col, t.value));
+    }
+    out_string.push_str("=============================\n");
+
+    match fs::write(&out_path, out_string) {
+        Ok(_) => println!("Successfully saved token stream to {}", out_path.display()),
+        Err(e) => {
+            eprintln!("Error writing output file: {}", e);
+            std::process::exit(1);
+        }
+    }
+}

@@ -13,7 +13,7 @@ Returns a `#Weekday` enum value from a `#dt`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Get.Weekday
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtGetWeekday"

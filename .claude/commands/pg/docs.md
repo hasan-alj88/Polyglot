@@ -1,12 +1,12 @@
 ---
 name: pg:docs
-description: Generate or update the Polyglot documentation PDF
+description: Generate or update the Aljam3 documentation PDF
 argument-hint: "[section | --by-audience | --audience=NAME]"
 allowed-tools: [Bash, Read]
 ---
 
 <objective>
-Generate Polyglot documentation PDFs from all markdown files in docs/.
+Generate Aljam3 documentation PDFs from all markdown files in docs/.
 
 **When to use:** After editing docs, adding new pages, or when you need fresh PDFs.
 </objective>
@@ -26,7 +26,7 @@ Script: scripts/generate-docs-pdf.sh
 Template: scripts/doc-template.typ
 
 Outputs:
-- Monolithic: Polyglot-Documentation.pdf (repo root)
+- Monolithic: Aljam3-Documentation.pdf (repo root)
 - Per-audience: docs/pdf/{audience}.pdf (pg-coder, developer, designer, architect, integrator)
 
 The script:

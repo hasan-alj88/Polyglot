@@ -21,7 +21,7 @@ Each `#Variable` instance has exactly one active language branch (`%##Active.One
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Variable
    [%] .description << "Language-tagged variable for cross-language bridge calls"
    [%] .version << "1.0.0"
@@ -114,11 +114,11 @@ The `.type` field references the corresponding language branch of [[pglib/types/
 
 ## Conversion
 
-The `-Variable.Convert` pipeline converts a `#Variable` from one language branch to another. Conversion passes through the Polyglot type system as intermediary:
+The `-Variable.Convert` pipeline converts a `#Variable` from one language branch to another. Conversion passes through the Aljam3 type system as intermediary:
 
 ```text
 Source #Variable (:Python, .type=int, .value="42")
-    → Polyglot #int ("42")
+    → Aljam3 #int ("42")
     → Target #Variable (:Rust, .type=i64, .value="42")
 ```
 

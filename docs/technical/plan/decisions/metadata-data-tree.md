@@ -11,7 +11,7 @@ updated: 2026-04-05
 
 ## Context
 
-All Polyglot objects are serialized data (trees of RawStrings). Every object needs a `%` URL path. The string-re-subfields decision referenced `%Data.#:*:String:int` paths but the full tree was unspecified.
+All Aljam3 objects are serialized data (trees of RawStrings). Every object needs a `%` URL path. The string-re-subfields decision referenced `%Data.#:*:String:int` paths but the full tree was unspecified.
 
 ## Decisions
 

@@ -13,7 +13,7 @@ Capability-level generic permission for sending and receiving signals. Sugar ove
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __System.Signal
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for sending and receiving signals. Sugar ove
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __System.Signal
    (_) <scope << "SIGTERM"
 ```

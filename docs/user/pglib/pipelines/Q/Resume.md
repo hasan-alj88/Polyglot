@@ -20,7 +20,7 @@ Direct command: move from Suspended Set to Resume Queue. Signal: `command.resume
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Resume
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QResume"

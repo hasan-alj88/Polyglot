@@ -11,7 +11,7 @@ Expands a collection and reduces all numeric values to their sum.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =*Agg.Sum
    (=) <array << $values
    (*) >sum >> $total
@@ -31,7 +31,7 @@ Expands a collection and reduces all numeric values to their sum.
 
 ## Equivalent Expand-Collect
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $values
    (=) >item >> $value

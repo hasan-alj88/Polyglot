@@ -13,7 +13,7 @@ Multiplies two or more numeric values. Accepts variadic input (2 or more operand
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Math.Multiply
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathMultiply"

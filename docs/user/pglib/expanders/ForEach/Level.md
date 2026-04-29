@@ -11,7 +11,7 @@ Unlike `=ForEach.Serial` which iterates all keys, `=ForEach.Level` iterates only
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =ForEach.Level
    (=) <level << #SomeData.SubField.=
    (=) >key >> $key

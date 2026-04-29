@@ -125,7 +125,7 @@ Query: "what pipelines does namespace X provide?" Each namespace has a sub-index
 | File | `-File.*` | File-system read/write | [[user/pglib/pipelines/File/INDEX\|u:pglib-File]] |
 | T (triggers) | `-T.*` | HTTP, queue, git, time, call triggers | [[user/pglib/pipelines/T/INDEX\|u:pglib-T]] |
 | Q (queue control) | `-Q.*` | Queue inspection and control | [[user/pglib/pipelines/Q/INDEX\|u:pglib-Q]] |
-| W (wrappers) | `-W.*` | Wrappers: RT, Env, Retry, Polyglot | [[user/pglib/pipelines/W/INDEX\|u:pglib-W]] |
+| W (wrappers) | `-W.*` | Wrappers: RT, Env, Retry, Aljam3 | [[user/pglib/pipelines/W/INDEX\|u:pglib-W]] |
 | Math | `-Math.*` | Arithmetic operations | [[user/pglib/pipelines/Math/INDEX\|u:pglib-Math]] |
 | DT (datetime) | `-DT.*` | #DateTime construction, conversion, arithmetic | [[user/pglib/pipelines/DT/INDEX\|u:pglib-DT]] |
 | RT (runtime) | `-RT.*` | Python/Rust/Go/JS runtime execution | [[user/pglib/pipelines/RT/INDEX\|u:pglib-RT]] |
@@ -252,7 +252,7 @@ Concept-level permission sub-pages:
 | Developer experience | [[philosophy/developer-experience\|c:developer-experience]] |
 | Error philosophy | [[philosophy/error-philosophy\|c:error-philosophy]] |
 | Extensibility | [[philosophy/extensibility\|c:extensibility]] |
-| How Polyglot differs | [[philosophy/how-polyglot-differs\|c:how-polyglot-differs]] |
+| How Aljam3 differs | [[philosophy/how-aljam3-differs\|c:how-aljam3-differs]] |
 | Language design | [[philosophy/language-design\|c:language-design]] |
 | Symbol / prefix rationale | [[philosophy/symbology\|c:symbology]] |
 
@@ -288,7 +288,7 @@ Query: "how does the runtime work?" Service components have their own `docs/tech
 | Native dispatch | [[technical/spec/native-dispatch\|u:native-dispatch]] |
 | Job sandbox (OS-level) | [[technical/spec/job-sandbox\|u:job-sandbox]] |
 | Type identity (structural matching) | [[technical/spec/type-identity\|u:type-identity]] |
-| Polyglot SDK | [[technical/spec/polyglot-sdk\|u:polyglot-sdk]] |
+| Aljam3 SDK | [[technical/spec/aljam3-sdk\|u:aljam3-sdk]] |
 | Collector definitions | [[technical/spec/collector-definitions\|u:collector-definitions]] |
 | Metadata-tree spec | [[technical/spec/metadata-tree/INDEX\|u:metadata-tree-index]] |
 | Integrator internals | [[technical/integrator-internals\|u:integrator-internals]] |
@@ -305,7 +305,7 @@ Query: "how does the runtime work?" Service components have their own `docs/tech
 
 | Topic | File |
 |-------|------|
-| Polyglot SDK (encode / decode / call / pull / push) | [[technical/spec/polyglot-sdk\|u:polyglot-sdk]] |
+| Aljam3 SDK (encode / decode / call / pull / push) | [[technical/spec/aljam3-sdk\|u:aljam3-sdk]] |
 | -Run.Bridge conversion algorithm | [[technical/algorithms/bridge-conversion\|u:bridge-conversion]] |
 | Foreign-code AST analysis (permission compliance) | [[technical/algorithms/foreign-code-analysis\|u:foreign-code-analysis]] |
 | AST-invisible registry (banned functions) | [[technical/compiler/ast-invisible-registry\|u:ast-invisible-registry]] |
@@ -319,7 +319,7 @@ Heuristics for picking the right starting file given a query shape.
 
 | If the query is... | Start here |
 |---------------------|------------|
-| "What is Polyglot?" | [[vision\|c:vision]] then [[project-overview\|u:project-overview]] |
+| "What is Aljam3?" | [[vision\|c:vision]] then [[project-overview\|u:project-overview]] |
 | "How do I write a pipeline?" | [[user/SPEC-INDEX\|u:SPEC-INDEX]] |
 | "What does `{X}` mean?" | "By Language Construct" table above |
 | "What does compile error PGE01005 mean?" (or any PGE / PGW code) | [[technical/COMPILE-RULES\|u:COMPILE-RULES]] then the matching file under `technical/compile-rules/PGE/` or `technical/compile-rules/PGW/` |
@@ -327,8 +327,8 @@ Heuristics for picking the right starting file given a query shape.
 | "What error namespaces exist?" | "By Error Namespace" table above |
 | "What does #TypeName mean?" | "By Type" table above; start with [[user/pglib/types/types\|u:types]] |
 | "How does the runtime work?" | [[architecture\|u:architecture]] |
-| "Why did Polyglot make decision X?" | [[audit/decisions/README\|c:decisions-index]] then [[philosophy/core-philosophy\|c:core-philosophy]] |
-| "Can I write this .pg code?" | [[technical/ebnf/INDEX\|u:ebnf-index]] then [[technical/edge-cases/INDEX\|u:edge-cases-index]] |
+| "Why did Aljam3 make decision X?" | [[audit/decisions/README\|c:decisions-index]] then [[philosophy/core-philosophy\|c:core-philosophy]] |
+| "Can I write this .aj3 code?" | [[technical/ebnf/INDEX\|u:ebnf-index]] then [[technical/edge-cases/INDEX\|u:edge-cases-index]] |
 | "Where is the full repo layout?" | [[source-tree-analysis\|u:source-tree-analysis]] |
 | "Give me an inventory by category" | [[component-inventory\|u:component-inventory]] |
 | "Where are the writing rules?" | [[audit/README\|c:audit/README]] |

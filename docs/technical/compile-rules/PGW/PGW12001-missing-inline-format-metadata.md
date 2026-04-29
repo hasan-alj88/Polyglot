@@ -20,7 +20,7 @@ severity: warning
 **See also:** PGE12003 (no %InlineString at all), PGE12006 (unresolved placeholder — name not in IO)
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW12001 — template has no placeholders
 {-} -StaticCall
    (-) %InlineString << "fixed-string"
@@ -28,7 +28,7 @@ severity: warning
    (-) >out#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >out << $input
 

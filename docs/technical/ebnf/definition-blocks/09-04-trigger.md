@@ -29,7 +29,7 @@ trigger_def_body    ::= { ( metadata_line | comment_line ) NEWLINE }
 
 **Example:**
 
-```polyglot
+```aljam3
 {T} -T.Folder.NewFiles
    [%] .description << "Fires when new files appear in watched directory"
    (-) <path#path

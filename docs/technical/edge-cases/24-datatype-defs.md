@@ -41,7 +41,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** Empty string `""` matches `.regex = ".*"` — the default regex accepts all strings, including empty. Verifies `##Scalar` is inherited via `[#] ##Scalar`. See [[syntax/types/basic-types#Layer 1: #String — The Foundation Type]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[variable-lifecycle]]
 
-```polyglot
+```aljam3
 {#} #String
    [#] ##Scalar
    [#] %##Alias << "string"
@@ -58,10 +58,10 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.2: #Int leading zeros and negative zero
 
 **EBNF:** `type_definition` — `.regex` regex `"^-?[0-9]+$"` accepts leading zeros and `-0`.
-**What it tests:** `"007"` and `"-0"` both match `#Int`'s regex. Leading zeros are valid serialized strings — Polyglot does not normalize numeric representations. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .regex]].
+**What it tests:** `"007"` and `"-0"` both match `#Int`'s regex. Leading zeros are valid serialized strings — Aljam3 does not normalize numeric representations. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .regex]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
-```polyglot
+```aljam3
 {#} #Int
    (#) <~ #String
    [#] %##Alias << "int"
@@ -84,7 +84,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]]
 **Status:** RESOLVED — regex corrected to `"^[0-9]+D$"` in both syntax/types.md and pglib/types/scalars.md.
 
-```polyglot
+```aljam3
 [ ] Authoritative definition — corrected regex
 {#} #Dimension
    (#) <~ #String
@@ -106,7 +106,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** `"1.5e4"` fails (4 is not a multiple of 3), `"1.5e3"` passes. The regex `(0|[369]|[1-9][0-9]*[0369])` constrains the exponent to 0, 3, 6, 9, ... See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .regex]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
-```polyglot
+```aljam3
 {#} #Eng
    (#) <~ #String
    [#] %##Alias << "eng"
@@ -130,7 +130,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** `"my.key"` fails (dot is reserved for fixed-field navigation), `"my-key"` passes. Ensures tree path safety for `<` child access. See [[syntax/types/basic-types#Layer 2c: #KeyString — Key Type for Tree Access]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
-```polyglot
+```aljam3
 {#} #KeyString
    (#) <~ #String
    [#] %##Alias << "key"
@@ -156,7 +156,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** `"error.file.read"` passes (dots allowed for alias paths), `"my<key"` fails. Used as element type for `%##Alias` paths. See [[syntax/types/basic-types#Layer 2d: #NestedKeyString — Key Type for Alias Paths]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
-```polyglot
+```aljam3
 {#} #NestedKeyString
    (#) <~ #String
    [#] %##Alias << "nestedkey"
@@ -180,7 +180,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **Cross-refs:** [[syntax/types/INDEX|types]], [[variable-lifecycle]]
 **Status:** RESOLVED — PGE11005 (Final Field Override via Inheritance) added to COMPILE-RULES.md.
 
-```polyglot
+```aljam3
 [ ] #String sets .regex with <~ (overridable default)
 {#} #String
    [.] .regex#RawString <~ ".*"
@@ -202,7 +202,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** #Boolean composes `##Enum` (enum classification), `##Scalar` (depth 1), and `###ScalarEnum` (leaf content is variant selector). A type can be both scalar AND enum. Can a user define a custom enum with the same pattern? Yes — `###ScalarEnum` and `##Scalar` are orthogonal. See [[syntax/types/basic-types#Layer 2b: #Boolean — Independent ##Enum Type]], [[syntax/types/schema-properties#`###` Field Types — Leaf Content]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
-```polyglot
+```aljam3
 {#} #Boolean
    [#] ##Enum
    [#] ##Scalar
@@ -230,7 +230,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** User defines `#MyStatus <~ #PipelineStatus` to add new variants. Enums use `[.]` fixed fields — `<~` on an enum should extend the field set (inheriting all parent variants). See [[syntax/types/structs#Enum Fields vs Value Fields]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
-```polyglot
+```aljam3
 {#} #PipelineStatus
    [#] ###Enum
    [.] .AwaitTrigger
@@ -261,7 +261,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]]
 **Status:** RESOLVED — `###None` added as third field type, PGE04021 added, #None definition updated with `[#] ###None`.
 
-```polyglot
+```aljam3
 {#} #None
    [ ] Represents the absence of a value
    [ ] Empty string "" is the only valid value
@@ -281,7 +281,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** `{#} #Array` is a generic type with `<#ValueType` (type input) and `<Dim` (value input with default "1D"). Schema properties accumulate from `##Array`. The `:` separator in type annotations binds positionally: `#array:float:2D` → ValueType-Float, Dim=2D. See [[syntax/types/schema-properties#Approved ## Schema Types]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]], [[technical/ebnf/04-type-system#4.3]]
 
-```polyglot
+```aljam3
 [ ] {#} #Array — generic type with two parameters
 {#} #Array
    (#) <#ValueType
@@ -302,7 +302,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **Cross-refs:** [[syntax/types/INDEX|types]]
 **Status:** Updated for #275 — ##Contiguous/##Sparse retired; properties stated directly on schemas.
 
-```polyglot
+```aljam3
 [ ] ##Array sets %##Gap << #False, %##Ordered << #True
 [ ] Overriding %##Gap on a type composing ##Array triggers PGW11002
 
@@ -323,7 +323,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **Cross-refs:** [[syntax/types/INDEX|types]]
 **Status:** RESOLVED — 0D array semantics documented in types.md: direct access, no indexing, PGE04017 on index.
 
-```polyglot
+```aljam3
 [ ] 0D array — scalar container
 [-] $scalar#array:int:0D <~ {42}
 
@@ -342,7 +342,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **Cross-refs:** [[syntax/types/INDEX|types]]
 **Status:** Updated for #275 — #Map retired; ##Record replaces it.
 
-```polyglot
+```aljam3
 [ ] empty array — zero elements, valid
 [-] $empty#array:int <~ {}
 
@@ -357,7 +357,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **Cross-refs:** [[syntax/types/INDEX|types]]
 **Status:** Updated for #275 — %##Key retired; %##Fields replaces it. #Map retired; ##Record replaces it.
 
-```polyglot
+```aljam3
 [ ] ##Record with enum keys — safe by definition
 {#} #UserRecord
    [#] ##Record
@@ -377,7 +377,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** #Serial uses maximally permissive schema properties to remove every structural constraint. PGW11003 warns about unlimited depth on USER types, but #Serial is pglib — it is the intentional escape hatch for unconstrained data. Show that user types with `.Inf` get the warning but #Serial does not. See [[syntax/types/schema-properties#Schema Properties]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
-```polyglot
+```aljam3
 [ ] #Serial — pglib, no PGW11003
 {#} #Serial
    [#] %##Alias << "serial"
@@ -403,7 +403,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** #Dataframe is a generic type with `<#Columns` and `<#CellType` parameters, composing `##Dataframe`. Access is row-oriented: `$df<row<column` (not column-oriented). Each row is a ##Record keyed by the column enum; the outer structure is an `#Array` of rows. See [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]], [[concepts/collections/INDEX|collections]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]], [[concepts/collections/INDEX|collections]], [[technical/ebnf/04-type-system#4.3]]
 
-```polyglot
+```aljam3
 [ ] RESOLVED — #Dataframe is row-oriented (Array of ##Record)
 {#} #SalesColumns
    [#] ##Scalar
@@ -426,7 +426,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 **What it tests:** pglib `types.md` uses stale notation without the `##` prefix. The correct notation per `syntax/types.md` requires `%##`. Document the complete mapping. See [[syntax/types/schema-properties#Schema Properties]].
 **Cross-refs:** [[syntax/types/INDEX|types]], [[pglib/INDEX|Standard Library]]
 
-```polyglot
+```aljam3
 [ ] STALE notation (pglib types.md)    -> CORRECT notation (syntax/types.md)
 [ ] %Alias                                -> %##Alias
 [ ] %Key.Type                             -> %##Key

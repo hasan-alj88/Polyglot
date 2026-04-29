@@ -13,7 +13,7 @@ Capability-level generic permission for WebSocket connections. Sugar over [[INDE
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Web.Socket
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for WebSocket connections. Sugar over [[INDE
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Web.Socket
    (_) <scope << "wss://stream.example.com/*"
 ```

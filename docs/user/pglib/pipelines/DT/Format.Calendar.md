@@ -13,7 +13,7 @@ Formats a `#dt` as a string in a specific calendar system's conventional format.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Format.Calendar
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtFormatCalendar"

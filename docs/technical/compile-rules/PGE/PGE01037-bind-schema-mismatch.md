@@ -16,7 +16,7 @@ severity: error
 **Detection:** The compiler checks that the assigned inline Record has exactly the fields declared in the target Record schema, with compatible types.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] inline Record matches declared schema
 {#} #ResizeInputs
    [.] .input_path#path
@@ -31,7 +31,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] PGE01037 — .extra_field not in #ResizeInputs schema
 {#} #ResizeInputs
    [.] .input_path#path

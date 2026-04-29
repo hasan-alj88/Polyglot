@@ -17,7 +17,7 @@ split_from: PGE06001
 **Detection:** When a `[?]` block branches on a `string`-typed variable, the compiler checks for a `[?] *?` branch. If absent, PGE06006 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ string conditional — known values + *? catch-all
 [?] $status
    [?] "active"
@@ -29,7 +29,7 @@ split_from: PGE06001
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE06006 — string without *?, no static proof possible
 [?] $status
    [?] "active"

@@ -47,7 +47,7 @@ format_enum            ::= "#YAML" | "#JSON" | "#TOML" ;
 
 ## Examples
 
-```polyglot
+```aljam3
 [ ] Instance — fully filled, one specific file
 {_} _Secrets
    [.] .intent << #Grant

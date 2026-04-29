@@ -28,7 +28,7 @@ severity: error
 | Cannot prove match | `[!]` + `!< fallback` required — PGE04009 if absent |
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
@@ -40,7 +40,7 @@ severity: error
 [-] $user#UserRecord << $data
 ```
 
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
@@ -56,7 +56,7 @@ severity: error
       [-] >user << $defaultUser
 ```
 
-```polyglot
+```aljam3
 {#} #Config
    [.] .timeout#int
    [.] .retries#int
@@ -70,7 +70,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
@@ -79,7 +79,7 @@ severity: error
 [-] $user#UserRecord << $dynamicSerial
 ```
 
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int

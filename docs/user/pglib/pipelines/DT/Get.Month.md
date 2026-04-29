@@ -13,7 +13,7 @@ Extracts the month component from a `#dt` value.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Get.Month
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtGetMonth"

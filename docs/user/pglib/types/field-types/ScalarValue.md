@@ -44,7 +44,7 @@ This field type applies to `##Scalar` subtypes of `#String` where the leaf carri
 
 Scalar value types are defined through the `##Scalar` composition. The `.string` field inherits from `#String` and the `.regex` field constrains valid content:
 
-```polyglot
+```aljam3
 {#} ##Int
    [#] ##Scalar
    [#] ###ScalarValue

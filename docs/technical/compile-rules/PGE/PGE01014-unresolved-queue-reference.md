@@ -18,17 +18,17 @@ severity: error
 **Detection:** The compiler resolves the `[Q]` reference against: (1) pglib queues (`-Q.Default`), (2) `{Q}` definitions in the current file/package, (3) `{Q}` definitions from imported packages.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ pglib queue — always available
 {-} -SimpleJob
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ user-defined queue in same file
 {Q} #Queue:WorkQueue
    [.] .strategy#QueueStrategy << #FIFO
@@ -36,18 +36,18 @@ severity: error
 {-} -BatchJob
    [T] -T.Call
    [Q] -Q.Assign"WorkQueue"
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01014 — #Queue:GPUQueue not defined or imported
 {-} -RenderJob
    [T] -T.Call
    [Q] -Q.Assign"GPUQueue"
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 ```

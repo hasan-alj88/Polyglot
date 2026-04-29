@@ -17,7 +17,7 @@ metadata_instance: "%#:Bound:N"
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Bound
    [%] .description << "Numeric value or infinity"
    [%] .version << "1.0.0"
@@ -38,7 +38,7 @@ When the integer branch is active, `#Bound` holds a concrete numeric value. When
 | `%##Count` | Max children (`.Inf` = unlimited) |
 | `%##Depth.Max` | Max tree depth (`.Inf` = unlimited) |
 
-```polyglot
+```aljam3
 [ ] Concrete limit
 [#] %##Count << 10
 

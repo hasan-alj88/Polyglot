@@ -18,7 +18,7 @@ severity: warning
 **See also:** PGW10002 (unverifiable foreign IO — partial opacity), PGE10013 (foreign resource outside scope — full verification possible), [[permissions/foreign-code#Bind Mode]]
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW10003 — Bind mode is fully opaque to compiler analysis
 {_} _DataAccess
    [.] .intent << #Grant
@@ -39,7 +39,7 @@ severity: warning
       (-) >Bind#Code:Python.Output >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW10003 — even with matching permissions, Bind is opaque
 {_} _WebAccess
    [.] .intent << #Grant

@@ -30,7 +30,7 @@ severity: error
 **Note:** `{-}` without an explicit marker is treated as `{-}[exe]`. No diagnostic is emitted (decided in #108).
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ — {-} takes [exe]
 {-}[exe] -Good.Pipeline
 
@@ -42,7 +42,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01029 — {#} cannot have markers
 {#}[exe] #BadData
 

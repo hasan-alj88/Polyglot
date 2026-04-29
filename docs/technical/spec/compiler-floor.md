@@ -7,7 +7,7 @@ updated: 2026-04-14
 # The Compiler Floor
 
 <!-- @c:glossary#RawString -->
-<!-- @c:glossary#Polyglot Service -->
+<!-- @c:glossary#Aljam3 Service -->
 <!-- @c:glossary#Trigger Monitor -->
 <!-- @u:philosophy/behavioral-contract -->
 <!-- @u:concepts/data-is-trees -->
@@ -18,9 +18,9 @@ Related: [[behavior-contract]], [[native-dispatch]]
 Every compiler faces the same problem as an English-English dictionary: some words must be self-evident, or all definitions become circular. In formal logic these are **axioms** — truths that require no proof because everything else derives from them.
 
 <!-- @c:vision#Core Philosophy -->
-In Polyglot, these axioms are called **native operations**. They are the irreducible floor — the atomic instructions and atomic async functions that everything else compiles down to. [[glossary#RawString|c:RawString]] is the type-system floor (the only compiler intrinsic). Native operations are the execution floor — the primitives that the [[glossary#Polyglot Service|c:Polyglot Service]] knows how to perform without further decomposition.
+In Aljam3, these axioms are called **native operations**. They are the irreducible floor — the atomic instructions and atomic async functions that everything else compiles down to. [[glossary#RawString|c:RawString]] is the type-system floor (the only compiler intrinsic). Native operations are the execution floor — the primitives that the [[glossary#Aljam3 Service|c:Aljam3 Service]] knows how to perform without further decomposition.
 
-Polyglot Code exists to shield users from the complexity beneath this floor.
+Aljam3 Code exists to shield users from the complexity beneath this floor.
 
 ## Two Kinds of Native
 
@@ -28,7 +28,7 @@ Every native operation is one of two kinds:
 
 ### Atomic Instruction
 
-A directive in the [[behavior-contract|c:Behavior Contract]] that configures the Polyglot Service's behavior. Instructions tell the [[glossary#Trigger Monitor|c:Trigger Monitor]] what to listen for and how to orchestrate.
+A directive in the [[behavior-contract|c:Behavior Contract]] that configures the Aljam3 Service's behavior. Instructions tell the [[glossary#Trigger Monitor|c:Trigger Monitor]] what to listen for and how to orchestrate.
 
 All `-T.*` triggers are instructions. They tell the Trigger Monitor to set up listening behavior — the Trigger Monitor has all trigger listeners implemented internally and activates them when the signal map says to start.
 
@@ -40,7 +40,7 @@ Examples:
 | `-T.Daily` | Activate the daily time-check listener |
 | `-T.Webhook` | Activate the webhook listener on this endpoint |
 | `-Q.Default` | Use FIFO dispatch |
-| `-W.Polyglot` | Use standard wrapper behavior (built into [[glossary#Runner|c:Runner]]) |
+| `-W.Aljam3` | Use standard wrapper behavior (built into [[glossary#Runner|c:Runner]]) |
 | `-DoNothing` | Compiler-inlined no-op |
 
 ### Atomic Async Function
@@ -65,7 +65,7 @@ Examples:
 | All triggers (`-T.*`) | **Instruction** | Configure Trigger Monitor listeners |
 | Queue strategy (`-Q.Default`) | **Instruction** | Dispatch rules for Queue Handler |
 | Queue actions (`-Q.Pause.*`, `-Q.Resume`) | **Async Function** | Active commands invoking Queue Handler code |
-| `-W.Polyglot` | **Instruction** | Built-in Runner behavior, no external code |
+| `-W.Aljam3` | **Instruction** | Built-in Runner behavior, no external code |
 | Other wrappers (`-W.DB.*`, `-W.File.*`) | **Async Function** | Runner invokes Rust for resource lifecycle |
 | Execution (`-File.*`, `-Math.*`, `-DB.*`) | **Async Function** | Runner invokes Rust for real work |
 | Intrinsics (`-DoNothing`, `-#.JSON.Parse`) | **Instruction** | Compiler-inlined, no runtime dispatch |
@@ -85,7 +85,7 @@ The `{N}` block declares:
 - Host function name: `.Rust << "FunctionName"`
 - IO contract: `(-)` input, output, and error declarations
 
-Implementation status is tracked in the YAML frontmatter of the `.md` documentation file that accompanies each `{N}` definition — not in the `.pg` file itself.
+Implementation status is tracked in the YAML frontmatter of the `.md` documentation file that accompanies each `{N}` definition — not in the `.aj3` file itself.
 
 ### Adding a New Native Operation
 
@@ -97,4 +97,4 @@ Adding a native operation (e.g., `-T.MQTT`) requires all three steps:
 
 ## The Floor Is Versioned
 
-The native instruction set and async function set are fixed per Polyglot version. They change if and only if the Polyglot version changes — the same relationship as a CPU instruction set tied to its architecture revision. Users write infinite programs; the instructions those programs compile to are fixed.
+The native instruction set and async function set are fixed per Aljam3 version. They change if and only if the Aljam3 version changes — the same relationship as a CPU instruction set tied to its architecture revision. Users write infinite programs; the instructions those programs compile to are fixed.

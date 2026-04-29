@@ -60,7 +60,7 @@ Configure overflow behavior via `-Q.Overflow.*` parameters in the `[Q]` queue bl
 
 ### Example
 
-```polyglot
+```aljam3
 [Q] =Q.Default
    [Q] -Q.Overflow.RamLimit << 536870912
    [Q] -Q.Overflow.PptdPaths << ["/tmp/pg-overflow", "/data/pg-overflow"]
@@ -72,7 +72,7 @@ Configure overflow behavior via `-Q.Overflow.*` parameters in the `[Q]` queue bl
 
 Collectors require `_File.TempWrite` permission for PPTD paths — but **only when overflow actually spills to disk**. If processing completes in RAM, no file permission is needed.
 
-```polyglot
+```aljam3
 {_} _CollectorOverflow
    (-) _File.TempWrite
    (-) .paths << -Q.Overflow.PptdPaths

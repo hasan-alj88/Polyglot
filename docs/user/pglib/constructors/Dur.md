@@ -17,7 +17,7 @@ The `$Dur` constructor produces `#Duration` values from human-readable duration 
 
 ### Hours + Minutes + Seconds
 
-```polyglot
+```aljam3
 {$} $Dur"{h}h{m}m{s}s"
    ($) <h.re << "[0-9]+"
    ($) <m.re << "[0-9]+"
@@ -35,7 +35,7 @@ Matches duration strings like `"1h30m45s"`. The `[-] -Dur.Convert` is a native p
 
 ### Hours + Minutes
 
-```polyglot
+```aljam3
 {$} $Dur"{h}h{m}m"
    ($) <h.re << "[0-9]+"
    ($) <m.re << "[0-9]+"
@@ -49,7 +49,7 @@ Matches duration strings like `"1h30m45s"`. The `[-] -Dur.Convert` is a native p
 
 ### Minutes + Seconds
 
-```polyglot
+```aljam3
 {$} $Dur"{m}m{s}s"
    ($) <m.re << "[0-9]+"
    ($) <s.re << "[0-9]+"
@@ -63,7 +63,7 @@ Matches duration strings like `"1h30m45s"`. The `[-] -Dur.Convert` is a native p
 
 ### Hours Only
 
-```polyglot
+```aljam3
 {$} $Dur"{h}h"
    ($) <h.re << "[0-9]+"
    [-] -Dur.Convert
@@ -75,7 +75,7 @@ Matches duration strings like `"1h30m45s"`. The `[-] -Dur.Convert` is a native p
 
 ### Minutes Only
 
-```polyglot
+```aljam3
 {$} $Dur"{m}m"
    ($) <m.re << "[0-9]+"
    [-] -Dur.Convert
@@ -87,7 +87,7 @@ Matches duration strings like `"1h30m45s"`. The `[-] -Dur.Convert` is a native p
 
 ### Seconds Only
 
-```polyglot
+```aljam3
 {$} $Dur"{s}s"
    ($) <s.re << "[0-9]+"
    [-] -Dur.Convert
@@ -116,7 +116,7 @@ The unit suffix characters (`h`, `m`, `s`) are literal separators — the `[0-9]
 
 ## Usage
 
-```polyglot
+```aljam3
 [ ] compile-time guaranteed — no error handling
 [-] $timeout << $Dur"30s"
 [-] $interval << $Dur"5m"

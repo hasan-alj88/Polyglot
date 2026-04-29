@@ -12,7 +12,7 @@ Authority: [[vision#Core Philosophy]]
 
 ## Who They Are
 
-Developers who integrate their existing codebases (Python, Rust, JavaScript, etc.) with Polyglot without writing .pg code. They use Polyglot as a service — connecting their applications through SDKs, APIs, and cross-language bridges. They care about how Polyglot fits into their stack, not its internal syntax.
+Developers who integrate their existing codebases (Python, Rust, JavaScript, etc.) with Aljam3 without writing .aj3 code. They use Aljam3 as a service — connecting their applications through SDKs, APIs, and cross-language bridges. They care about how Aljam3 fits into their stack, not its internal syntax.
 
 ## Writing Rules
 
@@ -22,22 +22,22 @@ Developers who integrate their existing codebases (Python, Rust, JavaScript, etc
 | Voice | Active voice, present tense, imperative for instructions |
 | Format | Host-language code snippets (Python, Rust, JS, etc.), API signatures, integration diagrams |
 | Structure | Goal -> integration code -> expected behavior -> troubleshooting |
-| Vocabulary | Use host-language terminology where appropriate. Define Polyglot terms via [[glossary]] |
-| Code | Host-language examples showing SDK/API usage. No .pg syntax required |
+| Vocabulary | Use host-language terminology where appropriate. Define Aljam3 terms via [[glossary]] |
+| Code | Host-language examples showing SDK/API usage. No .aj3 syntax required |
 
 ## ASSUME
 
 - Proficiency in their host programming language
 - Basic understanding of async/concurrent concepts and IPC
 - Familiarity with package managers, build systems, and dependency management
-- No knowledge of Polyglot code syntax
+- No knowledge of Aljam3 code syntax
 
 ## NEVER
 
-- Require .pg syntax knowledge — they don't write Polyglot code
+- Require .aj3 syntax knowledge — they don't write Aljam3 code
 - Assume they have read the language spec or syntax docs
-- Use Polyglot-internal jargon without definition
-- Show .pg code as the primary example — always lead with host-language code
+- Use Aljam3-internal jargon without definition
+- Show .aj3 code as the primary example — always lead with host-language code
 - Contradict [[vision#Evolution]] integration strategy
 
 ## ALWAYS
@@ -45,6 +45,6 @@ Developers who integrate their existing codebases (Python, Rust, JavaScript, etc
 - Show host-language code snippets (Python, Rust, JS, etc.)
 - Document SDK/API surfaces with signatures and return types
 - Include expected behavior and output for every example
-- Cross-reference [[audiences/automation-builder]] docs when deeper Polyglot understanding would help
+- Cross-reference [[audiences/automation-builder]] docs when deeper Aljam3 understanding would help
 - Note the integration evolution phase ([[vision#Evolution]]) for cross-language features
 - Provide troubleshooting for common integration failures

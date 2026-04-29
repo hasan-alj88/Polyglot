@@ -20,7 +20,7 @@ severity: error
 **See also:** PGE09001 (undefined import alias — validates the `@alias` prefix), PGE09003 (unresolved pipeline reference — same concept for local/pglib pipelines), PGE01010 (pipeline IO name mismatch — validated after the pipeline reference resolves)
 
 **VALID:**
-```polyglot
+```aljam3
 {@} @Local:999.MyApp:v1.0.0
    [@] @utils << @Local:999.Utilities:v1.0.0
 
@@ -28,7 +28,7 @@ severity: error
 {-} -Main
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] @utils-Validate                    [ ] ✓ @utils resolves (PGE09001), -Validate found in package (PGE09004)
       (-) <input#string << $data
@@ -36,7 +36,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {@} @Local:999.MyApp:v1.0.0
    [@] @utils << @Local:999.Utilities:v1.0.0
 
@@ -44,13 +44,13 @@ severity: error
 {-} -Main
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] @utils-NonExistent                 [ ] ✗ PGE09004 — no {-} -NonExistent in @Local:999.Utilities:v1.0.0
       (-) <input#string << $data
 ```
 
-```polyglot
+```aljam3
 {@} @Local:999.MyApp:v1.0.0
    [@] @utils << @Local:999.Utilities:v1.0.0
 
@@ -58,13 +58,13 @@ severity: error
 {-} -Main
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] @utils-Validte                     [ ] ✗ PGE09004 — typo: -Validte not found (did you mean -Validate?)
       (-) <input#string << $data
 ```
 
-```polyglot
+```aljam3
 {@} @Local:999.MyApp:v1.0.0
    [@] @utils << @Local:999.Utilities:v1.0.0
 
@@ -72,7 +72,7 @@ severity: error
 {-} -Main
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] @utils-OldPipeline                 [ ] ✗ PGE09004 — -OldPipeline no longer exists in @Local:999.Utilities:v1.0.0
       (-) <input#string << $data

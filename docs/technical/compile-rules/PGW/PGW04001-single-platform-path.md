@@ -19,27 +19,27 @@ severity: warning
 **See also:** PGE04008 (error when current OS subfield is missing), PGE04007 (invalid path string)
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] compiling on Unix:
 [-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"             [ ] ⚠ PGW04001 — only .Unix assigned, not portable
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ suppressed — developer acknowledges single-platform
 [ ] Ignore PGW04001
 [-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"             [ ] no warning — suppressed
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ no warning — both platforms assigned
 [-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ no warning — -Path"..." with cross-platform interpolation
 [-] $AppDir#path << -Path"{.}/MyApp"
 ```

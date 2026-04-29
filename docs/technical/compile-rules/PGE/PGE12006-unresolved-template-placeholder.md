@@ -20,7 +20,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all placeholders match declared inputs
 {-} -Greeting
    (-) %InlineString << "{name}"
@@ -28,13 +28,13 @@ severity: error
    (-) >message#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >message << "Hello {$name}"
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12006 — placeholder {user} has no matching <user input
 {-} -Greeting
    (-) %InlineString << "{user}"
@@ -42,7 +42,7 @@ severity: error
    (-) >message#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >message << "Hello {$name}"
 ```

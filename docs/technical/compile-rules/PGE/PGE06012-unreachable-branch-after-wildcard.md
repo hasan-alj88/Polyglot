@@ -19,7 +19,7 @@ severity: error
 **See also:** PGE06011 (duplicate wildcard catch-all — two `*?` in same chain), PGE06001 (conditional must be exhaustive)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ wildcard is the last branch
 [?] $status =? "active"
    [-] -HandleActive
@@ -29,7 +29,7 @@ severity: error
    [-] -HandleUnknown
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ no wildcard — statically exhaustive enum
 [?] $flag =? #Boolean.True
    [-] -DoSomething
@@ -38,7 +38,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE06012 — branch after wildcard is unreachable
 [?] $status =? "active"
    [-] -HandleActive
@@ -48,7 +48,7 @@ severity: error
    [-] -HandleInactive
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE06012 — multiple branches after wildcard
 [?] $code >? 100
    [-] -HandleHigh

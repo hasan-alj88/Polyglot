@@ -15,7 +15,7 @@ For known literals in execution body, use the `$Re` constructor instead — it g
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Re.Parse
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "ReParse"
@@ -48,7 +48,7 @@ None required. Pure computation pipeline.
 
 ## Usage
 
-```polyglot
+```aljam3
 [-] $pattern#re << -Re.Parse
    (<) <raw#string << $userInput
    [!] !Parse.Re.InvalidSyntax

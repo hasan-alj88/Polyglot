@@ -15,7 +15,7 @@ The `<authority` input selects the Hijri calendar authority. Defaults to `#Hijri
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Hijri
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToHijri"

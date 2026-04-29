@@ -17,7 +17,7 @@ severity: warning
 **Detection:** The compiler checks each `[C]` sequence. If the nearest parent `[-]` call is not a `-RT.*` pipeline, PGW01004 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ [C] under -RT.Python.Script — compiler knows the runtime target
 [-] -RT.Python.Script
    (-) <env << $env
@@ -28,7 +28,7 @@ severity: warning
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW01004 — [C] after a non-RT pipeline call
 [-] -File.Text.Read
    (-) <path << "/tmp/data.txt"
@@ -36,7 +36,7 @@ severity: warning
 [C] print("orphaned code")
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW01004 — [C] inside conditional without -RT.* parent
 [?] $mode =? "debug"
    [C] console.log("debug info")

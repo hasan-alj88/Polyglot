@@ -1,12 +1,12 @@
-# Polyglot Syntax Highlighting Test for Markdown
+# Aljam3 Syntax Highlighting Test for Markdown
 
-This document tests syntax highlighting of Polyglot code blocks in markdown.
+This document tests syntax highlighting of Aljam3 code blocks in markdown.
 
 ## Basic Pipeline
 
 Here's a simple pipeline:
 
-```polyglot
+```aljam3
 [@] @example/hello-world
 
 [|] |HelloWorld
@@ -23,7 +23,7 @@ Here's a simple pipeline:
 
 Example with variables:
 
-```polyglot
+```aljam3
 [|] |ProcessData
   [i] .input: pg\string
   [i] .count: pg\int <~ 10
@@ -41,7 +41,7 @@ Example with variables:
 
 Demonstrating error definitions and catch blocks:
 
-```polyglot
+```aljam3
 [!] !ValidationError
   .message: pg\string
   .code: pg\int
@@ -66,7 +66,7 @@ Demonstrating error definitions and catch blocks:
 
 All the different operators:
 
-```polyglot
+```aljam3
 [|] |Operators
   [i] .a: pg\int
   [i] .b: pg\int
@@ -92,7 +92,7 @@ All the different operators:
 
 Using datetime literals and triggers:
 
-```polyglot
+```aljam3
 [|] |ScheduledTask
   [i] !No.Input
   [t] |T.DT.Daily
@@ -110,14 +110,14 @@ Using datetime literals and triggers:
 
 Different namespace types:
 
-```polyglot
+```aljam3
 [|] |MultiLang
   [i] !No.Input
   [t] |T.Manual
 
-  // Polyglot native
-  [r] .pg_str: pg\string << "hello"
-  [r] .pg_int: pg\int << 42
+  // Aljam3 native
+  [r] .aj3_str: pg\string << "hello"
+  [r] .aj3_int: pg\int << 42
 
   // Rust types
   [r] .rs_vec: rs\Vec{i32} << [1, 2, 3]
@@ -140,7 +140,7 @@ Different namespace types:
 
 Processing collections:
 
-```polyglot
+```aljam3
 [|] |ProcessBatch
   [i] .items: pg\array{pg\string}
   [t] |T.Manual
@@ -159,7 +159,7 @@ Processing collections:
 
 Custom and reserved enums:
 
-```polyglot
+```aljam3
 [#] #Status
   .Pending
   .Processing
@@ -183,7 +183,7 @@ Custom and reserved enums:
 
 Complex logic with nesting:
 
-```polyglot
+```aljam3
 [|] |Nested
   [i] .value: pg\int
   [t] |T.Manual
@@ -227,7 +227,7 @@ Inline syntax elements: `[|]` pipeline marker, `.variable` identifier, `<<` push
 
 ## Summary
 
-All major Polyglot syntax elements should be highlighted:
+All major Aljam3 syntax elements should be highlighted:
 
 - **Block markers**: `[@]`, `[|]`, `[#]`, `[!]`, `[M]`, `[X]`, `[i]`, `[o]`, `[r]`, `[p]`, `[?]`, `[t]`, `[~]`, etc.
 - **Operators**: `<<`, `>>`, `<~`, `=?`, `>?`, `?[`, `~*`, etc.

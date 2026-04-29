@@ -11,26 +11,26 @@ updated: 2026-04-18
 <!-- @c:technical/spec/otel-permission-events -->
 Related: [[otel-foundation]], [[otel-permission-events]]
 
-This specification defines how users configure where Polyglot telemetry goes — exporters, sampling, fallback logging, and batch processing. All configuration is runtime-controlled; no recompilation is needed to change telemetry destinations.
+This specification defines how users configure where Aljam3 telemetry goes — exporters, sampling, fallback logging, and batch processing. All configuration is runtime-controlled; no recompilation is needed to change telemetry destinations.
 
 **Scope boundary:** This document covers telemetry *configuration* (where data goes, how it's filtered). The tracing infrastructure (crate stack, span hierarchy, NATS propagation) is defined in [[otel-foundation]]. Event specifications (what is logged and when) are defined per-domain (e.g., [[otel-permission-events]]).
 
 ## Configuration Methods
 
-Polyglot supports four configuration methods, evaluated in priority order:
+Aljam3 supports four configuration methods, evaluated in priority order:
 
 | Priority | Method | Scope | Example |
 |---|---|---|---|
 | 1 (highest) | Environment variables | Per-process override | `OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317` |
 | 2 | CLI flags | Per-invocation override | `--otel-exporter=stdout` |
-| 3 | `polyglot.toml` | Project-level default | `[telemetry]` section in project root |
+| 3 | `aljam3.toml` | Project-level default | `[telemetry]` section in project root |
 | 4 (lowest) | Built-in defaults | Fallback | OTLP exporter, localhost:4317, always-on sampling |
 
-Higher-priority methods override lower-priority ones field by field. For example, setting `OTEL_EXPORTER_OTLP_ENDPOINT` overrides `polyglot.toml`'s `endpoint` field but leaves `sampling.strategy` from `polyglot.toml` intact.
+Higher-priority methods override lower-priority ones field by field. For example, setting `OTEL_EXPORTER_OTLP_ENDPOINT` overrides `aljam3.toml`'s `endpoint` field but leaves `sampling.strategy` from `aljam3.toml` intact.
 
-## polyglot.toml \[telemetry\] Section
+## aljam3.toml \[telemetry\] Section
 
-The `[telemetry]` section in `polyglot.toml` is the primary configuration surface. This is the first defined section of `polyglot.toml` — other sections (e.g., `[compiler]`, `[runtime]`) will be defined by future specifications as needed.
+The `[telemetry]` section in `aljam3.toml` is the primary configuration surface. This is the first defined section of `aljam3.toml` — other sections (e.g., `[compiler]`, `[runtime]`) will be defined by future specifications as needed.
 
 ```toml
 [telemetry]
@@ -48,7 +48,7 @@ keep_errors = true
 enabled = true
 target = "stderr"
 format = "json"
-path = "/var/log/polyglot/otel-fallback.json"
+path = "/var/log/aljam3/otel-fallback.json"
 
 [telemetry.batch]
 max_queue_size = 2048
@@ -82,7 +82,7 @@ max_export_batch_size = 512
 | `enabled` | bool | `true` | `true`, `false` | Enable fallback logging when the primary exporter is unavailable (network failure, endpoint misconfiguration, export timeout). |
 | `target` | string | `"stderr"` | `"stderr"`, `"file"` | Where fallback output goes. `"stderr"` writes to standard error. `"file"` writes to the path specified in `path`. |
 | `format` | string | `"json"` | `"json"` | Fallback output format. Currently only structured JSON is supported. |
-| `path` | string | `"/var/log/polyglot/otel-fallback.json"` | File path | Output file path for `target = "file"`. Parent directory must exist. Ignored when `target = "stderr"`. |
+| `path` | string | `"/var/log/aljam3/otel-fallback.json"` | File path | Output file path for `target = "file"`. Parent directory must exist. Ignored when `target = "stderr"`. |
 
 #### \[telemetry.batch\]
 
@@ -94,7 +94,7 @@ max_export_batch_size = 512
 
 ## Environment Variable Mapping
 
-Standard OTel environment variables and Polyglot-specific variables override `polyglot.toml` fields:
+Standard OTel environment variables and Aljam3-specific variables override `aljam3.toml` fields:
 
 | Environment Variable | Maps To | Standard |
 |---|---|---|
@@ -102,11 +102,11 @@ Standard OTel environment variables and Polyglot-specific variables override `po
 | `OTEL_EXPORTER_OTLP_PROTOCOL` | `telemetry.protocol` | OTel standard |
 | `OTEL_TRACES_SAMPLER` | `telemetry.sampling.strategy` | OTel standard |
 | `OTEL_TRACES_SAMPLER_ARG` | `telemetry.sampling.ratio` | OTel standard |
-| `POLYGLOT_OTEL_EXPORTER` | `telemetry.exporter` | Polyglot-specific |
-| `POLYGLOT_OTEL_ENABLED` | `telemetry.enabled` | Polyglot-specific |
-| `POLYGLOT_OTEL_FALLBACK` | `telemetry.fallback.enabled` | Polyglot-specific |
+| `ALJAM3_OTEL_EXPORTER` | `telemetry.exporter` | Aljam3-specific |
+| `ALJAM3_OTEL_ENABLED` | `telemetry.enabled` | Aljam3-specific |
+| `ALJAM3_OTEL_FALLBACK` | `telemetry.fallback.enabled` | Aljam3-specific |
 
-**Naming convention:** Standard OTel variables use the `OTEL_` prefix. Polyglot-specific variables use the `POLYGLOT_OTEL_` prefix to avoid namespace collision.
+**Naming convention:** Standard OTel variables use the `OTEL_` prefix. Aljam3-specific variables use the `ALJAM3_OTEL_` prefix to avoid namespace collision.
 
 **Value mapping for `OTEL_TRACES_SAMPLER`:**
 
@@ -118,7 +118,7 @@ Standard OTel environment variables and Polyglot-specific variables override `po
 
 ## Exporter Destinations
 
-Polyglot supports several telemetry destinations, all via standard OTel protocols:
+Aljam3 supports several telemetry destinations, all via standard OTel protocols:
 
 ### OTLP Endpoint (default)
 
@@ -128,14 +128,14 @@ Any OTel-compatible backend accepting OTLP over gRPC or HTTP:
 - **Datadog** — via Datadog Agent's OTLP receiver
 - **Honeycomb** — `https://api.honeycomb.io:443` with API key header
 
-No Polyglot-specific integration is needed. Any backend that speaks OTLP receives full span and event data.
+No Aljam3-specific integration is needed. Any backend that speaks OTLP receives full span and event data.
 
 ### stdout (dev mode)
 
 Human-readable span output to terminal. Useful for local development and debugging:
 
 ```text
-POLYGLOT_OTEL_EXPORTER=stdout polyglot run myproject/
+ALJAM3_OTEL_EXPORTER=stdout aljam3 run myproject/
 ```
 
 Prints span names, durations, attributes, and events as they complete. Not suitable for production.
@@ -151,7 +151,7 @@ exporter = "none"
 [telemetry.fallback]
 enabled = true
 target = "file"
-path = "/var/log/polyglot/traces.json"
+path = "/var/log/aljam3/traces.json"
 ```
 
 ### none (disabled)
@@ -163,12 +163,12 @@ Telemetry disabled entirely. No OTel SDK initialization, no span creation overhe
 Multiple destinations are supported by running an OTel Collector as an intermediary:
 
 ```text
-Polyglot → OTLP → OTel Collector → Jaeger
+Aljam3 → OTLP → OTel Collector → Jaeger
                                   → Grafana Tempo
                                   → File export
 ```
 
-The OTel Collector is an external process, not a Polyglot component. Polyglot sends to a single OTLP endpoint; the Collector fans out to multiple backends. This keeps Polyglot's exporter logic simple while supporting arbitrarily complex routing.
+The OTel Collector is an external process, not a Aljam3 component. Aljam3 sends to a single OTLP endpoint; the Collector fans out to multiple backends. This keeps Aljam3's exporter logic simple while supporting arbitrarily complex routing.
 
 ## Fallback Logging
 
@@ -186,7 +186,7 @@ The OTel Collector is an external process, not a Polyglot component. Polyglot se
 Each line is a self-contained JSON object with the same attributes as the OTel span:
 
 ```json
-{"timestamp":"2026-04-18T14:30:05.789Z","severity":"ERROR","name":"permission.sandbox.violation","trace_id":"abc123","span_id":"exec-789","attributes":{"polyglot.job.uid":"job-a1b2c3d4","polyglot.sandbox.syscall":"open","polyglot.sandbox.resource":"/etc/shadow"}}
+{"timestamp":"2026-04-18T14:30:05.789Z","severity":"ERROR","name":"permission.sandbox.violation","trace_id":"abc123","span_id":"exec-789","attributes":{"aljam3.job.uid":"job-a1b2c3d4","aljam3.sandbox.syscall":"open","aljam3.sandbox.resource":"/etc/shadow"}}
 ```
 
 ### Design Rationale

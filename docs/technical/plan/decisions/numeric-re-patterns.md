@@ -11,7 +11,7 @@ updated: 2026-04-05
 
 ## Context
 
-All Polyglot data is serialized strings. `int` and `float` types are described as "matched via regular expression patterns" but no formal patterns were specified.
+All Aljam3 data is serialized strings. `int` and `float` types are described as "matched via regular expression patterns" but no formal patterns were specified.
 
 ## Decision
 

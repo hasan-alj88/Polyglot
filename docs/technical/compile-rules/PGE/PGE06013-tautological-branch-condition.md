@@ -23,7 +23,7 @@ severity: error
 - [PGE06012 — Unreachable Branch After Wildcard](PGE06012-unreachable-branch-after-wildcard.md) — unreachable due to `*?` ordering
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ compound condition is satisfiable — not tautological or contradictory
 [?] $age >? 18
    [&] $hasLicense =? #Boolean.True
@@ -32,7 +32,7 @@ severity: error
    [-] -Deny
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ OR is satisfiable — some inputs match, some don't
 [?] $status =? .Active
    [+] $role =? .Admin
@@ -42,7 +42,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE06013 — contradictory branch (always False)
 [?] $a =? .X
    [&] $a =!? .X                              [ ] ✗ PGE06013 — A AND NOT A = always False
@@ -51,7 +51,7 @@ severity: error
    [-] -Default
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE06013 — tautological branch (always True)
 [?] $a =? .X
    [+] $a =!? .X                              [ ] ✗ PGE06013 — A OR NOT A = always True
@@ -60,7 +60,7 @@ severity: error
    [-] -NeverReached                           [ ] unreachable due to tautological branch above
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE06013 — XOR of identical conditions (always False)
 [?] $status =? .Active
    [^] $status =? .Active                     [ ] ✗ PGE06013 — A XOR A = always False

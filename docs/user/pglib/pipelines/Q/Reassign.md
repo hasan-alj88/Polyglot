@@ -20,7 +20,7 @@ Move a job to a different queue. Enables host offloading.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Reassign
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QReassign"

@@ -13,7 +13,7 @@ Returns the next work day as a `#dt`. Requires an explicit `#BusinessWeek` confi
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Business.NextWorkDay
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtBusinessNextWorkDay"

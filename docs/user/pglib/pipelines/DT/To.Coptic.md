@@ -13,7 +13,7 @@ Projects a `#dt` value into a Coptic date structure. Projections are not cached 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Coptic
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToCoptic"

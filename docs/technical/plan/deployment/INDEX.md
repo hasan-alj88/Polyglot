@@ -9,22 +9,22 @@ updated: 2026-04-16
 <!-- @c:technical/plan/queue-manager/infrastructure -->
 <!-- @c:technical/plan/queue-manager/process-isolation -->
 
-The Polyglot Service deploys as a set of cooperating daemons managed by a single system package. The Runner requires direct Linux kernel access (PID namespaces, cgroups v2, CRIU) — container runtimes like Docker conflict with these primitives. Polyglot IS the isolation layer for its jobs.
+The Aljam3 Service deploys as a set of cooperating daemons managed by a single system package. The Runner requires direct Linux kernel access (PID namespaces, cgroups v2, CRIU) — container runtimes like Docker conflict with these primitives. Aljam3 IS the isolation layer for its jobs.
 
 ## Sections
 
 - [[packaging]] — How to build the .deb and .rpm packages: nfpm configuration, binary sources, systemd units, postinst/prerm scripts, APT repository hosting
-- [[installation]] — How users install, configure, and verify the Polyglot Service: prerequisites, install modes (all-in-one vs distributed), TLS certificate setup
+- [[installation]] — How users install, configure, and verify the Aljam3 Service: prerequisites, install modes (all-in-one vs distributed), TLS certificate setup
 - [[lifecycle]] — Upgrade, rollback, data migration, version compatibility, and uninstall procedures
 
 ## Component Inventory
 
 | Component | Binary | Source | Role |
 |-----------|--------|--------|------|
-| Compiler | `polyglot` | Rust (cargo build) | Compiles .pg files to Behavior Contracts |
-| Trigger Monitor | `polyglot-tm` | Rust (cargo build) | Long-running daemon — monitors triggers, manages job hierarchy |
-| Runner | `polyglot-runner` | Rust (cargo build) | Long-running daemon — executes jobs in PID namespaces with cgroup limits |
-| Management CLI | `polyglot-ctl` | Rust (cargo build) | Setup, join, status, certificate management |
+| Compiler | `aljam3` | Rust (cargo build) | Compiles .aj3 files to Behavior Contracts |
+| Trigger Monitor | `aljam3-tm` | Rust (cargo build) | Long-running daemon — monitors triggers, manages job hierarchy |
+| Runner | `aljam3-runner` | Rust (cargo build) | Long-running daemon — executes jobs in PID namespaces with cgroup limits |
+| Management CLI | `aljam3-ctl` | Rust (cargo build) | Setup, join, status, certificate management |
 | Queue Handler | Lua scripts | Hand-written | Loaded into Redis — atomic dispatch logic |
 | Redis | `redis-server` | Vendor binary (redis.io) | State store — queues, counters, sets |
 | NATS | `nats-server` | Vendor binary (nats.io) | Messaging backbone — inter-service signals |
@@ -36,7 +36,7 @@ The Runner creates PID namespaces, manages cgroups, uses pidfd operations, and p
 | Kernel Operation | Docker Conflict |
 |-----------------|-----------------|
 | `clone(CLONE_NEWPID)` | Double namespace nesting — unnecessary overhead |
-| cgroup management | Competing cgroup controllers (Docker's vs Polyglot's) |
+| cgroup management | Competing cgroup controllers (Docker's vs Aljam3's) |
 | CRIU dump/restore | Requires `--privileged` — defeats container isolation |
 | `pidfd_open()` + `pidfd_send_signal()` | Requires host PID namespace visibility |
 

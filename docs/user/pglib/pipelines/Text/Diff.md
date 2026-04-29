@@ -13,7 +13,7 @@ Compares two text strings and produces a list of line-level differences. Pure co
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} =Text.Diff
    [%] .Kind << #NativeKind.Computation
    [%] .Rust << "TextDiff"

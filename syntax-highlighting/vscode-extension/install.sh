@@ -1,15 +1,15 @@
 #!/bin/bash
-# Polyglot VSCode Extension Quick Install Script
+# Aljam3 VSCode Extension Quick Install Script
 
 set -e
 
-EXTENSION_NAME="polyglot-language-support-0.1.0"
+EXTENSION_NAME="aljam3-language-support-0.1.0"
 VSCODE_EXTENSIONS_DIR="$HOME/.vscode/extensions"
 EXTENSION_DIR="$VSCODE_EXTENSIONS_DIR/$EXTENSION_NAME"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "========================================="
-echo "Polyglot VSCode Extension Installer"
+echo "Aljam3 VSCode Extension Installer"
 echo "========================================="
 echo ""
 
@@ -54,8 +54,8 @@ echo "   - Type: 'Developer: Reload Window'"
 echo "   - Press Enter"
 echo ""
 echo "2. Test the extension:"
-echo "   - Open a .pg file"
-echo "   - Check language mode in bottom-right corner shows 'Polyglot'"
+echo "   - Open a .aj3 file"
+echo "   - Check language mode in bottom-right corner shows 'Aljam3'"
 echo ""
 echo "3. Test markdown highlighting:"
 echo "   - Open test-samples/markdown-test.md"

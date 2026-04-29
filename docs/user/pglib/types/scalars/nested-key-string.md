@@ -11,7 +11,7 @@ metadata_instance: "%#:String:nestedkey"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #NestedKeyString
    [%] %alias << "nestedkey"
    [#] ##String

@@ -1,4 +1,4 @@
-# Polyglot Syntax Corrections: Memory Lesson 1
+# Aljam3 Syntax Corrections: Memory Lesson 1
 
 **Date:** 2026-04-25
 **Scope:** Pipeline Definitions, Parallel Execution, and Environment Syntax
@@ -12,7 +12,7 @@
 2. **Triggers, Queues, and Wrappers**
    - **Incorrect:** Nesting pipelines under a `{T}` definition block.
    - **Correct:** `[T]`, `[Q]`, and `[W]` are placed inline directly within the `{-}` pipeline block just below the input/output declarations, e.g.:
-     ```polyglot
+     ```aljam3
      {-} -FetchAndNotifyStocks
         [T] -T.Daily"3AM"
         [Q] -Q.Default
@@ -31,4 +31,4 @@
 5. **String Interpolation**
    - Use `{$VariableName}` inside strings instead of appending with `+`: `"The price is {$Price}$"`.
 
-**Action taken:** This memory file ensures the Polyglot Coder persona correctly applies these pipeline execution markers going forward.
+**Action taken:** This memory file ensures the Aljam3 Coder persona correctly applies these pipeline execution markers going forward.

@@ -21,7 +21,7 @@ These are **operators**, not identifier prefixes. The 5 identifier prefixes (`@`
 
 ## Example: Transform an Array
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $SomeArray
    (=) >item >> $item
@@ -59,7 +59,7 @@ See [[concepts/collections/collect#Collect-All & Race Collectors]] for the colle
 
 Collector outputs can write directly to a pipeline output port using the `>` prefix:
 
-```polyglot
+```aljam3
 [-] *Agg.Concatenate
    (*) <string << $value
    (*) >result >> >pipelineOutput

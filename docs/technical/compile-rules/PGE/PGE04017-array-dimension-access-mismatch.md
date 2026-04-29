@@ -20,44 +20,44 @@ severity: error
 **See also:** PGE04013 (nested array type), PGE04011 (negative array index literal)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ 1D access — single index on default 1D array
 (-) <items#array:string
 [-] $first << $items.0
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ 2D access — two indices on :2D array
 (-) <matrix#array:float:2D
 [-] $val << $matrix.0.1
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ 3D access — three indices on :3D array
 (-) <cube#array:int:3D
 [-] $val << $cube.2.3.0
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ user-defined element type with :2D
 (-) <grid#array:UserRecord:2D
 [-] $cell << $grid.1.2
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE04017 — too many indices for :2D array
 (-) <matrix#array:float:2D
 [-] $val << $matrix.0.1.2                    [ ] ✗ 3 indices on :2D — expected 2
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04017 — too few indices for :3D array
 (-) <cube#array:int:3D
 [-] $val << $cube.2                           [ ] ✗ 1 index on :3D — expected 3
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04017 — :0D is not a valid dimension
 (-) <nothing#array:float:0D                  [ ] ✗ dimension must be positive integer
 ```

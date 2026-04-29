@@ -22,7 +22,7 @@ severity: error
 **See also:** PGE10005 (invalid permission block marker), PGE10004 (undeclared permission), [[permissions/permission-prefixes#__ Generic Permissions]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ template with all inputs provided
 {_} _YAMLFile
    (_) <file#path
@@ -42,7 +42,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10009 — template input <file not provided
 {_} _YAMLFile
    (_) <file#path

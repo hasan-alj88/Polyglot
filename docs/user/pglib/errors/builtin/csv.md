@@ -10,7 +10,7 @@ metadata_definition: "%!.CSV"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !CSV
    [:] :Parse
       [.] .MalformedRow#Error

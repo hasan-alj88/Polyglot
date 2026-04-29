@@ -16,7 +16,7 @@ updated: 2026-04-23
 
 **What it tests:** Full call structure: ref -> IO lines -> error blocks scoped under call. See [[concepts/pipelines/error-handling#Error Handling]], [[io#Pipeline Call]].
 
-```polyglot
+```aljam3
 [-] @AD-Account.Create
    (-) <name << $fullName
    (-) <email << $email
@@ -34,7 +34,7 @@ updated: 2026-04-23
 
 **What it tests:** `-File.Text.Append` with `=` prefix (all identifiers have a prefix, no exceptions). No `[@]` import needed. See [[concepts/pipelines/INDEX|pipelines]], [[technical/ebnf/10-execution#10.2]].
 
-```polyglot
+```aljam3
 [-] -File.Text.Append
    (-) <path << "/var/log/app.log"
    (-) <content << $message
@@ -48,7 +48,7 @@ updated: 2026-04-23
 
 **What it tests:** `[#]` block element for loading serialized data into typed structures. In `{#}` definitions, file access is mediated through `{_}` permission objects. See [[blocks#Execution]], [[concepts/permissions/enforcement#Compile-Time File Binding]].
 
-```polyglot
+```aljam3
 [ ] In execution: deserialize serial into typed data
 [#] $hire#NewHire << $payload
 
@@ -72,7 +72,7 @@ updated: 2026-04-23
 
 **What it tests:** `[#]` file load using a `{_}` template with `(_)` inputs. Template is resolved at compile time; each instantiation produces its own content hash.
 
-```polyglot
+```aljam3
 {_} _YAMLFile
    (_) <file#path
    [.] .intent << #Grant
@@ -96,7 +96,7 @@ updated: 2026-04-23
 <!-- @u:blocks:Execution -->
 **What it tests:** `[=]` for parallel runs. See [[blocks#Execution]].
 
-```polyglot
+```aljam3
 [=] @AD-Account.Create
    (-) <name << $name
 
@@ -112,7 +112,7 @@ updated: 2026-04-23
 
 **What it tests:** Multiple pipelines chained with `->`, IO wired via numeric step indices. See [[concepts/pipelines/chains#Chain Execution]], [[io#Chain IO Addressing]].
 
-```polyglot
+```aljam3
 [-] -Pipeline1->-Pipeline2->-Pipeline3
    (-) >0.inputParam1#path << $file
    (-) >0.inputParam2#string << "Hello"
@@ -128,7 +128,7 @@ updated: 2026-04-23
 
 **What it tests:** Using pipeline leaf name instead of numeric index for readability.
 
-```polyglot
+```aljam3
 [-] -File.List->-Data.Transform.Rows->-Report.Format
    (-) >List.folder#path << $folder
    (-) <List.files >> <Rows.input
@@ -142,7 +142,7 @@ updated: 2026-04-23
 
 **What it tests:** Only entry and exit IO declared; intermediate wiring is implicit.
 
-```polyglot
+```aljam3
 [-] -File.Text.Read->-Text.Transform->-Text.Format
    [ ] Each step: one output#string -> one input#string — auto-wired
    (-) >0.path#path << $path
@@ -155,7 +155,7 @@ updated: 2026-04-23
 
 **What it tests:** Errors scoped to specific chain steps using `!N.ErrorName`.
 
-```polyglot
+```aljam3
 [-] -File.Text.Read->-Text.Parse.CSV
    (-) >0.path#path << $path
    (-) <1.rows#string >> >content
@@ -171,7 +171,7 @@ updated: 2026-04-23
 
 **What it tests:** Numeric index and leaf name references used in the same chain, including in error blocks.
 
-```polyglot
+```aljam3
 [-] -User.Fetch->-User.Validate->-User.Store
    (-) >0.id#int << $userId
    (-) <Fetch.profile >> <Validate.input
@@ -187,7 +187,7 @@ updated: 2026-04-23
 
 **What it tests:** Duplicate leaf names in a chain must use numeric indices.
 
-```polyglot
+```aljam3
 [ ] INVALID — both steps have leaf name "Transform"
 [ ] [-] -Text.Transform->-Data.Transform
 [ ]    (-) >Transform.input << $val   <- ambiguous, compile error
@@ -202,7 +202,7 @@ updated: 2026-04-23
 
 **What it tests:** Auto-wire fails when types don't match between adjacent steps.
 
-```polyglot
+```aljam3
 [ ] INVALID — step 0 outputs #string, step 1 expects #int
 [ ] Auto-wire cannot infer: explicit (-) wiring required
 [-] -ProduceString->-ConsumeInt
@@ -218,7 +218,7 @@ updated: 2026-04-23
 
 **What it tests:** A standalone literal under `[-]`/`[=]`/`[b]` — no assignment, no call, no effect. See [[technical/compile-rules/PGE/PGE01020-effectless-execution-expression|PGE01020]].
 
-```polyglot
+```aljam3
 [ ] INVALID — bare integer literal
 [-] 42                                    [ ] ✗ PGE01020 — bare literal, no effect
 
@@ -233,7 +233,7 @@ updated: 2026-04-23
 
 **What it tests:** Data type, variable, or package identifiers used as execution expressions — they aren't pipeline calls and produce no effect. See [[technical/compile-rules/PGE/PGE01020-effectless-execution-expression|PGE01020]].
 
-```polyglot
+```aljam3
 [ ] INVALID — data type identifier (not a pipeline call)
 [-] #UserRecord                           [ ] ✗ PGE01020 — data type, not a call
 
@@ -249,12 +249,12 @@ updated: 2026-04-23
 **EBNF ref:** `continuation_line ::= "[~]" expression`
 **What it tests:** `[~]` at start of block with no preceding incomplete expression. PGE01026 fires.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01026 — [~] with no preceding expression
 {-} -Bad
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [~] "orphan continuation"
 ```
 
@@ -264,7 +264,7 @@ updated: 2026-04-23
 **EBNF ref:** `chain_call ::= pipeline_ref "->" pipeline_ref { "->" pipeline_ref }`
 **What it tests:** `-A -> -A` is valid (runs twice) but requires numeric step indexing. PGE08012 fires without it.
 
-```polyglot
+```aljam3
 [ ] ✓ self-chain with numeric indexing
 [ ]
 [-] -Process -> -Process
@@ -272,7 +272,7 @@ updated: 2026-04-23
    (-) <1.result >> >output
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08012 — self-chain without indexing
 [-] -Process -> -Process
    (-) >input << $data
@@ -284,7 +284,7 @@ updated: 2026-04-23
 **EBNF ref:** `foreign_code_block` — requires at least one `foreign_code_line`
 **What it tests:** `[C]` block with no code lines. PGE01027 fires.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01027 — empty foreign code block
 [-] -RT.Python.Script
    (-) <env << $env
@@ -298,7 +298,7 @@ updated: 2026-04-23
 **EBNF ref:** `call_io_line ::= ... | "(-)" wildcard_input "<<" wildcard_output`
 **What it tests:** `<* << $Label>*` with a single unique-type pairing — the simplest successful wildcard auto-wire. PGW08001 fires (valid but explicit wiring preferred). See [[user/syntax/io/auto-wire]].
 
-```polyglot
+```aljam3
 [ ] ✓ valid — one #string output bijectively maps to one #string input
 [ ] ⚠ PGW08001 — auto-wire succeeded, explicit wiring preferred
 [-] -File.Text.Read
@@ -317,7 +317,7 @@ updated: 2026-04-23
 **EBNF ref:** `wildcard_input`, `wildcard_output` — bijective type-identity required
 **What it tests:** `<* << $A>*` where `$A` has an output with no corresponding input type on the target. PGE08001 fires. See [[technical/compile-rules/PGE/PGE08001-auto-wire-type-mismatch|PGE08001]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08001 — >total#int has no matching <…#int input
 [-] -Count.Items
    (-) $A
@@ -336,7 +336,7 @@ updated: 2026-04-23
 **EBNF ref:** `wildcard_input`, `wildcard_output` — unique type-identity required per side
 **What it tests:** Multiple outputs share a type-identity, making the bijection non-unique. PGE08002 fires. See [[technical/compile-rules/PGE/PGE08002-auto-wire-ambiguous-type|PGE08002]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08002 — two #string outputs compete for one #string input
 [-] -Fetch.Both
    (-) $A
@@ -356,7 +356,7 @@ updated: 2026-04-23
 **EBNF ref:** `wildcard_input`, `wildcard_output` — cardinality must match
 **What it tests:** `$A` has more outputs than the target has inputs, so the bijection cannot be onto. PGE08003 fires. See [[technical/compile-rules/PGE/PGE08003-auto-wire-unmatched-parameter|PGE08003]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08003 — 3 outputs, 2 inputs
 [-] -Fetch.Data
    (-) $A

@@ -10,13 +10,13 @@ updated: 2026-04-16
 <!-- @c:technical/plan/queue-manager/infrastructure -->
 <!-- @c:technical/plan/queue-manager/process-isolation -->
 
-This document specifies how the Polyglot package handles upgrades, rollbacks, data migration, and version compatibility across its components.
+This document specifies how the Aljam3 package handles upgrades, rollbacks, data migration, and version compatibility across its components.
 
 ## Upgrade Process
 
 ### Service Restart Order
 
-When `apt upgrade polyglot` installs a new version, the postinstall script restarts services in dependency order:
+When `apt upgrade aljam3` installs a new version, the postinstall script restarts services in dependency order:
 
 1. **Redis** — state store restarts first (data persisted to disk via RDB/AOF)
 2. **NATS** — messaging restarts second (JetStream replays from disk)
@@ -38,13 +38,13 @@ In multi-host deployments, upgrade hosts one at a time:
 
 1. Upgrade infra host (Redis, NATS, TM restart — brief signal gap)
 2. Upgrade worker hosts sequentially (each Runner drains jobs before restart)
-3. Verify cluster health: `polyglot-ctl status --cluster`
+3. Verify cluster health: `aljam3-ctl status --cluster`
 
-The Queue Handler (Redis Lua scripts) is updated atomically during step 1 — the postinstall script reloads all Lua scripts via `polyglot-ctl load-qh-scripts`.
+The Queue Handler (Redis Lua scripts) is updated atomically during step 1 — the postinstall script reloads all Lua scripts via `aljam3-ctl load-qh-scripts`.
 
 ## Behavior Contract Compatibility
 
-The Behavior Contract is the compiled output of .pg files — a JSON signal map that the Trigger Monitor interprets at runtime.
+The Behavior Contract is the compiled output of .aj3 files — a JSON signal map that the Trigger Monitor interprets at runtime.
 
 ### Contract Version Field
 
@@ -67,7 +67,7 @@ Every Behavior Contract includes a `contract_version` field:
 | Supports v1.x | v2.0 contract | Rejected — TM logs error, contract not loaded |
 | Supports v2.x | v1.0 contract | Runs normally (major versions support previous major) |
 
-**Rule:** A Trigger Monitor supports contracts from its own major version and one major version back. Users must recompile .pg files with the new compiler when skipping more than one major version.
+**Rule:** A Trigger Monitor supports contracts from its own major version and one major version back. Users must recompile .aj3 files with the new compiler when skipping more than one major version.
 
 ## Data Migration
 
@@ -79,9 +79,9 @@ Redis stores runtime state (queues, job status, counters). This state is **ephem
 |-------------|-------------|----------------|
 | PATCH | No schema change | None — Redis restarts, state reloaded |
 | MINOR | Additive fields only | None — new fields use defaults |
-| MAJOR | Schema may change | `polyglot-ctl migrate` runs automatic migration |
+| MAJOR | Schema may change | `aljam3-ctl migrate` runs automatic migration |
 
-`polyglot-ctl migrate` reads the current Redis schema version from `polyglot:meta:schema_version` and applies incremental migration scripts. This runs automatically in the postinstall script for major upgrades.
+`aljam3-ctl migrate` reads the current Redis schema version from `aljam3:meta:schema_version` and applies incremental migration scripts. This runs automatically in the postinstall script for major upgrades.
 
 ### NATS JetStream Streams
 
@@ -90,7 +90,7 @@ NATS stores signal history in JetStream streams. Stream names and subject patter
 | Upgrade Type | NATS Impact | Action Required |
 |-------------|-------------|----------------|
 | PATCH/MINOR | No stream changes | None |
-| MAJOR | Stream names or subjects may change | `polyglot-ctl migrate` creates new streams, drains old ones |
+| MAJOR | Stream names or subjects may change | `aljam3-ctl migrate` creates new streams, drains old ones |
 
 ### NoSQL Database
 
@@ -99,7 +99,7 @@ Queue definitions and job hierarchy are stored in NoSQL. The schema is versioned
 | Upgrade Type | NoSQL Impact | Action Required |
 |-------------|-------------|----------------|
 | PATCH/MINOR | No schema change | None |
-| MAJOR | Schema may change | `polyglot-ctl migrate` applies schema migration |
+| MAJOR | Schema may change | `aljam3-ctl migrate` applies schema migration |
 
 ## Rollback
 
@@ -107,10 +107,10 @@ Queue definitions and job hierarchy are stored in NoSQL. The schema is versioned
 
 ```bash
 # Debian/Ubuntu — install specific version
-sudo apt install polyglot=0.1.0
+sudo apt install aljam3=0.1.0
 
 # Fedora/RHEL
-sudo dnf downgrade polyglot-0.1.0
+sudo dnf downgrade aljam3-0.1.0
 ```
 
 ### Rollback Constraints
@@ -118,7 +118,7 @@ sudo dnf downgrade polyglot-0.1.0
 | Component | Rollback Safety |
 |-----------|----------------|
 | Binaries | Safe — old binaries replace new ones |
-| Redis state | Safe for PATCH/MINOR — same schema. MAJOR rollback requires `polyglot-ctl migrate --reverse` |
+| Redis state | Safe for PATCH/MINOR — same schema. MAJOR rollback requires `aljam3-ctl migrate --reverse` |
 | NATS streams | Safe — old TM ignores unknown streams |
 | Behavior Contracts | Safe if rolling back within same major version. Cross-major requires recompile |
 | QH Lua scripts | Safe — postinstall reloads scripts matching the installed version |
@@ -126,11 +126,11 @@ sudo dnf downgrade polyglot-0.1.0
 
 ### Rollback Procedure
 
-1. Stop all services: `sudo polyglot-ctl stop`
-2. Install previous version: `sudo apt install polyglot=<version>`
-3. If major version rollback: `sudo polyglot-ctl migrate --reverse --target <version>`
-4. Start services: `sudo polyglot-ctl start`
-5. Verify: `polyglot-ctl status`
+1. Stop all services: `sudo aljam3-ctl stop`
+2. Install previous version: `sudo apt install aljam3=<version>`
+3. If major version rollback: `sudo aljam3-ctl migrate --reverse --target <version>`
+4. Start services: `sudo aljam3-ctl start`
+5. Verify: `aljam3-ctl status`
 
 ## Multi-Version Clusters
 
@@ -152,7 +152,7 @@ In distributed deployments, infra host and workers may temporarily run different
 
 Redis and NATS are bundled binaries with pinned versions. Updates follow this policy:
 
-| Vendor Change | Polyglot Version Bump | Process |
+| Vendor Change | Aljam3 Version Bump | Process |
 |--------------|----------------------|---------|
 | Security patch (Redis/NATS) | PATCH | Rebuild package with updated vendor binary |
 | Minor feature (Redis/NATS) | MINOR | Test compatibility, update `vendor/VERSIONS`, rebuild |

@@ -11,7 +11,7 @@ Expands a collection and collects items into a dataframe (row-oriented table).
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =*Into.Dataframe
    (=) <Array << $records
    (*) >Dataframe >> $table
@@ -31,7 +31,7 @@ Expands a collection and collects items into a dataframe (row-oriented table).
 
 ## Equivalent Expand-Collect
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $records
    (=) >item >> $record

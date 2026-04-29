@@ -13,7 +13,7 @@ Capability-level generic permission for shared memory access. Sugar over [[INDEX
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Memory.Shared
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for shared memory access. Sugar over [[INDEX
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Memory.Shared
    (_) <scope << "shm://buffer"
 ```

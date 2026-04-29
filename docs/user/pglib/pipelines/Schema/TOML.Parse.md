@@ -13,7 +13,7 @@ Parses a TOML string into a `#serial` data tree. Compiler intrinsic -- not user-
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -#.TOML.Parse
    [%] .Kind << #NativeKind.Compiler
    [%] .Rust << "SchemaTomlParse"

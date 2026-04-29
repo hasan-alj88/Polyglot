@@ -20,7 +20,7 @@ See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] f
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #NativeKind
    [%] .description << "Subsystem role classifier for native {N} definitions"
    [%] .version << "1.0.0"
@@ -37,7 +37,7 @@ See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] f
 |---------|------|---------|
 | `.Trigger` | Signal source — fires pipeline execution | `-T.Call`, `-T.Daily`, `-T.Webhook` |
 | `.Queue` | Queue strategy — controls dispatch ordering | `-Q.Default`, `-Q.Pause.Hard` |
-| `.Wrapper` | Resource lifecycle — setup/teardown around body | `-W.Polyglot`, `-W.RT` |
+| `.Wrapper` | Resource lifecycle — setup/teardown around body | `-W.Aljam3`, `-W.RT` |
 | `.Execution` | Data operation — reads, writes, transforms | `-File.Text.Read`, `=DB.Query`, `-Math.Add` |
 | `.Intrinsic` | Compiler built-in — no backing host function | `-DoNothing`, `-#.JSON.Parse` |
 
@@ -47,7 +47,7 @@ See [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] f
 
 Native definitions declare `.Kind` in their `[%]` metadata along with a `.<Language>` field naming the host function:
 
-```polyglot
+```aljam3
 {N} -File.Text.Read
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextRead"
@@ -58,13 +58,13 @@ Native definitions declare `.Kind` in their `[%]` metadata along with a `.<Langu
    (-) !File.PermissionDenied
 ```
 
-Only pglib `{N}` definitions use `#NativeKind`. User-defined pipelines are always **derived** `{-}` — they have full Polyglot execution bodies and no `%Native.*` metadata.
+Only pglib `{N}` definitions use `#NativeKind`. User-defined pipelines are always **derived** `{-}` — they have full Aljam3 execution bodies and no `%Native.*` metadata.
 
 ---
 
 ## Configuration
 
-The Polyglot service configuration file selects which host language implements each native operation using **subsystem defaults with per-operation overrides**:
+The Aljam3 service configuration file selects which host language implements each native operation using **subsystem defaults with per-operation overrides**:
 
 ```yaml
 native:

@@ -11,13 +11,13 @@ metadata_instance: "%#:path:N"
 
 <!-- @c:types -->
 
-Cross-platform file system path with OS-specific subfields. At runtime, the Polyglot runtime resolves `$pathVar` to the correct subfield based on the current OS.
+Cross-platform file system path with OS-specific subfields. At runtime, the Aljam3 runtime resolves `$pathVar` to the correct subfield based on the current OS.
 
 ---
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #path
    [%] .description << "Cross-platform file system path"
    [%] .version << "1.0.0"
@@ -41,7 +41,7 @@ Cross-platform file system path with OS-specific subfields. At runtime, the Poly
 
 Assign both platform subfields explicitly:
 
-```polyglot
+```aljam3
 [-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
@@ -49,7 +49,7 @@ Assign both platform subfields explicitly:
 
 Use the `-Path"..."` inline notation for common paths:
 
-```polyglot
+```aljam3
 [-] $LogDir#path << -Path"/tmp/MyApp/logs"
 ```
 

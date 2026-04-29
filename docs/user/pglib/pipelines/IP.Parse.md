@@ -15,7 +15,7 @@ For known literals in execution body, use the `$IP` constructor instead — it g
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -IP.Parse
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "IpParse"
@@ -49,7 +49,7 @@ None required. Pure computation pipeline.
 
 ## Usage
 
-```polyglot
+```aljam3
 [-] $addr#ip << -IP.Parse
    (<) <raw#string << $hostInput
    [!] !Parse.IP.InvalidFormat

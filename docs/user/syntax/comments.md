@@ -29,7 +29,7 @@ Place `[ ] Ignore PGW-NNN` on the line immediately above a statement that produc
 - Only works for **warnings** (`PGW-NNN` codes). Cannot suppress **errors** (`PGE-NNN`).
 - One `Ignore` per warning. Multiple warnings on the same line need multiple `Ignore` comments.
 
-```polyglot
+```aljam3
 [ ] Ignore PGW03001
 [b] -Audit.Log
    (-) <event << $event            [ ] no warning — suppressed

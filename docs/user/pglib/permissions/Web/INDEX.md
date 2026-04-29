@@ -13,7 +13,7 @@ Category-level generic permission for network/web operations. Takes a capability
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Web
    [#] <capability;WebCapability
    [#] <scope;string
@@ -24,7 +24,7 @@ Category-level generic permission for network/web operations. Takes a capability
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Web
    (_) <capability << .Request
    (_) <scope << "https://api.example.com/*"

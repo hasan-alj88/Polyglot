@@ -12,12 +12,12 @@ Authority: [[vision#Core Philosophy]]
 
 ## Who They Are
 
-Core Polyglot developers focused on language and system design. This audience covers two complementary scopes:
+Core Aljam3 developers focused on language and system design. This audience covers two complementary scopes:
 
 - **Language design:** grammar (EBNF), type system, compile rules, edge cases, syntax evolution, philosophy
 - **Architecture design:** service and runtime architecture (Queue Manager, Trigger Monitor, Dispatcher), host management, system scalability, and coordination
 
-They design how Polyglot code reads, what it means, what the compiler enforces, how the system runs, scales, and coordinates work across hosts and languages.
+They design how Aljam3 code reads, what it means, what the compiler enforces, how the system runs, scales, and coordinates work across hosts and languages.
 
 ## Writing Rules
 
@@ -25,10 +25,10 @@ They design how Polyglot code reads, what it means, what the compiler enforces, 
 |------|-----------|
 | Tone | Precise, specification-oriented, engineering-rigorous |
 | Voice | Active voice, present tense, declarative for rules, imperative for instructions |
-| Format | EBNF rules, compile error/warning definitions, state machine diagrams, sequence diagrams, architecture decision records, annotated .pg examples |
+| Format | EBNF rules, compile error/warning definitions, state machine diagrams, sequence diagrams, architecture decision records, annotated .aj3 examples |
 | Structure | Problem -> design -> constraints -> trade-offs -> decision; Syntax -> semantics -> edge cases -> compile rules |
 | Vocabulary | Exact [[glossary]] terms. PL theory and distributed systems terminology expected |
-| Code | Canonical .pg examples for every construct. EBNF grammar rules. Compile error codes. Architecture diagrams, protocol definitions |
+| Code | Canonical .aj3 examples for every construct. EBNF grammar rules. Compile error codes. Architecture diagrams, protocol definitions |
 
 ## ASSUME
 
@@ -55,7 +55,7 @@ They design how Polyglot code reads, what it means, what the compiler enforces, 
 
 - Include EBNF grammar rules for every syntactic construct
 - Define compile error codes (PGE/PGW) for every rule violation
-- Show canonical .pg examples — valid and invalid forms
+- Show canonical .aj3 examples — valid and invalid forms
 - Cover edge cases exhaustively
 - Specify behavior precisely (what happens, not what "should" happen)
 - Include state machine definitions for stateful components

@@ -13,7 +13,7 @@ Projects a `#dt` value into a Chinese date structure. Projections are not cached
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Chinese
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToChinese"

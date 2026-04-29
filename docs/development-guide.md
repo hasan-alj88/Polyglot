@@ -9,7 +9,7 @@ updated: 2026-04-23
 <!-- @c:vision -->
 <!-- @c:audit/README -->
 <!-- @c:audit/reference/glossary -->
-This guide orients new contributors to the Polyglot repository. Polyglot is currently in its Design & Architecture Spec milestone, so the contribution surface is documentation authorship, design decisions, and PAUL-managed issue work — the compiler implementation has not begun. Authority chain: [[vision|c:vision]] > [[audit/README|c:audit/README]] > `.paul/`. All terms match [[audit/reference/glossary|c:glossary]] exactly.
+This guide orients new contributors to the Aljam3 repository. Aljam3 is currently in its Design & Architecture Spec milestone, so the contribution surface is documentation authorship, design decisions, and PAUL-managed issue work — the compiler implementation has not begun. Authority chain: [[vision|c:vision]] > [[audit/README|c:audit/README]] > `.paul/`. All terms match [[audit/reference/glossary|c:glossary]] exactly.
 
 ## Overview
 
@@ -44,8 +44,8 @@ Recommended:
 ## Setting Up the Repo
 
 ```sh
-git clone <repo-url> Polyglot
-cd Polyglot
+git clone <repo-url> Aljam3
+cd Aljam3
 uv sync
 ```
 
@@ -65,7 +65,7 @@ Directory orientation: see [[source-tree-analysis|u:source-tree-analysis]] for t
 
 <!-- @c:philosophy/core-philosophy -->
 <!-- @c:.paul/PROJECT -->
-The [[.paul/PROJECT|c:.paul/PROJECT]] constraint is "Documentation-first: no code until specification is complete." The reasoning appears in [[philosophy/core-philosophy|c:core-philosophy]] and [[philosophy/behavioral-contract|c:behavioral-contract]]: Polyglot compiles `.pg` source into a [[audit/reference/glossary|c:Behavior Contract]] — a signal-graph IR read by the Polyglot Service. The contract shape must be fully specified before any compiler pass is written, otherwise the compiler and runtime diverge.
+The [[.paul/PROJECT|c:.paul/PROJECT]] constraint is "Documentation-first: no code until specification is complete." The reasoning appears in [[philosophy/core-philosophy|c:core-philosophy]] and [[philosophy/behavioral-contract|c:behavioral-contract]]: Aljam3 compiles `.aj3` source into a [[audit/reference/glossary|c:Behavior Contract]] — a signal-graph IR read by the Aljam3 Service. The contract shape must be fully specified before any compiler pass is written, otherwise the compiler and runtime diverge.
 
 Contributions that precede compiler implementation are therefore specification contributions: grammar productions, compile rules, type-system descriptors, pglib operator docs, philosophy sub-pages, audit-rule refinements, and architecture specs.
 
@@ -137,7 +137,7 @@ File naming: `YYYY-MM-DD-short-title.md`. The PAUL UNIFY and MERGE phases check 
 ## Glossary Discipline
 
 <!-- @c:audit/reference/glossary -->
-All project terminology must match [[audit/reference/glossary|c:glossary]] exactly. Examples of terms that must be used verbatim: [[audit/reference/glossary|c:Polyglot]], [[audit/reference/glossary|c:Polyglot Code]], [[audit/reference/glossary|c:Polyglot Service]], [[audit/reference/glossary|c:Trigger Monitor]], [[audit/reference/glossary|c:Queue Handler]], [[audit/reference/glossary|c:Dispatch Coordinator]], [[audit/reference/glossary|c:Runner]], [[audit/reference/glossary|c:Instance]], [[audit/reference/glossary|c:Job]], [[audit/reference/glossary|c:Pipeline]], [[audit/reference/glossary|c:Behavior Contract]], [[audit/reference/glossary|c:Reconciliation]], [[audit/reference/glossary|c:RawString]]. Introducing a synonym violates the checklist item `glossary-check`.
+All project terminology must match [[audit/reference/glossary|c:glossary]] exactly. Examples of terms that must be used verbatim: [[audit/reference/glossary|c:Aljam3]], [[audit/reference/glossary|c:Aljam3 Code]], [[audit/reference/glossary|c:Aljam3 Service]], [[audit/reference/glossary|c:Trigger Monitor]], [[audit/reference/glossary|c:Queue Handler]], [[audit/reference/glossary|c:Dispatch Coordinator]], [[audit/reference/glossary|c:Runner]], [[audit/reference/glossary|c:Instance]], [[audit/reference/glossary|c:Job]], [[audit/reference/glossary|c:Pipeline]], [[audit/reference/glossary|c:Behavior Contract]], [[audit/reference/glossary|c:Reconciliation]], [[audit/reference/glossary|c:RawString]]. Introducing a synonym violates the checklist item `glossary-check`.
 
 When a new term is needed, add it to the glossary first (with a `Definition` and a `NOT this` entry), then cite it from downstream docs.
 

@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler compares the resolved identifier on both sides of an assignment expression. If they are the same name and same kind (both `>` output params or both `$` variables), PGE08011 fires. For output params, both must be within the same operation scope (same pipeline body).
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Different output ports — cross-port wiring
 (-) >out1#string
 (-) >out2#string
@@ -32,7 +32,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE08011 — same output param on both sides
 (-) >result#string
 [-] >result << >result                  [ ] ✗ PGE08011 — self-assignment, no state change

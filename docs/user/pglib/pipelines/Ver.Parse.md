@@ -15,7 +15,7 @@ For known literals in execution body, use the `$Ver` constructor instead — it 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Ver.Parse
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "VerParse"
@@ -48,7 +48,7 @@ None required. Pure computation pipeline.
 
 ## Usage
 
-```polyglot
+```aljam3
 [-] $version#ver << -Ver.Parse
    (<) <raw#string << $versionString
    [!] !Parse.Ver.InvalidFormat

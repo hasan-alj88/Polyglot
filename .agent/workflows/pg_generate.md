@@ -1,9 +1,9 @@
 ---
-description: Generate necessary documentation, boilerplate, or initial assets for the Polyglot compiler
+description: Generate necessary documentation, boilerplate, or initial assets for the Aljam3 compiler
 ---
 
 <objective>
-Generate requested components according to the latest Polyglot architectural rules and Behavioral Contracts.
+Generate requested components according to the latest Aljam3 architectural rules and Behavioral Contracts.
 </objective>
 
 <process>

@@ -13,7 +13,7 @@ Adds a `#Period` (calendar-aware span such as "1 month") to a `#dt`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Add.Period
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtAddPeriod"

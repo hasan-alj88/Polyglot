@@ -9,12 +9,12 @@ A pipeline block `{-}` requires three mandatory configuration blocks to compile 
 
 1. **Trigger `[T]`**: Defines when the pipeline runs (e.g., `-T.Hourly`, `-T.Daily"10AM"`). Note that `-T.Hourly` is equivalent to `-T.Every"1H"`.
 2. **Queue `[Q]`**: Defines the queue configuration (e.g., `-Q.Default`).
-3. **Worker/Workflow `[W]`**: Defines the worker assignment (e.g., `-W.Polyglot`).
+3. **Worker/Workflow `[W]`**: Defines the worker assignment (e.g., `-W.Aljam3`).
 
 ### Correct Usage
-```polyglot
+```aljam3
 {-} -AlertPipeline
    [T] -T.Hourly
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 ```

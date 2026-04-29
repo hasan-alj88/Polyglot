@@ -1,13 +1,13 @@
 ---
 feature: "F001-Lexer"
-github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/362"
+github-issue-link: "https://github.com/hasan-alj88/Aljam3/issues/362"
 status: "done"
 assignee: "@product_owner"
 ---
 # User Story: Lexer Line Parsing & Scope Tracking
 
 **As a** compiler consumer,
-**I want** the lexer to accurately scan raw polyglot source code and compute scoping through indentation,
+**I want** the lexer to accurately scan raw aljam3 source code and compute scoping through indentation,
 **So that** my syntax is structurally verified and prepped for Token Generation without hidden spacing errors.
 
 ## Acceptance Criteria

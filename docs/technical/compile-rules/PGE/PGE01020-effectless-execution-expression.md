@@ -20,12 +20,12 @@ severity: error
 **See also:** PGE01016 (unmarked execution line — no marker at all), PGW02002 (unused variable — assigned but never read)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ pipeline call under [-]
 {-} -Process
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
@@ -35,24 +35,24 @@ severity: error
    [-] >out << $cleaned
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ assignment under [-]
 {-} -Assign
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
    [-] >out << $input
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ parallel pipeline calls
 {-} -ParallelWork
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) <email#string
    [ ]
@@ -63,32 +63,32 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01020 — bare literal under [-]
 {-} -BadLiteral
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] 42                                 [ ] ✗ PGE01020 — bare literal, no effect
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01020 — bare string literal under [-]
 {-} -BadString
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] "orphaned string"                  [ ] ✗ PGE01020 — bare literal, no effect
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01020 — non-pipeline identifiers under execution markers
 {-} -BadIdentifiers
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    [ ]
    [-] #UserRecord                        [ ] ✗ PGE01020 — data type, not a pipeline call

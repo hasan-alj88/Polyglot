@@ -12,7 +12,7 @@ Authority: [[vision#Core Philosophy]]
 
 ## Who They Are
 
-The discoverability layer for AI agents navigating Polyglot documentation. AI-finder content provides indexes, summaries, retrieval metadata, and structured navigation aids that help AI tools locate and consume the right documentation efficiently.
+The discoverability layer for AI agents navigating Aljam3 documentation. AI-finder content provides indexes, summaries, retrieval metadata, and structured navigation aids that help AI tools locate and consume the right documentation efficiently.
 
 ## Writing Rules
 

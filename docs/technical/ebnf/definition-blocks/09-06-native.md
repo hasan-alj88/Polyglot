@@ -29,17 +29,17 @@ language_name       ::= upper_letter { letter } ; (* Rust, Cpp, etc. *)
 ```
 
 **Rules:**
-- `{N}` defines a compiler-native pipeline — implemented in the host language, not Polyglot.
+- `{N}` defines a compiler-native pipeline — implemented in the host language, not Aljam3.
 - `[%]` metadata under `{N}` implicitly scopes to `%Native.*` — all fixed `.` fields.
 - `.Kind` is mandatory — must be one of `#NativeKind.Trigger`, `.Queue`, `.Wrapper`, `.Execution`, `.Intrinsic`.
 - At least one `.<Language>` binding is required — must match the configured host language.
 - No execution body (`[-]`, `[=]`, `[b]`, `[?]`), no `[T]`, no `[Q]`, no `[W]`.
 - `(-)` IO declarations define the public interface (inputs, outputs, errors) — same as any pipeline.
-- `{N}` definitions can only appear in pglib `.pg` files — user `.pg` files cannot define native pipelines.
+- `{N}` definitions can only appear in pglib `.aj3` files — user `.aj3` files cannot define native pipelines.
 
 **Example:**
 
-```polyglot
+```aljam3
 {N} -File.Text.Read
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextRead"

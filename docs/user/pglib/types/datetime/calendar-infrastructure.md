@@ -12,7 +12,7 @@ updated: 2026-04-09
 
 Defines how any calendar maps from epoch. Every calendar is a projection of `.Instant.epoch` (Unix epoch seconds). Converting between calendars always goes through epoch: CalendarA -> epoch -> CalendarB.
 
-```polyglot
+```aljam3
 {#} #CalendarProjection
    [%] .description << "Epoch-to-calendar mapping definition"
    [%] .version << "1.0.0"
@@ -28,7 +28,7 @@ Defines how any calendar maps from epoch. Every calendar is a projection of `.In
 
 `#LeapRule.FixedCycle` has nested value sub-fields for cycle configuration. `#LeapRule.Custom` uses flexible fields for user-defined leap logic.
 
-```polyglot
+```aljam3
 {#} #LeapRule
    [%] .description << "Leap year calculation method"
    [%] .version << "1.0.0"

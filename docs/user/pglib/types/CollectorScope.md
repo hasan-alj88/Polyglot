@@ -11,13 +11,13 @@ metadata_instance: "%#:CollectorScope:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.pg` file. Declares the invocation context of a `{*}` collector definition.
+Runtime `##Enum` type available in every `.aj3` file. Declares the invocation context of a `{*}` collector definition.
 
 ---
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #CollectorScope
    [%] .description << "Invocation context for collector definitions"
    [#] ##Enum

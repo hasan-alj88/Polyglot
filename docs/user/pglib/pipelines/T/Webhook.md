@@ -13,7 +13,7 @@ Fires on an incoming HTTP request to the specified endpoint. Endpoint path provi
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -T.Webhook
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TWebhook"

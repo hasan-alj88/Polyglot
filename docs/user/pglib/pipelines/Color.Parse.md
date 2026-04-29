@@ -15,7 +15,7 @@ For known literals in execution body, use the `$Color` constructor instead — i
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Color.Parse
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "ColorParse"
@@ -49,7 +49,7 @@ None required. Pure computation pipeline.
 
 ## Usage
 
-```polyglot
+```aljam3
 [-] $theme#color << -Color.Parse
    (<) <raw#string << $userColor
    [!] !Parse.Color.InvalidFormat

@@ -1,0 +1,347 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.01s
+     Running tests/lexer_engine_tests.rs (target/debug/deps/lexer_engine_tests-4769a562faf26e56)
+
+running 10 tests
+test test_lex_new_tokens ... FAILED
+test test_lex_incorrect_indent ... ok
+test test_lex_edge_cases ... FAILED
+test test_lex_comments ... ok
+test test_lex_recently_added_patterns ... FAILED
+test test_lex_basic_pipeline ... ok
+test test_lex_boolean_predicate ... FAILED
+test test_lex_advanced_operators ... FAILED
+test test_lex_valid_code ... FAILED
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
+     Running `target/debug/aljam3 --lexer -c tests/fixtures/basic_pipeline.aj3 -t tests/fixtures/cli_output_test.aj3ts`
+Successfully saved token stream to tests/fixtures/cli_output_test.aj3ts
+test test_cli_execution ... ok
+
+failures:
+
+---- test_lex_new_tokens stdout ----
+
+thread 'test_lex_new_tokens' panicked at tests/lexer_engine_tests.rs:157:5:
+InlineString missing
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- test_lex_edge_cases stdout ----
+
+=== Aljam3 Edge Cases Stream ===
+[L03:C01] Scope(0)
+[L03:C01] ActionExecSeq
+[L03:C05] Pipeline("Transform")
+[L03:C16] UnknownAljam3Object("@@@")
+[L03:C20] Variable("var")
+[L03:C24] PullFrom
+[L03:C26] Data("Config")
+[L03:C33] DataField("_database")
+[L03:C45] TokNewline
+======================================
+
+
+thread 'test_lex_edge_cases' panicked at tests/lexer_engine_tests.rs:83:5:
+assertion `left == right` failed
+  left: Data("Config")
+ right: Data("Config.")
+
+---- test_lex_recently_added_patterns stdout ----
+
+thread 'test_lex_recently_added_patterns' panicked at tests/lexer_engine_tests.rs:277:56:
+Lexer generated UnknownAljam3Object: !<
+
+---- test_lex_boolean_predicate stdout ----
+
+thread 'test_lex_boolean_predicate' panicked at tests/lexer_engine_tests.rs:313:5:
+InlineString missing
+
+---- test_lex_advanced_operators stdout ----
+
+thread 'test_lex_advanced_operators' panicked at tests/lexer_engine_tests.rs:213:5:
+InlineString missing
+
+---- test_lex_valid_code stdout ----
+=== Aljam3 Token Stream ===
+[L01:C01] Scope(0)
+[L01:C01] DefPackage
+[L01:C05] Registry("Company:MyCompany")
+[L01:C05] PackageName("Jobs.Stocks")
+[L01:C05] NoVersion
+[L01:C35] TokNewline
+[L02:C01] Scope(1)
+[L02:C04] ActionImport
+[L02:C08] Package("StocksDBop")
+[L02:C20] PullFrom
+[L02:C23] Package("MyCompany.DB")
+[L02:C36] TokNewline
+[L03:C01] Scope(1)
+[L03:C04] ActionImport
+[L03:C08] Package("HR")
+[L03:C12] PullFrom
+[L03:C15] Package("MyCompany.HR.Traders")
+[L03:C36] TokNewline
+[L04:C01] Scope(1)
+[L04:C04] ActionImport
+[L04:C08] Environment("StocksDB")
+[L04:C18] PullFrom
+[L04:C21] Package("StocksDBop")
+[L04:C32] Environment("StocksDB")
+[L04:C41] TokNewline
+[L07:C01] Scope(0)
+[L07:C01] DefPipeline
+[L07:C05] Pipeline("FetchAndNotifyStocks")
+[L07:C26] TokNewline
+[L08:C01] Scope(1)
+[L08:C04] PipelineIO
+[L08:C08] OutputParameter("SendEmails")
+[L08:C19] Package("HR")
+[L08:C22] Data("EmailSend")
+[L08:C32] TokNewline
+[L09:C01] Scope(1)
+[L09:C04] ActionTrigger
+[L09:C08] InlineInstruction("T.Daily")
+[L09:C08] ConstructorInlineString("3AM")
+[L09:C21] TokNewline
+[L10:C01] Scope(1)
+[L10:C04] ActionQueue
+[L10:C08] QueueConfig("Q.Default")
+[L10:C18] TokNewline
+[L11:C01] Scope(1)
+[L11:C04] ActionWrapper
+[L11:C08] Wrapper("W.DB")
+[L11:C13] Environment("StocksDB")
+[L11:C22] TokNewline
+[L12:C01] Scope(1)
+[L12:C04] ActionComment
+[L12:C04] TokSpace
+[L12:C04] CommentText("")
+[L12:C07] TokNewline
+[L13:C01] Scope(1)
+[L13:C04] ActionComment
+[L13:C04] TokSpace
+[L13:C04] CommentText("Run 3 API calls in parallel")
+[L13:C35] TokNewline
+[L14:C01] Scope(1)
+[L14:C04] ActionExecPar
+[L14:C08] Pipeline("API.Vantage.GetPrice")
+[L14:C29] TokNewline
+[L15:C01] Scope(2)
+[L15:C07] PipelineIO
+[L15:C11] InputParameter("ticker")
+[L15:C19] PullFrom
+[L15:C22] StringLiteral("AAPL")
+[L15:C28] TokNewline
+[L16:C01] Scope(2)
+[L16:C07] PipelineIO
+[L16:C11] OutputParameter("price")
+[L16:C18] PushInto
+[L16:C21] Variable("priceVantage")
+[L16:C34] TokNewline
+[L17:C01] Scope(1)
+[L17:C04] ActionComment
+[L17:C04] TokSpace
+[L17:C04] CommentText("")
+[L17:C13] TokNewline
+[L18:C01] Scope(1)
+[L18:C04] ActionExecPar
+[L18:C08] Pipeline("API.Polygon.GetPrice")
+[L18:C29] TokNewline
+[L19:C01] Scope(2)
+[L19:C07] PipelineIO
+[L19:C11] InputParameter("ticker")
+[L19:C19] PullFrom
+[L19:C22] StringLiteral("AAPL")
+[L19:C28] TokNewline
+[L20:C01] Scope(2)
+[L20:C07] PipelineIO
+[L20:C11] OutputParameter("price")
+[L20:C18] PushInto
+[L20:C21] Variable("pricePolygon")
+[L20:C34] TokNewline
+[L21:C01] Scope(1)
+[L21:C04] ActionComment
+[L21:C04] TokSpace
+[L21:C04] CommentText("")
+[L21:C11] TokNewline
+[L22:C01] Scope(1)
+[L22:C04] ActionExecPar
+[L22:C08] Pipeline("API.Yahoo.GetPrice")
+[L22:C27] TokNewline
+[L23:C01] Scope(2)
+[L23:C07] PipelineIO
+[L23:C11] InputParameter("ticker")
+[L23:C19] PullFrom
+[L23:C22] StringLiteral("AAPL")
+[L23:C28] TokNewline
+[L24:C01] Scope(2)
+[L24:C07] PipelineIO
+[L24:C11] OutputParameter("price")
+[L24:C18] PushInto
+[L24:C21] Variable("priceYahoo")
+[L24:C33] TokNewline
+[L25:C01] Scope(1)
+[L25:C04] ActionComment
+[L25:C04] TokSpace
+[L25:C04] CommentText("")
+[L25:C07] TokNewline
+[L26:C01] Scope(1)
+[L26:C04] ActionExecPar
+[L26:C08] Package("StocksDBop")
+[L26:C19] Pipeline("DB.Traders.GetAllMails")
+[L26:C42] Environment("StocksDB")
+[L26:C51] TokNewline
+[L27:C01] Scope(2)
+[L27:C07] PipelineIO
+[L27:C11] OutputParameter("emails")
+[L27:C19] PushInto
+[L27:C22] Variable("traderEmails")
+[L27:C35] TokNewline
+[L28:C01] Scope(1)
+[L28:C04] ActionComment
+[L28:C04] TokSpace
+[L28:C04] CommentText("")
+[L28:C07] TokNewline
+[L29:C01] Scope(1)
+[L29:C04] ActionComment
+[L29:C04] TokSpace
+[L29:C04] CommentText("3. Race Collector - take the first API to respond")
+[L29:C57] TokNewline
+[L30:C01] Scope(1)
+[L30:C04] ActionCollector
+[L30:C08] Collector("First")
+[L30:C14] TokNewline
+[L31:C01] Scope(2)
+[L31:C07] CollectorIO
+[L31:C11] PullFrom
+[L31:C14] Variable("priceVantage")
+[L31:C27] TokNewline
+[L32:C01] Scope(2)
+[L32:C07] CollectorIO
+[L32:C11] PullFrom
+[L32:C14] Variable("pricePolygon")
+[L32:C27] TokNewline
+[L33:C01] Scope(2)
+[L33:C07] CollectorIO
+[L33:C11] PullFrom
+[L33:C14] Variable("priceYahoo")
+[L33:C25] TokNewline
+[L34:C01] Scope(2)
+[L34:C07] CollectorIO
+[L34:C11] PushInto
+[L34:C14] Variable("Price")
+[L34:C20] TokNewline
+[L35:C01] Scope(1)
+[L35:C04] ActionComment
+[L35:C04] TokSpace
+[L35:C04] CommentText("")
+[L35:C07] TokNewline
+[L36:C01] Scope(1)
+[L36:C04] ActionComment
+[L36:C04] TokSpace
+[L36:C04] CommentText("4. Fetch trader emails from the database")
+[L36:C48] TokNewline
+[L37:C01] Scope(1)
+[L37:C04] ActionCollector
+[L37:C08] Collector("All")
+[L37:C12] TokNewline
+[L38:C01] Scope(2)
+[L38:C07] CollectorIO
+[L38:C11] PullFrom
+[L38:C14] Variable("traderEmails")
+[L38:C27] TokNewline
+[L39:C01] Scope(1)
+[L39:C04] ActionComment
+[L39:C04] TokSpace
+[L39:C04] CommentText("")
+[L39:C07] TokNewline
+[L40:C01] Scope(1)
+[L40:C04] ActionComment
+[L40:C04] TokSpace
+[L40:C04] CommentText("5. Add the resulting price into the stock DB")
+[L40:C52] TokNewline
+[L41:C01] Scope(1)
+[L41:C04] ActionExecSeq
+[L41:C08] Package("StocksDBop")
+[L41:C19] Pipeline("DB.Stocks.InsertPrice")
+[L41:C41] Environment("StocksDB")
+[L41:C50] TokNewline
+[L42:C01] Scope(2)
+[L42:C07] PipelineIO
+[L42:C11] InputParameter("ticker")
+[L42:C19] PullFrom
+[L42:C22] StringLiteral("AAPL")
+[L42:C28] TokNewline
+[L43:C01] Scope(2)
+[L43:C07] PipelineIO
+[L43:C11] InputParameter("price")
+[L43:C18] PullFrom
+[L43:C21] Variable("winningPrice")
+[L43:C34] TokNewline
+[L44:C01] Scope(2)
+[L44:C07] PipelineIO
+[L44:C11] InputParameter("timestamp")
+[L44:C22] PullFrom
+[L44:C25] MetaData("this.TriggeredAt")
+[L44:C44] IoComment
+[L44:C44] TokSpace
+[L44:C44] CommentText("Use pipeline metadata")
+[L44:C69] TokNewline
+[L45:C01] Scope(1)
+[L45:C04] ActionComment
+[L45:C04] TokSpace
+[L45:C04] CommentText("")
+[L45:C07] TokNewline
+[L46:C01] Scope(1)
+[L46:C04] ActionComment
+[L46:C04] TokSpace
+[L46:C04] CommentText("6. Email the winning price to all traders")
+[L46:C49] TokNewline
+[L47:C01] Scope(1)
+[L47:C04] ActionExecSeq
+[L47:C08] Pipeline("Email.SendBulk")
+[L47:C23] TokNewline
+[L48:C01] Scope(2)
+[L48:C07] PipelineIO
+[L48:C11] InputParameter("targetList")
+[L48:C23] PullFrom
+[L48:C26] Variable("traderEmails")
+[L48:C39] TokNewline
+[L49:C01] Scope(2)
+[L49:C07] PipelineIO
+[L49:C11] InputParameter("subject")
+[L49:C20] PullFrom
+[L49:C23] StringLiteral("Daily Stock Price: AAPL")
+[L49:C48] TokNewline
+[L50:C01] Scope(2)
+[L50:C07] PipelineIO
+[L50:C11] InputParameter("body")
+[L50:C17] PullFrom
+[L50:C20] StringLiteral("The price for AAPL at 3AM is ")
+[L50:C20] SubstituteVariable("Price")
+[L50:C20] StringLiteral("$")
+[L50:C60] TokNewline
+[L51:C01] Scope(2)
+[L51:C07] PipelineIO
+[L51:C11] OutputParameter("SendStatus")
+[L51:C23] PushInto
+[L51:C26] OutputParameter("SendEmails")
+[L51:C37] TokNewline
+=============================
+
+
+thread 'test_lex_valid_code' panicked at tests/lexer_engine_tests.rs:259:5:
+assertion `left == right` failed: Generated token stream does not match tests/fixtures/valid_code.aj3ts
+  left: "=== Aljam3 Token Stream ===\n[L01:C01] Scope(0)\n[L01:C01] DefPackage\n[L01:C05] Registry(\"Company:MyCompany\")\n[L01:C05] PackageName(\"Jobs.Stocks\")\n[L01:C05] NoVersion\n[L01:C35] TokNewline\n[L02:C01] Scope(1)\n[L02:C04] ActionImport\n[L02:C08] Package(\"StocksDBop\")\n[L02:C20] PullFrom\n[L02:C23] Package(\"MyCompany.DB\")\n[L02:C36] TokNewline\n[L03:C01] Scope(1)\n[L03:C04] ActionImport\n[L03:C08] Package(\"HR\")\n[L03:C12] PullFrom\n[L03:C15] Package(\"MyCompany.HR.Traders\")\n[L03:C36] TokNewline\n[L04:C01] Scope(1)\n[L04:C04] ActionImport\n[L04:C08] Environment(\"StocksDB\")\n[L04:C18] PullFrom\n[L04:C21] Package(\"StocksDBop\")\n[L04:C32] Environment(\"StocksDB\")\n[L04:C41] TokNewline\n[L07:C01] Scope(0)\n[L07:C01] DefPipeline\n[L07:C05] Pipeline(\"FetchAndNotifyStocks\")\n[L07:C26] TokNewline\n[L08:C01] Scope(1)\n[L08:C04] PipelineIO\n[L08:C08] OutputParameter(\"SendEmails\")\n[L08:C19] Package(\"HR\")\n[L08:C22] Data(\"EmailSend\")\n[L08:C32] TokNewline\n[L09:C01] Scope(1)\n[L09:C04] ActionTrigger\n[L09:C08] InlineInstruction(\"T.Daily\")\n[L09:C08] ConstructorInlineString(\"3AM\")\n[L09:C21] TokNewline\n[L10:C01] Scope(1)\n[L10:C04] ActionQueue\n[L10:C08] QueueConfig(\"Q.Default\")\n[L10:C18] TokNewline\n[L11:C01] Scope(1)\n[L11:C04] ActionWrapper\n[L11:C08] Wrapper(\"W.DB\")\n[L11:C13] Environment(\"StocksDB\")\n[L11:C22] TokNewline\n[L12:C01] Scope(1)\n[L12:C04] ActionComment\n[L12:C04] TokSpace\n[L12:C04] CommentText(\"\")\n[L12:C07] TokNewline\n[L13:C01] Scope(1)\n[L13:C04] ActionComment\n[L13:C04] TokSpace\n[L13:C04] CommentText(\"Run 3 API calls in parallel\")\n[L13:C35] TokNewline\n[L14:C01] Scope(1)\n[L14:C04] ActionExecPar\n[L14:C08] Pipeline(\"API.Vantage.GetPrice\")\n[L14:C29] TokNewline\n[L15:C01] Scope(2)\n[L15:C07] PipelineIO\n[L15:C11] InputParameter(\"ticker\")\n[L15:C19] PullFrom\n[L15:C22] StringLiteral(\"AAPL\")\n[L15:C28] TokNewline\n[L16:C01] Scope(2)\n[L16:C07] PipelineIO\n[L16:C11] OutputParameter(\"price\")\n[L16:C18] PushInto\n[L16:C21] Variable(\"priceVantage\")\n[L16:C34] TokNewline\n[L17:C01] Scope(1)\n[L17:C04] ActionComment\n[L17:C04] TokSpace\n[L17:C04] CommentText(\"\")\n[L17:C13] TokNewline\n[L18:C01] Scope(1)\n[L18:C04] ActionExecPar\n[L18:C08] Pipeline(\"API.Polygon.GetPrice\")\n[L18:C29] TokNewline\n[L19:C01] Scope(2)\n[L19:C07] PipelineIO\n[L19:C11] InputParameter(\"ticker\")\n[L19:C19] PullFrom\n[L19:C22] StringLiteral(\"AAPL\")\n[L19:C28] TokNewline\n[L20:C01] Scope(2)\n[L20:C07] PipelineIO\n[L20:C11] OutputParameter(\"price\")\n[L20:C18] PushInto\n[L20:C21] Variable(\"pricePolygon\")\n[L20:C34] TokNewline\n[L21:C01] Scope(1)\n[L21:C04] ActionComment\n[L21:C04] TokSpace\n[L21:C04] CommentText(\"\")\n[L21:C11] TokNewline\n[L22:C01] Scope(1)\n[L22:C04] ActionExecPar\n[L22:C08] Pipeline(\"API.Yahoo.GetPrice\")\n[L22:C27] TokNewline\n[L23:C01] Scope(2)\n[L23:C07] PipelineIO\n[L23:C11] InputParameter(\"ticker\")\n[L23:C19] PullFrom\n[L23:C22] StringLiteral(\"AAPL\")\n[L23:C28] TokNewline\n[L24:C01] Scope(2)\n[L24:C07] PipelineIO\n[L24:C11] OutputParameter(\"price\")\n[L24:C18] PushInto\n[L24:C21] Variable(\"priceYahoo\")\n[L24:C33] TokNewline\n[L25:C01] Scope(1)\n[L25:C04] ActionComment\n[L25:C04] TokSpace\n[L25:C04] CommentText(\"\")\n[L25:C07] TokNewline\n[L26:C01] Scope(1)\n[L26:C04] ActionExecPar\n[L26:C08] Package(\"StocksDBop\")\n[L26:C19] Pipeline(\"DB.Traders.GetAllMails\")\n[L26:C42] Environment(\"StocksDB\")\n[L26:C51] TokNewline\n[L27:C01] Scope(2)\n[L27:C07] PipelineIO\n[L27:C11] OutputParameter(\"emails\")\n[L27:C19] PushInto\n[L27:C22] Variable(\"traderEmails\")\n[L27:C35] TokNewline\n[L28:C01] Scope(1)\n[L28:C04] ActionComment\n[L28:C04] TokSpace\n[L28:C04] CommentText(\"\")\n[L28:C07] TokNewline\n[L29:C01] Scope(1)\n[L29:C04] ActionComment\n[L29:C04] TokSpace\n[L29:C04] CommentText(\"3. Race Collector - take the first API to respond\")\n[L29:C57] TokNewline\n[L30:C01] Scope(1)\n[L30:C04] ActionCollector\n[L30:C08] Collector(\"First\")\n[L30:C14] TokNewline\n[L31:C01] Scope(2)\n[L31:C07] CollectorIO\n[L31:C11] PullFrom\n[L31:C14] Variable(\"priceVantage\")\n[L31:C27] TokNewline\n[L32:C01] Scope(2)\n[L32:C07] CollectorIO\n[L32:C11] PullFrom\n[L32:C14] Variable(\"pricePolygon\")\n[L32:C27] TokNewline\n[L33:C01] Scope(2)\n[L33:C07] CollectorIO\n[L33:C11] PullFrom\n[L33:C14] Variable(\"priceYahoo\")\n[L33:C25] TokNewline\n[L34:C01] Scope(2)\n[L34:C07] CollectorIO\n[L34:C11] PushInto\n[L34:C14] Variable(\"Price\")\n[L34:C20] TokNewline\n[L35:C01] Scope(1)\n[L35:C04] ActionComment\n[L35:C04] TokSpace\n[L35:C04] CommentText(\"\")\n[L35:C07] TokNewline\n[L36:C01] Scope(1)\n[L36:C04] ActionComment\n[L36:C04] TokSpace\n[L36:C04] CommentText(\"4. Fetch trader emails from the database\")\n[L36:C48] TokNewline\n[L37:C01] Scope(1)\n[L37:C04] ActionCollector\n[L37:C08] Collector(\"All\")\n[L37:C12] TokNewline\n[L38:C01] Scope(2)\n[L38:C07] CollectorIO\n[L38:C11] PullFrom\n[L38:C14] Variable(\"traderEmails\")\n[L38:C27] TokNewline\n[L39:C01] Scope(1)\n[L39:C04] ActionComment\n[L39:C04] TokSpace\n[L39:C04] CommentText(\"\")\n[L39:C07] TokNewline\n[L40:C01] Scope(1)\n[L40:C04] ActionComment\n[L40:C04] TokSpace\n[L40:C04] CommentText(\"5. Add the resulting price into the stock DB\")\n[L40:C52] TokNewline\n[L41:C01] Scope(1)\n[L41:C04] ActionExecSeq\n[L41:C08] Package(\"StocksDBop\")\n[L41:C19] Pipeline(\"DB.Stocks.InsertPrice\")\n[L41:C41] Environment(\"StocksDB\")\n[L41:C50] TokNewline\n[L42:C01] Scope(2)\n[L42:C07] PipelineIO\n[L42:C11] InputParameter(\"ticker\")\n[L42:C19] PullFrom\n[L42:C22] StringLiteral(\"AAPL\")\n[L42:C28] TokNewline\n[L43:C01] Scope(2)\n[L43:C07] PipelineIO\n[L43:C11] InputParameter(\"price\")\n[L43:C18] PullFrom\n[L43:C21] Variable(\"winningPrice\")\n[L43:C34] TokNewline\n[L44:C01] Scope(2)\n[L44:C07] PipelineIO\n[L44:C11] InputParameter(\"timestamp\")\n[L44:C22] PullFrom\n[L44:C25] MetaData(\"this.TriggeredAt\")\n[L44:C44] IoComment\n[L44:C44] TokSpace\n[L44:C44] CommentText(\"Use pipeline metadata\")\n[L44:C69] TokNewline\n[L45:C01] Scope(1)\n[L45:C04] ActionComment\n[L45:C04] TokSpace\n[L45:C04] CommentText(\"\")\n[L45:C07] TokNewline\n[L46:C01] Scope(1)\n[L46:C04] ActionComment\n[L46:C04] TokSpace\n[L46:C04] CommentText(\"6. Email the winning price to all traders\")\n[L46:C49] TokNewline\n[L47:C01] Scope(1)\n[L47:C04] ActionExecSeq\n[L47:C08] Pipeline(\"Email.SendBulk\")\n[L47:C23] TokNewline\n[L48:C01] Scope(2)\n[L48:C07] PipelineIO\n[L48:C11] InputParameter(\"targetList\")\n[L48:C23] PullFrom\n[L48:C26] Variable(\"traderEmails\")\n[L48:C39] TokNewline\n[L49:C01] Scope(2)\n[L49:C07] PipelineIO\n[L49:C11] InputParameter(\"subject\")\n[L49:C20] PullFrom\n[L49:C23] StringLiteral(\"Daily Stock Price: AAPL\")\n[L49:C48] TokNewline\n[L50:C01] Scope(2)\n[L50:C07] PipelineIO\n[L50:C11] InputParameter(\"body\")\n[L50:C17] PullFrom\n[L50:C20] StringLiteral(\"The price for AAPL at 3AM is \")\n[L50:C20] SubstituteVariable(\"Price\")\n[L50:C20] StringLiteral(\"$\")\n[L50:C60] TokNewline\n[L51:C01] Scope(2)\n[L51:C07] PipelineIO\n[L51:C11] OutputParameter(\"SendStatus\")\n[L51:C23] PushInto\n[L51:C26] OutputParameter(\"SendEmails\")\n[L51:C37] TokNewline\n=============================\n"
+ right: "=== Aljam3 Token Stream ===\n[L01:C01] Scope(0)\n[L01:C01] DefPackage\n[L01:C05] Registry(\"Company:MyCompany\")\n[L01:C05] PackageName(\"Jobs.Stocks\")\n[L01:C05] NoVersion\n[L01:C35] TokNewline\n[L02:C01] Scope(1)\n[L02:C04] ActionImport\n[L02:C08] Package(\"StocksDBop\")\n[L02:C20] PullFrom\n[L02:C23] Package(\"MyCompany.DB\")\n[L02:C36] TokNewline\n[L03:C01] Scope(1)\n[L03:C04] ActionImport\n[L03:C08] Package(\"HR\")\n[L03:C12] PullFrom\n[L03:C15] Package(\"MyCompany.HR.Traders\")\n[L03:C36] TokNewline\n[L04:C01] Scope(1)\n[L04:C04] ActionImport\n[L04:C08] Environment(\"StocksDB\")\n[L04:C18] PullFrom\n[L04:C21] Package(\"StocksDBop\")\n[L04:C32] Environment(\"StocksDB\")\n[L04:C41] TokNewline\n[L07:C01] Scope(0)\n[L07:C01] DefPipeline\n[L07:C05] Pipeline(\"FetchAndNotifyStocks\")\n[L07:C26] TokNewline\n[L08:C01] Scope(1)\n[L08:C04] PipelineIO\n[L08:C08] OutputParameter(\"SendEmails\")\n[L08:C19] Package(\"HR\")\n[L08:C22] Data(\"EmailSend\")\n[L08:C32] TokNewline\n[L09:C01] Scope(1)\n[L09:C04] ActionTrigger\n[L09:C08] InlineInstruction(\"T.Daily\")\n[L09:C08] InlineString(\"3AM\")\n[L09:C21] TokNewline\n[L10:C01] Scope(1)\n[L10:C04] ActionQueue\n[L10:C08] QueueConfig(\"Q.Default\")\n[L10:C18] TokNewline\n[L11:C01] Scope(1)\n[L11:C04] ActionWrapper\n[L11:C08] Wrapper(\"W.DB\")\n[L11:C13] Environment(\"StocksDB\")\n[L11:C22] TokNewline\n[L12:C01] Scope(1)\n[L12:C04] ActionComment\n[L12:C04] TokSpace\n[L12:C04] CommentText(\"\")\n[L12:C07] TokNewline\n[L13:C01] Scope(1)\n[L13:C04] ActionComment\n[L13:C04] TokSpace\n[L13:C04] CommentText(\"Run 3 API calls in parallel\")\n[L13:C35] TokNewline\n[L14:C01] Scope(1)\n[L14:C04] ActionExecPar\n[L14:C08] Pipeline(\"API.Vantage.GetPrice\")\n[L14:C29] TokNewline\n[L15:C01] Scope(2)\n[L15:C07] PipelineIO\n[L15:C11] InputParameter(\"ticker\")\n[L15:C19] PullFrom\n[L15:C22] StringLiteral(\"AAPL\")\n[L15:C28] TokNewline\n[L16:C01] Scope(2)\n[L16:C07] PipelineIO\n[L16:C11] OutputParameter(\"price\")\n[L16:C18] PushInto\n[L16:C21] Variable(\"priceVantage\")\n[L16:C34] TokNewline\n[L17:C01] Scope(1)\n[L17:C04] ActionComment\n[L17:C04] TokSpace\n[L17:C04] CommentText(\"\")\n[L17:C13] TokNewline\n[L18:C01] Scope(1)\n[L18:C04] ActionExecPar\n[L18:C08] Pipeline(\"API.Polygon.GetPrice\")\n[L18:C29] TokNewline\n[L19:C01] Scope(2)\n[L19:C07] PipelineIO\n[L19:C11] InputParameter(\"ticker\")\n[L19:C19] PullFrom\n[L19:C22] StringLiteral(\"AAPL\")\n[L19:C28] TokNewline\n[L20:C01] Scope(2)\n[L20:C07] PipelineIO\n[L20:C11] OutputParameter(\"price\")\n[L20:C18] PushInto\n[L20:C21] Variable(\"pricePolygon\")\n[L20:C34] TokNewline\n[L21:C01] Scope(1)\n[L21:C04] ActionComment\n[L21:C04] TokSpace\n[L21:C04] CommentText(\"\")\n[L21:C11] TokNewline\n[L22:C01] Scope(1)\n[L22:C04] ActionExecPar\n[L22:C08] Pipeline(\"API.Yahoo.GetPrice\")\n[L22:C27] TokNewline\n[L23:C01] Scope(2)\n[L23:C07] PipelineIO\n[L23:C11] InputParameter(\"ticker\")\n[L23:C19] PullFrom\n[L23:C22] StringLiteral(\"AAPL\")\n[L23:C28] TokNewline\n[L24:C01] Scope(2)\n[L24:C07] PipelineIO\n[L24:C11] OutputParameter(\"price\")\n[L24:C18] PushInto\n[L24:C21] Variable(\"priceYahoo\")\n[L24:C33] TokNewline\n[L25:C01] Scope(1)\n[L25:C04] ActionComment\n[L25:C04] TokSpace\n[L25:C04] CommentText(\"\")\n[L25:C07] TokNewline\n[L26:C01] Scope(1)\n[L26:C04] ActionExecPar\n[L26:C08] Package(\"StocksDBop\")\n[L26:C19] Pipeline(\"DB.Traders.GetAllMails\")\n[L26:C42] Environment(\"StocksDB\")\n[L26:C51] TokNewline\n[L27:C01] Scope(2)\n[L27:C07] PipelineIO\n[L27:C11] OutputParameter(\"emails\")\n[L27:C19] PushInto\n[L27:C22] Variable(\"traderEmails\")\n[L27:C35] TokNewline\n[L28:C01] Scope(1)\n[L28:C04] ActionComment\n[L28:C04] TokSpace\n[L28:C04] CommentText(\"\")\n[L28:C07] TokNewline\n[L29:C01] Scope(1)\n[L29:C04] ActionComment\n[L29:C04] TokSpace\n[L29:C04] CommentText(\"3. Race Collector - take the first API to respond\")\n[L29:C57] TokNewline\n[L30:C01] Scope(1)\n[L30:C04] ActionCollector\n[L30:C08] Collector(\"First\")\n[L30:C14] TokNewline\n[L31:C01] Scope(2)\n[L31:C07] CollectorIO\n[L31:C11] PullFrom\n[L31:C14] Variable(\"priceVantage\")\n[L31:C27] TokNewline\n[L32:C01] Scope(2)\n[L32:C07] CollectorIO\n[L32:C11] PullFrom\n[L32:C14] Variable(\"pricePolygon\")\n[L32:C27] TokNewline\n[L33:C01] Scope(2)\n[L33:C07] CollectorIO\n[L33:C11] PullFrom\n[L33:C14] Variable(\"priceYahoo\")\n[L33:C25] TokNewline\n[L34:C01] Scope(2)\n[L34:C07] CollectorIO\n[L34:C11] PushInto\n[L34:C14] Variable(\"Price\")\n[L34:C20] TokNewline\n[L35:C01] Scope(1)\n[L35:C04] ActionComment\n[L35:C04] TokSpace\n[L35:C04] CommentText(\"\")\n[L35:C07] TokNewline\n[L36:C01] Scope(1)\n[L36:C04] ActionComment\n[L36:C04] TokSpace\n[L36:C04] CommentText(\"4. Fetch trader emails from the database\")\n[L36:C48] TokNewline\n[L37:C01] Scope(1)\n[L37:C04] ActionCollector\n[L37:C08] Collector(\"All\")\n[L37:C12] TokNewline\n[L38:C01] Scope(2)\n[L38:C07] CollectorIO\n[L38:C11] PullFrom\n[L38:C14] Variable(\"traderEmails\")\n[L38:C27] TokNewline\n[L39:C01] Scope(1)\n[L39:C04] ActionComment\n[L39:C04] TokSpace\n[L39:C04] CommentText(\"\")\n[L39:C07] TokNewline\n[L40:C01] Scope(1)\n[L40:C04] ActionComment\n[L40:C04] TokSpace\n[L40:C04] CommentText(\"5. Add the resulting price into the stock DB\")\n[L40:C52] TokNewline\n[L41:C01] Scope(1)\n[L41:C04] ActionExecSeq\n[L41:C08] Package(\"StocksDBop\")\n[L41:C19] Pipeline(\"DB.Stocks.InsertPrice\")\n[L41:C41] Environment(\"StocksDB\")\n[L41:C50] TokNewline\n[L42:C01] Scope(2)\n[L42:C07] PipelineIO\n[L42:C11] InputParameter(\"ticker\")\n[L42:C19] PullFrom\n[L42:C22] StringLiteral(\"AAPL\")\n[L42:C28] TokNewline\n[L43:C01] Scope(2)\n[L43:C07] PipelineIO\n[L43:C11] InputParameter(\"price\")\n[L43:C18] PullFrom\n[L43:C21] Variable(\"winningPrice\")\n[L43:C34] TokNewline\n[L44:C01] Scope(2)\n[L44:C07] PipelineIO\n[L44:C11] InputParameter(\"timestamp\")\n[L44:C22] PullFrom\n[L44:C25] MetaData(\"this.TriggeredAt\")\n[L44:C44] IoComment\n[L44:C44] TokSpace\n[L44:C44] CommentText(\"Use pipeline metadata\")\n[L44:C69] TokNewline\n[L45:C01] Scope(1)\n[L45:C04] ActionComment\n[L45:C04] TokSpace\n[L45:C04] CommentText(\"\")\n[L45:C07] TokNewline\n[L46:C01] Scope(1)\n[L46:C04] ActionComment\n[L46:C04] TokSpace\n[L46:C04] CommentText(\"6. Email the winning price to all traders\")\n[L46:C49] TokNewline\n[L47:C01] Scope(1)\n[L47:C04] ActionExecSeq\n[L47:C08] Pipeline(\"Email.SendBulk\")\n[L47:C23] TokNewline\n[L48:C01] Scope(2)\n[L48:C07] PipelineIO\n[L48:C11] InputParameter(\"targetList\")\n[L48:C23] PullFrom\n[L48:C26] Variable(\"traderEmails\")\n[L48:C39] TokNewline\n[L49:C01] Scope(2)\n[L49:C07] PipelineIO\n[L49:C11] InputParameter(\"subject\")\n[L49:C20] PullFrom\n[L49:C23] StringLiteral(\"Daily Stock Price: AAPL\")\n[L49:C48] TokNewline\n[L50:C01] Scope(2)\n[L50:C07] PipelineIO\n[L50:C11] InputParameter(\"body\")\n[L50:C17] PullFrom\n[L50:C20] StringLiteral(\"The price for AAPL at 3AM is \")\n[L50:C20] SubstituteVariable(\"Price\")\n[L50:C20] StringLiteral(\"$\")\n[L50:C60] TokNewline\n[L51:C01] Scope(2)\n[L51:C07] PipelineIO\n[L51:C11] OutputParameter(\"SendStatus\")\n[L51:C23] PushInto\n[L51:C26] OutputParameter(\"SendEmails\")\n[L51:C37] TokNewline\n=============================\n"
+
+
+failures:
+    test_lex_advanced_operators
+    test_lex_boolean_predicate
+    test_lex_edge_cases
+    test_lex_new_tokens
+    test_lex_recently_added_patterns
+    test_lex_valid_code
+
+test result: FAILED. 4 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+error: test failed, to rerun pass `--test lexer_engine_tests`

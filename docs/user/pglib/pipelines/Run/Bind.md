@@ -9,17 +9,17 @@ metadata_instance: "%-:Run.<Lang>.Bind:N"
 
 # -Run.\<Lang\>.Bind
 
-Foreign code imports the polyglot lib and controls data flow via `pull()`/`push()` calls.
+Foreign code imports the aljam3 lib and controls data flow via `pull()`/`push()` calls.
 
 > **Supersedes:** `-RT.<Lang>.Bind.Inline` and `-RT.<Lang>.Bind.File`. See [[pglib/pipelines/RT/Bind.Inline|@d:-RT.\<Lang\>.Bind.Inline]] and [[pglib/pipelines/RT/Bind.File|@d:-RT.\<Lang\>.Bind.File]].
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Run.<Lang>.Bind
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RunBind"
-   [%] .description << "Foreign code imports polyglot lib for data flow."
+   [%] .description << "Foreign code imports aljam3 lib for data flow."
    (-) <env#<Lang>Env
    (-) >output#Code:<Lang>.Output
    (-) <code#Code:Source
@@ -30,7 +30,7 @@ Foreign code imports the polyglot lib and controls data flow via `pull()`/`push(
 | Name | Type | Description |
 |------|------|-------------|
 | `<env` | `#<Lang>Env` | Runtime environment from `-W.Env` |
-| `<code` | `#Code:Source` | Code with polyglot lib imports (inline `[C]` or file) |
+| `<code` | `#Code:Source` | Code with aljam3 lib imports (inline `[C]` or file) |
 
 ## Outputs
 
@@ -40,30 +40,30 @@ Foreign code imports the polyglot lib and controls data flow via `pull()`/`push(
 
 ## Compiler Validation
 
-No binding validation -- `pull()`/`push()` calls are opaque runtime strings. The compiler cannot verify that the names passed to these functions correspond to any Polyglot IO ports.
+No binding validation -- `pull()`/`push()` calls are opaque runtime strings. The compiler cannot verify that the names passed to these functions correspond to any Aljam3 IO ports.
 
-This is the most flexible but least validated mode. Prefer `.Script` when Polyglot-controlled binding is sufficient.
+This is the most flexible but least validated mode. Prefer `.Script` when Aljam3-controlled binding is sufficient.
 
 ## Code Source
 
 Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, never both (PGE01038):
 
-```polyglot
+```aljam3
 [ ] inline via [C] blocks
 (-) <code.inline <<
-   [C] from polyglot import pull, push
+   [C] from aljam3 import pull, push
    [C] data = pull("input_data")
    [C] push("result", data.upper())
 ```
 
-```polyglot
+```aljam3
 [ ] file reference
 (-) <code.file#path << "/scripts/processor.py"
 ```
 
 ## Example
 
-```polyglot
+```aljam3
 {;} ;PyProcessor
    [.] .language << "python"
    [.] .version << "3.14"
@@ -87,7 +87,7 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
       (-) <env#PyEnv << $pyenv
       (-) >output#Code:Python.Output >> >processLog
       (-) <code.inline <<
-         [C] from polyglot import pull, push
+         [C] from aljam3 import pull, push
          [C] import json
          [C] data = pull("inputData")
          [C] processed = json.loads(data)
@@ -99,7 +99,7 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
 
 | Concern | `.Script` | `.Bind` |
 |---------|-----------|---------|
-| Who controls data flow | Polyglot (`<Bind`/`>Bind`) | Foreign code (`pull()`/`push()`) |
+| Who controls data flow | Aljam3 (`<Bind`/`>Bind`) | Foreign code (`pull()`/`push()`) |
 | Compiler validates names | Yes (PGE01033/PGE01034) | No |
 | Data flow timing | Before/after execution | Any point during execution |
 | Best for | Simple inject-and-read patterns | Complex async or event-driven code |

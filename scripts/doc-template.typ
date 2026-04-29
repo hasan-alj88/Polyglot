@@ -1,4 +1,4 @@
-// doc-template.typ — Polyglot /docs renderer
+// doc-template.typ — Aljam3 /docs renderer
 // This is not a book. It renders the contents of docs/ as-is.
 
 // Pandoc 3.x compatibility
@@ -58,7 +58,7 @@
    set page(header: none, footer: none)
    v(2fr)
    align(center)[
-      #text(size: 28pt, weight: "bold")[Polyglot]
+      #text(size: 28pt, weight: "bold")[Aljam3]
       #v(0.5em)
       #text(size: 14pt, fill: luma(80))[
          Rendered contents of #raw("docs/")
@@ -83,7 +83,7 @@
 }
 
 // Main document layout
-#let polyglot-book(audience: none, doc) = {
+#let aljam3-book(audience: none, doc) = {
    set page(
       paper: "a4",
       margin: (top: 2.5cm, bottom: 2.5cm, left: 2.2cm, right: 2.2cm),

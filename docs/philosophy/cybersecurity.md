@@ -12,13 +12,13 @@ updated: 2026-04-22
 <!-- @c:audit/reference/glossary -->
 # Cybersecurity
 
-> Polyglot orchestrates code across language boundaries — including compiled binaries and foreign scripts that the compiler cannot fully analyse. That power demands a security model built on distrust, not convenience. This page defines how Polyglot treats security as a design principle. See [[vision]] for the broader project context.
+> Aljam3 orchestrates code across language boundaries — including compiled binaries and foreign scripts that the compiler cannot fully analyse. That power demands a security model built on distrust, not convenience. This page defines how Aljam3 treats security as a design principle. See [[vision]] for the broader project context.
 
 ## Zero Trust on Executed Code
 
-Polyglot's **zero-trust** security model starts from a single premise: **no code is trusted until proven safe, and no proof lasts forever.**
+Aljam3's **zero-trust** security model starts from a single premise: **no code is trusted until proven safe, and no proof lasts forever.**
 
-The compiler performs exhaustive static analysis — type safety, permission coverage, error handling, concurrency correctness. For Polyglot-native code, if it compiles, the permissions are satisfied. But the compiler is only one gate. The [[glossary#Polyglot Service|Polyglot Service]] enforces permissions independently at runtime, using OS-level mechanisms that operate below the language layer. Even if code somehow bypasses compile-time checks, the runtime rejects unauthorized actions.
+The compiler performs exhaustive static analysis — type safety, permission coverage, error handling, concurrency correctness. For Aljam3-native code, if it compiles, the permissions are satisfied. But the compiler is only one gate. The [[glossary#Aljam3 Service|Aljam3 Service]] enforces permissions independently at runtime, using OS-level mechanisms that operate below the language layer. Even if code somehow bypasses compile-time checks, the runtime rejects unauthorized actions.
 
 This is not defense-in-depth as a buzzword — it is a structural property. The compiler and the runtime enforce the same permission model through independent mechanisms. The compiler validates statically; the runtime constrains dynamically. Neither trusts the other's verdict. A compiled binary that attempts to read a file outside its declared `{_}` grant is blocked by the kernel, regardless of what the compiler approved.
 
@@ -28,11 +28,11 @@ This is system-enforced security, not honour-system security. See [[user/concept
 
 ## No Permission Inheritance
 
-Permissions in Polyglot are never inherited, never passed down, and never assumed. Every package, pipeline, and task declares its own permissions independently through explicit `{_}` grant objects.
+Permissions in Aljam3 are never inherited, never passed down, and never assumed. Every package, pipeline, and task declares its own permissions independently through explicit `{_}` grant objects.
 
 The package ceiling (`{@}`) sets an upper bound on what any definition in the package may request. But a ceiling is a limit, not a grant. A package ceiling that allows file access does not mean any pipeline in the package *has* file access — each pipeline must explicitly declare the specific `{_}` grants it needs, and those grants must fall within the ceiling. No pipeline can piggyback on another's permissions or inherit access from its package.
 
-This design eliminates an entire class of privilege escalation vulnerabilities. In systems where permissions propagate — where a child process inherits its parent's access, or a module inherits its package's grants — a single compromised component can leverage permissions it never needed. Polyglot prevents this structurally: every component's IO footprint is explicit, auditable, and independently declared.
+This design eliminates an entire class of privilege escalation vulnerabilities. In systems where permissions propagate — where a child process inherits its parent's access, or a module inherits its package's grants — a single compromised component can leverage permissions it never needed. Aljam3 prevents this structurally: every component's IO footprint is explicit, auditable, and independently declared.
 
 The hierarchy exists for constraint validation — the compiler checks that every grant falls within its ceiling. "No inheritance" means grants are never automatic. This is a security feature: the hierarchy provides bounds, explicit declaration prevents silent privilege escalation.
 
@@ -40,9 +40,9 @@ See [[user/concepts/permissions/hierarchical-scoping]] for the scoping rules.
 
 ## Black Box Monitoring Is Mandatory
 
-Polyglot cannot analyse what it cannot see. Compiled binaries and AST-invisible constructs are opaque — the compiler cannot verify their internal behaviour. A Go binary referenced by `-Run.Go.CLI` might do anything: read unexpected files, open network connections, fork child processes. The compiler sees the binary as a black box.
+Aljam3 cannot analyse what it cannot see. Compiled binaries and AST-invisible constructs are opaque — the compiler cannot verify their internal behaviour. A Go binary referenced by `-Run.Go.CLI` might do anything: read unexpected files, open network connections, fork child processes. The compiler sees the binary as a black box.
 
-Polyglot's answer is not to ban black boxes — they are essential for integrating legacy code and compiled binaries. The answer is to **watch what they do.** OpenTelemetry tracing is built into the Polyglot runtime as mandatory security infrastructure, not optional telemetry. Every job execution, every permission check, every sandbox event is recorded:
+Aljam3's answer is not to ban black boxes — they are essential for integrating legacy code and compiled binaries. The answer is to **watch what they do.** OpenTelemetry tracing is built into the Aljam3 runtime as mandatory security infrastructure, not optional telemetry. Every job execution, every permission check, every sandbox event is recorded:
 
 - **Sandbox setup** — confirmation that all isolation layers initialised correctly before foreign code runs
 - **Permission violations** — when the kernel blocks a syscall because the code exceeded its declared permissions
@@ -51,13 +51,13 @@ Polyglot's answer is not to ban black boxes — they are essential for integrati
 
 These are not debug logs. They are the security audit trail. When a black box misbehaves, the OTel events record exactly what it attempted, which sandbox layer blocked it, and what permission category was missing. This data feeds into compliance reports that connect runtime behaviour back to the compile-time permission model.
 
-The principle is straightforward: if Polyglot cannot verify code statically, it monitors code dynamically. Verification and monitoring are complementary, not alternatives.
+The principle is straightforward: if Aljam3 cannot verify code statically, it monitors code dynamically. Verification and monitoring are complementary, not alternatives.
 
 See [[technical/spec/otel-permission-events]] for the 8 security events and [[technical/spec/otel-foundation]] for the tracing infrastructure.
 
 ## Black Box Trust Metric
 
-Every **black box** in the Polyglot ecosystem is tracked. Compiled binaries via `-Run.*`, code using AST-invisible functions from the [[technical/compiler/ast-invisible-registry|banned registry]], and any pipeline running under `_Unsafe.SandboxOnly` — all accumulate a runtime history.
+Every **black box** in the Aljam3 ecosystem is tracked. Compiled binaries via `-Run.*`, code using AST-invisible functions from the [[technical/compiler/ast-invisible-registry|banned registry]], and any pipeline running under `_Unsafe.SandboxOnly` — all accumulate a runtime history.
 
 The metrics that matter are:
 

@@ -19,21 +19,21 @@ severity: warning
 **See also:** PGE03005 (error when `[b]` output is referenced)
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW03001 — called pipeline has outputs but [b] discards them
 [ ] -Audit.Log declares >auditId — silently lost via [b]
 [b] -Audit.Log
    (-) <event << $event            [ ] ⚠ PGW03001 — -Audit.Log output discarded
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ acknowledged with $* — no warning
 [b] -Audit.Log
    (-) <event << $event
    (-) >auditId >> $*              [ ] ✓ explicitly discarded
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ suppressed via Ignore comment
 [ ] Ignore PGW03001
 [b] -Audit.Log

@@ -13,7 +13,7 @@ Reduce a running Job's resource allocation. Job keeps running with reduced CPU/R
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Throttle
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobThrottle"
@@ -56,9 +56,9 @@ The Job keeps running. CPU, RAM, and IO allocation are reduced. No state is lost
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends throttle command |
-| 2. NATS command | `polyglot.command.job.throttle.{jobId}` | `{jobId, cpu?, memory?, io?}` |
+| 2. NATS command | `aljam3.command.job.throttle.{jobId}` | `{jobId, cpu?, memory?, io?}` |
 | 3. QH executes | Queue Handler | HSET job status "executing.throttled", throttled true, throttle_config {cpu, memory, io} |
-| 4. Control signal | `polyglot.queue.control.{jobId}.job.throttle` | `{jobId, cpu, memory, io}` → Runner |
+| 4. Control signal | `aljam3.queue.control.{jobId}.job.throttle` | `{jobId, cpu, memory, io}` → Runner |
 | 5. Unix mechanism | Runner | `echo {quota} {period} > cpu.max`, `echo {bytes} > memory.high`, `echo {limits} > io.max` |
 
 ### Unthrottle
@@ -66,9 +66,9 @@ The Job keeps running. CPU, RAM, and IO allocation are reduced. No state is lost
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates condition cleared, sends unthrottle command |
-| 2. NATS command | `polyglot.command.job.unthrottle.{jobId}` | `{jobId}` |
+| 2. NATS command | `aljam3.command.job.unthrottle.{jobId}` | `{jobId}` |
 | 3. QH executes | Queue Handler | HSET job status "executing", throttled false, HDEL throttle_config |
-| 4. Control signal | `polyglot.queue.control.{jobId}.job.unthrottle` | `{jobId}` → Runner |
+| 4. Control signal | `aljam3.queue.control.{jobId}.job.unthrottle` | `{jobId}` → Runner |
 | 5. Unix mechanism | Runner | Remove cgroup limits (restore `cpu.max`, `memory.high`, `io.max` to defaults) |
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.

@@ -23,7 +23,7 @@ All `-DT.*` pipelines are native definitions (`{N}` blocks). They operate on `#d
 
 On infrastructure lines (`[T]`, `[Q]`, `[W]`), `-DT"..."` and `=DateTime"..."` remain valid as sugar for `-DT.From.ISO`. In the execution body, use the `$DT` constructor for known literals (no error handling needed) or `-DT.Parse` for dynamic/untrusted strings (error handling required). See [[constructors/DT|$DT constructor]] and [[DT/Parse|-DT.Parse]].
 
-```polyglot
+```aljam3
 [ ] infrastructure line — inline notation valid
 [T] -T.Cron"0 9 * * *"
 

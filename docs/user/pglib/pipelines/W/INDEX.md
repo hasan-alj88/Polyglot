@@ -14,7 +14,7 @@ Execution order: `(-),[T]` -> `[Q]` -> `[\]` -> Body -> `[/]`
 
 No `[@]` import needed.
 
-**PRIMITIVE** — pglib wrappers are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files. User-defined wrappers are created as `{W}` definitions and referenced on `[W]` lines — see [[concepts/pipelines/wrappers#Wrappers]].
+**PRIMITIVE** — pglib wrappers are direct OS/runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.aj3` files. User-defined wrappers are created as `{W}` definitions and referenced on `[W]` lines — see [[concepts/pipelines/wrappers#Wrappers]].
 
 ## Permissions
 
@@ -23,7 +23,7 @@ Wrappers that manage external resources require a `{_}` permission object granti
 
 | Pipeline | Required Capability | Category |
 |----------|-------------------|----------|
-| `-W.Polyglot` | None | — |
+| `-W.Aljam3` | None | — |
 | `-W.DB.Connection` | Database.Connect | Database |
 | `-W.DB.Transaction` | Database.Connect | Database |
 | `-W.File.Lock` | File.Read | File |
@@ -43,7 +43,7 @@ Wrappers that manage external resources require a `{_}` permission object granti
 
 | Pipeline | Description |
 |----------|-------------|
-| [[pglib/pipelines/W/Polyglot\|-W.Polyglot]] | Pure Polyglot Code — no external runtime, no setup/cleanup |
+| [[pglib/pipelines/W/Aljam3\|-W.Aljam3]] | Pure Aljam3 Code — no external runtime, no setup/cleanup |
 
 ### Database
 

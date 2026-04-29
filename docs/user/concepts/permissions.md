@@ -13,7 +13,7 @@ status: complete
 <!-- @u:philosophy/cybersecurity -->
 <!-- @u:philosophy/accountability -->
 
-Polyglot uses an implicit-deny permission system. Every pipeline starts with zero IO capabilities. To perform any IO — read a file, make a web request, access a database — the block must declare a named `{_}` permission object via its IO markers (`(#)` for `{#}` definitions, `(-)` for `{-}` pipelines). The `{_}` object carries both the capability grant and the resource locator (path, host, credentials, etc.).
+Aljam3 uses an implicit-deny permission system. Every pipeline starts with zero IO capabilities. To perform any IO — read a file, make a web request, access a database — the block must declare a named `{_}` permission object via its IO markers (`(#)` for `{#}` definitions, `(-)` for `{-}` pipelines). The `{_}` object carries both the capability grant and the resource locator (path, host, credentials, etc.).
 
 ## Sections
 
@@ -32,7 +32,7 @@ Polyglot uses an implicit-deny permission system. Every pipeline starts with zer
 
 A full package showing the ceiling-to-grant flow:
 
-```polyglot
+```aljam3
 [ ] Package declaration with permission ceiling
 {@} @Local:999::DataProcessor:v1.0.0
    (@) _DataCeiling
@@ -70,7 +70,7 @@ A full package showing the ceiling-to-grant flow:
    (-) _ReportReader
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >reports#array.Report
    [ ]
    [-] -File.Serial.CSV.Parse
@@ -82,7 +82,7 @@ A full package showing the ceiling-to-grant flow:
    (-) _OutputWriter
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#Report
    (-) >result#string
    [ ]
@@ -95,9 +95,9 @@ A full package showing the ceiling-to-grant flow:
 
 ## File Ordering
 
-`{@}` must appear first in every `.pg` file (compiler-enforced). The recommended stylistic ordering for the remaining blocks is:
+`{@}` must appear first in every `.aj3` file (compiler-enforced). The recommended stylistic ordering for the remaining blocks is:
 
-```polyglot
+```aljam3
 {@}   <- mandatory first (compiler-enforced)
 {_}   <- permission objects (recommended second)
 {#}   <- data definitions

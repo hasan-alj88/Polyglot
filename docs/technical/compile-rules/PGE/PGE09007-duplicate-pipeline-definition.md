@@ -21,15 +21,15 @@ severity: error
 **See also:** PGE09003 (unresolved pipeline reference), PGE09011 (duplicate import alias — analogous for `[@]` aliases)
 
 **VALID:**
-```polyglot
-{ } file-01.pg
+```aljam3
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-02.aj3"
 
 {-} -LoadData
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >data#string
    [ ]
    [-] >data << "loaded"
@@ -38,14 +38,14 @@ severity: error
    [.] .host#string
    [.] .port#int
 
-{ } file-02.pg
+{ } file-02.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-01.pg"
+   [@] << "{.}\file-01.aj3"
 
 {-} -ProcessData
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    [ ]
    [-] ...
@@ -58,55 +58,55 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE09007 — duplicate pipeline across files
-{ } file-01.pg
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-02.aj3"
 
 {-} -Transform
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >output#string
    [ ]
    [-] >output << $input
 
-{ } file-02.pg
+{ } file-02.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-01.pg"
+   [@] << "{.}\file-01.aj3"
 
-{-} -Transform                              [ ] ✗ PGE09007 — -Transform already defined in file-01.pg
+{-} -Transform                              [ ] ✗ PGE09007 — -Transform already defined in file-01.aj3
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >result#string
    [ ]
    [-] >result << $data
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE09007 — duplicate data type across files
-{ } file-01.pg
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-02.aj3"
 
 {#} #Config
    [.] .host#string
    [.] .port#int
 
-{ } file-02.pg
+{ } file-02.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-01.pg"
+   [@] << "{.}\file-01.aj3"
 
-{#} #Config                                 [ ] ✗ PGE09007 — #Config already defined in file-01.pg
+{#} #Config                                 [ ] ✗ PGE09007 — #Config already defined in file-01.aj3
    [.] .dbHost#string
    [.] .dbPort#int
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE09007 — duplicate wrapper within same file
 {@} @Local:1000.MyApp:v1.0.0
 

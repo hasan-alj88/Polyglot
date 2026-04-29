@@ -11,7 +11,7 @@ metadata_instance: "%#:String:sci"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #Sci
    [%] %alias << "sci"
    [#] ##String

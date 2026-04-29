@@ -19,7 +19,7 @@ severity: error
 **See also:** PGE04001 (type mismatch), PGE04027 (missing required DateTime subfield)
 
 **VALID:**
-```polyglot
+```aljam3
 [-] $event#dt
    [.] .Instant
       [.] .epoch << 1711929600
@@ -28,7 +28,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [-] $event#dt
    [.] .Instant
       [.] .epoch << 999999999999999999

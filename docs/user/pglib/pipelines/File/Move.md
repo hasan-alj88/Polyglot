@@ -13,7 +13,7 @@ Move or rename a file.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Move
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileMove"

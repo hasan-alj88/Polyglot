@@ -36,19 +36,19 @@ This specification defines the 8 OpenTelemetry log events emitted by the Runner 
 
 ## Attribute Registry
 
-All attributes use the `polyglot.*` namespace following OTel semantic conventions.
+All attributes use the `aljam3.*` namespace following OTel semantic conventions.
 
 | Attribute | Type | Description | Example |
 |---|---|---|---|
-| `polyglot.job.uid` | string | Unique job identifier assigned by the Trigger Monitor | `"job-a1b2c3d4"` |
-| `polyglot.pipeline.name` | string | Pipeline name including prefix | `"-ProcessData"` |
-| `polyglot.package.name` | string | Fully qualified package address | `"@MyCompany::DataPipeline<1.0.0"` |
-| `polyglot.permission.category` | string | `{_}` permission category involved | `"#File.#Read"` |
-| `polyglot.sandbox.layer` | string | Sandbox enforcement layer that acted | `"landlock"`, `"seccomp"`, `"namespace"`, `"cgroup"` |
-| `polyglot.sandbox.syscall` | string | Blocked or intercepted syscall name | `"open"`, `"connect"`, `"fork"` |
-| `polyglot.sandbox.resource` | string | Attempted resource path, host\:port, or byte value | `"/etc/shadow"`, `"evil.com:443"`, `"1073741824"` |
-| `polyglot.sandbox.action` | string | Enforcement action taken | `"blocked"`, `"#Kill"`, `"#Throttle"`, `"#Retry"` |
-| `polyglot.sandbox.opaque` | bool | Whether `_Unsafe.SandboxOnly` is active for this job | `true` |
+| `aljam3.job.uid` | string | Unique job identifier assigned by the Trigger Monitor | `"job-a1b2c3d4"` |
+| `aljam3.pipeline.name` | string | Pipeline name including prefix | `"-ProcessData"` |
+| `aljam3.package.name` | string | Fully qualified package address | `"@MyCompany::DataPipeline<1.0.0"` |
+| `aljam3.permission.category` | string | `{_}` permission category involved | `"#File.#Read"` |
+| `aljam3.sandbox.layer` | string | Sandbox enforcement layer that acted | `"landlock"`, `"seccomp"`, `"namespace"`, `"cgroup"` |
+| `aljam3.sandbox.syscall` | string | Blocked or intercepted syscall name | `"open"`, `"connect"`, `"fork"` |
+| `aljam3.sandbox.resource` | string | Attempted resource path, host\:port, or byte value | `"/etc/shadow"`, `"evil.com:443"`, `"1073741824"` |
+| `aljam3.sandbox.action` | string | Enforcement action taken | `"blocked"`, `"#Kill"`, `"#Throttle"`, `"#Retry"` |
+| `aljam3.sandbox.opaque` | bool | Whether `_Unsafe.SandboxOnly` is active for this job | `true` |
 
 ## Event Specifications
 
@@ -64,16 +64,16 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
 
 | Attribute | Source |
 |---|---|
-| `polyglot.job.uid` | Trigger Monitor assignment |
-| `polyglot.pipeline.name` | Behavior Contract |
-| `polyglot.package.name` | Behavior Contract |
-| `polyglot.sandbox.opaque` | Permission Manifest |
+| `aljam3.job.uid` | Trigger Monitor assignment |
+| `aljam3.pipeline.name` | Behavior Contract |
+| `aljam3.package.name` | Behavior Contract |
+| `aljam3.sandbox.opaque` | Permission Manifest |
 
 **Optional attributes:**
 
 | Attribute | When present |
 |---|---|
-| `polyglot.sandbox.layer` | One event per layer successfully initialized (multiple events possible) |
+| `aljam3.sandbox.layer` | One event per layer successfully initialized (multiple events possible) |
 
 **Parent span:** Sandbox Setup Span (child of Job Span)
 
@@ -85,10 +85,10 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
   "SeverityText": "INFO",
   "Body": "Sandbox setup complete for -ProcessData",
   "Attributes": {
-    "polyglot.job.uid": "job-a1b2c3d4",
-    "polyglot.pipeline.name": "-ProcessData",
-    "polyglot.package.name": "@MyCompany::DataPipeline<1.0.0",
-    "polyglot.sandbox.opaque": false
+    "aljam3.job.uid": "job-a1b2c3d4",
+    "aljam3.pipeline.name": "-ProcessData",
+    "aljam3.package.name": "@MyCompany::DataPipeline<1.0.0",
+    "aljam3.sandbox.opaque": false
   },
   "TraceId": "abc123...",
   "SpanId": "setup-span-456"
@@ -107,16 +107,16 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
 
 | Attribute | Source |
 |---|---|
-| `polyglot.job.uid` | Trigger Monitor assignment |
-| `polyglot.pipeline.name` | Behavior Contract |
-| `polyglot.package.name` | Behavior Contract |
-| `polyglot.sandbox.layer` | Which layer failed |
+| `aljam3.job.uid` | Trigger Monitor assignment |
+| `aljam3.pipeline.name` | Behavior Contract |
+| `aljam3.package.name` | Behavior Contract |
+| `aljam3.sandbox.layer` | Which layer failed |
 
 **Optional attributes:**
 
 | Attribute | When present |
 |---|---|
-| `polyglot.sandbox.resource` | Path or resource that caused the failure (e.g., missing mount target) |
+| `aljam3.sandbox.resource` | Path or resource that caused the failure (e.g., missing mount target) |
 
 **Parent span:** Sandbox Setup Span (child of Job Span)
 
@@ -128,11 +128,11 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
   "SeverityText": "CRITICAL",
   "Body": "Sandbox setup failed: Landlock ruleset creation returned ENOSYS",
   "Attributes": {
-    "polyglot.job.uid": "job-a1b2c3d4",
-    "polyglot.pipeline.name": "-ProcessData",
-    "polyglot.package.name": "@MyCompany::DataPipeline<1.0.0",
-    "polyglot.sandbox.layer": "landlock",
-    "polyglot.sandbox.resource": "/data/reports"
+    "aljam3.job.uid": "job-a1b2c3d4",
+    "aljam3.pipeline.name": "-ProcessData",
+    "aljam3.package.name": "@MyCompany::DataPipeline<1.0.0",
+    "aljam3.sandbox.layer": "landlock",
+    "aljam3.sandbox.resource": "/data/reports"
   },
   "TraceId": "abc123...",
   "SpanId": "setup-span-456"
@@ -151,20 +151,20 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
 
 | Attribute | Source |
 |---|---|
-| `polyglot.job.uid` | Trigger Monitor assignment |
-| `polyglot.pipeline.name` | Behavior Contract |
-| `polyglot.package.name` | Behavior Contract |
-| `polyglot.sandbox.layer` | Which enforcement layer blocked the call |
-| `polyglot.sandbox.syscall` | Blocked syscall name |
-| `polyglot.sandbox.resource` | Attempted resource |
-| `polyglot.permission.category` | Which `{_}` category would have been needed |
+| `aljam3.job.uid` | Trigger Monitor assignment |
+| `aljam3.pipeline.name` | Behavior Contract |
+| `aljam3.package.name` | Behavior Contract |
+| `aljam3.sandbox.layer` | Which enforcement layer blocked the call |
+| `aljam3.sandbox.syscall` | Blocked syscall name |
+| `aljam3.sandbox.resource` | Attempted resource |
+| `aljam3.permission.category` | Which `{_}` category would have been needed |
 
 **Optional attributes:**
 
 | Attribute | When present |
 |---|---|
-| `polyglot.sandbox.opaque` | Always present; highlights opaque vs analyzed code |
-| `polyglot.sandbox.action` | Always `"blocked"` for violations |
+| `aljam3.sandbox.opaque` | Always present; highlights opaque vs analyzed code |
+| `aljam3.sandbox.action` | Always `"blocked"` for violations |
 
 **Parent span:** Foreign Code Execution Span (child of Job Span)
 
@@ -176,15 +176,15 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
   "SeverityText": "ERROR",
   "Body": "Sandbox violation: open(/etc/shadow) blocked by Landlock — missing #File.#Read for /etc/shadow",
   "Attributes": {
-    "polyglot.job.uid": "job-a1b2c3d4",
-    "polyglot.pipeline.name": "-ProcessData",
-    "polyglot.package.name": "@MyCompany::DataPipeline<1.0.0",
-    "polyglot.sandbox.layer": "landlock",
-    "polyglot.sandbox.syscall": "open",
-    "polyglot.sandbox.resource": "/etc/shadow",
-    "polyglot.permission.category": "#File.#Read",
-    "polyglot.sandbox.action": "blocked",
-    "polyglot.sandbox.opaque": false
+    "aljam3.job.uid": "job-a1b2c3d4",
+    "aljam3.pipeline.name": "-ProcessData",
+    "aljam3.package.name": "@MyCompany::DataPipeline<1.0.0",
+    "aljam3.sandbox.layer": "landlock",
+    "aljam3.sandbox.syscall": "open",
+    "aljam3.sandbox.resource": "/etc/shadow",
+    "aljam3.permission.category": "#File.#Read",
+    "aljam3.sandbox.action": "blocked",
+    "aljam3.sandbox.opaque": false
   },
   "TraceId": "abc123...",
   "SpanId": "exec-span-789"
@@ -203,18 +203,18 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
 
 | Attribute | Source |
 |---|---|
-| `polyglot.job.uid` | Trigger Monitor assignment |
-| `polyglot.pipeline.name` | Behavior Contract |
-| `polyglot.package.name` | Behavior Contract |
-| `polyglot.permission.category` | Resource category exceeded (e.g., `#RAM.#Limit`, `#CPU.#Limit`) |
-| `polyglot.sandbox.resource` | Current value that exceeded the limit |
-| `polyglot.sandbox.action` | `"#Throttle"` or `"#Kill"` |
+| `aljam3.job.uid` | Trigger Monitor assignment |
+| `aljam3.pipeline.name` | Behavior Contract |
+| `aljam3.package.name` | Behavior Contract |
+| `aljam3.permission.category` | Resource category exceeded (e.g., `#RAM.#Limit`, `#CPU.#Limit`) |
+| `aljam3.sandbox.resource` | Current value that exceeded the limit |
+| `aljam3.sandbox.action` | `"#Throttle"` or `"#Kill"` |
 
 **Optional attributes:**
 
 | Attribute | When present |
 |---|---|
-| `polyglot.sandbox.layer` | Always `"cgroup"` for resource events |
+| `aljam3.sandbox.layer` | Always `"cgroup"` for resource events |
 
 **Parent span:** Foreign Code Execution Span (child of Job Span)
 
@@ -226,13 +226,13 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
   "SeverityText": "WARN",
   "Body": "Resource limit exceeded: CPU throttled for -ProcessData",
   "Attributes": {
-    "polyglot.job.uid": "job-a1b2c3d4",
-    "polyglot.pipeline.name": "-ProcessData",
-    "polyglot.package.name": "@MyCompany::DataPipeline<1.0.0",
-    "polyglot.permission.category": "#CPU.#Limit",
-    "polyglot.sandbox.resource": "2.5 cores",
-    "polyglot.sandbox.action": "#Throttle",
-    "polyglot.sandbox.layer": "cgroup"
+    "aljam3.job.uid": "job-a1b2c3d4",
+    "aljam3.pipeline.name": "-ProcessData",
+    "aljam3.package.name": "@MyCompany::DataPipeline<1.0.0",
+    "aljam3.permission.category": "#CPU.#Limit",
+    "aljam3.sandbox.resource": "2.5 cores",
+    "aljam3.sandbox.action": "#Throttle",
+    "aljam3.sandbox.layer": "cgroup"
   },
   "TraceId": "abc123...",
   "SpanId": "exec-span-789"
@@ -251,18 +251,18 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
 
 | Attribute | Source |
 |---|---|
-| `polyglot.job.uid` | Trigger Monitor assignment |
-| `polyglot.pipeline.name` | Behavior Contract |
-| `polyglot.package.name` | Behavior Contract |
-| `polyglot.permission.category` | Resource category that triggered the kill |
-| `polyglot.sandbox.resource` | Value at time of kill |
-| `polyglot.sandbox.action` | `"#Kill"` |
+| `aljam3.job.uid` | Trigger Monitor assignment |
+| `aljam3.pipeline.name` | Behavior Contract |
+| `aljam3.package.name` | Behavior Contract |
+| `aljam3.permission.category` | Resource category that triggered the kill |
+| `aljam3.sandbox.resource` | Value at time of kill |
+| `aljam3.sandbox.action` | `"#Kill"` |
 
 **Optional attributes:**
 
 | Attribute | When present |
 |---|---|
-| `polyglot.sandbox.layer` | Always `"cgroup"` |
+| `aljam3.sandbox.layer` | Always `"cgroup"` |
 
 **Parent span:** Job Span (directly, since this terminates the job)
 
@@ -274,13 +274,13 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
   "SeverityText": "ERROR",
   "Body": "Job killed: -ProcessData exceeded #RAM.#Limit (512MB, used 1073741824 bytes)",
   "Attributes": {
-    "polyglot.job.uid": "job-a1b2c3d4",
-    "polyglot.pipeline.name": "-ProcessData",
-    "polyglot.package.name": "@MyCompany::DataPipeline<1.0.0",
-    "polyglot.permission.category": "#RAM.#Limit",
-    "polyglot.sandbox.resource": "1073741824",
-    "polyglot.sandbox.action": "#Kill",
-    "polyglot.sandbox.layer": "cgroup"
+    "aljam3.job.uid": "job-a1b2c3d4",
+    "aljam3.pipeline.name": "-ProcessData",
+    "aljam3.package.name": "@MyCompany::DataPipeline<1.0.0",
+    "aljam3.permission.category": "#RAM.#Limit",
+    "aljam3.sandbox.resource": "1073741824",
+    "aljam3.sandbox.action": "#Kill",
+    "aljam3.sandbox.layer": "cgroup"
   },
   "TraceId": "abc123...",
   "SpanId": "job-span-123"
@@ -299,16 +299,16 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
 
 | Attribute | Source |
 |---|---|
-| `polyglot.job.uid` | Trigger Monitor assignment |
-| `polyglot.pipeline.name` | Behavior Contract |
-| `polyglot.package.name` | Behavior Contract |
-| `polyglot.sandbox.opaque` | Always `true` (suppression only happens under opaque mode) |
+| `aljam3.job.uid` | Trigger Monitor assignment |
+| `aljam3.pipeline.name` | Behavior Contract |
+| `aljam3.package.name` | Behavior Contract |
+| `aljam3.sandbox.opaque` | Always `true` (suppression only happens under opaque mode) |
 
 **Optional attributes:**
 
 | Attribute | When present |
 |---|---|
-| `polyglot.permission.category` | Category of the suppressed violation, if determinable |
+| `aljam3.permission.category` | Category of the suppressed violation, if determinable |
 
 **Parent span:** Foreign Code Execution Span (child of Job Span)
 
@@ -320,10 +320,10 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
   "SeverityText": "WARN",
   "Body": "AST-invisible error suppressed: PGE10014 (eval detected) — _Unsafe.SandboxOnly active",
   "Attributes": {
-    "polyglot.job.uid": "job-e5f6g7h8",
-    "polyglot.pipeline.name": "-LegacyProcessor",
-    "polyglot.package.name": "@MyCompany::Legacy<2.0.0",
-    "polyglot.sandbox.opaque": true
+    "aljam3.job.uid": "job-e5f6g7h8",
+    "aljam3.pipeline.name": "-LegacyProcessor",
+    "aljam3.package.name": "@MyCompany::Legacy<2.0.0",
+    "aljam3.sandbox.opaque": true
   },
   "TraceId": "def456...",
   "SpanId": "exec-span-012"
@@ -342,10 +342,10 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
 
 | Attribute | Source |
 |---|---|
-| `polyglot.job.uid` | Trigger Monitor assignment |
-| `polyglot.pipeline.name` | Behavior Contract |
-| `polyglot.package.name` | Behavior Contract |
-| `polyglot.sandbox.opaque` | Always `true` |
+| `aljam3.job.uid` | Trigger Monitor assignment |
+| `aljam3.pipeline.name` | Behavior Contract |
+| `aljam3.package.name` | Behavior Contract |
+| `aljam3.sandbox.opaque` | Always `true` |
 
 **Parent span:** Sandbox Setup Span (child of Job Span)
 
@@ -357,10 +357,10 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
   "SeverityText": "WARN",
   "Body": "_Unsafe.SandboxOnly activated for -LegacyProcessor — maximum containment engaged",
   "Attributes": {
-    "polyglot.job.uid": "job-e5f6g7h8",
-    "polyglot.pipeline.name": "-LegacyProcessor",
-    "polyglot.package.name": "@MyCompany::Legacy<2.0.0",
-    "polyglot.sandbox.opaque": true
+    "aljam3.job.uid": "job-e5f6g7h8",
+    "aljam3.pipeline.name": "-LegacyProcessor",
+    "aljam3.package.name": "@MyCompany::Legacy<2.0.0",
+    "aljam3.sandbox.opaque": true
   },
   "TraceId": "def456...",
   "SpanId": "setup-span-789"
@@ -379,15 +379,15 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
 
 | Attribute | Source |
 |---|---|
-| `polyglot.job.uid` | Trigger Monitor assignment |
-| `polyglot.pipeline.name` | Behavior Contract |
-| `polyglot.package.name` | Behavior Contract |
+| `aljam3.job.uid` | Trigger Monitor assignment |
+| `aljam3.pipeline.name` | Behavior Contract |
+| `aljam3.package.name` | Behavior Contract |
 
 **Optional attributes:**
 
 | Attribute | When present |
 |---|---|
-| `polyglot.sandbox.opaque` | Present when opaque mode was active |
+| `aljam3.sandbox.opaque` | Present when opaque mode was active |
 
 **Parent span:** Job Completion Span (child of Job Span)
 
@@ -399,9 +399,9 @@ All attributes use the `polyglot.*` namespace following OTel semantic convention
   "SeverityText": "INFO",
   "Body": "Runtime compliance appendix generated for -ProcessData (2 violations, 1 warning)",
   "Attributes": {
-    "polyglot.job.uid": "job-a1b2c3d4",
-    "polyglot.pipeline.name": "-ProcessData",
-    "polyglot.package.name": "@MyCompany::DataPipeline<1.0.0"
+    "aljam3.job.uid": "job-a1b2c3d4",
+    "aljam3.pipeline.name": "-ProcessData",
+    "aljam3.package.name": "@MyCompany::DataPipeline<1.0.0"
   },
   "TraceId": "abc123...",
   "SpanId": "completion-span-999"
@@ -453,20 +453,20 @@ The compile-time [[compliance-report]] is static — it records what the compile
         "timestamp": "2026-04-18T14:30:05.789Z",
         "event": "permission.sandbox.violation",
         "attributes": {
-          "polyglot.sandbox.layer": "landlock",
-          "polyglot.sandbox.syscall": "open",
-          "polyglot.sandbox.resource": "/etc/shadow",
-          "polyglot.permission.category": "#File.#Read",
-          "polyglot.sandbox.action": "blocked"
+          "aljam3.sandbox.layer": "landlock",
+          "aljam3.sandbox.syscall": "open",
+          "aljam3.sandbox.resource": "/etc/shadow",
+          "aljam3.permission.category": "#File.#Read",
+          "aljam3.sandbox.action": "blocked"
         }
       },
       {
         "timestamp": "2026-04-18T14:31:45.678Z",
         "event": "permission.resource.kill",
         "attributes": {
-          "polyglot.permission.category": "#RAM.#Limit",
-          "polyglot.sandbox.resource": "1073741824",
-          "polyglot.sandbox.action": "#Kill"
+          "aljam3.permission.category": "#RAM.#Limit",
+          "aljam3.sandbox.resource": "1073741824",
+          "aljam3.sandbox.action": "#Kill"
         }
       }
     ],
@@ -475,7 +475,7 @@ The compile-time [[compliance-report]] is static — it records what the compile
         "timestamp": "2026-04-18T14:30:02.000Z",
         "event": "permission.ast.suppressed",
         "attributes": {
-          "polyglot.sandbox.opaque": true
+          "aljam3.sandbox.opaque": true
         }
       }
     ]

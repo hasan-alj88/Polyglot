@@ -1,0 +1,7 @@
+[package]
+name = "aljam3-core"
+version = "0.1.0"
+edition = "2021"
+description = "Aljam3 language compiler — lexer, parser, and compile-rule enforcement"
+
+[dependencies]

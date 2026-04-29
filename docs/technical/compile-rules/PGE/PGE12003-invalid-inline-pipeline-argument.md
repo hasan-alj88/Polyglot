@@ -24,14 +24,14 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ infrastructure inline call — pipeline declares %InlineString
 {-} -MyWrapper
    (-) %InlineString << "{envName}"
    (-) <envName#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 
 {-} -MyPipeline
@@ -40,14 +40,14 @@ severity: error
    [W] -MyWrapper"production"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ normal call to pipeline without %InlineString — no error (not inline)
 {-} -NormalPipeline
    (-) <input#string
    (-) >output#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >output << $input
 
@@ -57,13 +57,13 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12003 — -MyWrapper has no %InlineString declaration
 {-} -MyWrapper
    (-) <envName#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 
 {-} -MyPipeline

@@ -9,23 +9,23 @@ status: draft
 
 <!-- @c:spec/native-dispatch -->
 <!-- @c:spec/native-dispatch#Serialization Protocol -->
-<!-- @c:spec/polyglot-sdk -->
+<!-- @c:spec/aljam3-sdk -->
 <!-- @c:pglib/types/Variable -->
 <!-- @c:pglib/types/NativeType -->
 <!-- @c:pglib/pipelines/Run/INDEX -->
-Related: [[native-dispatch]], [[polyglot-sdk]], [[foreign-code-analysis]]
+Related: [[native-dispatch]], [[aljam3-sdk]], [[foreign-code-analysis]]
 
 ## Overview
 
-The Bridge enables pairwise cross-language function calls and variable binding by converting `#Variable` instances between language type systems. All conversion passes through the Polyglot type system as intermediary -- the same string-serialized JSON wire format used by [[native-dispatch|native dispatch]].
+The Bridge enables pairwise cross-language function calls and variable binding by converting `#Variable` instances between language type systems. All conversion passes through the Aljam3 type system as intermediary -- the same string-serialized JSON wire format used by [[native-dispatch|native dispatch]].
 
 Bridge pipelines (`-Run.Bridge.Function`, `-Run.Bridge.Script`) use the conversion algorithm internally. Users can also invoke `-Variable.Convert` directly for explicit variable conversion outside a Bridge context.
 
 ### Design Principles
 
 1. **String serialization, not FFI.** All values cross language boundaries as JSON strings. No shared memory, no foreign function interface, no dynamic code generation.
-2. **Polyglot type system as intermediary.** Source native type maps to a Polyglot type, then Polyglot type maps to target native type. The two languages never communicate directly.
-3. **Same wire format as native dispatch.** The JSON envelope (`{"type": "<polyglot_type>", "value": "<string>"}`) is identical to [[native-dispatch#Value Encoding]].
+2. **Aljam3 type system as intermediary.** Source native type maps to a Aljam3 type, then Aljam3 type maps to target native type. The two languages never communicate directly.
+3. **Same wire format as native dispatch.** The JSON envelope (`{"type": "<aljam3_type>", "value": "<string>"}`) is identical to [[native-dispatch#Value Encoding]].
 4. **Extensible by language pair.** New language support adds conversion entries without changing the algorithm.
 
 ## Dual-Wrapper Lifecycle
@@ -110,26 +110,26 @@ Extracted:
    value: "42"
 ```
 
-### Step 2 -- Map to Polyglot Type
+### Step 2 -- Map to Aljam3 Type
 
-Look up the source native type in the [[pglib/types/NativeType#Marshalling Table|marshalling table]] to find the corresponding Polyglot type:
+Look up the source native type in the [[pglib/types/NativeType#Marshalling Table|marshalling table]] to find the corresponding Aljam3 type:
 
 ```text
-Lookup: Python.int → Polyglot #int
+Lookup: Python.int → Aljam3 #int
 
 Result:
-   polyglot_type: #int
+   aljam3_type: #int
    value: "42" (unchanged -- already string-encoded)
 ```
 
-The value string does not change during this step. All Polyglot values are already string-encoded per the [[spec/type-identity|type identity]] principle. The marshalling table lookup only determines the Polyglot type tag.
+The value string does not change during this step. All Aljam3 values are already string-encoded per the [[spec/type-identity|type identity]] principle. The marshalling table lookup only determines the Aljam3 type tag.
 
 ### Step 3 -- Map to Target Type
 
-Look up the Polyglot type in the marshalling table to find the target language's native type:
+Look up the Aljam3 type in the marshalling table to find the target language's native type:
 
 ```text
-Lookup: Polyglot #int → Rust i64
+Lookup: Aljam3 #int → Rust i64
 
 Result: #Variable {
    branch: "Rust",
@@ -139,7 +139,7 @@ Result: #Variable {
 }
 ```
 
-Again, the value string does not change. The JSON envelope's `"type"` field remains the Polyglot type (`"int"`) -- the `#NativeType` tag on the `#Variable` tells the receiving Runner which native constructor to use.
+Again, the value string does not change. The JSON envelope's `"type"` field remains the Aljam3 type (`"int"`) -- the `#NativeType` tag on the `#Variable` tells the receiving Runner which native constructor to use.
 
 ### Complete Flow
 
@@ -147,19 +147,19 @@ Again, the value string does not change. The JSON envelope's `"type"` field rema
 Source #Variable (:Python, .type=int, .value="42")
     ↓ Step 1: read source
     Python.int
-    ↓ Step 2: map to Polyglot
-    Polyglot #int ("42")
+    ↓ Step 2: map to Aljam3
+    Aljam3 #int ("42")
     ↓ Step 3: map to target
     Target #Variable (:Rust, .type=i64, .value="42")
 ```
 
 ### Edge Cases
 
-**Same Polyglot type, different native types:**
-Python `str` and Rust `String` both map to Polyglot `#string`. Conversion is trivial -- only the branch and type tag change.
+**Same Aljam3 type, different native types:**
+Python `str` and Rust `String` both map to Aljam3 `#string`. Conversion is trivial -- only the branch and type tag change.
 
 **No direct mapping (incompatible type):**
-Python `bytes` has no direct Polyglot equivalent. Attempting to convert a `bytes`-typed `#Variable` to JavaScript raises `!Run.Bridge.IncompatibleType`. The user must explicitly convert to `#string` (base64-encoded) before bridging.
+Python `bytes` has no direct Aljam3 equivalent. Attempting to convert a `bytes`-typed `#Variable` to JavaScript raises `!Run.Bridge.IncompatibleType`. The user must explicitly convert to `#string` (base64-encoded) before bridging.
 
 **Numeric precision:**
 All numeric values are string-encoded, so precision is preserved across conversion. Python `int` (arbitrary precision) → Rust `i64` (64-bit) may overflow at runtime, raising `!Run.Bridge.ConversionFailed`.
@@ -263,7 +263,7 @@ Step 4: Convert >Bind back to caller type system
 
 ## Chaining
 
-Bridge calls are standard `{-}` pipeline operations. Chaining A→B then B→C is two separate `[-]` calls wired through Polyglot IO:
+Bridge calls are standard `{-}` pipeline operations. Chaining A→B then B→C is two separate `[-]` calls wired through Aljam3 IO:
 
 ```text
 {-} =PythonToRustToGo
@@ -282,7 +282,7 @@ Bridge calls are standard `{-}` pipeline operations. Chaining A→B then B→C i
       (-) <arg#array.Variable << $rustResult
 ```
 
-Each Bridge call is independent. The intermediate `$rustResult` is a Polyglot variable holding `#array.Variable` instances tagged with Rust types. The second Bridge call converts these from Rust to Go automatically.
+Each Bridge call is independent. The intermediate `$rustResult` is a Aljam3 variable holding `#array.Variable` instances tagged with Rust types. The second Bridge call converts these from Rust to Go automatically.
 
 ## Runner Dispatch
 
@@ -311,13 +311,13 @@ The Runner coordinates these calls sequentially. The conversion calls are standa
 
 ### String Serialization Overhead
 
-Bridge calls serialize all values through JSON strings twice: once for the conversion step (source → Polyglot) and once for the dispatch step (Polyglot → callee). This adds overhead compared to single-language `-Run.*` calls.
+Bridge calls serialize all values through JSON strings twice: once for the conversion step (source → Aljam3) and once for the dispatch step (Aljam3 → callee). This adds overhead compared to single-language `-Run.*` calls.
 
 | Scenario | Serialization Passes | Relative Cost |
 |----------|---------------------|---------------|
-| Single-language `-Run.Function` | 1 (Polyglot → native) | Baseline |
-| Bridge `-Run.Bridge.Function` | 2 (source → Polyglot → target) | ~2x serialization |
-| SDK `pg.call()` | 2 (foreign → Polyglot → foreign, via NATS) | ~2x + NATS round-trip |
+| Single-language `-Run.Function` | 1 (Aljam3 → native) | Baseline |
+| Bridge `-Run.Bridge.Function` | 2 (source → Aljam3 → target) | ~2x serialization |
+| SDK `pg.call()` | 2 (foreign → Aljam3 → foreign, via NATS) | ~2x + NATS round-trip |
 
 ### When Bridge is Faster Than SDK
 
@@ -330,7 +330,7 @@ Bridge path: Runner(Python env) → Convert → Runner(Rust env) → Convert →
 
 ### When SDK is Simpler
 
-SDK is simpler for coarse-grained calls from external applications. Bridge is designed for **within-pipeline** cross-language calls where both environments are already managed by Polyglot wrappers.
+SDK is simpler for coarse-grained calls from external applications. Bridge is designed for **within-pipeline** cross-language calls where both environments are already managed by Aljam3 wrappers.
 
 ## Related
 
@@ -338,7 +338,7 @@ SDK is simpler for coarse-grained calls from external applications. Bridge is de
 |----------|-------------|
 | [[spec/native-dispatch\|Native Dispatch]] | JSON wire format and dispatch flow |
 | [[spec/native-dispatch#Serialization Protocol\|Serialization Protocol]] | Value encoding format shared with Bridge |
-| [[spec/polyglot-sdk\|Polyglot SDK]] | Alternative cross-language mechanism (external to pipeline) |
+| [[spec/aljam3-sdk\|Aljam3 SDK]] | Alternative cross-language mechanism (external to pipeline) |
 | [[algorithms/foreign-code-analysis\|Foreign Code Analysis]] | AST analysis for binding validation |
 | [[pglib/types/Variable\|#Variable]] | Language-tagged variable type |
 | [[pglib/types/NativeType\|#NativeType]] | Native type marshalling table |

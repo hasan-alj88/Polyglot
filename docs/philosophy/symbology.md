@@ -13,27 +13,27 @@ updated: 2026-04-22
 <!-- @c:audit/reference/glossary -->
 # Symbol Design Rationale
 
-> This page expands the syntax design choices summarized in [[vision]]. It explains *why* Polyglot's symbols look the way they do — not what they mean (see [[user/syntax/identifiers]] and [[user/syntax/blocks]] for that).
+> This page expands the syntax design choices summarized in [[vision]]. It explains *why* Aljam3's symbols look the way they do — not what they mean (see [[user/syntax/identifiers]] and [[user/syntax/blocks]] for that).
 
-Polyglot's syntax is visual by design. Every prefix character, bracket shape, and assignment arrow was chosen so that code self-documents its intent. A developer reading Polyglot code can identify what each line *is* — a variable, a type, a pipeline call, an error — before reading a single word of the identifier name. This is not decoration; it is a parsing strategy for both humans and the compiler.
+Aljam3's syntax is visual by design. Every prefix character, bracket shape, and assignment arrow was chosen so that code self-documents its intent. A developer reading Aljam3 code can identify what each line *is* — a variable, a type, a pipeline call, an error — before reading a single word of the identifier name. This is not decoration; it is a parsing strategy for both humans and the compiler.
 
 ## Why Prefixes?
 
-Every [[glossary#Polyglot Code|Polyglot Code]] identifier starts with a prefix character. This serves three purposes:
+Every [[glossary#Aljam3 Code|Aljam3 Code]] identifier starts with a prefix character. This serves three purposes:
 
 - **Human parsing** — the eye recognises `$` as "variable" and `#` as "type" without reading the name. In a trigger-driven language where pipelines, queues, wrappers, triggers, permissions, and execution all coexist, prefixes prevent ambiguity at a glance.
 
 - **Compiler parsing** — the compiler can classify any identifier with a single-character lookahead. No keyword reservation, no context-dependent resolution. A regex `^[$#\-!=@_%~]` partitions the entire identifier space.
 
-- **Self-documenting code** — Polyglot code carries its own legend. `$user` is always a variable. `-ProcessData` is always a pipeline. `!Timeout` is always an error. The prefix *is* the documentation.
+- **Self-documenting code** — Aljam3 code carries its own legend. `$user` is always a variable. `-ProcessData` is always a pipeline. `!Timeout` is always an error. The prefix *is* the documentation.
 
 <!-- @u:syntax/identifiers -->
 
 ## Why Do All Lines Start with Markers?
 
-Polyglot is a trigger-driven language. A pipeline is not a sequence of statements — it contains triggers, IO declarations, queue configuration, wrapper setup/cleanup, conditionals, error handlers, and execution calls. Each of these has a fundamentally different role.
+Aljam3 is a trigger-driven language. A pipeline is not a sequence of statements — it contains triggers, IO declarations, queue configuration, wrapper setup/cleanup, conditionals, error handlers, and execution calls. Each of these has a fundamentally different role.
 
-Line markers (`[T]`, `[Q]`, `[W]`, `[-]`, `[!]`, `[?]`) declare which section each line belongs to. There is no ambiguity about a line's purpose: the marker tells you before you read the content. This is the syntactic consequence of Polyglot's design philosophy — every construct declares its intent explicitly.
+Line markers (`[T]`, `[Q]`, `[W]`, `[-]`, `[!]`, `[?]`) declare which section each line belongs to. There is no ambiguity about a line's purpose: the marker tells you before you read the content. This is the syntactic consequence of Aljam3's design philosophy — every construct declares its intent explicitly.
 
 ## Prefix Symbols
 
@@ -51,7 +51,7 @@ Each prefix was chosen for visual resonance with its meaning:
 | `$` | Variable | Dollar sign — concrete instance of data (PHP convention) |
 | `!` | Error | Exclamation — warning, something went wrong |
 | `@` | Package | At sign — addressing, "where this comes from" |
-| `%` | Metadata tree | Fraction symbol — the part of the Big Metadata Tree where you find the full address for all Polyglot objects |
+| `%` | Metadata tree | Fraction symbol — the part of the Big Metadata Tree where you find the full address for all Aljam3 objects |
 | `;` | Environment | Semicolon — symbolic of foreign code line terminators (C++, Java, JS, Rust, Go) |
 | `~` | Continuation | Tilde — `[~]` continues the line above, `.~` iterates levels. Wave = "keep going" |
 
@@ -61,7 +61,7 @@ The prefix set is closed — no new prefixes will be added. Every prefix partici
 
 <!-- @u:syntax/blocks -->
 
-Polyglot uses three bracket shapes, each with a single semantic role:
+Aljam3 uses three bracket shapes, each with a single semantic role:
 
 | Bracket | Role | Meaning |
 |---------|------|---------|
@@ -83,7 +83,7 @@ The three shapes are visually distinct at any font size and never overlap in mea
 
 Most programming languages use `=` for assignment, with data flowing right-to-left: `x = value`. The direction is invisible — you must know the convention to read the flow.
 
-Polyglot makes data flow direction explicit:
+Aljam3 makes data flow direction explicit:
 
 | Operator | Direction | Meaning |
 |----------|-----------|---------|
@@ -106,11 +106,11 @@ The prefix characters tell a visual story of data moving through a pipeline syst
 - **`=` (parallel)** — data fans out to multiple parallel processes (two lines = two threads)
 - **`*` (collect)** — parallel results converge back into a single collection point
 
-This `-` → `=` → `*` progression mirrors the expand/collect pattern that is fundamental to Polyglot's concurrency model.
+This `-` → `=` → `*` progression mirrors the expand/collect pattern that is fundamental to Aljam3's concurrency model.
 
 ### Permission as Visual Metaphor
 
-The `_` underscore sits at the bottom of the character — the lowest bar, the floor. Permissions in Polyglot default to implicit deny: nothing is allowed unless explicitly granted. The visual metaphor reinforces this: `_` is the minimum, the baseline, the floor you must build up from. The three tiers (`_`, `__`, `___`) mirror the type system's three tiers (`#`, `##`, `###`), creating a consistent visual language for instance, schema, and field across both systems.
+The `_` underscore sits at the bottom of the character — the lowest bar, the floor. Permissions in Aljam3 default to implicit deny: nothing is allowed unless explicitly granted. The visual metaphor reinforces this: `_` is the minimum, the baseline, the floor you must build up from. The three tiers (`_`, `__`, `___`) mirror the type system's three tiers (`#`, `##`, `###`), creating a consistent visual language for instance, schema, and field across both systems.
 
 ### Prefix as Parse and Document
 

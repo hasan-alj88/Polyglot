@@ -19,19 +19,19 @@ severity: error
 **See also:** PGE01010 (pipeline IO name mismatch), PGE08007 (invalid assignment target), PGE08008 (missing required input), PGE08009 (uncaptured required output)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ correct IO direction at call site
 [-] -File.Text.Read
    (-) <path << $filepath                     [ ] ✓ input << push value in
    (-) >content >> $text                       [ ] ✓ output >> pull value out
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ pipeline body writes its own output port — allowed
 {-} -Compute
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <x#int
    (-) >result#int
    [ ]
@@ -39,21 +39,21 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE08010 — reversed IO direction at call site
 [-] -File.Text.Read
    (-) >content << $filepath                  [ ] ✗ PGE08010 — output is a source, not a destination
    (-) <path >> $text                          [ ] ✗ PGE08010 — input is a destination, not a source
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08010 — pushing into output at call site
 [-] -Format
    (-) <text << $input                         [ ] ✓ correct
    (-) >formatted << $overwrite                [ ] ✗ PGE08010 — cannot push into output at call site
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08010 — pulling from input at call site
 [-] -Process
    (-) <data >> $leak                          [ ] ✗ PGE08010 — cannot pull from input at call site

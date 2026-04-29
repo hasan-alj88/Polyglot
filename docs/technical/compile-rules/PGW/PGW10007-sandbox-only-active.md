@@ -25,7 +25,7 @@ severity: warning
 **See also:** PGE10015 (opaque binary without `_Unsafe.SandboxOnly`), PGE10016 (missing mandatory metadata), PGE10014 (AST-invisible foreign code — suppressed under `_Unsafe.SandboxOnly`), [[spec/job-sandbox#Opaque Code]], [[compiler/compliance-report]]
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW10007 — _Unsafe.SandboxOnly active, maximum sandbox enforcement
 {_} _FileGrant
    [.] .intent << #Grant
@@ -50,7 +50,7 @@ severity: warning
       (-) >output#string >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW10007 with suppressed PGE10014 findings
 {_} _FileGrant
    [.] .intent << #Grant

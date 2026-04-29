@@ -20,7 +20,7 @@ severity: error
 **Boundary with PGE04001:** PGE04002 fires when a data instance has the **correct schema** but is **incomplete** (missing required field values). If the schemas themselves are structurally different (different fields or field types), see PGE04001.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
@@ -31,7 +31,7 @@ severity: error
    [-] $user.age << 30
 ```
 
-```polyglot
+```aljam3
 {#} #Config
    [.] .timeout#int <~ 30
    [.] .retries#int <~ 3
@@ -40,7 +40,7 @@ severity: error
 [-] $cfg#Config
 ```
 
-```polyglot
+```aljam3
 {#} #Request
    [.] .url#string
    [.] .method#string <~ "GET"
@@ -51,7 +51,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
@@ -62,7 +62,7 @@ severity: error
    [ ] .age has no default and is never assigned — ✗ PGE04002
 ```
 
-```polyglot
+```aljam3
 {#} #Connection
    [.] .host#string
    [.] .port#int

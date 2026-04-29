@@ -8,7 +8,7 @@ updated: 2026-04-03
 
 <!-- @user/SPEC-INDEX -->
 
-Reference catalog for Polyglot Code training. Each scenario represents a real-world automation workflow. 500 scenarios across 30 categories demonstrate the breadth of pipelines Polyglot can express.
+Reference catalog for Aljam3 Code training. Each scenario represents a real-world automation workflow. 500 scenarios across 30 categories demonstrate the breadth of pipelines Aljam3 can express.
 
 | File | Scenarios | Categories |
 |------|-----------|------------|

@@ -15,11 +15,11 @@ severity: error
 <!-- @u:syntax/types -->
 
 **Statement:** Once a variable reaches Final state (via `<<` or `>>`), no further push is allowed. A variable in Default state (assigned via `<~` or `~>`) cannot receive another default assignment — it may only be promoted to Final via one push. Any attempt to push into a Final variable, or to re-default a Default variable, is a compile error. Pulls from a Final or Default variable are unlimited.
-**Rationale:** Final means the value is settled — downstream consumers can depend on it never changing. Default values exist so pipelines can provide fallbacks that are overridden at most once. Allowing reassignment would break deterministic data flow and make pipeline behavior unpredictable. Polyglot has no mutable variables. This is central to Polyglot's compile-time contract model — the compiler guarantees data flow determinism so that concurrent consumers never observe inconsistent state.
+**Rationale:** Final means the value is settled — downstream consumers can depend on it never changing. Default values exist so pipelines can provide fallbacks that are overridden at most once. Allowing reassignment would break deterministic data flow and make pipeline behavior unpredictable. Aljam3 has no mutable variables. This is central to Aljam3's compile-time contract model — the compiler guarantees data flow determinism so that concurrent consumers never observe inconsistent state.
 **Detection:** The compiler tracks each variable's lifecycle stage. A push into Final, or a default assignment into Default, is rejected.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Final variable pulled multiple times — pulls are unlimited
 (-) >name#string
 [-] >name << "Alice"            [ ] Final
@@ -29,7 +29,7 @@ severity: error
    (-) <msg << >name            [ ] ✓ pull 2 — no limit on pulls
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Default → Final is one valid transition
 (-) >label#string
 [-] >label <~ "pending"         [ ] Default
@@ -38,7 +38,7 @@ severity: error
    (-) <text << >label          [ ] ✓ pulling Final is fine
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ >> also produces Final
 (-) >result#string
 [-] -Compute
@@ -48,21 +48,21 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02003 — second push into a Final variable
 (-) >name#string
 [-] >name << "Alice"            [ ] Final
 [-] >name << "Bob"              [ ] ✗ PGE02003 — >name is already Final
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE02003 — default push into a Final variable
 (-) >count#int
 [-] >count << 42                [ ] Final
 [-] >count <~ 0                 [ ] ✗ PGE02003 — cannot default-assign a Final variable
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE02003 — >> into an already-Final variable
 (-) >result#string
 [-] -Step1
@@ -71,21 +71,21 @@ severity: error
    (-) >out >> >result          [ ] ✗ PGE02003 — >result is already Final
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE02003 — second default push (Default cannot be re-defaulted)
 (-) >tag#string
 [-] >tag <~ "draft"                [ ] Default
 [-] >tag <~ "review"              [ ] ✗ PGE02003 — already in Default, cannot default-assign again
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Default → Final via one push
 (-) >label#string
 [-] >label <~ "pending"            [ ] Default
 [-] >label << "confirmed"          [ ] Final — the one allowed push
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Default pulled without promotion — stays Default
 (-) >fallback#string
 [-] >fallback <~ "N/A"             [ ] Default
@@ -93,7 +93,7 @@ severity: error
    (-) <text << >fallback          [ ] ✓ pulling Default is valid
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Each conditional branch independently promotes Default → Final
 (-) >status#string
 [-] >status <~ "unknown"           [ ] Default

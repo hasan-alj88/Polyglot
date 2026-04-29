@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler checks that match expressions contain at least one `match_value` arm (literal, enum, or variable) before the `*?` wildcard arm.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ match with non-wildcard arm before wildcard
 [-] $code >> $msg#string
    [?] 200 >> "OK"
@@ -26,7 +26,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE06014 — wildcard-only match is tautological
 [-] $code >> $msg#string
    [?] *? >> "always this"

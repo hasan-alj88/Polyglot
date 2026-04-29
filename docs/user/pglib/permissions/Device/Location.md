@@ -13,7 +13,7 @@ Capability-level generic permission for location access. Sugar over [[INDEX|__De
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Device.Location
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for location access. Sugar over [[INDEX|__De
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Device.Location
    (_) <scope << "coarse"
 ```

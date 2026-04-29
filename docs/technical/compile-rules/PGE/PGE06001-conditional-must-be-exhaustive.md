@@ -21,7 +21,7 @@ severity: error
 
 If neither static proof nor `*?` is present, PGE06001 fires.
 
-**Rationale:** Every conditional must route every possible input. Missing branches cause undefined behavior at runtime. This enforces Polyglot's exhaustive coverage principle — if something can go wrong, the compiler catches it before production rather than discovering gaps at runtime.
+**Rationale:** Every conditional must route every possible input. Missing branches cause undefined behavior at runtime. This enforces Aljam3's exhaustive coverage principle — if something can go wrong, the compiler catches it before production rather than discovering gaps at runtime.
 **Detection:** The compiler determines the branched type, dispatches to the appropriate type-specific rule, and checks for `*?`. If neither the type-specific rule accepts the coverage nor `*?` is present, PGE06001 fires.
 
 ---

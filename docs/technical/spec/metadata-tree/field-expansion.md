@@ -10,7 +10,7 @@ updated: 2026-04-03
 
 Any field typed `#string` expands to the full `#String` struct in the tree:
 
-```polyglot
+```aljam3
 .description#string
   -> .description
       .string#RawString     <- the raw value

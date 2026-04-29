@@ -20,7 +20,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ {port?} is optional and <port has <~ default
 {-} -DB.Connect
    (-) %InlineString << "{host}:{port?}/{db}"
@@ -30,12 +30,12 @@ severity: error
    (-) >connection#serial
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12010 — {port?} is optional but <port has no default
 {-} -DB.Connect
    (-) %InlineString << "{host}:{port?}/{db}"
@@ -45,7 +45,7 @@ severity: error
    (-) >connection#serial
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ...
 ```
 

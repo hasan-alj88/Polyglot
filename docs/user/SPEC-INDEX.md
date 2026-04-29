@@ -4,13 +4,13 @@ audience: automation-builder
 updated: 2026-04-22
 ---
 
-# Polyglot Language Reference
+# Aljam3 Language Reference
 
 <!-- @c:vision:Core Philosophy -->
-<!-- @c:glossary:Polyglot Code -->
+<!-- @c:glossary:Aljam3 Code -->
 <!-- @audit/README -->
 
-Read the files below in order to learn how to write Polyglot Code. The progression builds from syntax fundamentals through core concepts to the unified tree that connects everything.
+Read the files below in order to learn how to write Aljam3 Code. The progression builds from syntax fundamentals through core concepts to the unified tree that connects everything.
 
 ```mermaid
 flowchart LR

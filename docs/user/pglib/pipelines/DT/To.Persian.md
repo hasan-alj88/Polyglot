@@ -13,7 +13,7 @@ Projects a `#dt` value into a Persian date structure. Projections are not cached
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Persian
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToPersian"

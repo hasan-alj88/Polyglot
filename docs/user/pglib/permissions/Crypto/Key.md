@@ -13,7 +13,7 @@ Capability-level generic permission for key management. Sugar over [[INDEX|__Cry
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Crypto.Key
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for key management. Sugar over [[INDEX|__Cry
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Crypto.Key
    (_) <scope << "aes-256-gcm"
 ```

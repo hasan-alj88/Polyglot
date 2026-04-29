@@ -15,7 +15,7 @@ Capability enum for `#IO` permission category. See [[concepts/permissions|Permis
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #IOCapability
    [%] .description << "IO resource limit capabilities"
    [%] .version << "1.0.0"

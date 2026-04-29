@@ -19,7 +19,7 @@ severity: error
 **See also:** PGE03010 (collector without expand), PGE03007 (expand operator input mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ (=) inside expand scope
 [=] =ForEach.Array
    (=) <Array << $items
@@ -29,7 +29,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03011 — (=) outside any expand context
 (=) <Array << $items
 (=) >item >> $item

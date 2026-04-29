@@ -11,7 +11,7 @@ Collects rows from mini-pipelines into a single CSV text string, with a header r
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Into.CSV.Rows
    (*) <row << $processedRow
    (*) <delimiter << ","

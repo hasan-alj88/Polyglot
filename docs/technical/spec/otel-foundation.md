@@ -13,21 +13,21 @@ updated: 2026-04-18
 <!-- @c:technical/spec/otel-config -->
 Related: [[otel-permission-events]], [[behavior-contract]], [[job-sandbox]], [[otel-config]]
 
-This specification defines the shared OpenTelemetry tracing infrastructure for all Polyglot services — the Rust crate stack, span hierarchy, semantic conventions, and cross-service trace context propagation.
+This specification defines the shared OpenTelemetry tracing infrastructure for all Aljam3 services — the Rust crate stack, span hierarchy, semantic conventions, and cross-service trace context propagation.
 
 **Scope boundary:** This document covers the tracing infrastructure (*how* telemetry flows). What is logged and when is defined per-domain in event specification documents (e.g., [[otel-permission-events]] for permission/sandbox events). Where telemetry goes (exporters, configuration) is defined in [[otel-config]].
 
 ## Rust Crate Stack
 
-Polyglot uses the standard Rust observability ecosystem. All services (Trigger Monitor, Queue Handler, Runner, Compiler) share this crate stack.
+Aljam3 uses the standard Rust observability ecosystem. All services (Trigger Monitor, Queue Handler, Runner, Compiler) share this crate stack.
 
 | Crate | Role | Feature Flags | Notes |
 |---|---|---|---|
-| `tracing` | Instrumentation API — spans, events, structured fields | — | All Polyglot code instruments via `tracing` macros (`#[instrument]`, `tracing::info!`, `tracing::error!`) |
+| `tracing` | Instrumentation API — spans, events, structured fields | — | All Aljam3 code instruments via `tracing` macros (`#[instrument]`, `tracing::info!`, `tracing::error!`) |
 | `tracing-opentelemetry` | Bridges `tracing` spans to OTel spans | — | Installed as a `tracing` layer; converts `tracing::Span` into OTel `SpanData` |
-| `opentelemetry-sdk` | OTel SDK — batch span processor, sampling, resource configuration | — | Configures service identity (`polyglot.service.role`), batch export intervals, sampling strategy |
+| `opentelemetry-sdk` | OTel SDK — batch span processor, sampling, resource configuration | — | Configures service identity (`aljam3.service.role`), batch export intervals, sampling strategy |
 | `opentelemetry-otlp` | OTLP exporter — sends spans/logs to OTel-compatible backends | `grpc-tonic`, `http-reqwest` | gRPC (tonic) is the default transport; HTTP (reqwest) available as fallback |
-| `opentelemetry-stdout` | Dev mode exporter — prints spans to stdout | — | Human-readable output for local development; enabled via `POLYGLOT_OTEL_EXPORTER=stdout` |
+| `opentelemetry-stdout` | Dev mode exporter — prints spans to stdout | — | Human-readable output for local development; enabled via `ALJAM3_OTEL_EXPORTER=stdout` |
 | `opentelemetry-nats` | NATS trace context propagation | — | Injects/extracts W3C `traceparent` headers in NATS messages for cross-service correlation |
 
 ### Integration Pattern
@@ -53,11 +53,11 @@ Exporter (selected at startup from config)
     └── (fallback)          → stderr JSON (when primary exporter fails)
 ```
 
-The bridge layer means all Polyglot code uses `tracing` — the standard Rust instrumentation crate — without importing OTel types directly. The OTel integration is a deployment concern configured at service startup.
+The bridge layer means all Aljam3 code uses `tracing` — the standard Rust instrumentation crate — without importing OTel types directly. The OTel integration is a deployment concern configured at service startup.
 
 ## Semantic Convention Registry
 
-All attributes use the `polyglot.*` namespace following [OTel semantic conventions](https://opentelemetry.io/docs/specs/semconv/). The registry is split into two groups: permission/sandbox attributes (defined by #315) and service-wide attributes (defined here).
+All attributes use the `aljam3.*` namespace following [OTel semantic conventions](https://opentelemetry.io/docs/specs/semconv/). The registry is split into two groups: permission/sandbox attributes (defined by #315) and service-wide attributes (defined here).
 
 ### Permission/Sandbox Attributes (from #315)
 
@@ -65,40 +65,40 @@ These 9 attributes are defined authoritatively in [[otel-permission-events#Attri
 
 | Attribute | Type | Defined In |
 |---|---|---|
-| `polyglot.job.uid` | string | [[otel-permission-events]] |
-| `polyglot.pipeline.name` | string | [[otel-permission-events]] |
-| `polyglot.package.name` | string | [[otel-permission-events]] |
-| `polyglot.permission.category` | string | [[otel-permission-events]] |
-| `polyglot.sandbox.layer` | string | [[otel-permission-events]] |
-| `polyglot.sandbox.syscall` | string | [[otel-permission-events]] |
-| `polyglot.sandbox.resource` | string | [[otel-permission-events]] |
-| `polyglot.sandbox.action` | string | [[otel-permission-events]] |
-| `polyglot.sandbox.opaque` | bool | [[otel-permission-events]] |
+| `aljam3.job.uid` | string | [[otel-permission-events]] |
+| `aljam3.pipeline.name` | string | [[otel-permission-events]] |
+| `aljam3.package.name` | string | [[otel-permission-events]] |
+| `aljam3.permission.category` | string | [[otel-permission-events]] |
+| `aljam3.sandbox.layer` | string | [[otel-permission-events]] |
+| `aljam3.sandbox.syscall` | string | [[otel-permission-events]] |
+| `aljam3.sandbox.resource` | string | [[otel-permission-events]] |
+| `aljam3.sandbox.action` | string | [[otel-permission-events]] |
+| `aljam3.sandbox.opaque` | bool | [[otel-permission-events]] |
 
 ### Service-Wide Attributes (this document)
 
 | Attribute | Type | Description | Example | Attached To |
 |---|---|---|---|---|
-| `polyglot.service.role` | string | Which Polyglot service emitted the span | `"tm"`, `"qh"`, `"runner"`, `"compiler"` | Service Span (root) |
-| `polyglot.trigger.name` | string | Trigger definition name from the pipeline | `"-T.Timer.Cron"`, `"-T.Git.Push"` | Trigger Evaluation Span |
-| `polyglot.queue.name` | string | Queue name from the `{Q}` definition | `"default"`, `"high-priority"` | Queue Dispatch Span |
+| `aljam3.service.role` | string | Which Aljam3 service emitted the span | `"tm"`, `"qh"`, `"runner"`, `"compiler"` | Service Span (root) |
+| `aljam3.trigger.name` | string | Trigger definition name from the pipeline | `"-T.Timer.Cron"`, `"-T.Git.Push"` | Trigger Evaluation Span |
+| `aljam3.queue.name` | string | Queue name from the `{Q}` definition | `"default"`, `"high-priority"` | Queue Dispatch Span |
 
 ### Registry Extensibility
 
-The `polyglot.*` namespace is extensible. Future event specifications (pipeline lifecycle, trigger monitor, job lifecycle — see the Future Event Sets section below) will register additional attributes in this namespace. Each event spec document owns its attribute definitions; this document maintains the cross-reference index.
+The `aljam3.*` namespace is extensible. Future event specifications (pipeline lifecycle, trigger monitor, job lifecycle — see the Future Event Sets section below) will register additional attributes in this namespace. Each event spec document owns its attribute definitions; this document maintains the cross-reference index.
 
 **Current total: 12 attributes** (9 permission/sandbox + 3 service-wide).
 
 ## Span Hierarchy
 
-The full span tree across all Polyglot services. Each span is owned by one service and created/closed at defined lifecycle points.
+The full span tree across all Aljam3 services. Each span is owned by one service and created/closed at defined lifecycle points.
 
 ```text
-Service Span (polyglot.service.role)
-  └── Pipeline Span (polyglot.pipeline.name, polyglot.package.name)
-        ├── Trigger Evaluation Span (polyglot.trigger.name)
-        ├── Job Span (polyglot.job.uid)
-        │     ├── Queue Dispatch Span (polyglot.queue.name)
+Service Span (aljam3.service.role)
+  └── Pipeline Span (aljam3.pipeline.name, aljam3.package.name)
+        ├── Trigger Evaluation Span (aljam3.trigger.name)
+        ├── Job Span (aljam3.job.uid)
+        │     ├── Queue Dispatch Span (aljam3.queue.name)
         │     ├── Wrapper Setup Span ([\])
         │     ├── Execution Body Span
         │     │     ├── Foreign Code Span (if -Run.*)
@@ -115,11 +115,11 @@ Service Span (polyglot.service.role)
 
 | Span | Owner | Created | Closed | Key Attributes |
 |---|---|---|---|---|
-| Service Span | Each service | Service startup | Service shutdown | `polyglot.service.role` |
-| Pipeline Span | Trigger Monitor | Pipeline enabled and first trigger evaluates | All jobs for this pipeline execution complete | `polyglot.pipeline.name`, `polyglot.package.name` |
-| Trigger Evaluation Span | Trigger Monitor | Trigger condition begins evaluation | Trigger fires or condition not met | `polyglot.trigger.name` |
-| Job Span | Trigger Monitor | Job UID assigned, TOON dispatched | Job completion ACK received from Runner | `polyglot.job.uid` |
-| Queue Dispatch Span | Queue Handler | Job enters queue | Job dispatched to Runner | `polyglot.queue.name` |
+| Service Span | Each service | Service startup | Service shutdown | `aljam3.service.role` |
+| Pipeline Span | Trigger Monitor | Pipeline enabled and first trigger evaluates | All jobs for this pipeline execution complete | `aljam3.pipeline.name`, `aljam3.package.name` |
+| Trigger Evaluation Span | Trigger Monitor | Trigger condition begins evaluation | Trigger fires or condition not met | `aljam3.trigger.name` |
+| Job Span | Trigger Monitor | Job UID assigned, TOON dispatched | Job completion ACK received from Runner | `aljam3.job.uid` |
+| Queue Dispatch Span | Queue Handler | Job enters queue | Job dispatched to Runner | `aljam3.queue.name` |
 | Wrapper Setup Span | Runner | `[\]` setup block begins | Setup block completes | — |
 | Execution Body Span | Runner | Pipeline body execution begins | Body execution completes | — |
 | Foreign Code Span | Runner | `-Run.*` pipeline spawns foreign process | Foreign process exits | — |
@@ -162,7 +162,7 @@ The trace context (W3C `traceparent`) is injected into NATS messages at each ser
 
 ## NATS Trace Context Propagation
 
-NATS messages between Polyglot services carry W3C Trace Context headers for cross-service span correlation. Without this, each service would produce isolated traces with no way to connect a trigger evaluation to its resulting job execution.
+NATS messages between Aljam3 services carry W3C Trace Context headers for cross-service span correlation. Without this, each service would produce isolated traces with no way to connect a trigger evaluation to its resulting job execution.
 
 ### Propagation Points
 
@@ -170,9 +170,9 @@ Three NATS message exchanges carry trace context:
 
 | Hop | From | To | NATS Subject | Payload Contains |
 |---|---|---|---|---|
-| 1. Trigger Fire | Trigger Monitor | Queue Handler | `polyglot.trigger.{pipeline}` | TOON + `traceparent` header |
-| 2. Job Dispatch | Queue Handler | Runner | `polyglot.job.{uid}` | Job config + `traceparent` header |
-| 3. Completion ACK | Runner | Queue Handler | `polyglot.ack.{uid}` | Result + `traceparent` header |
+| 1. Trigger Fire | Trigger Monitor | Queue Handler | `aljam3.trigger.{pipeline}` | TOON + `traceparent` header |
+| 2. Job Dispatch | Queue Handler | Runner | `aljam3.job.{uid}` | Job config + `traceparent` header |
+| 3. Completion ACK | Runner | Queue Handler | `aljam3.ack.{uid}` | Result + `traceparent` header |
 
 ### Inject/Extract Pattern
 
@@ -241,6 +241,6 @@ This foundation supports additional event specifications beyond the permission/s
 
 Each event set will:
 - Define its own events with severity, trigger conditions, and attributes
-- Register new `polyglot.*` attributes in this foundation document's registry
+- Register new `aljam3.*` attributes in this foundation document's registry
 - Specify which spans its events attach to (using the hierarchy defined above)
 - Follow the same structured format as [[otel-permission-events]]

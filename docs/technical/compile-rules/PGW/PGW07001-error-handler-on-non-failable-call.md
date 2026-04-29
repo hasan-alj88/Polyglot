@@ -22,12 +22,12 @@ severity: warning
 - [PGE07005 — Undeclared Error Raise](../PGE/PGE07005-undeclared-error-raise.md) — raising an error not declared by the pipeline
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ -ValidateUser declares (-) !Validation.Empty — handler is valid
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) >result#string
    [ ]
@@ -40,12 +40,12 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW07001 — -DoNothing declares no errors — handler is dead code
 {-} -ProcessBad
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) >result#string
    [ ]
@@ -55,12 +55,12 @@ severity: warning
    [-] >result << "done"
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW07001 — -Format declares no errors — handler is dead code
 {-} -ProcessAlsoBad
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >result#string
    [ ]

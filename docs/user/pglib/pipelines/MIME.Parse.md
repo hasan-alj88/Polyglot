@@ -15,7 +15,7 @@ For known literals in execution body, use the `$MIME` constructor instead — it
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -MIME.Parse
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MimeParse"
@@ -48,7 +48,7 @@ None required. Pure computation pipeline.
 
 ## Usage
 
-```polyglot
+```aljam3
 [-] $contentType#mime << -MIME.Parse
    (<) <raw#string << $headerValue
    [!] !Parse.MIME.InvalidFormat

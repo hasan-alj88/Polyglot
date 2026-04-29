@@ -13,7 +13,7 @@ Best-effort type conversion -- takes data and a target type, keeps fields that m
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -#.Coerce
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaCoerce"

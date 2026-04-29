@@ -15,10 +15,10 @@ updated: 2026-03-30
 
 **What it tests:** 4+ levels of indentation (package -> pipeline -> expand -> conditional -> error). See [[line-structure]].
 
-```polyglot
+```aljam3
 {-} -Deep
    [T] -T.Call
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] =ForEach.Array
@@ -40,7 +40,7 @@ updated: 2026-03-30
 
 **What it tests:** Bool values are `#Boolean.True` / `#Boolean.False` (not `true`/`false`). See [[syntax/types/INDEX|types]].
 
-```polyglot
+```aljam3
 [-] $flag#bool << #Boolean.True
 (-) >enabled#bool ~> #Boolean.False
 ```
@@ -51,7 +51,7 @@ updated: 2026-03-30
 
 **What it tests:** Negative integers and floats as literal values.
 
-```polyglot
+```aljam3
 [-] $offset#int << -1
 [-] $threshold#float << -0.5
 ```
@@ -62,7 +62,7 @@ updated: 2026-03-30
 
 **What it tests:** `""` as a valid string literal.
 
-```polyglot
+```aljam3
 [.] .name#string <~ ""
 ```
 
@@ -71,7 +71,7 @@ updated: 2026-03-30
 **EBNF ref:** `inline_pipeline_call ::= pipeline_ref string_literal`
 **What it tests:** Empty string `""` as inline pipeline argument. Valid — the pipeline decides how to handle it.
 
-```polyglot
+```aljam3
 [ ] ✓ empty inline string — pipeline responsibility
 [-] $p#path << -Path""
 ```
@@ -79,9 +79,9 @@ updated: 2026-03-30
 ### EC-2.6: Leading zeros in int/float literals
 
 **EBNF ref:** `int_literal ::= [ '-' ] digit { digit }` — comment says "leading zeros allowed"
-**What it tests:** `007`, `0042`, `00.50` — decimal only, no octal in Polyglot. PGW04002 warns.
+**What it tests:** `007`, `0042`, `00.50` — decimal only, no octal in Aljam3. PGW04002 warns.
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW04002 — leading zeros
 [-] $x#int << 007
 [-] $y#float << 00.50
@@ -92,7 +92,7 @@ updated: 2026-03-30
 **EBNF ref:** `int_literal`, `float_literal` — optional leading minus
 **What it tests:** `-0` and `-0.0` — syntactically valid. Runtime normalizes to `0`/`0.0`.
 
-```polyglot
+```aljam3
 [ ] ✓ negative zero — normalized at runtime
 [-] $x#int << -0
 [-] $y#float << -0.0

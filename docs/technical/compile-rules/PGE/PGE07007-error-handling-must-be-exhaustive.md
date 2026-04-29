@@ -15,7 +15,7 @@ severity: error
 <!-- @c:compile-rules/PGE/PGE06001-conditional-must-be-exhaustive -->
 
 **Statement:** When calling a failable pipeline (one that declares `(-) !ErrorName`), the caller must address every declared error on every output port. If any declared error has no handler and no fallback for any output, PGE07007 fires. **No variable may compile if there is a non-zero probability it can reach Failed state without explicit handling.** This mirrors PGE06001 (Conditional Must Be Exhaustive) — just as every conditional branch must route every value, every failable call must route every error.
-**Rationale:** Unaddressed errors cause silent pipeline termination — the caller believes downstream code will execute, but the pipeline ends without explanation. Explicit handling ensures the developer has acknowledged every failure mode, even if the chosen response is termination. This eliminates a class of "it just stopped" bugs. This is Polyglot's exhaustive coverage principle applied to error paths — the compiler demands that every scenario is accounted for before the pipeline runs, rather than discovering unhandled failures in production.
+**Rationale:** Unaddressed errors cause silent pipeline termination — the caller believes downstream code will execute, but the pipeline ends without explanation. Explicit handling ensures the developer has acknowledged every failure mode, even if the chosen response is termination. This eliminates a class of "it just stopped" bugs. This is Aljam3's exhaustive coverage principle applied to error paths — the compiler demands that every scenario is accounted for before the pipeline runs, rather than discovering unhandled failures in production.
 
 ## Addressing Mechanisms
 
@@ -92,12 +92,12 @@ For each output port **O**: if **Coverage(O) ⊊ E** (strict subset), emit PGE07
 
 When a failable call has multiple outputs, **every output port must have coverage for every declared error**. `[!]` handler blocks that push replacement values cover all outputs (since the handler body can write to any output port). Scattered `(>)` fallbacks and grouped `($)` fallbacks only cover the output they are declared on.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07007 — >status has no coverage for !File.NotFound or !File.ReadError
 {-} -ProcessMultiOutput
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    (-) >status#string
@@ -113,12 +113,12 @@ When a failable call has multiple outputs, **every output port must have coverag
 
 Fix with grouped fallback or `[!]` blocks that write to both outputs:
 
-```polyglot
+```aljam3
 [ ] ✓ grouped fallback covers all outputs
 {-} -ProcessMultiOutputFixed
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    (-) >status#string
@@ -132,12 +132,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
          ($) >status !> "error"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [!] blocks push to all outputs — covers everything
 {-} -ProcessMultiOutputHandlers
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    (-) >status#string
@@ -171,12 +171,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
 
 ### VALID
 
-```polyglot
+```aljam3
 [ ] ✓ all declared errors handled with specific [!] blocks
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -190,12 +190,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [-] >content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [!] !* wildcard covers all errors — like [?] *? for conditionals
 {-} -ProcessWildcard
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -207,12 +207,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [-] >content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ generic (>) !> fallback addresses all errors
 {-} -ProcessFallback
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -223,12 +223,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [-] >content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ mixed — specific [!] + [!] !* wildcard for the rest
 {-} -ProcessMixed
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -243,12 +243,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [-] >content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ error-specific fallbacks cover each declared error
 {-} -ProcessSpecificFallbacks
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -260,12 +260,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [-] >content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ grouped fallback under (-) $label
 {-} -ProcessGrouped
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -276,12 +276,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
          ($) >content !> "unavailable"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ grouped with error-specific and [!] blocks
 {-} -ProcessGroupedMixed
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -297,12 +297,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
 
 ### INVALID
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07007 — no error handling on failable call
 {-} -ProcessNone
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -314,12 +314,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [-] >content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07007 — partial handling — !File.ReadError not addressed
 {-} -ProcessPartial
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -332,12 +332,12 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
    [-] >content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07007 — specific fallback covers one error but not the other
 {-} -ProcessPartialFallback
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]

@@ -18,9 +18,9 @@ updated: 2026-04-15
 ## Why NATS for Messaging
 
 - **Decoupled services** — Trigger Monitor, Queue Handler, Runner, Resource Monitor communicate only via NATS subjects.
-- **Subject-based routing** — `polyglot.queue.control.{jobId}.job.pause.free.cpu.wait` routes precisely.
+- **Subject-based routing** — `aljam3.queue.control.{jobId}.job.pause.free.cpu.wait` routes precisely.
 - **JetStream persistence** — critical events can be persisted for crash recovery and replay.
-- **Embeddable** — NATS server can embed in the Polyglot runtime process.
+- **Embeddable** — NATS server can embed in the Aljam3 runtime process.
 - **Lightweight** — ~20MB, no external dependencies.
 
 ## Why This Split

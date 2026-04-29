@@ -13,7 +13,7 @@ Connects to message queue on setup, disconnects on cleanup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.Queue.Consumer
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WQueueConsumer"

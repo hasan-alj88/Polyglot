@@ -10,7 +10,7 @@ updated: 2026-04-18
 <!-- @c:technical/algorithms/foreign-code-analysis -->
 <!-- @u:concepts/permissions/foreign-code -->
 
-The Polyglot compiler (written in Rust) needs to parse foreign code ASTs for permission analysis. This document specifies the parser toolchain, per-language strategies, and upgrade path.
+The Aljam3 compiler (written in Rust) needs to parse foreign code ASTs for permission analysis. This document specifies the parser toolchain, per-language strategies, and upgrade path.
 
 ## tree-sitter (Universal Base)
 

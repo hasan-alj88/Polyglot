@@ -15,7 +15,7 @@ Starts language runtime on setup, stops on cleanup. Uses version-specific paths 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.RT
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WRt"
@@ -26,7 +26,7 @@ Starts language runtime on setup, stops on cleanup. Uses version-specific paths 
 
 Runtime versions are selected via colon-separated paths:
 
-```polyglot
+```aljam3
 -W.RT
    :Python
       :3

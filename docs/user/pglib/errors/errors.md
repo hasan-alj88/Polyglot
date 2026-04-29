@@ -43,7 +43,7 @@ No `[@]` import needed. pglib errors are defined as `{!}` blocks by the runtime:
 
 ### `!Error` — User-Extensible Namespace
 
-`!Error` is the only namespace with user-extensible children. All other namespaces have Polyglot-defined fixed leaves. See [[pglib/errors/custom-errors|Custom Errors]] for the full `{!}` definition syntax.
+`!Error` is the only namespace with user-extensible children. All other namespaces have Aljam3-defined fixed leaves. See [[pglib/errors/custom-errors|Custom Errors]] for the full `{!}` definition syntax.
 
 ### `!Env` vs `!RT` — Phase Distinction
 

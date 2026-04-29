@@ -14,7 +14,7 @@ status: complete
 
 All user-defined errors live under the `!Error` namespace. `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. Use `[:]` for extensible branches and `[.]` for terminal leaves (typed `#Error`):
 
-```polyglot
+```aljam3
 {!} !Error
    [:] :Validation
       [.] .Empty#Error
@@ -38,11 +38,11 @@ This creates `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Val
 
 ## `!Error` — User-Extensible Namespace
 
-`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`, `!Env`, `!Storage`, `!Text`, `!CSV`) have Polyglot-defined fixed leaves.
+`!Error` is the only namespace with user-extensible children. All other namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`, `!Env`, `!Storage`, `!Text`, `!CSV`) have Aljam3-defined fixed leaves.
 
 Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `[.]` for terminal leaves. Siblings at the same level must all use the same separator (sibling homogeneity rule).
 
-```polyglot
+```aljam3
 {!} !Error
    [:] :MyApp
       [:] :Auth
@@ -71,4 +71,4 @@ Users extend `!Error` via `{!}` blocks using `[:]` for extensible branches and `
 
 This creates `!Error:MyApp:Auth.Expired`, `!Error:MyApp:Auth.Invalid`, `!Error:MyApp:Data.Corrupt`, `!Error:MyApp:Data.Missing`, and `!Error:MyApp:GeneralFailure`. Each terminal carries its `.MessageTemplate` and `.Info` schema.
 
-Tree path: `%!.Error:MyApp:Auth.Expired` — `.Error` is Polyglot-defined (fixed), `:MyApp:Auth` are user-extensible (flexible), `.Expired` is a terminal leaf (fixed).
+Tree path: `%!.Error:MyApp:Auth.Expired` — `.Error` is Aljam3-defined (fixed), `:MyApp:Auth` are user-extensible (flexible), `.Expired` is a terminal leaf (fixed).

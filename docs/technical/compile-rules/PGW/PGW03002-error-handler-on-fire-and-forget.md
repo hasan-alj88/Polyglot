@@ -24,20 +24,20 @@ severity: warning
 - [PGE07007 — Error Handling Must Be Exhaustive](../PGE/PGE07007-error-handling-must-be-exhaustive.md) — `[b]` calls are exempt from this rule
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ [b] with no error handler — correct fire-and-forget
 [b] -Audit.Log
    (-) <event << $event
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [b] on failable pipeline — valid, errors handled internally by called pipeline
 [b] -File.Text.Write
    (-) <path << $logPath
    (-) <content << $event
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [-] with error handler — synchronous call can handle errors
 [-] -File.Text.Write
    (-) <path << $logPath
@@ -51,7 +51,7 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW03002 — [!] handler under [b] is dead code
 [b] -File.Text.Write
    (-) <path << $logPath
@@ -64,7 +64,7 @@ severity: warning
          (-) <msg << "log write failed"
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW03002 — wildcard [!] !* under [b] is also dead code
 [b] -Notify.Admin
    (-) <msg << "alert: system overload"

@@ -9,7 +9,7 @@ status: complete
 
 <!-- @c:types -->
 
-Polyglot provides three collection schemas and one unconstrained type: `##Record`, `##Array`, `##Dataframe`, and `#Serial`. All are available in every `.pg` file without `[@]` import.
+Aljam3 provides three collection schemas and one unconstrained type: `##Record`, `##Array`, `##Dataframe`, and `#Serial`. All are available in every `.aj3` file without `[@]` import.
 
 `##Record`, `##Array`, and `##Dataframe` are parameterized schemas that `{#}` types compose via `[#]`. `#Serial` is a plain `{#}` definition (no schema composition needed). See [[syntax/types/INDEX|types]] for the full type hierarchy and schema property definitions.
 
@@ -31,7 +31,7 @@ Polyglot provides three collection schemas and one unconstrained type: `##Record
 
 Types compose collection schemas using `[#]` schema composition:
 
-```polyglot
+```aljam3
 [-] $scores#array:int <~ {...}
 [-] $matrix#array:float:2D <~ {...}
 [-] $sales#dataframe:SalesColumns:string <~ {}

@@ -11,7 +11,7 @@ Reduces mini-pipeline outputs to a count of items received.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Agg.Count
    (*) <item << $value
    (*) >count >> $total

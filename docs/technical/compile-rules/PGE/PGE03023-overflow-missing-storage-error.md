@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler checks `.overflow` metadata. If not `.InMemoryOnly`, it scans the `(*)` IO for `!Storage.Space`. If absent, PGE03023 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 {*} *Into.Text.Append
    [%] .overflow << #OverflowStrategy.Append
    (*) !Storage.Space                     [ ] ✓ declared
@@ -25,7 +25,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03023 — Append overflow but no !Storage.Space
 {*} *Into.Text.Append
    [%] .overflow << #OverflowStrategy.Append

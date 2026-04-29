@@ -31,7 +31,7 @@ collector_id        ::= '*' dotted_name ;
 
 **Example:**
 
-```polyglot
+```aljam3
 {*} *First
    [%] .category << #CollectorCategory.Race
    [%] .scope << #CollectorScope.Parallel

@@ -17,7 +17,7 @@ Runtime execution output type. Output struct for all `-RT.*` pipeline modes. Lan
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Code
    :Python
       .Output

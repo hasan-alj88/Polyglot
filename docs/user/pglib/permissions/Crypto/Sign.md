@@ -13,7 +13,7 @@ Capability-level generic permission for signing operations. Sugar over [[INDEX|_
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Crypto.Sign
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for signing operations. Sugar over [[INDEX|_
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Crypto.Sign
    (_) <scope << "ed25519"
 ```

@@ -5,11 +5,11 @@
 
 # Cargo.lock - commit for binaries, ignore for libraries
 # We keep Cargo.lock in root for reproducible builds of binaries
-/polyglot-lexer/Cargo.lock
-/polyglot-parser/Cargo.lock
-/polyglot-ir/Cargo.lock
-/polyglot-db/Cargo.lock
-/polyglot-runtime-wrappers/Cargo.lock
+/aljam3-lexer/Cargo.lock
+/aljam3-parser/Cargo.lock
+/aljam3-ir/Cargo.lock
+/aljam3-db/Cargo.lock
+/aljam3-runtime-wrappers/Cargo.lock
 
 # IDEs
 .idea/
@@ -43,7 +43,7 @@ ENV/
 dist/
 build/
 .docs-build/
-Polyglot-Documentation.pdf
+Aljam3-Documentation.pdf
 
 # Test coverage
 coverage/

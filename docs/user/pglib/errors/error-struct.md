@@ -14,7 +14,7 @@ status: complete
 
 A `#Record` that can be null — used for optional structured data:
 
-```polyglot
+```aljam3
 {#} #NullableRecord
    [#] ##Nullable
       (#) <#Record
@@ -24,7 +24,7 @@ A `#Record` that can be null — used for optional structured data:
 
 All errors — pglib and user-defined — share the same struct:
 
-```polyglot
+```aljam3
 {#} #Error
    [.] .Name#RawString
    [.] .ErrorAlias#RawString

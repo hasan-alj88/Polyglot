@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler checks that each `{!}` block contains at least one `[.]` error leaf line. Comment-only and metadata-only blocks still trigger this error.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ error namespace with leaves
 {!} !Validation
    [.] .Empty#Error
@@ -25,12 +25,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01022 — no error leaves
 {!} !EmptyErrors
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01022 — metadata-only is still empty
 {!} !Placeholder
    [%] .description << "no errors defined"

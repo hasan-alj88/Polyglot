@@ -13,7 +13,7 @@ Returns `#bool` -- true when `a` is earlier than `b`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.IsBefore
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtIsBefore"

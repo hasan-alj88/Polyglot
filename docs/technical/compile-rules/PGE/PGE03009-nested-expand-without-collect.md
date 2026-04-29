@@ -20,7 +20,7 @@ severity: error
 **See also:** PGE03004 (section-boundary pairing for `[=]`/`(*)`), PGE03007 (expand operator input mismatch), PGE03008 (collect operator IO mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ nested expand with inner collector
 [=] =ForEach.Array
    (=) <Array << $outerList
@@ -43,7 +43,7 @@ severity: error
       (*) >Array >> $outerResult
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ inner results intentionally discarded with ignore collector
 [=] =ForEach.Array
    (=) <Array << $files
@@ -64,7 +64,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03009 — inner expand has no collector
 [=] =ForEach.Array
    (=) <Array << $outerList

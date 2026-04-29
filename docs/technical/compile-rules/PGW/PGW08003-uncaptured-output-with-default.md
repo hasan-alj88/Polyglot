@@ -23,12 +23,12 @@ severity: warning
 - PGW02003 (unpushed output port — pipeline-body side, not call-site)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ output with default captured explicitly — no warning
 {-} -Lookup
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <key#string
    (-) >value#string
    [ ]
@@ -41,7 +41,7 @@ severity: warning
 {-} -UseLookup
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -Lookup
@@ -52,12 +52,12 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW08003 — >found not captured, has default .False
 {-} -UseLookupPartial
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -Lookup
@@ -66,12 +66,12 @@ severity: warning
                                             [ ] ⚠ PGW08003 — >found has default .False
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW08003 — >content not captured, has fallback "unavailable"
 {-} -ReadFile
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    (-) !File.NotFound
@@ -86,7 +86,7 @@ severity: warning
 {-} -UseReadFile
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -ReadFile

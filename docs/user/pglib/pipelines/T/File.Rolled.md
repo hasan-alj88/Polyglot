@@ -13,7 +13,7 @@ Fires when a file rotates, delivering the **completed** (rolled-over) file — n
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -T.File.Rolled
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TriggerFileRolled"
@@ -38,7 +38,7 @@ Fires when a file rotates, delivering the **completed** (rolled-over) file — n
 
 Dir and Pattern are provided inline:
 
-```polyglot
+```aljam3
 [T] -T.File.Rolled"/var/log/app/" "app-*.log"
    (-) >RolledFile >> <logFile
    (-) >RolledSize >> <fileSize

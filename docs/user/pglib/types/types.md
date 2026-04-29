@@ -9,11 +9,11 @@ status: complete
 
 <!-- @c:types -->
 
-pglib structs and enums available in every `.pg` file. No `[@]` import needed. For the full type system specification (annotations, schemas, generics), see [[syntax/types/INDEX|types]].
+pglib structs and enums available in every `.aj3` file. No `[@]` import needed. For the full type system specification (annotations, schemas, generics), see [[syntax/types/INDEX|types]].
 
 ## Type Hierarchy
 
-```polyglot
+```aljam3
 RawString (compiler intrinsic) [##Leaf]
 └── #String (foundation — .string + .regex) [##Scalar, ###ScalarValue]
     ├── #Int (.regex = signed integers)

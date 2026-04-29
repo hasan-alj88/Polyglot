@@ -20,7 +20,7 @@ severity: error
 **See also:** PGE09001 (undefined import alias), PGE09012 (alias shadows pglib namespace)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ each alias is unique
 {@} @Local:999.MyApp:v1.0.0
    [@] @utils << @Local:999.Utilities:v1.0.0
@@ -29,7 +29,7 @@ severity: error
 {-} -Main
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] @utils-Validate
       (-) <input#string << $data
@@ -38,7 +38,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE09011 — @utils declared twice with different targets
 {@} @Local:999.MyApp:v1.0.0
    [@] @utils << @Local:999.Utilities:v1.0.0
@@ -47,13 +47,13 @@ severity: error
 {-} -Main
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] @utils-Validate                          [ ] ambiguous — which @utils?
       (-) <input#string << $data
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE09011 — same alias even if same target package
 {@} @Local:999.MyApp:v1.0.0
    [@] @lib << @Local:999.SharedLib:v1.0.0

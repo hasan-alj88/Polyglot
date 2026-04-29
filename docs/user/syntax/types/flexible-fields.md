@@ -12,7 +12,7 @@ updated: 2026-03-30
 
 A struct can have levels that use flexible (`:`) fields. At such a level, the `[:] :*#Type` syntax declares that ALL `:` siblings share the same type — a typed dictionary. The `:*` wildcard means "collectively, every key at this level has this type."
 
-```polyglot
+```aljam3
 {#} #Registry
    [.] .builtins
       [.] .http#Handler
@@ -27,7 +27,7 @@ Here `.plugins` has flexible children. Every `:key` under `.plugins` must be `#H
 
 When a typed flexible level references a struct type, all new keys inherit that struct's schema:
 
-```polyglot
+```aljam3
 {#} #SubStruct
    [.] .level4#string
 
@@ -45,7 +45,7 @@ To create a new key `:new` alongside existing `:level3`: push to `#Example.level
 - **Separator homogeneity is per-level** — siblings at the same level must share a separator, but different levels may differ (e.g., `.` at level 1, `:` at level 2). See [[technical/compile-rules/PGE/PGE05001-sibling-separator-homogeneity|PGE05001]].
 - **Multi-level flexibility** — a struct can have multiple flexible levels (each level independently homogeneous):
 
-```polyglot
+```aljam3
 {#} #DeepFlex
    [.] .config
       [:] :*#Section

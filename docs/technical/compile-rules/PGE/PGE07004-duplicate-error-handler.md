@@ -14,13 +14,13 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** Under a single `[-]` call, no two `[!]` blocks may handle the same `!Error.Name`. Multiple `[!]` blocks handling different errors under the same `[-]` call are valid and encouraged — each error gets its own handler. The wildcard `[!] !*` is also limited to one per `[-]` call.
-**Rationale:** When two `[!]` blocks catch the same error, the runtime cannot determine which handler to invoke. Handling different errors separately is the intended pattern — it gives each error a distinct recovery path. Duplicate same-name handlers are always ambiguous. Polyglot eliminates ambiguity at compile time — in a concurrent system, non-deterministic error resolution would make debugging impossible and violate the exhaustive coverage guarantee.
+**Rationale:** When two `[!]` blocks catch the same error, the runtime cannot determine which handler to invoke. Handling different errors separately is the intended pattern — it gives each error a distinct recovery path. Duplicate same-name handlers are always ambiguous. Aljam3 eliminates ambiguity at compile time — in a concurrent system, non-deterministic error resolution would make debugging impossible and violate the exhaustive coverage guarantee.
 **Detection:** The compiler collects all `[!]` blocks scoped under each `[-]` call and groups them by error name. If any error name (including `!*`) appears more than once, PGE07004 fires on the duplicate.
 
 **See also:** PGE07001 (error block scoping), PGE07003 (duplicate fallback assignment — `!<` lines, not `[!]` blocks)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ different errors under same [-] — encouraged
 [-] -File.Text.Read
    (-) <path << $file
@@ -33,7 +33,7 @@ severity: error
       [-] >content << "unknown error"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ single error handler — no duplication
 [-] -Fetch.Data
    (-) <url << $endpoint
@@ -43,7 +43,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE07004 — same error handled twice
 [-] -File.Text.Read
    (-) <path << $file
@@ -54,7 +54,7 @@ severity: error
       [-] >content << "handler 2"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07004 — duplicate wildcard handler
 [-] -Fetch.Data
    (-) <url << $endpoint

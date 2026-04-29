@@ -15,7 +15,7 @@ updated: 2026-04-22
 
 | File | What it tells Claude | When to read |
 |------|---------------------|--------------|
-| [[audiences/automation-builder\|audiences/automation-builder]] | Tone, format, assumptions for .pg code writers (external) | Before writing automation-builder docs |
+| [[audiences/automation-builder\|audiences/automation-builder]] | Tone, format, assumptions for .aj3 code writers (external) | Before writing automation-builder docs |
 | [[audiences/integrator\|audiences/integrator]] | Tone, format, assumptions for SDK/API integrators (external) | Before writing integrator docs |
 | [[audiences/product\|audiences/product]] | Tone, format, assumptions for product docs (internal) | Before writing product docs |
 | [[audiences/design\|audiences/design]] | Tone, format, assumptions for language + architecture design docs (internal) | Before writing design docs |
@@ -36,7 +36,7 @@ updated: 2026-04-22
 
 | Priority | Source | Governs |
 |----------|--------|---------|
-| 1 (highest) | [[vision]] | Product vision, philosophy, what Polyglot is |
+| 1 (highest) | [[vision]] | Product vision, philosophy, what Aljam3 is |
 | 2 | docs/audit/ (this folder) | How to write documentation |
 | 3 | .paul/ | Project management process |
 
@@ -74,7 +74,7 @@ This design follows the core philosophy ([[vision#Core Philosophy|c:Core Philoso
 The pipeline uses [T] to declare its trigger:
 
 <!-- @u:technical/ebnf/conditional#match-syntax -->
-```polyglot
+```aljam3
 [?] $status
    =? "active" >> $result <~ "proceed"
    *?           >> $result <~ "skip"
@@ -114,8 +114,8 @@ Untyped `@` refs (legacy) behave the same as always — mandatory read-before-wr
 ### Reference format in files
 
 ```markdown
-<!-- @c:glossary#Polyglot Service -->
-The Polyglot Service ([[glossary#Polyglot Service|c:Polyglot Service]]) consists of three components...
+<!-- @c:glossary#Aljam3 Service -->
+The Aljam3 Service ([[glossary#Aljam3 Service|c:Aljam3 Service]]) consists of three components...
 
 <!-- @u:syntax/operators#comparison -->
 The conditional uses comparison operators defined in the operators spec.

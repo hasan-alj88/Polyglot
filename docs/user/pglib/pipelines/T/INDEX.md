@@ -10,7 +10,7 @@ status: complete
 <!-- @c:pipelines -->
 Triggers are placed on `[T]` lines inside `{-}` pipeline definitions. No `[@]` import needed. See [[concepts/pipelines/io-triggers#Triggers]] for trigger usage rules.
 
-**PRIMITIVE** — Trigger pipelines are direct OS/runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
+**PRIMITIVE** — Trigger pipelines are direct OS/runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.aj3` files.
 
 ## Permissions
 
@@ -54,7 +54,7 @@ Git triggers use a two-layer architecture:
 | **Transport** | `-T.Git.Hook`, `-T.Webhook` | Local / Remote | Raw event delivery — hook dispatcher or HTTP POST |
 | **Semantic** | `-T.Git.Push`, `-T.Git.PR`, `-T.Git.Tag` | Either | Unified events — runtime resolves source via `-Env.*` config |
 
-**Transport triggers** deliver raw events. `-T.Git.Hook` installs a shell dispatcher into `.git/hooks/` that POSTs to the local Polyglot runtime on `localhost` — the same HTTP code path as `-T.Webhook`.
+**Transport triggers** deliver raw events. `-T.Git.Hook` installs a shell dispatcher into `.git/hooks/` that POSTs to the local Aljam3 runtime on `localhost` — the same HTTP code path as `-T.Webhook`.
 
 **Semantic triggers** abstract over transport. `-T.Git.Push` fires whether the push event arrives from a local hook or a remote GitHub/GitLab webhook. The runtime resolves the source based on environment configuration (`-Env.*`).
 

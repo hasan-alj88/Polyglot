@@ -12,7 +12,7 @@ updated: 2026-04-09
 
 `#DateTime` is a multi-level type (not `##Scalar`) because it contains both fixed structure (`.Instant`, `.Civil`, `.Relative`) and flexible extension points (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`). Leaf content is typed data (`###Value`).
 
-```polyglot
+```aljam3
 {#} #DateTime
    [%] .description << "Comprehensive date/time with multi-calendar support"
    [%] .version << "1.0.0"

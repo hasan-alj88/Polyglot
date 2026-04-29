@@ -8,7 +8,7 @@ status: draft
 # Environment Definitions (`{;}`)
 
 <!-- @c:vision:Core Philosophy -->
-<!-- @c:glossary:Polyglot Service -->
+<!-- @c:glossary:Aljam3 Service -->
 <!-- @u:pipelines:Pipeline Structure -->
 <!-- @u:blocks#Definition Elements -->
 
@@ -35,7 +35,7 @@ Environment definitions declare what a pipeline needs from its host system — l
 
 `{;}` blocks are standalone definitions at the same level as `{#}`, `{!}`, etc. They are importable via `[@]` like any other definition.
 
-```polyglot
+```aljam3
 {;} ;EnvName
    [.] .language << #BaseCode.*        {- mandatory -}
    [.] .version << ?[lo, hi)           {- version range, optional for Shell -}
@@ -48,19 +48,19 @@ Environment definitions declare what a pipeline needs from its host system — l
 
 Which runtime. Uses the `#BaseCode` enum:
 
-```polyglot
+```aljam3
 [.] .language << #BaseCode.Python
 [.] .language << #BaseCode.Rust
 [.] .language << #BaseCode.JavaScript
 [.] .language << #BaseCode.Shell
-[.] .language << #BaseCode.Polyglot
+[.] .language << #BaseCode.Aljam3
 ```
 
 ### `.version` — `#string` (optional for Shell)
 
-Version constraint using Polyglot range syntax (see [[operators#Range Operators]]):
+Version constraint using Aljam3 range syntax (see [[operators#Range Operators]]):
 
-```polyglot
+```aljam3
 [.] .version << ?[3.10, 4.0)       {- Python >=3.10 <4.0 -}
 [.] .version << ?[1.70, 2.0)       {- Rust >=1.70 <2.0 -}
 [.] .version << ?[22.0, 99.0)      {- Node >=22 -}
@@ -76,7 +76,7 @@ How to resolve packages. Exactly one field active:
 | `.file` | `#path` | External dependency file (requirements.txt, Cargo.toml, package.json) |
 | `.None` | `###None` | No external dependencies |
 
-```polyglot
+```aljam3
 {- Inline packages -}
 [.] .Dependency
    [.] .packages
@@ -109,7 +109,7 @@ These optional fields apply only to specific languages:
 
 Custom environment variables injected into the runtime. Flexible `:` fields — user-defined key-value pairs:
 
-```polyglot
+```aljam3
 [.] .env
    [:] :NODE_ENV << "production"
    [:] :API_KEY << "{$config.apiKey}"
@@ -122,7 +122,7 @@ Platform-managed vars (PATH, HOME, VIRTUAL_ENV, CARGO_HOME, etc.) are NOT declar
 
 `#;` is the environment definition type — an alias for `##Env`. It represents a reference to a `{;}` definition and allows the [[pglib/pipelines/W/Env|-W.Env]] wrapper to receive the environment specification as input:
 
-```polyglot
+```aljam3
 [W] -W.Env
    (-) <env#; << ;Python3.14
 ```
@@ -144,7 +144,7 @@ Resources (RAM, CPU, disk) are NOT in `{;}` — resource limits belong to `[Q]` 
 
 ### Python ML Environment
 
-```polyglot
+```aljam3
 {;} ;MLPython
    [.] .language << #BaseCode.Python
    [.] .version << ?[3.10, 4.0)
@@ -159,7 +159,7 @@ Resources (RAM, CPU, disk) are NOT in `{;}` — resource limits belong to `[Q]` 
 
 ### Rust Cross-Compilation
 
-```polyglot
+```aljam3
 {;} ;RustARM
    [.] .language << #BaseCode.Rust
    [.] .version << ?[1.75, 2.0)
@@ -171,7 +171,7 @@ Resources (RAM, CPU, disk) are NOT in `{;}` — resource limits belong to `[Q]` 
 
 ### Node.js API Server
 
-```polyglot
+```aljam3
 {;} ;NodeAPI
    [.] .language << #BaseCode.JavaScript
    [.] .version << ?[22.0, 99.0)
@@ -185,7 +185,7 @@ Resources (RAM, CPU, disk) are NOT in `{;}` — resource limits belong to `[Q]` 
 
 ### Deno TypeScript Worker
 
-```polyglot
+```aljam3
 {;} ;DenoWorker
    [.] .language << #BaseCode.JavaScript
    [.] .version << ?[2.0, 99.0)
@@ -197,7 +197,7 @@ Resources (RAM, CPU, disk) are NOT in `{;}` — resource limits belong to `[Q]` 
 
 ### Isolated Shell
 
-```polyglot
+```aljam3
 {;} ;SecureShell
    [.] .language << #BaseCode.Shell
    [.] .shell << "bash"
@@ -206,25 +206,25 @@ Resources (RAM, CPU, disk) are NOT in `{;}` — resource limits belong to `[Q]` 
       [.] .None
    [.] .env
       [:] :API_KEY << "{$secrets.apiKey}"
-      [:] :TEMP_DIR << "/tmp/polyglot-work"
+      [:] :TEMP_DIR << "/tmp/aljam3-work"
 ```
 
-### Pure Polyglot (built-in)
+### Pure Aljam3 (built-in)
 
-```polyglot
-{;} ;Polyglot
-   [.] .language << #BaseCode.Polyglot
+```aljam3
+{;} ;Aljam3
+   [.] .language << #BaseCode.Aljam3
    [.] .Dependency
       [.] .None
 ```
 
-`;Polyglot` is built-in — no user definition needed. All pure Polyglot pipelines declare `(-) ;Polyglot`.
+`;Aljam3` is built-in — no user definition needed. All pure Aljam3 pipelines declare `(-) ;Aljam3`.
 
 ## Compiler Rules
 
 | Code | Rule |
 |------|------|
-| PGE01032 | `(-) ;Env` declared but no matching `[W] -W.Env` or `[W] -W.Polyglot` wrapper |
+| PGE01032 | `(-) ;Env` declared but no matching `[W] -W.Env` or `[W] -W.Aljam3` wrapper |
 | PGE01033 | `[W] -W.Env` present but no `(-) ;Env` declaration |
 | PGE01034 | Caller invokes pipeline whose `(-) ;Env` is not available at call site |
 | PGE01035 | Multiple `(-) ;Env` declared but wrappers don't cover all |
@@ -237,4 +237,4 @@ Resources (RAM, CPU, disk) are NOT in `{;}` — resource limits belong to `[Q]` 
 - [[io#Environment Declaration]] — declaring `(-) ;` in IO contracts
 - [[pglib/pipelines/W/Env|-W.Env]] — the environment wrapper
 - [[pglib/errors/errors#Built-in Error Namespaces]] — `!Env.*` errors
-- [[pglib/pipelines/W/Polyglot|-W.Polyglot]] — pure Polyglot wrapper
+- [[pglib/pipelines/W/Aljam3|-W.Aljam3]] — pure Aljam3 wrapper

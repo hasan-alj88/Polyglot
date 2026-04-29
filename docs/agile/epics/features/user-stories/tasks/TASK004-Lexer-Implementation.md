@@ -1,6 +1,6 @@
 ---
 user-story: "US001-Lexer-Line-Parsing"
-github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/365"
+github-issue-link: "https://github.com/hasan-alj88/Aljam3/issues/365"
 status: "done"
 assignee: "@developer"
 ---
@@ -13,11 +13,11 @@ Translate the lexical definitions, whitespace rules, prefix mapping, and token e
 ## Instructions
 
 1. **Setup Token Enums**
-   - In the `/lib/polyglot/src/lexer` module, create the `PolyglotToken` enumeration mapping out all components from the Token Catalog.
+   - In the `/lib/aljam3/src/lexer` module, create the `Aljam3Token` enumeration mapping out all components from the Token Catalog.
    - Use standard data-carrying Enums for tokens containing extracted values (e.g., `Data(String)`, `Variable(String)`, `LiteralInt(i64)`).
 
 2. **Implement Tokenizer Core (Line-by-Line EBNF Engine)**
-   - Abandon the standard infinite character-loop tokenization model. Instead, the lexer enforces Polyglot's rigid grammatical topology by executing a 4-phase sequential algorithm on every line until EOF:
+   - Abandon the standard infinite character-loop tokenization model. Instead, the lexer enforces Aljam3's rigid grammatical topology by executing a 4-phase sequential algorithm on every line until EOF:
      1. **Indent Phase:** Calculate leading spaces. Yield a `TOK_INDENT` for every 3 contiguous spaces.
      2. **Marker Phase:** Identify the primary line structural marker (e.g. `[-]`, `{#}`, `(>)`) bridging the indent to the expression. Yield the corresponding Marker token.
      3. **Expression Phase:** Pass the remaining substring into the EBNF Composite Regex matching engine (from `TASK003`). The matcher evaluates the expression as a pattern sequence and yields the remaining token(s) and identifiers synchronously.
@@ -28,14 +28,14 @@ Translate the lexical definitions, whitespace rules, prefix mapping, and token e
 
 4. **Implement Fallback/Error Recovery**
    - Ensure the lexer processes to `EOF` without panics or crashes.
-   - Any character or sequence that does not match a valid Polyglot rule should be swallowed into a `TOK_UNRECOGNIZED(String)` variant and passed along the stream. The parser/compiler step will eventually halt and report it safely.
+   - Any character or sequence that does not match a valid Aljam3 rule should be swallowed into a `TOK_UNRECOGNIZED(String)` variant and passed along the stream. The parser/compiler step will eventually halt and report it safely.
 
 5. **Unit Tests**
    - Write comprehensive unit tests validating string payloads for Monolithic Identifiers without their prefixes.
    - Validate whitespace rule behavior surrounding `{`, `[`, and `#`.
 
 ## Acceptance Criteria
-- [x] `PolyglotToken` enum accurately matches the catalog in `TASK003`.
+- [x] `Aljam3Token` enum accurately matches the catalog in `TASK003`.
 - [x] Prefixes for monolithic identifiers are stripped during the extraction step.
 - [x] The lexer correctly tracks coordinates (`Line` / `Col`).
 - [x] Unrecognized garbage characters emit `TOK_UNRECOGNIZED` and don't panic the lexer thread.

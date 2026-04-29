@@ -18,18 +18,18 @@ severity: error
 **Detection:** After confirming all required sections are present (via PGE01005/106/107), the compiler checks that they appear in the correct order.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Form 1 — [W] provides setup/cleanup
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
       (-) <result >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Form 2 — explicit [\]/[/] inline
 {-} -Process
    [T] -T.Call
@@ -43,13 +43,13 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01001 — [-] appears before [Q] and setup
 {-} -Process
    [T] -T.Call
    [-] -DoWork
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 ```
 
 **Diagnostic:** "Pipeline `-Process` sections are misordered — expected `(-),[T]` → `[Q]` → setup → body → cleanup"

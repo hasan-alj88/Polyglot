@@ -19,7 +19,7 @@ severity: error
 **See also:** PGE01015 (duplicate metadata field — covers fixed fields, not aliases), PGE09011 (duplicate import alias — analogous rule for `[@]` import aliases)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ multiple unique aliases on one definition
 {#} #SystemConfig
    [%] %alias
@@ -29,7 +29,7 @@ severity: error
    [.] .retries#int <~ 3
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ different definitions with distinct aliases
 {#} #UserRecord
    [%] %alias
@@ -42,7 +42,7 @@ severity: error
    [.] .name#string
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ nested key alias with dot separators
 {!} !Permission
    [.] .File
@@ -53,7 +53,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12002 — same alias string appears twice in one definition
 {#} #Record
    [%] %alias
@@ -62,7 +62,7 @@ severity: error
    [.] .name#string
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE12002 — same alias across different definitions
 {#} #UserConfig
    [%] %alias
@@ -75,7 +75,7 @@ severity: error
    [.] .timeout#int
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE12002 — nested alias collides with another definition's alias
 {!} !Permission
    [.] .File

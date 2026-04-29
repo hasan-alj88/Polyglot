@@ -13,7 +13,7 @@ Capability-level generic permission for microphone access. Sugar over [[INDEX|__
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Device.Microphone
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for microphone access. Sugar over [[INDEX|__
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Device.Microphone
    (_) <scope << "default"
 ```

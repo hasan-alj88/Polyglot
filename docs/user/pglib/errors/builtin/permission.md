@@ -10,7 +10,7 @@ metadata_definition: "%!.Permission"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !Permission
    [.] .File.Denied#Error
       (-) .MessageTemplate << "File permission denied: {path}"

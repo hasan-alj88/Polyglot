@@ -12,7 +12,7 @@ updated: 2026-04-03
 
 An enum instance collapses to exactly ONE active field. The definition (`%definition.#:{EnumName}`) lists all valid branches, but a specific instance has only the active one:
 
-```polyglot
+```aljam3
 %definition.#:Boolean       <- schema: .True, .False (both listed)
 %#:Boolean:0.True           <- instance 0: .True is active
                               .False does NOT exist for this instance

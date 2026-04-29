@@ -14,23 +14,23 @@ severity: error
 **Detection:** When the compiler encounters an input parameter property `<name` or output parameter property `>name`, it validates the preceding IO marker. If `(<)` is missing for `<` or `(>)` is missing for `>`, an error is emitted.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Using directional markers
 {-} -ProcessData
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (<) <input#string
    (>) >output#string
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01061 — Using generic marker for specific parameter directions
 {-} -ProcessData
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string                         [ ] ✗ PGE01061 — should be (<)
    (-) >output#string                        [ ] ✗ PGE01061 — should be (>)
 ```

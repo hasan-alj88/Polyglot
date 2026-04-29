@@ -13,7 +13,7 @@ Terminate a Job after running `[/]` wrapper cleanup. Terminal — Job state dest
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Kill.WithCleanup
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobKillWithCleanup"
@@ -49,12 +49,12 @@ Everything freed after cleanup runs. The Job enters the Dying state during `[/]`
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates kill condition, sends command signal |
-| 2. NATS command | `polyglot.command.job.kill.with-cleanup.{jobId}` | `{jobId}` |
+| 2. NATS command | `aljam3.command.job.kill.with-cleanup.{jobId}` | `{jobId}` |
 | 3. QH executes | Queue Handler | Status-aware: remove from current set/queue, RPUSH queue:teardown, HSET job status "teardown.pending" |
 | 4. DC dispatches | Dispatch Coordinator | Picks job from teardown queue, sends control signal |
-| 5. Control signal | `polyglot.queue.control.{jobId}.job.kill.with-cleanup` | `{jobId}` → Runner |
+| 5. Control signal | `aljam3.queue.control.{jobId}.job.kill.with-cleanup` | `{jobId}` → Runner |
 | 6. Unix mechanism | Runner | `SIGTERM` → `[/]` cleanup runs → `SIGKILL` on timeout |
-| 7. Runner ACK | `polyglot.runner.teardown_completed.{jobId}` | `{jobId, pipeline}` → QH + TM |
+| 7. Runner ACK | `aljam3.runner.teardown_completed.{jobId}` | `{jobId, pipeline}` → QH + TM |
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 

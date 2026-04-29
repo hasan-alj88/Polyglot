@@ -9,7 +9,7 @@ updated: 2026-04-16
 <!-- @c:queue-manager/reactive-signals -->
 <!-- @c:queue-manager/resource-controls -->
 
-Polyglot enforces per-job process isolation using Linux PID namespaces, pidfd-based signal delivery, cgroup resource control, and CRIU checkpoint/restore. This document covers the kernel mechanisms backing the `-Q.Job.*` control signals.
+Aljam3 enforces per-job process isolation using Linux PID namespaces, pidfd-based signal delivery, cgroup resource control, and CRIU checkpoint/restore. This document covers the kernel mechanisms backing the `-Q.Job.*` control signals.
 
 ## PID Namespaces
 
@@ -55,12 +55,12 @@ All signal operations use `pidfd_send_signal()` instead of `kill()`. This elimin
 
 ## Cgroup Integration
 
-Each job gets a dedicated cgroup under the Polyglot cgroup hierarchy. The cgroup provides resource measurement, resource limiting, and atomic freeze/thaw.
+Each job gets a dedicated cgroup under the Aljam3 cgroup hierarchy. The cgroup provides resource measurement, resource limiting, and atomic freeze/thaw.
 
 **Cgroup hierarchy:**
 
 ```
-/sys/fs/cgroup/polyglot/
+/sys/fs/cgroup/aljam3/
 ├── queue:{queueName}/
 │   ├── job:{jobId}/          ← per-job cgroup
 │   │   ├── cgroup.freeze     ← atomic pause (Free.CPU)
@@ -100,7 +100,7 @@ CRIU (Checkpoint/Restore In Userspace) provides the mechanism for `Free.All`, cr
 
 ### CRIU as Runtime Dependency
 
-CRIU is a **required runtime dependency** for full functionality. The Polyglot runtime checks at startup:
+CRIU is a **required runtime dependency** for full functionality. The Aljam3 runtime checks at startup:
 
 - **CRIU present:** `Free.All`, cross-host `Reassign`, `Snapshot` all available
 - **CRIU missing:** These operations disabled; using them produces a compile/runtime error. `Free.CPU` and `Free.RAM` still work (they use cgroup freezer, not CRIU)
@@ -144,7 +144,7 @@ Image transfer is handled by the Runner, not the Queue Handler. The QH only know
 
 The `TCP_REPAIR` socket option allows CRIU to serialize TCP connection state (sequence numbers, window sizes, buffers). This is declared per-queue:
 
-```polyglot
+```aljam3
 {Q} #Queue:MigrateableQueue
    [.] .tcpRepairable << true
 ```
@@ -160,7 +160,7 @@ The compiler enforces this at compile time — a `Free.All` action on a queue wi
 
 ## GPU Considerations
 
-GPU state (VRAM contents, shader programs, compute contexts) cannot be serialized by CRIU alone. Polyglot supports two modes:
+GPU state (VRAM contents, shader programs, compute contexts) cannot be serialized by CRIU alone. Aljam3 supports two modes:
 
 **With vendor plugin:**
 - Plugin provides VRAM serialize/deserialize hooks

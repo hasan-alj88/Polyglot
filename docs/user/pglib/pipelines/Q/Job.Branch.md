@@ -13,7 +13,7 @@ Names a marker subtree as a branch group for external reference. Reserved for fu
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Branch
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobBranch"

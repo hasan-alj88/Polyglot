@@ -13,7 +13,7 @@ Category-level generic permission for system-level operations. Takes a capabilit
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __System
    [#] <capability;SystemCapability
    [#] <scope;string
@@ -24,7 +24,7 @@ Category-level generic permission for system-level operations. Takes a capabilit
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __System
    (_) <capability << .Env
    (_) <scope << "DATABASE_URL"

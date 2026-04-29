@@ -10,7 +10,7 @@ metadata_definition: "%!.Alias"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !Alias
    [.] .Clash#Error
       (-) .MessageTemplate << "Alias {alias} clashes with existing name in {namespace}"

@@ -28,7 +28,7 @@ label_accessor = "$" label_name accessor_sigil param_name ;
 accessor_sigil = ">" | "<" | "!" | "_" ;
 ```
 
-```polyglot
+```aljam3
 [-] -ReadFile
    (-) $Read
    (-) <path << "input.csv"
@@ -61,7 +61,7 @@ Four accessors mirror existing IO prefix conventions:
 
 The `>`, `<`, `!`, `_` sigils reuse the same prefix conventions found throughout [[io]] and [[blocks]].
 
-```polyglot
+```aljam3
 [-] -ReadFile
    (-) $Read
    (-) <path << "input.csv"
@@ -82,7 +82,7 @@ Metadata access through `$Label%state` also works. The label IS the operation's 
 
 `(-) $Label` at chain level labels the whole chain. `(.)` labels individual steps within the chain, indented under the chain label and mapped by position.
 
-```polyglot
+```aljam3
 [-] -ReadFile->-ParseCSV->-ValidateRows
    (-) $Pipeline
       (.) $Read
@@ -115,7 +115,7 @@ See [[concepts/pipelines/chains]] for chain execution semantics.
 
 `( )` (parentheses with a space) introduces an inline comment within IO blocks.
 
-```polyglot
+```aljam3
 [-] -Pipeline
    (-) $Op
    (-) <input << $value               ( ) describe this input
@@ -140,7 +140,7 @@ See [[concepts/pipelines/chains]] for chain execution semantics.
 
 `(-) $Label` on `[b]` is allowed only when the label's outputs are consumed within the same scope. A standalone fire-and-forget label with no consumer produces PGE02015.
 
-```polyglot
+```aljam3
 ( ) VALID -- label consumed in same scope
 [b] -LogEvent
    (-) $Log

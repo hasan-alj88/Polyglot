@@ -14,7 +14,7 @@ metadata_definition: "%definition.##:Enum"
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Enum
    [#] ##Flat
    [#] %##Active << #ActiveKind.One

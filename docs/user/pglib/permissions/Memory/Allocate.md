@@ -13,7 +13,7 @@ Capability-level generic permission for memory allocation. Sugar over [[INDEX|__
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Memory.Allocate
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for memory allocation. Sugar over [[INDEX|__
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Memory.Allocate
    (_) <scope << "512MB"
 ```

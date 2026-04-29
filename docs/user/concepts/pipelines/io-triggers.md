@@ -14,14 +14,14 @@ Every trigger must output `>IsTriggered#bool`. Triggers can produce additional o
 
 **Base trigger** — simplest form (pglib):
 
-```polyglot
+```aljam3
 {T} -T.Call
    (-) >IsTriggered#bool
 ```
 
 **Composed trigger** — with inputs and additional outputs:
 
-```polyglot
+```aljam3
 {T} -T.Folder.NewFiles
    [%] .description << "Fires when new files appear in watched directory"
    (-) <path#path
@@ -60,7 +60,7 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
 
 - Triggers that produce outputs wire them to pipeline inputs via indented `(-)` IO lines:
 
-```polyglot
+```aljam3
 (-) <NewFiles#array:path
 [T] -T.Folder.NewFiles"/inbox/"
    (-) >NewFiles >> <NewFiles
@@ -68,7 +68,7 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
 
 - Git triggers support filter fields and produce typed `#Git.*` outputs:
 
-```polyglot
+```aljam3
 (-) <branch#string
 (-) <sha#string
 (-) <commits#array.Git.Commit
@@ -84,7 +84,7 @@ See [[pglib/pipelines/T/INDEX#Three-Tier Trigger Model]] for how Git triggers wo
 
 ## Trigger Spans
 
-Triggers in Polyglot are not just instantaneous events; they operate over **spans** of time. For example, a state trigger spans as long as the state is active, while an event trigger (like a file being created) might be instantaneous or permeate change infinitely. 
+Triggers in Aljam3 are not just instantaneous events; they operate over **spans** of time. For example, a state trigger spans as long as the state is active, while an event trigger (like a file being created) might be instantaneous or permeate change infinitely. 
 
 A pipeline triggers only when the spans of all its required trigger conditions overlap—acting like a temporal AND gate. If a pipeline has three required triggers, it fires exactly at the moment their active spans intersect:
 
@@ -102,7 +102,7 @@ This intersection model makes asynchronous orchestration highly declarative, as 
 
 When a pipeline's trigger conditions are met again while the pipeline is already queued or executing, `#RetriggerStrategy` controls what happens. It is a queue configuration — declared on `[Q]` — but the Trigger Monitor enforces it, deciding whether to send an enqueue signal.
 
-```polyglot
+```aljam3
 [Q] -Q.Default
    (-) <retrigger#RetriggerStrategy << #Disallow
 ```

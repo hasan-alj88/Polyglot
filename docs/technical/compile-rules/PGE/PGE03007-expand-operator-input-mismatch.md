@@ -30,14 +30,14 @@ Missing or extra IO lines fire PGE03007.
 **See also:** PGE03008 (collect operator IO mismatch), PGE03002 (parallel output must be collected)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ correct IO for =ForEach.Array
 [=] =ForEach.Array
    (=) <Array << $InputNumbers
    (=) >item >> $num
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ correct IO for =ForEach.Array.Enumerate
 [=] =ForEach.Array.Enumerate
    (=) <Array << $InputNumbers
@@ -45,7 +45,7 @@ Missing or extra IO lines fire PGE03007.
    (=) >item >> $num
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ correct IO for =ForEach.Serial
 [-] =ForEach.Serial
    (=) <Serial << $config
@@ -54,14 +54,14 @@ Missing or extra IO lines fire PGE03007.
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03007 — =ForEach.Array missing <Array input
 [=] =ForEach.Array
    (=) <Serial << $data              [ ] ✗ PGE03007 — expected <Array, got <Serial
    (=) >item >> $num
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03007 — =ForEach.Array.Enumerate missing >index output
 [=] =ForEach.Array.Enumerate
    (=) <Array << $InputNumbers

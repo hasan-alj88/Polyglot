@@ -10,7 +10,7 @@ updated: 2026-04-09
 
 ### #Holiday
 
-```polyglot
+```aljam3
 {#} #Holiday
    [%] .description << "Named holiday with optional recurrence"
    [%] .version << "1.0.0"
@@ -26,7 +26,7 @@ updated: 2026-04-09
 
 ### #Observance
 
-```polyglot
+```aljam3
 {#} #Observance
    [%] .description << "Named observance with type classification"
    [%] .version << "1.0.0"
@@ -42,7 +42,7 @@ updated: 2026-04-09
 
 ### #ObservanceType
 
-```polyglot
+```aljam3
 {#} #ObservanceType
    [%] .description << "Classification of observance"
    [%] .version << "1.0.0"
@@ -57,7 +57,7 @@ updated: 2026-04-09
 
 ### #Season
 
-```polyglot
+```aljam3
 {#} #Season
    [%] .description << "Named season with start and end dates"
    [%] .version << "1.0.0"
@@ -73,7 +73,7 @@ updated: 2026-04-09
 
 ### #SeasonType
 
-```polyglot
+```aljam3
 {#} #SeasonType
    [%] .description << "Classification of season"
    [%] .version << "1.0.0"

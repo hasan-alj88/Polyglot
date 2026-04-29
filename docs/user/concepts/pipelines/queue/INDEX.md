@@ -10,7 +10,7 @@ updated: 2026-04-26
 
 # Queue Configuration
 
-Every pipeline must declare a `[Q]` line — omitting it is a compile error (PGE01006). Polyglot uses a multi-queue execution model with a unified dispatch layer:
+Every pipeline must declare a `[Q]` line — omitting it is a compile error (PGE01006). Aljam3 uses a multi-queue execution model with a unified dispatch layer:
 
 - **Dispatch Queues** — one per `{Q} #Queue:Name` definition (plus `-Q.Default`). Each maintains its own ordering strategy (FIFO, LIFO, Priority). Triggered pipelines enter the Dispatch Queue assigned by their `[Q]` declaration.
 - **Dispatch Coordinator** — the unified dispatch layer. Reads from all parallel Dispatch Queues simultaneously and dispatches Jobs to the Executing Set. The Dispatch Coordinator is faithful to every Dispatch Queue's ordering and concurrency rules — it never overrides or reorders a queue's internal strategy.
@@ -33,7 +33,7 @@ In `#QueueRules`, Job getters return an **array** of all Jobs on the queue. In `
 
 Custom queues define configuration and load rule sets. The identifier must use the `#Queue:` prefix (PGE01012).
 
-```polyglot
+```aljam3
 {Q} #Queue:WorkerQueue
    [.] .strategy#QueueStrategy << #FIFO
    [.] .host#URL << "worker-host-01"
@@ -52,7 +52,7 @@ Custom queues define configuration and load rule sets. The identifier must use t
 
 Queue data loading supports `[#]` to load and extend a base queue:
 
-```polyglot
+```aljam3
 {Q} #Queue:BackupHost
    [#] << #Queue.Default
       [.] .host#URL << "alternative.host.com"
@@ -69,7 +69,7 @@ Every job has resource limits. When a pipeline declares `{_}` resource permissio
 
 Queues configure default limits and limit-exceeded behavior:
 
-```polyglot
+```aljam3
 {Q} #Queue:WorkerQueue
    [.] .strategy#QueueStrategy << #FIFO
    [.] .host#URL << "worker-host-01"
@@ -106,7 +106,7 @@ Queues configure default limits and limit-exceeded behavior:
 
 Pipelines override defaults by declaring `{_}` resource permissions:
 
-```polyglot
+```aljam3
 {_} _RAMLimit
    [.] .intent << #Grant
    [.] .category << #RAM
@@ -124,7 +124,7 @@ Pipelines override defaults by declaring `{_}` resource permissions:
    (-) _CPULimit
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] ...
 ```
@@ -139,7 +139,7 @@ The `[Q]` line in a pipeline declares which queue it uses.
 
 Three equivalent syntaxes:
 
-```polyglot
+```aljam3
 [Q] >> #WorkerQueue
 [Q] -Q.Assign"{#WorkerQueue}"
 [Q] -Q.Assign
@@ -150,7 +150,7 @@ Three equivalent syntaxes:
 
 Three equivalent syntaxes:
 
-```polyglot
+```aljam3
 [Q] << #RAMGuard
 [Q] -Q.Load.Job.Rules"{#CPUGuard}"
 [Q] -Q.Load.Job.Rules
@@ -159,7 +159,7 @@ Three equivalent syntaxes:
 
 ### Full Pipeline Example
 
-```polyglot
+```aljam3
 {-} ProcessData
    [T] ...
    [ ] Assign Queue
@@ -168,13 +168,13 @@ Three equivalent syntaxes:
    [Q] << #RAMGuard
    [Q] << #CPUGuard
    [Q] << #IdleHibernation
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    ...
 ```
 
 ### Pipeline with Custom Threshold Override
 
-```polyglot
+```aljam3
 {-} HeavyJob
    [T] ...
    [Q] >> #WorkerQueue
@@ -182,7 +182,7 @@ Three equivalent syntaxes:
       (#) <value.GB << 8
       (#) >> $customRAMGuard
    [Q] << $customRAMGuard
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    ...
 ```
 

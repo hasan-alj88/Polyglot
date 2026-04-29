@@ -40,8 +40,8 @@ updated: 2026-04-10
 | `@pipelines:Triggers` | @u: | 3 | Section ref to trigger syntax |
 | `@pipelines:Error Handling` | @u: | 3 | Section ref to error handling syntax |
 | `@pglib/types/NativeKind` | @c: | 3 | Type definition — NativeKind concept |
-| `@glossary:Polyglot Service` | @c: | 3 | Glossary entry — concept definition |
-| `@glossary:Polyglot Code` | @c: | 3 | Glossary entry — concept definition |
+| `@glossary:Aljam3 Service` | @c: | 3 | Glossary entry — concept definition |
+| `@glossary:Aljam3 Code` | @c: | 3 | Glossary entry — concept definition |
 | `@data-is-trees` | @c: | 3 | Concept definition — core data model |
 | `@blocks:Execution` | @u: | 3 | Section ref to execution block syntax |
 | `@types:Enum Fields` | @u: | 2 | Section ref to enum field syntax |
@@ -60,7 +60,7 @@ updated: 2026-04-10
 | `@blocks:Logical` | @u: | 2 | Section ref to logical block syntax |
 | `@blocks:Control Flow` | @u: | 2 | Section ref to control flow syntax |
 | `@vision:Ways of Integration` | @c: | 1 | Vision section — design rationale |
-| `@vision:The Polyglot Ecosystem` | @c: | 1 | Vision section — design rationale |
+| `@vision:The Aljam3 Ecosystem` | @c: | 1 | Vision section — design rationale |
 | `@vision` | @c: | 1 | Vision document — highest authority |
 | `@variable-lifecycle:Failed` | @c: | 1 | Concept — Failed variable state |
 | `@user/concepts/metadata` | @c: | 1 | Concept definition — metadata system |
@@ -154,7 +154,7 @@ Syntax constructs that appear in docs without `@` back-references to their defin
 
 ### Priority
 
-**High priority** — compile-rules/ directory: 161 of 165 files lack any `@` cross-reference despite pervasive use of Polyglot constructs. Adding `<!-- @u:blocks -->`, `<!-- @u:io -->`, and `<!-- @u:operators -->` to these files would close the majority of gaps.
+**High priority** — compile-rules/ directory: 161 of 165 files lack any `@` cross-reference despite pervasive use of Aljam3 constructs. Adding `<!-- @u:blocks -->`, `<!-- @u:io -->`, and `<!-- @u:operators -->` to these files would close the majority of gaps.
 
 **Medium priority** — brainstorming/ directory: 5 files with heavy construct usage and zero refs.
 

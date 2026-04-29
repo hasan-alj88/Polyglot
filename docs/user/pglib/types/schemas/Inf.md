@@ -14,7 +14,7 @@ metadata_definition: "%definition.##:Inf"
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Inf
    [.] .Inf
 ```
@@ -44,7 +44,7 @@ metadata_definition: "%definition.##:Inf"
 
 Compose `##Inf` into types that need an unbounded option:
 
-```polyglot
+```aljam3
 {#} #Bound
    [#] ##Int
    [#] ##Inf

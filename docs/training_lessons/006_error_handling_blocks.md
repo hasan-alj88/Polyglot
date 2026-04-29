@@ -8,7 +8,7 @@
 You can catch and handle errors directly within an action block by using an explicit error handling block defined by `[!] *!`.
 
 ### Syntax Example
-```polyglot
+```aljam3
    [-] -File.CSV.Write
       (-) <file << $file
       (-) <data << $worldTemp

@@ -12,7 +12,7 @@ updated: 2026-04-22
 
 ## Summary
 
-The `->` chain operator was removed from Polyglot. Labeled `[-]` calls with operation labels (`(-) $Label`) and output addressing (`$Label>output`) replace all chain functionality. Wildcard auto-wire (`<* << $A>*`) recovers chain-style auto-wiring as a general feature (issue #345).
+The `->` chain operator was removed from Aljam3. Labeled `[-]` calls with operation labels (`(-) $Label`) and output addressing (`$Label>output`) replace all chain functionality. Wildcard auto-wire (`<* << $A>*`) recovers chain-style auto-wiring as a general feature (issue #345).
 
 ## Before
 

@@ -13,7 +13,7 @@ Parses an ISO-8601 string into a `#dt` value. Called implicitly by `-DT"..."` in
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.From.ISO
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtFromIso"

@@ -20,12 +20,12 @@ severity: warning
 **See also:** PGE09003 (unresolved pipeline reference), PGE09004 (unresolved import pipeline reference)
 
 **VALID:**
-```polyglot
+```aljam3
 {-} -Transform
    [%] .deprecated << false
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >output#string
    [ ]
@@ -38,13 +38,13 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 {-} -OldProcess
    [%] .deprecated << true
    [%] .deprecatedMessage << "Use -NewProcess instead"
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >result#string
    [ ]
@@ -56,12 +56,12 @@ severity: warning
    (-) >result#string >> $output
 ```
 
-```polyglot
+```aljam3
 {-} -LegacyFetch
    [%] .deprecated << true
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <url#string
    (-) >content#string
    [ ]
@@ -73,7 +73,7 @@ severity: warning
    (-) >content#string >> $page
 ```
 
-```polyglot
+```aljam3
 {@} @Local:999.MyApp:v1.0.0
    [@] @legacy << @Local:999.OldUtils:v1.0.0
 

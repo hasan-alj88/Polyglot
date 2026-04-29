@@ -15,8 +15,8 @@ severity: error
 <!-- @u:syntax/operators -->
 <!-- @u:syntax/types -->
 
-**Statement:** `live`-typed `%` metadata fields are managed by the Polyglot runtime and can only be pulled from. Any push into a `live` `%` field is a compile error. This rule applies only to `live` fields — non-live `%` fields (e.g., `%pipeline.*.description`) are user-assignable and follow normal lifecycle rules.
-**Rationale:** `live` fields reflect runtime state that only the runtime can change (e.g., a variable's lifecycle stage, a pipeline's execution status). Allowing user code to push into `live` metadata would break runtime invariants. Non-live metadata fields are user-defined and follow standard push/pull rules. This enforces Polyglot's separation between developer intent and runtime state — the compiler protects runtime-managed state from user interference, ensuring the state machine remains trustworthy.
+**Statement:** `live`-typed `%` metadata fields are managed by the Aljam3 runtime and can only be pulled from. Any push into a `live` `%` field is a compile error. This rule applies only to `live` fields — non-live `%` fields (e.g., `%pipeline.*.description`) are user-assignable and follow normal lifecycle rules.
+**Rationale:** `live` fields reflect runtime state that only the runtime can change (e.g., a variable's lifecycle stage, a pipeline's execution status). Allowing user code to push into `live` metadata would break runtime invariants. Non-live metadata fields are user-defined and follow standard push/pull rules. This enforces Aljam3's separation between developer intent and runtime state — the compiler protects runtime-managed state from user interference, ensuring the state machine remains trustworthy.
 **Detection:** At any assignment statement where the target uses the `%` accessor on a `live`-typed field — the compiler rejects the push regardless of operator (`<<`, `>>`, `<~`, `~>`).
 
 **Metadata access on Failed-state variables:**
@@ -27,7 +27,7 @@ severity: error
 **`%` schema tree:** Metadata is organized by block type — `%-.*` for `{-}` pipelines, `%#.*` for `{#}` data definitions, `%W.*` for `{W}` wrappers. The `*` in the path is the instance reference — one pipeline definition may span several concurrent instances, each with its own metadata. The schema is fixed per block type (all instances share the same field structure). See resolved design issue 002 (git history: `docs/technical/compiler_issues/002-metadata-schema-tree.md`) for full schema documentation status.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ pulling live %state in a conditional
 (-) >data#string
 [-] -Fetch
@@ -41,7 +41,7 @@ severity: error
          (-) <msg << "not ready"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ pulling live %status from a pipeline reference
 [?] -Fetch%status
    [?] #Running
@@ -52,19 +52,19 @@ severity: error
          (-) <msg << "done or failed"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ pushing into a non-live % field is allowed
 [%] .description#string << "Processes incoming invoices"
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02006 — pushing into a live %state field
 (-) >data#string
 [-] >data%state << #Final          [ ] ✗ PGE02006 — %state is live, cannot push
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE02006 — default-pushing into a live %status field
 [-] -Pipeline%status <~ #Running   [ ] ✗ PGE02006 — %status is live, cannot push
 ```

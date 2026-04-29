@@ -15,7 +15,7 @@ The wrapper receives a `{;}` environment definition as input and handles all pla
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.Env
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WEnv"
@@ -36,7 +36,7 @@ None. The wrapper's job is to set up the environment for the duration of the pip
 
 Wire the `{;}` definition to the wrapper on the `[W]` line using inline `;EnvName` syntax:
 
-```polyglot
+```aljam3
 [W] -W.Env;MLPythonEnv
 ```
 
@@ -46,7 +46,7 @@ This is the preferred shorthand. The environment name is appended directly to th
 
 The equivalent verbose form wires the environment via `(-)` IO:
 
-```polyglot
+```aljam3
 [W] -W.Env
    (-) <env#; << ;MLPythonEnv
 ```
@@ -55,7 +55,7 @@ The `#;` type represents a reference to a `{;}` environment definition. See [[en
 
 ### Full Pipeline Example
 
-```polyglot
+```aljam3
 {-} =ProcessData
    (-) <data#serial
    (-) >result#string
@@ -69,7 +69,7 @@ The `#;` type represents a reference to a `{;}` environment definition. See [[en
 
 ## Errors
 
-```polyglot
+```aljam3
 -W.Env
    [=] !Env.NotFound
    [=] !Env.VersionMismatch
@@ -86,7 +86,7 @@ See [[pglib/errors/errors#Built-in Error Namespaces]] for the full `!Env` error 
 
 Callers handle environment errors using `[!]` blocks or `(>) !>` fallbacks:
 
-```polyglot
+```aljam3
 [-]
    [-] -SomePipeline
       (-) <file << $File

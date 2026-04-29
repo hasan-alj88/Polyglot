@@ -13,7 +13,7 @@ List all files in a folder, returning an array of paths.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.List
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileList"

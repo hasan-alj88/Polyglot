@@ -13,7 +13,7 @@ Projects a `#dt` value into a Buddhist date structure. Projections are not cache
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Buddhist
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToBuddhist"

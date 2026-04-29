@@ -15,7 +15,7 @@ Variable manipulation pipelines operate on `#Variable` instances -- language-tag
 
 No `[@]` import needed.
 
-**PRIMITIVE** -- pglib runtime pipelines are direct language runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
+**PRIMITIVE** -- pglib runtime pipelines are direct language runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.aj3` files.
 
 ## Pipelines
 

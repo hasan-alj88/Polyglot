@@ -8,7 +8,7 @@ metadata_instance: "%#:GregorianDate:N"
 
 # #GregorianDate
 
-```polyglot
+```aljam3
 {#} #GregorianDate
    [%] .description << "Gregorian calendar date"
    [%] .version << "1.0.0"

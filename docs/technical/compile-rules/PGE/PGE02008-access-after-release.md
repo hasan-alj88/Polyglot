@@ -14,13 +14,13 @@ severity: error
 <!-- @u:syntax/types -->
 
 **Statement:** A variable in the Released state must not be read, pushed, or referenced. Released is a distinct lifecycle state indicating that a variable previously held a value but its scope has closed. Any reference to a Released variable is a compile error.
-**Rationale:** Released variables are no longer accessible — their scope has ended. Unlike Declared variables (never had a value), Released variables had a value but it is no longer valid to access. Use-after-release is always a structural error indicating code placed outside its proper scope. In Polyglot's parallel-by-design model, scope boundaries are where concurrent resources are reclaimed — the compiler catches use-after-release statically to prevent race conditions that would only surface at runtime.
+**Rationale:** Released variables are no longer accessible — their scope has ended. Unlike Declared variables (never had a value), Released variables had a value but it is no longer valid to access. Use-after-release is always a structural error indicating code placed outside its proper scope. In Aljam3's parallel-by-design model, scope boundaries are where concurrent resources are reclaimed — the compiler catches use-after-release statically to prevent race conditions that would only surface at runtime.
 **Detection:** The compiler tracks variable scope boundaries. When a scope-closing condition occurs (collector boundary, `[/]` cleanup exit, expand scope close), all variables local to that scope transition to Released. Any subsequent reference to those variables triggers PGE02008.
 
 **See also:** PGE02001 (lifecycle stages — defines Released state), PGE02002 (declared state unreadable — analogous rule for uninitialized variables)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ access within expand scope — before collector closes scope
 [=] =ForEach.Array
    (=) <Array << $files
@@ -40,7 +40,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02008 — access after collector boundary
 [=] =ForEach.Array
    (=) <Array << $files
@@ -59,7 +59,7 @@ severity: error
    (-) <msg << $text                        [ ] ✗ PGE02008 — $text is Released
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE02008 — access after cleanup exits
 [\] setup
    [-] $conn#Connection << -DB.Connect

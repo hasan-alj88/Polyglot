@@ -20,7 +20,7 @@ Direct command: finish work + `[/]` cleanup, then terminate. Signal: `command.ki
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Kill.Graceful
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QKillGraceful"

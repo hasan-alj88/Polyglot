@@ -23,7 +23,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Capture regex cannot match separator ":"
 
 {$} $DT"{hours}:{min}"
@@ -35,7 +35,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14004 — hours regex can match separator ":"
 
 {$} $DT"{hours}:{min}:{seconds}"
@@ -50,7 +50,7 @@ severity: error
 
 ```
 error[PGE14004]: constructor slot regex can match pattern separator
-  --> src/datetime.pg:3:4
+  --> src/datetime.aj3:3:4
    |
 1  | {$} $DT"{hours}:{min}:{seconds}"
    |                ^     ^           separator characters: ':'

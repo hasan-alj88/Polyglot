@@ -24,7 +24,7 @@ severity: warning
 **See also:** PGE10013 (foreign resource outside scope — fires when the resource IS resolvable and IS outside scope), PGW10005 (unrecognized foreign call — fires when the function itself is unknown), [[permissions/foreign-code#Confidence Levels]]
 
 **VALID (no warning):**
-```polyglot
+```aljam3
 [ ] ✓ string literal — fully verifiable, no warning needed
 {_} _DataRead
    [.] .intent << #Grant
@@ -50,7 +50,7 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW10002 — resource traces to function call, unresolvable
 {_} _DataRead
    [.] .intent << #Grant
@@ -76,7 +76,7 @@ severity: warning
          [.] .count#int >> >count
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW10002 — resource from <Bind input (medium confidence)
 {_} _DataRead
    [.] .intent << #Grant
@@ -101,7 +101,7 @@ severity: warning
       (-) >Bind#Code:Python.Output >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW10002 — dynamic string construction
 {-} -DynamicPath
    (-) _DataRead

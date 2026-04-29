@@ -14,7 +14,7 @@ severity: error
 <!-- @c:technical/algorithms/foreign-code-analysis -->
 
 **Statement:** When the compiler's AST analysis of foreign code in a `-Run.*` pipeline or `[C]` block detects an IO call whose resource argument (file path, URL, host, connection string) is a resolvable literal or traceable variable that falls outside every declared `{_}` permission scope for that category, PGE10013 fires.
-**Rationale:** Foreign code can access resources (files, network endpoints, databases) that the Polyglot pipeline's `{_}` permissions did not authorize. When the compiler can definitively determine the resource target — via string literal or intraprocedural constant propagation — and that target falls outside declared scopes, it is a verifiable violation. This is the compile-time enforcement counterpart to runtime sandboxing.
+**Rationale:** Foreign code can access resources (files, network endpoints, databases) that the Aljam3 pipeline's `{_}` permissions did not authorize. When the compiler can definitively determine the resource target — via string literal or intraprocedural constant propagation — and that target falls outside declared scopes, it is a verifiable violation. This is the compile-time enforcement counterpart to runtime sandboxing.
 **Detection:** During the foreign code AST walk (see [[algorithms/foreign-code-analysis]]):
 1. Match each `CallExpression` against the IO sink table
 2. Extract the resource argument at the known parameter position
@@ -28,7 +28,7 @@ severity: error
 **See also:** PGE10012 (code file outside scope — the script itself), PGE10014 (AST-invisible code — banned constructs), PGW10002 (unverifiable foreign IO — when resource cannot be resolved), [[permissions/foreign-code#Violation Detection]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all IO calls within declared permission scopes
 {_} _DataRead
    [.] .intent << #Grant
@@ -55,7 +55,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10013 — file access outside declared scope
 {_} _DataRead
    [.] .intent << #Grant
@@ -82,7 +82,7 @@ severity: error
          [.] .result#string >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10013 — network access outside declared scope
 {_} _ApiAccess
    [.] .intent << #Grant

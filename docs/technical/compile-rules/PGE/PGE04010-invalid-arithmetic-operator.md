@@ -13,8 +13,8 @@ severity: error
 <!-- @u:syntax/io -->
 <!-- @u:syntax/operators -->
 
-**Statement:** Raw arithmetic tokens (`+`, `-`, `*`, `/`, `%`) are not valid operators in Polyglot Code. Arithmetic is performed through `-Math.*` pglib pipelines. The compiler rejects arithmetic tokens and suggests the equivalent pglib pipeline.
-**Rationale:** Polyglot Code uses pipelines for all operations, including arithmetic. Raw operators would bypass the pipeline execution model (trigger → queue → wrapper → body), break the metadata tree (`%-` tracking), and conflict with existing operator meanings (`*` is a collector prefix, `-` has no defined role).
+**Statement:** Raw arithmetic tokens (`+`, `-`, `*`, `/`, `%`) are not valid operators in Aljam3 Code. Arithmetic is performed through `-Math.*` pglib pipelines. The compiler rejects arithmetic tokens and suggests the equivalent pglib pipeline.
+**Rationale:** Aljam3 Code uses pipelines for all operations, including arithmetic. Raw operators would bypass the pipeline execution model (trigger → queue → wrapper → body), break the metadata tree (`%-` tracking), and conflict with existing operator meanings (`*` is a collector prefix, `-` has no defined role).
 **Detection:** The parser encounters an arithmetic token in an expression context (not inside a string literal). PGE04010 fires with a suggestion message pointing to the `-Math.*` equivalent.
 
 **Suggestions:**
@@ -30,7 +30,7 @@ severity: error
 **See also:** [-Math pglib](../../../user/pglib/pipelines/Math.md)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ arithmetic through pglib pipelines
 [-] -Math.Add
    (-) << $price
@@ -44,12 +44,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE04010 — raw arithmetic operator
 [-] $total << $price + $tax                 [ ] ✗ PGE04010 — use -Math.Add
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04010 — raw arithmetic operator
 [-] $result << $a * $b                      [ ] ✗ PGE04010 — use -Math.Multiply
 ```

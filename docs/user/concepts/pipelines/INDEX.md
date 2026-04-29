@@ -62,7 +62,7 @@ A marker declaration on `{-}` specifies the pipeline's invocation context — wh
 
 **Examples:**
 
-```polyglot
+```aljam3
 { } Default — same as {-}[exe]
 {-} -ProcessData
    [T] -T.Call
@@ -78,7 +78,7 @@ A marker declaration on `{-}` specifies the pipeline's invocation context — wh
    [T] -T.Call
    (-) <message#string
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Append"{$logPath}"
       (-) <text << $message
@@ -89,15 +89,15 @@ See [[technical/ebnf/09-definition-blocks#9.3|EBNF §9.3]] for the formal `marke
 ## Native vs Derived
 
 <!-- @c:pglib/types/NativeKind -->
-Every pipeline definition is either **native** or **derived**. The distinction determines whether execution is handled by the host language or by a Polyglot body.
+Every pipeline definition is either **native** or **derived**. The distinction determines whether execution is handled by the host language or by a Aljam3 body.
 
 | Property | Native `{N}` | Derived `{-}` |
 |----------|-------------|---------------|
 | Block type | `{N}` | `{-}` |
-| Execution body | None — `[%]` metadata + `(-)` IO only | Full Polyglot body (`[T]`, `[Q]`, `[W]`, `[-]`/`[=]`/`[b]`) |
+| Execution body | None — `[%]` metadata + `(-)` IO only | Full Aljam3 body (`[T]`, `[Q]`, `[W]`, `[-]`/`[=]`/`[b]`) |
 | Metadata scope | `%Native.*` (implicit) — `.Kind`, `.<Language>` | `%Pipeline.*` (implicit) — `.description`, `.version`, etc. |
-| Where defined | pglib `.pg` files only | pglib or user `.pg` files |
-| Implementation | Host language (e.g., Rust) | Polyglot pipelines |
+| Where defined | pglib `.aj3` files only | pglib or user `.aj3` files |
+| Implementation | Host language (e.g., Rust) | Aljam3 pipelines |
 | User-extendable | No — compiler-controlled | Yes |
 
 **Mutual exclusion:** `{N}` and `{-}` are separate block types. A `{N}` definition cannot contain `[T]`, `[Q]`, `[W]`, or execution markers. A `{-}` definition cannot contain `%Native.*` metadata. Violating this is a compile error (PGE01028).
@@ -116,7 +116,7 @@ Every pipeline definition is either **native** or **derived**. The distinction d
 
 ### `#NativeKind` Enum
 
-```polyglot
+```aljam3
 {#} #NativeKind
    .Trigger
    .Queue
@@ -129,13 +129,13 @@ Every pipeline definition is either **native** or **derived**. The distinction d
 |------|-------------|---------|
 | `.Trigger` | Fires pipeline execution | `-T.Call`, `-T.Folder.NewFiles`, `-T.Webhook` |
 | `.Queue` | Manages job scheduling | `-Q.Default`, `-Q.Pause.Soft`, `-Q.Kill.Graceful` |
-| `.Wrapper` | Setup/cleanup around execution | `-W.Polyglot`, `-W.DB.Connection`, `-W.Env.Python:3:14` |
+| `.Wrapper` | Setup/cleanup around execution | `-W.Aljam3`, `-W.DB.Connection`, `-W.Env.Python:3:14` |
 | `.Execution` | Performs actual work (IO, compute) | `-File.Text.Read`, `-Math.Add`, `-DB.Query` |
 | `.Intrinsic` | Compiler-internal operations | `-#.JSON.Parse`, `-DT.Now`, `-#.Validate` |
 
 ### Configuration
 
-The Polyglot service configuration file selects which host language implements each native operation using **subsystem defaults with per-operation overrides**:
+The Aljam3 service configuration file selects which host language implements each native operation using **subsystem defaults with per-operation overrides**:
 
 ```yaml
 native:
@@ -153,8 +153,8 @@ All `{N}` definitions must include a `.<Language>` binding for the language reso
 
 ### Examples
 
-```polyglot
-{ } Native definition — compiler primitive, no Polyglot body
+```aljam3
+{ } Native definition — compiler primitive, no Aljam3 body
 {N} -File.Text.Read
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileTextRead"
@@ -171,13 +171,13 @@ All `{N}` definitions must include a `.<Language>` binding for the language reso
    [%] .description << "Pipeline invoked by another pipeline"
    (-) >IsTriggered#bool
 
-{ } Derived pipeline — full Polyglot body, uses native definitions
+{ } Derived pipeline — full Aljam3 body, uses native definitions
 {-} -ProcessData
    [T] -T.Call
    (-) <input#string
    (-) >result#string
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Read
       (-) <path << $input
@@ -226,7 +226,7 @@ Inside a `{-}` execution body, each `[-]`, `[=]`, and `[b]` line creates a job. 
 
 **Parallel jobs require collectors.** After `[=]` parallel jobs, a `[*]` collector is mandatory — failing to collect a parallel job's output is a compile error. Collectors specify which parallel outputs they collect by variable (not by position), enabling partial collection:
 
-```polyglot
+```aljam3
 [-] -JobA
    (-) >result >> $a
 

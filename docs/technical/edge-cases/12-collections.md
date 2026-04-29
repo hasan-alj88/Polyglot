@@ -15,7 +15,7 @@ updated: 2026-04-17
 
 **What it tests:** `[-]` = sequential mini-pipelines, `[=]` = parallel. See [[concepts/collections/expand#Expand Operators]].
 
-```polyglot
+```aljam3
 [ ] Sequential — order matters
 [-] =ForEach.Array
    (=) <Array << $orderedItems
@@ -33,7 +33,7 @@ updated: 2026-04-17
 
 **What it tests:** Enumerate provides both `>index` and `>item`.
 
-```polyglot
+```aljam3
 [-] =ForEach.Array.Enumerate
    (=) <Array << $items
    (=) >index >> $idx
@@ -46,7 +46,7 @@ updated: 2026-04-17
 
 **What it tests:** Serial iteration with `>key` and `>item`.
 
-```polyglot
+```aljam3
 [-] =ForEach.Serial
    (=) <Serial << $config
    (=) >key >> $k
@@ -59,7 +59,7 @@ updated: 2026-04-17
 
 **What it tests:** The `.=` level iteration marker on the input path — analogous to `.*` wildcard, `.=` means "expand siblings at this level." See [[concepts/collections/expand#ForEach.Level]].
 
-```polyglot
+```aljam3
 [-] =ForEach.Level
    (=) <level << #UserData.Preferences.=
    (=) >key >> $prefKey
@@ -73,7 +73,7 @@ updated: 2026-04-17
 
 **What it tests:** `[-]`/`[=]` execution marker for invocation, `(*)` for IO — consistent with expand (`[-]`/`[=]` + `(=)`). See [[io#Collection Operators]].
 
-```polyglot
+```aljam3
 [-] *Into.Array
    (*) <item << $value
    (*) >Array >> $collected
@@ -85,7 +85,7 @@ updated: 2026-04-17
 
 **What it tests:** `>> >pipelineOutput` syntax. See [[io#Direct Output Port Writing]].
 
-```polyglot
+```aljam3
 [-] *Agg.Count
    (*) <item << $service
    (*) >count >> >successCount
@@ -96,7 +96,7 @@ updated: 2026-04-17
 
 **What it tests:** Two `*` collectors operating within one `=ForEach` body.
 
-```polyglot
+```aljam3
 [=] =ForEach.Array
    (=) <Array << $items
    (=) >item >> $item
@@ -114,7 +114,7 @@ updated: 2026-04-17
 
 **What it tests:** Every aggregate collector variant.
 
-```polyglot
+```aljam3
 [-] *Agg.Sum
    (*) <number << $n
    (*) >sum >> $s
@@ -146,7 +146,7 @@ updated: 2026-04-17
 
 **What it tests:** `*All` with `(*) <<`-only lines outside expand scope. Variables remain accessible after.
 
-```polyglot
+```aljam3
 [=] -Fetch.A
    (-) <id << $id
    (-) >resultA >> $resultA
@@ -171,7 +171,7 @@ updated: 2026-04-17
 
 **What it tests:** `*First` cancels losing `(*) <<` inputs; only `(*) >>` output survives. All `(*) <<` inputs same type.
 
-```polyglot
+```aljam3
 [=] -Search.A
    (-) <q << $query
    (-) >result >> $rA
@@ -194,7 +194,7 @@ updated: 2026-04-17
 
 **What it tests:** `*Nth` takes `<n#int` position parameter. `*First`/`*Second` are sugar for n=1/n=2.
 
-```polyglot
+```aljam3
 [=] -Search.A
    (-) <q << $query
    (-) >result >> $rA
@@ -219,7 +219,7 @@ updated: 2026-04-17
 
 **What it tests:** `[*] *All` used twice in a pipeline body to form sequential parallel waves.
 
-```polyglot
+```aljam3
 [=] -Fetch.Profile
    (-) <id << $id
    (-) >profile >> $profile
@@ -253,7 +253,7 @@ updated: 2026-04-17
 
 **What it tests:** Contrast: `(*) <<` alone on `*All` leaves vars accessible; `(*) <<`+`(*) >>` on `*First` cancels `(*) <<` vars.
 
-```polyglot
+```aljam3
 [ ] *All: (*) << only — $a and $b accessible after
 [*] *All
    (*) << $a
@@ -277,7 +277,7 @@ updated: 2026-04-17
 **EBNF ref:** `exec_line` includes `collect_line` at any scope
 **What it tests:** `*Into.Array` at pipeline top level with no `=ForEach` or `[=]` context. PGE03010 fires. See [[concepts/collections/expand|expand]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03010 — collector has no parallel source
 [-] *Into.Array
    (*) <item << $someValue
@@ -289,7 +289,7 @@ updated: 2026-04-17
 **EBNF ref:** `collect_line ::= ( "[-]" | "[=]" ) collect_invocation`
 **What it tests:** `*Into.Array` with `[=]` marker — PGE01024 fires because `*Into.Array` only declares `[-]` compatibility. See [[concepts/collections/expand|expand]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01024 — *Into.Array is not [=]-compatible
 [=] *Into.Array
    (*) <item << $val
@@ -301,7 +301,7 @@ updated: 2026-04-17
 **EBNF ref:** `(=)` is a block element for expand IO
 **What it tests:** Orphaned `(=)` markers with no enclosing `=ForEach`. PGE03011 fires.
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03011 — (=) outside expand scope
 (=) <Array << $items
 (=) >item >> $item
@@ -312,7 +312,7 @@ updated: 2026-04-17
 **EBNF ref:** `collect_line ::= ( "[-]" | "[=]" ) collect_invocation`
 **What it tests:** `[=]` and `[b]` must pair with the next `[=]` or `[b]` sibling. A `[=]` line whose next sibling is not `[=]`/`[b]` fires PGE01040. See also EC-12.15 for PGE01024 (marker compatibility).
 
-```polyglot
+```aljam3
 [ ] ✓ two [=] collector siblings — parallel pair
 [=] =ForEach.Array
    (=) <Array << $items
@@ -327,7 +327,7 @@ updated: 2026-04-17
       (*) >sum >> >total
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01040 — [=] collector followed by [-] sibling
 [=] =ForEach.Array
    (=) <Array << $items
@@ -342,7 +342,7 @@ updated: 2026-04-17
       (*) >sum >> >total
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [-] collectors — both sequential, no parallel claim
 [=] =ForEach.Array
    (=) <Array << $items
@@ -357,7 +357,7 @@ updated: 2026-04-17
       (*) >sum >> >total
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01040 — [=] pipeline followed by [*] collector
 [=] -Fetch.A
    (-) <id << $id
@@ -376,7 +376,7 @@ updated: 2026-04-17
 
 **Decision:** Accept — existing type system covers this via schema-typed inputs and desugar + IO wiring validation.
 
-```polyglot
+```aljam3
 [ ] ✓ Compatible — Serial yields >key + >value, matches Into.Map collector
 [-] =*Into.Map
    (=) <Serial << $data
@@ -388,7 +388,7 @@ updated: 2026-04-17
    (*) >sum >> $total
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04001 — Array yields >item (single element), Into.Map needs >key + >value
 [ ] Compiler desugars to =ForEach.Array + *Into.Map, IO wiring fails
 [-] =*Into.Map

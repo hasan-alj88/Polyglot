@@ -15,13 +15,13 @@ severity: error
 <!-- @u:syntax/types -->
 
 **Statement:** A `{_}` permission object's `[.]` field lines must use known field names. The `.category` field must be one of the 8 predefined categories, and the `.capability` field must be a valid capability for that category (see [[permissions#Per-Category Capability Enums]]). If a field references a category or capability not in the predefined set, PGE10003 fires.
-**Rationale:** Permission categories are Polyglot-defined, not user-extensible. An unknown category would create a permission that no IO operation can consume — it cannot grant or restrict anything. Catching this at compile time prevents silent misconfiguration where a developer believes they have granted a capability that does not exist.
+**Rationale:** Permission categories are Aljam3-defined, not user-extensible. An unknown category would create a permission that no IO operation can consume — it cannot grant or restrict anything. Catching this at compile time prevents silent misconfiguration where a developer believes they have granted a capability that does not exist.
 **Detection:** The compiler parses each `[.] .category` and `[.] .capability` field in `{_}` blocks and checks against the known set: File (Read, Write, Execute, Delete, Create), Web (Request, Socket, Listen), Database (Connect, Read, Write), System (Env, Process, Signal, Shell), Crypto (Key, Sign, Encrypt), IPC (Send, Receive, Subscribe), Device (Camera, Microphone, Location, Bluetooth), Memory (Allocate, Shared). If the value is not in this set, PGE10003 fires.
 
 **See also:** PGE10004 (undeclared permission — using IO without permission), PGE10006 (duplicate permission), [[permissions#Per-Category Capability Enums]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all permission categories and capabilities are known
 {_} _LogAccess
    [.] .intent << #Ceiling
@@ -44,7 +44,7 @@ severity: error
    (-) _AppGrant
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Read
       (-) <path << _AppGrant
@@ -52,7 +52,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10003 — unknown category "Network"
 {_} _BadCategory
    [.] .intent << #Grant
@@ -61,7 +61,7 @@ severity: error
    [.] .scope "*"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10003 — unknown capability "Rename" under known category File
 {_} _BadCapability
    [.] .intent << #Grant
@@ -71,7 +71,7 @@ severity: error
    [.] .path "/tmp/*"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10003 — unknown capability "Delete" under known category Web
 {_} _BadWebCap
    [.] .intent << #Grant

@@ -20,12 +20,12 @@ severity: warning
 **See also:** PGE02003 (final is push-once — covers push-once semantics), PGE01010 (pipeline IO name mismatch — covers call-site wiring), PGW02002 (unused variable — analogous for `$` variables), PGE08009 (uncaptured required output at call site — the caller-side counterpart), PGW08003 (uncaptured output with default/fallback — caller-side warning counterpart)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all declared outputs are pushed
 {-} -Transform
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >result#string
    (-) >count#int
@@ -37,12 +37,12 @@ severity: warning
    [-] >count << 1
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ output pushed in all conditional branches
 {-} -Route
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <status#int
    (-) >message#string
    [ ]
@@ -54,12 +54,12 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW02003 — >forgotten declared but never pushed
 {-} -Incomplete
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >result#string
    (-) >forgotten#string               [ ] ⚠ PGW02003 — never pushed to
@@ -67,12 +67,12 @@ severity: warning
    [-] >result << $input
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW02003 — >count only pushed in one branch
 {-} -PartialPush
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <flag#bool
    (-) >result#string
    (-) >count#int                       [ ] ⚠ PGW02003 — not pushed in *? branch
@@ -86,12 +86,12 @@ severity: warning
          [ ] >count never pushed here
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW02003 — >debug declared but no code references it
 {-} -Leftover
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >out#string
    (-) >debug#string                    [ ] ⚠ PGW02003 — >debug never pushed to

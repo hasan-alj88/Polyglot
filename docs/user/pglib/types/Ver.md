@@ -18,7 +18,7 @@ See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$Ver` c
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Ver
    [%] .description << "Semantic version (SemVer 2.0)"
    [#] ##Scalar

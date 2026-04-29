@@ -1,14 +1,14 @@
-# Polyglot Syntax Highlighting Implementation - Summary
+# Aljam3 Syntax Highlighting Implementation - Summary
 
 **Date:** 2025-12-03
-**Task:** Create TextMate grammar and VSCode extension for Polyglot syntax highlighting
+**Task:** Create TextMate grammar and VSCode extension for Aljam3 syntax highlighting
 **Status:** ✅ **COMPLETE**
 
 ---
 
 ## Executive Summary
 
-Successfully created a comprehensive syntax highlighting system for the Polyglot automation language, including:
+Successfully created a comprehensive syntax highlighting system for the Aljam3 automation language, including:
 
 - **TextMate Grammar**: Complete language definition with all syntax elements
 - **VSCode Extension**: Full-featured extension with snippets and markdown injection
@@ -21,7 +21,7 @@ Successfully created a comprehensive syntax highlighting system for the Polyglot
 
 ### 1. TextMate Grammar
 
-**File:** `polyglot.tmLanguage.json`
+**File:** `aljam3.tmLanguage.json`
 
 **Coverage:**
 - ✅ All 30+ block markers (registry, data-flow, execution, control, scope, logical, special)
@@ -36,32 +36,32 @@ Successfully created a comprehensive syntax highlighting system for the Polyglot
 
 **Scope Categories Defined:**
 ```
-keyword.control.registry.polyglot       - [@] [|] [#] [!] [M]
-keyword.control.dataflow.polyglot       - [i] [o] [<] [>]
-keyword.control.execution.polyglot      - [r] [p] [b] [s] [Y]
-keyword.control.flow.polyglot           - [?] [t] [Q] [W]
-keyword.control.scope.polyglot          - [~] [\] [/] [{] [}]
-keyword.operator.logical.polyglot       - [&] [+] [-] [^] [.]
-keyword.control.special.polyglot        - [X] [A] [*]
-keyword.operator.dataflow.*.polyglot    - << >> <~
-keyword.operator.comparison.polyglot    - =? >? <? >=? <=? !?
-keyword.operator.range.polyglot         - ?[ ?(
-keyword.operator.collection.polyglot    - ~* ~Y.*
-entity.name.function.pipeline.polyglot  - |Pipeline
-entity.name.type.enumeration.polyglot   - #Enum
-entity.name.type.error.polyglot         - !Error
-variable.other.polyglot                 - .variable
-entity.name.package.polyglot            - @package
-storage.type.namespace.polyglot         - pg\ rs\ py\ js\ go\
-storage.type.primitive.polyglot         - int float string bool path url datetime
-storage.type.collection.polyglot        - array map set
-storage.type.wrapper.polyglot           - RT.Python RT.Rust RT.Node RT.Go
-string.quoted.double.polyglot           - "text"
-string.quoted.datetime.polyglot         - DT"datetime"
-constant.numeric.*.polyglot             - 123 45.67
-constant.language.*.polyglot            - #Boolean.True #None #PgVar.States.Ready
-constant.language.error.polyglot        - !No.Input !No.Output
-comment.line.double-slash.polyglot      - // comment
+keyword.control.registry.aljam3       - [@] [|] [#] [!] [M]
+keyword.control.dataflow.aljam3       - [i] [o] [<] [>]
+keyword.control.execution.aljam3      - [r] [p] [b] [s] [Y]
+keyword.control.flow.aljam3           - [?] [t] [Q] [W]
+keyword.control.scope.aljam3          - [~] [\] [/] [{] [}]
+keyword.operator.logical.aljam3       - [&] [+] [-] [^] [.]
+keyword.control.special.aljam3        - [X] [A] [*]
+keyword.operator.dataflow.*.aljam3    - << >> <~
+keyword.operator.comparison.aljam3    - =? >? <? >=? <=? !?
+keyword.operator.range.aljam3         - ?[ ?(
+keyword.operator.collection.aljam3    - ~* ~Y.*
+entity.name.function.pipeline.aljam3  - |Pipeline
+entity.name.type.enumeration.aljam3   - #Enum
+entity.name.type.error.aljam3         - !Error
+variable.other.aljam3                 - .variable
+entity.name.package.aljam3            - @package
+storage.type.namespace.aljam3         - pg\ rs\ py\ js\ go\
+storage.type.primitive.aljam3         - int float string bool path url datetime
+storage.type.collection.aljam3        - array map set
+storage.type.wrapper.aljam3           - RT.Python RT.Rust RT.Node RT.Go
+string.quoted.double.aljam3           - "text"
+string.quoted.datetime.aljam3         - DT"datetime"
+constant.numeric.*.aljam3             - 123 45.67
+constant.language.*.aljam3            - #Boolean.True #None #PgVar.States.Ready
+constant.language.error.aljam3        - !No.Input !No.Output
+comment.line.double-slash.aljam3      - // comment
 ```
 
 ### 2. VSCode Extension
@@ -76,15 +76,15 @@ vscode-extension/
 ├── install.sh                                     # Quick install script
 ├── INSTALL.md                                     # Installation guide
 ├── syntaxes/
-│   ├── polyglot.tmLanguage.json                  # Main grammar
-│   └── polyglot.markdown.injection.json          # Markdown code block support
+│   ├── aljam3.tmLanguage.json                  # Main grammar
+│   └── aljam3.markdown.injection.json          # Markdown code block support
 └── snippets/
-    └── polyglot.json                             # Code snippets
+    └── aljam3.json                             # Code snippets
 ```
 
 **Features:**
-- ✅ Syntax highlighting for `.pg` files
-- ✅ Syntax highlighting in markdown fenced code blocks (```polyglot and ```pg)
+- ✅ Syntax highlighting for `.aj3` files
+- ✅ Syntax highlighting in markdown fenced code blocks (```aljam3 and ```pg)
 - ✅ 18 code snippets (pipeline, error-def, exec-seq, exec-parallel, etc.)
 - ✅ Auto-closing pairs for brackets and quotes
 - ✅ Comment toggling support
@@ -116,7 +116,7 @@ vscode-extension/
 **Directory:** `test-samples/`
 
 **Files:**
-- `basic-pipeline.pg`: Comprehensive test file with all syntax elements (350+ lines)
+- `basic-pipeline.aj3`: Comprehensive test file with all syntax elements (350+ lines)
   - Registry definitions (packages, pipelines, enums, errors, macros)
   - All block marker types
   - All operators
@@ -131,7 +131,7 @@ vscode-extension/
 
 - `markdown-test.md`: Markdown file testing code block highlighting
   - Multiple code blocks with different syntax elements
-  - Tests both `polyglot` and `pg` fence identifiers
+  - Tests both `aljam3` and `pg` fence identifiers
   - Demonstrates all major language features
 
 ### 4. Documentation
@@ -175,7 +175,7 @@ cd syntax-highlighting/vscode-extension
 ### Quick Install (Recommended)
 
 ```bash
-cd /home/hhj/RustroverProjects/Polyglot/syntax-highlighting/vscode-extension
+cd /home/hhj/RustroverProjects/Aljam3/syntax-highlighting/vscode-extension
 ./install.sh
 ```
 
@@ -184,7 +184,7 @@ Then reload VSCode: `Ctrl+Shift+P` → `Developer: Reload Window`
 ### Manual Install
 
 ```bash
-cp -r vscode-extension ~/.vscode/extensions/polyglot-language-support-0.1.0
+cp -r vscode-extension ~/.vscode/extensions/aljam3-language-support-0.1.0
 ```
 
 Then reload VSCode.
@@ -195,7 +195,7 @@ Then reload VSCode.
 cd vscode-extension
 npm install -g @vscode/vsce
 vsce package
-# Creates: polyglot-language-support-0.1.0.vsix
+# Creates: aljam3-language-support-0.1.0.vsix
 # Install via VSCode: Extensions → ... → Install from VSIX
 ```
 
@@ -223,7 +223,7 @@ vsce package
 
 ### ✅ Test Files
 
-- `basic-pipeline.pg`: Comprehensive syntax coverage
+- `basic-pipeline.aj3`: Comprehensive syntax coverage
 - `markdown-test.md`: Fenced code block testing
 
 ---
@@ -232,7 +232,7 @@ vsce package
 
 ```
 syntax-highlighting/
-├── polyglot.tmLanguage.json                    # Core grammar (can be used standalone)
+├── aljam3.tmLanguage.json                    # Core grammar (can be used standalone)
 ├── README.md                                   # General documentation
 ├── SYNTAX-HIGHLIGHTING-SUMMARY.md              # This file
 ├── vscode-extension/                           # VSCode-specific extension
@@ -241,12 +241,12 @@ syntax-highlighting/
 │   ├── install.sh                             # Quick install script (executable)
 │   ├── INSTALL.md                             # Installation guide
 │   ├── syntaxes/
-│   │   ├── polyglot.tmLanguage.json          # Main grammar (copy)
-│   │   └── polyglot.markdown.injection.json  # Markdown support
+│   │   ├── aljam3.tmLanguage.json          # Main grammar (copy)
+│   │   └── aljam3.markdown.injection.json  # Markdown support
 │   └── snippets/
-│       └── polyglot.json                      # Code snippets
+│       └── aljam3.json                      # Code snippets
 └── test-samples/
-    ├── basic-pipeline.pg                      # Comprehensive test file
+    ├── basic-pipeline.aj3                      # Comprehensive test file
     └── markdown-test.md                       # Markdown test file
 ```
 
@@ -271,19 +271,19 @@ Follows standard TextMate conventions:
 
 Uses standard VSCode extension structure:
 - `package.json`: Defines language contribution point
-- `grammars`: Associates `.pg` files with TextMate grammar
+- `grammars`: Associates `.aj3` files with TextMate grammar
 - `embeddedLanguages`: Enables markdown injection
 - `injectTo`: Targets markdown fenced code blocks
 
 ### Markdown Code Block Support
 
 Works with both identifiers:
-- ` ```polyglot ` (full name)
+- ` ```aljam3 ` (full name)
 - ` ```pg ` (short form)
 
 Injection grammar pattern matches case-insensitively:
 ```regex
-(?i:(polyglot|pg)(\\s+[^`~]*)?$)
+(?i:(aljam3|pg)(\\s+[^`~]*)?$)
 ```
 
 ---
@@ -297,7 +297,7 @@ Users can customize colors via VSCode settings:
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
-        "scope": "keyword.control.registry.polyglot",
+        "scope": "keyword.control.registry.aljam3",
         "settings": {
           "foreground": "#C792EA",
           "fontStyle": "bold"
@@ -349,7 +349,7 @@ See `README.md` for complete color customization examples.
 ## Validation Checklist
 
 - [x] TextMate grammar follows standard structure
-- [x] All Polyglot syntax elements covered
+- [x] All Aljam3 syntax elements covered
 - [x] Scope names follow TextMate conventions
 - [x] VSCode extension package.json valid
 - [x] Language configuration complete
@@ -383,9 +383,9 @@ See `README.md` for complete color customization examples.
 
 **Status:** ✅ **COMPLETE & PRODUCTION READY**
 
-The Polyglot syntax highlighting system is fully functional and ready for use:
+The Aljam3 syntax highlighting system is fully functional and ready for use:
 
-1. **Complete Coverage**: All Polyglot syntax elements highlighted correctly
+1. **Complete Coverage**: All Aljam3 syntax elements highlighted correctly
 2. **VSCode Integration**: Full-featured extension with snippets and markdown support
 3. **Easy Installation**: Automated script for one-command setup
 4. **Comprehensive Testing**: Test files covering all language features
@@ -395,7 +395,7 @@ The Polyglot syntax highlighting system is fully functional and ready for use:
 **Ready for:**
 - Developer use in VSCode
 - Documentation authoring with syntax highlighting
-- Distribution to other Polyglot users
+- Distribution to other Aljam3 users
 - Publishing to VSCode Marketplace
 
 ---
@@ -413,7 +413,7 @@ To use the syntax highlighting immediately:
 
 ```bash
 # Navigate to extension directory
-cd /home/hhj/RustroverProjects/Polyglot/syntax-highlighting/vscode-extension
+cd /home/hhj/RustroverProjects/Aljam3/syntax-highlighting/vscode-extension
 
 # Run install script
 ./install.sh
@@ -421,10 +421,10 @@ cd /home/hhj/RustroverProjects/Polyglot/syntax-highlighting/vscode-extension
 # In VSCode: Ctrl+Shift+P → "Developer: Reload Window"
 
 # Open test file
-code ../test-samples/basic-pipeline.pg
+code ../test-samples/basic-pipeline.aj3
 
 # Or test markdown highlighting
 code ../test-samples/markdown-test.md
 ```
 
-Enjoy syntax-highlighted Polyglot code! 🎨
+Enjoy syntax-highlighted Aljam3 code! 🎨

@@ -13,7 +13,7 @@ Call a named function in inline foreign code.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -RT.<Lang>.Function.Inline
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RtFunctionInline"
@@ -50,7 +50,7 @@ The compiler validates that the `<func` name exists as a function definition in 
 
 ## Example
 
-```polyglot
+```aljam3
 {_} _RuntimeCeiling
    [.] .intent << #Ceiling
    [.] .System.Process "*"

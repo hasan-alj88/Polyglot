@@ -39,7 +39,7 @@ marker_type     ::= "r" | "p" | "b" ;
 
 **Exception branch rules:**
 - `%_` uses `permission_path` — `:` for named `{_}` object, then `.` fixed fields. No `:{instance}` level (permissions are compile-time).
-- `%!` uses `error_path` — `.` for Polyglot-defined namespaces and leaves. `.Error` children use `:` (user-extensible).
+- `%!` uses `error_path` — `.` for Aljam3-defined namespaces and leaves. `.Error` children use `:` (user-extensible).
 - `%@` uses `package_path` — `::` separates registry+ID from package name. `::` is treated as `:` in the tree.
 
 ## Shorthand in User Code

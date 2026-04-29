@@ -11,7 +11,7 @@ Iterates over each row in CSV text, producing a mini-pipeline per row. The first
 
 ## Syntax
 
-```polyglot
+```aljam3
 [=] =ForEach.CSV.Rows
    (=) <csv << $csvText
    (=) <delimiter << ","

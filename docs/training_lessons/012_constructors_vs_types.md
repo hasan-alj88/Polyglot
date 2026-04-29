@@ -5,18 +5,18 @@
 
 ## Lesson Summary
 
-In Polyglot, type definitions and constraints use the `#` prefix, while constructors for initializing values use the `$` prefix.
+In Aljam3, type definitions and constraints use the `#` prefix, while constructors for initializing values use the `$` prefix.
 
 ### Correct Usage
 When providing a default or fallback value, use the constructor format `$Name"Value"`:
-```polyglot
+```aljam3
    (-) >matrix >> $southTemp#array:float:3D
       (>) >! $Array.Float:3D"Empty"
 ```
 
 ### Incorrect Usage
 Using `#` when attempting to construct a value is invalid:
-```polyglot
+```aljam3
    (-) >matrix >> $southTemp#array:float:3D
       (>) >! #Array.Float:3D"Empty"
 ```

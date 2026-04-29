@@ -18,7 +18,7 @@ See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$Color`
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Color
    [%] .description << "Color value (RGBA 0-255)"
    [#] ##Scalar

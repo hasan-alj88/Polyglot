@@ -1,6 +1,6 @@
 ---
 user-story: "US001-Lexer-Line-Parsing"
-github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/365"
+github-issue-link: "https://github.com/hasan-alj88/Aljam3/issues/365"
 status: "done"
 assignee: "@developer"
 ---
@@ -9,7 +9,7 @@ assignee: "@developer"
 ## Instructions
 1. Process the isolated `ExpressionToken` emitted from the line tokenizer.
 2. Scan the expression string to identify the expected sub-tokens (e.g., variables, types, literals, operators).
-3. Utilize the known Polyglot object prefixes to rapidly identify and classify token types accurately without arbitrary guessing.
+3. Utilize the known Aljam3 object prefixes to rapidly identify and classify token types accurately without arbitrary guessing.
 4. Emit these structured sub-tokens to the final Token Stream, ensuring each retains precise line and column location metadata.
 
 ## Token List

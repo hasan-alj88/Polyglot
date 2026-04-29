@@ -14,7 +14,7 @@ metadata_definition: "%definition.##:Nullable"
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Nullable
    (#) <#ValueType
    [#] %##Active << #ActiveKind.One
@@ -56,7 +56,7 @@ metadata_definition: "%definition.##:Nullable"
 
 ## Usage
 
-```polyglot
+```aljam3
 {#} #MaybeInt
    [#] ##Nullable
       (#) <#ValueType << #Int

@@ -15,7 +15,7 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #PermissionIntent
    [%] .description << "Permission object intent classifier"
    [%] .version << "1.0.0"

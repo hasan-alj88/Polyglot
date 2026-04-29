@@ -9,15 +9,15 @@ metadata_instance: "%-:RT.<Lang>.Bind.File:N"
 
 # -RT.\<Lang\>.Bind.File
 
-Native code imports the polyglot lib and calls `pull()`/`push()` to interact with Polyglot IO ports. File variant.
+Native code imports the aljam3 lib and calls `pull()`/`push()` to interact with Aljam3 IO ports. File variant.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -RT.<Lang>.Bind.File
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RtBindFile"
-   [%] .description << "Native code imports polyglot lib and calls pull()/push(). File variant."
+   [%] .description << "Native code imports aljam3 lib and calls pull()/push(). File variant."
    (-) <env#<Lang>Env
    (-) >output#Code:<Lang>.Output
    (-) <file#path
@@ -38,7 +38,7 @@ Native code imports the polyglot lib and calls `pull()`/`push()` to interact wit
 
 ## Example
 
-```polyglot
+```aljam3
 [-] -RT.Python.Bind.File
    (-) <env#PyEnv << $pyenv
    (-) >output#Code:Python.Output >> >fileResult

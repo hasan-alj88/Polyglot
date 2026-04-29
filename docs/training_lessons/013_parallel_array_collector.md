@@ -10,7 +10,7 @@ If the objective is to collect variables generated from parallel actions and sto
 This avoids needing a separate array declaration and manual assignment.
 
 ### Correct Usage
-```polyglot
+```aljam3
    [*] *Into:Array
       (*) << $northTemp
       (*) << $southTemp

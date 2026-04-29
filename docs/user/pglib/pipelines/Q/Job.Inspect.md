@@ -13,7 +13,7 @@ Read a Job's runtime state without affecting it. Observation-only — no state c
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Inspect
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobInspect"
@@ -37,9 +37,9 @@ None.
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates inspect condition, sends command signal |
-| 2. NATS command | `polyglot.command.job.inspect.{jobId}` | `{jobId}` |
+| 2. NATS command | `aljam3.command.job.inspect.{jobId}` | `{jobId}` |
 | 3. QH executes | Queue Handler | Read-only: HGETALL job:{jobId} — no state mutation |
-| 4. State output | `polyglot.state.job.{jobId}.inspected` | Full job hash contents returned to TM |
+| 4. State output | `aljam3.state.job.{jobId}.inspected` | Full job hash contents returned to TM |
 
 No control signal to Runner. No Unix mechanism. Observation-only operation.
 

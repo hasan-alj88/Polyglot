@@ -2,7 +2,7 @@
 
 **Audience**: Internal Agile Personas (Product Owner, Scrum Master, Development Team)
 
-This directory serves as the memory and tracking backbone for Polyglot's AI Agile Team. It operates as the source of truth for planning, defining, and coordinating agile development work, which maps directly to corresponding GitHub Issues.
+This directory serves as the memory and tracking backbone for Aljam3's AI Agile Team. It operates as the source of truth for planning, defining, and coordinating agile development work, which maps directly to corresponding GitHub Issues.
 
 ## Hierarchical Structure
 

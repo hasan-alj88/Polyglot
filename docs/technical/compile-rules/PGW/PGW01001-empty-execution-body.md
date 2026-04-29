@@ -17,23 +17,23 @@ split_from: PGE01001
 **Detection:** After confirming all required sections are present, the compiler checks whether the execution body (between setup and cleanup) contains at least one `[-]` call.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ pipeline has execution body
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW01001 — empty execution body
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ⚠ PGW01001 — no [-] calls in body
 ```
 

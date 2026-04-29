@@ -13,7 +13,7 @@ Create a point-in-time state fork to disk. The original Job keeps running. The s
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Snapshot
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobSnapshot"
@@ -49,11 +49,11 @@ None.
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates snapshot condition, sends command signal |
-| 2. NATS command | `polyglot.command.job.snapshot.{jobId}` | `{jobId, targetQueue?}` |
+| 2. NATS command | `aljam3.command.job.snapshot.{jobId}` | `{jobId, targetQueue?}` |
 | 3. QH executes | Queue Handler | Generate forkId, enqueue fork in targetQueue, HSET fork job hash with forked_from |
-| 4. Control signal | `polyglot.queue.control.{jobId}.job.snapshot` | `{jobId, forkId}` → Runner |
+| 4. Control signal | `aljam3.queue.control.{jobId}.job.snapshot` | `{jobId, forkId}` → Runner |
 | 5. Unix mechanism | Runner | `criu dump --leave-running` (original continues, fork images saved to disk) |
-| 6. Runner ACK | `polyglot.runner.snapshot_completed.{jobId}` | `{jobId, forkId, images_dir}` → QH stores images_dir on fork job hash |
+| 6. Runner ACK | `aljam3.runner.snapshot_completed.{jobId}` | `{jobId, forkId, images_dir}` → QH stores images_dir on fork job hash |
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 

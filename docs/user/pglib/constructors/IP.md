@@ -15,7 +15,7 @@ The `$IP` constructor produces `#IP` values from IP address strings. The compile
 
 ### IPv4 Address
 
-```polyglot
+```aljam3
 {$} $IP"{addr}"
    ($) <addr.re << "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+"
    [$] #IP
@@ -28,7 +28,7 @@ Matches IPv4 addresses in dotted-decimal notation (e.g., `"192.168.1.1"`). The `
 
 ### IPv6 Address
 
-```polyglot
+```aljam3
 {$} $IP"{addr}"
    ($) <addr.re << "[0-9a-fA-F:.]+"
    [$] #IP
@@ -50,7 +50,7 @@ Resolution order: IPv4 first (more specific regex), IPv6 as fallback (broader ch
 
 ## Usage
 
-```polyglot
+```aljam3
 [ ] compile-time guaranteed — no error handling
 [-] $localhost4 << $IP"127.0.0.1"
 [-] $gateway << $IP"192.168.1.1"

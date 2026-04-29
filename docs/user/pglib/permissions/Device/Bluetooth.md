@@ -13,7 +13,7 @@ Capability-level generic permission for Bluetooth access. Sugar over [[INDEX|__D
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Device.Bluetooth
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for Bluetooth access. Sugar over [[INDEX|__D
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Device.Bluetooth
    (_) <scope << "ble"
 ```

@@ -29,9 +29,9 @@ updated: 2026-04-05
 
 ## 0. Object Type Hierarchy
 
-Polyglot has two base object types. All others are subtypes:
+Aljam3 has two base object types. All others are subtypes:
 
-```polyglot
+```aljam3
 {#} — Data definition (base)
  ├── {!} — Error definition (subtype of {#})
  └── {Q} #Name — Queue data definition (subtype of {#}, uses #Queue schema)
@@ -70,12 +70,12 @@ directive if desired.
 ## 1. Base Pipelines — Native Implementation
 
 Base pipelines are implemented in the compiler's native language (Rust). They are
-defined in pglib `.pg` files with full interface (IO, errors, metadata) but
+defined in pglib `.aj3` files with full interface (IO, errors, metadata) but
 **no execution body**. A `[%] .baseCode` metadata line links to the native code.
 
 ### `#BaseCode` Enum
 
-```polyglot
+```aljam3
 {#} #BaseCode
    [.] .Rust
       [.] .T
@@ -124,12 +124,12 @@ defined in pglib `.pg` files with full interface (IO, errors, metadata) but
          [.] .Kill
             [.] .Graceful
       [.] .W
-         [.] .Polyglot
+         [.] .Aljam3
 ```
 
 ### Configuration
 
-Polyglot config file selects the active base language:
+Aljam3 config file selects the active base language:
 
 ```yaml
 base: Rust
@@ -154,7 +154,7 @@ data alongside the fire signal.
 
 **Base triggers (bodyless):**
 
-```polyglot
+```aljam3
 {T} -T.Call
    [%] .baseCode << #BaseCode.Rust.T.Call
    (-) >IsTriggered#bool
@@ -179,7 +179,7 @@ data alongside the fire signal.
 
 **Derived triggers (composed or -RT.* bridge):**
 
-```polyglot
+```aljam3
 [ ] Composed from other triggers — AND semantics
 {T} -T.DailyWebhookReady
    [T] -T.Daily"3AM"
@@ -196,7 +196,7 @@ data alongside the fire signal.
 
 ### Execution Pipelines (base — bodyless)
 
-```polyglot
+```aljam3
 {-}[exe] -File.Text.Read
    [%] .baseCode << #BaseCode.Rust.File.Text.Read
    (-) <path#path
@@ -223,7 +223,7 @@ data alongside the fire signal.
 
 ### Queue Pipelines (base — bodyless)
 
-```polyglot
+```aljam3
 {Q} -Q.Default
    [%] .baseCode << #BaseCode.Rust.Q.Default
 
@@ -242,10 +242,10 @@ data alongside the fire signal.
 
 ### Wrapper Definitions
 
-```polyglot
+```aljam3
 [ ] Base — bodyless, no setup/cleanup
-{W} -W.Polyglot
-   [%] .baseCode << #BaseCode.Rust.W.Polyglot
+{W} -W.Aljam3
+   [%] .baseCode << #BaseCode.Rust.W.Aljam3
 
 [ ] Derived — has body (setup/cleanup), no .baseCode
 {W} -W.DB.Connection
@@ -280,7 +280,7 @@ data alongside the fire signal.
 
 ## 3. User Pipeline (typical — derived)
 
-```polyglot
+```aljam3
 {@} @Local:1000.InvoiceApp:v1.0.0
 
 {-}[exe] -Invoice.Save
@@ -317,7 +317,7 @@ data alongside the fire signal.
 | `{#}` | (none — data, not callable) | `{!}` inherits this |
 
 **VALID:**
-```polyglot
+```aljam3
 {-}[exe] -MyPipeline
 {T} -T.Custom
 {Q} -Q.Custom
@@ -325,7 +325,7 @@ data alongside the fire signal.
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01029 — {-} cannot declare [W] (use {W} instead)
 {-}[W] -Bad.Pipeline
 
@@ -348,17 +348,17 @@ data alongside the fire signal.
 ### Rule B: Required elements per marker group
 **PGE01005 (trigger), PGE01006 (queue), PGE01030 (wrapper)**
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01005 — {-}[exe] requires [T]
 {-}[exe] -Bad.NoTrigger
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
 
 [ ] ✗ PGE01006 — {-}[exe] requires [Q]
 {-}[exe] -Bad.NoQueue
    [T] -T.Call
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
 
 [ ] ✗ PGE01030 — {-}[exe] requires [W]
@@ -368,7 +368,7 @@ data alongside the fire signal.
    (-) <input#string
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ — {T} with only IO (simple trigger)
 {T} -T.Custom
    (-) <config#string
@@ -389,7 +389,7 @@ data alongside the fire signal.
       (-) >rows >> $rows
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ — {Q} needs only IO, no [T]/[W]/body
 {Q} -Q.Custom
    (-) <threshold#float
@@ -401,7 +401,7 @@ data alongside the fire signal.
 > **Design decision:** `{T}` triggers may have execution body, `[Q]`, and `[W]`. These are optional.
 > The only constraint unique to `{T}` is `>IsTriggered#bool` (PGE01032).
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01031 — {Q} cannot have [T]
 {Q} -Q.Bad
    [T] -T.Call                     [ ] ✗ — queue ops don't have triggers
@@ -425,13 +425,13 @@ data alongside the fire signal.
 
 [ ] ✗ PGE01031 — {Q} cannot have [W]
 {Q} -Q.Bad
-   [W] -W.Polyglot                 [ ] ✗ — queue ops don't use wrappers
+   [W] -W.Aljam3                 [ ] ✗ — queue ops don't use wrappers
 ```
 
 ### Rule D: Invocation must match declaration
 **PGE01024 — Incompatible Operation Marker** (existing)
 
-```polyglot
+```aljam3
 {T} -T.Custom
    (-) <config#string
    (-) >IsTriggered#bool
@@ -444,14 +444,14 @@ data alongside the fire signal.
 {-}[exe] -MyPipeline
    [T] -T.Custom
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -Worker
       (-) <data << $input
       (-) >result >> >output
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01024 — [-] invokes a {T}-declared pipeline
 [-] -T.Custom
 
@@ -465,12 +465,12 @@ data alongside the fire signal.
 ### Rule E: Implicit marker defaults
 **No PGE code — compiler behavior only** (decided in #108: no warning)
 
-```polyglot
+```aljam3
 [ ] ✓ — {-} without marker defaults to {-}[exe], no diagnostic emitted
 {-} -Implicit.Exe
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 
@@ -485,7 +485,7 @@ Note: `{-}` defaults to `{-}[exe]` — only execution gets the implicit default.
 
 ### Rule F: Base vs Derived pipeline constraints
 
-```polyglot
+```aljam3
 [ ] ✗ — base pipeline cannot have execution body
 {-}[exe] -Bad.BaseWithBody
    [%] .baseCode << #BaseCode.Rust.File.Text.Read
@@ -498,20 +498,20 @@ Note: `{-}` defaults to `{-}[exe]` — only execution gets the implicit default.
    [%] .baseCode << #BaseCode.Rust.DoNothing
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoSomething                [ ] ✗ — has body, cannot also be base
 
 [ ] ✗ — derived {W} wrapper cannot have .baseCode
 {W} -W.Bad.DerivedWithBase
-   [%] .baseCode << #BaseCode.Rust.W.Polyglot
+   [%] .baseCode << #BaseCode.Rust.W.Aljam3
    (-) <input;string
    [\]
       [-] -DoNothing               [ ] ✗ — has body, cannot also be base
 
 [ ] ✗ — base wrapper cannot have (-) IO/[\]/[/]
 {W} -W.Bad.BaseWithBody
-   [%] .baseCode << #BaseCode.Rust.W.Polyglot
+   [%] .baseCode << #BaseCode.Rust.W.Aljam3
    (-) <input;string               [ ] ✗ — base wrappers are bodyless
 
 [ ] ✗ — .baseCode references non-existent variant
@@ -531,7 +531,7 @@ Note: `{-}` defaults to `{-}[exe]` — only execution gets the implicit default.
 `>IsTriggered#bool` is mandatory. Additional outputs are allowed — they wire
 into the execution pipeline's inputs, supplying data alongside the fire signal.
 
-```polyglot
+```aljam3
 [ ] ✓ — {T} with mandatory output + additional data outputs
 {T} -T.Good.WithData
    (-) <config#string
@@ -541,7 +541,7 @@ into the execution pipeline's inputs, supplying data alongside the fire signal.
 [ ] ✓ — trigger with body still needs >IsTriggered#bool
 {T} -T.WithBody
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >IsTriggered#bool
    [ ]
    [-] -CheckCondition
@@ -561,7 +561,7 @@ into the execution pipeline's inputs, supplying data alongside the fire signal.
 
 ## 5. Foreign Language Execution — `-RT.*` and Language Wrappers
 
-Polyglot executes foreign code (Python, JS, Shell, etc.) through two mechanisms:
+Aljam3 executes foreign code (Python, JS, Shell, etc.) through two mechanisms:
 - **Language wrappers** (`{W} -W.<Language>.<Version>`) — set up the runtime environment
 - **Runtime pipelines** (`-RT.<Language>.*`) — execute code within that environment
 
@@ -569,7 +569,7 @@ Polyglot executes foreign code (Python, JS, Shell, etc.) through two mechanisms:
 
 Two standard patterns per language:
 
-```polyglot
+```aljam3
 [ ] Run an external script file
 {-}[exe] -RT.Python.Script
    [%] .baseCode << #BaseCode.Rust.RT.Python.Script
@@ -596,7 +596,7 @@ Same pattern for other languages: `-RT.JS.Script`, `-RT.Shell.Script`, etc.
 
 ### Language Wrapper Definition
 
-```polyglot
+```aljam3
 [ ] Base — sets up Python 3.19 environment
 {W} -W.Python.3.19
    (-) <dependency;path
@@ -615,7 +615,7 @@ Same pattern for other languages: `-RT.JS.Script`, `-RT.Shell.Script`, etc.
 
 For inline foreign code within a pipeline, `[C]` carries code lines passed to `-RT.*`:
 
-```polyglot
+```aljam3
 [-] -RT.Python.Script
    (-) <env << $env
    (-) <script <<
@@ -629,7 +629,7 @@ The `<script` input accepts either a `#path` to a file OR inline `[C]` lines.
 
 ### Hello World — Full Example
 
-```polyglot
+```aljam3
 {@} @Local:001.HelloWorld:v1.0.0
 
 [ ] Requirements file for Python dependencies
@@ -704,7 +704,7 @@ Three variants:
 
 ## 6. Resolved Questions
 
-1. **Zero-IO wrappers** — valid for both base and derived. `-W.Polyglot` (base) and user wrappers with no `(-)` IO are both allowed.
+1. **Zero-IO wrappers** — valid for both base and derived. `-W.Aljam3` (base) and user wrappers with no `(-)` IO are both allowed.
 2. **`#BaseCode` location** — lives in pglib.
 3. **`-RT.*`** — RT = RunTime. Bridges to other programming languages and shell/bash/cmd commands. Available for `{-}[exe]` pipelines.
 4. **`{Q} #QueueName`** — defines queue behavior and configuration data (how the queue behaves, its settings).

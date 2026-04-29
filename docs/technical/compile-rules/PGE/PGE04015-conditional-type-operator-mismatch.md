@@ -106,12 +106,12 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ range operator on int subject
 {-} -CheckScore
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <score#int
    (-) >label#string
    [ ]
@@ -124,12 +124,12 @@ severity: error
          [-] >label << "unknown"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ enum match on enum subject
 {-} -RouteByStatus
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <status#Status
    (-) >action#string
    [ ]
@@ -142,12 +142,12 @@ severity: error
          [-] >action << "error"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ cross-numeric — int subject with float bounds
 {-} -CheckTemp
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <temp#int
    (-) >alert#string
    [ ]
@@ -161,12 +161,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE04015 — range operator on string subject
 {-} -BadRange
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) >out#string
    [ ]
@@ -177,12 +177,12 @@ severity: error
          [-] >out << "other"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04015 — enum match on int subject
 {-} -BadEnum
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <count#int
    (-) >out#string
    [ ]
@@ -193,12 +193,12 @@ severity: error
          [-] >out << "no"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04015 — string equality on int subject
 {-} -BadEquality
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <count#int
    (-) >out#string
    [ ]

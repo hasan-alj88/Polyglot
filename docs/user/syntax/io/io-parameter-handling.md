@@ -15,14 +15,14 @@ The `(>)` (output) and `(<)` (input) block markers handle IO parameters scoped u
 
 ## Fallback Line Pattern
 
-```polyglot
+```aljam3
 (>) !> value_expr
 (>) !Error.Name> value_expr
 ```
 
 `(>)` lines are indented under the `(-)` output line they belong to — the output reference is implicit from indentation scope:
 
-```polyglot
+```aljam3
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out
@@ -49,7 +49,7 @@ When a fallback activates, the target variable becomes **Final** with the fallba
 
 In chain execution, fallback uses the `(-)` explicit form with step addressing (since `(>)`/`(<)` cannot carry step references):
 
-```polyglot
+```aljam3
 [-] -File.Text.Read->-Text.Parse.CSV
    (-) >0.path << $file
    (-) <1.rows >> $rows

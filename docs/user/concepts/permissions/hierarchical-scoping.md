@@ -13,7 +13,7 @@ Permissions operate at two levels: **package ceiling** and **pipeline grant**.
 
 Permission IO in `{@}` references `{_}` ceiling objects, setting the maximum permissions any definition in the package may request. The package ceiling **allows but does not grant** — no definition inherits permissions automatically. See [[packages#Permissions]] for the full ceiling syntax and compile rules (PGE10001, PGE10002).
 
-```polyglot
+```aljam3
 {_} _LogAnalyzerCeiling
    [.] .intent << #Ceiling
    [.] .category #File
@@ -29,7 +29,7 @@ Permission IO in `{@}` references `{_}` ceiling objects, setting the maximum per
 
 Each `{-}` pipeline must explicitly declare `{_}` grant objects via `(-)` IO for the permissions it needs. Grants can only **narrow** what the package ceiling allows — never widen. See [[concepts/pipelines/permissions#Permissions]] for placement within pipeline definitions.
 
-```polyglot
+```aljam3
 {_} _LogFileGrant
    [.] .intent << #Grant
    [.] .category #File
@@ -50,14 +50,14 @@ Each `{-}` pipeline must explicitly declare `{_}` grant objects via `(-)` IO for
    [ ] narrower than ceiling — granted
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    ...
 
 {-} -ComputeStats
    [ ] no permission IO — pure computation, zero IO
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    ...
 
 {-} -SneakyPipeline

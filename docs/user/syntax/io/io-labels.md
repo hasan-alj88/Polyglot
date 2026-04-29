@@ -19,7 +19,7 @@ status: draft
 | `<` | Input | `<array`, `<InputParameter1` |
 | `>` | Output | `>item`, `>OutputParameter1` |
 
-IO labels are serialized identifiers — like all Polyglot identifiers, they follow the `.` (fixed) and `:` (flexible) field separator rules. See [[identifiers#Serialization Rules]].
+IO labels are serialized identifiers — like all Aljam3 identifiers, they follow the `.` (fixed) and `:` (flexible) field separator rules. See [[identifiers#Serialization Rules]].
 
 ```mermaid
 flowchart LR
@@ -33,7 +33,7 @@ flowchart LR
 
 ## IO Line Pattern
 
-```polyglot
+```aljam3
 [operator-ref] <param << source
 [operator-ref] >param >> target
 ```

@@ -6,14 +6,14 @@ updated: 2026-03-31
 
 # Metadata
 
-<!-- @c:glossary:Polyglot Service -->
+<!-- @c:glossary:Aljam3 Service -->
 <!-- @c:data-is-trees -->
 <!-- @u:technical/spec/metadata-tree/INDEX -->
 <!-- @u:technical/edge-cases/15-metadata-blocks -->
 <!-- @u:blocks#Metadata -->
 <!-- @u:variable-lifecycle#Querying Lifecycle State -->
 
-Every Polyglot object carries metadata — descriptive fields you declare and runtime fields the system manages. You interact with metadata through two mechanisms:
+Every Aljam3 object carries metadata — descriptive fields you declare and runtime fields the system manages. You interact with metadata through two mechanisms:
 
 1. **`[%]` block element** — declare metadata inside `{#}`, `{-}`, or other `{x}` definitions
 2. **`%` accessor** — query runtime state from any expression context
@@ -46,7 +46,7 @@ Native definitions (`{N}`) use a separate metadata scope — `[%]` under `{N}` i
 
 ### Example
 
-```polyglot
+```aljam3
 {- -MyPipeline}
    [%] .description << "Processes incoming invoices"
    [%] .version << "2.1.0"
@@ -64,7 +64,7 @@ User-declared fields follow normal variable lifecycle rules ([[variable-lifecycl
 
 ## Querying Runtime State with `%`
 
-`live` fields are populated by the Polyglot runtime automatically. Users read them via `%` but cannot push into them (PGE02006). See [[syntax/types/hierarchy#Live Type Modifier]].
+`live` fields are populated by the Aljam3 runtime automatically. Users read them via `%` but cannot push into them (PGE02006). See [[syntax/types/hierarchy#Live Type Modifier]].
 
 ### Pipeline (`{-}`)
 
@@ -152,7 +152,7 @@ When you write `-MyPipeline%status`, the `:<current>` instance segment is implic
 
 When a pipeline has multiple concurrent instances, you can target a specific one by instance number:
 
-```polyglot
+```aljam3
 [-] $status << %-:MyPipeline:3.status
 ```
 

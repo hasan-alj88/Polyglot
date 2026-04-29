@@ -15,11 +15,11 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** `[!]` error handler blocks must be scoped directly under the specific `[-]` call that can produce the error. Each `[-]` call owns its own `[!]` blocks, indented under the call after any `(-)` IO lines. A `[!]` block that is not under a specific `[-]` call — such as at pipeline level or under a `[?]` conditional — is a compile error. Errors do not bubble up automatically to parent pipelines; each `[-]` must handle its own errors explicitly.
-**Rationale:** Scoping errors to their producing call makes error handling explicit and local. The caller always knows which operation failed and can respond specifically. Ambient or pipeline-level catch-all blocks would obscure the error source and encourage imprecise handling. This enforces Polyglot's compiler-driven error contract — every error must be traceable to its source and handled with intent, not swept into a catch-all that masks the real problem.
+**Rationale:** Scoping errors to their producing call makes error handling explicit and local. The caller always knows which operation failed and can respond specifically. Ambient or pipeline-level catch-all blocks would obscure the error source and encourage imprecise handling. This enforces Aljam3's compiler-driven error contract — every error must be traceable to its source and handled with intent, not swept into a catch-all that masks the real problem.
 **Detection:** The compiler checks the parent of every `[!]` block. If the immediate parent is not an `[-]` call (or a chain `[-]`), PGE07001 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ [!] scoped under the [-] that produces the error
 [-] -File.Text.Read
    (-) <path << $filepath
@@ -30,7 +30,7 @@ severity: error
       [-] $content << "Error: could not read file"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ chain errors scoped under the chain [-] — see PGE07002 for chain syntax
 [-] -File.Text.Read->-Text.Parse.CSV
    (-) >0.path#path << $path
@@ -45,12 +45,12 @@ severity: error
 - [PGE07002 — Chain Error Scoping](PGE07002-chain-error-scoping.md) — chain-specific error addressing and scope rules
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE07001 — [!] at pipeline level, not under [-]
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Read
       (-) <path << $filepath
@@ -59,7 +59,7 @@ severity: error
       [-] $content << "fallback"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07001 — [!] under [?] conditional, not under [-]
 [?] $mode
    [?] "read"

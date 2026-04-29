@@ -15,7 +15,7 @@ Capability enum for `#GPU` permission category. See [[concepts/permissions|Permi
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #GPUCapability
    [%] .description << "GPU resource limit capabilities"
    [%] .version << "1.0.0"

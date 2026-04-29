@@ -13,7 +13,7 @@ Formats a `#dt` using a pattern string (e.g. `"YYYY-MM-DD HH:mm:ss"`).
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Format
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtFormat"

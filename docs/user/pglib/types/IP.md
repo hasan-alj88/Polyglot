@@ -18,7 +18,7 @@ See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$IP` co
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #IP
    [%] .description << "IP address (IPv4 or IPv6)"
    [#] ##Scalar

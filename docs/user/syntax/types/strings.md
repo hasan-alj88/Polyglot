@@ -12,14 +12,14 @@ updated: 2026-03-30
 
 Strings support variable interpolation using `{$variable}` inside string literals. Any `$`-prefixed identifier inside `{...}` within a double-quoted string is expanded to its value:
 
-```polyglot
+```aljam3
 [-] $greeting#string << "Hello {$name}, you are {$age} years old"
 [-] $path#string << "/users/{$userId}/profile"
 ```
 
 Interpolation works with any `$`-prefixed variable, including flexible-field paths:
 
-```polyglot
+```aljam3
 [-] $msg#string << "User {$user:name} logged in from {$user:location}"
 ```
 
@@ -29,7 +29,7 @@ For literal curly braces inside strings, use `{{` and `}}`.
 
 `path` is a pglib struct with OS-specific subfields:
 
-```polyglot
+```aljam3
 {#} #path
    [.] .Unix#string
    [.] .Windows#string
@@ -39,13 +39,13 @@ For literal curly braces inside strings, use `{{` and `}}`.
 
 Assign both subfields so code works cross-platform:
 
-```polyglot
+```aljam3
 [-] $AppDir#path
    [.] .Unix << "/tmp/MyApp"
    [.] .Windows << "C:\MyApp"
 ```
 
-At runtime, the Polyglot runtime resolves `$AppDir` to the correct subfield based on the current OS (see `-Sys.OS` in [[pglib/INDEX|Standard Library]]).
+At runtime, the Aljam3 runtime resolves `$AppDir` to the correct subfield based on the current OS (see `-Sys.OS` in [[pglib/INDEX|Standard Library]]).
 
 Assigning only one subfield triggers a portability warning (PGW04001). If the missing subfield is for the current OS, the compiler raises an error (PGE04008).
 
@@ -55,14 +55,14 @@ A plain string cannot be assigned to a `#path` variable — `[-] $dir#path << "/
 
 `$Path"..."` is a constructor call ([[syntax/constructors]]) that creates a `#path` value from a string literal. On infrastructure lines (`[T]`/`[Q]`/`[W]`), the inline pipeline form `-Path"..."` remains valid — see [[pglib/pipelines/Path|-Path]].
 
-```polyglot
+```aljam3
 [-] $LogDir#path << $Path"/tmp/MyApp/logs"
 [-] $AppDir#path << $Path"{.}/MyApp"
 ```
 
 Both `/` and `\` are treated as path separators and normalized to the correct separator for the current OS. These two lines produce identical results:
 
-```polyglot
+```aljam3
 [-] $a#path << $Path"{.}\MyApp\logs"
 [-] $b#path << $Path"{.}/MyApp/logs"
 [ ] $a and $b resolve to the same path on any OS
@@ -74,7 +74,7 @@ Both `/` and `\` are treated as path separators and normalized to the correct se
 
 Define a root path, then build on it with interpolation:
 
-```polyglot
+```aljam3
 [-] $Root#path
    [.] .Unix << "/tmp"
    [.] .Windows << "C:"
@@ -96,7 +96,7 @@ These are equivalent to a built-in `$cfd` variable and are available in any path
 
 Trigger inline string arguments that contain file paths parse as path strings:
 
-```polyglot
+```aljam3
 [T] -T.Folder.NewFiles"/inbox/"
 ```
 

@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler scans the `[C]` block (or source file at runtime) for identifier tokens matching each `<Bind#Record` field name. Applies at compile time for `<code.inline` only; deferred to runtime for `<code.file`.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] field names match identifiers in [C] block
 [-] -Run.Python.Script
    (-) <env#PyEnv << $pyenv
@@ -30,7 +30,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] PGE01033 — .tgt_dir not found in code (typo for target_dir)
 [-] -Run.Python.Script
    (-) <env#PyEnv << $pyenv

@@ -12,7 +12,7 @@ updated: 2026-04-09
 
 ## Basic Types
 
-All Polyglot data is serialized strings. The type system is a schema layer on top of strings that constrains how each string is interpreted. Types are organized in layers — each built from the one below.
+All Aljam3 data is serialized strings. The type system is a schema layer on top of strings that constrains how each string is interpreted. Types are organized in layers — each built from the one below.
 
 ### Layer 0: RawString — The Compiler Intrinsic
 
@@ -25,7 +25,7 @@ All Polyglot data is serialized strings. The type system is a schema layer on to
 <!-- @c:types -->
 What `#string` refers to is `#String` — a struct built on `RawString`:
 
-```polyglot
+```aljam3
 {#} #String
    [ ] #String and #string both resolve here
    [#] ##Scalar
@@ -65,7 +65,7 @@ Each scalar type composes `##String` with a specific `<regex` parameter:
 
 Each subtype composes `##String` directly:
 
-```polyglot
+```aljam3
 {#} #Int
    [%] %alias << "int,integer,Integer"
    [#] ##String
@@ -91,7 +91,7 @@ The `##String` parameterized schema provides `##Scalar`, `###ScalarValue`, `.str
 
 Users can still define custom string subtypes with their own `.regex`:
 
-```polyglot
+```aljam3
 {#} #phoneNumber
    [#] ##String
       (#) <regex << "^\+?[0-9]{7,15}$"
@@ -101,9 +101,9 @@ Literal numeric values always match their RE by construction — no error handli
 
 ### Layer 2c: #KeyString — Key Type for Tree Access
 
-`#KeyString` is a string subtype that excludes characters reserved by Polyglot syntax — whitespace, `.`, `:`, `<`, `>`. This makes it safe for use as tree child keys accessed via the `<` operator:
+`#KeyString` is a string subtype that excludes characters reserved by Aljam3 syntax — whitespace, `.`, `:`, `<`, `>`. This makes it safe for use as tree child keys accessed via the `<` operator:
 
-```polyglot
+```aljam3
 {#} #KeyString
    (#) <~ #String
    [#] %##Alias << "key"
@@ -117,7 +117,7 @@ Any type used as flexible child keys must compose `#KeyString`. If it does not, 
 
 `#NestedKeyString` is a string subtype that allows `.` and `:` separators but still excludes whitespace, `<`, and `>`. This makes it safe for alias paths that reference nested definitions (e.g., `!File.Permission.Denied`):
 
-```polyglot
+```aljam3
 {#} #NestedKeyString
    (#) <~ #String
    [#] %##Alias << "nestedkey"
@@ -133,7 +133,7 @@ Used as the element type for `%alias` — alias values may contain `.` and `:` t
 
 `#Boolean` is intentionally NOT a `#String` subtype. It is a `##Enum` type — a struct whose fields are all enum fields (no `#type` annotation). `.True` and `.False` are enum fields — exactly one is active at a time. This is a separate type tree from `#String`.
 
-```polyglot
+```aljam3
 {#} #Boolean
    [#] ##Enum
    [#] ##Scalar

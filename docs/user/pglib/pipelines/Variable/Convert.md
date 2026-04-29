@@ -13,13 +13,13 @@ metadata_instance: "%-:Variable.Convert:N"
 <!-- @c:pglib/types/NativeType -->
 <!-- @c:spec/native-dispatch#Serialization Protocol -->
 
-Convert a `#Variable` from one language's type system to another. The conversion uses the Polyglot type system as intermediary -- source native type is mapped to a Polyglot type, then the Polyglot type is mapped to the target native type.
+Convert a `#Variable` from one language's type system to another. The conversion uses the Aljam3 type system as intermediary -- source native type is mapped to a Aljam3 type, then the Aljam3 type is mapped to the target native type.
 
 This pipeline is `{N}` native but user-callable. Bridge pipelines call it internally, but users can also invoke it directly for explicit variable conversion outside a Bridge context.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Variable.Convert
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "VariableConvert"
@@ -52,12 +52,12 @@ The conversion follows three steps:
 Step 1: Read source
    Source #Variable (:Python, .name="count", .value="42", .type=int)
 
-Step 2: Map to Polyglot type
-   Python int → Polyglot #int
+Step 2: Map to Aljam3 type
+   Python int → Aljam3 #int
    Value remains string-encoded: "42"
 
 Step 3: Map to target type
-   Polyglot #int → Rust i64
+   Aljam3 #int → Rust i64
    Target #Variable (:Rust, .name="count", .value="42", .type=i64)
 ```
 

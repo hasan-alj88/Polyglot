@@ -19,13 +19,13 @@ severity: error
 **See also:** PGW03001 (warning when `[b]` called pipeline has discarded outputs)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ [b] with no output — side-effect only
 [b] -Audit.Log
    (-) <event << $event            [ ] ✓ input is fine — fire and forget
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [b] alongside [=] — only [=] output is collected
 [b] -Notify.Admin
    (-) <msg << "processing started"
@@ -39,14 +39,14 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03005 — [b] output wired to prime variable
 [b] -Audit.Log
    (-) <event << $event
    (-) >auditId >> $auditId        [ ] ✗ PGE03005 — [b] cannot produce output
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03005 — attempting to collect [b] output
 [b] -Background.Task
    (-) >result >> $bgResult

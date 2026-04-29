@@ -12,13 +12,13 @@ updated: 2026-04-15
 <!-- @u:metadata -->
 <!-- @u:philosophy/data-trees -->
 
-All Polyglot data is serialized strings. Every object — structs, pipelines, variables, collections, errors, packages — is a branch on one unified tree rooted at `%`. Understanding this tree is the key to understanding how every concept in Polyglot Code connects.
+All Aljam3 data is serialized strings. Every object — structs, pipelines, variables, collections, errors, packages — is a branch on one unified tree rooted at `%`. Understanding this tree is the key to understanding how every concept in Aljam3 Code connects.
 
-**"Data tree" and "serialized data" are the same thing.** A data tree is the structure; serialized data is the format. In Polyglot, these are inseparable — when code is parsed, every object becomes a tree of `RawString` leaves serialized as JSON. The compiler and runtime operate on this serialized tree directly. The type `#serial` is the untyped form: a data tree with no schema constraints, accepting any topology.
+**"Data tree" and "serialized data" are the same thing.** A data tree is the structure; serialized data is the format. In Aljam3, these are inseparable — when code is parsed, every object becomes a tree of `RawString` leaves serialized as JSON. The compiler and runtime operate on this serialized tree directly. The type `#serial` is the untyped form: a data tree with no schema constraints, accepting any topology.
 
-## All Polyglot Objects Are Data Trees
+## All Aljam3 Objects Are Data Trees
 
-Every `{X}` definition block in Polyglot Code is fundamentally a `{#}` struct — a description of **data tree topology**. The different block types (`{-}`, `{T}`, `{W}`, `{Q}`, `{!}`, `{_}`, `{N}`) are `{#}` with specific schemas designed for designated purposes:
+Every `{X}` definition block in Aljam3 Code is fundamentally a `{#}` struct — a description of **data tree topology**. The different block types (`{-}`, `{T}`, `{W}`, `{Q}`, `{!}`, `{_}`, `{N}`) are `{#}` with specific schemas designed for designated purposes:
 
 - `{-}` is a struct with IO ports, trigger, queue, wrapper, and execution body fields
 - `{T}` is a struct with trigger-specific schema (subtype of `{-}`)
@@ -27,7 +27,7 @@ Every `{X}` definition block in Polyglot Code is fundamentally a `{#}` struct �
 - `{!}` is a struct with error namespace schema (subtype of `{#}`). Terminals carry `##Error` schema — if a `{!}` definition's terminals do not have `##Error`, it is a compile error
 - `{_}` is a struct with permission policy schema. A `_Permission` object is a variable `$` with `##Permission` schema
 
-A **datatype** is a description of data tree topology — the shape, depth, field names, field types, and constraints that define how a tree is structured. When Polyglot Code is parsed, it is serialized as data (JSON) and sent to the Polyglot service. The compiler and runtime operate entirely on these serialized data trees.
+A **datatype** is a description of data tree topology — the shape, depth, field names, field types, and constraints that define how a tree is structured. When Aljam3 Code is parsed, it is serialized as data (JSON) and sent to the Aljam3 service. The compiler and runtime operate entirely on these serialized data trees.
 
 ### Type Identity and Compatibility
 
@@ -46,15 +46,15 @@ These are independent operations:
 
 ## All Data is Serialized Strings
 
-Polyglot has one true primitive: `RawString` — a sequence of literal raw characters (see [[syntax/types/basic-types#RawString — The True Primitive]]). Everything else — `#String`, `int`, `float`, `#Boolean`, arrays, serials, user structs — is built on top of `RawString` through schemas that constrain how the string is interpreted.
+Aljam3 has one true primitive: `RawString` — a sequence of literal raw characters (see [[syntax/types/basic-types#RawString — The True Primitive]]). Everything else — `#String`, `int`, `float`, `#Boolean`, arrays, serials, user structs — is built on top of `RawString` through schemas that constrain how the string is interpreted.
 
-This means every Polyglot object is ultimately a tree of strings with typed structure layered on top.
+This means every Aljam3 object is ultimately a tree of strings with typed structure layered on top.
 
 ## Leaf-Only Values
 
 > **Clarification:** "Leaf-only" does not contradict "everything is a tree." A single leaf is a valid tree (depth 1). The invariant below is about **node roles** within a tree — each node is either a branch (structure) or a leaf (data), never both. Even a standalone `RawString` value is a tree with one leaf node.
 
-A universal invariant governs every tree in Polyglot: a node is either a **branch** or a **leaf**, never both.
+A universal invariant governs every tree in Aljam3: a node is either a **branch** or a **leaf**, never both.
 
 - **Branch nodes** have children but no value — they exist purely for structure and navigation (namespace or enum grouping)
 - **Leaf nodes** hold a `RawString` value but have no children — they are the terminal data
@@ -75,9 +75,9 @@ See [[syntax/types/prefix-system#Three-Tier Prefix System]] for the full prefix 
 
 ## The Structured Tree
 
-The `%` root has fixed branches for every object type in Polyglot:
+The `%` root has fixed branches for every object type in Aljam3:
 
-```polyglot
+```aljam3
 %
 ├── #   Structs          — type definitions ({#} blocks)
 ├── -   Pipelines        — async workflows ({-} blocks)
@@ -90,7 +90,7 @@ The `%` root has fixed branches for every object type in Polyglot:
 └── definition            — compile-time schema templates
 ```
 
-Most branches use flexible (`:`) fields for their instances — `%#:Boolean`, `%-:MyPipeline`, `%$:myVar`. Exceptions: `%_` uses only `.` fixed fields (Polyglot-defined permissions), `%!` uses `.` for Polyglot-defined namespaces (with `:` under `.Error` for user extensions), and `%definition` stores compile-time structural templates.
+Most branches use flexible (`:`) fields for their instances — `%#:Boolean`, `%-:MyPipeline`, `%$:myVar`. Exceptions: `%_` uses only `.` fixed fields (Aljam3-defined permissions), `%!` uses `.` for Aljam3-defined namespaces (with `:` under `.Error` for user extensions), and `%definition` stores compile-time structural templates.
 
 ## How Concepts Connect
 
@@ -115,7 +115,7 @@ The tree has two layers:
 - **Schema** (compile-time) — `%definition.{type}:{ref}` defines the structural template
 - **Instance** (runtime) — `%{type}:{ref}:{instance}.{fields}` holds actual values
 
-```polyglot
+```aljam3
 %definition.#:Boolean       ← schema: lists .True and .False as valid fields
 %#:Boolean:0                ← instance 0: has ONE active field (.True or .False)
 %#:Boolean:1                ← instance 1: independent, its own active field
@@ -170,7 +170,7 @@ graph TD
 
 An enum instance collapses to ONE active field. The definition lists all valid branches, but a specific instance has only the active one:
 
-```polyglot
+```aljam3
 %definition.#:Boolean       ← schema: .True, .False (both listed)
 %#:Boolean:0.True           ← instance 0: .True is active, .False does NOT exist
 ```
@@ -181,7 +181,7 @@ Push atomically clears the previous field and sets the new one. Reading a non-ac
 
 `int` lives at `%#:String:int` — nested under `:String` at a flexible level. The alias `#int` in user code resolves to `#String.int`. Each subtype uses the `#String` schema with `.regex` pre-filled:
 
-```polyglot
+```aljam3
 %#:String:int               ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+$")
 %#:String:float             ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+\.[0-9]+$")
 %#:String:email             ← pglib: .regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
@@ -193,7 +193,7 @@ See [[syntax/types/basic-types#Numeric Types — #String Subtypes]] for details.
 
 Pipeline instances carry their IO as nested fixed sections:
 
-```polyglot
+```aljam3
 %-:ProcessData:0
 ├── .<                      ← input ports (fixed typed section)
 │   └── .filepath#path

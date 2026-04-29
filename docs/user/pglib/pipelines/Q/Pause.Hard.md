@@ -21,7 +21,7 @@ Direct command: immediate suspend. Frees CPU+RAM. Signal: `command.pause.hard`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Pause.Hard
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QPauseHard"

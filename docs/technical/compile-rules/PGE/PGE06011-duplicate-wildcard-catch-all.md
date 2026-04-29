@@ -19,7 +19,7 @@ severity: error
 **See also:** PGE06001 (conditional must be exhaustive — requires `*?` for open types), PGE06009 (conditional missing comparison operator)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ single wildcard catch-all
 [?] $status =? "active"
    [-] -HandleActive
@@ -29,7 +29,7 @@ severity: error
    [-] -HandleUnknown
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ no wildcard needed — enum is statically exhaustive
 [?] $severity =? #Severity.Critical
    [-] -AlertCritical
@@ -42,7 +42,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE06011 — two wildcard catch-alls
 [?] $status =? "active"
    [-] -HandleActive
@@ -52,7 +52,7 @@ severity: error
    [-] -NeverReached
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE06011 — wildcard duplicated even with branches between
 [?] $code >? 200
    [-] -HandleHigh

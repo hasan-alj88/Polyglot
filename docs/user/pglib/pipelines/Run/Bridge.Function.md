@@ -20,7 +20,7 @@ This is the cross-language counterpart of [[pglib/pipelines/Run/Function|-Run.\<
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Run.Bridge.Function
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RunBridgeFunction"
@@ -58,7 +58,7 @@ This is the cross-language counterpart of [[pglib/pipelines/Run/Function|-Run.\<
 
 Bridge pipelines require two `-W.Env` wrappers -- one for the caller's language environment and one for the callee's. The two environments are specified using the `;Caller;Callee` dual-env syntax on the `[-]` call line:
 
-```polyglot
+```aljam3
 [-] -Run.Bridge.Function;PyEnv;RsEnv
 ```
 
@@ -89,7 +89,7 @@ See [[technical/algorithms/bridge-conversion#Dual-Wrapper Lifecycle]] for the fu
 
 A Python pipeline calls a Rust function to process data:
 
-```polyglot
+```aljam3
 {@} @Registry:PG<CrossLangDemo<1.0
    [.] .name << "CrossLangDemo"
 
@@ -138,16 +138,16 @@ A Python pipeline calls a Rust function to process data:
 In this example:
 - `$inputData` originates in a Python context (caller is `;PyData`)
 - The `<arg` `#Variable` is tagged with `.type#NativeType.Python.list`
-- The Bridge converts `Python list → Polyglot #array.float → Rust Vec<f64>` internally
+- The Bridge converts `Python list → Aljam3 #array.float → Rust Vec<f64>` internally
 - The callee function runs in the `;RsProc` Rust environment
 - Return values in `>Bind` are tagged with `.type#NativeType.Rust`
 
 ### SDK Caller Side
 
-From the Python application, the same pipeline is invoked through the [[polyglot-interface|c:polyglot-interface]] SDK:
+From the Python application, the same pipeline is invoked through the [[aljam3-interface|c:aljam3-interface]] SDK:
 
 ```python
-import polyglot_sdk as pg
+import aljam3_sdk as pg
 
 result = await pg.call("CrossLangProcess", {
     "inputData": [1.5, 2.7, 3.14, 4.0]
@@ -156,7 +156,7 @@ result = await pg.call("CrossLangProcess", {
 # result["log"] — stdout/stderr from the Rust environment
 ```
 
-The SDK serializes `inputData` using the universal string algorithm, publishes a NATS request to `-T.Call`, and deserializes the response. The Bridge conversion between Python and Rust happens inside the Polyglot Service -- the SDK caller does not manage language environments directly.
+The SDK serializes `inputData` using the universal string algorithm, publishes a NATS request to `-T.Call`, and deserializes the response. The Bridge conversion between Python and Rust happens inside the Aljam3 Service -- the SDK caller does not manage language environments directly.
 
 ## When to Use
 
@@ -164,7 +164,7 @@ The SDK serializes `inputData` using the universal string algorithm, publishes a
 |----------|-----|-----|
 | Call a function in a **different** language with type conversion | `-Run.Bridge.Function` | Pairwise conversion avoids JSON round-trip overhead |
 | Call a function in the **same** language | `-Run.<Lang>.Function` | No cross-language conversion needed |
-| Call a Polyglot pipeline from external code | SDK `call()` | Universal string, zero per-pair setup |
+| Call a Aljam3 pipeline from external code | SDK `call()` | Universal string, zero per-pair setup |
 | Performance-critical cross-language integration | `-Run.Bridge.Function` | Direct type mapping, no string serialization |
 | Universal integration across many languages | SDK `call()` | Works for all supported languages without per-pair config |
 

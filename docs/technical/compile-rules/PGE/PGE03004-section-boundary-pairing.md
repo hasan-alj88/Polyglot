@@ -18,7 +18,7 @@ severity: error
 **Detection:** The compiler maps each `[=]` to its containing section and each `(*)` to its containing section, then validates the pairing.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ [=] and (*) both in execution body
 [=] -Fetch.A
    (-) >result >> $a
@@ -31,7 +31,7 @@ severity: error
    (*) << $b
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [=] in [\] setup, (*) in [/] cleanup
 [\]
    [=] -Warmup.Cache
@@ -46,7 +46,7 @@ severity: error
       (*) << $cacheReady             [ ] ✓ [\]↔[/] pairing is valid
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [=] and (*) both within [\] — internal pairing
 [\]
    [=] -Init.Config
@@ -59,7 +59,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03004 — [=] in [\], (*) in body
 [\]
    [=] -Warmup.Cache
@@ -70,7 +70,7 @@ severity: error
    (*) << $cacheReady                   [ ] ✗ PGE03004 — [\]↔body pairing not allowed
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03004 — [=] in body, (*) in [/]
 [=] -Fetch.Data
    (-) >result >> $data

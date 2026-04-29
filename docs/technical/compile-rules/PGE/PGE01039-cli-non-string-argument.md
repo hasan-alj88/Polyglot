@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler checks that every field in `<arg#Record` and `<kwarg#Record` has type `#string`.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] all CLI argument fields are #string
 [-] -Run.Rust.CLI
    (-) <binary#path << -Path"/usr/local/bin/mytool"
@@ -29,7 +29,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] PGE01039 — .count is #int, not #string
 [-] -Run.Rust.CLI
    (-) <binary#path << -Path"/usr/local/bin/mytool"

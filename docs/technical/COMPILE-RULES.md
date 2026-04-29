@@ -5,7 +5,7 @@ updated: 2026-04-09
 status: draft
 ---
 
-# Polyglot Code — Compiler Rules
+# Aljam3 Code — Compiler Rules
 
 Semantic and behavioral constraints enforced at compile time. These rules go beyond EBNF grammar (which captures syntax only) and represent what the compiler must verify to accept a valid program.
 
@@ -335,17 +335,17 @@ Each rule follows this structure:
 **Rationale:** Why this constraint exists.
 
 **VALID:**
-​```polyglot
+​```aljam3
 (minimal example — accepted by compiler)
 ​```
 
 **INVALID:**
-​```polyglot
+​```aljam3
 (minimal example — triggers PGExxNNN)
 ​```
 
 **WARNING:**
-​```polyglot
+​```aljam3
 (minimal example — triggers PGWxxNNN)
 ​```
 
@@ -364,14 +364,14 @@ Each rule follows this structure:
 **Rationale:** Universal properties apply to every branch uniformly. A branch-wise override would create an ambiguous structural invariant — the compiler cannot enforce both a universal constraint and a per-branch exception simultaneously.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #MyCollection
    [#] %##Gap << #False
    [:] :*#string
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {#} #MyCollection
    [#] %##Gap << #False     [ ] ✗ PGE11001 — universal scope
    [.] .items
@@ -386,7 +386,7 @@ Each rule follows this structure:
 **Rationale:** Without a depth bound, nested collections can produce infinitely deep trees. The compiler requires an explicit limit so that tree traversal and memory allocation are predictable.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #Matrix
    [#] ##Array
       (#) <#ValueType << #float
@@ -395,14 +395,14 @@ Each rule follows this structure:
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {#} #Nested
    [#] ##Array
       (#) <#ValueType << #int        [ ] ✗ PGE11002 — no %##Depth.Max declared
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 {#} #FlexNested
    [#] ##Array
       (#) <#ValueType << #int
@@ -417,7 +417,7 @@ Each rule follows this structure:
 **Rationale:** The `###` classification must match the actual field declarations. Mismatches indicate a design error — the type's fields and its declared leaf nature disagree.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #Boolean
    [#] ###ScalarEnum
    [.] .True
@@ -425,7 +425,7 @@ Each rule follows this structure:
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {#} #BadEnum
    [#] ###Enum                    [ ] ✗ PGE11003 — declares ###Enum
    [.] .name#string               [ ] ✗ PGE11003 — but fields have #type (value fields)
@@ -439,14 +439,14 @@ Each rule follows this structure:
 **Rationale:** Tree child keys appear in accessor syntax (`$var<key`). Types that permit syntax-reserved characters in their values would create parse ambiguity.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #NamedRecord
    [#] ##Flat
    [#] %##Fields << #Range
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] PGE11004 — explicit key type override that allows reserved chars
 {#} #BadRecord
    [#] ##Flat
@@ -462,14 +462,14 @@ Each rule follows this structure:
 **Rationale:** A type's fields are either all value fields or all enum fields. Mixing creates ambiguity in the `###` classification and violates the leaf-only values invariant for enum branches.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #Record
    [.] .name#string
    [.] .age#int
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {#} #Mixed
    [.] .Active                    [ ] ✗ PGE05005 — untyped enum field
    [.] .count#int                 [ ] ✗ PGE05005 — typed value field at same level
@@ -483,7 +483,7 @@ Each rule follows this structure:
 **Rationale:** Schemas describe tree structure of data types. They have no meaning outside a type definition context.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #MyType
    [#] ##Flat
 
@@ -494,7 +494,7 @@ Each rule follows this structure:
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {-} -MyPipeline
    [-] $x << ##Flat               [ ] ✗ PGE05006 — ## used outside {#}
 ```
@@ -507,7 +507,7 @@ Each rule follows this structure:
 **Rationale:** `<<` means the value is sealed — no further pushes, including through inheritance. Without this rule, a child type could silently override a field the parent declared immutable, breaking the finality guarantee.
 
 **VALID:**
-```polyglot
+```aljam3
 {#} #String
    [.] .regex#RawString <~ ".*"
 
@@ -518,7 +518,7 @@ Each rule follows this structure:
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 {#} #Int
    (#) <~ #String
    [.] .regex#RawString << "^-?[0-9]+$"
@@ -537,7 +537,7 @@ Each rule follows this structure:
 **Rationale:** Redundant declarations add noise. The inherited value already applies. If the intent is to override, the value must differ (see PGW11002).
 
 **WARNING:**
-```polyglot
+```aljam3
 {#} #MyArray
    [#] ##Array
       (#) <#ValueType << #int
@@ -552,7 +552,7 @@ Each rule follows this structure:
 **Rationale:** Overriding inherited schema properties is allowed but unusual. The warning ensures the developer intended the override rather than accidentally contradicting the schema.
 
 **WARNING:**
-```polyglot
+```aljam3
 {#} #SparseArray
    [#] ##Array
       (#) <#ValueType << #int
@@ -567,7 +567,7 @@ Each rule follows this structure:
 **Rationale:** Unlimited depth is a deliberate escape hatch for unconstrained data. User-defined types should have bounded depth for predictable tree traversal and memory use.
 
 **WARNING:**
-```polyglot
+```aljam3
 {#} #DeepTree
    [#] %##Depth.Max << .Inf         [ ] ⚠ PGW11003 — unlimited depth on user type
 ```

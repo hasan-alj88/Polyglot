@@ -25,7 +25,7 @@ severity: warning
 **See also:** PGW10002 (unverifiable foreign IO — known IO function, unresolvable argument), PGE10014 (AST-invisible code — banned dynamic constructs), [[permissions/foreign-code#IO Detection]]
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW10005 — unknown function, not in sink table or known-pure list
 {_} _DataRead
    [.] .intent << #Grant
@@ -52,7 +52,7 @@ severity: warning
          [.] .result#int >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW10005 — bottom-up: function body contains known IO
 {-} -BottomUpDetect
    (-) _DataRead

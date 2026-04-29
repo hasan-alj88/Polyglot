@@ -11,7 +11,7 @@ Iterates over each item in an array with its positional index. The execution mar
 
 ## Syntax
 
-```polyglot
+```aljam3
 [=] =ForEach.Array.Enumerate
    (=) <Array << $myArray
    (=) >index >> $idx

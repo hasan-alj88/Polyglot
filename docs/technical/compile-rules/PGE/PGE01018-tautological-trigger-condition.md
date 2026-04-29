@@ -20,7 +20,7 @@ severity: error
 **See also:** PGE01005 (missing trigger), PGE06001 (conditional exhaustiveness), PGE06005 (compound condition overlap)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ AND of compatible triggers — both can co-fire
 {-} -ProcessOnScheduleAndFiles
    (-) <files#array:path
@@ -28,47 +28,47 @@ severity: error
       (-) >NewFiles >> <files
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >result#string
    [ ]
    [-] >result << "processed"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ OR group — not exhaustive, some states produce False
 {-} -MultiTrigger
    [T]
       [T] -T.Webhook"/api"
       [+] -T.Daily"3AM"
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] >out << "triggered"
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01018 — trigger expression is always False (contradiction)
 {-} -NeverFires
    [T] -T.Daily"3AM"
    [T] -T.Daily"5PM"                         [ ] ✗ PGE01018 — AND of mutually exclusive timers
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] >out << "unreachable"
 [ ] -T.Daily"3AM" AND -T.Daily"5PM" — never co-fire, always False
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01018 — XOR of same trigger is always False
 {-} -XorSelf
    [T]
       [T] -T.Webhook"/hook"
       [^] -T.Webhook"/hook"                  [ ] ✗ PGE01018 — A XOR A = always False
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] >out << "unreachable"

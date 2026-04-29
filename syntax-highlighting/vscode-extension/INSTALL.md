@@ -1,6 +1,6 @@
-# Installing Polyglot Language Support for VSCode
+# Installing Aljam3 Language Support for VSCode
 
-This guide explains how to install the Polyglot syntax highlighting extension for Visual Studio Code.
+This guide explains how to install the Aljam3 syntax highlighting extension for Visual Studio Code.
 
 ## Quick Install (Local Development)
 
@@ -8,12 +8,12 @@ This guide explains how to install the Polyglot syntax highlighting extension fo
 
 1. **Create extension directory** (if it doesn't exist):
    ```bash
-   mkdir -p ~/.vscode/extensions/polyglot-language-support-0.1.0
+   mkdir -p ~/.vscode/extensions/aljam3-language-support-0.1.0
    ```
 
 2. **Copy extension files**:
    ```bash
-   cp -r vscode-extension/* ~/.vscode/extensions/polyglot-language-support-0.1.0/
+   cp -r vscode-extension/* ~/.vscode/extensions/aljam3-language-support-0.1.0/
    ```
 
 3. **Reload VSCode**:
@@ -22,9 +22,9 @@ This guide explains how to install the Polyglot syntax highlighting extension fo
    - Press Enter
 
 4. **Verify installation**:
-   - Open a `.pg` file or create a new file with `.pg` extension
+   - Open a `.aj3` file or create a new file with `.aj3` extension
    - Check the language mode indicator in the bottom-right corner
-   - Should show "Polyglot"
+   - Should show "Aljam3"
 
 ### Method 2: Install from VSIX Package
 
@@ -43,7 +43,7 @@ This guide explains how to install the Polyglot syntax highlighting extension fo
    vsce package
    ```
 
-   This creates `polyglot-language-support-0.1.0.vsix`
+   This creates `aljam3-language-support-0.1.0.vsix`
 
 4. **Install the VSIX**:
    - Open VSCode
@@ -57,11 +57,11 @@ This guide explains how to install the Polyglot syntax highlighting extension fo
 
 ## Testing Syntax Highlighting
 
-### Test with .pg Files
+### Test with .aj3 Files
 
-Create a test file `test.pg`:
+Create a test file `test.aj3`:
 
-```polyglot
+```aljam3
 [@] @example/hello-world
 
 [|] |HelloWorld
@@ -78,7 +78,7 @@ Create a test file `test.pg`:
 [X]
 ```
 
-Open `test.pg` in VSCode - you should see:
+Open `test.aj3` in VSCode - you should see:
 - Block markers `[@]`, `[|]`, `[r]`, etc. highlighted
 - Operators `<<` highlighted
 - Identifiers like `.message`, `|HelloWorld` highlighted
@@ -91,11 +91,11 @@ Open `test.pg` in VSCode - you should see:
 Create a test file `test.md`:
 
 ````markdown
-# Polyglot Example
+# Aljam3 Example
 
-This is a Polyglot pipeline:
+This is a Aljam3 pipeline:
 
-```polyglot
+```aljam3
 [|] |Example
   [i] .input: pg\string
   [t] |T.Manual
@@ -124,33 +124,33 @@ To customize syntax highlighting colors, add to your VSCode `settings.json`:
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
-        "scope": "keyword.control.registry.polyglot",
+        "scope": "keyword.control.registry.aljam3",
         "settings": {
           "foreground": "#C792EA",
           "fontStyle": "bold"
         }
       },
       {
-        "scope": "keyword.operator.dataflow.polyglot",
+        "scope": "keyword.operator.dataflow.aljam3",
         "settings": {
           "foreground": "#89DDFF"
         }
       },
       {
-        "scope": "entity.name.function.pipeline.polyglot",
+        "scope": "entity.name.function.pipeline.aljam3",
         "settings": {
           "foreground": "#82AAFF",
           "fontStyle": "italic"
         }
       },
       {
-        "scope": "variable.other.polyglot",
+        "scope": "variable.other.aljam3",
         "settings": {
           "foreground": "#FFCB6B"
         }
       },
       {
-        "scope": "string.quoted.datetime.polyglot",
+        "scope": "string.quoted.datetime.aljam3",
         "settings": {
           "foreground": "#C3E88D",
           "fontStyle": "italic"
@@ -186,7 +186,7 @@ The extension includes helpful snippets. Type the prefix and press `Tab`:
 
 ### Example Usage
 
-1. Create a new `.pg` file
+1. Create a new `.aj3` file
 2. Type `pipeline` and press `Tab`
 3. Fill in the placeholders (press `Tab` to move between them)
 
@@ -196,14 +196,14 @@ The extension includes helpful snippets. Type the prefix and press `Tab`:
 
 1. **Check language mode**:
    - Click the language indicator in bottom-right corner
-   - Select "Polyglot" from the list
+   - Select "Aljam3" from the list
 
 2. **Check file association**:
    - Add to `settings.json`:
    ```json
    {
      "files.associations": {
-       "*.pg": "polyglot"
+       "*.aj3": "aljam3"
      }
    }
    ```
@@ -213,17 +213,17 @@ The extension includes helpful snippets. Type the prefix and press `Tab`:
 
 4. **Check extension installation**:
    - Go to Extensions view
-   - Search for "Polyglot"
+   - Search for "Aljam3"
    - Should show as installed
 
 ### Markdown Code Blocks Not Highlighted
 
 1. **Verify injection grammar**:
-   - Check that `polyglot.markdown.injection.json` exists in `syntaxes/`
+   - Check that `aljam3.markdown.injection.json` exists in `syntaxes/`
 
 2. **Try different fence identifiers**:
-   - Use `polyglot` or `pg` as the language identifier
-   - Example: ` ```polyglot ` or ` ```pg `
+   - Use `aljam3` or `pg` as the language identifier
+   - Example: ` ```aljam3 ` or ` ```pg `
 
 3. **Reload window**:
    - Markdown injection may require a full reload
@@ -231,7 +231,7 @@ The extension includes helpful snippets. Type the prefix and press `Tab`:
 ### Snippets Not Working
 
 1. **Check snippet file**:
-   - Verify `snippets/polyglot.json` exists
+   - Verify `snippets/aljam3.json` exists
 
 2. **Enable snippets in settings**:
    ```json
@@ -268,12 +268,12 @@ To publish the extension publicly:
 
 1. **Via VSCode UI**:
    - Go to Extensions view
-   - Find "Polyglot Language Support"
+   - Find "Aljam3 Language Support"
    - Click Uninstall
 
 2. **Manually**:
    ```bash
-   rm -rf ~/.vscode/extensions/polyglot-language-support-0.1.0
+   rm -rf ~/.vscode/extensions/aljam3-language-support-0.1.0
    ```
 
 3. **Reload VSCode**
@@ -281,6 +281,6 @@ To publish the extension publicly:
 ## Support
 
 For issues or feature requests:
-- Check the [Polyglot documentation](../../docs/)
+- Check the [Aljam3 documentation](../../docs/)
 - Report issues to the project repository
-- Review TextMate grammar in `syntaxes/polyglot.tmLanguage.json`
+- Review TextMate grammar in `syntaxes/aljam3.tmLanguage.json`

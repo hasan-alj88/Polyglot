@@ -1,5 +1,5 @@
 
-use polyglot::lexer::Lexer;
+use aljam3::lexer::Lexer;
 
 fn main() {
     let code = "{-} -BatchJob\n[Q] -Q.Assign\"BatchQueue\"\n<maxInstances#int << 5";

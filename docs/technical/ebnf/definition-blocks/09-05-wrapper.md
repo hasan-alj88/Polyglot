@@ -48,13 +48,13 @@ wrapper_io_line     ::= "(-)" variable_id assignment_op value_expr ;
 
 At the `[W]` line, wrapper IO is wired using `(-)` with `$` variables:
 
-```polyglot
+```aljam3
 [W] -W.DB.Connection
    (-) $connectionString << $connStr     (* wrapper input *)
    (-) $dbConn >> $dbConn                (* wrapper output *)
 ```
 
-**Examples:** `[W] -W.Polyglot` (no IO, no-op wrapper), `[W] -W.DB.Transaction` (with IO wiring)
+**Examples:** `[W] -W.Aljam3` (no IO, no-op wrapper), `[W] -W.DB.Transaction` (with IO wiring)
 
 ## Related User Documentation
 

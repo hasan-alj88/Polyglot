@@ -10,7 +10,7 @@ updated: 2026-04-23
 <!-- @c:audit/reference/glossary -->
 <!-- @u:INDEX -->
 <!-- @u:ai-retrieval-index -->
-This document is the flat, categorical inventory of every Polyglot component. It answers "what exists, by category" — block types, pglib namespaces, types, error namespaces, compile-rule groups, EBNF sections, philosophy pages, audit rules. Every row points at the authoritative file or sub-index; this inventory does not duplicate enumeration. For query-shaped lookup use [[ai-retrieval-index|u:ai-retrieval-index]]; for repo layout use [[source-tree-analysis|u:source-tree-analysis]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
+This document is the flat, categorical inventory of every Aljam3 component. It answers "what exists, by category" — block types, pglib namespaces, types, error namespaces, compile-rule groups, EBNF sections, philosophy pages, audit rules. Every row points at the authoritative file or sub-index; this inventory does not duplicate enumeration. For query-shaped lookup use [[ai-retrieval-index|u:ai-retrieval-index]]; for repo layout use [[source-tree-analysis|u:source-tree-analysis]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
 
 ## How to Use This Inventory
 
@@ -324,7 +324,7 @@ Authority: [[philosophy/core-philosophy|c:core-philosophy]] (entry point). Eleve
 | [[philosophy/developer-experience\|c:developer-experience]] | Developer UX goals |
 | [[philosophy/error-philosophy\|c:error-philosophy]] | Errors as data |
 | [[philosophy/extensibility\|c:extensibility]] | Open/closed boundaries |
-| [[philosophy/how-polyglot-differs\|c:how-polyglot-differs]] | Positioning |
+| [[philosophy/how-aljam3-differs\|c:how-aljam3-differs]] | Positioning |
 | [[philosophy/language-design\|c:language-design]] | Language-design principles |
 | [[philosophy/symbology\|c:symbology]] | Symbol/prefix rationale |
 
@@ -391,7 +391,7 @@ Authority: [[technical/INDEX|u:technical-index]].
 | OTel foundation | [[technical/spec/otel-foundation\|u:otel-foundation]] |
 | OTel permission events | [[technical/spec/otel-permission-events\|u:otel-permission-events]] |
 | OTel config | [[technical/spec/otel-config\|u:otel-config]] |
-| Polyglot SDK | [[technical/spec/polyglot-sdk\|u:polyglot-sdk]] |
+| Aljam3 SDK | [[technical/spec/aljam3-sdk\|u:aljam3-sdk]] |
 | Collector definitions | [[technical/spec/collector-definitions\|u:collector-definitions]] |
 | Metadata-tree spec | [[technical/spec/metadata-tree/INDEX\|u:metadata-tree-index]] |
 | Integrator internals | [[technical/integrator-internals\|u:integrator-internals]] |

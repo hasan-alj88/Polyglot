@@ -13,7 +13,7 @@ Capability-level generic permission for encryption operations. Sugar over [[INDE
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Crypto.Encrypt
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for encryption operations. Sugar over [[INDE
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Crypto.Encrypt
    (_) <scope << "aes-256-gcm"
 ```

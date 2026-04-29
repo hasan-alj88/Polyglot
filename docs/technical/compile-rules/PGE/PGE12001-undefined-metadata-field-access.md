@@ -72,12 +72,12 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ variable live metadata — %state exists for all $variables
 {-} -CheckState
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
@@ -88,12 +88,12 @@ severity: error
          [-] >out << "not ready"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ pipeline live metadata — %status exists for all pipelines
 {-} -Monitor
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [?] -Worker%status
@@ -103,48 +103,48 @@ severity: error
          [-] >out << "idle"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ user-declared metadata — %description exists when declared in [%]
 {-} -Documented
    [%] .description << "Handles payments"
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] >out << -Documented%description
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE12001 — $variable has no %description field
 {-} -BadAccess
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <count#int
    (-) >out#string
    [ ]
    [-] >out << $count%description       [ ] ✗ PGE12001 — $var has no .description
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE12001 — pipeline has no %memory field
 {-} -BadPipeline
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] >out << -Worker%memory           [ ] ✗ PGE12001 — no .memory in pipeline schema
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE12001 — %isSuccess is pipeline-only, not variable
 {-} -WrongScope
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >out#string
    [ ]

@@ -13,7 +13,7 @@ Compares two `#dt` values. Returns `-1`, `0`, or `1` as an `#int`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Compare
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtCompare"

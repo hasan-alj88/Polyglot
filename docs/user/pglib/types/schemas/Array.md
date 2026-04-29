@@ -14,7 +14,7 @@ metadata_definition: "%definition.##:Array"
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Array
    (#) <#ValueType
    (#) <Dim <~ "1D"

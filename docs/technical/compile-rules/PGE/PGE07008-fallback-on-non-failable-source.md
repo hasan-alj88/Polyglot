@@ -41,7 +41,7 @@ This means the same production (e.g., `expand_io_line`, `schema_property`, `coll
 
 ### VALID
 
-```polyglot
+```aljam3
 [ ] ✓ fallback on pipeline call — pipeline can fail
 [-] -File.Text.Read
    (-) <path << $configPath
@@ -49,12 +49,12 @@ This means the same production (e.g., `expand_io_line`, `schema_property`, `coll
       (<) !< "/default/path.txt"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ fallback on inline pipeline in data load
 [#] $config#Settings !< -Json.LoadFile"/fallback.json"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ collector output fallback — collection process can fail
 [*] *First
    (*) << $rA
@@ -65,38 +65,38 @@ This means the same production (e.g., `expand_io_line`, `schema_property`, `coll
 
 ### INVALID
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07008 — schema property with fallback on literal
 {#} #Sensor
    [#] %##Depth.Max !< 3
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07008 — expand IO with fallback on variable
 [=] =ForEach.Array
    (=) <Array !< $items
    (=) >item >> $val
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07008 — collect IO input with fallback on variable
 [-] *Into.Array
    (*) <item !< $val
    (*) >Array >> $result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07008 — value field with fallback on literal
 {#} #User
    [.] .name#string !< "anonymous"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07008 — metadata field with fallback on literal
 [%] .description !< "My pipeline"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE07008 — data load with fallback on literal (no pipeline source)
 [#] $config#Settings !< "raw-string"
 ```

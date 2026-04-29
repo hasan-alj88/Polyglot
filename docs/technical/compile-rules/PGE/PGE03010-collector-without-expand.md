@@ -20,7 +20,7 @@ severity: error
 **See also:** PGE03009 (nested expand without collect — the inverse rule), PGE03004 (section-boundary pairing for `[=]`/`(*)`), PGE03008 (collect operator IO mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ collector inside expand scope
 [=] =ForEach.Array
    (=) <Array << $items
@@ -36,7 +36,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03010 — collector with no expand scope
 [-] -Transform
    (-) <data << $input

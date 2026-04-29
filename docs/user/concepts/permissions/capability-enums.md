@@ -26,7 +26,7 @@ Permission categories use typed enums to prevent nonsensical combinations. Each 
 | `Processes` | `#ProcessCapability` | `Limit` |
 | `Duration` | `#DurationCapability` | `Limit` |
 
-Fourteen predefined categories cover all IO capabilities. Categories and capabilities are Polyglot-defined — not user-extensible. The enum type prevents invalid combinations like `.Device.Read` (devices don't have a `Read` capability).
+Fourteen predefined categories cover all IO capabilities. Categories and capabilities are Aljam3-defined — not user-extensible. The enum type prevents invalid combinations like `.Device.Read` (devices don't have a `Read` capability).
 
 ## Per-Category Resource Fields
 

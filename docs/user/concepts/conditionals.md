@@ -16,13 +16,13 @@ changes: "[+] is OR block — unified for both triggers and conditionals"
 <!-- @u:technical/edge-cases/22-control-flow-gaps -->
 <!-- @u:technical/compile-rules/algorithms/compound-exhaustiveness -->
 
-Conditionals in Polyglot Code use `[?]` block elements to branch execution based on comparisons. Each branch is a standalone test — there is no "subject" line that introduces a value to match against. See [[operators#Comparison Operators]] for the full operator table and [[blocks#Control Flow]] for marker reference.
+Conditionals in Aljam3 Code use `[?]` block elements to branch execution based on comparisons. Each branch is a standalone test — there is no "subject" line that introduces a value to match against. See [[operators#Comparison Operators]] for the full operator table and [[blocks#Control Flow]] for marker reference.
 
 ## Conditional Chains
 
 Sequential `[?]` blocks form a conditional chain. Each branch contains an explicit comparison and indented execution lines:
 
-```polyglot
+```aljam3
 [?] $status =? #Status.Ok
    [-] >result << "Success"
 
@@ -46,7 +46,7 @@ All conditional chains must be exhaustive — every possible value of the branch
 
 Enums are closed types. When all variants are listed, no `*?` is needed ([[PGE06002|PGE06002]]):
 
-```polyglot
+```aljam3
 {#} #Direction
    [.] .North
    [.] .South
@@ -66,7 +66,7 @@ Enums are closed types. When all variants are listed, no `*?` is needed ([[PGE06
 
 Partial coverage with `*?` covering the rest is also valid:
 
-```polyglot
+```aljam3
 [?] $dir =? #Direction.North
    [-] $label#string << "N"
 [?] *?
@@ -79,7 +79,7 @@ Partial coverage with `*?` covering the rest is also valid:
 
 Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the full domain or include `*?` ([[PGE06003|PGE06003]]). Overlapping ranges are flagged as warnings ([[PGE06004|PGE06004]]):
 
-```polyglot
+```aljam3
 [?] $code =? 200
    [-] $status#string << "ok"
 [?] $code =? 404
@@ -96,7 +96,7 @@ Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the f
 
 When every `[?]` arm performs the same operation — mapping one value to another — use match syntax. Match nests `[?]` arms under a `[-] $source >> $target` header:
 
-```polyglot
+```aljam3
 [ ] Match form — equivalent to the [?] chain above
 [-] $code >> $status#string
    [?] 200 >> "ok"
@@ -118,7 +118,7 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
 
 **Enum match — exhaustive without wildcard:**
 
-```polyglot
+```aljam3
 [-] $dir >> $label#string
    [?] #Direction.North >> "N"
    [?] #Direction.South >> "S"
@@ -181,7 +181,7 @@ Compound conditions combine multiple predicates using block-element logical mark
 
 Both conditions must hold:
 
-```polyglot
+```aljam3
 [?] $age >=? 18
 [&] $verified =? #Boolean.True
    [-] $access << #AccessLevel.Granted
@@ -193,7 +193,7 @@ Both conditions must hold:
 
 At least one condition holds:
 
-```polyglot
+```aljam3
 [?] $role =? #Role.Admin
 [+] $role =? #Role.Superuser
    [-] $elevated#bool << #Boolean.True
@@ -205,7 +205,7 @@ At least one condition holds:
 
 Exactly one of two conditions holds — not both, not neither:
 
-```polyglot
+```aljam3
 [?] $isAdmin =? #Boolean.True
 [^] $isSudo =? #Boolean.True
    [-] $elevated#bool << #Boolean.True
@@ -225,7 +225,7 @@ When logical operators combine conditions, the compiler evaluates whether the co
 
 A `[?]` branch can contain inner `[?]` chains. Each nesting level is independently exhaustive:
 
-```polyglot
+```aljam3
 [?] $role =? #Role.Admin
    [?] $region =? #Region.EU
       [-] $policy#string << "GDPR"
@@ -245,7 +245,7 @@ The outer chain branches on `$role`. Inside the Admin branch, a separate chain b
 
 Conditionals can switch on live metadata fields like pipeline `%status`:
 
-```polyglot
+```aljam3
 [?] -DataSync%status
    [?] #AwaitTrigger
       [-] $msg#string << "idle"

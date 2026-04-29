@@ -9,4 +9,4 @@ category: Variables and Data Types
 **Statement:** A variable in the `Final` state cannot be pushed into with a default assignment operator (`<~`, `~>`). Attempting to revert a variable from Final to Default is a compile error.
 
 ## Rationale
-Variables that have received their final, authoritative value must not be overridden with a tentative or default value. This guarantees the unidirectional flow of certainty in Polyglot.
+Variables that have received their final, authoritative value must not be overridden with a tentative or default value. This guarantees the unidirectional flow of certainty in Aljam3.

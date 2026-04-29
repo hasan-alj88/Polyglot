@@ -15,7 +15,7 @@ updated: 2026-03-30
 
 **What it tests:** Each negated form used correctly in `[?]` conditionals. `<!?` = not-less-than (>=), `>!?` = not-greater-than (<=), `<=!?` = not-less-or-equal (>), `>=!?` = not-greater-or-equal (<). See [[operators#Comparison Operators]].
 
-```polyglot
+```aljam3
 [ ] Not less than — equivalent to >=
 [?] $age <!? 18
    [-] $eligible#bool << #Boolean.True
@@ -45,7 +45,7 @@ updated: 2026-03-30
 
 **What it tests:** Negation operators combined with `[&]` / `[+]` logical markers. See [[operators#Comparison Operators]], [[blocks#Logical]].
 
-```polyglot
+```aljam3
 [ ] Active user who is not banned and age is not less than 13
 [?] $active =? #Boolean.True
 [&] $banned =!? #Boolean.True

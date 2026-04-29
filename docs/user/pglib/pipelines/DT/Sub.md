@@ -13,7 +13,7 @@ Subtracts two `#dt` values and returns the `#Duration` between them.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Sub
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtSub"

@@ -63,7 +63,7 @@ Compute the full space as the Cartesian product of all variable partitions.
 
 Example: `$status ∈ {Active, Inactive}` × `$age ∈ {(-∞,18], (18,65], (65,+∞)}`
 → 2 × 3 = 6 cells:
-```polyglot
+```aljam3
 {(Active, ≤18), (Active, 18-65), (Active, >65),
  (Inactive, ≤18), (Inactive, 18-65), (Inactive, >65)}
 ```
@@ -104,13 +104,13 @@ The diagnostic must include the uncovered cells as counterexample.
 
 **Time:** O(K^N) where K = max partitions per variable, N = number of variables tested.
 
-**Practical bounds:** Real Polyglot code typically uses 2–3 variables with 2–4 partitions each, yielding grids of 4–64 cells. The exponential bound is theoretical — the algorithm is efficient for practical code patterns.
+**Practical bounds:** Real Aljam3 code typically uses 2–3 variables with 2–4 partitions each, yielding grids of 4–64 cells. The exponential bound is theoretical — the algorithm is efficient for practical code patterns.
 
 **Worst case:** A conditional testing 5 enum variables with 10 variants each → 100,000 cells. The compiler may emit a diagnostic suggesting simplification if the grid exceeds a threshold.
 
 ## Walkthrough — Test 5 (Numeric Range × Enum)
 
-```polyglot
+```aljam3
 Variables: $status ∈ {Active, Inactive}, $age#int
 Boundaries for $age: {18}
 Partitions: $status → {Active, Inactive}, $age → {(-∞,18], (18,+∞)}

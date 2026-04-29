@@ -13,7 +13,7 @@ Capability-level generic permission for HTTP requests. Sugar over [[INDEX|__Web]
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Web.Request
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for HTTP requests. Sugar over [[INDEX|__Web]
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Web.Request
    (_) <scope << "https://api.example.com/*"
 ```

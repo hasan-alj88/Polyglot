@@ -10,7 +10,7 @@ updated: 2026-03-30
 
 `[!]` error blocks are scoped to the specific `[-]` call that can produce them, indented under the call (after its `(-)` IO lines):
 
-```polyglot
+```aljam3
 [-] @FS-File.Text.Read
    (-) <path << <filepath
    (-) >content >> >content
@@ -28,7 +28,7 @@ updated: 2026-03-30
 
 For simple "on error, use this value" cases, use `(>) !>` fallback under the `(-)` output line:
 
-```polyglot
+```aljam3
 [-] -File.Text.Read
    (-) <path << $file
    (-) >content >> $out

@@ -13,7 +13,7 @@ updated: 2026-04-16
 
 ```text
 1. Trigger Monitor detects event
-   → NATS: publish "polyglot.trigger.fire.ProcessData"
+   → NATS: publish "aljam3.trigger.fire.ProcessData"
    → TM evaluates retrigger policy, creates job ID, records hierarchy in NoSQL
    → NATS: publish "command.enqueue" {jobId, pipeline, queue, params}
 
@@ -26,22 +26,22 @@ updated: 2026-04-16
    → Tier 2 Dispatch RR: round-robin between Coordinator Queue, Resume Queue (empty), Teardown Queue (empty) → job:001
    → Check scoped constraints → all clear
    → Redis: LPOP, SADD set:executing, HINCRBY counter:instances
-   → NATS: publish "polyglot.queue.control.job:001.start"
+   → NATS: publish "aljam3.queue.control.job:001.start"
 
 4. Runner starts pipeline
-   → NATS: publish "polyglot.runner.started.job:001" → QH + TM
+   → NATS: publish "aljam3.runner.started.job:001" → QH + TM
 
 5. Pipeline completes
-   → NATS: publish "polyglot.runner.completed.job:001" → QH + TM
+   → NATS: publish "aljam3.runner.completed.job:001" → QH + TM
    → QH Redis: SREM set:executing, HINCRBY counter:instances -1, DEL job:job:001
    → Dispatch Coordinator wakes (slot freed)
 ```
 
 ## Pause / Resume Flow
 
-```polyglot
+```aljam3
 1. Resource Monitor: RAM drops below threshold
-   → NATS: publish "polyglot.resource.ram" {available: 2800}
+   → NATS: publish "aljam3.resource.ram" {available: 2800}
 
 2. Trigger Monitor evaluates -Q.Job.Pause.Free.RAM.Hard condition → met for job:001
    → NATS: publish "command.job.pause.free.ram.hard" {jobId: job:001, timing: "wait"}
@@ -53,17 +53,17 @@ updated: 2026-04-16
    → Redis: HINCRBY counter:instances:queue:DefaultQueue ProcessData -1
    → Redis: HINCRBY counter:instances:host:{host} ProcessData -1
    → Redis: HSET job:job:001 status "suspended.ram.hard" suspended_at {now}
-   → NATS: publish "polyglot.queue.control.job:001.job.pause.free.ram.hard"
+   → NATS: publish "aljam3.queue.control.job:001.job.pause.free.ram.hard"
    → Dispatch Coordinator wakes (slot freed)
 
 4. Runner suspends process, frees CPU+RAM
-   → NATS: publish "polyglot.runner.paused.job:001" {type: "ram.hard"} → QH + TM
+   → NATS: publish "aljam3.runner.paused.job:001" {type: "ram.hard"} → QH + TM
 
 5. Queue Handler updates state
    → Redis: HSET job:job:001 confirmed_paused true
 
 6. RAM recovers above threshold
-   → NATS: publish "polyglot.resource.ram" {available: 5500}
+   → NATS: publish "aljam3.resource.ram" {available: 5500}
 
 7. Trigger Monitor evaluates -Q.Job.Resume.RAM.MoreThan → condition met for job:001
    → NATS: publish "command.job.resume" {jobId: job:001}
@@ -79,12 +79,12 @@ updated: 2026-04-16
    → Tier 2 RR includes Resume Queue → job:001
    → Constraints re-checked → all clear
    → Redis: LPOP queue:resume, SADD set:executing, HINCRBY counter:instances
-   → NATS: publish "polyglot.queue.control.job:001.job.resume"
+   → NATS: publish "aljam3.queue.control.job:001.job.resume"
 ```
 
 ## Graceful Kill Flow
 
-```polyglot
+```aljam3
 1. Trigger Monitor evaluates -Q.Job.Kill.WithCleanup condition → met for job:001
    → NATS: publish "command.job.kill.with-cleanup" {jobId: job:001}
 
@@ -99,10 +99,10 @@ updated: 2026-04-16
 3. Dispatch Coordinator dispatches from Teardown Queue
    → Redis: LPOP queue:teardown, SADD set:executing, HINCRBY counter:instances
    → Redis: HSET job:job:001 status "teardown.executing"
-   → NATS: publish "polyglot.queue.control.job:001.job.kill.with-cleanup"
+   → NATS: publish "aljam3.queue.control.job:001.job.kill.with-cleanup"
 
 4. Runner finishes current work, runs [/] cleanup, terminates
-   → NATS: publish "polyglot.runner.teardown_completed.job:001" → QH + TM
+   → NATS: publish "aljam3.runner.teardown_completed.job:001" → QH + TM
    → QH Redis: SREM set:executing, HINCRBY counter:instances -1, DEL job:job:001
    → Dispatch Coordinator wakes (slot freed)
 ```
@@ -130,7 +130,7 @@ When a pipeline hits a `[=]`, `[-]`, or `[b]` marker, the Runner sends a `trigge
 
 ## Dispatch Wait Timeout
 
-```polyglot
+```aljam3
 1. Trigger Monitor checks maxWaitTime periodically
    → Read job enqueued_at from QH state signals
    → Read queue maxWaitTime from NoSQL

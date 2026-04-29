@@ -13,7 +13,7 @@ Category-level generic permission for database operations. Takes a capability an
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Database
    [#] <capability;DatabaseCapability
    [#] <scope;string
@@ -24,7 +24,7 @@ Category-level generic permission for database operations. Takes a capability an
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Database
    (_) <capability << .Connect
    (_) <scope << "postgres://db.internal/analytics"

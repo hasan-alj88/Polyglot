@@ -9,20 +9,20 @@ When executing an action (like calling an API) that generates structured results
 
 ### Naming an Action
 Assign a label to the action's execution block so you can reference its internal state or outputs directly using `>`.
-```polyglot
+```aljam3
    [-] @Mail-API.Email.SendAdminReport
       (-) $EmailOperation
 ```
 
 ### Structured Outputs and Fallbacks
 Instead of catching generic errors with `[!] *!`, define the expected typed output enum and provide a fallback enum if it fails.
-```polyglot
+```aljam3
       (-) >status >> @Mail#Status.Delivered
          (>) >! @Mail#Status.FailedToSend
 ```
 
 ### Downstream Referencing
 You can then extract the specific output from the named action using the `>` accessor:
-```polyglot
+```aljam3
    [-] >finalStatus >> $EmailOperation>status
 ```

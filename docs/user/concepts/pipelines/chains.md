@@ -9,7 +9,7 @@ updated: 2026-04-22
 
 ## Chain Execution (Retired)
 
-The `->` chain operator has been retired from Polyglot. Chains connected pipelines in sequence on a single `[-]` line (`-A->-B->-C`), with step-addressed IO and chain-specific error handling. This syntax has been replaced by **labeled `[-]` calls** using operation labels, which are strictly more powerful.
+The `->` chain operator has been retired from Aljam3. Chains connected pipelines in sequence on a single `[-]` line (`-A->-B->-C`), with step-addressed IO and chain-specific error handling. This syntax has been replaced by **labeled `[-]` calls** using operation labels, which are strictly more powerful.
 
 ### Why Retired
 
@@ -26,7 +26,7 @@ Chains were a redundant syntactic overlay. Labeled `[-]` calls support any-to-an
 ### Replacement Pattern
 
 **Before (chain):**
-```polyglot
+```aljam3
 [-] -File.Text.Read->-Text.Parse.CSV
    (-) >0.path#path << $file
    (-) <1.rows#string >> >content
@@ -37,7 +37,7 @@ Chains were a redundant syntactic overlay. Labeled `[-]` calls support any-to-an
 ```
 
 **After (labeled calls):**
-```polyglot
+```aljam3
 [ ] Step 1: read file
 [-] -File.Text.Read
    (-) $Read

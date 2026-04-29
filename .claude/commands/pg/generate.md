@@ -1,11 +1,11 @@
 ---
 name: pg:generate
-description: Generate valid Polyglot code from a description
+description: Generate valid Aljam3 code from a description
 allowed-tools: [Read, Glob, Grep, AskUserQuestion]
 ---
 
 <objective>
-Generate valid Polyglot Code from a natural language description. Reads the full language spec and all accumulated training lessons before generating.
+Generate valid Aljam3 Code from a natural language description. Reads the full language spec and all accumulated training lessons before generating.
 
 **Invoke with:** `/pg:generate <description of what to build>`
 </objective>
@@ -28,7 +28,7 @@ Generate valid Polyglot Code from a natural language description. Reads the full
 <step name="clarify">
 1. Parse `$ARGUMENTS` for the user's intent
 2. If ambiguous, ask clarifying questions via AskUserQuestion
-3. Identify which Polyglot constructs are needed (packages, pipelines, data definitions, triggers, collections, etc.)
+3. Identify which Aljam3 constructs are needed (packages, pipelines, data definitions, triggers, collections, etc.)
 </step>
 
 <step name="generate">
@@ -42,7 +42,7 @@ Generate valid Polyglot Code from a natural language description. Reads the full
    - Correct variable lifecycle (declared → default → final → released)
 2. Apply all lessons from `memory/pg_lesson_*.md`
 3. Include `[ ]` comments explaining each section
-4. Output the code in a ```polyglot fenced block
+4. Output the code in a ```aljam3 fenced block
 5. Explain key design decisions below the code
 </step>
 

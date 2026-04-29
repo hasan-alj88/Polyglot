@@ -11,7 +11,7 @@ metadata_instance: "%#:String:csvlist"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #CommaSeparatedList
    [%] %alias << "csvlist"
    [#] ##String

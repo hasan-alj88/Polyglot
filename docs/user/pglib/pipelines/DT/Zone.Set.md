@@ -13,7 +13,7 @@ Replaces the timezone label on a `#dt` without converting the instant. The wall-
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Zone.Set
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtZoneSet"

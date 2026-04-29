@@ -10,7 +10,7 @@ metadata_definition: "%!.Env"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !Env
    [.] .NotFound#Error
       (-) .MessageTemplate << "Environment not found: {name}"

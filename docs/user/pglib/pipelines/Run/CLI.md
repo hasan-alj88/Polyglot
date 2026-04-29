@@ -9,13 +9,13 @@ metadata_instance: "%-:Run.<Lang>.CLI:N"
 
 # -Run.\<Lang\>.CLI
 
-Invoke a compiled binary with string arguments. No language runtime needed -- uses `-W.Polyglot`, not `-W.Env`.
+Invoke a compiled binary with string arguments. No language runtime needed -- uses `-W.Aljam3`, not `-W.Env`.
 
 > **Supersedes:** `-RT.<Lang>.CLI`. See [[pglib/pipelines/RT/CLI|@d:-RT.\<Lang\>.CLI]].
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Run.<Lang>.CLI
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RunCli"
@@ -49,11 +49,11 @@ Invoke a compiled binary with string arguments. No language runtime needed -- us
 
 ## Notes
 
-Uses `-W.Polyglot`, not `-W.Env` -- no language runtime needed for compiled binaries. No `<env` parameter. No `<code` parameter.
+Uses `-W.Aljam3`, not `-W.Env` -- no language runtime needed for compiled binaries. No `<env` parameter. No `<code` parameter.
 
 ## Example
 
-```polyglot
+```aljam3
 {_} _BinaryCeiling
    [.] .intent << #Ceiling
    [.] .System.Process "*"
@@ -71,7 +71,7 @@ Uses `-W.Polyglot`, not `-W.Env` -- no language runtime needed for compiled bina
    (-) >toolOutput#Code:Rust.Output
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] -Run.Rust.CLI
@@ -102,4 +102,4 @@ Requires `System.Process` capability.
 ## Related
 
 - [[pglib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
-- [[pglib/pipelines/W/Polyglot|-W.Polyglot]] -- wrapper for non-runtime execution
+- [[pglib/pipelines/W/Aljam3|-W.Aljam3]] -- wrapper for non-runtime execution

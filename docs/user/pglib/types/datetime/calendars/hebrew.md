@@ -10,7 +10,7 @@ metadata_instance: "%#:HebrewDate:N"
 
 ## #HebrewDate
 
-```polyglot
+```aljam3
 {#} #HebrewDate
    [%] .description << "Hebrew calendar date"
    [%] .version << "1.0.0"
@@ -24,7 +24,7 @@ metadata_instance: "%#:HebrewDate:N"
 
 ## #HebrewMonth
 
-```polyglot
+```aljam3
 {#} #HebrewMonth
    [%] .description << "Hebrew calendar month"
    [%] .version << "1.0.0"

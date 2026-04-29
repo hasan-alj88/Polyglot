@@ -15,7 +15,7 @@ The `<era` input selects the Hindu era. Defaults to `#HinduEra.VikramSamvat`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Hindu
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToHindu"

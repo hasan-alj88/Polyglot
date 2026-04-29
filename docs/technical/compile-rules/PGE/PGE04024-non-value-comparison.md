@@ -18,7 +18,7 @@ severity: error
 **Detection:** The compiler checks that both operands of a comparison expression resolve to value types. If either operand is a pipeline/collection/expander identifier, PGE04024 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ comparing value types
 [?] $count >? 10
    [-] -HandleOverflow
@@ -29,7 +29,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE04024 — pipeline identifiers are not value types
 [?] -Pipeline.A =? -Pipeline.B
    [-] $same << #Boolean.True

@@ -13,7 +13,7 @@ Connects SSH on setup, disconnects on cleanup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.SSH.Session
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WSshSession"

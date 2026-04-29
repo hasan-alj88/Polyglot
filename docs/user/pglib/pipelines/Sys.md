@@ -20,7 +20,7 @@ System pipelines that read environment state require a `{_}` permission object g
 |----------|-------------------|----------|
 | `-Sys.OS` | System.Env | System |
 
-```polyglot
+```aljam3
 -Sys
    .OS
       >os#OS

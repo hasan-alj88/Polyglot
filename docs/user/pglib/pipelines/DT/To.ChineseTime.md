@@ -13,7 +13,7 @@ Converts a `#dt` into Chinese traditional time units (shichen/ke/fen). These pip
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.ChineseTime
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToChineseTime"

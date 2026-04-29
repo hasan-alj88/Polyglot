@@ -10,9 +10,9 @@ updated: 2026-03-30
 
 ## Type Identity
 
-Polyglot uses **structural matching** — two types are the same if they have the same fields and field types, regardless of name.
+Aljam3 uses **structural matching** — two types are the same if they have the same fields and field types, regardless of name.
 
-```polyglot
+```aljam3
 {#} #UserProfile
    [.] .name#string
    [.] .email#string
@@ -34,7 +34,7 @@ For the formal rules and compile-error references, see [[type-identity|technical
 
 Always allowed. A struct's fixed (`.`) fields are converted to flexible (`:`) fields in the serial. The struct is always a valid subset of serial's openness.
 
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
@@ -57,7 +57,7 @@ The compiler performs best-effort static analysis:
 - **Provably mismatches** — PGE04002 (schema mismatch)
 - **Cannot prove match** — user must handle with `[!]` block or `!<` fallback. If absent → PGE04009
 
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int

@@ -15,7 +15,7 @@ For known literals in execution body, use the `$Dur` constructor instead — it 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Dur.Parse
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DurParse"
@@ -49,7 +49,7 @@ None required. Pure computation pipeline.
 
 ## Usage
 
-```polyglot
+```aljam3
 [-] $timeout#duration << -Dur.Parse
    (<) <raw#string << $userInput
    [!] !Parse.Duration.InvalidFormat

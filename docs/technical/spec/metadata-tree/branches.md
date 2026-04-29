@@ -16,7 +16,7 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 
 ### Structure
 
-```polyglot
+```aljam3
 %-:MyPipeline:0
 ├── .<                           <- input ports
 │   └── .data#Serial
@@ -46,7 +46,7 @@ This file specifies the pipeline, wrapper, queue, trigger, and permission branch
 
 Jobs within a pipeline instance are addressed positionally by marker type and index. This is the **compiler-internal canonical form** — not user-facing syntax. Users access jobs through `.jobs:UID` at runtime.
 
-```polyglot
+```aljam3
 %-:ProcessData:0
 ├── .r.0                        <- first [-] job (-FetchData)
 ├── .p.0                        <- first [=] job (-Transform)
@@ -58,7 +58,7 @@ Positional paths use the marker letter (`r`, `p`, `b`) and a zero-based index wi
 
 Nested sub-jobs extend the positional path:
 
-```polyglot
+```aljam3
 %-:ProcessData:0.p.0            <- [=] -Transform
 %-:ProcessData:0.p.0.r.0        <- [-] inside -Transform's body
 %-:ProcessData:0.p.0.p.0        <- [=] inside -Transform's body
@@ -70,7 +70,7 @@ Nested sub-jobs extend the positional path:
 
 ### Structure
 
-```polyglot
+```aljam3
 %W:DB.Connection:0
 ├── .<                       <- inputs from calling pipeline
 │   └── .connectionString#string
@@ -93,7 +93,7 @@ Nested sub-jobs extend the positional path:
 
 ### Structure
 
-```polyglot
+```aljam3
 %Q:GPUQueue:0
 ├── .strategy#QueueStrategy        <- FIFO, LIFO, Priority
 ├── .host#String                   <- target host (1 queue = 1 host)
@@ -112,7 +112,7 @@ Nested sub-jobs extend the positional path:
 ### Key Properties
 
 - **Flexible instances** — each queue use creates `%Q:Name:N` with sequential numbering.
-- **Fields are fixed** — all fields (`.strategy`, `.host`, `.maxInstances`, etc.) are Polyglot-defined fixed fields. `#RetriggerStrategy` is a queue configuration enforced by the Trigger Monitor, not a queue metadata field.
+- **Fields are fixed** — all fields (`.strategy`, `.host`, `.maxInstances`, etc.) are Aljam3-defined fixed fields. `#RetriggerStrategy` is a queue configuration enforced by the Trigger Monitor, not a queue metadata field.
 - **Host-based dispatch** — `.host` binds each queue to a specific host. 1 queue = 1 host. Offloading work to another host means switching queues (e.g., via `-Q.Reassign`).
 - **Active controls** — nested `[Q]` lines within the definition set default pause/resume/kill behavior.
 - **`live` fields** — queue instances report runtime state: `pendingCount`, `activeCount`, `totalProcessed`. See [[metadata|user/concepts/metadata]].
@@ -123,7 +123,7 @@ Nested sub-jobs extend the positional path:
 
 ### Structure
 
-```polyglot
+```aljam3
 %T:Folder.NewFiles:0
 ├── .<                      <- input ports
 │   └── .path#path
@@ -141,11 +141,11 @@ Nested sub-jobs extend the positional path:
 
 ## Permission Branch
 
-`%_` stores named `{_}` permission objects. Unlike other branches, `%_` has **no `:{instance}` level** — permissions are compile-time declarations with no runtime instances. Object names use `:` (flexible), but all subfields use `.` (fixed). All categories and capabilities are Polyglot-defined, not user-extensible. `%_` uses `permission_path` (not `instance_path`) — see [[path-grammar|Path Grammar]]. See [[permissions]] for the full permission system.
+`%_` stores named `{_}` permission objects. Unlike other branches, `%_` has **no `:{instance}` level** — permissions are compile-time declarations with no runtime instances. Object names use `:` (flexible), but all subfields use `.` (fixed). All categories and capabilities are Aljam3-defined, not user-extensible. `%_` uses `permission_path` (not `instance_path`) — see [[path-grammar|Path Grammar]]. See [[permissions]] for the full permission system.
 
 ### Structure
 
-```polyglot
+```aljam3
 %_
 +-- :Secrets                           <- named {_} permission object (instance)
 |   +-- .intent                        #PermissionIntent (Ceiling | Grant)
@@ -188,7 +188,7 @@ Nested sub-jobs extend the positional path:
 ### Key Properties
 
 - **Named objects** — each `{_}` definition creates a named entry under `%_` (e.g., `%_:Secrets`). Object names use `:` flexible navigation.
-- **Fixed subfields (`.`)** — all fields within a permission object use `.` fixed-field navigation. The `__Permission` schema is Polyglot-defined, not user-extensible.
+- **Fixed subfields (`.`)** — all fields within a permission object use `.` fixed-field navigation. The `__Permission` schema is Aljam3-defined, not user-extensible.
 - **Resource locator fields** — `.resource.locator` carries category-dependent fields (`.path`, `.host`, `.credentials`, etc.) that identify the specific external resource. Pipelines receive the whole `_` object and extract fields they need.
 - **Template inputs** — `{_}` templates have a `._input` subsection listing `(_)` declared parameters. Templates resolve to concrete instances at compile time — "never generic at resolution."
 - **No instances** — permissions are per-definition, resolved at compile time. No `:{instance}` level exists. No runtime metadata.
@@ -205,7 +205,7 @@ Nested sub-jobs extend the positional path:
 
 ### Structure
 
-```polyglot
+```aljam3
 %definition.$:DT:0                          <- overload 0: keyword "Today"
 ├── .pattern                                <- compiled regex ("^Today$")
 ├── .targetType                             <- #DT.Date

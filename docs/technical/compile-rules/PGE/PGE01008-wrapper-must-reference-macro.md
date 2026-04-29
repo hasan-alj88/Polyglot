@@ -21,7 +21,7 @@ severity: error
 **See also:** PGE01004 (wrapper structural constraints), PGE01009 (wrapper IO mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ wrapper references a {W} wrapper definition
 {W} -W.DB.Transaction
    (-) <connStr;string
@@ -43,7 +43,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01008 — wrapper references a {-} pipeline, not a {W} wrapper
 {-} -NotAWrapper
    [T] -T.Call
@@ -57,7 +57,7 @@ severity: error
       (-) $input << $input
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01008 — wrapper references a nonexistent definition
 {-} -ProcessData
    [T] -T.Call

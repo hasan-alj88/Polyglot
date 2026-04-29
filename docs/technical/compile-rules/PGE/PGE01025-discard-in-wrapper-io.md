@@ -19,7 +19,7 @@ severity: error
 **See also:** PGE01009 (wrapper IO mismatch)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ named variables wired to wrapper IO
 [W] -W.DB.Connection
    (-) $connectionString << $connStr
@@ -27,13 +27,13 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01025 — $* discards the wrapper input
 [W] -W.DB.Connection
    (-) $* << $connectionString
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01025 — $* discards the wrapper output
 [W] -W.DB.Connection
    (-) $connectionString << $connStr

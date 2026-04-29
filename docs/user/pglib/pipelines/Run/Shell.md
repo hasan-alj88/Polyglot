@@ -13,13 +13,13 @@ Execute a shell command string through the system shell (`sh -c "..."`). Unlike 
 
 No `[@]` import needed.
 
-**PRIMITIVE** — pglib runtime pipeline implemented by the Polyglot runtime.
+**PRIMITIVE** — pglib runtime pipeline implemented by the Aljam3 runtime.
 
-> **Language-agnostic:** `-Run.Shell` has no `<Lang>` placeholder. It delegates to the system shell, not a language-specific runtime. No `-W.Env` environment is needed — uses `-W.Polyglot`.
+> **Language-agnostic:** `-Run.Shell` has no `<Lang>` placeholder. It delegates to the system shell, not a language-specific runtime. No `-W.Env` environment is needed — uses `-W.Aljam3`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Run.Shell
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RunShell"
@@ -71,7 +71,7 @@ No code or binding validation applies to `-Run.Shell`:
 
 ## Example
 
-```polyglot
+```aljam3
 {_} _ShellCeiling
    [.] .intent << #Ceiling
    [.] .System.Process "*"
@@ -96,7 +96,7 @@ No code or binding validation applies to `-Run.Shell`:
    (-) >result#ShellResult
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] -Run.Shell
@@ -166,5 +166,5 @@ This is the same process registration pattern used by `-Run.<Lang>.CLI` — any 
 
 - [[pglib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
 - [[pglib/pipelines/Run/CLI|-Run.\<Lang\>.CLI]] -- structured binary invocation (no shell)
-- [[pglib/pipelines/W/Polyglot|-W.Polyglot]] -- wrapper for non-runtime execution
+- [[pglib/pipelines/W/Aljam3|-W.Aljam3]] -- wrapper for non-runtime execution
 - [[pglib/pipelines/T/Git.Hook|-T.Git.Hook]] -- local Git hook trigger (depends on shell execution)

@@ -13,7 +13,7 @@ Category-level generic permission for file system operations. Takes a capability
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __File
    [#] <capability;FileCapability
    [#] <scope;path
@@ -24,7 +24,7 @@ Category-level generic permission for file system operations. Takes a capability
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __File
    (_) <capability << .Read
    (_) <scope << "/var/log/*"

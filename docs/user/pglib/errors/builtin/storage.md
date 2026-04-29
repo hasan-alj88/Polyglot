@@ -10,7 +10,7 @@ metadata_definition: "%!.Storage"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !Storage
    [.] .Space#Error
       (-) .MessageTemplate << "Insufficient storage space: {required} needed"

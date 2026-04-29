@@ -11,7 +11,7 @@ metadata_instance: "%#:String:dtstring"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #DataTypeString
    [%] %alias << "dtstring"
    [#] ##String

@@ -11,7 +11,7 @@ Expands a collection and collects all items into an array.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =*Into.Array
    (=) <Map << $lookup
    (*) >Array >> $values
@@ -31,7 +31,7 @@ Expands a collection and collects all items into an array.
 
 ## Equivalent Expand-Collect
 
-```polyglot
+```aljam3
 [-] =ForEach.Map
    (=) <Map << $lookup
    (=) >key >> $key

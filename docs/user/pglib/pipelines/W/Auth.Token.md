@@ -13,7 +13,7 @@ Acquires OAuth token on setup, revokes on cleanup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.Auth.Token
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WAuthToken"

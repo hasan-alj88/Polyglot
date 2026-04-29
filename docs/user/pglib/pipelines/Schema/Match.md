@@ -13,7 +13,7 @@ Boolean schema check -- does this data match this type? Returns `#True`/`#False`
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -#.Match
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaMatch"

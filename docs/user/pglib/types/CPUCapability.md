@@ -15,7 +15,7 @@ Capability enum for `#CPU` permission category. See [[concepts/permissions|Permi
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #CPUCapability
    [%] .description << "CPU resource limit capabilities"
    [%] .version << "1.0.0"

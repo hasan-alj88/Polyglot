@@ -30,7 +30,7 @@ For a 3x4 2D array, the key tree is a Cartesian product:
 
 ### Access
 
-```polyglot
+```aljam3
 [ ] 1D array access
 [-] $first << $myArray<0
 

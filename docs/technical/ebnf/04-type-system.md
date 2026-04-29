@@ -19,7 +19,7 @@ concrete_type_expr  ::= basic_type
                       (* All non-live type forms — no wildcard *)
 
 live_type           ::= "live" concrete_type_expr ;
-                      (* Polyglot-managed, read-only. Wraps concrete only — no nested live. *)
+                      (* Aljam3-managed, read-only. Wraps concrete only — no nested live. *)
 
 type_expr           ::= concrete_type_expr
                       | live_type ;
@@ -119,7 +119,7 @@ schema_param_bind   ::= "[#]" schema_id NEWLINE
 
 wrapper_def         ::= "{W}" '=' dotted_name NEWLINE
                          { indent wrapper_body_line NEWLINE } ;
-                      (* e.g., {W} =W.Polyglot, {W} =W.DB.Connection *)
+                      (* e.g., {W} =W.Aljam3, {W} =W.DB.Connection *)
 
 wrapper_body_line   ::= scope_setup
                        | scope_cleanup

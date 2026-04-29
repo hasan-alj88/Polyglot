@@ -10,7 +10,7 @@ metadata_definition: "%!.RT"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !RT
    [.] .CompileError#Error
       (-) .MessageTemplate << "Compile error in {language}: {reason}"

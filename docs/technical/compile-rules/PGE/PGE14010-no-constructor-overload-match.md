@@ -25,7 +25,7 @@ severity: error
 **Error Message:**
 ```
 error[PGE14010]: no constructor overload matches input string
-  --> src/pipeline.pg:8:20
+  --> src/pipeline.aj3:8:20
    |
 8  |    [-] $t << $DT"not-a-date"
    |                  ^^^^^^^^^^^^ does not match any $DT overload
@@ -38,24 +38,24 @@ error[PGE14010]: no constructor overload matches input string
 ```
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ argument matches the time overload pattern
 {-} -MyPipeline
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] $t << $DT"14:30:00"
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14010 — "not-a-date" does not match any $DT overload
 {-} -MyPipeline
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] $t << $DT"not-a-date"

@@ -13,7 +13,7 @@ Capability-level generic permission for camera access. Sugar over [[INDEX|__Devi
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __Device.Camera
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for camera access. Sugar over [[INDEX|__Devi
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __Device.Camera
    (_) <scope << "front"
 ```

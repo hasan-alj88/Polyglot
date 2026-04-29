@@ -13,7 +13,7 @@ Copy a file from one path to another.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -File.Copy
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "FileCopy"

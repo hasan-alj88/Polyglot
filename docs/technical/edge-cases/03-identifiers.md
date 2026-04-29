@@ -16,7 +16,7 @@ updated: 2026-04-16
 
 **What it tests:** Full address with subpackage and 4-segment version. See [[packages]], [[identifiers]].
 
-```polyglot
+```aljam3
 {@} @Local:999.MyPackage.Sub:v1.2.3.2
 ```
 
@@ -26,7 +26,7 @@ updated: 2026-04-16
 
 **What it tests:** `Community` registry with username-style ID.
 
-```polyglot
+```aljam3
 [@] @Slack << @Community:tools.SlackAdmin:v1.3.0
 ```
 
@@ -34,7 +34,7 @@ updated: 2026-04-16
 
 **What it tests:** Whether version and subpackage are truly optional.
 
-```polyglot
+```aljam3
 {@} @Local:001.Minimal
 ```
 
@@ -45,7 +45,7 @@ updated: 2026-04-16
 
 **What it tests:** Referencing an enum value from an imported package: `@alias#DataName.EnumField`. See [[syntax/types/structs#Enum Fields vs Value Fields]].
 
-```polyglot
+```aljam3
 [?] $status =? @HR#EmployeeStatus.Active
 ```
 
@@ -55,7 +55,7 @@ updated: 2026-04-16
 
 **What it tests:** Calling an imported pipeline. See [[packages#Usage]].
 
-```polyglot
+```aljam3
 [-] @Mail-Mailbox.Provision
 (-) <email << $email
 ```
@@ -67,7 +67,7 @@ updated: 2026-04-16
 
 **What it tests:** Variables with `:` flexible field separators. See [[identifiers#Serialized Identifiers]].
 
-```polyglot
+```aljam3
 [-] $config:timeout:value#int << 30
 [-] $user:name#string << "Alice"
 ```
@@ -79,7 +79,7 @@ updated: 2026-04-16
 
 **What it tests:** Mixing `.` and `:` at same level is rejected.
 
-```polyglot
+```aljam3
 [ ] INVALID — mixed separators at same sibling level
 [-] $point.x << 10
 [-] $point:y << 20
@@ -91,7 +91,7 @@ updated: 2026-04-16
 **EBNF ref:** `field_path ::= name { field_separator name }`, `field_separator ::= fixed_sep | flex_sep`
 **What it tests:** A single `field_path` can contain both `.` and `:` when crossing from a fixed level to a flexible level. PGE05001 enforces sibling homogeneity per level, not per path. See [[identifiers#Serialization Rules]], [[PGE05001|PGE05001]].
 
-```polyglot
+```aljam3
 {#} #Config
    [.] .db#serial
    [.] .app#serial

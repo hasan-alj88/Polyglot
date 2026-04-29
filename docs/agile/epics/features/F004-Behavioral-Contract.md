@@ -1,6 +1,6 @@
 ---
-epic: "Polyglot Lexer & AST Generator"
-github-issue-link: "https://github.com/hasan-alj88/Polyglot/issues/361"
+epic: "Aljam3 Lexer & AST Generator"
+github-issue-link: "https://github.com/hasan-alj88/Aljam3/issues/361"
 status: "planning"
 assignee: "@scrum_master"
 dependencies: ["F003-Compiler"]

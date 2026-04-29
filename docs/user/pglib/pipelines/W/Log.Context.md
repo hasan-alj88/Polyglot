@@ -13,7 +13,7 @@ Opens structured log scope on setup, closes on cleanup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.Log.Context
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WLogContext"

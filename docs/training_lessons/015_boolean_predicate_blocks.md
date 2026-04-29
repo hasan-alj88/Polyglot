@@ -5,7 +5,7 @@
 
 ## Lesson Summary
 
-Conditionals in Polyglot are represented as structural blocks rather than inline variables. 
+Conditionals in Aljam3 are represented as structural blocks rather than inline variables. 
 
 ### Syntax
 - The conditional block is opened with `[?]`.
@@ -16,7 +16,7 @@ Conditionals in Polyglot are represented as structural blocks rather than inline
 All conditional branches must be exhaustive. A compile error will occur if paths are left unhandled. You must include a fallback/else block using `[?] *?` (which can map to an empty action like `[-] -Do.Noting`).
 
 ### Correct Usage
-```polyglot
+```aljam3
    [?] $maxTemp >? <threshold 
       [=] @Mail-API.Email.SendAlert
          (-) $SendEmailOp

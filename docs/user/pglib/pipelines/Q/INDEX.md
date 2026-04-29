@@ -10,7 +10,7 @@ status: complete
 <!-- @c:concepts/pipelines/queue/INDEX -->
 Queue pipelines manage the multi-queue execution model. Every `-Q.*` pipeline is a **parameterized instruction** compiled into the behavior contract's signal map. The Trigger Monitor reads the signal map and executes at runtime. No `[@]` import needed. See [[concepts/pipelines/queue/INDEX|c:Queue]] for queue concepts.
 
-**PRIMITIVE** — Queue pipelines are direct OS/runtime integrations implemented by the Polyglot runtime. They cannot be reimplemented in user `.pg` files.
+**PRIMITIVE** — Queue pipelines are direct OS/runtime integrations implemented by the Aljam3 runtime. They cannot be reimplemented in user `.aj3` files.
 
 ## Permissions
 
@@ -178,7 +178,7 @@ Used for structural validation before the program compiles.
 
 ## Example: Queue Definition + Rules + Pipeline
 
-```polyglot
+```aljam3
 [ ] Queue configuration
 {Q} #Queue:WorkerQueue
    [.] .tickPeriod << #DT"5s"
@@ -214,7 +214,7 @@ Used for structural validation before the program compiles.
    [ ] Load job rules
    [Q] << #RAMGuard
    [Q] << #CPUGuard
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    ...
 ```
 
@@ -232,7 +232,7 @@ The following pipelines have been replaced. See individual files for migration p
 | [[pglib/pipelines/Q/Drain\|d:-Q.Drain]] | [[pglib/pipelines/Q/Queue.Drain\|-Q.Queue.Drain]] | Scoped naming |
 | [[pglib/pipelines/Q/Flush\|d:-Q.Flush]] | [[pglib/pipelines/Q/Queue.Flush\|-Q.Queue.Flush]] | Scoped naming |
 | [[pglib/pipelines/Q/Reassign\|d:-Q.Reassign]] | [[pglib/pipelines/Q/Job.Reassign\|-Q.Job.Reassign]] | Scoped naming |
-| `.If.<Resource>.<Condition>` suffixes | `[?]`/`[&]`/`[+]` conditional blocks | Conditions belong in Polyglot's conditional system |
+| `.If.<Resource>.<Condition>` suffixes | `[?]`/`[&]`/`[+]` conditional blocks | Conditions belong in Aljam3's conditional system |
 
 ## Related
 

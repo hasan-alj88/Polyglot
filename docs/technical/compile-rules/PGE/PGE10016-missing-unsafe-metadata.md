@@ -23,7 +23,7 @@ severity: error
 **See also:** PGE10015 (opaque binary without `_Unsafe.SandboxOnly` — fires before this rule), PGW10007 (informational warning when `_Unsafe.SandboxOnly` is active), [[spec/job-sandbox#Opaque Code]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all three metadata fields present
 {_} _FileGrant
    [.] .intent << #Grant
@@ -49,7 +49,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10016 — missing %Authors
 {_} _FileGrant
    [.] .intent << #Grant
@@ -73,7 +73,7 @@ severity: error
       (-) >output#string >> >result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10016 — missing all three metadata fields
 {_} _FileGrant
    [.] .intent << #Grant

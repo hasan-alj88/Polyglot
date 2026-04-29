@@ -15,7 +15,7 @@ The `$Ver` constructor produces `#Ver` values from semantic version strings. All
 
 ### Major.Minor.Patch-Prerelease+Build
 
-```polyglot
+```aljam3
 {$} $Ver"{major}.{minor}.{patch}-{pre}+{build}"
    ($) <major.re << "[0-9]+"
    ($) <minor.re << "[0-9]+"
@@ -34,7 +34,7 @@ Matches full semver strings like `"1.2.3-alpha.1+20260422"`. The `-` and `+` lit
 
 ### Major.Minor.Patch-Prerelease
 
-```polyglot
+```aljam3
 {$} $Ver"{major}.{minor}.{patch}-{pre}"
    ($) <major.re << "[0-9]+"
    ($) <minor.re << "[0-9]+"
@@ -51,7 +51,7 @@ Matches version strings with prerelease label but no build metadata (e.g., `"2.0
 
 ### Major.Minor.Patch+Build
 
-```polyglot
+```aljam3
 {$} $Ver"{major}.{minor}.{patch}+{build}"
    ($) <major.re << "[0-9]+"
    ($) <minor.re << "[0-9]+"
@@ -68,7 +68,7 @@ Matches version strings with build metadata but no prerelease label (e.g., `"1.0
 
 ### Major.Minor.Patch
 
-```polyglot
+```aljam3
 {$} $Ver"{major}.{minor}.{patch}"
    ($) <major.re << "[0-9]+"
    ($) <minor.re << "[0-9]+"
@@ -96,7 +96,7 @@ Resolution order: longest match first (full before prerelease/build, those befor
 
 ## Usage
 
-```polyglot
+```aljam3
 [ ] compile-time guaranteed — no error handling
 [-] $appVersion << $Ver"2.1.0"
 [-] $preRelease << $Ver"3.0.0-beta.2"

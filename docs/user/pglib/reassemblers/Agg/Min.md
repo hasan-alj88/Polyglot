@@ -11,7 +11,7 @@ Expands a collection and produces the minimum numeric value.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =*Agg.Min
    (=) <array << $values
    (*) >min >> $lowest
@@ -31,7 +31,7 @@ Expands a collection and produces the minimum numeric value.
 
 ## Equivalent Expand-Collect
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $values
    (=) >item >> $value

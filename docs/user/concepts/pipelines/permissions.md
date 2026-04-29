@@ -13,7 +13,7 @@ updated: 2026-04-17
 <!-- @c:permissions -->
 Pipelines declare permissions by referencing named `{_}` grant objects via `(-)` IO lines. Permission IO goes with other `(-)` lines, before `[T]`, `[Q]`, `[W]`, and data IO. See [[permissions]] for the full permission system, `{_}` object syntax, and the Ceiling vs Grant model.
 
-```polyglot
+```aljam3
 {_} _LogGrant
    [.] .intent << #Grant
    [.] .category #File
@@ -25,7 +25,7 @@ Pipelines declare permissions by referencing named `{_}` grant objects via `(-)`
    (-) _LogGrant
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <logPath#path
    (-) >summary#string
 

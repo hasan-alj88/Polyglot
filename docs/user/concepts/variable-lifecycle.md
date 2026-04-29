@@ -7,7 +7,7 @@ status: complete
 
 # Variable Lifecycle
 
-<!-- @c:glossary:Polyglot Code -->
+<!-- @c:glossary:Aljam3 Code -->
 <!-- @c:identifiers -->
 <!-- @c:pipelines -->
 <!-- @u:technical/ebnf/14-lifecycle -->
@@ -15,7 +15,7 @@ status: complete
 <!-- @u:technical/edge-cases/20-lifecycle-gaps -->
 <!-- @u:errors#Failed State -->
 <!-- @u:collections/collect#Collect Operators -->
-Variables in Polyglot Code ([[glossary#Polyglot Code]]) move through five lifecycle stages. Variables are [[identifiers]] with the `$` prefix. For how lifecycle applies to IO parameters, see [[concepts/pipelines/io-triggers#IO as Implicit Triggers]].
+Variables in Aljam3 Code ([[glossary#Aljam3 Code]]) move through five lifecycle stages. Variables are [[identifiers]] with the `$` prefix. For how lifecycle applies to IO parameters, see [[concepts/pipelines/io-triggers#IO as Implicit Triggers]].
 
 ## Stages
 
@@ -90,7 +90,7 @@ Any access to a Released variable is a compile error (PGE02008). Code that can o
 
 Variable lifecycle state is queryable at runtime via the `%` metadata accessor:
 
-```polyglot
+```aljam3
 [?] $myVar%state =? #VarState.Default
    [-] ...
 [?] $myVar%state =? #VarState.Failed
@@ -119,7 +119,7 @@ All assignment operators are directional — the arrow indicates data flow direc
 
 ### Default Assignment — Pipeline IO
 
-```polyglot
+```aljam3
 ...
 {-} -Example1
 [ ] Daily trigger at 3AM
@@ -132,7 +132,7 @@ All assignment operators are directional — the arrow indicates data flow direc
 
 ### Default and Final Assignment — Data Fields
 
-```polyglot
+```aljam3
 ...
 {#} #CustomDataType
 [ ] Data fields with default values

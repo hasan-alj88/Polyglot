@@ -14,31 +14,31 @@ severity: warning
 <!-- @u:syntax/types -->
 <!-- @u:concepts/permissions -->
 
-**Statement:** A `.pg` file that contains a `{@}` package declaration but no `{#}`, `{-}`, `{W}`, `{T}`, `{Q}`, `{N}`, `{!}`, or `{_}` definitions produces a warning. Comment blocks (`{ }`) do not count as definitions.
+**Statement:** A `.aj3` file that contains a `{@}` package declaration but no `{#}`, `{-}`, `{W}`, `{T}`, `{Q}`, `{N}`, `{!}`, or `{_}` definitions produces a warning. Comment blocks (`{ }`) do not count as definitions.
 **Rationale:** A file with only a package declaration and comments defines nothing useful. It is likely a stub or placeholder that was never completed. This is a warning rather than an error because the file is structurally valid.
 **Detection:** After parsing the package declaration, the compiler checks whether the file contains at least one definition block (`{#}`, `{-}`, `{W}`, `{T}`, `{Q}`, `{N}`, `{!}`, or `{_}`).
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ file with package and definition
 {@} @Local:001.App:v1.0.0
 
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW01003 — no definitions
 {@} @Local:999.EmptyPackage:v1.0.0
 { } This file defines nothing
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW01003 — package declaration only
 {@} @Local:001.Stub:v0.1.0
 ```

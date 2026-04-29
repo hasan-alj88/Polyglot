@@ -13,7 +13,7 @@ Opens connection + begins transaction on setup. Commits transaction + closes con
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.DB.Transaction
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WDbTransaction"

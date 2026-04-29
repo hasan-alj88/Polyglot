@@ -32,7 +32,7 @@ $var#string <~ ""           ✗ PGE04021 — empty string on a non-###None type
 
 ## Declaration
 
-```polyglot
+```aljam3
 {#} #None
    [#] ##Scalar
    [#] ###None

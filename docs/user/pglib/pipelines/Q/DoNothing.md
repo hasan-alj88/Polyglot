@@ -13,7 +13,7 @@ No action — satisfies `*?` exhaustiveness in conditional blocks. The compiler 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.DoNothing
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QDoNothing"

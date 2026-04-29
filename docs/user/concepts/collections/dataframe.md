@@ -12,7 +12,7 @@ updated: 2026-04-09
 
 `#Dataframe` is a two-level tabular collection -- a generic `{#}` type with `(#) <#Columns` and `(#) <#CellType` parameters. Level 1 uses `%##Fields << #Range` for integer row indices. Level 2 composes `##Record` with the column enum as fields. Composes `##Dataframe`. Use `:` positional binding: `#dataframe:SalesColumns:string`. See [[pglib/types/Dataframe|#Dataframe]] for the full definition.
 
-```polyglot
+```aljam3
 {#} #SalesColumns
    [#] ##Enum
    [#] ##Scalar
@@ -27,7 +27,7 @@ updated: 2026-04-09
 
 Row access uses `<` (range index), column access uses a second `<` (enum variant from `##Record`):
 
-```polyglot
+```aljam3
 [ ] Row 0, column "product"
 [-] $name#string << $sales<0<product
 
@@ -49,7 +49,7 @@ When a collection type is used as another collection's value type (e.g., an arra
 - **PGE11002** -- A collection used as a value type without explicit `%##Depth.Max` is a compile error. Unbounded nesting must be declared intentionally.
 - **PGW11003** -- Setting `%##Depth.Max << -1` (unlimited) on a user-defined type raises a warning. Only `#Serial` should use unlimited depth.
 
-```polyglot
+```aljam3
 [ ] PGE11002: compile error -- no depth bound on nested array
 {#} #BadGrid
    (#) <~ #array:array:int

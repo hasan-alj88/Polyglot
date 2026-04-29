@@ -21,7 +21,7 @@ severity: warning
 **See also:** PGW09002 (unused import — analogous pattern), PGE10004 (undeclared permission — the inverse: using IO without permission), [[permissions#Compile-Time Enforcement]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all referenced {_} objects have exercised capabilities
 {_} _LogIO
    [.] .intent << #Grant
@@ -34,19 +34,19 @@ severity: warning
    (-) _LogIO
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Read
       (-) <path << _LogIO
       (-) >content >> $content                                     [ ] ✓ exercises File.Read
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ pure computation — no permission IO, no IO calls
 {-} -PureCompute
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <a#int
    (-) <b#int
    (-) >sum#int
@@ -55,7 +55,7 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW10001 — _WebGrant declared but never exercised
 {_} _FileGrant
    [.] .intent << #Grant
@@ -76,7 +76,7 @@ severity: warning
    (-) _WebGrant                                                   [ ] ⚠ PGW10001 — _WebGrant never used
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Read
       (-) <path << _FileGrant
@@ -84,7 +84,7 @@ severity: warning
    [ ] no Web.Request call — _WebGrant is unused
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW10001 — all permission IO unused (pure computation despite declarations)
 {_} _FileGrant
    [.] .intent << #Grant
@@ -104,7 +104,7 @@ severity: warning
    (-) _SysGrant                                                   [ ] ⚠ PGW10001 — _SysGrant never used
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >output#string
    [ ]

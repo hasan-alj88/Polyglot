@@ -33,7 +33,7 @@ The leaf stores an actual value of the specified type. This is the most common f
 
 ## Declaration
 
-```polyglot
+```aljam3
 {#} #path
    [.] .Unix#string
    [.] .Windows#string

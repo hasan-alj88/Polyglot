@@ -13,7 +13,7 @@ Extracts all values for a given column across all rows of a row-oriented Datafra
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -#.Column
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaColumn"

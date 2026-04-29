@@ -25,7 +25,7 @@ metadata_definition: "%definition.%##:Fields"
 
 When `%##Fields << #Range`, children are addressed by integer index. The compiler generates `:0`, `:1`, `:2`, ... flexible fields up to `%##Count`:
 
-```polyglot
+```aljam3
 {#} ##Array
    (#) <#ValueType
    (#) <Dim##Dimension <~ "1D"
@@ -42,7 +42,7 @@ When `%##Fields << #Range`, children are addressed by integer index. The compile
 
 When `%##Fields` receives an enum type reference, the compiler reads the enum's variants and generates one `:` child per variant:
 
-```polyglot
+```aljam3
 {#} ##Record
    (#) <#Fields << ##Enum
    (#) <#ValueType <~ #
@@ -59,7 +59,7 @@ For example, `%##Fields << #DayOfWeek` stamps `.Monday`, `.Tuesday`, ... `.Sunda
 
 The enum governing `%##Fields`:
 
-```polyglot
+```aljam3
 {#} #FieldsDescriptor
    [#] ##Scalar
    [#] %##Active << #ActiveKind.One

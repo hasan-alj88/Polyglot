@@ -41,21 +41,21 @@ Missing, extra, or misnamed IO lines fire PGE03008.
 **See also:** PGE03007 (expand operator input mismatch), PGE03006 (race collector type homogeneity)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ correct IO for *Into.Array
 [=] *Into.Array
    (*) <item << $doubled
    (*) >Array >> $DoubledNumbers
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ correct IO for *Agg.Sum
 [=] *Agg.Sum
    (*) <number << $doubled
    (*) >sum >> $TotalSum
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ correct IO for *Into.Serial
 [-] *Into.Serial
    (*) <key << $k
@@ -64,14 +64,14 @@ Missing, extra, or misnamed IO lines fire PGE03008.
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03008 — *Into.Serial missing <value input
 [-] *Into.Serial
    (*) <item << $v                    [ ] ✗ PGE03008 — expected <key and <value, got <item
    (*) >Serial >> $result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03008 — *Agg.Sum wrong input name
 [=] *Agg.Sum
    (*) <string << $text               [ ] ✗ PGE03008 — expected <number, got <string

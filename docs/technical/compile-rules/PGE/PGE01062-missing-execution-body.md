@@ -14,22 +14,22 @@ severity: error
 **Detection:** The compiler verifies that at least one token classifying as an execution action is present inside the pipeline scope.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Pipeline has an execution step
 {-} -ProcessData
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [-] >run
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01062 — Missing execution step
 {-} -ProcessData
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
                                              [ ] ✗ PGE01062 — Pipeline lacks execution body
 ```
 

@@ -13,7 +13,7 @@ Extracts the year component from a `#dt` value.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Get.Year
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtGetYear"

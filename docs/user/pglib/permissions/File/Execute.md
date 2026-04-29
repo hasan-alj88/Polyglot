@@ -13,7 +13,7 @@ Capability-level generic permission for executing files. Sugar over [[INDEX|__Fi
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __File.Execute
    [#] <scope;path
 
@@ -23,7 +23,7 @@ Capability-level generic permission for executing files. Sugar over [[INDEX|__Fi
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __File.Execute
    (_) <scope << "/usr/local/bin/ffmpeg"
 ```

@@ -11,7 +11,7 @@ Expands a collection and concatenates all string values into a single string.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =*Agg.Concatenate
    (=) <array << $names
    (*) >result >> $allNames
@@ -31,7 +31,7 @@ Expands a collection and concatenates all string values into a single string.
 
 ## Equivalent Expand-Collect
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $names
    (=) >item >> $name

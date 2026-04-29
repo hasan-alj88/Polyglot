@@ -15,7 +15,7 @@ The `$URL` constructor produces `#URL` values from URL strings. URL parsing requ
 
 ### Full URL
 
-```polyglot
+```aljam3
 {$} $URL"{url}"
    ($) <url.re << ".+"
    [-] -URL.Decompose
@@ -45,11 +45,11 @@ Single overload — no ambiguity.
 
 ## Usage
 
-```polyglot
+```aljam3
 [ ] compile-time guaranteed — no error handling
 [-] $api << $URL"https://api.example.com/v2/users"
 [-] $local << $URL"http://localhost:8080/health"
-[-] $withQuery << $URL"https://search.example.com/q?term=polyglot&lang=en"
+[-] $withQuery << $URL"https://search.example.com/q?term=aljam3&lang=en"
 [-] $ssh << $URL"ssh://git@github.com:22/user/repo.git"
 
 [ ] for dynamic strings, use -URL.Parse with error handling

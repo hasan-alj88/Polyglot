@@ -15,7 +15,7 @@ updated: 2026-03-30
 
 **What it tests:** `array.string`, `array.int`, `array.path` — dot separates array from element type. See [[syntax/types/arrays#Element-Typed Arrays]].
 
-```polyglot
+```aljam3
 (-) <names#array:string
 (-) <scores#array:int
 (-) <files#array:path
@@ -27,7 +27,7 @@ updated: 2026-03-30
 
 **What it tests:** `array.UserRecord` not `array.#UserRecord`. See [[syntax/types/basic-types#User-Defined Types]].
 
-```polyglot
+```aljam3
 (-) <users#array:UserRecord
 ```
 
@@ -37,7 +37,7 @@ updated: 2026-03-30
 
 **What it tests:** `serial` as a type annotation on IO parameters. See [[syntax/types/basic-types#Basic Types]], [[concepts/collections/INDEX#Collection Hierarchy]].
 
-```polyglot
+```aljam3
 (-) <payload#serial
 ```
 
@@ -47,7 +47,7 @@ updated: 2026-03-30
 
 **What it tests:** `#DataName` as type annotation. See [[syntax/types/basic-types#User-Defined Types]].
 
-```polyglot
+```aljam3
 [-] $hire#NewHire << <payload
 ```
 
@@ -55,7 +55,7 @@ updated: 2026-03-30
 
 **What it tests:** `$Path"..."` constructor call creating `#path` values in execution body. On infrastructure lines (`[T]`/`[Q]`/`[W]`), the inline form `-Path"..."` remains valid. See [[syntax/types/strings#$Path Constructor Notation]], [[syntax/constructors]], [[pglib/pipelines/Path|-Path]].
 
-```polyglot
+```aljam3
 [ ] Basic usage — constructor in execution body
 [-] $dir#path << $Path"/tmp/MyApp"
 
@@ -82,7 +82,7 @@ updated: 2026-03-30
 
 **What it tests:** Warning when only one OS subfield assigned; error when current OS subfield missing. See [[syntax/types/strings#Explicit Subfield Assignment]].
 
-```polyglot
+```aljam3
 [ ] PGW04001 — single platform, but matches current OS (Unix)
 [ ]
 [-] $dir#path
@@ -107,7 +107,7 @@ updated: 2026-03-30
 
 **What it tests:** Assigning a plain string to a `#path` variable is a type mismatch. See [[syntax/types/strings#Explicit Subfield Assignment]].
 
-```polyglot
+```aljam3
 [ ] PGE04001 — string != path, no implicit coercion
 [-] $dir#path << "/tmp/MyApp"
 
@@ -121,7 +121,7 @@ updated: 2026-03-30
 
 **What it tests:** An inline pipeline call on an infrastructure line with one output evaluates to that output's type directly. In execution body, use constructors for known values.
 
-```polyglot
+```aljam3
 [ ] infrastructure line — inline pipeline config
 [W] -W.Env
    (-) <dir#path << -Path"/tmp/MyApp"
@@ -135,7 +135,7 @@ updated: 2026-03-30
 
 **What it tests:** An inline pipeline call with multiple outputs evaluates to `#serial` with output parameter names as keys. This is an infrastructure-context pattern — `-ParsePair` uses `%InlineString` for infrastructure configuration.
 
-```polyglot
+```aljam3
 ( ) -ParsePair is an infrastructure pipeline with %InlineString
 {-} -ParsePair
    (-) %InlineString << "{key}-{value}"
@@ -145,7 +145,7 @@ updated: 2026-03-30
    (-) >value#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] ... parsing logic ...
 
 [ ] infrastructure line usage — multiple outputs -> #serial
@@ -157,7 +157,7 @@ updated: 2026-03-30
 
 **What it tests:** Target type must match the inline pipeline's output type on infrastructure lines.
 
-```polyglot
+```aljam3
 [ ] PGE04001 — -Path returns #path, not #string
 [W] -W.Env
    (-) <name#string << -Path"/tmp"
@@ -175,14 +175,14 @@ updated: 2026-03-30
 
 **What it tests:** User-defined pipelines can accept inline calls on infrastructure lines by declaring `%InlineString` with a template. In execution body, use constructors for known values or `[-]` pipeline calls for dynamic values.
 
-```polyglot
+```aljam3
 {-} -Greeting
    (-) %InlineString << "{name}"
    (-) <name#string <~ "World"
    (-) >message#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >message << "Hello {$name}"
 
@@ -201,13 +201,13 @@ updated: 2026-03-30
 
 **What it tests:** Calling a pipeline inline on an infrastructure line when it has not declared a `%InlineString` template. This rule (PGE12003) applies to infrastructure inline calls only — for constructor errors in execution body, see PGE14xxx.
 
-```polyglot
+```aljam3
 {-} -NormalPipeline
    (-) <input#string
    (-) >output#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >output << $input
 
@@ -222,7 +222,7 @@ updated: 2026-03-30
 
 **What it tests:** New `:key` at a typed flexible level inherits the wildcard type. No explicit annotation needed. See [[syntax/types/flexible-fields#Typed Flexible Fields]].
 
-```polyglot
+```aljam3
 {#} #Handler
    [.] .endpoint#string
    [.] .method#string
@@ -240,7 +240,7 @@ updated: 2026-03-30
 
 **What it tests:** Explicit type annotation that contradicts the wildcard type is a compile error.
 
-```polyglot
+```aljam3
 {#} #Registry
    [.] .plugins
       [:] :*#Handler
@@ -253,7 +253,7 @@ updated: 2026-03-30
 
 **What it tests:** Nested typed flexible levels — compiler resolves one level at a time. See [[syntax/types/flexible-fields#Constraints]].
 
-```polyglot
+```aljam3
 {#} #Setting
    [.] .value#string
    [.] .default#string
@@ -274,7 +274,7 @@ updated: 2026-03-30
 
 **What it tests:** Flexible level without `[:] :*#Type` is untyped — treated as `#serial`.
 
-```polyglot
+```aljam3
 {#} #OpenConfig
    [.] .data
       [:] :key1#string
@@ -292,7 +292,7 @@ updated: 2026-03-30
 
 **What it tests:** Named flex field matches first; wildcard is fallback.
 
-```polyglot
+```aljam3
 {#} #MixedRegistry
    [.] .entries
       [:] :default#SpecialHandler
@@ -311,7 +311,7 @@ updated: 2026-03-30
 
 **What it tests:** Arrays support a dimension specifier via flexible field notation. Omitting `:<N>D` defaults to 1D. Access depth must match declared dimension count.
 
-```polyglot
+```aljam3
 [ ] 1D array — default (no :ND specified)
 (-) <items#array:string
 [-] $first << $items.0
@@ -347,7 +347,7 @@ updated: 2026-03-30
 
 **What it tests:** `#array` type annotation without element type specifier. The grammar requires `element_type_param` — `#array` alone is a grammar error (previously PGE04025, now grammar-enforced).
 
-```polyglot
+```aljam3
 [ ] ✗ grammar error — no element type
 (-) <items#array
 
@@ -361,7 +361,7 @@ updated: 2026-03-30
 
 **What it tests:** `#*` is no longer valid in any type annotation position. The grammar does not include a wildcard type. Multi-type constraints use `##` schemas instead (e.g., `##Scalar`, `##Leaf`).
 
-```polyglot
+```aljam3
 [ ] ✗ grammar error — wildcard type removed
 [-] $x#* << 42
 
@@ -386,7 +386,7 @@ updated: 2026-03-30
 
 **What it tests:** `element_type_param` excludes `dimension`, so `#array:2D` no longer parses — the first slot only accepts element types, not dimension literals.
 
-```polyglot
+```aljam3
 [ ] ✗ grammar error — dimension in element type slot
 [-] $matrix#array:2D
 
@@ -405,7 +405,7 @@ updated: 2026-03-30
 
 **What it tests:** Nested `live` is a grammar error. `live` wraps `concrete_type_expr` (basic, collection, or user type), not `type_expr`. Double or deeper nesting no longer parses. Note: `live` is an internal compiler/metadata concept, not user-facing.
 
-```polyglot
+```aljam3
 [ ] ✗ grammar error — double live
 [-] $x#live live string
 
@@ -422,7 +422,7 @@ updated: 2026-03-30
 
 **What it tests:** Version segments now support multi-digit numbers. Previously each segment was limited to a single `digit` (0-9), capping versions at v9.9.9.9.
 
-```polyglot
+```aljam3
 [ ] ✓ single-digit segments (unchanged)
 [@] @Registry:Acme.Analytics:v1.2.3
 

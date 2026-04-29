@@ -15,7 +15,7 @@ Capability enum for `#RAM` permission category. See [[concepts/permissions|Permi
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #RAMCapability
    [%] .description << "RAM resource limit capabilities"
    [%] .version << "1.0.0"

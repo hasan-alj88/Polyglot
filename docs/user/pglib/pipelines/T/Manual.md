@@ -13,7 +13,7 @@ Pipeline invoked manually (e.g., from CLI or test harness). No additional parame
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -T.Manual
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TManual"

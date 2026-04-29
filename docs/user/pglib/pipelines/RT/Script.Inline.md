@@ -13,7 +13,7 @@ Run inline code with variable bindings.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -RT.<Lang>.Script.Inline
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RtScriptInline"
@@ -46,11 +46,11 @@ The compiler validates that `<Bind` variable names exist as identifiers in the c
 
 ## Script vs Bind
 
-Polyglot-controlled binding — `<Bind` injects vars, `>Bind` captures final state. Compare with `.Bind` modes where foreign code controls data flow via `pull()`/`push()`.
+Aljam3-controlled binding — `<Bind` injects vars, `>Bind` captures final state. Compare with `.Bind` modes where foreign code controls data flow via `pull()`/`push()`.
 
 ## Example
 
-```polyglot
+```aljam3
 [-] -RT.Python.Script.Inline
    (-) <env#PyEnv << $pyenv
    (-) <Bind#serial << {"target_dir": $targetDir, "deleted_count": 0}

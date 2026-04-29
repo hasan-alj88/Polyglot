@@ -17,7 +17,7 @@ See [[pglib/pipelines/T/INDEX|-T.* Trigger Pipelines]] for the trigger family th
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Git
    [%] .description << "Git event type tree for CI/CD triggers"
 

@@ -26,7 +26,7 @@ When a `serial` value is pushed into a `struct`-typed target, the compiler must 
 
 No warnings. Either the compiler can prove it's safe (no handling needed), prove it's wrong (PGE04002), or the user must handle the uncertainty (PGE04009 if they don't).
 
-```polyglot
+```aljam3
 [ ] ✓ Handled — !> provides fallback
 [-] $record#UserRecord << $someSerial
    (>) !> $defaultRecord              [ ] catch-all fallback
@@ -34,7 +34,7 @@ No warnings. Either the compiler can prove it's safe (no handling needed), prove
       [-] >record << $defaultRecord
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04009 — serial→struct push without error handling
 [-] $record#UserRecord << $someSerial
 ```

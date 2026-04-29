@@ -13,7 +13,7 @@ Formats a `#dt` as an ISO-8601 string.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Format.ISO
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtFormatIso"

@@ -13,7 +13,7 @@ Converts a `#dt` to a different timezone. The underlying instant stays the same;
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Zone.Convert
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtZoneConvert"

@@ -11,7 +11,7 @@ updated: 2026-04-23
 <!-- @rules/checklist -->
 Contradictions found between documentation files. Individual issues are tracked in the `inconsistencies/` folder.
 
-**GitHub tracker:** [Issue #95](https://github.com/hasan-alj88/Polyglot/issues/95) — umbrella issue.
+**GitHub tracker:** [Issue #95](https://github.com/hasan-alj88/Aljam3/issues/95) — umbrella issue.
 
 ## Active Inconsistencies
 

@@ -11,11 +11,11 @@ name: One Package Declaration Per File
 <!-- @u:syntax/blocks -->
 <!-- @u:syntax/operators -->
 
-**Statement:** Every `.pg` file must contain exactly one `{@}` block, and it must be the first block in the file. A missing `{@}` block and multiple `{@}` blocks are both errors.
+**Statement:** Every `.aj3` file must contain exactly one `{@}` block, and it must be the first block in the file. A missing `{@}` block and multiple `{@}` blocks are both errors.
 **Rationale:** The package declaration establishes the file's identity, registry address, and imports. Without it the runtime cannot resolve references; with duplicates the file has conflicting identities.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ exactly one {@} as the first block
 {@}
    .address #string << "Registry:com.example.MyPkg:1.0.0"
@@ -25,13 +25,13 @@ name: One Package Declaration Per File
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01003 — no {@} block
 {-} -MyPipeline    [ ] ✗ PGE01003 — file has no package declaration
    ...
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01003 — two {@} blocks
 {@}
    .address #string << "Registry:com.example.MyPkg:1.0.0"

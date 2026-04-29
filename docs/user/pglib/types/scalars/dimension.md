@@ -11,7 +11,7 @@ metadata_instance: "%#:String:dim"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #Dimension
    [%] %alias << "dim"
    [#] ##String

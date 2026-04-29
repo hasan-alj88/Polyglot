@@ -8,13 +8,13 @@ assignee: "@product_owner"
 
 **As a** compiler consumer,
 **I want** the compiler to linearly scan the token stream and enforce strict EBNF grammar compliance,
-**So that** invalid grammatical sequences, invalid markers, and unknown Polyglot objects are caught and reported as PGE (Polyglot Error) codes before any hierarchical AST is built.
+**So that** invalid grammatical sequences, invalid markers, and unknown Aljam3 objects are caught and reported as PGE (Aljam3 Error) codes before any hierarchical AST is built.
 
 ## Acceptance Criteria
 - [ ] Validates that tokens on each line form a permitted EBNF sequence.
 - [ ] Catches invalid token combinations and throws a structured PGE error with line/col metadata.
 - [ ] Throws a PGE error if an `invalid marker` is encountered in the token stream.
-- [ ] Throws a PGE error if an `unknown Polyglot object` (unrecognized token) is encountered in the token stream.
+- [ ] Throws a PGE error if an `unknown Aljam3 object` (unrecognized token) is encountered in the token stream.
 - [ ] Processing happens purely linearly, checking line-by-line grammar.
 
 ## Tasks

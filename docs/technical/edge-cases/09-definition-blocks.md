@@ -15,7 +15,7 @@ updated: 2026-03-30
 
 **What it tests:** Multiple `[@]` imports in one package block. See [[packages]].
 
-```polyglot
+```aljam3
 {@} @Local:001.App:v1.0.0
    [@] @AD << @Local:001.ActiveDirectory:v2.0.0
    [@] @Mail << @Local:001.EmailSystem:v1.2.0
@@ -29,7 +29,7 @@ updated: 2026-03-30
 
 **What it tests:** All-enum siblings, no `#type`, no assignment. See [[syntax/types/structs#Enum Fields vs Value Fields]].
 
-```polyglot
+```aljam3
 {#} #Direction
    [.] .North
    [.] .South
@@ -43,7 +43,7 @@ updated: 2026-03-30
 
 **What it tests:** Enum variant carrying typed data underneath.
 
-```polyglot
+```aljam3
 {#} #Status
    [.] .Failed
       [.] .reason#string <~ "unknown"
@@ -58,7 +58,7 @@ updated: 2026-03-30
 
 **What it tests:** All-or-none assignment rule — all siblings have defaults. See [[identifiers#Serialization Rules]].
 
-```polyglot
+```aljam3
 {#} #Config
    [.] .timeout#int <~ 30
    [.] .retries#int <~ 3
@@ -71,7 +71,7 @@ updated: 2026-03-30
 
 **What it tests:** `[:]` with `:` separator for open-schema data.
 
-```polyglot
+```aljam3
 {#} #Metadata
    [:] :author#string <~ ""
    [:] :version#string <~ "0.0.0"
@@ -84,13 +84,13 @@ updated: 2026-03-30
 
 **What it tests:** Correct order: trigger -> IO -> queue -> wrapper -> execution. See [[concepts/pipelines/INDEX|pipelines]].
 
-```polyglot
+```aljam3
 {-} -Ordered
    [T] -T.Call
    (-) <input#string
    (-) >output#string ~> ""
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] >output << <input
 ```
@@ -99,10 +99,10 @@ updated: 2026-03-30
 
 **What it tests:** IO and Queue are optional per EBNF.
 
-```polyglot
+```aljam3
 {-} -Minimal
    [T] -T.Call
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $x#int << 1
 ```
@@ -113,7 +113,7 @@ updated: 2026-03-30
 
 **What it tests:** Triggers that take configuration strings.
 
-```polyglot
+```aljam3
 [T] -T.Daily"3AM"
 [T] -T.Webhook"/api/onboarding"
 [T] -T.Folder.NewFiles"/inbox/"
@@ -124,7 +124,7 @@ updated: 2026-03-30
 <!-- @u:pipelines:IO as Implicit Triggers -->
 **What it tests:** Constant, default, and required IO. See [[concepts/pipelines/io-triggers#IO as Implicit Triggers]].
 
-```polyglot
+```aljam3
 (-) <constant#string << "locked"
 (-) <fallback#string <~ "default"
 (-) <required#string
@@ -137,7 +137,7 @@ updated: 2026-03-30
 
 **What it tests:** `[=]` at end of `[\]` with no `[*] *All` — forked path runs concurrently with body; `[/]` collects via `[*] *All` with `(*) <<` wait inputs. See [[concepts/pipelines/wrappers#Parallel Forking in Setup]].
 
-```polyglot
+```aljam3
 {W} -W.Tracing
    (-) <traceId;string
    (-) >duration;string
@@ -165,7 +165,7 @@ updated: 2026-03-30
 
 **What it tests:** `[b]` in setup fires and is never collected — no `[*] *All` in `[/]` for it.
 
-```polyglot
+```aljam3
 {W} -W.AuditLog
    (-) <userId;string
    [\]
@@ -186,7 +186,7 @@ updated: 2026-03-30
 **EBNF ref:** `pipeline_body` — trigger, queue, wrapper, execution sections
 **What it tests:** A `{-}` with no content. PGE01005 (missing trigger) fires first. See [[concepts/pipelines/INDEX|pipelines]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01005 — empty pipeline has no trigger
 {-} -EmptyPipeline
 ```
@@ -196,7 +196,7 @@ updated: 2026-03-30
 **EBNF ref:** `data_def` — requires at least one `data_body_line`
 **What it tests:** A `{#}` with no fields. PGE01021 fires. See [[syntax/types/INDEX|types]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01021 — no fields
 {#} #EmptyRecord
 ```
@@ -206,7 +206,7 @@ updated: 2026-03-30
 **EBNF ref:** `error_def` — requires at least one `error_leaf_line`
 **What it tests:** A `{!}` with no error leaves. PGE01022 fires. See [[concepts/errors|errors]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01022 — no error leaves
 {!} !EmptyErrors
 ```
@@ -216,7 +216,7 @@ updated: 2026-03-30
 **EBNF ref:** `file ::= package_block { definition }`
 **What it tests:** A file that declares a package but defines nothing. PGW01003 fires. See [[syntax/packages|packages]].
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW01003 — no definitions in file
 {@} @Local:999.EmptyPackage:v1.0.0
 { } This file defines nothing
@@ -228,7 +228,7 @@ updated: 2026-03-30
 **EBNF ref:** `trigger_ref ::= pipeline_ref [ string_literal ]`
 **What it tests:** Using a non-trigger operation (e.g., `-File.Text.Read`) with `[T]`. PGE01024 fires — operations declare allowed markers. See [[concepts/pipelines/INDEX|pipelines]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01024 — -File.Text.Read is not trigger-compatible
 {-} -Bad
    [T] -File.Text.Read
@@ -240,13 +240,13 @@ updated: 2026-03-30
 **EBNF ref:** `trigger_io_section` — allows multiple `trigger_line` via `{ }` repetition
 **What it tests:** Multiple `[T]` lines use AND semantics — all triggers must fire. For OR, use `[+]`. See [[concepts/pipelines/INDEX|pipelines]].
 
-```polyglot
+```aljam3
 [ ] ✓ AND — both triggers must fire
 {-} -DualTrigger
    [T] -T.Daily"3AM"
    [T] -T.Webhook"/api/ready"
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -DoWork
 ```
@@ -256,13 +256,13 @@ updated: 2026-03-30
 **EBNF ref:** `pipeline_body ::= ... queue_section wrapper_section ...`
 **What it tests:** Grammar enforces exactly one `[Q]` and one `[W]`. Duplicate sections are a parse error.
 
-```polyglot
+```aljam3
 [ ] ✗ parse error — grammar requires single [Q] and [W]
 {-} -DuplicateQueue
    [T] -T.Call
    [Q] -Q.Default
    [Q] -Q.Custom
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 ```
 
 ### EC-9.19: Discard `$*` in wrapper IO wiring
@@ -271,7 +271,7 @@ updated: 2026-03-30
 **EBNF ref:** `wrapper_io_line ::= "(-)" variable_id assignment_op value_expr`
 **What it tests:** Using `$*` (discard) in wrapper IO defeats the purpose. PGE01025 fires. See [[concepts/pipelines/wrappers|wrappers]].
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01025 — $* discards wrapper input
 [W] -W.DB.Connection
    (-) $* << $connectionString

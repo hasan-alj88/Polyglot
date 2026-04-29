@@ -31,12 +31,12 @@ If the source is non-failable, PGW07004 fires.
 - [PGE02005 — Failed Is Terminal](../PGE/PGE02005-failed-is-terminal.md) — Failed state semantics
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ -File.Text.Read declares errors — fallback on output is valid
 {-} -Process
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -47,12 +47,12 @@ If the source is non-failable, PGW07004 fires.
    [-] >content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ error-specific fallback on failable call — valid
 {-} -ProcessSpecific
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >content#string
    [ ]
@@ -64,12 +64,12 @@ If the source is non-failable, PGW07004 fires.
    [-] >content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ fallback on variable input from pipeline output — source may fail
 {-} -ProcessChain
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <path#string
    (-) >result#string
    [ ]
@@ -84,12 +84,12 @@ If the source is non-failable, PGW07004 fires.
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW07004 — -Format declares no errors — fallback on output is dead code
 {-} -ProcessBad
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >result#string
    [ ]
@@ -100,12 +100,12 @@ If the source is non-failable, PGW07004 fires.
    [-] >result << $out
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW07004 — fallback on literal input source
 {-} -ProcessLiteral
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >result#string
    [ ]
    [-] -Process
@@ -115,12 +115,12 @@ If the source is non-failable, PGW07004 fires.
    [-] >result << $result
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW07004 — fallback on Final constant input source
 {-} -ProcessConstant
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >greeting#string
    [ ]
    [-] $name << "Alice"

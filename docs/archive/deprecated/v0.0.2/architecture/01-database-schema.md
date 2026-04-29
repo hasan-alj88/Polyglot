@@ -35,7 +35,7 @@ This schema stores the Intermediate Representation (IR) as normalized relational
 - [IR Representation](./02-ir-representation.md) - Type system & IR structure
 
 ### Language Specification
-- [BNF Grammar](../language/bnf/polyglot grammer.md) - Language syntax
+- [BNF Grammar](../language/bnf/aljam3 grammer.md) - Language syntax
 - [Type System](../language/02-type-system.md) - Data types
 
 ---
@@ -418,7 +418,7 @@ WHERE id = ?;
 - [System Architecture](./00-overview.md) - Component design
 - [IR Representation](./02-ir-representation.md) - IR structure details
 - [Type System](../language/02-type-system.md) - Type specifications
-- [BNF Grammar](../language/bnf/polyglot grammer.md) - Language syntax
+- [BNF Grammar](../language/bnf/aljam3 grammer.md) - Language syntax
 
 ---
 

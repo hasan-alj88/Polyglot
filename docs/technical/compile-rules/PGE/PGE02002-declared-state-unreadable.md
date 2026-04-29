@@ -13,11 +13,11 @@ severity: error
 <!-- @u:syntax/operators -->
 
 **Statement:** A variable in Declared state holds no value. Attempting to read (pull from) a Declared variable is an error. The variable must reach Default or Final before it can be used as a source.
-**Rationale:** Reading an uninitialized variable produces undefined behavior. Catching this eliminates entire categories of silent failures where pipelines operate on empty data without any error signal. Polyglot's compiler enforces variable lifecycle as a state machine — every variable must be in the correct state before access, turning what would be a silent runtime failure into a compile-time rejection.
+**Rationale:** Reading an uninitialized variable produces undefined behavior. Catching this eliminates entire categories of silent failures where pipelines operate on empty data without any error signal. Aljam3's compiler enforces variable lifecycle as a state machine — every variable must be in the correct state before access, turning what would be a silent runtime failure into a compile-time rejection.
 **Detection:** At the execution step that attempts to pull from the variable — the runtime checks the variable's state and fires PGE02002 if it is still Declared.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ >name assigned to Final before being read
 (-) >name#string
 [-] >name << "Alice"         [ ] Final — safe to read
@@ -26,7 +26,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02002 — >name declared but never assigned
 (-) >name#string             [ ] Declared — no value
 [-] -Greet

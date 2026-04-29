@@ -15,7 +15,7 @@ Call a named function in foreign code with structured arguments.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Run.<Lang>.Function
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "RunFunction"
@@ -59,21 +59,21 @@ The compiler validates that:
 
 Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, never both (PGE01038):
 
-```polyglot
+```aljam3
 [ ] inline via [C] blocks
 (-) <code.inline <<
    [C] def calculate(nums):
    [C]     return {"mean": sum(nums) / len(nums)}
 ```
 
-```polyglot
+```aljam3
 [ ] file reference
 (-) <code.file#path << "/scripts/stats.py"
 ```
 
 ## Example
 
-```polyglot
+```aljam3
 {_} _RuntimeCeiling
    [.] .intent << #Ceiling
    [.] .System.Process "*"

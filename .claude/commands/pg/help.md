@@ -1,10 +1,10 @@
 ---
 name: pg:help
-description: Show Polyglot agent command reference
+description: Show Aljam3 agent command reference
 ---
 
 <objective>
-Display the complete Polyglot agent command reference.
+Display the complete Aljam3 agent command reference.
 
 Output ONLY the reference content below. Do NOT add:
 
@@ -15,16 +15,16 @@ Output ONLY the reference content below. Do NOT add:
 </objective>
 
 <reference>
-# Polyglot Agent Commands
+# Aljam3 Agent Commands
 
-The `/pg:*` commands help you generate, validate, and iteratively improve Polyglot Code.
+The `/pg:*` commands help you generate, validate, and iteratively improve Aljam3 Code.
 
 ## Commands
 
 | Command | Purpose |
 |---------|---------|
 | `/pg:train [prompt]` | Training loop: generate → correct → learn |
-| `/pg:generate <desc>` | Generate Polyglot code from description |
+| `/pg:generate <desc>` | Generate Aljam3 code from description |
 | `/pg:docs [section]` | Generate/update documentation PDF |
 | `/pg:help` | This reference |
 
@@ -59,7 +59,7 @@ The primary command. Runs an iterative cycle:
 
 ## `/pg:generate` — Standalone Generation
 
-Generate Polyglot Code without the correction loop. Reads full spec + all accumulated training lessons.
+Generate Aljam3 Code without the correction loop. Reads full spec + all accumulated training lessons.
 
 **Usage:**
 - `/pg:generate "hello world pipeline"`
@@ -75,13 +75,13 @@ Three layers, from most to least authoritative:
 |-------|----------|------------|
 | **Spec files** | `docs/user/` | `/pg:train` (with your approval) |
 | **Memory lessons** | `memory/pg_lesson_*.md` | `/pg:train` (automatic) |
-| **CARL rules** | `~/.carl/polyglot` | Manual or `/pg:train` suggestion |
+| **CARL rules** | `~/.carl/aljam3` | Manual or `/pg:train` suggestion |
 
 **Spec files** are the canonical source of truth. When training reveals a gap or ambiguity, the agent proposes edits for your approval.
 
 **Memory lessons** persist across sessions. Each lesson records what went wrong, why, and how to avoid it. The agent loads all lessons before generating code.
 
-**CARL rules** activate automatically when Polyglot topics come up, even outside `/pg:*` commands. The agent suggests new rules when it sees recurring mistake patterns (3+).
+**CARL rules** activate automatically when Aljam3 topics come up, even outside `/pg:*` commands. The agent suggests new rules when it sees recurring mistake patterns (3+).
 
 ---
 
@@ -96,18 +96,18 @@ When you create a new spec file (e.g., `docs/user/syntax/error-handling.md`):
 
 ## `/pg:docs` — Documentation PDF
 
-Generate the combined Polyglot documentation book (343 docs → single PDF).
+Generate the combined Aljam3 documentation book (343 docs → single PDF).
 
 **Usage:**
 - `/pg:docs` — full book from all docs/
 - `/pg:docs user` — only user-facing documentation
 - `/pg:docs technical` — only technical documentation
 
-**Output:** `Polyglot-Documentation.pdf` in repo root.
+**Output:** `Aljam3-Documentation.pdf` in repo root.
 
 **Auto-generation:** A PostToolUse hook automatically regenerates the PDF after any `git commit` that touches `docs/`.
 
 ---
 
-*Polyglot Agent v0.2 | 4 commands*
+*Aljam3 Agent v0.2 | 4 commands*
 </reference>

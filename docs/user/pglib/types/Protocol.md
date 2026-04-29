@@ -15,7 +15,7 @@ Permission enum used in `{_}` permission objects. See [[concepts/permissions|Per
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Protocol
    [%] .description << "IO protocol for permission resource descriptors"
    [%] .version << "1.0.0"

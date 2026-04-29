@@ -13,7 +13,7 @@ Category-level generic permission for inter-process communication. Takes a capab
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __IPC
    [#] <capability;IPCCapability
    [#] <scope;string
@@ -24,7 +24,7 @@ Category-level generic permission for inter-process communication. Takes a capab
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __IPC
    (_) <capability << .Send
    (_) <scope << "queue://jobs"

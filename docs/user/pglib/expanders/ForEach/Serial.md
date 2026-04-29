@@ -13,7 +13,7 @@ No `.Enumerate` variant -- Serial is unordered.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =ForEach.Serial
    (=) <Serial << $data
    (=) >key >> $key

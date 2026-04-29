@@ -12,7 +12,7 @@ Authority: [[vision#Core Philosophy]]
 
 ## Who They Are
 
-Implementers who build Polyglot: writing compiler passes, implementing compile rules, building pglib operators, creating tests, and coding the runtime services. They turn design specifications into working software.
+Implementers who build Aljam3: writing compiler passes, implementing compile rules, building pglib operators, creating tests, and coding the runtime services. They turn design specifications into working software.
 
 ## Writing Rules
 
@@ -29,9 +29,9 @@ Implementers who build Polyglot: writing compiler passes, implementing compile r
 
 - Strong programming experience (Rust, Python, or equivalent)
 - Compiler theory basics (parsing, AST, type checking, code generation)
-- Familiarity with the Polyglot design spec (from [[audiences/design]] docs)
+- Familiarity with the Aljam3 design spec (from [[audiences/design]] docs)
 - Testing and CI/CD experience
-- Understanding of the Polyglot service architecture at a high level
+- Understanding of the Aljam3 service architecture at a high level
 
 ## NEVER
 

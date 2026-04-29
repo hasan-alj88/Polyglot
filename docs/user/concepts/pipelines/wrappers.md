@@ -12,7 +12,7 @@ updated: 2026-03-31
 
 Wrappers invoke a wrapper definition (`{W}`) that provides setup/cleanup scope. Every pipeline requires `[W]` — the compiler rejects pipelines without it (PGE01007). The `[W]` line must reference a valid `{W}` wrapper definition (PGE01008), and the IO wired at the `[W]` site must match the wrapper's `(-)` IO declarations (PGE01009).
 
-**Wrappers are THE mechanism for all runtime environments.** For Polyglot Code, wrappers provide lifecycle hooks (setup/cleanup). For foreign code (via `-RT.*` pipelines), wrappers provide the runtime environment — Python interpreter, Rust toolchain, database connections, HTTP sessions, etc. There is no other mechanism for runtime setup.
+**Wrappers are THE mechanism for all runtime environments.** For Aljam3 Code, wrappers provide lifecycle hooks (setup/cleanup). For foreign code (via `-RT.*` pipelines), wrappers provide the runtime environment — Python interpreter, Rust toolchain, database connections, HTTP sessions, etc. There is no other mechanism for runtime setup.
 
 Wrappers (`{W}`) cannot contain `[T]`, `[Q]`, or `(-)` pipeline-level IO — these are pipeline-only elements (PGE01004). See [[blocks]] for wrapper structural constraints.
 
@@ -22,7 +22,7 @@ Wrappers (`{W}`) cannot contain `[T]`, `[Q]`, or `(-)` pipeline-level IO — the
 
 At the `[W]` usage site, wrapper IO is wired using `(-)` with `$` variables:
 
-```polyglot
+```aljam3
 [W] -W.DB.Connection
    (-) $connectionString << $connStr
    (-) $dbConn >> $dbConn
@@ -75,7 +75,7 @@ flowchart LR
 | `[\]` `[=]` | Execution body `[*] *All` | ✗ — body runs while `[=]` is still in-flight |
 | Execution body `[=]` | Execution body `[*] *All` | ✓ — normal parallel pattern |
 
-```polyglot
+```aljam3
 {W} -W.Tracing
    (-) <traceId;string
    (-) >duration;string
@@ -108,7 +108,7 @@ flowchart LR
 ```
 
 Common wrappers:
-- `[W] -W.Polyglot` — default, pure Polyglot Code (no-op: calls `-DoNothing` for setup/cleanup)
+- `[W] -W.Aljam3` — default, pure Aljam3 Code (no-op: calls `-DoNothing` for setup/cleanup)
 - `[W] -W.DB.Transaction` — database connection + transaction lifecycle
 - `[W] -W.HTTP.Session` — HTTP client lifecycle
 

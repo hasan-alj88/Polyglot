@@ -18,7 +18,7 @@ severity: error
 **Detection:** The compiler resolves all `{_}` grant objects referenced by permission IO declarations (`(-) _PermName`) in each `[=]` job within a parallel scope. For each write capability (`.capability #Write` under `.category #File`, `.category #Database`, etc.), the compiler checks whether any two parallel jobs have overlapping resource paths. Overlap is determined by glob intersection — if the grant patterns of two jobs can match the same concrete path, PGE10008 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 { } ✓ parallel jobs read the same file — no write contention
 {_} _ReadGrant
    [.] .intent << #Grant
@@ -31,7 +31,7 @@ severity: error
    (-) _ReadGrant
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >result#string
    [ ]
    [=] -Analyze.Stats
@@ -46,7 +46,7 @@ severity: error
    [-] ...
 ```
 
-```polyglot
+```aljam3
 { } ✓ parallel jobs write to DIFFERENT files — no overlap
 {_} _WriteGrantA
    [.] .intent << #Grant
@@ -65,7 +65,7 @@ severity: error
 {-} -WriteResults
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [=] -Write.Stats
       (-) _WriteGrantA
@@ -79,7 +79,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 { } ✗ PGE10008 — two parallel jobs write to the same file
 {_} _WriteGrant
    [.] .intent << #Grant
@@ -91,7 +91,7 @@ severity: error
 {-} -ConflictingWrites
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [=] -Write.PartA
       (-) _WriteGrant                   [ ] ✗ writes to output/result.json
@@ -104,7 +104,7 @@ severity: error
       (*) << $resultB
 ```
 
-```polyglot
+```aljam3
 { } ✗ PGE10008 — overlapping glob patterns
 {_} _WriteAll
    [.] .intent << #Grant
@@ -123,7 +123,7 @@ severity: error
 {-} -OverlappingWrites
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [=] -Write.General
       (-) _WriteAll                     [ ] ✗ output/*.json

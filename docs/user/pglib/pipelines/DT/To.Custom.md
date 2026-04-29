@@ -13,7 +13,7 @@ Projects a `#dt` into a user-supplied custom calendar. Projections are not cache
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Custom
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToCustom"

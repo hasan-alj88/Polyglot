@@ -6,9 +6,9 @@ updated: 2026-03-24
 status: complete
 ---
 
-# Type Identity in Polyglot
+# Type Identity in Aljam3
 
-All Polyglot data is serialized strings. **"Same type" means "same schema"** — same structure and field types, not same name.
+All Aljam3 data is serialized strings. **"Same type" means "same schema"** — same structure and field types, not same name.
 
 ## Terminology
 
@@ -26,7 +26,7 @@ All Polyglot data is serialized strings. **"Same type" means "same schema"** —
 ## Examples
 
 **Same type — different names, identical schema:**
-```polyglot
+```aljam3
 {#} #UserProfile
    [.] .name#string
    [.] .email#string
@@ -39,7 +39,7 @@ All Polyglot data is serialized strings. **"Same type" means "same schema"** —
 ```
 
 **Different type — different field structure:**
-```polyglot
+```aljam3
 {#} #UserRecord
    [.] .name#string
    [.] .age#int
@@ -52,7 +52,7 @@ All Polyglot data is serialized strings. **"Same type" means "same schema"** —
 ```
 
 **Different type — no implicit coercion:**
-```polyglot
+```aljam3
 [ ] ✗ int ≠ float — no auto-promotion
 [ ] ✗ string ≠ path — no coercion
 [ ] ✗ array.int ≠ array.string — element types differ

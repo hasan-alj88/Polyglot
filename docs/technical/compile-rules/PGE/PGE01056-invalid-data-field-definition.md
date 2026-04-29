@@ -14,7 +14,7 @@ severity: error
 **Detection:** The compiler verifies that field definitions inside `{#}` and `{Q}` contexts do not use `(#)` or `<`. If it detects an IO-style definition where a structural data field should be, it emits an error.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Using [#] to define a data field
 {#} #User
    [#] .id#string
@@ -22,7 +22,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01056 — Using (#) and < in a Data block
 {#} #User
    (#) <id#string                            [ ] ✗ PGE01056 — should be [#] .id#string

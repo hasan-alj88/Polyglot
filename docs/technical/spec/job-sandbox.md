@@ -21,14 +21,14 @@ Related: [[enforcement]], [[behavior-contract]], [[compiler-floor]], [[foreign-c
 
 ## Why OS-Level Sandboxing
 
-Polyglot's compile-time permission model (`{_}` grants, ceilings, AST analysis) covers Polyglot-native code completely — if it compiles, the permissions are satisfied. But foreign code in `-Run.*` pipelines can make **raw syscalls**. A Python script can call `os.system()`, a Go binary can invoke `syscall.Open()`, a Rust binary can call `libc::connect()` directly. No runtime API layer intercepts these calls.
+Aljam3's compile-time permission model (`{_}` grants, ceilings, AST analysis) covers Aljam3-native code completely — if it compiles, the permissions are satisfied. But foreign code in `-Run.*` pipelines can make **raw syscalls**. A Python script can call `os.system()`, a Go binary can invoke `syscall.Open()`, a Rust binary can call `libc::connect()` directly. No runtime API layer intercepts these calls.
 
 This makes OS-level sandboxing **mandatory**, not optional. The compiler emits a [[behavior-contract#Permission Manifest|Permission Manifest]] as part of the Behavior Contract. The [[glossary#Runner|Runner]] reads this manifest and configures OS-level restrictions before spawning the job process. The sandbox catches violations that AST analysis cannot detect — unresolvable variable paths, IO registry gaps, or new library functions not yet in the [[technical/compiler/ast-invisible-registry|AST-invisible registry]].
 
-**Polyglot's position** is between Deno and gVisor:
+**Aljam3's position** is between Deno and gVisor:
 - **Deno** enforces permissions at the runtime API layer — works because Deno controls the full JS API surface. Insufficient for arbitrary foreign code.
 - **gVisor** reimplements the Linux syscall interface in user space — 2-10x overhead. Practical for medium-trust cloud workloads.
-- **Polyglot** uses Landlock + seccomp-bpf + Linux namespaces + cgroups v2 — lighter than gVisor, stronger than Deno's runtime-only checks.
+- **Aljam3** uses Landlock + seccomp-bpf + Linux namespaces + cgroups v2 — lighter than gVisor, stronger than Deno's runtime-only checks.
 
 The principle remains: **compilation is a license to launch**. The sandbox narrows that license to exactly what was declared.
 
@@ -98,7 +98,7 @@ When a binary or code cannot have its AST fully analyzed (compiled binaries, obf
 
 `[!] _Unsafe.SandboxOnly` appears in the error handler position of a `-Run.*` call:
 
-```polyglot
+```aljam3
 {-} -ProcessData
    [.] %Authors << "jane.doe@company.com"
    [.] %Description << "Legacy Go binary for report generation — no source available"
@@ -166,16 +166,16 @@ When the kernel blocks an operation (EACCES from Landlock, EPERM from seccomp):
    - If the code crashes — job enters Failed state
 3. The Queue Handler receives the job's exit status and routes accordingly (retry, error handling, etc.)
 
-**No special Polyglot runtime intervention** — the kernel enforces, the process fails naturally, standard job lifecycle handles the failure. This keeps the runtime simple.
+**No special Aljam3 runtime intervention** — the kernel enforces, the process fails naturally, standard job lifecycle handles the failure. This keeps the runtime simple.
 
 Resource limit violations (cgroup limits exceeded) follow a similar pattern — the kernel enforces limits, the process receives signals or throttling, and the Queue Handler manages the outcome. See the future resource categories specification for limit-exceeded behavior details.
 
 ## Sandbox Inspection
 
-The `polyglot inspect -sandbox` command shows the effective sandbox configuration derived from the Permission Manifest:
+The `aljam3 inspect -sandbox` command shows the effective sandbox configuration derived from the Permission Manifest:
 
 ```text
-$ polyglot inspect -sandbox -ProcessData
+$ aljam3 inspect -sandbox -ProcessData
 
 Pipeline: -ProcessData
 Sandbox Configuration:
@@ -212,7 +212,7 @@ This is a development and debugging tool — it reads the compiled Permission Ma
 
 ### Rust-Native (Recommended)
 
-bubblewrap (`bwrap`) handles namespace setup well but lacks Landlock, cgroups v2, advanced seccomp (USER\_NOTIF), and GPU support — all of which Polyglot needs. Using bubblewrap would mean layering additional Rust code on top.
+bubblewrap (`bwrap`) handles namespace setup well but lacks Landlock, cgroups v2, advanced seccomp (USER\_NOTIF), and GPU support — all of which Aljam3 needs. Using bubblewrap would mean layering additional Rust code on top.
 
 Rust-native implementation provides:
 - Single codebase, no external dependency

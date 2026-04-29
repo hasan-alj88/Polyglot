@@ -15,7 +15,7 @@ The `$Re` constructor produces `#Re` values from regex pattern strings. The comp
 
 ### Regex Pattern
 
-```polyglot
+```aljam3
 {$} $Re"{pattern}"
    ($) <pattern.re << ".+"
    [$] #Re
@@ -32,7 +32,7 @@ Single overload — no ambiguity.
 
 ## Usage
 
-```polyglot
+```aljam3
 [ ] compile-time guaranteed — no error handling
 [-] $emailPattern << $Re"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 [-] $digits << $Re"^[0-9]+$"

@@ -17,7 +17,7 @@ See [[syntax/types/INDEX|types]] for the full type hierarchy and [[scalars]] for
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #String
    [ ] #String and #string both resolve here
    [#] ##Scalar
@@ -65,7 +65,7 @@ See [[scalars]] for all subtypes and [[schemas/String|##String]] for the paramet
 
 Users can define custom string subtypes with their own `.regex`:
 
-```polyglot
+```aljam3
 {#} #phoneNumber
    [#] ##String
       (#) <regex << "^\+?[0-9]{7,15}$"

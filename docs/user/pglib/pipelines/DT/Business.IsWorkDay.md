@@ -13,7 +13,7 @@ Returns `#bool` -- true when `source` falls on a work day. Requires an explicit 
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Business.IsWorkDay
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtBusinessIsWorkDay"

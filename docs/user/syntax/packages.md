@@ -12,9 +12,9 @@ status: complete
 <!-- @u:technical/ebnf/01-file-structure#1.2 -->
 <!-- @u:technical/edge-cases/01-file-structure -->
 <!-- @u:technical/edge-cases/21-registry-type -->
-Mandatory first block in every `.pg` file — exactly one `{@}` per file. Multiple `{#}` and `{-}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses use `::` to separate the registry from the package name, with `:` (flexible) separators throughout. Packages live at `%@` in the metadata tree (see [[data-is-trees#How Concepts Connect]]).
+Mandatory first block in every `.aj3` file — exactly one `{@}` per file. Multiple `{#}` and `{-}` definitions are allowed, but not multiple `{@}`. See [[blocks]] for `{@}` definition and `[@]` import element. Package addresses use `::` to separate the registry from the package name, with `:` (flexible) separators throughout. Packages live at `%@` in the metadata tree (see [[data-is-trees#How Concepts Connect]]).
 
-```polyglot
+```aljam3
 { } Package declaration block
 {@} @Local:999::MyPackageName:Sub:v1.0.0
    [ ] imports
@@ -65,25 +65,25 @@ Each `[@]` import line declares an alias for a package address. The compiler enf
 
 Package imports must form a directed acyclic graph. If Package A imports Package B and Package B imports Package A (directly or transitively), the cycle is a compile error (PGE09002). The compiler reports the full cycle path.
 
-Within a package, pipeline calls must also be acyclic — Polyglot has no recursion mechanism. Self-calls and mutual call loops are compile errors (PGE09013). See [[concepts/pipelines/inline-calls#Call Site Rules]].
+Within a package, pipeline calls must also be acyclic — Aljam3 has no recursion mechanism. Self-calls and mutual call loops are compile errors (PGE09013). See [[concepts/pipelines/inline-calls#Call Site Rules]].
 
 Pipeline references in `[-]`, `[=]`, or `[b]` calls must resolve to either a pglib pipeline or a `{-}` definition within the same package (PGE09003). Cross-package pipelines must use the `@alias-Pipeline` form with a valid `[@]` import.
 
 ## Multi-File Packages
 
-A single package can span multiple `.pg` files. Each file declares the same `{@}` package address and references the other files using `[@]` with a path string — no alias on the left side.
+A single package can span multiple `.aj3` files. Each file declares the same `{@}` package address and references the other files using `[@]` with a path string — no alias on the left side.
 
 ### Syntax
 
-```polyglot
+```aljam3
 { } Explicit file references
 {@} @Local:1000::MyApp:v1.0.0
-   [@] << "{.}\my-app-02.pg"
-   [@] << "{.}\my-app-03.pg"
+   [@] << "{.}\my-app-02.aj3"
+   [@] << "{.}\my-app-03.aj3"
 ```
 
-```polyglot
-{ } Folder shorthand — include all .pg files in the directory
+```aljam3
+{ } Folder shorthand — include all .aj3 files in the directory
 {@} @Local:1000::MyApp:v1.0.0
    [@] << "{.}"
 ```
@@ -96,50 +96,50 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
 - **Full mesh** — every file must reference all other files in the package. If file A references B and C, then B must reference A and C, and C must reference A and B (PGE09010)
 - **No duplicates** — a `{-}` pipeline name or `{#}` data name must be unique across all files in the package (PGE09007)
 - **No self-reference** — a file must not list itself (PGE09009)
-- **File must exist** — every referenced path must resolve to an existing `.pg` file (PGE09008)
+- **File must exist** — every referenced path must resolve to an existing `.aj3` file (PGE09008)
 
 ### Folder Shorthand
 
-`[@] << "{.}"` discovers all `.pg` files in the specified directory. This is equivalent to listing each file explicitly. The folder shorthand satisfies the full mesh rule automatically — the compiler expands it to the full file list before validation.
+`[@] << "{.}"` discovers all `.aj3` files in the specified directory. This is equivalent to listing each file explicitly. The folder shorthand satisfies the full mesh rule automatically — the compiler expands it to the full file list before validation.
 
 ### Example — Three-File Package
 
-**my-app-01.pg:**
-```polyglot
+**my-app-01.aj3:**
+```aljam3
 {@} @Local:1000::MyApp:v1.0.0
-   [@] << "{.}\my-app-02.pg"
-   [@] << "{.}\my-app-03.pg"
+   [@] << "{.}\my-app-02.aj3"
+   [@] << "{.}\my-app-03.aj3"
 
 {#} #Config
    [.] .host#string
    [.] .port#int
 ```
 
-**my-app-02.pg:**
-```polyglot
+**my-app-02.aj3:**
+```aljam3
 {@} @Local:1000::MyApp:v1.0.0
-   [@] << "{.}\my-app-01.pg"
-   [@] << "{.}\my-app-03.pg"
+   [@] << "{.}\my-app-01.aj3"
+   [@] << "{.}\my-app-03.aj3"
 
 {-} -LoadConfig
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >config#Config
    [ ]
    [-] >config << ...
 ```
 
-**my-app-03.pg:**
-```polyglot
+**my-app-03.aj3:**
+```aljam3
 {@} @Local:1000::MyApp:v1.0.0
-   [@] << "{.}\my-app-01.pg"
-   [@] << "{.}\my-app-02.pg"
+   [@] << "{.}\my-app-01.aj3"
+   [@] << "{.}\my-app-02.aj3"
 
 {-} -RunServer
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <config#Config
    [ ]
    [-] ...
@@ -147,10 +147,10 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
 
 All three files share the `#Config` data type and can each other's pipelines as if they were in one file. A file can also reference imports and sibling files together:
 
-```polyglot
+```aljam3
 {@} @Local:1000::MyApp:v1.0.0
    [ ] sibling files
-   [@] << "{.}\my-app-02.pg"
+   [@] << "{.}\my-app-02.aj3"
    [ ] external imports
    [@] @utils << @Local:999::Utilities:v1.0.0
 ```
@@ -164,7 +164,7 @@ The `{@}` block declares `{_}` permission ceiling objects via `(@)` IO, setting 
 
 Permission IO in `{@}` references named `{_}` ceiling objects. The `{_}` objects are defined as standalone blocks (typically after `{@}`, before `{#}` and `{-}`):
 
-```polyglot
+```aljam3
 {@} @Local:999::LogAnalyzer:v1.0.0
    [@] @http << @Community:devops:HttpClient::HttpClient:v2.1.0
    (@) _LogCeiling

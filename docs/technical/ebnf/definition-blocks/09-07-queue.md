@@ -29,7 +29,7 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
 
 **Example:**
 
-```polyglot
+```aljam3
 {Q} #Queue:GPUQueue
    [%] .description << "Queue for GPU-intensive work"
    [.] .strategy#QueueStrategy << #LIFO

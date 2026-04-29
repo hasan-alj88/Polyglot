@@ -21,12 +21,12 @@ severity: error
 **See also:** PGE04001 (type mismatch), PGE08008 (missing required input)
 
 **Declaring constraints (pipeline definition):**
-```polyglot
+```aljam3
 [ ] ✓ pipeline author declares invalid values via %constraint
 {-} -Math.Divide
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <numerator#int
    (-) <denominator#int
       (<) %constraint#array:RawString << {"0"}
@@ -36,7 +36,7 @@ severity: error
 ```
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ literal does not match any constraint
 [-] -Math.Divide
    (-) <numerator << $total
@@ -44,7 +44,7 @@ severity: error
    (-) >result >> $half
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ variable input — cannot be checked at compile time, use fallback for safety
 [-] -Math.Divide
    (-) <numerator << $total
@@ -55,7 +55,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE04016 — literal matches constraint
 [-] -Math.Divide
    (-) <numerator << $total
@@ -63,7 +63,7 @@ severity: error
    (-) >result >> $result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04016 — literal matches constraint
 [-] -Math.Modulo
    (-) <numerator << $total

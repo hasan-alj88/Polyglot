@@ -7,9 +7,9 @@ status: stable
 
 <!-- @compile-rules/INDEX -->
 
-# Polyglot Compile Rules
+# Aljam3 Compile Rules
 
-This directory defines every compile-time rule enforced by the Polyglot compiler. Rules are organized into error codes (PGE, halting), warning codes (PGW, non-halting), and supporting algorithms (detection strategies).
+This directory defines every compile-time rule enforced by the Aljam3 compiler. Rules are organized into error codes (PGE, halting), warning codes (PGW, non-halting), and supporting algorithms (detection strategies).
 
 ## Code Scheme
 

@@ -13,7 +13,7 @@ For inline discard without creating a variable, use `$*` instead.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [*] *Ignore
    (*) << $unneededVar
 ```

@@ -13,7 +13,7 @@ Returns the arithmetic negation of the input (multiplies by −1). Accepts exact
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Math.Negate
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathNegate"

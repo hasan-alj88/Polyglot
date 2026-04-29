@@ -17,7 +17,7 @@ Runtime environment handle produced by `-W.RT:Python:*` wrapper setup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #PyEnv
    [.] .version#string
    [.] .handle#RawString

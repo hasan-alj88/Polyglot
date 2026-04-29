@@ -13,7 +13,7 @@ Fires on pull request events. This is a **semantic trigger** — remote only (no
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -T.Git.PR
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TGitPR"
@@ -39,7 +39,7 @@ Fires on pull request events. This is a **semantic trigger** — remote only (no
 
 Filters are provided via `(-) >>` lines under the `[T]` block:
 
-```polyglot
+```aljam3
 [T] -T.Git.PR
    (-) >> action: #Git.PRAction.Opened, #Git.PRAction.Synchronize
    (-) >> target: "main"

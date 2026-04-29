@@ -15,7 +15,7 @@ The `$MIME` constructor produces `#MIME` values from media type strings. All ove
 
 ### Type/Subtype
 
-```polyglot
+```aljam3
 {$} $MIME"{type}/{subtype}"
    ($) <type.re << "[a-zA-Z0-9][a-zA-Z0-9!#$&.+^_-]*"
    ($) <subtype.re << "[a-zA-Z0-9][a-zA-Z0-9!#$&.+^_-]*"
@@ -32,7 +32,7 @@ Single overload — no ambiguity.
 
 ## Usage
 
-```polyglot
+```aljam3
 [ ] compile-time guaranteed — no error handling
 [-] $json << $MIME"application/json"
 [-] $csv << $MIME"text/csv"

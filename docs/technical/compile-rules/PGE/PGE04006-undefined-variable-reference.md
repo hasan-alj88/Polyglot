@@ -24,21 +24,21 @@ severity: error
 **See also:** PGE04005 (undefined interpolation variable — same concept inside `{$var}` strings), PGE02002 (declared state is unreadable — variable exists but has no value yet), PGE01010 (pipeline IO name mismatch — undeclared names in pipeline call wiring)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all references resolve to declarations
 (-) <name#string
 (-) >greeting#string
 [-] >greeting << "Hello, {$name}!"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ $variable declared then used
 (-) <input#string
 [-] $temp#string << <input
 [-] >result#string << $temp
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ pulling from a declared IO output in a conditional
 (-) >status#string
 [?] >status
@@ -51,20 +51,20 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE04006 — $variable never declared
 (-) <input#string
 [-] >result#string << $neverDeclared      [ ] ✗ PGE04006 — $neverDeclared not in scope
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04006 — typo in variable name
 (-) <input#string
 [-] $processed#string << <input
 [-] >result#string << $procesed           [ ] ✗ PGE04006 — $procesed not declared (typo for $processed)
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE04006 — pulling from undeclared output
 [?] >undeclaredOutput                     [ ] ✗ PGE04006 — >undeclaredOutput not in scope
    [?] #Done

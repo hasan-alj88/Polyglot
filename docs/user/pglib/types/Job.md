@@ -19,7 +19,7 @@ Job state is stored at `%-:Pipeline:N.jobs:UID` in the metadata tree. See [[glos
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Job
    [%] .description << "Runtime job state within a pipeline instance"
    [%] .version << "1.0.0"

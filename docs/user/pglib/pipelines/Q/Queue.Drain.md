@@ -13,7 +13,7 @@ Stop accepting new Jobs into the queue. Existing Jobs continue until completion.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Queue.Drain
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QQueueDrain"
@@ -37,7 +37,7 @@ None.
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates drain condition, sends command signal |
-| 2. NATS command | `polyglot.command.drain.{queue}` | `{queue}` |
+| 2. NATS command | `aljam3.command.drain.{queue}` | `{queue}` |
 | 3. QH executes | Queue Handler | SADD queues:draining {queue} |
 
 No control signal to Runner. No Unix mechanism. Subsequent `command.enqueue` to this queue is rejected. Existing jobs continue normally.

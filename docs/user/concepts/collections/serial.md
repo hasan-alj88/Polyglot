@@ -22,7 +22,7 @@ updated: 2026-04-09
 
 By removing all structural constraints, `#Serial` accepts any compilable tree shape. This is the "raw tree" escape hatch -- it has schema properties, but every one is maximally permissive.
 
-```polyglot
+```aljam3
 {#} #Serial
    [#] %##Alias << "serial"
    [#] %##Depth.Max << #Inf
@@ -34,7 +34,7 @@ By removing all structural constraints, `#Serial` accepts any compilable tree sh
 
 Access uses chained `<` at unlimited depth:
 
-```polyglot
+```aljam3
 [-] $value << $data<key<subkey<deeperkey
 ```
 

@@ -38,7 +38,7 @@ A type composes `###ScalarEnum` when it is both an enum (all fields are variants
 
 ## Declaration
 
-```polyglot
+```aljam3
 {#} #Boolean
    [#] ##Enum
    [#] ##Scalar

@@ -11,13 +11,13 @@ metadata_instance: "%#:MergeStrategy:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.pg` file. Controls how `*Into.Text.Merge` and `*Into.CSV.Merge` collectors handle conflicting changes from parallel jobs modifying the same line.
+Runtime `##Enum` type available in every `.aj3` file. Controls how `*Into.Text.Merge` and `*Into.CSV.Merge` collectors handle conflicting changes from parallel jobs modifying the same line.
 
 ---
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #MergeStrategy
    [%] .description << "Conflict resolution strategy for k-way merge collectors"
    [#] ##Enum

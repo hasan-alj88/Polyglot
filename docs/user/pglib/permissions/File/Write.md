@@ -13,7 +13,7 @@ Capability-level generic permission for writing files. Sugar over [[INDEX|__File
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __File.Write
    [#] <scope;path
 
@@ -23,7 +23,7 @@ Capability-level generic permission for writing files. Sugar over [[INDEX|__File
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __File.Write
    (_) <scope << "/tmp/reports/*"
 ```

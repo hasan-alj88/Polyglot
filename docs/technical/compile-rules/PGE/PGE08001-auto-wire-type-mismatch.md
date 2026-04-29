@@ -22,7 +22,7 @@ updated: 2026-04-23
 **See also:** PGE08002 (ambiguous type), PGE08003 (port count mismatch), PGW08001 (auto-wire succeeded)
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE08001 — type mismatch, no bijective mapping possible
 [ ] -Count.Items has one output >total#int
 [ ] -Format.Label has one input  <text#string

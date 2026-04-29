@@ -24,7 +24,7 @@ if ! git -C "$REPO_ROOT" diff --name-only HEAD~1 HEAD 2>/dev/null | grep -q '^do
 fi
 
 # Regenerate monolithic PDF
-echo "docs/ changed — regenerating Polyglot-Documentation.pdf..."
+echo "docs/ changed — regenerating Aljam3-Documentation.pdf..."
 "$REPO_ROOT/scripts/generate-docs-pdf.sh" 2>&1 | tail -3
 
 # Regenerate per-audience PDFs

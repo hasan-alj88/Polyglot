@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler performs reachability analysis on all `[T]` blocks within the `{*}` definition. For each possible execution path (including error handlers), it verifies that a release covering `[0,N]` is reached. If any path exits without full release, PGE03025 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 {*} *First
    ...
    [T] *Arrive"0"
@@ -28,7 +28,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03025 — only releases the winner's job
 {*} *BadFirst
    ...

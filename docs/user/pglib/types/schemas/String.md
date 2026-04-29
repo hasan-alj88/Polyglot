@@ -14,7 +14,7 @@ metadata_definition: "%definition.##:String"
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##String
    (#) <regex
    [#] ##Scalar
@@ -48,7 +48,7 @@ metadata_definition: "%definition.##:String"
 
 ## Usage
 
-```polyglot
+```aljam3
 {#} #Int
    [%] %alias << "int,integer,Integer"
    [#] ##String

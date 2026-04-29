@@ -13,7 +13,7 @@ Projects a `#dt` value into a Japanese date structure. Projections are not cache
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.To.Japanese
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtToJapanese"

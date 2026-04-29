@@ -12,7 +12,7 @@ category: Syntax and Structure
 Ensures that all boolean paths are handled explicitly, preventing unhandled values at runtime.
 
 ## Examples
-```polyglot
+```aljam3
 [?] $isValid =? true >> $status << "Valid"
 [ ] ✗ PGE06015 — missing false branch or *? catch-all
 ```

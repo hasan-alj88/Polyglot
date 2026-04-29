@@ -11,7 +11,7 @@ Reduces mini-pipeline numeric outputs to their sum.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Agg.Sum
    (*) <number << $value
    (*) >sum >> $total

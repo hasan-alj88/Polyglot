@@ -11,7 +11,7 @@ status: draft
 <!-- @u:technical/ebnf/07-io-parameters -->
 IO inputs declared with `(-)` become `$`-prefixed variables in the execution body once filled. There is no need to redeclare them:
 
-```polyglot
+```aljam3
 (-) <incoming#Alert
 [ ] ...execution...
 [ ] Use directly as $incoming — it's already Final

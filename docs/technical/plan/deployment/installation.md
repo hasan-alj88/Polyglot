@@ -4,11 +4,11 @@ type: guide
 updated: 2026-04-16
 ---
 
-# Installing the Polyglot Service
+# Installing the Aljam3 Service
 
 <!-- @c:technical/plan/deployment/INDEX -->
 
-This guide covers how to install, configure, and verify the Polyglot Service on Linux. The Polyglot Service is the runtime that executes pipelines compiled from .pg files.
+This guide covers how to install, configure, and verify the Aljam3 Service on Linux. The Aljam3 Service is the runtime that executes pipelines compiled from .aj3 files.
 
 ## Prerequisites
 
@@ -37,16 +37,16 @@ cgroup v2 is the default on Ubuntu 22.04+, Debian 12+, and Fedora 38+. Older dis
 ## Install from APT (Debian/Ubuntu)
 
 ```bash
-# Add the Polyglot GPG key
-curl -fsSL https://polyglot.dev/apt/polyglot.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/polyglot.gpg
+# Add the Aljam3 GPG key
+curl -fsSL https://aljam3.dev/apt/aljam3.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/aljam3.gpg
 
 # Add the repository
-echo "deb [signed-by=/etc/apt/keyrings/polyglot.gpg] https://polyglot.dev/apt stable main" \
-  | sudo tee /etc/apt/sources.list.d/polyglot.list
+echo "deb [signed-by=/etc/apt/keyrings/aljam3.gpg] https://aljam3.dev/apt stable main" \
+  | sudo tee /etc/apt/sources.list.d/aljam3.list
 
 # Install
 sudo apt update
-sudo apt install polyglot
+sudo apt install aljam3
 ```
 
 This installs all components: compiler, Trigger Monitor, Runner, management CLI, and bundled Redis, PostgreSQL, and NATS.
@@ -55,34 +55,34 @@ This installs all components: compiler, Trigger Monitor, Runner, management CLI,
 
 ```bash
 # Add the repository
-sudo dnf config-manager --add-repo https://polyglot.dev/rpm/polyglot.repo
+sudo dnf config-manager --add-repo https://aljam3.dev/rpm/aljam3.repo
 
 # Install
-sudo dnf install polyglot
+sudo dnf install aljam3
 ```
 
 ## Install via Script (Other Distributions)
 
 ```bash
-curl -sSL https://polyglot.dev/install | sudo sh
+curl -sSL https://aljam3.dev/install | sudo sh
 ```
 
-The script detects your distribution, downloads the appropriate package, installs to `/opt/polyglot/`, and creates systemd units.
+The script detects your distribution, downloads the appropriate package, installs to `/opt/aljam3/`, and creates systemd units.
 
 ## Setup
 
-After installation, run `polyglot-ctl setup` to configure and start services. There are two modes.
+After installation, run `aljam3-ctl setup` to configure and start services. There are two modes.
 
 ### All-in-One Mode (Single Machine)
 
 Starts all four services on the local machine. Use for development or small deployments.
 
 ```bash
-sudo polyglot-ctl setup
+sudo aljam3-ctl setup
 ```
 
 This command:
-1. Generates a local CA and self-signed certificates in `/opt/polyglot/share/certs/`
+1. Generates a local CA and self-signed certificates in `/opt/aljam3/share/certs/`
 2. Configures PostgreSQL to listen on localhost only
 3. Configures Redis to listen on localhost only
 4. Configures NATS to listen on localhost only
@@ -97,7 +97,7 @@ For production deployments with separate infrastructure and worker hosts.
 **On the infrastructure host** (runs PostgreSQL, Redis, NATS, Trigger Monitor):
 
 ```bash
-sudo polyglot-ctl setup --role infra
+sudo aljam3-ctl setup --role infra
 ```
 
 This starts PostgreSQL, Redis, NATS, and the Trigger Monitor. It generates a CA certificate and creates a join token for worker hosts.
@@ -106,21 +106,21 @@ This starts PostgreSQL, Redis, NATS, and the Trigger Monitor. It generates a CA 
 
 ```bash
 # On the infra host — generate credentials for a worker
-sudo polyglot-ctl add-host worker-01
+sudo aljam3-ctl add-host worker-01
 # Outputs: Join token and instructions
 ```
 
 **On each worker host** (runs Runner only):
 
 ```bash
-sudo polyglot-ctl join --token <TOKEN> --infra https://infra-host:9443
+sudo aljam3-ctl join --token <TOKEN> --infra https://infra-host:9443
 ```
 
 This downloads TLS certificates from the infra host, configures the Runner to connect to the remote Redis and NATS, and starts the Runner service.
 
 ## Configuration
 
-The main configuration file is `/opt/polyglot/etc/polyglot.conf`:
+The main configuration file is `/opt/aljam3/etc/aljam3.conf`:
 
 ```toml
 # Role: "all" (default), "infra", or "worker"
@@ -130,7 +130,7 @@ role = "all"
 # "bundled" uses the included postgres service
 # "external" connects to your own PostgreSQL cluster
 mode = "bundled"
-# external_url = "postgres://user:pass@my-postgres:5432/polyglot"
+# external_url = "postgres://user:pass@my-postgres:5432/aljam3"
 
 [redis]
 # "bundled" uses the included redis-server
@@ -145,9 +145,9 @@ mode = "bundled"
 # external_url = "tls://my-nats:4222"
 
 [tls]
-ca_cert   = "/opt/polyglot/share/certs/ca.pem"
-cert_file = "/opt/polyglot/share/certs/server.pem"
-key_file  = "/opt/polyglot/share/certs/server-key.pem"
+ca_cert   = "/opt/aljam3/share/certs/ca.pem"
+cert_file = "/opt/aljam3/share/certs/server.pem"
+key_file  = "/opt/aljam3/share/certs/server-key.pem"
 
 [runner]
 # Maximum concurrent jobs on this host
@@ -158,10 +158,10 @@ max_concurrent = 0    # 0 = auto (based on CPU cores)
 
 To use your own PostgreSQL, Redis, or NATS instances instead of the bundled ones:
 
-1. Edit `/opt/polyglot/etc/polyglot.conf` — set `mode = "external"` and provide the connection URL
-2. Disable the bundled service: `sudo systemctl disable --now polyglot-redis` (or `polyglot-nats`, `polyglot-postgres`)
-3. Load QH Lua scripts into your external Redis: `sudo polyglot-ctl load-qh-scripts --redis-url <URL>`
-4. Run DB migrations on external Postgres: `sudo polyglot-ctl run-migrations --postgres-url <URL>`
+1. Edit `/opt/aljam3/etc/aljam3.conf` — set `mode = "external"` and provide the connection URL
+2. Disable the bundled service: `sudo systemctl disable --now aljam3-redis` (or `aljam3-nats`, `aljam3-postgres`)
+3. Load QH Lua scripts into your external Redis: `sudo aljam3-ctl load-qh-scripts --redis-url <URL>`
+4. Run DB migrations on external Postgres: `sudo aljam3-ctl run-migrations --postgres-url <URL>`
 
 External instances must meet these requirements:
 
@@ -173,20 +173,20 @@ External instances must meet these requirements:
 
 ## TLS Certificate Management
 
-All inter-service communication uses mTLS (mutual TLS). Certificates are managed by `polyglot-ctl`.
+All inter-service communication uses mTLS (mutual TLS). Certificates are managed by `aljam3-ctl`.
 
 ```bash
 # Initialize a new CA (done automatically by setup)
-sudo polyglot-ctl certs init
+sudo aljam3-ctl certs init
 
 # Generate certificate for a new host
-sudo polyglot-ctl certs add-host worker-02
+sudo aljam3-ctl certs add-host worker-02
 
 # List all certificates
-sudo polyglot-ctl certs list
+sudo aljam3-ctl certs list
 
 # Rotate certificates (generates new certs, graceful reload)
-sudo polyglot-ctl certs rotate
+sudo aljam3-ctl certs rotate
 ```
 
 In all-in-one mode, certificates are self-signed and generated automatically. In distributed mode, the infra host acts as the CA and issues certificates to workers during `join`.
@@ -195,13 +195,13 @@ In all-in-one mode, certificates are self-signed and generated automatically. In
 
 ```bash
 # Check all service statuses
-polyglot-ctl status
+aljam3-ctl status
 ```
 
 Expected output (all-in-one mode):
 
 ```text
-Polyglot Service Status
+Aljam3 Service Status
 ═══════════════════════════════════════
   PostgreSQL     ● running  (bundled, localhost:5432)
   Redis          ● running  (bundled, localhost:6379)
@@ -218,14 +218,14 @@ Polyglot Service Status
 ### Test with a Sample Pipeline
 
 ```bash
-# Compile a .pg file
-polyglot compile examples/hello.pg --output /opt/polyglot/var/contracts/hello.json
+# Compile a .aj3 file
+aljam3 compile examples/hello.aj3 --output /opt/aljam3/var/contracts/hello.json
 
 # Deploy the contract
-polyglot-ctl deploy hello.json
+aljam3-ctl deploy hello.json
 
 # Check job status
-polyglot-ctl jobs
+aljam3-ctl jobs
 ```
 
 ## Firewall Rules
@@ -236,7 +236,7 @@ For distributed deployments, worker hosts need access to the infra host:
 |------|---------|-----------|
 | 6379 | Redis (TLS) | Worker → Infra |
 | 4222 | NATS (TLS) | Worker → Infra |
-| 9443 | polyglot-ctl join API | Worker → Infra (setup only) |
+| 9443 | aljam3-ctl join API | Worker → Infra (setup only) |
 
 All connections use TLS. No plaintext ports are exposed.
 
@@ -244,17 +244,17 @@ All connections use TLS. No plaintext ports are exposed.
 
 ```bash
 # Debian/Ubuntu
-sudo apt remove polyglot
+sudo apt remove aljam3
 
 # Fedora/RHEL
-sudo dnf remove polyglot
+sudo dnf remove aljam3
 ```
 
-Uninstall stops all services and removes binaries, systemd units, and configuration. Data directories (`/opt/polyglot/var/`) are preserved — remove manually if no longer needed:
+Uninstall stops all services and removes binaries, systemd units, and configuration. Data directories (`/opt/aljam3/var/`) are preserved — remove manually if no longer needed:
 
 ```bash
-sudo rm -rf /opt/polyglot/var/
-sudo userdel polyglot
+sudo rm -rf /opt/aljam3/var/
+sudo userdel aljam3
 ```
 
 ---

@@ -5,7 +5,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
 ---
 
 <objective>
-Iterative training loop for the Polyglot language agent. Generate Polyglot Code, let the user correct it in docs/draft.md, infer what rules were violated, update spec docs, and memorize the lesson.
+Iterative training loop for the Aljam3 language agent. Generate Aljam3 Code, let the user correct it in docs/draft.md, infer what rules were violated, update spec docs, and memorize the lesson.
 
 **Invoke with:** `/pg:train` to start or `/pg:train <prompt>` to generate code for a specific scenario.
 </objective>
@@ -38,11 +38,11 @@ Iterative training loop for the Polyglot language agent. Generate Polyglot Code,
 </step>
 
 <step name="generate">
-## Step 2: GENERATE — Produce Polyglot Code
+## Step 2: GENERATE — Produce Aljam3 Code
 
 1. If `$ARGUMENTS` provided, use it as the generation prompt
 2. If no arguments, ask the user what to generate via AskUserQuestion
-3. Generate Polyglot Code following ALL spec rules:
+3. Generate Aljam3 Code following ALL spec rules:
    - 3-space indentation, one expression per line
    - `{@ }` package declaration as first block
    - Correct block elements (`[r]`, `[p]`, `[=]`, etc.)
@@ -54,11 +54,11 @@ Iterative training loop for the Polyglot language agent. Generate Polyglot Code,
 4. Save generated code internally (keep a copy for diffing later)
 5. Write generated code to `docs/draft.md` with a header:
    ```
-   ## Generated Polyglot Code
+   ## Generated Aljam3 Code
 
    <!-- pg:train — edit corrections below, then tell Claude "done" -->
 
-   ```polyglot
+   ```aljam3
    (generated code here)
    ```
    ```
@@ -138,8 +138,8 @@ For each mistake identified:
 
 4. Check if 3+ lessons share a common pattern → if so, suggest adding a CARL rule:
    > "I've made this type of mistake 3+ times. Suggest adding CARL rule:
-   > `POLYGLOT_RULE_N=...`
-   > Want me to add it to `~/.carl/polyglot`?"
+   > `ALJAM3_RULE_N=...`
+   > Want me to add it to `~/.carl/aljam3`?"
 </step>
 
 <step name="loop">

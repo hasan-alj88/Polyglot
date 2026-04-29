@@ -11,7 +11,7 @@ metadata_instance: "%#:String:eng"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #Eng
    [%] %alias << "eng"
    [#] ##String

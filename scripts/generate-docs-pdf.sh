@@ -9,7 +9,7 @@
 #
 # Requirements: pandoc (>=3.x), typst (>=0.14), mmdc (mermaid-cli, optional)
 # Output:
-#   Default:       Polyglot-Documentation.pdf in repo root
+#   Default:       Aljam3-Documentation.pdf in repo root
 #   --by-audience: docs/pdf/{audience}.pdf for each audience
 
 set -euo pipefail
@@ -19,7 +19,7 @@ DOCS_DIR="$REPO_ROOT/docs"
 TEMPLATE="$REPO_ROOT/scripts/doc-template.typ"
 BUILD_DIR="$REPO_ROOT/.docs-build"
 MERMAID_DIR="$BUILD_DIR/mermaid"
-OUTPUT_PDF="$REPO_ROOT/Polyglot-Documentation.pdf"
+OUTPUT_PDF="$REPO_ROOT/Aljam3-Documentation.pdf"
 
 # Colors
 RED='\033[0;31m'
@@ -119,7 +119,7 @@ declare -A SECTION_NAMES=(
 
 # Audience display names
 declare -A AUDIENCE_DISPLAY=(
-   ["pg-coder"]="Polyglot Coder"
+   ["pg-coder"]="Aljam3 Coder"
    ["developer"]="Developer"
    ["designer"]="Language Designer"
    ["architect"]="System Architect"
@@ -318,11 +318,11 @@ generate_pdf() {
    {
       echo '#import "/scripts/doc-template.typ": *'
       if [[ -n "$audience_label" ]]; then
-         echo "#show: polyglot-book.with(audience: \"$audience_label\")"
+         echo "#show: aljam3-book.with(audience: \"$audience_label\")"
          echo ""
          echo "#cover-page(audience: \"$audience_label\")"
       else
-         echo '#show: polyglot-book'
+         echo '#show: aljam3-book'
          echo ''
          echo '#cover-page()'
       fi

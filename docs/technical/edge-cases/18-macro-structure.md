@@ -18,7 +18,7 @@ updated: 2026-04-09
 
 **What it tests:** Complete `{W}` structure with setup/cleanup and IO. No `[T]`, `[Q]`, or pipeline-level IO. See [[blocks#Scope]], [[concepts/pipelines/wrappers#Wrappers]].
 
-```polyglot
+```aljam3
 {W} -W.DB.Transaction
    (-) <connectionString;string
    (-) >dbConn;serial
@@ -43,7 +43,7 @@ updated: 2026-04-09
 
 **What it tests:** `[W]` wires wrapper IO using `(-)` with `$` variables. Wrapper outputs become available in body. See [[concepts/pipelines/wrappers#Wrappers]].
 
-```polyglot
+```aljam3
 {-} -Invoice.Save
    (-) <invoice#Invoice
    [T] -T.Call
@@ -63,7 +63,7 @@ updated: 2026-04-09
 
 **What it tests:** A wrapper that provides lifecycle scope but exposes no outputs to the pipeline.
 
-```polyglot
+```aljam3
 {W} -W.AuditScope
    (-) <userId;string
    (-) <action;string

@@ -18,7 +18,7 @@ See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$Re` co
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Re
    [%] .description << "Compiled regular expression pattern"
    [#] ##Scalar

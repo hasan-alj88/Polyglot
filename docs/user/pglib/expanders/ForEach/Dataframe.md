@@ -13,7 +13,7 @@ The `>row` output is a compiler-synthesized struct from the `ColumnEnum` type pa
 
 ## Syntax
 
-```polyglot
+```aljam3
 [=] =ForEach.Dataframe
    (=) <Dataframe << $sales
    (=) >row >> $row

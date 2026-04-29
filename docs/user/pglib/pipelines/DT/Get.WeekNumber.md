@@ -13,7 +13,7 @@ Returns the week-of-year as `#int`. The `<system` input selects the week numberi
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Get.WeekNumber
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtGetWeekNumber"

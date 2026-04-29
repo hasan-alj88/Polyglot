@@ -16,7 +16,7 @@ severity: error
 **Detection:** After parsing the `{*}` block, the compiler checks that all three `[%]` fields are present. If any is missing, PGE03013 fires with the missing field name.
 
 **VALID:**
-```polyglot
+```aljam3
 {*} *MyCollector
    [%] .category << #CollectorCategory.Agg
    [%] .scope << #CollectorScope.Expand
@@ -26,7 +26,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03013 — missing .scope and .overflow
 {*} *MyCollector
    [%] .category << #CollectorCategory.Agg

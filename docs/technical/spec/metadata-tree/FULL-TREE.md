@@ -11,7 +11,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 **Notation:**
 - `(alias)` — this node is commonly known by alias
 - `((alias|Canonical))` — alias resolves to Canonical at this location
-- `.field` — fixed field (Polyglot-defined)
+- `.field` — fixed field (Aljam3-defined)
 - `:field` — flexible field (user/runtime-defined)
 - `#live.*` — type modifier: runtime-managed, read-only (PGE02006). `live` is a property of the type, not a separate branch
 - `→ [[link]]` — see linked file for full specification

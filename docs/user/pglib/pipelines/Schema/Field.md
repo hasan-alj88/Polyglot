@@ -13,7 +13,7 @@ Extracts a single field from a `#serial` data tree by path. Like tree access (`$
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -#.Field
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "SchemaField"

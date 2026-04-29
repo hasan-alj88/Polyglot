@@ -13,7 +13,7 @@ Returns the `#Zone` attached to a `#dt` value.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Get.Zone
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtGetZone"

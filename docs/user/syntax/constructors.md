@@ -11,7 +11,7 @@ updated: 2026-04-22
 
 ## Constructors
 
-Polyglot separates two fundamentally different operations that look similar on the surface: constructing a typed value from a known string, and calling a pipeline that performs async work. Both used to share inline pipeline syntax (`-Pipeline"string"`), but they have entirely different error profiles — and Polyglot's [[philosophy/error-philosophy|error philosophy]] demands that distinction be explicit.
+Aljam3 separates two fundamentally different operations that look similar on the surface: constructing a typed value from a known string, and calling a pipeline that performs async work. Both used to share inline pipeline syntax (`-Pipeline"string"`), but they have entirely different error profiles — and Aljam3's [[philosophy/error-philosophy|error philosophy]] demands that distinction be explicit.
 
 A **constructor** is a `{$}` definition that produces a compile-time-guaranteed Final value with no error surface. When you write `$DT"2026-04-22"`, the compiler proves at compile time that every possible runtime outcome is a valid `#DT` tree. No Failed state, no `[!]` error handling, no ceremony — because the compiler has already done the work.
 
@@ -31,17 +31,17 @@ This rule is absolute. If you know the value at compile time, use a constructor.
 
 A constructor definition uses the `{$}` block type. The definition header specifies the constructor name and its string pattern:
 
-```polyglot
+```aljam3
 {$} $Name"pattern"
 ```
 
-The `$` prefix follows Polyglot's prefix symmetry: `{#}` defines `#Type`, `{-}` defines `-Pipeline`, `{$}` defines `$Constructor`.
+The `$` prefix follows Aljam3's prefix symmetry: `{#}` defines `#Type`, `{-}` defines `-Pipeline`, `{$}` defines `$Constructor`.
 
 ### Simple Pattern Overload
 
-The simple pattern form defines capture slots within literal strings but delegates their validation entirely to their mapped data types. To prevent Polyglot from reinventing complex string parsing (see [[vision#The Problem|c:Vision]]), constructors do not support explicit regex configuration.
+The simple pattern form defines capture slots within literal strings but delegates their validation entirely to their mapped data types. To prevent Aljam3 from reinventing complex string parsing (see [[vision#The Problem|c:Vision]]), constructors do not support explicit regex configuration.
 
-```polyglot
+```aljam3
 {$} $DT"{hours}:{minutes}:{seconds}"
    [$] #DT.Time
    [.] .hours << <hours
@@ -59,7 +59,7 @@ Constructors do NOT support `($)` IO lines explicitly defining `.re` extraction 
 
 Keywords are patterns with no capture slots — they compile to exact-match regex:
 
-```polyglot
+```aljam3
 {$} $DT"Today"
    [$] #DT.Date
    [.] .year << %Runtime.Date.Year
@@ -73,7 +73,7 @@ A keyword overload has no `($)` lines — the entire argument string must match 
 
 Only pglib constructors may use `[-]` pipeline calls inside `{$}`. The called pipeline must be an infallible native operation — the compiler grants this trust based on the `{N}` definition:
 
-```polyglot
+```aljam3
 {$} $DT"Now"
    [-] -DT.Current
       (-) >hours >> $hrs
@@ -130,7 +130,7 @@ Constructor arguments may contain `{$var}` interpolation, but only under strict 
 
 This rule is analogous to SQL prepared statements: structure is fixed at compile time, only typed parameter slots accept data. A runtime string can never become constructor input — if you need to parse a dynamic string, use a pipeline call with error handling.
 
-```polyglot
+```aljam3
 [ ] Valid — $basePath is constructor-sourced
 [-] $basePath << $Path"/reports"
 [-] $fullPath << $Path"{$basePath}/daily"
@@ -144,7 +144,7 @@ This rule is analogous to SQL prepared statements: structure is fixed at compile
 
 Constructors follow a **scoped extension model**: any package can define `{$}` constructors for types from other packages. Visibility is scoped by `[@]` imports — callers only see constructors from imported packages.
 
-```polyglot
+```aljam3
 {@ } @MyUtils
    [@] @datetime
 
@@ -166,12 +166,12 @@ This model means:
 
 Constructors are invoked with `[-]` assignment, using `$Constructor"literal"` as the value expression:
 
-```polyglot
+```aljam3
 {-} -DailyReport
    [T] -T.Daily"9AM"
    (-) <input#string
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ] constructor — no error handling needed
    [ ]

@@ -16,7 +16,7 @@ The `$DT` constructor produces `#DateTime`, `#Date`, and `#Time` values from str
 
 ### ISO-8601 Full DateTime
 
-```polyglot
+```aljam3
 {$} $DT"{year}-{month}-{day}T{hour}:{min}:{sec}Z"
    ($) <year.re << "[0-9]{4}"
    ($) <month.re << "[0-1][0-9]"
@@ -37,7 +37,7 @@ Matches ISO-8601 datetime strings with `T` separator and `Z` UTC suffix. Capture
 
 ### Date-Only
 
-```polyglot
+```aljam3
 {$} $DT"{year}-{month}-{day}"
    ($) <year.re << "[0-9]{4}"
    ($) <month.re << "[0-1][0-9]"
@@ -52,7 +52,7 @@ Matches date strings in `YYYY-MM-DD` format. Produces a `#Date` value directly.
 
 ### Time-Only
 
-```polyglot
+```aljam3
 {$} $DT"{hour}:{min}:{sec}"
    ($) <hour.re << "[0-2][0-9]"
    ($) <min.re << "[0-5][0-9]"
@@ -69,7 +69,7 @@ Matches time strings in `HH:MM:SS` format. Produces a `#Time` value directly.
 
 ### Today
 
-```polyglot
+```aljam3
 {$} $DT"Today"
    [$] #Date
    [.] .year << %Runtime.Date.Year
@@ -81,7 +81,7 @@ Produces today's date from the runtime environment. The compiler knows all possi
 
 ### Yesterday
 
-```polyglot
+```aljam3
 {$} $DT"Yesterday"
    [$] #Date
    [.] .year << %Runtime.Date.Yesterday.Year
@@ -93,7 +93,7 @@ Produces yesterday's date. The runtime resolves calendar rollover (month/year bo
 
 ### Tomorrow
 
-```polyglot
+```aljam3
 {$} $DT"Tomorrow"
    [$] #Date
    [.] .year << %Runtime.Date.Tomorrow.Year
@@ -105,7 +105,7 @@ Produces tomorrow's date. The runtime resolves calendar rollover (month/year bou
 
 ### Now
 
-```polyglot
+```aljam3
 {$} $DT"Now"
    [-] -DT.Now
       (-) >dt >> $now
@@ -131,7 +131,7 @@ Keywords (`Today`, `Yesterday`, `Tomorrow`, `Now`) are exact-match — no regex 
 
 ## Usage
 
-```polyglot
+```aljam3
 [ ] compile-time guaranteed — no error handling
 [-] $deadline << $DT"2026-04-22"
 [-] $meetingTime << $DT"14:30:00"

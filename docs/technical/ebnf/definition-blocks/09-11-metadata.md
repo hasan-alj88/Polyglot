@@ -33,7 +33,7 @@ metadata_alias      ::= "%" "alias" NEWLINE
                          { indent flex_sep string_literal NEWLINE } ;
                       (* At least one alias name required — PGE12004 *)
 
-(* Live fields — Polyglot-managed, read-only, implicit *)
+(* Live fields — Aljam3-managed, read-only, implicit *)
 metadata_live       ::= fixed_sep name ";" "live" type_expr ;
 ```
 

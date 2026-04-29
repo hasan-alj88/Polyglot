@@ -11,11 +11,11 @@ status: draft
 <!-- @c:glossary#Runner -->
 <!-- @c:pglib/types/Variable -->
 <!-- @c:pglib/types/NativeType -->
-Foreign code execution pipelines run native code (Python, Rust, etc.) within Polyglot pipelines. Language-specific pipelines (`-Run.<Lang>.*`) take an environment handle from `-W.Env`; the language-agnostic `-Run.Shell` uses `-W.Polyglot` instead. Cross-language Bridge pipelines (`-Run.Bridge.*`) take two `-W.Env` wrappers and convert variables between languages automatically.
+Foreign code execution pipelines run native code (Python, Rust, etc.) within Aljam3 pipelines. Language-specific pipelines (`-Run.<Lang>.*`) take an environment handle from `-W.Env`; the language-agnostic `-Run.Shell` uses `-W.Aljam3` instead. Cross-language Bridge pipelines (`-Run.Bridge.*`) take two `-W.Env` wrappers and convert variables between languages automatically.
 
 No `[@]` import needed.
 
-**PRIMITIVE** — pglib runtime pipelines are direct language runtime integrations. They are implemented by the Polyglot runtime and cannot be reimplemented in user `.pg` files.
+**PRIMITIVE** — pglib runtime pipelines are direct language runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.aj3` files.
 
 `<Lang>` is a placeholder for the target language (Python, Rust, etc.). The actual pipeline name uses the concrete language: `-Run.Python.Function`, `-Run.Rust.Script`, etc. `-Run.Shell` is the exception — it is language-agnostic and invokes the system shell directly.
 
@@ -39,7 +39,7 @@ All `-Run.*` pipelines require a `{_}` permission object granting System.Process
 | [[pglib/pipelines/Run/Function\|-Run.\<Lang\>.Function]] | Call a named function in foreign code |
 | [[pglib/pipelines/Run/Script\|-Run.\<Lang\>.Script]] | Run code with Record-typed variable bindings |
 | [[pglib/pipelines/Run/CLI\|-Run.\<Lang\>.CLI]] | Invoke compiled binary with string arguments |
-| [[pglib/pipelines/Run/Bind\|-Run.\<Lang\>.Bind]] | Foreign code imports polyglot lib for data flow |
+| [[pglib/pipelines/Run/Bind\|-Run.\<Lang\>.Bind]] | Foreign code imports aljam3 lib for data flow |
 | [[pglib/pipelines/Run/Bridge.Function\|-Run.Bridge.Function]] | Call a named function across language boundaries |
 | [[pglib/pipelines/Run/Bridge.Script\|-Run.Bridge.Script]] | Run code with cross-language variable bindings |
 | [[pglib/pipelines/Run/Shell\|-Run.Shell]] | Execute shell command strings (pipes, redirections, compound commands) |
@@ -49,7 +49,7 @@ All `-Run.*` pipelines require a `{_}` permission object granting System.Process
 <!-- @c:types -->
 Three of the four pipelines (`.Function`, `.Script`, `.Bind`) accept a `<code` input. Code source is an enum-style struct with `%##Active` = one — the caller provides **either** inline code or a file path, never both:
 
-```polyglot
+```aljam3
 {#} #Code:Source
    [#] %##Active << #ActiveKind.One
    [.] .inline#string
@@ -57,14 +57,14 @@ Three of the four pipelines (`.Function`, `.Script`, `.Bind`) accept a `<code` i
 ```
 
 **Inline usage** (with `[C]` blocks):
-```polyglot
+```aljam3
 (-) <code.inline <<
    [C] import os
    [C] result = os.listdir(target_dir)
 ```
 
 **File usage:**
-```polyglot
+```aljam3
 (-) <code.file#path << "/scripts/process.py"
 ```
 
@@ -73,7 +73,7 @@ The compiler enforces `%##Active` one — providing both `.inline` and `.file` i
 ## Binding Modes
 
 <!-- @u:syntax/blocks#Foreign Code -->
-Four language-specific modes define **who controls data flow** between Polyglot and foreign code. The fifth variant, `.Shell`, is language-agnostic — see [[pglib/pipelines/Run/Shell|-Run.Shell]].
+Four language-specific modes define **who controls data flow** between Aljam3 and foreign code. The fifth variant, `.Shell`, is language-agnostic — see [[pglib/pipelines/Run/Shell|-Run.Shell]].
 
 ### `.Function` — Structured Call
 
@@ -89,7 +89,7 @@ Call a named function with positional and keyword arguments. The compiler valida
 | `>output` | `#Code:<Lang>.Output` | `.stdout`, `.stderr` capture |
 | `<code` | `#Code:Source` | Function definition (inline `[C]` or file) |
 
-### `.Script` — Polyglot-Controlled Binding
+### `.Script` — Aljam3-Controlled Binding
 
 Run code with Record-typed variable bindings. `<Bind#Record` field names become native local variables. `>Bind#Record` field names are read back after execution. The compiler validates that all field names exist as identifiers in the code.
 
@@ -115,13 +115,13 @@ Invoke a compiled binary with string arguments. No code validation — the binar
 
 ### `.Bind` — Foreign-Code-Controlled
 
-Foreign code imports the polyglot lib and calls `pull("name")`/`push("name", value)` at arbitrary points. The compiler cannot validate these — they are opaque runtime strings.
+Foreign code imports the aljam3 lib and calls `pull("name")`/`push("name", value)` at arbitrary points. The compiler cannot validate these — they are opaque runtime strings.
 
 | IO | Type | Purpose |
 |----|------|---------|
 | `<env` | `#<Lang>Env` | Runtime environment from `-W.Env` |
 | `>output` | `#Code:<Lang>.Output` | `.stdout`, `.stderr` capture |
-| `<code` | `#Code:Source` | Code with polyglot lib imports (inline `[C]` or file) |
+| `<code` | `#Code:Source` | Code with aljam3 lib imports (inline `[C]` or file) |
 
 ### `.Bridge.Function` — Cross-Language Structured Call
 
@@ -155,7 +155,7 @@ See [[pglib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for the full specif
 
 Bridge pipelines require **two** `-W.Env` wrappers — one per language environment. The `;Caller;Callee` syntax on the `[-]` call line specifies both:
 
-```polyglot
+```aljam3
 [W] -W.Env;PyEnv
 [W] -W.Env;RsEnv
 
@@ -173,9 +173,9 @@ See [[technical/algorithms/bridge-conversion#Dual-Wrapper Lifecycle]] for the fu
 ## Record Binding — The `%InlineString` Pattern
 
 <!-- @c:types/generic-types -->
-`<Bind`, `<arg`, `<kwarg`, and `>Bind` all use `#Record` types. Record field names map **exactly** to native variable/parameter names — the same principle as `%InlineString` where template variables match Polyglot `$` variables exactly.
+`<Bind`, `<arg`, `<kwarg`, and `>Bind` all use `#Record` types. Record field names map **exactly** to native variable/parameter names — the same principle as `%InlineString` where template variables match Aljam3 `$` variables exactly.
 
-| Mechanism | Polyglot Side | Foreign Side | Compiler Validates |
+| Mechanism | Aljam3 Side | Foreign Side | Compiler Validates |
 |-----------|---------------|--------------|-------------------|
 | `%InlineString` | `{$varName}` | String substitution | `$varName` exists |
 | `<Bind#Record` | `.field_name#type` | Native variable `field_name` | `field_name` in code |
@@ -185,7 +185,7 @@ See [[technical/algorithms/bridge-conversion#Dual-Wrapper Lifecycle]] for the fu
 
 **Inline Record** (anonymous, at call site) is standard collection assignment syntax — valid as long as the assigned object matches the schema topology:
 
-```polyglot
+```aljam3
 (-) <Bind#Record
    [.] .input_path#path << $imageFile
    [.] .target_w#int << $targetWidth
@@ -193,7 +193,7 @@ See [[technical/algorithms/bridge-conversion#Dual-Wrapper Lifecycle]] for the fu
 
 **Named Record** (reusable `{#}` definition):
 
-```polyglot
+```aljam3
 {#} #ResizeInputs
    [.] .input_path#path
    [.] .target_w#int
@@ -207,7 +207,7 @@ See [[technical/algorithms/bridge-conversion#Dual-Wrapper Lifecycle]] for the fu
 <!-- @c:spec/native-dispatch#Serialization Protocol -->
 Record field types drive marshalling through the native dispatch JSON wire format. Each field serializes to the native type per its annotation:
 
-| Polyglot Field Type | Python | Rust |
+| Aljam3 Field Type | Python | Rust |
 |---------------------|--------|------|
 | `#path` | `str` (OS path) | `PathBuf` |
 | `#int` | `int` | `i64` |
@@ -232,7 +232,7 @@ Record field types drive marshalling through the native dispatch JSON wire forma
 
 **Note:** Binding validation (PGE01033–PGE01036) applies at compile time for `<code.inline` only. When `<code.file` is used, binding validation is deferred to runtime (the file content is not available at compile time).
 
-**File binding rule:** When `<code.file` is used, the compiler records a content hash of the referenced file. If the file changes after compilation, the Polyglot Service revokes the pipeline's permission grant and refuses to execute until the developer recompiles. A file change watcher trigger monitors the referenced path and notifies the developer. See [[concepts/permissions#Compile-Time File Binding|c:Compile-Time File Binding]].
+**File binding rule:** When `<code.file` is used, the compiler records a content hash of the referenced file. If the file changes after compilation, the Aljam3 Service revokes the pipeline's permission grant and refuses to execute until the developer recompiles. A file change watcher trigger monitors the referenced path and notifies the developer. See [[concepts/permissions#Compile-Time File Binding|c:Compile-Time File Binding]].
 
 ### Binding Compiler Errors
 

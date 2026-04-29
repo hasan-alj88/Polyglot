@@ -12,7 +12,7 @@ metadata_instance: "%#:JapaneseDate:N"
 
 Uses Gregorian `#Month` for months.
 
-```polyglot
+```aljam3
 {#} #JapaneseDate
    [%] .description << "Japanese calendar date with imperial era"
    [%] .version << "1.0.0"
@@ -30,7 +30,7 @@ Uses Gregorian `#Month` for months.
 
 Known modern eras are fixed enum fields. Users can add older historical eras via the flexible `:historical` field.
 
-```polyglot
+```aljam3
 {#} #JapaneseEra
    [%] .description << "Japanese imperial era"
    [%] .version << "1.0.0"

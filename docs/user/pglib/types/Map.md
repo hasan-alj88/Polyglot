@@ -17,7 +17,7 @@ Enum-keyed collection with typed value fields. `##Record` is a parameterized sch
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Record
    (#) <#Fields << ##Enum
    (#) <#ValueType <~ #
@@ -48,7 +48,7 @@ The `<#Fields` parameter must satisfy `##Enum` -- field names come from an enum 
 
 Types that compose `##Record` use `:` positional binding for their `(#) <param` declarations:
 
-```polyglot
+```aljam3
 {#} #DayOfWeek
    [#] ##Enum
    [#] ##Scalar
@@ -72,7 +72,7 @@ Types that compose `##Record` use `:` positional binding for their `(#) <param` 
 
 Access uses `<` with enum variant names:
 
-```polyglot
+```aljam3
 [-] $monday#string << $schedule<Monday
 [-] $friday#string << $schedule<Friday
 ```

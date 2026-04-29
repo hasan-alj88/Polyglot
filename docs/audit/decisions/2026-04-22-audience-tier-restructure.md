@@ -11,7 +11,7 @@ updated: 2026-04-22
 
 ## Summary
 
-Polyglot's documentation audience system was restructured from a flat three-tier model (user/developer/ai) into a two-group, five-audience model: two external audiences (automation-builder, integrator) and three internal audiences (architect, designer, ai). This gives each audience a distinct tone, scope, and set of assumptions.
+Aljam3's documentation audience system was restructured from a flat three-tier model (user/developer/ai) into a two-group, five-audience model: two external audiences (automation-builder, integrator) and three internal audiences (architect, designer, ai). This gives each audience a distinct tone, scope, and set of assumptions.
 
 **Revision (2026-04-22):** Further restructured to support Agile development workflow — see #353. architect + designer merged into "design"; "ai" renamed to "ai-finder"; "product" added; "developer" added.
 
@@ -19,22 +19,22 @@ Polyglot's documentation audience system was restructured from a flat three-tier
 
 Three audiences with broad, overlapping scope:
 
-- **user** — anyone writing or reading Polyglot code
-- **developer** — anyone building Polyglot itself
+- **user** — anyone writing or reading Aljam3 code
+- **developer** — anyone building Aljam3 itself
 - **ai** — Claude and other AI agents consuming documentation
 
-The "user" audience conflated two very different needs: developers writing `.pg` files and developers integrating existing codebases via SDKs. The "developer" audience covered both architecture decisions and implementation details. "pg-coder" was used inconsistently as an alias for "user."
+The "user" audience conflated two very different needs: developers writing `.aj3` files and developers integrating existing codebases via SDKs. The "developer" audience covered both architecture decisions and implementation details. "pg-coder" was used inconsistently as an alias for "user."
 
 ## After (first restructure)
 
 Five audiences in two groups:
 
-**External** (how to *use* Polyglot):
+**External** (how to *use* Aljam3):
 
-- **automation-builder** — developers who write `.pg` files (renamed from pg-coder/user)
-- **integrator** — developers who connect existing codebases via SDKs/APIs without writing `.pg` code
+- **automation-builder** — developers who write `.aj3` files (renamed from pg-coder/user)
+- **integrator** — developers who connect existing codebases via SDKs/APIs without writing `.aj3` code
 
-**Internal** (how to *build* Polyglot):
+**Internal** (how to *build* Aljam3):
 
 - **architect** — core architecture, system design, infrastructure decisions
 - **designer** — language spec, philosophy, syntax design, type system decisions
@@ -46,7 +46,7 @@ Six audiences in two groups:
 
 **External** (unchanged):
 
-- **automation-builder** — developers who write `.pg` files
+- **automation-builder** — developers who write `.aj3` files
 - **integrator** — developers who connect existing codebases via SDKs/APIs
 
 **Internal** (revised):
@@ -71,7 +71,7 @@ Each audience has a dedicated file in `docs/audit/audiences/` with tone rules, f
 The original three audiences were too broad to drive useful writing rules:
 
 - An **automation-builder** needs task-oriented guides with working examples — they want to solve problems, not understand internals
-- An **integrator** needs SDK references and API contracts — they may never see `.pg` syntax
+- An **integrator** needs SDK references and API contracts — they may never see `.aj3` syntax
 - These two groups have fundamentally different vocabulary, assumptions, and success criteria
 
 Splitting "developer" into architect and designer separates "how the system works" (architecture) from "how the language is designed" (language design). These require different levels of abstraction and different readers.

@@ -10,7 +10,7 @@ status: draft
 <!-- @u:operation-labels -->
 `(-) $Label` labels a pipeline call's IO, allowing downstream operations to access outputs via `$Label>outputParam` without intermediate variables. The `(-)` marker mirrors the `[-]` pipeline call context. See [[operation-labels]] for full syntax, chain step labels `(.)`, IO comments `( )`, and compile rules.
 
-```polyglot
+```aljam3
 [-] -ReadFile
    (-) $Read
    (-) <path << "input.csv"
@@ -23,7 +23,7 @@ status: draft
 
 In chain IO addressing, step labels replace numeric/leaf-name step refs:
 
-```polyglot
+```aljam3
 [-] -ReadFile->-ParseCSV->-ValidateRows
    (-) $Pipeline
       (.) $Read

@@ -4,26 +4,26 @@ type: spec
 updated: 2026-04-23
 ---
 
-# Polyglot Architecture
+# Aljam3 Architecture
 
 <!-- @c:vision -->
 <!-- @c:philosophy/core-philosophy -->
 <!-- @c:philosophy/behavioral-contract -->
 <!-- @c:audit/reference/glossary -->
-This document is the consolidated architecture read for language designers and architects. It describes the four layers of Polyglot — language, compiler, service, runtime — and how they connect. Each section cites the authoritative spec file for its layer; this document sequences those specs into one design-shaped read and does not duplicate their prose. Authority chain: [[vision|c:vision]] > [[philosophy/core-philosophy|c:core-philosophy]] > [[philosophy/behavioral-contract|c:behavioral-contract]] > [[audit/README|c:audit/README]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
+This document is the consolidated architecture read for language designers and architects. It describes the four layers of Aljam3 — language, compiler, service, runtime — and how they connect. Each section cites the authoritative spec file for its layer; this document sequences those specs into one design-shaped read and does not duplicate their prose. Authority chain: [[vision|c:vision]] > [[philosophy/core-philosophy|c:core-philosophy]] > [[philosophy/behavioral-contract|c:behavioral-contract]] > [[audit/README|c:audit/README]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
 
 ## Overview
 
-<!-- @c:vision:The Polyglot Ecosystem -->
+<!-- @c:vision:The Aljam3 Ecosystem -->
 <!-- @c:philosophy/behavioral-contract -->
-Polyglot is a trigger-driven programming language whose compiler emits a Behavior Contract — a signal-graph IR — that the Polyglot Service executes at runtime. Four layers:
+Aljam3 is a trigger-driven programming language whose compiler emits a Behavior Contract — a signal-graph IR — that the Aljam3 Service executes at runtime. Four layers:
 
 | Layer | Produces | Consumes | Authoritative spec |
 |-------|----------|----------|--------------------|
-| Language | [[audit/reference/glossary\|c:Polyglot Code]] (`.pg` files) | EBNF grammar | [[technical/ebnf/INDEX\|u:ebnf-index]] |
-| Compiler | [[audit/reference/glossary\|c:Behavior Contract]] | Polyglot Code | [[technical/spec/compiler-floor\|u:compiler-floor]], [[technical/spec/behavior-contract\|u:behavior-contract]] |
+| Language | [[audit/reference/glossary\|c:Aljam3 Code]] (`.aj3` files) | EBNF grammar | [[technical/ebnf/INDEX\|u:ebnf-index]] |
+| Compiler | [[audit/reference/glossary\|c:Behavior Contract]] | Aljam3 Code | [[technical/spec/compiler-floor\|u:compiler-floor]], [[technical/spec/behavior-contract\|u:behavior-contract]] |
 | Service | Signals, Jobs, Variable state | Behavior Contract | [[technical/spec/compiler-floor\|u:compiler-floor]] |
-| Runtime execution | Results (outputs, errors) | Jobs and foreign-code blocks | [[technical/spec/polyglot-sdk\|u:polyglot-sdk]], [[technical/spec/native-dispatch\|u:native-dispatch]] |
+| Runtime execution | Results (outputs, errors) | Jobs and foreign-code blocks | [[technical/spec/aljam3-sdk\|u:aljam3-sdk]], [[technical/spec/native-dispatch\|u:native-dispatch]] |
 
 The boundaries between these layers are enforced by compile rules and runtime contracts; see "Authority Chain and Failure Modes" below for every boundary violation.
 
@@ -32,7 +32,7 @@ The boundaries between these layers are enforced by compile rules and runtime co
 <!-- @c:philosophy/core-philosophy -->
 <!-- @c:philosophy/data-trees -->
 <!-- @u:user/SPEC-INDEX -->
-The language layer defines what `.pg` source code looks like and what compile-time invariants the compiler enforces. It is fully specified — v0.2 is complete.
+The language layer defines what `.aj3` source code looks like and what compile-time invariants the compiler enforces. It is fully specified — v0.2 is complete.
 
 ### Grammar
 
@@ -46,7 +46,7 @@ The language layer defines what `.pg` source code looks like and what compile-ti
 | Collector-definition grammar | [[technical/ebnf/16-collector-definitions\|u:ebnf-16]] |
 | Edge-case enumeration | [[technical/edge-cases/INDEX\|u:edge-cases-index]] |
 
-The grammar uses three bracket families — `{X}` for definition blocks, `[X]` for block elements, `(X)` for IO markers — codified in [[user/syntax/blocks|u:blocks]]. The identifier-prefix system uses seven prefixes: `@`, `#`, `=`, `-`, `$`, `!`, `%`, plus the `_` permission prefix. Per [[audit/reference/glossary|c:glossary]], Polyglot Code never contains raw arithmetic operators; arithmetic routes through `-Math.*` pipelines, enforced by PGE04010.
+The grammar uses three bracket families — `{X}` for definition blocks, `[X]` for block elements, `(X)` for IO markers — codified in [[user/syntax/blocks|u:blocks]]. The identifier-prefix system uses seven prefixes: `@`, `#`, `=`, `-`, `$`, `!`, `%`, plus the `_` permission prefix. Per [[audit/reference/glossary|c:glossary]], Aljam3 Code never contains raw arithmetic operators; arithmetic routes through `-Math.*` pipelines, enforced by PGE04010.
 
 ### Type System
 
@@ -58,18 +58,18 @@ The grammar uses three bracket families — `{X}` for definition blocks, `[X]` f
 | Flexible fields | [[user/syntax/types/flexible-fields\|u:flexible-fields]] |
 | Structural type identity (spec-level) | [[technical/spec/type-identity\|u:type-identity]] |
 
-Types are data-tree descriptors. Every data value in Polyglot is a tree (per [[philosophy/data-trees|c:data-trees]]) keyed by a type hierarchy; `##` schemas define structural constraints; `#` aliases bind a name to a schema instance; `###` field types annotate individual fields. The compiler validates structural identity using the rules in [[technical/spec/type-identity|u:type-identity]].
+Types are data-tree descriptors. Every data value in Aljam3 is a tree (per [[philosophy/data-trees|c:data-trees]]) keyed by a type hierarchy; `##` schemas define structural constraints; `#` aliases bind a name to a schema instance; `###` field types annotate individual fields. The compiler validates structural identity using the rules in [[technical/spec/type-identity|u:type-identity]].
 
 ### Pipelines
 
 <!-- @u:user/concepts/pipelines/INDEX -->
-A [[audit/reference/glossary|c:Pipeline]] is the executable unit of Polyglot. Every pipeline has:
+A [[audit/reference/glossary|c:Pipeline]] is the executable unit of Aljam3. Every pipeline has:
 
 | Required | Optional |
 |----------|----------|
 | Trigger (`[T]`) or implicit IO trigger | Environment wiring (`;EnvName`) |
 | Queue (`[Q]`) | Wrapper override (`[W]`) |
-| Wrapper (`[W]` defaults to `-W.Polyglot`) | Permission grants (`{_}` + `[_]` IO markers) |
+| Wrapper (`[W]` defaults to `-W.Aljam3`) | Permission grants (`{_}` + `[_]` IO markers) |
 | Execution body (`[\]` setup + body + `[/]` cleanup) | Foreign-code blocks (`[C]`) |
 
 Mandatory structure is enforced by PGE01005 (missing trigger), PGE01006 (missing queue), PGE01007 (missing setup/cleanup). See [[user/concepts/pipelines/INDEX|u:pipelines-index]] for the concept-level overview.
@@ -77,7 +77,7 @@ Mandatory structure is enforced by PGE01005 (missing trigger), PGE01006 (missing
 ### Collections and Parallelism
 
 <!-- @u:user/concepts/collections/INDEX -->
-Polyglot expresses parallelism via expanders (`=ForEach.*`) and collectors (`*Agg.*`, `*Into.*`, `*Sync.*`, `*All`, `*First`, `*Nth`). An expander fans jobs out; a collector fans results in. The paired expand/collect scope is enforced by PGE03025. Canonical reads:
+Aljam3 expresses parallelism via expanders (`=ForEach.*`) and collectors (`*Agg.*`, `*Into.*`, `*Sync.*`, `*All`, `*First`, `*Nth`). An expander fans jobs out; a collector fans results in. The paired expand/collect scope is enforced by PGE03025. Canonical reads:
 
 | Concept | File |
 |---------|------|
@@ -91,7 +91,7 @@ Polyglot expresses parallelism via expanders (`=ForEach.*`) and collectors (`*Ag
 <!-- @c:philosophy/behavioral-contract -->
 <!-- @u:technical/spec/compiler-floor -->
 <!-- @u:technical/spec/behavior-contract -->
-The compiler translates Polyglot Code into a [[audit/reference/glossary|c:Behavior Contract]] — a signal-graph IR consumed by the Polyglot Service. The boundary between compile-time and run-time is the "compiler floor" defined in [[technical/spec/compiler-floor|u:compiler-floor]].
+The compiler translates Aljam3 Code into a [[audit/reference/glossary|c:Behavior Contract]] — a signal-graph IR consumed by the Aljam3 Service. The boundary between compile-time and run-time is the "compiler floor" defined in [[technical/spec/compiler-floor|u:compiler-floor]].
 
 ### Compiler Floor
 
@@ -125,7 +125,7 @@ The Behavior Contract is the signal-graph IR produced by the compiler. It encode
 | Collector reconciliation map | Which collectors watch which jobs; compound exhaustiveness claims |
 | Permission index | Grant + locator for every IO marker |
 
-The Polyglot Service reads this contract; it does not re-parse `.pg` source. See [[philosophy/behavioral-contract|c:behavioral-contract]] for why the contract is the boundary.
+The Aljam3 Service reads this contract; it does not re-parse `.aj3` source. See [[philosophy/behavioral-contract|c:behavioral-contract]] for why the contract is the boundary.
 
 ### Compile-Rule Catalog
 
@@ -158,7 +158,7 @@ Standalone compiler algorithms (outside the compile-rules tree):
 ## Service Layer
 
 <!-- @c:vision:Trigger-Driven Orchestration -->
-The [[audit/reference/glossary|c:Polyglot Service]] executes a Behavior Contract. It has four primary components: Trigger Monitor, Queue Handler, Dispatch Coordinator, and Runner.
+The [[audit/reference/glossary|c:Aljam3 Service]] executes a Behavior Contract. It has four primary components: Trigger Monitor, Queue Handler, Dispatch Coordinator, and Runner.
 
 ### Trigger Monitor
 
@@ -235,15 +235,15 @@ The sandbox spec defines `#LimitAction` semantics, cgroups mapping, and queue-de
 <!-- @u:user/pglib/pipelines/W/INDEX -->
 <!-- @u:user/pglib/pipelines/Run/INDEX -->
 <!-- @u:user/pglib/pipelines/RT/INDEX -->
-Execution is delegated via wrappers (`-W.*`) and runtime pipelines (`-RT.*`, `-Run.*`). Wrappers and runtimes form the boundary between Polyglot-controlled execution and foreign-language execution.
+Execution is delegated via wrappers (`-W.*`) and runtime pipelines (`-RT.*`, `-Run.*`). Wrappers and runtimes form the boundary between Aljam3-controlled execution and foreign-language execution.
 
 ### Wrappers (`-W.*`)
 
-Authority: [[user/pglib/pipelines/W/INDEX|u:pglib-W]]. A wrapper defines the setup/cleanup contract around a pipeline body. `-W.Polyglot` is the default (no-op setup/cleanup). Specialised wrappers:
+Authority: [[user/pglib/pipelines/W/INDEX|u:pglib-W]]. A wrapper defines the setup/cleanup contract around a pipeline body. `-W.Aljam3` is the default (no-op setup/cleanup). Specialised wrappers:
 
 | Wrapper | Purpose |
 |---------|---------|
-| `-W.Polyglot` | Default — no setup/cleanup |
+| `-W.Aljam3` | Default — no setup/cleanup |
 | `-W.RT` | Provision a foreign runtime (Python, Rust, Go, JS) for `-RT.*` calls |
 | `-W.Env` | Wire a `{;}` environment block into the body |
 | `-W.Retry` | Drive queue-level retry semantics (retry strategy lives in `[Q]`, not `[W]`) |
@@ -263,9 +263,9 @@ Each runtime splits further by binding origin:
 
 | Origin | Meaning |
 |--------|---------|
-| Script | Polyglot injects `<Bind` / `>Bind` names into the foreign environment |
-| Bind | Foreign code pulls/pushes via the Polyglot SDK |
-| CLI | Compiled binary execution; uses `-W.Polyglot`, not `-W.RT` |
+| Script | Aljam3 injects `<Bind` / `>Bind` names into the foreign environment |
+| Bind | Foreign code pulls/pushes via the Aljam3 SDK |
+| CLI | Compiled binary execution; uses `-W.Aljam3`, not `-W.RT` |
 
 `-RT.*` error namespaces appear under `!RT.*`. See [[user/pglib/errors/pipeline-associations|u:pipeline-associations]] for namespace-to-pipeline bindings.
 
@@ -285,24 +285,24 @@ Authority: [[user/pglib/pipelines/Run/INDEX|u:pglib-Run]]. `-Run.*` provides scr
 ## SDK and Cross-Language Integration
 
 <!-- @c:vision:Cross-Language Integration -->
-<!-- @u:technical/spec/polyglot-sdk -->
-Authority: [[technical/spec/polyglot-sdk|u:polyglot-sdk]].
+<!-- @u:technical/spec/aljam3-sdk -->
+Authority: [[technical/spec/aljam3-sdk|u:aljam3-sdk]].
 
-The [[audit/reference/glossary|c:Polyglot]] SDK provides encode / decode / call / pull / push primitives in each supported foreign language. It is the contract-defined surface for foreign code to interact with a Polyglot Job.
+The [[audit/reference/glossary|c:Aljam3]] SDK provides encode / decode / call / pull / push primitives in each supported foreign language. It is the contract-defined surface for foreign code to interact with a Aljam3 Job.
 
 ### SDK Primitives
 
 | Primitive | Purpose |
 |-----------|---------|
-| `encode(value)` | Serialise a native value to the Polyglot universal-string wire format |
+| `encode(value)` | Serialise a native value to the Aljam3 universal-string wire format |
 | `decode(wire, type)` | Deserialise a wire value into a native value |
-| `call(pipeline, inputs)` | Invoke a Polyglot pipeline from foreign code |
-| `pull(name)` | Pull a bound input variable from Polyglot |
-| `push(name, value)` | Push a bound output variable back to Polyglot |
+| `call(pipeline, inputs)` | Invoke a Aljam3 pipeline from foreign code |
+| `pull(name)` | Pull a bound input variable from Aljam3 |
+| `push(name, value)` | Push a bound output variable back to Aljam3 |
 
 ### Universal String Wire Format
 
-Authority: [[technical/spec/polyglot-sdk|u:polyglot-sdk]]. The wire format is a typed universal-string protocol. Types carried include: `#bytes` (Base64), `#dt` (epoch seconds), primitives, records, collections. Per-language encode/decode normalisation rules cover Boolean, Float, and Null handling with dependencies on `##Inf` and `##Nullable` schemas.
+Authority: [[technical/spec/aljam3-sdk|u:aljam3-sdk]]. The wire format is a typed universal-string protocol. Types carried include: `#bytes` (Base64), `#dt` (epoch seconds), primitives, records, collections. Per-language encode/decode normalisation rules cover Boolean, Float, and Null handling with dependencies on `##Inf` and `##Nullable` schemas.
 
 The SDK does not expose FFI. FFI (dynamic code generation) is deferred to `-Run.Bridge`; the SDK is universal-string-only.
 
@@ -332,12 +332,12 @@ All `[C]` foreign-code blocks undergo AST analysis before execution for permissi
 <!-- @u:technical/spec/otel-permission-events -->
 Authority: [[technical/spec/otel-foundation|u:otel-foundation]].
 
-Polyglot service components emit OpenTelemetry traces, logs, and metrics. The OTel foundation defines three specs:
+Aljam3 service components emit OpenTelemetry traces, logs, and metrics. The OTel foundation defines three specs:
 
 | Spec | Purpose |
 |------|---------|
 | [[technical/spec/otel-foundation\|u:otel-foundation]] | Tracing infrastructure, span hierarchy, attributes |
-| [[technical/spec/otel-permission-events\|u:otel-permission-events]] | Permission / sandbox events (8 log events, 9 `polyglot.*` attributes) |
+| [[technical/spec/otel-permission-events\|u:otel-permission-events]] | Permission / sandbox events (8 log events, 9 `aljam3.*` attributes) |
 | [[technical/spec/otel-config\|u:otel-config]] | Exporter configuration |
 
 Span hierarchy mirrors the service-component structure: Trigger → Queue admission → Dispatch → Runner Job → Collector reconciliation. Permission events are emitted at `{_}` grant acquisition and at every permission-enforced IO.

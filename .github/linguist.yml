@@ -1,17 +1,17 @@
-# GitHub Linguist Configuration for Polyglot Language
+# GitHub Linguist Configuration for Aljam3 Language
 # See: https://github.com/github/linguist/blob/master/CONTRIBUTING.md
 
-Polyglot:
+Aljam3:
   type: programming
-  color: "#7e57c2"  # Purple color for Polyglot (Material Design Deep Purple 400)
+  color: "#7e57c2"  # Purple color for Aljam3 (Material Design Deep Purple 400)
   extensions:
-    - ".pg"
-  tm_scope: source.polyglot
+    - ".aj3"
+  tm_scope: source.aljam3
   ace_mode: text
   language_id: 999999999  # Placeholder - GitHub will assign official ID if language is added
   aliases:
-    - polyglot
+    - aljam3
     - pg
   filenames: []
   interpreters: []
-  group: Polyglot
+  group: Aljam3

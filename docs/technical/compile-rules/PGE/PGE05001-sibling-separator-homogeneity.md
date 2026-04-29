@@ -20,21 +20,21 @@ severity: error
 **Scope:** PGE05001 applies per sibling level in definitions and field access — not per navigation path. A single `field_path` like `$config.db:host` that crosses from a fixed level (`.db`) to a flexible level (`:host`) does **not** trigger PGE05001, because the `.` and `:` operate at different tree levels. See EC-3.8.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all siblings use : (flexible)
 [-] $user:name << "Alice"
 [-] $user:age << 30
 [-] $user:email << "alice@example.com"
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ all siblings use . (fixed)
 {#} #Boolean
    [.] .True
    [.] .False
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ different separators at different levels
 {#} #Config
    [.] .timeout#int
@@ -47,13 +47,13 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE05001 — mixing . and : at the same level
 [-] $user.name << "Alice"
 [-] $user:age << 30                    [ ] ✗ PGE05001 — : sibling among . siblings
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE05001 — mixed separators in {#} definition
 {#} #Bad
    [.] .name#string

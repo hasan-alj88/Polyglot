@@ -21,12 +21,12 @@ severity: error
 **See also:** PGE01016 (Unmarked Execution Line — missing marker entirely), PGE01002 (IO Before Trigger — IO placement constraints)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ (-) for IO declaration, [-] for execution
 {-} -Process
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >output#string
    [ ]
@@ -36,12 +36,12 @@ severity: error
    [-] >output << $cleaned
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ (-) inside [-] call — wiring IO on called pipeline
 {-} -Caller
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >out#string
    [ ]
@@ -51,23 +51,23 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE01017 — (-) used for standalone assignment in execution body
 {-} -Bad
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <input#string
    (-) >result#string
    (-) >result << $input                      [ ] ✗ PGE01017 — should be [-]
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01017 — (-) used for output push inside conditional
 {-} -AlsoBad
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >output#string
    [ ]

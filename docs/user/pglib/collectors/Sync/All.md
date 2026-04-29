@@ -13,7 +13,7 @@ No type constraint on inputs.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [*] *All
    (*) << $profile
    (*) << $history

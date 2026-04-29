@@ -11,13 +11,13 @@ metadata_instance: "%#:JobStatus:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.pg` file. Represents the lifecycle state of a job as observed by a `{*}` collector.
+Runtime `##Enum` type available in every `.aj3` file. Represents the lifecycle state of a job as observed by a `{*}` collector.
 
 ---
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #JobStatus
    [%] .description << "Job lifecycle state as observed by collectors"
    [#] ##Enum

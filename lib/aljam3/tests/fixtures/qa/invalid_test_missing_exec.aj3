@@ -1,0 +1,7 @@
+{@} @Company:InvalidMissingExec<Processing.QueueWorker:1.0.0
+
+{-} -ProcessJobs
+   [T] -T.Manual
+   [W] -W.Aljam3
+   [Q] -MyQueue
+   ( ) Missing execution body here!

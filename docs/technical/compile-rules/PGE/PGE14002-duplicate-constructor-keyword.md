@@ -23,7 +23,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Two keyword overloads with different literals
 
 {$} $DT"Today"
@@ -41,7 +41,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14002 — duplicate keyword "Today"
 
 {$} $DT"Today"

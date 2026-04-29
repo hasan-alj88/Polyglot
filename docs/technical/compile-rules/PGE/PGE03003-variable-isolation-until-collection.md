@@ -18,7 +18,7 @@ severity: error
 **Detection:** The compiler tracks which variables originate from `[=]` scopes and verifies that any pull targeting them appears only after the corresponding `(*)` collector block.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ variable used only after *All collection
 [=] -Fetch.Data
    (-) >result >> $data
@@ -30,7 +30,7 @@ severity: error
    (-) <input << $data             [ ] ✓ $data is collected — safe to pull
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ two parallels, both collected before use
 [=] -Fetch.A
    (-) >result >> $a
@@ -48,7 +48,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE03003 — pulling parallel output before collection
 [=] -Fetch.Data
    (-) >result >> $data
@@ -60,7 +60,7 @@ severity: error
    (*) << $data
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE03001 — pushing into parallel output (push violation, not PGE03003)
 [=] -Fetch.Data
    (-) >result >> $data
@@ -71,7 +71,7 @@ severity: error
    (*) << $data
 ```
 
-**Note:** While `live` metadata (`$data%state`) **can** theoretically be inspected before collection without triggering PGE03003 (which isolates user-assignable push/pull operations only), its use is generally not recommended. All Polyglot states live in the NoSQL DB with read-only privileges; only the core Polyglot code can change these values (they are not writable via user code). This guarantees that `%state` transitions are atomic across the Trigger Monitor, Runner, and NATS boundary. However, if there are scenarios that seem to require direct inspection of `%state` before collection, the core Polyglot development team should instead create new syntax that negates the need for it. See resolved design issue 003 (git history: `docs/technical/compiler_issues/003-metadata-access-before-collection.md`).
+**Note:** While `live` metadata (`$data%state`) **can** theoretically be inspected before collection without triggering PGE03003 (which isolates user-assignable push/pull operations only), its use is generally not recommended. All Aljam3 states live in the NoSQL DB with read-only privileges; only the core Aljam3 code can change these values (they are not writable via user code). This guarantees that `%state` transitions are atomic across the Trigger Monitor, Runner, and NATS boundary. However, if there are scenarios that seem to require direct inspection of `%state` before collection, the core Aljam3 development team should instead create new syntax that negates the need for it. See resolved design issue 003 (git history: `docs/technical/compiler_issues/003-metadata-access-before-collection.md`).
 
 ## See Also
 

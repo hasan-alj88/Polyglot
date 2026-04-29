@@ -15,7 +15,7 @@ Capability enum for `#Duration` permission category. See [[concepts/permissions|
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #DurationCapability
    [%] .description << "Execution time limit capabilities"
    [%] .version << "1.0.0"

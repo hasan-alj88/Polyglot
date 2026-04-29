@@ -11,7 +11,7 @@ Gathers key-value outputs from mini-pipelines into serialized siblings at a spec
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Into.Level
    (*) <key << $key
    (*) <value << $value

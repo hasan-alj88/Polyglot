@@ -13,7 +13,7 @@ Creates temp directory on setup, deletes on cleanup.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -W.File.TempDir
    [%] .Kind << #NativeKind.Wrapper
    [%] .Rust << "WFileTempDir"

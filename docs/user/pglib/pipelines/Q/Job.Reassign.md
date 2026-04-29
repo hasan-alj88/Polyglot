@@ -13,7 +13,7 @@ Move a Job to a different queue. Same-host reassignment is bookkeeping only. Cro
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Q.Job.Reassign
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "QJobReassign"
@@ -39,7 +39,7 @@ None.
 | Step | Component | Action |
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates reassign condition, sends command signal |
-| 2. NATS command | `polyglot.command.reassign.{jobId}` | `{jobId, fromQueue, toQueue, priority?}` |
+| 2. NATS command | `aljam3.command.reassign.{jobId}` | `{jobId, fromQueue, toQueue, priority?}` |
 | 3. QH executes | Queue Handler | Lua script: LREM/ZREM from source queue, RPUSH/ZADD to target queue, HSET job queue |
 | 4. Same-host | — | Bookkeeping only — no Runner involvement |
 | 5. Cross-host | Runner | `criu dump` → image transfer (TCP/shared storage) → `criu restore` on target host |

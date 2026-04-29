@@ -9,7 +9,7 @@ updated: 2026-04-26
 <!-- @c:syntax/identifiers -->
 <!-- @c:pglib/INDEX -->
 
-Boolean Predicates (identified by the `?` sigil) represent **compile-time assertions**. Unlike `-` pipelines which evaluate at runtime, `?` predicates are evaluated strictly during compilation. They enforce structural and topological safety in your Polyglot codebase.
+Boolean Predicates (identified by the `?` sigil) represent **compile-time assertions**. Unlike `-` pipelines which evaluate at runtime, `?` predicates are evaluated strictly during compilation. They enforce structural and topological safety in your Aljam3 codebase.
 
 Predicates always return a Boolean value (`#Boolean.True` or `#Boolean.False`) and are typically used in conjunction with the `[?]` conditional switch to halt compilation if a safety check fails.
 
@@ -44,7 +44,7 @@ Used for numeric comparisons known strictly at compile-time (e.g., comparing two
 
 A prime example of compile-time predicates is ensuring that a queue does not attempt to failover to another queue on the same host (which would cause an infinite loop during an outage).
 
-```polyglot
+```aljam3
 {Q} #QueueRules:Failover
    (#) <FailoverQueue#Queue <~ {#BackupHostQueue}
    [ ] Compile-time safety check: if they are the same host, compilation fails.
@@ -53,5 +53,5 @@ A prime example of compile-time predicates is ensuring that a queue does not att
 ```
 
 ## See Also
-- [[syntax/identifiers|Identifiers]] — Core syntax for Polyglot sigils.
+- [[syntax/identifiers|Identifiers]] — Core syntax for Aljam3 sigils.
 - [[pglib/INDEX|pglib Registry]] — The full standard library catalog.

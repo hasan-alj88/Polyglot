@@ -15,16 +15,16 @@ This is a **transport-tier** trigger — it receives raw hook events from the lo
 
 ## Activation
 
-The Polyglot runtime installs a thin shell dispatcher into `.git/hooks/` (or uses Git's `core.hooksPath`). When Git fires a hook:
+The Aljam3 runtime installs a thin shell dispatcher into `.git/hooks/` (or uses Git's `core.hooksPath`). When Git fires a hook:
 
 1. Git runs `.git/hooks/<hook-name>` (the installed dispatcher)
 2. Dispatcher POSTs to `localhost:<port>/hooks/<hook-name>` with hook arguments
-3. Polyglot runtime receives the HTTP request — same code path as `-T.Webhook`
+3. Aljam3 runtime receives the HTTP request — same code path as `-T.Webhook`
 4. Runtime fires matching `-T.Git.Hook` triggers
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -T.Git.Hook
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TGitHook"

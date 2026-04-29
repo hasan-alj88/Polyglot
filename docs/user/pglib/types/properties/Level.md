@@ -43,7 +43,7 @@ metadata_definition: "%##Level.N"
 
 `%##Level.N` appears inside a `{#}` definition as a scoped block:
 
-```polyglot
+```aljam3
 {#} ##Dataframe
    (#) <#Columns << ##Enum
    (#) <#CellType <~ #

@@ -48,7 +48,7 @@ metadata_definition: "%definition.##:Record"
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} ##Record
    (#) <#Fields << ##Enum
    (#) <#ValueType <~ #

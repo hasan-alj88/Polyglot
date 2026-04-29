@@ -18,7 +18,7 @@ redirect: pglib/types/Array
 
 The uniqueness guarantee formerly provided by `##Set` is now a leaf-level property on any collection:
 
-```polyglot
+```aljam3
 {#} #UniqueStrings
    (#) <#ValueType << #String
    [#] ##Array

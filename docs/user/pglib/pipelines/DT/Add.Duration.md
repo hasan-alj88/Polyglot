@@ -13,7 +13,7 @@ Adds a `#Duration` (fixed time span) to a `#dt`.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.Add.Duration
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtAddDuration"

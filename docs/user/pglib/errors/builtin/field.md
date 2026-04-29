@@ -10,7 +10,7 @@ metadata_definition: "%!.Field"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !Field
    [.] .NotFound#Error
       (-) .MessageTemplate << "Field not found: {field}"

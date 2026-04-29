@@ -13,7 +13,7 @@ Fires on a push to a branch. Supports branch and path filters. This is a **seman
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -T.Git.Push
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TGitPush"
@@ -36,7 +36,7 @@ Fires on a push to a branch. Supports branch and path filters. This is a **seman
 
 Filters are provided via `(-) >>` lines under the `[T]` block:
 
-```polyglot
+```aljam3
 [T] -T.Git.Push
    (-) >> branch: "main", "develop"
    (-) >> paths: "src/**", "tests/**"

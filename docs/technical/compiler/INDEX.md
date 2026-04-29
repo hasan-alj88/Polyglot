@@ -7,7 +7,7 @@ status: stable
 
 <!-- @compiler/INDEX -->
 
-# Polyglot Compiler
+# Aljam3 Compiler
 
 Compiler internals — registries consulted during semantic analysis, foreign-code parsers, and the compliance-test matrix. These documents are referenced by compile rules (see [[../compile-rules/INDEX|Compile Rules]]) and by runtime specs.
 

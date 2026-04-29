@@ -24,12 +24,12 @@ severity: error
 - PGE01010 (pipeline IO name mismatch — wrong name, not missing capture)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all outputs captured — sequential pipeline call
 {-} -Process
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) >result#string
    (-) >count#int
@@ -40,7 +40,7 @@ severity: error
 {-} -UseProcess
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -Process
@@ -50,12 +50,12 @@ severity: error
    [-] >out << $res
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ output captured into discard — intentionally unused
 {-} -UseProcessDiscard
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -Process
@@ -64,12 +64,12 @@ severity: error
       (-) >count >> $*                     [ ] ✓ explicit discard — no error
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ fire-and-forget exempt from output capture
 {-} -FireAndForget
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    [ ]
    [b] -Logger                             [ ] ✓ [b] exempt — outputs not required
@@ -77,12 +77,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE08009 — uncaptured output on sequential pipeline call
 {-} -UseProcessBad
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -Process
@@ -91,12 +91,12 @@ severity: error
                                             [ ] ✗ PGE08009 — >count not captured, has no fallback
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08009 — uncaptured output on parallel pipeline call
 {-} -BatchBad
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [=] -Process

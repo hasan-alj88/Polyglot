@@ -44,7 +44,7 @@ severity: error
 
 ### VALID
 
-```polyglot
+```aljam3
 [ ] ✓ two [=] siblings — parallel pair
 [=] -Fetch.A
    (-) <id << $id
@@ -55,7 +55,7 @@ severity: error
    (-) >resultB >> $resultB
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ three [=] siblings — parallel group
 [=] -Fetch.A
    (-) <id << $id
@@ -70,7 +70,7 @@ severity: error
    (-) >c >> $c
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [=] + [b] mixed — both are parallel markers
 [=] -Fetch.Data
    (-) <id << $id
@@ -80,7 +80,7 @@ severity: error
    (-) <id << $id
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [-] collectors in expand scope — sequential, no parallel claim
 [=] =ForEach.Array
    (=) <Array << $items
@@ -95,7 +95,7 @@ severity: error
       (*) >sum >> >total
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ [=] collector siblings — parallel pair (independent collectors)
 [=] =ForEach.Array
    (=) <Array << $items
@@ -112,7 +112,7 @@ severity: error
 
 ### INVALID
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01040 — lone [=] collector, next sibling is [-]
 [=] =ForEach.Array
    (=) <Array << $items
@@ -127,7 +127,7 @@ severity: error
       (*) >sum >> >total
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01040 — [=] pipeline with no parallel sibling
 [=] -Fetch.Data
    (-) <id << $id
@@ -138,7 +138,7 @@ severity: error
    (-) >result >> $result
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01040 — [=] followed by [*] collector
 [=] -Fetch.A
    (-) <id << $id
@@ -148,7 +148,7 @@ severity: error
    (*) << $a
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE01040 — lone [b] with no parallel sibling
 [b] -Log.Access
    (-) <event << $event

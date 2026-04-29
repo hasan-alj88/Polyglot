@@ -11,7 +11,7 @@ metadata_instance: "%#:String:int"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #Int
    [%] %alias << "int,integer,Integer"
    [#] ##String

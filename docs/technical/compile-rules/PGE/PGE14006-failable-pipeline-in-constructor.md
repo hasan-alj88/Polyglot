@@ -23,7 +23,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ pglib constructor may use [-] native pipeline calls
 {$} $DT"Now"
     [$] #DT.Time
@@ -34,7 +34,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14006 — user-defined constructor cannot contain [-] pipeline calls
 {$} $MyType"(?<data>.+)"
     ($) <data.re << ".+"

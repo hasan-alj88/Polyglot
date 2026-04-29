@@ -21,7 +21,7 @@ See [[pglib/types/Variable|#Variable]] for the language-tagged variable type tha
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #NativeType
    [%] .description << "Primitive type classifier per host language"
    [%] .version << "1.0.0"
@@ -72,9 +72,9 @@ Only one language branch is active per instance (`%##Active.One`). The active br
 
 ## Marshalling Table
 
-The Bridge conversion algorithm uses this table to determine how to convert between Polyglot types and each language's native types. Conversion always passes through the Polyglot type system as intermediary.
+The Bridge conversion algorithm uses this table to determine how to convert between Aljam3 types and each language's native types. Conversion always passes through the Aljam3 type system as intermediary.
 
-| Polyglot Type | Python | Rust | Go | JavaScript |
+| Aljam3 Type | Python | Rust | Go | JavaScript |
 |---------------|--------|------|----|------------|
 | `#int` | `int` | `i64` | `int64` | `number` |
 | `#float` | `float` | `f64` | `float64` | `number` |

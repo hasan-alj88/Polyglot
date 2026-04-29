@@ -17,7 +17,7 @@ Queue configuration struct used in `{Q}` queue definitions. Each `{Q} #Queue:Nam
 
 ## Definition
 
-```polyglot
+```aljam3
 {#} #Queue
    [%] .description << "Queue configuration for pipeline dispatch"
    [%] .version << "2.0.0"

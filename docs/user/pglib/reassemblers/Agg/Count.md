@@ -11,7 +11,7 @@ Expands a collection and counts the number of items.
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] =*Agg.Count
    (=) <array << $items
    (*) >count >> $total
@@ -31,7 +31,7 @@ Expands a collection and counts the number of items.
 
 ## Equivalent Expand-Collect
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $items
    (=) >item >> $item

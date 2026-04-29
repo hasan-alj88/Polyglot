@@ -13,7 +13,7 @@ Capability-level generic permission for deleting files. Sugar over [[INDEX|__Fil
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __File.Delete
    [#] <scope;path
 
@@ -23,7 +23,7 @@ Capability-level generic permission for deleting files. Sugar over [[INDEX|__Fil
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __File.Delete
    (_) <scope << "/tmp/cache/*"
 ```

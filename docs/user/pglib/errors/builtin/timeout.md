@@ -10,7 +10,7 @@ metadata_definition: "%!.Timeout"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !Timeout
    [.] .Connection#Error
       (-) .MessageTemplate << "Connection timed out after {duration}"

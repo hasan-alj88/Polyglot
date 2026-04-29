@@ -12,7 +12,7 @@ Some calendars divide the day differently than hours/minutes/seconds. These all 
 
 ### #ChineseTime
 
-```polyglot
+```aljam3
 {#} #ChineseTime
    [%] .description << "Chinese traditional time divisions"
    [%] .version << "1.0.0"
@@ -29,7 +29,7 @@ Some calendars divide the day differently than hours/minutes/seconds. These all 
 
 The twelve double-hours (shichen) that divide the Chinese day.
 
-```polyglot
+```aljam3
 {#} #ChineseShichen
    [%] .description << "Chinese double-hour period"
    [%] .version << "1.0.0"
@@ -52,7 +52,7 @@ The twelve double-hours (shichen) that divide the Chinese day.
 
 ### #HinduTime
 
-```polyglot
+```aljam3
 {#} #HinduTime
    [%] .description << "Hindu traditional time divisions"
    [%] .version << "1.0.0"
@@ -70,7 +70,7 @@ The twelve double-hours (shichen) that divide the Chinese day.
 
 French Republican decimal time system (10 hours/day, 100 minutes/hour, 100 seconds/minute).
 
-```polyglot
+```aljam3
 {#} #DecimalTime
    [%] .description << "French Republican decimal time"
    [%] .version << "1.0.0"
@@ -86,7 +86,7 @@ French Republican decimal time system (10 hours/day, 100 minutes/hour, 100 secon
 
 User-defined time division. Fixed fields define the basic unit; flexible fields allow user-defined subdivisions and epoch-to-unit conversion mapping.
 
-```polyglot
+```aljam3
 {#} #CustomTimeUnit
    [%] .description << "User-defined time division"
    [%] .version << "1.0.0"

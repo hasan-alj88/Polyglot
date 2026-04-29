@@ -15,13 +15,13 @@ updated: 2026-03-30
 
 **What it tests:** IO must be declared **before** the trigger that pushes into it. Trigger outputs wired via indented `(-)` lines. See [[concepts/pipelines/io-triggers#Triggers]].
 
-```polyglot
+```aljam3
 {-} -Inbox.Monitor
    (-) <NewFiles#array:path
    [T] -T.Folder.NewFiles"/inbox/"
       (-) >NewFiles >> <NewFiles
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $count#int << 0
 ```
@@ -30,7 +30,7 @@ updated: 2026-03-30
 
 **What it tests:** A trigger with two outputs, each wired to a declared input. Order of `(-)` declarations before `[T]` matters.
 
-```polyglot
+```aljam3
 {-} -Webhook.Receiver
    (-) <payload#serial
    (-) <headers#serial
@@ -38,7 +38,7 @@ updated: 2026-03-30
       (-) >payload >> <payload
       (-) >headers >> <headers
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $type#string << $payload:eventType
 ```
@@ -47,14 +47,14 @@ updated: 2026-03-30
 
 **What it tests:** Inputs can be filled by trigger wiring **or** left unfilled (must be provided by caller). No mixing of assignment modes on the same param.
 
-```polyglot
+```aljam3
 {-} -File.Processor
    (-) <file#path
    (-) <options#serial <~ {}
    [T] -T.Folder.NewFiles"/watch/"
       (-) >NewFiles >> <file
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ] $options uses default {}; $file comes from trigger
    [ ]
    [-] $name#string << "{$file}"

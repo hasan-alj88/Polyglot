@@ -11,7 +11,7 @@ updated: 2026-04-24
 
 ## Summary
 
-Multiline comments (`[ ]<` ... `[ ]>`) are removed from the Polyglot grammar. Single-line comments via `[ ]` and `{ }` remain the only comment mechanisms. This simplifies the lexer implementation and eliminates an under-specified grammar production.
+Multiline comments (`[ ]<` ... `[ ]>`) are removed from the Aljam3 grammar. Single-line comments via `[ ]` and `{ }` remain the only comment mechanisms. This simplifies the lexer implementation and eliminates an under-specified grammar production.
 
 ## Before
 
@@ -36,7 +36,7 @@ Multiline comments are removed entirely. Developers use consecutive single-line 
 ## Rationale
 
 - **Lexer simplicity:** Multiline comments introduce a stateful lexer mode (tracking open/close across lines) that adds complexity disproportionate to the feature's value.
-- **Consistency:** Every other Polyglot construct is single-line based with `[~]` continuation for overflow. Multiline comments break this pattern.
+- **Consistency:** Every other Aljam3 construct is single-line based with `[~]` continuation for overflow. Multiline comments break this pattern.
 - **Low usage:** No existing code samples or documentation examples use multiline comments.
 - **Easy workaround:** Consecutive `[ ]` lines achieve the same result without special syntax.
 

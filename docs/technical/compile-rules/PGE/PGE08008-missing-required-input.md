@@ -24,12 +24,12 @@ severity: error
 - PGE08003 (auto-wire unmatched parameter — covers chain auto-wiring)
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ all required inputs wired — sequential pipeline call
 {-} -Greet
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) <title#string
    (-) >greeting#string
@@ -39,7 +39,7 @@ severity: error
 {-} -UseGreet
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -Greet
@@ -48,12 +48,12 @@ severity: error
       (-) >greeting >> >out
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ all required inputs wired — parallel pipeline call
 {-} -BatchProcess
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <items#array:string
    (-) >results#array:string
    [ ]
@@ -69,12 +69,12 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE08008 — missing required input on sequential pipeline call
 {-} -Greet
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <name#string
    (-) <title#string
    (-) >greeting#string
@@ -84,7 +84,7 @@ severity: error
 {-} -UseGreet
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [-] -Greet
@@ -93,12 +93,12 @@ severity: error
       (-) >greeting >> >out
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE08008 — missing required input on parallel pipeline call
 {-} -Transform
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) <data#string
    (-) <mode#string
    (-) >result#string
@@ -108,7 +108,7 @@ severity: error
 {-} -BatchTransform
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    (-) >out#string
    [ ]
    [=] -Transform

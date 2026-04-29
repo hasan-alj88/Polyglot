@@ -23,7 +23,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ All captures have .re constraints
 
 {$} $DT"{hours}:{min}"
@@ -35,7 +35,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14003 — <hours has no .re field
 
 {$} $DT"{hours}:{min}"

@@ -165,7 +165,7 @@ runner.snapshot_completed   { jobId, forkId, images_dir }
 
 ## Collector Signals (Trigger Monitor → Runner)
 
-```polyglot
+```aljam3
 collector.{jobId}.collected
 {
     jobId:          string    — parent job ID
@@ -194,7 +194,7 @@ Collectors are **Trigger Monitor programs** — algorithms that run inside the T
 
 **Compound collector example:** `*First` + `*All` on the same variables. When the first job completes, `*First` is satisfied and releases its claims on the remaining jobs. But `*All` still holds claims on them. The TM sees non-zero claim count → no kill signal. Only when `*All` is also satisfied (all jobs complete) are all claims released.
 
-The Polyglot Code gives the TM foreknowledge of all collector rules at compile time. The compiler validates that collector usage is consistent (e.g., all parallel outputs are collected per PGE03002). The TM implements these rules at runtime exactly as described.
+The Aljam3 Code gives the TM foreknowledge of all collector rules at compile time. The compiler validates that collector usage is consistent (e.g., all parallel outputs are collected per PGE03002). The TM implements these rules at runtime exactly as described.
 
 ## Trigger Monitor-exclusive signals
 

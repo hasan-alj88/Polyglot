@@ -15,7 +15,7 @@ updated: 2026-03-30
 
 **What it tests:** `*Into.Serial` takes separate key and value inputs, not a single `<item`. See [[concepts/collections/collect#Collect Operators]].
 
-```polyglot
+```aljam3
 [-] =ForEach.Array
    (=) <Array << $pairs
    (=) >item >> $pair
@@ -32,7 +32,7 @@ updated: 2026-03-30
 
 **What it tests:** Level-targeted collect, parallel to `=ForEach.Level`.
 
-```polyglot
+```aljam3
 [-] =ForEach.Level
    (=) <level << #UserData.Preferences.=
    (=) >key >> $k
@@ -50,7 +50,7 @@ updated: 2026-03-30
 
 **What it tests:** `*Second` used like `*First` but captures 2nd-to-finish. Same `(*) <<`/`(*) >>` semantics.
 
-```polyglot
+```aljam3
 [=] -Search.Fast
    (-) <q << $query
    (-) >result >> $rFast
@@ -77,7 +77,7 @@ updated: 2026-03-30
 <!-- @u:blocks:Execution -->
 **What it tests:** `[b]` execution marker on a collector invocation — fires without waiting for result. See [[blocks#Execution]], [[concepts/collections/collect#Collect Operators]].
 
-```polyglot
+```aljam3
 [=] =ForEach.Array
    (=) <Array << $events
    (=) >item >> $event

@@ -23,24 +23,24 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ $DT is defined by pglib — constructor call accepted
 {-} -MyPipeline
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] $t << $DT"Today"
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14012 — no {$} $Foo definition exists in scope
 {-} -MyPipeline
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
 
    [ ]
    [-] $x << $Foo"bar"

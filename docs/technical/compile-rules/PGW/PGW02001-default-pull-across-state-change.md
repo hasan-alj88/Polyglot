@@ -18,7 +18,7 @@ severity: warning
 **Detection:** At runtime, when a variable that was previously pulled in Default state is pulled again after transitioning to Final. The warning is emitted on the second pull — the pull succeeds but flags the inconsistency.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Default pulled once, then promoted — no second pull before promotion
 (-) >label#string
 [-] >label <~ "pending"           [ ] Default
@@ -27,7 +27,7 @@ severity: warning
    (-) <text << >label            [ ] ✓ only pull is after Final — no warning
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ Default pulled once, never promoted — consistent value
 (-) >fallback#string
 [-] >fallback <~ "N/A"            [ ] Default
@@ -38,7 +38,7 @@ severity: warning
 ```
 
 **WARNING:**
-```polyglot
+```aljam3
 [ ] ⚠ PGW02001 — two pulls straddle the Default→Final transition
 (-) >label#string
 [-] >label <~ "pending"           [ ] Default

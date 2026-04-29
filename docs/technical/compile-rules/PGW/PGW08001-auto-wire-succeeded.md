@@ -22,7 +22,7 @@ updated: 2026-04-23
 **See also:** PGE08001 (type mismatch), PGE08002 (ambiguous type), PGE08003 (port count mismatch)
 
 **VALID (warning):**
-```polyglot
+```aljam3
 [ ] ⚠ PGW08001 — auto-wire succeeded, prefer explicit wiring
 [ ] -File.Text.Read output: >content#string
 [ ] -Text.Transform input:  <text#string
@@ -36,7 +36,7 @@ updated: 2026-04-23
    (-) >formatted#string >> >output
 ```
 
-```polyglot
+```aljam3
 [ ] ⚠ PGW08001 — multiple ports, unique types, bijective
 [ ] -Step.A outputs: >name#string, >count#int
 [ ] -Step.B inputs:  <label#string, <total#int
@@ -52,7 +52,7 @@ updated: 2026-04-23
 ```
 
 **VALID (no warning — always preferred):**
-```polyglot
+```aljam3
 [ ] ✓ explicit per-port wiring — no warning
 [-] -Fetch.Data
    (-) $A

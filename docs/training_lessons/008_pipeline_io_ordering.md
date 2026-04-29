@@ -5,13 +5,13 @@
 
 ## Lesson Summary
 
-In Polyglot pipelines (`{-}`), all Input/Output (`IO`) declarations must occur **before** the trigger definitions (`[T]`). 
+In Aljam3 pipelines (`{-}`), all Input/Output (`IO`) declarations must occur **before** the trigger definitions (`[T]`). 
 
 If you define pipeline variables or arguments after the trigger, the compiler will raise an error because the trigger needs to know the exact data context it is executing within before it resolves.
 
 ### Example
 **Correct:**
-```polyglot
+```aljam3
 {-} -RunDailyCampaign
    [ ] IO declared first
    (-) <campaignDate#DT << $DT"today"
@@ -20,7 +20,7 @@ If you define pipeline variables or arguments after the trigger, the compiler wi
 ```
 
 **Incorrect:**
-```polyglot
+```aljam3
 {-} -RunDailyCampaign
    [T] -T.Daily"8AM"
    [ ] IO incorrectly declared after trigger

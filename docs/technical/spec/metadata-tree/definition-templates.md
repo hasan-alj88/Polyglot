@@ -32,7 +32,7 @@ Definitions are immutable at runtime — they are resolved entirely at compile t
 
 Each overload stores:
 
-```polyglot
+```aljam3
 %definition.$:DT:1
 ├── .pattern                                <- compiled regex from pattern string
 ├── .targetType                             <- #DT.Time (from [$] binding)
@@ -52,7 +52,7 @@ Constructor definitions are immutable compile-time templates. The compiler uses 
 
 `##` schema types live at `%definition.##:{SchemaName}` in the metadata tree. Each schema defines tree-structure properties using the `%##` prefix. A `##` schema is a named bundle of `%##` properties — composing `[#] ##Flat` expands into the individual `%##` assignments stored at `%definition.##:Flat`. The `%##` properties are the ground truth; schemas are syntactic sugar over them:
 
-```polyglot
+```aljam3
 %definition
 │   Depth schemas
 ├── .##:Leaf
@@ -100,7 +100,7 @@ Schema definitions are immutable compile-time templates. When a `{#}` type compo
 
 `###` field types live at `%definition.###:{FieldTypeName}`:
 
-```polyglot
+```aljam3
 %definition
 ├── .###:Value            <- leaf holds typed data (has #type annotation)
 ├── .###:Enum             <- leaf is variant selector (no #type annotation)
@@ -157,7 +157,7 @@ All siblings must be the same `###` kind — mixing typed and untyped fields amo
 
 The compiler uses `%Native.Class` to discover host-language functions for the type. Currently only `.Validate` is defined — additional capabilities will be added as needed.
 
-```polyglot
+```aljam3
 %definition.#:String
 ├── %Native.Class
 │   ├── .Rust                      -> "PgString"
@@ -168,7 +168,7 @@ The compiler uses `%Native.Class` to discover host-language functions for the ty
 
 `#Array` definition template showing all metadata layers (generic type with `(#) <#ValueType` and `(#) <Dim` parameters):
 
-```polyglot
+```aljam3
 %definition.#:Array
 ├── .%##Depth.Max              -> Dim (from ##Array parameter)
 ├── .%##Gap                    -> #False (from ##Array)
@@ -184,7 +184,7 @@ The `%##` properties are accumulated from composed schemas: `##Array` provides `
 
 `#Boolean` definition template showing `###ScalarEnum`:
 
-```polyglot
+```aljam3
 %definition.#:Boolean
 ├── .%##Depth.Max              -> 1 (from ##Scalar)
 ├── .%##Alias                  -> "bool"

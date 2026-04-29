@@ -11,7 +11,7 @@ Concatenates text fragments from mini-pipelines into a single string, with confi
 
 ## Syntax
 
-```polyglot
+```aljam3
 [-] *Into.Text.Append
    (*) <fragment << $processedLine
    (*) <separator << "\n"

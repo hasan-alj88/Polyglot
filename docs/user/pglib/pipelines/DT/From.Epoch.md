@@ -13,7 +13,7 @@ Converts epoch seconds to a `#dt` value.
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -DT.From.Epoch
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "DtFromEpoch"

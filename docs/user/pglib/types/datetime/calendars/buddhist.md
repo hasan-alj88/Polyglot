@@ -10,7 +10,7 @@ metadata_instance: "%#:BuddhistDate:N"
 
 Uses Gregorian `#Month` for months (Buddhist Era = Gregorian + 543).
 
-```polyglot
+```aljam3
 {#} #BuddhistDate
    [%] .description << "Buddhist calendar date"
    [%] .version << "1.0.0"

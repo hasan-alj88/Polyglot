@@ -520,7 +520,7 @@ Output: state.job.{jobId}.inspected {
         }
 ```
 
-Resource metrics (CPU, RAM, IO, disk) are not included — those come from the Resource Monitor via separate `polyglot.resource.*` subjects.
+Resource metrics (CPU, RAM, IO, disk) are not included — those come from the Resource Monitor via separate `aljam3.resource.*` subjects.
 
 ---
 

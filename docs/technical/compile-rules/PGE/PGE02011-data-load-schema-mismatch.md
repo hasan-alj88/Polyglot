@@ -17,7 +17,7 @@ severity: error
 **Detection:** The compiler checks that the RHS of a `[#]` assignment is a pipeline call (`-Pipeline.Name`) or data reference (`#DataType`), not a literal value. It then compares the output schema tree of the source against the target type's schema tree.
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ data load from deserialization pipeline — schemas match
 [#] $config#Config << -File.Serial.Read.JSON"/config.json"
 
@@ -28,7 +28,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE02011 — plain literal is not a valid [#] source
 [#] $x#int << 42
 

@@ -20,13 +20,13 @@ severity: error
 2. **Duplicate capability in `{_}`** — the same `.category` + `.capability` pair declared more than once within a single `{_}` permission object block.
 
 PGE10006 fires on the second (and subsequent) declaration(s).
-**Rationale:** Duplicate permission IO references are meaningless — referencing the same object twice grants no additional capability. Duplicate capabilities within a `{_}` block are ambiguous — if two `.capability #Read` lines under the same `.category #File` specify different scope patterns, which applies? Even if identical, duplicates indicate copy-paste errors or incomplete refactoring. Like PGE09011 (duplicate import alias), duplicate declarations create resolution ambiguity. Under Polyglot's implicit-deny permission model, every permission grant is a conscious design decision — duplicates suggest the developer has lost track of what they have authorized, which undermines the intentionality the permission system demands.
+**Rationale:** Duplicate permission IO references are meaningless — referencing the same object twice grants no additional capability. Duplicate capabilities within a `{_}` block are ambiguous — if two `.capability #Read` lines under the same `.category #File` specify different scope patterns, which applies? Even if identical, duplicates indicate copy-paste errors or incomplete refactoring. Like PGE09011 (duplicate import alias), duplicate declarations create resolution ambiguity. Under Aljam3's implicit-deny permission model, every permission grant is a conscious design decision — duplicates suggest the developer has lost track of what they have authorized, which undermines the intentionality the permission system demands.
 **Detection:** The compiler collects all permission IO references within each block scope (`{@}` or `{-}`). If the same `_ObjectName` appears more than once, PGE10006 fires. Separately, within each `{_}` block, the compiler checks all `.category` + `.capability` field pairs. If the same pair appears more than once, PGE10006 fires on the second occurrence.
 
 **See also:** PGE09011 (duplicate import alias — analogous pattern), PGE10001 (pipeline exceeds ceiling), PGE10003 (unknown permission category), [[permissions]]
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ different capabilities within same {_} block — not duplicates
 {_} _FileHandler
    [.] .intent << #Grant
@@ -47,7 +47,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
    (-) _FileWriter
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Read
       (-) <path << _FileHandler
@@ -57,7 +57,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
       (-) <content << $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ same {_} object referenced in different scopes (ceiling vs pipeline) — not duplicates
 {_} _LogRead
    [.] .intent << #Ceiling
@@ -80,14 +80,14 @@ PGE10006 fires on the second (and subsequent) declaration(s).
    (-) _AppLogRead
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Read
       (-) <path << _AppLogRead
       (-) >content >> $content
 ```
 
-```polyglot
+```aljam3
 [ ] ✓ different {_} objects referenced in same pipeline — not duplicates
 {_} _ReadGrant
    [.] .intent << #Grant
@@ -108,7 +108,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
    (-) _WriteGrant
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] -File.Text.Read
       (-) <path << _ReadGrant
@@ -119,7 +119,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE10006 — same permission IO reference twice in same pipeline
 {_} _FileGrant
    [.] .intent << #Grant
@@ -133,12 +133,12 @@ PGE10006 fires on the second (and subsequent) declaration(s).
    (-) _FileGrant                              [ ] ✗ PGE10006 — _FileGrant already referenced in this scope
    [T] -T.Manual
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $data << -File.Text.Read >> "/var/log/app.log"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10006 — duplicate category+capability within {_} block
 {_} _DupCapability
    [.] .intent << #Grant
@@ -152,7 +152,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
    [.] .path "/tmp/*"
 ```
 
-```polyglot
+```aljam3
 [ ] ✗ PGE10006 — same permission IO reference twice in package ceiling
 {_} _AppCeiling
    [.] .intent << #Ceiling

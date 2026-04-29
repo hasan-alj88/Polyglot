@@ -18,44 +18,44 @@ severity: error
 **See also:** PGE09006 (package name mismatch), PGE09010 (asymmetric multi-file reference)
 
 **VALID:**
-```polyglot
-{ } file-01.pg
+```aljam3
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-02.aj3"
 
-{ } file-02.pg
+{ } file-02.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-01.pg"
+   [@] << "{.}\file-01.aj3"
 
 [ ] ✓ both files declare v1.0.0
 ```
 
 **INVALID:**
-```polyglot
-{ } file-01.pg
+```aljam3
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v1.0.0
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-02.aj3"
 
-{ } file-02.pg — version mismatch
+{ } file-02.aj3 — version mismatch
 {@} @Local:1000.MyApp:v1.1.0              [ ] ✗ PGE09005 — v1.1.0 ≠ v1.0.0
-   [@] << "{.}\file-01.pg"
+   [@] << "{.}\file-01.aj3"
 ```
 
-```polyglot
-{ } file-01.pg
+```aljam3
+{ } file-01.aj3
 {@} @Local:1000.MyApp:v2.0.0
-   [@] << "{.}\file-02.pg"
-   [@] << "{.}\file-03.pg"
+   [@] << "{.}\file-02.aj3"
+   [@] << "{.}\file-03.aj3"
 
-{ } file-02.pg
+{ } file-02.aj3
 {@} @Local:1000.MyApp:v2.0.0
-   [@] << "{.}\file-01.pg"
-   [@] << "{.}\file-03.pg"
+   [@] << "{.}\file-01.aj3"
+   [@] << "{.}\file-03.aj3"
 
-{ } file-03.pg — forgot to bump version
+{ } file-03.aj3 — forgot to bump version
 {@} @Local:1000.MyApp:v1.0.0              [ ] ✗ PGE09005 — v1.0.0 ≠ v2.0.0
-   [@] << "{.}\file-01.pg"
-   [@] << "{.}\file-02.pg"
+   [@] << "{.}\file-01.aj3"
+   [@] << "{.}\file-02.aj3"
 ```
 
 ## See Also

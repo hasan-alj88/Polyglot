@@ -1,16 +1,16 @@
-# Polyglot
+# Aljam3
 
 **Version:** 0.2.0-specification
 **Status:** Active Development — Language Specification Phase
 **License:** TBD (Apache 2.0 or MIT)
 
-<img src="./Polyglot%20Logo/PNG/Logo.png" width="150" alt="">
+<img src="./Aljam3%20Logo/PNG/Logo.png" width="150" alt="">
 
-> **Important**: Polyglot is in the specification phase — the language design is complete but the compiler is not yet built. We're building in public and welcome contributors!
+> **Important**: Aljam3 is in the specification phase — the language design is complete but the compiler is not yet built. We're building in public and welcome contributors!
 
-## What Is Polyglot?
+## What Is Aljam3?
 
-Polyglot is a **trigger-driven programming language and platform** — async-centric and parallel-by-design, not as an afterthought — built on two pillars:
+Aljam3 is a **trigger-driven programming language and platform** — async-centric and parallel-by-design, not as an afterthought — built on two pillars:
 
 1. **Cross-Language Integration** — Utilise well-tested legacy code across Python, Rust, JavaScript, C++, or any supported runtime — don't reinvent what already works.
 2. **Trigger-Driven Orchestration** — First-class parallelism, concurrency, queuing, and resource management. Every pipeline is triggered, not called — concurrency is the starting point, not an add-on.
@@ -21,14 +21,14 @@ For the full project vision, philosophy, and design principles, see **[Project V
 
 ### There Is No Main Function
 
-Polyglot pipelines are not programs you run — they are reactions you define. Something happens, a trigger fires, work executes. You are not writing a sequence of instructions — you are defining how the system responds to events and conditions.
+Aljam3 pipelines are not programs you run — they are reactions you define. Something happens, a trigger fires, work executes. You are not writing a sequence of instructions — you are defining how the system responds to events and conditions.
 
-This is a fundamental shift: traditional approaches build synchronous code first, then retrofit async handling as an afterthought. Polyglot inverts this — triggers and concurrency are the starting point.
+This is a fundamental shift: traditional approaches build synchronous code first, then retrofit async handling as an afterthought. Aljam3 inverts this — triggers and concurrency are the starting point.
 
 ## Hello World
 
-**hello.pg**
-```polyglot
+**hello.aj3**
+```aljam3
 {@} @Local:1000::HelloWorld:v1.0.0
 
 {-} -SayHello
@@ -51,7 +51,7 @@ This is a fundamental shift: traditional approaches build synchronous code first
 - `[-] [C]` — the execution body, running shell code
 - No `main()`, no entry point — the trigger *is* the entry point
 
-## Why Polyglot?
+## Why Aljam3?
 
 ### The Problem
 Modern automation often requires:
@@ -64,7 +64,7 @@ Modern automation often requires:
 Existing solutions force you to choose one language or write brittle glue code.
 
 ### The Solution
-Polyglot provides:
+Aljam3 provides:
 - **Unified Syntax** — Single language for multi-language workflows
 - **Three-Bracket System** — `{X}` definitions, `[X]` control flow, `(X)` IO
 - **Trigger-Driven** — React to file changes, schedules, webhooks, or direct calls
@@ -83,7 +83,7 @@ Polyglot provides:
 
 A pipeline that watches for new log files, summarises them with an LLM, and writes reports:
 
-```polyglot
+```aljam3
 {@} @Local:1000::LogSummarizer:v1.0.0
    [@] @llm << @Community:ai::LLMService:v1.0.0
 
@@ -93,7 +93,7 @@ A pipeline that watches for new log files, summarises them with an LLM, and writ
    [T] -T.Folder.NewFiles"/var/logs/app/"
       (-) >NewFiles >> <NewFiles
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [=] =ForEach.Array.Enumerate
       (=) <Array << $NewFiles
@@ -133,13 +133,13 @@ A pipeline that watches for new log files, summarises them with an LLM, and writ
 
 Every pipeline follows a mandatory structure: trigger, IO, queue, wrapper, execution body.
 
-```polyglot
+```aljam3
 {-} -ProcessData
    (-) <input#string
    (-) >result#string
    [T] -T.Call
    [Q] -Q.Default
-   [W] -W.Polyglot
+   [W] -W.Aljam3
    [ ]
    [-] $result << -Transform
       (-) <data << $input
@@ -148,7 +148,7 @@ Every pipeline follows a mandatory structure: trigger, IO, queue, wrapper, execu
 
 ### 2. Trigger-Driven Pipelines
 
-```polyglot
+```aljam3
 { } Watch for new CSV files
 [T] -T.Folder.NewFiles"/data/"
    (-) >NewFiles >> <FilesToProcess
@@ -162,7 +162,7 @@ Every pipeline follows a mandatory structure: trigger, IO, queue, wrapper, execu
 
 ### 3. Parallel Execution with Expand/Collect
 
-```polyglot
+```aljam3
 { } Process items in parallel, collect results
 [=] =ForEach.Array
    (=) <Array << $items
@@ -179,7 +179,7 @@ Every pipeline follows a mandatory structure: trigger, IO, queue, wrapper, execu
 
 All errors must be handled — no silent failures. Errors use the `!` prefix and `[!]` blocks:
 
-```polyglot
+```aljam3
 [-] -RiskyOperation
    (-) <input << $data
    (-) >output >> $result
@@ -193,7 +193,7 @@ All errors must be handled — no silent failures. Errors use the `!` prefix and
 
 Everything is a tree. Types use `{#}` definitions with `#` prefix:
 
-```polyglot
+```aljam3
 {#} #UserRecord
    .name#string
    .email#string
@@ -210,7 +210,7 @@ Everything is a tree. Types use `{#}` definitions with `#` prefix:
 
 Runtime wrappers (`[W]`) connect to foreign language runtimes:
 
-```polyglot
+```aljam3
 { } Execute Python code
 [W] -W.Env.Python:3:14
 [ ]
@@ -220,7 +220,7 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
    result = df.describe().to_dict()
 
  { } Execute a compiled Rust binary
- [W] -W.Polyglot
+ [W] -W.Aljam3
  [ ]
  [-] -Run.Rust.CLI
     (-) <binary#path << -Path"./target/release/my_tool"
@@ -259,15 +259,15 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
 | `<~` | DefaultPushLeft | Right to left (one reassignment allowed) |
 | `~>` | DefaultPushRight | Left to right (one reassignment allowed) |
 
-## The Polyglot Ecosystem
+## The Aljam3 Ecosystem
 
-The **Polyglot Service** is the runtime backbone, consisting of three components:
+The **Aljam3 Service** is the runtime backbone, consisting of three components:
 
 - **Trigger Monitor** — Monitors events and evaluates conditions that initiate automated tasks
 - **Queue Handler** — Manages queue state and dispatches jobs to Runners
 - **Runner** — Executes pipelines, managing the lifecycle of each task from dispatch to completion
 
-The Polyglot Service must be running in the background to handle execution of automated tasks and manage their interactions.
+The Aljam3 Service must be running in the background to handle execution of automated tasks and manage their interactions.
 
 ## Use Cases
 
@@ -280,7 +280,7 @@ The Polyglot Service must be running in the background to handle execution of au
 
 ## Documentation
 
-- **[Project Vision & Philosophy](docs/vision.md)** — What Polyglot is, why it exists, and where it's going
+- **[Project Vision & Philosophy](docs/vision.md)** — What Aljam3 is, why it exists, and where it's going
 - **[Language Specification](docs/user/SPEC-INDEX.md)** — Complete syntax and concept reference
 - **[Technical Reference](docs/technical/INDEX.md)** — EBNF grammar, compile rules, edge cases
 
@@ -292,7 +292,7 @@ The project previously had a Rust implementation prototype which was reset in fa
 
 ## Installation
 
-> Polyglot is not yet installable — we're in the specification phase. The compiler will be built on the foundations of the completed language spec.
+> Aljam3 is not yet installable — we're in the specification phase. The compiler will be built on the foundations of the completed language spec.
 
 ## Getting Involved
 

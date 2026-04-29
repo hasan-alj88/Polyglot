@@ -13,7 +13,7 @@ Divides the dividend by the divisor. Accepts exactly two inputs in positional or
 
 ## Definition
 
-```polyglot
+```aljam3
 {N} -Math.Divide
    [%] .Kind << #NativeKind.Execution
    [%] .Rust << "MathDivide"
@@ -39,7 +39,7 @@ Divides the dividend by the divisor. Accepts exactly two inputs in positional or
 
 `!Math.DivideByZero` — raised when the divisor is zero.
 
-```polyglot
+```aljam3
 [-] -Math.Divide
    (-) << $numerator
    (-) << $denominator

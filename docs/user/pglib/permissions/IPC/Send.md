@@ -13,7 +13,7 @@ Capability-level generic permission for sending messages. Sugar over [[INDEX|__I
 
 ## Definition
 
-```polyglot
+```aljam3
 {_} __IPC.Send
    [#] <scope;string
 
@@ -23,7 +23,7 @@ Capability-level generic permission for sending messages. Sugar over [[INDEX|__I
 
 ## Usage
 
-```polyglot
+```aljam3
 (-) __IPC.Send
    (_) <scope << "queue://jobs"
 ```

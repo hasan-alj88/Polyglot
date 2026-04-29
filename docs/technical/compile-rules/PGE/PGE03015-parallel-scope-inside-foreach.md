@@ -17,7 +17,7 @@ severity: error
 **Detection:** At collector invocation site, if an `=ForEach` ancestor exists and the collector's `{*}` definition has `.scope == #CollectorScope.Parallel`, PGE03015 fires.
 
 **VALID:**
-```polyglot
+```aljam3
 [=] -Search.A
    (-) >result >> $a
 [=] -Search.B
@@ -29,7 +29,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [=] =ForEach.Array
    (=) <Array << $items
    (=) >item >> $item

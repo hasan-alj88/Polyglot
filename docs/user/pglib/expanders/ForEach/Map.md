@@ -13,7 +13,7 @@ No `.Enumerate` variant -- Map is unordered (`%Ordered = #False`), so a position
 
 ## Syntax
 
-```polyglot
+```aljam3
 [=] =ForEach.Map
    (=) <Map << $prices
    (=) >key >> $ticker

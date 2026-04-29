@@ -23,7 +23,7 @@ severity: error
 ---
 
 **VALID:**
-```polyglot
+```aljam3
 [ ] ✓ Two $DT overloads with non-overlapping patterns
 
 {$} $DT"{hours}:{min}:{seconds}"
@@ -43,7 +43,7 @@ severity: error
 ```
 
 **INVALID:**
-```polyglot
+```aljam3
 [ ] ✗ PGE14001 — both overloads match "12:30"
 
 {$} $DT"{hours}:{min}"

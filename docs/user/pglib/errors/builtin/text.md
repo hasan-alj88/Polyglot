@@ -10,7 +10,7 @@ metadata_definition: "%!.Text"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !Text
    [:] :Diff
       [.] .EmptyInput#Error

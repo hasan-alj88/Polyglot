@@ -11,7 +11,7 @@ metadata_instance: "%#:String:key"
 
 <!-- @c:types -->
 
-```polyglot
+```aljam3
 {#} #KeyString
    [%] %alias << "key"
    [#] ##String
@@ -29,4 +29,4 @@ metadata_instance: "%#:String:key"
 
 See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.
 
-`#KeyString` excludes characters reserved by Polyglot syntax. Enum variant names used in `%##Fields` must conform to `#KeyString`; otherwise the compiler raises PGE11004.
+`#KeyString` excludes characters reserved by Aljam3 syntax. Enum variant names used in `%##Fields` must conform to `#KeyString`; otherwise the compiler raises PGE11004.

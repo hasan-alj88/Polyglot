@@ -5,12 +5,12 @@ scope: all-documentation
 updated: 2026-04-23
 ---
 
-# Polyglot Documentation — Master Index
+# Aljam3 Documentation — Master Index
 
 <!-- @c:vision -->
 <!-- @audit/README -->
 <!-- @c:glossary -->
-This is the single entry point for all Polyglot documentation. Authority chain: [[vision]] > [[audit/README]] > `.paul/`. Terms follow [[reference/glossary]].
+This is the single entry point for all Aljam3 documentation. Authority chain: [[vision]] > [[audit/README]] > `.paul/`. Terms follow [[reference/glossary]].
 
 ## Quick Navigation
 
@@ -28,7 +28,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 | Understand the project philosophy | [[philosophy/core-philosophy]] |
 | Track documentation gaps | [[audit/tracking/coverage-gaps]] |
 
-## By Polyglot Object
+## By Aljam3 Object
 
 | Object | Prefix | User Concept | pglib Reference | EBNF Grammar | Edge Cases |
 |--------|--------|-------------|-----------------|-------------|------------|
@@ -48,7 +48,7 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 
 ## By Audience
 
-### For Users (learning Polyglot Code)
+### For Users (learning Aljam3 Code)
 
 | Path | Content |
 |------|---------|
@@ -111,11 +111,11 @@ This is the single entry point for all Polyglot documentation. Authority chain: 
 |------|----------|------|-------------|
 | vision.md | all | vision | Product vision and entry point (highest authority) |
 | INDEX.md | all | master-index | This file — documentation entry point |
-| project-overview.md | product | reference | Product-shaped overview — what Polyglot is, who it's for, status |
+| project-overview.md | product | reference | Product-shaped overview — what Aljam3 is, who it's for, status |
 | architecture.md | design | spec | Consolidated architecture read — language, compiler, service, runtime |
 | ai-retrieval-index.md | ai-finder | reference | Query-shaped retrieval layer for AI tools |
 | source-tree-analysis.md | ai-finder | reference | Repository shape map with ASCII tree diagrams |
-| component-inventory.md | ai-finder | reference | Flat categorical inventory of every Polyglot component |
+| component-inventory.md | ai-finder | reference | Flat categorical inventory of every Aljam3 component |
 | development-guide.md | developer | guide | Contributor onboarding — prerequisites, docs-first mindset, PAUL workflow |
 
 ### docs/philosophy/

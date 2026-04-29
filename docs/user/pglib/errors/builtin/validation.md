@@ -10,7 +10,7 @@ metadata_definition: "%!.Validation"
 
 No `[@]` import needed — pglib built-in.
 
-```polyglot
+```aljam3
 {!} !Validation
    [.] .Schema#Error
       (-) .MessageTemplate << "Schema validation failed: {reason}"
