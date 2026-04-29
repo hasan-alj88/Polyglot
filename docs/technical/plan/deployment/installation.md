@@ -49,7 +49,7 @@ sudo apt update
 sudo apt install polyglot
 ```
 
-This installs all components: compiler, Trigger Monitor, Runner, management CLI, and bundled Redis + NATS.
+This installs all components: compiler, Trigger Monitor, Runner, management CLI, and bundled Redis, PostgreSQL, and NATS.
 
 ## Install from RPM (Fedora/RHEL)
 
@@ -83,23 +83,24 @@ sudo polyglot-ctl setup
 
 This command:
 1. Generates a local CA and self-signed certificates in `/opt/polyglot/share/certs/`
-2. Configures Redis to listen on localhost only
-3. Configures NATS to listen on localhost only
-4. Loads Queue Handler Lua scripts into Redis
-5. Starts and enables all four systemd services
-6. Verifies all services are healthy
+2. Configures PostgreSQL to listen on localhost only
+3. Configures Redis to listen on localhost only
+4. Configures NATS to listen on localhost only
+5. Loads Queue Handler Lua scripts into Redis and runs database migrations on PostgreSQL
+6. Starts and enables all services
+7. Verifies all services are healthy
 
 ### Distributed Mode (Multi-Host)
 
 For production deployments with separate infrastructure and worker hosts.
 
-**On the infrastructure host** (runs Redis, NATS, Trigger Monitor):
+**On the infrastructure host** (runs PostgreSQL, Redis, NATS, Trigger Monitor):
 
 ```bash
 sudo polyglot-ctl setup --role infra
 ```
 
-This starts Redis, NATS, and the Trigger Monitor. It generates a CA certificate and creates a join token for worker hosts.
+This starts PostgreSQL, Redis, NATS, and the Trigger Monitor. It generates a CA certificate and creates a join token for worker hosts.
 
 **Add worker hosts:**
 
@@ -125,6 +126,12 @@ The main configuration file is `/opt/polyglot/etc/polyglot.conf`:
 # Role: "all" (default), "infra", or "worker"
 role = "all"
 
+[postgres]
+# "bundled" uses the included postgres service
+# "external" connects to your own PostgreSQL cluster
+mode = "bundled"
+# external_url = "postgres://user:pass@my-postgres:5432/polyglot"
+
 [redis]
 # "bundled" uses the included redis-server
 # "external" connects to your own Redis instance
@@ -147,18 +154,20 @@ key_file  = "/opt/polyglot/share/certs/server-key.pem"
 max_concurrent = 0    # 0 = auto (based on CPU cores)
 ```
 
-### Using External Redis or NATS
+### Using External Infrastructure
 
-To use your own Redis or NATS instances instead of the bundled ones:
+To use your own PostgreSQL, Redis, or NATS instances instead of the bundled ones:
 
 1. Edit `/opt/polyglot/etc/polyglot.conf` — set `mode = "external"` and provide the connection URL
-2. Disable the bundled service: `sudo systemctl disable --now polyglot-redis` (or `polyglot-nats`)
+2. Disable the bundled service: `sudo systemctl disable --now polyglot-redis` (or `polyglot-nats`, `polyglot-postgres`)
 3. Load QH Lua scripts into your external Redis: `sudo polyglot-ctl load-qh-scripts --redis-url <URL>`
+4. Run DB migrations on external Postgres: `sudo polyglot-ctl run-migrations --postgres-url <URL>`
 
 External instances must meet these requirements:
 
 | Service | Minimum Version | Required Config |
 |---------|----------------|-----------------|
+| PostgreSQL | 15+ | `JSONB` support enabled |
 | Redis / Valkey | 7.0+ | TLS enabled, Lua scripting enabled (default) |
 | NATS | 2.10+ | JetStream enabled, TLS configured |
 
@@ -194,6 +203,7 @@ Expected output (all-in-one mode):
 ```text
 Polyglot Service Status
 ═══════════════════════════════════════
+  PostgreSQL     ● running  (bundled, localhost:5432)
   Redis          ● running  (bundled, localhost:6379)
   NATS           ● running  (bundled, localhost:4222)
   Trigger Monitor● running  (pid 1234)

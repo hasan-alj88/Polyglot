@@ -1,0 +1,125 @@
+#!/bin/bash
+set -e
+
+echo "============================================="
+echo " Polyglot Dev Infrastructure Setup (Ubuntu/Debian) "
+echo "============================================="
+
+# Ensure sudo privileges upfront
+echo "Requesting root privileges for setup..."
+if ! sudo -v; then
+    echo "❌ This script requires sudo privileges to install packages and configure users."
+    exit 1
+fi
+
+# Keep sudo session alive
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# 0. Create Polyglot UNIX User
+echo -e "\n[0/4] Checking Polyglot UNIX user..."
+if id "polyglot" &>/dev/null; then
+    echo "✅ UNIX user 'polyglot' already exists."
+else
+    echo "❌ UNIX user 'polyglot' not found. Creating..."
+    sudo useradd -r -s /bin/false -d /opt/polyglot -m polyglot
+    echo "✅ UNIX user 'polyglot' created."
+fi
+
+# 1. Check & Install PostgreSQL
+echo -e "\n[1/4] Checking PostgreSQL..."
+if command_exists psql && id "postgres" &>/dev/null && psql -V >/dev/null 2>&1; then
+    echo "✅ PostgreSQL is already installed ($(psql -V | head -n 1))."
+else
+    echo "❌ PostgreSQL not fully installed. Installing..."
+    sudo apt update
+    sudo apt install -y postgresql postgresql-contrib
+    sudo systemctl enable --now postgresql
+    echo "✅ PostgreSQL installed and started."
+fi
+
+# Configure PostgreSQL Database & User
+echo "Checking PostgreSQL 'polyglot' role and database..."
+if sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='polyglot'" | grep -q 1; then
+    echo "✅ PostgreSQL user 'polyglot' already exists."
+else
+    echo "Creating PostgreSQL user 'polyglot'..."
+    sudo -u postgres psql -c "CREATE USER polyglot WITH PASSWORD 'polyglot';"
+fi
+
+if sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -qw polyglot; then
+    echo "✅ PostgreSQL database 'polyglot' already exists."
+else
+    echo "Creating PostgreSQL database 'polyglot'..."
+    sudo -u postgres psql -c "CREATE DATABASE polyglot OWNER polyglot;"
+fi
+
+# 2. Check & Install Redis
+echo -e "\n[2/4] Checking Redis..."
+if command_exists redis-cli; then
+    echo "✅ Redis is already installed ($(redis-cli -v))."
+else
+    echo "❌ Redis not found. Installing..."
+    sudo apt update
+    sudo apt install -y redis-server
+    sudo systemctl enable --now redis-server
+    echo "✅ Redis installed and started."
+fi
+
+# 3. Check & Install NATS
+echo -e "\n[3/4] Checking NATS JetStream..."
+if command_exists nats-server; then
+    echo "✅ NATS is already installed ($(nats-server -v))."
+else
+    echo "❌ NATS not found. Installing..."
+    # NATS is not in default apt repos, downloading latest binary
+    NATS_VERSION="2.10.14"
+    echo "Downloading NATS v${NATS_VERSION}..."
+    curl -L https://github.com/nats-io/nats-server/releases/download/v${NATS_VERSION}/nats-server-v${NATS_VERSION}-linux-amd64.zip -o /tmp/nats.zip
+    
+    # Unzip and install
+    sudo apt install -y unzip
+    unzip -q /tmp/nats.zip -d /tmp/
+    sudo mv /tmp/nats-server-v${NATS_VERSION}-linux-amd64/nats-server /usr/local/bin/
+    
+    # Create basic systemd service for NATS
+    echo "Creating systemd service for NATS..."
+    cat <<EOF | sudo tee /etc/systemd/system/nats.service
+[Unit]
+Description=NATS Server
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/nats-server -js -sd /opt/polyglot/nats
+Restart=always
+User=polyglot
+Group=polyglot
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    # Create NATS storage directory
+    sudo mkdir -p /opt/polyglot/nats
+    sudo chown -R polyglot:polyglot /opt/polyglot/nats
+    
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now nats
+    
+    # Clean up
+    rm -rf /tmp/nats.zip /tmp/nats-server-*
+    echo "✅ NATS installed and started with JetStream enabled."
+fi
+
+echo -e "\n============================================="
+echo "🎉 Setup Complete!"
+echo "Your local Polyglot dev environment is ready."
+echo "- PostgreSQL: localhost:5432 (User: polyglot, DB: polyglot)"
+echo "- Redis: localhost:6379"
+echo "- NATS: localhost:4222"
+echo "============================================="
