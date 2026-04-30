@@ -9,8 +9,8 @@ severity: error
 # Rule 1.39 — CLI Non-String Argument
 `PGE01039`
 
-<!-- @u:pglib/pipelines/Run/INDEX -->
-<!-- @u:pglib/pipelines/Run/CLI -->
+<!-- @u:aj3lib/pipelines/Run/INDEX -->
+<!-- @u:aj3lib/pipelines/Run/CLI -->
 
 **Statement:** In a `-Run.<Lang>.CLI` call, all `<arg#Record` and `<kwarg#Record` fields must be typed `#string`. A non-string field type is a compile error.
 **Rationale:** CLI arguments are shell strings. The runtime passes them as command-line tokens to the binary — there is no structured type marshalling for CLI invocations. Non-string types would require implicit conversion with no defined semantics.

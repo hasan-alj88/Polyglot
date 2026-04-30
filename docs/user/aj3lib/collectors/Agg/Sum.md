@@ -1,0 +1,43 @@
+---
+audience: automation-builder
+type: specification
+updated: 2026-04-07
+status: stable
+---
+
+# *Agg.Sum
+
+Reduces mini-pipeline numeric outputs to their sum.
+
+## Syntax
+
+```aljam3
+[-] *Agg.Sum
+   (*) <number << $value
+   (*) >sum >> $total
+```
+
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<number` | numeric | Value to accumulate |
+
+## Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `>sum` | numeric | Sum of all input values |
+
+## Errors
+
+None.
+
+## Permissions
+
+None.
+
+## Related
+
+- [[aj3lib/collectors/Agg/INDEX|*Agg Aggregation Collectors]]
+- [[concepts/collections/collect|Collect Operators]]

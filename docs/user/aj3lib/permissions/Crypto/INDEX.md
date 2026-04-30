@@ -1,0 +1,45 @@
+---
+audience: automation-builder
+type: specification
+updated: 2026-04-12
+status: complete
+---
+
+# __Crypto
+
+<!-- @c:permissions -->
+
+Category-level generic permission for cryptographic operations. Takes a capability and scope, yields a `_` permission object with `#Grant` intent.
+
+## Definition
+
+```aljam3
+{_} __Crypto
+   [#] <capability;CryptoCapability
+   [#] <scope;string
+
+   [.] .intent << #Grant
+   [.] .Crypto.$capability "{$scope}"
+```
+
+## Usage
+
+```aljam3
+(-) __Crypto
+   (_) <capability << .Key
+   (_) <scope << "aes-256-gcm"
+```
+
+## Capability-Level Generics
+
+| Generic | Input | Description |
+|---------|-------|-------------|
+| [[Key\|__Crypto.Key]] | `<scope;string` | Key management |
+| [[Sign\|__Crypto.Sign]] | `<scope;string` | Signing operations |
+| [[Encrypt\|__Crypto.Encrypt]] | `<scope;string` | Encryption operations |
+
+## Related
+
+- [[aj3lib/permissions/INDEX]] -- all aj3lib generic permissions
+- [[concepts/permissions]] -- permission system overview
+- [[aj3lib/types/PermissionCategory]] -- category enum

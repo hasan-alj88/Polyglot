@@ -19,9 +19,9 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - docs/user/pglib/errors/builtin/*.md (13 files)
-    - docs/user/pglib/types/scalars/*.md (9 files)
-    - docs/user/pglib/types/datetime/calendars/*.md (11 files)
+    - docs/user/aj3lib/errors/builtin/*.md (13 files)
+    - docs/user/aj3lib/types/scalars/*.md (9 files)
+    - docs/user/aj3lib/types/datetime/calendars/*.md (11 files)
 
 key-decisions:
   - "Error files use metadata_definition only (no instances — fixed namespaces)"
@@ -79,7 +79,7 @@ completed: 2026-04-14
 | Error files get `metadata_definition` only, no `metadata_instance` | Errors are fixed namespaces with no runtime instances per FULL-TREE.md | Consistent with `%!` branch semantics |
 | Multi-definition calendar files list all types in body table | Files like hijri.md define 5 types; frontmatter holds primary only | All definitions discoverable via Metadata section |
 | Scalar frontmatter uses `%definition.#:Name` (not `##:Name`) | Matches FULL-TREE.md struct definition paths | Consistent with authoritative tree |
-| CSV, Env, Storage, Text errors treated as top-level `%!` namespaces | They use `{!} !Name` syntax identical to FULL-TREE.md built-ins | Extends the `%!` namespace pattern for pglib additions |
+| CSV, Env, Storage, Text errors treated as top-level `%!` namespaces | They use `{!} !Name` syntax identical to FULL-TREE.md built-ins | Extends the `%!` namespace pattern for aj3lib additions |
 
 ## Deviations from Plan
 

@@ -207,7 +207,7 @@ Compile errors halt compilation. Each rule below defines a condition under which
 | PGE09009 | Multi-File Self-Reference | [[PGE09009-multi-file-self-reference]] |
 | PGE09010 | Asymmetric Multi-File Reference | [[PGE09010-asymmetric-multi-file-reference]] |
 | PGE09011 | Duplicate Import Alias | [[PGE09011-duplicate-import-alias]] |
-| PGE09012 | Import Alias Shadows Standard Library | [[PGE09012-import-alias-shadows-pglib]] |
+| PGE09012 | Import Alias Shadows Standard Library | [[PGE09012-import-alias-shadows-aj3lib]] |
 | PGE09013 | Circular Pipeline Call | [[PGE09013-circular-pipeline-call]] |
 
 ## PGE10 — Permissions and sandbox

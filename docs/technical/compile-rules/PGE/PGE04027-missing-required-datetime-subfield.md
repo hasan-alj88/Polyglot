@@ -43,5 +43,5 @@ severity: error
 
 ## See Also
 
-- [[pglib/types/datetime|DateTime Types]] — `#DateTime.Instant.epoch` definition
-- [[pglib/pipelines/DT/From.Parts|-DT.From.Parts]] — human-readable DateTime construction
+- [[aj3lib/types/datetime|DateTime Types]] — `#DateTime.Instant.epoch` definition
+- [[aj3lib/pipelines/DT/From.Parts|-DT.From.Parts]] — human-readable DateTime construction

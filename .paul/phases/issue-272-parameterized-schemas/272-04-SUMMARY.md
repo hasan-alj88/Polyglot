@@ -41,7 +41,7 @@ key-files:
     - docs/user/concepts/pipelines/INDEX.md
     - docs/user/concepts/pipelines/wrappers.md
     - docs/user/concepts/pipelines/permissions.md
-    - docs/user/pglib/pipelines/Schema/INDEX.md
+    - docs/user/aj3lib/pipelines/Schema/INDEX.md
 
 key-decisions:
   - "macro-types.md and macros.md kept as redirect stubs (not deleted) to guide readers"
@@ -105,7 +105,7 @@ completed: 2026-04-09
 | `docs/user/concepts/pipelines/INDEX.md` | Modified | Removed {M} references |
 | `docs/user/concepts/pipelines/wrappers.md` | Modified | Removed {M} references |
 | `docs/user/concepts/pipelines/permissions.md` | Modified | Removed {M} references |
-| `docs/user/pglib/pipelines/Schema/INDEX.md` | Modified | Updated <# references |
+| `docs/user/aj3lib/pipelines/Schema/INDEX.md` | Modified | Updated <# references |
 
 ## Decisions Made
 

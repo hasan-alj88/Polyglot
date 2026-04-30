@@ -6,7 +6,7 @@ tags: [type-system, migration, batch-replace]
 
 requires:
   - phase: issue-75-dict-kv/75-03
-    provides: Authoritative # annotation system in types.md, EBNF, metadata-tree, pglib
+    provides: Authoritative # annotation system in types.md, EBNF, metadata-tree, aj3lib
 provides:
   - Zero ; type annotations remaining in docs/ (excluding decision records and draft.md)
   - Complete # type annotation consistency across entire spec
@@ -59,7 +59,7 @@ completed: 2026-03-27
 |-----------|-------|-------------|
 | docs/user/syntax/ | 5 | 31 |
 | docs/user/concepts/ | 3 | 31 |
-| docs/user/pglib/ | 8 | 86 |
+| docs/user/aj3lib/ | 8 | 86 |
 | docs/technical/ (EBNF, EDGE-CASES, brainstorming) | 4 | 340 |
 | docs/technical/spec/ | (already migrated in 75-03, remaining sections caught) | — |
 | docs/technical/compile-rules/PGE/ | 64 | 667 |

@@ -112,8 +112,8 @@ Recommended execution order for open GitHub issues based on dependency analysis.
 | # | Title | Priority | Notes |
 |---|-------|----------|-------|
 | #38–#45, #59 | File stdlib operations (8 + 1 issues) | — | No design dependencies; can start after compiler architecture |
-| #164–#185 | Trigger/queue pglib operations (22 issues) | — | Parallel with service implementation |
-| #186–#263 | Remaining pglib operations (78 issues) | — | Parallel with service implementation |
+| #164–#185 | Trigger/queue aj3lib operations (22 issues) | — | Parallel with service implementation |
+| #186–#263 | Remaining aj3lib operations (78 issues) | — | Parallel with service implementation |
 
 ### Wave 4 — Bridge Implementation (depends on Wave 2 + compiler)
 
@@ -195,8 +195,8 @@ Phase 6: Service Implementation (depends on Phase 4 + Phase 5)
   #268 Implement QH
   #269 Implement Runner
   #38–#45, #59 Implement File stdlib operations (parallel with above)
-  #164–#185 Implement trigger/queue pglib operations (parallel with above)
-  #186–#263 Implement remaining pglib operations (parallel with above)
+  #164–#185 Implement trigger/queue aj3lib operations (parallel with above)
+  #186–#263 Implement remaining aj3lib operations (parallel with above)
 
 Phase 6.5: Bridge Implementation (depends on Phase 6)
   #322–#327 Six language-pair Bridge implementations

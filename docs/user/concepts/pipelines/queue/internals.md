@@ -165,4 +165,4 @@ TCP repairability is declared on the queue:
 
 - [[concepts/pipelines/queue/INDEX|Queue Configuration]] — Core queue setup and block types
 - [[concepts/pipelines/queue/rules|Queue Rules & Triggers]] — Defining queue rules and the reactive trigger engine
-- [[pglib/pipelines/Q/INDEX|u:-Q.* Queue Pipelines]] — full pipeline catalog
+- [[aj3lib/pipelines/Q/INDEX|u:-Q.* Queue Pipelines]] — full pipeline catalog

@@ -9,7 +9,7 @@ severity: error
 # Rule 1.38 — Code Source Conflict
 `PGE01038`
 
-<!-- @u:pglib/pipelines/Run/INDEX -->
+<!-- @u:aj3lib/pipelines/Run/INDEX -->
 <!-- @u:syntax/blocks -->
 
 **Statement:** A `-Run.*` pipeline call must provide either `<code.inline` (with `[C]` blocks) or `<code.file` (with a path), never both. Providing both is a compile error.

@@ -6,7 +6,7 @@ This directory contains the Aljam3 language compiler and host-language integrati
 
 | Folder | Purpose |
 |--------|---------|
-| `Aljam3-Core/` | The Aljam3 compiler (Rust crate) — lexer, compiler, and the `.aj3` standard library (`pglib/`) |
+| `Aljam3-Core/` | The Aljam3 compiler (Rust crate) — lexer, compiler, and the `.aj3` standard library (`aj3lib/`) |
 | `Aljam3-Integration/` | Language-specific SDKs for embedding Aljam3 into host-language codebases (Rust, Go, Python) |
 
 ### Aljam3-Core vs Aljam3-Integration

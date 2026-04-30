@@ -41,7 +41,7 @@ metadata_definition: "%definition.##:Sorted"
 
 ## Used By
 
-Available for user-defined types requiring sorted access patterns. Not used by any built-in pglib types by default.
+Available for user-defined types requiring sorted access patterns. Not used by any built-in aj3lib types by default.
 
 ## Metadata
 

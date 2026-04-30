@@ -2,7 +2,7 @@
 phase: 163-add-metadata-paths-types-operations
 plan: 01
 subsystem: docs
-tags: [metadata-tree, types, pglib, frontmatter]
+tags: [metadata-tree, types, aj3lib, frontmatter]
 
 requires:
   - phase: none
@@ -22,34 +22,34 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/pglib/types/OS.md
-    - docs/user/pglib/types/PipelineStatus.md
-    - docs/user/pglib/types/QueueStrategy.md
-    - docs/user/pglib/types/RetriggerStrategy.md
-    - docs/user/pglib/types/QueueState.md
-    - docs/user/pglib/types/KillPropagation.md
-    - docs/user/pglib/types/ResourceTag.md
-    - docs/user/pglib/types/FileAccess.md
-    - docs/user/pglib/types/VarState.md
-    - docs/user/pglib/types/FieldKind.md
-    - docs/user/pglib/types/path.md
-    - docs/user/pglib/types/Queue.md
-    - docs/user/pglib/types/Job.md
-    - docs/user/pglib/types/Map.md
-    - docs/user/pglib/types/Array.md
-    - docs/user/pglib/types/Dataframe.md
-    - docs/user/pglib/types/Serial.md
-    - docs/user/pglib/types/Code.md
-    - docs/user/pglib/types/PyEnv.md
-    - docs/user/pglib/types/RsEnv.md
+    - docs/user/aj3lib/types/OS.md
+    - docs/user/aj3lib/types/PipelineStatus.md
+    - docs/user/aj3lib/types/QueueStrategy.md
+    - docs/user/aj3lib/types/RetriggerStrategy.md
+    - docs/user/aj3lib/types/QueueState.md
+    - docs/user/aj3lib/types/KillPropagation.md
+    - docs/user/aj3lib/types/ResourceTag.md
+    - docs/user/aj3lib/types/FileAccess.md
+    - docs/user/aj3lib/types/VarState.md
+    - docs/user/aj3lib/types/FieldKind.md
+    - docs/user/aj3lib/types/path.md
+    - docs/user/aj3lib/types/Queue.md
+    - docs/user/aj3lib/types/Job.md
+    - docs/user/aj3lib/types/Map.md
+    - docs/user/aj3lib/types/Array.md
+    - docs/user/aj3lib/types/Dataframe.md
+    - docs/user/aj3lib/types/Serial.md
+    - docs/user/aj3lib/types/Code.md
+    - docs/user/aj3lib/types/PyEnv.md
+    - docs/user/aj3lib/types/RsEnv.md
   modified:
-    - docs/user/pglib/types/boolean.md
-    - docs/user/pglib/types/string.md
-    - docs/user/pglib/types/NativeKind.md
-    - docs/user/pglib/types/enums.md
-    - docs/user/pglib/types/structs.md
-    - docs/user/pglib/types/collections.md
-    - docs/user/pglib/types/rt.md
+    - docs/user/aj3lib/types/boolean.md
+    - docs/user/aj3lib/types/string.md
+    - docs/user/aj3lib/types/NativeKind.md
+    - docs/user/aj3lib/types/enums.md
+    - docs/user/aj3lib/types/structs.md
+    - docs/user/aj3lib/types/collections.md
+    - docs/user/aj3lib/types/rt.md
 
 key-decisions:
   - "Enum instance paths use :0 pattern (single active field per instance)"

@@ -67,7 +67,7 @@ Directory orientation: see [[source-tree-analysis|u:source-tree-analysis]] for t
 <!-- @c:.paul/PROJECT -->
 The [[.paul/PROJECT|c:.paul/PROJECT]] constraint is "Documentation-first: no code until specification is complete." The reasoning appears in [[philosophy/core-philosophy|c:core-philosophy]] and [[philosophy/behavioral-contract|c:behavioral-contract]]: Aljam3 compiles `.aj3` source into a [[audit/reference/glossary|c:Behavior Contract]] — a signal-graph IR read by the Aljam3 Service. The contract shape must be fully specified before any compiler pass is written, otherwise the compiler and runtime diverge.
 
-Contributions that precede compiler implementation are therefore specification contributions: grammar productions, compile rules, type-system descriptors, pglib operator docs, philosophy sub-pages, audit-rule refinements, and architecture specs.
+Contributions that precede compiler implementation are therefore specification contributions: grammar productions, compile rules, type-system descriptors, aj3lib operator docs, philosophy sub-pages, audit-rule refinements, and architecture specs.
 
 ## How to Make a Documentation Change
 

@@ -23,11 +23,11 @@ error_body_line     ::= "[.]" fixed_field "#Error"       (* terminal leaf *)
                       (* Siblings at same level must use same separator — PGE05001 *)
 ```
 
-`{!}` defines an error tree. Each terminal leaf is typed `#Error`. The namespace uses the `!` prefix. pglib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and use `[.]` fixed leaves only.
+`{!}` defines an error tree. Each terminal leaf is typed `#Error`. The namespace uses the `!` prefix. aj3lib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and use `[.]` fixed leaves only.
 
 User-defined `{!} !Name` implicitly nests under `!Error` in the metadata tree, creating `!Error:Name.*`. Only `{!} !Error` allows `[:]` flexible children for user-extensible branches. All other `{!}` namespaces use `[.]` fixed leaves only.
 
-**pglib example** (runtime-defined, fixed leaves):
+**aj3lib example** (runtime-defined, fixed leaves):
 ```aljam3
 {!} !Validation
    [.] .Schema#Error

@@ -172,7 +172,7 @@ The [[audit/reference/glossary|c:Trigger Monitor]] (TM) watches trigger conditio
 | Collector ownership | Own `*First` / `*Nth` / `*All` logic for sub-jobs; terminate associated jobs on race resolution |
 | Job FSM validation | Validate job state transitions before dispatching commands to the Queue Handler |
 
-Trigger conditions, not business logic, are the TM's decision scope. `-T.*` pipelines are the declarative contracts the TM evaluates; see [[user/pglib/pipelines/T/INDEX|u:pglib-T]] for the trigger catalog.
+Trigger conditions, not business logic, are the TM's decision scope. `-T.*` pipelines are the declarative contracts the TM evaluates; see [[user/aj3lib/pipelines/T/INDEX|u:aj3lib-T]] for the trigger catalog.
 
 ### Queue Handler
 
@@ -185,7 +185,7 @@ The [[audit/reference/glossary|c:Queue Handler]] (QH) enforces queue strategies 
 | Trigger/business-logic decisions | None — the QH never makes business decisions |
 | Dispatch signalling | Signal the Dispatch Coordinator when a job is eligible |
 
-Queue strategies and control pipelines live under `-Q.*`; see [[user/pglib/pipelines/Q/INDEX|u:pglib-Q]]. The queue-vs-set distinction and pause/kill flows are specified by queue-manager design decisions under [[audit/decisions/README|c:decisions-index]].
+Queue strategies and control pipelines live under `-Q.*`; see [[user/aj3lib/pipelines/Q/INDEX|u:aj3lib-Q]]. The queue-vs-set distinction and pause/kill flows are specified by queue-manager design decisions under [[audit/decisions/README|c:decisions-index]].
 
 ### Dispatch Coordinator
 
@@ -232,14 +232,14 @@ The sandbox spec defines `#LimitAction` semantics, cgroups mapping, and queue-de
 
 ## Runtime Execution Layer
 
-<!-- @u:user/pglib/pipelines/W/INDEX -->
-<!-- @u:user/pglib/pipelines/Run/INDEX -->
-<!-- @u:user/pglib/pipelines/RT/INDEX -->
+<!-- @u:user/aj3lib/pipelines/W/INDEX -->
+<!-- @u:user/aj3lib/pipelines/Run/INDEX -->
+<!-- @u:user/aj3lib/pipelines/RT/INDEX -->
 Execution is delegated via wrappers (`-W.*`) and runtime pipelines (`-RT.*`, `-Run.*`). Wrappers and runtimes form the boundary between Aljam3-controlled execution and foreign-language execution.
 
 ### Wrappers (`-W.*`)
 
-Authority: [[user/pglib/pipelines/W/INDEX|u:pglib-W]]. A wrapper defines the setup/cleanup contract around a pipeline body. `-W.Aljam3` is the default (no-op setup/cleanup). Specialised wrappers:
+Authority: [[user/aj3lib/pipelines/W/INDEX|u:aj3lib-W]]. A wrapper defines the setup/cleanup contract around a pipeline body. `-W.Aljam3` is the default (no-op setup/cleanup). Specialised wrappers:
 
 | Wrapper | Purpose |
 |---------|---------|
@@ -252,7 +252,7 @@ Retry is a queue concern, not a wrapper concern — see `pg_lesson_retry_is_queu
 
 ### Runtime Pipelines (`-RT.*`)
 
-Authority: [[user/pglib/pipelines/RT/INDEX|u:pglib-RT]]. Runtime pipelines invoke foreign code across four languages and two modes:
+Authority: [[user/aj3lib/pipelines/RT/INDEX|u:aj3lib-RT]]. Runtime pipelines invoke foreign code across four languages and two modes:
 
 | Mode variant | Meaning |
 |--------------|---------|
@@ -267,11 +267,11 @@ Each runtime splits further by binding origin:
 | Bind | Foreign code pulls/pushes via the Aljam3 SDK |
 | CLI | Compiled binary execution; uses `-W.Aljam3`, not `-W.RT` |
 
-`-RT.*` error namespaces appear under `!RT.*`. See [[user/pglib/errors/pipeline-associations|u:pipeline-associations]] for namespace-to-pipeline bindings.
+`-RT.*` error namespaces appear under `!RT.*`. See [[user/aj3lib/errors/pipeline-associations|u:pipeline-associations]] for namespace-to-pipeline bindings.
 
 ### Run Pipelines (`-Run.*`)
 
-Authority: [[user/pglib/pipelines/Run/INDEX|u:pglib-Run]]. `-Run.*` provides script, binary, Shell, and Bridge execution outside the `-RT.*` runtime model:
+Authority: [[user/aj3lib/pipelines/Run/INDEX|u:aj3lib-Run]]. `-Run.*` provides script, binary, Shell, and Bridge execution outside the `-RT.*` runtime model:
 
 | Pipeline | Purpose |
 |----------|---------|

@@ -70,7 +70,7 @@ completed: 2026-04-11
 
 - 12 files enriched with @d: pointing to replaced_by targets
 - 1 file (13-contributing.md) correctly marked with "no current replacement"
-- Targeted @c:/@u: added for glossary terms (TM, QM, pipeline, pglib) and syntax constructs (blocks, operators, errors)
+- Targeted @c:/@u: added for glossary terms (TM, QM, pipeline, aj3lib) and syntax constructs (blocks, operators, errors)
 
 ## Files Created/Modified
 

@@ -2,7 +2,7 @@
 phase: 278-into-text-csv-collectors
 plan: 01
 subsystem: docs
-tags: [pglib, types, enums, collectors, overflow, errors]
+tags: [aj3lib, types, enums, collectors, overflow, errors]
 
 requires:
   - phase: none
@@ -28,7 +28,7 @@ key-decisions:
   - "All new type files status: draft until full issue completion"
 
 patterns-established:
-  - "Text/merge types follow existing pglib type doc conventions"
+  - "Text/merge types follow existing aj3lib type doc conventions"
 
 completed: 2026-04-11
 ---
@@ -57,18 +57,18 @@ completed: 2026-04-11
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/pglib/types/TextDiff.md` | Created | #TextDiff struct + #TextDiffs alias |
-| `docs/user/pglib/types/DiffOp.md` | Created | #DiffOp enum (Add/Delete/Replace) |
-| `docs/user/pglib/types/DiffStats.md` | Created | #DiffStats struct (additions/deletions/unchanged) |
-| `docs/user/pglib/types/MergeConflict.md` | Created | #MergeConflict struct |
-| `docs/user/pglib/types/MergeResult.md` | Created | #MergeResult struct (.text + .conflicts) |
-| `docs/user/pglib/types/MergeStrategy.md` | Created | #MergeStrategy enum (5 strategies) |
-| `docs/user/pglib/types/CollectOrder.md` | Created | #CollectOrder enum (ExpandIndex/Arrival) |
-| `docs/user/pglib/types/types.md` | Modified | Added Text & Merge category |
-| `docs/user/pglib/types/enums.md` | Modified | Added Text & Merge Enums section |
-| `docs/user/pglib/collectors/Agg/Concatenate.md` | Modified | Added <separator parameter |
+| `docs/user/aj3lib/types/TextDiff.md` | Created | #TextDiff struct + #TextDiffs alias |
+| `docs/user/aj3lib/types/DiffOp.md` | Created | #DiffOp enum (Add/Delete/Replace) |
+| `docs/user/aj3lib/types/DiffStats.md` | Created | #DiffStats struct (additions/deletions/unchanged) |
+| `docs/user/aj3lib/types/MergeConflict.md` | Created | #MergeConflict struct |
+| `docs/user/aj3lib/types/MergeResult.md` | Created | #MergeResult struct (.text + .conflicts) |
+| `docs/user/aj3lib/types/MergeStrategy.md` | Created | #MergeStrategy enum (5 strategies) |
+| `docs/user/aj3lib/types/CollectOrder.md` | Created | #CollectOrder enum (ExpandIndex/Arrival) |
+| `docs/user/aj3lib/types/types.md` | Modified | Added Text & Merge category |
+| `docs/user/aj3lib/types/enums.md` | Modified | Added Text & Merge Enums section |
+| `docs/user/aj3lib/collectors/Agg/Concatenate.md` | Modified | Added <separator parameter |
 | `docs/technical/plan/queue-manager/overflow.md` | Created | PPTD overflow documentation |
-| `docs/user/pglib/errors/errors.md` | Modified | 3 namespaces + pipeline associations |
+| `docs/user/aj3lib/errors/errors.md` | Modified | 3 namespaces + pipeline associations |
 
 ## Decisions Made
 

@@ -2,13 +2,13 @@
 phase: 273-three-bracket-symbol-redesign
 plan: 04
 subsystem: spec
-tags: [three-bracket, pglib, syntax-migration]
+tags: [three-bracket, aj3lib, syntax-migration]
 
 requires:
   - phase: 273-01
     provides: authoritative EBNF grammar with three-bracket system
 provides:
-  - All pglib docs updated with three-bracket syntax
+  - All aj3lib docs updated with three-bracket syntax
 affects: [273-05 remaining technical docs]
 
 key-decisions:
@@ -19,9 +19,9 @@ started: 2026-04-09
 completed: 2026-04-09
 ---
 
-# Plan 273-04: pglib Docs Summary
+# Plan 273-04: aj3lib Docs Summary
 
-**158 pglib files updated with three-bracket syntax — zero stale markers remain.**
+**158 aj3lib files updated with three-bracket syntax — zero stale markers remain.**
 
 ## Performance
 
@@ -35,7 +35,7 @@ completed: 2026-04-09
 
 | Criterion | Status | Notes |
 |-----------|--------|-------|
-| AC-1: No stale markers in pglib | Pass | Zero matches |
+| AC-1: No stale markers in aj3lib | Pass | Zero matches |
 | AC-2: New syntax present | Pass | `{-}`, `(-)`, `[-]`, `(=)`, `(*)` present |
 
 ## Deviations from Plan
@@ -44,7 +44,7 @@ None.
 
 ## Next Phase Readiness
 
-**Ready:** All user-facing docs (syntax, concepts, pglib) and compile rules now consistent.
+**Ready:** All user-facing docs (syntax, concepts, aj3lib) and compile rules now consistent.
 
 **Remaining:** 273-05 — edge-cases, brainstorming, spec, plan docs (~30 files)
 

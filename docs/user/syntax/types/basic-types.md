@@ -143,7 +143,7 @@ Used as the element type for `%alias` — alias values may contain `.` and `:` t
    [.] .False
 ```
 
-- `bool` — alias for the `#Boolean` struct. See [[pglib/types/boolean|#Boolean]].
+- `bool` — alias for the `#Boolean` struct. See [[aj3lib/types/boolean|#Boolean]].
 
 ### Other Types
 

@@ -26,7 +26,7 @@ Every failable pipeline **must** declare its errors with `(-) !ErrorName` in the
    ...
 ```
 
-Error declarations are mandatory for failable pipelines. A pipeline without `(-) !...` is non-failable — the compiler warns (PGW07001) if a caller adds `[!]` handlers on it. Errors are raised in the execution body with `[!] >> !ErrorName` (see [[errors#Raising Errors]]). Custom error types are defined with `{!}` blocks (see [[errors#Defining Custom Errors]]). For pglib pipeline error trees, see [[pglib/errors/errors#Pipeline Error Associations]].
+Error declarations are mandatory for failable pipelines. A pipeline without `(-) !...` is non-failable — the compiler warns (PGW07001) if a caller adds `[!]` handlers on it. Errors are raised in the execution body with `[!] >> !ErrorName` (see [[errors#Raising Errors]]). Custom error types are defined with `{!}` blocks (see [[errors#Defining Custom Errors]]). For aj3lib pipeline error trees, see [[aj3lib/errors/errors#Pipeline Error Associations]].
 
 ## See Also
 

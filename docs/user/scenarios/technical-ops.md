@@ -57,7 +57,7 @@ Automation scenarios for file management, IT operations, DevOps, cloud infrastru
 
 ## 5. DevOps & CI/CD
 
-Many DevOps scenarios below are natural fits for `-T.Git.*` triggers (`-T.Git.Push`, `-T.Git.PR`, `-T.Git.Tag`). These semantic triggers abstract over local git hooks and remote webhooks — see [[pglib/pipelines/T/INDEX|-T.* Trigger Pipelines]] for the Git trigger family and [[pglib/types/git|#Git Type Tree]] for typed event payloads.
+Many DevOps scenarios below are natural fits for `-T.Git.*` triggers (`-T.Git.Push`, `-T.Git.PR`, `-T.Git.Tag`). These semantic triggers abstract over local git hooks and remote webhooks — see [[aj3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]] for the Git trigger family and [[aj3lib/types/git|#Git Type Tree]] for typed event payloads.
 
 | # | Scenario | Trigger | Description |
 |---|----------|---------|-------------|

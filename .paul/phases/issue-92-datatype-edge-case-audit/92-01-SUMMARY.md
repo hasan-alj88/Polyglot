@@ -2,34 +2,34 @@
 phase: issue-92-datatype-edge-case-audit
 plan: 01
 subsystem: docs
-tags: [edge-cases, types, schema, %##, pglib]
+tags: [edge-cases, types, schema, %##, aj3lib]
 
 requires:
   - phase: issue-88-schema-properties
     provides: %## schema property system and three-tier prefix
 provides:
   - 18 edge cases for all datatype definitions (EDGE-CASES.md §24)
-  - pglib types/ split into 6 category files with correct notation
+  - aj3lib types/ split into 6 category files with correct notation
   - 5 follow-up issues identified for resolution
 affects: [issue-92 plan 02 — edge case resolution]
 
 key-files:
   created:
-    - docs/user/pglib/types/string.md
-    - docs/user/pglib/types/scalars.md
-    - docs/user/pglib/types/boolean.md
-    - docs/user/pglib/types/collections.md
-    - docs/user/pglib/types/enums.md
-    - docs/user/pglib/types/structs.md
+    - docs/user/aj3lib/types/string.md
+    - docs/user/aj3lib/types/scalars.md
+    - docs/user/aj3lib/types/boolean.md
+    - docs/user/aj3lib/types/collections.md
+    - docs/user/aj3lib/types/enums.md
+    - docs/user/aj3lib/types/structs.md
   modified:
     - docs/technical/EDGE-CASES.md
-    - docs/user/pglib/types/types.md
-    - docs/user/pglib/INDEX.md
-    - docs/user/PGLIB.md
+    - docs/user/aj3lib/types/types.md
+    - docs/user/aj3lib/INDEX.md
+    - docs/user/AJ3LIB.md
 
 key-decisions:
   - "Allow 0D for #Dimension — regex is ^[0-9]+$ (no trailing D)"
-  - "Rewrite all pglib enums to {#} format with ##Scalar, ###Enum, %##Alias"
+  - "Rewrite all aj3lib enums to {#} format with ##Scalar, ###Enum, %##Alias"
   - "#Dataframe status TBD — kept in collections.md with note"
 
 duration: 30min
@@ -38,7 +38,7 @@ completed: 2026-03-28T17:20:00Z
 
 # Issue #92 Plan 01: Edge-Case Audit & Types Restructure Summary
 
-**18 edge cases documented for all datatype definitions; pglib types/ split from 1 monolithic file into 6 category files with corrected notation.**
+**18 edge cases documented for all datatype definitions; aj3lib types/ split from 1 monolithic file into 6 category files with corrected notation.**
 
 ## Performance
 
@@ -62,7 +62,7 @@ completed: 2026-03-28T17:20:00Z
 ## Accomplishments
 
 - Added §24 to EDGE-CASES.md with 18 edge cases covering scalars, enums, collections, inheritance, and notation
-- Split monolithic pglib types.md into string.md, scalars.md, boolean.md, collections.md, enums.md, structs.md
+- Split monolithic aj3lib types.md into string.md, scalars.md, boolean.md, collections.md, enums.md, structs.md
 - Rewrote all enum definitions to {#} block format with [#] << ##Scalar, ###Enum, %##Alias
 - Identified 5 follow-up issues requiring resolution (plan 92-02)
 
@@ -71,15 +71,15 @@ completed: 2026-03-28T17:20:00Z
 | File | Change | Purpose |
 |------|--------|---------|
 | docs/technical/EDGE-CASES.md | Modified | Added §24 (18 edge cases), updated coverage matrix |
-| docs/user/pglib/types/types.md | Rewritten | Now index page with hierarchy + links |
-| docs/user/pglib/types/string.md | Created | #String foundation type |
-| docs/user/pglib/types/scalars.md | Created | 8 scalar subtypes |
-| docs/user/pglib/types/boolean.md | Created | #Boolean + #None |
-| docs/user/pglib/types/collections.md | Created | #Map, #Array, #Serial, #Dataframe (TBD) |
-| docs/user/pglib/types/enums.md | Created | 7 runtime enums in {#} format |
-| docs/user/pglib/types/structs.md | Created | #path, #Queue |
-| docs/user/pglib/INDEX.md | Modified | Updated types section to list individual files |
-| docs/user/PGLIB.md | Modified | Updated types reference |
+| docs/user/aj3lib/types/types.md | Rewritten | Now index page with hierarchy + links |
+| docs/user/aj3lib/types/string.md | Created | #String foundation type |
+| docs/user/aj3lib/types/scalars.md | Created | 8 scalar subtypes |
+| docs/user/aj3lib/types/boolean.md | Created | #Boolean + #None |
+| docs/user/aj3lib/types/collections.md | Created | #Map, #Array, #Serial, #Dataframe (TBD) |
+| docs/user/aj3lib/types/enums.md | Created | 7 runtime enums in {#} format |
+| docs/user/aj3lib/types/structs.md | Created | #path, #Queue |
+| docs/user/aj3lib/INDEX.md | Modified | Updated types section to list individual files |
+| docs/user/AJ3LIB.md | Modified | Updated types reference |
 
 ## Decisions Made
 
@@ -103,7 +103,7 @@ completed: 2026-03-28T17:20:00Z
 
 **Ready:**
 - All edge cases documented with concrete examples
-- pglib type files restructured and using correct notation
+- aj3lib type files restructured and using correct notation
 - Follow-up issues clearly listed
 
 **Plan 92-02 scope (edge case resolution):**

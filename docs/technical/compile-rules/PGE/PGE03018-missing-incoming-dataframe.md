@@ -18,4 +18,4 @@ severity: error
 ## See Also
 
 - [[technical/spec/collector-definitions|Collector Definitions]] — Ground Rule 8
-- [[pglib/types/IncomingDataFrame|#IncomingDataFrame]] — type definition
+- [[aj3lib/types/IncomingDataFrame|#IncomingDataFrame]] — type definition

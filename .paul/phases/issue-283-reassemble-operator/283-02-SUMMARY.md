@@ -5,7 +5,7 @@ subsystem: docs
 tags: [cross-references, draft-cleanup, reassemble]
 requires:
   - phase: issue-283-reassemble-operator/01
-    provides: concept and pglib files to link to
+    provides: concept and aj3lib files to link to
 provides:
   - Cross-references from expand.md and collect.md to reassemble.md
   - draft.md =* section marked as placed
@@ -35,7 +35,7 @@ completed: 2026-04-15
 ## Accomplishments
 
 - expand.md and collect.md See Also sections now link to reassemble.md
-- draft.md Reassemble Operator section has placed notice pointing to concept, pglib, and EBNF docs
+- draft.md Reassemble Operator section has placed notice pointing to concept, aj3lib, and EBNF docs
 - Original brainstorm content preserved below the notice
 
 ## Files Created/Modified

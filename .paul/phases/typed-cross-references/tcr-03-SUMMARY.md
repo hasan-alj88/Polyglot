@@ -34,4 +34,4 @@ Migrated all classified `@` refs to `@c:`/`@u:` and added 435 new `@u:` coverage
 
 ## Deviations
 - Coverage gaps in brainstorming/ (medium priority) deferred — compile-rules was the high-priority target
-- pglib/ coverage gaps (lower priority) deferred — most already had @c:types refs
+- aj3lib/ coverage gaps (lower priority) deferred — most already had @c:types refs

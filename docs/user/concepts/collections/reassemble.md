@@ -63,8 +63,8 @@ Like expanders and collectors, reassemble operators accept `[-]` (sequential) or
 
 Reassemble operators combine the expander and collector namespaces:
 
-- `=*Agg.*` — expand and reduce to scalar ([[pglib/reassemblers/Agg/INDEX|reference]])
-- `=*Into.*` — expand and collect into a different collection type ([[pglib/reassemblers/Into/INDEX|reference]])
+- `=*Agg.*` — expand and reduce to scalar ([[aj3lib/reassemblers/Agg/INDEX|reference]])
+- `=*Into.*` — expand and collect into a different collection type ([[aj3lib/reassemblers/Into/INDEX|reference]])
 
 No `[@]` import needed.
 
@@ -72,5 +72,5 @@ No `[@]` import needed.
 
 - [[concepts/collections/expand|Expand Operators]] — `=` fan-out operators
 - [[concepts/collections/collect|Collect Operators]] — `*` fan-in operators
-- [[pglib/reassemblers/INDEX|Reassemble Operators (pglib)]] — full operator reference
+- [[aj3lib/reassemblers/INDEX|Reassemble Operators (aj3lib)]] — full operator reference
 - [[concepts/collections/examples|Examples]] — expand/transform/collect patterns

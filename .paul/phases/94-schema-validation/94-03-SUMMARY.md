@@ -11,7 +11,7 @@ affects: []
 
 key-files:
   modified:
-    - docs/user/pglib/expanders/ForEach/Dataframe.md
+    - docs/user/aj3lib/expanders/ForEach/Dataframe.md
     - docs/technical/EBNF.md
 
 key-decisions:
@@ -39,7 +39,7 @@ None — plan executed exactly as written.
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/pglib/expanders/ForEach/Dataframe.md` | Modified | Marked Column variant as deprecated, linked to =#.Column |
+| `docs/user/aj3lib/expanders/ForEach/Dataframe.md` | Modified | Marked Column variant as deprecated, linked to =#.Column |
 | `docs/technical/EBNF.md` | Modified | Removed ~ForEach.Dataframe.Column from expander signature table |
 
 ## Audit Findings

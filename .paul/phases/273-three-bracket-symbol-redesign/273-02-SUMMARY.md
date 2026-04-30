@@ -10,7 +10,7 @@ requires:
 provides:
   - All user-facing syntax docs updated with three-bracket syntax
   - All concept docs (pipelines, collections, remaining) updated
-affects: [273-03 compile rules, 273-04 pglib, 273-05 source/verification]
+affects: [273-03 compile rules, 273-04 aj3lib, 273-05 source/verification]
 
 tech-stack:
   added: []
@@ -157,7 +157,7 @@ None — plan executed exactly as written. All 15 replacement rules applied in s
 - Replacement ordering protocol proven for remaining plans
 
 **Concerns:**
-- pglib docs still use old syntax (~99 files with old `[=]` marker — plan 273-04 scope)
+- aj3lib docs still use old syntax (~99 files with old `[=]` marker — plan 273-04 scope)
 - Compile rules still reference old markers (plan 273-03 scope)
 
 **Blockers:**

@@ -35,7 +35,7 @@ language_name       ::= upper_letter { letter } ; (* Rust, Cpp, etc. *)
 - At least one `.<Language>` binding is required — must match the configured host language.
 - No execution body (`[-]`, `[=]`, `[b]`, `[?]`), no `[T]`, no `[Q]`, no `[W]`.
 - `(-)` IO declarations define the public interface (inputs, outputs, errors) — same as any pipeline.
-- `{N}` definitions can only appear in pglib `.aj3` files — user `.aj3` files cannot define native pipelines.
+- `{N}` definitions can only appear in aj3lib `.aj3` files — user `.aj3` files cannot define native pipelines.
 
 **Example:**
 

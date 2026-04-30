@@ -9,8 +9,8 @@ severity: error
 # Rule 1.36 — Unbound Function Kwarg
 `PGE01036`
 
-<!-- @u:pglib/pipelines/Run/INDEX -->
-<!-- @u:pglib/pipelines/Run/Function -->
+<!-- @u:aj3lib/pipelines/Run/INDEX -->
+<!-- @u:aj3lib/pipelines/Run/Function -->
 
 **Statement:** Every `<kwarg#Record` field in a `-Run.<Lang>.Function` call must correspond to a keyword parameter of the `<func` function. A field name with no matching keyword parameter is a compile error.
 **Rationale:** `<kwarg` Record field names map to keyword arguments by name. If a field name doesn't match a keyword parameter, the function call will fail at runtime with an unexpected keyword argument error — catchable at compile time.

@@ -39,4 +39,4 @@ severity: error
    [-] -CleanData                            [ ] ✗ PGE01060 — -CleanData is not defined
 ```
 
-**Diagnostic:** "The pipeline `-CleanData` is not defined in the current package. Ensure the pipeline is defined. External imports must be explicitly prefixed if not in pglib."
+**Diagnostic:** "The pipeline `-CleanData` is not defined in the current package. Ensure the pipeline is defined. External imports must be explicitly prefixed if not in aj3lib."

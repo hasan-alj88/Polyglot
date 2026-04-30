@@ -10,7 +10,7 @@ severity: warning
 `PGW10006`
 
 <!-- @u:concepts/permissions/foreign-code -->
-<!-- @u:pglib/pipelines/Run/Shell -->
+<!-- @u:aj3lib/pipelines/Run/Shell -->
 
 **Statement:** When the compiler's AST analysis of a `-Run.Shell` pipeline detects shell variable expansion (`$VAR` or `${VAR}`) within a command argument that maps to an IO operation (file path, URL, network address), PGW10006 fires. The compiler cannot verify what the expanded value will be at runtime.
 **Rationale:** Shell variables are expanded at runtime by the shell interpreter, not at compile time. When a variable appears in an IO context — such as a file path argument to `cat`, `cp`, `curl`, or a redirection target — the compiler cannot determine the actual resource being accessed. The expanded value could fall outside declared `{_}` permission scopes. This warning is specific to shell code; other languages have their own variable resolution handled by `trace_assignment`.

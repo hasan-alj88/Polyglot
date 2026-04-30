@@ -14,9 +14,9 @@ key-files:
   modified:
     - docs/user/syntax/types/schema-properties.md
     - docs/user/syntax/types/basic-types.md
-    - docs/user/pglib/types/boolean.md
-    - docs/user/pglib/types/enums.md
-    - docs/user/pglib/types/types.md
+    - docs/user/aj3lib/types/boolean.md
+    - docs/user/aj3lib/types/enums.md
+    - docs/user/aj3lib/types/types.md
     - docs/user/syntax/types/hierarchy.md
     - docs/technical/ebnf/04-type-system.md
     - docs/technical/edge-cases/24-datatype-defs.md
@@ -45,7 +45,7 @@ completed: 2026-04-07
 ## Accomplishments
 
 - Defined `##Enum` schema (##Flat + enum leaf constraint) in approved schemas
-- Added `[#] << ##Enum` to #Boolean and all 10 pglib enum definitions
+- Added `[#] << ##Enum` to #Boolean and all 10 aj3lib enum definitions
 - Replaced "enum struct" in 8 files with "##Enum type"
 
 ## Deviations from Plan

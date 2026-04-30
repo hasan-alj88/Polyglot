@@ -131,10 +131,10 @@ impl Rule for PipelineSemanticsAlgorithm {
                     }
 
                     if is_valid_syntax {
-                        let is_pglib = target_name.starts_with("W.");
+                        let is_aj3lib = target_name.starts_with("W.");
                         
                         // TODO: Expand this to check other packages/files
-                        if !is_pglib && !defined_wrappers.contains_key(&target_name) {
+                        if !is_aj3lib && !defined_wrappers.contains_key(&target_name) {
                             if defined_pipelines.contains_key(&target_name) {
                                 report.add_error(ValidationError {
                                     context_snippets: vec![],
@@ -158,7 +158,7 @@ impl Rule for PipelineSemanticsAlgorithm {
                                     help: Some("Ensure the wrapper is defined with `{W}`.".to_string()),
                                 });
                             }
-                        } else if !is_pglib {
+                        } else if !is_aj3lib {
                             let contract = defined_wrappers.get(&target_name).unwrap();
                             validate_io_contract(ctx, i, current_scope, contract, report, "PGE01009", "Wrapper IO Name Mismatch");
                         }
@@ -170,10 +170,10 @@ impl Rule for PipelineSemanticsAlgorithm {
             if matches!(token_val, Aljam3Token::ActionExecSeq | Aljam3Token::ActionExecPar | Aljam3Token::ActionExecBg | Aljam3Token::ActionCondSwitch) {
                 if i + 1 < ctx.tokens.len() {
                     if let Aljam3Token::Pipeline(target) = &ctx.tokens[i+1].value {
-                        let is_pglib = target.starts_with("T.") || target.starts_with("Q.") || target.starts_with("W.") || target.starts_with("Status.") || target.starts_with("File.") || target.starts_with("Do.");
+                        let is_aj3lib = target.starts_with("T.") || target.starts_with("Q.") || target.starts_with("W.") || target.starts_with("Status.") || target.starts_with("File.") || target.starts_with("Do.");
                         
                         // TODO: Expand this to check other packages/files
-                        if !is_pglib && !defined_pipelines.contains_key(target) {
+                        if !is_aj3lib && !defined_pipelines.contains_key(target) {
                             if defined_wrappers.contains_key(target) {
                                 report.add_error(ValidationError {
                                     context_snippets: vec![],
@@ -194,10 +194,10 @@ impl Rule for PipelineSemanticsAlgorithm {
                                     line: ctx.tokens[i+1].line,
                                     col: ctx.tokens[i+1].col,
                                     snippet: get_snippet(ctx.tokens[i+1].line, ctx.lines),
-                                    help: Some("Ensure the pipeline is defined. External imports must be explicitly prefixed if not in pglib.".to_string()),
+                                    help: Some("Ensure the pipeline is defined. External imports must be explicitly prefixed if not in aj3lib.".to_string()),
                                 });
                             }
-                        } else if !is_pglib {
+                        } else if !is_aj3lib {
                             let contract = defined_pipelines.get(target).unwrap();
                             validate_io_contract(ctx, i, current_scope, contract, report, "PGE01010", "Pipeline IO Name Mismatch");
                         }

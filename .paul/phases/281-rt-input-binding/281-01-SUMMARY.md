@@ -23,10 +23,10 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/pglib/pipelines/Run/Function.md
-    - docs/user/pglib/pipelines/Run/Script.md
-    - docs/user/pglib/pipelines/Run/CLI.md
-    - docs/user/pglib/pipelines/Run/Bind.md
+    - docs/user/aj3lib/pipelines/Run/Function.md
+    - docs/user/aj3lib/pipelines/Run/Script.md
+    - docs/user/aj3lib/pipelines/Run/CLI.md
+    - docs/user/aj3lib/pipelines/Run/Bind.md
     - docs/technical/compile-rules/PGE/PGE01033-unbound-script-variable.md
     - docs/technical/compile-rules/PGE/PGE01034-unbound-script-output.md
     - docs/technical/compile-rules/PGE/PGE01035-unbound-function-argument.md
@@ -35,7 +35,7 @@ key-files:
     - docs/technical/compile-rules/PGE/PGE01038-code-source-conflict.md
     - docs/technical/compile-rules/PGE/PGE01039-cli-non-string-argument.md
   modified:
-    - docs/user/pglib/pipelines/Run/INDEX.md
+    - docs/user/aj3lib/pipelines/Run/INDEX.md
     - docs/technical/COMPILE-RULES.md
 
 key-decisions:
@@ -83,10 +83,10 @@ completed: 2026-04-13T09:15:00Z
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/pglib/pipelines/Run/Function.md` | Created | Structured function call with `<arg`/`<kwarg` Record binding |
-| `docs/user/pglib/pipelines/Run/Script.md` | Created | Polyglot-controlled binding — `<Bind` field names = native vars |
-| `docs/user/pglib/pipelines/Run/CLI.md` | Created | Binary invocation with string-only Record args |
-| `docs/user/pglib/pipelines/Run/Bind.md` | Created | Foreign-code-controlled `pull()`/`push()` binding |
+| `docs/user/aj3lib/pipelines/Run/Function.md` | Created | Structured function call with `<arg`/`<kwarg` Record binding |
+| `docs/user/aj3lib/pipelines/Run/Script.md` | Created | Polyglot-controlled binding — `<Bind` field names = native vars |
+| `docs/user/aj3lib/pipelines/Run/CLI.md` | Created | Binary invocation with string-only Record args |
+| `docs/user/aj3lib/pipelines/Run/Bind.md` | Created | Foreign-code-controlled `pull()`/`push()` binding |
 | `docs/technical/compile-rules/PGE/PGE01033-*.md` | Created | Unbound Script Variable |
 | `docs/technical/compile-rules/PGE/PGE01034-*.md` | Created | Unbound Script Output |
 | `docs/technical/compile-rules/PGE/PGE01035-*.md` | Created | Unbound Function Argument |
@@ -94,7 +94,7 @@ completed: 2026-04-13T09:15:00Z
 | `docs/technical/compile-rules/PGE/PGE01037-*.md` | Created | Bind Schema Mismatch |
 | `docs/technical/compile-rules/PGE/PGE01038-*.md` | Created | Code Source Conflict |
 | `docs/technical/compile-rules/PGE/PGE01039-*.md` | Created | CLI Non-String Argument |
-| `docs/user/pglib/pipelines/Run/INDEX.md` | Modified | PGE renumbering 01029→01033 etc. |
+| `docs/user/aj3lib/pipelines/Run/INDEX.md` | Modified | PGE renumbering 01029→01033 etc. |
 | `docs/technical/COMPILE-RULES.md` | Modified | Added 7 new rules to index |
 
 ## Decisions Made

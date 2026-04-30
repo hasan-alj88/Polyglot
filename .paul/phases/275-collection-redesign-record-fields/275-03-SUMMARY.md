@@ -11,14 +11,14 @@ tech_stack:
   patterns: [direct-property-composition, schema-retirement]
 key_files:
   modified:
-    - docs/user/pglib/types/schemas/Nullable.md
-    - docs/user/pglib/types/schemas/Inf.md
-    - docs/user/pglib/types/schemas/Rectangular.md
-    - docs/user/pglib/types/schemas/Result.md
-    - docs/user/pglib/types/schemas/String.md
-    - docs/user/pglib/types/schemas/Array.md
-    - docs/user/pglib/types/string.md
-    - docs/user/pglib/types/Serial.md
+    - docs/user/aj3lib/types/schemas/Nullable.md
+    - docs/user/aj3lib/types/schemas/Inf.md
+    - docs/user/aj3lib/types/schemas/Rectangular.md
+    - docs/user/aj3lib/types/schemas/Result.md
+    - docs/user/aj3lib/types/schemas/String.md
+    - docs/user/aj3lib/types/schemas/Array.md
+    - docs/user/aj3lib/types/string.md
+    - docs/user/aj3lib/types/Serial.md
     - docs/user/concepts/collections/serial.md
     - docs/user/syntax/types/prefix-system.md
 decisions:
@@ -44,7 +44,7 @@ Drop `<<` before `##`/`###` schema composition, retire ##Rectangular/##Deep/##Sp
 - **Rectangular.md**: Rewrote as retirement notice with migration table
 - **Array.md**: Replaced `##Contiguous`/`##Rectangular` composition with direct properties (`%##Gap`, `%##Ordered`, `%##Regular`, `%##Depth.Max`, `%##Propagate`); replaced `%##Key << #UnsignedInt` with `%##Fields << #Range`
 
-### Task 2: pglib type and concept docs (3 files)
+### Task 2: aj3lib type and concept docs (3 files)
 - **string.md** (type): `[#] << ##Scalar` -> `[#] ##Scalar`; `[#] << ##String` -> `[#] ##String`
 - **Serial.md**: Replaced `##Deep`/`##Sparse` with direct `%##Depth.Max << #Inf`, `%##Gap << #True`; `.Inf` -> `#Inf`
 - **serial.md** (concepts): Rewrote constraint table to use direct properties; removed `##Heterogeneous`
@@ -88,7 +88,7 @@ These are not deviations -- the plan listed them as "update if needed" and they 
 | Task | Commit | Description |
 |------|--------|-------------|
 | 1 | 6e5d8dc | Schema files: drop << composition, retire ##Rectangular |
-| 2 | 556a8b1 | pglib type/concept docs: drop << composition, retire ##Deep/##Sparse |
+| 2 | 556a8b1 | aj3lib type/concept docs: drop << composition, retire ##Deep/##Sparse |
 | 3 | 7f8f9d6 | Syntax docs: replace ##Contiguous example |
 
 ## Self-Check: PASSED

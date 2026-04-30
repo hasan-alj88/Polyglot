@@ -2,7 +2,7 @@
 phase: 163-add-metadata-paths-types-operations
 plan: 02
 subsystem: docs
-tags: [metadata-tree, permissions, schemas, field-types, pglib]
+tags: [metadata-tree, permissions, schemas, field-types, aj3lib]
 
 requires:
   - phase: 163-01
@@ -15,12 +15,12 @@ affects: [163-03 (pipeline metadata)]
 
 key-files:
   created:
-    - docs/user/pglib/types/PermissionIntent.md (+ 9 more permission enums)
-    - docs/user/pglib/types/schemas/INDEX.md (+ 10 schema files)
-    - docs/user/pglib/types/field-types/INDEX.md (+ 5 field type files)
+    - docs/user/aj3lib/types/PermissionIntent.md (+ 9 more permission enums)
+    - docs/user/aj3lib/types/schemas/INDEX.md (+ 10 schema files)
+    - docs/user/aj3lib/types/field-types/INDEX.md (+ 5 field type files)
   modified:
-    - docs/user/pglib/types/enums.md
-    - docs/user/pglib/types/scalars.md
+    - docs/user/aj3lib/types/enums.md
+    - docs/user/aj3lib/types/scalars.md
 
 key-decisions:
   - "Permission enum variants sourced from FULL-TREE.md — no invented variants"

@@ -33,7 +33,7 @@ key-decisions:
   - "Merge architect+designer into single 'design' audience — covers spec, philosophy, architecture, syntax, type system"
   - "Rename ai to ai-finder — refocused on discoverability/retrieval, not AI agent consumption"
   - "Add 'product' audience — PRDs, user stories, acceptance criteria"
-  - "Add 'developer' audience — implementation, compile rules, pglib, tests"
+  - "Add 'developer' audience — implementation, compile rules, aj3lib, tests"
 
 patterns-established:
   - "6-audience model: 2 external (automation-builder, integrator) + 4 internal (product, design, developer, ai-finder)"

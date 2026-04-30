@@ -50,5 +50,5 @@ severity: error
 
 ## See Also
 
-- [[pglib/types/datetime|DateTime Types]] — `#Zone` definition
-- [[pglib/pipelines/DT/Zone.Set|-DT.Zone.Set]], [[pglib/pipelines/DT/Zone.Convert|-DT.Zone.Convert]] — timezone pipelines
+- [[aj3lib/types/datetime|DateTime Types]] — `#Zone` definition
+- [[aj3lib/pipelines/DT/Zone.Set|-DT.Zone.Set]], [[aj3lib/pipelines/DT/Zone.Convert|-DT.Zone.Convert]] — timezone pipelines

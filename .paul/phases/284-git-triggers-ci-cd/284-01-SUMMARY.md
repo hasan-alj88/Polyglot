@@ -1,7 +1,7 @@
 ---
 phase: 284-git-triggers-ci-cd
 plan: 01
-subsystem: pglib
+subsystem: aj3lib
 tags: [triggers, git, ci-cd, native-pipelines, type-tree]
 
 requires:
@@ -19,13 +19,13 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/pglib/types/git.md
-    - docs/user/pglib/pipelines/T/Git.Hook.md
-    - docs/user/pglib/pipelines/T/Git.Push.md
-    - docs/user/pglib/pipelines/T/Git.PR.md
-    - docs/user/pglib/pipelines/T/Git.Tag.md
+    - docs/user/aj3lib/types/git.md
+    - docs/user/aj3lib/pipelines/T/Git.Hook.md
+    - docs/user/aj3lib/pipelines/T/Git.Push.md
+    - docs/user/aj3lib/pipelines/T/Git.PR.md
+    - docs/user/aj3lib/pipelines/T/Git.Tag.md
   modified:
-    - docs/user/pglib/pipelines/T/INDEX.md
+    - docs/user/aj3lib/pipelines/T/INDEX.md
     - docs/user/concepts/pipelines/io-triggers.md
     - docs/user/scenarios/technical-ops.md
 
@@ -61,7 +61,7 @@ completed: 2026-04-16
 
 | Criterion | Status | Notes |
 |-----------|--------|-------|
-| AC-1: Git trigger pipeline docs follow pglib template | Pass | All 4 triggers have {N} native def, IO tables, permissions, metadata |
+| AC-1: Git trigger pipeline docs follow aj3lib template | Pass | All 4 triggers have {N} native def, IO tables, permissions, metadata |
 | AC-2: #Git type tree with correct schema properties | Pass | Single {#} #Git, 4 enum subtypes with ##Enum, .email#email |
 | AC-3: T/INDEX.md updated | Pass | 4 triggers in listing + permissions table + three-tier model section |
 | AC-4: Existing docs reference Git triggers | Pass | io-triggers.md has trigger list + filter example; technical-ops.md has cross-ref |
@@ -69,7 +69,7 @@ completed: 2026-04-16
 ## Accomplishments
 
 - Created `#Git` type tree with 9 struct subtypes and 4 enum subtypes, all nested under single `{#} #Git`
-- Documented 4 trigger pipelines following exact pglib template pattern (Git.Hook, Git.Push, Git.PR, Git.Tag)
+- Documented 4 trigger pipelines following exact aj3lib template pattern (Git.Hook, Git.Push, Git.PR, Git.Tag)
 - Established three-tier trigger architecture: transport (Hook, Webhook) vs semantic (Push, PR, Tag)
 - Added Git trigger filter syntax example to io-triggers.md concept doc
 
@@ -77,12 +77,12 @@ completed: 2026-04-16
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/pglib/types/git.md` | Created | #Git type tree — all Git event payload types |
-| `docs/user/pglib/pipelines/T/Git.Hook.md` | Created | Local git hook transport trigger |
-| `docs/user/pglib/pipelines/T/Git.Push.md` | Created | Semantic push event trigger with filters |
-| `docs/user/pglib/pipelines/T/Git.PR.md` | Created | Semantic PR event trigger (remote only) |
-| `docs/user/pglib/pipelines/T/Git.Tag.md` | Created | Semantic tag creation trigger with pattern filter |
-| `docs/user/pglib/pipelines/T/INDEX.md` | Modified | Added 4 triggers to listing + permissions + three-tier model |
+| `docs/user/aj3lib/types/git.md` | Created | #Git type tree — all Git event payload types |
+| `docs/user/aj3lib/pipelines/T/Git.Hook.md` | Created | Local git hook transport trigger |
+| `docs/user/aj3lib/pipelines/T/Git.Push.md` | Created | Semantic push event trigger with filters |
+| `docs/user/aj3lib/pipelines/T/Git.PR.md` | Created | Semantic PR event trigger (remote only) |
+| `docs/user/aj3lib/pipelines/T/Git.Tag.md` | Created | Semantic tag creation trigger with pattern filter |
+| `docs/user/aj3lib/pipelines/T/INDEX.md` | Modified | Added 4 triggers to listing + permissions + three-tier model |
 | `docs/user/concepts/pipelines/io-triggers.md` | Modified | Added Git triggers to list + filter example |
 | `docs/user/scenarios/technical-ops.md` | Modified | Added DevOps cross-reference to Git triggers |
 
@@ -93,7 +93,7 @@ completed: 2026-04-16
 | Three-tier model (transport + semantic) | Separates raw delivery from event semantics; same push event works local or remote | Future triggers can add transports without changing semantic layer |
 | HTTP localhost for hook activation | Reuses -T.Webhook code path; cross-platform; no Unix socket dependency | Runtime needs single HTTP listener for both local hooks and remote webhooks |
 | Single {#} #Git nested tree | User requested combined definition; reduces file count; shows Polyglot nested type capability | All Git types addressable as #Git.Commit, #Git.Push, etc. |
-| Assume #email exists (per #286) | Created issue #286 for pglib #Email; used in #Git.Author.email | git.md depends on #286 being completed |
+| Assume #email exists (per #286) | Created issue #286 for aj3lib #Email; used in #Git.Author.email | git.md depends on #286 being completed |
 
 ## Deviations from Plan
 

@@ -13,7 +13,7 @@ severity: error
 <!-- @u:syntax/io -->
 <!-- @u:syntax/operators -->
 
-**Statement:** Array access with a negative literal index is a compile error. Aljam3 arrays are zero-indexed; negative indices are not valid. Reverse access must use explicit pglib pipelines (e.g., `-Array.Last`, `-Array.FromEnd`).
+**Statement:** Array access with a negative literal index is a compile error. Aljam3 arrays are zero-indexed; negative indices are not valid. Reverse access must use explicit aj3lib pipelines (e.g., `-Array.Last`, `-Array.FromEnd`).
 **Rationale:** Implicit negative-means-reverse indexing (Python-style) is a source of subtle bugs — off-by-one errors, empty array edge cases, and unclear intent. Aljam3 is type-safe first; reverse access should be explicit and self-documenting.
 **Detection:** The compiler checks array access expressions with literal integer indices. If the index is negative, PGE04011 fires.
 
@@ -34,7 +34,7 @@ severity: error
 ```
 
 ```aljam3
-[ ] ✓ reverse access via explicit pglib
+[ ] ✓ reverse access via explicit aj3lib
 [-] -Array.Last
    (-) <array << $items
    (-) >item >> $last

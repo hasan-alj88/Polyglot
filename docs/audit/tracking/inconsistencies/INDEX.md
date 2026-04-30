@@ -25,7 +25,7 @@ Contradictions found between documentation files. Individual issues are tracked 
 | [[inconsistencies/IC-001\|IC-001]] | Critical | #VarState.Ready used in example | 2026-03-30 |
 | [[inconsistencies/IC-002\|IC-002]] | Critical | metadata.md had audience: developer in user path | 2026-03-30 |
 | [[inconsistencies/IC-003\|IC-003]] | High | #Dimension regex excluded 0D | 2026-03-30 |
-| [[inconsistencies/IC-004\|IC-004]] | High | 12 broken [[PGLIB]] wikilinks | 2026-03-30 |
+| [[inconsistencies/IC-004\|IC-004]] | High | 12 broken [[AJ3LIB]] wikilinks | 2026-03-30 |
 | [[inconsistencies/IC-005\|IC-005]] | Medium | Enums mislabeled as structs in structs.md | 2026-04-01 |
 | [[inconsistencies/IC-006\|IC-006]] | Medium | Missing @-imports in index files | 2026-03-30 |
 | [[inconsistencies/IC-007\|IC-007]] | Low | TBD stub in metadata.md tree diagram | 2026-03-30 |

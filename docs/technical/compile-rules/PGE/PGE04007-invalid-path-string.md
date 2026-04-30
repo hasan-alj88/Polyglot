@@ -89,4 +89,4 @@ The compiler statically infers whether a `-Path"..."` expression is provably cro
 ## See Also
 
 - [[syntax/types/strings|String Types]] — path validation error references
-- [[pglib/types/structs|Struct Types]] — `#path` invalid path string examples
+- [[aj3lib/types/structs|Struct Types]] — `#path` invalid path string examples

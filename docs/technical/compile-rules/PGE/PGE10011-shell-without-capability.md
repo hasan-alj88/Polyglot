@@ -11,7 +11,7 @@ severity: error
 
 <!-- @u:concepts/permissions/foreign-code -->
 <!-- @u:concepts/permissions/enforcement -->
-<!-- @u:pglib/pipelines/Run/Shell -->
+<!-- @u:aj3lib/pipelines/Run/Shell -->
 
 **Statement:** A `{-}` pipeline that uses `-Run.Shell` must declare a `(-) _PermName` reference to a `{_}` permission object with `.category #System` and `.capability #Shell`. If no such permission is declared, PGE10011 fires.
 **Rationale:** `-Run.Shell` executes arbitrary shell commands on the host system. Without an explicit `{_}` grant for `#System.#Shell`, the pipeline could execute any system command — file deletion, process spawning, network access — without the compiler or auditor seeing the declared intent. This rule ensures that every shell-executing pipeline has an explicit, auditable permission grant.

@@ -88,7 +88,7 @@ Progress:
 - Issue #157: [██████████] 100% (cleanup — circular ref already broken by #152)
 - Issue #147: [██████████] 100% (1/1 plans — .~ level iteration marker formalized)
 - Issue #160: [██████████] 100% (1/1 plans — DT.md split into DT/ folder + pipeline doc template)
-- Issue #161: [██████████] 100% (5/5 plans — all pglib docs split into per-operator files)
+- Issue #161: [██████████] 100% (5/5 plans — all aj3lib docs split into per-operator files)
 - Issue #162: [██████████] 100% (1/1 plans — native dispatch config docs aligned)
 - Issue #163: [██████████] 100% (3/3 plans — metadata paths for types + operations)
 - Issue #272: [██████████] 100% (5/5 plans — parameterized ## schemas replace {M} macros)
@@ -100,7 +100,7 @@ Progress:
 - Issue #265: [██████████] 100% (3/3 plans — Queue Handler design spec finalized)
 - Issue #284: [██████████] 100% (1/1 plans — Git triggers for CI/CD)
 - Issue #285: [██████████] 100% (1/1 plans — -Run.Shell pipeline + System.Shell)
-- Issue #286: [██████████] 100% (1/1 plans — #Email pglib scalar subtype)
+- Issue #286: [██████████] 100% (1/1 plans — #Email aj3lib scalar subtype)
 - Issue #288: [██████████] 100% (1/1 plans — [!] !*- error suppression sugar)
 - Issue #304: [██████████] 100% (1/1 plans — fallback validity + parallel marker pairing)
 - Issue #305: [██████████] 100% (1/1 plans — arithmetic EBNF removal + inline_data recursion fix)
@@ -127,7 +127,7 @@ Progress:
   - Issue #335: [██████████] 100% (1/1 plans — philosophy/error-philosophy.md error handling)
   - Issue #336: [██████████] 100% (1/1 plans — remaining philosophy files)
 - Issue #341: [██████████] 100% (closed — {$} constructor blocks spec)
-- Issue #342: [██████████] 100% (3/3 plans — pglib {$} constructors for core types)
+- Issue #342: [██████████] 100% (3/3 plans — aj3lib {$} constructors for core types)
 - Issues #343/#344: [██████████] 100% (2/2 plans — PGE14xxx constructor errors + docs transition)
 - Issue #353: [██████████] 100% (1/1 plans — audience tier restructure)
 - Issue #354: [██████████] 100% (1/1 plans — decision history system)
@@ -140,7 +140,7 @@ Progress:
   - Group 2 (Syntax Gaps): 5/5 COMPLETE
   - Group 3 (Naming): 6/6 COMPLETE
   - Group 4 (Cross-Ref): 2/2 COMPLETE
-  - Group 5 (pglib): 1/1 COMPLETE
+  - Group 5 (aj3lib): 1/1 COMPLETE
 
 ## Active Issue
 
@@ -176,9 +176,9 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Dual smart referencing | 2026-03-14 | @-imports (Claude mandatory reads) + [[wikilinks]] (Obsidian navigation) on all cross-references |
 | Audit scope: all documentation | 2026-03-14 | docs/audit/ rules apply to ALL documentation Claude writes, not just docs/ files |
 | Restructured v0.1 to 2 phases | 2026-03-14 | Dropped Language Spec, Compiler Architecture, Prior Art Research phases; Language Spec moves to v0.2 |
-| v0.2 milestone created with 4 phases | 2026-03-24 | Phases 9-12: Core Language & Type System, Operators & Control Flow, Pipelines & Concurrency, Package System & pglib |
-| Arithmetic uses =Math.* pglib, not raw operators | 2026-03-24 | PGE04010 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
-| Removed speculative pglib items | 2026-03-24 | =T.Schedule/HTTP/File, =W.Rust/Node had zero usage; =T.Webhook confirmed from EDGE-CASES |
+| v0.2 milestone created with 4 phases | 2026-03-24 | Phases 9-12: Core Language & Type System, Operators & Control Flow, Pipelines & Concurrency, Package System & aj3lib |
+| Arithmetic uses =Math.* aj3lib, not raw operators | 2026-03-24 | PGE04010 confirms raw +,-,*,/ are compile errors; spec reflects pipeline-based arithmetic |
+| Removed speculative aj3lib items | 2026-03-24 | =T.Schedule/HTTP/File, =W.Rust/Node had zero usage; =T.Webhook confirmed from EDGE-CASES |
 | Closed #36 — Pipeline call cycle detection algorithm | 2026-03-24 | Merged feat/issue-36-pipeline-call-cycle-detection to main |
 | Closed #37 — Multidimensional array via :ND | 2026-03-24 | Unified array + tensor into ;array.<type>:<N>D; removed ;tensor concept |
 | Closed #58 — Chain operator >> to => | 2026-03-24 | Chains use => with no spaces (=A=>=B=>=C); IO >> and [!] >> unchanged |
@@ -192,7 +192,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Issue #82 — Add %_ metadata tree branch for permissions | 2026-03-25 | %_ in all 3 tree files; 8 categories; ._ under %@ and %=; no instances; #86 created for . vs : audit |
 | Issue #83 — Add permission compile rules | 2026-03-25 | PGE10003/918/919/920 + PGW10001; issue's PGE10002 renumbered to PGE10006; extends 9.x range |
 | Issue #84 — Add !Permission.* error tree | 2026-03-25 | 8 .Denied leaves; trimmed overlapping .NotFound/.Timeout; File IO pipeline associations; #87 created for multi-alias |
-| Issue #85 — Document pglib pipeline permission declarations | 2026-03-25 | [_] permissions in all 7 pglib pipeline files; Permission column in INDEX.md; completes #80-#85 chain |
+| Issue #85 — Document aj3lib pipeline permission declarations | 2026-03-25 | [_] permissions in all 7 aj3lib pipeline files; Permission column in INDEX.md; completes #80-#85 chain |
 | Issue #86 — Audit fixed vs flexible field usage | 2026-03-25 | %_ all `.` fixed; %! namespaces `.` + new !Error with `:` children; %@ `::` separator + Company rename; path grammar updated |
 | Issue #64 — Add Mermaid tree diagram to data-is-trees.md | 2026-03-25 | graph TD diagram showing %definition schema → instances for #Boolean, =ProcessData, $myVar |
 | Issue #65 — Add Mermaid flowchart to SPEC-INDEX.md | 2026-03-25 | flowchart LR showing 5-phase learning path with file counts |
@@ -243,16 +243,16 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | .CLI uses =W.Polyglot, not =W.RT | 2026-04-01 | No language runtime needed for compiled binaries |
 | Compiler validates Function/Script only | 2026-04-01 | <func name checked in .Function; <Bind names checked in .Script; .CLI and .Bind opaque |
 | IC-005 fix — enums mislabeled as structs | 2026-04-01 | structs.md lists #path/#Queue/#DateTime; type-identity.md adds #Queue; tracking corrected |
-| Formalized #DateTime as pglib type | 2026-04-01 | 55 {#} types in datetime.md (22KB); multi-calendar, time units, cultural extensions |
+| Formalized #DateTime as aj3lib type | 2026-04-01 | 55 {#} types in datetime.md (22KB); multi-calendar, time units, cultural extensions |
 | #WeekSystem Option A restructure | 2026-04-01 | Enum fields with nested .config#BusinessWeek; fixes PGE05005 violation |
-| =DT.* pglib pipelines | 2026-04-01 | 40 {=} pipelines in DT.md; construction, conversion, arithmetic, comparison, formatting, business |
+| =DT.* aj3lib pipelines | 2026-04-01 | 40 {=} pipelines in DT.md; construction, conversion, arithmetic, comparison, formatting, business |
 | PGE04026-04028 compile rules | 2026-04-01 | Invalid IANA timezone, missing DateTime epoch, out-of-range epoch |
 | Closed #118 — #String Depth.Max=0 contradiction | 2026-04-04 | ##Leaf new, ##Scalar Depth.Max=1, ###ScalarValue/###ScalarEnum; merged to main |
 | Closed #116 — PushLeft/PushRight operator rename | 2026-04-04 | Renamed 6 EBNF symbols + display names; eliminated Push/Pull ambiguity; merged to main |
 | Closed #117 — int/float coercion wording fix | 2026-04-04 | "interoperate freely" → "comparable without conversion"; merged to main |
 | Closed #119 — ##Int schema vs #Int alias identity | 2026-04-04 | Alias table now has Schema column; clarifies #Int is alias, ##Int is schema; merged to main |
 | Closed #120 — IO perspective terminology fix | 2026-04-04 | "caller perspective" → "pipeline perspective"; one-line scoping rule added; merged to main |
-| Closed #121 — {N} native block type | 2026-04-04 | {N} block, #NativeKind enum, NativeKind.md, PGE01028 rewritten, 44 pglib defs converted; merged to main |
+| Closed #121 — {N} native block type | 2026-04-04 | {N} block, #NativeKind enum, NativeKind.md, PGE01028 rewritten, 44 aj3lib defs converted; merged to main |
 | Issue #122 — Standardize *? wildcard catch-all | 2026-04-04 | Bare `*` removed from match syntax; `*?` is the only wildcard form in both verbose and match conditionals; 5 files updated |
 | Issue #123 — Job vs Instance terminology | 2026-04-05 | {#} #Job struct (9 fields), glossary entries, Pipeline Branch %=:Pipeline:N.jobs:UID, data-is-trees clarification; Instance=sequential run, Job=UID-keyed work unit |
 | Closed #124 — Queue Handler vs Dispatch Coordinator glossary | 2026-04-05 | Added DC glossary entry; narrowed QH "never makes decisions" to trigger/business logic scope |
@@ -261,10 +261,10 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #129 — Match Syntax naming consistency | 2026-04-05 | Unified to "Match Syntax"; dropped "Conditional Assignment Sugar"; added disambiguation to blocks.md |
 | Closed #130 — TM vs QH decision-making contradiction | 2026-04-05 | vision.md QH wording scoped to "trigger conditions or business logic"; glossary already correct |
 | Closed #131 — Permission branch %_ path grammar fix | 2026-04-05 | Split type_prefix into standard (instance_path) and exception (_/!/@ with own grammar rules); created #140 for {_} redesign |
-| Closed #140 — {_} permission object block | 2026-04-05 | 3 plans: user docs (5), EBNF+metadata (6), compile rules+pglib (13); {_} named objects replace inline [_]; _/__/___ tiers; Ceiling vs Grant intent; PGE10005 renamed |
+| Closed #140 — {_} permission object block | 2026-04-05 | 3 plans: user docs (5), EBNF+metadata (6), compile rules+aj3lib (13); {_} named objects replace inline [_]; _/__/___ tiers; Ceiling vs Grant intent; PGE10005 renamed |
 | Closed #133 — ##/### type_prefix list fix | 2026-04-05 | Removed ##/### from instance_path type_prefix row; already covered by schema_prop/field_type_prop grammar rules |
 | Closed #134 — #Serial schema-free contradiction | 2026-04-05 | "schema-free" → "unconstrained" across 12 files; completed #Serial definition with 3 missing properties (Ordered, Regular, Max) |
-| Closed #135 — !Error extensibility contradiction | 2026-04-05 | User {!} !Name implicitly creates !Error:Name.*; replaced misleading examples; pglib table 7→10 namespaces; EBNF [:] grammar added |
+| Closed #135 — !Error extensibility contradiction | 2026-04-05 | User {!} !Name implicitly creates !Error:Name.*; replaced misleading examples; aj3lib table 7→10 namespaces; EBNF [:] grammar added |
 | Closed #136 — H4+ headings in PGE files | 2026-04-05 | Promoted heading levels in 8 PGE files (H3→H1, H4→H2, H5→H3); audit convention enforced |
 | Closed #137 — Untagged code blocks | 2026-04-05 | Added language tags to 168+ bare code fences across 46 files; polyglot/json/yaml/text/ebnf |
 | Closed #138 — Missing audience frontmatter | 2026-04-05 | Added audience field to 218 files + full frontmatter to 11 files; audit/→ai, technical/→developer |
@@ -275,7 +275,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #150 — PGW01002 retired | 2026-04-06 | PGW01002 reduced to stub redirect; PGE01021 sole rule for empty {#}; Group 1 complete |
 | Closed #142 — Queue definition syntax ambiguous | 2026-04-06 | Added Queue + Trigger/Wrapper/Permission/Native rows to INDEX.md object table |
 | Closed #155 — Metadata path syntax gap | 2026-04-06 | Advanced Metadata Paths section in metadata.md; shorthand resolution, :<current>, :N addressing |
-| Closed #153 — =#.Column prefix collision | 2026-04-06 | Documented =#.* as valid pglib namespace in identifiers.md and #.md |
+| Closed #153 — =#.Column prefix collision | 2026-04-06 | Documented =#.* as valid aj3lib namespace in identifiers.md and #.md |
 | Closed #156 — Array dimension :2D vs < access | 2026-04-07 | Fixed : to < in access examples; added :ND vs < bridging note |
 | Closed #145 — Wait/collect markers disambiguation | 2026-04-07 | [>]/[<] renamed to IO parameter handling; positional implicit IO documented; disambiguation note added |
 | Closed #151 — Scalar subtype naming convention | 2026-04-07 | Three-level naming (##schema, #alias, :treepath) documented in scalars.md, basic-types.md, string-subtypes.md |
@@ -288,11 +288,11 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #157 — PGE04009 circular reference | 2026-04-07 | Already broken by #152; fixed backtick typos, clarified cross-ref authority |
 | Closed #147 — ForEach.Level .~ tilde suffix | 2026-04-07 | Formalized .~ as EBNF level_input production; aligned prose in 4 files |
 | Issue #160 — Split DT.md into DT/ folder | 2026-04-07 | 40 pipelines (not 37); .version metadata removed (EBNF violation); pipeline doc template established |
-| Closed #161 — Split all pglib docs per operator | 2026-04-07 | Merged docs/issue-161-split-pglib-docs-per-operator to main; 125 files, 5 plans |
+| Closed #161 — Split all aj3lib docs per operator | 2026-04-07 | Merged docs/issue-161-split-aj3lib-docs-per-operator to main; 125 files, 5 plans |
 | Closed #162 — Native dispatch config docs | 2026-04-07 | Merged docs/issue-162-native-dispatch-config-update to main; 3 files, 1 plan |
 | Closed #163 — Metadata paths for types + operations | 2026-04-07 | 3 plans: type file split (163-01), schema/field-type files (163-02), 109 pipeline metadata (163-03); merged to main |
 | Closed #272 — Parameterized ## schemas replace {M} macros | 2026-04-09 | 5 plans: core properties, schema files, collection types, syntax/concept docs, technical docs; merged to main |
-| Issue #273 — Three-bracket system complete | 2026-04-09 | 5 plans, 387 files: EBNF grammar, core docs, compile rules, pglib, remaining technical; {X} define, [X] control, (X) IO |
+| Issue #273 — Three-bracket system complete | 2026-04-09 | 5 plans, 387 files: EBNF grammar, core docs, compile rules, aj3lib, remaining technical; {X} define, [X] control, (X) IO |
 | Closed #275 — Collection redesign | 2026-04-10 | Squash-merged to main; 107 files, ##Record replaces #Map, %##Fields replaces %##Key, 6 schemas retired, composition syntax updated |
 | Added @d: deprecated cross-reference type | 2026-04-10 | Informational marker (not mandatory import); extends @c:/@u: system; 4 audit files updated |
 | Added replaced_by: to 52 archive files | 2026-04-11 | All archived docs now point to current-spec replacements; 3 marked replaced_by: none |
@@ -306,7 +306,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #265 — Finalize Queue Handler design specification | 2026-04-16 | 3 plans: reactive signals/payloads/NATS, cross-doc alignment, signal chain in all -Q.* pipeline docs |
 | Closed #284 — Add Git triggers for CI/CD pipelines | 2026-04-16 | 4 triggers (-T.Git.Hook/Push/PR/Tag), #Git type tree, three-tier model; also created #285 (Run.Shell) and #286 (#Email) |
 | Closed #285 — Add -Run.Shell pipeline for shell command execution | 2026-04-16 | {N} -Run.Shell (language-agnostic), System.Shell capability, Process Lifecycle (Redis job:{UID}:process + QH signals) |
-| Closed #286 — Add #Email string subtype to pglib | 2026-04-16 | Promoted #emailAddress from user-defined to pglib; alias "email"; 9 files updated |
+| Closed #286 — Add #Email string subtype to aj3lib | 2026-04-16 | Promoted #emailAddress from user-defined to aj3lib; alias "email"; 9 files updated |
 | Closed #288 — Add [!] !*- error suppression sugar | 2026-04-16 | error_wildcard + error_suppress EBNF; PGW07010 warning; user docs |
 | Closed #304 — Fallback ops + parallelism markers | 2026-04-16 | PGE07008 (non-failable fallback), PGE07009 (unterminated chain), PGE01040 (orphan parallel); semantic not grammar |
 | Closed #305 — EBNF arithmetic + inline_data recursion | 2026-04-16 | Removed arithmetic_expr/arithmetic_op from EBNF; inline_value breaks inline_data cycle; PGE08013; EC-6.4 fixed |
@@ -336,8 +336,8 @@ PLAN ──▶ APPLY ──▶ UNIFY
 | Closed #336 — Remaining philosophy files | 2026-04-20 | Merged docs/issue-336-add-remaining-philosophy-files to main; 5 philosophy pages; resource management philosophy; vision.md 11 links |
 | Closed #337 — Replace logo with octopus design | 2026-04-20 | Merged docs/issue-337-replace-logo-with-octopus-design to main; 24 format exports (light+dark), logo.py deleted, AI/ deferred |
 | Closed #340 — Retire -> chain operator | 2026-04-22 | Merged design/issue-340 to main; EBNF §10.3 removed, chains.md rewritten, 6 compile rules retired, 11 files |
-| Issue #342 — pglib {$} constructors complete | 2026-04-22 | 3 plans: Tier 1 ($DT,$Path), Tier 2a ($Re,$MIME,$Dur), Tier 2b ($Ver,$URL,$IP,$Color); 9 constructors, 4 type defs, 9 parse pipelines, INDEX registry |
-| Closed #342 — pglib {$} constructors for core types | 2026-04-22 | Merged design/issue-342-pglib-constructors-core-types to main |
+| Issue #342 — aj3lib {$} constructors complete | 2026-04-22 | 3 plans: Tier 1 ($DT,$Path), Tier 2a ($Re,$MIME,$Dur), Tier 2b ($Ver,$URL,$IP,$Color); 9 constructors, 4 type defs, 9 parse pipelines, INDEX registry |
+| Closed #342 — aj3lib {$} constructors for core types | 2026-04-22 | Merged design/issue-342-aj3lib-constructors-core-types to main |
 | Closed #343/#344 — Constructor compile errors + docs transition | 2026-04-22 | Merged design/issue-343-344-constructor-compile-errors-docs to main |
 | Closed #354 — Decision history system | 2026-04-22 | Merged docs/issue-354-decision-history-tracking to main |
 | Closed #353 — Audience tier restructure | 2026-04-22 | Merged docs/issue-353-update-audience-tiers to main; 6-audience model |
@@ -354,7 +354,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 
 ### Deferred Issues
 - ~~Rebuild Polly as PAUL special flow~~ — closed, redundant with pg:generate/pg:train
-- 9 pglib files remain status: draft despite Stable content (Math, Path, Sys, ForEach, collectors, types)
+- 9 aj3lib files remain status: draft despite Stable content (Math, Path, Sys, ForEach, collectors, types)
 - ~~EC-6.4 inconsistency: raw arithmetic in EDGE-CASES vs PGE04010~~ — fixed by #305
 - ~30 technical/ files still use old package address format (migrate on touch)
 

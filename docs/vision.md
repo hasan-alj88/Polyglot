@@ -6,7 +6,11 @@ updated: 2026-04-20
 
 # The Aljam3 Project
 
-**الجامع** (Aljam3, `/ælˈdʒæːmɪʕ/`) means to collect, gather, and bring together. It is a **trigger-driven programming language and platform** designed to communicate with the computer based on *how to react* rather than just *what to execute*. It is built on two core pillars that reflect its name:
+## The Name: الجامع
+
+The name **الجامع** (Aljam3, pronounced `/ælˈdʒæːmɪʕ/`) comes from the Arabic root meaning to collect, gather, and bring together. It is also the author's family name (Hasan Aljamea). This dual meaning perfectly captures the project's identity: a personal vision to create a language that *gathers* disparate systems, languages, and parallel programs into a single, cohesive, and tightly controlled orchestrator.
+
+Aljam3 is a **trigger-driven programming language and platform** designed to communicate with the computer based on *how to react* rather than just *what to execute*. It is built on two core pillars that reflect its name:
 
 1. **Gathering Languages (Cross-Language Integration)** — Enabling developers to *use* legacy code across multiple programming languages (Python, Rust, C++, JavaScript) within a unified project, rather than reinventing what already works.
 2. **Gathering Programs (Parallel Orchestration)** — Providing first-class support for parallelism with strict resource control, preventing resource starvation through dynamic allocation. Every pipeline is triggered, not called, and enforced by **exhaustive logic** so there is no possible scenario where the program doesn't know what to do.
@@ -17,15 +21,27 @@ The name *Aljam3* is the project's mission statement. Aljam3 exists because ever
 
 ---
 
-## The Problem
+## The Frustrations & The Problem
 
-1. **Resource Starvation and Blind Allocation.** Traditional systems lack semantic control over computing resources. A low-priority background job can easily consume resources needed by mission-critical operations, leading to catastrophic starvation and huge business losses. We lack a native way to communicate job importance and dynamically allocate resources by *reacting* to current system conditions.
+Aljam3 was born out of frustration with the lack of absolute control in modern automation:
 
-2. **Lack of Exhaustive Logic.** In modern orchestration, there are always edge cases where the program simply "does not know what to do," resulting in silent failures or unhandled exceptions. True reliability requires exhaustive logic—guaranteeing that there is *no possible scenario* left undefined at compile time.
+1. **Lack of Control over Access (Cybersecurity Risk).** Automation tasks run unattended, handle sensitive data, and interact with external systems. Yet, existing tools treat permissions as external configurations, not as compile-time guarantees. Undefined access behavior is an exploitable gap, leading to massive cybersecurity risks. We need absolute, granular control over what a piece of code is allowed to access.
+2. **Lack of Control over Computing Resource Consumption.** Traditional systems lack semantic control over computing resources. A low-priority background job can easily consume resources needed by mission-critical operations, leading to catastrophic starvation and huge business losses. We lack a native way to communicate job importance and dynamically allocate resources by *reacting* to current system conditions.
+3. **Lack of Safe, Controlled Parallelism and Concurrency.** Existing languages bolt trigger-driven behavior and parallelism onto imperative foundations as an afterthought, passing the complexity of race conditions and state management to the developer. We need a language where triggers, reactions, and safe concurrency are the core primitives, backed by **exhaustive logic** that guarantees there is *no possible scenario* left undefined at compile time.
+4. **Lack of Seamless Codebase-to-Codebase Communication.** Cross-language integration is hard and brittle. We want to *use* legacy code, not reinvent it. Existing tools (FFI, gRPC stubs) are fragile, version-sensitive, and break silently. We need a tool that seamlessly gathers (الجامع) programming languages together, controlling distinct codebases under a single, unified orchestrator.
+5. **Lack of Operational Peace of Mind (Off-Hours Crashes).** When system jobs crash during off-hours, developers have little time to understand or fix the problem. By mandating **exhaustive logic**—forcing the code to explicitly communicate how to handle *all* types of scenarios—developers can sleep at ease. All possible problems are handled during working hours. Writing Aljam3 code is like giving detailed instructions to an automated monitoring operator, teaching the system exactly how to handle all sorts of issues while you are away.
 
-3. **Programming to React, Not Just to Execute.** We need to communicate with computers based on *how to react* when situations happen. Existing languages bolt trigger-driven behavior and parallelism onto imperative foundations as an afterthought. We need a language where triggers and reactions are the core primitives.
 
-4. **Reinventing the Wheel.** Cross-language integration is hard and brittle. The objective is to *use* legacy code, not reinvent it. We need a tool that gathers (الجامع) programming languages together with seamless integration, controlling existing codebases under dynamic conditions where a trigger-driven model is ideal.
+---
+
+## The Stance on AI and Human Accountability
+
+In the era of Artificial Intelligence, AI is a tremendously useful tool to ease the development workflow. However, **shipping code you didn't read nor fully comprehend is strictly unacceptable.** 
+
+This is why Aljam3 enforcing human audit and accountability is a mandatory requirement to launch programs. 
+- **AI as Author (Acceptable):** AI models may write Aljam3 code (`.aj3` files) to speed up development.
+- **Human as Executor (Mandatory):** AI must *never* autonomously execute the Aljam3 CLI or bypass human oversight. The exhaustive logic and strictly defined Behavioral Contract exist precisely so that a human developer can inspect, validate, and understand every possible scenario before the program is permitted to launch.
+- **Auditable by Design (DataTrees):** All Aljam3 data structures are fundamentally **DataTrees of Strings**. This is a deliberate design choice ensuring that data flowing between disparate languages is entirely human-readable and transparent. This allows a human to audit the exact state of the system at any given moment. In this way, Aljam3 seamlessly brings distinct codebases—and the humans who oversee them—together under one understandable layer.
 
 ---
 
@@ -61,7 +77,7 @@ For the full philosophy behind Aljam3's design decisions, see the dedicated phil
 - [[philosophy/data-trees]] — Everything is a tree: three-tier data model and universal strings
 - [[philosophy/behavioral-contract]] — The "building permit" compilation model
 - [[philosophy/developer-experience]] — Write, compile, fix, deploy: the iterative loop
-- [[philosophy/extensibility]] — pglib, community packages, and permission ceilings
+- [[philosophy/extensibility]] — aj3lib, community packages, and permission ceilings
 - [[philosophy/how-aljam3-differs]] — Positioning against Airflow, Temporal, Prefect, and gRPC
 
 ---

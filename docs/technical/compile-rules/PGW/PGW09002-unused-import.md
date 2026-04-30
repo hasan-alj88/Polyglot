@@ -43,7 +43,7 @@ severity: warning
 ```
 
 ```aljam3
-[ ] ✓ no imports — leaf package using only pglib
+[ ] ✓ no imports — leaf package using only aj3lib
 {@} @LeafPackage
 
 {-} -Simple

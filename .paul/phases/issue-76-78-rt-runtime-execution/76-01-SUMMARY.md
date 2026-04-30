@@ -1,7 +1,7 @@
 ---
 phase: issue-76-78-rt-runtime-execution
 plan: 01
-subsystem: pglib
+subsystem: aj3lib
 tags: [rt, runtime, python, rust, wrapper, errors, pipelines, foreign-code]
 
 requires:
@@ -22,14 +22,14 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/pglib/pipelines/RT.md
-    - docs/user/pglib/types/rt.md
+    - docs/user/aj3lib/pipelines/RT.md
+    - docs/user/aj3lib/types/rt.md
   modified:
-    - docs/user/pglib/pipelines/W.md
-    - docs/user/pglib/types/types.md
-    - docs/user/pglib/errors/errors.md
-    - docs/user/pglib/INDEX.md
-    - docs/user/PGLIB.md
+    - docs/user/aj3lib/pipelines/W.md
+    - docs/user/aj3lib/types/types.md
+    - docs/user/aj3lib/errors/errors.md
+    - docs/user/aj3lib/INDEX.md
+    - docs/user/AJ3LIB.md
     - docs/user/syntax/blocks.md
 
 key-decisions:
@@ -78,7 +78,7 @@ completed: 2026-04-01T11:30:00Z
 | AC-2: #Code output struct and env types added | Pass | rt.md created (72 lines); types.md hierarchy + category updated |
 | AC-3: !RT error namespace added | Pass | 4 leaves + 7 pipeline error associations in errors.md |
 | AC-4: =RT.md created with all 7 execution pipelines | Pass | 261 lines; IO signatures, examples, IO summary table, compiler validation |
-| AC-5: INDEX.md and PGLIB.md updated | Pass | =RT row, =W description, !RT listing, #Code/#PyEnv/#RsEnv types |
+| AC-5: INDEX.md and AJ3LIB.md updated | Pass | =RT row, =W description, !RT listing, #Code/#PyEnv/#RsEnv types |
 | AC-6: blocks.md [C] example updated | Pass | <script→<code, >stdout→>output#Code:Python.Output, .Script.Inline suffix |
 
 ## Accomplishments
@@ -92,13 +92,13 @@ completed: 2026-04-01T11:30:00Z
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/pglib/pipelines/RT.md` | Created | All 7 =RT.* execution pipelines (261 lines) |
-| `docs/user/pglib/types/rt.md` | Created | #Code, #PyEnv, #RsEnv type definitions (72 lines) |
-| `docs/user/pglib/pipelines/W.md` | Modified | =W.Python → =W.RT with flexible fields |
-| `docs/user/pglib/types/types.md` | Modified | Added Runtime category + types to hierarchy |
-| `docs/user/pglib/errors/errors.md` | Modified | Added {!} !RT block + pipeline associations |
-| `docs/user/pglib/INDEX.md` | Modified | Added =RT, !RT, #Code/#PyEnv/#RsEnv rows |
-| `docs/user/PGLIB.md` | Modified | Added =RT link in pipeline section |
+| `docs/user/aj3lib/pipelines/RT.md` | Created | All 7 =RT.* execution pipelines (261 lines) |
+| `docs/user/aj3lib/types/rt.md` | Created | #Code, #PyEnv, #RsEnv type definitions (72 lines) |
+| `docs/user/aj3lib/pipelines/W.md` | Modified | =W.Python → =W.RT with flexible fields |
+| `docs/user/aj3lib/types/types.md` | Modified | Added Runtime category + types to hierarchy |
+| `docs/user/aj3lib/errors/errors.md` | Modified | Added {!} !RT block + pipeline associations |
+| `docs/user/aj3lib/INDEX.md` | Modified | Added =RT, !RT, #Code/#PyEnv/#RsEnv rows |
+| `docs/user/AJ3LIB.md` | Modified | Added =RT link in pipeline section |
 | `docs/user/syntax/blocks.md` | Modified | Updated [C] example to use =RT.Python.Script.Inline |
 | `.paul/STATE.md` | Modified | Active issue + loop position tracking |
 
@@ -110,7 +110,7 @@ completed: 2026-04-01T11:30:00Z
 | .Inline/.File split for all modes | Consistent pattern; .CLI inherently file-based | 7 total variants instead of 4 |
 | .CLI uses =W.Polyglot, not =W.RT | No language runtime needed for compiled binaries | Simpler setup for CLI mode |
 | Compiler validates Function/Script only | CLI binary and Bind pull/push are opaque | Safety where possible; freedom where needed |
-| <Bind#serial not #Map | Serial is Polyglot's universal exchange format | Consistent with rest of pglib |
+| <Bind#serial not #Map | Serial is Polyglot's universal exchange format | Consistent with rest of aj3lib |
 | Code-last in IO declarations | Stylistic: [C] blocks at end reads better | Convention, not enforcement |
 | Multiple [W] bracket semantics | Setup forward, cleanup reverse — standard resource pattern | Enables multi-runtime pipelines |
 

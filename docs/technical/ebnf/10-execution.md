@@ -34,7 +34,7 @@ pipeline_ref        ::= pipeline_id                    (* local: -Pipeline.Name 
                       | cross_pkg_pipeline ;            (* imported: @alias-Pipeline.Name *)
 
 (* All pipeline references use the - prefix — no exceptions.
-   pglib pipelines (-File.*, -T.*, -Q.*, -W.*) are pipeline_id: -File.Text.Read, -T.Call, etc.
+   aj3lib pipelines (-File.*, -T.*, -Q.*, -W.*) are pipeline_id: -File.Text.Read, -T.Call, etc.
    All Aljam3 identifiers have a prefix; pipelines always use -. *)
 
 call_io_line        ::= "(-)" io_param assignment_op value_expr

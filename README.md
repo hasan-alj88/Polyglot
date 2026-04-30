@@ -10,7 +10,7 @@
 
 ## What Is Aljam3?
 
-**الجامع** (Aljam3, `/ælˈdʒæːmɪʕ/`) means to collect, gather, and bring together. It is a **trigger-driven programming language and platform** designed to communicate with the computer based on *how to react* rather than just *what to execute*. It is built on two core pillars that reflect its name:
+**الجامع** (Aljam3, `/ælˈdʒæːmɪʕ/`) means to collect, gather, and bring together. It is also the author's family name (Hasan Aljamea), representing a personal vision to create a language that *gathers* systems together. It is a **trigger-driven programming language and platform** designed to communicate with the computer based on *how to react* rather than just *what to execute*. It is built on two core pillars that reflect its name:
 
 1. **Gathering Languages (Cross-Language Integration)** — The objective is to *use* legacy code, not reinvent it. Aljam3 seamlessly integrates Python, Rust, JavaScript, and C++ into a unified workflow, bringing programming languages together under dynamic, trigger-driven control.
 2. **Gathering Programs (Parallel Orchestration)** — First-class parallelism with strict resource control. It introduces dynamic, priority-based resource allocation to prevent critical jobs from starving, combined with **exhaustive logic** ensuring there is never a scenario where the program doesn't know what to do.
@@ -286,7 +286,7 @@ The Aljam3 Service must be running in the background to handle execution of auto
 
 ## Project Status
 
-**Current Phase:** Documentation-first specification (v0.2 complete). The language design is stable with comprehensive specs covering syntax, type system, pipelines, concurrency, error handling, permissions, and the standard library (pglib).
+**Current Phase:** Documentation-first specification (v0.2 complete). The language design is stable with comprehensive specs covering syntax, type system, pipelines, concurrency, error handling, permissions, and the standard library (aj3lib).
 
 The project previously had a Rust implementation prototype which was reset in favour of a specification-first approach. Next steps: compiler architecture design and implementation.
 

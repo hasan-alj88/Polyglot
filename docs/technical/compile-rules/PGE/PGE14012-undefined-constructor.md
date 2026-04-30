@@ -14,9 +14,9 @@ severity: error
 
 **Statement:** A constructor call references a constructor name for which no `{$}` definition exists in the current scope. The compiler cannot find any `{$}` block defining the referenced `$Constructor`.
 
-**Rationale:** Simple undefined-reference error. Constructors must be defined before use — either in the same package, in an `[@]`-imported package, or in pglib. Without a definition, the compiler has no overloads to match against.
+**Rationale:** Simple undefined-reference error. Constructors must be defined before use — either in the same package, in an `[@]`-imported package, or in aj3lib. Without a definition, the compiler has no overloads to match against.
 
-**Detection:** Compiler looks up the constructor name in the current scope (local package definitions, `[@]`-imported packages, pglib). If no `{$}` definition exists for that name, PGE14012 is raised.
+**Detection:** Compiler looks up the constructor name in the current scope (local package definitions, `[@]`-imported packages, aj3lib). If no `{$}` definition exists for that name, PGE14012 is raised.
 
 **See also:** PGE14010 (no overload match — constructor exists but no pattern matches), PGE09003 (unresolved pipeline reference — analogous for pipelines), [[syntax/constructors]]
 
@@ -24,7 +24,7 @@ severity: error
 
 **VALID:**
 ```aljam3
-[ ] ✓ $DT is defined by pglib — constructor call accepted
+[ ] ✓ $DT is defined by aj3lib — constructor call accepted
 {-} -MyPipeline
    [T] -T.Call
    [Q] -Q.Default

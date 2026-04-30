@@ -1,0 +1,14 @@
+{@} @aj3lib.types
+
+{ } Subsystem role classifier for native {N} definitions
+
+{#} #NativeKind
+   [%] .description << "Subsystem role classifier for native {N} definitions"
+   [%] .version << "1.0.0"
+   [#] << ##Scalar
+   [#] << ###ScalarEnum
+   [.] .Trigger
+   [.] .Queue
+   [.] .Wrapper
+   [.] .Execution
+   [.] .Intrinsic

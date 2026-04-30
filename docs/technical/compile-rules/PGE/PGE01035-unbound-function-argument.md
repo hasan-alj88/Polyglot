@@ -9,8 +9,8 @@ severity: error
 # Rule 1.35 — Unbound Function Argument
 `PGE01035`
 
-<!-- @u:pglib/pipelines/Run/INDEX -->
-<!-- @u:pglib/pipelines/Run/Function -->
+<!-- @u:aj3lib/pipelines/Run/INDEX -->
+<!-- @u:aj3lib/pipelines/Run/Function -->
 
 **Statement:** Every `<arg#Record` field in a `-Run.<Lang>.Function` call must correspond to a positional parameter of the `<func` function. A field with no matching parameter is a compile error.
 **Rationale:** `<arg` Record field order maps to positional arguments. If a field doesn't match a parameter, the function call will fail at runtime with an argument count or name error — catchable at compile time.

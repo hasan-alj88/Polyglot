@@ -12,7 +12,7 @@ updated: 2026-04-09
 
 `#Array` is a generic `{#}` type with `(#) <#ValueType` and `(#) <Dim##Dimension` parameters (default `"1D"`). It composes `##Array`, which sets `%##Fields << #Range` (integer-indexed children), `%##Gap << #False` (no gaps), `%##Ordered << #True` (order preserved), and `%##Propagate << #True` (properties apply to all levels). Use `:` positional binding: `#array:float:2D`.
 
-See [[pglib/types/Array|#Array]] for the full definition and [[syntax/types/generic-types|Generic Types]] for the `(#) <param` syntax.
+See [[aj3lib/types/Array|#Array]] for the full definition and [[syntax/types/generic-types|Generic Types]] for the `(#) <param` syntax.
 
 ### Cartesian product keys
 
@@ -46,5 +46,5 @@ For a 3x4 2D array, the key tree is a Cartesian product:
 - [[syntax/types/arrays|Array Type Annotations]] -- element-typed and multidimensional array syntax
 - [[concepts/collections/expand|Expand Operators]] -- `=ForEach.Array` iteration
 - [[concepts/collections/collect|Collect Operators]] -- `*Into.Array` collection
-- [[pglib/types/schemas/Fields|%##Fields]] -- field descriptor property
+- [[aj3lib/types/schemas/Fields|%##Fields]] -- field descriptor property
 

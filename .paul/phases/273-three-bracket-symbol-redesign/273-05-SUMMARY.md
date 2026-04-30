@@ -39,7 +39,7 @@ completed: 2026-04-09
 |-----------|--------|-------|
 | AC-1: Edge-cases migrated | Pass | 22 files (including 07-io-parameters.md found during verification) |
 | AC-2: Brainstorming/spec/plan migrated | Pass | 16 files (including spec/metadata-tree and plan/decisions found during verification) |
-| AC-3: Index file references fixed | Pass | INDEX.md and PGLIB.md updated |
+| AC-3: Index file references fixed | Pass | INDEX.md and AJ3LIB.md updated |
 | AC-4: Zero stale markers in docs/ | Pass | All 7 verification checks pass |
 
 ## Deviations from Plan
@@ -55,7 +55,7 @@ completed: 2026-04-09
 | 273-01 | EBNF grammar | 9 |
 | 273-02 | Core syntax + concept docs | 38 |
 | 273-03 | Compile rules | 138 |
-| 273-04 | pglib docs | 158 |
+| 273-04 | aj3lib docs | 158 |
 | 273-05 | Remaining technical docs + verification | 44 |
 | **Total** | **All docs/** | **387** |
 

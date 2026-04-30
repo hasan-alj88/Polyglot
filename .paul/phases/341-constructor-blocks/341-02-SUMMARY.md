@@ -12,7 +12,7 @@ provides:
   - "[$] and ($) dual-context in EBNF §5"
   - "%definition.$ metadata tree branch across 4 spec files"
   - "Constructor row in data-is-trees.md concept table"
-affects: [342-pglib-constructors, 343-compile-rules, 344-doc-updates]
+affects: [342-aj3lib-constructors, 343-compile-rules, 344-doc-updates]
 
 tech-stack:
   added: []
@@ -36,7 +36,7 @@ completed: 2026-04-22
 
 # Issue #341 Plan 02: {$} EBNF Grammar & Metadata Tree Summary
 
-**Created EBNF §9.13 constructor grammar and updated %definition.$ metadata tree branch across 9 files — compiler infrastructure ready for #342 (pglib) and #343 (compile rules)**
+**Created EBNF §9.13 constructor grammar and updated %definition.$ metadata tree branch across 9 files — compiler infrastructure ready for #342 (aj3lib) and #343 (compile rules)**
 
 ## Performance
 
@@ -93,7 +93,7 @@ None — plan executed exactly as written.
 
 **Ready:**
 - EBNF grammar provides authoritative reference for #343 compile rules
-- Metadata tree provides authoritative paths for #342 pglib constructors
+- Metadata tree provides authoritative paths for #342 aj3lib constructors
 - Both plans 341-01 and 341-02 are complete — issue #341 is fully specified
 
 **Concerns:**

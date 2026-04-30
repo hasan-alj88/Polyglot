@@ -31,8 +31,8 @@ completed: 2026-04-09
 - docs/user/syntax/types/schema-properties.md
 - docs/user/syntax/types/generic-types.md
 - docs/user/syntax/types/basic-types.md
-- docs/user/pglib/types/schemas/INDEX.md
-- docs/user/pglib/types/schemas/Fields.md
+- docs/user/aj3lib/types/schemas/INDEX.md
+- docs/user/aj3lib/types/schemas/Fields.md
 
 ## Verification Results
 - Retired properties (%##Key, %##Range, %##Flexible, %##Regular, #FlexKind): 0 in modified files

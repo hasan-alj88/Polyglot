@@ -116,11 +116,11 @@ Custom environment variables injected into the runtime. Flexible `:` fields — 
    [:] :DB_HOST << "localhost"
 ```
 
-Platform-managed vars (PATH, HOME, VIRTUAL_ENV, CARGO_HOME, etc.) are NOT declared here — the [[pglib/pipelines/W/Env|-W.Env]] wrapper sets those automatically.
+Platform-managed vars (PATH, HOME, VIRTUAL_ENV, CARGO_HOME, etc.) are NOT declared here — the [[aj3lib/pipelines/W/Env|-W.Env]] wrapper sets those automatically.
 
 ## The `#;` Type
 
-`#;` is the environment definition type — an alias for `##Env`. It represents a reference to a `{;}` definition and allows the [[pglib/pipelines/W/Env|-W.Env]] wrapper to receive the environment specification as input:
+`#;` is the environment definition type — an alias for `##Env`. It represents a reference to a `{;}` definition and allows the [[aj3lib/pipelines/W/Env|-W.Env]] wrapper to receive the environment specification as input:
 
 ```aljam3
 [W] -W.Env
@@ -235,6 +235,6 @@ Resources (RAM, CPU, disk) are NOT in `{;}` — resource limits belong to `[Q]` 
 ## Related
 
 - [[io#Environment Declaration]] — declaring `(-) ;` in IO contracts
-- [[pglib/pipelines/W/Env|-W.Env]] — the environment wrapper
-- [[pglib/errors/errors#Built-in Error Namespaces]] — `!Env.*` errors
-- [[pglib/pipelines/W/Aljam3|-W.Aljam3]] — pure Aljam3 wrapper
+- [[aj3lib/pipelines/W/Env|-W.Env]] — the environment wrapper
+- [[aj3lib/errors/errors#Built-in Error Namespaces]] — `!Env.*` errors
+- [[aj3lib/pipelines/W/Aljam3|-W.Aljam3]] — pure Aljam3 wrapper

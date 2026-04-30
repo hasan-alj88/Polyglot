@@ -27,7 +27,7 @@ For literal curly braces inside strings, use `{{` and `}}`.
 
 ## Path Type
 
-`path` is a pglib struct with OS-specific subfields:
+`path` is a aj3lib struct with OS-specific subfields:
 
 ```aljam3
 {#} #path
@@ -45,7 +45,7 @@ Assign both subfields so code works cross-platform:
    [.] .Windows << "C:\MyApp"
 ```
 
-At runtime, the Aljam3 runtime resolves `$AppDir` to the correct subfield based on the current OS (see `-Sys.OS` in [[pglib/INDEX|Standard Library]]).
+At runtime, the Aljam3 runtime resolves `$AppDir` to the correct subfield based on the current OS (see `-Sys.OS` in [[aj3lib/INDEX|Standard Library]]).
 
 Assigning only one subfield triggers a portability warning (PGW04001). If the missing subfield is for the current OS, the compiler raises an error (PGE04008).
 
@@ -53,7 +53,7 @@ A plain string cannot be assigned to a `#path` variable — `[-] $dir#path << "/
 
 ### `$Path"..."` Constructor Notation
 
-`$Path"..."` is a constructor call ([[syntax/constructors]]) that creates a `#path` value from a string literal. On infrastructure lines (`[T]`/`[Q]`/`[W]`), the inline pipeline form `-Path"..."` remains valid — see [[pglib/pipelines/Path|-Path]].
+`$Path"..."` is a constructor call ([[syntax/constructors]]) that creates a `#path` value from a string literal. On infrastructure lines (`[T]`/`[Q]`/`[W]`), the inline pipeline form `-Path"..."` remains valid — see [[aj3lib/pipelines/Path|-Path]].
 
 ```aljam3
 [-] $LogDir#path << $Path"/tmp/MyApp/logs"
@@ -104,9 +104,9 @@ The `"/inbox/"` argument is parsed as a path string — separators are normalize
 
 ### Related
 
-- `-Path` — pglib pipeline for creating `#path` values from strings. See [[pglib/pipelines/Path|-Path]]
-- `#OS` — pglib enum with `.Unix` and `.Windows` variants. See [[pglib/INDEX|Standard Library]]
-- `-Sys.OS` — pglib pipeline that yields `>os#OS`. See [[pglib/INDEX|Standard Library]]
+- `-Path` — aj3lib pipeline for creating `#path` values from strings. See [[aj3lib/pipelines/Path|-Path]]
+- `#OS` — aj3lib enum with `.Unix` and `.Windows` variants. See [[aj3lib/INDEX|Standard Library]]
+- `-Sys.OS` — aj3lib pipeline that yields `>os#OS`. See [[aj3lib/INDEX|Standard Library]]
 - PGE04007 — invalid path string (compile error)
 - PGE04008 — missing path platform subfield (compile error)
 - PGW04001 — single-platform path (warning)

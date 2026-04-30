@@ -56,7 +56,7 @@ updated: 2026-04-17
 ### EC-6.4: Arithmetic in assignment (INVALID)
 
 <!-- @u:compile-rules/PGE/PGE04010-invalid-arithmetic-operator -->
-**What it tests:** Raw arithmetic tokens (`+`, `-`, `*`, `/`) are compile errors. Arithmetic uses `-Math.*` pglib pipelines. See [[PGE04010|PGE04010]].
+**What it tests:** Raw arithmetic tokens (`+`, `-`, `*`, `/`) are compile errors. Arithmetic uses `-Math.*` aj3lib pipelines. See [[PGE04010|PGE04010]].
 
 ```aljam3
 [ ] ✗ PGE04010 — raw multiplication
@@ -73,7 +73,7 @@ updated: 2026-04-17
 ```
 
 ```aljam3
-[ ] ✓ arithmetic through pglib pipelines
+[ ] ✓ arithmetic through aj3lib pipelines
 [-] -Math.Multiply
    (-) << $price
    (-) << $quantity

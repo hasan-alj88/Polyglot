@@ -61,7 +61,7 @@ completed: 2026-04-20
 | AC-2: Data Trees elevates spec concept | Pass | Three-tier system, universal strings, cross-language exchange |
 | AC-3: Behavioral Contract expands metaphor | Pass | Building permit expanded, single source of truth, 4 properties |
 | AC-4: Developer Experience covers compile loop | Pass | Write/compile/fix/deploy, compiler as collaborator, exhaustive trade-off |
-| AC-5: Extensibility covers ecosystem + safety | Pass | pglib, community packages, permission ceiling, no resource hogging |
+| AC-5: Extensibility covers ecosystem + safety | Pass | aj3lib, community packages, permission ceiling, no resource hogging |
 | AC-6: How Polyglot Differs positions correctly | Pass | Airflow/Temporal/Prefect/gRPC acknowledged, 5 differentiators |
 | AC-7: Resource management integrated | Pass | Breathing margins, permissions-as-resources, load balancing via queues |
 | AC-8: Vision.md updated | Pass | 11 entries in Philosophy section (6 existing + 5 new) |
@@ -80,7 +80,7 @@ completed: 2026-04-20
 | docs/philosophy/data-trees.md | Created | Three-tier tree model (#/##/###), universal strings |
 | docs/philosophy/behavioral-contract.md | Created | Building permit metaphor, signal map, 4 properties |
 | docs/philosophy/developer-experience.md | Created | Compile loop, compiler as collaborator, exhaustive trade-off |
-| docs/philosophy/extensibility.md | Created | pglib, packages, permission ceiling, no resource hogging |
+| docs/philosophy/extensibility.md | Created | aj3lib, packages, permission ceiling, no resource hogging |
 | docs/philosophy/how-polyglot-differs.md | Created | Positioning vs alternatives, resource + load balancing differentiators |
 | docs/vision.md | Modified | Added 5 new [[wikilinks]] to Philosophy section |
 

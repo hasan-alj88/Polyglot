@@ -9,8 +9,8 @@ severity: error
 # Rule 1.34 — Unbound Script Output
 `PGE01034`
 
-<!-- @u:pglib/pipelines/Run/INDEX -->
-<!-- @u:pglib/pipelines/Run/Script -->
+<!-- @u:aj3lib/pipelines/Run/INDEX -->
+<!-- @u:aj3lib/pipelines/Run/Script -->
 
 **Statement:** Every `>Bind#Record` field name in a `-Run.<Lang>.Script` call must exist as an identifier in the foreign code. A field name with no matching identifier is a compile error.
 **Rationale:** `>Bind` field names are read back from native scope after execution. If a field name doesn't appear as an assigned identifier in the code, the runtime will either read `undefined`/`None` or raise a name error — both are programming mistakes catchable at compile time.

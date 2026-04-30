@@ -1,7 +1,7 @@
 ---
 phase: 321-run-bridge
 plan: 02
-subsystem: pglib
+subsystem: aj3lib
 tags: [bridge, examples, cross-references, github-issues, integrator]
 
 requires:
@@ -22,8 +22,8 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - docs/user/pglib/pipelines/Run/Bridge.Function.md
-    - docs/user/pglib/pipelines/Run/Bridge.Script.md
+    - docs/user/aj3lib/pipelines/Run/Bridge.Function.md
+    - docs/user/aj3lib/pipelines/Run/Bridge.Script.md
     - docs/user/integrator/polyglot-interface.md
     - docs/technical/spec/polyglot-sdk.md
     - docs/technical/integrator-internals.md
@@ -35,7 +35,7 @@ key-decisions:
 
 patterns-established:
   - "SDK caller-side code snippets alongside Polyglot pipeline examples"
-  - "When to Use comparison tables in pglib pipeline docs"
+  - "When to Use comparison tables in aj3lib pipeline docs"
 
 duration: ~15min
 started: 2026-04-19
@@ -77,8 +77,8 @@ completed: 2026-04-19
 
 | File | Change | Purpose |
 |------|--------|---------|
-| docs/user/pglib/pipelines/Run/Bridge.Function.md | Modified | Added {@}, SDK caller, When to Use table |
-| docs/user/pglib/pipelines/Run/Bridge.Script.md | Modified | Replaced example with Go→Python, added {@}, SDK caller, When to Use |
+| docs/user/aj3lib/pipelines/Run/Bridge.Function.md | Modified | Added {@}, SDK caller, When to Use table |
+| docs/user/aj3lib/pipelines/Run/Bridge.Script.md | Modified | Replaced example with Go→Python, added {@}, SDK caller, When to Use |
 | docs/user/integrator/polyglot-interface.md | Modified | Added Bridge Integration section with SDK vs Bridge comparison |
 | docs/technical/spec/polyglot-sdk.md | Modified | Issue #321 → doc links, Bridge in Related table |
 | docs/technical/integrator-internals.md | Modified | Removed "(Deferred)", added Bridge doc links and Related entries |

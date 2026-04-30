@@ -9,7 +9,7 @@ severity: error
 # Rule 1.37 — Bind Schema Mismatch
 `PGE01037`
 
-<!-- @u:pglib/pipelines/Run/INDEX -->
+<!-- @u:aj3lib/pipelines/Run/INDEX -->
 
 **Statement:** When assigning an inline Record to `<Bind`, `<arg`, `<kwarg`, or `>Bind`, the assigned value must match the declared Record schema topology. A structural mismatch is a compile error.
 **Rationale:** Record bindings drive native variable injection and type marshalling. If the assigned value has fields that don't match the declared schema, the runtime will either inject unexpected variables or fail during serialization — both are preventable at compile time.

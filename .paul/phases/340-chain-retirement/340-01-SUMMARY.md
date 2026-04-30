@@ -100,7 +100,7 @@ None — plan executed exactly as written.
 - Edge cases (10-execution, 06-operators, 11-control-flow, 23-stress-tests, 24-datatype-defs) need chain examples removed
 - 08-expressions.md EBNF has minor chain_call reference
 - operation-labels.md may need "replaces chains" note
-- Various scenarios, pglib docs, and technical docs mention chains
+- Various scenarios, aj3lib docs, and technical docs mention chains
 
 **Blockers:** None
 

@@ -100,9 +100,9 @@ The lower bound must not exceed the upper bound ([[PGE04013|PGE04013]]). For inc
 
 ## Arithmetic
 
-Aljam3 does not have raw arithmetic operators. Arithmetic is performed through `-Math.*` pglib pipelines — raw tokens `+`, `-`, `*`, `/` in expression context are a compile error ([[PGE04010|PGE04010]]). This design keeps all operations inside the pipeline execution model (trigger → queue → wrapper → body) and avoids conflicts with existing operator meanings (`*` is a collector prefix).
+Aljam3 does not have raw arithmetic operators. Arithmetic is performed through `-Math.*` aj3lib pipelines — raw tokens `+`, `-`, `*`, `/` in expression context are a compile error ([[PGE04010|PGE04010]]). This design keeps all operations inside the pipeline execution model (trigger → queue → wrapper → body) and avoids conflicts with existing operator meanings (`*` is a collector prefix).
 
-| Operation | pglib Pipeline | Arity |
+| Operation | aj3lib Pipeline | Arity |
 |-----------|----------------|-------|
 | Addition | `-Math.Add` | variadic (2+) |
 | Subtraction | `-Math.Subtract` | exactly 2 |

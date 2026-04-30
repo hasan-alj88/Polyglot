@@ -32,8 +32,8 @@ key-files:
     - docs/technical/compile-rules/PGE/PGE04007-invalid-path-string.md
     - docs/technical/compile-rules/PGE/PGE07002-chain-error-scoping.md
     - docs/INDEX.md
-    - docs/user/pglib/INDEX.md
-    - docs/user/PGLIB.md
+    - docs/user/aj3lib/INDEX.md
+    - docs/user/AJ3LIB.md
     - docs/technical/spec/type-identity.md
 
 key-decisions:
@@ -94,7 +94,7 @@ completed: 2026-04-07
 | COMPILE-RULES.md | Edited | PGE02007 marked retired |
 | PGE04009, PGE04007, PGE07002 | Edited | *Continue → <! fallback |
 | conversions.md, serial-to-struct-matching.md | Edited | *Continue → <! fallback |
-| INDEX.md, pglib/INDEX.md, PGLIB.md | Edited | *Continue entries removed |
+| INDEX.md, aj3lib/INDEX.md, AJ3LIB.md | Edited | *Continue entries removed |
 | type-identity.md | Edited | *Continue → <! fallback |
 
 ## Decisions Made

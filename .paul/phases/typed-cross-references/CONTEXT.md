@@ -8,7 +8,7 @@ Add semantic types to the cross-referencing system so every `@` import carries c
 
 1. **Typed references** — Two types replace the current flat `@` imports:
    - `@c:` (concept) — "what is X?" Points to definitions, theory, design rationale
-   - `@u:` (usage) — "X appears here, defined elsewhere." Points to syntax specs, EBNF, pglib signatures, scenario examples
+   - `@u:` (usage) — "X appears here, defined elsewhere." Points to syntax specs, EBNF, aj3lib signatures, scenario examples
 
 2. **Full syntax coverage** — Every syntax construct that appears in any doc (prose or code blocks) without explanation must have a `@u:` back-reference to where that construct is defined. No implicit, unlinked syntax appearances.
 
@@ -28,7 +28,7 @@ Add semantic types to the cross-referencing system so every `@` import carries c
 ## Constraints
 
 - Nearly all 595 docs are specs/references — no guides/tutorials exist
-- Usage refs (`@u:`) point to existing spec content (EBNF, syntax, scenarios, pglib), not hypothetical future docs
+- Usage refs (`@u:`) point to existing spec content (EBNF, syntax, scenarios, aj3lib), not hypothetical future docs
 - Batch migration preferred over indefinite dual-convention coexistence
 
 ## Open Questions (for planning, not user)

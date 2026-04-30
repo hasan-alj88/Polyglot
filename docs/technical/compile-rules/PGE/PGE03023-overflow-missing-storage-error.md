@@ -37,4 +37,4 @@ severity: error
 ## See Also
 
 - [[technical/spec/collector-definitions|Collector Definitions]] — Ground Rule 9
-- [[pglib/types/OverflowStrategy|#OverflowStrategy]] — overflow variants
+- [[aj3lib/types/OverflowStrategy|#OverflowStrategy]] — overflow variants

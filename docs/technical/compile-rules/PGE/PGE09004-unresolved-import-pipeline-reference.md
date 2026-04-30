@@ -17,7 +17,7 @@ severity: error
 **Rationale:** A valid import alias pointing to a real package does not guarantee the pipeline exists there. The pipeline may have been renamed, removed, or never existed. Catching this at compile time prevents runtime lookup failures in cross-package calls.
 **Detection:** After PGE09001 resolves the `@alias` to an imported package, the compiler enumerates all `{-}` definitions in that package and checks the `-Pipeline` name against them. If no match is found, PGE09004 fires.
 
-**See also:** PGE09001 (undefined import alias — validates the `@alias` prefix), PGE09003 (unresolved pipeline reference — same concept for local/pglib pipelines), PGE01010 (pipeline IO name mismatch — validated after the pipeline reference resolves)
+**See also:** PGE09001 (undefined import alias — validates the `@alias` prefix), PGE09003 (unresolved pipeline reference — same concept for local/aj3lib pipelines), PGE01010 (pipeline IO name mismatch — validated after the pipeline reference resolves)
 
 **VALID:**
 ```aljam3

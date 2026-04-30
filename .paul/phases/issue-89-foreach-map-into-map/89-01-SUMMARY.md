@@ -1,7 +1,7 @@
 ---
 phase: issue-89-foreach-map-into-map
 plan: 01
-subsystem: pglib
+subsystem: aj3lib
 tags: [expand, collect, map, foreach, into]
 
 requires:
@@ -11,7 +11,7 @@ provides:
   - ~ForEach.Map expand operator for #Map iteration
   - "*Into.Map collect operator for #Map assembly"
   - Folder-per-variant convention for ForEach/ and Into/
-affects: [issue-90-dataframe-operators, pglib-restructure]
+affects: [issue-90-dataframe-operators, aj3lib-restructure]
 
 tech-stack:
   added: []
@@ -20,23 +20,23 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/pglib/expanders/ForEach/Array.md
-    - docs/user/pglib/expanders/ForEach/Array/Enumerate.md
-    - docs/user/pglib/expanders/ForEach/Serial.md
-    - docs/user/pglib/expanders/ForEach/Level.md
-    - docs/user/pglib/expanders/ForEach/Map.md
-    - docs/user/pglib/collectors/Into/Array.md
-    - docs/user/pglib/collectors/Into/Serial.md
-    - docs/user/pglib/collectors/Into/Level.md
-    - docs/user/pglib/collectors/Into/Map.md
+    - docs/user/aj3lib/expanders/ForEach/Array.md
+    - docs/user/aj3lib/expanders/ForEach/Array/Enumerate.md
+    - docs/user/aj3lib/expanders/ForEach/Serial.md
+    - docs/user/aj3lib/expanders/ForEach/Level.md
+    - docs/user/aj3lib/expanders/ForEach/Map.md
+    - docs/user/aj3lib/collectors/Into/Array.md
+    - docs/user/aj3lib/collectors/Into/Serial.md
+    - docs/user/aj3lib/collectors/Into/Level.md
+    - docs/user/aj3lib/collectors/Into/Map.md
   modified:
     - docs/user/concepts/collections.md
-    - docs/user/pglib/INDEX.md
-    - docs/user/PGLIB.md
+    - docs/user/aj3lib/INDEX.md
+    - docs/user/AJ3LIB.md
     - docs/technical/EBNF.md
     - docs/technical/compile-rules/PGE/PGE03007-expand-operator-input-mismatch.md
     - docs/technical/compile-rules/PGE/PGE03008-collect-operator-io-mismatch.md
-    - docs/user/pglib/types/types.md
+    - docs/user/aj3lib/types/types.md
     - docs/user/syntax/types.md
     - docs/technical/plan/decisions/schema-properties.md
 
@@ -46,7 +46,7 @@ key-decisions:
   - "No ~ForEach.Map.Enumerate — Map is unordered"
 
 patterns-established:
-  - "pglib namespace dot = folder hierarchy (ForEach.Array → ForEach/Array.md)"
+  - "aj3lib namespace dot = folder hierarchy (ForEach.Array → ForEach/Array.md)"
 
 duration: ~15min
 completed: 2026-03-28
@@ -89,24 +89,24 @@ completed: 2026-03-28
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/pglib/expanders/ForEach/Array.md` | Created | ~ForEach.Array spec |
-| `docs/user/pglib/expanders/ForEach/Array/Enumerate.md` | Created | ~ForEach.Array.Enumerate spec |
-| `docs/user/pglib/expanders/ForEach/Serial.md` | Created | ~ForEach.Serial spec |
-| `docs/user/pglib/expanders/ForEach/Level.md` | Created | ~ForEach.Level spec |
-| `docs/user/pglib/expanders/ForEach/Map.md` | Created | ~ForEach.Map spec (NEW) |
-| `docs/user/pglib/collectors/Into/Array.md` | Created | *Into.Array spec |
-| `docs/user/pglib/collectors/Into/Serial.md` | Created | *Into.Serial spec |
-| `docs/user/pglib/collectors/Into/Level.md` | Created | *Into.Level spec |
-| `docs/user/pglib/collectors/Into/Map.md` | Created | *Into.Map spec (NEW) |
-| `docs/user/pglib/expanders/ForEach.md` | Deleted | Replaced by folder hierarchy |
-| `docs/user/pglib/collectors/Into.md` | Deleted | Replaced by folder hierarchy |
+| `docs/user/aj3lib/expanders/ForEach/Array.md` | Created | ~ForEach.Array spec |
+| `docs/user/aj3lib/expanders/ForEach/Array/Enumerate.md` | Created | ~ForEach.Array.Enumerate spec |
+| `docs/user/aj3lib/expanders/ForEach/Serial.md` | Created | ~ForEach.Serial spec |
+| `docs/user/aj3lib/expanders/ForEach/Level.md` | Created | ~ForEach.Level spec |
+| `docs/user/aj3lib/expanders/ForEach/Map.md` | Created | ~ForEach.Map spec (NEW) |
+| `docs/user/aj3lib/collectors/Into/Array.md` | Created | *Into.Array spec |
+| `docs/user/aj3lib/collectors/Into/Serial.md` | Created | *Into.Serial spec |
+| `docs/user/aj3lib/collectors/Into/Level.md` | Created | *Into.Level spec |
+| `docs/user/aj3lib/collectors/Into/Map.md` | Created | *Into.Map spec (NEW) |
+| `docs/user/aj3lib/expanders/ForEach.md` | Deleted | Replaced by folder hierarchy |
+| `docs/user/aj3lib/collectors/Into.md` | Deleted | Replaced by folder hierarchy |
 | `docs/user/concepts/collections.md` | Modified | Added Map rows to tables + example |
 | `docs/technical/EBNF.md` | Modified | Added Map to grammar + IO tables |
-| `docs/user/pglib/INDEX.md` | Modified | Updated links to folders |
-| `docs/user/PGLIB.md` | Modified | Updated links to folders |
+| `docs/user/aj3lib/INDEX.md` | Modified | Updated links to folders |
+| `docs/user/AJ3LIB.md` | Modified | Updated links to folders |
 | `docs/technical/compile-rules/PGE/PGE03007-*.md` | Modified | Added ForEach.Map IO signature |
 | `docs/technical/compile-rules/PGE/PGE03008-*.md` | Modified | Added Into.Map IO signature |
-| `docs/user/pglib/types/types.md` | Modified | #Dict → #Map rename |
+| `docs/user/aj3lib/types/types.md` | Modified | #Dict → #Map rename |
 | `docs/user/syntax/types.md` | Modified | #Dict → #Map rename |
 | `docs/technical/plan/decisions/schema-properties.md` | Modified | #Dict → #Map rename |
 
@@ -115,7 +115,7 @@ completed: 2026-03-28
 | Decision | Rationale | Impact |
 |----------|-----------|--------|
 | Rename #Dict to #Map | Duplicate type with #Map in collections.md; #Map uses newer ## schema system | All #Dict references removed; #Dataframe rows now reference #Map |
-| Dot-to-folder convention | User requested each variant in its own file matching namespace hierarchy | Establishes pattern for remaining pglib restructure (Agg, Sync, pipelines) |
+| Dot-to-folder convention | User requested each variant in its own file matching namespace hierarchy | Establishes pattern for remaining aj3lib restructure (Agg, Sync, pipelines) |
 | No ForEach.Map.Enumerate | Map is unordered (%Ordered = #False); positional index misleading | Consistent with Serial which also has no .Enumerate |
 
 ## Deviations from Plan
@@ -132,11 +132,11 @@ completed: 2026-03-28
 
 ### Auto-fixed Issues
 
-**1. Stale PGLIB.md links**
+**1. Stale AJ3LIB.md links**
 - **Found during:** Task 3 verification
-- **Issue:** PGLIB.md still linked to deleted ForEach.md and Into.md
+- **Issue:** AJ3LIB.md still linked to deleted ForEach.md and Into.md
 - **Fix:** Updated links to ForEach/ and Into/ folders
-- **Files:** docs/user/PGLIB.md
+- **Files:** docs/user/AJ3LIB.md
 
 ## Issues Encountered
 
@@ -146,10 +146,10 @@ None.
 
 **Ready:**
 - Map operators fully integrated across spec, grammar, and compile rules
-- Folder-per-variant pattern established for future pglib restructure
+- Folder-per-variant pattern established for future aj3lib restructure
 
 **Concerns:**
-- Remaining pglib files (Agg, Sync, Continue, pipelines) still use single-file pattern — needs separate issue for restructure
+- Remaining aj3lib files (Agg, Sync, Continue, pipelines) still use single-file pattern — needs separate issue for restructure
 
 **Blockers:**
 - None

@@ -55,7 +55,7 @@ completed: 2026-04-22
 - Added glossary @c: imports and [[glossary#Term]] links to all 11 philosophy files
 - Added 7 sibling @c:philosophy/ cross-references across 6 files
 - Fixed "programming language" phrasing to "trigger-driven programming language and platform"
-- Applied bold on first use of key terms (Failed, Accountability Chain, zero-trust, pglib, compile loop, black box)
+- Applied bold on first use of key terms (Failed, Accountability Chain, zero-trust, aj3lib, compile loop, black box)
 - Updated frontmatter dates on all 11 files
 
 ## Files Modified
@@ -69,7 +69,7 @@ completed: 2026-04-22
 | accountability.md | Added @c:philosophy/behavioral-contract, glossary import + 2 term links, bold Accountability Chain |
 | behavioral-contract.md | Added @c:philosophy/error-philosophy, glossary import + 4 term links |
 | core-philosophy.md | Added @c:philosophy/symbology, glossary import + 5 term links |
-| extensibility.md | Added @c:philosophy/language-design, glossary import + 2 term links, bold pglib |
+| extensibility.md | Added @c:philosophy/language-design, glossary import + 2 term links, bold aj3lib |
 | cybersecurity.md | Glossary import + 1 term link, bold zero-trust and black box |
 | developer-experience.md | Glossary import + 3 term links, bold compile loop |
 | language-design.md | Glossary import + 2 term links, bold trigger-driven/async-centric |

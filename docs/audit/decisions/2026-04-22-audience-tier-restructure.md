@@ -53,7 +53,7 @@ Six audiences in two groups:
 
 - **product** — PRDs, user stories, acceptance criteria, roadmap
 - **design** — language spec, philosophy, architecture, design decisions (merges former architect + designer)
-- **developer** — implementation, compile rules, pglib, tests
+- **developer** — implementation, compile rules, aj3lib, tests
 - **ai-finder** — discoverability layer: indexes, summaries, retrieval metadata for AI navigation
 
 Each audience has a dedicated file in `docs/audit/audiences/` with tone rules, format assumptions, and content guidelines.

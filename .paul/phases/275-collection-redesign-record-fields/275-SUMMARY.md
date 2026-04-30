@@ -28,7 +28,7 @@ completed: 2026-04-10
 | Plan | Scope | Files | Commits |
 |------|-------|-------|---------|
 | 275-01 | Core definitions + property tables | 5 | (pre-agent) |
-| 275-02 | Collection user docs (pglib + concepts) | 13 | 5 |
+| 275-02 | Collection user docs (aj3lib + concepts) | 13 | 5 |
 | 275-03 | Schema files + composition syntax | 10 | 4 |
 | 275-04 | Technical docs (EBNF, rules, metadata) | 7 | 5 |
 | 275-05 | Remaining propagation + verification | 42 | 4 |

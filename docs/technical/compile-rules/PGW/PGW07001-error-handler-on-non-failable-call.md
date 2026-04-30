@@ -15,7 +15,7 @@ severity: warning
 
 **Statement:** An `[!]` error handler block scoped under an `[-]` call to a pipeline that declares no `(-) !ErrorName` error declarations is unreachable dead code. The compiler emits a warning because the called pipeline is non-failable — it cannot produce errors, so the handler will never execute.
 **Rationale:** Error handlers on non-failable calls mislead the reader into thinking the call can fail. Flagging dead `[!]` blocks keeps error handling honest and helps developers avoid cargo-culting error handling patterns where none are needed.
-**Detection:** The compiler checks each `[!]` block's parent `[-]` call. If the called pipeline has no `(-) !...` declarations (and is not a pglib failable pipeline), PGW07001 fires.
+**Detection:** The compiler checks each `[!]` block's parent `[-]` call. If the called pipeline has no `(-) !...` declarations (and is not a aj3lib failable pipeline), PGW07001 fires.
 
 **See also:**
 - [PGE07001 — Error Block Scoping](../PGE/PGE07001-error-block-scoping.md) — structural scoping rules for `[!]`

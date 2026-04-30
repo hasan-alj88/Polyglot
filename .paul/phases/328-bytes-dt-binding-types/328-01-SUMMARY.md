@@ -22,7 +22,7 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - docs/user/pglib/types/NativeType.md
+    - docs/user/aj3lib/types/NativeType.md
     - docs/technical/spec/polyglot-sdk.md
     - docs/technical/spec/native-dispatch.md
 
@@ -71,7 +71,7 @@ completed: 2026-04-19
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/pglib/types/NativeType.md` | Modified | Added #bytes/#dt marshalling rows; added .Vec_u8, .byte_slice, .Uint8Array enum fields |
+| `docs/user/aj3lib/types/NativeType.md` | Modified | Added #bytes/#dt marshalling rows; added .Vec_u8, .byte_slice, .Uint8Array enum fields |
 | `docs/technical/spec/polyglot-sdk.md` | Modified | Added #bytes/#dt to primitive type mapping table + notes |
 | `docs/technical/spec/native-dispatch.md` | Modified | Added #bytes row (Base64); updated #dt from ISO 8601 to epoch seconds |
 

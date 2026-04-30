@@ -27,7 +27,7 @@ key-files:
     - docs/user/concepts/metadata.md
     - docs/user/concepts/collections.md
     - docs/user/syntax/blocks.md
-    - docs/user/pglib/types/types.md
+    - docs/user/aj3lib/types/types.md
     - docs/technical/EBNF.md
     - docs/technical/COMPILE-RULES.md
     - docs/technical/compile-rules/PGE/PGE01015-duplicate-metadata-field.md
@@ -79,7 +79,7 @@ completed: 2026-03-28
 
 - Renamed `#IndexString` → `#KeyString` across entire spec (5 files, consistent terminology)
 - Added `#NestedKeyString` type for alias paths that include `.` and `:` separators
-- Converted `.alias` from singular fixed field to flexible `%alias#Array.NestedKeyString` with `[:]` children across all spec and pglib files
+- Converted `.alias` from singular fixed field to flexible `%alias#Array.NestedKeyString` with `[:]` children across all spec and aj3lib files
 - Created PGE12002 (Duplicate Alias) with intra-definition and inter-definition duplicate detection
 - Updated EBNF `metadata_alias` production to match new array syntax
 
@@ -91,7 +91,7 @@ completed: 2026-03-28
 | `docs/user/concepts/metadata.md` | Modified | %alias flexible field, metadata tree diagram update |
 | `docs/user/concepts/collections.md` | Modified | #KeyString rename |
 | `docs/user/syntax/blocks.md` | Modified | %alias description |
-| `docs/user/pglib/types/types.md` | Modified | All enum .alias → %alias syntax (26 aliases converted) |
+| `docs/user/aj3lib/types/types.md` | Modified | All enum .alias → %alias syntax (26 aliases converted) |
 | `docs/technical/EBNF.md` | Modified | metadata_alias production, #KeyString, rules text, parse tree example |
 | `docs/technical/COMPILE-RULES.md` | Modified | PGE12002 table entry, #KeyString rename |
 | `docs/technical/compile-rules/PGE/PGE01015-duplicate-metadata-field.md` | Modified | Removed .alias from fixed-field list |

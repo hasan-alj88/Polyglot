@@ -8,8 +8,8 @@ status: complete
 # Foreign Code Permissions
 
 <!-- @u:syntax/blocks#Foreign Code -->
-<!-- @u:pglib/pipelines/Run/INDEX -->
-Pipelines using `[C]` foreign code blocks ([[blocks#Foreign Code|u:Foreign Code]]) and `-Run.*` pipelines ([[pglib/pipelines/Run/INDEX|u:Run pipelines]]) interact with permissions as follows:
+<!-- @u:aj3lib/pipelines/Run/INDEX -->
+Pipelines using `[C]` foreign code blocks ([[blocks#Foreign Code|u:Foreign Code]]) and `-Run.*` pipelines ([[aj3lib/pipelines/Run/INDEX|u:Run pipelines]]) interact with permissions as follows:
 
 - The pipeline must declare `{_}` permission objects via `(-)` IO for the IO the foreign code will perform
 - The **compiler analyzes** the foreign code AST to verify permission compliance
@@ -80,8 +80,8 @@ The compiler classifies detected IO calls by category and checks resource argume
 
 ## Per-Mode Analysis
 
-<!-- @u:pglib/pipelines/Run/INDEX -->
-Each `-Run.*` mode ([[pglib/pipelines/Run/INDEX|u:Run pipelines]]) has a different level of AST analysis:
+<!-- @u:aj3lib/pipelines/Run/INDEX -->
+Each `-Run.*` mode ([[aj3lib/pipelines/Run/INDEX|u:Run pipelines]]) has a different level of AST analysis:
 
 | Mode | AST Analysis | Notes |
 |------|-------------|-------|

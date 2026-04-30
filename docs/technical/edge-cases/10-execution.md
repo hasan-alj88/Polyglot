@@ -27,10 +27,10 @@ updated: 2026-04-23
       [-] $adId << "TIMEOUT"
 ```
 
-### EC-10.2: pglib pipeline call — no import needed
+### EC-10.2: aj3lib pipeline call — no import needed
 
 <!-- @u:EBNF:pipeline_ref -->
-**EBNF:** `pipeline_ref ::= pipeline_id` — pglib uses `=` prefix like all pipelines.
+**EBNF:** `pipeline_ref ::= pipeline_id` — aj3lib uses `=` prefix like all pipelines.
 
 **What it tests:** `-File.Text.Append` with `=` prefix (all identifiers have a prefix, no exceptions). No `[@]` import needed. See [[concepts/pipelines/INDEX|pipelines]], [[technical/ebnf/10-execution#10.2]].
 

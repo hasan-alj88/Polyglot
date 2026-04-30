@@ -38,5 +38,5 @@ severity: error
 
 ## See Also
 
-- [[pglib/types/datetime|DateTime Types]] — `#DateTime.Instant` definition
-- [[pglib/pipelines/DT/From.Epoch|-DT.From.Epoch]] — epoch-to-DateTime pipeline
+- [[aj3lib/types/datetime|DateTime Types]] — `#DateTime.Instant` definition
+- [[aj3lib/pipelines/DT/From.Epoch|-DT.From.Epoch]] — epoch-to-DateTime pipeline

@@ -2,7 +2,7 @@
 phase: 163-add-metadata-paths-types-operations
 plan: 03
 subsystem: documentation
-tags: [metadata, pglib, pipelines, frontmatter]
+tags: [metadata, aj3lib, pipelines, frontmatter]
 
 requires:
   - phase: 163-add-metadata-paths-types-operations
@@ -19,7 +19,7 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - docs/user/pglib/pipelines/**/*.md (109 pipeline operation files)
+    - docs/user/aj3lib/pipelines/**/*.md (109 pipeline operation files)
 
 key-decisions:
   - "Schema files use =#. prefix matching their H1 heading (not =Schema.)"
@@ -34,7 +34,7 @@ completed: 2026-04-07
 
 # Plan 163-03 Summary: Add metadata to pipeline operation files
 
-**Added metadata tree paths (YAML frontmatter + ## Metadata section) to all 109 pipeline operation files across 8 pglib subdirectories + 2 loose files.**
+**Added metadata tree paths (YAML frontmatter + ## Metadata section) to all 109 pipeline operation files across 8 aj3lib subdirectories + 2 loose files.**
 
 ## Performance
 

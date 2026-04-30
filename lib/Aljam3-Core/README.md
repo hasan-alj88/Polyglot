@@ -15,9 +15,9 @@ The core Aljam3 language compiler, implemented in Rust.
 .aj3 source → Lexer → Token Stream → Compiler → AST JSON
 ```
 
-## `pglib/` — Aljam3 Standard Library
+## `aj3lib/` — Aljam3 Standard Library
 
-The `pglib/` directory contains `.aj3` source definitions for all standard-library pipelines, types, and errors. These files are the compiler's source of truth for pglib.
+The `aj3lib/` directory contains `.aj3` source definitions for all standard-library pipelines, types, and errors. These files are the compiler's source of truth for aj3lib.
 
 | Folder | Contains |
 |--------|----------|

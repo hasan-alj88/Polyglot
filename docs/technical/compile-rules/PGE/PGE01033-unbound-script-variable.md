@@ -9,8 +9,8 @@ severity: error
 # Rule 1.33 — Unbound Script Variable
 `PGE01033`
 
-<!-- @u:pglib/pipelines/Run/INDEX -->
-<!-- @u:pglib/pipelines/Run/Script -->
+<!-- @u:aj3lib/pipelines/Run/INDEX -->
+<!-- @u:aj3lib/pipelines/Run/Script -->
 
 **Statement:** Every `<Bind#Record` field name in a `-Run.<Lang>.Script` call must exist as an identifier in the foreign code. A field name with no matching identifier is a compile error.
 **Rationale:** `<Bind` field names become native local variables — the runtime injects them before execution. If a field name doesn't appear in the code, the injected variable is unused, which strongly suggests a typo or wiring mistake.

@@ -12,7 +12,7 @@ updated: 2026-04-09
 
 `##Record` is a parameterized schema for enum-keyed collections with typed value fields. It replaces the former `#Map` / `##Map`. The `<#Fields` parameter must satisfy `##Enum` -- field names come from an enum type. `<#ValueType` sets the value type for all fields.
 
-See [[pglib/types/Map|##Record]] for the full definition and [[syntax/types/generic-types|Generic Types]] for the `(#) <param` syntax.
+See [[aj3lib/types/Map|##Record]] for the full definition and [[syntax/types/generic-types|Generic Types]] for the `(#) <param` syntax.
 
 ### Schema composition
 
@@ -52,5 +52,5 @@ Use `<` to access fields by enum variant name:
 
 - [[concepts/collections/expand|Expand Operators]] -- iteration over record fields
 - [[concepts/collections/collect|Collect Operators]] -- collection into records
-- [[pglib/types/schemas/Fields|%##Fields]] -- field descriptor property
+- [[aj3lib/types/schemas/Fields|%##Fields]] -- field descriptor property
 

@@ -118,7 +118,7 @@
 [L28:C01] Scope(1)
 [L28:C04] ActionComment
 [L28:C04] TokSpace
-[L28:C04] CommentText("is this pglib pipeline? if not Compile Error Ref not found")
+[L28:C04] CommentText("is this aj3lib pipeline? if not Compile Error Ref not found")
 [L28:C66] TokNewline
 [L29:C01] Scope(1)
 [L29:C04] ActionComment
@@ -178,7 +178,7 @@
 [L40:C01] Scope(1)
 [L40:C04] ActionComment
 [L40:C04] TokSpace
-[L40:C04] CommentText("is this in pglib? No? then compile Error")
+[L40:C04] CommentText("is this in aj3lib? No? then compile Error")
 [L40:C48] TokNewline
 [L41:C01] Scope(1)
 [L41:C04] ActionExecSeq

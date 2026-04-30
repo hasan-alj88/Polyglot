@@ -42,14 +42,14 @@ Three-context rule governs how values are constructed:
 Key constraints:
 
 - `{$}` is its own block type (not a pipeline subtype)
-- User-definable; only pglib uses `[-]` pipeline calls inside `{$}`
+- User-definable; only aj3lib uses `[-]` pipeline calls inside `{$}`
 - No auto-derivation — explicit definitions only
 - Constructor-sourced interpolation only (SQL injection analogy for safety)
 
 ## Impact
 
 - New block type `{$}` added to the block system
-- 9 pglib constructors created (issue #342): `$DT`, `$Path`, `$Re`, `$MIME`, `$Dur`, `$Ver`, `$URL`, `$IP`, `$Color`
+- 9 aj3lib constructors created (issue #342): `$DT`, `$Path`, `$Re`, `$MIME`, `$Dur`, `$Ver`, `$URL`, `$IP`, `$Color`
 - 4 type definitions updated, 9 parse pipelines created
 - PGE14xxx compile rules added for constructor errors (issue #343)
 - `docs/user/syntax/constructors.md` created
@@ -74,4 +74,4 @@ Alternatives considered:
 ## Related
 
 - [[decisions/2026-04-22-retire-chain-operator|Chain operator retirement]] — another syntax decision from the same period
-- GitHub: #341 (design), #342 (pglib catalog), #343 (compile errors), #344 (docs transition)
+- GitHub: #341 (design), #342 (aj3lib catalog), #343 (compile errors), #344 (docs transition)

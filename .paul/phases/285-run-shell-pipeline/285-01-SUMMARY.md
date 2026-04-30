@@ -1,7 +1,7 @@
 ---
 phase: 285-run-shell-pipeline
 plan: 01
-subsystem: pglib
+subsystem: aj3lib
 tags: [run, shell, native, permissions, system-capability]
 
 requires:
@@ -19,13 +19,13 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/pglib/pipelines/Run/Shell.md
-    - docs/user/pglib/permissions/System/Shell.md
+    - docs/user/aj3lib/pipelines/Run/Shell.md
+    - docs/user/aj3lib/permissions/System/Shell.md
   modified:
-    - docs/user/pglib/pipelines/Run/INDEX.md
+    - docs/user/aj3lib/pipelines/Run/INDEX.md
     - docs/user/concepts/permissions/capability-enums.md
-    - docs/user/pglib/permissions/System/INDEX.md
-    - docs/user/pglib/permissions/INDEX.md
+    - docs/user/aj3lib/permissions/System/INDEX.md
+    - docs/user/aj3lib/permissions/INDEX.md
 
 key-decisions:
   - "Shell is language-agnostic (no <Lang> placeholder) — uses -W.Polyglot"
@@ -73,12 +73,12 @@ completed: 2026-04-16
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/pglib/pipelines/Run/Shell.md` | Created | Full pipeline spec: definition, IO, Shell vs CLI, example, Process Lifecycle, permissions, errors, metadata |
-| `docs/user/pglib/permissions/System/Shell.md` | Created | `__System.Shell` capability-level permission generic |
-| `docs/user/pglib/pipelines/Run/INDEX.md` | Modified | Added Shell to Pipelines, Permissions, Compiler Validation tables; updated intro text |
+| `docs/user/aj3lib/pipelines/Run/Shell.md` | Created | Full pipeline spec: definition, IO, Shell vs CLI, example, Process Lifecycle, permissions, errors, metadata |
+| `docs/user/aj3lib/permissions/System/Shell.md` | Created | `__System.Shell` capability-level permission generic |
+| `docs/user/aj3lib/pipelines/Run/INDEX.md` | Modified | Added Shell to Pipelines, Permissions, Compiler Validation tables; updated intro text |
 | `docs/user/concepts/permissions/capability-enums.md` | Modified | Added `Shell` to `#SystemCapability` enum |
-| `docs/user/pglib/permissions/System/INDEX.md` | Modified | Added `__System.Shell` row |
-| `docs/user/pglib/permissions/INDEX.md` | Modified | Added `__System.Shell` row to master table |
+| `docs/user/aj3lib/permissions/System/INDEX.md` | Modified | Added `__System.Shell` row |
+| `docs/user/aj3lib/permissions/INDEX.md` | Modified | Added `__System.Shell` row to master table |
 
 ## Decisions Made
 

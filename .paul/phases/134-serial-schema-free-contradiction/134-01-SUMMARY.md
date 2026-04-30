@@ -20,7 +20,7 @@ key-files:
   created: []
   modified:
     - docs/user/concepts/collections/serial.md
-    - docs/user/pglib/types/collections.md
+    - docs/user/aj3lib/types/collections.md
     - docs/technical/edge-cases/24-datatype-defs.md
 
 key-decisions:
@@ -62,15 +62,15 @@ completed: 2026-04-05
 
 - Replaced "schema-free" with "unconstrained" across 12 files (only brainstorming/ retains old term)
 - Added constraint-removal table to serial.md explaining what each property removes and why
-- Completed #Serial pglib definition: added %##Children.Ordered, %##Children.Regular, %##Children.Max
-- Aligned edge-case EC-24.16 definition with pglib (previously inconsistent)
+- Completed #Serial aj3lib definition: added %##Children.Ordered, %##Children.Regular, %##Children.Max
+- Aligned edge-case EC-24.16 definition with aj3lib (previously inconsistent)
 
 ## Files Created/Modified
 
 | File | Change | Purpose |
 |------|--------|---------|
 | `docs/user/concepts/collections/serial.md` | Modified | Heading + constraint-removal table + complete definition |
-| `docs/user/pglib/types/collections.md` | Modified | Complete definition + schema table with "Constraint Removed" column |
+| `docs/user/aj3lib/types/collections.md` | Modified | Complete definition + schema table with "Constraint Removed" column |
 | `docs/technical/edge-cases/24-datatype-defs.md` | Modified | EC-24.16 title, body, and code example aligned |
 | `docs/INDEX.md` | Modified | "schema-free" → "unconstrained" |
 | `docs/user/concepts/collections/INDEX.md` | Modified | Two occurrences updated |
@@ -78,7 +78,7 @@ completed: 2026-04-05
 | `docs/user/syntax/types/basic-types.md` | Modified | "schema-free" → "unconstrained" |
 | `docs/user/syntax/types/hierarchy.md` | Modified | "schema-free" → "unconstrained" |
 | `docs/user/syntax/types/conversions.md` | Modified | "schema-free" → "unconstrained" |
-| `docs/user/pglib/types/types.md` | Modified | "schema-free" → "unconstrained" |
+| `docs/user/aj3lib/types/types.md` | Modified | "schema-free" → "unconstrained" |
 | `docs/technical/COMPILE-RULES.md` | Modified | PGW11003 rationale wording |
 | `docs/technical/compile-rules/PGE/PGE04009-unhandled-serial-struct-conversion.md` | Modified | "schema-free" → "unconstrained" |
 
@@ -104,10 +104,10 @@ completed: 2026-04-05
 
 ### Auto-fixed Issues
 
-**1. Edge-case definition inconsistent with pglib definition**
+**1. Edge-case definition inconsistent with aj3lib definition**
 - **Found during:** Task 1b
-- **Issue:** EC-24.16 used raw properties (Gap, Ordered, Depth.Max) while pglib used ## schema composition (##Deep, ##Sparse, ##Heterogeneous). Both were also missing properties.
-- **Fix:** Aligned EC-24.16 to use same ## composition syntax as pglib, plus all 3 new properties
+- **Issue:** EC-24.16 used raw properties (Gap, Ordered, Depth.Max) while aj3lib used ## schema composition (##Deep, ##Sparse, ##Heterogeneous). Both were also missing properties.
+- **Fix:** Aligned EC-24.16 to use same ## composition syntax as aj3lib, plus all 3 new properties
 - **Verification:** Both definitions now identical
 
 ## Issues Encountered

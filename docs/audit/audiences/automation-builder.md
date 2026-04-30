@@ -43,7 +43,7 @@ Developers who write Aljam3 code (.aj3 files). They author pipelines, define dat
 ## ALWAYS
 
 - Show canonical .aj3 examples for every language feature
-- Link to [[SPEC-INDEX]] and [[pglib/INDEX]] for reference
+- Link to [[SPEC-INDEX]] and [[aj3lib/INDEX]] for reference
 - Include edge cases and error states
 - Provide "try-it" sections where the reader can modify and experiment
 - Cross-reference related features via [[wikilinks]]

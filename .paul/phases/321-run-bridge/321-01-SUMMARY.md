@@ -1,7 +1,7 @@
 ---
 phase: 321-run-bridge
 plan: 01
-subsystem: pglib
+subsystem: aj3lib
 tags: [bridge, cross-language, native-type, variable, conversion]
 
 requires:
@@ -24,14 +24,14 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/pglib/types/NativeType.md
-    - docs/user/pglib/types/Variable.md
-    - docs/user/pglib/pipelines/Variable/Convert.md
-    - docs/user/pglib/pipelines/Run/Bridge.Function.md
-    - docs/user/pglib/pipelines/Run/Bridge.Script.md
+    - docs/user/aj3lib/types/NativeType.md
+    - docs/user/aj3lib/types/Variable.md
+    - docs/user/aj3lib/pipelines/Variable/Convert.md
+    - docs/user/aj3lib/pipelines/Run/Bridge.Function.md
+    - docs/user/aj3lib/pipelines/Run/Bridge.Script.md
     - docs/technical/algorithms/bridge-conversion.md
   modified:
-    - docs/user/pglib/pipelines/Run/INDEX.md
+    - docs/user/aj3lib/pipelines/Run/INDEX.md
 
 key-decisions:
   - "#NativeType uses per-language enum variants (NativeType.Python.list, NativeType.Rust.Vec)"
@@ -83,13 +83,13 @@ completed: 2026-04-19
 
 | File | Change | Purpose |
 |------|--------|---------|
-| docs/user/pglib/types/NativeType.md | Created | Per-language native type enum for marshalling |
-| docs/user/pglib/types/Variable.md | Created | Language-tagged variable type (.name, .value, .type) |
-| docs/user/pglib/pipelines/Variable/Convert.md | Created | Cross-language variable conversion pipeline |
-| docs/user/pglib/pipelines/Run/Bridge.Function.md | Created | Cross-language function call pipeline |
-| docs/user/pglib/pipelines/Run/Bridge.Script.md | Created | Cross-language variable binding pipeline |
+| docs/user/aj3lib/types/NativeType.md | Created | Per-language native type enum for marshalling |
+| docs/user/aj3lib/types/Variable.md | Created | Language-tagged variable type (.name, .value, .type) |
+| docs/user/aj3lib/pipelines/Variable/Convert.md | Created | Cross-language variable conversion pipeline |
+| docs/user/aj3lib/pipelines/Run/Bridge.Function.md | Created | Cross-language function call pipeline |
+| docs/user/aj3lib/pipelines/Run/Bridge.Script.md | Created | Cross-language variable binding pipeline |
 | docs/technical/algorithms/bridge-conversion.md | Created | Bridge conversion algorithm and dual-wrapper lifecycle |
-| docs/user/pglib/pipelines/Run/INDEX.md | Modified | Added Bridge entries to pipeline index |
+| docs/user/aj3lib/pipelines/Run/INDEX.md | Modified | Added Bridge entries to pipeline index |
 
 ## Decisions Made
 

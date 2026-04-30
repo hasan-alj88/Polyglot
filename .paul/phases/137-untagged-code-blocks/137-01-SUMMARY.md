@@ -63,7 +63,7 @@ completed: 2026-04-05
 | Directory | Files Changed | Primary Tag |
 |-----------|--------------|-------------|
 | docs/user/concepts/ | 5 | polyglot |
-| docs/user/pglib/ | 11 | polyglot |
+| docs/user/aj3lib/ | 11 | polyglot |
 | docs/user/syntax/ | 2 | polyglot |
 | docs/technical/brainstorming/ | 2 | polyglot |
 | docs/technical/compile-rules/ | 4 | text, polyglot |

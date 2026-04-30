@@ -9,5 +9,5 @@ type: feedback
 - Run call: `[-] -Run.Python.Script;PythonUV` (not `(-) <env#PyEnv << $pyenv`)
 **Why:** I used the verbose multi-line IO form from the spec examples, but the corrected form uses concise inline `;EnvName` appended directly to the pipeline name. No separate `<env` IO line needed.
 **How to apply:** When wiring environments to `-W.Env` or `-Run.*` calls, append `;EnvName` inline to the pipeline reference. Do not use separate `(-) <env` IO lines.
-**Spec file:** docs/user/pglib/pipelines/W/Env.md, docs/user/pglib/pipelines/Run/Script.md
+**Spec file:** docs/user/aj3lib/pipelines/W/Env.md, docs/user/aj3lib/pipelines/Run/Script.md
 **Spec updated:** yes — W/Env.md and Run/Script.md updated with inline syntax and corrected examples

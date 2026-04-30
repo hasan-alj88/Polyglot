@@ -2,7 +2,7 @@
 phase: issue-121-native-block
 plan: 03
 subsystem: docs
-tags: [native, pglib, DT, queue, propagation]
+tags: [native, aj3lib, DT, queue, propagation]
 
 requires:
   - phase: issue-121-native-block/02
@@ -15,10 +15,10 @@ affects: []
 
 key-files:
   modified:
-    - docs/user/pglib/pipelines/DT.md
+    - docs/user/aj3lib/pipelines/DT.md
     - docs/user/concepts/pipelines/queue.md
     - docs/user/concepts/pipelines/io-triggers.md
-    - docs/user/pglib/pipelines/#.md
+    - docs/user/aj3lib/pipelines/#.md
 
 key-decisions:
   - "DT.md .Rust names use CamelCase from pipeline path: =DT.From.ISO → DtFromIso"
@@ -28,9 +28,9 @@ duration: 10min
 completed: 2026-04-04
 ---
 
-# Issue #121 Plan 03: Propagate {N} to pglib — Summary
+# Issue #121 Plan 03: Propagate {N} to aj3lib — Summary
 
-**Converted 44 pglib pipeline definitions from old `{=}`/`{Q}` + `.baseCode` syntax to `{N}` blocks with `%Native.*` metadata, and aligned all "base pipeline" terminology to "native definition".**
+**Converted 44 aj3lib pipeline definitions from old `{=}`/`{Q}` + `.baseCode` syntax to `{N}` blocks with `%Native.*` metadata, and aligned all "base pipeline" terminology to "native definition".**
 
 ## Acceptance Criteria Results
 
@@ -57,7 +57,7 @@ None — plan executed exactly as written.
 **Issue #121 complete.** All 3 plans executed:
 - 121-01: Core {N} design (blocks.md, INDEX.md, metadata.md, EBNF)
 - 121-02: Retire BaseCode → NativeKind (type file, PGE01028, EBNF, cross-refs)
-- 121-03: Propagate {N} to pglib (DT.md, queue.md, io-triggers.md, #.md)
+- 121-03: Propagate {N} to aj3lib (DT.md, queue.md, io-triggers.md, #.md)
 
 **Ready for:** Git commit, branch merge to main, issue closure.
 

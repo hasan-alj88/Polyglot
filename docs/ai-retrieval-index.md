@@ -10,7 +10,7 @@ updated: 2026-04-23
 <!-- @c:audit/reference/glossary -->
 <!-- @c:audit/audiences/ai-finder -->
 <!-- @u:INDEX -->
-This index is the query-shaped entry point for AI tools. Every row answers "given this concept, which file(s) do I read?" Sections partition by query shape (construct, compile-rule range, pglib namespace, type, error namespace, philosophy, audit area) rather than by human navigation. For human navigation use [[INDEX|u:INDEX]]; for repo shape use [[source-tree-analysis|u:source-tree-analysis]]; for flat inventory use [[component-inventory|u:component-inventory]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
+This index is the query-shaped entry point for AI tools. Every row answers "given this concept, which file(s) do I read?" Sections partition by query shape (construct, compile-rule range, aj3lib namespace, type, error namespace, philosophy, audit area) rather than by human navigation. For human navigation use [[INDEX|u:INDEX]]; for repo shape use [[source-tree-analysis|u:source-tree-analysis]]; for flat inventory use [[component-inventory|u:component-inventory]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
 
 ## How to Read This Index
 
@@ -116,91 +116,91 @@ Compiler algorithms that back the rules live under `docs/technical/compile-rules
 | Match condition overlap detection | [[technical/compile-rules/algorithms/overlap-detection\|u:overlap-detection]] |
 | Compound exhaustiveness | [[technical/compile-rules/algorithms/compound-exhaustiveness\|u:compound-exhaustiveness]] |
 
-## By pglib Namespace
+## By aj3lib Namespace
 
-Query: "what pipelines does namespace X provide?" Each namespace has a sub-index under `docs/user/pglib/pipelines/{Namespace}/INDEX.md` (or a flat file for single-file namespaces).
+Query: "what pipelines does namespace X provide?" Each namespace has a sub-index under `docs/user/aj3lib/pipelines/{Namespace}/INDEX.md` (or a flat file for single-file namespaces).
 
 | Namespace | Prefix | Purpose | Primary dir |
 |-----------|--------|---------|-------------|
-| File | `-File.*` | File-system read/write | [[user/pglib/pipelines/File/INDEX\|u:pglib-File]] |
-| T (triggers) | `-T.*` | HTTP, queue, git, time, call triggers | [[user/pglib/pipelines/T/INDEX\|u:pglib-T]] |
-| Q (queue control) | `-Q.*` | Queue inspection and control | [[user/pglib/pipelines/Q/INDEX\|u:pglib-Q]] |
-| W (wrappers) | `-W.*` | Wrappers: RT, Env, Retry, Aljam3 | [[user/pglib/pipelines/W/INDEX\|u:pglib-W]] |
-| Math | `-Math.*` | Arithmetic operations | [[user/pglib/pipelines/Math/INDEX\|u:pglib-Math]] |
-| DT (datetime) | `-DT.*` | #DateTime construction, conversion, arithmetic | [[user/pglib/pipelines/DT/INDEX\|u:pglib-DT]] |
-| RT (runtime) | `-RT.*` | Python/Rust/Go/JS runtime execution | [[user/pglib/pipelines/RT/INDEX\|u:pglib-RT]] |
-| Run | `-Run.*` | Script, binary, Shell, Bridge execution | [[user/pglib/pipelines/Run/INDEX\|u:pglib-Run]] |
-| Schema | `-Schema.*` | Schema match / validate / describe / coerce | [[user/pglib/pipelines/Schema/INDEX\|u:pglib-Schema]] |
-| Variable | `-Variable.*` | Variable introspection | [[user/pglib/pipelines/Variable/INDEX\|u:pglib-Variable]] |
-| Text | `-Text.*` | Text operations | [[user/pglib/pipelines/Text\|u:pglib-Text]] |
-| Path | `-Path.*` | Path operations | [[user/pglib/pipelines/Path\|u:pglib-Path]] |
-| Sys | `-Sys.*` | System inspection | [[user/pglib/pipelines/Sys\|u:pglib-Sys]] |
+| File | `-File.*` | File-system read/write | [[user/aj3lib/pipelines/File/INDEX\|u:aj3lib-File]] |
+| T (triggers) | `-T.*` | HTTP, queue, git, time, call triggers | [[user/aj3lib/pipelines/T/INDEX\|u:aj3lib-T]] |
+| Q (queue control) | `-Q.*` | Queue inspection and control | [[user/aj3lib/pipelines/Q/INDEX\|u:aj3lib-Q]] |
+| W (wrappers) | `-W.*` | Wrappers: RT, Env, Retry, Aljam3 | [[user/aj3lib/pipelines/W/INDEX\|u:aj3lib-W]] |
+| Math | `-Math.*` | Arithmetic operations | [[user/aj3lib/pipelines/Math/INDEX\|u:aj3lib-Math]] |
+| DT (datetime) | `-DT.*` | #DateTime construction, conversion, arithmetic | [[user/aj3lib/pipelines/DT/INDEX\|u:aj3lib-DT]] |
+| RT (runtime) | `-RT.*` | Python/Rust/Go/JS runtime execution | [[user/aj3lib/pipelines/RT/INDEX\|u:aj3lib-RT]] |
+| Run | `-Run.*` | Script, binary, Shell, Bridge execution | [[user/aj3lib/pipelines/Run/INDEX\|u:aj3lib-Run]] |
+| Schema | `-Schema.*` | Schema match / validate / describe / coerce | [[user/aj3lib/pipelines/Schema/INDEX\|u:aj3lib-Schema]] |
+| Variable | `-Variable.*` | Variable introspection | [[user/aj3lib/pipelines/Variable/INDEX\|u:aj3lib-Variable]] |
+| Text | `-Text.*` | Text operations | [[user/aj3lib/pipelines/Text\|u:aj3lib-Text]] |
+| Path | `-Path.*` | Path operations | [[user/aj3lib/pipelines/Path\|u:aj3lib-Path]] |
+| Sys | `-Sys.*` | System inspection | [[user/aj3lib/pipelines/Sys\|u:aj3lib-Sys]] |
 
 Standalone parser pipelines (file per name):
 
 | Pipeline | File |
 |----------|------|
-| `-Color.Parse` | [[user/pglib/pipelines/Color.Parse\|u:Color-Parse]] |
-| `-Dur.Parse` | [[user/pglib/pipelines/Dur.Parse\|u:Dur-Parse]] |
-| `-IP.Parse` | [[user/pglib/pipelines/IP.Parse\|u:IP-Parse]] |
-| `-MIME.Parse` | [[user/pglib/pipelines/MIME.Parse\|u:MIME-Parse]] |
-| `-Path.Parse` | [[user/pglib/pipelines/Path.Parse\|u:Path-Parse]] |
-| `-Re.Parse` | [[user/pglib/pipelines/Re.Parse\|u:Re-Parse]] |
-| `-URL.Parse` | [[user/pglib/pipelines/URL.Parse\|u:URL-Parse]] |
-| `-Ver.Parse` | [[user/pglib/pipelines/Ver.Parse\|u:Ver-Parse]] |
+| `-Color.Parse` | [[user/aj3lib/pipelines/Color.Parse\|u:Color-Parse]] |
+| `-Dur.Parse` | [[user/aj3lib/pipelines/Dur.Parse\|u:Dur-Parse]] |
+| `-IP.Parse` | [[user/aj3lib/pipelines/IP.Parse\|u:IP-Parse]] |
+| `-MIME.Parse` | [[user/aj3lib/pipelines/MIME.Parse\|u:MIME-Parse]] |
+| `-Path.Parse` | [[user/aj3lib/pipelines/Path.Parse\|u:Path-Parse]] |
+| `-Re.Parse` | [[user/aj3lib/pipelines/Re.Parse\|u:Re-Parse]] |
+| `-URL.Parse` | [[user/aj3lib/pipelines/URL.Parse\|u:URL-Parse]] |
+| `-Ver.Parse` | [[user/aj3lib/pipelines/Ver.Parse\|u:Ver-Parse]] |
 
 ## By Expander / Collector
 
 | Category | Namespace | Primary dir |
 |----------|-----------|-------------|
-| Expander | `=ForEach.*` | [[user/pglib/expanders/ForEach/INDEX\|u:ForEach-index]] |
-| Collector — aggregate | `*Agg.*` | [[user/pglib/collectors/Agg/INDEX\|u:Agg-index]] |
-| Collector — into-collection | `*Into.*` | [[user/pglib/collectors/Into/INDEX\|u:Into-index]] |
-| Collector — sync/race | `*Sync.*` (incl. `*All`, `*First`, `*Nth`) | [[user/pglib/collectors/Sync/INDEX\|u:Sync-index]] |
+| Expander | `=ForEach.*` | [[user/aj3lib/expanders/ForEach/INDEX\|u:ForEach-index]] |
+| Collector — aggregate | `*Agg.*` | [[user/aj3lib/collectors/Agg/INDEX\|u:Agg-index]] |
+| Collector — into-collection | `*Into.*` | [[user/aj3lib/collectors/Into/INDEX\|u:Into-index]] |
+| Collector — sync/race | `*Sync.*` (incl. `*All`, `*First`, `*Nth`) | [[user/aj3lib/collectors/Sync/INDEX\|u:Sync-index]] |
 
 ## By Type
 
-Query: "where is type X defined?" Types live under `docs/user/pglib/types/` — top-level files plus `datetime/`, `field-types/`, `properties/`, `scalars/`, `schemas/` subdirs.
+Query: "where is type X defined?" Types live under `docs/user/aj3lib/types/` — top-level files plus `datetime/`, `field-types/`, `properties/`, `scalars/`, `schemas/` subdirs.
 
 | Type category | Files | Location |
 |---------------|-------|----------|
-| Boolean, scalar primitives | `boolean.md`, `string.md`, `path.md` | `docs/user/pglib/types/*.md` |
-| Scalars (subtype tree) | `scalars/` (11 files) | `docs/user/pglib/types/scalars/` |
-| Schemas (`##Record`, `##Leaf`, `##Inf`, `##Nullable`, etc.) | `schemas/` (20 files) | `docs/user/pglib/types/schemas/` |
-| Schema properties | `properties/` (16 files) | `docs/user/pglib/types/properties/` |
-| Field kinds | `field-types/` (6 files) | `docs/user/pglib/types/field-types/` |
-| Date / time | `datetime/` (10 files) | `docs/user/pglib/types/datetime/` |
-| Collections | `Array.md`, `Map.md`, `Serial.md`, `Dataframe.md`, `Set.md` | `docs/user/pglib/types/*.md` |
-| Runtime types | `PyEnv.md`, `RsEnv.md`, `rt.md`, `Code.md` | `docs/user/pglib/types/*.md` |
-| Service types | `Job.md`, `JobStatus.md`, `Queue.md`, `QueueState.md`, `Variable.md`, `VarState.md` | `docs/user/pglib/types/*.md` |
-| Git | `git.md` | `docs/user/pglib/types/git.md` |
-| Parsed entities | `Color.md`, `IP.md`, `URL.md`, `MIME.md`, `Ver.md`, `Re.md` | `docs/user/pglib/types/*.md` |
-| Capability enums | `CPUCapability.md`, `GPUCapability.md`, `RAMCapability.md`, `IOCapability.md`, `ProcessCapability.md`, `DurationCapability.md` | `docs/user/pglib/types/*.md` |
+| Boolean, scalar primitives | `boolean.md`, `string.md`, `path.md` | `docs/user/aj3lib/types/*.md` |
+| Scalars (subtype tree) | `scalars/` (11 files) | `docs/user/aj3lib/types/scalars/` |
+| Schemas (`##Record`, `##Leaf`, `##Inf`, `##Nullable`, etc.) | `schemas/` (20 files) | `docs/user/aj3lib/types/schemas/` |
+| Schema properties | `properties/` (16 files) | `docs/user/aj3lib/types/properties/` |
+| Field kinds | `field-types/` (6 files) | `docs/user/aj3lib/types/field-types/` |
+| Date / time | `datetime/` (10 files) | `docs/user/aj3lib/types/datetime/` |
+| Collections | `Array.md`, `Map.md`, `Serial.md`, `Dataframe.md`, `Set.md` | `docs/user/aj3lib/types/*.md` |
+| Runtime types | `PyEnv.md`, `RsEnv.md`, `rt.md`, `Code.md` | `docs/user/aj3lib/types/*.md` |
+| Service types | `Job.md`, `JobStatus.md`, `Queue.md`, `QueueState.md`, `Variable.md`, `VarState.md` | `docs/user/aj3lib/types/*.md` |
+| Git | `git.md` | `docs/user/aj3lib/types/git.md` |
+| Parsed entities | `Color.md`, `IP.md`, `URL.md`, `MIME.md`, `Ver.md`, `Re.md` | `docs/user/aj3lib/types/*.md` |
+| Capability enums | `CPUCapability.md`, `GPUCapability.md`, `RAMCapability.md`, `IOCapability.md`, `ProcessCapability.md`, `DurationCapability.md` | `docs/user/aj3lib/types/*.md` |
 
 Master type aggregators:
 
 | File | Purpose |
 |------|---------|
-| [[user/pglib/types/types\|u:types]] | Top-level type catalog |
-| [[user/pglib/types/collections\|u:collections-types]] | Collection-type summary |
-| [[user/pglib/types/scalars\|u:scalars]] | Scalar-subtype summary |
-| [[user/pglib/types/enums\|u:enums]] | Enum-type summary |
-| [[user/pglib/types/structs\|u:structs-types]] | Struct-type summary |
-| [[user/pglib/types/schemas\|u:schemas-index]] | Schema summary |
+| [[user/aj3lib/types/types\|u:types]] | Top-level type catalog |
+| [[user/aj3lib/types/collections\|u:collections-types]] | Collection-type summary |
+| [[user/aj3lib/types/scalars\|u:scalars]] | Scalar-subtype summary |
+| [[user/aj3lib/types/enums\|u:enums]] | Enum-type summary |
+| [[user/aj3lib/types/structs\|u:structs-types]] | Struct-type summary |
+| [[user/aj3lib/types/schemas\|u:schemas-index]] | Schema summary |
 
 ## By Error Namespace
 
-Query: "what errors can pipeline X raise?" Error namespaces live under `docs/user/pglib/errors/`.
+Query: "what errors can pipeline X raise?" Error namespaces live under `docs/user/aj3lib/errors/`.
 
 | Error file | Topic |
 |------------|-------|
-| [[user/pglib/errors/errors\|u:errors-pglib]] | Error-namespace overview |
-| [[user/pglib/errors/error-struct\|u:error-struct]] | `!Error` struct definition |
-| [[user/pglib/errors/custom-errors\|u:custom-errors]] | User-defined error types via `{!}` |
-| [[user/pglib/errors/alias-clash\|u:alias-clash]] | Alias-clash error handling |
-| [[user/pglib/errors/pipeline-associations\|u:pipeline-associations]] | Pipeline-to-error-namespace associations |
+| [[user/aj3lib/errors/errors\|u:errors-aj3lib]] | Error-namespace overview |
+| [[user/aj3lib/errors/error-struct\|u:error-struct]] | `!Error` struct definition |
+| [[user/aj3lib/errors/custom-errors\|u:custom-errors]] | User-defined error types via `{!}` |
+| [[user/aj3lib/errors/alias-clash\|u:alias-clash]] | Alias-clash error handling |
+| [[user/aj3lib/errors/pipeline-associations\|u:pipeline-associations]] | Pipeline-to-error-namespace associations |
 
-Built-in namespaces (under `docs/user/pglib/errors/builtin/`) are partitioned by concern:
+Built-in namespaces (under `docs/user/aj3lib/errors/builtin/`) are partitioned by concern:
 
 | Namespace | Raised by |
 |-----------|-----------|
@@ -214,18 +214,18 @@ Built-in namespaces (under `docs/user/pglib/errors/builtin/`) are partitioned by
 
 ## By Permission Category
 
-Permission categories live under `docs/user/pglib/permissions/` as one subdirectory per category. The authoritative concept document is [[user/concepts/permissions|u:permissions]].
+Permission categories live under `docs/user/aj3lib/permissions/` as one subdirectory per category. The authoritative concept document is [[user/concepts/permissions|u:permissions]].
 
 | Category | Scope | Dir |
 |----------|-------|-----|
-| Crypto | Cryptographic primitives | `docs/user/pglib/permissions/Crypto/` |
-| Database | Database connections | `docs/user/pglib/permissions/Database/` |
-| Device | Device access | `docs/user/pglib/permissions/Device/` |
-| File | File-system access | `docs/user/pglib/permissions/File/` |
-| IPC | Inter-process communication | `docs/user/pglib/permissions/IPC/` |
-| Memory | Memory allocation and limits | `docs/user/pglib/permissions/Memory/` |
-| System | System-level access (shell, env, OS) | `docs/user/pglib/permissions/System/` |
-| Web | Network and HTTP access | `docs/user/pglib/permissions/Web/` |
+| Crypto | Cryptographic primitives | `docs/user/aj3lib/permissions/Crypto/` |
+| Database | Database connections | `docs/user/aj3lib/permissions/Database/` |
+| Device | Device access | `docs/user/aj3lib/permissions/Device/` |
+| File | File-system access | `docs/user/aj3lib/permissions/File/` |
+| IPC | Inter-process communication | `docs/user/aj3lib/permissions/IPC/` |
+| Memory | Memory allocation and limits | `docs/user/aj3lib/permissions/Memory/` |
+| System | System-level access (shell, env, OS) | `docs/user/aj3lib/permissions/System/` |
+| Web | Network and HTTP access | `docs/user/aj3lib/permissions/Web/` |
 
 Concept-level permission sub-pages:
 
@@ -323,9 +323,9 @@ Heuristics for picking the right starting file given a query shape.
 | "How do I write a pipeline?" | [[user/SPEC-INDEX\|u:SPEC-INDEX]] |
 | "What does `{X}` mean?" | "By Language Construct" table above |
 | "What does compile error PGE01005 mean?" (or any PGE / PGW code) | [[technical/COMPILE-RULES\|u:COMPILE-RULES]] then the matching file under `technical/compile-rules/PGE/` or `technical/compile-rules/PGW/` |
-| "What pipelines does `-X.*` provide?" | "By pglib Namespace" table above |
+| "What pipelines does `-X.*` provide?" | "By aj3lib Namespace" table above |
 | "What error namespaces exist?" | "By Error Namespace" table above |
-| "What does #TypeName mean?" | "By Type" table above; start with [[user/pglib/types/types\|u:types]] |
+| "What does #TypeName mean?" | "By Type" table above; start with [[user/aj3lib/types/types\|u:types]] |
 | "How does the runtime work?" | [[architecture\|u:architecture]] |
 | "Why did Aljam3 make decision X?" | [[audit/decisions/README\|c:decisions-index]] then [[philosophy/core-philosophy\|c:core-philosophy]] |
 | "Can I write this .aj3 code?" | [[technical/ebnf/INDEX\|u:ebnf-index]] then [[technical/edge-cases/INDEX\|u:edge-cases-index]] |
@@ -355,7 +355,7 @@ Both must be present. See [[audit/README|c:audit/README]] for the full typed-ref
 This index is re-generated whenever:
 
 - New top-level `docs/` files are added or removed
-- pglib namespaces are added, renamed, or partitioned into subfolders
+- aj3lib namespaces are added, renamed, or partitioned into subfolders
 - PGE / PGW rule ranges are added or retired
 - Philosophy pages are added or removed
 - Audit audience tiers change

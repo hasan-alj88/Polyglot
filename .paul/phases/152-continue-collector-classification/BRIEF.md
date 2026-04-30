@@ -9,7 +9,7 @@ status: brief-ready
 # Issue #152: *Continue classified as collector but functionally is error recovery
 
 ## Inconsistency
-`*Continue` uses the `*` prefix (collector category) and appears in the EBNF grammar under `collect_operator`, but it functions as an error recovery mechanism inside `[!]` blocks, not as a data-gathering collector. True collectors (`*Into.*`, `*Agg.*`) operate inside `~ForEach` expand scopes and gather outputs from mini-pipelines. `*Continue` has no relationship to expand/collect — it signals the pipeline to continue after an error with a fallback value. The EBNF explicitly classifies it as `error_operator` within `collect_operator`, and the pglib INDEX lists it as "Error recovery with fallback value", yet its `*` prefix groups it with data collectors in the metadata tree (`%*`) and in the operator summary tables.
+`*Continue` uses the `*` prefix (collector category) and appears in the EBNF grammar under `collect_operator`, but it functions as an error recovery mechanism inside `[!]` blocks, not as a data-gathering collector. True collectors (`*Into.*`, `*Agg.*`) operate inside `~ForEach` expand scopes and gather outputs from mini-pipelines. `*Continue` has no relationship to expand/collect — it signals the pipeline to continue after an error with a fallback value. The EBNF explicitly classifies it as `error_operator` within `collect_operator`, and the aj3lib INDEX lists it as "Error recovery with fallback value", yet its `*` prefix groups it with data collectors in the metadata tree (`%*`) and in the operator summary tables.
 
 ## Affected Files
 | File | What's Wrong |
@@ -17,8 +17,8 @@ status: brief-ready
 | `docs/technical/ebnf/12-collections.md` | Lines 58-61: `collect_operator` includes `error_operator ::= "Continue"` — correctly separated in grammar but still under collect umbrella |
 | `docs/technical/ebnf/12-collections.md` | Lines 118-121: `*Continue` listed in Collect IO Signatures table alongside `*Into.*` and `*Agg.*` data collectors |
 | `docs/user/concepts/collections/collect.md` | Does not mention `*Continue` at all — the collections concept page only covers `*Into`, `*Agg`, `*All`, `*First`, `*Nth`, `*Ignore` |
-| `docs/user/pglib/collectors/Continue.md` | Title says "Error Recovery" — correct role, but file lives under `collectors/` directory |
-| `docs/user/pglib/INDEX.md` | Line 53: lists `*Continue` under "Collector Operators (*)" section — grouped with data collectors |
+| `docs/user/aj3lib/collectors/Continue.md` | Title says "Error Recovery" — correct role, but file lives under `collectors/` directory |
+| `docs/user/aj3lib/INDEX.md` | Line 53: lists `*Continue` under "Collector Operators (*)" section — grouped with data collectors |
 | `docs/INDEX.md` | Line 164: `collectors/*.md` described as containing `*Into variants, *Agg, *Sync, *Continue` — all grouped |
 | `docs/technical/spec/metadata-tree/object-types.md` | Line 19: `%*` branch lists only data/collect-all/race categories — `*Continue` is not even listed here |
 
@@ -29,7 +29,7 @@ status: brief-ready
 > 
 > error_operator      ::= "Continue" ;
 
-**Source B** (`docs/user/pglib/collectors/Continue.md`, lines ~8-10):
+**Source B** (`docs/user/aj3lib/collectors/Continue.md`, lines ~8-10):
 > # *Continue — Error Recovery
 > 
 > Used inside `[!]` error blocks to continue the pipeline with a fallback value. Without `*Continue`, an `[!]` block terminates the pipeline on error (PGE02005).

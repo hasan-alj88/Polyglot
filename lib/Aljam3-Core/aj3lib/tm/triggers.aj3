@@ -1,0 +1,50 @@
+{@} @aj3lib.tm
+
+{ } Trigger Monitor native operations
+{ } All triggers return >IsTriggered#bool
+
+{N} =T.Call
+   [%] .Kind << #NativeKind.Trigger
+   [%] .Rust << "TriggerCall"
+   [%] .description << "Pipeline invoked by another pipeline"
+   [=] >IsTriggered#bool
+
+{N} =T.Manual
+   [%] .Kind << #NativeKind.Trigger
+   [%] .Rust << "TriggerManual"
+   [%] .description << "Pipeline invoked manually from CLI or test harness"
+   [=] >IsTriggered#bool
+
+{N} =T.Daily
+   [%] .Kind << #NativeKind.Trigger
+   [%] .Rust << "TriggerDaily"
+   [%] .description << "Fires once per day at specified time"
+   [=] <time#string
+   [=] >IsTriggered#bool
+
+{N} =T.Folder.NewFiles
+   [%] .Kind << #NativeKind.Trigger
+   [%] .Rust << "TriggerFolderNewFiles"
+   [%] .description << "Fires when new files appear in watched directory"
+   [=] <path#path
+   [=] >IsTriggered#bool
+   [=] >NewFiles#array:path
+
+{N} =T.Webhook
+   [%] .Kind << #NativeKind.Trigger
+   [%] .Rust << "TriggerWebhook"
+   [%] .description << "Fires on incoming HTTP request to endpoint"
+   [=] <endpoint#string
+   [=] >IsTriggered#bool
+
+{N} =T.File.Rolled
+   [%] .Kind << #NativeKind.Trigger
+   [%] .Rust << "TriggerFileRolled"
+   [%] .description << "Fires when a file rotates, delivering the completed file"
+   [=] <Dir#path
+   [=] <Pattern#string
+   [=] <Strategy#RotationKind <~ #RotationKind.Auto
+   [=] >IsTriggered#bool
+   [=] >RolledFile#path
+   [=] >NewFile#path
+   [=] >RolledSize#int

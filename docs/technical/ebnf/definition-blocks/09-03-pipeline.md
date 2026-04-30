@@ -58,7 +58,7 @@ trigger_ref         ::= pipeline_ref [ string_literal ] ;
 ```
 
 **Rules:**
-- `trigger_ref` must reference an operation that declares `[T]` marker compatibility (PGE01024). pglib trigger pipelines (`-T.*`) are the canonical trigger operations.
+- `trigger_ref` must reference an operation that declares `[T]` marker compatibility (PGE01024). aj3lib trigger pipelines (`-T.*`) are the canonical trigger operations.
 - Multiple `[T]` lines in one pipeline have **AND** semantics — all triggers must fire before the pipeline executes.
 - For **OR** semantics (any trigger fires the pipeline), use `[+]` to scope alternative triggers.
 

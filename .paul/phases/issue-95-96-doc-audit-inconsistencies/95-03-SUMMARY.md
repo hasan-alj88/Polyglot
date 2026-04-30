@@ -2,7 +2,7 @@
 phase: issue-95-96-doc-audit-inconsistencies
 plan: 03
 subsystem: docs
-tags: [datetime, pglib, pipelines, compile-rules]
+tags: [datetime, aj3lib, pipelines, compile-rules]
 requires:
   - phase: 95-01
     provides: IC-005 fix, #DateTime references valid
@@ -13,10 +13,10 @@ provides:
   - 3 compile rules (PGE04026-04028)
   - INDEX.md entries for #DateTime and =DT.*
   - Full IC verification sweep
-affects: [future pglib work, compiler implementation]
+affects: [future aj3lib work, compiler implementation]
 key-files:
-  created: [docs/user/pglib/pipelines/DT.md, docs/technical/compile-rules/PGE/PGE04026-invalid-iana-timezone.md, docs/technical/compile-rules/PGE/PGE04027-missing-required-datetime-subfield.md, docs/technical/compile-rules/PGE/PGE04028-invalid-epoch-value.md]
-  modified: [docs/technical/COMPILE-RULES.md, docs/user/pglib/INDEX.md]
+  created: [docs/user/aj3lib/pipelines/DT.md, docs/technical/compile-rules/PGE/PGE04026-invalid-iana-timezone.md, docs/technical/compile-rules/PGE/PGE04027-missing-required-datetime-subfield.md, docs/technical/compile-rules/PGE/PGE04028-invalid-epoch-value.md]
+  modified: [docs/technical/COMPILE-RULES.md, docs/user/aj3lib/INDEX.md]
 key-decisions:
   - "=DT.Now is the only pipeline needing _IO.Read (system clock); all others _None"
   - "3 compile rules focused on type validation; runtime rules deferred"
@@ -41,12 +41,12 @@ completed: 2026-04-01
 
 | File | Change | Purpose |
 |------|--------|---------|
-| docs/user/pglib/pipelines/DT.md | Created | 40 {=} pipeline definitions |
+| docs/user/aj3lib/pipelines/DT.md | Created | 40 {=} pipeline definitions |
 | docs/technical/compile-rules/PGE/PGE04026-invalid-iana-timezone.md | Created | Invalid IANA timezone string rule |
 | docs/technical/compile-rules/PGE/PGE04027-missing-required-datetime-subfield.md | Created | Missing .Instant.epoch rule |
 | docs/technical/compile-rules/PGE/PGE04028-invalid-epoch-value.md | Created | Out-of-range epoch literal rule |
 | docs/technical/COMPILE-RULES.md | Modified | Added PGE04026-04028 to index table |
-| docs/user/pglib/INDEX.md | Modified | Added #DateTime type + =DT.* pipeline entries |
+| docs/user/aj3lib/INDEX.md | Modified | Added #DateTime type + =DT.* pipeline entries |
 
 ## Pipeline Groups
 

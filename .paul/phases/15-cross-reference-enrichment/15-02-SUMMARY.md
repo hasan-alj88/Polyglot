@@ -64,7 +64,7 @@ completed: 2026-04-11
 ## Accomplishments
 
 - 13 language files: 55 cross-references (rich @c:/@u: for types, blocks, operators, errors, collections, EBNF)
-- 7 stdlib files: 29 cross-references (pglib, wrappers, triggers, queues, collections)
+- 7 stdlib files: 29 cross-references (aj3lib, wrappers, triggers, queues, collections)
 - 3 architecture files: 13 cross-references (TM, QM, Runner service components; 2 with no replacement)
 - 9 audit files: 9 @d: references (process docs, no forced concept refs)
 - 3 example files: 7 cross-references (hello-world and approved-examples got @c:/@u:)

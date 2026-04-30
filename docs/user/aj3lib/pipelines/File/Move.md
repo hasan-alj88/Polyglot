@@ -1,0 +1,58 @@
+---
+audience: automation-builder
+type: specification
+updated: 2026-04-07
+status: complete
+metadata_definition: "%definition.-:File.Move"
+metadata_instance: "%-:File.Move:N"
+---
+
+# -File.Move
+
+Move or rename a file.
+
+## Definition
+
+```aljam3
+{N} -File.Move
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "FileMove"
+   [%] .description << "Move/rename file"
+   (-) <source#path
+   (-) <destination#path
+```
+
+## Inputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| `<source` | `#path` | Path to the source file |
+| `<destination` | `#path` | Path to the destination file |
+
+## Outputs
+
+None. Success is signalled by `!NoError`.
+
+## Errors
+
+| Error | When |
+|-------|------|
+| `!File.NotFound` | Source file does not exist |
+| `!File.MoveError` | Cannot complete move (permissions, cross-device, disk full) |
+
+## Permissions
+
+Requires `File.Read` + `File.Write` capability.
+
+## Metadata
+
+| Path | Pattern | Description |
+|------|---------|-------------|
+| Definition | `%definition.-:File.Move` | Compile-time pipeline template |
+| Instance | `%-:File.Move:N` | Runtime pipeline instance (N = instance number) |
+
+## Related
+
+- [[aj3lib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[aj3lib/pipelines/File/Copy|-File.Copy]]
+- [[aj3lib/pipelines/File/Delete|-File.Delete]]

@@ -36,9 +36,9 @@ A `_` object is a `#` struct instance whose schema is `##Permission`. Every leaf
 
 A `__` descriptor is a `##` schema template with `(_)` inputs. It fills missing fields to produce a concrete `_` object at compile time.
 
-### pglib Generic Permissions
+### aj3lib Generic Permissions
 
-pglib ships generic permissions at two levels:
+aj3lib ships generic permissions at two levels:
 
 - **Category-level** (`__File`, `__Web`, ...) — takes capability + scope + resource fields
 - **Capability-level** (`__File.Read`, `__Web.Request`, ...) — takes only scope + resource fields (capability is baked in)
@@ -66,7 +66,7 @@ pglib ships generic permissions at two levels:
    [.] .path "{<path}"
 ```
 
-See [[pglib/permissions/INDEX|pglib Generic Permissions]] for the full list of 8 category generics and 31 capability generics.
+See [[aj3lib/permissions/INDEX|aj3lib Generic Permissions]] for the full list of 8 category generics and 31 capability generics.
 
 ### User-Defined Templates
 

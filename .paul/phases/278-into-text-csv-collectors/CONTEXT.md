@@ -6,7 +6,7 @@
 <domain>
 ## Issue Boundary
 
-Add text and CSV collection operators to pglib, completing the expand/collect pattern for text data. Includes:
+Add text and CSV collection operators to aj3lib, completing the expand/collect pattern for text data. Includes:
 - Text collectors (*Into.Text.Append, *Into.Text.Merge)
 - CSV collectors (*Into.CSV.Rows, *Into.CSV.Merge)
 - Text/CSV expanders (=ForEach.Text.Lines, =ForEach.CSV.Rows)
@@ -112,7 +112,7 @@ Add optional `<separator` (#String, default "") — backwards-compatible, existi
 <specifics>
 ## Specific Ideas
 
-- The k-way merge collector takes #TextDiffs from a separate =Text.Diff comparator pipeline — the comparator is its own pglib pipeline, not baked into the collector
+- The k-way merge collector takes #TextDiffs from a separate =Text.Diff comparator pipeline — the comparator is its own aj3lib pipeline, not baked into the collector
 - Conflict handling parameters allow partial application: apply non-conflicts and keep conflict list for later processing
 - CSV merge is row-aware and preserves header rows
 - PPTD concept parallels how databases handle memory pressure — spill to disk transparently

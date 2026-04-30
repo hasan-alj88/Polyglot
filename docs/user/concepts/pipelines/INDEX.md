@@ -39,7 +39,7 @@ Misordering these sections is a compile error (PGE01001).
 
 **Note:** `[T]` triggers, `(-)` IO declarations, and `(-) !ErrorName` error declarations form one section. IO declarations must appear **before** any trigger that pushes into them — the variable must exist before assignment (PGE01002). Error declarations (`(-) !ErrorName`) appear alongside IO declarations. When a trigger produces outputs (e.g., `-T.Folder.NewFiles`), its `(-)` IO lines are indented under the `[T]` line and wire trigger outputs to pipeline inputs.
 
-**Type inputs:** Pipelines can receive type definitions as data tree inputs using `(-) <#type` — the same `<#` syntax used in `{#}` generic type parameters. This extends GT-1 (all definitions are data trees) to runtime pipeline IO. See [[syntax/types/generic-types#`<#type` in Pipeline IO]] for details and [[pglib/pipelines/Schema/INDEX|-#.* Schema Pipelines]] for the `-#.*` validation pipelines that use this pattern.
+**Type inputs:** Pipelines can receive type definitions as data tree inputs using `(-) <#type` — the same `<#` syntax used in `{#}` generic type parameters. This extends GT-1 (all definitions are data trees) to runtime pipeline IO. See [[syntax/types/generic-types#`<#type` in Pipeline IO]] for details and [[aj3lib/pipelines/Schema/INDEX|-#.* Schema Pipelines]] for the `-#.*` validation pipelines that use this pattern.
 
 ## Marker Declarations
 
@@ -88,7 +88,7 @@ See [[technical/ebnf/09-definition-blocks#9.3|EBNF §9.3]] for the formal `marke
 
 ## Native vs Derived
 
-<!-- @c:pglib/types/NativeKind -->
+<!-- @c:aj3lib/types/NativeKind -->
 Every pipeline definition is either **native** or **derived**. The distinction determines whether execution is handled by the host language or by a Aljam3 body.
 
 | Property | Native `{N}` | Derived `{-}` |
@@ -96,7 +96,7 @@ Every pipeline definition is either **native** or **derived**. The distinction d
 | Block type | `{N}` | `{-}` |
 | Execution body | None — `[%]` metadata + `(-)` IO only | Full Aljam3 body (`[T]`, `[Q]`, `[W]`, `[-]`/`[=]`/`[b]`) |
 | Metadata scope | `%Native.*` (implicit) — `.Kind`, `.<Language>` | `%Pipeline.*` (implicit) — `.description`, `.version`, etc. |
-| Where defined | pglib `.aj3` files only | pglib or user `.aj3` files |
+| Where defined | aj3lib `.aj3` files only | aj3lib or user `.aj3` files |
 | Implementation | Host language (e.g., Rust) | Aljam3 pipelines |
 | User-extendable | No — compiler-controlled | Yes |
 
@@ -184,7 +184,7 @@ All `{N}` definitions must include a `.<Language>` binding for the language reso
       (-) >content >> $result
 ```
 
-See [[pglib/types/NativeKind|#NativeKind enum]] for the full enum definition and [[technical/ebnf/09-definition-blocks#9.4c|EBNF §9.4c]] for the formal `{N}` grammar.
+See [[aj3lib/types/NativeKind|#NativeKind enum]] for the full enum definition and [[technical/ebnf/09-definition-blocks#9.4c|EBNF §9.4c]] for the formal `{N}` grammar.
 
 ## Pipeline, Instance, and Job
 

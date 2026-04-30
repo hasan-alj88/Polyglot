@@ -148,10 +148,10 @@ docs/audit/tracking/
 ```text
 docs/user/
 ├── SPEC-INDEX.md               5-phase learning progression
-├── PGLIB.md                    Standard library overview (top-level pointer)
+├── AJ3LIB.md                    Standard library overview (top-level pointer)
 ├── syntax/                     Syntax foundations (10 files + subdirs)
 ├── concepts/                   Core concepts (7 files + 4 subdirs)
-├── pglib/                      Standard library reference (large)
+├── aj3lib/                      Standard library reference (large)
 ├── scenarios/                  500 real-world automation scenarios
 └── integrator/                 Integrator-specific guidance (1 file)
 ```
@@ -200,23 +200,23 @@ docs/user/concepts/
 | `pipelines/` | INDEX, chains, error-handling, execution, inline-calls, io-triggers, metadata, permissions, queue, wrappers |
 | `collections/` | INDEX, map, array, serial, dataframe, user-struct, expand, collect, reassemble, examples |
 
-### docs/user/pglib/ — Standard Library Reference
+### docs/user/aj3lib/ — Standard Library Reference
 
 ```text
-docs/user/pglib/
+docs/user/aj3lib/
 ├── INDEX.md                    Namespace registry
 ├── pipelines/                  {-} pipeline operators
 ├── expanders/                  {=} expander operators
 ├── collectors/                 {*} collector operators
 ├── reassemblers/               Reassembler operators
-├── types/                      pglib type catalog (>70 top-level files)
+├── types/                      aj3lib type catalog (>70 top-level files)
 ├── constructors/               {$} constructor catalog (10 files)
 ├── errors/                     Error-namespace catalog (5 files + subdir)
 └── permissions/                Permission category catalog (9 subdirs)
 ```
 
 ```text
-docs/user/pglib/pipelines/
+docs/user/aj3lib/pipelines/
 ├── DT/                         42 files — #DateTime construction, conversion, arithmetic
 ├── File/                       12 files — file access (Text, Serial, Binary)
 ├── Math/                       9 files — arithmetic operations
@@ -228,19 +228,19 @@ docs/user/pglib/pipelines/
 ├── Text/                       1 file  — text operations
 ├── Variable/                   2 files — variable introspection
 ├── W/                          14 files — wrappers (RT, Env, Retry, Aljam3)
-├── Path.md, Sys.md             Standalone pglib pipelines
+├── Path.md, Sys.md             Standalone aj3lib pipelines
 ├── Color.Parse.md, Dur.Parse.md, IP.Parse.md, MIME.Parse.md,
 ├── Path.Parse.md, Re.Parse.md, URL.Parse.md, Ver.Parse.md
 ```
 
 ```text
-docs/user/pglib/expanders/
+docs/user/aj3lib/expanders/
 ├── INDEX.md
 └── ForEach/                    10 files — Array, Map, Serial, Level, Dataframe variants
 ```
 
 ```text
-docs/user/pglib/collectors/
+docs/user/aj3lib/collectors/
 ├── INDEX.md
 ├── Agg/                        7 files — aggregate collectors (Sum, Count, Max, Min, etc.)
 ├── Into/                       10 files — into-collection collectors
@@ -248,9 +248,9 @@ docs/user/pglib/collectors/
 ```
 
 ```text
-docs/user/pglib/types/
+docs/user/aj3lib/types/
 ├── INDEX.md (via types.md)
-├── 72 top-level .md files       Catalog of pglib types
+├── 72 top-level .md files       Catalog of aj3lib types
 ├── datetime/                    10 files — #DateTime subtype tree
 ├── field-types/                 6 files  — field type definitions
 ├── properties/                 16 files  — ## schema properties
@@ -259,7 +259,7 @@ docs/user/pglib/types/
 ```
 
 ```text
-docs/user/pglib/errors/
+docs/user/aj3lib/errors/
 ├── errors.md                   Error-namespace overview
 ├── error-struct.md             !Error struct definition
 ├── custom-errors.md            User-defined error types
@@ -269,7 +269,7 @@ docs/user/pglib/errors/
 ```
 
 ```text
-docs/user/pglib/permissions/
+docs/user/aj3lib/permissions/
 ├── INDEX.md
 ├── Crypto/                     Cryptographic permissions
 ├── Database/                   Database permissions
@@ -282,14 +282,14 @@ docs/user/pglib/permissions/
 ```
 
 ```text
-docs/user/pglib/constructors/
+docs/user/aj3lib/constructors/
 ├── INDEX.md
 ├── Color.md, DT.md, Dur.md, IP.md, MIME.md
 ├── Path.md, Re.md, URL.md, Ver.md
 ```
 
 ```text
-docs/user/pglib/reassemblers/
+docs/user/aj3lib/reassemblers/
 ├── INDEX.md
 ├── Agg/                        Aggregate-reassembler pages
 └── Into/                       Into-reassembler pages

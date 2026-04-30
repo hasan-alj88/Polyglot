@@ -1,0 +1,327 @@
+{@} @aj3lib.runner.datetime
+
+{ } Runner native operations — DateTime
+{ } All =DT.* pipelines operate on #dt (alias for #DateTime)
+
+{ } Construction
+
+{N} =DT.Now
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtNow"
+   [%] .description << "Current instant from system clock"
+   [=] >dt#dt
+
+{N} =DT.From.Epoch
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFromEpoch"
+   [%] .description << "Epoch seconds to DateTime"
+   [=] <epoch#int
+   [=] >dt#dt
+
+{N} =DT.From.ISO
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFromIso"
+   [%] .description << "ISO-8601 string to DateTime"
+   [=] <iso#string
+   [=] >dt#dt
+
+{N} =DT.From.Parts
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFromParts"
+   [%] .description << "Explicit components to DateTime"
+   [=] <year#int
+   [=] <month#int
+   [=] <day#int
+   [=] <hour#int <~ 0
+   [=] <minute#int <~ 0
+   [=] <second#int <~ 0
+   [=] <nano#int <~ 0
+   [=] <zone#string <~ "UTC"
+   [=] >dt#dt
+
+{ } Arithmetic
+
+{N} =DT.Add.Duration
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtAddDuration"
+   [%] .description << "Add duration to DateTime"
+   [=] <source#dt
+   [=] <duration#Duration
+   [=] >result#dt
+
+{N} =DT.Add.Period
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtAddPeriod"
+   [%] .description << "Add calendar period to DateTime"
+   [=] <source#dt
+   [=] <period#Period
+   [=] >result#dt
+
+{N} =DT.Sub
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtSub"
+   [%] .description << "Subtract two DateTimes to get Duration"
+   [=] <a#dt
+   [=] <b#dt
+   [=] >result#Duration
+
+{ } Comparison
+
+{N} =DT.Compare
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtCompare"
+   [%] .description << "Compare two DateTimes — returns -1, 0, or 1"
+   [=] <a#dt
+   [=] <b#dt
+   [=] >result#int
+
+{N} =DT.IsBefore
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtIsBefore"
+   [%] .description << "Check if DateTime is before another"
+   [=] <a#dt
+   [=] <b#dt
+   [=] >result#bool
+
+{N} =DT.IsAfter
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtIsAfter"
+   [%] .description << "Check if DateTime is after another"
+   [=] <a#dt
+   [=] <b#dt
+   [=] >result#bool
+
+{N} =DT.InInterval
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtInInterval"
+   [%] .description << "Check if DateTime is within interval"
+   [=] <source#dt
+   [=] <interval#Interval
+   [=] >result#bool
+
+{ } Extraction
+
+{N} =DT.Get.Year
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetYear"
+   [%] .description << "Extract year from DateTime"
+   [=] <source#dt
+   [=] >year#int
+
+{N} =DT.Get.Month
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetMonth"
+   [%] .description << "Extract month from DateTime"
+   [=] <source#dt
+   [=] >month#int
+
+{N} =DT.Get.Day
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetDay"
+   [%] .description << "Extract day from DateTime"
+   [=] <source#dt
+   [=] >day#int
+
+{N} =DT.Get.Weekday
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetWeekday"
+   [%] .description << "Extract weekday from DateTime"
+   [=] <source#dt
+   [=] >weekday#Weekday
+
+{N} =DT.Get.WeekNumber
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetWeekNumber"
+   [%] .description << "Extract week number from DateTime"
+   [=] <source#dt
+   [=] <system#WeekSystem <~ #WeekSystem.ISO
+   [=] >week#int
+
+{N} =DT.Get.Epoch
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetEpoch"
+   [%] .description << "Extract epoch seconds from DateTime"
+   [=] <source#dt
+   [=] >epoch#int
+
+{N} =DT.Get.Zone
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtGetZone"
+   [%] .description << "Extract timezone from DateTime"
+   [=] <source#dt
+   [=] >zone#Zone
+
+{ } Zone management
+
+{N} =DT.Zone.Set
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtZoneSet"
+   [%] .description << "Set timezone label without converting instant"
+   [=] <source#dt
+   [=] <iana#string
+   [=] >result#dt
+
+{N} =DT.Zone.Convert
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtZoneConvert"
+   [%] .description << "Convert DateTime to different timezone"
+   [=] <source#dt
+   [=] <iana#string
+   [=] >result#dt
+
+{ } Formatting
+
+{N} =DT.Format
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFormat"
+   [%] .description << "Format DateTime with pattern string"
+   [=] <source#dt
+   [=] <pattern#string
+   [=] >text#string
+
+{N} =DT.Format.ISO
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFormatIso"
+   [%] .description << "Format DateTime as ISO-8601"
+   [=] <source#dt
+   [=] >text#string
+
+{N} =DT.Format.Calendar
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtFormatCalendar"
+   [%] .description << "Format DateTime in calendar system format"
+   [=] <source#dt
+   [=] <system#CalendarSystem
+   [=] >text#string
+
+{ } Calendar conversion
+
+{N} =DT.To.Gregorian
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToGregorian"
+   [%] .description << "DateTime to Gregorian date"
+   [=] <source#dt
+   [=] >gregorian#GregorianDate
+
+{N} =DT.To.Hijri
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToHijri"
+   [%] .description << "DateTime to Hijri date"
+   [=] <source#dt
+   [=] <authority#HijriAuthority <~ #HijriAuthority.UmmAlQura
+   [=] >hijri#HijriDate
+
+{N} =DT.To.Hebrew
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToHebrew"
+   [%] .description << "DateTime to Hebrew date"
+   [=] <source#dt
+   [=] >hebrew#HebrewDate
+
+{N} =DT.To.Chinese
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToChinese"
+   [%] .description << "DateTime to Chinese date"
+   [=] <source#dt
+   [=] >chinese#ChineseDate
+
+{N} =DT.To.Persian
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToPersian"
+   [%] .description << "DateTime to Persian date"
+   [=] <source#dt
+   [=] >persian#PersianDate
+
+{N} =DT.To.Buddhist
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToBuddhist"
+   [%] .description << "DateTime to Buddhist date"
+   [=] <source#dt
+   [=] >buddhist#BuddhistDate
+
+{N} =DT.To.Hindu
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToHindu"
+   [%] .description << "DateTime to Hindu date"
+   [=] <source#dt
+   [=] <era#HinduEra <~ #HinduEra.VikramSamvat
+   [=] >hindu#HinduDate
+
+{N} =DT.To.Japanese
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToJapanese"
+   [%] .description << "DateTime to Japanese date"
+   [=] <source#dt
+   [=] >japanese#JapaneseDate
+
+{N} =DT.To.Ethiopian
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToEthiopian"
+   [%] .description << "DateTime to Ethiopian date"
+   [=] <source#dt
+   [=] >ethiopian#EthiopianDate
+
+{N} =DT.To.Coptic
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToCoptic"
+   [%] .description << "DateTime to Coptic date"
+   [=] <source#dt
+   [=] >coptic#CopticDate
+
+{N} =DT.To.Custom
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToCustom"
+   [%] .description << "DateTime to custom calendar date"
+   [=] <source#dt
+   [=] <calendar#CustomCalendar
+   [=] >date#Date
+
+{ } Time unit conversion
+
+{N} =DT.To.ChineseTime
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToChineseTime"
+   [%] .description << "DateTime to Chinese traditional time"
+   [=] <source#dt
+   [=] >time#ChineseTime
+
+{N} =DT.To.HinduTime
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToHinduTime"
+   [%] .description << "DateTime to Hindu traditional time"
+   [=] <source#dt
+   [=] >time#HinduTime
+
+{N} =DT.To.DecimalTime
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtToDecimalTime"
+   [%] .description << "DateTime to French Republican decimal time"
+   [=] <source#dt
+   [=] >time#DecimalTime
+
+{ } Business day operations
+
+{N} =DT.Business.IsWorkDay
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtBusinessIsWorkDay"
+   [%] .description << "Check if DateTime is a work day"
+   [=] <source#dt
+   [=] <week#BusinessWeek
+   [=] >result#bool
+
+{N} =DT.Business.NextWorkDay
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtBusinessNextWorkDay"
+   [%] .description << "Find next work day"
+   [=] <source#dt
+   [=] <week#BusinessWeek
+   [=] >result#dt
+
+{N} =DT.Business.AddWorkDays
+   [%] .Kind << #NativeKind.Execution
+   [%] .Rust << "DtBusinessAddWorkDays"
+   [%] .description << "Add work days to DateTime, skipping non-work days"
+   [=] <source#dt
+   [=] <days#int
+   [=] <week#BusinessWeek
+   [=] >result#dt

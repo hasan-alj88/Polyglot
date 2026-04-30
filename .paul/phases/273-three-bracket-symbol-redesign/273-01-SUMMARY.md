@@ -12,7 +12,7 @@ provides:
   - New IO bracket category (X) for data binding
   - Pipeline prefix - replaces =
   - Expander prefix = replaces ~
-affects: [273-02 core docs, 273-03 compile rules, 273-04 pglib docs, 273-05 source files]
+affects: [273-02 core docs, 273-03 compile rules, 273-04 aj3lib docs, 273-05 source files]
 
 tech-stack:
   added: []
