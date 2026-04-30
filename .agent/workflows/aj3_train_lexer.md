@@ -10,7 +10,7 @@ Apply the lexer to Aljam3 code, review the token stream with the user, and itera
 Follow these sequential steps. **Do not skip explicitly defined pauses.**
 
 1. **Phase 1: Lexical Analysis**
-   - Apply the lexer to Aljam3 code (either from the `pg_train_code` workflow or from an existing Aljam3 file).
+   - Apply the lexer to Aljam3 code (either from the `aj3_train_code` workflow or from an existing Aljam3 file).
    // turbo-all
    - Generate the token stream and prepare it for review.
 

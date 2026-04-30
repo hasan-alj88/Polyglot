@@ -77,4 +77,4 @@ See [[technical/INDEX|docs/technical/INDEX.md]] — Architect section for runtim
 ## Adding New Spec Files
 
 When a new spec file is created, add it to the appropriate phase table above.
-The `/pg:*` commands read this index dynamically — no command files need changing.
+The `/aj3:*` commands read this index dynamically — no command files need changing.

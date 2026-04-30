@@ -31,5 +31,5 @@ Follow these sequential steps. **Do not skip explicitly defined pauses.**
      - Ask questions to the user to ensure a full picture of what to update in the docs.
 
 4. **Phase 4: Next Steps**
-   - Repeat the workflow for a new scenario, close the workflow, or transition to the `pg_train_lexer` workflow using the newly generated examples.
+   - Repeat the workflow for a new scenario, close the workflow, or transition to the `aj3_train_lexer` workflow using the newly generated examples.
 </process>
