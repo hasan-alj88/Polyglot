@@ -6,12 +6,12 @@ updated: 2026-04-20
 
 # The Aljam3 Project
 
-Aljam3 is a trigger-driven programming language and platform — async-centric and parallel-by-design, not as an afterthought — with two core pillars:
+**الجامع** (Aljam3, `/ælˈdʒæːmɪʕ/`) means to collect, gather, and bring together. It is a **trigger-driven programming language and platform** designed to communicate with the computer based on *how to react* rather than just *what to execute*. It is built on two core pillars that reflect its name:
 
-1. **Cross-Language Integration** — Enabling developers to utilise well-tested legacy code across multiple programming languages within a unified project, rather than reinventing what already works.
-2. **Trigger-Driven Orchestration** — Providing first-class support for parallelism, concurrency, race condition handling, error handling, and resource management as foundational language features. Every pipeline is triggered, not called — concurrency is the starting point, not an add-on.
+1. **Gathering Languages (Cross-Language Integration)** — Enabling developers to *use* legacy code across multiple programming languages (Python, Rust, C++, JavaScript) within a unified project, rather than reinventing what already works.
+2. **Gathering Programs (Parallel Orchestration)** — Providing first-class support for parallelism with strict resource control, preventing resource starvation through dynamic allocation. Every pipeline is triggered, not called, and enforced by **exhaustive logic** so there is no possible scenario where the program doesn't know what to do.
 
-The name *Aljam3* — one who speaks many languages — is the project's mission statement. Aljam3 exists because every programming language brings something valuable: Python's data science ecosystem, Rust's performance guarantees, JavaScript's frontend reach, Go's networking simplicity. Rather than replacing any of them, Aljam3 provides the platform that lets them work together. The best code is often the code that already exists — battle-tested, production-proven, written by experts in each language's domain. Aljam3's job is to make that code seamlessly available across language boundaries.
+The name *Aljam3* is the project's mission statement. Aljam3 exists because every programming language brings something valuable: Python's data science ecosystem, Rust's performance guarantees, JavaScript's frontend reach, Go's networking simplicity. Rather than replacing any of them, Aljam3 provides the platform that lets them work together. The best code is often the code that already exists — battle-tested, production-proven, written by experts in each language's domain. Aljam3's job is to make that code seamlessly available across language boundaries.
 
 > **Warning:** This project is in early stages of development and is not suitable for production use. APIs, architecture, and features are subject to change. Users are encouraged to contribute to the project and provide feedback to help shape its future direction.
 
@@ -19,13 +19,13 @@ The name *Aljam3* — one who speaks many languages — is the project's mission
 
 ## The Problem
 
-1. **Cross-language integration is hard and brittle.** Existing tools (FFI, pybind, gRPC stubs) are fragile, version-sensitive, and require deep knowledge of both sides of the boundary. Every language pair demands its own integration approach, and these approaches break silently when either side changes.
+1. **Resource Starvation and Blind Allocation.** Traditional systems lack semantic control over computing resources. A low-priority background job can easily consume resources needed by mission-critical operations, leading to catastrophic starvation and huge business losses. We lack a native way to communicate job importance and dynamically allocate resources by *reacting* to current system conditions.
 
-2. **No language exists that is made for automation — trigger-driven and parallel by design.** Existing languages bolt async and parallelism onto imperative foundations as libraries or frameworks, never as core language constructs. Automation tools inherit these limitations and pass the complexity to the developer.
+2. **Lack of Exhaustive Logic.** In modern orchestration, there are always edge cases where the program simply "does not know what to do," resulting in silent failures or unhandled exceptions. True reliability requires exhaustive logic—guaranteeing that there is *no possible scenario* left undefined at compile time.
 
-3. **Security and permissions are afterthoughts in existing tools.** Automation tasks run unattended, handle sensitive data, and interact with external systems — yet the tools that orchestrate them treat permissions as configuration, not as compile-time guarantees. Undefined behaviour is an exploitable gap, not a compile error.
+3. **Programming to React, Not Just to Execute.** We need to communicate with computers based on *how to react* when situations happen. Existing languages bolt trigger-driven behavior and parallelism onto imperative foundations as an afterthought. We need a language where triggers and reactions are the core primitives.
 
-4. **Async runtime errors are preventable at compile time.** Developers discover race conditions, unhandled error paths, and resource conflicts in production because their tools cannot analyze concurrent interactions at compile time. Aljam3's compiler catches these before deployment.
+4. **Reinventing the Wheel.** Cross-language integration is hard and brittle. The objective is to *use* legacy code, not reinvent it. We need a tool that gathers (الجامع) programming languages together with seamless integration, controlling existing codebases under dynamic conditions where a trigger-driven model is ideal.
 
 ---
 

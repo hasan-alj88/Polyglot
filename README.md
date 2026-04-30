@@ -10,10 +10,10 @@
 
 ## What Is Aljam3?
 
-Aljam3 is a **trigger-driven programming language and platform** — async-centric and parallel-by-design, not as an afterthought — built on two pillars:
+**الجامع** (Aljam3, `/ælˈdʒæːmɪʕ/`) means to collect, gather, and bring together. It is a **trigger-driven programming language and platform** designed to communicate with the computer based on *how to react* rather than just *what to execute*. It is built on two core pillars that reflect its name:
 
-1. **Cross-Language Integration** — Utilise well-tested legacy code across Python, Rust, JavaScript, C++, or any supported runtime — don't reinvent what already works.
-2. **Trigger-Driven Orchestration** — First-class parallelism, concurrency, queuing, and resource management. Every pipeline is triggered, not called — concurrency is the starting point, not an add-on.
+1. **Gathering Languages (Cross-Language Integration)** — The objective is to *use* legacy code, not reinvent it. Aljam3 seamlessly integrates Python, Rust, JavaScript, and C++ into a unified workflow, bringing programming languages together under dynamic, trigger-driven control.
+2. **Gathering Programs (Parallel Orchestration)** — First-class parallelism with strict resource control. It introduces dynamic, priority-based resource allocation to prevent critical jobs from starving, combined with **exhaustive logic** ensuring there is never a scenario where the program doesn't know what to do.
 
 Think: *what if your API orchestration layer was a programming language?*
 

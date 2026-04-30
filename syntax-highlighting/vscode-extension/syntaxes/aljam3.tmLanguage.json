@@ -8,16 +8,135 @@
     { "include": "#strings" },
     { "include": "#inline-strings" },
     { "include": "#numbers" },
-    { "include": "#operators" },
-    { "include": "#markers" },
-    { "include": "#identifiers" }
+    { "include": "#triggers" },
+    { "include": "#queues" },
+    { "include": "#wrappers" },
+    { "include": "#pipelines" },
+    { "include": "#parallels" },
+    { "include": "#environments" },
+    { "include": "#variables" },
+    { "include": "#packages" },
+    { "include": "#io-tags" },
+    { "include": "#datatypes-schema" },
+    { "include": "#properties" },
+    { "include": "#constants" },
+    { "include": "#exceptions-errors" },
+    { "include": "#logical-nodes" },
+    { "include": "#collectors" },
+    { "include": "#assignment-operators" },
+    { "include": "#permissions" }
   ],
   "repository": {
+    "pipelines": {
+      "patterns": [
+        { "name": "entity.name.function.pipeline.aljam3", "match": "\\[-\\]|\\{-\\}|\\(-\\)" },
+        { "name": "entity.name.function.pipeline.aljam3", "match": "\\-[A-Za-z0-9_]+" }
+      ]
+    },
+    "parallels": {
+      "patterns": [
+        { "name": "entity.name.function.parallel.aljam3", "match": "\\[=\\]|\\{=\\}|\\(=\\)" },
+        { "name": "entity.name.function.parallel.aljam3", "match": "\\=[A-Za-z0-9_]+" }
+      ]
+    },
+    "triggers": {
+      "patterns": [
+        { "name": "entity.name.type.trigger.aljam3", "match": "\\[T\\]|\\{T\\}|\\(T\\)" },
+        { "name": "entity.name.type.trigger.aljam3", "match": "\\-T\\.[A-Za-z0-9_]+" }
+      ]
+    },
+    "queues": {
+      "patterns": [
+        { "name": "entity.name.type.queue.aljam3", "match": "\\[Q\\]|\\{Q\\}|\\(Q\\)" },
+        { "name": "entity.name.type.queue.aljam3", "match": "\\-Q\\.[A-Za-z0-9_]+" }
+      ]
+    },
+    "wrappers": {
+      "patterns": [
+        { "name": "entity.name.type.wrapper.aljam3", "match": "\\[W\\]|\\{W\\}|\\(W\\)" },
+        { "name": "entity.name.type.wrapper.aljam3", "match": "\\-W\\.[A-Za-z0-9_]+" }
+      ]
+    },
+    "environments": {
+      "patterns": [
+        { "name": "entity.name.environment.aljam3", "match": "\\{;\\}|\\[;\\]|\\(;\\)" },
+        { "name": "entity.name.environment.aljam3", "match": ";[A-Za-z0-9_]+" }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        { "name": "variable.name.aljam3", "match": "\\[\\$\\]|\\{\\$\\}|\\(\\$\\)" },
+        { "name": "variable.name.aljam3", "match": "\\$[A-Za-z0-9_]+|\\$\\*" }
+      ]
+    },
+    "packages": {
+      "patterns": [
+        { "name": "entity.name.namespace.aljam3", "match": "\\[@\\]|\\{@\\}|\\(@\\)" },
+        { "name": "entity.name.namespace.aljam3", "match": "@[A-Za-z0-9_]+" }
+      ]
+    },
+    "io-tags": {
+      "patterns": [
+        { "name": "entity.name.tag.io.aljam3", "match": "\\(>\\)|\\(<\\)" },
+        { "name": "entity.name.tag.io.aljam3", "match": "[<>][A-Za-z0-9_]+" }
+      ]
+    },
+    "datatypes-schema": {
+      "patterns": [
+        { "name": "entity.name.type.aljam3", "match": "\\[##\\]|\\{##\\}|\\(##\\)|\\[#\\]|\\{#\\}|\\(#\\)" },
+        { "name": "entity.name.type.aljam3", "match": "###[A-Za-z0-9_]+|##[A-Za-z0-9_]+|#[A-Za-z0-9_]+" }
+      ]
+    },
+    "properties": {
+      "patterns": [
+        { "name": "variable.name.property.aljam3", "match": "\\[\\.\\]|\\(\\.\\)|\\[:\\]|\\(:\\)" },
+        { "name": "variable.name.property.aljam3", "match": "[\\.:][A-Za-z0-9_]+" }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        { "name": "constant.language.aljam3", "match": "%[A-Za-z0-9_]+" }
+      ]
+    },
+    "exceptions-errors": {
+      "patterns": [
+        { "name": "invalid.illegal.aljam3", "match": "\\[!\\]|\\{!\\}|<!|>!" },
+        { "name": "invalid.illegal.aljam3", "match": "![A-Za-z0-9_]+" }
+      ]
+    },
+    "logical-nodes": {
+      "patterns": [
+        { "name": "keyword.operator.logical.aljam3", "match": "\\[\\?\\]|\\[\\+\\]|\\[&\\]|\\[\\^\\]" },
+        { "name": "keyword.operator.logical.aljam3", "match": ">\\?|<\\?|<=\\?|>=\\?|!\\?|=\\?" },
+        { "name": "keyword.operator.logical.aljam3", "match": "\\?[A-Za-z0-9_]+" }
+      ]
+    },
+    "collectors": {
+      "patterns": [
+        { "name": "entity.name.collector.aljam3", "match": "\\[\\*\\]|\\{\\*\\}|\\(\\*\\)" },
+        { "name": "entity.name.collector.aljam3", "match": "\\*[A-Za-z0-9_]+" }
+      ]
+    },
+    "assignment-operators": {
+      "patterns": [
+        { "name": "keyword.operator.assignment.aljam3", "match": "<<|<~|<-|>>" }
+      ]
+    },
+    "permissions": {
+      "patterns": [
+        { "name": "constant.other.permission.aljam3", "match": "\\[_\\]|\\{_\\}|\\(_\\)" },
+        { "name": "constant.other.permission.aljam3", "match": "_[A-Za-z0-9_]+" }
+      ]
+    },
     "comments": {
       "patterns": [
         {
-          "name": "comment.line.aljam3",
-          "match": "^\\s*(\\{\\s*\\}|\\[\\s*\\]|\\(\\s*\\)).*$"
+          "name": "comment.line.bracket.aljam3",
+          "match": "(\\{\\s*\\}|\\[\\s*\\]|\\(\\s*\\)).*$"
+        },
+        {
+          "name": "comment.line.double-slash.aljam3",
+          "match": "//.*$"
         }
       ]
     },
@@ -39,10 +158,10 @@
     "inline-strings": {
       "patterns": [
         {
-          "match": "([\\$\\-#_!%@][A-Za-z0-9_:\\.]+)(\"[^\"]*\")",
+          "match": "([\\$\\-#_!%@<>;\\*\\?]\\!?[A-Za-z0-9_]+)(\"[^\"]*\")",
           "captures": {
-            "1": { "name": "support.function.aljam3" },
-            "2": { "name": "string.quoted.double.inline.aljam3" }
+            "1": { "name": "variable.name.aljam3" },
+            "2": { "name": "string.interpolated.aljam3" }
           }
         }
       ]
@@ -56,78 +175,6 @@
         {
           "name": "constant.numeric.integer.aljam3",
           "match": "\\b\\d+\\b"
-        }
-      ]
-    },
-    "operators": {
-      "patterns": [
-        {
-          "name": "keyword.operator.assignment.aljam3",
-          "match": "<<|<~|<-"
-        },
-        {
-          "name": "keyword.operator.accessor.aljam3",
-          "match": "<|>"
-        }
-      ]
-    },
-    "markers": {
-      "patterns": [
-        {
-          "name": "keyword.control.aljam3",
-          "match": "\\[-\\]|\\{-\\}|\\(-\\)|\\[=\\]|\\{=\\}|\\(=\\)"
-        },
-        {
-          "name": "keyword.control.conditional.aljam3",
-          "match": "\\[\\*\\]|\\{\\*\\}|\\(\\*\\)|\\[!\\]|\\{!\\}|\\(!\\)|\\[\\?\\]|\\{\\?\\}|\\(\\?\\)"
-        },
-        {
-          "name": "support.class.aljam3",
-          "match": "\\[T\\]|\\{T\\}|\\(T\\)|\\[Q\\]|\\{Q\\}|\\(Q\\)|\\[W\\]|\\{W\\}|\\(W\\)"
-        },
-        {
-          "name": "entity.name.tag.aljam3",
-          "match": "\\[@\\]|\\{@\\}|\\(@\\)"
-        },
-        {
-          "name": "entity.name.type.aljam3",
-          "match": "\\[##\\]|\\{##\\}|\\(##\\)|\\[#\\]|\\{#\\}|\\(#\\)"
-        },
-        {
-          "name": "keyword.operator.aljam3",
-          "match": "\\(>\\)|\\(<\\)"
-        }
-      ]
-    },
-    "identifiers": {
-      "patterns": [
-        {
-          "name": "support.function.aljam3",
-          "match": "-[A-Za-z0-9.]+"
-        },
-        {
-          "name": "entity.name.tag.aljam3",
-          "match": "@[A-Za-z0-9:.]+"
-        },
-        {
-          "name": "variable.language.aljam3",
-          "match": "\\$[A-Za-z0-9:_.]+|\\$\\*"
-        },
-        {
-          "name": "entity.name.type.aljam3",
-          "match": "###[A-Za-z0-9]+|##[A-Za-z0-9]+|#[A-Za-z0-9:.]+"
-        },
-        {
-          "name": "constant.language.aljam3",
-          "match": "%[#A-Za-z0-9.]+"
-        },
-        {
-          "name": "keyword.control.exception.aljam3",
-          "match": "![A-Za-z0-9:.]+"
-        },
-        {
-          "name": "keyword.operator.logical.aljam3",
-          "match": "\\?[A-Za-z0-9.]+"
         }
       ]
     }

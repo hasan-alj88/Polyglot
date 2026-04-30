@@ -1,11 +1,10 @@
-// Basic Aljam3 Pipeline Example
-// This demonstrates core syntax elements for testing highlighting
+{ } Basic Aljam3 Pipeline Example
+{ } This demonstrates core syntax elements for testing highlighting
+{@} @examples<syntax.test:1.0.0
 
-{@} @examples<syntax-test:1.0.0
-
-// ============================================================================
-// Pipeline with Input/Output
-// ============================================================================
+{ } ============================================================================
+{ } Pipeline with Input/Output
+{ } ============================================================================
 {-} -ProcessData
    [ ] Inputs
    (-) <input#string
@@ -16,32 +15,32 @@
    [W] -W.Aljam3
    [ ]
 
-   // Sequential execution
+   [ ] Sequential execution
    [-] $sanitized#string << <input
    [-] $length#int << $sanitized
 
-   // Conditional logic
+   [ ] Conditional logic
    [?] $length >? 0
       [-] $valid#bool << #Boolean.True
    [?] *?
       [-] $valid#bool << #Boolean.False
    [ ]
 
-   // Parallel execution into a collector
+   [ ] Parallel execution into a collector
    [*] *Into.Array
       (*) << $DT"2025-12-03T10:30:00Z"
       (*) << $sanitized
       (*) >> $parallelResults#array:string:1D
    [ ]
 
-   // Outputs
+   { } Outputs
    (-) >sanitized#string >> $sanitized
    (-) >valid#bool >> $valid
    (-) >timestamp#datetime >> $DT"2025-12-03T10:30:00Z"
 
-// ============================================================================
-// Pipeline with Error Handling
-// ============================================================================
+{ } ============================================================================
+{ } Pipeline with Error Handling
+{ } ============================================================================
 {-} -SafeProcess
    (-) <data#string
    [T] -T.Manual
@@ -52,13 +51,13 @@
    [-] -ProcessData
       (-) <input << <data
       (-) >sanitized >> $result#string
-         (>) >! "default"  // Error catch block fallback
+         (>) >! "default"  ( ) Error catch block fallback
 
-   (-) >result#string >> $result
+   (-) >result#string >> $result 
 
-// ============================================================================
-// Error Definition
-// ============================================================================
+{ } ============================================================================
+{ } Error Definition
+{ } ============================================================================
 {!} !ValidationError
    [.] .message#string
    [.] .code#int
@@ -69,18 +68,18 @@
    [.] .code#int
    [.] .trace#string
 
-// ============================================================================
-// Enumeration Definition
-// ============================================================================
+{ } ============================================================================
+{ } Enumeration Definition
+{ } ============================================================================
 {#} #Status
    [.] .Pending
    [.] .Processing
    [.] .Completed
    [.] .Failed
 
-// ============================================================================
-// Pipeline with Nested Scopes
-// ============================================================================
+{ } ============================================================================
+{ } Pipeline with Nested Scopes
+{ } ============================================================================
 {-} -NestedLogic
    (-) <value#int
    [T] -T.Manual
@@ -88,7 +87,7 @@
    [W] -W.Aljam3
    [ ]
 
-   // Nested scope for complex logic
+   [ ] Nested scope for complex logic
    [?] <value >? 100
       [-] $category#string << "high"
    [?] (<value >=? 50) [&] (<value <=? 100)
@@ -100,9 +99,9 @@
 
    (-) >category#string >> $category
 
-// ============================================================================
-// Pipeline with DateTime Trigger
-// ============================================================================
+{ } ============================================================================
+{ } Pipeline with DateTime Trigger
+{ } ============================================================================
 {-} -ScheduledTask
    [T] -T.Daily"09:00"
    [Q] -Q.Default
@@ -114,9 +113,9 @@
 
    (-) >message#string >> $message
 
-// ============================================================================
-// Operators Showcase
-// ============================================================================
+{ } ============================================================================
+{ } Operators Showcase
+{ } ============================================================================
 {-} -OperatorsDemo
    (-) <a#int
    (-) <b#int
@@ -125,7 +124,7 @@
    [W] -W.Aljam3
    [ ]
 
-   // Comparison operators
+   [ ] Comparison operators
    [-] $equal#bool << (<a =? <b)
    [-] $greater#bool << (<a >? <b)
    [-] $less#bool << (<a <? <b)
@@ -133,33 +132,33 @@
    [-] $less_eq#bool << (<a <=? <b)
    [-] $not_equal#bool << (<a !? <b)
 
-   // Collection operators
+   [ ] Collection operators
    [-] ##Array.Int:1D
       (-) <item << 1
       (-) <item << 2
       (-) <item << 3
       (-) >array >> $list#array:int:1D
 
-   // Data flow operators
-   [-] $push_value#int << 42       // << PUSH
-   [-] $pull_value#int >> $a       // >> PULL
-   [-] $default_val#int <~ 100     // <~ DEFAULT (can override once)
+   [ ] Data flow operators
+   [-] $push_value#int << 42       [ ] (<<) PUSH
+   [-] $pull_value#int >> $a       [ ] (>>) PULL
+   [-] $default_val#int <~ 100     [ ] (<~) DEFAULT (can override once)
 
    (-) >equal#bool >> $equal
 
-// ============================================================================
-// Multi-Language Type System
-// ============================================================================
+{ } ============================================================================
+{ } Multi-Language Type System
+{ } ============================================================================
 {-} -TypesShowcase
    (-) >array##Array
       (>) #<#int
       (>) #<Dim << 1
-   [T] -T.Manual
-   [Q] -Q.Default
-   [W] -W.Aljam3
+   [T] -T:Manual
+   [Q] -Q:Default
+   [W] -W:Aljam3
    [ ]
 
-   // Aljam3 native types
+   [ ] Aljam3 native types
    [-] $pg_int#int << 42
    [-] $pg_float#float << 3.14
    [-] $pg_string#string << "hello"
@@ -176,13 +175,13 @@
       (*) << $pg_url
       (*) << $pg_datetime
 
-   // Collection types
-   [-] >array >> $array_type
+   [ ] Collection types
+   [-] >array ##Array.String.1D >> $array_type
    [-] $map_type << #Map.String.Int
 
-// ============================================================================
-// Reserved Enumerations
-// ============================================================================
+{ } ============================================================================
+{ } Reserved Enumerations
+{ } ============================================================================
 {-} -ReservedEnums
    (-) <var_name#string
    [T] -T.Manual
@@ -194,16 +193,16 @@
    [-] $bool_false#bool << #Boolean.False
    [-] $none_value#string << #None
 
-   // Variable states (read-only)
+   [ ] Variable states (read-only)
    [-] $state_declared#string << #PgVar.States.Declared
    [-] $state_default#string << #PgVar.States.DefaultReady
    [-] $state_pending#string << #PgVar.States.Pending
    [-] $state_ready#string << #PgVar.States.Ready
    [-] $state_faulted#string << #PgVar.States.Faulted
 
-// ============================================================================
-// Line Continuation & Metadata
-// ============================================================================
+{ } ============================================================================
+{ } Line Continuation & Metadata
+{ } ============================================================================
 {-} -LineContinuation
    (-) <long_input#string
    [T] -T.Manual
@@ -211,10 +210,10 @@
    [W] -W.Aljam3
    [ ]
 
-   // Metadata
+   [ ] Metadata
    [%] .description << "Testing continuations"
 
-   // Long expression using line continuation marker [~] or (~)
+   [ ] Long expression using line continuation marker [~] or (~)
    [-] $complex_result#string << "prefix"
       [~] << <long_input
       [~] << "suffix"
@@ -222,9 +221,9 @@
 
    (-) >complex_result#string >> $complex_result
 
-// ============================================================================
-// Native Function & Extensibility System
-// ============================================================================
+{ } ============================================================================
+{ } Native Function & Extensibility System
+{ } ============================================================================
 {N} =T.LogMessage
    [%] .Kind << #NativeKind.Trigger
    [%] .Rust << "TriggerLogMessage"
@@ -240,7 +239,7 @@
    [W] -W.Aljam3
    [ ]
 
-   // Custom native call
+   [ ] Custom native call
    [=] =T.LogMessage
       (=) <message << <msg
       (=) >log_entry >> $log_entry#string

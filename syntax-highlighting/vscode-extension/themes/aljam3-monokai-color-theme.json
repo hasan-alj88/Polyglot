@@ -19,9 +19,16 @@
     },
     {
       "name": "Pipelines",
-      "scope": "entity.name.function.aljam3",
+      "scope": "entity.name.function.pipeline.aljam3",
       "settings": {
         "foreground": "#a6e22e"
+      }
+    },
+    {
+      "name": "Parallels",
+      "scope": "entity.name.function.parallel.aljam3",
+      "settings": {
+        "foreground": "#fd971f"
       }
     },
     {
@@ -97,23 +104,37 @@
     },
     {
       "name": "Strings",
-      "scope": ["string.quoted.double.aljam3", "string.quoted.double.inline.aljam3"],
+      "scope": "string.quoted.double.aljam3",
       "settings": {
-        "foreground": "#e6db74"
+        "foreground": "#E6DB74"
+      }
+    },
+    {
+      "name": "IO Tags",
+      "scope": "entity.name.tag.io.aljam3",
+      "settings": {
+        "foreground": "#F92672"
+      }
+    },
+    {
+      "name": "Inline Strings",
+      "scope": "string.interpolated.aljam3",
+      "settings": {
+        "foreground": "#A6E22E"
       }
     },
     {
       "name": "Numbers",
       "scope": ["constant.numeric.float.aljam3", "constant.numeric.integer.aljam3"],
       "settings": {
-        "foreground": "#ae81ff"
+        "foreground": "#AE81FF"
       }
     },
     {
-      "name": "Separators and Accessors",
-      "scope": ["punctuation.separator.aljam3", "keyword.operator.accessor.aljam3"],
+      "name": "Separators, Brackets, and Accessors",
+      "scope": ["punctuation.separator.aljam3", "punctuation.definition.bracket.aljam3", "keyword.operator.accessor.aljam3"],
       "settings": {
-        "foreground": "#f8f8f2"
+        "foreground": "#F8F8F2"
       }
     }
   ]
