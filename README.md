@@ -61,7 +61,7 @@ Modern automation often requires:
 - C++ for legacy system integration
 - Shell scripts for system operations
 
-Existing solutions force you to choose one language or write brittle glue code.
+Existing solutions force you to choose one language or write brittle, ad-hoc integrations.
 
 ### The Solution
 Aljam3 provides:

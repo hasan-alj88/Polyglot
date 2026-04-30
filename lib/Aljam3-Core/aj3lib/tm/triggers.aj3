@@ -3,43 +3,31 @@
 { } Trigger Monitor native operations
 { } All triggers return >IsTriggered#bool
 
-{N} =T.Call
-   [%] .Kind << #NativeKind.Trigger
-   [%] .Rust << "TriggerCall"
+{-} =T.Call
    [%] .description << "Pipeline invoked by another pipeline"
    [=] >IsTriggered#bool
 
-{N} =T.Manual
-   [%] .Kind << #NativeKind.Trigger
-   [%] .Rust << "TriggerManual"
+{-} =T.Manual
    [%] .description << "Pipeline invoked manually from CLI or test harness"
    [=] >IsTriggered#bool
 
-{N} =T.Daily
-   [%] .Kind << #NativeKind.Trigger
-   [%] .Rust << "TriggerDaily"
+{-} =T.Daily
    [%] .description << "Fires once per day at specified time"
    [=] <time#string
    [=] >IsTriggered#bool
 
-{N} =T.Folder.NewFiles
-   [%] .Kind << #NativeKind.Trigger
-   [%] .Rust << "TriggerFolderNewFiles"
+{-} =T.Folder.NewFiles
    [%] .description << "Fires when new files appear in watched directory"
    [=] <path#path
    [=] >IsTriggered#bool
    [=] >NewFiles#array:path
 
-{N} =T.Webhook
-   [%] .Kind << #NativeKind.Trigger
-   [%] .Rust << "TriggerWebhook"
+{-} =T.Webhook
    [%] .description << "Fires on incoming HTTP request to endpoint"
    [=] <endpoint#string
    [=] >IsTriggered#bool
 
-{N} =T.File.Rolled
-   [%] .Kind << #NativeKind.Trigger
-   [%] .Rust << "TriggerFileRolled"
+{-} =T.File.Rolled
    [%] .description << "Fires when a file rotates, delivering the completed file"
    [=] <Dir#path
    [=] <Pattern#string

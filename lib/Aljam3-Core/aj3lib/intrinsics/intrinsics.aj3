@@ -1,57 +1,49 @@
 {@} @aj3lib.intrinsics
 
 { } Compiler intrinsics — no host function, compiler-inlined
-{ } These {N} definitions have no .<Language> binding
+{ } These {-} definitions have no .<Language> binding
 
-{N} =DoNothing
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =DoNothing
    [%] .description << "No-op pipeline"
 
 { } Format parsers — text to serial data tree
 
-{N} =#.JSON.Parse
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =#.JSON.Parse
    [%] .description << "Parse JSON text into serial data tree"
    [=] <raw#RawString
    [=] >data#serial
 
-{N} =#.YAML.Parse
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =#.YAML.Parse
    [%] .description << "Parse YAML text into serial data tree"
    [=] <raw#RawString
    [=] >data#serial
 
-{N} =#.TOML.Parse
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =#.TOML.Parse
    [%] .description << "Parse TOML text into serial data tree"
    [=] <raw#RawString
    [=] >data#serial
 
 { } Schema validation pipelines
 
-{N} =#.Match
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =#.Match
    [%] .description << "Boolean schema check — does data match type?"
    [=] <data#serial
    [=] <#type
    [=] >match#bool
 
-{N} =#.Validate
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =#.Validate
    [%] .description << "Detailed validation — checks data against type"
    [=] <data#serial
    [=] <#type
    [=] >valid#bool
    [=] >errors#array:string
 
-{N} =#.Describe
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =#.Describe
    [%] .description << "Schema introspection — returns type schema as data tree"
    [=] <#type
    [=] >schema#serial
 
-{N} =#.Coerce
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =#.Coerce
    [%] .description << "Best-effort type conversion — keeps matching fields"
    [=] <data#serial
    [=] <#type
@@ -60,8 +52,7 @@
 
 { } Field and column extraction
 
-{N} =#.Field
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =#.Field
    [%] .description << "Extract single field from data tree by path"
    [=] <data#serial
    [=] <path#RawString
@@ -69,8 +60,7 @@
    [=] !Field.NotFound
    [=] !Field.PathError
 
-{N} =#.Column
-   [%] .Kind << #NativeKind.Intrinsic
+{-} =#.Column
    [%] .description << "Extract all values for a column in a Dataframe"
    [=] <data#dataframe
    [=] <column#enum

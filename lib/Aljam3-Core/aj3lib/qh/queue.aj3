@@ -2,55 +2,37 @@
 
 { } Queue Handler native operations
 
-{N} =Q.Default
-   [%] .Kind << #NativeKind.Queue
-   [%] .Rust << "QueueDefault"
+{-} =Q.Default
    [%] .description << "Default FIFO queue strategy"
 
-{N} =Q.Assign
-   [%] .Kind << #NativeKind.Queue
-   [%] .Rust << "QueueAssign"
+{-} =Q.Assign
    [%] .description << "Assign pipeline to a named queue"
    [=] <queue#string
 
-{N} =Q.Pause.Hard
-   [%] .Kind << #NativeKind.Queue
-   [%] .Rust << "QueuePauseHard"
+{-} =Q.Pause.Hard
    [%] .description << "Hard pause — stop dispatching immediately"
    [=] <condition#string
 
-{N} =Q.Pause.Soft
-   [%] .Kind << #NativeKind.Queue
-   [%] .Rust << "QueuePauseSoft"
+{-} =Q.Pause.Soft
    [%] .description << "Soft pause — finish current, stop new dispatch"
    [=] <condition#string
 
-{N} =Q.Pause.Hard.RAM.LessThan
-   [%] .Kind << #NativeKind.Queue
-   [%] .Rust << "QueuePauseHardRamLessThan"
+{-} =Q.Pause.Hard.RAM.LessThan
    [%] .description << "Hard pause when RAM drops below threshold"
    [=] <mb#float
 
-{N} =Q.Resume
-   [%] .Kind << #NativeKind.Queue
-   [%] .Rust << "QueueResume"
+{-} =Q.Resume
    [%] .description << "Resume dispatching after pause"
    [=] <condition#string
 
-{N} =Q.Resume.RAM.MoreThan
-   [%] .Kind << #NativeKind.Queue
-   [%] .Rust << "QueueResumeRamMoreThan"
+{-} =Q.Resume.RAM.MoreThan
    [%] .description << "Resume when RAM recovers above threshold"
    [=] <mb#float
 
-{N} =Q.Kill.Graceful
-   [%] .Kind << #NativeKind.Queue
-   [%] .Rust << "QueueKillGraceful"
+{-} =Q.Kill.Graceful
    [%] .description << "Graceful kill — wait for in-flight jobs"
    [=] <condition#string
 
-{N} =Q.Kill.Graceful.Time.MoreThan
-   [%] .Kind << #NativeKind.Queue
-   [%] .Rust << "QueueKillGracefulTimeMoreThan"
+{-} =Q.Kill.Graceful.Time.MoreThan
    [%] .description << "Graceful kill when job exceeds time limit"
    [=] <duration#string

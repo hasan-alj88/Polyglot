@@ -224,9 +224,7 @@
 { } ============================================================================
 { } Native Function & Extensibility System
 { } ============================================================================
-{N} =T.LogMessage
-   [%] .Kind << #NativeKind.Trigger
-   [%] .Rust << "TriggerLogMessage"
+{-} =T.LogMessage
    [=] <message#string
    [=] >timestamp#datetime
    [=] >log_entry#string

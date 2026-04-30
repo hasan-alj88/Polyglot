@@ -2,44 +2,28 @@
 
 { } Runner native operations — Math (positional IO)
 
-{N} =Math.Add
-   [%] .Kind << #NativeKind.Execution
-   [%] .Rust << "MathAdd"
+{-} =Math.Add
    [%] .description << "Add two or more numbers"
 
-{N} =Math.Subtract
-   [%] .Kind << #NativeKind.Execution
-   [%] .Rust << "MathSubtract"
+{-} =Math.Subtract
    [%] .description << "Subtract second from first"
 
-{N} =Math.Multiply
-   [%] .Kind << #NativeKind.Execution
-   [%] .Rust << "MathMultiply"
+{-} =Math.Multiply
    [%] .description << "Multiply two or more numbers"
 
-{N} =Math.Divide
-   [%] .Kind << #NativeKind.Execution
-   [%] .Rust << "MathDivide"
+{-} =Math.Divide
    [%] .description << "Divide first by second"
    [=] !Math.DivisionByZero
 
-{N} =Math.Modulo
-   [%] .Kind << #NativeKind.Execution
-   [%] .Rust << "MathModulo"
+{-} =Math.Modulo
    [%] .description << "Remainder of division"
    [=] !Math.DivisionByZero
 
-{N} =Math.Power
-   [%] .Kind << #NativeKind.Execution
-   [%] .Rust << "MathPower"
+{-} =Math.Power
    [%] .description << "Raise base to exponent"
 
-{N} =Math.Abs
-   [%] .Kind << #NativeKind.Execution
-   [%] .Rust << "MathAbs"
+{-} =Math.Abs
    [%] .description << "Absolute value"
 
-{N} =Math.Negate
-   [%] .Kind << #NativeKind.Execution
-   [%] .Rust << "MathNegate"
+{-} =Math.Negate
    [%] .description << "Negate a number"

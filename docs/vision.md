@@ -50,7 +50,7 @@ This is why Aljam3 enforcing human audit and accountability is a mandatory requi
 - Teams managing multi-language codebases with complex async workflows
 - Data pipeline engineers who coordinate Python, Rust, Go, and JavaScript in a single data flow
 - DevOps automation builders who need safe, repeatable, trigger-driven task orchestration
-- Backend teams with aljam3 services that need cross-language integration without brittle glue code
+- Backend teams with aljam3 services that need to seamlessly integrate distinct codebases without brittle workarounds
 
 **Not for:** Single-language CRUD apps. Not a replacement for general-purpose programming.
 
@@ -58,7 +58,7 @@ This is why Aljam3 enforcing human audit and accountability is a mandatory requi
 
 ## What Aljam3 Is Not
 
-- **Not a general-purpose language** — use Python, Rust, Go, JavaScript for that. Aljam3 orchestrates them; it doesn't replace them. It's the glue, not the bricks.
+- **Not a general-purpose language** — use Python, Rust, Go, JavaScript for that. Aljam3 orchestrates them; it doesn't replace them. It gathers them into a unified system, rather than trying to be the building blocks.
 - **Not a container orchestrator** — Kubernetes schedules containers. Aljam3 compiles workflows and manages their execution at the pipeline level, inside or outside containers.
 - **Not a replacement for any language** — the best code is the code that already exists. Aljam3 makes it work together.
 

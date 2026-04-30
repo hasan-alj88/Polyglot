@@ -24,7 +24,6 @@ pub enum Aljam3Token {
     DefPipeline,
     DefTrigger,
     DefWrapper,
-    DefNative,
     DefQueue,
     DefError,
     DefPermission,
