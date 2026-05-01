@@ -22,7 +22,7 @@ NATS handles communication. Redis handles runtime state and job hierarchy. **Pos
 
 | Data | Store | Reason |
 |------|-------|--------|
-| Queue ordering (LIST/ZSET), Executing/Suspended Sets | Redis | Fast atomic operations, microsecond latency |
+| Queue ordering (LIST/ZSET), Running/Suspended Sets | Redis | Fast atomic operations, microsecond latency |
 | Job runtime state (status, timestamps, pid) | Redis | Frequently read/written by dispatch loop |
 | Job hierarchy (parent→children) | Redis | Deep tree traversal and state propagation |
 | Queue config cache (constraints, strategy) | Redis | Loaded at queue registration via TM signal |

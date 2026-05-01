@@ -28,7 +28,7 @@ severity: warning
    [@] @data << "com.example.data"
 
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -47,7 +47,7 @@ severity: warning
 {@} @LeafPackage
 
 {-} -Simple
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -64,7 +64,7 @@ severity: warning
    [@] @data << "com.example.data"      [ ] ⚠ PGW09002 — @data never used
 
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -82,7 +82,7 @@ severity: warning
    [@] @also << "com.example.other"     [ ] ⚠ PGW09002 — @also never used
 
 {-} -NoExternalCalls
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string

@@ -17,7 +17,7 @@ severity: error
 ```aljam3
 [ ] ✓ Pipeline has an execution step
 {-} -ProcessData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] >run
@@ -27,7 +27,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01062 — Missing execution step
 {-} -ProcessData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
                                              [ ] ✗ PGE01062 — Pipeline lacks execution body

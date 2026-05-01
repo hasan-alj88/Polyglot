@@ -32,7 +32,7 @@ severity: warning
 
 {-} -LogAnalyzer
    (-) _LogIO
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -44,7 +44,7 @@ severity: warning
 ```aljam3
 [ ] ✓ pure computation — no permission IO, no IO calls
 {-} -PureCompute
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <a#int
@@ -74,7 +74,7 @@ severity: warning
 {-} -PartialIO
    (-) _FileGrant
    (-) _WebGrant                                                   [ ] ⚠ PGW10001 — _WebGrant never used
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -102,7 +102,7 @@ severity: warning
 {-} -OverDeclared
    (-) _FileGrant                                                  [ ] ⚠ PGW10001 — _FileGrant never used
    (-) _SysGrant                                                   [ ] ⚠ PGW10001 — _SysGrant never used
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string

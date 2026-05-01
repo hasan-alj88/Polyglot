@@ -23,7 +23,7 @@ severity: error
 ```aljam3
 [ ] ✓ linear call chain — no cycle
 {-} -Ingest
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >result#string
@@ -36,7 +36,7 @@ severity: error
       (-) >ok >> >result
 
 {-} -Transform
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -45,7 +45,7 @@ severity: error
    >> >clean
 
 {-} -Store
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <item#string
@@ -58,7 +58,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE09013 — self-call
 {-} -Recurse
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -72,7 +72,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE09013 — direct mutual recursion
 {-} -Ping
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <msg#string
@@ -83,7 +83,7 @@ severity: error
       (-) >out >> >out
 
 {-} -Pong
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <msg#string
@@ -97,7 +97,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE09013 — transitive cycle (A→B→C→A)
 {-} -StepA
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <in#string
@@ -108,7 +108,7 @@ severity: error
       (-) >out >> >out
 
 {-} -StepB
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <in#string
@@ -119,7 +119,7 @@ severity: error
       (-) >out >> >out
 
 {-} -StepC
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <in#string

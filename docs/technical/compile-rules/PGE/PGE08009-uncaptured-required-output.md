@@ -27,7 +27,7 @@ severity: error
 ```aljam3
 [ ] ✓ all outputs captured — sequential pipeline call
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -38,7 +38,7 @@ severity: error
    [-] >count << 1
 
 {-} -UseProcess
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -53,7 +53,7 @@ severity: error
 ```aljam3
 [ ] ✓ output captured into discard — intentionally unused
 {-} -UseProcessDiscard
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -67,7 +67,7 @@ severity: error
 ```aljam3
 [ ] ✓ fire-and-forget exempt from output capture
 {-} -FireAndForget
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -80,7 +80,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE08009 — uncaptured output on sequential pipeline call
 {-} -UseProcessBad
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -94,7 +94,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE08009 — uncaptured output on parallel pipeline call
 {-} -BatchBad
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string

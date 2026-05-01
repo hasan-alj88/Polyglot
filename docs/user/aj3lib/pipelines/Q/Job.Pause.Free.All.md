@@ -66,7 +66,7 @@ Resume with `-Q.Job.Resume.From.Disk`.
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends command signal |
 | 2. NATS command | `aljam3.command.job.pause.free.all.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
-| 3. QH executes | Queue Handler | SREM set:executing, HSET set:suspended "all", decrement counters, HSET job status "suspended.all" |
+| 3. QH executes | Queue Handler | SREM set:running, HSET set:suspended "all", decrement counters, HSET job status "suspended.all" |
 | 4. Control signal | `aljam3.queue.control.{jobId}.job.pause.free.all` | `{jobId, timing}` → Runner |
 | 5. Unix mechanism | Runner | .Now: `criu dump --tree {pid} --images-dir {path}`; .Wait: work unit boundary then `criu dump` |
 | 6. Runner ACK | `aljam3.runner.paused.{jobId}` | `{type: "all", images_dir}` → QH stores `images_dir` on job hash |

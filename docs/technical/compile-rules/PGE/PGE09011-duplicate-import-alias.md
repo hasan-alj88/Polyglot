@@ -27,7 +27,7 @@ severity: error
    [@] @auth  << @Local:999.AuthLib:v1.0.0
 
 {-} -Main
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -45,7 +45,7 @@ severity: error
    [@] @utils << @Local:999.HelperLib:v2.0.0   [ ] ✗ PGE09011 — duplicate alias @utils
 
 {-} -Main
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]

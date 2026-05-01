@@ -68,7 +68,7 @@ A full package showing the ceiling-to-grant flow:
 [ ] Pipelines declare permissions via (-) IO
 {-} -ReadReports
    (-) _ReportReader
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >reports#array.Report
@@ -80,7 +80,7 @@ A full package showing the ceiling-to-grant flow:
 
 {-} -WriteOutput
    (-) _OutputWriter
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#Report

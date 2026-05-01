@@ -129,7 +129,7 @@ Throttling reduces resource allocation without pausing. The job keeps running wi
 
 **Unthrottle:** Remove cgroup limits — restore full allocation.
 
-**Throttle vs Pause:** Throttled jobs remain in `set:executing` — they still hold their dispatch slot. Paused jobs are removed from `set:executing` and the slot is freed for other jobs.
+**Throttle vs Pause:** Throttled jobs remain in `set:running` — they still hold their dispatch slot. Paused jobs are removed from `set:running` and the slot is freed for other jobs.
 
 ## Pause Reason Set
 

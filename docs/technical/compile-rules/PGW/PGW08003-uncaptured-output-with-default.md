@@ -26,7 +26,7 @@ severity: warning
 ```aljam3
 [ ] ✓ output with default captured explicitly — no warning
 {-} -Lookup
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <key#string
@@ -39,7 +39,7 @@ severity: warning
    [-] >found << .True
 
 {-} -UseLookup
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -55,7 +55,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW08003 — >found not captured, has default .False
 {-} -UseLookupPartial
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -69,7 +69,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW08003 — >content not captured, has fallback "unavailable"
 {-} -ReadFile
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <path#string
@@ -84,7 +84,7 @@ severity: warning
    [-] >content << $content
 
 {-} -UseReadFile
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string

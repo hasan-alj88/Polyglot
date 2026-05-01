@@ -8,7 +8,7 @@
    [#] <~ #DefaultQueueConfig
 
 {-} -ProcessJobs
-   [T] -T.Manual
+   [T] -T.CLI
    [W] -W.Aljam3
    [Q] -MyQueue
    (<) <input#Payload

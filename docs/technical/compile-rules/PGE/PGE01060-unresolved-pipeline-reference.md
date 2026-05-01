@@ -17,13 +17,13 @@ severity: error
 ```aljam3
 [ ] ✓ Calling a defined pipeline
 {-} -ProcessData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] -CleanData
 
 {-} -CleanData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] >run
@@ -33,7 +33,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01060 — Calling an undefined pipeline
 {-} -ProcessData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] -CleanData                            [ ] ✗ PGE01060 — -CleanData is not defined

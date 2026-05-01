@@ -411,7 +411,7 @@ impl Rule for PipelineSemanticsAlgorithm {
                         name: "Mandatory Trigger".to_string(),
                         message: "Pipeline lacks a mandatory Trigger `[T]` block.".to_string(),
                         line, col, snippet: get_snippet(line, ctx.lines),
-                        help: Some("All pipelines must define a Trigger `[T]`. To disable automatic triggering, specify `[T] -T.Manual`.".to_string()),
+                        help: Some("All pipelines must define a Trigger `[T]`. To disable automatic triggering, specify `[T] -T.CLI`.".to_string()),
                     });
                 }
                 if !has_queue {

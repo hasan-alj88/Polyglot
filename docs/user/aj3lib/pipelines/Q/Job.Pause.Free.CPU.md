@@ -53,7 +53,7 @@ None.
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends command signal |
 | 2. NATS command | `aljam3.command.job.pause.free.cpu.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
-| 3. QH executes | Queue Handler | SREM set:executing, HSET set:suspended "cpu", decrement counters, HSET job status "suspended.cpu" |
+| 3. QH executes | Queue Handler | SREM set:running, HSET set:suspended "cpu", decrement counters, HSET job status "suspended.cpu" |
 | 4. Control signal | `aljam3.queue.control.{jobId}.job.pause.free.cpu` | `{jobId, timing}` → Runner |
 | 5. Unix mechanism | Runner | .Now: `echo 1 > cgroup.freeze` (atomic freeze); .Wait: `SIGSTOP` after work unit boundary |
 | 6. Runner ACK | `aljam3.runner.paused.{jobId}` | `{type: "cpu"}` → QH + TM |

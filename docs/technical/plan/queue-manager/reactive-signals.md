@@ -48,7 +48,7 @@ All four pause signals share the same QH state write pattern — the only differ
 Input:  {jobId, timing: "now"|"wait"}
 
 State Write:
-    SREM set:executing {jobId}
+    SREM set:running {jobId}
     HSET set:suspended {jobId} "cpu"
     HINCRBY counter:instances {pipeline} -1
     HINCRBY counter:instances:queue:{queue} {pipeline} -1
@@ -68,7 +68,7 @@ Wake:   Dispatch Coordinator (slot freed)
 Input:  {jobId, timing: "now"|"wait"}
 
 State Write:
-    SREM set:executing {jobId}
+    SREM set:running {jobId}
     HSET set:suspended {jobId} "ram.soft"
     HINCRBY counter:instances {pipeline} -1
     HINCRBY counter:instances:queue:{queue} {pipeline} -1
@@ -88,7 +88,7 @@ Wake:   Dispatch Coordinator (slot freed)
 Input:  {jobId, timing: "now"|"wait"}
 
 State Write:
-    SREM set:executing {jobId}
+    SREM set:running {jobId}
     HSET set:suspended {jobId} "ram.hard"
     HINCRBY counter:instances {pipeline} -1
     HINCRBY counter:instances:queue:{queue} {pipeline} -1
@@ -108,7 +108,7 @@ Wake:   Dispatch Coordinator (slot freed)
 Input:  {jobId, timing: "now"|"wait"}
 
 State Write:
-    SREM set:executing {jobId}
+    SREM set:running {jobId}
     HSET set:suspended {jobId} "all"
     HINCRBY counter:instances {pipeline} -1
     HINCRBY counter:instances:queue:{queue} {pipeline} -1
@@ -156,12 +156,12 @@ State Write:
     status = HGET job:{jobId} status
     SWITCH status:
         "executing" | "executing.throttled":
-            SREM set:executing {jobId}
+            SREM set:running {jobId}
             HINCRBY counter:instances {pipeline} -1
             HINCRBY counter:instances:queue:{queue} {pipeline} -1
             HINCRBY counter:instances:host:{host} {pipeline} -1
         "teardown.executing":
-            SREM set:executing {jobId}
+            SREM set:running {jobId}
             HINCRBY counter:instances {pipeline} -1
             HINCRBY counter:instances:queue:{queue} {pipeline} -1
             HINCRBY counter:instances:host:{host} {pipeline} -1
@@ -190,7 +190,7 @@ State Write:
     status = HGET job:{jobId} status
     SWITCH status:
         "executing" | "executing.throttled" | "teardown.executing":
-            SREM set:executing {jobId}
+            SREM set:running {jobId}
             HINCRBY counter:instances {pipeline} -1
             HINCRBY counter:instances:queue:{queue} {pipeline} -1
             HINCRBY counter:instances:host:{host} {pipeline} -1
@@ -322,8 +322,8 @@ State Write:
     FOR each jobId in queue:dispatch:{queue}:
         LREM/ZREM queue:dispatch:{queue} {jobId}
         DEL job:{jobId}
-    FOR each jobId in set:executing WHERE job.queue == {queue}:
-        SREM set:executing {jobId}
+    FOR each jobId in set:running WHERE job.queue == {queue}:
+        SREM set:running {jobId}
         Decrement scoped counters
         DEL job:{jobId}
     FOR each jobId in set:suspended WHERE job.queue == {queue}:
@@ -378,7 +378,7 @@ Normal completion only — not for teardown jobs.
 Input:  {jobId, result}
 
 State Write:
-    SREM set:executing {jobId}
+    SREM set:running {jobId}
     HINCRBY counter:instances {pipeline} -1
     DEL job:{jobId}
 
@@ -396,7 +396,7 @@ Completion of `[/]` cleanup after graceful kill.
 Input:  {jobId, pipeline}
 
 State Write:
-    SREM set:executing {jobId}
+    SREM set:running {jobId}
     HINCRBY counter:instances {pipeline} -1
     DEL job:{jobId}
 
@@ -412,7 +412,7 @@ Wake:   Dispatch Coordinator (slot freed)
 Input:  {jobId, error}
 
 State Write:
-    SREM set:executing {jobId}
+    SREM set:running {jobId}
     HINCRBY counter:instances {pipeline} -1
     DEL job:{jobId}
 
@@ -424,7 +424,7 @@ Wake:   Dispatch Coordinator (slot freed)
 
 ## command.job.throttle
 
-Reduces resource allocation without pausing. The job stays in `set:executing` and keeps its dispatch slot.
+Reduces resource allocation without pausing. The job stays in `set:running` and keeps its dispatch slot.
 
 ```text
 Input:  {jobId, cpu?, memory?, io?}

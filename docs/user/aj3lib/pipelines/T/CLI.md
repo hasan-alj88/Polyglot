@@ -3,20 +3,20 @@ audience: automation-builder
 type: specification
 updated: 2026-04-07
 status: complete
-metadata_definition: "%definition.T:Manual"
-metadata_instance: "%T:Manual:N"
+metadata_definition: "%definition.T:CLI"
+metadata_instance: "%T:CLI:N"
 ---
 
-# -T.Manual
+# -T.CLI
 
 Pipeline invoked manually (e.g., from CLI or test harness). No additional parameters.
 
 ## Definition
 
 ```aljam3
-{N} -T.Manual
+{N} -T.CLI
    [%] .Kind << #NativeKind.Trigger
-   [%] .Rust << "TManual"
+   [%] .Rust << "TCLI"
    [%] .description << "Pipeline is invoked manually (e.g., from CLI or test harness)."
    [ ] No additional parameters.
 ```
@@ -43,8 +43,8 @@ None.
 
 | Path | Pattern | Description |
 |------|---------|-------------|
-| Definition | `%definition.T:Manual` | Compile-time pipeline template |
-| Instance | `%T:Manual:N` | Runtime pipeline instance (N = instance number) |
+| Definition | `%definition.T:CLI` | Compile-time pipeline template |
+| Instance | `%T:CLI:N` | Runtime pipeline instance (N = instance number) |
 
 ## Related
 

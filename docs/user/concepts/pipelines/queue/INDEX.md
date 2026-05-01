@@ -13,7 +13,7 @@ updated: 2026-04-26
 Every pipeline must declare a `[Q]` line — omitting it is a compile error (PGE01006). Aljam3 uses a multi-queue execution model with a unified dispatch layer:
 
 - **Dispatch Queues** — one per `{Q} #Queue:Name` definition (plus `-Q.Default`). Each maintains its own ordering strategy (FIFO, LIFO, Priority). Triggered pipelines enter the Dispatch Queue assigned by their `[Q]` declaration.
-- **Dispatch Coordinator** — the unified dispatch layer. Reads from all parallel Dispatch Queues simultaneously and dispatches Jobs to the Executing Set. The Dispatch Coordinator is faithful to every Dispatch Queue's ordering and concurrency rules — it never overrides or reorders a queue's internal strategy.
+- **Dispatch Coordinator** — the unified dispatch layer. Reads from all parallel Dispatch Queues simultaneously and dispatches Jobs to the Running Set. The Dispatch Coordinator is faithful to every Dispatch Queue's ordering and concurrency rules — it never overrides or reorders a queue's internal strategy.
 
 ## Three `{Q}` Block Types
 

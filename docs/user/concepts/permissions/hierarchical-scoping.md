@@ -48,14 +48,14 @@ Each `{-}` pipeline must explicitly declare `{_}` grant objects via `(-)` IO for
 {-} -ProcessLogs
    (-) _LogFileGrant
    [ ] narrower than ceiling — granted
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    ...
 
 {-} -ComputeStats
    [ ] no permission IO — pure computation, zero IO
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    ...

@@ -19,7 +19,7 @@ severity: error
 {-} -ProcessData
    (-) <#None
    (-) >#None
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] >run
@@ -31,7 +31,7 @@ severity: error
 {-} -ProcessData
    (-) <#None
    (-) >#None
-   [T] -T.Manual
+   [T] -T.CLI
    [W] -W.Aljam3                            [ ] ✗ PGE01005 — Missing [Q] block
    [-] >run
 ```

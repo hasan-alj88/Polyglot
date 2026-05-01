@@ -64,7 +64,7 @@ None.
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends command signal |
 | 2. NATS command | `aljam3.command.job.pause.free.ram.soft.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
-| 3. QH executes | Queue Handler | SREM set:executing, HSET set:suspended "ram.soft", decrement counters, HSET job status "suspended.ram.soft" |
+| 3. QH executes | Queue Handler | SREM set:running, HSET set:suspended "ram.soft", decrement counters, HSET job status "suspended.ram.soft" |
 | 4. Control signal | `aljam3.queue.control.{jobId}.job.pause.free.ram.soft` | `{jobId, timing}` → Runner |
 | 5. Unix mechanism | Runner | `cgroup.freeze` + `echo {limit} > memory.high` (kernel hint, best-effort swap) |
 | 6. Runner ACK | `aljam3.runner.paused.{jobId}` | `{type: "ram.soft"}` → QH + TM |
@@ -75,7 +75,7 @@ None.
 |------|-----------|--------|
 | 1. TM decides | Trigger Monitor | Evaluates `#JobRules` condition, sends command signal |
 | 2. NATS command | `aljam3.command.job.pause.free.ram.hard.{jobId}` | `{jobId, timing: "now"\|"wait"}` |
-| 3. QH executes | Queue Handler | SREM set:executing, HSET set:suspended "ram.hard", decrement counters, HSET job status "suspended.ram.hard" |
+| 3. QH executes | Queue Handler | SREM set:running, HSET set:suspended "ram.hard", decrement counters, HSET job status "suspended.ram.hard" |
 | 4. Control signal | `aljam3.queue.control.{jobId}.job.pause.free.ram.hard` | `{jobId, timing}` → Runner |
 | 5. Unix mechanism | Runner | `cgroup.freeze` + `echo {limit} > memory.max` (hard cap, OOM-kill risk) |
 | 6. Runner ACK | `aljam3.runner.paused.{jobId}` | `{type: "ram.hard"}` → QH + TM |

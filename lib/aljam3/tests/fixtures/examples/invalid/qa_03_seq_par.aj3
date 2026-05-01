@@ -1,0 +1,57 @@
+[ ] ERROR: Incorrect use of assignment operators and trigger payload mapping
+[ ] ERROR: Incorrect syntax for accessing operation status in predicates
+[ ] ERROR: Incorrect mandatory block [W] -W.Env instead of [W] -W.Aljam3
+
+{@} @Local:7777<QA:Test.UserOnboarding:1.0.0
+   [@] @Auth << @Community:authservice<Auth.Service:2.0.0
+   [@] @Mail << @Community:mailservice<Mail.Sender:1.0.0
+   [@] @Cloud << @Company:internal<Storage.Provider:3.0.0
+
+{-} -OnboardUser
+   [ ] ERROR: Should use <~ for inputs that might be mutated
+   [ ] ERROR: Should use ~> for outputs that might be mutated
+   (-) <userId#string << "new_user_123"
+   (-) >onboardingStatus#string >> $finalStatus
+      (>) >! "Failed"
+   [ ]
+   [T] -T.Http"POST /onboard:8888"
+   [Q] -Q.Default
+   [W] -W.Aljam3
+   [ ]
+   [-] @Auth-API.Users.GetProfile
+      (-) <id << <userId
+      (-) >email#string >> $userEmail
+         (>) >! "default@example.com"
+      (-) >name#string >> $userName
+         (>) >! "Unknown"
+   [ ]
+   [=] @Mail-API.Account.Create
+      (-) $EmailCreationOp
+      (-) <email << $userEmail
+      (-) <name << $userName
+      (-) >status
+         (>) >! @Mail#Status.Failed
+   [ ]
+   [=] @Cloud-API.Storage.CreateBucket
+      (-) $StorageCreationOp
+      (-) <owner << <userId
+      (-) >status
+         (>) >! @Cloud#Status.Failed
+   [ ]
+   [*] *All
+      (*) << $EmailCreationOp>status
+      (*) << $StorageCreationOp>status
+   [ ]
+   [-] @Mail-API.Email.Send
+      (-) $EmailSendOp
+      (-) <recipient << $userEmail
+      (-) <subject << "Welcome {<userName}!"
+      (-) <body << "Your account is ready."
+      (-) >status
+         (>) >! @Mail#Status.FailedToSend
+   [ ]
+   [?] $EmailCreationOp.status =? @Mail#Status.Completed
+   [&] $StorageCreationOp.status =? @Cloud#Status.Completed
+      [-] >onboardingStatus << @Mail#Status.Completed
+   [?] *?
+     [-] >onboardingStatus << @Mail#Status.FailedToSend

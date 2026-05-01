@@ -19,7 +19,7 @@ severity: error
 {-} -ProcessData
    (-) <#None
    (-) >#None
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] >run
@@ -30,7 +30,7 @@ severity: error
 {-} -ProcessData
    (-) <#None
    (-) >#None
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [\]
       [-] -Setup.Init
@@ -45,7 +45,7 @@ severity: error
 {-} -ProcessData
    (-) <#None
    (-) >#None
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [-] >run                                  [ ] ✗ PGE01006 — Missing [W] or [\]/[/] pair
 ```

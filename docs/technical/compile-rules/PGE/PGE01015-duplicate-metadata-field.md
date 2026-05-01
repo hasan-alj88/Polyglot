@@ -28,7 +28,7 @@ severity: error
    [%] .version << "1.0.0"
    [%] .authors << ["Alice", "Bob"]
    [%] .license << "MIT"
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -43,7 +43,7 @@ severity: error
    [%] :info
       :team << "platform"
       :priority << "high"              [ ] ✓ different keys under :info
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -68,7 +68,7 @@ severity: error
 {-} -BadMeta
    [%] .description << "First description"
    [%] .description << "Second description"  [ ] ✗ PGE01015 — .description appears twice
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -81,7 +81,7 @@ severity: error
 {-} -AlsoBad
    [%] .version << "1.0.0"
    [%] .version << "2.0.0"              [ ] ✗ PGE01015 — .version appears twice
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string

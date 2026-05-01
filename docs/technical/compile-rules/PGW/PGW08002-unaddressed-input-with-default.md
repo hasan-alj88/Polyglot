@@ -25,7 +25,7 @@ severity: warning
 ```aljam3
 [ ] ✓ default input explicitly wired — no warning
 {-} -Format
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <text#string
@@ -36,7 +36,7 @@ severity: warning
    [-] >formatted << "{$text} ({$locale})"
 
 {-} -UseFormat
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -51,7 +51,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW08002 — <locale not wired, using default "en-US"
 {-} -UseFormatDefault
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -65,7 +65,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW08002 — <timeout not wired on parallel pipeline call, using default 30
 {-} -Fetch
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <url#string
@@ -76,7 +76,7 @@ severity: warning
    [-] >body << "response"
 
 {-} -BatchFetch
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string

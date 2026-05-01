@@ -60,7 +60,7 @@ severity: error
 {-} -RunRogue
    (-) _ScriptGrant
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -82,7 +82,7 @@ severity: error
 {-} -RunTraversal
    (-) _ScriptGrant
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]

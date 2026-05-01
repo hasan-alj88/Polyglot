@@ -40,7 +40,7 @@ severity: warning
    [.] %Version << "1.2.0"
    (-) _FileGrant
    (-) ;GoEnv
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;GoEnv
    [ ]
@@ -65,7 +65,7 @@ severity: warning
    [.] %Version << "0.9.0"
    (-) _FileGrant
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]

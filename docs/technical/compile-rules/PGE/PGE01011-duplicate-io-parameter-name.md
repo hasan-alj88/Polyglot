@@ -21,7 +21,7 @@ severity: error
 **VALID:**
 ```aljam3
 {-} -Transfer
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -34,7 +34,7 @@ severity: error
 
 ```aljam3
 {-} -ProcessPerson
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <person.name#string
@@ -49,7 +49,7 @@ severity: error
 **INVALID:**
 ```aljam3
 {-} -Broken
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -61,7 +61,7 @@ severity: error
 
 ```aljam3
 {-} -AlsoBroken
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string

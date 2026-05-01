@@ -34,7 +34,7 @@ severity: error
 {-} -SafeScript
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -62,7 +62,7 @@ severity: error
 {-} -EvalScript
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -79,7 +79,7 @@ severity: error
 {-} -ExecScript
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -97,7 +97,7 @@ severity: error
 {-} -DynamicImport
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]

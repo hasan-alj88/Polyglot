@@ -40,7 +40,7 @@ severity: error
 {-} -AnalyzeReport
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -67,7 +67,7 @@ severity: error
 {-} -ExfilData
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -94,7 +94,7 @@ severity: error
 {-} -FetchExternal
    (-) _ApiAccess
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]

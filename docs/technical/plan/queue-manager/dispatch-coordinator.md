@@ -19,7 +19,7 @@ The Dispatch Coordinator is event-driven — it wakes and cycles whenever queue 
 - Job enqueued (any Dispatch Queue)
 - Job pushed to Resume Queue
 - Job pushed to Teardown Queue
-- Job leaves Executing Set (completed, paused, killed)
+- Job leaves Running Set (completed, paused, killed)
 
 When woken, it runs one full cycle (Tier 1 Selection → Tier 2 Dispatch → constraint check → dispatch). If items remain and slots are available, it cycles again immediately. When all queues are empty or all candidates fail constraints, it sleeps until the next wake event.
 
@@ -42,7 +42,7 @@ Tier 2 — Dispatch RR (three equal peers):
    └─ Teardown Queue
        │ round-robin between all three
        ▼
-Dispatch Constraints → Executing Set
+Dispatch Constraints → Running Set
 ```
 
 **Tier 1 (Selection RR):** Round-robins across user-defined Dispatch Queues. Each queue proposes exactly one candidate based on its strategy. The selected candidate enters the Dispatch Queues Coordinator Queue — a single-slot virtual buffer.
@@ -78,21 +78,21 @@ When a candidate passes all constraints, the Lua script dispatches based on the 
 
 **From Dispatch Queue:**
 1. Pop candidate from its Dispatch Queue
-2. `SADD set:executing {jobId}`
+2. `SADD set:running {jobId}`
 3. Increment scoped counters (see below)
 4. `HSET job:{jobId} status "executing" dispatched_at {now}`
 5. Emit `control.{jobId}.start → Runner`
 
 **From Resume Queue:**
 1. `LPOP queue:resume`
-2. `SADD set:executing {jobId}`
+2. `SADD set:running {jobId}`
 3. Increment scoped counters
 4. `HSET job:{jobId} status "executing"`
 5. Emit `control.{jobId}.job.resume → Runner`
 
 **From Teardown Queue:**
 1. `LPOP queue:teardown`
-2. `SADD set:executing {jobId}`
+2. `SADD set:running {jobId}`
 3. Increment scoped counters
 4. `HSET job:{jobId} status "teardown.executing"`
 5. Emit `control.{jobId}.job.kill.with-cleanup → Runner`
@@ -104,7 +104,7 @@ HINCRBY counter:instances:queue:{queue} {pipeline} 1
 HINCRBY counter:instances:host:{host} {pipeline} 1
 ```
 
-**Scoped counter decrement** (on every removal from Executing Set):
+**Scoped counter decrement** (on every removal from Running Set):
 ```text
 HINCRBY counter:instances {pipeline} -1
 HINCRBY counter:instances:queue:{queue} {pipeline} -1

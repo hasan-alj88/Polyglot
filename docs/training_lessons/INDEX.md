@@ -25,3 +25,6 @@ Whenever a piece of code or lexer token stream is corrected, the specific lesson
 - [017: Package and Connections](file:///home/hhj/RustroverProjects/Aljam3/docs/training_lessons/017_package_and_connections.md)
 - [018: IO Markers](file:///home/hhj/RustroverProjects/Aljam3/docs/training_lessons/018_io_markers.md)
 - [019: Error Blocks](file:///home/hhj/RustroverProjects/Aljam3/docs/training_lessons/019_error_blocks.md)
+- [020: Trigger Payload Mapping](file:///home/hhj/RustroverProjects/Aljam3/docs/training_lessons/020_trigger_payload_mapping.md)
+- [021: Predicate Logical AND and Operation Status](file:///home/hhj/RustroverProjects/aljam3/docs/training_lessons/021_predicate_operation_status.md)
+- [022: Pipeline Sub-job Execution Rules](file:///home/hhj/RustroverProjects/aljam3/docs/training_lessons/022_pipeline_execution_rules.md)

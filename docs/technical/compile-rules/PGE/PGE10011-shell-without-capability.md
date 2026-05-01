@@ -58,7 +58,7 @@ severity: error
 {-} -BadDeploy
    (-) _FileOnly                                                    [ ] ✗ wrong category — #File, not #System
    (-) ;Bash
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;Bash
    [ ]
@@ -72,7 +72,7 @@ severity: error
 [ ] ✗ PGE10011 — -Run.Shell with no permission declarations at all
 {-} -NakedShell
    (-) ;Bash
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;Bash
    [ ]

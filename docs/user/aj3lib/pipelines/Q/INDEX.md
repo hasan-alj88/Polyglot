@@ -146,7 +146,7 @@ Where `<Scope>` is `Job`, `Host`, `Queue`, or `Queue.Jobs` (array context in `#Q
 | Getter | Returns | Unit | Source |
 |--------|---------|------|--------|
 | `-Q.Queue.Get.Length` | Number of Jobs in queue | Count | Redis `LLEN`/`ZCARD queue:dispatch:{queue}` |
-| `-Q.Queue.Get.Executing` | Number of executing Jobs | Count | Redis `SCARD set:executing` filtered by queue |
+| `-Q.Queue.Get.Running` | Number of executing Jobs | Count | Redis `SCARD set:running` filtered by queue |
 | `-Q.Queue.Get.Suspended` | Number of suspended Jobs | Count | Redis `HLEN set:suspended` filtered by queue |
 
 #### `-Q.Queue.Jobs.Get.*` (all jobs — returns array, `#QueueRules` context)

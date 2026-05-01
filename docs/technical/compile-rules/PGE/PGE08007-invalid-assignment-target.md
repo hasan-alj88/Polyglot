@@ -30,7 +30,7 @@ severity: error
 ```aljam3
 [ ] ✓ variable on LHS — valid assignment target
 {-} -Store
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -48,7 +48,7 @@ severity: error
 ```aljam3
 [ ] ✓ inline call on RHS — value expressions are valid as sources
 {-} -MakePath
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#path
@@ -61,7 +61,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE08007 — inline pipeline call as assignment target
 {-} -BadInline
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <value#string
@@ -72,7 +72,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE08007 — inline call as default assignment target
 {-} -BadDefault
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <value#string
@@ -83,7 +83,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE08007 — literal as assignment target
 {-} -BadLiteral
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <value#string

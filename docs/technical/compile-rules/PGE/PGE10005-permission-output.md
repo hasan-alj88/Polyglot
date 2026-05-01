@@ -79,7 +79,7 @@ severity: error
 [ ] ✗ PGE10005 — [T] trigger marker inside {_} block
 {_} _BadTrigger
    [.] .intent << #Grant
-   [T] -T.Manual                                        [ ] ✗ PGE10005 — [T] not allowed in {_}
+   [T] -T.CLI                                        [ ] ✗ PGE10005 — [T] not allowed in {_}
    [.] .category #File
    [.] .capability #Read
    [.] .scope "/data/*"

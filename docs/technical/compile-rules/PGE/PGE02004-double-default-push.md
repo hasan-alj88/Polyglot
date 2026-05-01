@@ -17,7 +17,7 @@ severity: error
 ```aljam3
 [ ] ✓ Default followed by Final
 {-} -ProcessData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -29,7 +29,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE02004 — Double Default assignment
 {-} -ProcessData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]

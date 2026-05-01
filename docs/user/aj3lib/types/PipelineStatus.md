@@ -27,8 +27,8 @@ Runtime `##Enum` type available in every `.aj3` file. Uses `[#] ##Enum` (enum cl
    [#] %##Alias << "pipelinestatus"
    [.] .AwaitTrigger
    [.] .Disabled
-   [.] .Pending
-   [.] .Executing
+   [.] .Enqueued
+   [.] .Running
    [.] .SuspendedSoft
    [.] .SuspendedHard
    [.] .Teardown

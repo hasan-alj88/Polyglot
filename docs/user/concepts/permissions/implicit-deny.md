@@ -20,7 +20,7 @@ A pipeline with no `_` IO declarations is **pure computation** — it can transf
 
 ```aljam3
 {-} PureComputation
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ] no permission IO — this pipeline cannot do IO

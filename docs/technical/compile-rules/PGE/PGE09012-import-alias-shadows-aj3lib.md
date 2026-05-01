@@ -27,7 +27,7 @@ severity: error
    [@] @fileUtils << @Local:999.FileHelpers:v1.0.0
 
 {-} -Main
-   [T] -T.Manual                                [ ] ✓ aj3lib trigger — no conflict
+   [T] -T.CLI                                [ ] ✓ aj3lib trigger — no conflict
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -44,7 +44,7 @@ severity: error
    [@] @T << @Local:999.CustomTriggers:v1.0.0   [ ] ✗ PGE09012 — T is a reserved aj3lib namespace
 
 {-} -Main
-   [T] -T.Manual                                [ ] ambiguous — aj3lib -T or imported @T?
+   [T] -T.CLI                                [ ] ambiguous — aj3lib -T or imported @T?
    [Q] -Q.Default
    [W] -W.Aljam3
 ```

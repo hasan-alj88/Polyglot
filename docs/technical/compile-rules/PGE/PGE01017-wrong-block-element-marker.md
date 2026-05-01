@@ -24,7 +24,7 @@ severity: error
 ```aljam3
 [ ] ✓ (-) for IO declaration, [-] for execution
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -39,7 +39,7 @@ severity: error
 ```aljam3
 [ ] ✓ (-) inside [-] call — wiring IO on called pipeline
 {-} -Caller
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -54,7 +54,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01017 — (-) used for standalone assignment in execution body
 {-} -Bad
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -65,7 +65,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01017 — (-) used for output push inside conditional
 {-} -AlsoBad
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string

@@ -37,7 +37,7 @@ severity: error
    [.] %Version << "1.2.0"
    (-) _FileGrant
    (-) ;GoEnv
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;GoEnv
    [ ]
@@ -59,7 +59,7 @@ severity: error
 {-} -ProcessDataSafe
    (-) _FileGrant
    (-) ;GoEnv
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;GoEnv
    [ ]
@@ -85,7 +85,7 @@ severity: error
 {-} -ProcessData
    (-) _FileGrant
    (-) ;GoEnv
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;GoEnv
    [ ]
@@ -106,7 +106,7 @@ severity: error
 {-} -CustomLangScript
    (-) _FileGrant
    (-) ;CustomEnv
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;CustomEnv
    [ ]

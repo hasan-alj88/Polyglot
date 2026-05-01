@@ -36,7 +36,7 @@ severity: warning
 {-} -DirectRead
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -62,7 +62,7 @@ severity: warning
 {-} -IndirectRead
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -88,7 +88,7 @@ severity: warning
 {-} -BindRead
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -106,7 +106,7 @@ severity: warning
 {-} -DynamicPath
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]

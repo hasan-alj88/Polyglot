@@ -23,7 +23,7 @@ severity: warning
 ```aljam3
 [ ] ✓ all declared outputs are pushed
 {-} -Transform
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -40,7 +40,7 @@ severity: warning
 ```aljam3
 [ ] ✓ output pushed in all conditional branches
 {-} -Route
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <status#int
@@ -57,7 +57,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW02003 — >forgotten declared but never pushed
 {-} -Incomplete
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -70,7 +70,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW02003 — >count only pushed in one branch
 {-} -PartialPush
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <flag#bool
@@ -89,7 +89,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW02003 — >debug declared but no code references it
 {-} -Leftover
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string

@@ -9,7 +9,7 @@ severity: error
 # Rule 1.4 — Mandatory Trigger
 `PGE01004`
 
-**Statement:** Every pipeline block `{-}` must explicitly declare a Trigger configuration block `[T]`. If the pipeline should not be automatically triggered, `[T] -T.Manual` must be explicitly specified.
+**Statement:** Every pipeline block `{-}` must explicitly declare a Trigger configuration block `[T]`. If the pipeline should not be automatically triggered, `[T] -T.CLI` must be explicitly specified.
 **Rationale:** Aljam3 embraces explicit operational semantics. Omitting the trigger configuration makes it ambiguous how and when a pipeline is executed. By forcing the developer to declare `[T]`, the entry points and execution circumstances of the application remain unambiguous.
 **Detection:** During pipeline validation, the compiler confirms that a `[T]` marker exists within the block before execution starts. If it is missing entirely, the pipeline fails to compile.
 
@@ -19,7 +19,7 @@ severity: error
 {-} -ProcessData
    (-) <#None
    (-) >#None
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] >run
@@ -36,4 +36,4 @@ severity: error
    [-] >run
 ```
 
-**Diagnostic:** "Pipeline lacks a mandatory Trigger `[T]` block. All pipelines must define a Trigger `[T]`. To disable automatic triggering, specify `[T] -T.Manual`."
+**Diagnostic:** "Pipeline lacks a mandatory Trigger `[T]` block. All pipelines must define a Trigger `[T]`. To disable automatic triggering, specify `[T] -T.CLI`."

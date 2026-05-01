@@ -27,7 +27,7 @@ severity: error
 ```aljam3
 [ ] ✓ all required inputs wired — sequential pipeline call
 {-} -Greet
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <name#string
@@ -37,7 +37,7 @@ severity: error
    [-] >greeting << "Hello, {$title} {$name}!"
 
 {-} -UseGreet
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -51,7 +51,7 @@ severity: error
 ```aljam3
 [ ] ✓ all required inputs wired — parallel pipeline call
 {-} -BatchProcess
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <items#array:string
@@ -72,7 +72,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE08008 — missing required input on sequential pipeline call
 {-} -Greet
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <name#string
@@ -82,7 +82,7 @@ severity: error
    [-] >greeting << "Hello, {$title} {$name}!"
 
 {-} -UseGreet
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -96,7 +96,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE08008 — missing required input on parallel pipeline call
 {-} -Transform
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -106,7 +106,7 @@ severity: error
    [-] >result << $data
 
 {-} -BatchTransform
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string

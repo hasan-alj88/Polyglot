@@ -14,7 +14,7 @@ The Queue Handler is responsible for dispatching triggered pipelines to executio
 ## Sections
 
 - [[infrastructure]] — External service dependencies (NATS, Redis) and storage split between Redis and NoSQL
-- [[redis-containers]] — Redis data structures for Dispatch Queues, Executing/Suspended Sets, and supporting state
+- [[redis-containers]] — Redis data structures for Dispatch Queues, Running/Suspended Sets, and supporting state
 - [[nosql-schema]] — Queue definitions and job hierarchy schema stored in NoSQL
 - [[dispatch-coordinator]] — Two-tier round-robin dispatch loop with atomic constraint checks
 - [[reactive-signals]] — Signal table mapping every command to state transitions and output signals

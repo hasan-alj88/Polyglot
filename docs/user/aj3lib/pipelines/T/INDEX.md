@@ -20,7 +20,7 @@ Most triggers require no permissions. IO-touching triggers require a `{_}` permi
 | Pipeline | Required Capability | Category |
 |----------|-------------------|----------|
 | `-T.Call` | None | — |
-| `-T.Manual` | None | — |
+| `-T.CLI` | None | — |
 | `-T.Daily` | None | — |
 | `-T.Folder.NewFiles` | File.Read | File |
 | `-T.File.Rolled` | File.Read | File |
@@ -35,7 +35,7 @@ Most triggers require no permissions. IO-touching triggers require a `{_}` permi
 | Pipeline | Description |
 |----------|-------------|
 | [[aj3lib/pipelines/T/Call\|-T.Call]] | Pipeline invoked when called from another pipeline |
-| [[aj3lib/pipelines/T/Manual\|-T.Manual]] | Pipeline invoked manually (CLI or test harness) |
+| [[aj3lib/pipelines/T/CLI\|-T.CLI]] | Pipeline invoked manually (CLI or test harness) |
 | [[aj3lib/pipelines/T/Daily\|-T.Daily]] | Fires once per day at specified time |
 | [[aj3lib/pipelines/T/Folder.NewFiles\|-T.Folder.NewFiles]] | Fires when new files appear in folder |
 | [[aj3lib/pipelines/T/File.Rolled\|-T.File.Rolled]] | Fires when a file rotates (log rotation) |

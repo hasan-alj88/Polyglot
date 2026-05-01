@@ -807,7 +807,7 @@ function fromAljam3Enum(envelope, validVariants) {
 }
 
 // Usage with Behavior Contract variant list:
-const statusVariants = new Set(["Active", "Inactive", "Pending"]);
+const statusVariants = new Set(["Active", "Inactive", "Enqueued"]);
 const status = fromAljam3Enum(envelope, statusVariants);
 ```
 

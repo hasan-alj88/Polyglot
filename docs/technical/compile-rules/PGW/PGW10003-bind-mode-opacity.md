@@ -30,7 +30,7 @@ severity: warning
 {-} -BindProcessor
    (-) _DataAccess
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -59,7 +59,7 @@ severity: warning
    (-) _WebAccess
    (-) _FileAccess
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]

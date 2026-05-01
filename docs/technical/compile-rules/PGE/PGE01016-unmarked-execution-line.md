@@ -24,7 +24,7 @@ severity: error
 ```aljam3
 [ ] ✓ assignment under [-] marker
 {-} -Example
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -36,7 +36,7 @@ severity: error
 ```aljam3
 [ ] ✓ data load under [#] marker
 {-} -LoadConfig
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#Config
@@ -49,7 +49,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01016 — bare assignment without marker
 {-} -Bad
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -60,7 +60,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01016 — bare inline pipeline call without marker
 {-} -AlsoBad
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#path
@@ -70,7 +70,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01016 — bare pipeline call without marker
 {-} -NoPrefixCall
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string

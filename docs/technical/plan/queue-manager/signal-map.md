@@ -18,10 +18,10 @@ Consolidated cross-reference mapping every `-Q.*` pipeline to its full signal ch
 
 | `-Q.*` Command | NATS Command Subject | Payload | QH Redis Write | Control Signal to Runner | Unix Mechanism |
 |---|---|---|---|---|---|
-| `-Q.Job.Pause.Free.CPU` (.Now/.Wait) | `aljam3.command.job.pause.free.cpu.{jobId}` | `{jobId, timing}` | SREM set:executing, HSET set:suspended "cpu", decrement counters, HSET job status "suspended.cpu" | `aljam3.queue.control.{jobId}.job.pause.free.cpu` | .Now: `echo 1 > cgroup.freeze`; .Wait: `SIGSTOP` after work unit |
-| `-Q.Job.Pause.Free.RAM.Soft` (.Now/.Wait) | `aljam3.command.job.pause.free.ram.soft.{jobId}` | `{jobId, timing}` | SREM set:executing, HSET set:suspended "ram.soft", decrement counters, HSET job status "suspended.ram.soft" | `aljam3.queue.control.{jobId}.job.pause.free.ram.soft` | `cgroup.freeze` + `echo {limit} > memory.high` (best-effort swap) |
-| `-Q.Job.Pause.Free.RAM.Hard` (.Now/.Wait) | `aljam3.command.job.pause.free.ram.hard.{jobId}` | `{jobId, timing}` | SREM set:executing, HSET set:suspended "ram.hard", decrement counters, HSET job status "suspended.ram.hard" | `aljam3.queue.control.{jobId}.job.pause.free.ram.hard` | `cgroup.freeze` + `echo {limit} > memory.max` (hard cap, OOM-kill risk) |
-| `-Q.Job.Pause.Free.All` (.Now/.Wait) | `aljam3.command.job.pause.free.all.{jobId}` | `{jobId, timing}` | SREM set:executing, HSET set:suspended "all", decrement counters, HSET job status "suspended.all" | `aljam3.queue.control.{jobId}.job.pause.free.all` | .Now: `criu dump --tree {pid} --images-dir {path}`; .Wait: work unit boundary then `criu dump` |
+| `-Q.Job.Pause.Free.CPU` (.Now/.Wait) | `aljam3.command.job.pause.free.cpu.{jobId}` | `{jobId, timing}` | SREM set:running, HSET set:suspended "cpu", decrement counters, HSET job status "suspended.cpu" | `aljam3.queue.control.{jobId}.job.pause.free.cpu` | .Now: `echo 1 > cgroup.freeze`; .Wait: `SIGSTOP` after work unit |
+| `-Q.Job.Pause.Free.RAM.Soft` (.Now/.Wait) | `aljam3.command.job.pause.free.ram.soft.{jobId}` | `{jobId, timing}` | SREM set:running, HSET set:suspended "ram.soft", decrement counters, HSET job status "suspended.ram.soft" | `aljam3.queue.control.{jobId}.job.pause.free.ram.soft` | `cgroup.freeze` + `echo {limit} > memory.high` (best-effort swap) |
+| `-Q.Job.Pause.Free.RAM.Hard` (.Now/.Wait) | `aljam3.command.job.pause.free.ram.hard.{jobId}` | `{jobId, timing}` | SREM set:running, HSET set:suspended "ram.hard", decrement counters, HSET job status "suspended.ram.hard" | `aljam3.queue.control.{jobId}.job.pause.free.ram.hard` | `cgroup.freeze` + `echo {limit} > memory.max` (hard cap, OOM-kill risk) |
+| `-Q.Job.Pause.Free.All` (.Now/.Wait) | `aljam3.command.job.pause.free.all.{jobId}` | `{jobId, timing}` | SREM set:running, HSET set:suspended "all", decrement counters, HSET job status "suspended.all" | `aljam3.queue.control.{jobId}.job.pause.free.all` | .Now: `criu dump --tree {pid} --images-dir {path}`; .Wait: work unit boundary then `criu dump` |
 | `-Q.Job.Resume` | `aljam3.command.job.resume.{jobId}` | `{jobId}` | HDEL set:suspended, RPUSH queue:resume, HSET job status "resuming" | `aljam3.queue.control.{jobId}.job.resume` | cpu/ram: `echo 0 > cgroup.freeze`; all: `criu restore --images-dir {path}` |
 | `-Q.Job.Kill.WithCleanup` | `aljam3.command.job.kill.with-cleanup.{jobId}` | `{jobId}` | Status-aware cleanup (SREM/HDEL/LREM by state), RPUSH queue:teardown, HSET job status "teardown.pending" | None immediately; Runner gets `aljam3.queue.control.{jobId}.job.kill.with-cleanup` when dispatched from teardown queue | `SIGTERM` → `[/]` cleanup runs → `SIGKILL` on timeout |
 | `-Q.Job.Kill.Now` | `aljam3.command.job.kill.now.{jobId}` | `{jobId}` | Status-aware cleanup (SREM/HDEL/LREM by state), DEL job:{jobId} | `aljam3.queue.control.{jobId}.job.kill.now` (if was executing) | `SIGKILL` — immediate termination |
@@ -67,11 +67,11 @@ Consolidated cross-reference mapping every `-Q.*` pipeline to its full signal ch
 | `-Q.Host.Get.Status` | Resource Monitor aggregate | Online/Offline/Draining from host health checks |
 | `-Q.Host.Get.GPU.Status` | `nvidia-smi` / vendor tool | InUse/Free from GPU utilization query |
 | `-Q.Queue.Get.Length` | Redis `LLEN`/`ZCARD queue:dispatch:{queue}` | Container size of dispatch queue |
-| `-Q.Queue.Get.Executing` | Redis `SCARD set:executing` filtered by queue | Count members where `job.queue == {queue}` |
+| `-Q.Queue.Get.Running` | Redis `SCARD set:running` filtered by queue | Count members where `job.queue == {queue}` |
 | `-Q.Queue.Get.Suspended` | Redis `HLEN set:suspended` filtered by queue | Count members where `job.queue == {queue}` |
-| `-Q.Queue.Jobs.Get.RAM.GB` | Per-job cgroup `memory.current` | SMEMBERS set:executing (queue filter) → read each job's cgroup |
-| `-Q.Queue.Jobs.Get.CPU.Percent` | Per-job cgroup `cpu.stat` | SMEMBERS set:executing (queue filter) → compute each job's CPU |
-| `-Q.Queue.Jobs.Get.Idle.All` | Per-job cgroup stat deltas | SMEMBERS set:executing (queue filter) → compute each job's idle |
+| `-Q.Queue.Jobs.Get.RAM.GB` | Per-job cgroup `memory.current` | SMEMBERS set:running (queue filter) → read each job's cgroup |
+| `-Q.Queue.Jobs.Get.CPU.Percent` | Per-job cgroup `cpu.stat` | SMEMBERS set:running (queue filter) → compute each job's CPU |
+| `-Q.Queue.Jobs.Get.Idle.All` | Per-job cgroup stat deltas | SMEMBERS set:running (queue filter) → compute each job's idle |
 
 ---
 

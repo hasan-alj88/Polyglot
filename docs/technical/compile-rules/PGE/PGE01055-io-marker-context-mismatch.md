@@ -17,7 +17,7 @@ severity: error
 ```aljam3
 [ ] ✓ Using (-) in a Pipeline
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -39,7 +39,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01055 — (#) used in a Pipeline block
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (#) <input#string                         [ ] ✗ PGE01055 — should be (-)

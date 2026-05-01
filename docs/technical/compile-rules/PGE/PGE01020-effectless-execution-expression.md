@@ -23,7 +23,7 @@ severity: error
 ```aljam3
 [ ] ✓ pipeline call under [-]
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -38,7 +38,7 @@ severity: error
 ```aljam3
 [ ] ✓ assignment under [-]
 {-} -Assign
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -50,7 +50,7 @@ severity: error
 ```aljam3
 [ ] ✓ parallel pipeline calls
 {-} -ParallelWork
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <name#string
@@ -66,7 +66,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01020 — bare literal under [-]
 {-} -BadLiteral
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -76,7 +76,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01020 — bare string literal under [-]
 {-} -BadString
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -86,7 +86,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01020 — non-pipeline identifiers under execution markers
 {-} -BadIdentifiers
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string

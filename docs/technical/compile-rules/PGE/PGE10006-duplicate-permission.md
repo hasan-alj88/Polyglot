@@ -45,7 +45,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
 {-} -FileProcessor
    (-) _FileHandler
    (-) _FileWriter
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -78,7 +78,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
 
 {-} -LogReader
    (-) _AppLogRead
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -106,7 +106,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
 {-} -ReadAndWrite
    (-) _ReadGrant
    (-) _WriteGrant
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -131,7 +131,7 @@ PGE10006 fires on the second (and subsequent) declaration(s).
 {-} -DupRef
    (-) _FileGrant
    (-) _FileGrant                              [ ] ✗ PGE10006 — _FileGrant already referenced in this scope
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]

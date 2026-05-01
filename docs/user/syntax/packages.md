@@ -122,7 +122,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [@] << "{.}\my-app-03.aj3"
 
 {-} -LoadConfig
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >config#Config
@@ -137,7 +137,7 @@ Distinguished from import `[@]` by: no alias on the left, path string on the rig
    [@] << "{.}\my-app-02.aj3"
 
 {-} -RunServer
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <config#Config

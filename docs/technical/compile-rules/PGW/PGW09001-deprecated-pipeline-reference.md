@@ -23,7 +23,7 @@ severity: warning
 ```aljam3
 {-} -Transform
    [%] .deprecated << false
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -42,7 +42,7 @@ severity: warning
 {-} -OldProcess
    [%] .deprecated << true
    [%] .deprecatedMessage << "Use -NewProcess instead"
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -59,7 +59,7 @@ severity: warning
 ```aljam3
 {-} -LegacyFetch
    [%] .deprecated << true
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <url#string

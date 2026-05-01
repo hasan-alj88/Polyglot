@@ -42,7 +42,7 @@ severity: error
 
 {-} -ReadLogs
    (-) _AppGrant
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]

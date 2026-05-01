@@ -17,7 +17,7 @@ severity: error
 ```aljam3
 [ ] ✓ Using directional markers
 {-} -ProcessData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (<) <input#string
@@ -28,7 +28,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01061 — Using generic marker for specific parameter directions
 {-} -ProcessData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string                         [ ] ✗ PGE01061 — should be (<)

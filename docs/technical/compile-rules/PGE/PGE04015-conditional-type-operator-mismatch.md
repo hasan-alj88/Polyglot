@@ -109,7 +109,7 @@ severity: error
 ```aljam3
 [ ] ✓ range operator on int subject
 {-} -CheckScore
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <score#int
@@ -127,7 +127,7 @@ severity: error
 ```aljam3
 [ ] ✓ enum match on enum subject
 {-} -RouteByStatus
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <status#Status
@@ -145,7 +145,7 @@ severity: error
 ```aljam3
 [ ] ✓ cross-numeric — int subject with float bounds
 {-} -CheckTemp
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <temp#int
@@ -164,7 +164,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE04015 — range operator on string subject
 {-} -BadRange
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <name#string
@@ -180,7 +180,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE04015 — enum match on int subject
 {-} -BadEnum
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <count#int
@@ -196,7 +196,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE04015 — string equality on int subject
 {-} -BadEquality
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <count#int

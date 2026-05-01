@@ -33,7 +33,7 @@ The compiler parses foreign code into an AST and walks it to detect IO calls. Ea
    (-) _DataRead
    (-) _ProcessGrant
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]

@@ -32,7 +32,7 @@ severity: error
 
 {-} -GoodPipe
    (-) _LogReader
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -44,7 +44,7 @@ severity: error
 ```aljam3
 [ ] ✓ pure computation — no IO calls, no permission declarations needed
 {-} -PureCompute
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <a#int
@@ -75,7 +75,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE10004 — calls -File.Text.Read without any permission declaration granting File.Read
 {-} -BadPipe
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -104,7 +104,7 @@ severity: error
       (-) >content >> $data
 
 {-} -Outer
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]

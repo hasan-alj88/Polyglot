@@ -21,14 +21,14 @@ The Queue Handler uses two container types:
 | Dispatch Queues Coordinator Queue | Queue | Virtual single-slot buffer — holds Tier 1 Selection RR's candidate for Tier 2 |
 | Resume Queue | Queue | Resumed Jobs waiting for a dispatch slot |
 | Teardown Queue | Queue | Jobs waiting for a cleanup slot to run `[/]` cleanup before termination |
-| Executing Set | Set | Currently executing |
+| Running Set | Set | Currently executing |
 | Suspended Set | Set | Suspended — resource freeing level varies per Job |
 
 ## The Dispatch Coordinator
 
 The Dispatch Coordinator is the unified dispatch layer that reads from all parallel Dispatch Queues simultaneously. It is not a separate container — it is the autonomous dispatch loop inside the Queue Handler.
 
-Each Dispatch Queue maintains its own internal ordering (FIFO, LIFO, Priority). Each queue proposes its next candidate based on its strategy. The Dispatch Coordinator dispatches Jobs to the Executing Set while being **faithful** to every Dispatch Queue's rules:
+Each Dispatch Queue maintains its own internal ordering (FIFO, LIFO, Priority). Each queue proposes its next candidate based on its strategy. The Dispatch Coordinator dispatches Jobs to the Running Set while being **faithful** to every Dispatch Queue's rules:
 
 - If GPUQueue (LIFO) says D goes before E, the Dispatch Coordinator will never dispatch E before D
 - If DefaultQueue (FIFO) says A goes before B, the Dispatch Coordinator will never dispatch B before A
@@ -55,7 +55,7 @@ Tier 2 — Dispatch RR (three equal peers):
    └─ Teardown Queue
        │ round-robin between all three
        ▼
-Dispatch Constraints → Executing Set
+Dispatch Constraints → Running Set
 ```
 
 **Tier 1 (Selection RR):** Round-robins across user-defined Dispatch Queues to select one candidate. Each queue proposes exactly one candidate. The selected candidate enters the Dispatch Queues Coordinator Queue.
@@ -64,17 +64,17 @@ Dispatch Constraints → Executing Set
 
 ## State Transitions
 
-Triggered pipelines enter the Dispatch Queue assigned by their `[Q]` declaration. The Dispatch Coordinator dispatches them to the Executing Set when resources and concurrency constraints allow.
+Triggered pipelines enter the Dispatch Queue assigned by their `[Q]` declaration. The Dispatch Coordinator dispatches them to the Running Set when resources and concurrency constraints allow.
 
 - **Trigger** → Dispatch Queue (per `[Q]` config)
-- **Dispatch Queue** → dispatched by Dispatch Coordinator → Executing Set
-- **Executing Set** → throttle → Throttled (still in Executing Set, reduced resources)
-- **Executing Set** → pause (any level) → Suspended Set (resource freeing per level)
+- **Dispatch Queue** → dispatched by Dispatch Coordinator → Running Set
+- **Running Set** → throttle → Throttled (still in Running Set, reduced resources)
+- **Running Set** → pause (any level) → Suspended Set (resource freeing per level)
 - **Suspended Set** → resume → Resume Queue
-- **Resume Queue** → dispatched by Dispatch Coordinator → Executing Set (resumes from suspended state)
-- **Executing Set** → Kill.WithCleanup → Teardown Queue (waits for cleanup slot)
-- **Teardown Queue** → dispatched by Dispatch Coordinator → Executing Set (runs `[/]` cleanup, terminates)
-- **Executing Set** → Kill.Now → immediately removed, no cleanup
+- **Resume Queue** → dispatched by Dispatch Coordinator → Running Set (resumes from suspended state)
+- **Running Set** → Kill.WithCleanup → Teardown Queue (waits for cleanup slot)
+- **Teardown Queue** → dispatched by Dispatch Coordinator → Running Set (runs `[/]` cleanup, terminates)
+- **Running Set** → Kill.Now → immediately removed, no cleanup
 
 ## Host-Based Load Balancing
 

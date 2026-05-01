@@ -24,7 +24,7 @@ severity: warning
 ```aljam3
 [ ] ✓ variable assigned and consumed
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -39,7 +39,7 @@ severity: warning
 ```aljam3
 [ ] ✓ discard pattern — intentionally unused
 {-} -FireAndForget
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -54,7 +54,7 @@ severity: warning
 ```aljam3
 [ ] ✓ variable used in conditional
 {-} -Route
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <status#Status
@@ -74,7 +74,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW02002 — $unused assigned but never consumed
 {-} -Wasteful
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -92,7 +92,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW02002 — $temp assigned but never consumed
 {-} -DeadAssignment
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string

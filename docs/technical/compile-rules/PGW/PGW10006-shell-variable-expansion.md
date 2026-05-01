@@ -35,7 +35,7 @@ severity: warning
 {-} -SafeShell
    (-) _ShellGrant
    (-) ;Bash
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;Bash
    [ ]
@@ -58,7 +58,7 @@ severity: warning
 {-} -LogShell
    (-) _ShellGrant
    (-) ;Bash
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;Bash
    [ ]
@@ -80,7 +80,7 @@ severity: warning
 {-} -CurlShell
    (-) _ShellGrant
    (-) ;Bash
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;Bash
    [ ]

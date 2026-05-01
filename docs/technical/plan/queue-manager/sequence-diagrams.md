@@ -27,9 +27,9 @@ sequenceDiagram
     Note over DC: Dispatch Coordinator wakes (enqueue event)
     DC->>Redis: Peek all Dispatch Queues (Tier 1 Selection RR)
     DC->>Redis: Read cached constraints from queue:config:{queue}
-    DC->>Redis: Read counter:instances, set:executing
+    DC->>Redis: Read counter:instances, set:running
     Note over DC: Apply scoped constraints per candidate
-    DC->>Redis: LPOP queue, SADD set:executing, HINCRBY counter:instances
+    DC->>Redis: LPOP queue, SADD set:running, HINCRBY counter:instances
     QH-->>TM: state.job.{jobId}.executing
     QH-->>TM: state.executing.count {n}
     QH->>Runner: control.{jobId}.start {pipeline, params}
@@ -41,7 +41,7 @@ sequenceDiagram
 
     Runner-->>QH: runner.completed {jobId, result}
     Runner-->>TM: runner.completed {jobId, result}
-    QH->>Redis: SREM set:executing, HINCRBY counter:instances -1, DEL job
+    QH->>Redis: SREM set:running, HINCRBY counter:instances -1, DEL job
     QH-->>TM: state.job.{jobId}.completed
     QH-->>TM: state.executing.count {n}
     Note over DC: Dispatch Coordinator wakes (slot freed)
@@ -109,13 +109,13 @@ sequenceDiagram
     TM->>QH: command.job.kill.with-cleanup {jobId: sub-1}
     TM->>QH: command.job.kill.with-cleanup {jobId: sub-2}
 
-    QH->>Redis: SREM set:executing {parent}, HINCRBY -1
+    QH->>Redis: SREM set:running {parent}, HINCRBY -1
     QH->>Redis: RPUSH queue:teardown {parent}
     
-    QH->>Redis: SREM set:executing {sub-1}, HINCRBY -1
+    QH->>Redis: SREM set:running {sub-1}, HINCRBY -1
     QH->>Redis: RPUSH queue:teardown {sub-1}
 
-    QH->>Redis: SREM set:executing {sub-2}, HINCRBY -1
+    QH->>Redis: SREM set:running {sub-2}, HINCRBY -1
     QH->>Redis: RPUSH queue:teardown {sub-2}
 
     QH-->>TM: state.job.{parent}.teardown.pending
@@ -171,7 +171,7 @@ sequenceDiagram
 
     Note over TM: RAM drops below threshold → -Q.Job.Pause.Free.RAM.RAM.LessThan fires
     TM->>QH: command.job.pause.free.ram {jobId}
-    QH->>Redis: SREM set:executing {jobId}
+    QH->>Redis: SREM set:running {jobId}
     QH->>Redis: HSET set:suspended {jobId} "hard"
     QH->>Redis: HINCRBY counter:instances {pipeline} -1
     QH->>Runner: control.{jobId}.job.pause.free.ram
@@ -190,7 +190,7 @@ sequenceDiagram
     QH-->>TM: state.job.{jobId}.resuming
 
     Note over QH: Dispatch Coordinator wakes: Tier 2 RR includes Resume Queue
-    QH->>Redis: LPOP queue:resume, SADD set:executing, HINCRBY counter:instances
+    QH->>Redis: LPOP queue:resume, SADD set:running, HINCRBY counter:instances
     QH->>Runner: control.{jobId}.job.resume
     QH-->>TM: state.job.{jobId}.executing
 ```

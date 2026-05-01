@@ -19,7 +19,7 @@ severity: error
 {-} -ProcessData
    (-) <data#string
    (-) >status#int
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] >run
@@ -30,7 +30,7 @@ severity: error
 {-} -PingService
    (-) <#None
    (-) >#None
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] -Do.Ping
@@ -40,7 +40,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE01003 — Missing IO declarations
 {-} -PingService
-   [T] -T.Manual                           [ ] ✗ PGE01003 — Reached [T] without seeing IO declarations
+   [T] -T.CLI                           [ ] ✗ PGE01003 — Reached [T] without seeing IO declarations
    [Q] -Q.Default
    [W] -W.Aljam3
    [-] -Do.Ping

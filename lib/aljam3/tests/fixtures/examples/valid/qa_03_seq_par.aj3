@@ -1,0 +1,76 @@
+[ ] Test QA for mixed sequential and parallel jobs
+{@} @Local:7777<QA:Test.UserOnboarding:1.0.0
+   [@] @Auth << @Community:authservice<Auth.Service:2.0.0
+   [@] @Mail << @Community:mailservice<Mail.Sender:1.0.0
+   [@] @Cloud << @Company:internal<Storage.Provider:3.0.0
+
+
+{#} #OnboardingStatus
+   [#] .Completed
+   [#] .Failed
+   [#] .InProgress
+
+
+
+{#} #OnboardingPayload
+   [#] .userId#string
+   [#] .userEmail#string
+   [#] .userName#string
+
+
+
+{-} -OnboardUser
+   (-) <userId#string <~ ""
+   (-) >onboardingStatus#OnboardingStatus ~> #OnboardingStatus.Failed
+   [ ] Triggers and Queue
+   [T] -T.Http"POST /onboard"
+      ( ) if the payload does not contain userId
+      ( ) it the trigger will fail to trigger
+      ( ) failed trigger are logged automatically via Otel
+      (-) >Payload.userId#string >> <userId
+         (>) >! ""
+   [Q] -Q.HighPriority
+   [W] -W.Aljam3
+   [ ]
+   [ ] Sequential job: Fetch user profile
+   [-] @Auth-API.Users.GetProfile
+      (-) <id << <userId
+      (-) >email#Email >> $userEmail
+         (>) >! "default@example.com"
+      (-) >name#string >> $userName
+         (>) >! "Unknown"
+   [ ]
+   [ ] Parallel job 1: Provision Email
+   [=] @Mail-API.Account.Create
+      (-) $EmailCreationOp
+      (-) <email << $userEmail
+      (-) <name << $userName
+      (-) >status >> @Mail#Status.Success
+         (>) >! @Mail#Status.Failed
+   [ ]
+   [ ] Parallel job 2: Provision Storage
+   [=] @Cloud-API.Storage.CreateBucket
+      (-) $StorageCreationOp
+      (-) <owner << <userId
+      (-) >status >> @Cloud#Status.Success
+         (>) >! @Cloud#Status.Failed
+   [ ]
+   [ ] Lesson 003: Parallel Collectors
+   [*] *All
+      (*) << $EmailCreationOp>status
+      (*) << $StorageCreationOp>status
+
+   [ ] Sequential job: Send Welcome Email
+   [-] @Mail-API.Email.Send
+      (-) <recipient << $userEmail
+      (-) <subject << "Welcome {<userName}!"
+      (-) <body << "Your account is ready."
+      (-) >status >> $EmailSendingStatus
+         (>) >! @Mail#Status.FailedToSend
+   [ ]
+   [?] $EmailCreationOp.status =? @Mail#Status.Success
+   [&] $StorageCreationOp.status =? @Cloud#Status.Success
+      [-] >onboardingStatus#OnboardingStatus << #OnboardingStatus.Completed
+   [?] *?
+      [-] >onboardingStatus#OnboardingStatus << #OnboardingStatus.Failed
+      

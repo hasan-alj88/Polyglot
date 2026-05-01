@@ -149,7 +149,7 @@ When branching on an enum imported from another package, use the `@alias#EnumNam
 ```aljam3
 [ ] ✓ imported enum — all variants covered, no *? needed
 [?] $status;@models#OrderStatus
-   [?] @models#OrderStatus.Pending
+   [?] @models#OrderStatus.Enqueued
       [-] -Process.Queue
    [?] @models#OrderStatus.Shipped
       [-] -Process.Track

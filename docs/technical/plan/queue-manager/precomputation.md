@@ -21,9 +21,9 @@ On enqueue(jobId):
     HSET job:{jobId} constraint_precomputed {pass|fail|reason}
 ```
 
-When the Dispatch Coordinator cycles, the cached result is read instead of re-evaluated. Caches invalidate only when the Executing Set changes (job starts, completes, pauses, or resumes) — a known, finite set of events.
+When the Dispatch Coordinator cycles, the cached result is read instead of re-evaluated. Caches invalidate only when the Running Set changes (job starts, completes, pauses, or resumes) — a known, finite set of events.
 
-Invalidation trigger: any change to `set:executing` → recompute constraints for all waiting candidates.
+Invalidation trigger: any change to `set:running` → recompute constraints for all waiting candidates.
 
 ## 2. Short-circuit on State Broadcast
 

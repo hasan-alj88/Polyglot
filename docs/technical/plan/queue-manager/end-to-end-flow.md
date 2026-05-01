@@ -25,7 +25,7 @@ updated: 2026-04-16
    → Tier 1 Selection RR: pick candidate from Dispatch Queues → job:001 from DefaultQueue
    → Tier 2 Dispatch RR: round-robin between Coordinator Queue, Resume Queue (empty), Teardown Queue (empty) → job:001
    → Check scoped constraints → all clear
-   → Redis: LPOP, SADD set:executing, HINCRBY counter:instances
+   → Redis: LPOP, SADD set:running, HINCRBY counter:instances
    → NATS: publish "aljam3.queue.control.job:001.start"
 
 4. Runner starts pipeline
@@ -33,7 +33,7 @@ updated: 2026-04-16
 
 5. Pipeline completes
    → NATS: publish "aljam3.runner.completed.job:001" → QH + TM
-   → QH Redis: SREM set:executing, HINCRBY counter:instances -1, DEL job:job:001
+   → QH Redis: SREM set:running, HINCRBY counter:instances -1, DEL job:job:001
    → Dispatch Coordinator wakes (slot freed)
 ```
 
@@ -47,7 +47,7 @@ updated: 2026-04-16
    → NATS: publish "command.job.pause.free.ram.hard" {jobId: job:001, timing: "wait"}
 
 3. Queue Handler receives command.job.pause.free.ram.hard
-   → Redis: SREM set:executing job:001
+   → Redis: SREM set:running job:001
    → Redis: HSET set:suspended job:001 "ram.hard"
    → Redis: HINCRBY counter:instances ProcessData -1
    → Redis: HINCRBY counter:instances:queue:DefaultQueue ProcessData -1
@@ -78,7 +78,7 @@ updated: 2026-04-16
 9. Dispatch Coordinator cycles
    → Tier 2 RR includes Resume Queue → job:001
    → Constraints re-checked → all clear
-   → Redis: LPOP queue:resume, SADD set:executing, HINCRBY counter:instances
+   → Redis: LPOP queue:resume, SADD set:running, HINCRBY counter:instances
    → NATS: publish "aljam3.queue.control.job:001.job.resume"
 ```
 
@@ -89,7 +89,7 @@ updated: 2026-04-16
    → NATS: publish "command.job.kill.with-cleanup" {jobId: job:001}
 
 2. Queue Handler receives command.job.kill.with-cleanup (job status: executing)
-   → Redis: SREM set:executing job:001
+   → Redis: SREM set:running job:001
    → Redis: RPUSH queue:teardown job:001
    → Redis: HINCRBY counter:instances ProcessData -1
    → Redis: HSET job:job:001 status "teardown.pending"
@@ -97,13 +97,13 @@ updated: 2026-04-16
    → Dispatch Coordinator wakes (slot freed + item in Teardown Queue)
 
 3. Dispatch Coordinator dispatches from Teardown Queue
-   → Redis: LPOP queue:teardown, SADD set:executing, HINCRBY counter:instances
+   → Redis: LPOP queue:teardown, SADD set:running, HINCRBY counter:instances
    → Redis: HSET job:job:001 status "teardown.executing"
    → NATS: publish "aljam3.queue.control.job:001.job.kill.with-cleanup"
 
 4. Runner finishes current work, runs [/] cleanup, terminates
    → NATS: publish "aljam3.runner.teardown_completed.job:001" → QH + TM
-   → QH Redis: SREM set:executing, HINCRBY counter:instances -1, DEL job:job:001
+   → QH Redis: SREM set:running, HINCRBY counter:instances -1, DEL job:job:001
    → Dispatch Coordinator wakes (slot freed)
 ```
 

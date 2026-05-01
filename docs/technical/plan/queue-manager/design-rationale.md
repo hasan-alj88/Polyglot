@@ -11,7 +11,7 @@ updated: 2026-04-15
 ## Why Redis for State
 
 - **Atomic Lua scripts** — Dispatch Coordinator constraint checks and state mutations execute as one atomic operation. No race conditions.
-- **Data structure fit** — LIST for FIFO/LIFO, SORTED SET for Priority, SET for Executing, HASH for Suspended and metadata.
+- **Data structure fit** — LIST for FIFO/LIFO, SORTED SET for Priority, SET for Running, HASH for Suspended and metadata.
 - **Dynamic priority** — `ZADD` / `ZINCRBY` allow real-time reprioritization triggered by events.
 - **Lightweight** — single binary, in-memory, microsecond latency.
 

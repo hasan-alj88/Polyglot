@@ -27,7 +27,7 @@ severity: error
    [@] << "{.}\file-02.aj3"
 
 {-} -LoadData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >data#string
@@ -43,7 +43,7 @@ severity: error
    [@] << "{.}\file-01.aj3"
 
 {-} -ProcessData
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -65,7 +65,7 @@ severity: error
    [@] << "{.}\file-02.aj3"
 
 {-} -Transform
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -78,7 +78,7 @@ severity: error
    [@] << "{.}\file-01.aj3"
 
 {-} -Transform                              [ ] ✗ PGE09007 — -Transform already defined in file-01.aj3
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string

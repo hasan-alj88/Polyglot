@@ -42,7 +42,7 @@ Job state is stored at `%-:Pipeline:N.jobs:UID` in the metadata tree. See [[glos
 | Field | Type | Purpose |
 |-------|------|---------|
 | `.PID` | `#String` | OS process ID — needed for SIGTERM, SIGKILL, SIGSTOP, SIGCONT |
-| `.status` | `#QueueState` | Current lifecycle state (Pending, Executing, Completed, etc.) |
+| `.status` | `#QueueState` | Current lifecycle state (Enqueued, Running, Completed, etc.) |
 | `.pipeline` | `#String` | Pipeline name this job belongs to |
 | `.queue` | `#String` | Dispatch Queue this job was assigned to |
 | `.parent` | `#String` | Parent job ID (empty for root job) |

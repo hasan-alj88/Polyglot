@@ -37,7 +37,7 @@ severity: warning
 {-} -CustomLib
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]
@@ -57,7 +57,7 @@ severity: warning
 {-} -BottomUpDetect
    (-) _DataRead
    (-) ;PythonUV
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Env;PythonUV
    [ ]

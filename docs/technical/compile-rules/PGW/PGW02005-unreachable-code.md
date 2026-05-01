@@ -26,7 +26,7 @@ severity: warning
 ```aljam3
 [ ] ✓ code after non-terminal conditional — reachable
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -49,7 +49,7 @@ severity: warning
 ```aljam3
 [ ] ✓ multiple outputs — only one is Final, code still reachable
 {-} -MultiOut
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -67,7 +67,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW02005 — statement after output is Final
 {-} -DeadAfterFinal
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -81,7 +81,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW02005 — code after every branch terminates
 {-} -DeadAfterExhaustive
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -99,7 +99,7 @@ severity: warning
 ```aljam3
 [ ] ⚠ PGW02005 — all outputs Final across multiple pushes
 {-} -MultiOutDead
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -119,7 +119,7 @@ severity: warning
 ```aljam3
 [ ] ✓ post-finalization work in [/] cleanup
 {-} -CorrectCleanup
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string

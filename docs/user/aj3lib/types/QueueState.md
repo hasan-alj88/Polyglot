@@ -25,8 +25,8 @@ Runtime `##Enum` type available in every `.aj3` file. Uses `[#] ##Enum` (enum cl
    [#] ##Scalar
    [#] ###ScalarEnum
    [#] %##Alias << "queuestate"
-   [.] .Pending
-   [.] .Executing
+   [.] .Enqueued
+   [.] .Running
    [.] .SuspendedSoft
    [.] .SuspendedHard
    [.] .Resuming

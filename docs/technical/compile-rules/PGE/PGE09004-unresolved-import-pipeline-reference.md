@@ -26,7 +26,7 @@ severity: error
 
 [ ] ✓ -Validate exists as {-} -Validate in @Local:999.Utilities:v1.0.0
 {-} -Main
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -42,7 +42,7 @@ severity: error
 
 [ ] ✗ PGE09004 — -NonExistent not found in imported package
 {-} -Main
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -56,7 +56,7 @@ severity: error
 
 [ ] ✗ PGE09004 — typo in pipeline name
 {-} -Main
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
@@ -70,7 +70,7 @@ severity: error
 
 [ ] ✗ PGE09004 — pipeline was removed in newer version
 {-} -Main
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]

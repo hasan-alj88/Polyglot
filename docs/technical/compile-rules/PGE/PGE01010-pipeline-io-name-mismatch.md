@@ -21,7 +21,7 @@ severity: error
 **VALID:**
 ```aljam3
 {-} -Greet
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <name#string
@@ -37,7 +37,7 @@ severity: error
 
 ```aljam3
 {-} -Transform
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -54,7 +54,7 @@ severity: error
 **INVALID:**
 ```aljam3
 {-} -Greet
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <name#string
@@ -77,7 +77,7 @@ severity: error
 
 ```aljam3
 {-} -Process
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string

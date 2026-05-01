@@ -24,7 +24,7 @@ severity: error
 ```aljam3
 [ ] ✓ valid inclusive range — lo < hi
 {-} -Grade
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <score#int
@@ -42,7 +42,7 @@ severity: error
 ```aljam3
 [ ] ✓ single-point inclusive range — lo == hi is valid
 {-} -Exact
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <count#int
@@ -58,7 +58,7 @@ severity: error
 ```aljam3
 [ ] ✓ valid exclusive range — lo < hi with room between
 {-} -Between
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <temp#float
@@ -75,7 +75,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE04013 — inverted inclusive range
 {-} -BadInclusive
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <score#int
@@ -91,7 +91,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE04013 — empty exclusive range (lo == hi)
 {-} -BadExclusive
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <temp#float
@@ -107,7 +107,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE04013 — inverted mixed range
 {-} -BadMixed
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <value#int

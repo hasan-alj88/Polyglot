@@ -75,7 +75,7 @@ severity: error
 ```aljam3
 [ ] ✓ variable live metadata — %state exists for all $variables
 {-} -CheckState
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -91,7 +91,7 @@ severity: error
 ```aljam3
 [ ] ✓ pipeline live metadata — %status exists for all pipelines
 {-} -Monitor
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -107,7 +107,7 @@ severity: error
 [ ] ✓ user-declared metadata — %description exists when declared in [%]
 {-} -Documented
    [%] .description << "Handles payments"
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -119,7 +119,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE12001 — $variable has no %description field
 {-} -BadAccess
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <count#int
@@ -131,7 +131,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE12001 — pipeline has no %memory field
 {-} -BadPipeline
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) >out#string
@@ -142,7 +142,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE12001 — %isSuccess is pipeline-only, not variable
 {-} -WrongScope
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string

@@ -23,7 +23,7 @@ severity: error
 ```aljam3
 [ ] ✓ code between partial Final pushes — still reachable
 {-} -MultiStage
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -42,7 +42,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE02009 — code after single output pushed Final
 {-} -DeadAfterFinal
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -56,7 +56,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE02009 — code after exhaustive conditional terminates all outputs
 {-} -DeadAfterExhaustive
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <data#string
@@ -74,7 +74,7 @@ severity: error
 ```aljam3
 [ ] ✗ PGE02009 — multiple outputs, all Final
 {-} -MultiOutDead
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string
@@ -94,7 +94,7 @@ severity: error
 ```aljam3
 [ ] ✓ post-finalization work in [/] cleanup
 {-} -CorrectCleanup
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <input#string

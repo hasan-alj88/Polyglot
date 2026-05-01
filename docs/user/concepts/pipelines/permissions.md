@@ -23,7 +23,7 @@ Pipelines declare permissions by referencing named `{_}` grant objects via `(-)`
 
 {-} -AnalyzeLogs
    (-) _LogGrant
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    (-) <logPath#path

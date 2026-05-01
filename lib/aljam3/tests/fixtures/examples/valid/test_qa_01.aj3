@@ -2,19 +2,19 @@
    [@] @DB << @Company:TopHillHighSchool<StudentDB:1.3.5
 
 {-} -File.CSV.Log
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
    [-] -T.Dummy
 {-} -Agg.Flat.Max
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
    [-] -T.Dummy
 {-} -Do.Nothing
-   [T] -T.Manual
+   [T] -T.CLI
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]

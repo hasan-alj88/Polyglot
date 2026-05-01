@@ -44,12 +44,12 @@ Jobs that received a graceful kill. Waiting for a cleanup slot to be dispatched 
 "queue:teardown"                  LIST   [jobZ]
 ```
 
-## Executing Set
+## Running Set
 
 Jobs currently running. Used for constraint checks (scoped maxInstances, maxConcurrent, resourceTag).
 
 ```text
-"set:executing"                   SET    {jobA, jobD, jobF}
+"set:running"                   SET    {jobA, jobD, jobF}
 ```
 
 ## Suspended Set
@@ -103,7 +103,7 @@ started_at:         string?   — ISO timestamp
 suspended_at:       string?   — ISO timestamp
 pid:                int?      — OS process ID (from Runner ACK)
 confirmed_paused:   bool?     — Runner confirmed suspension
-throttled:          bool?     — true if job is throttled (remains in set:executing)
+throttled:          bool?     — true if job is throttled (remains in set:running)
 throttle_config:    string?   — serialized throttle limits {cpu?, memory?, io?}
 images_dir:         string?   — CRIU image directory (set on Free.All suspend, read on resume)
 ```
@@ -125,21 +125,21 @@ Every job has a `status` field with one of these variants:
 
 ```aljam3
 #QueueState (10 variants)
-├── #Pending              — in Dispatch Queue, waiting for dispatch
-├── #Executing            — in Executing Set, actively running
-├── #Executing.Throttled  — in Executing Set, running with reduced resources (throttled flag set)
+├── #Enqueued              — in Dispatch Queue, waiting for dispatch
+├── #Running            — in Running Set, actively running
+├── #Running.Throttled  — in Running Set, running with reduced resources (throttled flag set)
 ├── #Suspended.CPU        — in Suspended Set ("cpu"), cgroup frozen, RAM in process memory
 ├── #Suspended.RAM.Soft   — in Suspended Set ("ram.soft"), cgroup frozen, RAM best-effort swapped
 ├── #Suspended.RAM.Hard   — in Suspended Set ("ram.hard"), cgroup frozen, RAM guaranteed freed
 ├── #Suspended.All        — in Suspended Set ("all"), CRIU checkpointed, process terminated, state on disk
 ├── #Resuming             — in Resume Queue, waiting for dispatch slot
-├── #Teardown.Pending     — in Teardown Queue, waiting for cleanup slot
-└── #Teardown.Executing   — in Executing Set, running [/] cleanup
+├── #Teardown.Enqueued     — in Teardown Queue, waiting for cleanup slot
+└── #Teardown.Running   — in Running Set, running [/] cleanup
 ```
 
 Each state maps to exactly one container. No `#Killed` or `#Completed` — the job hash is DELeted on those transitions.
 
-**Throttle note:** `#Executing.Throttled` is a sub-state of `#Executing` — the job remains in `set:executing` and keeps its dispatch slot. The `throttled` flag on the job hash distinguishes it from normal execution. Throttle does not affect counter accounting.
+**Throttle note:** `#Running.Throttled` is a sub-state of `#Running` — the job remains in `set:running` and keeps its dispatch slot. The `throttled` flag on the job hash distinguishes it from normal execution. Throttle does not affect counter accounting.
 
 Job hierarchy (parentJobId, children) lives ONLY in NoSQL — not in Redis. For kill propagation, the Trigger Monitor reads the hierarchy from NoSQL, pre-computes the full descendant list, and sends individual kill signals for each.
 
