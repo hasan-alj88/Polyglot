@@ -70,7 +70,7 @@ The `<#Columns` parameter must satisfy `##Enum` -- column names come from an enu
 
 ## Used By
 
-<!-- @u:aj3lib/types/Dataframe -->
+<!-- @u:jm3lib/types/Dataframe -->
 
 - [[Dataframe|#Dataframe]] type composes this schema
 

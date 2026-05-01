@@ -1,8 +1,8 @@
 ---
-phase: 161-split-aj3lib-docs-per-operator
+phase: 161-split-jm3lib-docs-per-operator
 plan: 04
 subsystem: docs
-tags: [aj3lib, pipelines, wrappers, schema, queue, runtime, doc-template]
+tags: [jm3lib, pipelines, wrappers, schema, queue, runtime, doc-template]
 
 provides:
   - 12 wrapper operator files (W/)
@@ -14,15 +14,15 @@ affects: [161-05 wikilinks]
 
 key-files:
   created:
-    - docs/user/aj3lib/pipelines/W/INDEX.md
-    - docs/user/aj3lib/pipelines/Schema/INDEX.md
-    - docs/user/aj3lib/pipelines/Q/INDEX.md
-    - docs/user/aj3lib/pipelines/RT/INDEX.md
+    - docs/user/jm3lib/pipelines/W/INDEX.md
+    - docs/user/jm3lib/pipelines/Schema/INDEX.md
+    - docs/user/jm3lib/pipelines/Q/INDEX.md
+    - docs/user/jm3lib/pipelines/RT/INDEX.md
   deleted:
-    - docs/user/aj3lib/pipelines/W.md
-    - docs/user/aj3lib/pipelines/#.md
-    - docs/user/aj3lib/pipelines/Q.md
-    - docs/user/aj3lib/pipelines/RT.md
+    - docs/user/jm3lib/pipelines/W.md
+    - docs/user/jm3lib/pipelines/#.md
+    - docs/user/jm3lib/pipelines/Q.md
+    - docs/user/jm3lib/pipelines/RT.md
 
 duration: ~2min
 completed: 2026-04-07
@@ -68,5 +68,5 @@ None -- executed by 4 parallel agents as planned.
 **Blockers:** None
 
 ---
-*Phase: 161-split-aj3lib-docs-per-operator, Plan: 04*
+*Phase: 161-split-jm3lib-docs-per-operator, Plan: 04*
 *Completed: 2026-04-07*

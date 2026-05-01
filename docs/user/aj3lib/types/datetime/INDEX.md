@@ -25,4 +25,4 @@ The alias `#dt` is available for type annotations.
 | [[calendar-date-types]] | Gregorian, Hijri, Hebrew, Chinese, Persian, Buddhist, Hindu, Japanese, Ethiopian, Coptic, Custom |
 | [[non-standard-time]] | `#ChineseTime`, `#HinduTime`, `#DecimalTime`, `#CustomTimeUnit` |
 | [[cultural-types]] | `#Holiday`, `#Observance`, `#Season` and related enums |
-| [[related]] | Cross-references to other aj3lib type docs |
+| [[related]] | Cross-references to other jm3lib type docs |

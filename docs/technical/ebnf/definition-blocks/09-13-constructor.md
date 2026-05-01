@@ -49,7 +49,7 @@ constructor_native_call ::= "[-]" "-" pipeline_ref NEWLINE
 - `[$]` type binding — exactly one per overload, must appear after all `($)` IO lines and before `[.]` field assignments. Declares the target type: `[$] #TargetType`.
 - `[.]` fixed field assignment maps captured values or metadata to target type fields. Same syntax as in `{#}` definitions.
 - **Keyword overloads** have no `($)` lines — the entire `pattern_string` is treated as an exact-match regex (`^pattern$`). The `constructor_body` then has zero `constructor_io_line` entries.
-- **Native pipeline overloads** (`constructor_native_body`) use `[-]` calls to infallible native pipelines. **aj3lib only** — user-defined constructors cannot use `[-]` calls inside `{$}`. The called pipeline must be a `{N}` native definition that the compiler trusts as infallible.
+- **Native pipeline overloads** (`constructor_native_body`) use `[-]` calls to infallible native pipelines. **jm3lib only** — user-defined constructors cannot use `[-]` calls inside `{$}`. The called pipeline must be a `{N}` native definition that the compiler trusts as infallible.
 - **Overload resolution:** A constructor name (e.g., `$DT`) can have multiple `{$}` definitions. Each is an overload. The compiler resolves via regex matching: exactly one match required. Zero matches = compile error. Multiple matches = ambiguity error on the *definitions* (detected at definition compile time).
 - **Structural integrity check:** At definition compile time, the compiler verifies that no capture slot's `.re` pattern can match the pattern's literal separators. This prevents values from breaking pattern structure.
 - **Interpolation:** Constructor arguments may contain `{$var}` interpolation, but only if `$var` was produced by another constructor. Runtime/IO-sourced variables are a compile error.
@@ -81,7 +81,7 @@ Keyword overload:
    [.] .day << %Runtime.Date.Day
 ```
 
-Native pipeline overload (aj3lib only):
+Native pipeline overload (jm3lib only):
 
 ```aljam3
 {$} $DT"Now"

@@ -51,5 +51,5 @@ File.Write
 
 ## Related
 
-- [[aj3lib/pipelines/W/INDEX|-W.* Wrappers]]
-- [[aj3lib/pipelines/W/File.Lock|-W.File.Lock]]
+- [[jm3lib/pipelines/W/INDEX|-W.* Wrappers]]
+- [[jm3lib/pipelines/W/File.Lock|-W.File.Lock]]

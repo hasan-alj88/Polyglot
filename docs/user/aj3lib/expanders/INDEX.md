@@ -15,10 +15,10 @@ No `[@]` import needed.
 
 ## ForEach
 
-- [[aj3lib/expanders/ForEach/INDEX|=ForEach.*]] -- iterate Array, Map, Serial, Level, or Dataframe
+- [[jm3lib/expanders/ForEach/INDEX|=ForEach.*]] -- iterate Array, Map, Serial, Level, or Dataframe
 
 ## Related
 
-- [[aj3lib/INDEX|aj3lib Namespace Registry]]
-- [[aj3lib/collectors/INDEX|Collector Operators]] -- pair with expanders to collect results
+- [[jm3lib/INDEX|jm3lib Namespace Registry]]
+- [[jm3lib/collectors/INDEX|Collector Operators]] -- pair with expanders to collect results
 - [[concepts/collections/expand|Expand Operators]] -- conceptual overview

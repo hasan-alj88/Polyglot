@@ -32,5 +32,5 @@ Capability-level generic permission for shell command execution. Sugar over [[IN
 
 - [[INDEX|__System]] -- category-level generic
 - [[Process|__System.Process]] -- process spawning (lower privilege)
-- [[aj3lib/permissions/INDEX]] -- all aj3lib generic permissions
-- [[aj3lib/pipelines/Run/Shell|-Run.Shell]] -- pipeline requiring this capability
+- [[jm3lib/permissions/INDEX]] -- all jm3lib generic permissions
+- [[jm3lib/pipelines/Run/Shell|-Run.Shell]] -- pipeline requiring this capability

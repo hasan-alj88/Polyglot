@@ -49,7 +49,7 @@ completed: 2026-03-31
 
 ## Files Modified
 
-93 files across: user docs, EBNF specs, edge cases, compile rules (PGE/PGW), aj3lib pipelines, brainstorming.
+93 files across: user docs, EBNF specs, edge cases, compile rules (PGE/PGW), jm3lib pipelines, brainstorming.
 
 ## Decisions Made
 

@@ -7,7 +7,7 @@ updated: 2026-04-22
 # $Re Constructor
 
 <!-- @u:syntax/constructors -->
-<!-- @c:aj3lib/types/Re -->
+<!-- @c:jm3lib/types/Re -->
 
 The `$Re` constructor produces `#Re` values from regex pattern strings. The compiler validates that the pattern is syntactically valid regex at compile time — no error surface, no `[!]` handling needed.
 
@@ -47,7 +47,7 @@ Single overload — no ambiguity.
 
 ## Related
 
-- [[constructors/INDEX|aj3lib Constructors]] -- constructor registry
+- [[constructors/INDEX|jm3lib Constructors]] -- constructor registry
 - [[syntax/constructors]] -- `{$}` block specification
-- [[aj3lib/pipelines/Re.Parse|-Re.Parse]] -- runtime regex string parsing
-- [[aj3lib/types/Re|#Re type]] -- regex pattern type definition
+- [[jm3lib/pipelines/Re.Parse|-Re.Parse]] -- runtime regex string parsing
+- [[jm3lib/types/Re|#Re type]] -- regex pattern type definition

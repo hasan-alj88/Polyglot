@@ -9,7 +9,7 @@ dependencies: []
 **Audience**: Internal Agile Personas (Product Owner, Scrum Master, Development Team)
 
 ## Objective
-Build a robust and efficient lexer that parses `*.aj3` (Aljam3) code syntax and translates it into well-structured AST (Abstract Syntax Tree) JSONs. This forms the foundational layer for all subsequent compilation, analysis, and execution of Aljam3 code.
+Build a robust and efficient lexer that parses `*.jm3` (Aljam3) code syntax and translates it into well-structured AST (Abstract Syntax Tree) JSONs. This forms the foundational layer for all subsequent compilation, analysis, and execution of Aljam3 code.
 
 ## Research Findings: Impact of Strict Syntax Rules
 **User Observation:** *All aljam3 objects have identifiable prefixes, and all aljam3 lines are in the form `{indent}{marker}{1 expression}`.*
@@ -25,7 +25,7 @@ These intentional language design choices dramatically simplify lexical analysis
 
 ## Scope
 - **In Scope:**
-  - Tokenizing `{indent}`, `{marker}`, and `{expression}` from `*.aj3` files.
+  - Tokenizing `{indent}`, `{marker}`, and `{expression}` from `*.jm3` files.
   - Resolving object classes based on their defined prefixes.
   - Generating and exporting structured, nested JSON AST files.
   - Returning informative lexical errors (line/column tracking).
@@ -34,10 +34,10 @@ These intentional language design choices dramatically simplify lexical analysis
   - Semantic validation (e.g., type checking, checking if referenced variables exist) beyond lexical syntax.
 
 ## Features Breakdown & Pipeline Architecture
-To ensure strict separation of concerns, the transformation of `*.aj3` files follows an explicit timeline. This Epic is divided into features mapping directly to the 5 distinct architectural steps. Each feature will serve as a parent for executing specific development tasks.
+To ensure strict separation of concerns, the transformation of `*.jm3` files follows an explicit timeline. This Epic is divided into features mapping directly to the 5 distinct architectural steps. Each feature will serve as a parent for executing specific development tasks.
 
 ### Feature 1: Lexer (Token Stream Generator)
-- Scans `*.aj3` source code files line by line (ignore entirely blank lines).
+- Scans `*.jm3` source code files line by line (ignore entirely blank lines).
 - Evaluates scope: Indentation is **strictly 3 spaces per level**. If an indentation is not a multiple of 3, immediately trigger a compile syntax error.
 - Enforces syntactic boundaries: Explicitly isolates markers bound by `{X}`, `[X]`, or `(X)`.
 - Handles Comments: If the bracket is empty (`{}`, `[]`, or `()`), treats the entire line as a comment and ignores it.

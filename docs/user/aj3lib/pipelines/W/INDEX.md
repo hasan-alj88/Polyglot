@@ -14,7 +14,7 @@ Execution order: `(-),[T]` -> `[Q]` -> `[\]` -> Body -> `[/]`
 
 No `[@]` import needed.
 
-**PRIMITIVE** — aj3lib wrappers are direct OS/runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.aj3` files. User-defined wrappers are created as `{W}` definitions and referenced on `[W]` lines — see [[concepts/pipelines/wrappers#Wrappers]].
+**PRIMITIVE** — jm3lib wrappers are direct OS/runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.jm3` files. User-defined wrappers are created as `{W}` definitions and referenced on `[W]` lines — see [[concepts/pipelines/wrappers#Wrappers]].
 
 ## Permissions
 
@@ -43,68 +43,68 @@ Wrappers that manage external resources require a `{_}` permission object granti
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/Aljam3\|-W.Aljam3]] | Pure Aljam3 Code — no external runtime, no setup/cleanup |
+| [[jm3lib/pipelines/W/Aljam3\|-W.Aljam3]] | Pure Aljam3 Code — no external runtime, no setup/cleanup |
 
 ### Database
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/DB.Connection\|-W.DB.Connection]] | Opens DB connection on setup, closes on cleanup |
-| [[aj3lib/pipelines/W/DB.Transaction\|-W.DB.Transaction]] | Opens connection + begins transaction on setup, commits + closes on cleanup |
+| [[jm3lib/pipelines/W/DB.Connection\|-W.DB.Connection]] | Opens DB connection on setup, closes on cleanup |
+| [[jm3lib/pipelines/W/DB.Transaction\|-W.DB.Transaction]] | Opens connection + begins transaction on setup, commits + closes on cleanup |
 
 ### File System
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/File.Lock\|-W.File.Lock]] | Acquires file lock on setup, releases on cleanup |
-| [[aj3lib/pipelines/W/File.TempDir\|-W.File.TempDir]] | Creates temp directory on setup, deletes on cleanup |
+| [[jm3lib/pipelines/W/File.Lock\|-W.File.Lock]] | Acquires file lock on setup, releases on cleanup |
+| [[jm3lib/pipelines/W/File.TempDir\|-W.File.TempDir]] | Creates temp directory on setup, deletes on cleanup |
 
 ### Network
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/HTTP.Session\|-W.HTTP.Session]] | Creates HTTP client on setup, closes on cleanup |
-| [[aj3lib/pipelines/W/SSH.Session\|-W.SSH.Session]] | Connects SSH on setup, disconnects on cleanup |
+| [[jm3lib/pipelines/W/HTTP.Session\|-W.HTTP.Session]] | Creates HTTP client on setup, closes on cleanup |
+| [[jm3lib/pipelines/W/SSH.Session\|-W.SSH.Session]] | Connects SSH on setup, disconnects on cleanup |
 
 ### Security
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/Auth.Token\|-W.Auth.Token]] | Acquires OAuth token on setup, revokes on cleanup |
+| [[jm3lib/pipelines/W/Auth.Token\|-W.Auth.Token]] | Acquires OAuth token on setup, revokes on cleanup |
 
 ### Observability
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/Log.Context\|-W.Log.Context]] | Opens structured log scope on setup, closes on cleanup |
+| [[jm3lib/pipelines/W/Log.Context\|-W.Log.Context]] | Opens structured log scope on setup, closes on cleanup |
 
 ### Messaging
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/Queue.Consumer\|-W.Queue.Consumer]] | Connects to message queue on setup, disconnects on cleanup |
+| [[jm3lib/pipelines/W/Queue.Consumer\|-W.Queue.Consumer]] | Connects to message queue on setup, disconnects on cleanup |
 
 ### Caching
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/Cache.Scope\|-W.Cache.Scope]] | Connects cache on setup, flushes + disconnects on cleanup |
+| [[jm3lib/pipelines/W/Cache.Scope\|-W.Cache.Scope]] | Connects cache on setup, flushes + disconnects on cleanup |
 
 ### Environment
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/Env\|-W.Env]] | Sets up language environment on setup, tears down on cleanup |
+| [[jm3lib/pipelines/W/Env\|-W.Env]] | Sets up language environment on setup, tears down on cleanup |
 
 ### Runtime (Deprecated)
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/W/RT\|-W.RT]] | **Deprecated** — use [[aj3lib/pipelines/W/Env\|-W.Env]]. Starts language runtime on setup, stops on cleanup |
+| [[jm3lib/pipelines/W/RT\|-W.RT]] | **Deprecated** — use [[jm3lib/pipelines/W/Env\|-W.Env]]. Starts language runtime on setup, stops on cleanup |
 
 NOTE: Retry/timeout/rate-limiting are `[Q]` queue strategies, not wrappers.
 
 ## Related
 
 - [[concepts/pipelines/wrappers]]
-- [[aj3lib/INDEX]]
+- [[jm3lib/INDEX]]

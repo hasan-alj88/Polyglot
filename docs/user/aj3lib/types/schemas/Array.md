@@ -77,7 +77,7 @@ metadata_definition: "%definition.##:Array"
 
 ## Used By
 
-<!-- @u:aj3lib/types/Array -->
+<!-- @u:jm3lib/types/Array -->
 
 - [[Array|#Array]] type composes this schema
 

@@ -54,8 +54,8 @@ Scalar value types are defined through the `##Scalar` composition. The `.string`
 
 ## Example Types
 
-<!-- @u:aj3lib/types/scalars -->
-<!-- @u:aj3lib/types/string -->
+<!-- @u:jm3lib/types/scalars -->
+<!-- @u:jm3lib/types/string -->
 
 | Type | Regex Pattern | Valid Content |
 |------|--------------|---------------|

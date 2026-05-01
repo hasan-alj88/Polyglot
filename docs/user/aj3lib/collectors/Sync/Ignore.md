@@ -55,5 +55,5 @@ None.
 
 ## Related
 
-- [[aj3lib/collectors/Sync/INDEX|Collect-All & Race Collectors]]
+- [[jm3lib/collectors/Sync/INDEX|Collect-All & Race Collectors]]
 - [[concepts/collections/collect|Collect Operators]]

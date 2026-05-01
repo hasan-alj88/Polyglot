@@ -1,7 +1,7 @@
 ---
 phase: issue-84-add-permission-error-tree
 plan: 01
-subsystem: aj3lib
+subsystem: jm3lib
 tags: [permissions, errors, error-tree, runtime]
 
 requires:
@@ -21,7 +21,7 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - docs/user/aj3lib/errors/errors.md
+    - docs/user/jm3lib/errors/errors.md
     - docs/user/concepts/errors.md
 
 key-decisions:
@@ -53,7 +53,7 @@ completed: 2026-03-25
 
 | Criterion | Status | Notes |
 |-----------|--------|-------|
-| AC-1: `{!} !Permission` block in aj3lib errors | Pass | 8 `.Denied` leaves: File, Web, Database, System, Crypto, IPC, Device, Memory |
+| AC-1: `{!} !Permission` block in jm3lib errors | Pass | 8 `.Denied` leaves: File, Web, Database, System, Crypto, IPC, Device, Memory |
 | AC-2: Pipeline error associations updated | Pass | `=File.Text.Read/Write/Append` all declare `[=] !Permission.File.Denied` |
 | AC-3: Concepts errors updated | Pass | Count → six, inline list includes all 6, table has all 6 rows |
 | AC-4: Pre-existing bugs fixed | Pass | Added missing `!Math` to table, `!Validation` to inline list |
@@ -69,7 +69,7 @@ completed: 2026-03-25
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/errors/errors.md` | Modified | Added `{!} !Permission` block + pipeline error associations |
+| `docs/user/jm3lib/errors/errors.md` | Modified | Added `{!} !Permission` block + pipeline error associations |
 | `docs/user/concepts/errors.md` | Modified | Updated namespace count, inline list, and summary table |
 
 ## Decisions Made

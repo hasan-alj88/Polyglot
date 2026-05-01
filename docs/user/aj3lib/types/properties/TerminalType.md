@@ -67,4 +67,4 @@ A "terminal branch" is a branch that has no further user-defined children — it
 - [[properties/INDEX|Properties]] -- all `%##` and `%###` properties
 - [[properties/Type|%###Type]] -- scalar leaf type constraint
 - [[syntax/types/schema-properties|Schema Properties]] -- full specification
-- [[aj3lib/errors/errors|Error System]] -- `{!}` uses `%##TerminalType << #Error`
+- [[jm3lib/errors/errors|Error System]] -- `{!}` uses `%##TerminalType << #Error`

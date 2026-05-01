@@ -10,16 +10,16 @@ updated: 2026-04-23
 <!-- @c:audit/reference/glossary -->
 <!-- @u:INDEX -->
 <!-- @u:ai-retrieval-index -->
-This document is the flat, categorical inventory of every Aljam3 component. It answers "what exists, by category" — block types, aj3lib namespaces, types, error namespaces, compile-rule groups, EBNF sections, philosophy pages, audit rules. Every row points at the authoritative file or sub-index; this inventory does not duplicate enumeration. For query-shaped lookup use [[ai-retrieval-index|u:ai-retrieval-index]]; for repo layout use [[source-tree-analysis|u:source-tree-analysis]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
+This document is the flat, categorical inventory of every Aljam3 component. It answers "what exists, by category" — block types, jm3lib namespaces, types, error namespaces, compile-rule groups, EBNF sections, philosophy pages, audit rules. Every row points at the authoritative file or sub-index; this inventory does not duplicate enumeration. For query-shaped lookup use [[ai-retrieval-index|u:ai-retrieval-index]]; for repo layout use [[source-tree-analysis|u:source-tree-analysis]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
 
 ## How to Use This Inventory
 
 | Goal | Section |
 |------|---------|
 | List every definition-block type | Block Types |
-| Find a aj3lib pipeline namespace | aj3lib Pipelines |
-| Find an expander / collector | aj3lib Expanders / Collectors |
-| List types and schemas | aj3lib Types |
+| Find a jm3lib pipeline namespace | jm3lib Pipelines |
+| Find an expander / collector | jm3lib Expanders / Collectors |
+| List types and schemas | jm3lib Types |
 | List error namespaces | Error Namespaces |
 | Find a compile rule by range | Compile Rule Groups |
 | List EBNF grammar sections | EBNF Sections |
@@ -45,7 +45,7 @@ Definition blocks use the `{X}` family. Block elements (inside definition bodies
 | `{_}` | Permission object definition | [[user/concepts/permissions\|u:permissions]] | [[technical/ebnf/09-definition-blocks\|u:ebnf-09]] |
 | `{$}` | Constructor definition | [[user/syntax/constructors\|u:constructors]] | [[technical/ebnf/09-definition-blocks\|u:ebnf-09]] |
 | `{;}` | Environment definition | [[user/syntax/environments\|u:environments]] | [[technical/ebnf/09-definition-blocks\|u:ebnf-09]] |
-| `{N}` | Native-code block | [[user/aj3lib/types/NativeKind\|u:NativeKind]] | [[technical/ebnf/09-definition-blocks\|u:ebnf-09]] |
+| `{N}` | Native-code block | [[user/jm3lib/types/NativeKind\|u:NativeKind]] | [[technical/ebnf/09-definition-blocks\|u:ebnf-09]] |
 
 ### Block Elements (inside definitions)
 
@@ -82,46 +82,46 @@ Definition blocks use the `{X}` family. Block elements (inside definition bodies
 | `(#)` | Generic-input marker | [[technical/ebnf/04-type-system\|u:ebnf-04]] |
 | `($)` | Operation-label output addressing | [[technical/ebnf/10-execution\|u:ebnf-10]] |
 
-## aj3lib Pipelines
+## jm3lib Pipelines
 
 Pipeline namespace → sub-index. Each namespace sub-index enumerates its pipelines and errors.
 
 | Namespace | Count | Sub-index |
 |-----------|-------|-----------|
-| `-File.*` | 12 | [[user/aj3lib/pipelines/File/INDEX\|u:aj3lib-File-index]] |
-| `-T.*` | 11 | [[user/aj3lib/pipelines/T/INDEX\|u:aj3lib-T-index]] |
-| `-Q.*` | 27 | [[user/aj3lib/pipelines/Q/INDEX\|u:aj3lib-Q-index]] |
-| `-W.*` | 14 | [[user/aj3lib/pipelines/W/INDEX\|u:aj3lib-W-index]] |
-| `-Math.*` | 9 | [[user/aj3lib/pipelines/Math/INDEX\|u:aj3lib-Math-index]] |
-| `-DT.*` | 42 | [[user/aj3lib/pipelines/DT/INDEX\|u:aj3lib-DT-index]] |
-| `-RT.*` | 8 | [[user/aj3lib/pipelines/RT/INDEX\|u:aj3lib-RT-index]] |
-| `-Run.*` | 8 | [[user/aj3lib/pipelines/Run/INDEX\|u:aj3lib-Run-index]] |
-| `-Schema.*` | 10 | [[user/aj3lib/pipelines/Schema/INDEX\|u:aj3lib-Schema-index]] |
-| `-Variable.*` | 2 | [[user/aj3lib/pipelines/Variable/INDEX\|u:aj3lib-Variable-index]] |
-| `-Text.*` | 1 | [[user/aj3lib/pipelines/Text\|u:aj3lib-Text]] |
-| `-Path` | 1 (single file) | [[user/aj3lib/pipelines/Path\|u:aj3lib-Path]] |
-| `-Sys` | 1 (single file) | [[user/aj3lib/pipelines/Sys\|u:aj3lib-Sys]] |
+| `-File.*` | 12 | [[user/jm3lib/pipelines/File/INDEX\|u:jm3lib-File-index]] |
+| `-T.*` | 11 | [[user/jm3lib/pipelines/T/INDEX\|u:jm3lib-T-index]] |
+| `-Q.*` | 27 | [[user/jm3lib/pipelines/Q/INDEX\|u:jm3lib-Q-index]] |
+| `-W.*` | 14 | [[user/jm3lib/pipelines/W/INDEX\|u:jm3lib-W-index]] |
+| `-Math.*` | 9 | [[user/jm3lib/pipelines/Math/INDEX\|u:jm3lib-Math-index]] |
+| `-DT.*` | 42 | [[user/jm3lib/pipelines/DT/INDEX\|u:jm3lib-DT-index]] |
+| `-RT.*` | 8 | [[user/jm3lib/pipelines/RT/INDEX\|u:jm3lib-RT-index]] |
+| `-Run.*` | 8 | [[user/jm3lib/pipelines/Run/INDEX\|u:jm3lib-Run-index]] |
+| `-Schema.*` | 10 | [[user/jm3lib/pipelines/Schema/INDEX\|u:jm3lib-Schema-index]] |
+| `-Variable.*` | 2 | [[user/jm3lib/pipelines/Variable/INDEX\|u:jm3lib-Variable-index]] |
+| `-Text.*` | 1 | [[user/jm3lib/pipelines/Text\|u:jm3lib-Text]] |
+| `-Path` | 1 (single file) | [[user/jm3lib/pipelines/Path\|u:jm3lib-Path]] |
+| `-Sys` | 1 (single file) | [[user/jm3lib/pipelines/Sys\|u:jm3lib-Sys]] |
 
 ### Standalone Parser Pipelines
 
 | Pipeline | File |
 |----------|------|
-| `-Color.Parse` | [[user/aj3lib/pipelines/Color.Parse\|u:Color-Parse]] |
-| `-Dur.Parse` | [[user/aj3lib/pipelines/Dur.Parse\|u:Dur-Parse]] |
-| `-IP.Parse` | [[user/aj3lib/pipelines/IP.Parse\|u:IP-Parse]] |
-| `-MIME.Parse` | [[user/aj3lib/pipelines/MIME.Parse\|u:MIME-Parse]] |
-| `-Path.Parse` | [[user/aj3lib/pipelines/Path.Parse\|u:Path-Parse]] |
-| `-Re.Parse` | [[user/aj3lib/pipelines/Re.Parse\|u:Re-Parse]] |
-| `-URL.Parse` | [[user/aj3lib/pipelines/URL.Parse\|u:URL-Parse]] |
-| `-Ver.Parse` | [[user/aj3lib/pipelines/Ver.Parse\|u:Ver-Parse]] |
+| `-Color.Parse` | [[user/jm3lib/pipelines/Color.Parse\|u:Color-Parse]] |
+| `-Dur.Parse` | [[user/jm3lib/pipelines/Dur.Parse\|u:Dur-Parse]] |
+| `-IP.Parse` | [[user/jm3lib/pipelines/IP.Parse\|u:IP-Parse]] |
+| `-MIME.Parse` | [[user/jm3lib/pipelines/MIME.Parse\|u:MIME-Parse]] |
+| `-Path.Parse` | [[user/jm3lib/pipelines/Path.Parse\|u:Path-Parse]] |
+| `-Re.Parse` | [[user/jm3lib/pipelines/Re.Parse\|u:Re-Parse]] |
+| `-URL.Parse` | [[user/jm3lib/pipelines/URL.Parse\|u:URL-Parse]] |
+| `-Ver.Parse` | [[user/jm3lib/pipelines/Ver.Parse\|u:Ver-Parse]] |
 
-## aj3lib Expanders
+## jm3lib Expanders
 
 Expanders use the `=ForEach.*` namespace. Every expander fans out a collection into per-element jobs; termination is collector-driven.
 
 | Namespace | Count | Sub-index |
 |-----------|-------|-----------|
-| `=ForEach.*` | 10 | [[user/aj3lib/expanders/ForEach/INDEX\|u:ForEach-index]] |
+| `=ForEach.*` | 10 | [[user/jm3lib/expanders/ForEach/INDEX\|u:ForEach-index]] |
 
 | Variant | Expands | File |
 |---------|---------|------|
@@ -133,30 +133,30 @@ Expanders use the `=ForEach.*` namespace. Every expander fans out a collection i
 
 The top-level expanders index also includes `=#.Column` (column extraction) and related column-oriented expanders documented in the Dataframe-collection area.
 
-## aj3lib Collectors
+## jm3lib Collectors
 
 Collectors use three families: aggregate (`*Agg.*`), into-collection (`*Into.*`), and sync/race (`*Sync.*`).
 
 | Family | Namespace | Count | Sub-index |
 |--------|-----------|-------|-----------|
-| Aggregate | `*Agg.*` | 7 | [[user/aj3lib/collectors/Agg/INDEX\|u:Agg-index]] |
-| Into-collection | `*Into.*` | 10 | [[user/aj3lib/collectors/Into/INDEX\|u:Into-index]] |
-| Sync / race | `*Sync.*` (with `*All`, `*First`, `*Nth`) | 5 | [[user/aj3lib/collectors/Sync/INDEX\|u:Sync-index]] |
+| Aggregate | `*Agg.*` | 7 | [[user/jm3lib/collectors/Agg/INDEX\|u:Agg-index]] |
+| Into-collection | `*Into.*` | 10 | [[user/jm3lib/collectors/Into/INDEX\|u:Into-index]] |
+| Sync / race | `*Sync.*` (with `*All`, `*First`, `*Nth`) | 5 | [[user/jm3lib/collectors/Sync/INDEX\|u:Sync-index]] |
 
 ### Reassemblers
 
-Reassemblers are a separate operator family that rebuilds a collection shape from expanded elements. Listed under `docs/user/aj3lib/reassemblers/`.
+Reassemblers are a separate operator family that rebuilds a collection shape from expanded elements. Listed under `docs/user/jm3lib/reassemblers/`.
 
 | Category | Dir |
 |----------|-----|
-| Aggregate reassemblers | [[user/aj3lib/reassemblers/Agg/INDEX\|u:reassemble-Agg]] (if index present) |
-| Into reassemblers | [[user/aj3lib/reassemblers/Into/INDEX\|u:reassemble-Into]] (if index present) |
+| Aggregate reassemblers | [[user/jm3lib/reassemblers/Agg/INDEX\|u:reassemble-Agg]] (if index present) |
+| Into reassemblers | [[user/jm3lib/reassemblers/Into/INDEX\|u:reassemble-Into]] (if index present) |
 
-## aj3lib Types
+## jm3lib Types
 
 Types are partitioned into five subdirectories plus 72 top-level files. Each subdirectory has its own `INDEX.md` (or umbrella file).
 
-### Top-Level aj3lib Type Categories
+### Top-Level jm3lib Type Categories
 
 | Category | Key files |
 |----------|-----------|
@@ -174,7 +174,7 @@ Types are partitioned into five subdirectories plus 72 top-level files. Each sub
 | OS | `OS.md`, `OSTarget.md` |
 | Umbrella aggregators | `types.md`, `scalars.md`, `structs.md`, `enums.md`, `collections.md` |
 
-### aj3lib Type Subfolders
+### jm3lib Type Subfolders
 
 | Subfolder | Count | Purpose | INDEX |
 |-----------|-------|---------|-------|
@@ -186,17 +186,17 @@ Types are partitioned into five subdirectories plus 72 top-level files. Each sub
 
 ## Error Namespaces
 
-User-facing error-namespace catalog lives under `docs/user/aj3lib/errors/`.
+User-facing error-namespace catalog lives under `docs/user/jm3lib/errors/`.
 
 | File | Purpose |
 |------|---------|
-| [[user/aj3lib/errors/errors\|u:errors-aj3lib]] | Error-namespace overview |
-| [[user/aj3lib/errors/error-struct\|u:error-struct]] | `!Error` struct |
-| [[user/aj3lib/errors/custom-errors\|u:custom-errors]] | User-defined `{!}` errors |
-| [[user/aj3lib/errors/alias-clash\|u:alias-clash]] | Alias-clash handling |
-| [[user/aj3lib/errors/pipeline-associations\|u:pipeline-associations]] | Pipeline → namespace binding |
+| [[user/jm3lib/errors/errors\|u:errors-jm3lib]] | Error-namespace overview |
+| [[user/jm3lib/errors/error-struct\|u:error-struct]] | `!Error` struct |
+| [[user/jm3lib/errors/custom-errors\|u:custom-errors]] | User-defined `{!}` errors |
+| [[user/jm3lib/errors/alias-clash\|u:alias-clash]] | Alias-clash handling |
+| [[user/jm3lib/errors/pipeline-associations\|u:pipeline-associations]] | Pipeline → namespace binding |
 
-Built-in namespaces (`docs/user/aj3lib/errors/builtin/`):
+Built-in namespaces (`docs/user/jm3lib/errors/builtin/`):
 
 | Namespace | Raised by |
 |-----------|-----------|
@@ -210,7 +210,7 @@ Built-in namespaces (`docs/user/aj3lib/errors/builtin/`):
 
 ## Permission Catalog
 
-Permission categories live under `docs/user/aj3lib/permissions/`.
+Permission categories live under `docs/user/jm3lib/permissions/`.
 
 | Category | Dir | Purpose |
 |----------|-----|---------|
@@ -238,19 +238,19 @@ Concept-level permission sub-pages under `docs/user/concepts/permissions/`:
 
 ## Constructor Catalog
 
-`{$}` constructors live under `docs/user/aj3lib/constructors/` and are paired with the corresponding type. Parser pipelines live under `docs/user/aj3lib/pipelines/*.Parse.md`.
+`{$}` constructors live under `docs/user/jm3lib/constructors/` and are paired with the corresponding type. Parser pipelines live under `docs/user/jm3lib/pipelines/*.Parse.md`.
 
 | Constructor | Type file | Parser pipeline |
 |-------------|-----------|------------------|
-| `$Color` | [[user/aj3lib/types/Color\|u:Color]] | [[user/aj3lib/pipelines/Color.Parse\|u:Color-Parse]] |
-| `$DT` | [[user/aj3lib/types/datetime/INDEX\|u:datetime-index]] | `-DT.Parse` (within DT/) |
-| `$Dur` | — | [[user/aj3lib/pipelines/Dur.Parse\|u:Dur-Parse]] |
-| `$IP` | [[user/aj3lib/types/IP\|u:IP]] | [[user/aj3lib/pipelines/IP.Parse\|u:IP-Parse]] |
-| `$MIME` | [[user/aj3lib/types/MIME\|u:MIME]] | [[user/aj3lib/pipelines/MIME.Parse\|u:MIME-Parse]] |
-| `$Path` | [[user/aj3lib/types/path\|u:path]] | [[user/aj3lib/pipelines/Path.Parse\|u:Path-Parse]] |
-| `$Re` | [[user/aj3lib/types/Re\|u:Re]] | [[user/aj3lib/pipelines/Re.Parse\|u:Re-Parse]] |
-| `$URL` | [[user/aj3lib/types/URL\|u:URL]] | [[user/aj3lib/pipelines/URL.Parse\|u:URL-Parse]] |
-| `$Ver` | [[user/aj3lib/types/Ver\|u:Ver]] | [[user/aj3lib/pipelines/Ver.Parse\|u:Ver-Parse]] |
+| `$Color` | [[user/jm3lib/types/Color\|u:Color]] | [[user/jm3lib/pipelines/Color.Parse\|u:Color-Parse]] |
+| `$DT` | [[user/jm3lib/types/datetime/INDEX\|u:datetime-index]] | `-DT.Parse` (within DT/) |
+| `$Dur` | — | [[user/jm3lib/pipelines/Dur.Parse\|u:Dur-Parse]] |
+| `$IP` | [[user/jm3lib/types/IP\|u:IP]] | [[user/jm3lib/pipelines/IP.Parse\|u:IP-Parse]] |
+| `$MIME` | [[user/jm3lib/types/MIME\|u:MIME]] | [[user/jm3lib/pipelines/MIME.Parse\|u:MIME-Parse]] |
+| `$Path` | [[user/jm3lib/types/path\|u:path]] | [[user/jm3lib/pipelines/Path.Parse\|u:Path-Parse]] |
+| `$Re` | [[user/jm3lib/types/Re\|u:Re]] | [[user/jm3lib/pipelines/Re.Parse\|u:Re-Parse]] |
+| `$URL` | [[user/jm3lib/types/URL\|u:URL]] | [[user/jm3lib/pipelines/URL.Parse\|u:URL-Parse]] |
+| `$Ver` | [[user/jm3lib/types/Ver\|u:Ver]] | [[user/jm3lib/pipelines/Ver.Parse\|u:Ver-Parse]] |
 
 Constructor block design is recorded in [[audit/decisions/2026-04-22-constructor-blocks|c:decision-constructor-blocks]].
 

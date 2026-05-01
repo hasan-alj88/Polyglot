@@ -8,7 +8,7 @@ metadata_definition: "%!.Env"
 
 # `!Env`
 
-No `[@]` import needed — aj3lib built-in.
+No `[@]` import needed — jm3lib built-in.
 
 ```aljam3
 {!} !Env
@@ -55,4 +55,4 @@ No `[@]` import needed — aj3lib built-in.
 
 See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.
 
-See [[aj3lib/errors/builtin/rt#`!Env` vs `!RT` — Phase Distinction]] for the distinction between `!Env.*` (wrapper setup) and `!RT.*` (body execution) errors.
+See [[jm3lib/errors/builtin/rt#`!Env` vs `!RT` — Phase Distinction]] for the distinction between `!Env.*` (wrapper setup) and `!RT.*` (body execution) errors.

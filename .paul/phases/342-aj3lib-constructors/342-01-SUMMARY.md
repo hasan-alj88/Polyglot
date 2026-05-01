@@ -1,8 +1,8 @@
 ---
-phase: 342-aj3lib-constructors
+phase: 342-jm3lib-constructors
 plan: 01
-subsystem: aj3lib
-tags: [constructors, datetime, path, aj3lib, compile-time]
+subsystem: jm3lib
+tags: [constructors, datetime, path, jm3lib, compile-time]
 
 requires:
   - phase: issue-341
@@ -11,7 +11,7 @@ provides:
   - "$DT constructor with 7 overloads (3 string-parsing + 4 keyword)"
   - "$Path constructor with 3 overloads (1 string-parsing + 2 keyword)"
   - "-DT.Parse and -Path.Parse runtime parsing pipelines"
-  - "aj3lib constructors/ directory with registry INDEX"
+  - "jm3lib constructors/ directory with registry INDEX"
 affects: [342-02 Tier 2 constructors, 343 compile error codes, 344 docs updates]
 
 tech-stack:
@@ -20,14 +20,14 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/aj3lib/constructors/INDEX.md
-    - docs/user/aj3lib/constructors/DT.md
-    - docs/user/aj3lib/constructors/Path.md
-    - docs/user/aj3lib/pipelines/DT/Parse.md
-    - docs/user/aj3lib/pipelines/Path.Parse.md
+    - docs/user/jm3lib/constructors/INDEX.md
+    - docs/user/jm3lib/constructors/DT.md
+    - docs/user/jm3lib/constructors/Path.md
+    - docs/user/jm3lib/pipelines/DT/Parse.md
+    - docs/user/jm3lib/pipelines/Path.Parse.md
   modified:
-    - docs/user/aj3lib/pipelines/DT/INDEX.md
-    - docs/user/aj3lib/pipelines/Path.md
+    - docs/user/jm3lib/pipelines/DT/INDEX.md
+    - docs/user/jm3lib/pipelines/Path.md
 
 key-decisions:
   - "Used actual #Date/#Time field names (.hour/.minute/.second) from core-components.md, not illustrative names from constructors.md spec example"
@@ -45,7 +45,7 @@ completed: 2026-04-22
 
 # Plan 342-01: Tier 1 {$} Constructors ($DT + $Path) Summary
 
-**Defined $DT (7 overloads) and $Path (3 overloads) constructors with companion -DT.Parse/-Path.Parse runtime pipelines, establishing the aj3lib constructors/ directory**
+**Defined $DT (7 overloads) and $Path (3 overloads) constructors with companion -DT.Parse/-Path.Parse runtime pipelines, establishing the jm3lib constructors/ directory**
 
 ## Performance
 
@@ -69,7 +69,7 @@ completed: 2026-04-22
 
 ## Accomplishments
 
-- Established `docs/user/aj3lib/constructors/` as the aj3lib constructor catalog with registry INDEX
+- Established `docs/user/jm3lib/constructors/` as the jm3lib constructor catalog with registry INDEX
 - Defined complete `$DT` constructor with ISO-8601 full, date-only, time-only string-parsing overloads and Today/Yesterday/Tomorrow/Now keyword overloads
 - Defined `$Path` constructor with path string, `.` (CWD), and `..` (parent) overloads
 - Created `-DT.Parse` and `-Path.Parse` as runtime counterparts with proper error types
@@ -79,13 +79,13 @@ completed: 2026-04-22
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/constructors/INDEX.md` | Created | Constructor registry with $DT and $Path entries |
-| `docs/user/aj3lib/constructors/DT.md` | Created | $DT constructor — 7 overloads with regex, type binding, field mapping |
-| `docs/user/aj3lib/constructors/Path.md` | Created | $Path constructor — 3 overloads with OS-aware path handling |
-| `docs/user/aj3lib/pipelines/DT/Parse.md` | Created | -DT.Parse runtime pipeline for dynamic datetime strings |
-| `docs/user/aj3lib/pipelines/Path.Parse.md` | Created | -Path.Parse runtime pipeline for dynamic path strings |
-| `docs/user/aj3lib/pipelines/DT/INDEX.md` | Modified | Three-Context Rule table, -DT.Parse added to Construction listing |
-| `docs/user/aj3lib/pipelines/Path.md` | Modified | Three-Context Rule section with constructor and parse pipeline refs |
+| `docs/user/jm3lib/constructors/INDEX.md` | Created | Constructor registry with $DT and $Path entries |
+| `docs/user/jm3lib/constructors/DT.md` | Created | $DT constructor — 7 overloads with regex, type binding, field mapping |
+| `docs/user/jm3lib/constructors/Path.md` | Created | $Path constructor — 3 overloads with OS-aware path handling |
+| `docs/user/jm3lib/pipelines/DT/Parse.md` | Created | -DT.Parse runtime pipeline for dynamic datetime strings |
+| `docs/user/jm3lib/pipelines/Path.Parse.md` | Created | -Path.Parse runtime pipeline for dynamic path strings |
+| `docs/user/jm3lib/pipelines/DT/INDEX.md` | Modified | Three-Context Rule table, -DT.Parse added to Construction listing |
+| `docs/user/jm3lib/pipelines/Path.md` | Modified | Three-Context Rule section with constructor and parse pipeline refs |
 
 ## Decisions Made
 
@@ -116,5 +116,5 @@ None.
 - None
 
 ---
-*Phase: 342-aj3lib-constructors, Plan: 01*
+*Phase: 342-jm3lib-constructors, Plan: 01*
 *Completed: 2026-04-22*

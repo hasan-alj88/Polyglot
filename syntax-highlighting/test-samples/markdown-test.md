@@ -116,8 +116,8 @@ Different namespace types:
   [t] |T.Manual
 
   // Aljam3 native
-  [r] .aj3_str: pg\string << "hello"
-  [r] .aj3_int: pg\int << 42
+  [r] .jm3_str: pg\string << "hello"
+  [r] .jm3_int: pg\int << 42
 
   // Rust types
   [r] .rs_vec: rs\Vec{i32} << [1, 2, 3]

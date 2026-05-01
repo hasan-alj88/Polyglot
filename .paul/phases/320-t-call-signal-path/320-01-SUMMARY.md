@@ -22,7 +22,7 @@ key-files:
   modified:
     - docs/technical/spec/native-dispatch.md
     - docs/technical/plan/queue-manager/nats-namespace.md
-    - docs/user/aj3lib/pipelines/T/Call.md
+    - docs/user/jm3lib/pipelines/T/Call.md
     - docs/technical/spec/polyglot-sdk.md
 
 key-decisions:
@@ -73,7 +73,7 @@ completed: 2026-04-19
 |------|--------|---------|
 | `docs/technical/spec/native-dispatch.md` | Modified | New "-T.Call Signal Path" section with 8 subsections |
 | `docs/technical/plan/queue-manager/nats-namespace.md` | Modified | New "SDK Call Signals" section with 2 topics |
-| `docs/user/aj3lib/pipelines/T/Call.md` | Modified | New "Signal Flow" section with simplified diagram |
+| `docs/user/jm3lib/pipelines/T/Call.md` | Modified | New "Signal Flow" section with simplified diagram |
 | `docs/technical/spec/polyglot-sdk.md` | Modified | Cross-reference to native-dispatch.md in call() section |
 
 ## Decisions Made

@@ -15,7 +15,7 @@ updated: 2026-04-22
 
 | File | What it tells Claude | When to read |
 |------|---------------------|--------------|
-| [[audiences/automation-builder\|audiences/automation-builder]] | Tone, format, assumptions for .aj3 code writers (external) | Before writing automation-builder docs |
+| [[audiences/automation-builder\|audiences/automation-builder]] | Tone, format, assumptions for .jm3 code writers (external) | Before writing automation-builder docs |
 | [[audiences/integrator\|audiences/integrator]] | Tone, format, assumptions for SDK/API integrators (external) | Before writing integrator docs |
 | [[audiences/product\|audiences/product]] | Tone, format, assumptions for product docs (internal) | Before writing product docs |
 | [[audiences/design\|audiences/design]] | Tone, format, assumptions for language + architecture design docs (internal) | Before writing design docs |
@@ -51,7 +51,7 @@ Every cross-reference carries a **type** that tells Claude *why* the import exis
 | Type | Prefix | Purpose | Points to |
 |------|--------|---------|-----------|
 | Concept | `@c:` | "What is this?" — load a definition before writing about it | Glossary, vision, design rationale, type definitions |
-| Usage | `@u:` | "This construct appears here" — link to where it's defined | Syntax specs, EBNF grammar, aj3lib signatures, scenarios |
+| Usage | `@u:` | "This construct appears here" — link to where it's defined | Syntax specs, EBNF grammar, jm3lib signatures, scenarios |
 | Deprecated | `@d:` | "This is superseded" — mark content as deprecated with pointer to replacement | Archived docs, retired constructs, superseded designs |
 | Untyped | `@` | Legacy form — valid but deprecated for new docs | Any (migrate to `@c:`, `@u:`, or `@d:` on touch) |
 

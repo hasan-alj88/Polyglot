@@ -12,7 +12,7 @@ updated: 2026-03-30
 
 Every trigger must output `>IsTriggered#bool`. Triggers can produce additional outputs that wire to the consuming pipeline's inputs via indented `(-)` IO lines under `[T]`.
 
-**Base trigger** — simplest form (aj3lib):
+**Base trigger** — simplest form (jm3lib):
 
 ```aljam3
 {T} -T.Call
@@ -29,7 +29,7 @@ Every trigger must output `>IsTriggered#bool`. Triggers can produce additional o
    (-) >NewFiles#array:path
 ```
 
-Trigger definitions have no execution body, no `[Q]`, and no `[W]` — they are IO-only. aj3lib triggers (`-T.*`) are native definitions backed by host language code — see [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived]] for the distinction.
+Trigger definitions have no execution body, no `[Q]`, and no `[W]` — they are IO-only. jm3lib triggers (`-T.*`) are native definitions backed by host language code — see [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived]] for the distinction.
 
 ## IO as Implicit Triggers
 
@@ -80,7 +80,7 @@ If a trigger's boolean expression evaluates to the same value for all combinatio
    (-) >commits >> <commits
 ```
 
-See [[aj3lib/pipelines/T/INDEX#Three-Tier Trigger Model]] for how Git triggers work across local hooks and remote webhooks.
+See [[jm3lib/pipelines/T/INDEX#Three-Tier Trigger Model]] for how Git triggers work across local hooks and remote webhooks.
 
 ## Trigger Spans
 

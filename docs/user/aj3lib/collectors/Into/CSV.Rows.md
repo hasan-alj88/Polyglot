@@ -25,7 +25,7 @@ Collects rows from mini-pipelines into a single CSV text string, with a header r
 |------|------|----------|-------------|
 | `<row` | `##Record` | Yes | Row to collect |
 | `<delimiter` | `#string` | No (default `","`) | Field delimiter character |
-| `<order` | `#CollectOrder` | No (default `.ExpandIndex`) | Assembly order: [[aj3lib/types/CollectOrder|.ExpandIndex]] (original position) or `.Arrival` (completion order) |
+| `<order` | `#CollectOrder` | No (default `.ExpandIndex`) | Assembly order: [[jm3lib/types/CollectOrder|.ExpandIndex]] (original position) or `.Arrival` (completion order) |
 
 ## Outputs
 
@@ -53,7 +53,7 @@ When row count exceeds the `-Q.Overflow.RamLimit` threshold, intermediate result
 
 ## Related
 
-- [[aj3lib/collectors/Into/INDEX|*Into Data Collectors]]
-- [[aj3lib/expanders/ForEach/CSV.Rows|=ForEach.CSV.Rows]] -- expand CSV into rows
-- [[aj3lib/collectors/Into/Text.Append|*Into.Text.Append]] -- simpler text-level alternative
+- [[jm3lib/collectors/Into/INDEX|*Into Data Collectors]]
+- [[jm3lib/expanders/ForEach/CSV.Rows|=ForEach.CSV.Rows]] -- expand CSV into rows
+- [[jm3lib/collectors/Into/Text.Append|*Into.Text.Append]] -- simpler text-level alternative
 - [[concepts/collections/collect|Collect Operators]]

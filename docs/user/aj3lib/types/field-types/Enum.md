@@ -47,8 +47,8 @@ Each `[.]` line without a `#type` annotation declares a `###Enum` field. The com
 
 ## Example Types
 
-<!-- @u:aj3lib/types/boolean -->
-<!-- @u:aj3lib/types/OS -->
+<!-- @u:jm3lib/types/boolean -->
+<!-- @u:jm3lib/types/OS -->
 
 | Type | Variants | Purpose |
 |------|----------|---------|

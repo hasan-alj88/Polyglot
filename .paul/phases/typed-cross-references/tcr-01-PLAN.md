@@ -45,7 +45,7 @@ Given docs/audit/README.md "Dual Smart Referencing" section exists
 When the section is updated
 Then it defines three reference forms:
   - @c: (concept) — points to definitions, theory, design rationale
-  - @u: (usage) — points to syntax specs, EBNF, aj3lib signatures, scenarios where a construct appears
+  - @u: (usage) — points to syntax specs, EBNF, jm3lib signatures, scenarios where a construct appears
   - @ (untyped) — legacy form, valid but deprecated for new docs
 And each form has at least two real examples from existing docs (not hypothetical)
 And behavioral guidance explains both types are mandatory read-before-write

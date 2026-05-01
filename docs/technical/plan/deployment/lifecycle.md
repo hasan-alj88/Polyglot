@@ -44,7 +44,7 @@ The Queue Handler (Redis Lua scripts) is updated atomically during step 1 — th
 
 ## Behavior Contract Compatibility
 
-The Behavior Contract is the compiled output of .aj3 files — a JSON signal map that the Trigger Monitor interprets at runtime.
+The Behavior Contract is the compiled output of .jm3 files — a JSON signal map that the Trigger Monitor interprets at runtime.
 
 ### Contract Version Field
 
@@ -67,7 +67,7 @@ Every Behavior Contract includes a `contract_version` field:
 | Supports v1.x | v2.0 contract | Rejected — TM logs error, contract not loaded |
 | Supports v2.x | v1.0 contract | Runs normally (major versions support previous major) |
 
-**Rule:** A Trigger Monitor supports contracts from its own major version and one major version back. Users must recompile .aj3 files with the new compiler when skipping more than one major version.
+**Rule:** A Trigger Monitor supports contracts from its own major version and one major version back. Users must recompile .jm3 files with the new compiler when skipping more than one major version.
 
 ## Data Migration
 

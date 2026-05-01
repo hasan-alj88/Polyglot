@@ -7,7 +7,7 @@ updated: 2026-04-22
 # $IP Constructor
 
 <!-- @u:syntax/constructors -->
-<!-- @c:aj3lib/types/IP -->
+<!-- @c:jm3lib/types/IP -->
 
 The `$IP` constructor produces `#IP` values from IP address strings. The compiler validates that the address is syntactically valid and within range at compile time — no error surface, no `[!]` handling needed.
 
@@ -66,7 +66,7 @@ Resolution order: IPv4 first (more specific regex), IPv6 as fallback (broader ch
 
 ## Related
 
-- [[constructors/INDEX|aj3lib Constructors]] -- constructor registry
+- [[constructors/INDEX|jm3lib Constructors]] -- constructor registry
 - [[syntax/constructors]] -- `{$}` block specification
-- [[aj3lib/pipelines/IP.Parse|-IP.Parse]] -- runtime IP address string parsing
-- [[aj3lib/types/IP|#IP type]] -- IP address type definition
+- [[jm3lib/pipelines/IP.Parse|-IP.Parse]] -- runtime IP address string parsing
+- [[jm3lib/types/IP|#IP type]] -- IP address type definition

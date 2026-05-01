@@ -41,6 +41,6 @@ None.
 
 ## Related
 
-- [[aj3lib/collectors/Into/INDEX|*Into Data Collectors]]
-- [[aj3lib/collectors/Into/Map|*Into.Map]] -- similar key-value collection
+- [[jm3lib/collectors/Into/INDEX|*Into Data Collectors]]
+- [[jm3lib/collectors/Into/Map|*Into.Map]] -- similar key-value collection
 - [[concepts/collections/collect|Collect Operators]]

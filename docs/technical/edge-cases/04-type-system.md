@@ -53,7 +53,7 @@ updated: 2026-03-30
 
 ### EC-4.5: `$Path"..."` constructor path creation
 
-**What it tests:** `$Path"..."` constructor call creating `#path` values in execution body. On infrastructure lines (`[T]`/`[Q]`/`[W]`), the inline form `-Path"..."` remains valid. See [[syntax/types/strings#$Path Constructor Notation]], [[syntax/constructors]], [[aj3lib/pipelines/Path|-Path]].
+**What it tests:** `$Path"..."` constructor call creating `#path` values in execution body. On infrastructure lines (`[T]`/`[Q]`/`[W]`), the inline form `-Path"..."` remains valid. See [[syntax/types/strings#$Path Constructor Notation]], [[syntax/constructors]], [[jm3lib/pipelines/Path|-Path]].
 
 ```aljam3
 [ ] Basic usage — constructor in execution body

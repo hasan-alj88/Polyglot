@@ -1,8 +1,8 @@
 ---
-phase: 161-split-aj3lib-docs-per-operator
+phase: 161-split-jm3lib-docs-per-operator
 plan: 03
 subsystem: docs
-tags: [aj3lib, pipelines, file, math, triggers, doc-template]
+tags: [jm3lib, pipelines, file, math, triggers, doc-template]
 
 provides:
   - 24 individual pipeline operator files (11 File, 8 Math, 5 T)
@@ -11,9 +11,9 @@ affects: [161-05 wikilinks]
 
 key-files:
   created:
-    - docs/user/aj3lib/pipelines/File/INDEX.md
-    - docs/user/aj3lib/pipelines/Math/INDEX.md
-    - docs/user/aj3lib/pipelines/T/INDEX.md
+    - docs/user/jm3lib/pipelines/File/INDEX.md
+    - docs/user/jm3lib/pipelines/Math/INDEX.md
+    - docs/user/jm3lib/pipelines/T/INDEX.md
 
 duration: 5min
 completed: 2026-04-07
@@ -52,5 +52,5 @@ None -- executed by 3 parallel agents as planned.
 **Blockers:** None
 
 ---
-*Phase: 161-split-aj3lib-docs-per-operator, Plan: 03*
+*Phase: 161-split-jm3lib-docs-per-operator, Plan: 03*
 *Completed: 2026-04-07*

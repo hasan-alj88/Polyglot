@@ -70,7 +70,7 @@ directive if desired.
 ## 1. Base Pipelines — Native Implementation
 
 Base pipelines are implemented in the compiler's native language (Rust). They are
-defined in aj3lib `.aj3` files with full interface (IO, errors, metadata) but
+defined in jm3lib `.jm3` files with full interface (IO, errors, metadata) but
 **no execution body**. A `[%] .baseCode` metadata line links to the native code.
 
 ### `#BaseCode` Enum
@@ -141,7 +141,7 @@ pipeline definitions — only the config and enum expand.
 
 ---
 
-## 2. aj3lib Definitions
+## 2. jm3lib Definitions
 
 ### Trigger Pipelines
 
@@ -705,7 +705,7 @@ Three variants:
 ## 6. Resolved Questions
 
 1. **Zero-IO wrappers** — valid for both base and derived. `-W.Aljam3` (base) and user wrappers with no `(-)` IO are both allowed.
-2. **`#BaseCode` location** — lives in aj3lib.
+2. **`#BaseCode` location** — lives in jm3lib.
 3. **`-RT.*`** — RT = RunTime. Bridges to other programming languages and shell/bash/cmd commands. Available for `{-}[exe]` pipelines.
 4. **`{Q} #QueueName`** — defines queue behavior and configuration data (how the queue behaves, its settings).
 5. **`-RT.*` patterns** — two standard patterns per language: `-RT.<Lang>.Script` (run file) and `-RT.<Lang>.Function` (call function). Both are `{-}[exe]` base pipelines backed by native code.

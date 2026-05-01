@@ -11,7 +11,7 @@ metadata_instance: "%#:CollectOrder:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.aj3` file. Controls the ordering of collected fragments in append-style collectors (`*Into.Text.Append`, `*Into.CSV.Rows`).
+Runtime `##Enum` type available in every `.jm3` file. Controls the ordering of collected fragments in append-style collectors (`*Into.Text.Append`, `*Into.CSV.Rows`).
 
 ---
 
@@ -50,5 +50,5 @@ Runtime `##Enum` type available in every `.aj3` file. Controls the ordering of c
 
 ## Related
 
-- [[enums]] — other aj3lib enum types
+- [[enums]] — other jm3lib enum types
 - [[syntax/types/INDEX|types]] — full type system specification

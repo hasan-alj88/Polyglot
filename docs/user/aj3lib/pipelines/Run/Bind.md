@@ -11,7 +11,7 @@ metadata_instance: "%-:Run.<Lang>.Bind:N"
 
 Foreign code imports the aljam3 lib and controls data flow via `pull()`/`push()` calls.
 
-> **Supersedes:** `-RT.<Lang>.Bind.Inline` and `-RT.<Lang>.Bind.File`. See [[aj3lib/pipelines/RT/Bind.Inline|@d:-RT.\<Lang\>.Bind.Inline]] and [[aj3lib/pipelines/RT/Bind.File|@d:-RT.\<Lang\>.Bind.File]].
+> **Supersedes:** `-RT.<Lang>.Bind.Inline` and `-RT.<Lang>.Bind.File`. See [[jm3lib/pipelines/RT/Bind.Inline|@d:-RT.\<Lang\>.Bind.Inline]] and [[jm3lib/pipelines/RT/Bind.File|@d:-RT.\<Lang\>.Bind.File]].
 
 ## Definition
 
@@ -106,7 +106,7 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
 
 ## Errors
 
-See [[aj3lib/pipelines/Run/INDEX#Binding Compiler Errors]].
+See [[jm3lib/pipelines/Run/INDEX#Binding Compiler Errors]].
 
 ## Permissions
 
@@ -121,6 +121,6 @@ Requires `System.Process` capability.
 
 ## Related
 
-- [[aj3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
-- [[aj3lib/pipelines/W/Env|-W.Env]] -- wrapper that manages runtime environments
-- [[aj3lib/types/rt|Runtime types]] -- `#Code`, `#PyEnv`, `#RsEnv`
+- [[jm3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
+- [[jm3lib/pipelines/W/Env|-W.Env]] -- wrapper that manages runtime environments
+- [[jm3lib/types/rt|Runtime types]] -- `#Code`, `#PyEnv`, `#RsEnv`

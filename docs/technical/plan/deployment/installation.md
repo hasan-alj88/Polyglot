@@ -8,7 +8,7 @@ updated: 2026-04-16
 
 <!-- @c:technical/plan/deployment/INDEX -->
 
-This guide covers how to install, configure, and verify the Aljam3 Service on Linux. The Aljam3 Service is the runtime that executes pipelines compiled from .aj3 files.
+This guide covers how to install, configure, and verify the Aljam3 Service on Linux. The Aljam3 Service is the runtime that executes pipelines compiled from .jm3 files.
 
 ## Prerequisites
 
@@ -218,8 +218,8 @@ Aljam3 Service Status
 ### Test with a Sample Pipeline
 
 ```bash
-# Compile a .aj3 file
-aljam3 compile examples/hello.aj3 --output /opt/aljam3/var/contracts/hello.json
+# Compile a .jm3 file
+aljam3 compile examples/hello.jm3 --output /opt/aljam3/var/contracts/hello.json
 
 # Deploy the contract
 aljam3-ctl deploy hello.json

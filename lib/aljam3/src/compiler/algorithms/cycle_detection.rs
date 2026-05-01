@@ -31,7 +31,7 @@ pub fn detect_cycles(tokens: &[Spanned<Aljam3Token>]) -> Vec<Vec<String>> {
                 if let Some(parent) = &current_pipeline {
                     if i + 1 < tokens.len() {
                         if let Aljam3Token::Pipeline(target) = &tokens[i+1].value {
-                            // Exclude aj3lib standard pipelines
+                            // Exclude jm3lib standard pipelines
                             if !target.starts_with("T.") && !target.starts_with("Q.") && !target.starts_with("W.") {
                                 edges.get_mut(parent).unwrap().push(target.clone());
                             }

@@ -75,6 +75,6 @@ System.Process (local mode) or Web.Socket (remote webhook mode).
 
 ## Related
 
-- [[aj3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
-- [[aj3lib/types/git|#Git Type Tree]] — `#Git.Commit` payload type
-- [[aj3lib/pipelines/T/Git.Hook|-T.Git.Hook]] — transport layer for local pushes
+- [[jm3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
+- [[jm3lib/types/git|#Git Type Tree]] — `#Git.Commit` payload type
+- [[jm3lib/pipelines/T/Git.Hook|-T.Git.Hook]] — transport layer for local pushes

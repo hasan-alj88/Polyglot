@@ -53,5 +53,5 @@ None required.
 
 ## Related
 
-- [[aj3lib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
-- [[aj3lib/types/datetime|DateTime types]]
+- [[jm3lib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
+- [[jm3lib/types/datetime|DateTime types]]

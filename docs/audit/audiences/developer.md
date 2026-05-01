@@ -12,7 +12,7 @@ Authority: [[vision#Core Philosophy]]
 
 ## Who They Are
 
-Implementers who build Aljam3: writing compiler passes, implementing compile rules, building aj3lib operators, creating tests, and coding the runtime services. They turn design specifications into working software.
+Implementers who build Aljam3: writing compiler passes, implementing compile rules, building jm3lib operators, creating tests, and coding the runtime services. They turn design specifications into working software.
 
 ## Writing Rules
 

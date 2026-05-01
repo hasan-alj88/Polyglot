@@ -64,5 +64,5 @@ None required. Pure computation pipeline.
 
 ## Related
 
-- [[aj3lib/constructors/Ver|$Ver constructor]] -- compile-time version construction
-- [[aj3lib/types/Ver|#Ver type]] -- semantic version type definition
+- [[jm3lib/constructors/Ver|$Ver constructor]] -- compile-time version construction
+- [[jm3lib/types/Ver|#Ver type]] -- semantic version type definition

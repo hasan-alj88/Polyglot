@@ -50,5 +50,5 @@ Summary statistics from a `=Text.Diff` comparison. Reports the count of addition
 ## Related
 
 - [[TextDiff]] — individual diff entries that these stats summarize
-- [[structs]] — other aj3lib struct types
+- [[structs]] — other jm3lib struct types
 - [[syntax/types/INDEX|types]] — full type system specification

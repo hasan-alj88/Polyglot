@@ -1,11 +1,11 @@
 ---
-phase: 342-aj3lib-constructors
+phase: 342-jm3lib-constructors
 plan: 02
-subsystem: aj3lib
-tags: [constructors, regex, mime, duration, aj3lib, compile-time]
+subsystem: jm3lib
+tags: [constructors, regex, mime, duration, jm3lib, compile-time]
 
 requires:
-  - phase: 342-aj3lib-constructors-01
+  - phase: 342-jm3lib-constructors-01
     provides: "Constructor directory, doc patterns, INDEX.md registry"
 provides:
   - "#Re type definition with PgRegex native validation"
@@ -22,17 +22,17 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/aj3lib/types/Re.md
-    - docs/user/aj3lib/types/MIME.md
-    - docs/user/aj3lib/constructors/Re.md
-    - docs/user/aj3lib/constructors/MIME.md
-    - docs/user/aj3lib/constructors/Dur.md
-    - docs/user/aj3lib/pipelines/Re.Parse.md
-    - docs/user/aj3lib/pipelines/MIME.Parse.md
-    - docs/user/aj3lib/pipelines/Dur.Parse.md
+    - docs/user/jm3lib/types/Re.md
+    - docs/user/jm3lib/types/MIME.md
+    - docs/user/jm3lib/constructors/Re.md
+    - docs/user/jm3lib/constructors/MIME.md
+    - docs/user/jm3lib/constructors/Dur.md
+    - docs/user/jm3lib/pipelines/Re.Parse.md
+    - docs/user/jm3lib/pipelines/MIME.Parse.md
+    - docs/user/jm3lib/pipelines/Dur.Parse.md
   modified:
-    - docs/user/aj3lib/constructors/INDEX.md
-    - docs/user/aj3lib/pipelines/DT/INDEX.md
+    - docs/user/jm3lib/constructors/INDEX.md
+    - docs/user/jm3lib/pipelines/DT/INDEX.md
 
 key-decisions:
   - "$Re uses native validation pattern — ($) regex is permissive (.+), PgRegex native class validates at compile time"
@@ -77,8 +77,8 @@ completed: 2026-04-22
 
 ## Accomplishments
 
-- Created `#Re` aj3lib type with native validation pattern — PgRegex validates regex syntax at compile time (not regex-on-regex)
-- Created `#MIME` aj3lib type as a two-field struct (.type + .subtype) for type-safe media type handling
+- Created `#Re` jm3lib type with native validation pattern — PgRegex validates regex syntax at compile time (not regex-on-regex)
+- Created `#MIME` jm3lib type as a two-field struct (.type + .subtype) for type-safe media type handling
 - Defined `$Dur` constructor with 6 duration-format overloads using the native pipeline conversion pattern via `-Dur.Convert`
 - Established two new constructor patterns beyond the basic string-parsing pattern from Tier 1
 
@@ -86,16 +86,16 @@ completed: 2026-04-22
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/types/Re.md` | Created | #Re type — regex pattern with PgRegex native class |
-| `docs/user/aj3lib/types/MIME.md` | Created | #MIME type — .type + .subtype media type struct |
-| `docs/user/aj3lib/constructors/Re.md` | Created | $Re constructor — 1 native-validation overload |
-| `docs/user/aj3lib/constructors/MIME.md` | Created | $MIME constructor — 1 string-parsing overload |
-| `docs/user/aj3lib/constructors/Dur.md` | Created | $Dur constructor — 6 overloads with -Dur.Convert |
-| `docs/user/aj3lib/pipelines/Re.Parse.md` | Created | -Re.Parse runtime pipeline |
-| `docs/user/aj3lib/pipelines/MIME.Parse.md` | Created | -MIME.Parse runtime pipeline |
-| `docs/user/aj3lib/pipelines/Dur.Parse.md` | Created | -Dur.Parse runtime pipeline |
-| `docs/user/aj3lib/constructors/INDEX.md` | Modified | Added $Re, $MIME, $Dur to registry (5 total) |
-| `docs/user/aj3lib/pipelines/DT/INDEX.md` | Modified | Added -Dur.Parse cross-reference in Construction section |
+| `docs/user/jm3lib/types/Re.md` | Created | #Re type — regex pattern with PgRegex native class |
+| `docs/user/jm3lib/types/MIME.md` | Created | #MIME type — .type + .subtype media type struct |
+| `docs/user/jm3lib/constructors/Re.md` | Created | $Re constructor — 1 native-validation overload |
+| `docs/user/jm3lib/constructors/MIME.md` | Created | $MIME constructor — 1 string-parsing overload |
+| `docs/user/jm3lib/constructors/Dur.md` | Created | $Dur constructor — 6 overloads with -Dur.Convert |
+| `docs/user/jm3lib/pipelines/Re.Parse.md` | Created | -Re.Parse runtime pipeline |
+| `docs/user/jm3lib/pipelines/MIME.Parse.md` | Created | -MIME.Parse runtime pipeline |
+| `docs/user/jm3lib/pipelines/Dur.Parse.md` | Created | -Dur.Parse runtime pipeline |
+| `docs/user/jm3lib/constructors/INDEX.md` | Modified | Added $Re, $MIME, $Dur to registry (5 total) |
+| `docs/user/jm3lib/pipelines/DT/INDEX.md` | Modified | Added -Dur.Parse cross-reference in Construction section |
 
 ## Decisions Made
 
@@ -128,5 +128,5 @@ None.
 - None
 
 ---
-*Phase: 342-aj3lib-constructors, Plan: 02*
+*Phase: 342-jm3lib-constructors, Plan: 02*
 *Completed: 2026-04-22*

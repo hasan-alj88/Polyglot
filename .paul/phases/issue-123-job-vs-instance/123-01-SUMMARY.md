@@ -2,13 +2,13 @@
 phase: issue-123-job-vs-instance
 plan: 01
 subsystem: docs
-tags: [job, instance, metadata-tree, glossary, aj3lib-types]
+tags: [job, instance, metadata-tree, glossary, jm3lib-types]
 
 requires:
   - phase: none
     provides: existing glossary, structs.md, branches.md, data-is-trees.md
 provides:
-  - "{#} #Job aj3lib struct type"
+  - "{#} #Job jm3lib struct type"
   - "Instance glossary entry"
   - "Pipeline Branch metadata tree spec with .jobs:UID"
   - "Job vs Instance clarification in data-is-trees.md"
@@ -21,7 +21,7 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - docs/user/aj3lib/types/structs.md
+    - docs/user/jm3lib/types/structs.md
     - docs/audit/reference/glossary.md
     - docs/technical/spec/metadata-tree/branches.md
     - docs/user/concepts/data-is-trees.md
@@ -72,7 +72,7 @@ completed: 2026-04-05
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/types/structs.md` | Modified | Added `## #Job` section with definition, Fields table, context note |
+| `docs/user/jm3lib/types/structs.md` | Modified | Added `## #Job` section with definition, Fields table, context note |
 | `docs/audit/reference/glossary.md` | Modified | Revised "Job" entry, added "Instance" entry with cross-references |
 | `docs/technical/spec/metadata-tree/branches.md` | Modified | Added `## Pipeline Branch` with `.jobs:UID#Job` structure |
 | `docs/user/concepts/data-is-trees.md` | Modified | Added clarification paragraph after Instance numbering text |

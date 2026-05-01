@@ -9,8 +9,8 @@ metadata_instance: "%Q:Pause.Soft:N"
 
 # -Q.Pause.Soft
 
-<!-- @d:aj3lib/pipelines/Q/Job.Pause.Free.CPU -->
-**Deprecated.** Replaced by [[aj3lib/pipelines/Q/Job.Pause.Free.CPU|d:-Q.Job.Pause.Free.CPU]] (`.Wait` variant). Conditions now use `[?]`/`[&]`/`[+]` conditional blocks inside `{Q} #JobRules` definitions instead of pipeline name suffixes.
+<!-- @d:jm3lib/pipelines/Q/Job.Pause.Free.CPU -->
+**Deprecated.** Replaced by [[jm3lib/pipelines/Q/Job.Pause.Free.CPU|d:-Q.Job.Pause.Free.CPU]] (`.Wait` variant). Conditions now use `[?]`/`[&]`/`[+]` conditional blocks inside `{Q} #JobRules` definitions instead of pipeline name suffixes.
 
 ---
 
@@ -63,6 +63,6 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/Pause.Hard|-Q.Pause.Hard]]
-- [[aj3lib/pipelines/Q/Resume|-Q.Resume]]
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/Pause.Hard|-Q.Pause.Hard]]
+- [[jm3lib/pipelines/Q/Resume|-Q.Resume]]
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

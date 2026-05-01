@@ -19,7 +19,7 @@ Every pipeline declares its environment requirement using `(-) ;EnvName`. This i
 
 **Reading order in `(-)`:** inputs (`<`), outputs (`>`), errors (`!`), environments (`;`).
 
-Pure Aljam3 pipelines use `(-) ;Aljam3`. Foreign-environment pipelines reference a user-defined `{;}` environment and wire it through the [[aj3lib/pipelines/W/Env|-W.Env]] wrapper:
+Pure Aljam3 pipelines use `(-) ;Aljam3`. Foreign-environment pipelines reference a user-defined `{;}` environment and wire it through the [[jm3lib/pipelines/W/Env|-W.Env]] wrapper:
 
 ```aljam3
 {-} =ProcessData

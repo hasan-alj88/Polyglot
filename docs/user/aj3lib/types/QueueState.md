@@ -11,7 +11,7 @@ metadata_instance: "%#:QueueState:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.aj3` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
+Runtime `##Enum` type available in every `.jm3` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
 
 ---
 
@@ -49,7 +49,7 @@ Runtime `##Enum` type available in every `.aj3` file. Uses `[#] ##Enum` (enum cl
 
 ## Related
 
-- [[enums]] — other aj3lib enum types
+- [[enums]] — other jm3lib enum types
 - [[Job]] — job lifecycle
 - [[Queue]] — queue configuration
 - [[syntax/types/INDEX|types]] — full type system specification

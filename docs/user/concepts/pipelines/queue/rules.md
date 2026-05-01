@@ -159,4 +159,4 @@ Override by setting the default to false:
 
 - [[concepts/pipelines/queue/INDEX|Queue Configuration]] — Core queue setup and block types
 - [[concepts/pipelines/queue/internals|Queue Internals]] — Dispatch coordinator, state transitions, and load balancing
-- [[aj3lib/pipelines/Q/INDEX|u:-Q.* Queue Pipelines]] — full pipeline catalog
+- [[jm3lib/pipelines/Q/INDEX|u:-Q.* Queue Pipelines]] — full pipeline catalog

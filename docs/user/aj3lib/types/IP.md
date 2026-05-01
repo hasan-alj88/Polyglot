@@ -10,9 +10,9 @@ metadata_instance: "%#:IP:N"
 # #IP — IP Address
 
 <!-- @c:types -->
-<!-- @c:aj3lib/types/string -->
+<!-- @c:jm3lib/types/string -->
 
-`#IP` is a aj3lib type representing an IP address (IPv4 or IPv6). IP address validation requires range checking (e.g., octets 0-255 for IPv4, valid hex groups for IPv6) that cannot be expressed as regex constraints, so `#IP` is backed by a native `PgIP` class.
+`#IP` is a jm3lib type representing an IP address (IPv4 or IPv6). IP address validation requires range checking (e.g., octets 0-255 for IPv4, valid hex groups for IPv6) that cannot be expressed as regex constraints, so `#IP` is backed by a native `PgIP` class.
 
 See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$IP` constructor.
 
@@ -61,8 +61,8 @@ See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$IP` co
 
 ## Related
 
-- [[aj3lib/constructors/IP\|$IP constructor]] -- compile-time IP address construction
-- [[aj3lib/pipelines/IP.Parse\|-IP.Parse]] -- runtime IP address string parsing
+- [[jm3lib/constructors/IP\|$IP constructor]] -- compile-time IP address construction
+- [[jm3lib/pipelines/IP.Parse\|-IP.Parse]] -- runtime IP address string parsing
 - [[scalars]] -- scalar subtypes overview
 - [[string]] -- `#String` foundation type
 - [[syntax/types/INDEX\|types]] -- full type system specification

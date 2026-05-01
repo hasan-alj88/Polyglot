@@ -55,6 +55,6 @@ None.
 
 ## Related
 
-- [[aj3lib/reassemblers/Agg/INDEX|=*Agg Aggregation Reassemblers]]
-- [[aj3lib/collectors/Agg/Average|*Agg.Average]] -- standalone collector equivalent
+- [[jm3lib/reassemblers/Agg/INDEX|=*Agg Aggregation Reassemblers]]
+- [[jm3lib/collectors/Agg/Average|*Agg.Average]] -- standalone collector equivalent
 - [[concepts/collections/reassemble|Reassemble Operators]]

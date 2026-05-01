@@ -73,7 +73,7 @@ Examples:
 ## The `{N}` Block — Self-Documenting Natives
 
 <!-- @u:technical/ebnf/definition-blocks/09-06-native -->
-`{N}` definitions in aj3lib files are the self-documentation of native operations — designed before any Rust code is written. They serve two purposes:
+`{N}` definitions in jm3lib files are the self-documentation of native operations — designed before any Rust code is written. They serve two purposes:
 
 1. **Make signal logic clear on paper** — what signals exist, what each native does
 2. **Give the compiler vocabulary** to validate user code against real natives
@@ -85,14 +85,14 @@ The `{N}` block declares:
 - Host function name: `.Rust << "FunctionName"`
 - IO contract: `(-)` input, output, and error declarations
 
-Implementation status is tracked in the YAML frontmatter of the `.md` documentation file that accompanies each `{N}` definition — not in the `.aj3` file itself.
+Implementation status is tracked in the YAML frontmatter of the `.md` documentation file that accompanies each `{N}` definition — not in the `.jm3` file itself.
 
 ### Adding a New Native Operation
 
 Adding a native operation (e.g., `-T.MQTT`) requires all three steps:
 
 1. Write the Rust async function (or Trigger Monitor listener implementation)
-2. Add the `{N}` definition to aj3lib (self-documentation)
+2. Add the `{N}` definition to jm3lib (self-documentation)
 3. Update the compiler to recognize it
 
 ## The Floor Is Versioned

@@ -46,7 +46,7 @@ completed: 2026-04-16
 | docs/technical/edge-cases/04-type-system.md | Modified | EC-4.20 through EC-4.23 added; EC-4.19 updated |
 | docs/technical/edge-cases/INDEX.md | Modified | EC-4.1--4.19 → EC-4.1--4.23 |
 | docs/user/syntax/types/generic-types.md | Modified | #* Wildcard Type section → Multi-Type Constraints |
-| docs/user/aj3lib/types/Serial.md | Modified | [:] :*#* removed |
+| docs/user/jm3lib/types/Serial.md | Modified | [:] :*#* removed |
 | docs/user/concepts/collections/serial.md | Modified | [:] :*#* removed |
 | docs/technical/edge-cases/24-datatype-defs.md | Modified | [:] :*#* removed (2 occurrences) |
 | docs/technical/plan/decisions/schema-properties.md | Modified | [:] :*#* removed; Gap #2 updated |

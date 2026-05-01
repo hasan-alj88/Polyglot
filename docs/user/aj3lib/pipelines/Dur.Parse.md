@@ -67,7 +67,7 @@ None required. Pure computation pipeline.
 
 ## Related
 
-- [[aj3lib/constructors/Dur|$Dur constructor]] -- compile-time duration construction
-- [[aj3lib/types/datetime/core-components|#Duration type]] -- duration type definition
-- [[aj3lib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]] -- related DateTime pipelines
-- [[aj3lib/constructors/DT|$DT constructor]] -- companion DateTime constructor
+- [[jm3lib/constructors/Dur|$Dur constructor]] -- compile-time duration construction
+- [[jm3lib/types/datetime/core-components|#Duration type]] -- duration type definition
+- [[jm3lib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]] -- related DateTime pipelines
+- [[jm3lib/constructors/DT|$DT constructor]] -- companion DateTime constructor

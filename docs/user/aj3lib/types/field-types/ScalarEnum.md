@@ -51,11 +51,11 @@ The `[#] ###ScalarEnum` line declares the field type for all variant fields in t
 
 ## Example Types
 
-<!-- @u:aj3lib/types/boolean -->
-<!-- @u:aj3lib/types/OS -->
-<!-- @u:aj3lib/types/PipelineStatus -->
-<!-- @u:aj3lib/types/VarState -->
-<!-- @u:aj3lib/types/QueueStrategy -->
+<!-- @u:jm3lib/types/boolean -->
+<!-- @u:jm3lib/types/OS -->
+<!-- @u:jm3lib/types/PipelineStatus -->
+<!-- @u:jm3lib/types/VarState -->
+<!-- @u:jm3lib/types/QueueStrategy -->
 
 | Type | Variants | Purpose |
 |------|----------|---------|

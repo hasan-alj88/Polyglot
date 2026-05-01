@@ -11,7 +11,7 @@ metadata_instance: "%#:MergeStrategy:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.aj3` file. Controls how `*Into.Text.Merge` and `*Into.CSV.Merge` collectors handle conflicting changes from parallel jobs modifying the same line.
+Runtime `##Enum` type available in every `.jm3` file. Controls how `*Into.Text.Merge` and `*Into.CSV.Merge` collectors handle conflicting changes from parallel jobs modifying the same line.
 
 ---
 
@@ -58,5 +58,5 @@ Runtime `##Enum` type available in every `.aj3` file. Controls how `*Into.Text.M
 
 - [[MergeResult]] — output type containing resolved text and unresolved conflicts
 - [[MergeConflict]] — individual conflict record
-- [[enums]] — other aj3lib enum types
+- [[enums]] — other jm3lib enum types
 - [[syntax/types/INDEX|types]] — full type system specification

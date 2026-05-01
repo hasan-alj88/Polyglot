@@ -18,15 +18,15 @@ No `[@]` import needed.
 
 ## Operators
 
-- [[aj3lib/collectors/Agg/Sum|*Agg.Sum]] -- sum numeric values
-- [[aj3lib/collectors/Agg/Count|*Agg.Count]] -- count items
-- [[aj3lib/collectors/Agg/Average|*Agg.Average]] -- arithmetic mean
-- [[aj3lib/collectors/Agg/Max|*Agg.Max]] -- maximum value
-- [[aj3lib/collectors/Agg/Min|*Agg.Min]] -- minimum value
-- [[aj3lib/collectors/Agg/Concatenate|*Agg.Concatenate]] -- join strings
+- [[jm3lib/collectors/Agg/Sum|*Agg.Sum]] -- sum numeric values
+- [[jm3lib/collectors/Agg/Count|*Agg.Count]] -- count items
+- [[jm3lib/collectors/Agg/Average|*Agg.Average]] -- arithmetic mean
+- [[jm3lib/collectors/Agg/Max|*Agg.Max]] -- maximum value
+- [[jm3lib/collectors/Agg/Min|*Agg.Min]] -- minimum value
+- [[jm3lib/collectors/Agg/Concatenate|*Agg.Concatenate]] -- join strings
 
 ## Related
 
-- [[aj3lib/collectors/INDEX|Collectors overview]]
+- [[jm3lib/collectors/INDEX|Collectors overview]]
 - [[concepts/collections/collect|Collect Operators]]
 - [[concepts/collections/collect#Reconciliation]] -- reconciliation model

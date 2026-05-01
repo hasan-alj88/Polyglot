@@ -2,7 +2,7 @@
 status: planning
 assignee: "@product_owner"
 ---
-# Epic: Standard Library (aj3lib) Implementation
+# Epic: Standard Library (jm3lib) Implementation
 
 **Audience**: Internal Agile Personas
 

@@ -26,8 +26,8 @@ key-files:
     - docs/technical/plan/queue-manager/signal-map.md
   modified:
     - docs/technical/plan/queue-manager/INDEX.md
-    - docs/user/aj3lib/pipelines/Q/INDEX.md
-    - 15 action pipeline docs in docs/user/aj3lib/pipelines/Q/
+    - docs/user/jm3lib/pipelines/Q/INDEX.md
+    - 15 action pipeline docs in docs/user/jm3lib/pipelines/Q/
 
 key-decisions: []
 
@@ -74,22 +74,22 @@ completed: 2026-04-16
 |------|--------|---------|
 | `docs/technical/plan/queue-manager/signal-map.md` | Created | Consolidated cross-reference: action table (21 rows) + getter/state table (30 rows) |
 | `docs/technical/plan/queue-manager/INDEX.md` | Modified | Added signal-map.md to section list |
-| `docs/user/aj3lib/pipelines/Q/INDEX.md` | Modified | Source column added to 6 getter/state/idle tables |
-| `docs/user/aj3lib/pipelines/Q/Job.Pause.Free.CPU.md` | Modified | Runtime Behavior: cgroup.freeze / SIGSTOP |
-| `docs/user/aj3lib/pipelines/Q/Job.Pause.Free.RAM.md` | Modified | Runtime Behavior: .Soft (memory.high) and .Hard (memory.max) variants |
-| `docs/user/aj3lib/pipelines/Q/Job.Pause.Free.All.md` | Modified | Runtime Behavior: CRIU dump |
-| `docs/user/aj3lib/pipelines/Q/Job.Resume.md` | Modified | Runtime Behavior: type-aware routing (cgroup thaw vs criu restore) |
-| `docs/user/aj3lib/pipelines/Q/Job.Kill.WithCleanup.md` | Modified | Runtime Behavior: teardown queue + SIGTERM + [/] cleanup |
-| `docs/user/aj3lib/pipelines/Q/Job.Kill.Now.md` | Modified | Runtime Behavior: SIGKILL immediate |
-| `docs/user/aj3lib/pipelines/Q/Job.Throttle.md` | Modified | Runtime Behavior: throttle (cpu.max/memory.high/io.max) + unthrottle |
-| `docs/user/aj3lib/pipelines/Q/Job.Snapshot.md` | Modified | Runtime Behavior: criu dump --leave-running |
-| `docs/user/aj3lib/pipelines/Q/Job.Inspect.md` | Modified | Runtime Behavior: Redis read-only, no Unix op |
-| `docs/user/aj3lib/pipelines/Q/Job.Reassign.md` | Modified | Runtime Behavior: Lua script + optional CRIU for cross-host |
-| `docs/user/aj3lib/pipelines/Q/Priority.Update.md` | Modified | Runtime Behavior: ZADD only |
-| `docs/user/aj3lib/pipelines/Q/Queue.Drain.md` | Modified | Runtime Behavior: SADD queues:draining |
-| `docs/user/aj3lib/pipelines/Q/Queue.Flush.md` | Modified | Runtime Behavior: per-job SIGKILL |
-| `docs/user/aj3lib/pipelines/Q/DoNothing.md` | Modified | Runtime Behavior: no-op note |
-| `docs/user/aj3lib/pipelines/Q/Dispatch.Wait.TimeOut.md` | Modified | Runtime Behavior: escalate + variant delegation |
+| `docs/user/jm3lib/pipelines/Q/INDEX.md` | Modified | Source column added to 6 getter/state/idle tables |
+| `docs/user/jm3lib/pipelines/Q/Job.Pause.Free.CPU.md` | Modified | Runtime Behavior: cgroup.freeze / SIGSTOP |
+| `docs/user/jm3lib/pipelines/Q/Job.Pause.Free.RAM.md` | Modified | Runtime Behavior: .Soft (memory.high) and .Hard (memory.max) variants |
+| `docs/user/jm3lib/pipelines/Q/Job.Pause.Free.All.md` | Modified | Runtime Behavior: CRIU dump |
+| `docs/user/jm3lib/pipelines/Q/Job.Resume.md` | Modified | Runtime Behavior: type-aware routing (cgroup thaw vs criu restore) |
+| `docs/user/jm3lib/pipelines/Q/Job.Kill.WithCleanup.md` | Modified | Runtime Behavior: teardown queue + SIGTERM + [/] cleanup |
+| `docs/user/jm3lib/pipelines/Q/Job.Kill.Now.md` | Modified | Runtime Behavior: SIGKILL immediate |
+| `docs/user/jm3lib/pipelines/Q/Job.Throttle.md` | Modified | Runtime Behavior: throttle (cpu.max/memory.high/io.max) + unthrottle |
+| `docs/user/jm3lib/pipelines/Q/Job.Snapshot.md` | Modified | Runtime Behavior: criu dump --leave-running |
+| `docs/user/jm3lib/pipelines/Q/Job.Inspect.md` | Modified | Runtime Behavior: Redis read-only, no Unix op |
+| `docs/user/jm3lib/pipelines/Q/Job.Reassign.md` | Modified | Runtime Behavior: Lua script + optional CRIU for cross-host |
+| `docs/user/jm3lib/pipelines/Q/Priority.Update.md` | Modified | Runtime Behavior: ZADD only |
+| `docs/user/jm3lib/pipelines/Q/Queue.Drain.md` | Modified | Runtime Behavior: SADD queues:draining |
+| `docs/user/jm3lib/pipelines/Q/Queue.Flush.md` | Modified | Runtime Behavior: per-job SIGKILL |
+| `docs/user/jm3lib/pipelines/Q/DoNothing.md` | Modified | Runtime Behavior: no-op note |
+| `docs/user/jm3lib/pipelines/Q/Dispatch.Wait.TimeOut.md` | Modified | Runtime Behavior: escalate + variant delegation |
 
 ## Decisions Made
 

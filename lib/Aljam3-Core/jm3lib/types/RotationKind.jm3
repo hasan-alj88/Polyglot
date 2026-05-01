@@ -1,0 +1,15 @@
+{@} @jm3lib.types
+
+{ } Rotation detection strategy for -T.File.Rolled
+
+{#} #RotationKind
+   [%] .description << "Rotation detection strategy"
+   [%] .version << "1.0.0"
+   [#] ##Enum
+   [#] ##Scalar
+   [#] ###ScalarEnum
+   [#] %##Alias << "rotationkind"
+   [.] .Timestamp
+   [.] .Sequence
+   [.] .CopyTruncate
+   [.] .Auto

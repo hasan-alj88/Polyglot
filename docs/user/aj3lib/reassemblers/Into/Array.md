@@ -56,6 +56,6 @@ None.
 
 ## Related
 
-- [[aj3lib/reassemblers/Into/INDEX|=*Into Transformation Reassemblers]]
-- [[aj3lib/collectors/Into/Array|*Into.Array]] -- standalone collector equivalent
+- [[jm3lib/reassemblers/Into/INDEX|=*Into Transformation Reassemblers]]
+- [[jm3lib/collectors/Into/Array|*Into.Array]] -- standalone collector equivalent
 - [[concepts/collections/reassemble|Reassemble Operators]]

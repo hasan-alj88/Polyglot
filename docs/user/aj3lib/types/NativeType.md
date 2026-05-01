@@ -11,11 +11,11 @@ metadata_instance: "%#:NativeType:N"
 
 <!-- @c:types -->
 <!-- @c:spec/native-dispatch#Serialization Protocol -->
-<!-- @c:aj3lib/types/NativeKind -->
+<!-- @c:jm3lib/types/NativeKind -->
 
 `#NativeType` represents the set of primitive types available in each supported host language. Used by `#Variable` to tag values with their source or target language type, enabling the Bridge conversion algorithm to marshal data between language pairs.
 
-See [[aj3lib/types/Variable|#Variable]] for the language-tagged variable type that references `#NativeType` branches.
+See [[jm3lib/types/Variable|#Variable]] for the language-tagged variable type that references `#NativeType` branches.
 
 ---
 
@@ -113,8 +113,8 @@ No changes to `#NativeType`'s schema properties or `#Variable` are required.
 
 ## Related
 
-- [[aj3lib/types/Variable|#Variable]] -- language-tagged variable using `#NativeType` branches
+- [[jm3lib/types/Variable|#Variable]] -- language-tagged variable using `#NativeType` branches
 - [[spec/native-dispatch|Native Dispatch]] -- JSON wire format and serialization protocol
 - [[spec/type-identity|Type Identity]] -- "all data is serialized strings" principle
-- [[aj3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]] -- pipelines that use native types
-- [[aj3lib/pipelines/Variable/Convert|-Variable.Convert]] -- pairwise type conversion pipeline
+- [[jm3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]] -- pipelines that use native types
+- [[jm3lib/pipelines/Variable/Convert|-Variable.Convert]] -- pairwise type conversion pipeline

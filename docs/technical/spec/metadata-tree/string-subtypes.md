@@ -18,7 +18,7 @@ String subtypes live under `%#:String:*` at a flexible level:
 ├── :sci          <- .string#RawString + .regex = scientific notation
 ├── :eng          <- .string#RawString + .regex = engineering notation
 ├── :dim          <- .string#RawString + .regex = "^[1-9][0-9]*$"
-├── :email        <- aj3lib: .regex = email pattern
+├── :email        <- jm3lib: .regex = email pattern
 └── :(any)        <- extensible — users define new subtypes
 ```
 

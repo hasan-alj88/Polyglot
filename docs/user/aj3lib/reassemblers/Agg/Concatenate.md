@@ -55,6 +55,6 @@ None.
 
 ## Related
 
-- [[aj3lib/reassemblers/Agg/INDEX|=*Agg Aggregation Reassemblers]]
-- [[aj3lib/collectors/Agg/Concatenate|*Agg.Concatenate]] -- standalone collector equivalent
+- [[jm3lib/reassemblers/Agg/INDEX|=*Agg Aggregation Reassemblers]]
+- [[jm3lib/collectors/Agg/Concatenate|*Agg.Concatenate]] -- standalone collector equivalent
 - [[concepts/collections/reassemble|Reassemble Operators]]

@@ -7,7 +7,7 @@ assignee: "@developer"
 # Task: Validation CLI Integration
 
 ## Description
-Integrate the EBNF Compiler Validation phase into the `aljam3` CLI application to allow users to invoke the validator on `.aj3` files.
+Integrate the EBNF Compiler Validation phase into the `aljam3` CLI application to allow users to invoke the validator on `.jm3` files.
 
 ## Instructions
 1. Update `lib/aljam3/src/main.rs` to accept a new CLI argument: `--validate`.
@@ -20,6 +20,6 @@ Integrate the EBNF Compiler Validation phase into the `aljam3` CLI application t
    - Exit with a non-zero exit code (`std::process::exit(1)`) if validation fails.
 
 ## Acceptance Criteria
-- [ ] `aljam3 --validate -c <file.aj3>` successfully runs the entire pipeline (Lexer -> EBNF -> Report -> Display).
+- [ ] `aljam3 --validate -c <file.jm3>` successfully runs the entire pipeline (Lexer -> EBNF -> Report -> Display).
 - [ ] Passing a perfectly valid file exits with status code `0` and a success message.
 - [ ] Passing an invalid file triggers the formatted PGE error output and exits with status code `1`.

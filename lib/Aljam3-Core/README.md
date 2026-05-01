@@ -6,18 +6,18 @@ The core Aljam3 language compiler, implemented in Rust.
 
 | Module | Description |
 |--------|-------------|
-| `lexer` | Tokenizes `.aj3` source files into a token stream |
+| `lexer` | Tokenizes `.jm3` source files into a token stream |
 | `compiler` | Validates tokens, enforces compile rules (PGE/PGW), and produces AST JSON |
 
 ### Pipeline
 
 ```
-.aj3 source → Lexer → Token Stream → Compiler → AST JSON
+.jm3 source → Lexer → Token Stream → Compiler → AST JSON
 ```
 
-## `aj3lib/` — Aljam3 Standard Library
+## `jm3lib/` — Aljam3 Standard Library
 
-The `aj3lib/` directory contains `.aj3` source definitions for all standard-library pipelines, types, and errors. These files are the compiler's source of truth for aj3lib.
+The `jm3lib/` directory contains `.jm3` source definitions for all standard-library pipelines, types, and errors. These files are the compiler's source of truth for jm3lib.
 
 | Folder | Contains |
 |--------|----------|

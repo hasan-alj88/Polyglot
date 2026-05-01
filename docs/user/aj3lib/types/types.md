@@ -9,7 +9,7 @@ status: complete
 
 <!-- @c:types -->
 
-aj3lib structs and enums available in every `.aj3` file. No `[@]` import needed. For the full type system specification (annotations, schemas, generics), see [[syntax/types/INDEX|types]].
+jm3lib structs and enums available in every `.jm3` file. No `[@]` import needed. For the full type system specification (annotations, schemas, generics), see [[syntax/types/INDEX|types]].
 
 ## Type Hierarchy
 

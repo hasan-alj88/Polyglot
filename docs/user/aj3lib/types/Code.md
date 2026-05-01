@@ -55,6 +55,6 @@ Runtime execution output type. Output struct for all `-RT.*` pipeline modes. Lan
 ## Related
 
 - [[rt]] — runtime types overview
-- [[aj3lib/pipelines/RT/INDEX|-RT.*]] — runtime execution pipelines
-- [[aj3lib/pipelines/W/INDEX|-W.*]] — wrapper pipelines
+- [[jm3lib/pipelines/RT/INDEX|-RT.*]] — runtime execution pipelines
+- [[jm3lib/pipelines/W/INDEX|-W.*]] — wrapper pipelines
 - [[syntax/types/INDEX|types]] — full type system specification

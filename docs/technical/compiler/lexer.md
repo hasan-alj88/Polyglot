@@ -5,7 +5,7 @@ description: "Core algorithms and token registries driving the Aljam3 string ext
 
 # Aljam3 Lexer Architecture
 
-The Aljam3 Lexer is responsible for turning a raw `*.aj3` script into a completely structured stream of Enum Tokens (`Aljam3Token`). Unlike traditional infinite-character parsers, Aljam3 leverages a rigid grammatical structure, allowing the Lexer to operate on a deterministic **Line-by-Line 4-Phase Algorithm**.
+The Aljam3 Lexer is responsible for turning a raw `*.jm3` script into a completely structured stream of Enum Tokens (`Aljam3Token`). Unlike traditional infinite-character parsers, Aljam3 leverages a rigid grammatical structure, allowing the Lexer to operate on a deterministic **Line-by-Line 4-Phase Algorithm**.
 
 This architecture guarantees that the Parser (Compiler Phase 2) always receives extremely predictable token sequences, isolated from arbitrary spacing or line continuation issues.
 

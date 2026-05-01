@@ -9,8 +9,8 @@ metadata_instance: "%Q:Kill.Graceful:N"
 
 # -Q.Kill.Graceful
 
-<!-- @d:aj3lib/pipelines/Q/Job.Kill.WithCleanup -->
-**Deprecated.** Replaced by [[aj3lib/pipelines/Q/Job.Kill.WithCleanup|d:-Q.Job.Kill.WithCleanup]]. Conditions now use `[?]`/`[&]`/`[+]` conditional blocks inside `{Q} #JobRules` definitions instead of pipeline name suffixes.
+<!-- @d:jm3lib/pipelines/Q/Job.Kill.WithCleanup -->
+**Deprecated.** Replaced by [[jm3lib/pipelines/Q/Job.Kill.WithCleanup|d:-Q.Job.Kill.WithCleanup]]. Conditions now use `[?]`/`[&]`/`[+]` conditional blocks inside `{Q} #JobRules` definitions instead of pipeline name suffixes.
 
 ---
 
@@ -63,5 +63,5 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/Kill.Hard|-Q.Kill.Hard]]
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/Kill.Hard|-Q.Kill.Hard]]
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

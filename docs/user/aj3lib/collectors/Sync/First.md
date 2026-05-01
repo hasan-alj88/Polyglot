@@ -61,6 +61,6 @@ None.
 
 ## Related
 
-- [[aj3lib/collectors/Sync/INDEX|Collect-All & Race Collectors]]
-- [[aj3lib/collectors/Sync/Nth|*Nth]] -- generic race form
-- [[aj3lib/collectors/Sync/All|*All]] -- collect-all alternative
+- [[jm3lib/collectors/Sync/INDEX|Collect-All & Race Collectors]]
+- [[jm3lib/collectors/Sync/Nth|*Nth]] -- generic race form
+- [[jm3lib/collectors/Sync/All|*All]] -- collect-all alternative

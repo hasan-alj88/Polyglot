@@ -51,6 +51,6 @@ None -- pure computation.
 
 ## Related
 
-- [[aj3lib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
-- [[aj3lib/pipelines/Schema/YAML.Parse|-#.YAML.Parse]]
-- [[aj3lib/pipelines/Schema/TOML.Parse|-#.TOML.Parse]]
+- [[jm3lib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[jm3lib/pipelines/Schema/YAML.Parse|-#.YAML.Parse]]
+- [[jm3lib/pipelines/Schema/TOML.Parse|-#.TOML.Parse]]

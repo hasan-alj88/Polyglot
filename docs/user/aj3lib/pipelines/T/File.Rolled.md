@@ -32,7 +32,7 @@ Fires when a file rotates, delivering the **completed** (rolled-over) file — n
 |------|------|---------|-------------|
 | `<Dir` | `#path` | — | Directory to watch for rotation events. |
 | `<Pattern` | `#string` | — | Filename glob pattern to match (e.g. `"app-*.log"`). |
-| `<Strategy` | `#RotationKind` | `#RotationKind.Auto` | Detection strategy. See [[aj3lib/types/RotationKind\|#RotationKind]]. |
+| `<Strategy` | `#RotationKind` | `#RotationKind.Auto` | Detection strategy. See [[jm3lib/types/RotationKind\|#RotationKind]]. |
 
 ### Inline Syntax
 
@@ -124,6 +124,6 @@ File.Read
 
 ## Related
 
-- [[aj3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
-- [[aj3lib/pipelines/T/Folder.NewFiles|-T.Folder.NewFiles]] — related trigger (fires on new files, not rolled files)
-- [[aj3lib/types/RotationKind|#RotationKind]] — detection strategy enum
+- [[jm3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
+- [[jm3lib/pipelines/T/Folder.NewFiles|-T.Folder.NewFiles]] — related trigger (fires on new files, not rolled files)
+- [[jm3lib/types/RotationKind|#RotationKind]] — detection strategy enum

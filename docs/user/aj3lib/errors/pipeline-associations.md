@@ -9,7 +9,7 @@ status: complete
 
 <!-- @c:errors -->
 
-Each aj3lib pipeline declares the errors it can raise via `[=] !ErrorName` (see [[concepts/pipelines/metadata#Error Trees]]):
+Each jm3lib pipeline declares the errors it can raise via `[=] !ErrorName` (see [[concepts/pipelines/metadata#Error Trees]]):
 
 ```aljam3
 =File.Text.Read

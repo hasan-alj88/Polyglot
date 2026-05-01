@@ -31,4 +31,4 @@ Capability-level generic permission for Bluetooth access. Sugar over [[INDEX|__D
 ## Related
 
 - [[INDEX|__Device]] -- category-level generic
-- [[aj3lib/permissions/INDEX]] -- all aj3lib generic permissions
+- [[jm3lib/permissions/INDEX]] -- all jm3lib generic permissions

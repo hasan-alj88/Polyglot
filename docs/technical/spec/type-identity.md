@@ -12,7 +12,7 @@ All Aljam3 data is serialized strings. **"Same type" means "same schema"** — s
 
 ## Terminology
 
-`{#}` declarations produce **structs** — the term for any type with a defined schema. All `{#}` types (user-defined and aj3lib like `#path`, `#Boolean`, `#OS`, `#Queue`, `#DateTime`) are structs.
+`{#}` declarations produce **structs** — the term for any type with a defined schema. All `{#}` types (user-defined and jm3lib like `#path`, `#Boolean`, `#OS`, `#Queue`, `#DateTime`) are structs.
 
 ## Rules
 

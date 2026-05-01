@@ -1,11 +1,11 @@
 ---
-phase: 161-split-aj3lib-docs-per-operator
+phase: 161-split-jm3lib-docs-per-operator
 plan: 05
 subsystem: docs
-tags: [aj3lib, wikilinks, cleanup]
+tags: [jm3lib, wikilinks, cleanup]
 
 provides:
-  - All aj3lib wikilinks point to new per-operator file structure
+  - All jm3lib wikilinks point to new per-operator file structure
 affects: []
 
 key-files:
@@ -14,13 +14,13 @@ key-files:
     - docs/user/syntax/types/macro-types.md
     - docs/user/concepts/collections/dataframe.md
     - docs/user/concepts/pipelines/INDEX.md
-    - docs/user/aj3lib/expanders/ForEach/Dataframe/Column.md
-    - docs/user/aj3lib/pipelines/File/Serial.Read.md
-    - docs/user/aj3lib/pipelines/File/Serial.Read.Field.md
-    - docs/user/aj3lib/pipelines/File/Serial.Write.md
-    - docs/user/aj3lib/pipelines/File/INDEX.md
-    - docs/user/aj3lib/types/rt.md
-    - docs/user/aj3lib/pipelines/RT/INDEX.md
+    - docs/user/jm3lib/expanders/ForEach/Dataframe/Column.md
+    - docs/user/jm3lib/pipelines/File/Serial.Read.md
+    - docs/user/jm3lib/pipelines/File/Serial.Read.Field.md
+    - docs/user/jm3lib/pipelines/File/Serial.Write.md
+    - docs/user/jm3lib/pipelines/File/INDEX.md
+    - docs/user/jm3lib/types/rt.md
+    - docs/user/jm3lib/pipelines/RT/INDEX.md
 
 duration: 1min
 completed: 2026-04-07
@@ -52,8 +52,8 @@ completed: 2026-04-07
 
 **1. Two additional stale links discovered during verification**
 - **Found during:** Task 1 verification (grep caught 2 more)
-- **Issue:** `macro-types.md` and `concepts/pipelines/INDEX.md` had `[[#|aj3lib/pipelines/#]]` variant not caught by initial research
-- **Fix:** Updated both to `[[aj3lib/pipelines/Schema/INDEX|=#.* Schema Pipelines]]`
+- **Issue:** `macro-types.md` and `concepts/pipelines/INDEX.md` had `[[#|jm3lib/pipelines/#]]` variant not caught by initial research
+- **Fix:** Updated both to `[[jm3lib/pipelines/Schema/INDEX|=#.* Schema Pipelines]]`
 - **Files:** macro-types.md, concepts/pipelines/INDEX.md
 - **Verification:** Re-grep confirms zero matches
 
@@ -66,5 +66,5 @@ completed: 2026-04-07
 **Blockers:** None
 
 ---
-*Phase: 161-split-aj3lib-docs-per-operator, Plan: 05*
+*Phase: 161-split-jm3lib-docs-per-operator, Plan: 05*
 *Completed: 2026-04-07*

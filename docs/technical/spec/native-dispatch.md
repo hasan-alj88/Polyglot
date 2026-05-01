@@ -10,7 +10,7 @@ status: draft
 <!-- @c:spec/type-identity -->
 <!-- @c:spec/aljam3-sdk -->
 <!-- @concepts/pipelines/INDEX -->
-<!-- @c:aj3lib/types/NativeKind -->
+<!-- @c:jm3lib/types/NativeKind -->
 
 The native dispatch layer bridges Aljam3's runtime and host-language functions. When a subsystem encounters a call to a `{N}` native pipeline, the dispatch layer resolves the function, serializes inputs, executes the native function, and deserializes outputs back into Aljam3 variables.
 
@@ -124,7 +124,7 @@ At service startup, each subsystem validates its registry entries:
 
 ### Compile-Time Construction
 
-The compiler scans all aj3lib `.aj3` files, collects `{N}` definitions, and emits a **native registry** — a lookup table included in the compiled output.
+The compiler scans all jm3lib `.jm3` files, collects `{N}` definitions, and emits a **native registry** — a lookup table included in the compiled output.
 
 For each `{N}` definition, the compiler extracts:
 
@@ -427,7 +427,7 @@ Native functions report errors by returning an error envelope. The `error.id` mu
 
 ## #NativeKind Routing
 
-<!-- @c:aj3lib/types/NativeKind -->
+<!-- @c:jm3lib/types/NativeKind -->
 
 Each `#NativeKind` variant routes to a specific subsystem and dispatch context.
 
@@ -445,7 +445,7 @@ Runner receives job.start signal
    → Result flows back into pipeline variables
 ```
 
-**Bridge dispatch note:** `-Run.Bridge.Function` and `-Run.Bridge.Script` are Execution-kind operations dispatched by the Runner. The Runner handles dual-env setup by dispatching two environment wrappers (one per language) before executing the Bridge call. See [[aj3lib/pipelines/Run/Bridge.Function]] and [[aj3lib/pipelines/Run/Bridge.Script]] for the pipeline definitions, and [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] for the type conversion flow.
+**Bridge dispatch note:** `-Run.Bridge.Function` and `-Run.Bridge.Script` are Execution-kind operations dispatched by the Runner. The Runner handles dual-env setup by dispatching two environment wrappers (one per language) before executing the Bridge call. See [[jm3lib/pipelines/Run/Bridge.Function]] and [[jm3lib/pipelines/Run/Bridge.Script]] for the pipeline definitions, and [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] for the type conversion flow.
 
 ### Trigger
 
@@ -869,7 +869,7 @@ To add support for a new host language (e.g., Go):
 1. Create `lib/go/` with the standard subfolder structure
 2. Implement the native function contract in Go (JSON in → JSON out)
 3. Implement each native function listed in the native registry for the target subsystem(s)
-4. Add `.<Language>` bindings to `{N}` definitions in aj3lib `.aj3` files (e.g., `[%] .Go << "FileTextRead"`)
+4. Add `.<Language>` bindings to `{N}` definitions in jm3lib `.jm3` files (e.g., `[%] .Go << "FileTextRead"`)
 5. Update the YAML config to reference the new language in `defaults` or `overrides`
 6. Build the integrator SDK for bidirectional communication
 
@@ -964,13 +964,13 @@ Runner                 Native Function       Error Handler
 |----------|-------------|
 | [[technical/ebnf/09-definition-blocks#9.4c\|EBNF §9.4c]] | Formal `{N}` grammar |
 | [[technical/compile-rules/PGE/PGE01028\|PGE01028]] | Native/derived mutual exclusion rules |
-| [[aj3lib/types/NativeKind\|#NativeKind]] | The 5 kind variants |
+| [[jm3lib/types/NativeKind\|#NativeKind]] | The 5 kind variants |
 | [[concepts/pipelines/INDEX#Native vs Derived\|Native vs Derived]] | High-level distinction |
 | [[spec/type-identity\|Type Identity]] | "All data is serialized strings" foundation |
 | [[spec/aljam3-sdk\|Aljam3 SDK]] | SDK public API, type mapping, and serialization algorithm |
 | [[spec/metadata-tree/branches\|Metadata Tree Branches]] | Pipeline/job structure |
 | [[queue-manager/end-to-end-flow\|End-to-End Flow]] | Where native dispatch fits in execution |
-| [[aj3lib/pipelines/#\|-#.* Pipelines]] | Intrinsic catalog source |
-| [[aj3lib/pipelines/Run/Bridge.Function]] | `-Run.Bridge.Function` — cross-language function call |
-| [[aj3lib/pipelines/Run/Bridge.Script]] | `-Run.Bridge.Script` — cross-language variable binding |
+| [[jm3lib/pipelines/#\|-#.* Pipelines]] | Intrinsic catalog source |
+| [[jm3lib/pipelines/Run/Bridge.Function]] | `-Run.Bridge.Function` — cross-language function call |
+| [[jm3lib/pipelines/Run/Bridge.Script]] | `-Run.Bridge.Script` — cross-language variable binding |
 | [[technical/algorithms/bridge-conversion]] | Bridge conversion algorithm for pairwise type mapping |

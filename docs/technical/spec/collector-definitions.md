@@ -13,9 +13,9 @@ status: draft
 
 # Collector Definitions (`{*}`)
 
-`{*}` is the 10th definition block type. It makes collectors ([[glossary#Reconciliation|c:Reconciliation]]) a first-class definable entity — users can define custom collector logic, not just invoke aj3lib-native operators.
+`{*}` is the 10th definition block type. It makes collectors ([[glossary#Reconciliation|c:Reconciliation]]) a first-class definable entity — users can define custom collector logic, not just invoke jm3lib-native operators.
 
-`{N}` remains for native pipelines. `{*}` is exclusively for collector definitions. Existing aj3lib collectors (`*First`, `*All`, etc.) are rewritten as `{*}` blocks — the collector logic lives in `{*}`, while the underlying job management and queue handling remain native.
+`{N}` remains for native pipelines. `{*}` is exclusively for collector definitions. Existing jm3lib collectors (`*First`, `*All`, etc.) are rewritten as `{*}` blocks — the collector logic lives in `{*}`, while the underlying job management and queue handling remain native.
 
 `{*}` creates a branch on the `%` metadata tree at `%*`.
 

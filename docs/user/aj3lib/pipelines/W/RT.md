@@ -9,7 +9,7 @@ metadata_instance: "%W:RT:N"
 
 # -W.RT (Deprecated)
 
-> **Deprecated:** Use [[aj3lib/pipelines/W/Env|-W.Env]] with `{;}` environment definitions instead. `-W.RT` and its version tree syntax are retired. See [[environments]] for the replacement system.
+> **Deprecated:** Use [[jm3lib/pipelines/W/Env|-W.Env]] with `{;}` environment definitions instead. `-W.RT` and its version tree syntax are retired. See [[environments]] for the replacement system.
 
 Starts language runtime on setup, stops on cleanup. Uses version-specific paths (e.g., `-W.RT:Python:3:14`).
 
@@ -70,4 +70,4 @@ System.Process
 
 ## Related
 
-- [[aj3lib/pipelines/W/INDEX|-W.* Wrappers]]
+- [[jm3lib/pipelines/W/INDEX|-W.* Wrappers]]

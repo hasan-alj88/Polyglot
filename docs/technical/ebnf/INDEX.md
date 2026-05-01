@@ -25,7 +25,7 @@ status: draft
 <!-- @u:concepts/permissions -->
 <!-- @u:concepts/metadata -->
 <!-- @u:technical/edge-cases/INDEX -->
-This document defines the complete formal grammar for Aljam3 Code (`.aj3` files) using Extended Backus-Naur Form (EBNF). Each section maps to spec files: [[line-structure]], [[blocks]], [[identifiers]], [[syntax/types/INDEX|types]], [[operators]], [[io]], [[packages]], [[comments]], [[concepts/pipelines/INDEX|pipelines]], [[concepts/collections/INDEX|collections]], [[variable-lifecycle]]. For edge case testing, see [[technical/edge-cases/INDEX|EDGE-CASES]].
+This document defines the complete formal grammar for Aljam3 Code (`.jm3` files) using Extended Backus-Naur Form (EBNF). Each section maps to spec files: [[line-structure]], [[blocks]], [[identifiers]], [[syntax/types/INDEX|types]], [[operators]], [[io]], [[packages]], [[comments]], [[concepts/pipelines/INDEX|pipelines]], [[concepts/collections/INDEX|collections]], [[variable-lifecycle]]. For edge case testing, see [[technical/edge-cases/INDEX|EDGE-CASES]].
 
 ## Notation Conventions
 

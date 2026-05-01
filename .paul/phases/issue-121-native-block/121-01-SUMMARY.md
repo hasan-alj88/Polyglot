@@ -12,7 +12,7 @@ provides:
   - "#NativeKind enum (Trigger, Queue, Wrapper, Execution, Intrinsic)"
   - "%Native.* metadata scope with .Kind, .<Language>, .description"
   - "EBNF §9.4c grammar for {N}"
-affects: ["121-02 (BaseCode retirement)", "121-03 (aj3lib propagation)"]
+affects: ["121-02 (BaseCode retirement)", "121-03 (jm3lib propagation)"]
 
 key-files:
   modified:
@@ -62,7 +62,7 @@ completed: 2026-04-04
 
 **Remaining plans:**
 - 121-02: Replace #BaseCode with #NativeKind (retire BaseCode.md, update PGE01028, cross-refs)
-- 121-03: Propagate {N} to aj3lib pipeline definitions (replace {=}[exe] + .baseCode examples)
+- 121-03: Propagate {N} to jm3lib pipeline definitions (replace {=}[exe] + .baseCode examples)
 
 ---
 *Phase: issue-121-native-block, Plan: 01*

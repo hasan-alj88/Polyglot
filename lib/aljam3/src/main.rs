@@ -53,7 +53,7 @@ fn main() {
     }
 
     if (!is_lexer && !is_validate) || input_file.is_none() {
-        eprintln!("Usage: aljam3 [--lexer | --validate] -c <input.aj3> [-t <output.aj3ts>]");
+        eprintln!("Usage: aljam3 [--lexer | --validate] -c <input.jm3> [-t <output.jm3ts>]");
         std::process::exit(1);
     }
 

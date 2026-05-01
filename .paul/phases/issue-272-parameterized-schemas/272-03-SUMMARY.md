@@ -18,17 +18,17 @@ affects: [272-04 syntax/concept/block docs, 272-05 technical docs]
 
 key-files:
   created:
-    - docs/user/aj3lib/types/Set.md
+    - docs/user/jm3lib/types/Set.md
   modified:
-    - docs/user/aj3lib/types/Map.md
-    - docs/user/aj3lib/types/Array.md
-    - docs/user/aj3lib/types/Dataframe.md
-    - docs/user/aj3lib/types/Serial.md
-    - docs/user/aj3lib/types/scalars.md
-    - docs/user/aj3lib/types/collections.md
-    - docs/user/aj3lib/types/string.md
-    - docs/user/aj3lib/types/boolean.md
-    - docs/user/aj3lib/types/types.md
+    - docs/user/jm3lib/types/Map.md
+    - docs/user/jm3lib/types/Array.md
+    - docs/user/jm3lib/types/Dataframe.md
+    - docs/user/jm3lib/types/Serial.md
+    - docs/user/jm3lib/types/scalars.md
+    - docs/user/jm3lib/types/collections.md
+    - docs/user/jm3lib/types/string.md
+    - docs/user/jm3lib/types/boolean.md
+    - docs/user/jm3lib/types/types.md
     - docs/user/syntax/types/hierarchy.md
     - docs/user/syntax/types/basic-types.md
     - docs/user/syntax/types/arrays.md

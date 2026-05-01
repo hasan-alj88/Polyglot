@@ -10,26 +10,26 @@ files_modified:
   - docs/technical/compile-rules/PGE/PGE10005-permission-output.md
   - docs/technical/compile-rules/PGE/PGE10006-duplicate-permission.md
   - docs/technical/compile-rules/PGW/PGW10001-unused-permission.md
-  - docs/user/aj3lib/pipelines/DT.md
-  - docs/user/aj3lib/pipelines/File.md
-  - docs/user/aj3lib/pipelines/W.md
-  - docs/user/aj3lib/pipelines/T.md
-  - docs/user/aj3lib/pipelines/RT.md
-  - docs/user/aj3lib/pipelines/Sys.md
-  - docs/user/aj3lib/pipelines/#.md
+  - docs/user/jm3lib/pipelines/DT.md
+  - docs/user/jm3lib/pipelines/File.md
+  - docs/user/jm3lib/pipelines/W.md
+  - docs/user/jm3lib/pipelines/T.md
+  - docs/user/jm3lib/pipelines/RT.md
+  - docs/user/jm3lib/pipelines/Sys.md
+  - docs/user/jm3lib/pipelines/#.md
 autonomous: true
 ---
 
 <objective>
 ## Goal
-Update compile rules and aj3lib permission references to reflect the {_} named permission object system designed in Plans 01-02.
+Update compile rules and jm3lib permission references to reflect the {_} named permission object system designed in Plans 01-02.
 
 ## Purpose
-Plans 01-02 rewrote user-facing docs and technical spec (EBNF + metadata tree) for {_} objects. Compile rules and aj3lib files still use the old inline `[_] _Category.subfield` syntax. This plan brings them into alignment.
+Plans 01-02 rewrote user-facing docs and technical spec (EBNF + metadata tree) for {_} objects. Compile rules and jm3lib files still use the old inline `[_] _Category.subfield` syntax. This plan brings them into alignment.
 
 ## Output
 - 5 compile rule files rewritten for {_} object system
-- 7 aj3lib pipeline files with updated permission sections
+- 7 jm3lib pipeline files with updated permission sections
 </objective>
 
 <context>
@@ -45,13 +45,13 @@ Plans 01-02 rewrote user-facing docs and technical spec (EBNF + metadata tree) f
 @docs/technical/compile-rules/PGE/PGE10005-permission-output.md
 @docs/technical/compile-rules/PGE/PGE10006-duplicate-permission.md
 @docs/technical/compile-rules/PGW/PGW10001-unused-permission.md
-@docs/user/aj3lib/pipelines/DT.md
-@docs/user/aj3lib/pipelines/File.md
-@docs/user/aj3lib/pipelines/W.md
-@docs/user/aj3lib/pipelines/T.md
-@docs/user/aj3lib/pipelines/RT.md
-@docs/user/aj3lib/pipelines/Sys.md
-@docs/user/aj3lib/pipelines/#.md
+@docs/user/jm3lib/pipelines/DT.md
+@docs/user/jm3lib/pipelines/File.md
+@docs/user/jm3lib/pipelines/W.md
+@docs/user/jm3lib/pipelines/T.md
+@docs/user/jm3lib/pipelines/RT.md
+@docs/user/jm3lib/pipelines/Sys.md
+@docs/user/jm3lib/pipelines/#.md
 </context>
 
 <acceptance_criteria>
@@ -64,9 +64,9 @@ Then all statements, detection text, and code examples use {_} named permission 
 And all VALID/INVALID/WARNING examples use [_] _ObjectName (referencing {_} by name), {_} _Name blocks with [.] field lines, and {_} .intent << #Ceiling/#Grant
 ```
 
-## AC-2: aj3lib permission tables use Category.Capability format
+## AC-2: jm3lib permission tables use Category.Capability format
 ```gherkin
-Given aj3lib files File.md, W.md, T.md, DT.md, Sys.md, RT.md, #.md
+Given jm3lib files File.md, W.md, T.md, DT.md, Sys.md, RT.md, #.md
 When reading each Permissions section
 Then permission tables show required Category.Capability (e.g., File.Read, System.Env) — not old _Category.subfield format
 And prose describes referencing named {_} objects (not inline declarations)
@@ -78,7 +78,7 @@ And the "Type" column (Inline/IO) is removed or replaced with "Category"
 Given DT.md with ~40 {N} native pipeline definitions
 When reading each definition code block
 Then [_] _None lines are removed entirely (pure computation needs no permission line)
-And [_] _IO.Read on =DT.Now is removed (aj3lib {N} defs don't have [_] — they require capabilities implicitly)
+And [_] _IO.Read on =DT.Now is removed (jm3lib {N} defs don't have [_] — they require capabilities implicitly)
 And permission table correctly shows =DT.Now requires System.Env capability
 ```
 
@@ -113,7 +113,7 @@ And a {_} _ObjectName definition block is shown with [.] .System.Process scope
     - Keep the 8 categories and their capabilities unchanged
 
     **PGE10004 — Undeclared Permission:**
-    - Statement: pipeline calls IO aj3lib without matching `[_] _ObjectName` reference whose `{_}` object grants the needed capability
+    - Statement: pipeline calls IO jm3lib without matching `[_] _ObjectName` reference whose `{_}` object grants the needed capability
     - Detection: compiler traces call graph, checks referenced `{_}` objects cover all IO capabilities used
     - Examples: show {_} + {@} + {=} with [_] references, transitive enforcement
 
@@ -145,18 +145,18 @@ And a {_} _ObjectName definition block is shown with [.] .System.Process scope
 </task>
 
 <task type="auto">
-  <name>Task 2: Update 7 aj3lib files' permission sections</name>
+  <name>Task 2: Update 7 jm3lib files' permission sections</name>
   <files>
-    docs/user/aj3lib/pipelines/DT.md,
-    docs/user/aj3lib/pipelines/File.md,
-    docs/user/aj3lib/pipelines/W.md,
-    docs/user/aj3lib/pipelines/T.md,
-    docs/user/aj3lib/pipelines/RT.md,
-    docs/user/aj3lib/pipelines/Sys.md,
-    docs/user/aj3lib/pipelines/#.md
+    docs/user/jm3lib/pipelines/DT.md,
+    docs/user/jm3lib/pipelines/File.md,
+    docs/user/jm3lib/pipelines/W.md,
+    docs/user/jm3lib/pipelines/T.md,
+    docs/user/jm3lib/pipelines/RT.md,
+    docs/user/jm3lib/pipelines/Sys.md,
+    docs/user/jm3lib/pipelines/#.md
   </files>
   <action>
-    Update each aj3lib file's Permissions section:
+    Update each jm3lib file's Permissions section:
 
     **All files — Permission table format change:**
     - Old: `| Pipeline | Permission | Type |` with `_File.read | Inline`
@@ -189,11 +189,11 @@ And a {_} _ObjectName definition block is shown with [.] .System.Process scope
     Avoid:
     - Changing anything outside the Permissions section
     - Changing pipeline definitions, IO, errors, or descriptions
-    - Adding {_} definition blocks to aj3lib files (these are reference docs, not example files)
+    - Adding {_} definition blocks to jm3lib files (these are reference docs, not example files)
     - Using old inline permission syntax
   </action>
   <verify>Grep all 7 files for "_None", "_IO.Read", "_File.read\"", "_System.process" (old inline patterns) — should find zero matches. Verify DT.md has no [_] lines in {N} definitions.</verify>
-  <done>AC-2, AC-3, AC-4 satisfied: aj3lib files use new permission terminology and syntax</done>
+  <done>AC-2, AC-3, AC-4 satisfied: jm3lib files use new permission terminology and syntax</done>
 </task>
 
 </tasks>
@@ -210,14 +210,14 @@ And a {_} _ObjectName definition block is shown with [.] .System.Process scope
 - Do not update PGE10001/PGE10002 (planned rules — out of scope for this issue)
 - Do not update PGE01024 open point about [_] marker compatibility (separate concern)
 - Do not add new compile rules beyond updating existing ones
-- Do not change aj3lib pipeline definitions, IO, errors, or descriptions — only Permissions sections
+- Do not change jm3lib pipeline definitions, IO, errors, or descriptions — only Permissions sections
 
 </boundaries>
 
 <verification>
 Before declaring plan complete:
 - [ ] All 5 compile rule files use {_} named object syntax in statements + examples
-- [ ] All 7 aj3lib files use Category.Capability format in permission tables
+- [ ] All 7 jm3lib files use Category.Capability format in permission tables
 - [ ] DT.md has zero [_] lines inside {N} definition code blocks
 - [ ] RT.md examples show {_} definition + [_] reference pattern
 - [ ] Grep for old patterns (_File.read, _None, _IO.Read, _System.process inline) returns zero hits in modified files
@@ -228,7 +228,7 @@ Before declaring plan complete:
 - All tasks completed
 - All verification checks pass
 - No old inline permission syntax remains in modified files
-- Compile rules and aj3lib are fully aligned with {_} object system from Plans 01-02
+- Compile rules and jm3lib are fully aligned with {_} object system from Plans 01-02
 </success_criteria>
 
 <output>

@@ -9,8 +9,8 @@ metadata_instance: "%Q:Reassign:N"
 
 # -Q.Reassign
 
-<!-- @d:aj3lib/pipelines/Q/Job.Reassign -->
-**Deprecated.** Renamed to [[aj3lib/pipelines/Q/Job.Reassign|d:-Q.Job.Reassign]] under the scoped naming convention (`-Q.<Scope>.<Action>`).
+<!-- @d:jm3lib/pipelines/Q/Job.Reassign -->
+**Deprecated.** Renamed to [[jm3lib/pipelines/Q/Job.Reassign|d:-Q.Job.Reassign]] under the scoped naming convention (`-Q.<Scope>.<Action>`).
 
 ---
 
@@ -57,4 +57,4 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

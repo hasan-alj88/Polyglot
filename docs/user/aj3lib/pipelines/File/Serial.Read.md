@@ -9,7 +9,7 @@ metadata_instance: "%-:File.Serial.Read:N"
 
 # -File.Serial.Read
 
-Read and parse a structured data file. Format is auto-detected from file extension (.json, .yaml, .toml). Internally delegates to `-#.JSON.Parse`, `-#.YAML.Parse`, or `-#.TOML.Parse` base parsers (see [[aj3lib/pipelines/Schema/INDEX|pipelines/Schema]]).
+Read and parse a structured data file. Format is auto-detected from file extension (.json, .yaml, .toml). Internally delegates to `-#.JSON.Parse`, `-#.YAML.Parse`, or `-#.TOML.Parse` base parsers (see [[jm3lib/pipelines/Schema/INDEX|pipelines/Schema]]).
 
 ## Definition
 
@@ -55,7 +55,7 @@ Requires `File.Read` capability.
 
 ## Related
 
-- [[aj3lib/pipelines/File/INDEX|-File.* File Pipelines]]
-- [[aj3lib/pipelines/File/Serial.Write|-File.Serial.Write]]
-- [[aj3lib/pipelines/File/Serial.Read.Field|-File.Serial.Read.Field]]
-- [[aj3lib/pipelines/Schema/INDEX|-# Base Parsers]]
+- [[jm3lib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[jm3lib/pipelines/File/Serial.Write|-File.Serial.Write]]
+- [[jm3lib/pipelines/File/Serial.Read.Field|-File.Serial.Read.Field]]
+- [[jm3lib/pipelines/Schema/INDEX|-# Base Parsers]]

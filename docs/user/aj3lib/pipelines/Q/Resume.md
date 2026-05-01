@@ -9,8 +9,8 @@ metadata_instance: "%Q:Resume:N"
 
 # -Q.Resume
 
-<!-- @d:aj3lib/pipelines/Q/Job.Resume -->
-**Deprecated.** Replaced by [[aj3lib/pipelines/Q/Job.Resume|d:-Q.Job.Resume]]. Resume now uses pause reason set semantics — "resume" means "this rule no longer wants the Job paused." The Job actually resumes only when no rule wants it paused.
+<!-- @d:jm3lib/pipelines/Q/Job.Resume -->
+**Deprecated.** Replaced by [[jm3lib/pipelines/Q/Job.Resume|d:-Q.Job.Resume]]. Resume now uses pause reason set semantics — "resume" means "this rule no longer wants the Job paused." The Job actually resumes only when no rule wants it paused.
 
 ---
 
@@ -63,6 +63,6 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/Pause.Soft|-Q.Pause.Soft]]
-- [[aj3lib/pipelines/Q/Pause.Hard|-Q.Pause.Hard]]
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/Pause.Soft|-Q.Pause.Soft]]
+- [[jm3lib/pipelines/Q/Pause.Hard|-Q.Pause.Hard]]
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

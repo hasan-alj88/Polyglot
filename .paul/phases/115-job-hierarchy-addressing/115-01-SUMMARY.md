@@ -9,7 +9,7 @@ requires:
     provides: "#Job struct definition, Job vs Instance terminology"
 provides:
   - "Nested [Q] under markers for job-level queue scoping"
-  - "=Q.Job.Branch aj3lib pipeline stub"
+  - "=Q.Job.Branch jm3lib pipeline stub"
   - "Positional job path grammar in metadata tree"
   - "EBNF grammar update for job-level [Q]"
 affects: [queue-manager, compiler, runtime]
@@ -22,7 +22,7 @@ key-files:
   created: []
   modified:
     - docs/user/concepts/pipelines/queue.md
-    - docs/user/aj3lib/pipelines/Q.md
+    - docs/user/jm3lib/pipelines/Q.md
     - docs/technical/spec/metadata-tree/branches.md
     - docs/technical/spec/metadata-tree/path-grammar.md
     - docs/technical/ebnf/09-definition-blocks.md
@@ -56,7 +56,7 @@ completed: 2026-04-05
 | Criterion | Status | Notes |
 |-----------|--------|-------|
 | AC-1: Nested [Q] under markers documented | Pass | queue.md "Job-Level Queue Conditions" section with full example |
-| AC-2: =Q.Job.Branch aj3lib pipeline documented | Pass | Q.md "Job Addressing" section |
+| AC-2: =Q.Job.Branch jm3lib pipeline documented | Pass | Q.md "Job Addressing" section |
 | AC-3: Positional job paths in metadata tree | Pass | branches.md subsection + path-grammar.md `job_path` production |
 | AC-4: EBNF allows nested [Q] in execution section | Pass | `pipeline_call` includes `queue_control_line`; dual context note in 09 |
 
@@ -72,7 +72,7 @@ completed: 2026-04-05
 | File | Change | Purpose |
 |------|--------|---------|
 | `docs/user/concepts/pipelines/queue.md` | Modified | Added "Job-Level Queue Conditions" subsection with example |
-| `docs/user/aj3lib/pipelines/Q.md` | Modified | Added "Job Addressing" section with `=Q.Job.Branch` |
+| `docs/user/jm3lib/pipelines/Q.md` | Modified | Added "Job Addressing" section with `=Q.Job.Branch` |
 | `docs/technical/spec/metadata-tree/branches.md` | Modified | Added "Job Positional Addressing" subsection |
 | `docs/technical/spec/metadata-tree/path-grammar.md` | Modified | Added `job_path`, `marker_type` grammar productions |
 | `docs/technical/ebnf/09-definition-blocks.md` | Modified | Added dual-context note for `[Q]` |

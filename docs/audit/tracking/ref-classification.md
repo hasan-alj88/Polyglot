@@ -39,7 +39,7 @@ updated: 2026-04-10
 | `@queue-manager/infrastructure` | @c: | 3 | Design rationale — infrastructure |
 | `@pipelines:Triggers` | @u: | 3 | Section ref to trigger syntax |
 | `@pipelines:Error Handling` | @u: | 3 | Section ref to error handling syntax |
-| `@aj3lib/types/NativeKind` | @c: | 3 | Type definition — NativeKind concept |
+| `@jm3lib/types/NativeKind` | @c: | 3 | Type definition — NativeKind concept |
 | `@glossary:Aljam3 Service` | @c: | 3 | Glossary entry — concept definition |
 | `@glossary:Aljam3 Code` | @c: | 3 | Glossary entry — concept definition |
 | `@data-is-trees` | @c: | 3 | Concept definition — core data model |
@@ -89,7 +89,7 @@ updated: 2026-04-10
 | `@pipelines:Parallel Forking in Setup` | @u: | 1 | Section ref to parallel forking |
 | `@pipelines:IO as Implicit Triggers` | @u: | 1 | Section ref to implicit trigger |
 | `@pipelines:Chains` | @u: | 1 | Section ref to chain syntax |
-| `@aj3lib/errors/errors` | @c: | 1 | aj3lib error type definitions |
+| `@jm3lib/errors/errors` | @c: | 1 | jm3lib error type definitions |
 | `@operation-labels` | @u: | 1 | Syntax spec — operation label usage |
 | `@metadata` | @c: | 1 | Concept — metadata blocks |
 | `@io:Wait and Collect-Into Markers` | @u: | 1 | Section ref to wait/collect syntax |
@@ -150,7 +150,7 @@ Syntax constructs that appear in docs without `@` back-references to their defin
 | `~>` push operator | brainstorming/marker-declarations, PGE08007, PGE02006 | user/syntax/operators.md | ~10 |
 | `{_}` permission block | PGW01003, PGW10001, PGE10005 | user/concepts/permissions.md | ~9 |
 | `[C]` foreign code | PGE01027, brainstorming/marker-declarations | user/syntax/blocks.md | ~5 |
-| `{;}` environment block | aj3lib/pipelines/W/Env.md, aj3lib/pipelines/W/RT.md | user/syntax/environments.md | ~2 |
+| `{;}` environment block | jm3lib/pipelines/W/Env.md, jm3lib/pipelines/W/RT.md | user/syntax/environments.md | ~2 |
 
 ### Priority
 
@@ -158,7 +158,7 @@ Syntax constructs that appear in docs without `@` back-references to their defin
 
 **Medium priority** — brainstorming/ directory: 5 files with heavy construct usage and zero refs.
 
-**Lower priority** — aj3lib/ files: most already have `@types` refs; gaps are smaller.
+**Lower priority** — jm3lib/ files: most already have `@types` refs; gaps are smaller.
 
 ## Migration Results
 

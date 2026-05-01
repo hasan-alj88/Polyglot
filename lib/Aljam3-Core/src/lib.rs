@@ -4,7 +4,7 @@
 //!
 //! ## Modules
 //!
-//! - [`lexer`] — Tokenizes `.aj3` source code into a token stream.
+//! - [`lexer`] — Tokenizes `.jm3` source code into a token stream.
 //! - [`compiler`] — Validates the token stream, enforces compile rules,
 //!   and produces an AST JSON representation.
 

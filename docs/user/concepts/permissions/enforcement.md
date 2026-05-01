@@ -189,4 +189,4 @@ This ensures that no external code or input runs through the platform without ha
 
 Templates contribute to hashing after resolution — each instantiation produces its own hash based on the resolved `.path`.
 
-**Note:** `.aj3` source files are covered by the same principle implicitly — changing a `.aj3` file has no effect until the developer recompiles, at which point the compiler re-analyses the entire package.
+**Note:** `.jm3` source files are covered by the same principle implicitly — changing a `.jm3` file has no effect until the developer recompiles, at which point the compiler re-analyses the entire package.

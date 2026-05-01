@@ -25,7 +25,7 @@ Concatenates text fragments from mini-pipelines into a single string, with confi
 |------|------|----------|-------------|
 | `<fragment` | `#string` | Yes | Text fragment to append |
 | `<separator` | `#string` | No (default `""`) | Delimiter inserted between fragments |
-| `<order` | `#CollectOrder` | No (default `.ExpandIndex`) | Assembly order: [[aj3lib/types/CollectOrder\|.ExpandIndex]] (original position) or `.Arrival` (completion order) |
+| `<order` | `#CollectOrder` | No (default `.ExpandIndex`) | Assembly order: [[jm3lib/types/CollectOrder\|.ExpandIndex]] (original position) or `.Arrival` (completion order) |
 
 ## Outputs
 
@@ -52,7 +52,7 @@ When fragment count exceeds the `-Q.Overflow.RamLimit` threshold, intermediate r
 
 ## Related
 
-- [[aj3lib/collectors/Into/INDEX\|*Into Data Collectors]]
-- [[aj3lib/collectors/Agg/Concatenate\|*Agg.Concatenate]] -- simpler alternative (no ordering, no overflow)
-- [[aj3lib/expanders/ForEach/Text.Lines\|=ForEach.Text.Lines]] -- expand text into lines
+- [[jm3lib/collectors/Into/INDEX\|*Into Data Collectors]]
+- [[jm3lib/collectors/Agg/Concatenate\|*Agg.Concatenate]] -- simpler alternative (no ordering, no overflow)
+- [[jm3lib/expanders/ForEach/Text.Lines\|=ForEach.Text.Lines]] -- expand text into lines
 - [[concepts/collections/collect\|Collect Operators]]

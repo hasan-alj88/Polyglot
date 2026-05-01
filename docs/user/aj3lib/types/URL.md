@@ -10,9 +10,9 @@ metadata_instance: "%#:URL:N"
 # #URL — Uniform Resource Locator
 
 <!-- @c:types -->
-<!-- @c:aj3lib/types/string -->
+<!-- @c:jm3lib/types/string -->
 
-`#URL` is a aj3lib type representing a URL (RFC 3986). It decomposes a URL string into its scheme, host, port, path, query, and fragment components. URL parsing requires an RFC 3986-compliant parser — not regex — so `#URL` is backed by a native `PgUrl` class.
+`#URL` is a jm3lib type representing a URL (RFC 3986). It decomposes a URL string into its scheme, host, port, path, query, and fragment components. URL parsing requires an RFC 3986-compliant parser — not regex — so `#URL` is backed by a native `PgUrl` class.
 
 See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$URL` constructor.
 
@@ -86,8 +86,8 @@ See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$URL` c
 
 ## Related
 
-- [[aj3lib/constructors/URL\|$URL constructor]] -- compile-time URL construction
-- [[aj3lib/pipelines/URL.Parse\|-URL.Parse]] -- runtime URL string parsing
+- [[jm3lib/constructors/URL\|$URL constructor]] -- compile-time URL construction
+- [[jm3lib/pipelines/URL.Parse\|-URL.Parse]] -- runtime URL string parsing
 - [[scalars]] -- scalar subtypes overview
 - [[string]] -- `#String` foundation type
 - [[syntax/types/INDEX\|types]] -- full type system specification

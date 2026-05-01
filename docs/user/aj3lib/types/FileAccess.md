@@ -11,7 +11,7 @@ metadata_instance: "%#:FileAccess:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.aj3` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
+Runtime `##Enum` type available in every `.jm3` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
 
 ---
 
@@ -43,6 +43,6 @@ Runtime `##Enum` type available in every `.aj3` file. Uses `[#] ##Enum` (enum cl
 
 ## Related
 
-- [[enums]] — other aj3lib enum types
-- [[aj3lib/pipelines/File/INDEX|-File.*]] — file operations
+- [[enums]] — other jm3lib enum types
+- [[jm3lib/pipelines/File/INDEX|-File.*]] — file operations
 - [[syntax/types/INDEX|types]] — full type system specification

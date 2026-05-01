@@ -1,0 +1,61 @@
+{@} @jm3lib.runner.wrappers
+
+{ } Runner native operations — Wrapper kind
+{ } Setup/cleanup lifecycle around pipeline bodies
+
+{-} =W.Aljam3
+   [%] .description << "Default Aljam3 wrapper — no-op setup/cleanup"
+
+{-} =W.DB.Connection
+   [%] .description << "Database connection lifecycle"
+   [{] $connectionString#string
+   [}] $dbConn
+
+{-} =W.DB.Transaction
+   [%] .description << "Database connection + transaction lifecycle"
+   [{] $connectionString#string
+   [}] $tx
+   [}] $dbConn
+
+{-} =W.File.Lock
+   [%] .description << "File lock lifecycle"
+   [{] $path#path
+   [}] $lock
+
+{-} =W.File.TempDir
+   [%] .description << "Temporary directory lifecycle — created on setup, deleted on cleanup"
+   [}] $tempDir#path
+
+{-} =W.HTTP.Session
+   [%] .description << "HTTP session lifecycle"
+   [{] $baseUrl#string
+   [}] $session
+
+{-} =W.SSH.Session
+   [%] .description << "SSH session lifecycle"
+   [{] $host#string
+   [{] $credentials#string
+   [}] $session
+
+{-} =W.Auth.Token
+   [%] .description << "Auth token acquisition and refresh lifecycle"
+   [{] $config#serial
+   [}] $token#string
+
+{-} =W.Log.Context
+   [%] .description << "Structured logging context — adds fields on setup, flushes on cleanup"
+
+{-} =W.Queue.Consumer
+   [%] .description << "Message queue consumer lifecycle"
+   [{] $queueName#string
+   [}] $consumer
+
+{-} =W.Cache.Scope
+   [%] .description << "Cache scope lifecycle — populates on setup, invalidates on cleanup"
+   [{] $config#serial
+   [}] $cache
+
+{-} =W.RT
+   [%] .description << "Foreign language runtime lifecycle"
+   [{] $runtime#string
+   [}] $env

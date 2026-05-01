@@ -95,7 +95,7 @@ A full package showing the ceiling-to-grant flow:
 
 ## File Ordering
 
-`{@}` must appear first in every `.aj3` file (compiler-enforced). The recommended stylistic ordering for the remaining blocks is:
+`{@}` must appear first in every `.jm3` file (compiler-enforced). The recommended stylistic ordering for the remaining blocks is:
 
 ```aljam3
 {@}   <- mandatory first (compiler-enforced)

@@ -38,11 +38,11 @@ metadata_definition: "%definition.##:Scalar"
 
 ## Used By
 
-<!-- @u:aj3lib/types/boolean -->
-<!-- @u:aj3lib/types/OS -->
-<!-- @u:aj3lib/types/path -->
-<!-- @u:aj3lib/types/Queue -->
-<!-- @u:aj3lib/types/scalars -->
+<!-- @u:jm3lib/types/boolean -->
+<!-- @u:jm3lib/types/OS -->
+<!-- @u:jm3lib/types/path -->
+<!-- @u:jm3lib/types/Queue -->
+<!-- @u:jm3lib/types/scalars -->
 
 - All enum types ([[boolean|#Boolean]], [[OS|#OS]], etc.)
 - [[path|#path]]

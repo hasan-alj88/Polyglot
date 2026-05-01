@@ -51,5 +51,5 @@ Requires `File.Read` capability.
 
 ## Related
 
-- [[aj3lib/pipelines/File/INDEX|-File.* File Pipelines]]
-- [[aj3lib/pipelines/File/List|-File.List]]
+- [[jm3lib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[jm3lib/pipelines/File/List|-File.List]]

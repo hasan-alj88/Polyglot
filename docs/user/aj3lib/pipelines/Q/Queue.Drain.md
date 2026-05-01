@@ -57,5 +57,5 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/Queue.Flush|-Q.Queue.Flush]]
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/Queue.Flush|-Q.Queue.Flush]]
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

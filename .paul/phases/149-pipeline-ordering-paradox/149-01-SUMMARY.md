@@ -24,7 +24,7 @@ key-files:
     - docs/technical/ebnf/09-definition-blocks.md
     - docs/user/concepts/pipelines/INDEX.md
     - docs/user/concepts/pipelines/wrappers.md
-    - docs/user/aj3lib/pipelines/W.md
+    - docs/user/jm3lib/pipelines/W.md
     - docs/technical/edge-cases/16-trigger-io-wiring.md
 
 key-decisions:
@@ -76,7 +76,7 @@ completed: 2026-04-06
 | `docs/technical/ebnf/09-definition-blocks.md` | Modified | EBNF comment + grammar + execution order reference |
 | `docs/user/concepts/pipelines/INDEX.md` | Unchanged | Already said "IO before trigger" — no `[T],[=]` notation to fix |
 | `docs/user/concepts/pipelines/wrappers.md` | Modified | Execution order + Mermaid diagram label |
-| `docs/user/aj3lib/pipelines/W.md` | Modified | Execution order line |
+| `docs/user/jm3lib/pipelines/W.md` | Modified | Execution order line |
 | `docs/technical/edge-cases/16-trigger-io-wiring.md` | Modified | EBNF reference updated to match new production |
 
 ## Decisions Made

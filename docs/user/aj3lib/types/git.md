@@ -13,7 +13,7 @@ metadata_instance: "%#:Git:N"
 
 Aj3lib struct providing typed payloads for Git event triggers (`-T.Git.*`). All subtypes are nested under a single `{#} #Git` definition. Enum subtypes carry `[#] ##Enum` schema classification.
 
-See [[aj3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]] for the trigger family that produces these types.
+See [[jm3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]] for the trigger family that produces these types.
 
 ## Definition
 
@@ -163,9 +163,9 @@ All enum subtypes use `[#] ##Enum`, `[#] ##Scalar`, `[#] ###ScalarEnum` schema p
 
 ## Related
 
-- [[aj3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]] — triggers that produce `#Git` payloads
-- [[aj3lib/pipelines/T/Git.Hook|-T.Git.Hook]] — local hook transport trigger
-- [[aj3lib/pipelines/T/Git.Push|-T.Git.Push]] — push event trigger
-- [[aj3lib/pipelines/T/Git.PR|-T.Git.PR]] — pull request event trigger
-- [[aj3lib/pipelines/T/Git.Tag|-T.Git.Tag]] — tag creation trigger
+- [[jm3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]] — triggers that produce `#Git` payloads
+- [[jm3lib/pipelines/T/Git.Hook|-T.Git.Hook]] — local hook transport trigger
+- [[jm3lib/pipelines/T/Git.Push|-T.Git.Push]] — push event trigger
+- [[jm3lib/pipelines/T/Git.PR|-T.Git.PR]] — pull request event trigger
+- [[jm3lib/pipelines/T/Git.Tag|-T.Git.Tag]] — tag creation trigger
 - [[syntax/types/INDEX|types]] — full type system specification

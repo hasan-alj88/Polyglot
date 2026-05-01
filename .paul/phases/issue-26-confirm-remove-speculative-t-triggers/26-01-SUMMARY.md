@@ -1,11 +1,11 @@
 ---
 phase: issue-26-confirm-remove-speculative-t-triggers
 plan: 01
-subsystem: aj3lib
-tags: [triggers, aj3lib, verification]
+subsystem: jm3lib
+tags: [triggers, jm3lib, verification]
 
 requires:
-  - phase: 12-package-system-aj3lib
+  - phase: 12-package-system-jm3lib
     provides: Speculative trigger cleanup and T.md completion
 provides:
   - Formal verification that issue #26 is resolved

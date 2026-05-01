@@ -83,7 +83,7 @@ vscode-extension/
 ```
 
 **Features:**
-- ✅ Syntax highlighting for `.aj3` files
+- ✅ Syntax highlighting for `.jm3` files
 - ✅ Syntax highlighting in markdown fenced code blocks (```aljam3 and ```pg)
 - ✅ 18 code snippets (pipeline, error-def, exec-seq, exec-parallel, etc.)
 - ✅ Auto-closing pairs for brackets and quotes
@@ -116,7 +116,7 @@ vscode-extension/
 **Directory:** `test-samples/`
 
 **Files:**
-- `basic-pipeline.aj3`: Comprehensive test file with all syntax elements (350+ lines)
+- `basic-pipeline.jm3`: Comprehensive test file with all syntax elements (350+ lines)
   - Registry definitions (packages, pipelines, enums, errors, macros)
   - All block marker types
   - All operators
@@ -223,7 +223,7 @@ vsce package
 
 ### ✅ Test Files
 
-- `basic-pipeline.aj3`: Comprehensive syntax coverage
+- `basic-pipeline.jm3`: Comprehensive syntax coverage
 - `markdown-test.md`: Fenced code block testing
 
 ---
@@ -246,7 +246,7 @@ syntax-highlighting/
 │   └── snippets/
 │       └── aljam3.json                      # Code snippets
 └── test-samples/
-    ├── basic-pipeline.aj3                      # Comprehensive test file
+    ├── basic-pipeline.jm3                      # Comprehensive test file
     └── markdown-test.md                       # Markdown test file
 ```
 
@@ -271,7 +271,7 @@ Follows standard TextMate conventions:
 
 Uses standard VSCode extension structure:
 - `package.json`: Defines language contribution point
-- `grammars`: Associates `.aj3` files with TextMate grammar
+- `grammars`: Associates `.jm3` files with TextMate grammar
 - `embeddedLanguages`: Enables markdown injection
 - `injectTo`: Targets markdown fenced code blocks
 
@@ -421,7 +421,7 @@ cd /home/hhj/RustroverProjects/Aljam3/syntax-highlighting/vscode-extension
 # In VSCode: Ctrl+Shift+P → "Developer: Reload Window"
 
 # Open test file
-code ../test-samples/basic-pipeline.aj3
+code ../test-samples/basic-pipeline.jm3
 
 # Or test markdown highlighting
 code ../test-samples/markdown-test.md

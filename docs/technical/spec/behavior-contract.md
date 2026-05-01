@@ -39,7 +39,7 @@ This is not a sequential step list. It is a signal map that the Trigger Monitor 
 ### Compilation Pipeline
 
 ```text
-Aljam3 Code (.aj3)
+Aljam3 Code (.jm3)
     → PGCompiler (validates signal logic — buggy concurrency = compile error)
         → Behavior Contract (serialized signal map, one per pipeline)
             → stored in NoSQL DB (registration)
@@ -229,7 +229,7 @@ Collectors differ from regular callable pipelines:
 ## How User Code Relates to the Floor
 
 ```text
-User writes:           Aljam3 Code (.aj3 files)
+User writes:           Aljam3 Code (.jm3 files)
                            ↓ compiles to
 Compiler produces:     Behavior Contract (signal map: instructions + async function refs)
                            ↓ validated by
@@ -240,7 +240,7 @@ Persistence:           NoSQL DB (one contract per pipeline, definitions in % tre
 Service executes:      Trigger Monitor reads signal map, orchestrates via NATS
 ```
 
-Aljam3 Code is a high-level shield over the Behavior Contract. The `[X]` markers in `.aj3` code inform the kind of action; the compiler transforms them into serialized signal logic that the Trigger Monitor interprets in an async environment.
+Aljam3 Code is a high-level shield over the Behavior Contract. The `[X]` markers in `.jm3` code inform the kind of action; the compiler transforms them into serialized signal logic that the Trigger Monitor interprets in an async environment.
 
 ## Future Work
 

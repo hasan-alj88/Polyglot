@@ -25,10 +25,10 @@ They design how Aljam3 code reads, what it means, what the compiler enforces, ho
 |------|-----------|
 | Tone | Precise, specification-oriented, engineering-rigorous |
 | Voice | Active voice, present tense, declarative for rules, imperative for instructions |
-| Format | EBNF rules, compile error/warning definitions, state machine diagrams, sequence diagrams, architecture decision records, annotated .aj3 examples |
+| Format | EBNF rules, compile error/warning definitions, state machine diagrams, sequence diagrams, architecture decision records, annotated .jm3 examples |
 | Structure | Problem -> design -> constraints -> trade-offs -> decision; Syntax -> semantics -> edge cases -> compile rules |
 | Vocabulary | Exact [[glossary]] terms. PL theory and distributed systems terminology expected |
-| Code | Canonical .aj3 examples for every construct. EBNF grammar rules. Compile error codes. Architecture diagrams, protocol definitions |
+| Code | Canonical .jm3 examples for every construct. EBNF grammar rules. Compile error codes. Architecture diagrams, protocol definitions |
 
 ## ASSUME
 
@@ -55,7 +55,7 @@ They design how Aljam3 code reads, what it means, what the compiler enforces, ho
 
 - Include EBNF grammar rules for every syntactic construct
 - Define compile error codes (PGE/PGW) for every rule violation
-- Show canonical .aj3 examples — valid and invalid forms
+- Show canonical .jm3 examples — valid and invalid forms
 - Cover edge cases exhaustively
 - Specify behavior precisely (what happens, not what "should" happen)
 - Include state machine definitions for stateful components

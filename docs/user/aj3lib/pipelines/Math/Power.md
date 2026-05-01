@@ -52,4 +52,4 @@ None.
 
 ## Related
 
-- [[aj3lib/pipelines/Math/INDEX|-Math.* Numeric Pipelines]]
+- [[jm3lib/pipelines/Math/INDEX|-Math.* Numeric Pipelines]]

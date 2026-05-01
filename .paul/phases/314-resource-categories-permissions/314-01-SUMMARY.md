@@ -23,18 +23,18 @@ completed: 2026-04-18
 
 ## Files Created
 
-- docs/user/aj3lib/types/RAMCapability.md
-- docs/user/aj3lib/types/CPUCapability.md
-- docs/user/aj3lib/types/GPUCapability.md
-- docs/user/aj3lib/types/IOCapability.md
-- docs/user/aj3lib/types/ProcessCapability.md
-- docs/user/aj3lib/types/DurationCapability.md
-- docs/user/aj3lib/types/LimitAction.md
-- docs/user/aj3lib/types/LimitConfig.md
+- docs/user/jm3lib/types/RAMCapability.md
+- docs/user/jm3lib/types/CPUCapability.md
+- docs/user/jm3lib/types/GPUCapability.md
+- docs/user/jm3lib/types/IOCapability.md
+- docs/user/jm3lib/types/ProcessCapability.md
+- docs/user/jm3lib/types/DurationCapability.md
+- docs/user/jm3lib/types/LimitAction.md
+- docs/user/jm3lib/types/LimitConfig.md
 
 ## Files Modified
 
-- docs/user/aj3lib/types/PermissionCategory.md
+- docs/user/jm3lib/types/PermissionCategory.md
 - docs/user/concepts/permissions/capability-enums.md
 - docs/user/concepts/permissions/permission-schema.md
 - docs/user/concepts/permissions/enforcement.md

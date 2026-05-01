@@ -52,7 +52,7 @@ Rather than storing IR as JSON blobs, Aljam3 uses **normalized relational tables
 
 **Strongly Typed:**
 - No implicit type conversions across language boundaries
-- All type conversions explicit in `.aj3` code
+- All type conversions explicit in `.jm3` code
 - Type checking at compile time (IR generation)
 
 **IDE-Friendly:**
@@ -117,7 +117,7 @@ pg\dt → ISO 8601 string → py\datetime
 ## IR Generation Process
 
 ```
-.aj3 Source Files
+.jm3 Source Files
       ↓
    Lexer (tokenization)
       ↓

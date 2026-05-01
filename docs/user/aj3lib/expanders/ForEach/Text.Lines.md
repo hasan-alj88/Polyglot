@@ -44,7 +44,7 @@ None.
 
 ## Related
 
-- [[aj3lib/expanders/ForEach/INDEX\|=ForEach Expanders]]
+- [[jm3lib/expanders/ForEach/INDEX\|=ForEach Expanders]]
 - [[concepts/collections/expand\|Expand Operators]]
-- [[aj3lib/collectors/Into/Text.Append\|*Into.Text.Append]] -- reassemble lines by concatenation
-- [[aj3lib/collectors/Into/Text.Merge\|*Into.Text.Merge]] -- reassemble lines by diff merge
+- [[jm3lib/collectors/Into/Text.Append\|*Into.Text.Append]] -- reassemble lines by concatenation
+- [[jm3lib/collectors/Into/Text.Merge\|*Into.Text.Merge]] -- reassemble lines by diff merge

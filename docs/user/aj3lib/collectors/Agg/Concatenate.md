@@ -43,5 +43,5 @@ None.
 
 ## Related
 
-- [[aj3lib/collectors/Agg/INDEX|*Agg Aggregation Collectors]]
+- [[jm3lib/collectors/Agg/INDEX|*Agg Aggregation Collectors]]
 - [[concepts/collections/collect|Collect Operators]]

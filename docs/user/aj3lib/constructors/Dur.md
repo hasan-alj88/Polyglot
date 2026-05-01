@@ -7,11 +7,11 @@ updated: 2026-04-22
 # $Dur Constructor
 
 <!-- @u:syntax/constructors -->
-<!-- @c:aj3lib/types/datetime/core-components -->
+<!-- @c:jm3lib/types/datetime/core-components -->
 
 The `$Dur` constructor produces `#Duration` values from human-readable duration strings. All overloads are compile-time guaranteed — no error surface, no `[!]` handling needed.
 
-`#Duration` is defined in the datetime family (see [[aj3lib/types/datetime/core-components|core components]]) with `.seconds#int` and `.nanos#int` fields.
+`#Duration` is defined in the datetime family (see [[jm3lib/types/datetime/core-components|core components]]) with `.seconds#int` and `.nanos#int` fields.
 
 ## String-Parsing Overloads
 
@@ -31,7 +31,7 @@ The `$Dur` constructor produces `#Duration` values from human-readable duration 
    [.] << $computed
 ```
 
-Matches duration strings like `"1h30m45s"`. The `[-] -Dur.Convert` is a native pipeline (aj3lib-only pattern) that converts hours, minutes, and seconds into the `#Duration` fields (`.seconds` and `.nanos`).
+Matches duration strings like `"1h30m45s"`. The `[-] -Dur.Convert` is a native pipeline (jm3lib-only pattern) that converts hours, minutes, and seconds into the `#Duration` fields (`.seconds` and `.nanos`).
 
 ### Hours + Minutes
 
@@ -132,8 +132,8 @@ The unit suffix characters (`h`, `m`, `s`) are literal separators — the `[0-9]
 
 ## Related
 
-- [[constructors/INDEX|aj3lib Constructors]] -- constructor registry
+- [[constructors/INDEX|jm3lib Constructors]] -- constructor registry
 - [[syntax/constructors]] -- `{$}` block specification
-- [[aj3lib/pipelines/Dur.Parse|-Dur.Parse]] -- runtime duration string parsing
-- [[aj3lib/types/datetime/core-components|#Duration type]] -- duration type definition
-- [[aj3lib/constructors/DT|$DT constructor]] -- companion DateTime constructor
+- [[jm3lib/pipelines/Dur.Parse|-Dur.Parse]] -- runtime duration string parsing
+- [[jm3lib/types/datetime/core-components|#Duration type]] -- duration type definition
+- [[jm3lib/constructors/DT|$DT constructor]] -- companion DateTime constructor

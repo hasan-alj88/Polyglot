@@ -4,13 +4,13 @@ type: specification
 updated: 2026-04-22
 ---
 
-# aj3lib Constructors
+# jm3lib Constructors
 
 <!-- @u:syntax/constructors -->
 
 `{$}` constructors are compile-time value producers that guarantee a valid Final value with no error surface. They replace inline pipeline notation (`-Pipeline"..."`) in execution body contexts, where the compiler can prove infallibility at definition time. See [[syntax/constructors]] for the full `{$}` block specification and the Three-Context Rule.
 
-aj3lib defines constructors for core types where string-to-value conversion is common and provably safe.
+jm3lib defines constructors for core types where string-to-value conversion is common and provably safe.
 
 ## Registry
 
@@ -29,12 +29,12 @@ aj3lib defines constructors for core types where string-to-value conversion is c
 ## Related
 
 - [[syntax/constructors]] -- `{$}` block syntax and semantics
-- [[aj3lib/pipelines/DT/INDEX|-DT.* pipelines]] -- DateTime pipelines including `-DT.Parse`
-- [[aj3lib/pipelines/Path|-Path pipeline]] -- Path pipeline including `-Path.Parse`
-- [[aj3lib/pipelines/Re.Parse|-Re.Parse]] -- runtime regex string parsing
-- [[aj3lib/pipelines/MIME.Parse|-MIME.Parse]] -- runtime MIME string parsing
-- [[aj3lib/pipelines/Dur.Parse|-Dur.Parse]] -- runtime duration string parsing
-- [[aj3lib/pipelines/Ver.Parse|-Ver.Parse]] -- runtime version string parsing
-- [[aj3lib/pipelines/URL.Parse|-URL.Parse]] -- runtime URL string parsing
-- [[aj3lib/pipelines/IP.Parse|-IP.Parse]] -- runtime IP address string parsing
-- [[aj3lib/pipelines/Color.Parse|-Color.Parse]] -- runtime color string parsing
+- [[jm3lib/pipelines/DT/INDEX|-DT.* pipelines]] -- DateTime pipelines including `-DT.Parse`
+- [[jm3lib/pipelines/Path|-Path pipeline]] -- Path pipeline including `-Path.Parse`
+- [[jm3lib/pipelines/Re.Parse|-Re.Parse]] -- runtime regex string parsing
+- [[jm3lib/pipelines/MIME.Parse|-MIME.Parse]] -- runtime MIME string parsing
+- [[jm3lib/pipelines/Dur.Parse|-Dur.Parse]] -- runtime duration string parsing
+- [[jm3lib/pipelines/Ver.Parse|-Ver.Parse]] -- runtime version string parsing
+- [[jm3lib/pipelines/URL.Parse|-URL.Parse]] -- runtime URL string parsing
+- [[jm3lib/pipelines/IP.Parse|-IP.Parse]] -- runtime IP address string parsing
+- [[jm3lib/pipelines/Color.Parse|-Color.Parse]] -- runtime color string parsing

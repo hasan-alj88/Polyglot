@@ -15,7 +15,6 @@ pub fn get_def_target_help(def_marker: &Aljam3Token, target_token: &Aljam3Token)
         Aljam3Token::DefPipeline => "{-}",
         Aljam3Token::DefTrigger => "{T}",
         Aljam3Token::DefWrapper => "{W}",
-        Aljam3Token::DefNative => "{N}",
         Aljam3Token::DefQueue => "{Q}",
         Aljam3Token::DefError => "{!}",
         Aljam3Token::DefPermission => "{_}",
@@ -30,7 +29,6 @@ pub fn get_def_target_help(def_marker: &Aljam3Token, target_token: &Aljam3Token)
         Aljam3Token::DefPipeline => ("`-`", "pipeline"),
         Aljam3Token::DefTrigger => ("`-`", "trigger"),
         Aljam3Token::DefWrapper => ("`-`", "wrapper"),
-        Aljam3Token::DefNative => ("`N~`", "native function"),
         Aljam3Token::DefQueue => ("`#`", "queue configuration"),
         Aljam3Token::DefError => ("`!`", "error definition"),
         Aljam3Token::DefPermission => ("`_` or `__`", "permission"),
@@ -78,7 +76,7 @@ impl<'a> AnalysisContext<'a> {
 
             let is_def_marker = match token.value {
                 Aljam3Token::DefPackage | Aljam3Token::DefData | Aljam3Token::DefPipeline
-                | Aljam3Token::DefTrigger | Aljam3Token::DefWrapper | Aljam3Token::DefNative
+                | Aljam3Token::DefTrigger | Aljam3Token::DefWrapper
                 | Aljam3Token::DefQueue | Aljam3Token::DefError | Aljam3Token::DefPermission
                 | Aljam3Token::DefCollector | Aljam3Token::DefConstructor | Aljam3Token::DefComment => true,
                 _ => false,

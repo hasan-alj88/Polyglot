@@ -93,7 +93,7 @@ None filed. All six verdicts were `keep`; no `merge` verdicts were recorded, so 
 
 - Task 2 was executed with direct `Write` calls rather than via `bmm-codebase-analyzer` agents. The parallel-agent approach was attempted at the start of the earlier session, failed (3 agents hit output-size limits, 1 tool-sandbox issue, 1 false success, 1 early stop), and was abandoned per the handoff's explicit guidance. Outcome-equivalent: same six audit-compliant files produced.
 
-- Plan boundaries observed: no changes to `docs/vision.md`, `docs/philosophy/*`, `docs/audit/**`, `docs/user/**`, `docs/technical/**`, or `docs/archive/**`. Only `docs/INDEX.md` edited for link rows. No new compile rules, EBNF edits, or aj3lib additions. No deletions.
+- Plan boundaries observed: no changes to `docs/vision.md`, `docs/philosophy/*`, `docs/audit/**`, `docs/user/**`, `docs/technical/**`, or `docs/archive/**`. Only `docs/INDEX.md` edited for link rows. No new compile rules, EBNF edits, or jm3lib additions. No deletions.
 
 ## Next Action
 

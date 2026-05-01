@@ -40,7 +40,7 @@ The `[%]` block element lives inside any `{x}` definition. One definition = one 
 | Field | Type | Description |
 |-------|------|-------------|
 | `%alias` | `#Array.NestedKeyString` | Shorthand names — multiple aliases per definition. Each alias is a `#NestedKeyString` (allows `.` and `:` for nested paths). Must be globally unique (PGE12002) |
-| `%Native.Class` | scope | Native class backing — `{#}` only. Declares that a host-language class backs this type. Fields: `.Rust` (class name), `.Validate` (`#True` if class provides validation). See [[aj3lib/types/string\|#String]] for example |
+| `%Native.Class` | scope | Native class backing — `{#}` only. Declares that a host-language class backs this type. Fields: `.Rust` (class name), `.Validate` (`#True` if class provides validation). See [[jm3lib/types/string\|#String]] for example |
 | `:info` | `#serial` | Opens a flexible scope for custom key-value tooling data |
 
 ### Example

@@ -21,7 +21,7 @@ The Aljam3 Service deploys as a set of cooperating daemons managed by a single s
 
 | Component | Binary | Source | Role |
 |-----------|--------|--------|------|
-| Compiler | `aljam3` | Rust (cargo build) | Compiles .aj3 files to Behavior Contracts |
+| Compiler | `aljam3` | Rust (cargo build) | Compiles .jm3 files to Behavior Contracts |
 | Trigger Monitor | `aljam3-tm` | Rust (cargo build) | Long-running daemon — monitors triggers, manages job hierarchy |
 | Runner | `aljam3-runner` | Rust (cargo build) | Long-running daemon — executes jobs in PID namespaces with cgroup limits |
 | Management CLI | `aljam3-ctl` | Rust (cargo build) | Setup, join, status, certificate management |

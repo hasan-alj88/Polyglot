@@ -86,7 +86,7 @@ For the full technical protocol (NATS topics, Redis key structure, error handlin
 
 ## Related
 
-- [[aj3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
+- [[jm3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
 - [[spec/native-dispatch#-T.Call Signal Path|Signal Path Technical Protocol]]
 - [[spec/aljam3-sdk#call|SDK call() API]]
 - [[queue-manager/nats-namespace|NATS Subject Registry]]

@@ -41,5 +41,5 @@ None.
 
 ## Related
 
-- [[aj3lib/collectors/Into/INDEX|*Into Data Collectors]]
+- [[jm3lib/collectors/Into/INDEX|*Into Data Collectors]]
 - [[concepts/collections/collect|Collect Operators]]

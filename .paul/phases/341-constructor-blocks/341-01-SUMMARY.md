@@ -12,7 +12,7 @@ provides:
   - "Block registry updated with {$}, ($) dual-context, [$]"
   - "Inline calls scoped to infrastructure lines"
   - "Constructor glossary entry"
-affects: [341-02-ebnf-metadata, 342-aj3lib-constructors, 343-compile-rules, 344-doc-updates]
+affects: [341-02-ebnf-metadata, 342-jm3lib-constructors, 343-compile-rules, 344-doc-updates]
 
 tech-stack:
   added: []
@@ -62,7 +62,7 @@ completed: 2026-04-22
 - Created full {$} constructor specification: syntax, contract, overload resolution, interpolation rules, cross-package scoping, three-context rule
 - Documented ($) dual-context disambiguation (variable-scope vs constructor IO) — existing ($) usage preserved
 - Scoped inline-calls.md to infrastructure lines only with redirect to constructors.md
-- No boundary violations: zero PGE/PGW codes, zero aj3lib definitions
+- No boundary violations: zero PGE/PGW codes, zero jm3lib definitions
 
 ## Files Created/Modified
 
@@ -79,7 +79,7 @@ completed: 2026-04-22
 | Decision | Rationale | Impact |
 |----------|-----------|--------|
 | ($) dual-context rather than new marker | ($) already used for variable-scope; context disambiguates (under {$} vs (-) $Label) — same pattern as [*] dual meaning | No new marker needed |
-| %InlineString retired from {-} only | Triggers/queues/wrappers still need inline config; only execution body use is replaced | Clean separation; #344 can update aj3lib docs |
+| %InlineString retired from {-} only | Triggers/queues/wrappers still need inline config; only execution body use is replaced | Clean separation; #344 can update jm3lib docs |
 | Scoped extension model (C) | [@] imports already scope visibility; ambiguity caught at import site | No orphan rule needed |
 
 ## Deviations from Plan

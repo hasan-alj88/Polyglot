@@ -83,6 +83,6 @@ Web.Socket — required for receiving remote webhook events.
 
 ## Related
 
-- [[aj3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
-- [[aj3lib/types/git|#Git Type Tree]] — `#Git.PR`, `#Git.PRAction` payload types
-- [[aj3lib/pipelines/T/Webhook|-T.Webhook]] — transport layer for remote PR events
+- [[jm3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
+- [[jm3lib/types/git|#Git Type Tree]] — `#Git.PR`, `#Git.PRAction` payload types
+- [[jm3lib/pipelines/T/Webhook|-T.Webhook]] — transport layer for remote PR events

@@ -3,7 +3,7 @@ audience: automation-builder
 type: specification
 updated: 2026-04-09
 status: retired
-redirect: aj3lib/types/Array
+redirect: jm3lib/types/Array
 ---
 
 # #Set (Retired)

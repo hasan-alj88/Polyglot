@@ -55,7 +55,7 @@ None -- pure computation.
 
 ## Related
 
-- [[aj3lib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
-- [[aj3lib/pipelines/Schema/Field|-#.Field]]
+- [[jm3lib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[jm3lib/pipelines/Schema/Field|-#.Field]]
 - [[concepts/collections/expand#Expand Operators]]
 - [[syntax/types/generic-types|Generic Types and Parameterized Schemas]]

@@ -74,6 +74,6 @@ None.
 
 ## Related
 
-- [[aj3lib/collectors/Sync/INDEX|Collect-All & Race Collectors]]
-- [[aj3lib/collectors/Sync/First|*First]] -- n=1 sugar
-- [[aj3lib/collectors/Sync/All|*All]] -- collect-all alternative
+- [[jm3lib/collectors/Sync/INDEX|Collect-All & Race Collectors]]
+- [[jm3lib/collectors/Sync/First|*First]] -- n=1 sugar
+- [[jm3lib/collectors/Sync/All|*All]] -- collect-all alternative

@@ -12,7 +12,7 @@ Authority: [[vision#Core Philosophy]]
 
 ## Who They Are
 
-Developers who integrate their existing codebases (Python, Rust, JavaScript, etc.) with Aljam3 without writing .aj3 code. They use Aljam3 as a service — connecting their applications through SDKs, APIs, and cross-language bridges. They care about how Aljam3 fits into their stack, not its internal syntax.
+Developers who integrate their existing codebases (Python, Rust, JavaScript, etc.) with Aljam3 without writing .jm3 code. They use Aljam3 as a service — connecting their applications through SDKs, APIs, and cross-language bridges. They care about how Aljam3 fits into their stack, not its internal syntax.
 
 ## Writing Rules
 
@@ -23,7 +23,7 @@ Developers who integrate their existing codebases (Python, Rust, JavaScript, etc
 | Format | Host-language code snippets (Python, Rust, JS, etc.), API signatures, integration diagrams |
 | Structure | Goal -> integration code -> expected behavior -> troubleshooting |
 | Vocabulary | Use host-language terminology where appropriate. Define Aljam3 terms via [[glossary]] |
-| Code | Host-language examples showing SDK/API usage. No .aj3 syntax required |
+| Code | Host-language examples showing SDK/API usage. No .jm3 syntax required |
 
 ## ASSUME
 
@@ -34,10 +34,10 @@ Developers who integrate their existing codebases (Python, Rust, JavaScript, etc
 
 ## NEVER
 
-- Require .aj3 syntax knowledge — they don't write Aljam3 code
+- Require .jm3 syntax knowledge — they don't write Aljam3 code
 - Assume they have read the language spec or syntax docs
 - Use Aljam3-internal jargon without definition
-- Show .aj3 code as the primary example — always lead with host-language code
+- Show .jm3 code as the primary example — always lead with host-language code
 - Contradict [[vision#Evolution]] integration strategy
 
 ## ALWAYS

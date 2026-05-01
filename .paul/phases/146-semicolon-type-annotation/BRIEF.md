@@ -9,7 +9,7 @@ status: brief-ready
 # Issue #146: Semicolon (`;`) type annotation separator missing from EBNF and identifier rules
 
 ## Inconsistency
-The `;` character is used throughout aj3lib type definitions and queue field examples as a separator between a field name and its type annotation (e.g., `.strategy;#QueueStrategy`, `.string;RawString`). However, the EBNF grammar defines `type_annotation ::= '#' type_expr` -- meaning annotations start directly with `#`, with no `;` separator. The `;` is not defined in the EBNF's lexical elements, identifier rules, field separators, or prefix tables. The decisions document for issue #88 explicitly states "`;` Retired -- `#` for Type Annotations", yet `;` continues to appear in active documentation.
+The `;` character is used throughout jm3lib type definitions and queue field examples as a separator between a field name and its type annotation (e.g., `.strategy;#QueueStrategy`, `.string;RawString`). However, the EBNF grammar defines `type_annotation ::= '#' type_expr` -- meaning annotations start directly with `#`, with no `;` separator. The `;` is not defined in the EBNF's lexical elements, identifier rules, field separators, or prefix tables. The decisions document for issue #88 explicitly states "`;` Retired -- `#` for Type Annotations", yet `;` continues to appear in active documentation.
 
 ## Affected Files
 | File | What's Wrong |
@@ -17,8 +17,8 @@ The `;` character is used throughout aj3lib type definitions and queue field exa
 | `docs/technical/ebnf/04-type-system.md` | `type_annotation ::= '#' type_expr` -- no `;` separator defined |
 | `docs/technical/ebnf/03-identifiers.md` | Field separator rules list only `.`, `:`, `%` -- `;` absent |
 | `docs/technical/ebnf/09-definition-blocks.md` | `value_field` grammar uses `type_annotation` (which starts with `#`), yet example at line ~375 uses `.strategy;#QueueStrategy` |
-| `docs/user/aj3lib/types/structs.md` | #Queue definition uses `;` notation: `.strategy;#QueueStrategy`, `.host;#String`, etc. |
-| `docs/user/aj3lib/pipelines/Q.md` | IO parameters use `;` notation in tables: `<mb;#Float`, `<duration;#String` |
+| `docs/user/jm3lib/types/structs.md` | #Queue definition uses `;` notation: `.strategy;#QueueStrategy`, `.host;#String`, etc. |
+| `docs/user/jm3lib/pipelines/Q.md` | IO parameters use `;` notation in tables: `<mb;#Float`, `<duration;#String` |
 | `docs/audit/reference/glossary.md` | Describes #String as "contains `.string;RawString`" using `;` notation |
 | `docs/technical/plan/decisions/schema-properties.md` | Says "`;` Retired -- `#` for Type Annotations" and "`#` replaces `;`" but `;` examples persist within the same file |
 

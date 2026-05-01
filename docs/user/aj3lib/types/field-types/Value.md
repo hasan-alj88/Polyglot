@@ -43,9 +43,9 @@ Each `[.]` line with a `#type` annotation declares a `###Value` field. The compi
 
 ## Example Types
 
-<!-- @u:aj3lib/types/path -->
-<!-- @u:aj3lib/types/Queue -->
-<!-- @u:aj3lib/types/Job -->
+<!-- @u:jm3lib/types/path -->
+<!-- @u:jm3lib/types/Queue -->
+<!-- @u:jm3lib/types/Job -->
 
 | Type | Field | Annotation | Stored Data |
 |------|-------|------------|-------------|

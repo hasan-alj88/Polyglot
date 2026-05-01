@@ -50,12 +50,12 @@ The same pattern applies to other languages — Rust, JavaScript, Go — with id
 
 ## Bridge Integration
 
-<!-- @c:aj3lib/pipelines/Run/Bridge.Function -->
-<!-- @c:aj3lib/pipelines/Run/Bridge.Script -->
+<!-- @c:jm3lib/pipelines/Run/Bridge.Function -->
+<!-- @c:jm3lib/pipelines/Run/Bridge.Script -->
 
 For performance-critical pairwise integration, Aljam3 provides `-Run.Bridge` pipelines that convert data directly between two language type systems -- bypassing the universal string serialization used by the SDK.
 
-Bridge pipelines are written in Aljam3 code (`.aj3` files) and require two `-W.Env` wrappers, one per language. The SDK caller invokes Bridge pipelines the same way as any other pipeline -- through `call()`:
+Bridge pipelines are written in Aljam3 code (`.jm3` files) and require two `-W.Env` wrappers, one per language. The SDK caller invokes Bridge pipelines the same way as any other pipeline -- through `call()`:
 
 ```python
 # Python calling a Bridge pipeline that runs Rust code
@@ -79,14 +79,14 @@ The SDK caller does not manage language environments or type conversion directly
 | Aspect | SDK (`call`/`pull`/`push`) | Bridge (`-Run.Bridge.*`) |
 |--------|----------------------------|--------------------------|
 | Serialization | Universal string (JSON envelopes) | Pairwise native type conversion |
-| Setup cost | Zero -- works for all supported languages | Per-pair: requires `.aj3` pipeline with two `{;}` environments |
+| Setup cost | Zero -- works for all supported languages | Per-pair: requires `.jm3` pipeline with two `{;}` environments |
 | Performance | JSON serialization overhead | Direct type mapping, minimal overhead |
 | Language coverage | All supported languages | Only implemented language pairs |
 | Who writes it | Integrator (host-language code only) | Automation builder (Aljam3 code) |
 
 **Use the SDK** when you need universal integration across many languages with minimal setup. **Use Bridge** when a specific language pair is a performance bottleneck and the conversion overhead of JSON serialization is unacceptable.
 
-See [[aj3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] and [[aj3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for the full Aljam3-side specification.
+See [[jm3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] and [[jm3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for the full Aljam3-side specification.
 
 ## Codebase Location
 

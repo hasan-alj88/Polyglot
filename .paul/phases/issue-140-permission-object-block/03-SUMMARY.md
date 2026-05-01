@@ -2,7 +2,7 @@
 phase: issue-140-permission-object-block
 plan: 03
 subsystem: docs
-tags: [permissions, compile-rules, aj3lib, grammar]
+tags: [permissions, compile-rules, jm3lib, grammar]
 
 requires:
   - phase: issue-140-permission-object-block/01
@@ -11,7 +11,7 @@ requires:
     provides: "EBNF grammar + metadata tree for {_}"
 provides:
   - "Compile rules PGE10003-10006 + PGW10001 rewritten for {_} objects"
-  - "aj3lib permission references updated across 7 files"
+  - "jm3lib permission references updated across 7 files"
 affects: ["issue-140 merge"]
 
 key-files:
@@ -22,27 +22,27 @@ key-files:
     - docs/technical/compile-rules/PGE/PGE10006-duplicate-permission.md
     - docs/technical/compile-rules/PGW/PGW10001-unused-permission.md
     - docs/technical/COMPILE-RULES.md
-    - docs/user/aj3lib/pipelines/DT.md
-    - docs/user/aj3lib/pipelines/File.md
-    - docs/user/aj3lib/pipelines/W.md
-    - docs/user/aj3lib/pipelines/T.md
-    - docs/user/aj3lib/pipelines/RT.md
-    - docs/user/aj3lib/pipelines/Sys.md
-    - docs/user/aj3lib/pipelines/#.md
+    - docs/user/jm3lib/pipelines/DT.md
+    - docs/user/jm3lib/pipelines/File.md
+    - docs/user/jm3lib/pipelines/W.md
+    - docs/user/jm3lib/pipelines/T.md
+    - docs/user/jm3lib/pipelines/RT.md
+    - docs/user/jm3lib/pipelines/Sys.md
+    - docs/user/jm3lib/pipelines/#.md
 
 key-decisions:
   - "PGE10005 renamed from 'Permission Output' to 'Invalid Permission Block Marker'"
   - "DT.md [_] _None lines removed (pure computation = no permission line)"
   - "DT.md =DT.Now requires System.Env (not _IO.Read — IO is not a category)"
-  - "aj3lib {N} defs don't have [_] lines — capabilities are compiler-internal"
+  - "jm3lib {N} defs don't have [_] lines — capabilities are compiler-internal"
 
 duration: ~15min
 completed: 2026-04-05
 ---
 
-# Issue #140 Plan 03: Compile Rules + aj3lib Permission Refs Summary
+# Issue #140 Plan 03: Compile Rules + jm3lib Permission Refs Summary
 
-**Rewrote 5 compile rules and 7 aj3lib permission sections for {_} named permission object system.**
+**Rewrote 5 compile rules and 7 jm3lib permission sections for {_} named permission object system.**
 
 ## Performance
 
@@ -58,7 +58,7 @@ completed: 2026-04-05
 | Criterion | Status | Notes |
 |-----------|--------|-------|
 | AC-1: Compile rules use {_} named object syntax | Pass | All 5 rules rewritten with {_} blocks, [.] field lines, [_] _ObjectName references |
-| AC-2: aj3lib permission tables use Category.Capability format | Pass | All 7 files updated; old _Category.subfield and Inline/IO columns removed |
+| AC-2: jm3lib permission tables use Category.Capability format | Pass | All 7 files updated; old _Category.subfield and Inline/IO columns removed |
 | AC-3: DT.md [_] lines removed from {N} definitions | Pass | ~40 [_] _None removed, [_] _IO.Read removed; table shows System.Env |
 | AC-4: RT.md example code uses named {_} objects | Pass | Both examples now show {_} ceiling + grant blocks with [_] references |
 
@@ -70,7 +70,7 @@ completed: 2026-04-05
 - PGE10006: Now covers two scopes — duplicate `[_]` references AND duplicate capabilities within `{_}` blocks
 - PGW10001: Now warns when referenced `{_}` object's capabilities go unexercised
 - COMPILE-RULES.md index updated with PGE10005 name change
-- All 7 aj3lib files use `Category.Capability` format in permission tables
+- All 7 jm3lib files use `Category.Capability` format in permission tables
 - DT.md cleaned of ~40 `[_] _None` lines and 1 `[_] _IO.Read`
 - RT.md examples now demonstrate full {_} ceiling/grant + {@}/{=} reference pattern
 

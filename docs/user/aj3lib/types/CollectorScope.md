@@ -11,7 +11,7 @@ metadata_instance: "%#:CollectorScope:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.aj3` file. Declares the invocation context of a `{*}` collector definition.
+Runtime `##Enum` type available in every `.jm3` file. Declares the invocation context of a `{*}` collector definition.
 
 ---
 
@@ -43,5 +43,5 @@ Runtime `##Enum` type available in every `.aj3` file. Declares the invocation co
 
 - [[CollectorCategory]] — reconciliation category (Into, Agg, Sync, Race, Discard)
 - [[OverflowStrategy]] — overflow behavior for collector definitions
-- [[enums]] — other aj3lib enum types
+- [[enums]] — other jm3lib enum types
 - [[technical/spec/collector-definitions\|Collector Definitions]] — `{*}` block specification

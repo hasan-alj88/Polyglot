@@ -16,15 +16,15 @@ No `[@]` import needed.
 
 ## Operators
 
-- [[aj3lib/reassemblers/Agg/Sum|=*Agg.Sum]] -- sum numeric values
-- [[aj3lib/reassemblers/Agg/Count|=*Agg.Count]] -- count items
-- [[aj3lib/reassemblers/Agg/Average|=*Agg.Average]] -- arithmetic mean
-- [[aj3lib/reassemblers/Agg/Max|=*Agg.Max]] -- maximum value
-- [[aj3lib/reassemblers/Agg/Min|=*Agg.Min]] -- minimum value
-- [[aj3lib/reassemblers/Agg/Concatenate|=*Agg.Concatenate]] -- join strings
+- [[jm3lib/reassemblers/Agg/Sum|=*Agg.Sum]] -- sum numeric values
+- [[jm3lib/reassemblers/Agg/Count|=*Agg.Count]] -- count items
+- [[jm3lib/reassemblers/Agg/Average|=*Agg.Average]] -- arithmetic mean
+- [[jm3lib/reassemblers/Agg/Max|=*Agg.Max]] -- maximum value
+- [[jm3lib/reassemblers/Agg/Min|=*Agg.Min]] -- minimum value
+- [[jm3lib/reassemblers/Agg/Concatenate|=*Agg.Concatenate]] -- join strings
 
 ## Related
 
-- [[aj3lib/reassemblers/INDEX|Reassemble Operators overview]]
-- [[aj3lib/collectors/Agg/INDEX|*Agg Collectors]] -- standalone collector equivalents
+- [[jm3lib/reassemblers/INDEX|Reassemble Operators overview]]
+- [[jm3lib/collectors/Agg/INDEX|*Agg Collectors]] -- standalone collector equivalents
 - [[concepts/collections/reassemble|Reassemble Operators (concept)]]

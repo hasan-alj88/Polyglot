@@ -1,0 +1,68 @@
+{@} @jm3lib.intrinsics
+
+{ } Compiler intrinsics — no host function, compiler-inlined
+{ } These {-} definitions have no .<Language> binding
+
+{-} =DoNothing
+   [%] .description << "No-op pipeline"
+
+{ } Format parsers — text to serial data tree
+
+{-} =#.JSON.Parse
+   [%] .description << "Parse JSON text into serial data tree"
+   [=] <raw#RawString
+   [=] >data#serial
+
+{-} =#.YAML.Parse
+   [%] .description << "Parse YAML text into serial data tree"
+   [=] <raw#RawString
+   [=] >data#serial
+
+{-} =#.TOML.Parse
+   [%] .description << "Parse TOML text into serial data tree"
+   [=] <raw#RawString
+   [=] >data#serial
+
+{ } Schema validation pipelines
+
+{-} =#.Match
+   [%] .description << "Boolean schema check — does data match type?"
+   [=] <data#serial
+   [=] <#type
+   [=] >match#bool
+
+{-} =#.Validate
+   [%] .description << "Detailed validation — checks data against type"
+   [=] <data#serial
+   [=] <#type
+   [=] >valid#bool
+   [=] >errors#array:string
+
+{-} =#.Describe
+   [%] .description << "Schema introspection — returns type schema as data tree"
+   [=] <#type
+   [=] >schema#serial
+
+{-} =#.Coerce
+   [%] .description << "Best-effort type conversion — keeps matching fields"
+   [=] <data#serial
+   [=] <#type
+   [=] >result#serial
+   [=] >dropped#array:string
+
+{ } Field and column extraction
+
+{-} =#.Field
+   [%] .description << "Extract single field from data tree by path"
+   [=] <data#serial
+   [=] <path#RawString
+   [=] >value#serial
+   [=] !Field.NotFound
+   [=] !Field.PathError
+
+{-} =#.Column
+   [%] .description << "Extract all values for a column in a Dataframe"
+   [=] <data#dataframe
+   [=] <column#enum
+   [=] >values#array
+   [=] !Field.NotFound

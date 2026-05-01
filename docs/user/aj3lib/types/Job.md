@@ -64,7 +64,7 @@ Job state is stored at `%-:Pipeline:N.jobs:UID` in the metadata tree. See [[glos
 
 ## Related
 
-- [[structs]] — other aj3lib struct types
+- [[structs]] — other jm3lib struct types
 - [[QueueState]] — job lifecycle state enum
 - [[KillPropagation]] — kill signal propagation enum
 - [[glossary]] — Job vs Instance distinction

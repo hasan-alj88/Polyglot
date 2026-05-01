@@ -31,7 +31,7 @@
           "aljam3"
         ],
         "extensions": [
-          ".aj3"
+          ".jm3"
         ],
         "configuration": "./language-configuration.json"
       }

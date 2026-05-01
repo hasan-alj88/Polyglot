@@ -67,5 +67,5 @@ None required. Pure computation pipeline.
 
 ## Related
 
-- [[aj3lib/constructors/IP|$IP constructor]] -- compile-time IP address construction
-- [[aj3lib/types/IP|#IP type]] -- IP address type definition
+- [[jm3lib/constructors/IP|$IP constructor]] -- compile-time IP address construction
+- [[jm3lib/types/IP|#IP type]] -- IP address type definition

@@ -2,7 +2,7 @@
 phase: 278-into-text-csv-collectors
 plan: 02
 subsystem: docs
-tags: [aj3lib, text, collectors, expanders, pipelines, diff, merge]
+tags: [jm3lib, text, collectors, expanders, pipelines, diff, merge]
 
 requires:
   - phase: 278-01
@@ -58,12 +58,12 @@ completed: 2026-04-11
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/pipelines/Text/Diff.md` | Created | =Text.Diff comparator — compares two texts, outputs line-level diffs |
-| `docs/user/aj3lib/expanders/ForEach/Text.Lines.md` | Created | =ForEach.Text.Lines — expand text into lines with index |
-| `docs/user/aj3lib/collectors/Into/Text.Append.md` | Created | *Into.Text.Append — concatenate fragments with separator and ordering |
-| `docs/user/aj3lib/collectors/Into/Text.Merge.md` | Created | *Into.Text.Merge — k-way merge diffs against base with conflict resolution |
-| `docs/user/aj3lib/expanders/ForEach/INDEX.md` | Modified | Added Text section with =ForEach.Text.Lines entry |
-| `docs/user/aj3lib/collectors/Into/INDEX.md` | Modified | Added Text Collectors section with Append and Merge entries |
+| `docs/user/jm3lib/pipelines/Text/Diff.md` | Created | =Text.Diff comparator — compares two texts, outputs line-level diffs |
+| `docs/user/jm3lib/expanders/ForEach/Text.Lines.md` | Created | =ForEach.Text.Lines — expand text into lines with index |
+| `docs/user/jm3lib/collectors/Into/Text.Append.md` | Created | *Into.Text.Append — concatenate fragments with separator and ordering |
+| `docs/user/jm3lib/collectors/Into/Text.Merge.md` | Created | *Into.Text.Merge — k-way merge diffs against base with conflict resolution |
+| `docs/user/jm3lib/expanders/ForEach/INDEX.md` | Modified | Added Text section with =ForEach.Text.Lines entry |
+| `docs/user/jm3lib/collectors/Into/INDEX.md` | Modified | Added Text Collectors section with Append and Merge entries |
 
 ## Decisions Made
 

@@ -81,4 +81,4 @@ Compiler issues, design decisions, and project tracking are managed via [GitHub 
 
 ## Language Reference
 
-See [[user/SPEC-INDEX|docs/user/SPEC-INDEX.md]] for the user-facing language reference (syntax, concepts, aj3lib).
+See [[user/SPEC-INDEX|docs/user/SPEC-INDEX.md]] for the user-facing language reference (syntax, concepts, jm3lib).

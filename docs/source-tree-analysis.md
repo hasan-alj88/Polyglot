@@ -105,7 +105,7 @@ docs/audit/
 ```text
 docs/audit/audiences/
 ├── ai-finder.md                Internal — AI retrieval layer
-├── automation-builder.md       External — writes .aj3 files
+├── automation-builder.md       External — writes .jm3 files
 ├── design.md                   Internal — grammar, compile rules, philosophy
 ├── developer.md                Internal — compiler and runtime implementers
 ├── integrator.md               External — connects codebases via SDK
@@ -148,10 +148,10 @@ docs/audit/tracking/
 ```text
 docs/user/
 ├── SPEC-INDEX.md               5-phase learning progression
-├── AJ3LIB.md                    Standard library overview (top-level pointer)
+├── JM3LIB.md                    Standard library overview (top-level pointer)
 ├── syntax/                     Syntax foundations (10 files + subdirs)
 ├── concepts/                   Core concepts (7 files + 4 subdirs)
-├── aj3lib/                      Standard library reference (large)
+├── jm3lib/                      Standard library reference (large)
 ├── scenarios/                  500 real-world automation scenarios
 └── integrator/                 Integrator-specific guidance (1 file)
 ```
@@ -200,23 +200,23 @@ docs/user/concepts/
 | `pipelines/` | INDEX, chains, error-handling, execution, inline-calls, io-triggers, metadata, permissions, queue, wrappers |
 | `collections/` | INDEX, map, array, serial, dataframe, user-struct, expand, collect, reassemble, examples |
 
-### docs/user/aj3lib/ — Standard Library Reference
+### docs/user/jm3lib/ — Standard Library Reference
 
 ```text
-docs/user/aj3lib/
+docs/user/jm3lib/
 ├── INDEX.md                    Namespace registry
 ├── pipelines/                  {-} pipeline operators
 ├── expanders/                  {=} expander operators
 ├── collectors/                 {*} collector operators
 ├── reassemblers/               Reassembler operators
-├── types/                      aj3lib type catalog (>70 top-level files)
+├── types/                      jm3lib type catalog (>70 top-level files)
 ├── constructors/               {$} constructor catalog (10 files)
 ├── errors/                     Error-namespace catalog (5 files + subdir)
 └── permissions/                Permission category catalog (9 subdirs)
 ```
 
 ```text
-docs/user/aj3lib/pipelines/
+docs/user/jm3lib/pipelines/
 ├── DT/                         42 files — #DateTime construction, conversion, arithmetic
 ├── File/                       12 files — file access (Text, Serial, Binary)
 ├── Math/                       9 files — arithmetic operations
@@ -228,19 +228,19 @@ docs/user/aj3lib/pipelines/
 ├── Text/                       1 file  — text operations
 ├── Variable/                   2 files — variable introspection
 ├── W/                          14 files — wrappers (RT, Env, Retry, Aljam3)
-├── Path.md, Sys.md             Standalone aj3lib pipelines
+├── Path.md, Sys.md             Standalone jm3lib pipelines
 ├── Color.Parse.md, Dur.Parse.md, IP.Parse.md, MIME.Parse.md,
 ├── Path.Parse.md, Re.Parse.md, URL.Parse.md, Ver.Parse.md
 ```
 
 ```text
-docs/user/aj3lib/expanders/
+docs/user/jm3lib/expanders/
 ├── INDEX.md
 └── ForEach/                    10 files — Array, Map, Serial, Level, Dataframe variants
 ```
 
 ```text
-docs/user/aj3lib/collectors/
+docs/user/jm3lib/collectors/
 ├── INDEX.md
 ├── Agg/                        7 files — aggregate collectors (Sum, Count, Max, Min, etc.)
 ├── Into/                       10 files — into-collection collectors
@@ -248,9 +248,9 @@ docs/user/aj3lib/collectors/
 ```
 
 ```text
-docs/user/aj3lib/types/
+docs/user/jm3lib/types/
 ├── INDEX.md (via types.md)
-├── 72 top-level .md files       Catalog of aj3lib types
+├── 72 top-level .md files       Catalog of jm3lib types
 ├── datetime/                    10 files — #DateTime subtype tree
 ├── field-types/                 6 files  — field type definitions
 ├── properties/                 16 files  — ## schema properties
@@ -259,7 +259,7 @@ docs/user/aj3lib/types/
 ```
 
 ```text
-docs/user/aj3lib/errors/
+docs/user/jm3lib/errors/
 ├── errors.md                   Error-namespace overview
 ├── error-struct.md             !Error struct definition
 ├── custom-errors.md            User-defined error types
@@ -269,7 +269,7 @@ docs/user/aj3lib/errors/
 ```
 
 ```text
-docs/user/aj3lib/permissions/
+docs/user/jm3lib/permissions/
 ├── INDEX.md
 ├── Crypto/                     Cryptographic permissions
 ├── Database/                   Database permissions
@@ -282,14 +282,14 @@ docs/user/aj3lib/permissions/
 ```
 
 ```text
-docs/user/aj3lib/constructors/
+docs/user/jm3lib/constructors/
 ├── INDEX.md
 ├── Color.md, DT.md, Dur.md, IP.md, MIME.md
 ├── Path.md, Re.md, URL.md, Ver.md
 ```
 
 ```text
-docs/user/aj3lib/reassemblers/
+docs/user/jm3lib/reassemblers/
 ├── INDEX.md
 ├── Agg/                        Aggregate-reassembler pages
 └── Into/                       Into-reassembler pages

@@ -11,7 +11,7 @@ provides:
   - {_} template inputs via (_)
   - Compile-Time File Binding as consequence of {_} model
   - PGE10009/PGE10010 new compile rules
-affects: [compiler, aj3lib, all pipeline examples]
+affects: [compiler, jm3lib, all pipeline examples]
 
 key-files:
   created:
@@ -28,7 +28,7 @@ key-files:
     - docs/technical/compile-rules/PGE/ (PGE10003-10008, PGW10001)
     - docs/technical/edge-cases/ (10-execution.md, 06-operators.md)
     - docs/technical/spec/metadata-tree/ (branches.md, FULL-TREE.md)
-    - ~55 aj3lib + pipeline files ([_] → (-) sweep)
+    - ~55 jm3lib + pipeline files ([_] → (-) sweep)
 
 key-decisions:
   - "{_} carries both grant AND resource locator — single gateway for all external access"

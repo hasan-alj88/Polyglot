@@ -84,7 +84,7 @@ The `%` root has fixed branches for every object type in Aljam3:
 ├── =   Expanders         — expand operators (=ForEach.*)
 ├── *   Collectors        — collect operators (*Into.*, *Agg.*, *All, *First)
 ├── $   Variables         — runtime data ($name, $result)
-├── !   Errors            — error trees ({!} blocks, aj3lib !File.*, !No.*, etc.)
+├── !   Errors            — error trees ({!} blocks, jm3lib !File.*, !No.*, etc.)
 ├── @   Packages          — package addresses (@Local:999::MyPkg)
 ├── _   Permissions       — IO capability declarations (permission IO markers)
 └── definition            — compile-time schema templates
@@ -184,7 +184,7 @@ Push atomically clears the previous field and sets the new one. Reading a non-ac
 ```aljam3
 %#:String:int               ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+$")
 %#:String:float             ← .string#RawString + .regex#RawString (regex = "^-?[0-9]+\.[0-9]+$")
-%#:String:email             ← aj3lib: .regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+%#:String:email             ← jm3lib: .regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
 ```
 
 See [[syntax/types/basic-types#Numeric Types — #String Subtypes]] for details.

@@ -2,7 +2,7 @@
 phase: 163-add-metadata-paths-types-operations
 plan: 01
 subsystem: docs
-tags: [metadata-tree, types, aj3lib, frontmatter]
+tags: [metadata-tree, types, jm3lib, frontmatter]
 
 requires:
   - phase: none
@@ -22,34 +22,34 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/aj3lib/types/OS.md
-    - docs/user/aj3lib/types/PipelineStatus.md
-    - docs/user/aj3lib/types/QueueStrategy.md
-    - docs/user/aj3lib/types/RetriggerStrategy.md
-    - docs/user/aj3lib/types/QueueState.md
-    - docs/user/aj3lib/types/KillPropagation.md
-    - docs/user/aj3lib/types/ResourceTag.md
-    - docs/user/aj3lib/types/FileAccess.md
-    - docs/user/aj3lib/types/VarState.md
-    - docs/user/aj3lib/types/FieldKind.md
-    - docs/user/aj3lib/types/path.md
-    - docs/user/aj3lib/types/Queue.md
-    - docs/user/aj3lib/types/Job.md
-    - docs/user/aj3lib/types/Map.md
-    - docs/user/aj3lib/types/Array.md
-    - docs/user/aj3lib/types/Dataframe.md
-    - docs/user/aj3lib/types/Serial.md
-    - docs/user/aj3lib/types/Code.md
-    - docs/user/aj3lib/types/PyEnv.md
-    - docs/user/aj3lib/types/RsEnv.md
+    - docs/user/jm3lib/types/OS.md
+    - docs/user/jm3lib/types/PipelineStatus.md
+    - docs/user/jm3lib/types/QueueStrategy.md
+    - docs/user/jm3lib/types/RetriggerStrategy.md
+    - docs/user/jm3lib/types/QueueState.md
+    - docs/user/jm3lib/types/KillPropagation.md
+    - docs/user/jm3lib/types/ResourceTag.md
+    - docs/user/jm3lib/types/FileAccess.md
+    - docs/user/jm3lib/types/VarState.md
+    - docs/user/jm3lib/types/FieldKind.md
+    - docs/user/jm3lib/types/path.md
+    - docs/user/jm3lib/types/Queue.md
+    - docs/user/jm3lib/types/Job.md
+    - docs/user/jm3lib/types/Map.md
+    - docs/user/jm3lib/types/Array.md
+    - docs/user/jm3lib/types/Dataframe.md
+    - docs/user/jm3lib/types/Serial.md
+    - docs/user/jm3lib/types/Code.md
+    - docs/user/jm3lib/types/PyEnv.md
+    - docs/user/jm3lib/types/RsEnv.md
   modified:
-    - docs/user/aj3lib/types/boolean.md
-    - docs/user/aj3lib/types/string.md
-    - docs/user/aj3lib/types/NativeKind.md
-    - docs/user/aj3lib/types/enums.md
-    - docs/user/aj3lib/types/structs.md
-    - docs/user/aj3lib/types/collections.md
-    - docs/user/aj3lib/types/rt.md
+    - docs/user/jm3lib/types/boolean.md
+    - docs/user/jm3lib/types/string.md
+    - docs/user/jm3lib/types/NativeKind.md
+    - docs/user/jm3lib/types/enums.md
+    - docs/user/jm3lib/types/structs.md
+    - docs/user/jm3lib/types/collections.md
+    - docs/user/jm3lib/types/rt.md
 
 key-decisions:
   - "Enum instance paths use :0 pattern (single active field per instance)"

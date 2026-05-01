@@ -31,4 +31,4 @@ Capability-level generic permission for writing to databases. Sugar over [[INDEX
 ## Related
 
 - [[INDEX|__Database]] -- category-level generic
-- [[aj3lib/permissions/INDEX]] -- all aj3lib generic permissions
+- [[jm3lib/permissions/INDEX]] -- all jm3lib generic permissions

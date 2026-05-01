@@ -12,7 +12,7 @@ Runtime execution pipelines run foreign code (Python, Rust, etc.) within Aljam3 
 
 No `[@]` import needed.
 
-**PRIMITIVE** — aj3lib runtime pipelines are direct language runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.aj3` files.
+**PRIMITIVE** — jm3lib runtime pipelines are direct language runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.jm3` files.
 
 `<Lang>` is a placeholder for the target language (Python, Rust, etc.). The actual pipeline name uses the concrete language: `-RT.Python.Function.Inline`, `-RT.Rust.CLI`, etc.
 
@@ -31,28 +31,28 @@ All `-RT.*` pipelines require a `{_}` permission object granting System.Process.
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/RT/Function.Inline\|-RT.\<Lang\>.Function.Inline]] | Call a named function in inline foreign code |
-| [[aj3lib/pipelines/RT/Function.File\|-RT.\<Lang\>.Function.File]] | Call a named function in a source file |
+| [[jm3lib/pipelines/RT/Function.Inline\|-RT.\<Lang\>.Function.Inline]] | Call a named function in inline foreign code |
+| [[jm3lib/pipelines/RT/Function.File\|-RT.\<Lang\>.Function.File]] | Call a named function in a source file |
 
 ### Script Execution
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/RT/Script.Inline\|-RT.\<Lang\>.Script.Inline]] | Run inline code with variable bindings |
-| [[aj3lib/pipelines/RT/Script.File\|-RT.\<Lang\>.Script.File]] | Run source file with variable bindings |
+| [[jm3lib/pipelines/RT/Script.Inline\|-RT.\<Lang\>.Script.Inline]] | Run inline code with variable bindings |
+| [[jm3lib/pipelines/RT/Script.File\|-RT.\<Lang\>.Script.File]] | Run source file with variable bindings |
 
 ### Binary Invocation
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/RT/CLI\|-RT.\<Lang\>.CLI]] | Invoke compiled binary |
+| [[jm3lib/pipelines/RT/CLI\|-RT.\<Lang\>.CLI]] | Invoke compiled binary |
 
 ### Native Binding
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/RT/Bind.Inline\|-RT.\<Lang\>.Bind.Inline]] | Native code imports aljam3 lib (inline) |
-| [[aj3lib/pipelines/RT/Bind.File\|-RT.\<Lang\>.Bind.File]] | Native code imports aljam3 lib (file) |
+| [[jm3lib/pipelines/RT/Bind.Inline\|-RT.\<Lang\>.Bind.Inline]] | Native code imports aljam3 lib (inline) |
+| [[jm3lib/pipelines/RT/Bind.File\|-RT.\<Lang\>.Bind.File]] | Native code imports aljam3 lib (file) |
 
 ## `.Script` vs `.Bind` — Binding Origin
 
@@ -88,9 +88,9 @@ A pipeline may declare multiple `[W]` wrappers (e.g., one Python + one Rust). Se
 
 ## Related
 
-- [[aj3lib/pipelines/W/INDEX|-W]] — `-W.RT` wrapper that manages runtime environments
-- [[aj3lib/types/rt|Runtime types]] — `#Code`, `#PyEnv`, `#RsEnv`
-- [[aj3lib/errors/errors|errors]] — `!RT` error namespace
+- [[jm3lib/pipelines/W/INDEX|-W]] — `-W.RT` wrapper that manages runtime environments
+- [[jm3lib/types/rt|Runtime types]] — `#Code`, `#PyEnv`, `#RsEnv`
+- [[jm3lib/errors/errors|errors]] — `!RT` error namespace
 - [[syntax/blocks|blocks]] — `[C]` inline foreign code element
 
 NOTE: Retry/timeout/rate-limiting are `[Q]` queue strategies, not runtime pipeline concerns.

@@ -66,6 +66,6 @@ None -- pure computation.
 
 ## Related
 
-- [[aj3lib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
-- [[aj3lib/pipelines/Schema/Column|-#.Column]]
-- [[aj3lib/pipelines/File/Serial.Read.Field|-File.Serial.Read.Field]]
+- [[jm3lib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[jm3lib/pipelines/Schema/Column|-#.Column]]
+- [[jm3lib/pipelines/File/Serial.Read.Field|-File.Serial.Read.Field]]

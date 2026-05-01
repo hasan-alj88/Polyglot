@@ -69,9 +69,9 @@ Keywords are patterns with no capture slots — they compile to exact-match rege
 
 A keyword overload has no `($)` lines — the entire argument string must match literally.
 
-### Native Pipeline Overload (aj3lib only)
+### Native Pipeline Overload (jm3lib only)
 
-Only aj3lib constructors may use `[-]` pipeline calls inside `{$}`. The called pipeline must be an infallible native operation — the compiler grants this trust based on the `{N}` definition:
+Only jm3lib constructors may use `[-]` pipeline calls inside `{$}`. The called pipeline must be an infallible native operation — the compiler grants this trust based on the `{N}` definition:
 
 ```aljam3
 {$} $DT"Now"
@@ -85,7 +85,7 @@ Only aj3lib constructors may use `[-]` pipeline calls inside `{$}`. The called p
    [.] .seconds << $sec
 ```
 
-User-defined constructors cannot use `[-]` calls — they are limited to mapping simple string patterns. This restriction ensures the no-error-surface guarantee holds: simple string-to-tree mappings are provably safe at compile time for string literals, while pipeline calls introduce async complexity that only aj3lib's native operations can guarantee infallible.
+User-defined constructors cannot use `[-]` calls — they are limited to mapping simple string patterns. This restriction ensures the no-error-surface guarantee holds: simple string-to-tree mappings are provably safe at compile time for string literals, while pipeline calls introduce async complexity that only jm3lib's native operations can guarantee infallible.
 
 ## Constructor Contract
 
@@ -211,7 +211,7 @@ Constructor validation errors enforced at compile time. See [[COMPILE-RULES#14 �
 | PGE14002 | Duplicate Constructor Keyword | Two keyword overloads with the same literal string |
 | PGE14004 | Structural Integrity Violation | Slot's inherited structural constraint can match pattern separators |
 | PGE14005 | Target Type Mismatch | `[.]` field mapping to nonexistent field on target type |
-| PGE14006 | Failable Pipeline In Constructor | User `{$}` contains `[-]` pipeline call (aj3lib only) |
+| PGE14006 | Failable Pipeline In Constructor | User `{$}` contains `[-]` pipeline call (jm3lib only) |
 | PGE14007 | Incomplete Field Mapping | Not all required fields of target type are mapped |
 
 ### Call-Site Errors

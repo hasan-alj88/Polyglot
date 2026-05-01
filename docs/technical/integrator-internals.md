@@ -33,7 +33,7 @@ This approach uses the same JSON wire protocol defined in `native-dispatch.md` �
 
 FFI between language pairs offers significantly better performance than serialized string exchange by avoiding JSON serialization overhead. However, FFI requires dynamic code generation to set up bindings between arbitrary language pairs — this violates the SDK's "no dynamic code generation" design principle. FFI is also not universally available across all supported languages.
 
-For language pairs where FFI is feasible and performance-critical, Aljam3 provides `-Run.Bridge` — a pairwise, language-specific integration pipeline. Bridge pipelines require two `-W.Env` wrappers (one per language) and use [[aj3lib/pipelines/Variable/Convert|-Variable.Convert]] for direct type mapping between language type systems. See [[aj3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] for cross-language function calls and [[aj3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for cross-language variable binding. The [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] documents the full conversion flow.
+For language pairs where FFI is feasible and performance-critical, Aljam3 provides `-Run.Bridge` — a pairwise, language-specific integration pipeline. Bridge pipelines require two `-W.Env` wrappers (one per language) and use [[jm3lib/pipelines/Variable/Convert|-Variable.Convert]] for direct type mapping between language type systems. See [[jm3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] for cross-language function calls and [[jm3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for cross-language variable binding. The [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] documents the full conversion flow.
 
 The `aljam3-interface` SDK uses Method 1 (serialized data trees) exclusively. Method 2 is a separate optimization path, not part of the SDK. See [[aljam3-sdk#Why No FFI in the SDK]] for the full rationale.
 
@@ -43,6 +43,6 @@ The `aljam3-interface` SDK uses Method 1 (serialized data trees) exclusively. Me
 - [[aljam3-sdk]] — SDK public API, type mapping, and serialization algorithm
 - `docs/technical/spec/native-dispatch.md` — JSON wire protocol and native function contract
 - `lib/README.md` — SDK structure and language folders
-- [[aj3lib/pipelines/Run/Bridge.Function]] — cross-language function call specification
-- [[aj3lib/pipelines/Run/Bridge.Script]] — cross-language variable binding specification
+- [[jm3lib/pipelines/Run/Bridge.Function]] — cross-language function call specification
+- [[jm3lib/pipelines/Run/Bridge.Script]] — cross-language variable binding specification
 - [[technical/algorithms/bridge-conversion]] — Bridge conversion algorithm

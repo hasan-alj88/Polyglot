@@ -24,7 +24,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |                                           → [[definition-templates]]
 |   |
 |   +-- .#                                      Struct definitions
-|   |   |                                       → [[aj3lib/types/types|Built-in Types]]
+|   |   |                                       → [[jm3lib/types/types|Built-in Types]]
 |   |   |
 |   |   +-- :Boolean                            %definition.#:Boolean  (bool)
 |   |   +-- :String                             %definition.#:String  (string)
@@ -38,9 +38,9 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   +-- :Job                                %definition.#:Job
 |   |   +-- :Dataframe                          %definition.#:Dataframe
 |   |   +-- :path                               %definition.#:path
-|   |   +-- :Queue                              %definition.#:Queue  → [[aj3lib/types/structs]]
+|   |   +-- :Queue                              %definition.#:Queue  → [[jm3lib/types/structs]]
 |   |   |
-|   |   |   Enum types (all {#}, ##Enum)        → [[aj3lib/types/enums]]
+|   |   |   Enum types (all {#}, ##Enum)        → [[jm3lib/types/enums]]
 |   |   +-- :PipelineStatus                     %definition.#:PipelineStatus  (pipelinestatus)
 |   |   +-- :VarState                           %definition.#:VarState  (varstate)
 |   |   +-- :QueueStrategy                      %definition.#:QueueStrategy  (queuestrategy)
@@ -51,7 +51,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   +-- :FileAccess                         %definition.#:FileAccess  (fileaccess)
 |   |   +-- :FieldKind                          %definition.#:FieldKind  (fieldkind)
 |   |   +-- :OS                                 %definition.#:OS  (os)
-|   |   +-- :NativeKind                         %definition.#:NativeKind  → [[aj3lib/types/NativeKind]]
+|   |   +-- :NativeKind                         %definition.#:NativeKind  → [[jm3lib/types/NativeKind]]
 |   |   +-- :WrapperStatus                      %definition.#:WrapperStatus
 |   |   |
 |   |   |   Permission enums                    → [[permissions]]
@@ -66,7 +66,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   |   +-- :AuditLevel                         %definition.#:AuditLevel  (None | OnUse | OnDeny | All)
 |   |   +-- :AlertLevel                         %definition.#:AlertLevel  (None | OnDeny | OnEscalation)
 |   |   |
-|   |   |   Runtime types                       → [[aj3lib/types/rt]]
+|   |   |   Runtime types                       → [[jm3lib/types/rt]]
 |   |   +-- :Code                               %definition.#:Code  (per-language .Output)
 |   |   +-- :PyEnv                              %definition.#:PyEnv
 |   |   +-- :RsEnv                              %definition.#:RsEnv
@@ -194,7 +194,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |   +-- :Error:0                                %#:Error:0  (.Name, .ErrorAlias, .Message, .Info)
 |   +-- :Job:0                                  %#:Job:0  (.PID, .status, .hierarchy, .parent)
 |   +-- :path:0                                 %#:path:0
-|   +-- :Queue:0                                %#:Queue:0  → [[aj3lib/types/structs#Queue]]
+|   +-- :Queue:0                                %#:Queue:0  → [[jm3lib/types/structs#Queue]]
 |   +-- :Code:0                                 %#:Code:0  (.stdout, .stderr, .return)
 |   |
 |   +-- :UserRecord:0 (example)                 %#:UserRecord:0  (user-defined {#})
@@ -287,7 +287,7 @@ Complete `%` tree showing all branches, definition templates, and runtime instan
 |       +-- .totalProcessed#live.int
 |
 +-- !   Errors                                  FIXED NAMESPACES (no instances)
-|   |                                           → [[aj3lib/errors/errors]]
+|   |                                           → [[jm3lib/errors/errors]]
 |   |
 |   +-- .File                                    .NotFound, .ReadError, .WriteError, .ParseError
 |   +-- .No                                      .Input, .Output

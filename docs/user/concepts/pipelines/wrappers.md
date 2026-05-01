@@ -112,7 +112,7 @@ Common wrappers:
 - `[W] -W.DB.Transaction` — database connection + transaction lifecycle
 - `[W] -W.HTTP.Session` — HTTP client lifecycle
 
-See [[aj3lib/INDEX#Pipeline Namespaces|Wrappers]] for the full wrapper catalog.
+See [[jm3lib/INDEX#Pipeline Namespaces|Wrappers]] for the full wrapper catalog.
 
 ## See Also
 

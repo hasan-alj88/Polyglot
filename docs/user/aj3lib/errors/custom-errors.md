@@ -32,7 +32,7 @@ All user-defined errors live under the `!Error` namespace. `{!} !Name` implicitl
             [:] :email#string
 ```
 
-This creates `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail` — all carrying the `#Error` struct with their `.MessageTemplate` and `.Info` schema defined at the definition site. The raise site fills `.Info` values only. Note: the aj3lib `!Validation` namespace (shown in [[aj3lib/errors/builtin/validation|!Validation]]) is separate — it has fixed leaves defined by the runtime, not user code.
+This creates `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail` — all carrying the `#Error` struct with their `.MessageTemplate` and `.Info` schema defined at the definition site. The raise site fills `.Info` values only. Note: the jm3lib `!Validation` namespace (shown in [[jm3lib/errors/builtin/validation|!Validation]]) is separate — it has fixed leaves defined by the runtime, not user code.
 
 `{!}` creates entries at `%!.Error:Name.*` in the metadata tree. See [[data-is-trees#How Concepts Connect]].
 

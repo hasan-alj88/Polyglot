@@ -32,7 +32,7 @@ Iterates over each item in an array, producing a mini-pipeline per item. The exe
 
 ## Variants
 
-- [[aj3lib/expanders/ForEach/Array/Enumerate|=ForEach.Array.Enumerate]] -- adds positional `>index` output
+- [[jm3lib/expanders/ForEach/Array/Enumerate|=ForEach.Array.Enumerate]] -- adds positional `>index` output
 
 ## Errors
 
@@ -44,5 +44,5 @@ None.
 
 ## Related
 
-- [[aj3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
+- [[jm3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]

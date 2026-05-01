@@ -2,7 +2,7 @@
 phase: issue-75-dict-kv
 plan: 03
 subsystem: docs
-tags: [type-system, ebnf, metadata-tree, compile-rules, aj3lib, generics, schema-properties]
+tags: [type-system, ebnf, metadata-tree, compile-rules, jm3lib, generics, schema-properties]
 
 requires:
   - phase: issue-75-dict-kv/75-02
@@ -11,7 +11,7 @@ provides:
   - EBNF §4 rewritten for # type annotations with generic params, schema properties, constraints
   - metadata-tree updated for # annotations and schema property documentation
   - 3 new compile rules (PGE04018/419/420) for type parameter constraints, duplicate keys, key gaps
-  - aj3lib types.md with all 11 core type definitions
+  - jm3lib types.md with all 11 core type definitions
 affects: [75-04 spec-wide migration, COMPILE-RULES rule-by-rule writing]
 
 tech-stack:
@@ -26,7 +26,7 @@ key-files:
     - docs/technical/EBNF.md
     - docs/technical/spec/metadata-tree.md
     - docs/technical/COMPILE-RULES.md
-    - docs/user/aj3lib/types/types.md
+    - docs/user/jm3lib/types/types.md
 
 key-decisions:
   - "New PGE codes in 4.x range (418-420) not 3.x — type constraints are type-system rules"
@@ -39,9 +39,9 @@ patterns-established:
 completed: 2026-03-27
 ---
 
-# Issue #75 Plan 03: Technical Spec + aj3lib Type Definitions
+# Issue #75 Plan 03: Technical Spec + jm3lib Type Definitions
 
-**Updated EBNF grammar, metadata tree, and compile rules for # type annotations; added all 11 core type definitions to aj3lib types.md.**
+**Updated EBNF grammar, metadata tree, and compile rules for # type annotations; added all 11 core type definitions to jm3lib types.md.**
 
 ## Performance
 
@@ -57,7 +57,7 @@ completed: 2026-03-27
 | AC-1: EBNF Type Annotation Grammar Uses # | Pass | §4 rewritten; dict_type, dataframe_type, generic_param, schema_property, type_constraint, wildcard_type all present; basic_type includes uint/sci/eng/dim; array uses flex_sep |
 | AC-2: Metadata Tree Updated for # Annotations | Pass | Alias resolution uses #; definition templates include schema property table + #Array example; field expansion uses # |
 | AC-3: New Compile Rules for Type System | Pass | PGE04018, PGE04019, PGE04020 added to error code reference table |
-| AC-4: Core Type Definitions in aj3lib | Pass | #String through #Dimension (7 scalar types) + #Array/#Dict/#Serial/#Dataframe (4 collections) = 11 definitions; existing entries updated ; → # |
+| AC-4: Core Type Definitions in jm3lib | Pass | #String through #Dimension (7 scalar types) + #Array/#Dict/#Serial/#Dataframe (4 collections) = 11 definitions; existing entries updated ; → # |
 
 ## Accomplishments
 
@@ -65,7 +65,7 @@ completed: 2026-03-27
 - EBNF §4.3 added for generic type parameters in {#} definitions (schema_inheritance, schema_property, type_constraint productions)
 - metadata-tree.md: String Subtype Nesting updated with all 7 subtypes and # alias resolution; Definition Templates gains schema property table and #Array example tree; Field Expansion uses #
 - COMPILE-RULES.md: 3 new error codes (PGE04018 Type Parameter Constraint Violation, PGE04019 Duplicate Dictionary Key, PGE04020 Key Gap Violation)
-- aj3lib/types/types.md: type hierarchy section, 7 scalar definitions, 4 collection definitions, all existing entries migrated ; → #, status promoted to complete
+- jm3lib/types/types.md: type hierarchy section, 7 scalar definitions, 4 collection definitions, all existing entries migrated ; → #, status promoted to complete
 
 ## Files Created/Modified
 
@@ -74,7 +74,7 @@ completed: 2026-03-27
 | `docs/technical/EBNF.md` | Modified | §4 rewritten for # annotations; §4.3 added for generics/schema/constraints; §5 [<] note updated |
 | `docs/technical/spec/metadata-tree.md` | Modified | String Subtype Nesting, Definition Templates, Field Expansion updated for # |
 | `docs/technical/COMPILE-RULES.md` | Modified | PGE04018, PGE04019, PGE04020 added to error code table |
-| `docs/user/aj3lib/types/types.md` | Modified | 11 core type defs added, hierarchy section, ; → # migration, status → complete |
+| `docs/user/jm3lib/types/types.md` | Modified | 11 core type defs added, hierarchy section, ; → # migration, status → complete |
 
 ## Decisions Made
 
@@ -95,7 +95,7 @@ None.
 
 **Ready:**
 - All 4 technical spec files aligned with # type annotation system
-- aj3lib types.md has complete core type definitions — downstream files can reference
+- jm3lib types.md has complete core type definitions — downstream files can reference
 - EBNF grammar is authoritative for # annotations, generics, schema properties
 
 **Concerns:**

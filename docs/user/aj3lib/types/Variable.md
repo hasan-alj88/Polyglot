@@ -10,8 +10,8 @@ metadata_instance: "%#:Variable:N"
 # #Variable Struct (##Enum)
 
 <!-- @c:types -->
-<!-- @c:aj3lib/types/NativeType -->
-<!-- @c:aj3lib/pipelines/Run/INDEX -->
+<!-- @c:jm3lib/types/NativeType -->
+<!-- @c:jm3lib/pipelines/Run/INDEX -->
 
 `#Variable` represents a named variable from a specific host language, tagged with its native type. Used by `-Run.Bridge.*` pipelines to pass arguments and return values across language boundaries.
 
@@ -57,7 +57,7 @@ Each language branch contains the same three fields:
 | `.value` | `#serial` | Serialized value (JSON wire format) |
 | `.type` | `#NativeType.<Lang>` | Native type classifier from the source language |
 
-The `.type` field references the corresponding language branch of [[aj3lib/types/NativeType|#NativeType]]. This constrains `.type` to only valid types for the active language -- a `:Python` variable cannot have `.type#NativeType.Rust`.
+The `.type` field references the corresponding language branch of [[jm3lib/types/NativeType|#NativeType]]. This constrains `.type` to only valid types for the active language -- a `:Python` variable cannot have `.type#NativeType.Rust`.
 
 ---
 
@@ -122,7 +122,7 @@ Source #Variable (:Python, .type=int, .value="42")
     → Target #Variable (:Rust, .type=i64, .value="42")
 ```
 
-See [[aj3lib/pipelines/Variable/Convert|-Variable.Convert]] for the pipeline definition and [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] for the full algorithm.
+See [[jm3lib/pipelines/Variable/Convert|-Variable.Convert]] for the pipeline definition and [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] for the full algorithm.
 
 ---
 
@@ -135,8 +135,8 @@ See [[aj3lib/pipelines/Variable/Convert|-Variable.Convert]] for the pipeline def
 
 ## Related
 
-- [[aj3lib/types/NativeType|#NativeType]] -- primitive type classifier per host language
-- [[aj3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] -- cross-language function call
-- [[aj3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] -- cross-language variable binding
-- [[aj3lib/pipelines/Variable/Convert|-Variable.Convert]] -- pairwise type conversion
+- [[jm3lib/types/NativeType|#NativeType]] -- primitive type classifier per host language
+- [[jm3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] -- cross-language function call
+- [[jm3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] -- cross-language variable binding
+- [[jm3lib/pipelines/Variable/Convert|-Variable.Convert]] -- pairwise type conversion
 - [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] -- conversion algorithm and dual-wrapper lifecycle

@@ -19,6 +19,6 @@ Types used by `-RT.*` runtime execution pipelines and `-W.RT` wrappers. No `[@]`
 
 ## Related
 
-- [[aj3lib/pipelines/RT/INDEX|-RT]] -- runtime execution pipelines that consume these types
-- [[aj3lib/pipelines/W/INDEX|-W]] -- `-W.RT` wrapper that produces `#PyEnv`/`#RsEnv`
-- [[aj3lib/errors/errors|errors]] -- `!RT` error namespace for runtime failures
+- [[jm3lib/pipelines/RT/INDEX|-RT]] -- runtime execution pipelines that consume these types
+- [[jm3lib/pipelines/W/INDEX|-W]] -- `-W.RT` wrapper that produces `#PyEnv`/`#RsEnv`
+- [[jm3lib/errors/errors|errors]] -- `!RT` error namespace for runtime failures

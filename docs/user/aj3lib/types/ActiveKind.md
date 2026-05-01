@@ -11,7 +11,7 @@ metadata_instance: "%#:ActiveKind:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.aj3` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
+Runtime `##Enum` type available in every `.jm3` file. Uses `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
 
 ---
 
@@ -45,6 +45,6 @@ Used by the `%##Active` schema property to describe how many of a branch's child
 
 ## Related
 
-- [[enums]] -- other aj3lib enum types
+- [[enums]] -- other jm3lib enum types
 - [[syntax/types/schema-properties|Schema Properties]] -- `%##Active` property using this type
 - [[syntax/types/INDEX|types]] -- full type system specification

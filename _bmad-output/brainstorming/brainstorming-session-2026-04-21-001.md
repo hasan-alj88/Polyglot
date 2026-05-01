@@ -58,7 +58,7 @@ _Concept:_ The compiler guarantees a valid Final value WILL be produced. Not wha
 _Novelty:_ Separates "will this succeed?" (compiler answers YES) from "what will the result be?" (may depend on runtime).
 
 **[First Principles #4]**: User-Definable with Native Restriction
-_Concept:_ Users can define `{$}` constructors. Only aj3lib constructors can use pipeline calls to infallible native pipelines inside `{$}`. User constructors are pure regex-to-tree mapping only.
+_Concept:_ Users can define `{$}` constructors. Only jm3lib constructors can use pipeline calls to infallible native pipelines inside `{$}`. User constructors are pure regex-to-tree mapping only.
 _Novelty:_ Extensible but sandboxed.
 
 **[First Principles #5]**: Constructor Overloading via Regex
@@ -127,7 +127,7 @@ Native pipeline overload:
 - Definitions: `%definitions.$.*` with overloads enumerated
 - Instances: `%{pipeline instance}.$.*`
 
-**aj3lib Constructor Catalog:**
+**jm3lib Constructor Catalog:**
 
 | Constructor | Target Type | Key Overloads |
 |---|---|---|
@@ -156,7 +156,7 @@ Native pipeline overload:
 
 **Package Interaction:**
 - Users define `{$}` for own types and cross-package types
-- Only aj3lib can use `[-]` pipeline calls inside `{$}`
+- Only jm3lib can use `[-]` pipeline calls inside `{$}`
 - `{@}` ceiling: no interaction (constructors don't use permissions/resources)
 - `[@]` import brings in `{$}` definitions alongside `{#}` and `{-}`
 

@@ -48,7 +48,7 @@ Custom queues define configuration and load rule sets. The identifier must use t
    [Q] << #HostFailover
 ```
 
-`-Q.Default` is the only aj3lib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first. Referencing an undefined queue is a compile error (PGE01014).
+`-Q.Default` is the only jm3lib-provided queue and does not require a `{Q}` definition. All other queues must be defined via `{Q}` first. Referencing an undefined queue is a compile error (PGE01014).
 
 Queue data loading supports `[#]` to load and extend a base queue:
 
@@ -191,4 +191,4 @@ Three equivalent syntaxes:
 - [[concepts/pipelines/queue/rules|Queue Rules & Triggers]] — Defining queue rules and the reactive trigger engine
 - [[concepts/pipelines/queue/internals|Queue Internals]] — Dispatch coordinator, state transitions, and load balancing
 - [[concepts/pipelines/INDEX|Pipeline Structure]] — where `[Q]` fits in pipeline element order
-- [[aj3lib/pipelines/Q/INDEX|u:-Q.* Queue Pipelines]] — full pipeline catalog
+- [[jm3lib/pipelines/Q/INDEX|u:-Q.* Queue Pipelines]] — full pipeline catalog

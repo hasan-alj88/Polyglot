@@ -11,7 +11,7 @@ metadata_instance: "%#:JobStatus:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.aj3` file. Represents the lifecycle state of a job as observed by a `{*}` collector.
+Runtime `##Enum` type available in every `.jm3` file. Represents the lifecycle state of a job as observed by a `{*}` collector.
 
 ---
 
@@ -46,5 +46,5 @@ Runtime `##Enum` type available in every `.aj3` file. Represents the lifecycle s
 ## Related
 
 - [[IncomingDataFrame]] — uses `#JobStatus` in `.status` field
-- [[enums]] — other aj3lib enum types
+- [[enums]] — other jm3lib enum types
 - [[technical/spec/collector-definitions\|Collector Definitions]] — `{*}` block specification

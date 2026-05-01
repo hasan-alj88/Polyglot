@@ -12,7 +12,7 @@ metadata_instance: "%#:OverflowStrategy:N"
 <!-- @c:types -->
 <!-- @u:technical/plan/queue-manager/overflow -->
 
-Runtime `##Enum` type available in every `.aj3` file. Controls how a `{*}` collector handles intermediate data that exceeds RAM capacity, participating in the PPTD (Parallel Processing Temporary Directory) overflow system ([[technical/plan/queue-manager/overflow|u:overflow]]).
+Runtime `##Enum` type available in every `.jm3` file. Controls how a `{*}` collector handles intermediate data that exceeds RAM capacity, participating in the PPTD (Parallel Processing Temporary Directory) overflow system ([[technical/plan/queue-manager/overflow|u:overflow]]).
 
 ---
 
@@ -50,6 +50,6 @@ Runtime `##Enum` type available in every `.aj3` file. Controls how a `{*}` colle
 
 - [[CollectorCategory]] — reconciliation category (Into, Agg, Sync, Race, Discard)
 - [[CollectorScope]] — invocation context (Expand vs Parallel)
-- [[enums]] — other aj3lib enum types
+- [[enums]] — other jm3lib enum types
 - [[technical/spec/collector-definitions\|Collector Definitions]] — `{*}` block specification
 - [[technical/plan/queue-manager/overflow\|Overflow System]] — PPTD three-tier overflow chain

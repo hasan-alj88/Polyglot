@@ -16,7 +16,7 @@ package_block       ::= "{@}" package_id NEWLINE
 import_line         ::= "[@]" '@' name push_left package_id ;
 ```
 
-**Rule:** `{@}` must be the first block in every `.aj3` file. Exactly one `{@}` per file — multiple `{@}` blocks are not allowed. Multiple `{#}` and `{-}` definitions are allowed.
+**Rule:** `{@}` must be the first block in every `.jm3` file. Exactly one `{@}` per file — multiple `{@}` blocks are not allowed. Multiple `{#}` and `{-}` definitions are allowed.
 
 ## Related User Documentation
 

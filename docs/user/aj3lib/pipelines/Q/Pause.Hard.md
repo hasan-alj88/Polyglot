@@ -9,9 +9,9 @@ metadata_instance: "%Q:Pause.Hard:N"
 
 # -Q.Pause.Hard
 
-<!-- @d:aj3lib/pipelines/Q/Job.Pause.Free.RAM -->
-<!-- @d:aj3lib/pipelines/Q/Job.Pause.Free.All -->
-**Deprecated.** Replaced by [[aj3lib/pipelines/Q/Job.Pause.Free.RAM|d:-Q.Job.Pause.Free.RAM]] (CPU+RAM) and [[aj3lib/pipelines/Q/Job.Pause.Free.All|d:-Q.Job.Pause.Free.All]] (everything to disk). The new system provides five granular resource-freeing levels. Conditions now use `[?]`/`[&]`/`[+]` conditional blocks inside `{Q} #JobRules` definitions.
+<!-- @d:jm3lib/pipelines/Q/Job.Pause.Free.RAM -->
+<!-- @d:jm3lib/pipelines/Q/Job.Pause.Free.All -->
+**Deprecated.** Replaced by [[jm3lib/pipelines/Q/Job.Pause.Free.RAM|d:-Q.Job.Pause.Free.RAM]] (CPU+RAM) and [[jm3lib/pipelines/Q/Job.Pause.Free.All|d:-Q.Job.Pause.Free.All]] (everything to disk). The new system provides five granular resource-freeing levels. Conditions now use `[?]`/`[&]`/`[+]` conditional blocks inside `{Q} #JobRules` definitions.
 
 ---
 
@@ -64,6 +64,6 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/Pause.Soft|-Q.Pause.Soft]]
-- [[aj3lib/pipelines/Q/Resume|-Q.Resume]]
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/Pause.Soft|-Q.Pause.Soft]]
+- [[jm3lib/pipelines/Q/Resume|-Q.Resume]]
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

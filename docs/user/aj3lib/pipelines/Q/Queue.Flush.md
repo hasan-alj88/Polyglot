@@ -57,6 +57,6 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/Queue.Drain|-Q.Queue.Drain]]
-- [[aj3lib/pipelines/Q/Job.Kill.Now|-Q.Job.Kill.Now]]
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/Queue.Drain|-Q.Queue.Drain]]
+- [[jm3lib/pipelines/Q/Job.Kill.Now|-Q.Job.Kill.Now]]
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

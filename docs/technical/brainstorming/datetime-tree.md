@@ -598,9 +598,9 @@ All four extensible levels (`.Calendar`, `.Week`, `.TimeUnit`, `.Cultural`) are 
 [-] $deadline#dt
 ```
 
-## aj3lib Pipelines — -DT.*
+## jm3lib Pipelines — -DT.*
 
-All `-DT.*` pipelines yield `#dt` objects. No `[@]` import needed (aj3lib).
+All `-DT.*` pipelines yield `#dt` objects. No `[@]` import needed (jm3lib).
 
 ### Construction
 ```aljam3

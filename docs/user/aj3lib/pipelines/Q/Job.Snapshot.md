@@ -70,6 +70,6 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/Job.Pause.Free.All|-Q.Job.Pause.Free.All]]
-- [[aj3lib/pipelines/Q/Job.Reassign|-Q.Job.Reassign]]
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/Job.Pause.Free.All|-Q.Job.Pause.Free.All]]
+- [[jm3lib/pipelines/Q/Job.Reassign|-Q.Job.Reassign]]
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

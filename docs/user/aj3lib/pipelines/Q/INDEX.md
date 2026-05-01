@@ -10,7 +10,7 @@ status: complete
 <!-- @c:concepts/pipelines/queue/INDEX -->
 Queue pipelines manage the multi-queue execution model. Every `-Q.*` pipeline is a **parameterized instruction** compiled into the behavior contract's signal map. The Trigger Monitor reads the signal map and executes at runtime. No `[@]` import needed. See [[concepts/pipelines/queue/INDEX|c:Queue]] for queue concepts.
 
-**PRIMITIVE** — Queue pipelines are direct OS/runtime integrations implemented by the Aljam3 runtime. They cannot be reimplemented in user `.aj3` files.
+**PRIMITIVE** — Queue pipelines are direct OS/runtime integrations implemented by the Aljam3 runtime. They cannot be reimplemented in user `.jm3` files.
 
 ## Permissions
 
@@ -42,36 +42,36 @@ Where `<Scope>` is `Job`, `Host`, `Queue`, or `Queue.Jobs` (array context in `#Q
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/Q/Default\|-Q.Default]] | Standard FIFO queue, no constraints |
-| [[aj3lib/pipelines/Q/Assign\|-Q.Assign]] | Assign pipeline to a named queue |
+| [[jm3lib/pipelines/Q/Default\|-Q.Default]] | Standard FIFO queue, no constraints |
+| [[jm3lib/pipelines/Q/Assign\|-Q.Assign]] | Assign pipeline to a named queue |
 
 ### Pause (resumable — Job state preserved)
 
 | Pipeline | CPU | RAM | FDs/TCP/Locks | Timing |
 |----------|-----|-----|---------------|--------|
-| [[aj3lib/pipelines/Q/Job.Pause.Free.CPU\|-Q.Job.Pause.Free.CPU]] | Freed | Kept | Kept | `.Now` / `.Wait` |
-| [[aj3lib/pipelines/Q/Job.Pause.Free.RAM\|-Q.Job.Pause.Free.RAM]] | Freed | Freed | Kept | `.Soft` / `.Hard` x `.Now` / `.Wait` |
-| [[aj3lib/pipelines/Q/Job.Pause.Free.All\|-Q.Job.Pause.Free.All]] | Freed | Freed | Freed (to disk) | `.Now` / `.Wait` |
+| [[jm3lib/pipelines/Q/Job.Pause.Free.CPU\|-Q.Job.Pause.Free.CPU]] | Freed | Kept | Kept | `.Now` / `.Wait` |
+| [[jm3lib/pipelines/Q/Job.Pause.Free.RAM\|-Q.Job.Pause.Free.RAM]] | Freed | Freed | Kept | `.Soft` / `.Hard` x `.Now` / `.Wait` |
+| [[jm3lib/pipelines/Q/Job.Pause.Free.All\|-Q.Job.Pause.Free.All]] | Freed | Freed | Freed (to disk) | `.Now` / `.Wait` |
 
 ### Resume
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/Q/Job.Resume\|-Q.Job.Resume]] | Resume from CPU or RAM pause (state in memory) |
+| [[jm3lib/pipelines/Q/Job.Resume\|-Q.Job.Resume]] | Resume from CPU or RAM pause (state in memory) |
 | `-Q.Job.Resume.From.Disk` | Restore from `Free.All` image files |
 
 ### Kill (terminal — Job state destroyed)
 
 | Pipeline | Cleanup? | Description |
 |----------|----------|-------------|
-| [[aj3lib/pipelines/Q/Job.Kill.WithCleanup\|-Q.Job.Kill.WithCleanup]] | Yes | SIGTERM, run `[/]` cleanup, then SIGKILL timeout |
-| [[aj3lib/pipelines/Q/Job.Kill.Now\|-Q.Job.Kill.Now]] | No | SIGKILL — instant termination |
+| [[jm3lib/pipelines/Q/Job.Kill.WithCleanup\|-Q.Job.Kill.WithCleanup]] | Yes | SIGTERM, run `[/]` cleanup, then SIGKILL timeout |
+| [[jm3lib/pipelines/Q/Job.Kill.Now\|-Q.Job.Kill.Now]] | No | SIGKILL — instant termination |
 
 ### Resource Adjustment (Job keeps running)
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/Q/Job.Throttle\|-Q.Job.Throttle]] | Reduce CPU/RAM/IO allocation |
+| [[jm3lib/pipelines/Q/Job.Throttle\|-Q.Job.Throttle]] | Reduce CPU/RAM/IO allocation |
 | `-Q.Job.Unthrottle` | Restore full allocation |
 | `-Q.Job.Priority.Update` | Change scheduling priority |
 
@@ -79,8 +79,8 @@ Where `<Scope>` is `Job`, `Host`, `Queue`, or `Queue.Jobs` (array context in `#Q
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/Q/Job.Reassign\|-Q.Job.Reassign]] | Move to different queue (cross-host = CRIU transfer) |
-| [[aj3lib/pipelines/Q/Job.Snapshot\|-Q.Job.Snapshot]] | Point-in-time state fork to disk |
+| [[jm3lib/pipelines/Q/Job.Reassign\|-Q.Job.Reassign]] | Move to different queue (cross-host = CRIU transfer) |
+| [[jm3lib/pipelines/Q/Job.Snapshot\|-Q.Job.Snapshot]] | Point-in-time state fork to disk |
 
 ### Queue Door Controls (Ingress Fate & Dispatch)
 
@@ -107,14 +107,14 @@ Where `<Scope>` is `Job`, `Host`, `Queue`, or `Queue.Jobs` (array context in `#Q
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/Q/Job.Inspect\|-Q.Job.Inspect]] | Read Job state without affecting it |
-| [[aj3lib/pipelines/Q/Job.Branch\|-Q.Job.Branch]] | Name a marker subtree for external reference |
+| [[jm3lib/pipelines/Q/Job.Inspect\|-Q.Job.Inspect]] | Read Job state without affecting it |
+| [[jm3lib/pipelines/Q/Job.Branch\|-Q.Job.Branch]] | Name a marker subtree for external reference |
 
 ### No-Op
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/Q/DoNothing\|-Q.DoNothing]] | Satisfies `*?` exhaustiveness. Compiler warns on unhandled states |
+| [[jm3lib/pipelines/Q/DoNothing\|-Q.DoNothing]] | Satisfies `*?` exhaustiveness. Compiler warns on unhandled states |
 
 ### Getter Pipelines
 
@@ -224,17 +224,17 @@ The following pipelines have been replaced. See individual files for migration p
 
 | Old | Replacement | Reason |
 |-----|-------------|--------|
-| [[aj3lib/pipelines/Q/Pause.Soft\|d:-Q.Pause.Soft]] | [[aj3lib/pipelines/Q/Job.Pause.Free.CPU\|-Q.Job.Pause.Free.CPU]] | Scoped naming, explicit resource level |
-| [[aj3lib/pipelines/Q/Pause.Hard\|d:-Q.Pause.Hard]] | [[aj3lib/pipelines/Q/Job.Pause.Free.RAM\|-Q.Job.Pause.Free.RAM]] | Five resource-freeing levels replace two |
-| [[aj3lib/pipelines/Q/Resume\|d:-Q.Resume]] | [[aj3lib/pipelines/Q/Job.Resume\|-Q.Job.Resume]] | Pause reason set semantics |
-| [[aj3lib/pipelines/Q/Kill.Graceful\|d:-Q.Kill.Graceful]] | [[aj3lib/pipelines/Q/Job.Kill.WithCleanup\|-Q.Job.Kill.WithCleanup]] | "WithCleanup" = `[/]` runs |
-| [[aj3lib/pipelines/Q/Kill.Hard\|d:-Q.Kill.Hard]] | [[aj3lib/pipelines/Q/Job.Kill.Now\|-Q.Job.Kill.Now]] | "Now" = instant SIGKILL |
-| [[aj3lib/pipelines/Q/Drain\|d:-Q.Drain]] | [[aj3lib/pipelines/Q/Queue.Drain\|-Q.Queue.Drain]] | Scoped naming |
-| [[aj3lib/pipelines/Q/Flush\|d:-Q.Flush]] | [[aj3lib/pipelines/Q/Queue.Flush\|-Q.Queue.Flush]] | Scoped naming |
-| [[aj3lib/pipelines/Q/Reassign\|d:-Q.Reassign]] | [[aj3lib/pipelines/Q/Job.Reassign\|-Q.Job.Reassign]] | Scoped naming |
+| [[jm3lib/pipelines/Q/Pause.Soft\|d:-Q.Pause.Soft]] | [[jm3lib/pipelines/Q/Job.Pause.Free.CPU\|-Q.Job.Pause.Free.CPU]] | Scoped naming, explicit resource level |
+| [[jm3lib/pipelines/Q/Pause.Hard\|d:-Q.Pause.Hard]] | [[jm3lib/pipelines/Q/Job.Pause.Free.RAM\|-Q.Job.Pause.Free.RAM]] | Five resource-freeing levels replace two |
+| [[jm3lib/pipelines/Q/Resume\|d:-Q.Resume]] | [[jm3lib/pipelines/Q/Job.Resume\|-Q.Job.Resume]] | Pause reason set semantics |
+| [[jm3lib/pipelines/Q/Kill.Graceful\|d:-Q.Kill.Graceful]] | [[jm3lib/pipelines/Q/Job.Kill.WithCleanup\|-Q.Job.Kill.WithCleanup]] | "WithCleanup" = `[/]` runs |
+| [[jm3lib/pipelines/Q/Kill.Hard\|d:-Q.Kill.Hard]] | [[jm3lib/pipelines/Q/Job.Kill.Now\|-Q.Job.Kill.Now]] | "Now" = instant SIGKILL |
+| [[jm3lib/pipelines/Q/Drain\|d:-Q.Drain]] | [[jm3lib/pipelines/Q/Queue.Drain\|-Q.Queue.Drain]] | Scoped naming |
+| [[jm3lib/pipelines/Q/Flush\|d:-Q.Flush]] | [[jm3lib/pipelines/Q/Queue.Flush\|-Q.Queue.Flush]] | Scoped naming |
+| [[jm3lib/pipelines/Q/Reassign\|d:-Q.Reassign]] | [[jm3lib/pipelines/Q/Job.Reassign\|-Q.Job.Reassign]] | Scoped naming |
 | `.If.<Resource>.<Condition>` suffixes | `[?]`/`[&]`/`[+]` conditional blocks | Conditions belong in Aljam3's conditional system |
 
 ## Related
 
 - [[concepts/pipelines/queue/INDEX|c:Queue]]
-- [[aj3lib/INDEX]]
+- [[jm3lib/INDEX]]

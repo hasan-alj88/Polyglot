@@ -13,11 +13,11 @@ updated: 2026-04-22
 
 > Aljam3 is designed to grow safely. The same compile-time guarantees that protect core pipelines extend to every package in the ecosystem. This page explains how extensibility works without compromising safety. See [[vision]] for the broader project context.
 
-## aj3lib: The Standard Library
+## jm3lib: The Standard Library
 
-Aljam3 ships with **aj3lib** — a standard library of battle-tested operations that cover common automation needs. File operations, data transformations, date/time handling, collection operators, trigger types, queue strategies — these are not user-defined pipelines. They are compiler-known operations backed by native implementations, validated by the same exhaustive checks as any other [[glossary#Pipeline|pipeline]].
+Aljam3 ships with **jm3lib** — a standard library of battle-tested operations that cover common automation needs. File operations, data transformations, date/time handling, collection operators, trigger types, queue strategies — these are not user-defined pipelines. They are compiler-known operations backed by native implementations, validated by the same exhaustive checks as any other [[glossary#Pipeline|pipeline]].
 
-aj3lib exists because automation has common patterns. Reading a file, parsing JSON, iterating over a collection, handling a cron trigger — every automation project needs these. Rather than forcing every developer to rewrite them (and reintroduce the bugs that come with reimplementation), Aljam3 provides them as first-class language features with full compiler support.
+jm3lib exists because automation has common patterns. Reading a file, parsing JSON, iterating over a collection, handling a cron trigger — every automation project needs these. Rather than forcing every developer to rewrite them (and reintroduce the bugs that come with reimplementation), Aljam3 provides them as first-class language features with full compiler support.
 
 ## Community Packages
 

@@ -20,7 +20,7 @@ Aljam3 is a trigger-driven programming language whose compiler emits a Behavior 
 
 | Layer | Produces | Consumes | Authoritative spec |
 |-------|----------|----------|--------------------|
-| Language | [[audit/reference/glossary\|c:Aljam3 Code]] (`.aj3` files) | EBNF grammar | [[technical/ebnf/INDEX\|u:ebnf-index]] |
+| Language | [[audit/reference/glossary\|c:Aljam3 Code]] (`.jm3` files) | EBNF grammar | [[technical/ebnf/INDEX\|u:ebnf-index]] |
 | Compiler | [[audit/reference/glossary\|c:Behavior Contract]] | Aljam3 Code | [[technical/spec/compiler-floor\|u:compiler-floor]], [[technical/spec/behavior-contract\|u:behavior-contract]] |
 | Service | Signals, Jobs, Variable state | Behavior Contract | [[technical/spec/compiler-floor\|u:compiler-floor]] |
 | Runtime execution | Results (outputs, errors) | Jobs and foreign-code blocks | [[technical/spec/aljam3-sdk\|u:aljam3-sdk]], [[technical/spec/native-dispatch\|u:native-dispatch]] |
@@ -32,7 +32,7 @@ The boundaries between these layers are enforced by compile rules and runtime co
 <!-- @c:philosophy/core-philosophy -->
 <!-- @c:philosophy/data-trees -->
 <!-- @u:user/SPEC-INDEX -->
-The language layer defines what `.aj3` source code looks like and what compile-time invariants the compiler enforces. It is fully specified — v0.2 is complete.
+The language layer defines what `.jm3` source code looks like and what compile-time invariants the compiler enforces. It is fully specified — v0.2 is complete.
 
 ### Grammar
 
@@ -125,7 +125,7 @@ The Behavior Contract is the signal-graph IR produced by the compiler. It encode
 | Collector reconciliation map | Which collectors watch which jobs; compound exhaustiveness claims |
 | Permission index | Grant + locator for every IO marker |
 
-The Aljam3 Service reads this contract; it does not re-parse `.aj3` source. See [[philosophy/behavioral-contract|c:behavioral-contract]] for why the contract is the boundary.
+The Aljam3 Service reads this contract; it does not re-parse `.jm3` source. See [[philosophy/behavioral-contract|c:behavioral-contract]] for why the contract is the boundary.
 
 ### Compile-Rule Catalog
 
@@ -172,7 +172,7 @@ The [[audit/reference/glossary|c:Trigger Monitor]] (TM) watches trigger conditio
 | Collector ownership | Own `*First` / `*Nth` / `*All` logic for sub-jobs; terminate associated jobs on race resolution |
 | Job FSM validation | Validate job state transitions before dispatching commands to the Queue Handler |
 
-Trigger conditions, not business logic, are the TM's decision scope. `-T.*` pipelines are the declarative contracts the TM evaluates; see [[user/aj3lib/pipelines/T/INDEX|u:aj3lib-T]] for the trigger catalog.
+Trigger conditions, not business logic, are the TM's decision scope. `-T.*` pipelines are the declarative contracts the TM evaluates; see [[user/jm3lib/pipelines/T/INDEX|u:jm3lib-T]] for the trigger catalog.
 
 ### Queue Handler
 
@@ -185,7 +185,7 @@ The [[audit/reference/glossary|c:Queue Handler]] (QH) enforces queue strategies 
 | Trigger/business-logic decisions | None — the QH never makes business decisions |
 | Dispatch signalling | Signal the Dispatch Coordinator when a job is eligible |
 
-Queue strategies and control pipelines live under `-Q.*`; see [[user/aj3lib/pipelines/Q/INDEX|u:aj3lib-Q]]. The queue-vs-set distinction and pause/kill flows are specified by queue-manager design decisions under [[audit/decisions/README|c:decisions-index]].
+Queue strategies and control pipelines live under `-Q.*`; see [[user/jm3lib/pipelines/Q/INDEX|u:jm3lib-Q]]. The queue-vs-set distinction and pause/kill flows are specified by queue-manager design decisions under [[audit/decisions/README|c:decisions-index]].
 
 ### Dispatch Coordinator
 
@@ -232,14 +232,14 @@ The sandbox spec defines `#LimitAction` semantics, cgroups mapping, and queue-de
 
 ## Runtime Execution Layer
 
-<!-- @u:user/aj3lib/pipelines/W/INDEX -->
-<!-- @u:user/aj3lib/pipelines/Run/INDEX -->
-<!-- @u:user/aj3lib/pipelines/RT/INDEX -->
+<!-- @u:user/jm3lib/pipelines/W/INDEX -->
+<!-- @u:user/jm3lib/pipelines/Run/INDEX -->
+<!-- @u:user/jm3lib/pipelines/RT/INDEX -->
 Execution is delegated via wrappers (`-W.*`) and runtime pipelines (`-RT.*`, `-Run.*`). Wrappers and runtimes form the boundary between Aljam3-controlled execution and foreign-language execution.
 
 ### Wrappers (`-W.*`)
 
-Authority: [[user/aj3lib/pipelines/W/INDEX|u:aj3lib-W]]. A wrapper defines the setup/cleanup contract around a pipeline body. `-W.Aljam3` is the default (no-op setup/cleanup). Specialised wrappers:
+Authority: [[user/jm3lib/pipelines/W/INDEX|u:jm3lib-W]]. A wrapper defines the setup/cleanup contract around a pipeline body. `-W.Aljam3` is the default (no-op setup/cleanup). Specialised wrappers:
 
 | Wrapper | Purpose |
 |---------|---------|
@@ -252,7 +252,7 @@ Retry is a queue concern, not a wrapper concern — see `pg_lesson_retry_is_queu
 
 ### Runtime Pipelines (`-RT.*`)
 
-Authority: [[user/aj3lib/pipelines/RT/INDEX|u:aj3lib-RT]]. Runtime pipelines invoke foreign code across four languages and two modes:
+Authority: [[user/jm3lib/pipelines/RT/INDEX|u:jm3lib-RT]]. Runtime pipelines invoke foreign code across four languages and two modes:
 
 | Mode variant | Meaning |
 |--------------|---------|
@@ -267,11 +267,11 @@ Each runtime splits further by binding origin:
 | Bind | Foreign code pulls/pushes via the Aljam3 SDK |
 | CLI | Compiled binary execution; uses `-W.Aljam3`, not `-W.RT` |
 
-`-RT.*` error namespaces appear under `!RT.*`. See [[user/aj3lib/errors/pipeline-associations|u:pipeline-associations]] for namespace-to-pipeline bindings.
+`-RT.*` error namespaces appear under `!RT.*`. See [[user/jm3lib/errors/pipeline-associations|u:pipeline-associations]] for namespace-to-pipeline bindings.
 
 ### Run Pipelines (`-Run.*`)
 
-Authority: [[user/aj3lib/pipelines/Run/INDEX|u:aj3lib-Run]]. `-Run.*` provides script, binary, Shell, and Bridge execution outside the `-RT.*` runtime model:
+Authority: [[user/jm3lib/pipelines/Run/INDEX|u:jm3lib-Run]]. `-Run.*` provides script, binary, Shell, and Bridge execution outside the `-RT.*` runtime model:
 
 | Pipeline | Purpose |
 |----------|---------|

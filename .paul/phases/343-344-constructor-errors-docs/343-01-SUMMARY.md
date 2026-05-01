@@ -7,8 +7,8 @@ tags: [PGE14xxx, constructors, compile-rules, error-codes]
 requires:
   - phase: 341-constructor-blocks
     provides: "{$} constructor block EBNF grammar and user spec"
-  - phase: 342-aj3lib-constructors
-    provides: "aj3lib {$} constructor definitions for 9 core types"
+  - phase: 342-jm3lib-constructors
+    provides: "jm3lib {$} constructor definitions for 9 core types"
 provides:
   - "11 PGE14xxx constructor compile error specifications"
   - "### 14 — Constructors category in COMPILE-RULES.md"

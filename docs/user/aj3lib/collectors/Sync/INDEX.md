@@ -18,10 +18,10 @@ No `[@]` import needed.
 
 ## Operators
 
-- [[aj3lib/collectors/Sync/All|*All]] -- wait for all listed variables to reach Final
-- [[aj3lib/collectors/Sync/First|*First]] -- race: take first arriving value
-- [[aj3lib/collectors/Sync/Nth|*Nth]] -- race: take Nth arriving value (*Second is alias for n=2)
-- [[aj3lib/collectors/Sync/Ignore|*Ignore]] -- explicit collector discard
+- [[jm3lib/collectors/Sync/All|*All]] -- wait for all listed variables to reach Final
+- [[jm3lib/collectors/Sync/First|*First]] -- race: take first arriving value
+- [[jm3lib/collectors/Sync/Nth|*Nth]] -- race: take Nth arriving value (*Second is alias for n=2)
+- [[jm3lib/collectors/Sync/Ignore|*Ignore]] -- explicit collector discard
 
 ## Inline Discard
 
@@ -34,7 +34,7 @@ No `[@]` import needed.
 
 ## Related
 
-- [[aj3lib/collectors/INDEX|Collectors overview]]
+- [[jm3lib/collectors/INDEX|Collectors overview]]
 - [[concepts/collections/collect|Collect Operators]]
 - [[concepts/collections/collect#Reconciliation]] -- reconciliation model
 - [[concepts/collections/collect#Compound Collector Strategies]] -- multiple collectors on same job

@@ -1,8 +1,8 @@
 ---
-phase: 161-split-aj3lib-docs-per-operator
+phase: 161-split-jm3lib-docs-per-operator
 plan: 01
 subsystem: docs
-tags: [aj3lib, collectors, doc-template]
+tags: [jm3lib, collectors, doc-template]
 
 requires:
   - phase: 160-split-dt-pipeline-template
@@ -19,16 +19,16 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/aj3lib/collectors/INDEX.md
-    - docs/user/aj3lib/collectors/Agg/INDEX.md
-    - docs/user/aj3lib/collectors/Sync/INDEX.md
-    - docs/user/aj3lib/collectors/Into/INDEX.md
+    - docs/user/jm3lib/collectors/INDEX.md
+    - docs/user/jm3lib/collectors/Agg/INDEX.md
+    - docs/user/jm3lib/collectors/Sync/INDEX.md
+    - docs/user/jm3lib/collectors/Into/INDEX.md
   modified:
-    - docs/user/aj3lib/collectors/Into/Array.md
-    - docs/user/aj3lib/collectors/Into/Map.md
-    - docs/user/aj3lib/collectors/Into/Serial.md
-    - docs/user/aj3lib/collectors/Into/Level.md
-    - docs/user/aj3lib/collectors/Into/Dataframe.md
+    - docs/user/jm3lib/collectors/Into/Array.md
+    - docs/user/jm3lib/collectors/Into/Map.md
+    - docs/user/jm3lib/collectors/Into/Serial.md
+    - docs/user/jm3lib/collectors/Into/Level.md
+    - docs/user/jm3lib/collectors/Into/Dataframe.md
 
 key-decisions:
   - "*Second documented as alias inside Nth.md, not separate file"
@@ -134,5 +134,5 @@ completed: 2026-04-07
 - None
 
 ---
-*Phase: 161-split-aj3lib-docs-per-operator, Plan: 01*
+*Phase: 161-split-jm3lib-docs-per-operator, Plan: 01*
 *Completed: 2026-04-07*

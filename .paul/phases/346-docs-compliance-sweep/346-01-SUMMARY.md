@@ -28,7 +28,7 @@ key-files:
     - docs/technical/spec/metadata-tree/branches.md
     - docs/technical/spec/native-dispatch.md
     - docs/user/concepts/pipelines/io-triggers.md
-    - docs/user/aj3lib/types/NativeKind.md
+    - docs/user/jm3lib/types/NativeKind.md
     - docs/user/scenarios/business-ops.md
     - docs/user/scenarios/commerce-finance.md
     - docs/user/scenarios/communication.md
@@ -86,7 +86,7 @@ completed: 2026-04-22
 | `docs/technical/spec/metadata-tree/branches.md` | Modified | Glossary fix |
 | `docs/technical/spec/native-dispatch.md` | Modified | Glossary fix (2 occurrences) |
 | `docs/user/concepts/pipelines/io-triggers.md` | Modified | Glossary fix |
-| `docs/user/aj3lib/types/NativeKind.md` | Modified | Glossary fix |
+| `docs/user/jm3lib/types/NativeKind.md` | Modified | Glossary fix |
 | `docs/user/scenarios/business-ops.md` | Modified | "Event" → "Signal" in trigger type column |
 | `docs/user/scenarios/commerce-finance.md` | Modified | "Event" → "Signal" in trigger type column |
 | `docs/user/scenarios/communication.md` | Modified | "Event" → "Signal" in trigger type column |

@@ -67,5 +67,5 @@ None required. Pure computation pipeline.
 
 ## Related
 
-- [[aj3lib/constructors/URL|$URL constructor]] -- compile-time URL construction
-- [[aj3lib/types/URL|#URL type]] -- URL type definition
+- [[jm3lib/constructors/URL|$URL constructor]] -- compile-time URL construction
+- [[jm3lib/types/URL|#URL type]] -- URL type definition

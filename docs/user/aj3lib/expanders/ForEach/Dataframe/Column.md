@@ -22,4 +22,4 @@ status: deprecated
    ...
 ```
 
-See also: [[concepts/collections/expand#Expand Operators]], [[aj3lib/pipelines/Schema/INDEX]]
+See also: [[concepts/collections/expand#Expand Operators]], [[jm3lib/pipelines/Schema/INDEX]]

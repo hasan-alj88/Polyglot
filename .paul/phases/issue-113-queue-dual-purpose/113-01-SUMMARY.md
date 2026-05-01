@@ -49,13 +49,13 @@ completed: 2026-04-01
 | Criterion | Status | Notes |
 |-----------|--------|-------|
 | AC-1: blocks.md {Q} row explains dual-purpose | Pass | Row expanded with both forms and prefix disambiguation rule |
-| AC-2: queue.md documents pipeline operation form | Pass | New section with disambiguation rule + 4 aj3lib examples |
+| AC-2: queue.md documents pipeline operation form | Pass | New section with disambiguation rule + 4 jm3lib examples |
 | AC-3: EBNF S9.5 covers both forms | Pass | Dual-purpose paragraph added with S9.3 cross-reference |
 
 ## Accomplishments
 
 - Expanded `{Q}` row in blocks.md from terse parenthetical to clear dual-purpose explanation
-- Added "Queue Pipeline Operations (`{Q} =Q.*`)" section to queue.md with all 4 aj3lib queue pipelines (`=Q.Default`, `=Q.Pause.Hard`, `=Q.Resume`, `=Q.Kill.Graceful`)
+- Added "Queue Pipeline Operations (`{Q} =Q.*`)" section to queue.md with all 4 jm3lib queue pipelines (`=Q.Default`, `=Q.Pause.Hard`, `=Q.Resume`, `=Q.Kill.Graceful`)
 - Added EBNF S9.5 clarification cross-referencing S9.3 for the pipeline form grammar
 
 ## Files Created/Modified

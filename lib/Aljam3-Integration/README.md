@@ -25,5 +25,5 @@ Each language folder provides packages for embedding Aljam3 and implementing nat
 
 1. Create `<language>/` with the standard subfolders
 2. Implement native functions following the JSON wire contract
-3. Add `[%] .<Language>` bindings to `{N}` definitions in aj3lib `.aj3` files
+3. Add `[%] .<Language>` bindings to `{N}` definitions in jm3lib `.jm3` files
 4. Update the YAML config

@@ -22,7 +22,7 @@ A `#Record` that can be null — used for optional structured data:
 
 ## `#Error` Struct
 
-All errors — aj3lib and user-defined — share the same struct:
+All errors — jm3lib and user-defined — share the same struct:
 
 ```aljam3
 {#} #Error

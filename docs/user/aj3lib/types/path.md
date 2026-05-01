@@ -79,6 +79,6 @@ See [[syntax/types/strings#Path Type]] for full details including `-Path"..."`, 
 
 ## Related
 
-- [[structs]] — other aj3lib struct types
+- [[structs]] — other jm3lib struct types
 - [[string]] — string type
 - [[syntax/types/INDEX|types]] — full type system specification

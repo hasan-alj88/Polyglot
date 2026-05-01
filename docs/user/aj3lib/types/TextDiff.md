@@ -62,5 +62,5 @@ A single diff entry representing one line-level change in a text comparison. Pro
 - [[DiffOp]] — operation type enum used by .op field
 - [[DiffStats]] — summary statistics from =Text.Diff
 - [[MergeResult]] — output of k-way merge using #TextDiffs
-- [[structs]] — other aj3lib struct types
+- [[structs]] — other jm3lib struct types
 - [[syntax/types/INDEX|types]] — full type system specification

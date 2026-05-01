@@ -53,6 +53,6 @@ None required.
 
 ## Related
 
-- [[aj3lib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
-- [[aj3lib/pipelines/DT/Zone.Convert|-DT.Zone.Convert]] -- converts instant to different timezone (wall-clock changes)
-- [[aj3lib/types/datetime|DateTime types]]
+- [[jm3lib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
+- [[jm3lib/pipelines/DT/Zone.Convert|-DT.Zone.Convert]] -- converts instant to different timezone (wall-clock changes)
+- [[jm3lib/types/datetime|DateTime types]]

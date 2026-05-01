@@ -50,7 +50,7 @@ None.
 
 ## Related
 
-- [[aj3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
+- [[jm3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]
-- [[aj3lib/collectors/Into/CSV.Rows|*Into.CSV.Rows]] -- reassemble rows into CSV text
-- [[aj3lib/collectors/Into/CSV.Merge|*Into.CSV.Merge]] -- merge CSV diffs with header preservation
+- [[jm3lib/collectors/Into/CSV.Rows|*Into.CSV.Rows]] -- reassemble rows into CSV text
+- [[jm3lib/collectors/Into/CSV.Merge|*Into.CSV.Merge]] -- merge CSV diffs with header preservation

@@ -36,9 +36,9 @@ A `_` object is a `#` struct instance whose schema is `##Permission`. Every leaf
 
 A `__` descriptor is a `##` schema template with `(_)` inputs. It fills missing fields to produce a concrete `_` object at compile time.
 
-### aj3lib Generic Permissions
+### jm3lib Generic Permissions
 
-aj3lib ships generic permissions at two levels:
+jm3lib ships generic permissions at two levels:
 
 - **Category-level** (`__File`, `__Web`, ...) — takes capability + scope + resource fields
 - **Capability-level** (`__File.Read`, `__Web.Request`, ...) — takes only scope + resource fields (capability is baked in)
@@ -66,7 +66,7 @@ aj3lib ships generic permissions at two levels:
    [.] .path "{<path}"
 ```
 
-See [[aj3lib/permissions/INDEX|aj3lib Generic Permissions]] for the full list of 8 category generics and 31 capability generics.
+See [[jm3lib/permissions/INDEX|jm3lib Generic Permissions]] for the full list of 8 category generics and 31 capability generics.
 
 ### User-Defined Templates
 

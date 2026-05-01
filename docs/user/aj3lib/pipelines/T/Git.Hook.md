@@ -65,6 +65,6 @@ System.Process — required to install the hook dispatcher script.
 
 ## Related
 
-- [[aj3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
-- [[aj3lib/types/git|#Git Type Tree]] — event payload types
-- [[aj3lib/pipelines/T/Git.Push|-T.Git.Push]] — semantic push trigger (uses Hook as transport)
+- [[jm3lib/pipelines/T/INDEX|-T.* Trigger Pipelines]]
+- [[jm3lib/types/git|#Git Type Tree]] — event payload types
+- [[jm3lib/pipelines/T/Git.Push|-T.Git.Push]] — semantic push trigger (uses Hook as transport)

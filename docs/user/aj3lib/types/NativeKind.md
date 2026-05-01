@@ -58,7 +58,7 @@ Native definitions declare `.Kind` in their `[%]` metadata along with a `.<Langu
    (-) !File.PermissionDenied
 ```
 
-Only aj3lib `{N}` definitions use `#NativeKind`. User-defined pipelines are always **derived** `{-}` — they have full Aljam3 execution bodies and no `%Native.*` metadata.
+Only jm3lib `{N}` definitions use `#NativeKind`. User-defined pipelines are always **derived** `{-}` — they have full Aljam3 execution bodies and no `%Native.*` metadata.
 
 ---
 
@@ -96,5 +96,5 @@ Future host languages (e.g., `.Go`, `.Cpp`) can be added by extending the `.<Lan
 
 - [[concepts/pipelines/INDEX#Native vs Derived|Native vs Derived pipelines]] — native vs derived distinction
 - [[concepts/metadata|Metadata]] — `%Native.*` metadata scope
-- [[enums]] — other aj3lib enum types
+- [[enums]] — other jm3lib enum types
 - [[syntax/types/INDEX|types]] — full type system specification

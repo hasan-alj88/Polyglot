@@ -10,8 +10,8 @@ status: draft
 <!-- @c:spec/native-dispatch -->
 <!-- @c:spec/behavior-contract -->
 <!-- @c:spec/type-identity -->
-<!-- @c:aj3lib/types/schemas/Inf -->
-<!-- @c:aj3lib/types/schemas/Nullable -->
+<!-- @c:jm3lib/types/schemas/Inf -->
+<!-- @c:jm3lib/types/schemas/Nullable -->
 <!-- @c:spec/compiler-floor -->
 <!-- @c:glossary#Aljam3 Service -->
 <!-- @c:glossary#Runner -->
@@ -312,7 +312,7 @@ push("result", result)           # Write back for Aljam3
 ```
 
 **Relationship to `-Run.*.Bind`:**
-The Bind protocol is symmetric — direction is inferred from the trigger source. When Aljam3 triggers `-Run.<Lang>.Bind`, it places `<Bind` inputs in the store; the foreign code reads them with `pull()`. The foreign code writes results with `push()`; Aljam3 reads them as `>Bind` outputs. See [[aj3lib/pipelines/Run/Bind]] for the pipeline definition.
+The Bind protocol is symmetric — direction is inferred from the trigger source. When Aljam3 triggers `-Run.<Lang>.Bind`, it places `<Bind` inputs in the store; the foreign code reads them with `pull()`. The foreign code writes results with `push()`; Aljam3 reads them as `>Bind` outputs. See [[jm3lib/pipelines/Run/Bind]] for the pipeline definition.
 
 ## Primitive Type Mapping Table
 
@@ -825,7 +825,7 @@ const status = fromAljam3Enum(envelope, statusVariants);
 ### Wire Format Conventions
 
 <!-- @c:spec/native-dispatch#Value Encoding -->
-Related: [[native-dispatch#Value Encoding]], [[aj3lib/types/schemas/Inf\|##Inf]], [[aj3lib/types/schemas/Nullable\|##Nullable]]
+Related: [[native-dispatch#Value Encoding]], [[jm3lib/types/schemas/Inf\|##Inf]], [[jm3lib/types/schemas/Nullable\|##Nullable]]
 
 The SDK normalizes all values to canonical wire format strings before serialization. Each SDK must produce identical wire output regardless of language-native representations. The canonical forms are defined by [[native-dispatch#Value Encoding]] — the SDK is a consumer of that protocol.
 
@@ -846,7 +846,7 @@ On deserialization (`from_aljam3`), SDKs accept only the canonical forms `"True"
 
 #### Float Special Values
 
-Float special values are **governed by schema** — not all float fields support them. The schema properties [[aj3lib/types/schemas/Nullable\|##Nullable]] and [[aj3lib/types/schemas/Inf\|##Inf]] control which special values a field accepts:
+Float special values are **governed by schema** — not all float fields support them. The schema properties [[jm3lib/types/schemas/Nullable\|##Nullable]] and [[jm3lib/types/schemas/Inf\|##Inf]] control which special values a field accepts:
 
 - `##Nullable` enables `""` (empty string = none/null)
 - `##Inf` enables `"Infinity"`, `"-Infinity"`, `"NaN"`
@@ -1066,7 +1066,7 @@ FFI (Foreign Function Interface) between language pairs is significantly faster 
 
 3. **Complexity vs. universality.** The universal string algorithm works identically for every supported language. FFI would require per-pair implementations, testing matrices, and maintenance — complexity that scales quadratically with language count.
 
-**The trade-off is acknowledged:** FFI is faster. For performance-critical pairwise integration, Aljam3 provides `-Run.Bridge` — a separate pipeline designed for direct code-to-code binding between specific language pairs. See [[aj3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] for cross-language function calls and [[aj3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for cross-language variable binding.
+**The trade-off is acknowledged:** FFI is faster. For performance-critical pairwise integration, Aljam3 provides `-Run.Bridge` — a separate pipeline designed for direct code-to-code binding between specific language pairs. See [[jm3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] for cross-language function calls and [[jm3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for cross-language variable binding.
 
 The SDK and `-Run.Bridge` serve different needs: the SDK provides universal, zero-configuration integration; `-Run.Bridge` provides optimized, per-pair integration where performance justifies the setup cost. See [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] for the full conversion algorithm.
 
@@ -1080,8 +1080,8 @@ The SDK and `-Run.Bridge` serve different needs: the SDK provides universal, zer
 | [[aljam3-interface]] | User-facing SDK guide (integrator audience) |
 | [[integrator-internals]] | Data casting methods and library architecture |
 | [[spec/type-identity]] | "All data is serialized strings" foundation |
-| [[aj3lib/pipelines/T/Call]] | `-T.Call` trigger used by `call()` |
-| [[aj3lib/pipelines/Run/Bind]] | `-Run.*.Bind` pipeline used by `pull()`/`push()` |
-| [[aj3lib/pipelines/Run/Bridge.Function]] | `-Run.Bridge.Function` — cross-language function call |
-| [[aj3lib/pipelines/Run/Bridge.Script]] | `-Run.Bridge.Script` — cross-language variable binding |
+| [[jm3lib/pipelines/T/Call]] | `-T.Call` trigger used by `call()` |
+| [[jm3lib/pipelines/Run/Bind]] | `-Run.*.Bind` pipeline used by `pull()`/`push()` |
+| [[jm3lib/pipelines/Run/Bridge.Function]] | `-Run.Bridge.Function` — cross-language function call |
+| [[jm3lib/pipelines/Run/Bridge.Script]] | `-Run.Bridge.Script` — cross-language variable binding |
 | [[technical/algorithms/bridge-conversion]] | Bridge conversion algorithm for pairwise type mapping |

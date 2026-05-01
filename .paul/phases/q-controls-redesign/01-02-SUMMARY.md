@@ -2,7 +2,7 @@
 phase: q-controls-redesign
 plan: 02
 subsystem: docs
-tags: [queue, aj3lib, Q-pipelines, per-pipeline-specs, deprecation]
+tags: [queue, jm3lib, Q-pipelines, per-pipeline-specs, deprecation]
 
 requires:
   - phase: q-controls-redesign/01-01
@@ -21,33 +21,33 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/aj3lib/pipelines/Q/Job.Pause.Free.CPU.md
-    - docs/user/aj3lib/pipelines/Q/Job.Pause.Free.RAM.md
-    - docs/user/aj3lib/pipelines/Q/Job.Pause.Free.All.md
-    - docs/user/aj3lib/pipelines/Q/Job.Kill.WithCleanup.md
-    - docs/user/aj3lib/pipelines/Q/Job.Kill.Now.md
-    - docs/user/aj3lib/pipelines/Q/Job.Resume.md
-    - docs/user/aj3lib/pipelines/Q/Job.Throttle.md
-    - docs/user/aj3lib/pipelines/Q/Job.Snapshot.md
-    - docs/user/aj3lib/pipelines/Q/Job.Inspect.md
-    - docs/user/aj3lib/pipelines/Q/Job.Reassign.md
-    - docs/user/aj3lib/pipelines/Q/Queue.Drain.md
-    - docs/user/aj3lib/pipelines/Q/Queue.Flush.md
-    - docs/user/aj3lib/pipelines/Q/DoNothing.md
+    - docs/user/jm3lib/pipelines/Q/Job.Pause.Free.CPU.md
+    - docs/user/jm3lib/pipelines/Q/Job.Pause.Free.RAM.md
+    - docs/user/jm3lib/pipelines/Q/Job.Pause.Free.All.md
+    - docs/user/jm3lib/pipelines/Q/Job.Kill.WithCleanup.md
+    - docs/user/jm3lib/pipelines/Q/Job.Kill.Now.md
+    - docs/user/jm3lib/pipelines/Q/Job.Resume.md
+    - docs/user/jm3lib/pipelines/Q/Job.Throttle.md
+    - docs/user/jm3lib/pipelines/Q/Job.Snapshot.md
+    - docs/user/jm3lib/pipelines/Q/Job.Inspect.md
+    - docs/user/jm3lib/pipelines/Q/Job.Reassign.md
+    - docs/user/jm3lib/pipelines/Q/Queue.Drain.md
+    - docs/user/jm3lib/pipelines/Q/Queue.Flush.md
+    - docs/user/jm3lib/pipelines/Q/DoNothing.md
   modified:
-    - docs/user/aj3lib/pipelines/Q/Pause.Soft.md
-    - docs/user/aj3lib/pipelines/Q/Pause.Hard.md
-    - docs/user/aj3lib/pipelines/Q/Kill.Graceful.md
-    - docs/user/aj3lib/pipelines/Q/Kill.Hard.md
-    - docs/user/aj3lib/pipelines/Q/Resume.md
-    - docs/user/aj3lib/pipelines/Q/Reassign.md
-    - docs/user/aj3lib/pipelines/Q/Drain.md
-    - docs/user/aj3lib/pipelines/Q/Flush.md
-    - docs/user/aj3lib/pipelines/Q/Priority.Update.md
-    - docs/user/aj3lib/pipelines/Q/Default.md
-    - docs/user/aj3lib/pipelines/Q/Assign.md
-    - docs/user/aj3lib/pipelines/Q/Dispatch.Wait.TimeOut.md
-    - docs/user/aj3lib/pipelines/Q/Job.Branch.md
+    - docs/user/jm3lib/pipelines/Q/Pause.Soft.md
+    - docs/user/jm3lib/pipelines/Q/Pause.Hard.md
+    - docs/user/jm3lib/pipelines/Q/Kill.Graceful.md
+    - docs/user/jm3lib/pipelines/Q/Kill.Hard.md
+    - docs/user/jm3lib/pipelines/Q/Resume.md
+    - docs/user/jm3lib/pipelines/Q/Reassign.md
+    - docs/user/jm3lib/pipelines/Q/Drain.md
+    - docs/user/jm3lib/pipelines/Q/Flush.md
+    - docs/user/jm3lib/pipelines/Q/Priority.Update.md
+    - docs/user/jm3lib/pipelines/Q/Default.md
+    - docs/user/jm3lib/pipelines/Q/Assign.md
+    - docs/user/jm3lib/pipelines/Q/Dispatch.Wait.TimeOut.md
+    - docs/user/jm3lib/pipelines/Q/Job.Branch.md
 
 key-decisions:
   - "Resume.md, Reassign.md, Drain.md, Flush.md, Priority.Update.md deprecated with @d: markers pointing to new scoped names"

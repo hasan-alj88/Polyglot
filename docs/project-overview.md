@@ -15,7 +15,7 @@ This document is the product-shaped entry point to the Aljam3 project. It answer
 
 <!-- @c:vision:The Aljam3 Ecosystem -->
 <!-- @c:audit/reference/glossary -->
-Aljam3 is a trigger-driven programming language and platform, async-centric and parallel-by-design. The project name refers to the whole platform — language plus runtime service — per [[audit/reference/glossary|c:Aljam3]]. Developers write [[audit/reference/glossary|c:Aljam3 Code]] (`.aj3` files) to define automated workflows; the [[audit/reference/glossary|c:Aljam3 Service]] executes them.
+Aljam3 is a trigger-driven programming language and platform, async-centric and parallel-by-design. The project name refers to the whole platform — language plus runtime service — per [[audit/reference/glossary|c:Aljam3]]. Developers write [[audit/reference/glossary|c:Aljam3 Code]] (`.jm3` files) to define automated workflows; the [[audit/reference/glossary|c:Aljam3 Service]] executes them.
 
 Two pillars define the scope (see [[vision|c:vision]]):
 
@@ -29,11 +29,11 @@ Aljam3 targets two external audiences and four internal audiences, matching the 
 
 | Audience tier | Group | Who they are |
 |---------------|-------|--------------|
-| automation-builder | External | Developers who write `.aj3` files to orchestrate multi-language workflows |
-| integrator | External | Developers who connect existing codebases via SDK/API without authoring `.aj3` files |
+| automation-builder | External | Developers who write `.jm3` files to orchestrate multi-language workflows |
+| integrator | External | Developers who connect existing codebases via SDK/API without authoring `.jm3` files |
 | product | Internal | Product managers who define requirements and acceptance criteria (this document's primary audience) |
 | design | Internal | Language and architecture designers: grammar, compile rules, philosophy, service design |
-| developer | Internal | Implementers: compiler passes, aj3lib operators, runtime services, tests |
+| developer | Internal | Implementers: compiler passes, jm3lib operators, runtime services, tests |
 | ai-finder | Internal | AI agents navigating the documentation: indexes, retrieval metadata, structured summaries |
 
 Aljam3 is not a general-purpose programming language. It does not replace Python, Rust, Go, or JavaScript; it orchestrates workflows that call them.
@@ -46,8 +46,8 @@ The project spans four concerns:
 
 | Concern | Definition | Authoritative docs |
 |---------|-----------|--------------------|
-| The language | `.aj3` syntax: blocks, pipelines, types, collections, errors, permissions | [[user/SPEC-INDEX\|u:SPEC-INDEX]], [[user/syntax/blocks\|u:blocks]], [[user/concepts/pipelines\|u:pipelines]] |
-| The standard library (aj3lib) | Built-in operators: `-File.*`, `-T.*`, `-Q.*`, `-W.*`, `-Math.*`, `-Run.*`, `-DT.*`, `=ForEach.*`, `*Into.*`, `*Agg.*` | [[user/aj3lib/INDEX\|u:aj3lib/INDEX]] |
+| The language | `.jm3` syntax: blocks, pipelines, types, collections, errors, permissions | [[user/SPEC-INDEX\|u:SPEC-INDEX]], [[user/syntax/blocks\|u:blocks]], [[user/concepts/pipelines\|u:pipelines]] |
+| The standard library (jm3lib) | Built-in operators: `-File.*`, `-T.*`, `-Q.*`, `-W.*`, `-Math.*`, `-Run.*`, `-DT.*`, `=ForEach.*`, `*Into.*`, `*Agg.*` | [[user/jm3lib/INDEX\|u:jm3lib/INDEX]] |
 | The compiler | Grammar, compile-rule catalog, algorithms (cycle detection, overlap detection, compound exhaustiveness, reconciliation) | [[technical/INDEX\|u:technical/INDEX]], [[technical/ebnf/INDEX\|u:ebnf/INDEX]], [[technical/COMPILE-RULES\|u:COMPILE-RULES]] |
 | The service | Runtime components (Trigger Monitor, Queue Handler, Runner), SDK, cross-language bridge, observability | [[technical/spec/behavior-contract\|u:behavior-contract]], [[technical/spec/aljam3-sdk\|u:aljam3-sdk]], [[technical/spec/otel-foundation\|u:otel-foundation]] |
 
@@ -58,7 +58,7 @@ Aljam3 is in its Design & Architecture Spec milestone (M2). The authoritative re
 
 | Dimension | State |
 |-----------|-------|
-| Language spec (v0.2) | Complete — grammar, type system, operators, pipelines, collections, aj3lib catalogued |
+| Language spec (v0.2) | Complete — grammar, type system, operators, pipelines, collections, jm3lib catalogued |
 | Compile-rule catalog | 188 PGE error rules, 31 PGW warning rules, 3 algorithms — all documented |
 | Service architecture | Designed and specified (Trigger Monitor, Queue Handler, Dispatch Coordinator, Runner, SDK, `-Run.Bridge`); implementation not started |
 | Compiler implementation | Not started — all Rust code was removed in the 2026-03-12 reset; the project is documentation-first until the spec stabilises |
@@ -73,8 +73,8 @@ Where to go depends on why you are here:
 | Goal | Entry point |
 |------|-------------|
 | Read the vision | [[vision\|c:vision]] |
-| Learn `.aj3` language syntax | [[user/SPEC-INDEX\|u:SPEC-INDEX]] |
-| Look up a aj3lib operator | [[user/aj3lib/INDEX\|u:aj3lib/INDEX]] |
+| Learn `.jm3` language syntax | [[user/SPEC-INDEX\|u:SPEC-INDEX]] |
+| Look up a jm3lib operator | [[user/jm3lib/INDEX\|u:jm3lib/INDEX]] |
 | Look up a compile-rule code (PGE/PGW) | [[technical/COMPILE-RULES\|u:COMPILE-RULES]] |
 | Understand the service architecture | [[architecture\|u:architecture]] |
 | Navigate the repository | [[source-tree-analysis\|u:source-tree-analysis]] |

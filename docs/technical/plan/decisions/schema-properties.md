@@ -68,7 +68,7 @@ Schema properties are part of the definition metadata, not part of string instan
 
 ### Built-In Collection Definitions
 
-`#Array`, `#Map`, and `#Serial` are **aj3lib-provided** `{#}` definitions. Users can create custom collection types using the same `[#] %` mechanism.
+`#Array`, `#Map`, and `#Serial` are **jm3lib-provided** `{#}` definitions. Users can create custom collection types using the same `[#] %` mechanism.
 
 ## Collection Type Definitions
 

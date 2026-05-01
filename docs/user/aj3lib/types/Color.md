@@ -10,9 +10,9 @@ metadata_instance: "%#:Color:N"
 # #Color — Color Value
 
 <!-- @c:types -->
-<!-- @c:aj3lib/types/string -->
+<!-- @c:jm3lib/types/string -->
 
-`#Color` is a aj3lib type representing a color as RGBA components. It stores red, green, blue, and alpha channels as integers (0-255 each). Color validation requires range checking and named color lookup, so `#Color` is backed by a native `PgColor` class.
+`#Color` is a jm3lib type representing a color as RGBA components. It stores red, green, blue, and alpha channels as integers (0-255 each). Color validation requires range checking and named color lookup, so `#Color` is backed by a native `PgColor` class.
 
 See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$Color` constructor.
 
@@ -83,8 +83,8 @@ See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$Color`
 
 ## Related
 
-- [[aj3lib/constructors/Color\|$Color constructor]] -- compile-time color construction
-- [[aj3lib/pipelines/Color.Parse\|-Color.Parse]] -- runtime color string parsing
+- [[jm3lib/constructors/Color\|$Color constructor]] -- compile-time color construction
+- [[jm3lib/pipelines/Color.Parse\|-Color.Parse]] -- runtime color string parsing
 - [[scalars]] -- scalar subtypes overview
 - [[string]] -- `#String` foundation type
 - [[syntax/types/INDEX\|types]] -- full type system specification

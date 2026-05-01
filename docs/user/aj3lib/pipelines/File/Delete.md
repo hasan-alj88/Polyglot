@@ -51,5 +51,5 @@ Requires `File.Delete` capability.
 
 ## Related
 
-- [[aj3lib/pipelines/File/INDEX|-File.* File Pipelines]]
-- [[aj3lib/pipelines/File/Move|-File.Move]]
+- [[jm3lib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[jm3lib/pipelines/File/Move|-File.Move]]

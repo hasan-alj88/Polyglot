@@ -2,7 +2,7 @@
 phase: 160-split-dt-pipeline-template
 plan: 01
 subsystem: docs
-tags: [aj3lib, DT, datetime, pipeline-docs, template]
+tags: [jm3lib, DT, datetime, pipeline-docs, template]
 
 requires: []
 provides:
@@ -18,10 +18,10 @@ tech-stack:
 
 key-files:
   created:
-    - docs/user/aj3lib/pipelines/DT/INDEX.md
-    - docs/user/aj3lib/pipelines/DT/*.md (40 pipeline files)
+    - docs/user/jm3lib/pipelines/DT/INDEX.md
+    - docs/user/jm3lib/pipelines/DT/*.md (40 pipeline files)
   modified:
-    - docs/user/aj3lib/INDEX.md
+    - docs/user/jm3lib/INDEX.md
     - docs/technical/compile-rules/PGE/PGE04026-invalid-iana-timezone.md
     - docs/technical/compile-rules/PGE/PGE04027-missing-required-datetime-subfield.md
     - docs/technical/compile-rules/PGE/PGE04028-invalid-epoch-value.md
@@ -75,10 +75,10 @@ completed: 2026-04-07
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/pipelines/DT/INDEX.md` | Created | Overview, inline notation, permissions, categorized pipeline listing |
-| `docs/user/aj3lib/pipelines/DT/*.md` (40 files) | Created | Individual pipeline docs with template |
-| `docs/user/aj3lib/pipelines/DT.md` | Deleted | Replaced by DT/ folder |
-| `docs/user/aj3lib/INDEX.md` | Modified | DT.md → DT/INDEX.md link |
+| `docs/user/jm3lib/pipelines/DT/INDEX.md` | Created | Overview, inline notation, permissions, categorized pipeline listing |
+| `docs/user/jm3lib/pipelines/DT/*.md` (40 files) | Created | Individual pipeline docs with template |
+| `docs/user/jm3lib/pipelines/DT.md` | Deleted | Replaced by DT/ folder |
+| `docs/user/jm3lib/INDEX.md` | Modified | DT.md → DT/INDEX.md link |
 | `docs/technical/compile-rules/PGE/PGE04026-invalid-iana-timezone.md` | Modified | Wikilink → DT/Zone.Set, DT/Zone.Convert |
 | `docs/technical/compile-rules/PGE/PGE04027-missing-required-datetime-subfield.md` | Modified | Wikilink → DT/From.Parts |
 | `docs/technical/compile-rules/PGE/PGE04028-invalid-epoch-value.md` | Modified | Wikilink → DT/From.Epoch |

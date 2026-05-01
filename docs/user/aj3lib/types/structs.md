@@ -9,7 +9,7 @@ status: complete
 
 <!-- @c:types -->
 
-aj3lib struct types available in every `.aj3` file. These are non-enum, non-collection structs with typed value fields.
+jm3lib struct types available in every `.jm3` file. These are non-enum, non-collection structs with typed value fields.
 
 | Type | Description | File |
 |------|-------------|------|

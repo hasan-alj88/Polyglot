@@ -1,32 +1,32 @@
 ---
-phase: issue-85-document-aj3lib-pipeline-permissions
+phase: issue-85-document-jm3lib-pipeline-permissions
 plan: 01
-subsystem: aj3lib
-tags: [permissions, aj3lib, pipelines, documentation]
+subsystem: jm3lib
+tags: [permissions, jm3lib, pipelines, documentation]
 
 requires:
   - phase: issue-80-84
     provides: Permission system ([_] blocks, categories, compile rules, !Permission error tree)
 provides:
-  - Permission declarations in all 7 aj3lib pipeline reference files
-  - Permission column in aj3lib INDEX.md
+  - Permission declarations in all 7 jm3lib pipeline reference files
+  - Permission column in jm3lib INDEX.md
 affects: []
 
 tech-stack:
   added: []
-  patterns: ["## Permissions section in aj3lib pipeline files", "Permission column in INDEX.md"]
+  patterns: ["## Permissions section in jm3lib pipeline files", "Permission column in INDEX.md"]
 
 key-files:
   created: []
   modified:
-    - docs/user/aj3lib/pipelines/File.md
-    - docs/user/aj3lib/pipelines/T.md
-    - docs/user/aj3lib/pipelines/W.md
-    - docs/user/aj3lib/pipelines/Math.md
-    - docs/user/aj3lib/pipelines/Path.md
-    - docs/user/aj3lib/pipelines/Sys.md
-    - docs/user/aj3lib/pipelines/Q.md
-    - docs/user/aj3lib/INDEX.md
+    - docs/user/jm3lib/pipelines/File.md
+    - docs/user/jm3lib/pipelines/T.md
+    - docs/user/jm3lib/pipelines/W.md
+    - docs/user/jm3lib/pipelines/Math.md
+    - docs/user/jm3lib/pipelines/Path.md
+    - docs/user/jm3lib/pipelines/Sys.md
+    - docs/user/jm3lib/pipelines/Q.md
+    - docs/user/jm3lib/INDEX.md
 
 key-decisions:
   - "Include full permission map from issue #85, even for pipelines not yet fully specified"
@@ -40,9 +40,9 @@ started: 2026-03-25
 completed: 2026-03-25
 ---
 
-# Issue #85 Plan 01: Document aj3lib Pipeline Permission Declarations — Summary
+# Issue #85 Plan 01: Document jm3lib Pipeline Permission Declarations — Summary
 
-**Added [_] permission declarations to all 7 aj3lib pipeline files and Permission column to INDEX.md, completing the permission documentation chain (#80-#85).**
+**Added [_] permission declarations to all 7 jm3lib pipeline files and Permission column to INDEX.md, completing the permission documentation chain (#80-#85).**
 
 ## Performance
 
@@ -71,14 +71,14 @@ completed: 2026-03-25
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/pipelines/File.md` | Modified | 8-row permission table for all File operations |
-| `docs/user/aj3lib/pipelines/T.md` | Modified | 5-row permission table (3 None, 2 IO) |
-| `docs/user/aj3lib/pipelines/W.md` | Modified | 12-row permission table (2 None, 10 IO) |
-| `docs/user/aj3lib/pipelines/Math.md` | Modified | No permissions required (pure computation) |
-| `docs/user/aj3lib/pipelines/Path.md` | Modified | No permissions required (pure computation) |
-| `docs/user/aj3lib/pipelines/Sys.md` | Modified | 1-row permission table (_System.env) |
-| `docs/user/aj3lib/pipelines/Q.md` | Modified | No permissions required (queue scheduling) |
-| `docs/user/aj3lib/INDEX.md` | Modified | Permission column + !Permission in error table |
+| `docs/user/jm3lib/pipelines/File.md` | Modified | 8-row permission table for all File operations |
+| `docs/user/jm3lib/pipelines/T.md` | Modified | 5-row permission table (3 None, 2 IO) |
+| `docs/user/jm3lib/pipelines/W.md` | Modified | 12-row permission table (2 None, 10 IO) |
+| `docs/user/jm3lib/pipelines/Math.md` | Modified | No permissions required (pure computation) |
+| `docs/user/jm3lib/pipelines/Path.md` | Modified | No permissions required (pure computation) |
+| `docs/user/jm3lib/pipelines/Sys.md` | Modified | 1-row permission table (_System.env) |
+| `docs/user/jm3lib/pipelines/Q.md` | Modified | No permissions required (queue scheduling) |
+| `docs/user/jm3lib/INDEX.md` | Modified | Permission column + !Permission in error table |
 
 ## Decisions Made
 
@@ -116,7 +116,7 @@ None
 
 **Ready:**
 - Permission documentation chain complete (#80 → #81 → #82 → #83 → #84 → #85)
-- All aj3lib pipeline files now document their permission requirements
+- All jm3lib pipeline files now document their permission requirements
 - Ready for /paul:merge
 
 **Concerns:**
@@ -126,5 +126,5 @@ None
 - None
 
 ---
-*Phase: issue-85-document-aj3lib-pipeline-permissions, Plan: 01*
+*Phase: issue-85-document-jm3lib-pipeline-permissions, Plan: 01*
 *Completed: 2026-03-25*

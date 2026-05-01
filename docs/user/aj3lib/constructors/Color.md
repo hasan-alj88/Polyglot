@@ -7,7 +7,7 @@ updated: 2026-04-22
 # $Color Constructor
 
 <!-- @u:syntax/constructors -->
-<!-- @c:aj3lib/types/Color -->
+<!-- @c:jm3lib/types/Color -->
 
 The `$Color` constructor produces `#Color` values from hex strings or named colors. Hex overloads use native pipeline conversion (like `$Dur`) to decompose hex digits into RGBA channels; the named overload uses native validation (like `$Re`) to look up color names. All overloads are compile-time guaranteed — no error surface, no `[!]` handling needed.
 
@@ -95,7 +95,7 @@ Resolution order: hex overloads first (anchored by `#` literal prefix), then nam
 
 ## Related
 
-- [[constructors/INDEX|aj3lib Constructors]] -- constructor registry
+- [[constructors/INDEX|jm3lib Constructors]] -- constructor registry
 - [[syntax/constructors]] -- `{$}` block specification
-- [[aj3lib/pipelines/Color.Parse|-Color.Parse]] -- runtime color string parsing
-- [[aj3lib/types/Color|#Color type]] -- color value type definition
+- [[jm3lib/pipelines/Color.Parse|-Color.Parse]] -- runtime color string parsing
+- [[jm3lib/types/Color|#Color type]] -- color value type definition

@@ -23,15 +23,15 @@ K-way merge collector for CSV data. Applies multiple diff sets against a shared 
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| `<diffs` | `#TextDiffs` | Yes | Row-level diff set from a parallel [[aj3lib/pipelines/Text/Diff|=Text.Diff]] call on CSV content |
+| `<diffs` | `#TextDiffs` | Yes | Row-level diff set from a parallel [[jm3lib/pipelines/Text/Diff|=Text.Diff]] call on CSV content |
 | `<base` | `#string` | Yes | Original CSV text all diffs were computed against |
-| `<conflict` | `#MergeStrategy` | No (default `.FirstWins`) | [[aj3lib/types/MergeStrategy|Conflict resolution strategy]] |
+| `<conflict` | `#MergeStrategy` | No (default `.FirstWins`) | [[jm3lib/types/MergeStrategy|Conflict resolution strategy]] |
 
 ## Outputs
 
 | Name | Type | Description |
 |------|------|-------------|
-| `>result` | `#MergeResult` | [[aj3lib/types/MergeResult|Merged result]]: `.text` (merged CSV string) + `.conflicts` (array of [[aj3lib/types/MergeConflict|#MergeConflict]]) |
+| `>result` | `#MergeResult` | [[jm3lib/types/MergeResult|Merged result]]: `.text` (merged CSV string) + `.conflicts` (array of [[jm3lib/types/MergeConflict|#MergeConflict]]) |
 
 ## Errors
 
@@ -54,10 +54,10 @@ When diff count exceeds the `-Q.Overflow.RamLimit` threshold, intermediate merge
 
 ## Related
 
-- [[aj3lib/collectors/Into/INDEX|*Into Data Collectors]]
-- [[aj3lib/collectors/Into/Text.Merge|*Into.Text.Merge]] -- general text merge (non-CSV-aware)
-- [[aj3lib/pipelines/Text/Diff|=Text.Diff]] -- produces the diffs this collector merges
-- [[aj3lib/expanders/ForEach/CSV.Rows|=ForEach.CSV.Rows]] -- expand CSV into rows
-- [[aj3lib/types/MergeResult|#MergeResult]] -- output type
-- [[aj3lib/types/MergeStrategy|#MergeStrategy]] -- conflict resolution enum
+- [[jm3lib/collectors/Into/INDEX|*Into Data Collectors]]
+- [[jm3lib/collectors/Into/Text.Merge|*Into.Text.Merge]] -- general text merge (non-CSV-aware)
+- [[jm3lib/pipelines/Text/Diff|=Text.Diff]] -- produces the diffs this collector merges
+- [[jm3lib/expanders/ForEach/CSV.Rows|=ForEach.CSV.Rows]] -- expand CSV into rows
+- [[jm3lib/types/MergeResult|#MergeResult]] -- output type
+- [[jm3lib/types/MergeStrategy|#MergeStrategy]] -- conflict resolution enum
 - [[concepts/collections/collect|Collect Operators]]

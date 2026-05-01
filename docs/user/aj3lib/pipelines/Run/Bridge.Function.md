@@ -9,14 +9,14 @@ metadata_instance: "%-:Run.Bridge.Function:N"
 
 # -Run.Bridge.Function
 
-<!-- @c:aj3lib/pipelines/Run/INDEX -->
-<!-- @c:aj3lib/types/Variable -->
-<!-- @c:aj3lib/types/NativeType -->
+<!-- @c:jm3lib/pipelines/Run/INDEX -->
+<!-- @c:jm3lib/types/Variable -->
+<!-- @c:jm3lib/types/NativeType -->
 <!-- @c:spec/native-dispatch#Serialization Protocol -->
 
-Call a named function in foreign code where the **caller** and **callee** run in different language environments. The Bridge handles variable conversion between the two languages automatically using [[aj3lib/pipelines/Variable/Convert|-Variable.Convert]].
+Call a named function in foreign code where the **caller** and **callee** run in different language environments. The Bridge handles variable conversion between the two languages automatically using [[jm3lib/pipelines/Variable/Convert|-Variable.Convert]].
 
-This is the cross-language counterpart of [[aj3lib/pipelines/Run/Function|-Run.\<Lang\>.Function]], which operates within a single language. `-Run.Bridge.Function` requires two `-W.Env` wrappers -- one for each language environment.
+This is the cross-language counterpart of [[jm3lib/pipelines/Run/Function|-Run.\<Lang\>.Function]], which operates within a single language. `-Run.Bridge.Function` requires two `-W.Env` wrappers -- one for each language environment.
 
 ## Definition
 
@@ -201,11 +201,11 @@ Requires `System.Process` capability for **both** language environments.
 
 ## Related
 
-- [[aj3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]] -- parent namespace
-- [[aj3lib/pipelines/Run/Function|-Run.\<Lang\>.Function]] -- single-language function call
-- [[aj3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] -- cross-language variable binding
-- [[aj3lib/pipelines/Variable/Convert|-Variable.Convert]] -- variable conversion pipeline
-- [[aj3lib/types/Variable|#Variable]] -- language-tagged variable type
-- [[aj3lib/types/NativeType|#NativeType]] -- native type marshalling
-- [[aj3lib/pipelines/W/Env|-W.Env]] -- environment wrapper
+- [[jm3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]] -- parent namespace
+- [[jm3lib/pipelines/Run/Function|-Run.\<Lang\>.Function]] -- single-language function call
+- [[jm3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] -- cross-language variable binding
+- [[jm3lib/pipelines/Variable/Convert|-Variable.Convert]] -- variable conversion pipeline
+- [[jm3lib/types/Variable|#Variable]] -- language-tagged variable type
+- [[jm3lib/types/NativeType|#NativeType]] -- native type marshalling
+- [[jm3lib/pipelines/W/Env|-W.Env]] -- environment wrapper
 - [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]]

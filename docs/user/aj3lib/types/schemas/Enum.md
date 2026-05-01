@@ -58,13 +58,13 @@ metadata_definition: "%definition.##:Enum"
 
 ## Used By
 
-<!-- @u:aj3lib/types/boolean -->
-<!-- @u:aj3lib/types/OS -->
-<!-- @u:aj3lib/types/PipelineStatus -->
-<!-- @u:aj3lib/types/VarState -->
-<!-- @u:aj3lib/types/ActiveKind -->
-<!-- @u:aj3lib/types/QueueStrategy -->
-<!-- @u:aj3lib/types/KillPropagation -->
+<!-- @u:jm3lib/types/boolean -->
+<!-- @u:jm3lib/types/OS -->
+<!-- @u:jm3lib/types/PipelineStatus -->
+<!-- @u:jm3lib/types/VarState -->
+<!-- @u:jm3lib/types/ActiveKind -->
+<!-- @u:jm3lib/types/QueueStrategy -->
+<!-- @u:jm3lib/types/KillPropagation -->
 
 - [[boolean|#Boolean]]
 - [[OS|#OS]]

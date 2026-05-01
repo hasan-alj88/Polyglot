@@ -62,7 +62,7 @@ See [[QueueStrategy]], [[KillPropagation]], [[ResourceTag]] for enum definitions
 
 ## Related
 
-- [[structs]] — other aj3lib struct types
+- [[structs]] — other jm3lib struct types
 - [[QueueStrategy]] — queue ordering strategy enum
 - [[KillPropagation]] — kill signal propagation enum
 - [[ResourceTag]] — resource constraint tags

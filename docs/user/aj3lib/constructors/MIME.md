@@ -7,7 +7,7 @@ updated: 2026-04-22
 # $MIME Constructor
 
 <!-- @u:syntax/constructors -->
-<!-- @c:aj3lib/types/MIME -->
+<!-- @c:jm3lib/types/MIME -->
 
 The `$MIME` constructor produces `#MIME` values from media type strings. All overloads are compile-time guaranteed — no error surface, no `[!]` handling needed.
 
@@ -47,7 +47,7 @@ Single overload — no ambiguity.
 
 ## Related
 
-- [[constructors/INDEX|aj3lib Constructors]] -- constructor registry
+- [[constructors/INDEX|jm3lib Constructors]] -- constructor registry
 - [[syntax/constructors]] -- `{$}` block specification
-- [[aj3lib/pipelines/MIME.Parse|-MIME.Parse]] -- runtime MIME string parsing
-- [[aj3lib/types/MIME|#MIME type]] -- media type definition
+- [[jm3lib/pipelines/MIME.Parse|-MIME.Parse]] -- runtime MIME string parsing
+- [[jm3lib/types/MIME|#MIME type]] -- media type definition

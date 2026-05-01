@@ -1,0 +1,38 @@
+{@} @jm3lib.tm
+
+{ } Trigger Monitor native operations
+{ } All triggers return >IsTriggered#bool
+
+{-} =T.Call
+   [%] .description << "Pipeline invoked by another pipeline"
+   [=] >IsTriggered#bool
+
+{-} =T.Manual
+   [%] .description << "Pipeline invoked manually from CLI or test harness"
+   [=] >IsTriggered#bool
+
+{-} =T.Daily
+   [%] .description << "Fires once per day at specified time"
+   [=] <time#string
+   [=] >IsTriggered#bool
+
+{-} =T.Folder.NewFiles
+   [%] .description << "Fires when new files appear in watched directory"
+   [=] <path#path
+   [=] >IsTriggered#bool
+   [=] >NewFiles#array:path
+
+{-} =T.Webhook
+   [%] .description << "Fires on incoming HTTP request to endpoint"
+   [=] <endpoint#string
+   [=] >IsTriggered#bool
+
+{-} =T.File.Rolled
+   [%] .description << "Fires when a file rotates, delivering the completed file"
+   [=] <Dir#path
+   [=] <Pattern#string
+   [=] <Strategy#RotationKind <~ #RotationKind.Auto
+   [=] >IsTriggered#bool
+   [=] >RolledFile#path
+   [=] >NewFile#path
+   [=] >RolledSize#int

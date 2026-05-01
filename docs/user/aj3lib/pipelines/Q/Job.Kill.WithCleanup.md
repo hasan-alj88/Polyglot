@@ -71,6 +71,6 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/Job.Kill.Now|-Q.Job.Kill.Now]]
-- [[aj3lib/pipelines/Q/Job.Pause.Free.CPU|-Q.Job.Pause.Free.CPU]] (non-terminal alternative)
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/Job.Kill.Now|-Q.Job.Kill.Now]]
+- [[jm3lib/pipelines/Q/Job.Pause.Free.CPU|-Q.Job.Pause.Free.CPU]] (non-terminal alternative)
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

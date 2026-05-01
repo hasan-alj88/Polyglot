@@ -60,8 +60,8 @@ The schema generates `.string#RawString` and `.regex#RawString` fields. The comp
 
 ## Used By
 
-<!-- @u:aj3lib/types/string -->
-<!-- @u:aj3lib/types/scalars -->
+<!-- @u:jm3lib/types/string -->
+<!-- @u:jm3lib/types/scalars -->
 
 - [[string|#String]] foundation type
 - All [[scalars|scalar subtypes]] ([[scalars|#Int]], [[scalars|#Float]], etc.)

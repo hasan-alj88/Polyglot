@@ -64,5 +64,5 @@ None required. Pure computation pipeline.
 
 ## Related
 
-- [[aj3lib/constructors/Re|$Re constructor]] -- compile-time regex construction
-- [[aj3lib/types/Re|#Re type]] -- regex pattern type definition
+- [[jm3lib/constructors/Re|$Re constructor]] -- compile-time regex construction
+- [[jm3lib/types/Re|#Re type]] -- regex pattern type definition

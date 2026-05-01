@@ -3,7 +3,7 @@ audience: automation-builder
 type: specification
 updated: 2026-04-09
 status: retired
-redirect: aj3lib/types/schemas/Array
+redirect: jm3lib/types/schemas/Array
 metadata_definition: "%definition.##:Set"
 ---
 

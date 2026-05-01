@@ -73,7 +73,7 @@ completed: 2026-04-05
 
 ## Next Phase Readiness
 
-**Ready:** Plan 03 (compile rules + aj3lib) can proceed
+**Ready:** Plan 03 (compile rules + jm3lib) can proceed
 **Concerns:** None
 **Blockers:** None
 

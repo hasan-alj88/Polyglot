@@ -42,6 +42,6 @@ None.
 
 ## Related
 
-- [[aj3lib/expanders/ForEach/Dataframe|=ForEach.Dataframe]] -- base variant without index
-- [[aj3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
+- [[jm3lib/expanders/ForEach/Dataframe|=ForEach.Dataframe]] -- base variant without index
+- [[jm3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]

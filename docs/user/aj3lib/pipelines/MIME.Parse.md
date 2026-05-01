@@ -64,5 +64,5 @@ None required. Pure computation pipeline.
 
 ## Related
 
-- [[aj3lib/constructors/MIME|$MIME constructor]] -- compile-time MIME construction
-- [[aj3lib/types/MIME|#MIME type]] -- media type definition
+- [[jm3lib/constructors/MIME|$MIME constructor]] -- compile-time MIME construction
+- [[jm3lib/types/MIME|#MIME type]] -- media type definition

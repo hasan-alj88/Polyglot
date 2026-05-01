@@ -11,7 +11,7 @@ metadata_instance: "%-:Run.<Lang>.Function:N"
 
 Call a named function in foreign code with structured arguments.
 
-> **Supersedes:** `-RT.<Lang>.Function.Inline` and `-RT.<Lang>.Function.File`. See [[aj3lib/pipelines/RT/Function.Inline|@d:-RT.\<Lang\>.Function.Inline]] and [[aj3lib/pipelines/RT/Function.File|@d:-RT.\<Lang\>.Function.File]].
+> **Supersedes:** `-RT.<Lang>.Function.Inline` and `-RT.<Lang>.Function.File`. See [[jm3lib/pipelines/RT/Function.Inline|@d:-RT.\<Lang\>.Function.Inline]] and [[jm3lib/pipelines/RT/Function.File|@d:-RT.\<Lang\>.Function.File]].
 
 ## Definition
 
@@ -121,7 +121,7 @@ Uses `#Code:Source` with `%##Active` one -- provide **either** inline or file, n
 
 ## Errors
 
-See [[aj3lib/pipelines/Run/INDEX#Binding Compiler Errors]].
+See [[jm3lib/pipelines/Run/INDEX#Binding Compiler Errors]].
 
 ## Permissions
 
@@ -136,6 +136,6 @@ Requires `System.Process` capability.
 
 ## Related
 
-- [[aj3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
-- [[aj3lib/pipelines/W/Env|-W.Env]] -- wrapper that manages runtime environments
-- [[aj3lib/types/rt|Runtime types]] -- `#Code`, `#PyEnv`, `#RsEnv`
+- [[jm3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
+- [[jm3lib/pipelines/W/Env|-W.Env]] -- wrapper that manages runtime environments
+- [[jm3lib/types/rt|Runtime types]] -- `#Code`, `#PyEnv`, `#RsEnv`

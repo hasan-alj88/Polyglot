@@ -8,7 +8,7 @@ metadata_definition: "%!.Validation"
 
 # `!Validation`
 
-No `[@]` import needed — aj3lib built-in.
+No `[@]` import needed — jm3lib built-in.
 
 ```aljam3
 {!} !Validation

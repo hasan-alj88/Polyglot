@@ -10,7 +10,7 @@ updated: 2026-04-09
 
 ## #Dataframe -- Two-Level Table
 
-`#Dataframe` is a two-level tabular collection -- a generic `{#}` type with `(#) <#Columns` and `(#) <#CellType` parameters. Level 1 uses `%##Fields << #Range` for integer row indices. Level 2 composes `##Record` with the column enum as fields. Composes `##Dataframe`. Use `:` positional binding: `#dataframe:SalesColumns:string`. See [[aj3lib/types/Dataframe|#Dataframe]] for the full definition.
+`#Dataframe` is a two-level tabular collection -- a generic `{#}` type with `(#) <#Columns` and `(#) <#CellType` parameters. Level 1 uses `%##Fields << #Range` for integer row indices. Level 2 composes `##Record` with the column enum as fields. Composes `##Dataframe`. Use `:` positional binding: `#dataframe:SalesColumns:string`. See [[jm3lib/types/Dataframe|#Dataframe]] for the full definition.
 
 ```aljam3
 {#} #SalesColumns
@@ -38,7 +38,7 @@ Row access uses `<` (range index), column access uses a second `<` (enum variant
 [-] $row << $sales<0
 ```
 
-For entire-column extraction, use `=#.Column` pipeline (see [[aj3lib/pipelines/Schema/INDEX]]).
+For entire-column extraction, use `=#.Column` pipeline (see [[jm3lib/pipelines/Schema/INDEX]]).
 
 Build dataframes using `*Into.Dataframe` collectors, not incremental assignment.
 

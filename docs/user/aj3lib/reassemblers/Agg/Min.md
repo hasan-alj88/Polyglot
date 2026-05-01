@@ -55,7 +55,7 @@ None.
 
 ## Related
 
-- [[aj3lib/reassemblers/Agg/INDEX|=*Agg Aggregation Reassemblers]]
-- [[aj3lib/collectors/Agg/Min|*Agg.Min]] -- standalone collector equivalent
-- [[aj3lib/reassemblers/Agg/Max|=*Agg.Max]] -- maximum counterpart
+- [[jm3lib/reassemblers/Agg/INDEX|=*Agg Aggregation Reassemblers]]
+- [[jm3lib/collectors/Agg/Min|*Agg.Min]] -- standalone collector equivalent
+- [[jm3lib/reassemblers/Agg/Max|=*Agg.Max]] -- maximum counterpart
 - [[concepts/collections/reassemble|Reassemble Operators]]

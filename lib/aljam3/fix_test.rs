@@ -16,8 +16,8 @@ fn main() {
     if let Some(start) = out_str.find("=== Aljam3 Token Stream ===") {
         if let Some(end) = out_str[start..].find("=============================\n") {
             let token_stream = &out_str[start..start + end + 30];
-            fs::write("tests/fixtures/valid_code.aj3ts", token_stream).unwrap();
-            println!("Updated valid_code.aj3ts!");
+            fs::write("tests/fixtures/valid_code.jm3ts", token_stream).unwrap();
+            println!("Updated valid_code.jm3ts!");
         }
     }
 }

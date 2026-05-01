@@ -31,4 +31,4 @@ Capability-level generic permission for creating files. Sugar over [[INDEX|__Fil
 ## Related
 
 - [[INDEX|__File]] -- category-level generic
-- [[aj3lib/permissions/INDEX]] -- all aj3lib generic permissions
+- [[jm3lib/permissions/INDEX]] -- all jm3lib generic permissions

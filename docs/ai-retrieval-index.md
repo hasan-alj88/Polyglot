@@ -10,7 +10,7 @@ updated: 2026-04-23
 <!-- @c:audit/reference/glossary -->
 <!-- @c:audit/audiences/ai-finder -->
 <!-- @u:INDEX -->
-This index is the query-shaped entry point for AI tools. Every row answers "given this concept, which file(s) do I read?" Sections partition by query shape (construct, compile-rule range, aj3lib namespace, type, error namespace, philosophy, audit area) rather than by human navigation. For human navigation use [[INDEX|u:INDEX]]; for repo shape use [[source-tree-analysis|u:source-tree-analysis]]; for flat inventory use [[component-inventory|u:component-inventory]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
+This index is the query-shaped entry point for AI tools. Every row answers "given this concept, which file(s) do I read?" Sections partition by query shape (construct, compile-rule range, jm3lib namespace, type, error namespace, philosophy, audit area) rather than by human navigation. For human navigation use [[INDEX|u:INDEX]]; for repo shape use [[source-tree-analysis|u:source-tree-analysis]]; for flat inventory use [[component-inventory|u:component-inventory]]. All terminology matches [[audit/reference/glossary|c:glossary]] exactly.
 
 ## How to Read This Index
 
@@ -116,91 +116,91 @@ Compiler algorithms that back the rules live under `docs/technical/compile-rules
 | Match condition overlap detection | [[technical/compile-rules/algorithms/overlap-detection\|u:overlap-detection]] |
 | Compound exhaustiveness | [[technical/compile-rules/algorithms/compound-exhaustiveness\|u:compound-exhaustiveness]] |
 
-## By aj3lib Namespace
+## By jm3lib Namespace
 
-Query: "what pipelines does namespace X provide?" Each namespace has a sub-index under `docs/user/aj3lib/pipelines/{Namespace}/INDEX.md` (or a flat file for single-file namespaces).
+Query: "what pipelines does namespace X provide?" Each namespace has a sub-index under `docs/user/jm3lib/pipelines/{Namespace}/INDEX.md` (or a flat file for single-file namespaces).
 
 | Namespace | Prefix | Purpose | Primary dir |
 |-----------|--------|---------|-------------|
-| File | `-File.*` | File-system read/write | [[user/aj3lib/pipelines/File/INDEX\|u:aj3lib-File]] |
-| T (triggers) | `-T.*` | HTTP, queue, git, time, call triggers | [[user/aj3lib/pipelines/T/INDEX\|u:aj3lib-T]] |
-| Q (queue control) | `-Q.*` | Queue inspection and control | [[user/aj3lib/pipelines/Q/INDEX\|u:aj3lib-Q]] |
-| W (wrappers) | `-W.*` | Wrappers: RT, Env, Retry, Aljam3 | [[user/aj3lib/pipelines/W/INDEX\|u:aj3lib-W]] |
-| Math | `-Math.*` | Arithmetic operations | [[user/aj3lib/pipelines/Math/INDEX\|u:aj3lib-Math]] |
-| DT (datetime) | `-DT.*` | #DateTime construction, conversion, arithmetic | [[user/aj3lib/pipelines/DT/INDEX\|u:aj3lib-DT]] |
-| RT (runtime) | `-RT.*` | Python/Rust/Go/JS runtime execution | [[user/aj3lib/pipelines/RT/INDEX\|u:aj3lib-RT]] |
-| Run | `-Run.*` | Script, binary, Shell, Bridge execution | [[user/aj3lib/pipelines/Run/INDEX\|u:aj3lib-Run]] |
-| Schema | `-Schema.*` | Schema match / validate / describe / coerce | [[user/aj3lib/pipelines/Schema/INDEX\|u:aj3lib-Schema]] |
-| Variable | `-Variable.*` | Variable introspection | [[user/aj3lib/pipelines/Variable/INDEX\|u:aj3lib-Variable]] |
-| Text | `-Text.*` | Text operations | [[user/aj3lib/pipelines/Text\|u:aj3lib-Text]] |
-| Path | `-Path.*` | Path operations | [[user/aj3lib/pipelines/Path\|u:aj3lib-Path]] |
-| Sys | `-Sys.*` | System inspection | [[user/aj3lib/pipelines/Sys\|u:aj3lib-Sys]] |
+| File | `-File.*` | File-system read/write | [[user/jm3lib/pipelines/File/INDEX\|u:jm3lib-File]] |
+| T (triggers) | `-T.*` | HTTP, queue, git, time, call triggers | [[user/jm3lib/pipelines/T/INDEX\|u:jm3lib-T]] |
+| Q (queue control) | `-Q.*` | Queue inspection and control | [[user/jm3lib/pipelines/Q/INDEX\|u:jm3lib-Q]] |
+| W (wrappers) | `-W.*` | Wrappers: RT, Env, Retry, Aljam3 | [[user/jm3lib/pipelines/W/INDEX\|u:jm3lib-W]] |
+| Math | `-Math.*` | Arithmetic operations | [[user/jm3lib/pipelines/Math/INDEX\|u:jm3lib-Math]] |
+| DT (datetime) | `-DT.*` | #DateTime construction, conversion, arithmetic | [[user/jm3lib/pipelines/DT/INDEX\|u:jm3lib-DT]] |
+| RT (runtime) | `-RT.*` | Python/Rust/Go/JS runtime execution | [[user/jm3lib/pipelines/RT/INDEX\|u:jm3lib-RT]] |
+| Run | `-Run.*` | Script, binary, Shell, Bridge execution | [[user/jm3lib/pipelines/Run/INDEX\|u:jm3lib-Run]] |
+| Schema | `-Schema.*` | Schema match / validate / describe / coerce | [[user/jm3lib/pipelines/Schema/INDEX\|u:jm3lib-Schema]] |
+| Variable | `-Variable.*` | Variable introspection | [[user/jm3lib/pipelines/Variable/INDEX\|u:jm3lib-Variable]] |
+| Text | `-Text.*` | Text operations | [[user/jm3lib/pipelines/Text\|u:jm3lib-Text]] |
+| Path | `-Path.*` | Path operations | [[user/jm3lib/pipelines/Path\|u:jm3lib-Path]] |
+| Sys | `-Sys.*` | System inspection | [[user/jm3lib/pipelines/Sys\|u:jm3lib-Sys]] |
 
 Standalone parser pipelines (file per name):
 
 | Pipeline | File |
 |----------|------|
-| `-Color.Parse` | [[user/aj3lib/pipelines/Color.Parse\|u:Color-Parse]] |
-| `-Dur.Parse` | [[user/aj3lib/pipelines/Dur.Parse\|u:Dur-Parse]] |
-| `-IP.Parse` | [[user/aj3lib/pipelines/IP.Parse\|u:IP-Parse]] |
-| `-MIME.Parse` | [[user/aj3lib/pipelines/MIME.Parse\|u:MIME-Parse]] |
-| `-Path.Parse` | [[user/aj3lib/pipelines/Path.Parse\|u:Path-Parse]] |
-| `-Re.Parse` | [[user/aj3lib/pipelines/Re.Parse\|u:Re-Parse]] |
-| `-URL.Parse` | [[user/aj3lib/pipelines/URL.Parse\|u:URL-Parse]] |
-| `-Ver.Parse` | [[user/aj3lib/pipelines/Ver.Parse\|u:Ver-Parse]] |
+| `-Color.Parse` | [[user/jm3lib/pipelines/Color.Parse\|u:Color-Parse]] |
+| `-Dur.Parse` | [[user/jm3lib/pipelines/Dur.Parse\|u:Dur-Parse]] |
+| `-IP.Parse` | [[user/jm3lib/pipelines/IP.Parse\|u:IP-Parse]] |
+| `-MIME.Parse` | [[user/jm3lib/pipelines/MIME.Parse\|u:MIME-Parse]] |
+| `-Path.Parse` | [[user/jm3lib/pipelines/Path.Parse\|u:Path-Parse]] |
+| `-Re.Parse` | [[user/jm3lib/pipelines/Re.Parse\|u:Re-Parse]] |
+| `-URL.Parse` | [[user/jm3lib/pipelines/URL.Parse\|u:URL-Parse]] |
+| `-Ver.Parse` | [[user/jm3lib/pipelines/Ver.Parse\|u:Ver-Parse]] |
 
 ## By Expander / Collector
 
 | Category | Namespace | Primary dir |
 |----------|-----------|-------------|
-| Expander | `=ForEach.*` | [[user/aj3lib/expanders/ForEach/INDEX\|u:ForEach-index]] |
-| Collector — aggregate | `*Agg.*` | [[user/aj3lib/collectors/Agg/INDEX\|u:Agg-index]] |
-| Collector — into-collection | `*Into.*` | [[user/aj3lib/collectors/Into/INDEX\|u:Into-index]] |
-| Collector — sync/race | `*Sync.*` (incl. `*All`, `*First`, `*Nth`) | [[user/aj3lib/collectors/Sync/INDEX\|u:Sync-index]] |
+| Expander | `=ForEach.*` | [[user/jm3lib/expanders/ForEach/INDEX\|u:ForEach-index]] |
+| Collector — aggregate | `*Agg.*` | [[user/jm3lib/collectors/Agg/INDEX\|u:Agg-index]] |
+| Collector — into-collection | `*Into.*` | [[user/jm3lib/collectors/Into/INDEX\|u:Into-index]] |
+| Collector — sync/race | `*Sync.*` (incl. `*All`, `*First`, `*Nth`) | [[user/jm3lib/collectors/Sync/INDEX\|u:Sync-index]] |
 
 ## By Type
 
-Query: "where is type X defined?" Types live under `docs/user/aj3lib/types/` — top-level files plus `datetime/`, `field-types/`, `properties/`, `scalars/`, `schemas/` subdirs.
+Query: "where is type X defined?" Types live under `docs/user/jm3lib/types/` — top-level files plus `datetime/`, `field-types/`, `properties/`, `scalars/`, `schemas/` subdirs.
 
 | Type category | Files | Location |
 |---------------|-------|----------|
-| Boolean, scalar primitives | `boolean.md`, `string.md`, `path.md` | `docs/user/aj3lib/types/*.md` |
-| Scalars (subtype tree) | `scalars/` (11 files) | `docs/user/aj3lib/types/scalars/` |
-| Schemas (`##Record`, `##Leaf`, `##Inf`, `##Nullable`, etc.) | `schemas/` (20 files) | `docs/user/aj3lib/types/schemas/` |
-| Schema properties | `properties/` (16 files) | `docs/user/aj3lib/types/properties/` |
-| Field kinds | `field-types/` (6 files) | `docs/user/aj3lib/types/field-types/` |
-| Date / time | `datetime/` (10 files) | `docs/user/aj3lib/types/datetime/` |
-| Collections | `Array.md`, `Map.md`, `Serial.md`, `Dataframe.md`, `Set.md` | `docs/user/aj3lib/types/*.md` |
-| Runtime types | `PyEnv.md`, `RsEnv.md`, `rt.md`, `Code.md` | `docs/user/aj3lib/types/*.md` |
-| Service types | `Job.md`, `JobStatus.md`, `Queue.md`, `QueueState.md`, `Variable.md`, `VarState.md` | `docs/user/aj3lib/types/*.md` |
-| Git | `git.md` | `docs/user/aj3lib/types/git.md` |
-| Parsed entities | `Color.md`, `IP.md`, `URL.md`, `MIME.md`, `Ver.md`, `Re.md` | `docs/user/aj3lib/types/*.md` |
-| Capability enums | `CPUCapability.md`, `GPUCapability.md`, `RAMCapability.md`, `IOCapability.md`, `ProcessCapability.md`, `DurationCapability.md` | `docs/user/aj3lib/types/*.md` |
+| Boolean, scalar primitives | `boolean.md`, `string.md`, `path.md` | `docs/user/jm3lib/types/*.md` |
+| Scalars (subtype tree) | `scalars/` (11 files) | `docs/user/jm3lib/types/scalars/` |
+| Schemas (`##Record`, `##Leaf`, `##Inf`, `##Nullable`, etc.) | `schemas/` (20 files) | `docs/user/jm3lib/types/schemas/` |
+| Schema properties | `properties/` (16 files) | `docs/user/jm3lib/types/properties/` |
+| Field kinds | `field-types/` (6 files) | `docs/user/jm3lib/types/field-types/` |
+| Date / time | `datetime/` (10 files) | `docs/user/jm3lib/types/datetime/` |
+| Collections | `Array.md`, `Map.md`, `Serial.md`, `Dataframe.md`, `Set.md` | `docs/user/jm3lib/types/*.md` |
+| Runtime types | `PyEnv.md`, `RsEnv.md`, `rt.md`, `Code.md` | `docs/user/jm3lib/types/*.md` |
+| Service types | `Job.md`, `JobStatus.md`, `Queue.md`, `QueueState.md`, `Variable.md`, `VarState.md` | `docs/user/jm3lib/types/*.md` |
+| Git | `git.md` | `docs/user/jm3lib/types/git.md` |
+| Parsed entities | `Color.md`, `IP.md`, `URL.md`, `MIME.md`, `Ver.md`, `Re.md` | `docs/user/jm3lib/types/*.md` |
+| Capability enums | `CPUCapability.md`, `GPUCapability.md`, `RAMCapability.md`, `IOCapability.md`, `ProcessCapability.md`, `DurationCapability.md` | `docs/user/jm3lib/types/*.md` |
 
 Master type aggregators:
 
 | File | Purpose |
 |------|---------|
-| [[user/aj3lib/types/types\|u:types]] | Top-level type catalog |
-| [[user/aj3lib/types/collections\|u:collections-types]] | Collection-type summary |
-| [[user/aj3lib/types/scalars\|u:scalars]] | Scalar-subtype summary |
-| [[user/aj3lib/types/enums\|u:enums]] | Enum-type summary |
-| [[user/aj3lib/types/structs\|u:structs-types]] | Struct-type summary |
-| [[user/aj3lib/types/schemas\|u:schemas-index]] | Schema summary |
+| [[user/jm3lib/types/types\|u:types]] | Top-level type catalog |
+| [[user/jm3lib/types/collections\|u:collections-types]] | Collection-type summary |
+| [[user/jm3lib/types/scalars\|u:scalars]] | Scalar-subtype summary |
+| [[user/jm3lib/types/enums\|u:enums]] | Enum-type summary |
+| [[user/jm3lib/types/structs\|u:structs-types]] | Struct-type summary |
+| [[user/jm3lib/types/schemas\|u:schemas-index]] | Schema summary |
 
 ## By Error Namespace
 
-Query: "what errors can pipeline X raise?" Error namespaces live under `docs/user/aj3lib/errors/`.
+Query: "what errors can pipeline X raise?" Error namespaces live under `docs/user/jm3lib/errors/`.
 
 | Error file | Topic |
 |------------|-------|
-| [[user/aj3lib/errors/errors\|u:errors-aj3lib]] | Error-namespace overview |
-| [[user/aj3lib/errors/error-struct\|u:error-struct]] | `!Error` struct definition |
-| [[user/aj3lib/errors/custom-errors\|u:custom-errors]] | User-defined error types via `{!}` |
-| [[user/aj3lib/errors/alias-clash\|u:alias-clash]] | Alias-clash error handling |
-| [[user/aj3lib/errors/pipeline-associations\|u:pipeline-associations]] | Pipeline-to-error-namespace associations |
+| [[user/jm3lib/errors/errors\|u:errors-jm3lib]] | Error-namespace overview |
+| [[user/jm3lib/errors/error-struct\|u:error-struct]] | `!Error` struct definition |
+| [[user/jm3lib/errors/custom-errors\|u:custom-errors]] | User-defined error types via `{!}` |
+| [[user/jm3lib/errors/alias-clash\|u:alias-clash]] | Alias-clash error handling |
+| [[user/jm3lib/errors/pipeline-associations\|u:pipeline-associations]] | Pipeline-to-error-namespace associations |
 
-Built-in namespaces (under `docs/user/aj3lib/errors/builtin/`) are partitioned by concern:
+Built-in namespaces (under `docs/user/jm3lib/errors/builtin/`) are partitioned by concern:
 
 | Namespace | Raised by |
 |-----------|-----------|
@@ -214,18 +214,18 @@ Built-in namespaces (under `docs/user/aj3lib/errors/builtin/`) are partitioned b
 
 ## By Permission Category
 
-Permission categories live under `docs/user/aj3lib/permissions/` as one subdirectory per category. The authoritative concept document is [[user/concepts/permissions|u:permissions]].
+Permission categories live under `docs/user/jm3lib/permissions/` as one subdirectory per category. The authoritative concept document is [[user/concepts/permissions|u:permissions]].
 
 | Category | Scope | Dir |
 |----------|-------|-----|
-| Crypto | Cryptographic primitives | `docs/user/aj3lib/permissions/Crypto/` |
-| Database | Database connections | `docs/user/aj3lib/permissions/Database/` |
-| Device | Device access | `docs/user/aj3lib/permissions/Device/` |
-| File | File-system access | `docs/user/aj3lib/permissions/File/` |
-| IPC | Inter-process communication | `docs/user/aj3lib/permissions/IPC/` |
-| Memory | Memory allocation and limits | `docs/user/aj3lib/permissions/Memory/` |
-| System | System-level access (shell, env, OS) | `docs/user/aj3lib/permissions/System/` |
-| Web | Network and HTTP access | `docs/user/aj3lib/permissions/Web/` |
+| Crypto | Cryptographic primitives | `docs/user/jm3lib/permissions/Crypto/` |
+| Database | Database connections | `docs/user/jm3lib/permissions/Database/` |
+| Device | Device access | `docs/user/jm3lib/permissions/Device/` |
+| File | File-system access | `docs/user/jm3lib/permissions/File/` |
+| IPC | Inter-process communication | `docs/user/jm3lib/permissions/IPC/` |
+| Memory | Memory allocation and limits | `docs/user/jm3lib/permissions/Memory/` |
+| System | System-level access (shell, env, OS) | `docs/user/jm3lib/permissions/System/` |
+| Web | Network and HTTP access | `docs/user/jm3lib/permissions/Web/` |
 
 Concept-level permission sub-pages:
 
@@ -323,12 +323,12 @@ Heuristics for picking the right starting file given a query shape.
 | "How do I write a pipeline?" | [[user/SPEC-INDEX\|u:SPEC-INDEX]] |
 | "What does `{X}` mean?" | "By Language Construct" table above |
 | "What does compile error PGE01005 mean?" (or any PGE / PGW code) | [[technical/COMPILE-RULES\|u:COMPILE-RULES]] then the matching file under `technical/compile-rules/PGE/` or `technical/compile-rules/PGW/` |
-| "What pipelines does `-X.*` provide?" | "By aj3lib Namespace" table above |
+| "What pipelines does `-X.*` provide?" | "By jm3lib Namespace" table above |
 | "What error namespaces exist?" | "By Error Namespace" table above |
-| "What does #TypeName mean?" | "By Type" table above; start with [[user/aj3lib/types/types\|u:types]] |
+| "What does #TypeName mean?" | "By Type" table above; start with [[user/jm3lib/types/types\|u:types]] |
 | "How does the runtime work?" | [[architecture\|u:architecture]] |
 | "Why did Aljam3 make decision X?" | [[audit/decisions/README\|c:decisions-index]] then [[philosophy/core-philosophy\|c:core-philosophy]] |
-| "Can I write this .aj3 code?" | [[technical/ebnf/INDEX\|u:ebnf-index]] then [[technical/edge-cases/INDEX\|u:edge-cases-index]] |
+| "Can I write this .jm3 code?" | [[technical/ebnf/INDEX\|u:ebnf-index]] then [[technical/edge-cases/INDEX\|u:edge-cases-index]] |
 | "Where is the full repo layout?" | [[source-tree-analysis\|u:source-tree-analysis]] |
 | "Give me an inventory by category" | [[component-inventory\|u:component-inventory]] |
 | "Where are the writing rules?" | [[audit/README\|c:audit/README]] |
@@ -355,7 +355,7 @@ Both must be present. See [[audit/README|c:audit/README]] for the full typed-ref
 This index is re-generated whenever:
 
 - New top-level `docs/` files are added or removed
-- aj3lib namespaces are added, renamed, or partitioned into subfolders
+- jm3lib namespaces are added, renamed, or partitioned into subfolders
 - PGE / PGW rule ranges are added or retired
 - Philosophy pages are added or removed
 - Audit audience tiers change

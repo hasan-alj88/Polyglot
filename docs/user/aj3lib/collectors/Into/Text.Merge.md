@@ -7,7 +7,7 @@ status: draft
 
 # *Into.Text.Merge
 
-K-way merge collector that applies multiple diff sets against a shared base text, producing a merged result with conflict detection. Each mini-pipeline produces diffs (via [[aj3lib/pipelines/Text/Diff\|=Text.Diff]]), and this collector reconciles them into a single output.
+K-way merge collector that applies multiple diff sets against a shared base text, producing a merged result with conflict detection. Each mini-pipeline produces diffs (via [[jm3lib/pipelines/Text/Diff\|=Text.Diff]]), and this collector reconciles them into a single output.
 
 ## Syntax
 
@@ -23,15 +23,15 @@ K-way merge collector that applies multiple diff sets against a shared base text
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| `<diffs` | `#TextDiffs` | Yes | Diff set from a parallel [[aj3lib/pipelines/Text/Diff\|=Text.Diff]] call |
+| `<diffs` | `#TextDiffs` | Yes | Diff set from a parallel [[jm3lib/pipelines/Text/Diff\|=Text.Diff]] call |
 | `<base` | `#string` | Yes | Original text all diffs were computed against |
-| `<conflict` | `#MergeStrategy` | No (default `.FirstWins`) | [[aj3lib/types/MergeStrategy\|Conflict resolution strategy]] |
+| `<conflict` | `#MergeStrategy` | No (default `.FirstWins`) | [[jm3lib/types/MergeStrategy\|Conflict resolution strategy]] |
 
 ## Outputs
 
 | Name | Type | Description |
 |------|------|-------------|
-| `>result` | `#MergeResult` | [[aj3lib/types/MergeResult\|Merged result]]: `.text` (merged string) + `.conflicts` (array of [[aj3lib/types/MergeConflict\|#MergeConflict]]) |
+| `>result` | `#MergeResult` | [[jm3lib/types/MergeResult\|Merged result]]: `.text` (merged string) + `.conflicts` (array of [[jm3lib/types/MergeConflict\|#MergeConflict]]) |
 
 ## Errors
 
@@ -43,7 +43,7 @@ K-way merge collector that applies multiple diff sets against a shared base text
 
 ## Conflict Resolution Strategies
 
-The `<conflict` parameter accepts a [[aj3lib/types/MergeStrategy\|#MergeStrategy]] enum value:
+The `<conflict` parameter accepts a [[jm3lib/types/MergeStrategy\|#MergeStrategy]] enum value:
 
 | Strategy | Behavior |
 |----------|----------|
@@ -91,11 +91,11 @@ When diff count exceeds the `-Q.Overflow.RamLimit` threshold, intermediate merge
 
 ## Related
 
-- [[aj3lib/collectors/Into/INDEX\|*Into Data Collectors]]
-- [[aj3lib/pipelines/Text/Diff\|=Text.Diff]] -- produces the diffs this collector merges
-- [[aj3lib/types/MergeResult\|#MergeResult]] -- output type
-- [[aj3lib/types/MergeStrategy\|#MergeStrategy]] -- conflict resolution enum
-- [[aj3lib/types/MergeConflict\|#MergeConflict]] -- conflict entry type
-- [[aj3lib/types/TextDiff\|#TextDiff]] -- individual diff entry type
-- [[aj3lib/collectors/Into/Text.Append\|*Into.Text.Append]] -- simpler alternative (no conflict resolution)
+- [[jm3lib/collectors/Into/INDEX\|*Into Data Collectors]]
+- [[jm3lib/pipelines/Text/Diff\|=Text.Diff]] -- produces the diffs this collector merges
+- [[jm3lib/types/MergeResult\|#MergeResult]] -- output type
+- [[jm3lib/types/MergeStrategy\|#MergeStrategy]] -- conflict resolution enum
+- [[jm3lib/types/MergeConflict\|#MergeConflict]] -- conflict entry type
+- [[jm3lib/types/TextDiff\|#TextDiff]] -- individual diff entry type
+- [[jm3lib/collectors/Into/Text.Append\|*Into.Text.Append]] -- simpler alternative (no conflict resolution)
 - [[concepts/collections/collect\|Collect Operators]]

@@ -7,7 +7,7 @@ updated: 2026-04-22
 # $Path Constructor
 
 <!-- @u:syntax/constructors -->
-<!-- @c:aj3lib/types/path -->
+<!-- @c:jm3lib/types/path -->
 
 The `$Path` constructor produces `#path` values from string literals and keywords. All overloads are compile-time guaranteed — no error surface, no `[!]` handling needed.
 
@@ -84,8 +84,8 @@ Keywords are tested first (exact match). Any non-matching string falls through t
 
 ## Related
 
-- [[constructors/INDEX|aj3lib Constructors]] -- constructor registry
+- [[constructors/INDEX|jm3lib Constructors]] -- constructor registry
 - [[syntax/constructors]] -- `{$}` block specification
-- [[aj3lib/pipelines/Path|-Path pipeline]] -- Path creation pipeline
-- [[aj3lib/pipelines/Path.Parse|-Path.Parse]] -- runtime path parsing
-- [[aj3lib/types/path|#path type]] -- cross-platform path struct
+- [[jm3lib/pipelines/Path|-Path pipeline]] -- Path creation pipeline
+- [[jm3lib/pipelines/Path.Parse|-Path.Parse]] -- runtime path parsing
+- [[jm3lib/types/path|#path type]] -- cross-platform path struct

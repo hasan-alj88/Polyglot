@@ -1,0 +1,82 @@
+{@} @jm3lib.runner.file
+
+{ } Runner native operations — File IO
+
+{-} =File.Text.Read
+   [%] .description << "Read text file contents"
+   [=] <path#path
+   [=] >content#string
+   [=] !File.NotFound
+   [=] !File.PermissionDenied
+
+{-} =File.Text.Write
+   [%] .description << "Write text to file"
+   [=] <path#path
+   [=] <content#string
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{-} =File.Text.Append
+   [%] .description << "Append text to file"
+   [=] <path#path
+   [=] <content#string
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{-} =File.Serial.Read
+   [%] .description << "Read and parse structured data file (JSON/YAML/TOML)"
+   [=] <path#path
+   [=] >data#serial
+   [=] !File.NotFound
+   [=] !File.ReadError
+   [=] !File.ParseError
+
+{-} =File.Serial.Write
+   [%] .description << "Serialize and write structured data to file"
+   [=] <path#path
+   [=] <data#serial
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{-} =File.Serial.Read.Field
+   [%] .description << "Read file, parse, extract single field by path"
+   [=] <path#path
+   [=] <field#RawString
+   [=] >value#serial
+   [=] !File.NotFound
+   [=] !File.ReadError
+   [=] !File.ParseError
+   [=] !Field.NotFound
+
+{-} =File.Copy
+   [%] .description << "Copy file from source to destination"
+   [=] <source#path
+   [=] <destination#path
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{-} =File.Move
+   [%] .description << "Move file from source to destination"
+   [=] <source#path
+   [=] <destination#path
+   [=] !File.NotFound
+   [=] !File.WriteError
+
+{-} =File.Delete
+   [%] .description << "Delete file at path"
+   [=] <path#path
+   [=] !File.NotFound
+   [=] !File.PermissionDenied
+
+{-} =File.Access
+   [%] .description << "Check file access permissions"
+   [=] <path#path
+   [=] >access#FileAccess
+   [=] !File.NotFound
+
+{-} =File.List
+   [%] .description << "List files in directory"
+   [=] <folder#path
+   [=] >files#array:path
+   [=] !File.NotFound
+   [=] !File.PermissionDenied

@@ -67,6 +67,6 @@ None required. Pure computation pipeline.
 
 ## Related
 
-- [[aj3lib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
-- [[aj3lib/constructors/DT|$DT constructor]] -- compile-time DateTime construction
-- [[aj3lib/types/datetime|DateTime types]]
+- [[jm3lib/pipelines/DT/INDEX|-DT.* DateTime Pipelines]]
+- [[jm3lib/constructors/DT|$DT constructor]] -- compile-time DateTime construction
+- [[jm3lib/types/datetime|DateTime types]]

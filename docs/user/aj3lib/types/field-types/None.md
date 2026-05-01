@@ -50,7 +50,7 @@ Field types are compile-time leaf content classifiers -- they have no runtime in
 
 ## Used By
 
-<!-- @u:aj3lib/types/boolean -->
+<!-- @u:jm3lib/types/boolean -->
 
 - [[boolean|#None]] -- the only type using `###None`
 

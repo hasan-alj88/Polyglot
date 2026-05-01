@@ -9,8 +9,8 @@ metadata_instance: "%-:Variable.Convert:N"
 
 # -Variable.Convert
 
-<!-- @c:aj3lib/types/Variable -->
-<!-- @c:aj3lib/types/NativeType -->
+<!-- @c:jm3lib/types/Variable -->
+<!-- @c:jm3lib/types/NativeType -->
 <!-- @c:spec/native-dispatch#Serialization Protocol -->
 
 Convert a `#Variable` from one language's type system to another. The conversion uses the Aljam3 type system as intermediary -- source native type is mapped to a Aljam3 type, then the Aljam3 type is mapped to the target native type.
@@ -85,8 +85,8 @@ No additional permissions required beyond the calling pipeline's permission scop
 
 ## Related
 
-- [[aj3lib/types/Variable|#Variable]] -- the language-tagged variable type
-- [[aj3lib/types/NativeType|#NativeType]] -- marshalling table for type mapping
-- [[aj3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] -- uses Convert internally
-- [[aj3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] -- uses Convert internally
+- [[jm3lib/types/Variable|#Variable]] -- the language-tagged variable type
+- [[jm3lib/types/NativeType|#NativeType]] -- marshalling table for type mapping
+- [[jm3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] -- uses Convert internally
+- [[jm3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] -- uses Convert internally
 - [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] -- full algorithm specification

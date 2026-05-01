@@ -17,7 +17,7 @@ updated: 2026-03-30
 
 A **struct** is any type with a defined schema, declared with `{#}` (see [[blocks]]). The term "struct" refers to the type category — `{#}` is the declaration syntax. Every struct definition creates a schema template at `%definition.#:{StructName}` and instances at `%#:{StructName}:{n}` — see [[data-is-trees#Schema vs Instance]].
 
-aj3lib structs with value fields include `#path`, `#Queue`, and `#DateTime` (see [[aj3lib/types/structs|aj3lib structs]] and [[aj3lib/types/datetime/INDEX|datetime]]). Enum types (`#Boolean`, `#OS`, `#PipelineStatus`, `#VarState`) are also `{#}` structs but documented separately — see [[aj3lib/types/enums|enums]] and [[aj3lib/types/boolean|boolean]]. User-defined structs follow the same rules.
+jm3lib structs with value fields include `#path`, `#Queue`, and `#DateTime` (see [[jm3lib/types/structs|jm3lib structs]] and [[jm3lib/types/datetime/INDEX|datetime]]). Enum types (`#Boolean`, `#OS`, `#PipelineStatus`, `#VarState`) are also `{#}` structs but documented separately — see [[jm3lib/types/enums|enums]] and [[jm3lib/types/boolean|boolean]]. User-defined structs follow the same rules.
 
 In type annotations (after `#`), nested type refs drop the `#` prefix — the compiler knows `#` starts a type context:
 

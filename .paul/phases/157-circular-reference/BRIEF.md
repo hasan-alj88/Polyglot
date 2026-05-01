@@ -16,7 +16,7 @@ Three documents form a circular dependency with no external ground truth breakin
 |------|-------------|
 | `docs/user/syntax/types/conversions.md` | Defers to PGE04009 for the "cannot prove match" rule instead of stating it authoritatively; also references `*Continue >FallBack` without self-contained explanation |
 | `docs/technical/compile-rules/PGE/PGE04009-unhandled-serial-struct-conversion.md` | References `*Continue` for the required recovery pattern and links back to `conversions.md` via See Also |
-| `docs/user/aj3lib/collectors/Continue.md` | References PGE04009 as the rule mandating `*Continue >FallBack` for serial-to-struct conversion, closing the loop |
+| `docs/user/jm3lib/collectors/Continue.md` | References PGE04009 as the rule mandating `*Continue >FallBack` for serial-to-struct conversion, closing the loop |
 
 ## Example
 **Source A** (`docs/user/syntax/types/conversions.md`, line ~58):
@@ -24,9 +24,9 @@ Three documents form a circular dependency with no external ground truth breakin
 
 **Source B** (`docs/technical/compile-rules/PGE/PGE04009-unhandled-serial-struct-conversion.md`, lines ~102-103):
 > - [[syntax/types/conversions|Type Conversions]] -- serial-to-struct conversion handling rules
-> - [[aj3lib/collectors/Continue|*Continue]] -- `*Continue >FallBack` usage for unproven conversions
+> - [[jm3lib/collectors/Continue|*Continue]] -- `*Continue >FallBack` usage for unproven conversions
 
-**Source C** (`docs/user/aj3lib/collectors/Continue.md`, line ~46):
+**Source C** (`docs/user/jm3lib/collectors/Continue.md`, line ~46):
 > When used for serial->struct conversion, `[!]` + `*Continue >FallBack` is mandatory if the compiler cannot prove the match (PGE04009)
 
 ## Prior Related Work

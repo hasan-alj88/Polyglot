@@ -27,4 +27,4 @@ metadata_instance: "%#:String:int"
 | Definition | `%definition.#:Int` | Schema descriptor |
 | Instance | `%#:String:int` | Tree path under `#String` |
 
-See [[aj3lib/types/scalars/INDEX\|Scalar Subtypes]] for the full summary table.
+See [[jm3lib/types/scalars/INDEX\|Scalar Subtypes]] for the full summary table.

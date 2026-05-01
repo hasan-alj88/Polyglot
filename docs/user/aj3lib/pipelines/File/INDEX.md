@@ -7,9 +7,9 @@ status: complete
 
 # -File.* File Pipelines
 
-aj3lib pipelines for file system operations. All are native definitions -- no `[@]` import needed. Success is signalled by `!NoError`. Side-effect-only pipelines (Write, Append, Copy, Move, Delete) have no output -- `!NoError` confirms completion.
+jm3lib pipelines for file system operations. All are native definitions -- no `[@]` import needed. Success is signalled by `!NoError`. Side-effect-only pipelines (Write, Append, Copy, Move, Delete) have no output -- `!NoError` confirms completion.
 
-`-File.Serial.*` pipelines load and save structured data files (JSON, YAML, TOML). Format is auto-detected from file extension. Internally delegates to `-#.JSON.Parse`, `-#.YAML.Parse`, or `-#.TOML.Parse` base parsers (see [[aj3lib/pipelines/Schema/INDEX|pipelines/Schema]]).
+`-File.Serial.*` pipelines load and save structured data files (JSON, YAML, TOML). Format is auto-detected from file extension. Internally delegates to `-#.JSON.Parse`, `-#.YAML.Parse`, or `-#.TOML.Parse` base parsers (see [[jm3lib/pipelines/Schema/INDEX|pipelines/Schema]]).
 
 ## Permissions
 
@@ -33,27 +33,27 @@ All `-File.*` pipelines perform filesystem IO and require a `{_}` permission obj
 
 ### Text Operations
 
-- [[aj3lib/pipelines/File/Text.Read|-File.Text.Read]] -- Read text file contents
-- [[aj3lib/pipelines/File/Text.Write|-File.Text.Write]] -- Write text to file
-- [[aj3lib/pipelines/File/Text.Append|-File.Text.Append]] -- Append text to file
+- [[jm3lib/pipelines/File/Text.Read|-File.Text.Read]] -- Read text file contents
+- [[jm3lib/pipelines/File/Text.Write|-File.Text.Write]] -- Write text to file
+- [[jm3lib/pipelines/File/Text.Append|-File.Text.Append]] -- Append text to file
 
 ### Serial Operations
 
-- [[aj3lib/pipelines/File/Serial.Read|-File.Serial.Read]] -- Read and parse structured data file
-- [[aj3lib/pipelines/File/Serial.Write|-File.Serial.Write]] -- Serialize data tree to file
-- [[aj3lib/pipelines/File/Serial.Read.Field|-File.Serial.Read.Field]] -- One-step field extraction from structured file
+- [[jm3lib/pipelines/File/Serial.Read|-File.Serial.Read]] -- Read and parse structured data file
+- [[jm3lib/pipelines/File/Serial.Write|-File.Serial.Write]] -- Serialize data tree to file
+- [[jm3lib/pipelines/File/Serial.Read.Field|-File.Serial.Read.Field]] -- One-step field extraction from structured file
 
 ### File Management
 
-- [[aj3lib/pipelines/File/Copy|-File.Copy]] -- Copy file
-- [[aj3lib/pipelines/File/Move|-File.Move]] -- Move/rename file
-- [[aj3lib/pipelines/File/Delete|-File.Delete]] -- Delete file
-- [[aj3lib/pipelines/File/Access|-File.Access]] -- Check file access permissions
-- [[aj3lib/pipelines/File/List|-File.List]] -- List files in folder
+- [[jm3lib/pipelines/File/Copy|-File.Copy]] -- Copy file
+- [[jm3lib/pipelines/File/Move|-File.Move]] -- Move/rename file
+- [[jm3lib/pipelines/File/Delete|-File.Delete]] -- Delete file
+- [[jm3lib/pipelines/File/Access|-File.Access]] -- Check file access permissions
+- [[jm3lib/pipelines/File/List|-File.List]] -- List files in folder
 
 ## Related
 
-- [[aj3lib/pipelines/INDEX|aj3lib Pipeline Index]]
-- [[aj3lib/pipelines/Schema/INDEX|-# Base Parsers]]
+- [[jm3lib/pipelines/INDEX|jm3lib Pipeline Index]]
+- [[jm3lib/pipelines/Schema/INDEX|-# Base Parsers]]
 - [[permissions|Permission System]]
 - [[errors#Built-in Error Namespaces|Built-in Error Namespaces]]

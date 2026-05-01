@@ -9,7 +9,7 @@ metadata_instance: "%W:Env:N"
 
 # -W.Env
 
-Sets up a language environment on setup, tears it down on cleanup. Replaces the deprecated [[aj3lib/pipelines/W/RT|-W.Env]] wrapper.
+Sets up a language environment on setup, tears it down on cleanup. Replaces the deprecated [[jm3lib/pipelines/W/RT|-W.Env]] wrapper.
 
 The wrapper receives a `{;}` environment definition as input and handles all platform-level setup: runtime installation, dependency resolution, virtual environment creation, and environment variable injection. See [[environments]] for the `{;}` definition syntax.
 
@@ -80,7 +80,7 @@ The `#;` type represents a reference to a `{;}` environment definition. See [[en
    [=] !Env.Dependency.InstallFailed
 ```
 
-See [[aj3lib/errors/errors#Built-in Error Namespaces]] for the full `!Env` error tree.
+See [[jm3lib/errors/errors#Built-in Error Namespaces]] for the full `!Env` error tree.
 
 ### Error Handling at Call Site
 
@@ -111,6 +111,6 @@ System.Process
 ## Related
 
 - [[environments]] — `{;}` environment definition syntax
-- [[aj3lib/pipelines/W/INDEX|-W.* Wrappers]]
-- [[aj3lib/pipelines/W/RT|-W.Env]] (deprecated — use `-W.Env`)
-- [[aj3lib/errors/errors#Built-in Error Namespaces]] — `!Env.*` errors
+- [[jm3lib/pipelines/W/INDEX|-W.* Wrappers]]
+- [[jm3lib/pipelines/W/RT|-W.Env]] (deprecated — use `-W.Env`)
+- [[jm3lib/errors/errors#Built-in Error Namespaces]] — `!Env.*` errors

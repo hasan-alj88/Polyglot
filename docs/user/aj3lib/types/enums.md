@@ -9,7 +9,7 @@ status: complete
 
 <!-- @c:types -->
 
-Runtime and internal `##Enum` types available in every `.aj3` file. All enums use `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
+Runtime and internal `##Enum` types available in every `.jm3` file. All enums use `[#] ##Enum` (enum classification), `[#] ##Scalar` (depth 1), and `[#] ###ScalarEnum` (leaf content is variant selection).
 
 See [[boolean]] for `#Boolean` (also a `##Enum` type, documented separately).
 

@@ -53,6 +53,6 @@ Requires `File.Write` capability.
 
 ## Related
 
-- [[aj3lib/pipelines/File/INDEX|-File.* File Pipelines]]
-- [[aj3lib/pipelines/File/Serial.Read|-File.Serial.Read]]
-- [[aj3lib/pipelines/Schema/INDEX|-# Base Parsers]]
+- [[jm3lib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[jm3lib/pipelines/File/Serial.Read|-File.Serial.Read]]
+- [[jm3lib/pipelines/Schema/INDEX|-# Base Parsers]]

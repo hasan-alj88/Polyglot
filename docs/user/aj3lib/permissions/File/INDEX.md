@@ -42,6 +42,6 @@ Category-level generic permission for file system operations. Takes a capability
 
 ## Related
 
-- [[aj3lib/permissions/INDEX]] -- all aj3lib generic permissions
+- [[jm3lib/permissions/INDEX]] -- all jm3lib generic permissions
 - [[concepts/permissions]] -- permission system overview
-- [[aj3lib/types/PermissionCategory]] -- category enum
+- [[jm3lib/types/PermissionCategory]] -- category enum

@@ -10,9 +10,9 @@ metadata_instance: "%#:Re:N"
 # #Re — Regex Pattern Type
 
 <!-- @c:types -->
-<!-- @c:aj3lib/types/string -->
+<!-- @c:jm3lib/types/string -->
 
-`#Re` is a aj3lib type representing a compiled regular expression pattern. It stores the regex source text and is validated at compile time by the native `PgRegex` class — the compiler parses the pattern string using an actual regex engine, not regex-on-regex validation.
+`#Re` is a jm3lib type representing a compiled regular expression pattern. It stores the regex source text and is validated at compile time by the native `PgRegex` class — the compiler parses the pattern string using an actual regex engine, not regex-on-regex validation.
 
 See [[scalars]] for scalar subtypes and [[syntax/constructors]] for the `$Re` constructor.
 
@@ -63,8 +63,8 @@ This means `$Re"^[a-z]+$"` succeeds because the compiler proves the string is va
 
 ## Related
 
-- [[aj3lib/constructors/Re\|$Re constructor]] -- compile-time regex construction
-- [[aj3lib/pipelines/Re.Parse\|-Re.Parse]] -- runtime regex string parsing
+- [[jm3lib/constructors/Re\|$Re constructor]] -- compile-time regex construction
+- [[jm3lib/pipelines/Re.Parse\|-Re.Parse]] -- runtime regex string parsing
 - [[scalars]] -- scalar subtypes overview
 - [[string]] -- `#String` foundation type
 - [[syntax/types/INDEX\|types]] -- full type system specification

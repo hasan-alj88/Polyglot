@@ -35,7 +35,7 @@ The `>row` output is a compiler-synthesized struct from the `ColumnEnum` type pa
 
 ## Variants
 
-- [[aj3lib/expanders/ForEach/Dataframe/Enumerate|=ForEach.Dataframe.Enumerate]] -- adds positional `>index` output
+- [[jm3lib/expanders/ForEach/Dataframe/Enumerate|=ForEach.Dataframe.Enumerate]] -- adds positional `>index` output
 - ~~Column~~ -- **deprecated**. Use `-#.Column` pipeline instead.
 
 ## Errors
@@ -48,5 +48,5 @@ None.
 
 ## Related
 
-- [[aj3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
+- [[jm3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]

@@ -17,7 +17,7 @@ flowchart LR
     P1["Syntax Foundations\n(7 files)"]
     P2["Core Concepts\n(5 files)"]
     P3["The Big Picture\n(2 files)"]
-    P4["Packages & aj3lib\n(2 files)"]
+    P4["Packages & jm3lib\n(2 files)"]
     P5["Practice"]
 
     P1 --> P2 --> P3 --> P4 --> P5
@@ -58,7 +58,7 @@ flowchart LR
 | # | File | Covers |
 |---|------|--------|
 | 15 | packages.md | {@ } declaration, address format, imports |
-| 16 | aj3lib/INDEX.md | Namespace registry → per-namespace reference files |
+| 16 | jm3lib/INDEX.md | Namespace registry → per-namespace reference files |
 
 ## Phase 5: Practice
 
@@ -77,4 +77,4 @@ See [[technical/INDEX|docs/technical/INDEX.md]] — Architect section for runtim
 ## Adding New Spec Files
 
 When a new spec file is created, add it to the appropriate phase table above.
-The `/aj3:*` commands read this index dynamically — no command files need changing.
+The `/jm3:*` commands read this index dynamically — no command files need changing.

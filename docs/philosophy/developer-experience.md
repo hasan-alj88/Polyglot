@@ -17,7 +17,7 @@ updated: 2026-04-22
 
 The Aljam3 development workflow is a deliberately iterative **compile loop**:
 
-1. **Write** — Express your intent in [[glossary#.aj3 files|.aj3 files]]. Define [[glossary#Pipeline|pipelines]], triggers, permissions, error handling. Focus on *what* should happen, not *how*.
+1. **Write** — Express your intent in [[glossary#.jm3 files|.jm3 files]]. Define [[glossary#Pipeline|pipelines]], triggers, permissions, error handling. Focus on *what* should happen, not *how*.
 2. **Compile** — The compiler analyses your code and reports every gap it finds. Missing error handlers, unsatisfied permissions, race conditions in parallel blocks, type mismatches across language boundaries.
 3. **Fix** — Address each compiler error. Add the missing error path. Grant the required permission. Resolve the type mismatch. Each fix makes the pipeline more complete.
 4. **Compile again** — When the compiler reports no errors, the pipeline is ready. Every scenario is accounted for.

@@ -9,7 +9,7 @@ requires:
     provides: authoritative EBNF grammar with three-bracket system
 provides:
   - All compile rule docs updated with three-bracket syntax
-affects: [273-04 aj3lib, 273-05 remaining technical docs]
+affects: [273-04 jm3lib, 273-05 remaining technical docs]
 
 tech-stack:
   added: []
@@ -70,7 +70,7 @@ None — plan executed exactly as written.
 - All compile rules consistent with EBNF grammar from 273-01 and user docs from 273-02
 
 **Concerns:**
-- aj3lib docs still use old syntax (~99 files — plan 273-04 scope)
+- jm3lib docs still use old syntax (~99 files — plan 273-04 scope)
 - Edge-cases, brainstorming, spec, plan docs still use old syntax (~30 files — plan 273-05 scope)
 
 **Blockers:**

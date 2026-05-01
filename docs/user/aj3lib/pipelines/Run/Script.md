@@ -11,7 +11,7 @@ metadata_instance: "%-:Run.<Lang>.Script:N"
 
 Run code with Record-typed variable bindings. Field names become native local variables.
 
-> **Supersedes:** `-RT.<Lang>.Script.Inline` and `-RT.<Lang>.Script.File`. See [[aj3lib/pipelines/RT/Script.Inline|@d:-RT.\<Lang\>.Script.Inline]] and [[aj3lib/pipelines/RT/Script.File|@d:-RT.\<Lang\>.Script.File]].
+> **Supersedes:** `-RT.<Lang>.Script.Inline` and `-RT.<Lang>.Script.File`. See [[jm3lib/pipelines/RT/Script.Inline|@d:-RT.\<Lang\>.Script.Inline]] and [[jm3lib/pipelines/RT/Script.File|@d:-RT.\<Lang\>.Script.File]].
 
 ## Definition
 
@@ -54,7 +54,7 @@ This is the primary mechanism for passing Aljam3 data into foreign code:
 | `.target_w#int` | `target_w` |
 | `.target_h#int` | `target_h` |
 
-Field types drive marshalling through the native dispatch JSON wire format. See [[aj3lib/pipelines/Run/INDEX#Type Marshalling]] for the full type mapping table.
+Field types drive marshalling through the native dispatch JSON wire format. See [[jm3lib/pipelines/Run/INDEX#Type Marshalling]] for the full type mapping table.
 
 ## Compiler Validation
 
@@ -160,7 +160,7 @@ Each `-Run.*` call gets a fresh variable scope within the `-W.Env` environment. 
 
 ## Errors
 
-See [[aj3lib/pipelines/Run/INDEX#Binding Compiler Errors]].
+See [[jm3lib/pipelines/Run/INDEX#Binding Compiler Errors]].
 
 ## Permissions
 
@@ -175,6 +175,6 @@ Requires `System.Process` capability.
 
 ## Related
 
-- [[aj3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
-- [[aj3lib/pipelines/W/Env|-W.Env]] -- wrapper that manages runtime environments
-- [[aj3lib/types/rt|Runtime types]] -- `#Code`, `#PyEnv`, `#RsEnv`
+- [[jm3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
+- [[jm3lib/pipelines/W/Env|-W.Env]] -- wrapper that manages runtime environments
+- [[jm3lib/types/rt|Runtime types]] -- `#Code`, `#PyEnv`, `#RsEnv`

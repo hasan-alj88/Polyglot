@@ -17,13 +17,13 @@ affects: [272-02 schema files, 272-03 collection types, 272-04 syntax/concept do
 
 key-files:
   created:
-    - docs/user/aj3lib/types/FlexKind.md
-    - docs/user/aj3lib/types/ActiveKind.md
-    - docs/user/aj3lib/types/Bound.md
+    - docs/user/jm3lib/types/FlexKind.md
+    - docs/user/jm3lib/types/ActiveKind.md
+    - docs/user/jm3lib/types/Bound.md
   modified:
     - docs/user/syntax/types/schema-properties.md
-    - docs/user/aj3lib/types/enums.md
-    - docs/user/aj3lib/types/types.md
+    - docs/user/jm3lib/types/enums.md
+    - docs/user/jm3lib/types/types.md
     - docs/user/syntax/types/INDEX.md
 
 key-decisions:
@@ -74,12 +74,12 @@ completed: 2026-04-08
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/types/FlexKind.md` | Created | #FlexKind enum: .Fixed/.Flexible/.Range |
-| `docs/user/aj3lib/types/ActiveKind.md` | Created | #ActiveKind enum: .All/.One/.Partial |
-| `docs/user/aj3lib/types/Bound.md` | Created | #Bound type: ##Int + ##Inf composite |
+| `docs/user/jm3lib/types/FlexKind.md` | Created | #FlexKind enum: .Fixed/.Flexible/.Range |
+| `docs/user/jm3lib/types/ActiveKind.md` | Created | #ActiveKind enum: .All/.One/.Partial |
+| `docs/user/jm3lib/types/Bound.md` | Created | #Bound type: ##Int + ##Inf composite |
 | `docs/user/syntax/types/schema-properties.md` | Rewritten | New %##/%### property tables, approved schemas updated |
-| `docs/user/aj3lib/types/enums.md` | Modified | Added #FlexKind, #ActiveKind to registry |
-| `docs/user/aj3lib/types/types.md` | Modified | Added types to hierarchy and Category Index |
+| `docs/user/jm3lib/types/enums.md` | Modified | Added #FlexKind, #ActiveKind to registry |
+| `docs/user/jm3lib/types/types.md` | Modified | Added types to hierarchy and Category Index |
 | `docs/user/syntax/types/INDEX.md` | Modified | GT-9/GT-10 ground truths, macro-types description |
 
 ## Decisions Made

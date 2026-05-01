@@ -2,7 +2,7 @@
 phase: 280-inline-pipeline-syntax
 plan: 01
 subsystem: docs
-tags: [inline-calls, %InlineString, template, compiler-rules, aj3lib]
+tags: [inline-calls, %InlineString, template, compiler-rules, jm3lib]
 
 requires:
   - phase: 274-generic-input-marker
@@ -11,8 +11,8 @@ provides:
   - "%InlineString template-based inline pipeline call syntax"
   - "7 new compiler rules for template validation (PGE12005-PGE12010, PGW12002)"
   - "Rewritten PGE12003 and PGW12001 for new system"
-  - "3 aj3lib pipelines updated to use %InlineString"
-affects: [compile-rules, aj3lib, inline-calls]
+  - "3 jm3lib pipelines updated to use %InlineString"
+affects: [compile-rules, jm3lib, inline-calls]
 
 tech-stack:
   added: []
@@ -35,9 +35,9 @@ key-files:
     - docs/technical/compile-rules/PGE/PGE12003-invalid-inline-pipeline-argument.md
     - docs/technical/compile-rules/PGW/PGW12001-missing-inline-format-metadata.md
     - docs/technical/COMPILE-RULES.md
-    - docs/user/aj3lib/pipelines/Path.md
-    - docs/user/aj3lib/pipelines/T/Daily.md
-    - docs/user/aj3lib/pipelines/T/Webhook.md
+    - docs/user/jm3lib/pipelines/Path.md
+    - docs/user/jm3lib/pipelines/T/Daily.md
+    - docs/user/jm3lib/pipelines/T/Webhook.md
 
 key-decisions:
   - "Shifted new rule numbering to PGE12005-PGE12010 because PGE12004 already existed (Empty Metadata Alias)"
@@ -72,14 +72,14 @@ completed: 2026-04-12
 | AC-1: %InlineString Template Syntax Documented | Pass | inline-calls.md fully rewritten with template declaration, mechanism, optional placeholders, dual-mode |
 | AC-2: EBNF Grammar Updated | Pass | 08-expressions.md comment updated, 09-definition-blocks.md has inline_template_decl production |
 | AC-3: Compiler Rules Complete | Pass | PGE12003 rewritten, PGE12005-12010 created, PGW12001 rewritten, PGW12002 created, index updated |
-| AC-4: aj3lib Pipelines Use %InlineString | Pass | -Path, -T.Daily, -T.Webhook all declare %InlineString with named inputs |
+| AC-4: jm3lib Pipelines Use %InlineString | Pass | -Path, -T.Daily, -T.Webhook all declare %InlineString with named inputs |
 | AC-5: No Stale =Pipeline References | Pass | Zero results for InlineStringLiteral, =Path", =Pipeline", inlineFormat, inlineExamples in docs/ |
 
 ## Accomplishments
 
 - Rewrote inline-calls.md with complete %InlineString template system: `{name}` required and `{name?}` optional placeholders, 5-step mechanism, updated Mermaid diagram
 - Created 6 new compiler rules (PGE12005-PGE12010) + PGW12002 covering template validation, format mismatch, placeholder resolution, type coercion, and optional placeholder semantics
-- Updated 3 aj3lib pipelines (-Path, -T.Daily, -T.Webhook) and 3 edge case entries (EC-4.9, EC-4.11, EC-4.12) to use new syntax
+- Updated 3 jm3lib pipelines (-Path, -T.Daily, -T.Webhook) and 3 edge case entries (EC-4.9, EC-4.11, EC-4.12) to use new syntax
 
 ## Files Created/Modified
 
@@ -99,9 +99,9 @@ completed: 2026-04-12
 | docs/technical/compile-rules/PGW/PGW12001-*.md | Modified | Rewritten: Template With No Placeholders |
 | docs/technical/compile-rules/PGW/PGW12002-*.md | Created | Optional Placeholder Never Provided |
 | docs/technical/COMPILE-RULES.md | Modified | Index updated with all new rules |
-| docs/user/aj3lib/pipelines/Path.md | Modified | %InlineString << "{path}", <path#path |
-| docs/user/aj3lib/pipelines/T/Daily.md | Modified | %InlineString << "{time}", <time#string |
-| docs/user/aj3lib/pipelines/T/Webhook.md | Modified | %InlineString << "{endpoint}", <endpoint#string |
+| docs/user/jm3lib/pipelines/Path.md | Modified | %InlineString << "{path}", <path#path |
+| docs/user/jm3lib/pipelines/T/Daily.md | Modified | %InlineString << "{time}", <time#string |
+| docs/user/jm3lib/pipelines/T/Webhook.md | Modified | %InlineString << "{endpoint}", <endpoint#string |
 
 ## Decisions Made
 
@@ -139,7 +139,7 @@ None.
 **Ready:**
 - %InlineString template system fully documented
 - Compiler rules provide complete validation coverage
-- aj3lib pipelines demonstrate the new syntax
+- jm3lib pipelines demonstrate the new syntax
 - Phase is single-plan — ready for transition
 
 **Concerns:**

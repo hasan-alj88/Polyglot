@@ -1,7 +1,7 @@
 ---
 issue: 147
 group: 5
-group_name: "aj3lib Classification"
+group_name: "jm3lib Classification"
 priority: P3-medium
 status: brief-ready
 ---
@@ -15,7 +15,7 @@ The EBNF grammar defines expand invocations as using a single `~` prefix: `expan
 | File | What's Wrong |
 |------|-------------|
 | `docs/technical/ebnf/12-collections.md` | Defines `expand_invocation ::= '~' expand_operator` (single prefix) but describes `.~` suffix in prose only (line ~36) with no grammar production |
-| `docs/user/aj3lib/expanders/ForEach/Level.md` | Documents `<level << #SomeData.SubField.~` with `.~` suffix but does not explain the grammatical basis |
+| `docs/user/jm3lib/expanders/ForEach/Level.md` | Documents `<level << #SomeData.SubField.~` with `.~` suffix but does not explain the grammatical basis |
 | `docs/user/concepts/collections/expand.md` | Lists `~ForEach.Level` in the operator table with `<level` input but does not mention the `.~` suffix in the table; only describes it in the subsection below |
 | `docs/technical/edge-cases/12-collections.md` | EC-12.4 tests the tilde suffix but calls it "special input syntax" without EBNF formalization |
 
@@ -26,7 +26,7 @@ The EBNF grammar defines expand invocations as using a single `~` prefix: `expan
 **Source B** (`docs/technical/ebnf/12-collections.md`, line ~36):
 > **`~ForEach.Level` special input syntax:** The `~` suffix on input marks the iteration point: `<level << #SomeData.SubField.~`
 
-**Source C** (`docs/user/aj3lib/expanders/ForEach/Level.md`, lines ~25-26):
+**Source C** (`docs/user/jm3lib/expanders/ForEach/Level.md`, lines ~25-26):
 > ```polyglot
 > [r] ~ForEach.Level
 >    [~] <level << #SomeData.SubField.~

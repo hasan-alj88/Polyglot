@@ -53,6 +53,6 @@ None -- pure computation.
 
 ## Related
 
-- [[aj3lib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
-- [[aj3lib/pipelines/Schema/Validate|-#.Validate]]
-- [[aj3lib/pipelines/Schema/Coerce|-#.Coerce]]
+- [[jm3lib/pipelines/Schema/INDEX|-# Schema Validation & Field Extraction]]
+- [[jm3lib/pipelines/Schema/Validate|-#.Validate]]
+- [[jm3lib/pipelines/Schema/Coerce|-#.Coerce]]

@@ -16,25 +16,25 @@ affects: [272-03 collection types, 272-04 syntax/concept docs, 272-05 technical 
 
 key-files:
   created:
-    - docs/user/aj3lib/types/schemas/Inf.md
-    - docs/user/aj3lib/types/schemas/Sorted.md
-    - docs/user/aj3lib/types/schemas/Fields.md
-    - docs/user/aj3lib/types/schemas/Nullable.md
-    - docs/user/aj3lib/types/schemas/Result.md
-    - docs/user/aj3lib/types/schemas/String.md
-    - docs/user/aj3lib/types/schemas/Map.md
-    - docs/user/aj3lib/types/schemas/Array.md
-    - docs/user/aj3lib/types/schemas/Set.md
-    - docs/user/aj3lib/types/schemas/Dataframe.md
+    - docs/user/jm3lib/types/schemas/Inf.md
+    - docs/user/jm3lib/types/schemas/Sorted.md
+    - docs/user/jm3lib/types/schemas/Fields.md
+    - docs/user/jm3lib/types/schemas/Nullable.md
+    - docs/user/jm3lib/types/schemas/Result.md
+    - docs/user/jm3lib/types/schemas/String.md
+    - docs/user/jm3lib/types/schemas/Map.md
+    - docs/user/jm3lib/types/schemas/Array.md
+    - docs/user/jm3lib/types/schemas/Set.md
+    - docs/user/jm3lib/types/schemas/Dataframe.md
   modified:
-    - docs/user/aj3lib/types/schemas/INDEX.md
-    - docs/user/aj3lib/types/schemas/Enum.md
-    - docs/user/aj3lib/types/schemas/Rectangular.md
-    - docs/user/aj3lib/types/schemas/Contiguous.md
-    - docs/user/aj3lib/types/schemas/Sparse.md
-    - docs/user/aj3lib/types/schemas/Deep.md
-    - docs/user/aj3lib/types/schemas/Homogeneous.md
-    - docs/user/aj3lib/types/schemas/Heterogeneous.md
+    - docs/user/jm3lib/types/schemas/INDEX.md
+    - docs/user/jm3lib/types/schemas/Enum.md
+    - docs/user/jm3lib/types/schemas/Rectangular.md
+    - docs/user/jm3lib/types/schemas/Contiguous.md
+    - docs/user/jm3lib/types/schemas/Sparse.md
+    - docs/user/jm3lib/types/schemas/Deep.md
+    - docs/user/jm3lib/types/schemas/Homogeneous.md
+    - docs/user/jm3lib/types/schemas/Heterogeneous.md
 
 key-decisions:
   - "Retired schemas kept as redirect stubs (not deleted) for wikilink stability"

@@ -39,7 +39,7 @@ metadata_definition: "%definition.##:Flat"
 
 ## Used By
 
-<!-- @u:aj3lib/types/Job -->
+<!-- @u:jm3lib/types/Job -->
 
 - [[Job|#Job]]
 - `##Enum` (composes ##Flat)

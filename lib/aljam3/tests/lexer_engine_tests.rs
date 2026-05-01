@@ -3,7 +3,7 @@ use aljam3::lexer::token::Aljam3Token;
 
 #[test]
 fn test_lex_basic_pipeline() {
-    let script = std::fs::read_to_string("tests/fixtures/basic_pipeline.aj3").unwrap();
+    let script = std::fs::read_to_string("tests/fixtures/basic_pipeline.jm3").unwrap();
     let tokens = lex(&script);
 
     println!("\n=== Aljam3 Token Stream ===");
@@ -17,7 +17,7 @@ fn test_lex_basic_pipeline() {
 
 #[test]
 fn test_lex_incorrect_indent() {
-    let script = std::fs::read_to_string("tests/fixtures/incorrect_indent.aj3").unwrap();
+    let script = std::fs::read_to_string("tests/fixtures/incorrect_indent.jm3").unwrap();
     let tokens = lex(&script);
 
     println!("\n=== Incorrect Indent Stream ===");
@@ -43,7 +43,7 @@ fn test_lex_incorrect_indent() {
 
 #[test]
 fn test_lex_comments() {
-    let script = std::fs::read_to_string("tests/fixtures/comments.aj3").unwrap();
+    let script = std::fs::read_to_string("tests/fixtures/comments.jm3").unwrap();
     let tokens = lex(&script);
     println!("\n=== Aljam3 Comments Stream ===");
     for t in &tokens {
@@ -57,7 +57,7 @@ fn test_lex_comments() {
 
 #[test]
 fn test_lex_edge_cases() {
-    let script = std::fs::read_to_string("tests/fixtures/edge_cases.aj3").unwrap();
+    let script = std::fs::read_to_string("tests/fixtures/edge_cases.jm3").unwrap();
     let tokens = lex(&script);
     println!("\n=== Aljam3 Edge Cases Stream ===");
     for t in &tokens {
@@ -93,7 +93,7 @@ fn test_cli_execution() {
     use std::path::Path;
     use std::process::Command;
 
-    let output_file = "tests/fixtures/cli_output_test.aj3ts";
+    let output_file = "tests/fixtures/cli_output_test.jm3ts";
     let _ = fs::remove_file(output_file); // Ensure clean state before start
 
     let status = Command::new("cargo")
@@ -104,7 +104,7 @@ fn test_cli_execution() {
             "--",
             "--lexer",
             "-c",
-            "tests/fixtures/basic_pipeline.aj3",
+            "tests/fixtures/basic_pipeline.jm3",
             "-t",
             output_file,
         ])
@@ -117,11 +117,11 @@ fn test_cli_execution() {
     );
     assert!(
         Path::new(output_file).exists(),
-        "CLI failed to generate the .aj3ts output file"
+        "CLI failed to generate the .jm3ts output file"
     );
 
     let generated_content =
-        fs::read_to_string(output_file).expect("Failed to read generated .aj3ts");
+        fs::read_to_string(output_file).expect("Failed to read generated .jm3ts");
 
     // Assert that the CLI fundamentally parses and formats identically to the organic lex() core
     assert!(generated_content.contains("[L02:C01] ActionExecSeq"));
@@ -228,7 +228,7 @@ fn test_lex_advanced_operators() {
 
 #[test]
 fn test_lex_valid_code() {
-    let script = std::fs::read_to_string("tests/fixtures/valid_code.aj3").unwrap();
+    let script = std::fs::read_to_string("tests/fixtures/valid_code.jm3").unwrap();
     let tokens = lex(&script);
 
     let mut generated_string = String::new();
@@ -255,10 +255,10 @@ fn test_lex_valid_code() {
     println!("{}", generated_string);
 
     // Verify the emitted token stream exactly matches the expected spec
-    let expected_string = std::fs::read_to_string("tests/fixtures/valid_code.aj3ts").unwrap();
+    let expected_string = std::fs::read_to_string("tests/fixtures/valid_code.jm3ts").unwrap();
     assert_eq!(
         generated_string, expected_string,
-        "Generated token stream does not match tests/fixtures/valid_code.aj3ts"
+        "Generated token stream does not match tests/fixtures/valid_code.jm3ts"
     );
 }
 

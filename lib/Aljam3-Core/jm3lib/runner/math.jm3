@@ -1,0 +1,29 @@
+{@} @jm3lib.runner.math
+
+{ } Runner native operations — Math (positional IO)
+
+{-} =Math.Add
+   [%] .description << "Add two or more numbers"
+
+{-} =Math.Subtract
+   [%] .description << "Subtract second from first"
+
+{-} =Math.Multiply
+   [%] .description << "Multiply two or more numbers"
+
+{-} =Math.Divide
+   [%] .description << "Divide first by second"
+   [=] !Math.DivisionByZero
+
+{-} =Math.Modulo
+   [%] .description << "Remainder of division"
+   [=] !Math.DivisionByZero
+
+{-} =Math.Power
+   [%] .description << "Raise base to exponent"
+
+{-} =Math.Abs
+   [%] .description << "Absolute value"
+
+{-} =Math.Negate
+   [%] .description << "Negate a number"

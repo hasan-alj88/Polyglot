@@ -8,11 +8,11 @@ status: complete
 # Standard Library — Namespace Registry
 
 <!-- @c:packages -->
-This is the authoritative list of all aj3lib namespaces. Any top-level namespace listed here is **reserved** — user `[@]` import aliases must not shadow these names (PGE09012). See [[packages#Import Rules]].
+This is the authoritative list of all jm3lib namespaces. Any top-level namespace listed here is **reserved** — user `[@]` import aliases must not shadow these names (PGE09012). See [[packages#Import Rules]].
 
-Standard library items do NOT require an `[@]` import — they are available in every `.aj3` file by default.
+Standard library items do NOT require an `[@]` import — they are available in every `.jm3` file by default.
 
-All aj3lib items live on the `%` metadata tree (see [[data-is-trees#How Concepts Connect]]). Pipeline namespaces are at `%-`, operators at `%=` and `%*`, types at `%#`, errors at `%!`.
+All jm3lib items live on the `%` metadata tree (see [[data-is-trees#How Concepts Connect]]). Pipeline namespaces are at `%-`, operators at `%=` and `%*`, types at `%#`, errors at `%!`.
 
 **Legend**
 
@@ -94,7 +94,7 @@ All aj3lib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 | `__Device` | [permissions/Device.md](permissions/Device.md) | Device permissions (Camera, Microphone, Location, Bluetooth) | Stable |
 | `__Memory` | [permissions/Memory.md](permissions/Memory.md) | Memory permissions (Allocate, Shared) | Stable |
 
-See [[aj3lib/permissions/INDEX|Generic Permissions INDEX]] for full capability-level breakdown.
+See [[jm3lib/permissions/INDEX|Generic Permissions INDEX]] for full capability-level breakdown.
 
 ## Error Namespaces (!)
 

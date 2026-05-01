@@ -31,4 +31,4 @@ Capability-level generic permission for memory allocation. Sugar over [[INDEX|__
 ## Related
 
 - [[INDEX|__Memory]] -- category-level generic
-- [[aj3lib/permissions/INDEX]] -- all aj3lib generic permissions
+- [[jm3lib/permissions/INDEX]] -- all jm3lib generic permissions

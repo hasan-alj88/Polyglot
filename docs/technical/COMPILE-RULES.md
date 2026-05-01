@@ -215,7 +215,7 @@ Error codes use the `PGExxNNN` format where `xx` is the category (01–99) and `
 | PGE09009 | Multi-File Self-Reference |
 | PGE09010 | Asymmetric Multi-File Reference |
 | PGE09011 | Duplicate Import Alias |
-| PGE09012 | Import Alias Shadows aj3lib |
+| PGE09012 | Import Alias Shadows jm3lib |
 | PGE09013 | Circular Pipeline Call |
 
 ### 10 — Permissions

@@ -31,4 +31,4 @@ Capability-level generic permission for key management. Sugar over [[INDEX|__Cry
 ## Related
 
 - [[INDEX|__Crypto]] -- category-level generic
-- [[aj3lib/permissions/INDEX]] -- all aj3lib generic permissions
+- [[jm3lib/permissions/INDEX]] -- all jm3lib generic permissions

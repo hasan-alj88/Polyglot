@@ -50,5 +50,5 @@ An unresolved conflict from a k-way merge operation. When multiple parallel jobs
 - [[MergeResult]] — contains an array of #MergeConflict in .conflicts field
 - [[MergeStrategy]] — conflict resolution strategies
 - [[TextDiff]] — individual diff entries that may conflict
-- [[structs]] — other aj3lib struct types
+- [[structs]] — other jm3lib struct types
 - [[syntax/types/INDEX|types]] — full type system specification

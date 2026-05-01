@@ -10,9 +10,9 @@ metadata_instance: "%#:MIME:N"
 # #MIME — Media Type
 
 <!-- @c:types -->
-<!-- @c:aj3lib/types/string -->
+<!-- @c:jm3lib/types/string -->
 
-`#MIME` is a aj3lib type representing an Internet media type (RFC 6838). It stores the type and subtype components separately, enabling type-safe MIME handling without string parsing at runtime.
+`#MIME` is a jm3lib type representing an Internet media type (RFC 6838). It stores the type and subtype components separately, enabling type-safe MIME handling without string parsing at runtime.
 
 See [[syntax/constructors]] for the `$MIME` constructor.
 
@@ -62,8 +62,8 @@ See [[syntax/constructors]] for the `$MIME` constructor.
 
 ## Related
 
-- [[aj3lib/constructors/MIME\|$MIME constructor]] -- compile-time MIME construction
-- [[aj3lib/pipelines/MIME.Parse\|-MIME.Parse]] -- runtime MIME string parsing
+- [[jm3lib/constructors/MIME\|$MIME constructor]] -- compile-time MIME construction
+- [[jm3lib/pipelines/MIME.Parse\|-MIME.Parse]] -- runtime MIME string parsing
 - [[scalars]] -- scalar subtypes overview
 - [[string]] -- `#String` foundation type
 - [[syntax/types/INDEX\|types]] -- full type system specification

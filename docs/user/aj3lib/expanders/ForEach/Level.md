@@ -44,6 +44,6 @@ None.
 
 ## Related
 
-- [[aj3lib/expanders/ForEach/Serial|=ForEach.Serial]] -- iterates all levels
-- [[aj3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
+- [[jm3lib/expanders/ForEach/Serial|=ForEach.Serial]] -- iterates all levels
+- [[jm3lib/expanders/ForEach/INDEX|=ForEach Expanders]]
 - [[concepts/collections/expand|Expand Operators]]

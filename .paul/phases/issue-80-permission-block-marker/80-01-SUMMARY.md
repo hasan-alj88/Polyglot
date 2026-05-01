@@ -5,7 +5,7 @@ subsystem: language-spec
 tags: [permissions, identifiers, blocks, implicit-deny, security]
 
 requires:
-  - phase: 12-package-system-aj3lib
+  - phase: 12-package-system-jm3lib
     provides: existing identifiers.md and blocks.md spec files
 provides:
   - "_ permission identifier prefix in identifiers.md"

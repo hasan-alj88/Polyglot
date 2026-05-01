@@ -67,6 +67,6 @@ None required. Pure computation pipeline.
 
 ## Related
 
-- [[aj3lib/pipelines/Path|-Path pipeline]] -- Path creation pipeline
-- [[aj3lib/constructors/Path|$Path constructor]] -- compile-time path construction
-- [[aj3lib/types/path|#path type]] -- cross-platform path struct
+- [[jm3lib/pipelines/Path|-Path pipeline]] -- Path creation pipeline
+- [[jm3lib/constructors/Path|$Path constructor]] -- compile-time path construction
+- [[jm3lib/types/path|#path type]] -- cross-platform path struct

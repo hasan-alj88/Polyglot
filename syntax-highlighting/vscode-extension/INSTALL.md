@@ -22,7 +22,7 @@ This guide explains how to install the Aljam3 syntax highlighting extension for 
    - Press Enter
 
 4. **Verify installation**:
-   - Open a `.aj3` file or create a new file with `.aj3` extension
+   - Open a `.jm3` file or create a new file with `.jm3` extension
    - Check the language mode indicator in the bottom-right corner
    - Should show "Aljam3"
 
@@ -57,9 +57,9 @@ This guide explains how to install the Aljam3 syntax highlighting extension for 
 
 ## Testing Syntax Highlighting
 
-### Test with .aj3 Files
+### Test with .jm3 Files
 
-Create a test file `test.aj3`:
+Create a test file `test.jm3`:
 
 ```aljam3
 [@] @example/hello-world
@@ -78,7 +78,7 @@ Create a test file `test.aj3`:
 [X]
 ```
 
-Open `test.aj3` in VSCode - you should see:
+Open `test.jm3` in VSCode - you should see:
 - Block markers `[@]`, `[|]`, `[r]`, etc. highlighted
 - Operators `<<` highlighted
 - Identifiers like `.message`, `|HelloWorld` highlighted
@@ -186,7 +186,7 @@ The extension includes helpful snippets. Type the prefix and press `Tab`:
 
 ### Example Usage
 
-1. Create a new `.aj3` file
+1. Create a new `.jm3` file
 2. Type `pipeline` and press `Tab`
 3. Fill in the placeholders (press `Tab` to move between them)
 
@@ -203,7 +203,7 @@ The extension includes helpful snippets. Type the prefix and press `Tab`:
    ```json
    {
      "files.associations": {
-       "*.aj3": "aljam3"
+       "*.jm3": "aljam3"
      }
    }
    ```

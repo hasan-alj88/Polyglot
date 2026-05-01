@@ -13,7 +13,7 @@ updated: 2026-03-30
 <!-- @u:EBNF:file -->
 **EBNF:** `file ::= package_block { definition }` — the `{ }` repetition allows zero or more definitions after the package block.
 
-**What it tests:** A single `.aj3` file containing `{@}`, `{#}`, `{-}`, and `{ }` definitions together.
+**What it tests:** A single `.jm3` file containing `{@}`, `{#}`, `{-}`, and `{ }` definitions together.
 
 **Cross-refs:** [[packages]] (package block), [[blocks]] (definition elements)
 
@@ -36,7 +36,7 @@ updated: 2026-03-30
 
 **EBNF:** `file ::= package_block { definition }` — zero definitions is valid.
 
-**What it tests:** Minimal valid `.aj3` file.
+**What it tests:** Minimal valid `.jm3` file.
 
 ```aljam3
 {@} @Local:001.Empty:v1.0.0

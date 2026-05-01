@@ -121,7 +121,7 @@
 - Don't soften the opinionatedness — "every error path must be handled" is the point
 
 ## Proof Points
-**Metrics:** Specification phase complete (v0.2); comprehensive language spec covering syntax, type system, pipelines, concurrency, error handling, permissions, and aj3lib standard library
+**Metrics:** Specification phase complete (v0.2); comprehensive language spec covering syntax, type system, pipelines, concurrency, error handling, permissions, and jm3lib standard library
 **Community signals:** Building in public, seeking collaborators for compiler implementation (Rust)
 **Testimonials:** *(none yet — pre-launch)*
 **Value themes:**

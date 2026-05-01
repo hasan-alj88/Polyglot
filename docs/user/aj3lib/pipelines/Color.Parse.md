@@ -67,5 +67,5 @@ None required. Pure computation pipeline.
 
 ## Related
 
-- [[aj3lib/constructors/Color|$Color constructor]] -- compile-time color construction
-- [[aj3lib/types/Color|#Color type]] -- color value type definition
+- [[jm3lib/constructors/Color|$Color constructor]] -- compile-time color construction
+- [[jm3lib/types/Color|#Color type]] -- color value type definition

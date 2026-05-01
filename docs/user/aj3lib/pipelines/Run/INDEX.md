@@ -9,17 +9,17 @@ status: draft
 
 <!-- @c:pipelines -->
 <!-- @c:glossary#Runner -->
-<!-- @c:aj3lib/types/Variable -->
-<!-- @c:aj3lib/types/NativeType -->
+<!-- @c:jm3lib/types/Variable -->
+<!-- @c:jm3lib/types/NativeType -->
 Foreign code execution pipelines run native code (Python, Rust, etc.) within Aljam3 pipelines. Language-specific pipelines (`-Run.<Lang>.*`) take an environment handle from `-W.Env`; the language-agnostic `-Run.Shell` uses `-W.Aljam3` instead. Cross-language Bridge pipelines (`-Run.Bridge.*`) take two `-W.Env` wrappers and convert variables between languages automatically.
 
 No `[@]` import needed.
 
-**PRIMITIVE** — aj3lib runtime pipelines are direct language runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.aj3` files.
+**PRIMITIVE** — jm3lib runtime pipelines are direct language runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.jm3` files.
 
 `<Lang>` is a placeholder for the target language (Python, Rust, etc.). The actual pipeline name uses the concrete language: `-Run.Python.Function`, `-Run.Rust.Script`, etc. `-Run.Shell` is the exception — it is language-agnostic and invokes the system shell directly.
 
-> **Supersedes:** `-RT.*` pipeline family. See [[aj3lib/pipelines/RT/INDEX|@d:-RT.*]] for the deprecated specification.
+> **Supersedes:** `-RT.*` pipeline family. See [[jm3lib/pipelines/RT/INDEX|@d:-RT.*]] for the deprecated specification.
 
 ## Permissions
 
@@ -36,13 +36,13 @@ All `-Run.*` pipelines require a `{_}` permission object granting System.Process
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/Run/Function\|-Run.\<Lang\>.Function]] | Call a named function in foreign code |
-| [[aj3lib/pipelines/Run/Script\|-Run.\<Lang\>.Script]] | Run code with Record-typed variable bindings |
-| [[aj3lib/pipelines/Run/CLI\|-Run.\<Lang\>.CLI]] | Invoke compiled binary with string arguments |
-| [[aj3lib/pipelines/Run/Bind\|-Run.\<Lang\>.Bind]] | Foreign code imports aljam3 lib for data flow |
-| [[aj3lib/pipelines/Run/Bridge.Function\|-Run.Bridge.Function]] | Call a named function across language boundaries |
-| [[aj3lib/pipelines/Run/Bridge.Script\|-Run.Bridge.Script]] | Run code with cross-language variable bindings |
-| [[aj3lib/pipelines/Run/Shell\|-Run.Shell]] | Execute shell command strings (pipes, redirections, compound commands) |
+| [[jm3lib/pipelines/Run/Function\|-Run.\<Lang\>.Function]] | Call a named function in foreign code |
+| [[jm3lib/pipelines/Run/Script\|-Run.\<Lang\>.Script]] | Run code with Record-typed variable bindings |
+| [[jm3lib/pipelines/Run/CLI\|-Run.\<Lang\>.CLI]] | Invoke compiled binary with string arguments |
+| [[jm3lib/pipelines/Run/Bind\|-Run.\<Lang\>.Bind]] | Foreign code imports aljam3 lib for data flow |
+| [[jm3lib/pipelines/Run/Bridge.Function\|-Run.Bridge.Function]] | Call a named function across language boundaries |
+| [[jm3lib/pipelines/Run/Bridge.Script\|-Run.Bridge.Script]] | Run code with cross-language variable bindings |
+| [[jm3lib/pipelines/Run/Shell\|-Run.Shell]] | Execute shell command strings (pipes, redirections, compound commands) |
 
 ## Code Source — `<code#Code:Source`
 
@@ -73,7 +73,7 @@ The compiler enforces `%##Active` one — providing both `.inline` and `.file` i
 ## Binding Modes
 
 <!-- @u:syntax/blocks#Foreign Code -->
-Four language-specific modes define **who controls data flow** between Aljam3 and foreign code. The fifth variant, `.Shell`, is language-agnostic — see [[aj3lib/pipelines/Run/Shell|-Run.Shell]].
+Four language-specific modes define **who controls data flow** between Aljam3 and foreign code. The fifth variant, `.Shell`, is language-agnostic — see [[jm3lib/pipelines/Run/Shell|-Run.Shell]].
 
 ### `.Function` — Structured Call
 
@@ -125,7 +125,7 @@ Foreign code imports the aljam3 lib and calls `pull("name")`/`push("name", value
 
 ### `.Bridge.Function` — Cross-Language Structured Call
 
-Call a named function where caller and callee run in **different** language environments. Arguments and return values are `#Variable` instances — language-tagged values that the Bridge converts automatically using [[aj3lib/pipelines/Variable/Convert|-Variable.Convert]].
+Call a named function where caller and callee run in **different** language environments. Arguments and return values are `#Variable` instances — language-tagged values that the Bridge converts automatically using [[jm3lib/pipelines/Variable/Convert|-Variable.Convert]].
 
 | IO | Type | Purpose |
 |----|------|---------|
@@ -136,7 +136,7 @@ Call a named function where caller and callee run in **different** language envi
 | `>output` | `#Code:Output` | `.stdout`, `.stderr` capture |
 | `<code` | `#Code:Source` | Function definition in callee language |
 
-See [[aj3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] for the full specification.
+See [[jm3lib/pipelines/Run/Bridge.Function|-Run.Bridge.Function]] for the full specification.
 
 ### `.Bridge.Script` — Cross-Language Variable Binding
 
@@ -149,7 +149,7 @@ Run code in one language with variables originating from another language. Each 
 | `>output` | `#Code:Output` | `.stdout`, `.stderr` capture |
 | `<code` | `#Code:Source` | Script code in callee language |
 
-See [[aj3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for the full specification.
+See [[jm3lib/pipelines/Run/Bridge.Script|-Run.Bridge.Script]] for the full specification.
 
 ### Dual-Wrapper Pattern (Bridge Only)
 
@@ -257,12 +257,12 @@ The `-W.Env` wrapper manages the **environment** (interpreter process, installed
 
 ## Related
 
-- [[aj3lib/pipelines/W/Env|-W.Env]] — wrapper that manages runtime environments
-- [[aj3lib/types/rt|Runtime types]] — `#Code`, `#PyEnv`, `#RsEnv`
-- [[aj3lib/types/Variable|#Variable]] — language-tagged variable for Bridge pipelines
-- [[aj3lib/types/NativeType|#NativeType]] — native type classifier per host language
-- [[aj3lib/pipelines/Variable/Convert|-Variable.Convert]] — pairwise variable conversion
-- [[aj3lib/errors/errors|errors]] — `!Run` error namespace
+- [[jm3lib/pipelines/W/Env|-W.Env]] — wrapper that manages runtime environments
+- [[jm3lib/types/rt|Runtime types]] — `#Code`, `#PyEnv`, `#RsEnv`
+- [[jm3lib/types/Variable|#Variable]] — language-tagged variable for Bridge pipelines
+- [[jm3lib/types/NativeType|#NativeType]] — native type classifier per host language
+- [[jm3lib/pipelines/Variable/Convert|-Variable.Convert]] — pairwise variable conversion
+- [[jm3lib/errors/errors|errors]] — `!Run` error namespace
 - [[syntax/blocks|blocks]] — `[C]` inline foreign code element
 - [[technical/algorithms/bridge-conversion|Bridge Conversion Algorithm]] — dual-wrapper lifecycle and conversion internals
 

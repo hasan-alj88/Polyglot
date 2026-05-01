@@ -25,7 +25,7 @@ Track which documentation areas have been audited against [[rules/checklist]] an
 |------|------|--------|-------------|--------------|
 | User concepts | user/concepts/ | In Progress | IC-001, IC-002, IC-007 | 2026-03-30 |
 | User syntax | user/syntax/ | In Progress | IC-003, IC-005, IC-006 | 2026-03-30 |
-| User aj3lib | user/aj3lib/ | In Progress | IC-004 (wikilinks only) | 2026-03-30 |
+| User jm3lib | user/jm3lib/ | In Progress | IC-004 (wikilinks only) | 2026-03-30 |
 | User indexes | SPEC-INDEX.md | In Progress | IC-006 | 2026-03-30 |
 | Technical specs | technical/spec/ | Not Started | — | — |
 | Technical EBNF | technical/ebnf/ | Not Started | — | — |

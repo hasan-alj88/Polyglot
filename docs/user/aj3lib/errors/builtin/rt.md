@@ -8,7 +8,7 @@ metadata_definition: "%!.RT"
 
 # `!RT`
 
-No `[@]` import needed — aj3lib built-in.
+No `[@]` import needed — jm3lib built-in.
 
 ```aljam3
 {!} !RT
@@ -48,4 +48,4 @@ See [[metadata-tree/FULL-TREE|Full Metadata Tree]] for the authoritative tree.
 | `!Env.*` | `[W]` wrapper setup | Environment availability + dependency resolution |
 | `!RT.*` | `[-]` body execution | Foreign code compile/runtime errors |
 
-`!Env.*` errors fire during [[aj3lib/pipelines/W/Env|-W.Env]] wrapper setup when the environment cannot be established. `!RT.EnvironmentError` fires during execution when the foreign runtime encounters an environment issue within already-running code. Both coexist — they cover different execution phases. See [[environments]] for the `{;}` environment system.
+`!Env.*` errors fire during [[jm3lib/pipelines/W/Env|-W.Env]] wrapper setup when the environment cannot be established. `!RT.EnvironmentError` fires during execution when the foreign runtime encounters an environment issue within already-running code. Both coexist — they cover different execution phases. See [[environments]] for the `{;}` environment system.

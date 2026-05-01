@@ -9,7 +9,7 @@ status: complete
 
 <!-- @c:types -->
 
-Aljam3 provides three collection schemas and one unconstrained type: `##Record`, `##Array`, `##Dataframe`, and `#Serial`. All are available in every `.aj3` file without `[@]` import.
+Aljam3 provides three collection schemas and one unconstrained type: `##Record`, `##Array`, `##Dataframe`, and `#Serial`. All are available in every `.jm3` file without `[@]` import.
 
 `##Record`, `##Array`, and `##Dataframe` are parameterized schemas that `{#}` types compose via `[#]`. `#Serial` is a plain `{#}` definition (no schema composition needed). See [[syntax/types/INDEX|types]] for the full type hierarchy and schema property definitions.
 

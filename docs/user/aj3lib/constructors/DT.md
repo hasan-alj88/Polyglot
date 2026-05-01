@@ -7,8 +7,8 @@ updated: 2026-04-22
 # $DT Constructor
 
 <!-- @u:syntax/constructors -->
-<!-- @c:aj3lib/types/datetime/main-type -->
-<!-- @c:aj3lib/types/datetime/core-components -->
+<!-- @c:jm3lib/types/datetime/main-type -->
+<!-- @c:jm3lib/types/datetime/core-components -->
 
 The `$DT` constructor produces `#DateTime`, `#Date`, and `#Time` values from string literals and keywords. All overloads are compile-time guaranteed — no error surface, no `[!]` handling needed.
 
@@ -113,7 +113,7 @@ Produces tomorrow's date. The runtime resolves calendar rollover (month/year bou
    [.] << $now
 ```
 
-Produces the current instant from the system clock. This is the **native pipeline overload** pattern — only aj3lib constructors may use `[-]` calls inside `{$}`. The `-DT.Now` pipeline is a `{N}` native operation guaranteed infallible by the runtime.
+Produces the current instant from the system clock. This is the **native pipeline overload** pattern — only jm3lib constructors may use `[-]` calls inside `{$}`. The `-DT.Now` pipeline is a `{N}` native operation guaranteed infallible by the runtime.
 
 The `[.] << $now` syntax assigns the entire tree from the pipeline result — no field-by-field mapping needed because `-DT.Now` already produces a complete `#DateTime`.
 
@@ -148,9 +148,9 @@ Keywords (`Today`, `Yesterday`, `Tomorrow`, `Now`) are exact-match — no regex 
 
 ## Related
 
-- [[constructors/INDEX|aj3lib Constructors]] -- constructor registry
+- [[constructors/INDEX|jm3lib Constructors]] -- constructor registry
 - [[syntax/constructors]] -- `{$}` block specification
-- [[aj3lib/pipelines/DT/INDEX|-DT.* pipelines]] -- DateTime pipelines
-- [[aj3lib/pipelines/DT/Parse|-DT.Parse]] -- runtime DateTime parsing
-- [[aj3lib/types/datetime/main-type|#DateTime type]] -- type hierarchy
-- [[aj3lib/types/datetime/core-components|core components]] -- `#Date`, `#Time`, `#Zone` fields
+- [[jm3lib/pipelines/DT/INDEX|-DT.* pipelines]] -- DateTime pipelines
+- [[jm3lib/pipelines/DT/Parse|-DT.Parse]] -- runtime DateTime parsing
+- [[jm3lib/types/datetime/main-type|#DateTime type]] -- type hierarchy
+- [[jm3lib/types/datetime/core-components|core components]] -- `#Date`, `#Time`, `#Zone` fields

@@ -61,6 +61,6 @@ None.
 
 ## Related
 
-- [[aj3lib/collectors/Sync/INDEX|Collect-All & Race Collectors]]
-- [[aj3lib/collectors/Sync/First|*First]] -- race alternative
+- [[jm3lib/collectors/Sync/INDEX|Collect-All & Race Collectors]]
+- [[jm3lib/collectors/Sync/First|*First]] -- race alternative
 - [[concepts/collections/collect|Collect Operators]]

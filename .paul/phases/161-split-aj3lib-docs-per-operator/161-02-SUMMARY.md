@@ -1,8 +1,8 @@
 ---
-phase: 161-split-aj3lib-docs-per-operator
+phase: 161-split-jm3lib-docs-per-operator
 plan: 02
 subsystem: docs
-tags: [aj3lib, expanders, doc-template]
+tags: [jm3lib, expanders, doc-template]
 
 requires:
   - phase: 161-01
@@ -14,16 +14,16 @@ affects: [161-05 wikilinks]
 
 key-files:
   created:
-    - docs/user/aj3lib/expanders/INDEX.md
-    - docs/user/aj3lib/expanders/ForEach/INDEX.md
+    - docs/user/jm3lib/expanders/INDEX.md
+    - docs/user/jm3lib/expanders/ForEach/INDEX.md
   modified:
-    - docs/user/aj3lib/expanders/ForEach/Array.md
-    - docs/user/aj3lib/expanders/ForEach/Array/Enumerate.md
-    - docs/user/aj3lib/expanders/ForEach/Map.md
-    - docs/user/aj3lib/expanders/ForEach/Serial.md
-    - docs/user/aj3lib/expanders/ForEach/Level.md
-    - docs/user/aj3lib/expanders/ForEach/Dataframe.md
-    - docs/user/aj3lib/expanders/ForEach/Dataframe/Enumerate.md
+    - docs/user/jm3lib/expanders/ForEach/Array.md
+    - docs/user/jm3lib/expanders/ForEach/Array/Enumerate.md
+    - docs/user/jm3lib/expanders/ForEach/Map.md
+    - docs/user/jm3lib/expanders/ForEach/Serial.md
+    - docs/user/jm3lib/expanders/ForEach/Level.md
+    - docs/user/jm3lib/expanders/ForEach/Dataframe.md
+    - docs/user/jm3lib/expanders/ForEach/Dataframe/Enumerate.md
 
 key-decisions:
   - "Dataframe/Column.md left unchanged (deprecated, status: deprecated)"
@@ -74,5 +74,5 @@ None -- plan executed exactly as written.
 - None
 
 ---
-*Phase: 161-split-aj3lib-docs-per-operator, Plan: 02*
+*Phase: 161-split-jm3lib-docs-per-operator, Plan: 02*
 *Completed: 2026-04-07*

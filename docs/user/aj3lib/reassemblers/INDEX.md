@@ -18,17 +18,17 @@ No `[@]` import needed.
 
 Expand a collection and reduce to a single scalar value.
 
-- [[aj3lib/reassemblers/Agg/INDEX|=*Agg.*]] -- Sum, Count, Average, Max, Min, Concatenate
+- [[jm3lib/reassemblers/Agg/INDEX|=*Agg.*]] -- Sum, Count, Average, Max, Min, Concatenate
 
 ## Transformation Reassemblers
 
 Expand a collection and collect into a different collection type.
 
-- [[aj3lib/reassemblers/Into/INDEX|=*Into.*]] -- Array, Map, Dataframe
+- [[jm3lib/reassemblers/Into/INDEX|=*Into.*]] -- Array, Map, Dataframe
 
 ## Related
 
-- [[aj3lib/INDEX|aj3lib Namespace Registry]]
-- [[aj3lib/expanders/INDEX|Expander Operators]] -- `=` fan-out operators
-- [[aj3lib/collectors/INDEX|Collector Operators]] -- `*` fan-in operators
+- [[jm3lib/INDEX|jm3lib Namespace Registry]]
+- [[jm3lib/expanders/INDEX|Expander Operators]] -- `=` fan-out operators
+- [[jm3lib/collectors/INDEX|Collector Operators]] -- `*` fan-in operators
 - [[concepts/collections/reassemble|Reassemble Operators (concept)]]

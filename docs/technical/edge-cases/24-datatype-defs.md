@@ -29,7 +29,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 | EC-24.15 | Invalid key type | Non-#KeyString key (PGE11004) |
 | EC-24.16 | #Serial — maximally permissive schemas | Unlimited depth escape hatch (PGW11003 exemption) |
 | EC-24.17 | #Dataframe status | Row-oriented access via `$df<row<column` |
-| EC-24.18 | Stale %Property notation | aj3lib types.md missing `##` prefix |
+| EC-24.18 | Stale %Property notation | jm3lib types.md missing `##` prefix |
 | EC-24.19 | *(Retired)* Macro merge behavior | Macros removed — see #272 |
 | EC-24.20 | *(Retired)* Macro dispatch ambiguity | Macros removed — see #272 |
 
@@ -81,8 +81,8 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 **EBNF:** `type_definition` — `.regex` for #Dimension and the `:ND` syntax sugar.
 **What it tests:** 0D is valid for scalars. The stored value includes the `D` suffix — `"2D"`, not `"2"`. Regex is `"^[0-9]+D$"`. See [[syntax/types/basic-types#Layer 2: Scalar Subtypes — Specialize .regex]].
-**Cross-refs:** [[syntax/types/INDEX|types]], [[aj3lib/INDEX|Standard Library]]
-**Status:** RESOLVED — regex corrected to `"^[0-9]+D$"` in both syntax/types.md and aj3lib/types/scalars.md.
+**Cross-refs:** [[syntax/types/INDEX|types]], [[jm3lib/INDEX|Standard Library]]
+**Status:** RESOLVED — regex corrected to `"^[0-9]+D$"` in both syntax/types.md and jm3lib/types/scalars.md.
 
 ```aljam3
 [ ] Authoritative definition — corrected regex
@@ -258,7 +258,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 **EBNF:** `type_definition ::= "{#}" type_header { schema_line | field_line }` — zero fields, `###None` field type.
 **What it tests:** #None has no fields and uses `###None` — a third field type meaning "nullable." Empty string `""` is the only valid value. Only `###None` types accept empty string; all others reject it with PGE04021. See [[syntax/types/INDEX|types]], [[syntax/types/schema-properties#`###` Field Types — Leaf Content]].
-**Cross-refs:** [[syntax/types/INDEX|types]], [[aj3lib/INDEX|Standard Library]]
+**Cross-refs:** [[syntax/types/INDEX|types]], [[jm3lib/INDEX|Standard Library]]
 **Status:** RESOLVED — `###None` added as third field type, PGE04021 added, #None definition updated with `[#] ###None`.
 
 ```aljam3
@@ -279,7 +279,7 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 **EBNF:** `generic_param ::= "(#)" "<#" name`, `value_param ::= "(#)" "<" name schema_id`, `schema_param_bind` — generic type definition with parameterized schema composition.
 **What it tests:** `{#} #Array` is a generic type with `<#ValueType` (type input) and `<Dim` (value input with default "1D"). Schema properties accumulate from `##Array`. The `:` separator in type annotations binds positionally: `#array:float:2D` → ValueType-Float, Dim=2D. See [[syntax/types/schema-properties#Approved ## Schema Types]].
-**Cross-refs:** [[syntax/types/INDEX|types]], [[aj3lib/INDEX|Standard Library]], [[technical/ebnf/04-type-system#4.3]]
+**Cross-refs:** [[syntax/types/INDEX|types]], [[jm3lib/INDEX|Standard Library]], [[technical/ebnf/04-type-system#4.3]]
 
 ```aljam3
 [ ] {#} #Array — generic type with two parameters
@@ -373,12 +373,12 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 
 ### EC-24.16: #Serial — maximally permissive schemas
 
-**EBNF:** `type_definition` — `%##Depth.Max << .Inf` on a aj3lib type.
-**What it tests:** #Serial uses maximally permissive schema properties to remove every structural constraint. PGW11003 warns about unlimited depth on USER types, but #Serial is aj3lib — it is the intentional escape hatch for unconstrained data. Show that user types with `.Inf` get the warning but #Serial does not. See [[syntax/types/schema-properties#Schema Properties]].
+**EBNF:** `type_definition` — `%##Depth.Max << .Inf` on a jm3lib type.
+**What it tests:** #Serial uses maximally permissive schema properties to remove every structural constraint. PGW11003 warns about unlimited depth on USER types, but #Serial is jm3lib — it is the intentional escape hatch for unconstrained data. Show that user types with `.Inf` get the warning but #Serial does not. See [[syntax/types/schema-properties#Schema Properties]].
 **Cross-refs:** [[syntax/types/INDEX|types]]
 
 ```aljam3
-[ ] #Serial — aj3lib, no PGW11003
+[ ] #Serial — jm3lib, no PGW11003
 {#} #Serial
    [#] %##Alias << "serial"
    [#] %##Depth.Max << #Inf
@@ -400,8 +400,8 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.17: #Dataframe row-oriented access — RESOLVED
 
 **EBNF:** `generic_param`, `child_access` — Dataframe is a generic `{#}` type, row-oriented (Array of ##Record).
-**What it tests:** #Dataframe is a generic type with `<#Columns` and `<#CellType` parameters, composing `##Dataframe`. Access is row-oriented: `$df<row<column` (not column-oriented). Each row is a ##Record keyed by the column enum; the outer structure is an `#Array` of rows. See [[syntax/types/INDEX|types]], [[aj3lib/INDEX|Standard Library]], [[concepts/collections/INDEX|collections]].
-**Cross-refs:** [[syntax/types/INDEX|types]], [[aj3lib/INDEX|Standard Library]], [[concepts/collections/INDEX|collections]], [[technical/ebnf/04-type-system#4.3]]
+**What it tests:** #Dataframe is a generic type with `<#Columns` and `<#CellType` parameters, composing `##Dataframe`. Access is row-oriented: `$df<row<column` (not column-oriented). Each row is a ##Record keyed by the column enum; the outer structure is an `#Array` of rows. See [[syntax/types/INDEX|types]], [[jm3lib/INDEX|Standard Library]], [[concepts/collections/INDEX|collections]].
+**Cross-refs:** [[syntax/types/INDEX|types]], [[jm3lib/INDEX|Standard Library]], [[concepts/collections/INDEX|collections]], [[technical/ebnf/04-type-system#4.3]]
 
 ```aljam3
 [ ] RESOLVED — #Dataframe is row-oriented (Array of ##Record)
@@ -423,18 +423,18 @@ Type DEFINITIONS — `{#}` blocks, `%##` schema properties, `<~` inheritance, an
 ### EC-24.18: Stale %Property notation
 
 **EBNF:** `schema_property ::= "[#]" "%##" property_path "<<" value` — the `##` prefix is mandatory.
-**What it tests:** aj3lib `types.md` uses stale notation without the `##` prefix. The correct notation per `syntax/types.md` requires `%##`. Document the complete mapping. See [[syntax/types/schema-properties#Schema Properties]].
-**Cross-refs:** [[syntax/types/INDEX|types]], [[aj3lib/INDEX|Standard Library]]
+**What it tests:** jm3lib `types.md` uses stale notation without the `##` prefix. The correct notation per `syntax/types.md` requires `%##`. Document the complete mapping. See [[syntax/types/schema-properties#Schema Properties]].
+**Cross-refs:** [[syntax/types/INDEX|types]], [[jm3lib/INDEX|Standard Library]]
 
 ```aljam3
-[ ] STALE notation (aj3lib types.md)    -> CORRECT notation (syntax/types.md)
+[ ] STALE notation (jm3lib types.md)    -> CORRECT notation (syntax/types.md)
 [ ] %Alias                                -> %##Alias
 [ ] %Key.Type                             -> %##Key
 [ ] %Key.Gap                              -> %##Gap
 [ ] %Ordered                              -> %##Ordered
 [ ] %Depth.Max                            -> %##Depth.Max
 
-[ ] Stale: aj3lib types.md #Array definition
+[ ] Stale: jm3lib types.md #Array definition
 [#] %Alias << "array"
 [#] %Key.Type << #UnsignedInt
 [#] %Key.Gap << #False

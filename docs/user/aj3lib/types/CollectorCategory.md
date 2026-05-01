@@ -11,7 +11,7 @@ metadata_instance: "%#:CollectorCategory:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.aj3` file. Classifies the reconciliation strategy of a `{*}` collector definition.
+Runtime `##Enum` type available in every `.jm3` file. Classifies the reconciliation strategy of a `{*}` collector definition.
 
 ---
 
@@ -49,5 +49,5 @@ Runtime `##Enum` type available in every `.aj3` file. Classifies the reconciliat
 
 - [[CollectorScope]] — invocation context (Expand vs Parallel)
 - [[OverflowStrategy]] — overflow behavior for collector definitions
-- [[enums]] — other aj3lib enum types
+- [[enums]] — other jm3lib enum types
 - [[technical/spec/collector-definitions\|Collector Definitions]] — `{*}` block specification

@@ -2,7 +2,7 @@
 phase: 154-agg-shorthand-glossary
 plan: 01
 subsystem: docs
-tags: [glossary, aj3lib, naming]
+tags: [glossary, jm3lib, naming]
 
 requires: []
 provides:
@@ -18,7 +18,7 @@ key-files:
   created: []
   modified:
     - docs/audit/reference/glossary.md
-    - docs/user/aj3lib/collectors/Agg.md
+    - docs/user/jm3lib/collectors/Agg.md
 
 key-decisions:
   - "*Agg is alias of *Aggregate (user clarification) — wording reflects valid long form, not error"
@@ -59,7 +59,7 @@ completed: 2026-04-07
 | File | Change | Purpose |
 |------|--------|---------|
 | docs/audit/reference/glossary.md | Modified | Added *Agg row to term table |
-| docs/user/aj3lib/collectors/Agg.md | Modified | Corrected namespace warning to alias wording |
+| docs/user/jm3lib/collectors/Agg.md | Modified | Corrected namespace warning to alias wording |
 
 ## Decisions Made
 

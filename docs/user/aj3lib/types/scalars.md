@@ -27,17 +27,17 @@ All scalar subtypes compose `##String` with a specific `<regex` parameter:
 
 | Type | Alias | `.regex` Pattern | Example Values | Doc |
 |------|-------|---------------|----------------|-----|
-| `#Int` | `int` | `^-?[0-9]+$` | `42`, `-7`, `007` | [[aj3lib/types/scalars/int\|#Int]] |
-| `#UnsignedInt` | `uint` | `^[0-9]+$` | `0`, `1`, `42` | [[aj3lib/types/scalars/unsigned-int\|#UnsignedInt]] |
-| `#Float` | `float` | `^-?[0-9]+\.[0-9]+$` | `3.14`, `-0.5`, `007.00` | [[aj3lib/types/scalars/float\|#Float]] |
-| `#Sci` | `sci` | `^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$` | `1e10`, `3.14e-2` | [[aj3lib/types/scalars/sci\|#Sci]] |
-| `#Eng` | `eng` | `^-?[0-9]+(\.[0-9]+)?[kKMGTPE]?$` | `1.5k`, `2.47M` | [[aj3lib/types/scalars/eng\|#Eng]] |
-| `#Dimension` | `dim` | `^[0-9]+D$` | `0D`, `1D`, `2D`, `3D` | [[aj3lib/types/scalars/dimension\|#Dimension]] |
-| `#KeyString` | `key` | `^[a-zA-Z_][a-zA-Z0-9_]*$` | `name`, `id`, `my_key` | [[aj3lib/types/scalars/key-string\|#KeyString]] |
-| `#NestedKeyString` | `nestedkey` | `^[a-zA-Z_][a-zA-Z0-9_.]*$` | `File.Permission.Denied` | [[aj3lib/types/scalars/nested-key-string\|#NestedKeyString]] |
-| `#CommaSeparatedList` | `csvlist` | `^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$` | `product,price,quantity` | [[aj3lib/types/scalars/comma-separated-list\|#CommaSeparatedList]] |
-| `#DataTypeString` | `dtstring` | `^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$` | `Array1D:Int`, `Map:String` | [[aj3lib/types/scalars/data-type-string\|#DataTypeString]] |
-| `#Email` | `email` | `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$` | `user@example.com`, `admin+tag@sub.domain.org` | [[aj3lib/types/scalars/email\|#Email]] |
+| `#Int` | `int` | `^-?[0-9]+$` | `42`, `-7`, `007` | [[jm3lib/types/scalars/int\|#Int]] |
+| `#UnsignedInt` | `uint` | `^[0-9]+$` | `0`, `1`, `42` | [[jm3lib/types/scalars/unsigned-int\|#UnsignedInt]] |
+| `#Float` | `float` | `^-?[0-9]+\.[0-9]+$` | `3.14`, `-0.5`, `007.00` | [[jm3lib/types/scalars/float\|#Float]] |
+| `#Sci` | `sci` | `^-?[0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+$` | `1e10`, `3.14e-2` | [[jm3lib/types/scalars/sci\|#Sci]] |
+| `#Eng` | `eng` | `^-?[0-9]+(\.[0-9]+)?[kKMGTPE]?$` | `1.5k`, `2.47M` | [[jm3lib/types/scalars/eng\|#Eng]] |
+| `#Dimension` | `dim` | `^[0-9]+D$` | `0D`, `1D`, `2D`, `3D` | [[jm3lib/types/scalars/dimension\|#Dimension]] |
+| `#KeyString` | `key` | `^[a-zA-Z_][a-zA-Z0-9_]*$` | `name`, `id`, `my_key` | [[jm3lib/types/scalars/key-string\|#KeyString]] |
+| `#NestedKeyString` | `nestedkey` | `^[a-zA-Z_][a-zA-Z0-9_.]*$` | `File.Permission.Denied` | [[jm3lib/types/scalars/nested-key-string\|#NestedKeyString]] |
+| `#CommaSeparatedList` | `csvlist` | `^[a-zA-Z_][a-zA-Z0-9_]*(,[a-zA-Z_][a-zA-Z0-9_]*)*$` | `product,price,quantity` | [[jm3lib/types/scalars/comma-separated-list\|#CommaSeparatedList]] |
+| `#DataTypeString` | `dtstring` | `^[A-Z][a-zA-Z0-9]*(:[A-Z][a-zA-Z0-9]*)*$` | `Array1D:Int`, `Map:String` | [[jm3lib/types/scalars/data-type-string\|#DataTypeString]] |
+| `#Email` | `email` | `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$` | `user@example.com`, `admin+tag@sub.domain.org` | [[jm3lib/types/scalars/email\|#Email]] |
 
 ## Metadata
 

@@ -10,9 +10,9 @@ status: draft
 <!-- @c:spec/native-dispatch -->
 <!-- @c:spec/native-dispatch#Serialization Protocol -->
 <!-- @c:spec/aljam3-sdk -->
-<!-- @c:aj3lib/types/Variable -->
-<!-- @c:aj3lib/types/NativeType -->
-<!-- @c:aj3lib/pipelines/Run/INDEX -->
+<!-- @c:jm3lib/types/Variable -->
+<!-- @c:jm3lib/types/NativeType -->
+<!-- @c:jm3lib/pipelines/Run/INDEX -->
 Related: [[native-dispatch]], [[aljam3-sdk]], [[foreign-code-analysis]]
 
 ## Overview
@@ -112,7 +112,7 @@ Extracted:
 
 ### Step 2 -- Map to Aljam3 Type
 
-Look up the source native type in the [[aj3lib/types/NativeType#Marshalling Table|marshalling table]] to find the corresponding Aljam3 type:
+Look up the source native type in the [[jm3lib/types/NativeType#Marshalling Table|marshalling table]] to find the corresponding Aljam3 type:
 
 ```text
 Lookup: Python.int → Aljam3 #int
@@ -340,9 +340,9 @@ SDK is simpler for coarse-grained calls from external applications. Bridge is de
 | [[spec/native-dispatch#Serialization Protocol\|Serialization Protocol]] | Value encoding format shared with Bridge |
 | [[spec/aljam3-sdk\|Aljam3 SDK]] | Alternative cross-language mechanism (external to pipeline) |
 | [[algorithms/foreign-code-analysis\|Foreign Code Analysis]] | AST analysis for binding validation |
-| [[aj3lib/types/Variable\|#Variable]] | Language-tagged variable type |
-| [[aj3lib/types/NativeType\|#NativeType]] | Native type marshalling table |
-| [[aj3lib/pipelines/Run/Bridge.Function\|-Run.Bridge.Function]] | Pipeline definition |
-| [[aj3lib/pipelines/Run/Bridge.Script\|-Run.Bridge.Script]] | Pipeline definition |
-| [[aj3lib/pipelines/Variable/Convert\|-Variable.Convert]] | Conversion pipeline |
-| [[aj3lib/pipelines/W/Env\|-W.Env]] | Environment wrapper lifecycle |
+| [[jm3lib/types/Variable\|#Variable]] | Language-tagged variable type |
+| [[jm3lib/types/NativeType\|#NativeType]] | Native type marshalling table |
+| [[jm3lib/pipelines/Run/Bridge.Function\|-Run.Bridge.Function]] | Pipeline definition |
+| [[jm3lib/pipelines/Run/Bridge.Script\|-Run.Bridge.Script]] | Pipeline definition |
+| [[jm3lib/pipelines/Variable/Convert\|-Variable.Convert]] | Conversion pipeline |
+| [[jm3lib/pipelines/W/Env\|-W.Env]] | Environment wrapper lifecycle |

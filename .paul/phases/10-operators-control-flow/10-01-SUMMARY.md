@@ -11,7 +11,7 @@ provides:
   - operators.md promoted to status: complete (arithmetic, negation, type-operator compatibility)
   - conditionals.md new spec at status: complete (exhaustiveness, logical operators, nesting)
   - SPEC-INDEX.md updated with conditionals.md entry
-affects: [11-pipelines-concurrency, 12-package-system-aj3lib]
+affects: [11-pipelines-concurrency, 12-package-system-jm3lib]
 
 key-files:
   created:
@@ -21,7 +21,7 @@ key-files:
     - docs/user/SPEC-INDEX.md
 
 key-decisions:
-  - "Arithmetic uses =Math.* aj3lib pipelines, not raw operators (PGE04010 confirms)"
+  - "Arithmetic uses =Math.* jm3lib pipelines, not raw operators (PGE04010 confirms)"
   - "conditionals.md placed in concepts/ not syntax/ — conditionals are behavioral, not lexical"
 
 completed: 2026-03-24
@@ -51,7 +51,7 @@ completed: 2026-03-24
 
 ### Key Finding: Arithmetic Model
 
-The plan originally described arithmetic as "operators (+, -, *, / with type rules)". During execution, PGE04010 revealed that **raw arithmetic tokens are compile errors** — all arithmetic is performed through `=Math.*` aj3lib pipelines. The Arithmetic section was written to reflect this authoritative compile rule rather than the EBNF grammar productions (which exist only for error detection purposes).
+The plan originally described arithmetic as "operators (+, -, *, / with type rules)". During execution, PGE04010 revealed that **raw arithmetic tokens are compile errors** — all arithmetic is performed through `=Math.*` jm3lib pipelines. The Arithmetic section was written to reflect this authoritative compile rule rather than the EBNF grammar productions (which exist only for error detection purposes).
 
 **Impact:** More accurate spec. EC-6.4 in EDGE-CASES shows raw arithmetic syntax that conflicts with PGE04010 — this is a known inconsistency in the technical reference material.
 

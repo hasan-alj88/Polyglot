@@ -7,7 +7,7 @@ updated: 2026-04-22
 # $Ver Constructor
 
 <!-- @u:syntax/constructors -->
-<!-- @c:aj3lib/types/Ver -->
+<!-- @c:jm3lib/types/Ver -->
 
 The `$Ver` constructor produces `#Ver` values from semantic version strings. All overloads are compile-time guaranteed — no error surface, no `[!]` handling needed.
 
@@ -112,7 +112,7 @@ Resolution order: longest match first (full before prerelease/build, those befor
 
 ## Related
 
-- [[constructors/INDEX|aj3lib Constructors]] -- constructor registry
+- [[constructors/INDEX|jm3lib Constructors]] -- constructor registry
 - [[syntax/constructors]] -- `{$}` block specification
-- [[aj3lib/pipelines/Ver.Parse|-Ver.Parse]] -- runtime version string parsing
-- [[aj3lib/types/Ver|#Ver type]] -- semantic version type definition
+- [[jm3lib/pipelines/Ver.Parse|-Ver.Parse]] -- runtime version string parsing
+- [[jm3lib/types/Ver|#Ver type]] -- semantic version type definition

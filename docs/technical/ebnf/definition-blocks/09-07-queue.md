@@ -42,7 +42,7 @@ queue_control_line  ::= "[Q]" pipeline_ref NEWLINE
       (-) <duration << "4h"
 ```
 
-**Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `-Q.Default` is the aj3lib-provided queue and does not require a `{Q}` definition.
+**Rule:** `{Q}` is both a data definition (`#Queue:*` struct) and a runtime instantiation — unlike `{#}` which only defines a type. `-Q.Default` is the jm3lib-provided queue and does not require a `{Q}` definition.
 
 **Dual-purpose:** `{Q}` serves two roles based on the identifier prefix. The grammar above covers the **data definition** form (`{Q} #Queue:Name`). The **pipeline operation** form (`{Q} -Q.*`) is syntactic sugar for `{-}[Q]` and follows the pipeline definition grammar in 9.3 — it defines a queue control pipeline invocable via `[Q]`. Examples: `{Q} -Q.Default`, `{Q} -Q.Pause.Hard`, `{Q} -Q.Kill.Graceful`.
 

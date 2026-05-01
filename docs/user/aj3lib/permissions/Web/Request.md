@@ -31,4 +31,4 @@ Capability-level generic permission for HTTP requests. Sugar over [[INDEX|__Web]
 ## Related
 
 - [[INDEX|__Web]] -- category-level generic
-- [[aj3lib/permissions/INDEX]] -- all aj3lib generic permissions
+- [[jm3lib/permissions/INDEX]] -- all jm3lib generic permissions

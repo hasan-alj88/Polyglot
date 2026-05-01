@@ -7,7 +7,7 @@ updated: 2026-04-26
 # ? — Compile-Time Predicates
 
 <!-- @c:syntax/identifiers -->
-<!-- @c:aj3lib/INDEX -->
+<!-- @c:jm3lib/INDEX -->
 
 Boolean Predicates (identified by the `?` sigil) represent **compile-time assertions**. Unlike `-` pipelines which evaluate at runtime, `?` predicates are evaluated strictly during compilation. They enforce structural and topological safety in your Aljam3 codebase.
 
@@ -54,4 +54,4 @@ A prime example of compile-time predicates is ensuring that a queue does not att
 
 ## See Also
 - [[syntax/identifiers|Identifiers]] — Core syntax for Aljam3 sigils.
-- [[aj3lib/INDEX|aj3lib Registry]] — The full standard library catalog.
+- [[jm3lib/INDEX|jm3lib Registry]] — The full standard library catalog.

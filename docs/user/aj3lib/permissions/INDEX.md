@@ -5,11 +5,11 @@ updated: 2026-04-12
 status: complete
 ---
 
-# aj3lib Generic Permissions
+# jm3lib Generic Permissions
 
 <!-- @c:permissions -->
 
-aj3lib provides `__` generic permission templates — syntax sugar that produces concrete `_` permission objects at compile time. Two levels:
+jm3lib provides `__` generic permission templates — syntax sugar that produces concrete `_` permission objects at compile time. Two levels:
 
 - **Category-level** (`__File`, `__Web`, ...) — takes capability + scope as inputs
 - **Capability-level** (`__File.Read`, `__Web.Request`, ...) — takes only scope, sugar over category-level
@@ -64,5 +64,5 @@ All generics produce `_` objects with `#Grant` intent. For `#Ceiling` objects, w
 ## Related
 
 - [[concepts/permissions]] -- permission system overview
-- [[aj3lib/types/PermissionCategory]] -- 8-category enum
-- [[aj3lib/types/PermissionIntent]] -- Ceiling vs Grant intent
+- [[jm3lib/types/PermissionCategory]] -- 8-category enum
+- [[jm3lib/types/PermissionIntent]] -- Ceiling vs Grant intent

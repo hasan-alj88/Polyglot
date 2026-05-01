@@ -59,7 +59,7 @@ All `-DT.*` pipelines are pure computation and require no `{_}` permission objec
 - [[DT/From.ISO|-DT.From.ISO]]
 - [[DT/From.Parts|-DT.From.Parts]]
 - [[DT/Parse|-DT.Parse]]
-- [[aj3lib/pipelines/Dur.Parse|-Dur.Parse]] -- duration parsing (separate from DT, at pipelines/ root)
+- [[jm3lib/pipelines/Dur.Parse|-Dur.Parse]] -- duration parsing (separate from DT, at pipelines/ root)
 
 ### Calendar Conversion
 
@@ -125,6 +125,6 @@ All `-DT.*` pipelines are pure computation and require no `{_}` permission objec
 
 ## Related
 
-- [[aj3lib/types/datetime|DateTime types]] -- `#dt`, `#Duration`, `#Period`, `#Interval`, calendar date structs
-- [[aj3lib/pipelines/INDEX|Pipelines index]] -- full aj3lib pipeline listing
+- [[jm3lib/types/datetime|DateTime types]] -- `#dt`, `#Duration`, `#Period`, `#Interval`, calendar date structs
+- [[jm3lib/pipelines/INDEX|Pipelines index]] -- full jm3lib pipeline listing
 - [[permissions]] -- permission system for `{_}` permission objects

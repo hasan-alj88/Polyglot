@@ -10,7 +10,7 @@ status: complete
 <!-- @c:pipelines -->
 Triggers are placed on `[T]` lines inside `{-}` pipeline definitions. No `[@]` import needed. See [[concepts/pipelines/io-triggers#Triggers]] for trigger usage rules.
 
-**PRIMITIVE** — Trigger pipelines are direct OS/runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.aj3` files.
+**PRIMITIVE** — Trigger pipelines are direct OS/runtime integrations. They are implemented by the Aljam3 runtime and cannot be reimplemented in user `.jm3` files.
 
 ## Permissions
 
@@ -34,16 +34,16 @@ Most triggers require no permissions. IO-touching triggers require a `{_}` permi
 
 | Pipeline | Description |
 |----------|-------------|
-| [[aj3lib/pipelines/T/Call\|-T.Call]] | Pipeline invoked when called from another pipeline |
-| [[aj3lib/pipelines/T/CLI\|-T.CLI]] | Pipeline invoked manually (CLI or test harness) |
-| [[aj3lib/pipelines/T/Daily\|-T.Daily]] | Fires once per day at specified time |
-| [[aj3lib/pipelines/T/Folder.NewFiles\|-T.Folder.NewFiles]] | Fires when new files appear in folder |
-| [[aj3lib/pipelines/T/File.Rolled\|-T.File.Rolled]] | Fires when a file rotates (log rotation) |
-| [[aj3lib/pipelines/T/Webhook\|-T.Webhook]] | Fires on incoming HTTP request |
-| [[aj3lib/pipelines/T/Git.Hook\|-T.Git.Hook]] | Fires on local git hook invocation |
-| [[aj3lib/pipelines/T/Git.Push\|-T.Git.Push]] | Fires on push to branch (with filters) |
-| [[aj3lib/pipelines/T/Git.PR\|-T.Git.PR]] | Fires on pull request events |
-| [[aj3lib/pipelines/T/Git.Tag\|-T.Git.Tag]] | Fires on tag creation |
+| [[jm3lib/pipelines/T/Call\|-T.Call]] | Pipeline invoked when called from another pipeline |
+| [[jm3lib/pipelines/T/CLI\|-T.CLI]] | Pipeline invoked manually (CLI or test harness) |
+| [[jm3lib/pipelines/T/Daily\|-T.Daily]] | Fires once per day at specified time |
+| [[jm3lib/pipelines/T/Folder.NewFiles\|-T.Folder.NewFiles]] | Fires when new files appear in folder |
+| [[jm3lib/pipelines/T/File.Rolled\|-T.File.Rolled]] | Fires when a file rotates (log rotation) |
+| [[jm3lib/pipelines/T/Webhook\|-T.Webhook]] | Fires on incoming HTTP request |
+| [[jm3lib/pipelines/T/Git.Hook\|-T.Git.Hook]] | Fires on local git hook invocation |
+| [[jm3lib/pipelines/T/Git.Push\|-T.Git.Push]] | Fires on push to branch (with filters) |
+| [[jm3lib/pipelines/T/Git.PR\|-T.Git.PR]] | Fires on pull request events |
+| [[jm3lib/pipelines/T/Git.Tag\|-T.Git.Tag]] | Fires on tag creation |
 
 ## Three-Tier Trigger Model
 
@@ -60,9 +60,9 @@ Git triggers use a two-layer architecture:
 
 Use transport triggers when you need hook-specific behavior. Use semantic triggers for CI/CD workflows that should work across local and hosted setups.
 
-See [[aj3lib/types/git|#Git Type Tree]] for the typed event payloads produced by these triggers.
+See [[jm3lib/types/git|#Git Type Tree]] for the typed event payloads produced by these triggers.
 
 ## Related
 
 - [[concepts/pipelines/io-triggers]]
-- [[aj3lib/INDEX]]
+- [[jm3lib/INDEX]]

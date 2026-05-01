@@ -11,7 +11,7 @@ metadata_instance: "%-:Run.<Lang>.CLI:N"
 
 Invoke a compiled binary with string arguments. No language runtime needed -- uses `-W.Aljam3`, not `-W.Env`.
 
-> **Supersedes:** `-RT.<Lang>.CLI`. See [[aj3lib/pipelines/RT/CLI|@d:-RT.\<Lang\>.CLI]].
+> **Supersedes:** `-RT.<Lang>.CLI`. See [[jm3lib/pipelines/RT/CLI|@d:-RT.\<Lang\>.CLI]].
 
 ## Definition
 
@@ -86,7 +86,7 @@ Uses `-W.Aljam3`, not `-W.Env` -- no language runtime needed for compiled binari
 
 ## Errors
 
-See [[aj3lib/pipelines/Run/INDEX#Binding Compiler Errors]].
+See [[jm3lib/pipelines/Run/INDEX#Binding Compiler Errors]].
 
 ## Permissions
 
@@ -101,5 +101,5 @@ Requires `System.Process` capability.
 
 ## Related
 
-- [[aj3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
-- [[aj3lib/pipelines/W/Aljam3|-W.Aljam3]] -- wrapper for non-runtime execution
+- [[jm3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
+- [[jm3lib/pipelines/W/Aljam3|-W.Aljam3]] -- wrapper for non-runtime execution

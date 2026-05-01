@@ -39,7 +39,7 @@ Aljam3 was born out of frustration with the lack of absolute control in modern a
 In the era of Artificial Intelligence, AI is a tremendously useful tool to ease the development workflow. However, **shipping code you didn't read nor fully comprehend is strictly unacceptable.** 
 
 This is why Aljam3 enforcing human audit and accountability is a mandatory requirement to launch programs. 
-- **AI as Author (Acceptable):** AI models may write Aljam3 code (`.aj3` files) to speed up development.
+- **AI as Author (Acceptable):** AI models may write Aljam3 code (`.jm3` files) to speed up development.
 - **Human as Executor (Mandatory):** AI must *never* autonomously execute the Aljam3 CLI or bypass human oversight. The exhaustive logic and strictly defined Behavioral Contract exist precisely so that a human developer can inspect, validate, and understand every possible scenario before the program is permitted to launch.
 - **Auditable by Design (DataTrees):** All Aljam3 data structures are fundamentally **DataTrees of Strings**. This is a deliberate design choice ensuring that data flowing between disparate languages is entirely human-readable and transparent. This allows a human to audit the exact state of the system at any given moment. In this way, Aljam3 seamlessly brings distinct codebases—and the humans who oversee them—together under one understandable layer.
 
@@ -77,7 +77,7 @@ For the full philosophy behind Aljam3's design decisions, see the dedicated phil
 - [[philosophy/data-trees]] — Everything is a tree: three-tier data model and universal strings
 - [[philosophy/behavioral-contract]] — The "building permit" compilation model
 - [[philosophy/developer-experience]] — Write, compile, fix, deploy: the iterative loop
-- [[philosophy/extensibility]] — aj3lib, community packages, and permission ceilings
+- [[philosophy/extensibility]] — jm3lib, community packages, and permission ceilings
 - [[philosophy/how-aljam3-differs]] — Positioning against Airflow, Temporal, Prefect, and gRPC
 
 ---

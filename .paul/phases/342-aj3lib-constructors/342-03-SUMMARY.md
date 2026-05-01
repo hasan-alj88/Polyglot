@@ -1,5 +1,5 @@
 ---
-phase: 342-aj3lib-constructors
+phase: 342-jm3lib-constructors
 plan: 03
 status: complete
 completed: 2026-04-22
@@ -9,31 +9,31 @@ completed: 2026-04-22
 
 ## What Was Done
 
-Defined the 4 remaining Tier 2b {$} constructors ($Ver, $URL, $IP, $Color) with their aj3lib {#} type definitions and companion -Type.Parse runtime pipelines. This completes the full constructor catalog for issue #342.
+Defined the 4 remaining Tier 2b {$} constructors ($Ver, $URL, $IP, $Color) with their jm3lib {#} type definitions and companion -Type.Parse runtime pipelines. This completes the full constructor catalog for issue #342.
 
 ## Files Created (12)
 
 ### Type Definitions (4)
-- `docs/user/aj3lib/types/Ver.md` — ##Scalar, ###ScalarValue; .major, .minor, .patch (required) + .prerelease, .build (optional with defaults)
-- `docs/user/aj3lib/types/URL.md` — ##Scalar; 6 fields (.scheme, .host, .port, .path, .query, .fragment); PgUrl native class for RFC 3986 parsing
-- `docs/user/aj3lib/types/IP.md` — ##Scalar, ###ScalarValue; single .address#RawString field; PgIP native class for range validation
-- `docs/user/aj3lib/types/Color.md` — ##Scalar, ###ScalarValue; .r, .g, .b, .a (0-255); PgColor native class for range + named color lookup
+- `docs/user/jm3lib/types/Ver.md` — ##Scalar, ###ScalarValue; .major, .minor, .patch (required) + .prerelease, .build (optional with defaults)
+- `docs/user/jm3lib/types/URL.md` — ##Scalar; 6 fields (.scheme, .host, .port, .path, .query, .fragment); PgUrl native class for RFC 3986 parsing
+- `docs/user/jm3lib/types/IP.md` — ##Scalar, ###ScalarValue; single .address#RawString field; PgIP native class for range validation
+- `docs/user/jm3lib/types/Color.md` — ##Scalar, ###ScalarValue; .r, .g, .b, .a (0-255); PgColor native class for range + named color lookup
 
 ### Constructor Docs (4)
-- `docs/user/aj3lib/constructors/Ver.md` — 4 overloads: basic, +prerelease, +build, +both; pure string-parsing pattern
-- `docs/user/aj3lib/constructors/URL.md` — 1 overload; native pipeline conversion via -URL.Decompose (like $Dur)
-- `docs/user/aj3lib/constructors/IP.md` — 2 overloads: IPv4 (dotted-decimal) and IPv6 (colon-hex); native validation (like $Re)
-- `docs/user/aj3lib/constructors/Color.md` — 3 overloads: hex RGB (6-digit), hex RGBA (8-digit), named; mixed native conversion + validation
+- `docs/user/jm3lib/constructors/Ver.md` — 4 overloads: basic, +prerelease, +build, +both; pure string-parsing pattern
+- `docs/user/jm3lib/constructors/URL.md` — 1 overload; native pipeline conversion via -URL.Decompose (like $Dur)
+- `docs/user/jm3lib/constructors/IP.md` — 2 overloads: IPv4 (dotted-decimal) and IPv6 (colon-hex); native validation (like $Re)
+- `docs/user/jm3lib/constructors/Color.md` — 3 overloads: hex RGB (6-digit), hex RGBA (8-digit), named; mixed native conversion + validation
 
 ### Parse Pipeline Docs (4)
-- `docs/user/aj3lib/pipelines/Ver.Parse.md` — {N} native, !Parse.Ver.InvalidFormat
-- `docs/user/aj3lib/pipelines/URL.Parse.md` — {N} native, !Parse.URL.InvalidFormat, !Parse.URL.InvalidScheme
-- `docs/user/aj3lib/pipelines/IP.Parse.md` — {N} native, !Parse.IP.InvalidFormat, !Parse.IP.OutOfRange
-- `docs/user/aj3lib/pipelines/Color.Parse.md` — {N} native, !Parse.Color.InvalidFormat, !Parse.Color.UnknownName
+- `docs/user/jm3lib/pipelines/Ver.Parse.md` — {N} native, !Parse.Ver.InvalidFormat
+- `docs/user/jm3lib/pipelines/URL.Parse.md` — {N} native, !Parse.URL.InvalidFormat, !Parse.URL.InvalidScheme
+- `docs/user/jm3lib/pipelines/IP.Parse.md` — {N} native, !Parse.IP.InvalidFormat, !Parse.IP.OutOfRange
+- `docs/user/jm3lib/pipelines/Color.Parse.md` — {N} native, !Parse.Color.InvalidFormat, !Parse.Color.UnknownName
 
 ## Files Modified (1)
 
-- `docs/user/aj3lib/constructors/INDEX.md` — Added 4 new rows (5 → 9 constructors), removed "Tier 2b (planned)" section, added 4 parse pipeline related links
+- `docs/user/jm3lib/constructors/INDEX.md` — Added 4 new rows (5 → 9 constructors), removed "Tier 2b (planned)" section, added 4 parse pipeline related links
 
 ## Constructor Pattern Summary
 
@@ -56,6 +56,6 @@ Defined the 4 remaining Tier 2b {$} constructors ($Ver, $URL, $IP, $Color) with 
 
 ## What's Next
 
-All 9 aj3lib constructors from issue #342 are now defined. Remaining work:
+All 9 jm3lib constructors from issue #342 are now defined. Remaining work:
 - Issue #343: Compile error codes for constructors
 - Issue #344: Cross-reference updates to existing docs

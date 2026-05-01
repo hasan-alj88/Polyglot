@@ -31,7 +31,7 @@ Outputs:
 
 The script:
 - Combines docs/ markdown into PDFs via Pandoc + Typst
-- Orders content by canonical section (Vision → Syntax → Concepts → aj3lib → etc.)
+- Orders content by canonical section (Vision → Syntax → Concepts → jm3lib → etc.)
 - Includes title page, table of contents, part dividers
 - Strips YAML frontmatter, HTML comments, and deduplicates Typst labels
 - Per-audience mode filters files by frontmatter `audience:` field

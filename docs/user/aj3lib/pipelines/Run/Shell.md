@@ -13,7 +13,7 @@ Execute a shell command string through the system shell (`sh -c "..."`). Unlike 
 
 No `[@]` import needed.
 
-**PRIMITIVE** — aj3lib runtime pipeline implemented by the Aljam3 runtime.
+**PRIMITIVE** — jm3lib runtime pipeline implemented by the Aljam3 runtime.
 
 > **Language-agnostic:** `-Run.Shell` has no `<Lang>` placeholder. It delegates to the system shell, not a language-specific runtime. No `-W.Env` environment is needed — uses `-W.Aljam3`.
 
@@ -164,7 +164,7 @@ This is the same process registration pattern used by `-Run.<Lang>.CLI` — any 
 
 ## Related
 
-- [[aj3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
-- [[aj3lib/pipelines/Run/CLI|-Run.\<Lang\>.CLI]] -- structured binary invocation (no shell)
-- [[aj3lib/pipelines/W/Aljam3|-W.Aljam3]] -- wrapper for non-runtime execution
-- [[aj3lib/pipelines/T/Git.Hook|-T.Git.Hook]] -- local Git hook trigger (depends on shell execution)
+- [[jm3lib/pipelines/Run/INDEX|-Run.* Foreign Code Execution]]
+- [[jm3lib/pipelines/Run/CLI|-Run.\<Lang\>.CLI]] -- structured binary invocation (no shell)
+- [[jm3lib/pipelines/W/Aljam3|-W.Aljam3]] -- wrapper for non-runtime execution
+- [[jm3lib/pipelines/T/Git.Hook|-T.Git.Hook]] -- local Git hook trigger (depends on shell execution)

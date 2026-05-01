@@ -17,7 +17,7 @@ key-files:
     - docs/technical/spec/metadata-tree.md
     - docs/user/concepts/data-is-trees.md
     - docs/user/syntax/packages.md
-    - docs/user/aj3lib/errors/errors.md
+    - docs/user/jm3lib/errors/errors.md
     - docs/user/concepts/errors.md
     - docs/user/syntax/identifiers.md
 
@@ -74,7 +74,7 @@ completed: 2026-03-25
 | `docs/technical/spec/metadata-tree.md` | Modified | %_ all `.`, %! + .Error, %@ `::`, branch-specific path grammar |
 | `docs/user/concepts/data-is-trees.md` | Modified | Updated instance examples for %_, %!, %@ |
 | `docs/user/syntax/packages.md` | Modified | New address format with `::`, Company rename, all examples updated |
-| `docs/user/aj3lib/errors/errors.md` | Modified | Tree path ref to `.`, added `!Error` namespace section |
+| `docs/user/jm3lib/errors/errors.md` | Modified | Tree path ref to `.`, added `!Error` namespace section |
 | `docs/user/concepts/errors.md` | Modified | Added !Error to namespace list, count (six→seven), table |
 | `docs/user/syntax/identifiers.md` | Modified | Updated package address example and description |
 
@@ -83,7 +83,7 @@ completed: 2026-03-25
 | Decision | Rationale | Impact |
 |----------|-----------|--------|
 | Permissions all `.` fixed | Categories and capabilities are Polyglot-defined, not user-extensible | Consistent with `_File.read` identifier syntax |
-| Error namespaces `.` fixed | aj3lib namespaces are Polyglot-defined; only `!Error` is user-extensible | `.Error` is fixed name, children are `:` flexible |
+| Error namespaces `.` fixed | jm3lib namespaces are Polyglot-defined; only `!Error` is user-extensible | `.Error` is fixed name, children are `:` flexible |
 | `!Error` added as 7th namespace | Users need extensibility point for custom errors via `{!}` blocks | `[:]` for branches, `[.]` for terminal leaves |
 | Sibling homogeneity rule documented | All children of a parent must use same separator | Prevents mixed `.`/`:` at same level |
 | Packages use `::` separator | Clearly separates registry+ID from package name | Eliminates ambiguity at `.` → `:` transition |

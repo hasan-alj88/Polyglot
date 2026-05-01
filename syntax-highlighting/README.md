@@ -32,7 +32,7 @@ This directory contains syntax highlighting definitions for the Aljam3 automatio
     "languages": [{
       "id": "aljam3",
       "aliases": ["Aljam3", "aljam3"],
-      "extensions": [".aj3"],
+      "extensions": [".jm3"],
       "configuration": "./language-configuration.json"
     }],
     "grammars": [{
@@ -123,7 +123,7 @@ Add to `package.json`:
 For GitHub/GitLab syntax highlighting, add to repository's `.gitattributes`:
 
 ```
-*.aj3 linguist-language=Aljam3
+*.jm3 linguist-language=Aljam3
 ```
 
 And create `.github/linguist.yml` (if using a custom grammar repository):
@@ -133,7 +133,7 @@ Aljam3:
   type: programming
   color: "#7e57c2"
   extensions:
-    - ".aj3"
+    - ".jm3"
   tm_scope: source.aljam3
   ace_mode: text
 ```

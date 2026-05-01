@@ -47,7 +47,7 @@ And each classification includes a one-line rationale
 Given the protocol from Plan 01 defines @c: and @u: semantics
 When targets are classified
 Then targets pointing to glossary, vision, design rationale → @c:
-And targets pointing to EBNF, syntax specs, aj3lib signatures, scenarios → @u:
+And targets pointing to EBNF, syntax specs, jm3lib signatures, scenarios → @u:
 And targets that are pure navigation (INDEX files) → untyped
 ```
 
@@ -79,7 +79,7 @@ Then the user reviews and approves before Plan 03 proceeds
     3. Count occurrences of each target
     4. Classify each using the protocol from Plan 01:
        - @c: if target is a definition, concept, design rationale, glossary entry, or vision section
-       - @u: if target is syntax spec, EBNF grammar, aj3lib signature, compile rule, or scenario
+       - @u: if target is syntax spec, EBNF grammar, jm3lib signature, compile rule, or scenario
        - untyped if target is an INDEX file or pure navigation
     5. Write classification table to docs/audit/tracking/ref-classification.md with columns:
        | Current Form | Classification | Count | Rationale |

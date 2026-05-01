@@ -83,7 +83,7 @@ completed: 2026-04-09
 |-----------|--------|-------|
 | AC-1: No {M} in docs/technical/ | Pass | Remaining mentions are only in retirement stubs explaining what was removed |
 | AC-2: No [M] in docs/technical/ | Pass | Remaining mentions are only in retirement table entries |
-| AC-3: No retired schemas in docs/ | Pass | Only in expected redirect stubs (docs/user/aj3lib/types/schemas/) |
+| AC-3: No retired schemas in docs/ | Pass | Only in expected redirect stubs (docs/user/jm3lib/types/schemas/) |
 | AC-4: No %##Children.* in docs/ | Pass | Zero in docs/technical/; docs/user/ remnants are boundary-protected (plans 01-04 scope) |
 | AC-5: No %M branch in metadata trees | Pass | Zero matches |
 | AC-6: EBNF macro grammar replaced | Pass | macro_def/macro_body/macro_input/macro_output all zero; generic_param/value_param/schema_param_bind added |

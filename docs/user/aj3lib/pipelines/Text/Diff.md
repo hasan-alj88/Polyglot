@@ -35,8 +35,8 @@ Compares two text strings and produces a list of line-level differences. Pure co
 
 | Name | Type | Description |
 |------|------|-------------|
-| `>diffs` | `#TextDiffs` | Array of [[aj3lib/types/TextDiff\|#TextDiff]] entries (line, op, content) |
-| `>stats` | `#DiffStats` | Summary counts ([[aj3lib/types/DiffStats\|#DiffStats]]: additions, deletions, unchanged) |
+| `>diffs` | `#TextDiffs` | Array of [[jm3lib/types/TextDiff\|#TextDiff]] entries (line, op, content) |
+| `>stats` | `#DiffStats` | Summary counts ([[jm3lib/types/DiffStats\|#DiffStats]]: additions, deletions, unchanged) |
 
 ## Errors
 
@@ -57,7 +57,7 @@ None (pure computation).
 
 ## Related
 
-- [[aj3lib/types/TextDiff\|#TextDiff]] -- diff entry type
-- [[aj3lib/types/DiffStats\|#DiffStats]] -- summary statistics type
-- [[aj3lib/collectors/Into/Text.Merge\|*Into.Text.Merge]] -- merge diffs back into text
-- [[aj3lib/expanders/ForEach/Text.Lines\|=ForEach.Text.Lines]] -- expand text into lines
+- [[jm3lib/types/TextDiff\|#TextDiff]] -- diff entry type
+- [[jm3lib/types/DiffStats\|#DiffStats]] -- summary statistics type
+- [[jm3lib/collectors/Into/Text.Merge\|*Into.Text.Merge]] -- merge diffs back into text
+- [[jm3lib/expanders/ForEach/Text.Lines\|=ForEach.Text.Lines]] -- expand text into lines

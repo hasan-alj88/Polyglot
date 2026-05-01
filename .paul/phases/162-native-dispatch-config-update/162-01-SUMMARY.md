@@ -2,7 +2,7 @@
 phase: 162-native-dispatch-config-update
 plan: 01
 subsystem: docs
-tags: [native-dispatch, yaml-config, aj3lib]
+tags: [native-dispatch, yaml-config, jm3lib]
 
 requires:
   - phase: native-dispatch-spec
@@ -18,7 +18,7 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - docs/user/aj3lib/types/NativeKind.md
+    - docs/user/jm3lib/types/NativeKind.md
     - docs/user/concepts/pipelines/INDEX.md
     - docs/technical/compile-rules/PGE/PGE01028-base-derived-mutual-exclusion.md
 
@@ -61,7 +61,7 @@ completed: 2026-04-07
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/types/NativeKind.md` | Modified | Configuration section: YAML schema + prose |
+| `docs/user/jm3lib/types/NativeKind.md` | Modified | Configuration section: YAML schema + prose |
 | `docs/user/concepts/pipelines/INDEX.md` | Modified | Configuration subsection: YAML schema + prose |
 | `docs/technical/compile-rules/PGE/PGE01028-base-derived-mutual-exclusion.md` | Modified | Sub-condition (e): table, detection, INVALID example |
 

@@ -11,7 +11,7 @@ metadata_instance: "%#:DiffOp:N"
 
 <!-- @c:types -->
 
-Runtime `##Enum` type available in every `.aj3` file. Classifies the operation type in a text diff entry — whether a line was added, deleted, or replaced relative to the original text.
+Runtime `##Enum` type available in every `.jm3` file. Classifies the operation type in a text diff entry — whether a line was added, deleted, or replaced relative to the original text.
 
 ---
 
@@ -53,5 +53,5 @@ Runtime `##Enum` type available in every `.aj3` file. Classifies the operation t
 ## Related
 
 - [[TextDiff]] — uses #DiffOp for operation classification
-- [[enums]] — other aj3lib enum types
+- [[enums]] — other jm3lib enum types
 - [[syntax/types/INDEX|types]] — full type system specification

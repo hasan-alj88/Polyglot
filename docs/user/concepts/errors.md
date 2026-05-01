@@ -10,13 +10,13 @@ updated: 2026-03-25
 <!-- @u:pipelines:Error Handling -->
 <!-- @c:variable-lifecycle:Failed -->
 <!-- @c:data-is-trees -->
-<!-- @c:aj3lib/errors/errors -->
+<!-- @c:jm3lib/errors/errors -->
 <!-- @u:technical/ebnf/09-definition-blocks#9.7 -->
 <!-- @u:technical/edge-cases/10-execution -->
 <!-- @u:io/error-declaration -->
 <!-- @u:io/io-parameter-handling#Fallback -->
 
-Errors in Aljam3 Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Aljam3 objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[aj3lib/errors/errors#`#Error` Struct]]). Error messages use `.MessageTemplate` with `{key}` interpolation — the compiler enforces that every `{key}` exists in `.Info#Record` (PGE07008). System diagnostics (`.Stderr`, `.StackTrace`, `.ExitCode`) are auto-filled by the runtime as `#NullableRecord` fields.
+Errors in Aljam3 Code use the `!` prefix and live at the `%!` branch of the metadata tree (see [[data-is-trees#How Concepts Connect]]). They follow the same [[identifiers]] rules as all Aljam3 objects — `.` for fixed fields, `:` for flexible fields. Every error leaf is typed `#Error` (see [[jm3lib/errors/errors#`#Error` Struct]]). Error messages use `.MessageTemplate` with `{key}` interpolation — the compiler enforces that every `{key}` exists in `.Info#Record` (PGE07008). System diagnostics (`.Stderr`, `.StackTrace`, `.ExitCode`) are auto-filled by the runtime as `#NullableRecord` fields.
 
 ```mermaid
 flowchart LR
@@ -31,7 +31,7 @@ flowchart LR
 
 ## Defining Custom Errors (`{!}`)
 
-Custom errors are defined with `{!}` blocks (see [[blocks#Definition Elements]]). All user-defined errors live under the `!Error` namespace — `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. `{!}` is effectively a `{#}` data tree with `%##TerminalType << #Error` — every terminal branch must be an `#Error` instance (see [[aj3lib/types/properties/TerminalType|%##TerminalType]]). Use `[:]` for extensible branches and `[.]` for terminals (typed `#Error`):
+Custom errors are defined with `{!}` blocks (see [[blocks#Definition Elements]]). All user-defined errors live under the `!Error` namespace — `{!} !Name` implicitly creates `!Error:Name.*` in the metadata tree. `{!}` is effectively a `{#}` data tree with `%##TerminalType << #Error` — every terminal branch must be an `#Error` instance (see [[jm3lib/types/properties/TerminalType|%##TerminalType]]). Use `[:]` for extensible branches and `[.]` for terminals (typed `#Error`):
 
 ```aljam3
 {!} !Error
@@ -63,7 +63,7 @@ Each terminal declares `.MessageTemplate` (required) and `.Info` schema with typ
 
 This creates five error identifiers under `!Error`: `!Error:Validation.Empty`, `!Error:Validation.TooLong`, `!Error:Validation.InvalidEmail`, `!Error:Auth.Expired`, `!Error:Auth.InvalidToken`. Tree paths use `:` for user-extensible branches and `.` for fixed terminals (e.g., `%!.Error:Validation.Empty`). Siblings at the same level must all use the same separator (PGE05001).
 
-aj3lib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and require no definition — they use fixed `.` leaves and are **not** user-extensible. `!Error` is the only namespace with user-extensible children (see [[aj3lib/errors/errors#`!Error` — User-Extensible Namespace]]). See [[aj3lib/errors/errors#Built-in Error Namespaces]] for the complete list.
+jm3lib error namespaces (`!File`, `!No`, `!Timeout`, `!Math`, `!Validation`, `!Field`, `!Alias`, `!Permission`, `!RT`) are built-in and require no definition — they use fixed `.` leaves and are **not** user-extensible. `!Error` is the only namespace with user-extensible children (see [[jm3lib/errors/errors#`!Error` — User-Extensible Namespace]]). See [[jm3lib/errors/errors#Built-in Error Namespaces]] for the complete list.
 
 ## Declaring Pipeline Errors (`(-) !`)
 
@@ -231,7 +231,7 @@ See [[concepts/pipelines/chains#Error Handling in Chains]] for the full chain ex
 
 ## Standard Error Trees
 
-Every pipeline exposes an error tree via `(-) !ErrorName` declarations — a structured list of every error it can raise. The aj3lib defines nine root namespaces (defined as `{!}` blocks by the runtime, all with fixed `.` leaves):
+Every pipeline exposes an error tree via `(-) !ErrorName` declarations — a structured list of every error it can raise. The jm3lib defines nine root namespaces (defined as `{!}` blocks by the runtime, all with fixed `.` leaves):
 
 | Namespace | Covers |
 |-----------|--------|
@@ -246,7 +246,7 @@ Every pipeline exposes an error tree via `(-) !ErrorName` declarations — a str
 | `!RT` | Runtime execution errors (CompileError, RuntimeError, Timeout, EnvironmentError) |
 | `!Error` | **User-extensible** — the only namespace with `:` flexible children |
 
-See [[aj3lib/errors/errors]] for the complete error tree listings.
+See [[jm3lib/errors/errors]] for the complete error tree listings.
 
 ## Failed State
 

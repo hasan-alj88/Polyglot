@@ -9,8 +9,8 @@ metadata_instance: "%Q:Flush:N"
 
 # -Q.Flush
 
-<!-- @d:aj3lib/pipelines/Q/Queue.Flush -->
-**Deprecated.** Renamed to [[aj3lib/pipelines/Q/Queue.Flush|d:-Q.Queue.Flush]] under the scoped naming convention (`-Q.<Scope>.<Action>`).
+<!-- @d:jm3lib/pipelines/Q/Queue.Flush -->
+**Deprecated.** Renamed to [[jm3lib/pipelines/Q/Queue.Flush|d:-Q.Queue.Flush]] under the scoped naming convention (`-Q.<Scope>.<Action>`).
 
 ---
 
@@ -55,5 +55,5 @@ None — pure computation (queue scheduling and resource management).
 
 ## Related
 
-- [[aj3lib/pipelines/Q/Drain|-Q.Drain]]
-- [[aj3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]
+- [[jm3lib/pipelines/Q/Drain|-Q.Drain]]
+- [[jm3lib/pipelines/Q/INDEX|-Q.* Queue Pipelines]]

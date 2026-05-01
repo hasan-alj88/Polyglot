@@ -2,7 +2,7 @@
 phase: 94-schema-validation
 plan: 02
 subsystem: spec
-tags: [aj3lib, pipelines, validation, schema, file-io, errors]
+tags: [jm3lib, pipelines, validation, schema, file-io, errors]
 
 provides:
   - "=File.Serial.Read/Write/Read.Field pipelines"
@@ -16,11 +16,11 @@ affects: [94-03 expand/collect audit]
 
 key-files:
   created:
-    - docs/user/aj3lib/pipelines/#.md
+    - docs/user/jm3lib/pipelines/#.md
   modified:
-    - docs/user/aj3lib/pipelines/File.md
-    - docs/user/aj3lib/errors/errors.md
-    - docs/user/aj3lib/INDEX.md
+    - docs/user/jm3lib/pipelines/File.md
+    - docs/user/jm3lib/errors/errors.md
+    - docs/user/jm3lib/INDEX.md
     - docs/user/syntax/types.md
     - docs/user/concepts/pipelines.md
     - docs/technical/EBNF.md
@@ -63,10 +63,10 @@ None — plan executed exactly as written.
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `docs/user/aj3lib/pipelines/#.md` | Created | 10 pipelines: 3 base parsers, 4 validation, 2 field/column extraction |
-| `docs/user/aj3lib/pipelines/File.md` | Modified | Added =File.Serial.* branch (3 pipelines), permissions, errors, implementation status |
-| `docs/user/aj3lib/errors/errors.md` | Modified | Added !File.ParseError, replaced !Validation.Error with .Schema/.Type/.Regex, added !Field namespace, 5 new pipeline error associations |
-| `docs/user/aj3lib/INDEX.md` | Modified | Added =# row, updated =File description, updated error prefix list |
+| `docs/user/jm3lib/pipelines/#.md` | Created | 10 pipelines: 3 base parsers, 4 validation, 2 field/column extraction |
+| `docs/user/jm3lib/pipelines/File.md` | Modified | Added =File.Serial.* branch (3 pipelines), permissions, errors, implementation status |
+| `docs/user/jm3lib/errors/errors.md` | Modified | Added !File.ParseError, replaced !Validation.Error with .Schema/.Type/.Regex, added !Field namespace, 5 new pipeline error associations |
+| `docs/user/jm3lib/INDEX.md` | Modified | Added =# row, updated =File description, updated error prefix list |
 | `docs/user/syntax/types.md` | Modified | Added "<#type in Pipeline IO" subsection with tier table and example |
 | `docs/user/concepts/pipelines.md` | Modified | Added <#type cross-reference paragraph in IO section |
 | `docs/technical/EBNF.md` | Modified | Added type_input_line production to io_section grammar |

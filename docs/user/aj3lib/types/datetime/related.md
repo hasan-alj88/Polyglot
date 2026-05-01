@@ -8,8 +8,8 @@ updated: 2026-04-03
 
 <!-- @source:related -->
 
-- [[enums]] -- aj3lib enum types
-- [[structs]] -- aj3lib struct types (#path, #Queue)
+- [[enums]] -- jm3lib enum types
+- [[structs]] -- jm3lib struct types (#path, #Queue)
 - [[boolean]] -- #Boolean enum type
 - [[string]] -- #String foundation type
 - [[syntax/types/schema-properties]] -- `##`/`###` schema property rules

@@ -2,7 +2,7 @@
 phase: q-controls-redesign
 plan: 01
 subsystem: docs
-tags: [queue, aj3lib, Q-pipelines, controls-redesign]
+tags: [queue, jm3lib, Q-pipelines, controls-redesign]
 
 requires:
   - phase: brainstorm
@@ -10,7 +10,7 @@ requires:
 
 provides:
   - Rewritten queue concepts doc (docs/user/concepts/pipelines/queue.md)
-  - Rewritten Q pipeline catalog (docs/user/aj3lib/pipelines/Q/INDEX.md)
+  - Rewritten Q pipeline catalog (docs/user/jm3lib/pipelines/Q/INDEX.md)
 
 affects: [01-02 per-pipeline specs, 01-03 technical docs]
 
@@ -22,7 +22,7 @@ key-files:
   created: []
   modified:
     - docs/user/concepts/pipelines/queue.md
-    - docs/user/aj3lib/pipelines/Q/INDEX.md
+    - docs/user/jm3lib/pipelines/Q/INDEX.md
 
 key-decisions:
   - "Three {Q} block types: #Queue, #QueueRules, #JobRules"
@@ -79,7 +79,7 @@ completed: 2026-04-15
 | File | Change | Purpose |
 |------|--------|---------|
 | `docs/user/concepts/pipelines/queue.md` | Rewritten | Three {Q} block types, composition model, temporal behavior, resource freeing spectrum |
-| `docs/user/aj3lib/pipelines/Q/INDEX.md` | Rewritten | Full pipeline catalog with getters, state guards, actions, examples, deprecation table |
+| `docs/user/jm3lib/pipelines/Q/INDEX.md` | Rewritten | Full pipeline catalog with getters, state guards, actions, examples, deprecation table |
 
 ## Decisions Made
 

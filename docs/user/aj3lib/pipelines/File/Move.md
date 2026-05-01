@@ -53,6 +53,6 @@ Requires `File.Read` + `File.Write` capability.
 
 ## Related
 
-- [[aj3lib/pipelines/File/INDEX|-File.* File Pipelines]]
-- [[aj3lib/pipelines/File/Copy|-File.Copy]]
-- [[aj3lib/pipelines/File/Delete|-File.Delete]]
+- [[jm3lib/pipelines/File/INDEX|-File.* File Pipelines]]
+- [[jm3lib/pipelines/File/Copy|-File.Copy]]
+- [[jm3lib/pipelines/File/Delete|-File.Delete]]

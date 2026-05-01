@@ -52,7 +52,7 @@ completed: 2026-03-26T00:02:00Z
 
 - Inserted Mermaid `flowchart LR` with 5 nodes (entry, 3 steps, exit)
 - Used solid arrows for auto-wire connections, dashed arrows for explicit [=] wiring
-- Step labels reference actual aj3lib pipelines from the code example below
+- Step labels reference actual jm3lib pipelines from the code example below
 
 ## Files Created/Modified
 

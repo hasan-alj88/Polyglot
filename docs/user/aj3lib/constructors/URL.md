@@ -7,7 +7,7 @@ updated: 2026-04-22
 # $URL Constructor
 
 <!-- @u:syntax/constructors -->
-<!-- @c:aj3lib/types/URL -->
+<!-- @c:jm3lib/types/URL -->
 
 The `$URL` constructor produces `#URL` values from URL strings. URL parsing requires an RFC 3986-compliant parser, so this constructor uses the native pipeline conversion pattern (like `$Dur`) — the captured string is passed to `-URL.Decompose` which parses and decomposes it into `#URL` fields. All overloads are compile-time guaranteed — no error surface, no `[!]` handling needed.
 
@@ -37,7 +37,7 @@ The `$URL` constructor produces `#URL` values from URL strings. URL parsing requ
 
 Captures the entire argument string as a URL. The `($)` regex `.+` accepts any non-empty string — the actual validation and decomposition is performed by the native `-URL.Decompose` pipeline at compile time.
 
-**Native pipeline conversion pattern:** Like `$Dur`, the `$URL` constructor delegates to a native pipeline (`-URL.Decompose`) that performs both validation and field extraction. This pipeline is a aj3lib-internal compile-time primitive — it is invoked during constructor evaluation, not at runtime.
+**Native pipeline conversion pattern:** Like `$Dur`, the `$URL` constructor delegates to a native pipeline (`-URL.Decompose`) that performs both validation and field extraction. This pipeline is a jm3lib-internal compile-time primitive — it is invoked during constructor evaluation, not at runtime.
 
 ## Overload Resolution
 
@@ -61,7 +61,7 @@ Single overload — no ambiguity.
 
 ## Related
 
-- [[constructors/INDEX|aj3lib Constructors]] -- constructor registry
+- [[constructors/INDEX|jm3lib Constructors]] -- constructor registry
 - [[syntax/constructors]] -- `{$}` block specification
-- [[aj3lib/pipelines/URL.Parse|-URL.Parse]] -- runtime URL string parsing
-- [[aj3lib/types/URL|#URL type]] -- URL type definition
+- [[jm3lib/pipelines/URL.Parse|-URL.Parse]] -- runtime URL string parsing
+- [[jm3lib/types/URL|#URL type]] -- URL type definition

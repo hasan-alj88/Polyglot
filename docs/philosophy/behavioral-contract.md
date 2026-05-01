@@ -51,7 +51,7 @@ The Behavioral Contract has four properties that distinguish it from traditional
 
 The compilation flow is a one-way handoff:
 
-1. The developer writes [[glossary#Aljam3 Code|Aljam3 Code]] ([[glossary#.aj3 files|.aj3 files]])
+1. The developer writes [[glossary#Aljam3 Code|Aljam3 Code]] ([[glossary#.jm3 files|.jm3 files]])
 2. The compiler validates signal logic — buggy concurrency, missing error paths, and permission violations are compile errors
 3. The compiler produces a Behavioral Contract — a serialized signal map for each pipeline
 4. The contract is registered in the Aljam3 Service's database

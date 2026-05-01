@@ -18,24 +18,24 @@ No `[@]` import needed.
 
 ## Operators
 
-- [[aj3lib/collectors/Into/Array|*Into.Array]] -- collect items into an array
-- [[aj3lib/collectors/Into/Map|*Into.Map]] -- collect key-value pairs into a map
-- [[aj3lib/collectors/Into/Serial|*Into.Serial]] -- collect key-value pairs into a serial
-- [[aj3lib/collectors/Into/Level|*Into.Level]] -- collect into serialized siblings at a level
-- [[aj3lib/collectors/Into/Dataframe|*Into.Dataframe]] -- collect rows into a dataframe
+- [[jm3lib/collectors/Into/Array|*Into.Array]] -- collect items into an array
+- [[jm3lib/collectors/Into/Map|*Into.Map]] -- collect key-value pairs into a map
+- [[jm3lib/collectors/Into/Serial|*Into.Serial]] -- collect key-value pairs into a serial
+- [[jm3lib/collectors/Into/Level|*Into.Level]] -- collect into serialized siblings at a level
+- [[jm3lib/collectors/Into/Dataframe|*Into.Dataframe]] -- collect rows into a dataframe
 
 ## Text Collectors
 
-- [[aj3lib/collectors/Into/Text.Append|*Into.Text.Append]] -- concatenate text fragments with separator and ordering
-- [[aj3lib/collectors/Into/Text.Merge|*Into.Text.Merge]] -- k-way merge text diffs against a base with conflict resolution
+- [[jm3lib/collectors/Into/Text.Append|*Into.Text.Append]] -- concatenate text fragments with separator and ordering
+- [[jm3lib/collectors/Into/Text.Merge|*Into.Text.Merge]] -- k-way merge text diffs against a base with conflict resolution
 
 ## CSV Collectors
 
-- [[aj3lib/collectors/Into/CSV.Rows|*Into.CSV.Rows]] -- collect rows into CSV text with header
-- [[aj3lib/collectors/Into/CSV.Merge|*Into.CSV.Merge]] -- k-way merge CSV diffs with header preservation
+- [[jm3lib/collectors/Into/CSV.Rows|*Into.CSV.Rows]] -- collect rows into CSV text with header
+- [[jm3lib/collectors/Into/CSV.Merge|*Into.CSV.Merge]] -- k-way merge CSV diffs with header preservation
 
 ## Related
 
-- [[aj3lib/collectors/INDEX|Collectors overview]]
+- [[jm3lib/collectors/INDEX|Collectors overview]]
 - [[concepts/collections/collect|Collect Operators]]
 - [[concepts/collections/collect#Reconciliation]] -- reconciliation model

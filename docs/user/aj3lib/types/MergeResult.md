@@ -50,5 +50,5 @@ Output from `*Into.Text.Merge` and `*Into.CSV.Merge` collectors. Contains the me
 - [[MergeConflict]] — individual conflict records in .conflicts
 - [[MergeStrategy]] — how conflicts are resolved
 - [[TextDiff]] — diff entries that feed into the merge
-- [[structs]] — other aj3lib struct types
+- [[structs]] — other jm3lib struct types
 - [[syntax/types/INDEX|types]] — full type system specification

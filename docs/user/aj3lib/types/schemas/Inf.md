@@ -57,7 +57,7 @@ When `##Inf` is composed, the type gains an `.Inf` branch. Combined with `%##Act
 
 ## Used By
 
-<!-- @u:aj3lib/types/Bound -->
+<!-- @u:jm3lib/types/Bound -->
 
 - [[Bound|#Bound]] composes `##Inf` for its `.Inf` variant
 
