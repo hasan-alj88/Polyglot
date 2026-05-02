@@ -25,29 +25,30 @@ A `##Map` structurally acts as a parent node where its children (the values `V`)
 
 Because `##Map` requires uniform schema branches, deeply nested trees (like 3D or 4D data) would normally require repeating keys over and over.
 
-Instead, Aljam3 separates the **labels (Keys)** from the **raw data**, conceptually similar to Python's `xarray` or R's `dimnames`. You define the keys for each depth level using schema properties (`<#Keys.N`), and then provide the raw data arrays. 
+Instead, Aljam3 separates the **labels (Keys)** from the **raw data**, conceptually similar to Python's `xarray` or R's `dimnames`. You define the keys for each depth level using the `(<)` Tuple marker under the `#Keys` parameter, and then provide the raw data arrays using the `(.)` anonymous row marker.
 
 ```aljam3
 [ ] 3D Map: Country -> City -> Metric
 [-] $stats##Map <<
    ( ) 1. The Labels (coords/dimnames)
-   (#) <#Keys.1 << [.London, .Manchester]
-   (#) <#Keys.2 << [.Population, .GDP]
-   
+   (#) <#Keys << 
+      (<) .London     | .Manchester
+      (<) .Population | .GDP
+      
    ( ) 2. The Raw Data
    ($) .UK << 
-      ($) << 9.0 | 3.0
-      ($) << 2.5 | 0.5
+      (.) << 9.0 | 3.0
+      (.) << 2.5 | 0.5
    ($) .US << 
-      ($) << 8.5 | 2.0
-      ($) << 4.0 | 1.2
+      (.) << 8.5 | 2.0
+      (.) << 4.0 | 1.2
 ```
 
 In this structure:
-- `(#)` is used to shape the schema's axes.
+- `(#) <#Keys` initiates the parameter assignment.
+- `(<)` pushes a depth-level key tuple, leveraging the `|` tabular separator.
 - `($) .UK` establishes the root level 0 keys dynamically.
-- `($) <<` leverages the auto-incrementing push constructor to drop in the anonymous row data.
-- `|` (the Tabular Separator) acts as the column separator for the deepest level.
+- `(.) <<` pushes an anonymous data row corresponding to the deepest hierarchy.
 
 ### Access
 
