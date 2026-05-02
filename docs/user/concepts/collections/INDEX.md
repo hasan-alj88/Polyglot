@@ -27,7 +27,7 @@ Every collection in Aljam3 is a tree. `##Map` is the universal flat key-value co
 |------|------|----------|--------------|
 | `##Map:K:V` | Base collection (generic) | `K` (any key type) | Flat key-value |
 | `##Array:V:Dim` | Contiguous collection (generic) | `#UnsignedInt` | Cartesian product of 0..n-1 per dimension |
-| `##Dataframe:E:C` | Row-oriented table (generic) | `##Enum` columns | Array of Map -- each row is a map |
+| `##Dataframe:R:C` | Strictly 2D Matrix | `##Enum` keys (Flat) | 2D matrix with Row (`R`) and Column (`C`) Enums |
 | `##Set:V` | Unique value collection (generic) | (sparse) | No duplicates |
 | `##Serial` | Unconstrained tree | Any | Unlimited depth, no constraints |
 
