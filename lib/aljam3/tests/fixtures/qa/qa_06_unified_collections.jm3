@@ -1,0 +1,52 @@
+[ ] QA 06: DataFrames, Unified Expanders, and File Validation
+{@} @Local:7777<QA:Test.UnifiedCollections:1.0.0
+   [@] @Math << @Community:math<Math.Operations:1.0.0
+
+{-} -ProcessSales
+   [ ] Output parameter declarations (always comes before Triggers now)
+   (-) >processedSales##Dataframe
+      (>) #<Columns << #SalesSchema
+   [T] -T.CLI"ProcessSales"
+   [Q] -Q.Default
+   [W] -W.Aljam3
+   [ ]
+   [ ] Define safe file paths via constructors (compile-time validated)
+   [-] $dataFile << $File"/var/data/sales.csv"
+   [-] $reportsFolder << $Folder"/var/reports"
+   [ ]
+   [ ] Initialize a Dataframe schema using Constructor Inputs ($)
+   [-] $salesData##Dataframe
+      ($) #<Columns << #SalesSchema
+      ($) <0 << ##UniformRecord
+         ($) #<ValueType << #Any
+         ($) .region << $$"North"
+         ($) .amount << 500.0
+      ($) <1 << ##UniformRecord
+         ($) #<ValueType << #Any
+         ($) .region << $$"South"
+         ($) .amount << 350.0
+   [ ]
+   [ ] Iterate DataTree rows using the unified =ForEach
+   [=] =ForEach
+      (=) <Data << $salesData
+      (=) >item >> $row
+      (=) >key >> $index
+      [ ]
+      [ ] Process row: calculate tax
+      [-] @Math-API.Float.Multiply
+         (-) <a << $row<.amount
+         (-) <b << 1.05
+         (-) >result >> $taxedAmount
+            (>) >! $row<.amount
+      [ ]
+      [ ] Rebuild row schema
+      [-] $updatedRow##UniformRecord
+         ($) #<ValueType << #Any
+         ($) .region << $row<.region
+         ($) .amount << $taxedAmount
+      [ ]
+      [ ] Assemble using unified *Collect directly into output port
+      [*] *Collect
+         (*) <item << $updatedRow
+         (*) <key << $index
+         (*) >Data >> >processedSales
