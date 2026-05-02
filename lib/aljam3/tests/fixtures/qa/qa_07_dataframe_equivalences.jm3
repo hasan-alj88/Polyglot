@@ -1,0 +1,43 @@
+[ ] QA 07: Dataframe Tabular Equivalences
+{@} @Local:7777<QA:Test.DataframeSyntax:1.0.0
+   [@] @Data << @Community:data<Data.Processing:1.0.0
+
+{-} -ProcessUsers
+   (-) >report##Dataframe
+   [T] -T.CLI"TestDF"
+   [Q] -Q.Default
+   [W] -W.Aljam3
+   [ ]
+   [ ] FORM 1: The Tabular Syntactic Sugar
+   [-] $usersTabular##Dataframe <<
+      ($) .name#string | .age#int | .active#bool
+      ($) "Hasan"      | 35       | $$"True"
+      ($) "Paul"       | 28       | $$"False"
+   [ ]
+   [ ] FORM 2: Explicit Row Indices
+   [-] $usersExplicit##Dataframe <<
+      ($) <0
+         ($) .name#string << "Hasan"
+         ($) .age#int << 35
+         ($) .active#bool << $$"True"
+      ($) <1
+         ($) .name#string << "Paul"
+         ($) .age#int << 28
+         ($) .active#bool << $$"False"
+   [ ]
+   [ ] FORM 3: Auto-Incrementing Push (<<)
+   [-] $usersPush##Dataframe <<
+      ($) <<
+         ($) .name#string << "Hasan"
+         ($) .age#int << 35
+         ($) .active#bool << $$"True"
+      ($) <<
+         ($) .name#string << "Paul"
+         ($) .age#int << 28
+         ($) .active#bool << $$"False"
+   [ ]
+   [ ] Prove all three are identical
+   [*] *All
+      (*) << $usersTabular
+      (*) << $usersExplicit
+      (*) << $usersPush
