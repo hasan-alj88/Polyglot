@@ -13,6 +13,7 @@
     { "include": "#wrappers" },
     { "include": "#pipelines" },
     { "include": "#parallels" },
+    { "include": "#backgrounds" },
     { "include": "#environments" },
     { "include": "#variables" },
     { "include": "#packages" },
@@ -20,6 +21,7 @@
     { "include": "#datatypes-schema" },
     { "include": "#properties" },
     { "include": "#constants" },
+    { "include": "#metadata" },
     { "include": "#exceptions-errors" },
     { "include": "#logical-nodes" },
     { "include": "#collectors" },
@@ -39,22 +41,28 @@
         { "name": "entity.name.function.parallel.aljam3", "match": "\\=[A-Za-z0-9_]+" }
       ]
     },
+    "backgrounds": {
+      "patterns": [
+        { "name": "entity.name.function.background.aljam3", "match": "\\[b\\]|\\{b\\}|\\(b\\)" },
+        { "name": "entity.name.function.background.aljam3", "match": "\\-b[\\.:][A-Za-z0-9_]+" }
+      ]
+    },
     "triggers": {
       "patterns": [
         { "name": "entity.name.type.trigger.aljam3", "match": "\\[T\\]|\\{T\\}|\\(T\\)" },
-        { "name": "entity.name.type.trigger.aljam3", "match": "\\-T\\.[A-Za-z0-9_]+" }
+        { "name": "entity.name.type.trigger.aljam3", "match": "\\-T[\\.:][A-Za-z0-9_]+" }
       ]
     },
     "queues": {
       "patterns": [
         { "name": "entity.name.type.queue.aljam3", "match": "\\[Q\\]|\\{Q\\}|\\(Q\\)" },
-        { "name": "entity.name.type.queue.aljam3", "match": "\\-Q\\.[A-Za-z0-9_]+" }
+        { "name": "entity.name.type.queue.aljam3", "match": "\\-Q[\\.:][A-Za-z0-9_]+" }
       ]
     },
     "wrappers": {
       "patterns": [
         { "name": "entity.name.type.wrapper.aljam3", "match": "\\[W\\]|\\{W\\}|\\(W\\)" },
-        { "name": "entity.name.type.wrapper.aljam3", "match": "\\-W\\.[A-Za-z0-9_]+" }
+        { "name": "entity.name.type.wrapper.aljam3", "match": "\\-W[\\.:][A-Za-z0-9_]+" }
       ]
     },
     "environments": {
@@ -78,7 +86,8 @@
     "io-tags": {
       "patterns": [
         { "name": "entity.name.tag.io.aljam3", "match": "\\(>\\)|\\(<\\)" },
-        { "name": "entity.name.tag.io.aljam3", "match": "[<>][A-Za-z0-9_]+" }
+        { "name": "entity.name.tag.input.aljam3", "match": "<[A-Za-z0-9_]+" },
+        { "name": "entity.name.tag.output.aljam3", "match": ">[A-Za-z0-9_]+" }
       ]
     },
     "datatypes-schema": {
@@ -98,6 +107,12 @@
         { "name": "constant.language.aljam3", "match": "%[A-Za-z0-9_]+" }
       ]
     },
+    "metadata": {
+      "patterns": [
+        { "name": "entity.name.tag.metadata.aljam3", "match": "\\[%\\]|\\{%\\}|\\(%\\)" },
+        { "name": "entity.name.tag.metadata.aljam3", "match": "<%|>%" }
+      ]
+    },
     "exceptions-errors": {
       "patterns": [
         { "name": "invalid.illegal.aljam3", "match": "\\[!\\]|\\{!\\}|<!|>!" },
@@ -107,7 +122,7 @@
     "logical-nodes": {
       "patterns": [
         { "name": "keyword.operator.logical.aljam3", "match": "\\[\\?\\]|\\[\\+\\]|\\[&\\]|\\[\\^\\]" },
-        { "name": "keyword.operator.logical.aljam3", "match": ">\\?|<\\?|<=\\?|>=\\?|!\\?|=\\?" },
+        { "name": "keyword.operator.logical.aljam3", "match": ">\\?|<\\?|<=\\?|>=\\?|!\\?|=\\?|\\*\\?" },
         { "name": "keyword.operator.logical.aljam3", "match": "\\?[A-Za-z0-9_]+" }
       ]
     },
