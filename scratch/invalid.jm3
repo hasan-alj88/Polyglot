@@ -1,6 +1,0 @@
-@Package TestInvalid
--Pipeline my_pipe
-  #Data some_data
-  -> InvalidOperator
-  ? BadPredicate
-  ~ InvalidMarker

@@ -86,7 +86,7 @@
     "io-tags": {
       "patterns": [
         { "name": "entity.name.tag.io.aljam3", "match": "\\(>\\)|\\(<\\)|\\(\\$\\)" },
-        { "name": "entity.name.tag.schema.aljam3", "match": "#<[A-Za-z0-9_]+" },
+        { "name": "entity.name.tag.io.aljam3", "match": "#<[A-Za-z0-9_]+" },
         { "name": "entity.name.tag.input.aljam3", "match": "<[A-Za-z0-9_]+" },
         { "name": "entity.name.tag.output.aljam3", "match": ">[A-Za-z0-9_]+" }
       ]
