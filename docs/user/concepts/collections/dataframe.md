@@ -22,19 +22,29 @@ Because both dimensions are structural Enums (`.`), the Dataframe guarantees a f
    ($) "Mouse"         | 45.0         | 12
 ```
 
-This tabular layout is syntactic sugar that the compiler unrolls into an explicit matrix of flat row enums (`0.`, `1.`) and flat column enums (`.product`, `.price`):
+This tabular layout is syntactic sugar that the compiler unrolls into an explicit matrix of flat row enums (`.0`, `.1`) and flat column enums (`.product`, `.price`):
 
 ```aljam3
 [ ] The unrolled explicit matrix
 [-] $salesData##Dataframe <<
-   ($) 0.
+   ($) .0
       ($) .product#string << "Laptop"
       ($) .price#float << 1200.0
       ($) .quantity#int << 5
-   ($) 1.
+   ($) .1
       ($) .product#string << "Mouse"
       ($) .price#float << 45.0
       ($) .quantity#int << 12
+```
+
+You can also explicitly name the row enums in the tabular layout by providing them in the first column:
+
+```aljam3
+[ ] Tabular Syntax with Named Row Enums
+[-] $users##Dataframe <<
+   ($)        | .name#string | .age#int | .active#bool
+   ($) .user1 | "Hasan"      | 35       | #True
+   ($) .user2 | "Paul"       | 28       | #False
 ```
 
 Alternatively, the auto-incrementing push `($) <<` can be used to construct rows without explicitly naming the numeric enum:

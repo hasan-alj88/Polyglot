@@ -10,31 +10,31 @@
    [ ]
    [ ] FORM 1: The Tabular Syntactic Sugar
    [-] $usersTabular##Dataframe <<
-      ($) .name#string | .age#int | .active#bool
-      ($) "Hasan"      | 35       | $$"True"
-      ($) "Paul"       | 28       | $$"False"
+      ($)        | .name#string | .age#int | .active#bool
+      ($) .user1 | "Hasan"      | 35       | #True
+      ($) .user2 | "Paul"       | 28       | #False
    [ ]
-   [ ] FORM 2: Explicit Row Indices
+   [ ] FORM 2: Explicit Row Enums
    [-] $usersExplicit##Dataframe <<
-      ($) <0
+      ($) .user1
          ($) .name#string << "Hasan"
          ($) .age#int << 35
-         ($) .active#bool << $$"True"
-      ($) <1
+         ($) .active#bool << #True
+      ($) .user2
          ($) .name#string << "Paul"
          ($) .age#int << 28
-         ($) .active#bool << $$"False"
+         ($) .active#bool << #False
    [ ]
    [ ] FORM 3: Auto-Incrementing Push (<<)
    [-] $usersPush##Dataframe <<
       ($) <<
          ($) .name#string << "Hasan"
          ($) .age#int << 35
-         ($) .active#bool << $$"True"
+         ($) .active#bool << #True
       ($) <<
          ($) .name#string << "Paul"
          ($) .age#int << 28
-         ($) .active#bool << $$"False"
+         ($) .active#bool << #False
    [ ]
    [ ] Prove all three are identical
    [*] *All
