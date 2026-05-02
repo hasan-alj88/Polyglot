@@ -297,6 +297,11 @@ pub fn get_patterns() -> Vec<PatternRule> {
             extractor: |_, _| vec![Aljam3Token::FallBackPushInto],
         },
         PatternRule {
+            label: "Tabular_Separator",
+            regex: &RE_TABULAR_SEP,
+            extractor: |_, _| vec![Aljam3Token::TabularSeparator],
+        },
+        PatternRule {
             label: "Range",
             regex: &RE_RANGE,
             extractor: |caps, _| {

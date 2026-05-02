@@ -74,7 +74,7 @@ pub enum Aljam3Token {
     InvalidIdentifier(String),
     SchemaShapingInput(String),
     VerboseConstructor(String),
-    AllOtherErrros,
+    AllOtherErrors,
     Registry(String),
     PackageName(String),
     PackageVersion(String),
@@ -105,6 +105,7 @@ pub enum Aljam3Token {
     DefaultPushInto,
     FallBackPullFrom,
     FallBackPushInto,
+    TabularSeparator,
 
     // Compression Operators
     IsItEqual,

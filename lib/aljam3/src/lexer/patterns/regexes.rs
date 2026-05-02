@@ -37,6 +37,7 @@ lazy_static! {
     pub static ref RE_DEFAULT_PUSH: Regex = Regex::new(r"^~>").unwrap();
     pub static ref RE_FALLBACK_PULL: Regex = Regex::new(r"^<!").unwrap();
     pub static ref RE_FALLBACK_PUSH: Regex = Regex::new(r"^>!").unwrap();
+    pub static ref RE_TABULAR_SEP: Regex = Regex::new(r"^\|").unwrap();
 
     // Compression Operators
     pub static ref RE_COMPRESSION: Regex = Regex::new(r"^(?P<op>=\?|=!\?|>\?|>\!\?|<\?|<\!\?|\*\?)").unwrap();
