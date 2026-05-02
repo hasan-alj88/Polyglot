@@ -25,16 +25,23 @@ The expand operator's IO must match its signature — `=ForEach` requires `<Data
 
 Every expand scope must contain at least one [[concepts/collections/collect|collector]]. A nested expand without an inner collector is a compile error — inner items cannot flow to outer collectors (PGE03009). Conversely, a `*Collect` or `*Agg` collector outside any expand scope is invalid (PGE03010).
 
-### `=ForEach.Level` — Level-Specific Iteration
+### Depth Limiting (`<Depth`)
 
-Unlike `=ForEach.Serial` which iterates all keys, `=ForEach.Level` iterates only the siblings at a specific level of a serialized structure. The `.=` suffix on the input path marks the level iteration point — analogous to `.*` wildcard, `.=` means "expand siblings at this level":
+Because Aljam3 fundamentally treats all collections as **DataTrees**, a generic `=ForEach` must know how far down the branches to traverse. By default, tree traversal walks down to the leaves (cell-by-cell). 
+
+You can instruct the expander to yield entire sub-trees at a specific level using the `(<) <Depth` argument:
 
 ```aljam3
-[-] =ForEach.Level
-   (=) <level << #SomeData.SubField.=
-   (=) >key >> $key
-   (=) >item >> $item
+[=] =ForEach
+   (=) <Data << $salesData##Dataframe
+   (=) <Depth << 1           [ ] Stops at the first branch, yielding row Enums
+   (=) >item >> $row         [ ] $row is the sub-tree Record for that row
+   (=) >key >> $index        [ ] $index is the row Enum (e.g., .0)
 ```
+
+- `<Depth << 1`: Iterates the immediate children (e.g., rows of a dataframe).
+- `<Depth << 2`: Iterates the next level (e.g., cells of a dataframe).
+- `<Depth << -1`: Exhaustive iteration; traverses uniformly to all leaf nodes across the tree.
 
 ## See Also
 

@@ -2,6 +2,7 @@
 {@} @Local:7777<QA:Test.UnifiedCollections:1.0.0
    [@] @Math << @Community:math<Math.Operations:1.0.0
 
+
 {-} -ProcessSales
    [ ] Output parameter declarations (always comes before Triggers now)
    (-) >processedSales##Dataframe
