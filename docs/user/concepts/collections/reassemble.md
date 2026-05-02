@@ -61,18 +61,22 @@ Like expanders and collectors, reassemble operators accept `[-]` (sequential) or
 
 ### Tree Reorganization (Transposing)
 
-Because the reassembler atomically expands and recollects, it is the native tool for reorganizing uniform DataTrees. By supplying a `(*) <Permute` input, you can swap the hierarchy of the keys without writing a manual loop. 
+Because the reassembler atomically expands and recollects, it is the native tool for reorganizing DataTrees. By using `=*PermuteLevels` and supplying a `(*) <Permute` input, you can swap the hierarchy of the keys without writing a manual loop. 
 
 For example, transposing a 2D `##Dataframe` (swapping rows and columns):
 
 ```aljam3
-[-] =*Collect
-   (=) <Data << $users##Dataframe
+[ ] Transpose a DataFrame by swapping the Row and Column depths
+[-] =*PermuteLevels
+   (=) <Data << $users       [ ] since its final the Data type is known
    (*) <Permute << [1, 0]    [ ] Level 1 (Columns) becomes Level 0 (Rows)
    (*) >Data >> >transposedDF
 ```
 
-This acts as pure structural manipulation; the compiler unrolls this into an exhaustive traversal (`<Depth << -1`) that collects the leaves back into a new tree using the reversed key paths.
+This acts as pure structural manipulation; the compiler unrolls this into an exhaustive traversal that collects the leaves back into a new tree using the reversed key paths.
+
+**Compile-Time Safety Note:** 
+`=*PermuteLevels` is only valid on **Uniform Trees** (where all branches share the exact same schema structure, like a DataFrame). If `$users` is a non-uniform tree (meaning branches have different schemas), attempting to permute the levels will trigger a strict **Compiler Error**, as the resulting structure cannot be safely inferred.
 
 ### Namespaces
 
