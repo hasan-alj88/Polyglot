@@ -8,9 +8,11 @@ updated: 2026-04-09
 <!-- @u:syntax/types/generic-types -->
 <!-- @u:data-is-trees -->
 
-## ##Array -- Range-Indexed Collection Schema
+## `##Array` -- Range-Indexed Collection Schema
 
-`##Array` is a schema parameterizing the `#Array` generic `{#}` type with `(#) <#ValueType` and `(#) <Dim##Dimension` parameters (default `"1D"`). It composes `##Array`, which sets `%##Fields << #Range` (integer-indexed children), `%##Gap << #False` (no gaps), `%##Ordered << #True` (order preserved), and `%##Propagate << #True` (properties apply to all levels). Use `:` positional binding: `##Array:Float:2D`.
+The **only difference** between an `##Array` and a `##Map` is that `##Array` strictly restricts its indices to **incremental numeric keys** (e.g., `<0`, `<1`, `<2`), whereas a `##Map` can have indices of any type.
+
+`##Array` is a schema parameterizing the `#Array` generic `{#}` type with `(#) <#ValueType` and `(#) <Dim##Dimension` parameters (default `"1D"`). It composes `##Map` but overrides the key generation, setting `%##Fields << #Range` (integer-indexed children), `%##Gap << #False` (no gaps), `%##Ordered << #True` (order preserved), and `%##Propagate << #True` (properties apply to all levels). Use `:` positional binding: `##Array:Float:2D`.
 
 See [[jm3lib/types/schemas/Array|##Array]] for the full definition and [[syntax/types/generic-types|Generic Types]] for the `(#) <param` syntax.
 

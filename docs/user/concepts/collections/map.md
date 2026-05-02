@@ -8,49 +8,38 @@ updated: 2026-04-09
 <!-- @u:syntax/types/generic-types -->
 <!-- @u:data-is-trees -->
 
-## ##Record -- Enum-Keyed Collection
+## `##Map:K:V` -- Generic Key-Value Collection
 
-`##Record` is a parameterized schema for enum-keyed collections with typed value fields. It replaces the former `#Map` / `##Map`. The `<#Fields` parameter must satisfy `##Enum` -- field names come from an enum type. `<#ValueType` sets the value type for all fields.
+`##Map` is the universal base collection schema for all key-value mappings in Aljam3. It parameterizes a key type `K` and a value type `V`. 
 
-See [[jm3lib/types/Map|##Record]] for the full definition and [[syntax/types/generic-types|Generic Types]] for the `(#) <param` syntax.
+Unlike `##Array`, which enforces strict, incremental numeric keys, the keys in a `##Map` can be **anything** (Strings, Enums, UUIDs, or even complex objects depending on the definition).
 
 ### Schema composition
 
-`##Record` composes `##Flat` and sets:
+A `##Map` structurally acts as a parent node where its children (the values `V`) are bound to arbitrary unique keys `K`.
 
-- `%##Depth.Max << 1` -- flat (one level of children)
-- `%##Fields << <#Fields` -- one child per enum variant
-- `%##Active << #ActiveKind.All` -- all fields active simultaneously
-- `%###Type << <#ValueType` -- uniform value type
-- `%###Kind << #FieldKind.Value` -- all children are value fields
+- `%##KeyType << K`
+- `%##ValueType << V`
 
 ### Access
 
-Use `<` to access fields by enum variant name:
+Use `<` followed by the key to access elements.
 
 ```aljam3
-{#} #Colors
-   [#] ##Enum
-   [#] ##Scalar
-   [.] .Red
-   [.] .Green
-   [.] .Blue
+[ ] Initialize a Map string -> float
+[-] $prices##Map:String:Float <<
+   ($) <"Apple"  << 150.5
+   ($) <"Banana" << 1.2
 
-{#} #RGBValues
-   (#) <#Fields << #Colors
-   (#) <#ValueType << #Int
-   [#] ##Record
-      (#) <#Fields << <#Fields
-      (#) <#ValueType << <#ValueType
-
-[-] $rgb#RGBValues <~ {}
-[-] $red#int << $rgb<Red
-[-] $green#int << $rgb<Green
+[ ] Dynamic key access
+[-] $item << "Apple"
+[-] $cost << $prices<$item
 ```
 
 ## See Also
 
-- [[concepts/collections/expand|Expand Operators]] -- iteration over record fields
-- [[concepts/collections/collect|Collect Operators]] -- collection into records
-- [[jm3lib/types/schemas/Fields|%##Fields]] -- field descriptor property
+- [[concepts/collections/array|##Array]] -- A specialized Map constrained to incremental numeric keys
+- [[concepts/collections/set|##Set]] -- A collection where all leaves are uniquely constrained
+- [[concepts/collections/expand|Expand Operators]] -- Iterating over maps
+- [[concepts/collections/collect|Collect Operators]] -- Collecting into maps
 
