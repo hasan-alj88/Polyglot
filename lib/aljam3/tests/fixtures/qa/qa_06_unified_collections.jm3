@@ -21,8 +21,8 @@
       ($) .0 | "North"        | 500.0
       ($) .1 | "South"        | 350.0
    [ ]
-   [ ] Iterate DataTree rows using the unified =ForEach
-   [=] =ForEach
+   [ ] Iterate DataTree rows using the semantic wrapper =ForEach.Row
+   [=] =ForEach.Row
       (=) <Data << $salesData
       (=) >item >> $row
       (=) >key >> $index
