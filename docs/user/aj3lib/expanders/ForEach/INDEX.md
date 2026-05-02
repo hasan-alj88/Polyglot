@@ -11,25 +11,11 @@ Expand operators iterate over collection elements, producing a mini-pipeline per
 
 No `[@]` import needed.
 
-## Array
+## DataTrees (Unified)
 
-- [[jm3lib/expanders/ForEach/Array|=ForEach.Array]] -- iterate array items
-- [[jm3lib/expanders/ForEach/Array/Enumerate|=ForEach.Array.Enumerate]] -- with positional index
+For all DataTree collections (`##Array`, `##Map`, `##Serial`, `##Dataframe`), use the unified `=ForEach` operator.
 
-## Map
-
-- [[jm3lib/expanders/ForEach/Map|=ForEach.Map]] -- iterate key-value pairs
-
-## Serial
-
-- [[jm3lib/expanders/ForEach/Serial|=ForEach.Serial]] -- iterate all key-item pairs at all levels
-- [[jm3lib/expanders/ForEach/Level|=ForEach.Level]] -- iterate siblings at a specific level (`.=` suffix)
-
-## Dataframe
-
-- [[jm3lib/expanders/ForEach/Dataframe|=ForEach.Dataframe]] -- iterate rows
-- [[jm3lib/expanders/ForEach/Dataframe/Enumerate|=ForEach.Dataframe.Enumerate]] -- with row index
-- ~~Column~~ -- **deprecated**. Use `-#.Column` pipeline instead.
+See [[concepts/collections/expand|Expand Operators]] for details on iterating DataTrees.
 
 ## Text
 

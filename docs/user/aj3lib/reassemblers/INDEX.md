@@ -24,7 +24,7 @@ Expand a collection and reduce to a single scalar value.
 
 Expand a collection and collect into a different collection type.
 
-- [[jm3lib/reassemblers/Into/INDEX|=*Into.*]] -- Array, Map, Dataframe
+- `=*Collect` -- expand and collect into a different DataTree collection
 
 ## Related
 

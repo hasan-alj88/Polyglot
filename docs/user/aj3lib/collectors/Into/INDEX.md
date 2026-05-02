@@ -16,13 +16,11 @@ Collector invocation uses `[-]` (sequential) or `[=]` (parallel) execution marke
 
 No `[@]` import needed.
 
-## Operators
+## DataTrees (Unified)
 
-- [[jm3lib/collectors/Into/Array|*Into.Array]] -- collect items into an array
-- [[jm3lib/collectors/Into/Map|*Into.Map]] -- collect key-value pairs into a map
-- [[jm3lib/collectors/Into/Serial|*Into.Serial]] -- collect key-value pairs into a serial
-- [[jm3lib/collectors/Into/Level|*Into.Level]] -- collect into serialized siblings at a level
-- [[jm3lib/collectors/Into/Dataframe|*Into.Dataframe]] -- collect rows into a dataframe
+For all DataTree collections (`##Array`, `##Map`, `##Serial`, `##Dataframe`), use the unified `*Collect` operator.
+
+See [[concepts/collections/collect|Collect Operators]] for details on collecting into DataTrees.
 
 ## Text Collectors
 
