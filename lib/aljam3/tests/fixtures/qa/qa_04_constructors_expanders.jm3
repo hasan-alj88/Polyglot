@@ -1,0 +1,49 @@
+[ ] QA 04: Constructors and Expanders
+{@} @Local:7777<QA:Test.ConstructorsExpanders:1.0.0
+   [@] @FS << @Community:filesystem<File.System:1.0.0
+
+{-} -ProcessDirectories
+   [ ] Output array declaration for processed items
+   [ ] IO comes first
+   [ ] ##Array is not a data type its a schema hence ##
+   (-) >processedDirs##Array
+      (>) #<type << #Folder
+      (>) #<Dimensions << $$"1D"
+   [T] -T.CLI"ProcessDirectories"
+   [Q] -Q.Default
+   [W] -W.Aljam3
+   [ ]
+   [ ] Define paths using constructors. Constructors are compile-time guaranteed.
+   [ ] Another change is in place of $Path"..." 
+   [ ] its $Folder"" or $File"" where the compiler
+   [ ] even check if the string is folder or a file
+   [ ] and that they exist - compile error otherwise.
+   [-] $reportsPath << $Folder"/var/reports"
+   [-] $logsPath << $Folder"/var/logs"
+   [-] $archivesPath << $Folder"/var/archives"
+   [ ]
+   [ ] Initialize a 1D array of paths using Verbose Constructors and Constructor Input ($)
+   [-] $dirArray##Array
+      ($) #<ValueType << #Folder
+      ($) #<Dimensions << $$"1D"
+      ($) << $reportsPath
+      ($) << $logsPath
+      ($) << $archivesPath
+   [ ]
+   [ ] Use the unified expander to iterate over the array
+   [=] =ForEach
+      (=) <Data << $dirArray
+      (=) >item >> $currentDir
+      (=) >key >> $index
+      [ ]
+      [ ] Mini-pipeline per item
+      [-] @FS-API.Directory.Create
+         (-) <path << $currentDir
+         (-) >status
+            (>) >! $$"False"
+      [ ]
+      [ ] Collect paths back into a new array
+      [*] *Collect
+         (*) <item << $currentDir
+         (*) <key << $index
+         (*) >Array >> >processedDirs

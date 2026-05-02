@@ -28,3 +28,4 @@ Whenever a piece of code or lexer token stream is corrected, the specific lesson
 - [020: Trigger Payload Mapping](file:///home/hhj/RustroverProjects/Aljam3/docs/training_lessons/020_trigger_payload_mapping.md)
 - [021: Predicate Logical AND and Operation Status](file:///home/hhj/RustroverProjects/aljam3/docs/training_lessons/021_predicate_operation_status.md)
 - [022: Pipeline Sub-job Execution Rules](file:///home/hhj/RustroverProjects/aljam3/docs/training_lessons/022_pipeline_execution_rules.md)
+- [023: DataTrees, Expanders, and Collectors Syntax Evolution](file:///home/hhj/RustroverProjects/aljam3/docs/training_lessons/023_datatrees_expand_collect.md)

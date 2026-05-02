@@ -53,6 +53,21 @@ pub fn get_patterns() -> Vec<PatternRule> {
             },
         },
         PatternRule {
+            label: "Verbose_Constructor",
+            regex: &RE_VERBOSE_CONSTRUCTOR,
+            extractor: |caps, _| {
+                let mut tokens = Vec::new();
+                if let Some(_str_match) = caps.name("has_string") {
+                    tokens.push(Aljam3Token::VerboseConstructor(String::new()));
+                    let inner = caps.name("str").unwrap().as_str();
+                    tokens.extend(extract_inline_string(inner, Aljam3Token::ConstructorInlineString));
+                } else {
+                    tokens.push(Aljam3Token::VerboseConstructor(String::new()));
+                }
+                tokens
+            },
+        },
+        PatternRule {
             label: "Constructor",
             regex: &RE_CONSTRUCTOR,
             extractor: |caps, _| {
@@ -112,6 +127,11 @@ pub fn get_patterns() -> Vec<PatternRule> {
             extractor: |caps, _| vec![Aljam3Token::InputParameter(caps["param"].to_string())],
         },
         PatternRule {
+            label: "Schema_Shaping_Input",
+            regex: &RE_SCHEMA_SHAPING,
+            extractor: |caps, _| vec![Aljam3Token::SchemaShapingInput(caps["param"].to_string())],
+        },
+        PatternRule {
             label: "Output_Parameter",
             regex: &RE_OUTPUT_PARAM,
             extractor: |caps, _| vec![Aljam3Token::OutputParameter(caps["param"].to_string())],
@@ -155,6 +175,11 @@ pub fn get_patterns() -> Vec<PatternRule> {
 
                 tokens
             },
+        },
+        PatternRule {
+            label: "Action_Error_Handler",
+            regex: &RE_ACTION_ERROR_HANDLER,
+            extractor: |_, _| vec![Aljam3Token::AllOtherErrors],
         },
         PatternRule {
             label: "Collector",

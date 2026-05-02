@@ -88,21 +88,21 @@ A pipeline that watches for new log files, summarises them with an LLM, and writ
    [@] @llm << @Community:ai::LLMService:v1.0.0
 
 {-} -SummarizeCompletedLogs
-   (-) <NewFiles#array.path
+   (-) <NewFiles##Array
+      (<) #<ValueType << #File
    (-) >ReportCount#int ~> 0
    [T] -T.Folder.NewFiles"/var/logs/app/"
       (-) >NewFiles >> <NewFiles
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
-   [=] =ForEach.Array.Enumerate
-      (=) <Array << $NewFiles
+   [=] =ForEach
+      (=) <Data << $NewFiles
       (=) >item >> $logFile
-      (=) >index >> $index
+      (=) >key >> $index
       [?] -File.Access"{$logFile}" =? #FileAccess.Available
          [-] $logContent#string << -File.Text.Read"{$logFile}"
-            [!] !*
-               [-] $logContent#string << ""
+            (>) >! ""
          [-] @llm-Summarize
             (-) <content << $logContent
             (-) <prompt << "Summarize this log file concisely."
@@ -164,13 +164,13 @@ Every pipeline follows a mandatory structure: trigger, IO, queue, wrapper, execu
 
 ```aljam3
 { } Process items in parallel, collect results
-[=] =ForEach.Array
-   (=) <Array << $items
+[=] =ForEach
+   (=) <Data << $items
    (=) >item >> $current
    [-] -ProcessItem
       (-) <data << $current
       (-) >output >> $processed
-[-] *Into.Array
+[*] *Collect
    (*) <item << $processed
    (*) >Array >> >results
 ```

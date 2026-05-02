@@ -29,7 +29,7 @@ flowchart LR
         I3["item N"]
     end
 
-    C1["[*] *Into.Array"]
+    C1["[*] *Collect"]
     C2["[*] *Agg.Sum"]
     R1["Result array — one level up"]
     R2["Result value — one level up"]
@@ -42,15 +42,11 @@ flowchart LR
     I1 & I2 & I3 --> C2 --> R2
 ```
 
-### `*Into` — Collect into Collection
+### `*Collect` — Collect into Collection
 
 | Operator | Collects into | IO |
 |----------|---------------|-----|
-| `*Into.Array` | Array | `<item`, `>Array` |
-| `*Into.Map` | Map | `<key`, `<value`, `>Map` |
-| `*Into.Serial` | Serial | `<key`, `<value`, `>Serial` |
-| `*Into.Level` | Serialized siblings | `<key`, `<value`, `>Serial` |
-| `*Into.Dataframe` | Dataframe | `<row`, `>Dataframe` |
+| `*Collect` | Any collection type | `<item`, optionally `<key`, `>Array`/`>Map`/`>Data` |
 
 ### `*Agg` — Reduce to Single Value
 
@@ -78,7 +74,7 @@ collector_io     = "(*)" , ( "<<" , "$" , var_name
                            | ">>" , "$" , var_name
                            | "<" , param_name , "<<" , source ) ;
 collector_name   = "All" | "First" | "Second" | "Nth" | "Ignore"
-                 | "Into." , into_target | "Agg." , agg_op ;
+                 | "Collect" | "Agg." , agg_op ;
 ```
 
 `[*]` is the **invocation marker** — it appears once on the collector header line, analogous to `[-]` (sequential call) and `[=]` (parallel call). `(*)` is the **IO marker** — it appears on each data-wiring line underneath, analogous to `(-)` for pipeline IO and `(=)` for expand IO.
@@ -255,18 +251,18 @@ Every parallel job must be **reconciled** ([[glossary#Reconciliation|c:Reconcili
 | Strategy | Operators | Result |
 |----------|-----------|--------|
 | Aggregation | `*Agg.*` | Reduce parallel outputs into one scalar value |
-| Collection Transformation | `*Into.*` | Populate a collection from parallel outputs |
+| Collection Transformation | `*Collect` | Populate a collection from parallel outputs |
 | Race Selection | `*First`, `*Nth` | Select one output, discard the rest |
 | Barrier | `*All` | Wait for all outputs — variables stay accessible |
 | Discard | `$*`, `*Ignore`, `[b]` | Intentionally discard job output |
 
-`*Into.*` and `*Agg.*` operate **inside** expand scopes — they gather per-item results from mini-pipelines. `*All`, `*First`, and `*Nth` operate **outside** expand scopes — they synchronize parallel `[=]` pipeline calls.
+`*Collect` and `*Agg.*` operate **inside** expand scopes — they gather per-item results from mini-pipelines. `*All`, `*First`, and `*Nth` operate **outside** expand scopes — they synchronize parallel `[=]` pipeline calls.
 
 ### Job Reconciliation
 
 The collector determines *when* collection is satisfied. In all cases, jobs whose output has been collected are terminated:
 
-- `*All`, `*Into.*`, `*Agg.*` — every associated job completes naturally
+- `*All`, `*Collect`, `*Agg.*` — every associated job completes naturally
 - `*First` / `*Nth` — winner collected, remaining associated jobs are cancelled
 - `$*` / `*Ignore` / `[b]` — output discarded, job completes but output is released
 

@@ -14,21 +14,21 @@ Two operator prefixes for collection processing. For the full operator reference
 
 | Prefix | Operation | Example |
 |--------|-----------|---------|
-| `=ForEach` | Expand (iterate) | `=ForEach.Array` — iterate over collection |
-| `*` | Collect (aggregate) | `*Into.Array` — collect results into collection |
+| `=ForEach` | Expand (iterate) | `=ForEach` — iterate over collection |
+| `*` | Collect (aggregate) | `*Collect` — collect results into collection |
 
 These are **operators**, not identifier prefixes. The 5 identifier prefixes (`@`, `#`, `-`, `$`, `!`) remain unchanged.
 
 ## Example: Transform an Array
 
 ```aljam3
-[-] =ForEach.Array
-   (=) <Array << $SomeArray
+[-] =ForEach
+   (=) <Data << $SomeArray
    (=) >item >> $item
    [ ]
    [ ] Here we can do something with the $item
    ...
-   [-] *Into.Array
+   [*] *Collect
       (*) <item << $item
       (*) >Array >> $NewArray
    [ ] $NewArray can be used one level up in the pipeline

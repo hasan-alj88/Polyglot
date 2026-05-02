@@ -1,0 +1,41 @@
+[ ] QA 05: DataTrees, Expanders, and Collectors
+{@} @Local:7777<QA:Test.DataTrees:1.0.0
+   [@] @Math << @Community:math<Math.Operations:1.0.0
+
+
+{-} -ProcessDataTrees
+   [ ] Output declarations
+   (-) >processedMap##Uniform
+      (>) #<ValueType << #Float
+   [T] -T.CLI"ProcessDataTrees"
+   [Q] -Q.Default
+   [W] -W.Aljam3
+   [ ]
+   [ ] Initialize a Map of strings to floats using Constructor Input ($)
+   [-] $prices##UniformRecord
+      ($) #<ValueType << #Float
+      ( ) keys in any data tree is an Enum
+      ( ) No need for constructor for 
+      ( ) numeric and literal strings
+      ($) .AAPL << 150.0
+      ($) .GOOGL << 2800.0
+      ($) .MSFT << 300.0
+   [ ]
+   [ ] Use the unified =ForEach expander
+   [=] =ForEach
+      (=) <Data << $prices
+      (=) >item >> $price
+      (=) >key >> $ticker
+      [ ]
+      [ ] Mini-pipeline per key-value pair
+      [-] @Math-API.Float.Multiply
+         (-) <a << $price
+         (-) <b << 1.1
+         (-) >result >> $newPrice
+            (>) >! 0.0
+      [ ]
+      [ ] Collect back into map using the unified *Collect
+      [*] *Collect
+         (*) <item << $newPrice
+         (*) <key << $ticker
+         (*) >Map >> >processedMap

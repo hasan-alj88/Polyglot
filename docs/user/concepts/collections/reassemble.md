@@ -24,8 +24,8 @@ Reassemble operators combine an [[concepts/collections/expand|expander]] (`=`) a
 The equivalent expand-collect form requires three blocks:
 
 ```aljam3
-[-] =ForEach.Array
-   (=) <Array << $jobRAMs
+[-] =ForEach
+   (=) <Data << $jobRAMs
    (=) >item >> $ram
 
    [-] *Agg.Sum
@@ -64,7 +64,7 @@ Like expanders and collectors, reassemble operators accept `[-]` (sequential) or
 Reassemble operators combine the expander and collector namespaces:
 
 - `=*Agg.*` — expand and reduce to scalar ([[jm3lib/reassemblers/Agg/INDEX|reference]])
-- `=*Into.*` — expand and collect into a different collection type ([[jm3lib/reassemblers/Into/INDEX|reference]])
+- `=*Collect` — expand and collect into a different collection type
 
 No `[@]` import needed.
 

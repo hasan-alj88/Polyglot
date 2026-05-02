@@ -81,6 +81,7 @@ pub fn lex(script: &str) -> Vec<Spanned<Aljam3Token>> {
             ("(>)", Aljam3Token::OutputParameterProperty),
             ("(=)", Aljam3Token::ExpanderIO),
             ("(*)", Aljam3Token::CollectorIO),
+            ("($)", Aljam3Token::ConstructorInput),
             ("(~)", Aljam3Token::ContinueIOLine),
             ("[~]", Aljam3Token::ContinueActionLine),
             ("[T]", Aljam3Token::ActionTrigger),

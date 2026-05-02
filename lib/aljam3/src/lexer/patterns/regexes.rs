@@ -23,9 +23,11 @@ lazy_static! {
     // Constructors
     // Also matched for standalone variables if they don't have `#type` or `""` attached
     pub static ref RE_CONSTRUCTOR: Regex = Regex::new(r#"^\$(?P<ident>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z0-9]+)*)(?P<has_string>"(?P<str>.*?)")?"#).unwrap();
+    pub static ref RE_VERBOSE_CONSTRUCTOR: Regex = Regex::new(r#"^\$\$(?P<has_string>"(?P<str>.*?)")?"#).unwrap();
 
     // IO Parameters
     pub static ref RE_INPUT_PARAM: Regex = Regex::new(r"^<(?P<param>[a-zA-Z0-9.]+)").unwrap();
+    pub static ref RE_SCHEMA_SHAPING: Regex = Regex::new(r"^#<(?P<param>[a-zA-Z0-9_.]+)").unwrap();
     pub static ref RE_OUTPUT_PARAM: Regex = Regex::new(r"^>(?P<param>[a-zA-Z0-9.]+)").unwrap();
 
     // Operators
@@ -50,6 +52,9 @@ lazy_static! {
     pub static ref RE_ISOLATED_DATA: Regex = Regex::new(r"^#(?P<data>[A-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z0-9]+)*)").unwrap();
     pub static ref RE_DATA_FIELD: Regex = Regex::new(r"^\.(?P<ident>[a-zA-Z0-9_]+)").unwrap();
     pub static ref RE_METADATA: Regex = Regex::new(r"^%(?P<meta>[a-zA-Z0-9.]+)").unwrap();
+    
+    // Error Handlers
+    pub static ref RE_ACTION_ERROR_HANDLER: Regex = Regex::new(r"^\*!").unwrap();
 
     // Boolean Predicates
     pub static ref RE_PREDICATE: Regex = Regex::new(r#"^\?(?P<ident>[a-zA-Z][a-zA-Z0-9]*(?:[.:][a-zA-Z][a-zA-Z0-9]*)*)(?P<has_string>"(?P<str>.*?)")?"#).unwrap();

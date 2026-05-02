@@ -132,12 +132,12 @@ This rule is analogous to SQL prepared statements: structure is fixed at compile
 
 ```aljam3
 [ ] Valid — $basePath is constructor-sourced
-[-] $basePath << $Path"/reports"
-[-] $fullPath << $Path"{$basePath}/daily"
+[-] $basePath << $Folder"/reports"
+[-] $fullPath << $Folder"{$basePath}/daily"
 
 [ ] Invalid — $userInput is IO-sourced (runtime)
 (-) <userInput#string
-[-] $parsed << $Path"{$userInput}"     ( ) compile error: non-constructor source
+[-] $parsed << $Folder"{$userInput}"     ( ) compile error: non-constructor source
 ```
 
 ## Cross-Package Constructors
@@ -178,8 +178,8 @@ Constructors are invoked with `[-]` assignment, using `$Constructor"literal"` as
    [-] $reportDate << $DT"2026-04-21"
 
    [ ] constructor chain — interpolation from constructor source
-   [-] $basePath << $Path"/reports"
-   [-] $fullPath << $Path"{$basePath}/daily"
+   [-] $basePath << $Folder"/reports"
+   [-] $fullPath << $Folder"{$basePath}/daily"
 
    [ ] pipeline call — dynamic input, error handling required
    [-] $parsed#DT << -DT.Parse
