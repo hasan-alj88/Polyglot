@@ -14,17 +14,11 @@
    [-] $dataFile << $File"/var/data/sales.csv"
    [-] $reportsFolder << $Folder"/var/reports"
    [ ]
-   [ ] Initialize a Dataframe schema using Constructor Inputs ($)
-   [-] $salesData##Dataframe
-      ($) #<Columns << #SalesSchema
-      ($) <0 << ##UniformRecord
-         ($) #<ValueType << #Any
-         ($) .region << $$"North"
-         ($) .amount << 500.0
-      ($) <1 << ##UniformRecord
-         ($) #<ValueType << #Any
-         ($) .region << $$"South"
-         ($) .amount << 350.0
+   [ ] Initialize a Dataframe using the Tabular Syntax Sugar
+   [-] $salesData##Dataframe <<
+      ($)    | .region#string | .amount#float
+      ($) .0 | "North"        | 500.0
+      ($) .1 | "South"        | 350.0
    [ ]
    [ ] Iterate DataTree rows using the unified =ForEach
    [=] =ForEach
@@ -34,15 +28,14 @@
       [ ]
       [ ] Process row: calculate tax
       [-] @Math-API.Float.Multiply
-         (-) <a << $row<.amount
+         (-) <a << $row.amount
          (-) <b << 1.05
          (-) >result >> $taxedAmount
-            (>) >! $row<.amount
+            (>) >! $row.amount
       [ ]
-      [ ] Rebuild row schema
-      [-] $updatedRow##UniformRecord
-         ($) #<ValueType << #Any
-         ($) .region << $row<.region
+      [ ] Rebuild row schema using structural Record
+      [-] $updatedRow##Record
+         ($) .region << $row.region
          ($) .amount << $taxedAmount
       [ ]
       [ ] Assemble using unified *Collect directly into output port
