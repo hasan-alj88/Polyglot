@@ -21,6 +21,34 @@ A `##Map` structurally acts as a parent node where its children (the values `V`)
 - `%##KeyType << K`
 - `%##ValueType << V`
 
+### N-Dimensional Labeled Maps
+
+Because `##Map` requires uniform schema branches, deeply nested trees (like 3D or 4D data) would normally require repeating keys over and over.
+
+Instead, Aljam3 separates the **labels (Keys)** from the **raw data**, conceptually similar to Python's `xarray` or R's `dimnames`. You define the keys for each depth level using schema properties (`<#Keys.N`), and then provide the raw data arrays. 
+
+```aljam3
+[ ] 3D Map: Country -> City -> Metric
+[-] $stats##Map <<
+   ( ) 1. The Labels (coords/dimnames)
+   (#) <#Keys.1 << [.London, .Manchester]
+   (#) <#Keys.2 << [.Population, .GDP]
+   
+   ( ) 2. The Raw Data
+   ($) .UK << 
+      ($) << 9.0 | 3.0
+      ($) << 2.5 | 0.5
+   ($) .US << 
+      ($) << 8.5 | 2.0
+      ($) << 4.0 | 1.2
+```
+
+In this structure:
+- `(#)` is used to shape the schema's axes.
+- `($) .UK` establishes the root level 0 keys dynamically.
+- `($) <<` leverages the auto-incrementing push constructor to drop in the anonymous row data.
+- `|` (the Tabular Separator) acts as the column separator for the deepest level.
+
 ### Access
 
 Use `<` followed by the key to access elements.
