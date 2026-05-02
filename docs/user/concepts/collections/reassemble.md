@@ -59,6 +59,21 @@ Reassemble operators use both `(=)` (expander input) and `(*)` (collector output
 
 Like expanders and collectors, reassemble operators accept `[-]` (sequential) or `[=]` (parallel) execution markers. The marker controls whether the internal expand step runs items sequentially or in parallel.
 
+### Tree Reorganization (Transposing)
+
+Because the reassembler atomically expands and recollects, it is the native tool for reorganizing uniform DataTrees. By supplying a `(*) <Permute` input, you can swap the hierarchy of the keys without writing a manual loop. 
+
+For example, transposing a 2D `##Dataframe` (swapping rows and columns):
+
+```aljam3
+[-] =*Collect
+   (=) <Data << $users##Dataframe
+   (*) <Permute << [1, 0]    [ ] Level 1 (Columns) becomes Level 0 (Rows)
+   (*) >Data >> >transposedDF
+```
+
+This acts as pure structural manipulation; the compiler unrolls this into an exhaustive traversal (`<Depth << -1`) that collects the leaves back into a new tree using the reversed key paths.
+
 ### Namespaces
 
 Reassemble operators combine the expander and collector namespaces:
