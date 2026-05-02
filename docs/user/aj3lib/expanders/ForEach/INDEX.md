@@ -13,9 +13,16 @@ No `[@]` import needed.
 
 ## DataTrees (Unified)
 
-For all DataTree collections (`##Array`, `##Map`, `##Serial`, `##Dataframe`), use the unified `=ForEach` operator.
+For all generic DataTree collections (`##Array`, `##Map`, `##Serial`), use the universal `=ForEach` operator.
 
 See [[concepts/collections/expand|Expand Operators]] for details on iterating DataTrees.
+
+## Dataframes (Standard Type)
+
+To accommodate the strictly 2D flat enum schema of `##Dataframe`, `jm3lib` provides domain-specific wrappers:
+
+- [[jm3lib/expanders/ForEach/Row|=ForEach.Row]] -- iterate the Dataframe row-by-row (sugar for `<Depth << 1`)
+- [[jm3lib/expanders/ForEach/Column|=ForEach.Column]] -- iterate the Dataframe column-by-column (sugar for Transpose + `<Depth << 1`)
 
 ## Text
 
