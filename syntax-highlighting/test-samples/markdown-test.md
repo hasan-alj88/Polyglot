@@ -231,7 +231,7 @@ All major Aljam3 syntax elements should be highlighted:
 
 - **Block markers**: `[@]`, `[|]`, `[#]`, `[!]`, `[M]`, `[X]`, `[i]`, `[o]`, `[r]`, `[p]`, `[?]`, `[t]`, `[~]`, etc.
 - **Operators**: `<<`, `>>`, `<~`, `=?`, `>?`, `?[`, `~*`, etc.
-- **Identifiers**: `.variable`, `|Pipeline`, `#Enum`, `!Error`, `@package`
+- **Identifiers**: `.variable`, `-Pipeline`, `#Enum`, `!Error`, `@package`
 - **Types**: `pg\string`, `rs\Vec`, `py\dict`, `js\Array`, `go\[]int`
 - **Literals**: `"string"`, `DT"datetime"`, `42`, `3.14`
 - **Reserved**: `#Boolean.True`, `#None`, `#PgVar.States.Ready`, `!No.Input`, `!No.Output`

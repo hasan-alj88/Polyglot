@@ -166,7 +166,7 @@ The grammar defines the following scope categories:
 - **Collection**: `~*`, `~Y.*` - `keyword.operator.collection.aljam3`
 
 ### Identifiers
-- **Pipeline**: `|PipelineName` - `entity.name.function.pipeline.aljam3`
+- **Pipeline**: `-PipelineName` - `entity.name.function.pipeline.aljam3`
 - **Enumeration**: `#EnumName` - `entity.name.type.enumeration.aljam3`
 - **Error**: `!ErrorName` - `entity.name.type.error.aljam3`
 - **Variable**: `.variableName` - `variable.other.aljam3`

@@ -47,7 +47,7 @@ keyword.operator.dataflow.*.aljam3    - << >> <~
 keyword.operator.comparison.aljam3    - =? >? <? >=? <=? !?
 keyword.operator.range.aljam3         - ?[ ?(
 keyword.operator.collection.aljam3    - ~* ~Y.*
-entity.name.function.pipeline.aljam3  - |Pipeline
+entity.name.function.pipeline.aljam3  - -Pipeline
 entity.name.type.enumeration.aljam3   - #Enum
 entity.name.type.error.aljam3         - !Error
 variable.other.aljam3                 - .variable
