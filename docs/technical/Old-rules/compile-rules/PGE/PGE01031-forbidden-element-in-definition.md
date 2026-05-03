@@ -46,9 +46,9 @@ severity: error
       (-) <sql << "SELECT ready FROM system"
       (-) >rows >> $rows
    [?] $rows<0.ready
-      [?] =? "true"
+      [?] ?= "true"
          [-] >IsTriggered << #True
-      [?] *?
+      [?] ?*
          [-] >IsTriggered << #False
 
 [ ] ✓ — simple trigger, no body needed

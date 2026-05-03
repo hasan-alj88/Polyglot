@@ -73,7 +73,7 @@ The `>`, `<`, `!`, `_` sigils reuse the same prefix conventions found throughout
    [!] $Read!File.NotFound
       [-] >data << ""
 
-[?] $Read<path =? "input.csv"
+[?] $Read<path ?= "input.csv"
 ```
 
 Metadata access through `$Label%state` also works. The label IS the operation's instance IO, so the full metadata tree is reachable.

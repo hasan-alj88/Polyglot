@@ -46,7 +46,7 @@ updated: 2026-04-16
 **What it tests:** Referencing an enum value from an imported package: `@alias#DataName.EnumField`. See [[syntax/types/structs#Enum Fields vs Value Fields]].
 
 ```aljam3
-[?] $status =? @HR#EmployeeStatus.Active
+[?] $status ?= @HR#EmployeeStatus.Active
 ```
 
 ### EC-3.5: Cross-package pipeline reference

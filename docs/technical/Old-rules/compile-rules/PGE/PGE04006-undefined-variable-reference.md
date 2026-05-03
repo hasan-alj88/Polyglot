@@ -45,7 +45,7 @@ severity: error
    [?] #Done
       [-] -Log
          (-) <msg#string << "finished"
-   [?] *?
+   [?] ?*
       [-] -Log
          (-) <msg#string << "pending"
 ```
@@ -70,7 +70,7 @@ severity: error
    [?] #Done
       [-] -Log
          (-) <msg#string << "done"
-   [?] *?
+   [?] ?*
       [-] -Log
          (-) <msg#string << "not done"
 ```

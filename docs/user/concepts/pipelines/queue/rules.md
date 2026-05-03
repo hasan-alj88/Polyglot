@@ -27,7 +27,7 @@ Rules accept parameters with `(#)` inputs. `<~` sets defaults (overridable), `<<
 Parameters support validation inside the rule:
 
 ```aljam3
-   [?] -Math.IsGreater"{$margin.GB}", "{$value.GB}" =? #Boolean.True
+   [?] $margin.GB ?>= $value.GB
       [!] >> !Queue.InvalidMargin
 ```
 
@@ -50,24 +50,8 @@ Queue rules use Aljam3's trigger system rather than continuous procedural loops.
 | `[&]` | State Trigger (must be true when the Edge Trigger fires) |
 | `[+]` | State Trigger OR (alternative state condition) |
 
-Because rules are purely reactive, you do not need `*?` wildcards or `-Q.DoNothing` blocks at runtime. If a trigger doesn't fire, no action is taken.
+Because rules are purely reactive, you do not need `?*` wildcards or `-Q.DoNothing` blocks at runtime. If a trigger doesn't fire, no action is taken.
 
-## Compile-Time Predicates (`[?] ?`)
-
-For structural validation *before* the program runs, you can use Boolean Predicates prefixed with `?`. These are strictly compile-time assertions.
-
-| Guard | Meaning |
-|-------|---------|
-| `?Queue.Host.IsEqual"{#TargetQueue}"` | Prevents routing loops by ensuring queues are on different hosts |
-| `?Queue.Strategy.IsEqual"{#FIFO}"` | Asserts the queue strategy |
-
-```aljam3
-{Q} #QueueRules:Failover
-   (#) <FailoverQueue#Queue <~ {#BackupHostQueue}
-   [ ] Compile-time safety check
-   [?] ?Queue.Host.IsEqual"{#FailoverQueue}" =? #Boolean.True
-      [!] >> !Queue.InvalidFailoverTarget
-```
 
 ## Examples
 

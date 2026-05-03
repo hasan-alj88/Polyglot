@@ -62,9 +62,9 @@ severity: error
    (-) <data#string
    (-) >output#string
    [ ]
-   [?] $data =? "ok"
+   [?] $data ?= "ok"
       [-] >output << $data
-   [?] *?
+   [?] ?*
       [-] >output << "error"
    [ ] >output is Final in all paths
    [-] -Log                                    [ ] ✗ PGE02009 — unreachable

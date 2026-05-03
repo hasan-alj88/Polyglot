@@ -6,13 +6,13 @@ category: Syntax and Structure
 
 ## Description
 
-**Statement:** Branching on a `#bool` must explicitly cover both `true` and `false` branches, or include a `*?` catch-all. If a conditional `[?]` evaluates a boolean subject and fails to provide branches for both states without a wildcard fallback, `PGE06015` is raised.
+**Statement:** Branching on a `#bool` must explicitly cover both `true` and `false` branches, or include a `?*` catch-all. If a conditional `[?]` evaluates a boolean subject and fails to provide branches for both states without a wildcard fallback, `PGE06015` is raised.
 
 ## Rationale
 Ensures that all boolean paths are handled explicitly, preventing unhandled values at runtime.
 
 ## Examples
 ```aljam3
-[?] $isValid =? true >> $status << "Valid"
-[ ] ✗ PGE06015 — missing false branch or *? catch-all
+[?] $isValid ?= true >> $status << "Valid"
+[ ] ✗ PGE06015 — missing false branch or ?* catch-all
 ```

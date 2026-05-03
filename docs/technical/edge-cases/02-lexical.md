@@ -25,7 +25,7 @@ updated: 2026-03-30
    (=) <Array << $items
    (=) >item >> $item
 
-      [?] $item >? 0
+      [?] $item ?> 0
          [-] -SomeCall
          (-) <val << $item
          (-) >out >> $result

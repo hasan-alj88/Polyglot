@@ -39,13 +39,25 @@ Every `[?]` arm must include a comparison operator — bare subject lines like `
 
 | Operator | Meaning |
 |----------|---------|
-| `=?` | Equal |
-| `>?` | Greater than |
-| `<?` | Less than |
-| `>=?` | Greater or equal |
-| `<=?` | Less or equal |
-| `=!?` | Not equal |
-| `*?` | Wildcard (else/catch-all) |
+| `?=` | Equal |
+| `?>` | Greater than |
+| `?<` | Less than |
+| `?>=` | Greater or equal |
+| `?<=` | Less or equal |
+| `?!=` | Not equal |
+| `?*` | Wildcard (else/catch-all) |
+
+### Domain Match Operators
+Because the `?` acts as a universal Query Operator, it can combine with the identifier prefixes to perform structural and topological safety checks natively:
+
+| Syntax | Check Type | Example | Meaning |
+|--------|------------|---------|---------|
+| `?#` | Type Check | `$var?#Type` | Is `$var` an instance of the `#Type` topology? |
+| `?##` | Schema Check | `$var?##Enum` | Does `$var` conform to the `##Enum` schema? |
+| `?_` | Permission | `$user?_Admin` | Does this context hold the `_Admin` permission? |
+| `?@` | Provenance | `$var?@Company` | Did this data originate from `@Company`? |
+| `?!` | Error | `$var?!Timeout` | Is this variable a `!Timeout` fault? |
+| `?-` | Source | `$var?-Pipeline` | Was this produced by `-Pipeline`? |
 
 ### Negation Operators
 
@@ -53,23 +65,23 @@ Any comparison operator can be negated by inserting `!` before `?`. This replace
 
 | Operator | Meaning | Equivalent |
 |----------|---------|------------|
-| `=!?` | Not equal | opposite of `=?` |
-| `<!?` | Not less than | equivalent to `>=` |
-| `>!?` | Not greater than | equivalent to `<=` |
-| `<=!?` | Not less-or-equal | equivalent to `>` |
-| `>=!?` | Not greater-or-equal | equivalent to `<` |
+| `?!=` | Not equal | opposite of `?=` |
+| `?!<` | Not less than | equivalent to `?>=` |
+| `?!>` | Not greater than | equivalent to `?<=` |
+| `?!<=` | Not less-or-equal | equivalent to `?>` |
+| `?!>=` | Not greater-or-equal | equivalent to `?<` |
 
 ```aljam3
 [ ] Not less than — age is at least 18
-[?] $age <!? 18
+[?] $age ?!< 18
    [-] $eligible#bool << #Boolean.True
-[?] *?
+[?] ?*
    [-] $eligible#bool << #Boolean.False
 
 [ ] Not greater than — score capped at 100
-[?] $score >!? 100
+[?] $score ?!> 100
    [-] $capped#bool << #Boolean.True
-[?] *?
+[?] ?*
    [-] $capped#bool << #Boolean.False
 ```
 
@@ -78,12 +90,12 @@ Any comparison operator can be negated by inserting `!` before `?`. This replace
 The comparison operator must match the subject variable's type ([[PGE04015|PGE04015]]):
 
 - **Numeric** (`#int`, `#float`): all comparison and range operators. Int and float share the same numeric domain — comparable without conversion.
-- **String** (`#string`): equality only (`=?`, `=!?`). Ordering and ranges are invalid.
-- **Bool** (`#bool`): equality only (`=?`, `=!?`).
+- **String** (`#string`): equality only (`?=`, `?!=`). Ordering and ranges are invalid.
+- **Bool** (`#bool`): equality only (`?=`, `?!=`).
 - **Enum**: equality with enum variants of the same type. Ordering, ranges, and cross-type matches are invalid.
-- **Wildcard** (`*?`): always valid on any type.
+- **Wildcard** (`?*`): always valid on any type.
 
-**Exhaustiveness rule:** All `[?]` conditional chains must be exhaustive. If the conditions do not cover every possible case, a `[?] *?` catch-all branch is mandatory. See [[conditionals]] for full exhaustiveness rules ([[PGE06001|PGE06001]]).
+**Exhaustiveness rule:** All `[?]` conditional chains must be exhaustive. If the conditions do not cover every possible case, a `[?] ?*?` catch-all branch is mandatory. See [[conditionals]] for full exhaustiveness rules ([[PGE06001|PGE06001]]).
 
 ## Range Operators
 
@@ -142,3 +154,5 @@ Prefixes, not identifiers. See [[concepts/collections/INDEX|collections]] for fu
 | `=ForEach` | Expand (iterate) | `=ForEach.Array`. See [[concepts/collections/expand#Expand Operators]] |
 | `*` | Collect (aggregate) | `*Into.Array`, `*Agg.Sum`. See [[concepts/collections/collect#Collect Operators]] |
 | `=*` | Reassemble (atomic expand + collect) | `=*Agg.Sum`, `=*Into.Array`. See [[concepts/collections/reassemble#Reassemble Operators]] |
+| `?in` | Includes (contains) | `$element ?in $collection` |
+| `?has` | Has key | `$collection ?has $key` |

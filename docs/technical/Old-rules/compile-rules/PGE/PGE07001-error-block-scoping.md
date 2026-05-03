@@ -68,7 +68,7 @@ severity: error
          (-) >content >> $content
    [!] !File.NotFound                  [ ] ✗ PGE07001 — parent is [?], not [-]
       [-] $content << "fallback"
-   [?] *?
+   [?] ?*
       [-] -NoOp
 ```
 

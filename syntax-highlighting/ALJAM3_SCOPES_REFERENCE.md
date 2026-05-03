@@ -19,7 +19,7 @@ This document maps all the Aljam3 syntactical constructs to their corresponding 
 | **Properties** | `.message`, `.code` | `variable.name.property` | `.` | `[.]`, `(.)`, `[:]` , `(:)` | `\\[\\.\\]`&#124;`\\(\\.\\)`&#124;`\\[:\\]`&#124;`\\(:\\)`, `\\.[A-Za-z0-9_]+` | |
 | **Constants** | `%#Active`, `%` | `constant.language` | `%` | N/A | `%[A-Za-z0-9_.]+` | |
 | **Exceptions** | `!ValidationError` | `invalid.illegal` | `!` | `[!]`, `{!}`, `<!`, `>!` | `\\[!\\]`&#124;`\\{!\\}`&#124;`<!`&#124;`>!`, `![A-Za-z0-9_:.]+` | |
-| **Logical Nodes** | `?condition` | `keyword.operator.logical` | `?` | `[?]`,`[+]`, `[&]`, `[^]` | `\\[\\?\\]`&#124;`\\[\\+\\]`&#124;`\\[&\\]`&#124;`\\[\\^\\]`, `>\\?`&#124;`<\\?`&#124;`<=\\?`&#124;`>=\\?`&#124;`!\\?`&#124;`=\\?`, `\\?[A-Za-z0-9_.]+` | comparison operators (`>?`,`<?=`, etc) |
+| **Logical Nodes** | `?=` | `keyword.operator.logical` | `?` | `[?]`,`[+]`, `[&]`, `[^]` | `\\[\\?\\]`&#124;`\\[\\+\\]`&#124;`\\[&\\]`&#124;`\\[\\^\\]`, `\\\?(?:=\|!=\|>\|<\|>=\|<=\|!>\|!<=\|!>=\|\\*\|\\[\|\\(\\|\\]\|\\)\|in\\b\|has\\b\|#\|##\|_\|@\|!\|-)` | query operators (`?=`,`?>`, etc) |
 | **Collectors** | `*Into.Array` | `entity.name.collector` | `*` | `[*]`,`{*}`, `(*)` | `\\[\\*\\]`&#124;`\\{\\*\\}`&#124;`\\(\\*\\)`, `\\*[A-Za-z0-9_.]+` | |
 | **Comments** | `{ }` | `comment.line.bracket` | N/A | `{ }`, `( )`, `[ ]` | `(\\{\\s*\\}`&#124;`\\[\\s*\\]`&#124;`\\(\\s*\\)).*$`, `//.*$` | from literal to the END of the line |
 | **Assignment Operators** | `<<`, `<~`, `<-`, `>>` | `keyword.operator.assignment` | N/A | `<<`, `<~`, `<-`, `>>` | `<<`&#124;`<~`&#124;`<-`&#124;`>>` | Push, Default, Set, and Pull operations. |

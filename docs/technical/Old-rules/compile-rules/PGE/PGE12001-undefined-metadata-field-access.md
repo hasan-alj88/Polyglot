@@ -82,9 +82,9 @@ severity: error
    (-) >out#string
    [ ]
    [?] $input%state
-      [?] =? .Final
+      [?] ?= .Final
          [-] >out << $input
-      [?] *?
+      [?] ?*
          [-] >out << "not ready"
 ```
 
@@ -97,9 +97,9 @@ severity: error
    (-) >out#string
    [ ]
    [?] -Worker%status
-      [?] =? .Running
+      [?] ?= .Running
          [-] >out << "active"
-      [?] *?
+      [?] ?*
          [-] >out << "idle"
 ```
 
@@ -149,9 +149,9 @@ severity: error
    (-) >out#string
    [ ]
    [?] $data%isSuccess                  [ ] ✗ PGE12001 — .isSuccess is pipeline metadata
-      [?] =? .True
+      [?] ?= .True
          [-] >out << "ok"
-      [?] *?
+      [?] ?*
          [-] >out << "fail"
 ```
 

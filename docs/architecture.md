@@ -368,7 +368,7 @@ Authority flows top-down: [[vision|c:vision]] → [[philosophy/core-philosophy|c
 | Self-chain addressing | Chain references without numeric index | PGE08012 |
 | Collector reconciliation | Parallel writes to same variable | PGE10008 |
 | Collector scope | Release outside paired expand | PGE03025 |
-| Conditional exhaustiveness | Missing `*?` in conditional | PGE06xxx |
+| Conditional exhaustiveness | Missing `?*` in conditional | PGE06xxx |
 | Error suppression | Unhandled error without `!*-` or `[!]` | PGE07xxx |
 | Permission compliance | Foreign-code violates grant | PGE10011-10014 |
 | Constructor invariants | Constructor fails Final guarantee | PGE14xxx |

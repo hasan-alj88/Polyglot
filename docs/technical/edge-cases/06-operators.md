@@ -28,12 +28,12 @@ updated: 2026-04-17
 **What it tests:** Each comparison in a conditional.
 
 ```aljam3
-[?] $a =? 0
-[?] $b >? 10
-[?] $c <? 5
-[?] $d >=? 100
-[?] $e <=? -1
-[?] $f =!? ""
+[?] $a ?= 0
+[?] $b ?> 10
+[?] $c ?< 5
+[?] $d ?>= 100
+[?] $e ?<= -1
+[?] $f ?!= ""
 ```
 
 ### EC-6.3: Range operators
@@ -169,12 +169,12 @@ updated: 2026-04-17
 [-] $ok#bool << $score ?[60, 100]
 
 [ ] ✓ Conditional — [?] is line-start block element
-[?] $score >=? 60
+[?] $score ?>= 60
    [-] $grade << "pass"
 
-[ ] ✓ Greedy operator parsing — =? consumed as one comparison token
-[?] $x =? $y
+[ ] ✓ Greedy operator parsing — ?= consumed as one comparison token
+[?] $x ?= $y
    [-] $msg << "equal"
-[ ] =?[ would tokenize as =? + [ — the ? is consumed by the comparison operator
+[ ] =?[ would tokenize as ?= + [ — the ? is consumed by the comparison operator
 [ ] and cannot start a ?[ range token
 ```

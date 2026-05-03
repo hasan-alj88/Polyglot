@@ -37,7 +37,7 @@ The compiler finds these problems in seconds. Finding them in production takes h
 
 Aljam3 demands exhaustive coverage. Every conditional must account for every possible case. Every parallel job must have its output collected. Every error must be handled or explicitly acknowledged. There is no "happy path only" code.
 
-This can feel tiresome. Writing an `[!]` handler for an error you think will never happen feels like busywork. Adding a `*?` wildcard catch-all to a conditional that "obviously" covers all cases feels redundant.
+This can feel tiresome. Writing an `[!]` handler for an error you think will never happen feels like busywork. Adding a `?*` wildcard catch-all to a conditional that "obviously" covers all cases feels redundant.
 
 But this is precisely the point. The errors you think will never happen are the ones that crash your system in production. The cases you think are "obviously" covered are the ones that produce undefined behaviour when an upstream API changes its response format. Aljam3 does not allow you to express certainty about things that are inherently uncertain.
 

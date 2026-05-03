@@ -80,18 +80,18 @@ updated: 2026-03-30
          [-] >report << "record save failed"
 
    [ ] Mark success only if none of the IDs are failure markers
-   [?] $adId =!? "AD_FAILED"
-   [&] $adId =!? "AD_TIMEOUT"
-   [&] $mailboxId =!? "MAIL_FAILED"
-   [&] $slackId =!? "SLACK_FAILED"
+   [?] $adId ?!= "AD_FAILED"
+   [&] $adId ?!= "AD_TIMEOUT"
+   [&] $mailboxId ?!= "MAIL_FAILED"
+   [&] $slackId ?!= "SLACK_FAILED"
       [-] >success << #Boolean.True
-   [?] *?
+   [?] ?*?
       [-] >success << #Boolean.False
 ```
 
 ### ST-2: Complex conditional branching — range, logical, negation, exhaustive
 
-**What it tests:** Nested range checks, all logical operators, negation operators, XOR, and mandatory `*?`. Every branch path is non-trivial.
+**What it tests:** Nested range checks, all logical operators, negation operators, XOR, and mandatory `?*`. Every branch path is non-trivial.
 
 ```aljam3
 {-} -Risk.Classify
@@ -106,43 +106,43 @@ updated: 2026-03-30
 
    [ ] High risk: score > 80 AND (not verified OR flags > 2)
    [ ]
-   [?] $score >? 80
-   [&] $verified =!? #Boolean.True
+   [?] $score ?> 80
+   [&] $verified ?!= #Boolean.True
       [-] >tier << "high"
       [-] >action << "block"
 
    [ ] Also high risk: score > 80 AND flags > 2 (even if verified)
-   [?] $score >? 80
-   [&] $flags >? 2
+   [?] $score ?> 80
+   [&] $flags ?> 2
       [-] >tier << "high"
       [-] >action << "escalate"
 
    [ ] Medium: score in [50,80], flags not excessive
    [?] $score ?[50,80]
-   [&] $flags <=? 2
+   [&] $flags ?<= 2
       [-] >tier << "medium"
       [-] >action << "monitor"
 
    [ ] Low: score strictly in (0,50), verified, no flags
    [?] $score ?(0,50)
-   [&] $verified =? #Boolean.True
-   [&] $flags =? 0
+   [&] $verified ?= #Boolean.True
+   [&] $flags ?= 0
       [-] >tier << "low"
       [-] >action << "pass"
 
    [ ] Suspicious: high score XOR high flags (one but not both)
-   [?] $score >? 80
-   [^] $flags >? 2
+   [?] $score ?> 80
+   [^] $flags ?> 2
       [-] >tier << "suspicious"
       [-] >action << "investigate"
 
    [ ] Zero or negative score — anomalous
-   [?] $score <=? 0
+   [?] $score ?<= 0
       [-] >tier << "invalid"
       [-] >action << "reject"
 
    [ ] Catch-all for any uncovered combination
-   [?] *?
+   [?] ?*?
       [-] >tier << "unknown"
       [-] >action << "review"
 ```
@@ -261,7 +261,7 @@ updated: 2026-03-30
 
 ### ST-5: Deep nesting — expand inside conditional inside expand with collectors
 
-**What it tests:** Expand nested inside a conditional branch, which is itself inside another expand. Tests 4+ levels of indentation, per-level collector scoping, and `*?` at each conditional level.
+**What it tests:** Expand nested inside a conditional branch, which is itself inside another expand. Tests 4+ levels of indentation, per-level collector scoping, and `?*` at each conditional level.
 
 ```aljam3
 {-} -Tree.Flatten
@@ -277,7 +277,7 @@ updated: 2026-03-30
       (=) <Array << $categories
       (=) >item >> $category
 
-      [?] $category:enabled =? #Boolean.True
+      [?] $category:enabled ?= #Boolean.True
          [ ] Inner expand — each category's items
          [-] =ForEach.Array
             (=) <Array << $category:items
@@ -288,7 +288,7 @@ updated: 2026-03-30
             [-] *Into.Array
                (*) <item << $label
                (*) >Array >> >flat
-      [?] *?
+      [?] ?*?
          [ ] Disabled category — skip silently
 ```
 

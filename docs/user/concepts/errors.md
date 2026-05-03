@@ -95,15 +95,15 @@ In the execution body, `[!] >> !ErrorName` raises a declared error. The raise bl
 
 ```aljam3
 [ ]
-[?] $name =? ""
+[?] $name ?= ""
    [!] >> !Validation.Empty
       (!) .Info:field << "name"
-[?] $name.length >? 100
+[?] $name.length ?> 100
    [!] >> !Validation.TooLong
       (!) .Info:field << "name"
       (!) .Info:maxLength << 100
       (!) .Info:actualLength << $name.length   [ ] extra key — allowed
-[?] *?
+[?] ?*?
    [-] >validated << $name
    [-] >status << "ok"
 ```
@@ -363,10 +363,10 @@ Here `!File.NotFound` is fully handled by `[!]` (it pushes a replacement). `!Fil
 When a fallback activates, the error that triggered it is accessible via `$var%sourceError` (`#live.error`). If no error occurred, `%sourceError` is `!NoError`. See [[metadata#Variable (`$`)]].
 
 ```aljam3
-[?] $content%sourceError =!? !NoError
+[?] $content%sourceError ?!= !NoError
    [-] -LogWarning
       (-) <msg << "Used fallback for {$file}: {$content%sourceError}"
-[?] *?
+[?] ?*?
    [ ] Normal path — no error occurred
 ```
 

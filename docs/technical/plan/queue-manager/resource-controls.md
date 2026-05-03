@@ -166,7 +166,7 @@ Different thresholds for pausing vs resuming. The `<margin` parameter on getter 
 
    [?] -Q.Host.Get.RAM.MB "<? {$margin}"
       [Q] -Q.Job.Pause.Free.RAM.Hard.Wait
-   [?] *?
+   [?] ?*?
       [Q] -Q.DoNothing
 ```
 
@@ -222,7 +222,7 @@ Override by setting the default to false:
 
 ### Implicit Exhaustiveness via Triggers
 
-Because rules are trigger-driven (`[T]`), you do not need `*?` wildcards or `-Q.DoNothing` blocks to handle states you don't care about. If a trigger doesn't fire, the rule simply doesn't wake up.
+Because rules are trigger-driven (`[T]`), you do not need `?*` wildcards or `-Q.DoNothing` blocks to handle states you don't care about. If a trigger doesn't fire, the rule simply doesn't wake up.
 
 This removes the need for the compiler to warn about "Uncovered States" in Queue logic, as non-firing triggers naturally represent the absence of an action.
 

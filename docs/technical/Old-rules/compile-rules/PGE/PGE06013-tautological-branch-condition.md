@@ -20,52 +20,52 @@ severity: error
 - [PGE01018 — Tautological or Contradictory Trigger Condition](PGE01018-tautological-trigger-condition.md) — same check for triggers
 - [PGE06005 — Compound Condition Overlap](PGE06005-compound-condition-overlap.md) — overlap detection (runs after PGE06013)
 - [PGE06008 — Compound Condition Exhaustiveness](PGE06008-compound-condition-exhaustiveness.md) — exhaustiveness (runs after PGE06013)
-- [PGE06012 — Unreachable Branch After Wildcard](PGE06012-unreachable-branch-after-wildcard.md) — unreachable due to `*?` ordering
+- [PGE06012 — Unreachable Branch After Wildcard](PGE06012-unreachable-branch-after-wildcard.md) — unreachable due to `?*` ordering
 
 **VALID:**
 ```aljam3
 [ ] ✓ compound condition is satisfiable — not tautological or contradictory
-[?] $age >? 18
-   [&] $hasLicense =? #Boolean.True
+[?] $age ?> 18
+   [&] $hasLicense ?= #Boolean.True
       [-] -Allow.Drive
-[?] *?
+[?] ?*
    [-] -Deny
 ```
 
 ```aljam3
 [ ] ✓ OR is satisfiable — some inputs match, some don't
-[?] $status =? .Active
-   [+] $role =? .Admin
+[?] $status ?= .Active
+   [+] $role ?= .Admin
       [-] -GrantAccess
-[?] *?
+[?] ?*
    [-] -DenyAccess
 ```
 
 **INVALID:**
 ```aljam3
 [ ] ✗ PGE06013 — contradictory branch (always False)
-[?] $a =? .X
-   [&] $a =!? .X                              [ ] ✗ PGE06013 — A AND NOT A = always False
+[?] $a ?= .X
+   [&] $a ?!= .X                              [ ] ✗ PGE06013 — A AND NOT A = always False
       [-] -NeverReached
-[?] *?
+[?] ?*
    [-] -Default
 ```
 
 ```aljam3
 [ ] ✗ PGE06013 — tautological branch (always True)
-[?] $a =? .X
-   [+] $a =!? .X                              [ ] ✗ PGE06013 — A OR NOT A = always True
+[?] $a ?= .X
+   [+] $a ?!= .X                              [ ] ✗ PGE06013 — A OR NOT A = always True
       [-] -AlwaysReached
-[?] $a =? .Y
+[?] $a ?= .Y
    [-] -NeverReached                           [ ] unreachable due to tautological branch above
 ```
 
 ```aljam3
 [ ] ✗ PGE06013 — XOR of identical conditions (always False)
-[?] $status =? .Active
-   [^] $status =? .Active                     [ ] ✗ PGE06013 — A XOR A = always False
+[?] $status ?= .Active
+   [^] $status ?= .Active                     [ ] ✗ PGE06013 — A XOR A = always False
       [-] -NeverReached
-[?] *?
+[?] ?*
    [-] -Default
 ```
 

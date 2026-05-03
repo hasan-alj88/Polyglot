@@ -27,7 +27,7 @@ This is not defensive programming as a suggestion. It is defensive programming a
 
 Every unhandled edge case is a future production incident. The only question is *when* you deal with it: during working hours with the compiler helping, or at 3am responding to a page.
 
-Aljam3's compiler is tiresome on purpose. It demands `[!]` error handlers for failable calls. It demands fallback operators (`!<`, `!>`) or explicit error blocks for every path that can fail. It demands exhaustive conditionals — every `[?]` branch must account for all possibilities, with `*?` as the mandatory catch-all. It demands that every parallel fan-out has a matching collector. It demands that every race accounts for the scenario where all candidates fail.
+Aljam3's compiler is tiresome on purpose. It demands `[!]` error handlers for failable calls. It demands fallback operators (`!<`, `!>`) or explicit error blocks for every path that can fail. It demands exhaustive conditionals — every `[?]` branch must account for all possibilities, with `?*` as the mandatory catch-all. It demands that every parallel fan-out has a matching collector. It demands that every race accounts for the scenario where all candidates fail.
 
 These requirements feel burdensome when writing code. That is the point. The compiler is offloading work that would otherwise happen in production — where the cost is orders of magnitude higher, the context is lost, and the person debugging may not be the person who wrote the code.
 
@@ -53,7 +53,7 @@ Aljam3 does not allow developers to write code that only handles the success cas
 
 - **Parallel jobs require collection.** Every `[=]` expand that fans out work must have a matching collector — `*All`, `*First`, `*Nth`, or a custom collector. Orphaned parallel [[glossary#Job|jobs]] are a compile error (see [[technical/compile-rules/PGE/PGE01040-orphan-parallel-marker|PGE01040]]).
 
-- **Conditionals require exhaustive branches.** Every `[?]` conditional must cover all possible values, with `*?` as the mandatory catch-all for any values not explicitly matched. An incomplete conditional is a compile error.
+- **Conditionals require exhaustive branches.** Every `[?]` conditional must cover all possible values, with `?*` as the mandatory catch-all for any values not explicitly matched. An incomplete conditional is a compile error.
 
 - **Race collectors require all-Failed handling.** When using `*First` or `*Nth` race collectors, the developer must account for the scenario where all competing jobs fail. A race with no all-Failed handler is a compile error.
 

@@ -15,7 +15,7 @@ IO inputs declared with `(-)` become `$`-prefixed variables in the execution bod
 (-) <incoming#Alert
 [ ] ...execution...
 [ ] Use directly as $incoming — it's already Final
-[?] $incoming.level >? 5
+[?] $incoming.level ?> 5
 ```
 
 IO inputs with no assignment must be filled externally and are in Final state when the pipeline fires. See [[concepts/pipelines/io-triggers#IO as Implicit Triggers]], [[variable-lifecycle]].

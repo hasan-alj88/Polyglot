@@ -191,7 +191,7 @@ Fix with grouped fallback or `[!]` blocks that write to both outputs:
 ```
 
 ```aljam3
-[ ] ✓ [!] !* wildcard covers all errors — like [?] *? for conditionals
+[ ] ✓ [!] !* wildcard covers all errors — like [?] ?* for conditionals
 {-} -ProcessWildcard
    [T] -T.Call
    [Q] -Q.Default

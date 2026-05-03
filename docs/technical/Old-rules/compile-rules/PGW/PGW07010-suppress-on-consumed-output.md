@@ -64,9 +64,9 @@ severity: warning
    [!] !*-
 
 [ ] Both $result and $code used downstream — both Failed if call errors
-[?] $code =? 200
+[?] $code ?= 200
    [-] $output << $result
-[?] *?
+[?] ?*?
    [-] $output << "error"
 ```
 

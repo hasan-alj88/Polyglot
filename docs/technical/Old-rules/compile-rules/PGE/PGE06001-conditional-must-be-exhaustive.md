@@ -17,18 +17,18 @@ severity: error
 **Statement:** Every `[?]` conditional block must be exhaustive — every possible value of the branched type must have a defined path. Exhaustiveness is proven in two ways:
 
 1. **Static proof** — the compiler verifies all values are covered (closed types)
-2. **`*?` catch-all** — required for open types where static proof is impossible
+2. **`?*` catch-all** — required for open types where static proof is impossible
 
-If neither static proof nor `*?` is present, PGE06001 fires.
+If neither static proof nor `?*` is present, PGE06001 fires.
 
 **Rationale:** Every conditional must route every possible input. Missing branches cause undefined behavior at runtime. This enforces Aljam3's exhaustive coverage principle — if something can go wrong, the compiler catches it before production rather than discovering gaps at runtime.
-**Detection:** The compiler determines the branched type, dispatches to the appropriate type-specific rule, and checks for `*?`. If neither the type-specific rule accepts the coverage nor `*?` is present, PGE06001 fires.
+**Detection:** The compiler determines the branched type, dispatches to the appropriate type-specific rule, and checks for `?*`. If neither the type-specific rule accepts the coverage nor `?*` is present, PGE06001 fires.
 
 ---
 
 ## Exhaustiveness by Type
 
-| Type | Value Set | Rule | `*?` Required? |
+| Type | Value Set | Rule | `?*` Required? |
 |------|-----------|------|----------------|
 | `{#}` enum (`.` fields) | Closed (finite variants) | PGE06002 | No — if all variants listed |
 | `bool` (`#Boolean`) | Closed (2 variants) | PGE06002 | No — if both listed |
@@ -38,7 +38,7 @@ If neither static proof nor `*?` is present, PGE06001 fires.
 | Flexible field (`:`) | Open | PGE06007 | Yes — always |
 | Compound (`[&]`/`[\|]`/`[^]`) | Complex | PGE06008, PGE06005 (overlap), PGE06013 (pre-check) | No — if all variables closed and partition proof succeeds; Yes — if any variable open |
 
-**Key principle:** `*?` is a fallback for types where the compiler cannot prove exhaustiveness. When the compiler *can* prove exhaustiveness (enums with all variants, numeric ranges covering -∞ to +∞), `*?` is optional.
+**Key principle:** `?*` is a fallback for types where the compiler cannot prove exhaustiveness. When the compiler *can* prove exhaustiveness (enums with all variants, numeric ranges covering -∞ to +∞), `?*` is optional.
 
 ---
 

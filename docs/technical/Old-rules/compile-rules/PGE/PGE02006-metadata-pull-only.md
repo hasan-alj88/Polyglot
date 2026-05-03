@@ -36,7 +36,7 @@ severity: error
    [?] #Final
       [-] -Process
          (-) <input << >data
-   [?] *?
+   [?] ?*
       [-] -Log
          (-) <msg << "not ready"
 ```
@@ -47,7 +47,7 @@ severity: error
    [?] #Running
       [-] -Log
          (-) <msg << "still running"
-   [?] *?
+   [?] ?*
       [-] -Log
          (-) <msg << "done or failed"
 ```

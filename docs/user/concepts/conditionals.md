@@ -23,13 +23,13 @@ Conditionals in Aljam3 Code use `[?]` block elements to branch execution based o
 Sequential `[?]` blocks form a conditional chain. Each branch contains an explicit comparison and indented execution lines:
 
 ```aljam3
-[?] $status =? #Status.Ok
+[?] $status ?= #Status.Ok
    [-] >result << "Success"
 
-[?] $status =? #Status.Warn
+[?] $status ?= #Status.Warn
    [-] >result << "Warning"
 
-[?] $status =? #Status.Fail
+[?] $status ?= #Status.Fail
    [-] >result << "Failure"
 ```
 
@@ -40,11 +40,11 @@ Every `[?]` line must include a comparison operator — bare lines like `[?] $va
 All conditional chains must be exhaustive — every possible value of the branched type must have a defined path ([[PGE06001|PGE06001]]). Exhaustiveness is proven in two ways:
 
 1. **Static proof** — the compiler verifies all values are covered (closed types)
-2. **`*?` catch-all** — required for open types where static proof is impossible
+2. **`?*` catch-all** — required for open types where static proof is impossible
 
 ### Enum Exhaustiveness
 
-Enums are closed types. When all variants are listed, no `*?` is needed ([[PGE06002|PGE06002]]):
+Enums are closed types. When all variants are listed, no `?*` is needed ([[PGE06002|PGE06002]]):
 
 ```aljam3
 {#} #Direction
@@ -53,40 +53,40 @@ Enums are closed types. When all variants are listed, no `*?` is needed ([[PGE06
    [.] .East
    [.] .West
 
-[ ] All variants covered — no *? needed
-[?] $dir =? #Direction.North
+[ ] All variants covered — no ?* needed
+[?] $dir ?= #Direction.North
    [-] $label#string << "N"
-[?] $dir =? #Direction.South
+[?] $dir ?= #Direction.South
    [-] $label#string << "S"
-[?] $dir =? #Direction.East
+[?] $dir ?= #Direction.East
    [-] $label#string << "E"
-[?] $dir =? #Direction.West
+[?] $dir ?= #Direction.West
    [-] $label#string << "W"
 ```
 
-Partial coverage with `*?` covering the rest is also valid:
+Partial coverage with `?*` covering the rest is also valid:
 
 ```aljam3
-[?] $dir =? #Direction.North
+[?] $dir ?= #Direction.North
    [-] $label#string << "N"
-[?] *?
+[?] ?*
    [-] $label#string << "other"
 ```
 
-`#Boolean` follows the same rule — list both `#Boolean.True` and `#Boolean.False`, or use `*?`.
+`#Boolean` follows the same rule — list both `#Boolean.True` and `#Boolean.False`, or use `?*`.
 
 ### Numeric Exhaustiveness
 
-Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the full domain or include `*?` ([[PGE06003|PGE06003]]). Overlapping ranges are flagged as warnings ([[PGE06004|PGE06004]]):
+Numeric types (`#int`, `#float`) are open but rangeable. Ranges must cover the full domain or include `?*` ([[PGE06003|PGE06003]]). Overlapping ranges are flagged as warnings ([[PGE06004|PGE06004]]):
 
 ```aljam3
-[?] $code =? 200
+[?] $code ?= 200
    [-] $status#string << "ok"
-[?] $code =? 404
+[?] $code ?= 404
    [-] $status#string << "not_found"
-[?] $code =? 500
+[?] $code ?= 500
    [-] $status#string << "error"
-[?] *?
+[?] ?*
    [-] $status#string << "unknown"
 ```
 
@@ -102,7 +102,7 @@ When every `[?]` arm performs the same operation — mapping one value to anothe
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
    [?] 500 >> "error"
-   [?] *? >> "unknown"
+   [?] ?* >> "unknown"
 ```
 
 This desugars to the verbose form shown in the Numeric Exhaustiveness example above. The two forms are equivalent.
@@ -112,7 +112,7 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
 1. The source variable (`$code`) must be in **Final** state — its value is fully resolved
 2. The target variable (`$status`) receives the matched result via push
 3. Arms are **assignment-only** — no side effects, pipeline calls, or nested logic
-4. `[?] *?` is the wildcard catch-all — same syntax in both verbose and match forms
+4. `[?] ?*` is the wildcard catch-all — same syntax in both verbose and match forms
 5. All exhaustiveness rules ([[PGE06001|PGE06001]] through [[PGE06013|PGE06013]]) apply to the desugared form
 6. [[PGE06009|PGE06009]] does not apply to match arms — they use `value >> result` form, not `$var operator value`
 
@@ -126,17 +126,17 @@ This desugars to the verbose form shown in the Numeric Exhaustiveness example ab
    [?] #Direction.West >> "W"
 ```
 
-All variants of `#Direction` are listed, so no `*?` is needed — same rule as the verbose form ([[PGE06002|PGE06002]]).
+All variants of `#Direction` are listed, so no `?*` is needed — same rule as the verbose form ([[PGE06002|PGE06002]]).
 
 **Not a match:** If `[-] $x >> $y` has no indented `[?]` children, it is a plain assignment — not a match header.
 
 ### String and Flexible Field Exhaustiveness
 
-Strings are open sets — `*?` is always required ([[PGE06006|PGE06006]]). Flexible fields (`:`) are also open — `*?` is always required ([[PGE06007|PGE06007]]).
+Strings are open sets — `?*` is always required ([[PGE06006|PGE06006]]). Flexible fields (`:`) are also open — `?*` is always required ([[PGE06007|PGE06007]]).
 
 ### Exhaustiveness Summary
 
-| Type | Value Set | `*?` Required? |
+| Type | Value Set | `?*` Required? |
 |------|-----------|----------------|
 | Enum (`{#}` with `[.]` fields) | Closed (finite) | No — if all variants listed |
 | `#Boolean` | Closed (2 variants) | No — if both listed |
@@ -155,8 +155,8 @@ flowchart TD
     ALL_LISTED{"All variants\nlisted?"}
     FULL_RANGE{"Ranges cover\nfull domain?"}
 
-    NO_WILD["No *? needed"]
-    WILD["*? required"]
+    NO_WILD["No ?* needed"]
+    WILD["?* required"]
 
     START -->|enum / bool| CLOSED
     START -->|int / float| RANGE
@@ -182,10 +182,10 @@ Compound conditions combine multiple predicates using block-element logical mark
 Both conditions must hold:
 
 ```aljam3
-[?] $age >=? 18
-[&] $verified =? #Boolean.True
+[?] $age ?>= 18
+[&] $verified ?= #Boolean.True
    [-] $access << #AccessLevel.Granted
-[?] *?
+[?] ?*
    [-] $access << #AccessLevel.Denied
 ```
 
@@ -194,10 +194,10 @@ Both conditions must hold:
 At least one condition holds:
 
 ```aljam3
-[?] $role =? #Role.Admin
-[+] $role =? #Role.Superuser
+[?] $role ?= #Role.Admin
+[+] $role ?= #Role.Superuser
    [-] $elevated#bool << #Boolean.True
-[?] *?
+[?] ?*
    [-] $elevated#bool << #Boolean.False
 ```
 
@@ -206,40 +206,40 @@ At least one condition holds:
 Exactly one of two conditions holds — not both, not neither:
 
 ```aljam3
-[?] $isAdmin =? #Boolean.True
-[^] $isSudo =? #Boolean.True
+[?] $isAdmin ?= #Boolean.True
+[^] $isSudo ?= #Boolean.True
    [-] $elevated#bool << #Boolean.True
-[?] *?
+[?] ?*
    [-] $elevated#bool << #Boolean.False
 ```
 
 ### `[-]` — NOT
 
-Negate the preceding condition. For simple negation, prefer negation operators (`=!?`, `<!?`, etc.) over `[-]` — see [[operators#Negation Operators]].
+Negate the preceding condition. For simple negation, prefer negation operators (`?!=`, `?!>=`, etc.) over `[-]` — see [[operators#Negation Operators]].
 
 ### Compound Exhaustiveness
 
-When logical operators combine conditions, the compiler evaluates whether the compound expression partitions the input space ([[PGE06008|PGE06008]]). If any variable is an open type, `*?` is required. Overlapping compound conditions are flagged ([[PGE06005|PGE06005]]). Tautological branches (always true) and contradictory branches (always false) are compile errors ([[PGE06013|PGE06013]]).
+When logical operators combine conditions, the compiler evaluates whether the compound expression partitions the input space ([[PGE06008|PGE06008]]). If any variable is an open type, `?*` is required. Overlapping compound conditions are flagged ([[PGE06005|PGE06005]]). Tautological branches (always true) and contradictory branches (always false) are compile errors ([[PGE06013|PGE06013]]).
 
 ## Nested Conditionals
 
 A `[?]` branch can contain inner `[?]` chains. Each nesting level is independently exhaustive:
 
 ```aljam3
-[?] $role =? #Role.Admin
-   [?] $region =? #Region.EU
+[?] $role ?= #Role.Admin
+   [?] $region ?= #Region.EU
       [-] $policy#string << "GDPR"
-   [?] $region =? #Region.US
+   [?] $region ?= #Region.US
       [-] $policy#string << "CCPA"
-   [?] *?
+   [?] ?*
       [-] $policy#string << "Global"
-[?] $role =? #Role.User
+[?] $role ?= #Role.User
    [-] $policy#string << "Standard"
-[?] *?
+[?] ?*
    [-] $policy#string << "None"
 ```
 
-The outer chain branches on `$role`. Inside the Admin branch, a separate chain branches on `$region` — this inner chain has its own `*?` because `#Region` may have more than EU and US variants.
+The outer chain branches on `$role`. Inside the Admin branch, a separate chain branches on `$region` — this inner chain has its own `?*` because `#Region` may have more than EU and US variants.
 
 ## Switching on Metadata
 
@@ -257,7 +257,7 @@ Conditionals can switch on live metadata fields like pipeline `%status`:
          (-) <msg << "DataSync failed"
    [?] #Disabled
       [-] $msg#string << "pipeline disabled"
-   [?] *?
+   [?] ?*
       [-] $msg#string << "unknown state"
 ```
 
@@ -265,24 +265,24 @@ See [[syntax/types/hierarchy#Live Type Modifier]] and [[concepts/pipelines/chain
 
 ## Wildcard Rules
 
-- Only one `*?` per chain ([[PGE06011|PGE06011]])
-- `*?` must be the last branch — branches after `*?` are unreachable dead code ([[PGE06012|PGE06012]])
-- `*?` catches everything the preceding branches did not
+- Only one `?*` per chain ([[PGE06011|PGE06011]])
+- `?*` must be the last branch — branches after `?*` are unreachable dead code ([[PGE06012|PGE06012]])
+- `?*` catches everything the preceding branches did not
 
 ## Compile Rules Reference
 
 | Rule | Name | What it catches |
 |------|------|-----------------|
 | [[PGE06001\|PGE06001]] | Conditional Must Be Exhaustive | Missing coverage for any possible value |
-| [[PGE06002\|PGE06002]] | Enum Exhaustiveness | Missing enum variants without `*?` |
+| [[PGE06002\|PGE06002]] | Enum Exhaustiveness | Missing enum variants without `?*` |
 | [[PGE06003\|PGE06003]] | Numeric Range Not Exhaustive | Incomplete numeric range coverage |
 | [[PGE06004\|PGE06004]] | Numeric Range Overlap | Overlapping range branches |
 | [[PGE06005\|PGE06005]] | Compound Condition Overlap | Overlapping compound expressions |
-| [[PGE06006\|PGE06006]] | String Exhaustiveness | Missing `*?` on string conditionals |
-| [[PGE06007\|PGE06007]] | Flexible Field Exhaustiveness | Missing `*?` on flexible field conditionals |
+| [[PGE06006\|PGE06006]] | String Exhaustiveness | Missing `?*` on string conditionals |
+| [[PGE06007\|PGE06007]] | Flexible Field Exhaustiveness | Missing `?*` on flexible field conditionals |
 | [[PGE06008\|PGE06008]] | Compound Condition Exhaustiveness | Incomplete compound condition coverage |
 | [[PGE06009\|PGE06009]] | Conditional Missing Comparison Operator | Bare `[?] $variable` without operator |
 | [[PGE06010\|PGE06010]] | Empty Conditional Scope | Branch with no executable statement |
-| [[PGE06011\|PGE06011]] | Duplicate Wildcard Catch-All | More than one `*?` in a chain |
-| [[PGE06012\|PGE06012]] | Unreachable Branch After Wildcard | Branches placed after `*?` |
+| [[PGE06011\|PGE06011]] | Duplicate Wildcard Catch-All | More than one `?*` in a chain |
+| [[PGE06012\|PGE06012]] | Unreachable Branch After Wildcard | Branches placed after `?*` |
 | [[PGE06013\|PGE06013]] | Tautological Branch Condition | Always-true or always-false compound expression |

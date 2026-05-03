@@ -77,12 +77,12 @@ Review in batches by section. Each edge case includes:
 | S14 Lifecycle | EC-14.1--14.7 | Default->Final, Final immutability, leaf-only, all-or-none, Final-then-Default, input immutability, data load schema |
 | S15 Metadata Blocks | EC-15.1--15.5 | `[%]` user fields, alias, `.info#serial`, `%` live accessor, empty alias |
 | S16 Trigger IO Wiring | EC-16.1--16.3 | Trigger outputs, multi-output wiring, mixed fill modes |
-| S17 Negation Operators | EC-17.1--17.2 | `<!?`, `>!?`, `<=!?`, `>=!?`, negation in compound logic |
+| S17 Negation Operators | EC-17.1--17.2 | `?!>=`, `?!<=`, `?!>`, `?!<`, negation in compound logic |
 | S18 Wrapper Structure | EC-18.1--18.4 | `{W}` full structure, `[W]` usage wiring, no-output wrapper, zero-param macro (retired) |
 | S19 Collections -- Gaps | EC-19.1--19.4 | `*Into.Serial`, `*Into.Level`, `*Second`, `[b]` collector |
 | S20 Lifecycle -- Gaps | EC-20.1--20.3 | Declared state, Released state, `~>` on output params |
 | S21 Third Registry Type | EC-21.1 | `Registry` address format |
-| S22 Control Flow -- Gaps | EC-22.1--22.5 | `*?` exhaustiveness, nested conditionals, `%status` switch, `[^]` XOR, orphaned `[C]` warning |
+| S22 Control Flow -- Gaps | EC-22.1--22.5 | `?*` exhaustiveness, nested conditionals, `%status` switch, `[^]` XOR, orphaned `[C]` warning |
 | S23 Stress Tests | ST-1--ST-6 | Full onboarding, complex conditionals, race+chain, multi-wave+expand, deep nesting, wrapper+timer |
 | S24 Datatype Definitions | EC-24.1--24.20 | Scalar regex boundaries, `<~` inheritance, ##/### composition, generic type parameters, %## property completeness |
 

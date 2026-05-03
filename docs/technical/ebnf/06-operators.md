@@ -29,21 +29,27 @@ assignment_op       ::= push_left | push_right | default_push_left | default_pus
 ### 6.2 Comparison Operators
 
 ```ebnf
-comparison_op       ::= "=?"       (* equal *)
-                      | ">?"       (* greater than *)
-                      | "<?"       (* less than *)
-                      | ">=?"      (* greater or equal *)
-                      | "<=?"      (* less or equal *)
-                      | "=!?"      (* not equal *)
-                      | "<!?"      (* not less than *)
-                      | ">!?"      (* not greater than *)
-                      | "<=!?"     (* not less-or-equal *)
-                      | ">=!?"     (* not greater-or-equal *)
-                      | "*?" ;     (* wildcard / else / catch-all *)
+comparison_op       ::= "?="       (* equal *)
+                      | "?>"       (* greater than *)
+                      | "?<"       (* less than *)
+                      | "?>="      (* greater or equal *)
+                      | "?<="      (* less or equal *)
+                      | "?!="      (* not equal *)
+                      | "?!<"      (* not less than *)
+                      | "?!>"      (* not greater than *)
+                      | "?!<="     (* not less-or-equal *)
+                      | "?!>="     (* not greater-or-equal *)
+                      | "?*" ;     (* wildcard / else / catch-all *)
 
-(* Negation pattern: insert ! before ? to negate any comparison.
+(* Negation pattern: insert ! after ? to negate any comparison.
    This replaces the need for a standalone [-] NOT logical operator. *)
 
+domain_op           ::= "?#"       (* Type Check *)
+                      | "?##"      (* Schema Check *)
+                      | "?_"       (* Permission Check *)
+                      | "?@"       (* Provenance Check *)
+                      | "?!"       (* Error Check *)
+                      | "?-" ;     (* Source Check *)
 ```
 
 ### 6.3 Range Operators
@@ -58,9 +64,9 @@ range_expr          ::= value_expr range_open value_expr ',' value_expr range_cl
 **Lexer Disambiguation:** The `?[` and `?(` range tokens share the `?` character with comparison operators and the `[?]` block element. The lexer resolves this positionally:
 
 - `[?]` is a **three-character block element** token, matched at line start after indentation (§5.1). The `[` precedes the `?`.
-- `?[` and `?(` are **two-character range tokens**, matched in expression context after a `value_expr`. The `?` precedes the bracket.
-- Comparison operators consume `?` **greedily**: `=?[` tokenizes as `=?` (comparison) + `[` (unrelated), never as `=` + `?[` (range open).
+- `?[` and `?(` are **two-character range tokens**, matched in expression context after a `value_expr`.
+- Comparison operators consume greedily: `?=[` tokenizes as `?=` (comparison) + `[` (unrelated), never as `?` + `=[`.
 
-No grammar ambiguity exists — the token boundary is determined by whether `?` or `[` appears first, and whether the position is line-start (block element) or mid-expression (range/comparison).
+No grammar ambiguity exists — the token boundary is determined by whether `[` appears first, and whether the position is line-start (block element) or mid-expression (range/comparison).
 
 ---

@@ -12,29 +12,29 @@ split_from: PGE06001
 
 <!-- @u:syntax/blocks -->
 
-**Statement:** A `[?]` conditional branching on a flexible field (`:`) must include a `[?] *?` catch-all branch. Flexible fields are an open set — new keys can be added at runtime, so the compiler cannot prove exhaustiveness statically.
-**Rationale:** Flexible fields (`:`) allow arbitrary keys, unlike fixed fields (`.`) which form a closed set handled by PGE06002. The compiler cannot enumerate all possible keys at compile time, so `*?` is the only guarantee of exhaustiveness.
-**Detection:** When a `[?]` block branches on a flexible field (`:` type), the compiler checks for a `[?] *?` branch. If absent, PGE06007 fires.
+**Statement:** A `[?]` conditional branching on a flexible field (`:`) must include a `[?] ?*` catch-all branch. Flexible fields are an open set — new keys can be added at runtime, so the compiler cannot prove exhaustiveness statically.
+**Rationale:** Flexible fields (`:`) allow arbitrary keys, unlike fixed fields (`.`) which form a closed set handled by PGE06002. The compiler cannot enumerate all possible keys at compile time, so `?*` is the only guarantee of exhaustiveness.
+**Detection:** When a `[?]` block branches on a flexible field (`:` type), the compiler checks for a `[?] ?*` branch. If absent, PGE06007 fires.
 
 **VALID:**
 ```aljam3
-[ ] ✓ flexible field — *? required
+[ ] ✓ flexible field — ?* required
 [?] $config:mode
    [?] "fast"
       [-] -Run.Fast
-   [?] *?
+   [?] ?*
       [-] -Run.Default
 ```
 
 **INVALID:**
 ```aljam3
-[ ] ✗ PGE06007 — flexible field without *?
+[ ] ✗ PGE06007 — flexible field without ?*
 [?] $config:mode
    [?] "fast"
       [-] -Run.Fast
    [?] "slow"
       [-] -Run.Slow
-   [ ] ✗ PGE06007 — missing *?, flexible field is open type
+   [ ] ✗ PGE06007 — missing ?*, flexible field is open type
 ```
 
 **See also:**

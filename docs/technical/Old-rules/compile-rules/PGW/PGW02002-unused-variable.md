@@ -66,7 +66,7 @@ severity: warning
    [?] $code                            [ ] ✓ $code consumed in conditional
       [?] ?[200,299]
          [-] >out << "ok"
-      [?] *?
+      [?] ?*?
          [-] >out << "error"
 ```
 

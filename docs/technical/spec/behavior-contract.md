@@ -139,7 +139,7 @@ The compiler validates the signal map before the Behavior Contract is produced. 
 ### Dead-End and Unreachable Path Detection
 
 - **PGE02009** — Code after all output ports reach Final is unreachable (signal paths terminate)
-- **PGE06012** — Branches after wildcard `*?` can never fire
+- **PGE06012** — Branches after wildcard `?*` can never fire
 
 ### Scope Boundary Violations
 

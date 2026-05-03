@@ -59,13 +59,6 @@ All jm3lib items live on the `%` metadata tree (see [[data-is-trees#How Concepts
 | `=*Agg` | [reassemblers/Agg/](reassemblers/Agg/) | Expand and reduce to scalar (sum, count, average, max, min, concatenate) | Draft |
 | `=*Into` | [reassemblers/Into/](reassemblers/Into/) | Expand and collect into collection (array, map, dataframe) | Draft |
 
-## Compile-Time Predicates (?)
-
-| Prefix | File | Description | Status |
-|--------|------|-------------|--------|
-| `?Queue` | [predicates/INDEX.md](predicates/INDEX.md) | Queue topology and configuration assertions | Stable |
-| `?Host` | [predicates/INDEX.md](predicates/INDEX.md) | Host capability and OS assertions | Stable |
-| `?Math` | [predicates/INDEX.md](predicates/INDEX.md) | Compile-time numeric comparisons | Stable |
 
 ## Built-in Types (#)
 

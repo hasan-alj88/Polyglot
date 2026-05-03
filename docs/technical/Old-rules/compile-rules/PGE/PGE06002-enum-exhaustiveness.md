@@ -14,9 +14,9 @@ severity: error
 <!-- @u:syntax/operators -->
 <!-- @u:syntax/types -->
 
-**Statement:** When a `[?]` conditional branches on a `{#}` enum type, all declared enum variants must either appear as explicit branches or be covered by a `*?` catch-all. When **all** variants are explicitly listed, `*?` is optional — exhaustiveness is proven statically. When some variants are missing and no `*?` is present, PGE06002 fires.
-**Rationale:** Enum types have a closed set of variants defined at compile time. Failing to handle a variant is a likely bug — the compiler enforces that every variant has a path, either explicitly or via `*?`.
-**Detection:** The compiler resolves the `{#}` enum definition, enumerates all declared variants, and compares them against the explicit `[?]` branches. If any variant is missing and no `*?` branch exists, PGE06002 fires.
+**Statement:** When a `[?]` conditional branches on a `{#}` enum type, all declared enum variants must either appear as explicit branches or be covered by a `?*` catch-all. When **all** variants are explicitly listed, `?*` is optional — exhaustiveness is proven statically. When some variants are missing and no `?*` is present, PGE06002 fires.
+**Rationale:** Enum types have a closed set of variants defined at compile time. Failing to handle a variant is a likely bug — the compiler enforces that every variant has a path, either explicitly or via `?*`.
+**Detection:** The compiler resolves the `{#}` enum definition, enumerates all declared variants, and compares them against the explicit `[?]` branches. If any variant is missing and no `?*` branch exists, PGE06002 fires.
 
 ---
 
@@ -40,7 +40,7 @@ severity: error
    [.] .Warning
    [.] .Info
 
-[ ] ✓ all variants listed — exhaustive, no *? needed
+[ ] ✓ all variants listed — exhaustive, no ?* needed
 [?] $level#Severity
    [?] #Severity.Critical
       [-] -Alert.Page
@@ -53,12 +53,12 @@ severity: error
 ```
 
 ```aljam3
-[ ] ✓ partial coverage + *? covers the rest
+[ ] ✓ partial coverage + ?* covers the rest
 [?] $level#Severity
    [?] #Severity.Critical
       [-] -Alert.Page
-   [?] *?
-      [-] -Log.Default           [ ] ✓ *? covers Error, Warning, Info
+   [?] ?*
+      [-] -Log.Default           [ ] ✓ ?* covers Error, Warning, Info
 ```
 
 **INVALID:**
@@ -69,25 +69,25 @@ severity: error
    [.] .Warning
    [.] .Info
 
-[ ] ✗ PGE06002 — .Warning and .Info not covered, no *?
+[ ] ✗ PGE06002 — .Warning and .Info not covered, no ?*
 [?] $level#Severity
    [?] #Severity.Critical
       [-] -Alert.Page
    [?] #Severity.Error
       [-] -Alert.Email
    [ ] ✗ PGE06002 — .Warning, .Info unhandled
-   [ ] also ✗ PGE06001 — not exhaustive, no *?
+   [ ] also ✗ PGE06001 — not exhaustive, no ?*
 ```
 
 ---
 
 ## `#Boolean` — System Enum
 
-`#Boolean` is a system-provided enum with exactly two variants. PGE06002 treats it identically to any user-defined enum. When both variants are listed, `*?` is optional.
+`#Boolean` is a system-provided enum with exactly two variants. PGE06002 treats it identically to any user-defined enum. When both variants are listed, `?*` is optional.
 
 **VALID:**
 ```aljam3
-[ ] ✓ both variants listed — no *? needed
+[ ] ✓ both variants listed — no ?* needed
 [?] $isActive#bool
    [?] #Boolean.True
       [-] -Handle.Active
@@ -96,22 +96,22 @@ severity: error
 ```
 
 ```aljam3
-[ ] ✓ one variant + *? covers the other
+[ ] ✓ one variant + ?* covers the other
 [?] $isActive#bool
    [?] #Boolean.True
       [-] -Handle.Active
-   [?] *?
-      [-] -Handle.NotActive    [ ] ✓ *? covers #Boolean.False
+   [?] ?*
+      [-] -Handle.NotActive    [ ] ✓ ?* covers #Boolean.False
 ```
 
 **INVALID:**
 ```aljam3
-[ ] ✗ PGE06002 — #Boolean.False not covered, no *?
+[ ] ✗ PGE06002 — #Boolean.False not covered, no ?*
 [?] $isActive#bool
    [?] #Boolean.True
       [-] -Handle.Active
    [ ] ✗ PGE06002 — #Boolean.False unhandled
-   [ ] also ✗ PGE06001 — not exhaustive, no *?
+   [ ] also ✗ PGE06001 — not exhaustive, no ?*
 ```
 
 ---
@@ -129,7 +129,7 @@ When an enum variant contains value sub-fields, PGE06002 checks only the **top-l
       [.] .reason#string <~ "unknown"
       [.] .retries#int <~ 0
 
-[ ] ✓ both top-level variants — exhaustive, no *? needed
+[ ] ✓ both top-level variants — exhaustive, no ?* needed
 [?] $outcome#Result
    [?] #Result.Success
       [-] -Log.Success
@@ -147,7 +147,7 @@ When branching on an enum imported from another package, use the `@alias#EnumNam
 
 **VALID:**
 ```aljam3
-[ ] ✓ imported enum — all variants covered, no *? needed
+[ ] ✓ imported enum — all variants covered, no ?* needed
 [?] $status;@models#OrderStatus
    [?] @models#OrderStatus.Enqueued
       [-] -Process.Queue
@@ -163,10 +163,10 @@ When branching on an enum imported from another package, use the `@alias#EnumNam
 
 | Scenario | PGE06001 | PGE06002 | Result |
 |----------|---------|---------|--------|
-| All enum variants listed, no `*?` | ✓ (exhaustive) | ✓ | Valid |
-| All enum variants listed, `*?` present | ✓ | ✓ | Valid |
-| Partial variants, `*?` present | ✓ | ✓ (`*?` covers rest) | Valid |
-| Partial variants, no `*?` | ✗ | ✗ | Error (both) |
+| All enum variants listed, no `?*` | ✓ (exhaustive) | ✓ | Valid |
+| All enum variants listed, `?*` present | ✓ | ✓ | Valid |
+| Partial variants, `?*` present | ✓ | ✓ (`?*` covers rest) | Valid |
+| Partial variants, no `?*` | ✗ | ✗ | Error (both) |
 
 ---
 

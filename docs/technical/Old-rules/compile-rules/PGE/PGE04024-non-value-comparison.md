@@ -13,25 +13,25 @@ severity: error
 <!-- @u:concepts/conditionals -->
 <!-- @u:syntax/operators -->
 
-**Statement:** Comparison operators (`=?`, `>?`, `<?`, etc.) require both operands to be value types (`$` variables, literals, `<`/`>` IO params, field paths). Pipeline identifiers (`-Name`), collection operators (`*Into.*`), and expander operators (`=ForEach.*`) are not value types and cannot be compared.
+**Statement:** Comparison operators (`?=`, `?>`, `?<`, etc.) require both operands to be value types (`$` variables, literals, `<`/`>` IO params, field paths). Pipeline identifiers (`-Name`), collection operators (`*Into.*`), and expander operators (`=ForEach.*`) are not value types and cannot be compared.
 **Rationale:** Pipelines are operations, not data values. Comparing two pipeline identifiers has no defined semantics — there is no ordering or equality relation between operations. Only data values can be meaningfully compared.
 **Detection:** The compiler checks that both operands of a comparison expression resolve to value types. If either operand is a pipeline/collection/expander identifier, PGE04024 fires.
 
 **VALID:**
 ```aljam3
 [ ] ✓ comparing value types
-[?] $count >? 10
+[?] $count ?> 10
    [-] -HandleOverflow
 
 [ ] ✓ comparing enum values
-[?] $status =? #Status.Active
+[?] $status ?= #Status.Active
    [-] -Process
 ```
 
 **INVALID:**
 ```aljam3
 [ ] ✗ PGE04024 — pipeline identifiers are not value types
-[?] -Pipeline.A =? -Pipeline.B
+[?] -Pipeline.A ?= -Pipeline.B
    [-] $same << #Boolean.True
 ```
 

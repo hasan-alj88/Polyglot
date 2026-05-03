@@ -12,31 +12,31 @@ split_from: PGE06001
 
 <!-- @u:syntax/blocks -->
 
-**Statement:** A `[?]` conditional branching on a `string` value must include a `[?] *?` catch-all branch. String values are an open set — the compiler cannot know all possible values at compile time, so static exhaustiveness proof is impossible.
-**Rationale:** Strings are unbounded. Unlike enums (PGE06002) or numeric ranges (PGE06003), the compiler cannot verify that all string values are covered by listed branches. The `*?` catch-all is the only way to guarantee exhaustiveness.
-**Detection:** When a `[?]` block branches on a `string`-typed variable, the compiler checks for a `[?] *?` branch. If absent, PGE06006 fires.
+**Statement:** A `[?]` conditional branching on a `string` value must include a `[?] ?*` catch-all branch. String values are an open set — the compiler cannot know all possible values at compile time, so static exhaustiveness proof is impossible.
+**Rationale:** Strings are unbounded. Unlike enums (PGE06002) or numeric ranges (PGE06003), the compiler cannot verify that all string values are covered by listed branches. The `?*` catch-all is the only way to guarantee exhaustiveness.
+**Detection:** When a `[?]` block branches on a `string`-typed variable, the compiler checks for a `[?] ?*` branch. If absent, PGE06006 fires.
 
 **VALID:**
 ```aljam3
-[ ] ✓ string conditional — known values + *? catch-all
+[ ] ✓ string conditional — known values + ?* catch-all
 [?] $status
    [?] "active"
       [-] -Process.Active
    [?] "paused"
       [-] -Process.Paused
-   [?] *?
+   [?] ?*
       [-] -Process.Unknown
 ```
 
 **INVALID:**
 ```aljam3
-[ ] ✗ PGE06006 — string without *?, no static proof possible
+[ ] ✗ PGE06006 — string without ?*, no static proof possible
 [?] $status
    [?] "active"
       [-] -Process.Active
    [?] "paused"
       [-] -Process.Paused
-   [ ] ✗ PGE06006 — missing *?, string is open type
+   [ ] ✗ PGE06006 — missing ?*, string is open type
 ```
 
 **See also:**

@@ -102,7 +102,7 @@ severity: error
       [-] >status << "approved"    [ ] Final in this branch
    [?] #No
       [-] >status << "rejected"    [ ] Final in this branch
-   [?] *?
+   [?] ?*
       [ ] ✓ >status stays Default — not promoted in catch-all
 ```
 

@@ -9,7 +9,7 @@ metadata_instance: "%Q:DoNothing:N"
 
 # -Q.DoNothing
 
-No action — satisfies `*?` exhaustiveness in conditional blocks. The compiler emits a warning listing states not explicitly handled.
+No action — satisfies `?*` exhaustiveness in conditional blocks. The compiler emits a warning listing states not explicitly handled.
 
 ## Definition
 
@@ -38,7 +38,7 @@ When a `[Q]` block uses state guards and a `DoNothing` catch-all, the compiler e
 
 ## Runtime Behavior
 
-No runtime signal. No NATS command. No Redis write. No Unix mechanism. Compiler no-op satisfying exhaustiveness in `*?` catch-all blocks.
+No runtime signal. No NATS command. No Redis write. No Unix mechanism. Compiler no-op satisfying exhaustiveness in `?*` catch-all blocks.
 
 See [[queue-manager/signal-map|Signal Map]] for the full cross-reference.
 

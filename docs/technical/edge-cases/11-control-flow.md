@@ -22,13 +22,13 @@ updated: 2026-04-17
    [.] .Fail
 
 [ ] ...in pipeline execution...
-[?] $status =? #Status.Ok
+[?] $status ?= #Status.Ok
    [-] >result << "Success"
 
-[?] $status =? #Status.Warn
+[?] $status ?= #Status.Warn
    [-] >result << "Warning"
 
-[?] $status =? #Status.Fail
+[?] $status ?= #Status.Fail
    [-] >result << "Failure"
 ```
 
@@ -55,19 +55,19 @@ updated: 2026-04-17
 
 ```aljam3
 [ ] AND: both conditions must be true
-[?] $age >=? 18
-[&] $verified =? #Boolean.True
+[?] $age ?>= 18
+[&] $verified ?= #Boolean.True
    [-] $access << #AccessLevel.Granted
 
 [ ] OR: either condition
-[?] $role =? #Role.Admin
-[+] $role =? #Role.Superuser
+[?] $role ?= #Role.Admin
+[+] $role ?= #Role.Superuser
    [-] $elevated << #Boolean.True
 
 [ ] Negation: insert ! before ? in comparison operator
-[ ] <!? means "not less than", >=!? means "not greater-or-equal"
-[?] $banned =? #Boolean.False
-[&] $age <!? 13
+[ ] ?!>= means "not less than", ?!< means "not greater-or-equal"
+[?] $banned ?= #Boolean.False
+[&] $age ?!>= 13
    [-] $allowed << #Boolean.True
 ```
 
@@ -83,7 +83,7 @@ updated: 2026-04-17
    [?] 200 >> "ok"
    [?] 404 >> "not_found"
    [?] 500 >> "error"
-   [?] *? >> "unknown"
+   [?] ?* >> "unknown"
 ```
 
 ### EC-11.5: Match — enum exhaustive (no wildcard needed)
@@ -93,7 +93,7 @@ updated: 2026-04-17
 **What it tests:** Enum match with all variants listed — no `*` required, same as verbose form (PGE06002).
 
 ```aljam3
-[ ] All #Direction variants covered — no *? needed
+[ ] All #Direction variants covered — no ?* needed
 [-] $dir >> $label#string
    [?] #Direction.North >> "N"
    [?] #Direction.South >> "S"
@@ -115,12 +115,12 @@ updated: 2026-04-17
 ### EC-11.7: Wildcard-only match — tautological
 
 **EBNF ref:** `match_line ::= "[-]" value_expr ">>" assign_target { match_arm }`
-**What it tests:** Match with only `[?] *?` — always produces the same result. PGE06014 fires.
+**What it tests:** Match with only `[?] ?*?` — always produces the same result. PGE06014 fires.
 
 ```aljam3
 [ ] ✗ PGE06014 — wildcard-only match is tautological
 [-] $code >> $msg#string
-   [?] *? >> "always this"
+   [?] ?* >> "always this"
 ```
 
 ### EC-11.8: Variable as match arm value — must be Final
@@ -133,7 +133,7 @@ updated: 2026-04-17
 [-] $threshold#int << 100
 [-] $input >> $label#string
    [?] $threshold >> "at threshold"
-   [?] *? >> "other"
+   [?] ?* >> "other"
 ```
 
 ### EC-11.9: Pipeline identifier in comparison — non-value type
@@ -143,7 +143,7 @@ updated: 2026-04-17
 
 ```aljam3
 [ ] ✗ PGE04024 — pipeline identifiers cannot be compared
-[?] -Pipeline.A =? -Pipeline.B
+[?] -Pipeline.A ?= -Pipeline.B
    [-] $same << #Boolean.True
 ```
 
@@ -157,7 +157,7 @@ updated: 2026-04-17
 [-] $status >> $label#string
    [?] @auth#Role.Admin >> "admin"
    [?] @auth#Role.User >> "user"
-   [?] *? >> "unknown"
+   [?] ?* >> "unknown"
 ```
 
 ### EC-11.11: Comment-only conditional branch — PGE06010 sufficient (X.43 Accept)
@@ -169,16 +169,16 @@ updated: 2026-04-17
 
 ```aljam3
 [ ] ✗ PGE06010 — comment-only branch, no executable
-[?] $mode =? "debug"
+[?] $mode ?= "debug"
    [ ] TODO: add debug logging
-[?] *?
+[?] ?*?
    [-] -Process
 
 [ ] ✗ PGE06010 — multiple comments, still no executable
-[?] $status =? "active"
+[?] $status ?= "active"
    [ ] First comment
    [ ] Second comment
-[?] *?
+[?] ?*?
    [-] -Fallback
 ```
 

@@ -71,9 +71,9 @@ severity: error
    (-) <data#string
    (-) >output#string
    [ ]
-   [?] $data =? "ok"
+   [?] $data ?= "ok"
       (-) >output << $data                    [ ] ✗ PGE01017 — should be [-]
-   [?] *?
+   [?] ?*
       (-) >output << "error"                  [ ] ✗ PGE01017 — should be [-]
 ```
 

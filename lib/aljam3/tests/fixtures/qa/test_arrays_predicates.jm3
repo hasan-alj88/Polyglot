@@ -10,8 +10,8 @@
    (#) <FailoverQueue#Queue <~ #SomeOtherQueue
    ( ) Queues are #Queue Data Type
    [ ] Compile-time safety check
-   [?] ?Queue.Host.IsEqual"{<FailoverQueue}"
-   [ ] the whole point of predicte operators is to replace comparesion operators
+   [?] {#FailoverQueue}%host ?= {#QueueRules:MyQueue}%host
+   [ ] using prefix comparison operators instead of deprecated predicate functions
       [!] >>!Queue.InvalidFailoverTarget
 
 {-} -ProcessData

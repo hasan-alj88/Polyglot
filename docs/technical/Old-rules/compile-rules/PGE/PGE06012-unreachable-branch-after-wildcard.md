@@ -12,51 +12,51 @@ severity: error
 <!-- @u:syntax/blocks -->
 <!-- @u:syntax/types -->
 
-**Statement:** The `[?] *?` wildcard catch-all must be the final branch in a conditional chain. Any `[?]` branch after `*?` is unreachable dead code and is a compile error.
-**Rationale:** `*?` matches everything the preceding branches did not. Any branch declared after it can never execute — the wildcard already consumed all remaining cases. Enforcing `*?`-last prevents hidden dead code.
-**Detection:** The compiler scans `[?]` branches in declaration order. If a `*?` branch is encountered and further `[?]` branches follow, PGE06012 fires on each subsequent branch.
+**Statement:** The `[?] ?*` wildcard catch-all must be the final branch in a conditional chain. Any `[?]` branch after `?*` is unreachable dead code and is a compile error.
+**Rationale:** `?*` matches everything the preceding branches did not. Any branch declared after it can never execute — the wildcard already consumed all remaining cases. Enforcing `?*`-last prevents hidden dead code.
+**Detection:** The compiler scans `[?]` branches in declaration order. If a `?*` branch is encountered and further `[?]` branches follow, PGE06012 fires on each subsequent branch.
 
-**See also:** PGE06011 (duplicate wildcard catch-all — two `*?` in same chain), PGE06001 (conditional must be exhaustive)
+**See also:** PGE06011 (duplicate wildcard catch-all — two `?*` in same chain), PGE06001 (conditional must be exhaustive)
 
 **VALID:**
 ```aljam3
 [ ] ✓ wildcard is the last branch
-[?] $status =? "active"
+[?] $status ?= "active"
    [-] -HandleActive
-[?] $status =? "inactive"
+[?] $status ?= "inactive"
    [-] -HandleInactive
-[?] *?
+[?] ?*
    [-] -HandleUnknown
 ```
 
 ```aljam3
 [ ] ✓ no wildcard — statically exhaustive enum
-[?] $flag =? #Boolean.True
+[?] $flag ?= #Boolean.True
    [-] -DoSomething
-[?] $flag =? #Boolean.False
+[?] $flag ?= #Boolean.False
    [-] -DoNothing
 ```
 
 **INVALID:**
 ```aljam3
 [ ] ✗ PGE06012 — branch after wildcard is unreachable
-[?] $status =? "active"
+[?] $status ?= "active"
    [-] -HandleActive
-[?] *?
+[?] ?*
    [-] -HandleUnknown
-[?] $status =? "inactive"                   [ ] ✗ PGE06012 — unreachable after *?
+[?] $status ?= "inactive"                   [ ] ✗ PGE06012 — unreachable after ?*
    [-] -HandleInactive
 ```
 
 ```aljam3
 [ ] ✗ PGE06012 — multiple branches after wildcard
-[?] $code >? 100
+[?] $code ?> 100
    [-] -HandleHigh
-[?] *?
+[?] ?*
    [-] -HandleDefault
-[?] $code =? 50                             [ ] ✗ PGE06012 — unreachable
+[?] $code ?= 50                             [ ] ✗ PGE06012 — unreachable
    [-] -HandleFifty
-[?] $code =? 0                              [ ] ✗ PGE06012 — unreachable
+[?] $code ?= 0                              [ ] ✗ PGE06012 — unreachable
    [-] -HandleZero
 ```
 

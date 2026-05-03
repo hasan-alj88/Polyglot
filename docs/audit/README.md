@@ -76,8 +76,8 @@ The pipeline uses [T] to declare its trigger:
 <!-- @u:technical/ebnf/conditional#match-syntax -->
 ```aljam3
 [?] $status
-   =? "active" >> $result <~ "proceed"
-   *?           >> $result <~ "skip"
+   ?= "active" >> $result <~ "proceed"
+   ?*           >> $result <~ "skip"
 ```
 
 **Deprecated references** (`@d:`) — content superseded, kept for history:

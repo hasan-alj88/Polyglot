@@ -23,48 +23,48 @@ severity: error
 
 ## Compatibility Tables
 
-### Equality Operators (`=?`, `=!?`)
+### Equality Operators (`?=`, `?!=`)
 
 | Left (subject) | Operator | Right (operand) | Valid? |
 |----------------|----------|-----------------|--------|
-| `#int` | `=?` | `#int` | yes |
-| `#int` | `=?` | `#float` | yes |
-| `#int` | `=?` | `#string` | no — PGE04015 |
-| `#int` | `=?` | `#bool` | no — PGE04015 |
-| `#int` | `=?` | enum | no — PGE04015 |
-| `#float` | `=?` | `#float` | yes |
-| `#float` | `=?` | `#int` | yes |
-| `#float` | `=?` | `#string` | no — PGE04015 |
-| `#string` | `=?` | `#string` | yes |
-| `#string` | `=?` | `#int` | no — PGE04015 |
-| `#string` | `=?` | `#float` | no — PGE04015 |
-| `#bool` | `=?` | `#bool` | yes |
-| `#bool` | `=?` | `#int` | no — PGE04015 |
-| `#bool` | `=?` | `#string` | no — PGE04015 |
-| enum `#S` | `=?` | `.Value` of `#S` | yes |
-| enum `#S` | `=?` | `#int` | no — PGE04015 |
-| enum `#S` | `=?` | `#string` | no — PGE04015 |
-| enum `#S` | `=?` | `.Value` of `#T` | no — PGE04015 |
+| `#int` | `?=` | `#int` | yes |
+| `#int` | `?=` | `#float` | yes |
+| `#int` | `?=` | `#string` | no — PGE04015 |
+| `#int` | `?=` | `#bool` | no — PGE04015 |
+| `#int` | `?=` | enum | no — PGE04015 |
+| `#float` | `?=` | `#float` | yes |
+| `#float` | `?=` | `#int` | yes |
+| `#float` | `?=` | `#string` | no — PGE04015 |
+| `#string` | `?=` | `#string` | yes |
+| `#string` | `?=` | `#int` | no — PGE04015 |
+| `#string` | `?=` | `#float` | no — PGE04015 |
+| `#bool` | `?=` | `#bool` | yes |
+| `#bool` | `?=` | `#int` | no — PGE04015 |
+| `#bool` | `?=` | `#string` | no — PGE04015 |
+| enum `#S` | `?=` | `.Value` of `#S` | yes |
+| enum `#S` | `?=` | `#int` | no — PGE04015 |
+| enum `#S` | `?=` | `#string` | no — PGE04015 |
+| enum `#S` | `?=` | `.Value` of `#T` | no — PGE04015 |
 
-*(Same table applies to `=!?`)*
+*(Same table applies to `?!=`)*
 
-### Ordering Operators (`>?`, `<?`, `>!?`, `<!?`)
+### Ordering Operators (`?>`, `?<`, `?!<=`, `?!>=`)
 
 | Left (subject) | Operator | Right (operand) | Valid? |
 |----------------|----------|-----------------|--------|
-| `#int` | `>?` | `#int` | yes |
-| `#int` | `>?` | `#float` | yes |
-| `#int` | `>?` | `#string` | no — PGE04015 |
-| `#int` | `>?` | `#bool` | no — PGE04015 |
-| `#int` | `>?` | enum | no — PGE04015 |
-| `#float` | `>?` | `#float` | yes |
-| `#float` | `>?` | `#int` | yes |
-| `#float` | `>?` | `#string` | no — PGE04015 |
-| `#string` | `>?` | any | no — PGE04015 |
-| `#bool` | `>?` | any | no — PGE04015 |
-| enum | `>?` | any | no — PGE04015 |
+| `#int` | `?>` | `#int` | yes |
+| `#int` | `?>` | `#float` | yes |
+| `#int` | `?>` | `#string` | no — PGE04015 |
+| `#int` | `?>` | `#bool` | no — PGE04015 |
+| `#int` | `?>` | enum | no — PGE04015 |
+| `#float` | `?>` | `#float` | yes |
+| `#float` | `?>` | `#int` | yes |
+| `#float` | `?>` | `#string` | no — PGE04015 |
+| `#string` | `?>` | any | no — PGE04015 |
+| `#bool` | `?>` | any | no — PGE04015 |
+| enum | `?>` | any | no — PGE04015 |
 
-*(Same table applies to `<?`, `>!?`, `<!?`)*
+*(Same table applies to `?<`, `?!<=`, `?!>=`)*
 
 ### Range Operators (`?[lo,hi]`, `?(lo,hi)`, mixed)
 
@@ -97,11 +97,11 @@ severity: error
 | `#string` | `.Value` | any | no — PGE04015 |
 | `#bool` | `.Value` | any | no — PGE04015 |
 
-### Wildcard (`*?`)
+### Wildcard (`?*`)
 
 | Left (subject) | Operator | Valid? |
 |----------------|----------|--------|
-| any type | `*?` | always yes |
+| any type | `?*` | always yes |
 
 ---
 
@@ -120,7 +120,7 @@ severity: error
          [-] >label << "fail"
       [?] ?[60,100]
          [-] >label << "pass"
-      [?] *?
+      [?] ?*
          [-] >label << "unknown"
 ```
 
@@ -134,11 +134,11 @@ severity: error
    (-) >action#string
    [ ]
    [?] $status
-      [?] =? .Active
+      [?] ?= .Active
          [-] >action << "proceed"
-      [?] =? .Inactive
+      [?] ?= .Inactive
          [-] >action << "skip"
-      [?] *?
+      [?] ?*
          [-] >action << "error"
 ```
 
@@ -156,7 +156,7 @@ severity: error
          [-] >alert << "hypothermia"
       [?] ?[37.0,42.0]
          [-] >alert << "normal-to-fever"
-      [?] *?
+      [?] ?*
          [-] >alert << "critical"
 ```
 
@@ -173,7 +173,7 @@ severity: error
    [?] $name
       [?] ?[1,10]                       [ ] ✗ PGE04015 — range requires numeric
          [-] >out << "short"
-      [?] *?
+      [?] ?*
          [-] >out << "other"
 ```
 
@@ -187,9 +187,9 @@ severity: error
    (-) >out#string
    [ ]
    [?] $count
-      [?] =? .Active                   [ ] ✗ PGE04015 — enum match requires enum type
+      [?] ?= .Active                   [ ] ✗ PGE04015 — enum match requires enum type
          [-] >out << "yes"
-      [?] *?
+      [?] ?*
          [-] >out << "no"
 ```
 
@@ -203,9 +203,9 @@ severity: error
    (-) >out#string
    [ ]
    [?] $count
-      [?] =? "five"                    [ ] ✗ PGE04015 — string operand on int subject
+      [?] ?= "five"                    [ ] ✗ PGE04015 — string operand on int subject
          [-] >out << "matched"
-      [?] *?
+      [?] ?*
          [-] >out << "other"
 ```
 

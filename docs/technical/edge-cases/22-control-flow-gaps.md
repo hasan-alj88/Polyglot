@@ -8,32 +8,32 @@ updated: 2026-04-17
 
 ## 22. Control Flow — Gaps (S22)
 
-### EC-22.1: Exhaustiveness — `[?] *?` catch-all is mandatory when conditions are non-exhaustive
+### EC-22.1: Exhaustiveness — `[?] ?*?` catch-all is mandatory when conditions are non-exhaustive
 
 <!-- @u:operators -->
 **EBNF:** `conditional_chain ::= { conditional_branch } [ wildcard_branch ]` — wildcard required if set is non-exhaustive.
 
-**What it tests:** A conditional on a string/int value (open set) requires `*?`. Missing `*?` is a compile error. See [[operators#Comparison Operators]].
+**What it tests:** A conditional on a string/int value (open set) requires `?*`. Missing `?*` is a compile error. See [[operators#Comparison Operators]].
 
 ```aljam3
 [ ] VALID — open set needs *?
-[?] $code =? 200
+[?] $code ?= 200
    [-] $status#string << "ok"
-[?] $code =? 404
+[?] $code ?= 404
    [-] $status#string << "not_found"
-[?] $code =? 500
+[?] $code ?= 500
    [-] $status#string << "error"
-[?] *?
+[?] ?*?
    [-] $status#string << "unknown"
 
-[ ] VALID — exhaustive enum: all variants covered, no *? needed
-[?] $dir =? #Direction.North
+[ ] VALID — exhaustive enum: all variants covered, no ?* needed
+[?] $dir ?= #Direction.North
    [-] $label#string << "N"
-[?] $dir =? #Direction.South
+[?] $dir ?= #Direction.South
    [-] $label#string << "S"
-[?] $dir =? #Direction.East
+[?] $dir ?= #Direction.East
    [-] $label#string << "E"
-[?] $dir =? #Direction.West
+[?] $dir ?= #Direction.West
    [-] $label#string << "W"
 ```
 
@@ -42,22 +42,22 @@ updated: 2026-04-17
 **What it tests:** A `[?]` block inside another `[?]` branch — each nesting level is independently exhaustive.
 
 ```aljam3
-[?] $role =? #Role.Admin
-   [?] $region =? #Region.EU
+[?] $role ?= #Role.Admin
+   [?] $region ?= #Region.EU
       [-] $policy#string << "GDPR"
-   [?] $region =? #Region.US
+   [?] $region ?= #Region.US
       [-] $policy#string << "CCPA"
-   [?] *?
+   [?] ?*?
       [-] $policy#string << "Global"
-[?] $role =? #Role.User
+[?] $role ?= #Role.User
    [-] $policy#string << "Standard"
-[?] *?
+[?] ?*?
    [-] $policy#string << "None"
 ```
 
 ### EC-22.3: Switching on pipeline `%status` — nested enum switch
 
-**What it tests:** `[?]` on a live metadata field; inner `[?]` checks enum variants. All branches plus `*?`. See [[syntax/types/hierarchy#Live Type Modifier]], [[concepts/pipelines/chains#Querying Pipeline Status]].
+**What it tests:** `[?]` on a live metadata field; inner `[?]` checks enum variants. All branches plus `?*`. See [[syntax/types/hierarchy#Live Type Modifier]], [[concepts/pipelines/chains#Querying Pipeline Status]].
 
 ```aljam3
 [?] -DataSync%status
@@ -71,7 +71,7 @@ updated: 2026-04-17
          (-) <msg << "DataSync failed"
    [?] #Disabled
       [-] $msg#string << "pipeline disabled"
-   [?] *?
+   [?] ?*?
       [-] $msg#string << "unknown state"
 ```
 
@@ -82,10 +82,10 @@ updated: 2026-04-17
 
 ```aljam3
 [ ] Exactly one of $isAdmin or $isSudo — not both, not neither
-[?] $isAdmin =? #Boolean.True
-[^] $isSudo =? #Boolean.True
+[?] $isAdmin ?= #Boolean.True
+[^] $isSudo ?= #Boolean.True
    [-] $elevated#bool << #Boolean.True
-[?] *?
+[?] ?*?
    [-] $elevated#bool << #Boolean.False
 ```
 
@@ -111,9 +111,9 @@ updated: 2026-04-17
 [C] print("orphaned code")
 
 [ ] ⚠ PGW01004 — [C] inside conditional without -RT.* parent
-[?] $mode =? "debug"
+[?] $mode ?= "debug"
    [C] console.log("debug")
-[?] *?
+[?] ?*?
    [-] -DoNothing
 ```
 

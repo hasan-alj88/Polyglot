@@ -49,7 +49,7 @@ severity: warning
    [?] $status
       [?] ?[200,299]
          [-] >message << "ok"           [ ] ✓ pushed in this branch
-      [?] *?
+      [?] ?*?
          [-] >message << "error"        [ ] ✓ pushed in this branch
 ```
 
@@ -75,13 +75,13 @@ severity: warning
    [W] -W.Aljam3
    (-) <flag#bool
    (-) >result#string
-   (-) >count#int                       [ ] ⚠ PGW02003 — not pushed in *? branch
+   (-) >count#int                       [ ] ⚠ PGW02003 — not pushed in ?* branch
    [ ]
    [?] $flag
-      [?] =? .True
+      [?] ?= .True
          [-] >result << "yes"
          [-] >count << 1
-      [?] *?
+      [?] ?*?
          [-] >result << "no"
          [ ] >count never pushed here
 ```

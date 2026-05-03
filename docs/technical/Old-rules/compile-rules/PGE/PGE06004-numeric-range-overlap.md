@@ -11,8 +11,8 @@ severity: error
 
 <!-- @u:syntax/blocks -->
 
-**Statement:** In a `[?]` conditional with numeric branches, no two branches may overlap. Overlapping ranges are always a compile error, regardless of whether `*?` is present. The compiler must identify the overlapping branches and the overlapping interval.
-**Rationale:** Overlapping ranges create ambiguity — when a value falls in the overlap, the compiler cannot determine which branch should execute. This is always a bug. Even with `*?`, overlaps must be resolved. Aljam3's exhaustive coverage model requires that every value maps to exactly one branch — ambiguity is a compile-time error, not a runtime coin flip.
+**Statement:** In a `[?]` conditional with numeric branches, no two branches may overlap. Overlapping ranges are always a compile error, regardless of whether `?*` is present. The compiler must identify the overlapping branches and the overlapping interval.
+**Rationale:** Overlapping ranges create ambiguity — when a value falls in the overlap, the compiler cannot determine which branch should execute. This is always a bug. Even with `?*`, overlaps must be resolved. Aljam3's exhaustive coverage model requires that every value maps to exactly one branch — ambiguity is a compile-time error, not a runtime coin flip.
 **Detection:** The compiler checks all pairs of numeric branch conditions for intersection. If any pair has a non-empty intersection, PGE06004 fires. The error message identifies the two overlapping branches and the overlapping interval.
 
 **See also:** PGE06003 (range not exhaustive), PGE06001 (general exhaustiveness), [Overlap Detection Algorithm](../algorithms/overlap-detection.md)
@@ -21,13 +21,13 @@ severity: error
 ```aljam3
 [ ] ✓ mutually exclusive ranges — no overlap
 [?] $val
-   [?] $val <? 0
+   [?] $val ?< 0
       [-] -Negative
    [?] $val ?[0,50)
       [-] -Low
    [?] $val ?[50,100]
       [-] -High
-   [?] $val >? 100
+   [?] $val ?> 100
       [-] -VeryHigh
 ```
 
@@ -39,18 +39,18 @@ severity: error
       [-] -Low
    [?] $val ?[80,100]
       [-] -High                [ ] ✗ PGE06004 — [80,90] in both branches
-   [?] *?
-      [-] -Other               [ ] *? does not fix overlap
+   [?] ?*
+      [-] -Other               [ ] ?* does not fix overlap
 ```
 
 ```aljam3
 [ ] ✗ PGE06004 — comparison operators overlap
 [?] $score
-   [?] $score >=? 80
+   [?] $score ?>= 80
       [-] -High
-   [?] $score >=? 70
+   [?] $score ?>= 70
       [-] -Mid                 [ ] ✗ PGE06004 — [80, +∞) is in both branches
-   [?] $score <? 70
+   [?] $score ?< 70
       [-] -Low
 ```
 

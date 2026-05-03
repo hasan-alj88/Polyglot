@@ -87,9 +87,9 @@ severity: error
 [ ] ✗ PGE04009 — conditionally built serial, compiler cannot prove completeness
 [-] $data#serial
    [-] $data:name << "Alice"
-   [?] $hasAge =? true
+   [?] $hasAge ?= true
       [-] $data:age << 30
-   [?] *?
+   [?] ?*
       [ ] .age not assigned in this branch
 [-] $user#UserRecord << $data        [ ] ✗ PGE04009 — .age may be missing
 ```

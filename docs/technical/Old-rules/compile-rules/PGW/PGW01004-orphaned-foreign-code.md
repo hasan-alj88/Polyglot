@@ -38,9 +38,9 @@ severity: warning
 
 ```aljam3
 [ ] ⚠ PGW01004 — [C] inside conditional without -RT.* parent
-[?] $mode =? "debug"
+[?] $mode ?= "debug"
    [C] console.log("debug info")
-[?] *?
+[?] ?*?
    [-] -DoNothing
 ```
 

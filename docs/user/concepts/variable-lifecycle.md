@@ -91,11 +91,11 @@ Any access to a Released variable is a compile error (PGE02008). Code that can o
 Variable lifecycle state is queryable at runtime via the `%` metadata accessor:
 
 ```aljam3
-[?] $myVar%state =? #VarState.Default
+[?] $myVar%state ?= #VarState.Default
    [-] ...
-[?] $myVar%state =? #VarState.Failed
+[?] $myVar%state ?= #VarState.Failed
    [-] ...
-[?] *?
+[?] ?*?
    [-] ...
 ```
 

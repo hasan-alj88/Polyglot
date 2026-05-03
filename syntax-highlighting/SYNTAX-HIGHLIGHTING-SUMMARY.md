@@ -41,10 +41,10 @@ keyword.control.dataflow.aljam3       - [i] [o] [<] [>]
 keyword.control.execution.aljam3      - [r] [p] [b] [s] [Y]
 keyword.control.flow.aljam3           - [?] [t] [Q] [W]
 keyword.control.scope.aljam3          - [~] [\] [/] [{] [}]
-keyword.operator.logical.aljam3       - [&] [+] [-] [^] [.]
+keyword.operator.logical.aljam3       - [&] [+] [-] [^] [.] ?in ?has ?# ?_
 keyword.control.special.aljam3        - [X] [A] [*]
 keyword.operator.dataflow.*.aljam3    - << >> <~
-keyword.operator.comparison.aljam3    - =? >? <? >=? <=? !?
+keyword.operator.comparison.aljam3    - ?= ?> ?< ?>= ?<= ?!=
 keyword.operator.range.aljam3         - ?[ ?(
 keyword.operator.collection.aljam3    - ~* ~Y.*
 entity.name.function.pipeline.aljam3  - -Pipeline

@@ -34,7 +34,7 @@ Example:
 
 ### 3. The `[*] *All` Synchronization Barrier
 The `[*] *All` block acts as a deliberate **Data Synchronization** construct. 
-* By explicitly requiring specific operations (e.g., `(*) << $EmailCreationOp>status`) to be Final, it halts.
+* By explicitly requiring specific operations (e.g., `(*) << $EmailCreationOp%status`) to be Final, it halts.
 * **Crucially**: It does *not* structurally block the jobs beneath it. The structural progression cascades past it immediately. It only delays subsequent sub-jobs if those sub-jobs actually *depend* on the variables being synchronized (or if they depend on an output produced by the `[*]` block itself).
 
 ### 4. Post-Barrier Cascading
@@ -43,13 +43,13 @@ If a subsequent job does not depend on the variables synchronized by the `[*]` b
 Example:
 ```aljam3
    [*] *All
-      (*) << $EmailCreationOp>status
-      (*) << $StorageCreationOp>status
+      (*) << $EmailCreationOp%status
+      (*) << $StorageCreationOp%status
    [ ]
    [-] @Mail-API.Email.Send
       (-) <recipient << $userEmail
 ```
 Because `[-] @Mail-API.Email.Send` only takes `$userEmail` (provided previously by `Auth-API`), it has no data dependency on anything happening in the `[=]` block or the `[*]` block. Therefore, it will Enqueue and run as soon as `$userEmail` is final, running concurrently with the account creation processes.
 
-### 5. Final State Switching & Assignment
-Switching predicates (`[?]`, `[&]`) and Variable Assignments (`[-] >onboardingStatus << ...`) act as final structural blocks. They trigger and evaluate safely only when the variables they explicitly inspect reach a Final state, securely closing the pipeline logic.
+### 5. Final State Queries & Assignment
+Conditional queries (`[?]`, `[&]`) and Variable Assignments (`[-] >onboardingStatus << ...`) act as final structural blocks. They trigger and evaluate safely only when the variables they explicitly inspect reach a Final state, securely closing the pipeline logic.

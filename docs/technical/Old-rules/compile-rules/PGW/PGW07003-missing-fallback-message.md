@@ -33,12 +33,12 @@ severity: warning
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
-   [?] $name =? ""
+   [?] $name ?= ""
       [!] >> !Validation.Empty
          (!) .Message << "Name is required"
          (!) >status << "invalid"
             (>) %FallbackMessage << "Pipeline returns invalid status on empty input"
-   [?] *?
+   [?] ?*?
       [-] >validated << $name
       [-] >status << "ok"
 ```
@@ -53,12 +53,12 @@ severity: warning
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
-   [?] $name =? ""
+   [?] $name ?= ""
       [!] >> !Validation.Empty
          (!) .Message << "Name is required"
          (!) >status << "invalid"
             (>) %FallbackMessage << ""
-   [?] *?
+   [?] ?*?
       [-] >status << "ok"
 ```
 
@@ -73,11 +73,11 @@ severity: warning
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
-   [?] $name =? ""
+   [?] $name ?= ""
       [!] >> !Validation.Empty
          (!) .Message << "Name is required"
          (!) >status << "invalid"             [ ] ⚠ PGW07003 — missing %FallbackMessage
-   [?] *?
+   [?] ?*?
       [-] >status << "ok"
 ```
 

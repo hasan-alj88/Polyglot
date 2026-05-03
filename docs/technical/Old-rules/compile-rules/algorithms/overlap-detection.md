@@ -37,18 +37,18 @@ Each branch's comparison operator or range notation maps to an interval `[lo, hi
 
 | Syntax | Interval |
 |---|---|
-| `$x >? V` | (V, +∞) |
-| `$x >=? V` | [V, +∞) |
-| `$x <? V` | (-∞, V) |
-| `$x <=? V` | (-∞, V] |
-| `$x =? V` | [V, V] |
-| `$x =!? V` | (-∞, V) ∪ (V, +∞) |
+| `$x ?> V` | (V, +∞) |
+| `$x ?>= V` | [V, +∞) |
+| `$x ?< V` | (-∞, V) |
+| `$x ?<= V` | (-∞, V] |
+| `$x ?= V` | [V, V] |
+| `$x ?!= V` | (-∞, V) ∪ (V, +∞) |
 | `$x ?[A,B]` | [A, B] |
 | `$x ?(A,B]` | (A, B] |
 | `$x ?[A,B)` | [A, B) |
 | `$x ?(A,B)` | (A, B) |
 
-**Negation (`=!?`):** Produces two disjoint intervals. Each half is tested independently against other branches.
+**Negation (`?!=`):** Produces two disjoint intervals. Each half is tested independently against other branches.
 
 ### Step 2: Pairwise intersection
 
@@ -93,10 +93,10 @@ Each branch maps to a bit set of covered variants:
 
 | Branch condition | Bit set |
 |---|---|
-| `$color =? .Red` | {Red} |
-| `$color =!? .Red` | {Green, Blue, ...} (complement of {Red} in full variant set) |
-| `$bool =? #Boolean.True` | {True} |
-| `$bool =!? #Boolean.True` | {False} |
+| `$color ?= .Red` | {Red} |
+| `$color ?!= .Red` | {Green, Blue, ...} (complement of {Red} in full variant set) |
+| `$bool ?= #Boolean.True` | {True} |
+| `$bool ?!= #Boolean.True` | {False} |
 
 The full variant set is known at compile time from the `{#}` definition.
 
@@ -116,8 +116,8 @@ If any pair has non-empty AND → **PGE06004** with:
 - The shared variants as counterexample
 
 **Edge case — negation overlap:**
-- Branch 1: `$color =!? .Red` → {Green, Blue}
-- Branch 2: `$color =!? .Blue` → {Red, Green}
+- Branch 1: `$color ?!= .Red` → {Green, Blue}
+- Branch 2: `$color ?!= .Blue` → {Red, Green}
 - AND: {Green} → **PGE06004** — overlap at `.Green`
 
 ## Algorithm 3 — String/Flexible Exact Literal Match
@@ -126,13 +126,13 @@ String and flexible field types have open (infinite) domains. Full overlap analy
 
 ### Step 1: Collect literal values
 
-For each branch with an `=?` comparison against a string literal, record the literal value.
+For each branch with an `?=` comparison against a string literal, record the literal value.
 
 ### Step 2: Duplicate detection
 
 If two branches test the same literal value → overlap.
 
-Negation branches (`=!?`) on strings are not checked for overlap — the complement of a single string is effectively the entire domain minus one value, which always overlaps with any other branch. This is handled by the `*?` requirement (PGE06006/PGE06007).
+Negation branches (`?!=`) on strings are not checked for overlap — the complement of a single string is effectively the entire domain minus one value, which always overlaps with any other branch. This is handled by the `?*` requirement (PGE06006/PGE06007).
 
 ### Step 3: Report
 

@@ -102,14 +102,14 @@ updated: 2026-03-30
    [?] #Failed
       [b] -Audit.Log
          (-) <event << "pipeline_failed"
-   [?] *?
+   [?] ?*?
       [-] $ready#bool << #Boolean.False
 
 [ ] Variable lifecycle state
 [?] $myVar%state
    [?] #Ready
       [-] $safe#bool << #Boolean.True
-   [?] *?
+   [?] ?*?
       [-] $safe#bool << #Boolean.False
 
 [ ] Data definition metadata (read-only counters)

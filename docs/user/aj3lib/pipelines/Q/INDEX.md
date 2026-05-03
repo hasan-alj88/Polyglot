@@ -114,7 +114,7 @@ Where `<Scope>` is `Job`, `Host`, `Queue`, or `Queue.Jobs` (array context in `#Q
 
 | Pipeline | Description |
 |----------|-------------|
-| [[jm3lib/pipelines/Q/DoNothing\|-Q.DoNothing]] | Satisfies `*?` exhaustiveness. Compiler warns on unhandled states |
+| [[jm3lib/pipelines/Q/DoNothing\|-Q.DoNothing]] | Satisfies `?*` exhaustiveness. Compiler warns on unhandled states |
 
 ### Getter Pipelines
 
@@ -166,15 +166,7 @@ Rules rely on triggers rather than continuous evaluation loops.
 | **Edge Triggers** | `-QT.Job.Resource.Exceeds.RAM"{val}"`, `-QT.Job.Parent.Terminated` | Wakes the rule via `[T]` |
 | **State Triggers** | `-QT.Job.State.Is.Paused`, `-QT.Job.State.Is.Active` | Validates condition via `[&]` |
 
-### Compile-Time Predicates (`?` Prefix)
 
-Used for structural validation before the program compiles.
-
-| Predicate | Evaluates To | Usage |
-|-----------|--------------|-------|
-| `?Queue.Host.IsEqual"{#TargetQueue}"` | `#Boolean` | `[?] ?Queue.Host.IsEqual"{#TargetQueue}"` |
-| `?Queue.Strategy.IsEqual"{#Strategy}"` | `#Boolean` | `[?] ?Queue.Strategy.IsEqual"{#Strategy}"` |
-| `?Queue.Supports.TCPRepair` | `#Boolean` | `[?] ?Queue.Supports.TCPRepair` |
 
 ## Example: Queue Definition + Rules + Pipeline
 
@@ -192,7 +184,7 @@ Used for structural validation before the program compiles.
    (#) $margin.GB#int <~ 1
    
    [ ] Compile-time validation: margin must be strictly less than value
-   [?] -Math.IsGreater"{$margin.GB}", "{$value.GB}" =? #Boolean.True
+   [?] $margin.GB ?>= $value.GB
       [!] >> !Queue.InvalidMargin
       
    [ ] Trigger when RAM exceeds threshold AND Job is Active

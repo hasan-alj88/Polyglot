@@ -35,7 +35,7 @@ severity: error
          [-] >label << "fail"
       [?] ?[60,100]
          [-] >label << "pass"
-      [?] *?
+      [?] ?*
          [-] >label << "unknown"
 ```
 
@@ -51,7 +51,7 @@ severity: error
    [?] $count
       [?] ?[5,5]                        [ ] ✓ matches exactly 5
          [-] >out << "five"
-      [?] *?
+      [?] ?*
          [-] >out << "other"
 ```
 
@@ -67,7 +67,7 @@ severity: error
    [?] $temp
       [?] ?(0.0,100.0)
          [-] >out << "in range"
-      [?] *?
+      [?] ?*
          [-] >out << "out of range"
 ```
 
@@ -84,7 +84,7 @@ severity: error
    [?] $score
       [?] ?[100,0]                      [ ] ✗ PGE04013 — lo (100) > hi (0)
          [-] >out << "impossible"
-      [?] *?
+      [?] ?*
          [-] >out << "always here"
 ```
 
@@ -100,7 +100,7 @@ severity: error
    [?] $temp
       [?] ?(5.0,5.0)                   [ ] ✗ PGE04013 — lo (5.0) >= hi (5.0) for exclusive
          [-] >out << "impossible"
-      [?] *?
+      [?] ?*
          [-] >out << "always here"
 ```
 
@@ -116,7 +116,7 @@ severity: error
    [?] $value
       [?] ?[10,3)                       [ ] ✗ PGE04013 — lo (10) > hi (3)
          [-] >out << "impossible"
-      [?] *?
+      [?] ?*
          [-] >out << "always here"
 ```
 

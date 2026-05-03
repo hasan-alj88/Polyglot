@@ -17,7 +17,7 @@ conditional_line    ::= "[?]" comparison_expr NEWLINE
 conditional_branch  ::= exec_line | comment_line ;
 
 (* Exhaustiveness: All [?] chains must cover every case.
-   If conditions are not exhaustive, a catch-all [?] *? branch is mandatory.
+   If conditions are not exhaustive, a catch-all [?] ?* branch is mandatory.
    PGE06001: Conditional must be exhaustive.
    PGE06009: Every [?] line must include a comparison operator — no bare subjects.
    PGE06010: Every [?] branch must contain at least one executable statement. *)
@@ -32,7 +32,7 @@ match_line          ::= "[-]" value_expr ">>" assign_target NEWLINE
                       (* At least one non-wildcard arm required — PGE06014 *)
 
 match_arm           ::= match_value_arm
-                      | "[?]" "*?" ">>" value_expr ;       (* wildcard catch-all *)
+                      | "[?]" "?*" ">>" value_expr ;       (* wildcard catch-all *)
 
 match_value_arm     ::= "[?]" match_value ">>" value_expr ;
 
@@ -42,7 +42,7 @@ match_value         ::= literal
                          via data_id and package_id alternatives in §3.1 *)
 ```
 
-**Rule:** Match is syntactic sugar. `[-] $x >> $y` with indented `[?]` children desugars to a `[?]` chain where each arm becomes `[?] $x =? value` / `[-] $y << result`. All exhaustiveness rules (PGE06001 through PGE06013) apply to the desugared form. Match arms use `*?` for the wildcard catch-all, same as verbose conditionals.
+**Rule:** Match is syntactic sugar. `[-] $x >> $y` with indented `[?]` children desugars to a `[?]` chain where each arm becomes `[?] $x ?= value` / `[-] $y << result`. All exhaustiveness rules (PGE06001 through PGE06013) apply to the desugared form. Match arms use `?*` for the wildcard catch-all, same as verbose conditionals.
 
 **Rule:** If a `[-] value_expr >> assign_target` line has no indented `[?]` children, it is a plain assignment — not a match header.
 
@@ -93,7 +93,7 @@ logical_and         ::= "[&]" comparison_expr ;
 logical_or          ::= "[+]" comparison_expr ;
 logical_xor         ::= "[^]" comparison_expr ;
 
-(* Note: Negation is expressed by modifying the comparison operator: <? → <!?, >=? → >=!? etc.
+(* Note: Negation is expressed by modifying the comparison operator: ?< → ?!<, ?>= → ?!>= etc.
    [+] is the OR marker — unified for both triggers (§9.3.1) and conditionals. *)
 ```
 

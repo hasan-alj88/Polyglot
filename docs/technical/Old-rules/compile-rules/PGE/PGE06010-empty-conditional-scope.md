@@ -16,43 +16,43 @@ severity: error
 
 **Statement:** Every `[?]` branch must contain at least one executable statement (`[-]`, `[=]`, `[b]`, or nested `[?]`). A `[?]` branch with only comments or no body at all is a compile error. Use `[-] -DoNothing` to explicitly mark an intentionally empty branch.
 **Rationale:** An empty conditional branch is almost always an authoring mistake — the developer intended to add logic but forgot. Unlike an empty pipeline body (PGW01001, warning), a conditional branch is a targeted decision point: if the developer wrote the condition, they intended an action. Requiring `-DoNothing` makes the "do nothing" intent explicit and self-documenting.
-**Detection:** The compiler checks the body of every `[?]` branch (including `[?] *?` catch-all). If no executable statement is found, PGE06010 fires.
+**Detection:** The compiler checks the body of every `[?]` branch (including `[?] ?*` catch-all). If no executable statement is found, PGE06010 fires.
 
 **VALID:**
 ```aljam3
 [ ] ✓ each branch has an executable statement
-[?] $age =? #FileAge.Old
+[?] $age ?= #FileAge.Old
    [-] -File.Delete
       (-) <path << $file
-[?] $age =? #FileAge.Unknown
+[?] $age ?= #FileAge.Unknown
    [-] -DoNothing
-[?] *?
+[?] ?*
    [-] -DoNothing
 ```
 
 ```aljam3
 [ ] ✓ comments alongside executable statement are fine
-[?] $status =? #PipelineStatus.Running
+[?] $status ?= #PipelineStatus.Running
    [ ] Pipeline is still running — wait
    [-] -DoNothing
-[?] *?
+[?] ?*
    [-] -HandleComplete
 ```
 
 **INVALID:**
 ```aljam3
 [ ] ✗ PGE06010 — catch-all branch has only a comment, no executable
-[?] $age =? #FileAge.Old
+[?] $age ?= #FileAge.Old
    [-] -File.Delete
       (-) <path << $file
-[?] *?
+[?] ?*
    [ ] File is not old enough — skip
 ```
 
 ```aljam3
 [ ] ✗ PGE06010 — branch is completely empty
-[?] $mode =? "debug"
-[?] *?
+[?] $mode ?= "debug"
+[?] ?*
    [-] -Process
 ```
 

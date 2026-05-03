@@ -31,7 +31,7 @@
       (>) >status >> @DB#Status.Success
          (>) >! @DB#Status.Failed
 
-   [?] ?ScoresQuery.Status.IsEqual"{#DB.Status.Failed}" =? #Boolean.True
+   [?] $ScoresQuery%status ?= #DB.Status.Failed
       [-] -File.CSV.Log
          (<) <file.Path << "db_failed_{$today}.csv"
             (<) <! "db_failed_default.csv"
@@ -46,7 +46,7 @@
          (<) <data << $allScores
          (>) >result >> $maxScore
          
-      [?] ?Score.IsItGreaterThan"95.0" >? #Boolean.True
+      [?] $maxScore ?> 95.0
          [-] @Mail-API.Email.SendAlert
             (-) $EmailOperation
             (<) <recipient << "admin@acme.edu"

@@ -33,13 +33,13 @@ severity: error
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
-   [?] $name =? ""
+   [?] $name ?= ""
       [!] >> !Validation.Empty                [ ] ✓ matches declaration
          (!) .Message << "Name is required"
-   [?] $name.length >? 100
+   [?] $name.length ?> 100
       [!] >> !Validation.TooLong              [ ] ✓ matches declaration
          (!) .Message << "Name exceeds limit"
-   [?] *?
+   [?] ?*
       [-] >validated << $name
 ```
 
@@ -55,10 +55,10 @@ severity: error
    [Q] -Q.Default
    [W] -W.Aljam3
    [ ]
-   [?] $name =? ""
+   [?] $name ?= ""
       [!] >> !Validation.Empty
          (!) .Message << "Name is required"
-   [?] *?
+   [?] ?*
       [-] >validated << $name
 ```
 

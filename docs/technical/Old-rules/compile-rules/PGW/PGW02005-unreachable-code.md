@@ -32,11 +32,11 @@ severity: warning
    (-) <input#string
    (-) >output#string
    [ ]
-   [?] $input =? "fast"
+   [?] $input ?= "fast"
       [-] -ProcessFast
          (-) <data << $input
          (-) >result >> $fast
-   [?] *?
+   [?] ?*?
       [-] -ProcessSlow
          (-) <data << $input
          (-) >result >> $slow
@@ -87,9 +87,9 @@ severity: warning
    (-) <data#string
    (-) >output#string
    [ ]
-   [?] $data =? "ok"
+   [?] $data ?= "ok"
       [-] >output << $data
-   [?] *?
+   [?] ?*?
       [-] >output << "error"
    [ ] >output is Final in all paths
    [-] -Log                                    [ ] ⚠ PGW02005 — unreachable
