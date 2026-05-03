@@ -9,7 +9,7 @@ pub trait Rule {
 
 pub fn get_all_rules() -> Vec<Box<dyn Rule>> {
     vec![
-        // Algorithms framework
-        Box::new(algorithms::PipelineAlgorithms),
+        // Registered Algorithms
+        Box::new(algorithms::MissingTokenDetector),
     ]
 }
