@@ -49,13 +49,14 @@ Each prefix was chosen for visual resonance with its meaning:
 | `_` | Permission | Lowest bar — floor of access, implicit deny, minimum privilege |
 | `#` | Data type | Hash/number sign — structured data, table grid |
 | `$` | Variable | Dollar sign — concrete instance of data (PHP convention) |
+| `$$` | Constant | Double dollar sign — global/system data instance or package-level constant |
 | `!` | Error | Exclamation — warning, something went wrong |
 | `@` | Package | At sign — addressing, "where this comes from" |
 | `%` | Metadata tree | Fraction symbol — the part of the Big Metadata Tree where you find the full address for all Aljam3 objects |
 | `;` | Environment | Semicolon — symbolic of foreign code line terminators (C++, Java, JS, Rust, Go) |
 | `~` | Continuation | Tilde — `[~]` continues the line above, `.~` iterates levels. Wave = "keep going" |
 
-The prefix set is closed — no new prefixes will be added. Every prefix participates in the `%` metadata tree (see [[user/concepts/data-is-trees]] and [[glossary#Data Tree|Data Tree]]).
+The prefix set is finite and strictly controlled — new prefixes are only added when absolutely necessary to minimize cognitive load. Every prefix participates in the `%` metadata tree (see [[user/concepts/data-is-trees]] and [[glossary#Data Tree|Data Tree]]).
 
 ## The Three-Bracket System
 
@@ -71,7 +72,7 @@ Aljam3 uses three bracket shapes, each with a single semantic role:
 
 **`{X}` — Define.** Curly brackets open top-level definitions: types (`{#}`), pipelines (`{-}`), permissions (`{_}`), packages (`{@}`), triggers (`{T}`), wrappers (`{W}`), queues (`{Q}`), errors (`{!}`), natives (`{N}`), and collectors (`{*}`). Every `{X}` creates a branch on the `%` metadata tree. The bracket shape says: *this is a new thing in the world*.
 
-**`[X]` — Control.** Square brackets mark lines inside definitions: triggers (`[T]`), queues (`[Q]`), wrappers (`[W]`), execution (`[-]`, `[=]`, `[b]`), conditionals (`[?]`), errors (`[!]`), setup (`[\]`), cleanup (`[/]`), metadata (`[%]`), data load (`[#]`), and collectors (`[*]`). The bracket shape says: *this is what this line does*.
+**`[X]` — Control.** Square brackets mark lines inside definitions: triggers (`[T]`), queues (`[Q]`), wrappers (`[W]`), execution (`[-]`, `[=]`, `[b]`), conditionals (`[?]`), errors (`[!]`), setup (`[\]`), cleanup (`[/]`), metadata (`[%]`), constants (`[$]`), data load (`[#]`), and collectors (`[*]`). The bracket shape says: *this is what this line does*.
 
 **`(X)` — IO.** Round brackets declare data flow: pipeline IO (`(-)`), expand IO (`(=)`), collect IO (`(*)`), permission IO (`(_)`, `(#)`, `(-)`), output handling (`(>)`), input handling (`(<)`), and operation labels (`(-) $Label`). The bracket shape says: *data moves here*.
 

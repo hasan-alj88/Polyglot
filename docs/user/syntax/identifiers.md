@@ -16,9 +16,10 @@ ALL Aljam3 identifiers require a prefix — see [[packages]] for `@` address for
 | Prefix | Type | Example |
 |--------|------|---------|
 | `@` | Packages | `@Local:999::MyPackage:Sub:v1.0.0` |
-| `#` | Struct definitions | `#UserRecord`, `#Boolean.True` |
+| `#` | Struct definitions | `#UserRecord`, `#Boolean` |
 | `-` | Pipelines | `-ProcessData`, `-Pipeline.Name` |
 | `$` | Variables | `$name`, `$result:status`, `$*` (discard) |
+| `$$`| Constants | `$$True`, `$$Today`, `$$AliasName` |
 | `!` | Errors | `!No.Input`, `!Timeout:Connection` |
 | `?` | Boolean Predicates | `?Queue.Host.IsEqual` |
 | `_` | Permission object | `_DataCeiling`, `_ReportReader` |
@@ -43,7 +44,7 @@ ALL identifiers are **serialized data**. Two field separators distinguish schema
 | `%` | Metadata | Read-only runtime metadata | `-Pipeline%status` — live pipeline status |
 
 **Fixed fields (`.`)** — keys predefined by either:
-- **Aljam3 standard** — built-in types, errors, enums (`#Boolean.True`, `pg.string`, `!No.Input`)
+- **Aljam3 standard** — built-in types, errors, enums (`#Boolean`, `pg.string`, `!No.Input`), and built-in constants (`$$True`, `$$None`).
 - **User-defined structs** — fields declared via `{#}` blocks (`#UserRecord.name`, `#UserRecord.age`)
 
 **Flexible fields (`:`)** — user-defined, any key accepted:
@@ -65,7 +66,7 @@ The `%` accessor reads `live`-typed metadata that the runtime populates. Users c
 
 The prefix (`$`, `@`, `!`, `#`, `-`, `_`) identifies the type. The separators (`.` fixed, `:` flexible) navigate within it. For how separators apply to struct definitions, see [[syntax/types/structs#Enum Fields vs Value Fields]]. For collection types that use these schemas, see [[concepts/collections/INDEX#Collection Types]].
 
-These serialized paths — `#Boolean.True`, `$user:name`, `-Pipeline%status` — are all branches on one unified tree. Every Aljam3 object lives in the `%` metadata tree, organized by its prefix. After learning the core concepts, see [[data-is-trees]] for how everything connects.
+These serialized paths — `$$True`, `$user:name`, `-Pipeline%status` — are all branches on one unified tree. Every Aljam3 object lives in the `%` metadata tree, organized by its prefix. After learning the core concepts, see [[data-is-trees]] for how everything connects.
 
 ## Serialization Rules
 
@@ -73,7 +74,7 @@ These serialized paths — `#Boolean.True`, `$user:name`, `-Pipeline%status` —
 
 ```aljam3
 [ ] VALID:   $user:name, $user:age        [ ] all flexible
-[ ] VALID:   #Boolean.True, #Boolean.False [ ] all fixed
+[ ] VALID:   $$True, $$False               [ ] all fixed
 [ ] INVALID: $user.name, $user:age         [ ] mixed separators at same level
 ```
 

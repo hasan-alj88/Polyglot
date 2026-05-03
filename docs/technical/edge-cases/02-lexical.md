@@ -36,13 +36,13 @@ updated: 2026-03-30
 ### EC-2.2: Bool literals
 
 <!-- @c:types -->
-**EBNF:** `bool_literal ::= "#Boolean.True" | "#Boolean.False"` — booleans are data references, not keywords.
+**EBNF:** `bool_literal ::= "$$True" | "$$False"` — booleans are built-in global instances (constants).
 
-**What it tests:** Bool values are `#Boolean.True` / `#Boolean.False` (not `true`/`false`). See [[syntax/types/INDEX|types]].
+**What it tests:** Bool values use the `$$` constant prefix: `$$True` / `$$False` (not `true`/`false`). See [[syntax/types/INDEX|types]].
 
 ```aljam3
-[-] $flag#bool << #Boolean.True
-(-) >enabled#bool ~> #Boolean.False
+[-] $flag#bool << $$True
+(-) >enabled#bool ~> $$False
 ```
 
 ### EC-2.3: Negative numeric literals

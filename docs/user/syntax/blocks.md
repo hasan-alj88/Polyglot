@@ -84,7 +84,7 @@ See [[io]] for IO parameter patterns and [[concepts/collections/INDEX|collection
 | `[b]` | Run/execute in background (fire and forget) |
 | `[*]` | Invoke a collector operator (`*All`, `*First`, `*Nth`, `*Ignore`). IO lines underneath use `(*)`. See [[concepts/collections/collect#Collect-All & Race Collectors]] |
 | `[#]` | Load serialized data into typed structure. In `{#}` definitions, loads external files at compile time — requires `(#) _PermName` permission input. Subject to [[permissions/enforcement#Compile-Time File Binding]] (content-hashed, permission-revoked on change). See [[ebnf/10-execution#Data Load]] |
-| `[$]` | Constructor type binding — inside `{$}` definitions, declares the target type: `[$] #TargetType`. Exactly one per overload. Must appear after all `($)` IO lines and before `[.]` field assignments. See [[constructors]] |
+| `[$]` | Context-dependent assignment: (1) **Constant/Direct Assignment**: Inside `{@}` packages or `{-}` pipelines, defines constants or direct variable assignments (e.g., `[$] $$Alias << #Status.Done` or `[$] $var#int <~ 0`). (2) **Constructor Type Binding**: Inside `{$}` definitions, declares the target type: `[$] #TargetType`. See [[constructors]] |
 
 ### Control Flow
 

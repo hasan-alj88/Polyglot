@@ -155,7 +155,7 @@ The grammar defines the following scope categories:
 - **Control Flow**: `[?]`, `[t]`, `[Q]`, `[W]` - `keyword.control.flow.aljam3`
 - **Scope**: `[~]`, `[\]`, `[/]`, `[{]`, `[}]` - `keyword.control.scope.aljam3`
 - **Logical**: `[&]`, `[+]`, `[-]`, `[^]`, `[.]` - `keyword.operator.logical.aljam3`
-- **Special**: `[X]`, `[A]`, `[*]` - `keyword.control.special.aljam3`
+- **Special**: `[X]`, `[A]`, `[*]`, `[$]` - `keyword.control.special.aljam3`
 
 ### Operators
 - **Push**: `<<` - `keyword.operator.dataflow.push.aljam3`
@@ -169,7 +169,8 @@ The grammar defines the following scope categories:
 - **Pipeline**: `-PipelineName` - `entity.name.function.pipeline.aljam3`
 - **Enumeration**: `#EnumName` - `entity.name.type.enumeration.aljam3`
 - **Error**: `!ErrorName` - `entity.name.type.error.aljam3`
-- **Variable**: `.variableName` - `variable.other.aljam3`
+- **Variable**: `.variableName`, `$name` - `variable.other.aljam3`
+- **Constant**: `$$True`, `$$Alias` - `constant.language.aljam3`
 - **Package**: `@package/name` - `entity.name.package.aljam3`
 
 ### Types
@@ -182,7 +183,7 @@ The grammar defines the following scope categories:
 - **String**: `"text"` - `string.quoted.double.aljam3`
 - **DateTime String**: `DT"2025-12-03"` - `string.quoted.datetime.aljam3`
 - **Number**: `123`, `45.67` - `constant.numeric.*.aljam3`
-- **Reserved Enums**: `#Boolean.True`, `#None`, `#PgVar.States.Ready` - `constant.language.*.aljam3`
+- **Reserved Constants**: `$$True`, `$$False`, `$$None` - `constant.language.*.aljam3`
 - **Error Markers**: `!No.Input`, `!No.Output` - `constant.language.error.aljam3`
 
 ### Comments
