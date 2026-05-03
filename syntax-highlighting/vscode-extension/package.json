@@ -2,7 +2,11 @@
   "name": "aljam3-language-support",
   "displayName": "Aljam3 Language Support",
   "description": "Syntax highlighting and language support for Aljam3 automation language",
-  "version": "0.1.9",
+  "version": "0.1.12",
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:aljam3"
+  ],
   "publisher": "aljam3-lang",
   "icon": "icons/extension-icon.png",
   "license": "MIT",
@@ -73,10 +77,16 @@
     ]
   },
   "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
     "package": "vsce package",
     "publish": "vsce publish"
   },
   "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "@types/node": "^16.11.0",
+    "typescript": "^4.9.5",
     "@vscode/vsce": "^2.19.0"
   },
   "dependencies": {

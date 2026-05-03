@@ -6,6 +6,12 @@ cd "$(dirname "$0")"
 echo "🧹 Cleaning up old builds..."
 rm -f *.vsix
 
+echo "📦 Installing dependencies..."
+npm install || { echo "❌ npm install failed"; exit 1; }
+
+echo "🔨 Compiling extension..."
+npm run compile || { echo "❌ Compilation failed"; exit 1; }
+
 echo "📦 Packaging new VSIX..."
 vsce package || { echo "❌ Packaging failed"; exit 1; }
 
