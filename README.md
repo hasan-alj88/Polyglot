@@ -100,7 +100,7 @@ A pipeline that watches for new log files, summarises them with an LLM, and writ
       (=) <Data << $NewFiles
       (=) >item >> $logFile
       (=) >key >> $index
-      [?] -File.Access"{$logFile}" =? #FileAccess.Available
+      [?] -File.Access"{$logFile}" ?= $$FileAccess.Available
          [-] $logContent#string << -File.Text.Read"{$logFile}"
             (>) >! ""
          [-] @llm-Summarize
@@ -110,7 +110,7 @@ A pipeline that watches for new log files, summarises them with an LLM, and writ
          [-] -File.Text.Write
             (-) <path << -Path"/var/logs/reports/log_report_{$index}.txt"
             (-) <content << $summary
-      [?] *?
+      [?] ?*
          [-] -DoNothing
    [-] *Agg.Count
       (*) <item << $summary
@@ -122,7 +122,7 @@ A pipeline that watches for new log files, summarises them with an LLM, and writ
 - `{-}` pipeline with mandatory `[T]` trigger, `[Q]` queue, `[W]` wrapper
 - `(-)` IO parameters with `<<`/`>>` assignment and `#type` annotations
 - `[=]` parallel expand over an array with `(=)` IO
-- `[?]` conditionals with mandatory comparison operators and `*?` wildcard catch-all
+- `[?]` conditionals with mandatory prefix query operators (`?=`) and `?*` wildcard catch-all
 - `[!]` error handling with `!*` wildcard catch and recovery value
 - `[-]` sequential calls with inline string args (`"{$logFile}"`)
 - `*Agg.Count` collector with `(*)` IO writing to output port
@@ -234,8 +234,8 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
 
 | Shape | Role | Examples |
 |-------|------|---------|
-| `{X}` | Define | `{@}` package, `{#}` struct, `{-}` pipeline, `{!}` errors, `{_}` permissions |
-| `[X]` | Control | `[T]` trigger, `[Q]` queue, `[W]` wrapper, `[-]` run, `[=]` parallel, `[?]` conditional |
+| `{X}` | Define | `{@}` package, `{#}` struct, `{-}` pipeline, `{!}` errors, `{_}` permissions, `{$}` constructor |
+| `[X]` | Control | `[T]` trigger, `[Q]` queue, `[W]` wrapper, `[-]` run, `[=]` parallel, `[?]` conditional, `[$]` constant |
 | `(X)` | IO | `(-)` pipeline IO, `(=)` expand IO, `(*)` collect IO |
 
 ### Identifier Prefixes
@@ -246,6 +246,7 @@ Runtime wrappers (`[W]`) connect to foreign language runtimes:
 | `#` | Data type | `#UserRecord`, `#string` |
 | `-` | Pipeline | `-ProcessData`, `-File.Text.Read` |
 | `$` | Variable | `$input`, `$result` |
+| `$$`| Constant | `$$True`, `$$AliasName` |
 | `!` | Error | `!File.NotFound`, `!Error:Validation.Empty` |
 | `%` | Metadata | `%#`, `%-`, `%!` |
 | `_` | Permission | `_ReadOnly`, `__NetworkAccess` |
