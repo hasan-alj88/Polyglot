@@ -78,6 +78,22 @@ This acts as pure structural manipulation; the compiler unrolls this into an exh
 **Compile-Time Safety Note:** 
 `=*PermuteLevels` is only valid on **Uniform Trees** (where all branches share the exact same schema structure, like a DataFrame). If `$users` is a non-uniform tree (meaning branches have different schemas), attempting to permute the levels will trigger a strict **Compiler Error**, as the resulting structure cannot be safely inferred.
 
+### Tree Assembly (Combining)
+
+The Reassembler is also the native tool for grouping disjoint DataTrees into a single, combined DataTree without using a manual collection loop. Using `=*Combine`, you can assemble an arbitrary number of trees, explicitly assigning them as Level 1 branches under a new parent.
+
+The input parameters for `=*Combine` use a dynamic `<Branch.` prefix followed by the desired branch name:
+
+```aljam3
+[ ] Combine disjoint trees into a single tree
+[-] =*Combine
+   (=) <Branch.tree1 << $tree1         [ ] Becomes branch 'tree1'
+   (=) <Branch.AnyBranchName << $tree2 [ ] Becomes branch 'AnyBranchName'
+   (*) >> $combined
+```
+
+The parameter name after the dot is interpreted by the compiler as the constant branch name. In the resulting `$combined` tree, the 1st level fields will be exactly those names.
+
 ### Namespaces
 
 Reassemble operators combine the expander and collector namespaces:

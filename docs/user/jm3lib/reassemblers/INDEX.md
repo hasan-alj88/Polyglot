@@ -24,6 +24,7 @@ Expand a collection and reduce to a single scalar value.
 
 Because Reassemblers execute "expand-then-collect" instantly in memory without a pipeline body, they are the only mechanism allowed to perform atomic topology changes.
 
+- `=*Combine` -- [[Combine|Reference]] -- Atomically groups disjoint DataTrees into a single parent DataTree as Level 1 branches.
 - `=*PermuteLevels` -- Safely transposes a multi-dimensional `##Uniform` Data Tree (e.g., swaps rows and columns). Throws a compile error if attempted on a `#Serial` tree.
 - `=*Sort` -- Atomically sorts the branches of a Data Tree.
 - `=*Filter` -- Atomically filters branches based on a schema or regex.

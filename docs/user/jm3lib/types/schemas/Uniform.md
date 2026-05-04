@@ -7,11 +7,19 @@ metadata_definition: "%definition.##:Uniform"
 metadata_instance: "%##:Uniform:N"
 ---
 
-# `##Uniform` — Symmetric Data Tree Schema
+# Uniform — Symmetric Data Tree Schema
 
 <!-- @c:schemas -->
 
-The `##Uniform` property is the foundational schema for **self-similar data trees** in Aljam3. It guarantees that every branch at a specific depth level has the exact same structure and datatype.
+The `##Uniform` property is the foundational schema for **self-similar data trees** in Aljam3. It guarantees that every branch at a specific depth level has the exact same structural schema. 
+
+## `##Uniform` vs `###Uniform`
+
+While `##Uniform` enforces structural symmetry (e.g., every row in a table has the same columns), it does not restrict the data types of the leaves across the entire tree. For example, a `##Uniform` tree can have a `#String` in one column and an `#Int` in another.
+
+To enforce strict, homogeneous data types across the entire tree, Aljam3 provides the `###Uniform` syntactic sugar. 
+
+**`###Uniform`** is syntactic sugar for manually setting the `%##` schema metadata. It automatically applies `##Uniform` and further restricts the schema so that **every single leaf** in the branch must be of the exact same scalar Data Type (like a strict `#String` array or a float matrix).
 
 ## Structural Definition
 

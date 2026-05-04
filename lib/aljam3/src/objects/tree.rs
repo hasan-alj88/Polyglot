@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 use serde::{Deserialize, Serialize};
 use regex::Regex;
@@ -200,5 +200,43 @@ impl Aljam3DataTree {
     /// Implements ##Map behavior (and ##TimeSeries).
     pub fn generate_map(&mut self, _base_path: &str) {
         // No pre-generation required for dynamic keys.
+    }
+
+    /// Extracts a subtree by keeping only nodes that start with the given branch path,
+    /// and stripping the prefix so they are relative to the subtree root.
+    pub fn extract_subtree(&self, branch_path: &str) -> HashMap<String, Aljam3DataLeaf> {
+        let mut subtree = HashMap::new();
+        for (key, leaf) in &self.nodes {
+            if key == branch_path {
+                subtree.insert("".to_string(), leaf.clone());
+            } else if key.starts_with(branch_path) {
+                let remainder = &key[branch_path.len()..];
+                if remainder.starts_with('.') || remainder.starts_with(':') || remainder.starts_with('<') {
+                    subtree.insert(remainder[1..].to_string(), leaf.clone());
+                }
+            }
+        }
+        subtree
+    }
+
+    /// Gets all immediate children (next segment of the path) of a given branch path.
+    pub fn get_first_level_branches(&self, branch_path: &str) -> HashSet<String> {
+        let mut branches = HashSet::new();
+        for key in self.nodes.keys() {
+            if key.starts_with(branch_path) && key.len() > branch_path.len() {
+                let remainder = &key[branch_path.len()..];
+                if remainder.starts_with('.') || remainder.starts_with(':') || remainder.starts_with('<') {
+                    let sub_remainder = &remainder[1..];
+                    let next_delim = sub_remainder.find(|c| c == '.' || c == ':' || c == '<').unwrap_or(sub_remainder.len());
+                    branches.insert(sub_remainder[..next_delim].to_string());
+                }
+            }
+        }
+        branches
+    }
+    
+    /// Calculates depth based on ., :, and < delimiters
+    pub fn calculate_depth(path: &str) -> usize {
+        path.chars().filter(|c| *c == '.' || *c == ':' || *c == '<').count()
     }
 }
