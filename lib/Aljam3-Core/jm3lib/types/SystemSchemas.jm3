@@ -1,0 +1,62 @@
+{@} @jm3lib.types.schemas
+
+{ } System Data Tree Schemas
+{ } Core topological declarations for the {;}, {_}, and {!} data trees.
+
+{#} ##Environments
+   [%] .description << "Configuration tree for deployment environments"
+   [#] %##Active << #ActiveType.One
+   [.] .File
+      [.] .file#File
+      [.] .Mode#String
+   [.] .Database
+      [.] .Uri#URIString
+      [.] .Pool#Int
+   [.] .Runtime
+      [#] %##Active << #ActiveType.One
+      [.] .Python
+         [.] .uv#Boolean
+         [.] .Requirements#File
+      [.] .Rust
+         [.] .CargoToml#File
+      [.] .Node
+         [.] .PackageJson#File
+
+{#} #QueryHandles
+   [.] .Select
+   [.] .Delete
+   [.] .Insert
+
+{#} ##Permissions
+   [%] .description << "Authorized capability handles tree"
+   [#] %##Active << #ActiveType.One
+   [.] .File
+      [.] .Read
+      [.] .Write
+   [.] .Database
+      [.] .Query##Array
+         (.) #<#QueryHandles
+      [.] .Table##Array
+         (.) #<#String
+   [.] .Runtime
+      [.] .Execute
+      [.] .Compile
+
+{#} ##Error
+   [%] .description << "Standard error terminal"
+   [.] .Code#Int
+   [.] .Message#String
+   [.] .Fatal#Boolean
+
+{#} ##ErrorsTree
+   [%] .description << "Global registry of system errors"
+   [.] .File
+      [.] .NotFound##Error
+      [.] .AccessDenied##Error
+   [.] .Database
+      [.] .Timeout##Error
+      [.] .SchemaMismatch##Error
+   [.] .Runtime
+      [.] .CompilationFailed##Error
+      [.] .ProcessCrashed##Error
+      [.] .MissingDependency##Error

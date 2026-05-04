@@ -60,11 +60,12 @@ flowchart LR
 | 15 | packages.md | {@ } declaration, address format, imports |
 | 16 | jm3lib/INDEX.md | Namespace registry → per-namespace reference files |
 
-## Phase 5: Practice
+## Phase 5: Practice & Setup
 
 | File | Covers |
 |------|--------|
 | scenarios/INDEX.md | 500 real-world automation scenarios (6 thematic files) |
+| ide-integration.md | VS Code & Antigravity Setup (Semantic Highlighting & Auto-Complete) |
 
 ## For Designers
 

@@ -75,7 +75,7 @@
       "patterns": [
         {
           "name": "keyword.control.aljam3",
-          "match": "\\[-\\]|\\{-\\}|\\(-\\)|\\[=\\]|\\{=\\}|\\(=\\)|\\[\\$\\]|\\{\\$\\}|\\(\\$\\)"
+          "match": "\\[-\\]|\\{-\\}|\\(-\\)|\\[=\\]|\\{=\\}|\\(=\\)|\\[\\$\\]|\\{\\$\\}|\\(\\$\\)|\\[;\\]|\\{;\\}|\\(;\\)|\\[_\\]|\\{_\\}|\\(_\\)"
         },
         {
           "name": "keyword.control.conditional.aljam3",
@@ -104,6 +104,22 @@
         {
           "name": "support.function.aljam3",
           "match": "-[A-Za-z0-9.]+"
+        },
+        {
+          "name": "entity.name.function.aljam3",
+          "match": "=\\*[A-Za-z0-9.]+"
+        },
+        {
+          "name": "entity.name.function.aljam3",
+          "match": "=[A-Za-z0-9.]+"
+        },
+        {
+          "name": "entity.name.function.aljam3",
+          "match": "\\*[A-Za-z0-9.]+"
+        },
+        {
+          "name": "entity.name.type.aljam3",
+          "match": "(___|__|_|;)[A-Za-z0-9.]+"
         },
         {
           "name": "entity.name.tag.aljam3",

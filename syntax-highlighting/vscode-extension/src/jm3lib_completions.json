@@ -1,0 +1,135 @@
+{
+  "$$": [
+    { "label": "True", "detail": "System Constant", "kind": "Constant" },
+    { "label": "False", "detail": "System Constant", "kind": "Constant" },
+    { "label": "None", "detail": "System Constant", "kind": "Constant" }
+  ],
+  "#": [
+    { "label": "String", "detail": "Foundation Type", "kind": "Class" },
+    { "label": "Int", "detail": "Scalar Type", "kind": "Class" },
+    { "label": "UnsignedInt", "detail": "Scalar Type", "kind": "Class" },
+    { "label": "Float", "detail": "Scalar Type", "kind": "Class" },
+    { "label": "Sci", "detail": "Scalar Type", "kind": "Class" },
+    { "label": "Eng", "detail": "Scalar Type", "kind": "Class" },
+    { "label": "Boolean", "detail": "Enum Type", "kind": "Class" },
+    { "label": "None", "detail": "Absence Type", "kind": "Class" },
+    { "label": "Folder", "detail": "Struct Type", "kind": "Class" },
+    { "label": "DateTime", "detail": "Struct Type", "kind": "Class" },
+    { "label": "dt", "detail": "Alias for DateTime", "kind": "Class" },
+    { "label": "Map", "detail": "Collection Type", "kind": "Class" },
+    { "label": "Array", "detail": "Collection Type", "kind": "Class" },
+    { "label": "Serial", "detail": "Collection Type", "kind": "Class" },
+    { "label": "Dataframe", "detail": "Collection Type", "kind": "Class" }
+  ],
+  "?": [
+    { "label": "=", "detail": "Equal", "insertText": "= ", "kind": "Operator" },
+    { "label": "!=", "detail": "Not equal", "insertText": "!= ", "kind": "Operator" },
+    { "label": ">", "detail": "Greater than", "insertText": "> ", "kind": "Operator" },
+    { "label": "<", "detail": "Less than", "insertText": "< ", "kind": "Operator" },
+    { "label": ">=", "detail": "Greater or equal", "insertText": ">= ", "kind": "Operator" },
+    { "label": "<=", "detail": "Less or equal", "insertText": "<= ", "kind": "Operator" },
+    { "label": "*", "detail": "Wildcard (catch-all)", "insertText": "*", "kind": "Operator" },
+    { "label": "in", "detail": "Includes (contains)", "insertText": "in ", "kind": "Operator" },
+    { "label": "has", "detail": "Has key", "insertText": "has ", "kind": "Operator" },
+    { "label": "#", "detail": "Domain: Type Check", "insertText": "#", "kind": "Event", "command": "triggerSuggest" },
+    { "label": "##", "detail": "Domain: Schema Check", "insertText": "##", "kind": "Event", "command": "triggerSuggest" },
+    { "label": "_", "detail": "Domain: Permission Check", "insertText": "_", "kind": "Event", "command": "triggerSuggest" },
+    { "label": "@", "detail": "Domain: Provenance Check", "insertText": "@", "kind": "Event", "command": "triggerSuggest" },
+    { "label": "!", "detail": "Domain: Error Check", "insertText": "!", "kind": "Event", "command": "triggerSuggest" },
+    { "label": "-", "detail": "Domain: Source Check", "insertText": "-", "kind": "Event", "command": "triggerSuggest" }
+  ],
+  "[-": [
+    { "label": "T", "detail": "Trigger Block", "insertText": "T] -T.", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "Q", "detail": "Queue Block", "insertText": "Q] -Q.", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "W", "detail": "Wrapper Block", "insertText": "W] -W.", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "-", "detail": "Sequential Block", "insertText": "-] -", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "=", "detail": "Parallel Block", "insertText": "=] -", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "b", "detail": "Background Block", "insertText": "b] -", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "\\", "detail": "Split Block", "insertText": "\\] ", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "/", "detail": "Merge Block", "insertText": "/] ", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "?", "detail": "Query Block", "insertText": "?] ", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "!", "detail": "Error Block", "insertText": "!] ", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "$", "detail": "State Block", "insertText": "$] ", "kind": "Module", "command": "triggerSuggest" }
+  ],
+  "[@": [
+    { "label": "@", "detail": "Import Block", "insertText": "@] @", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "$", "detail": "State Block", "insertText": "$] ", "kind": "Module", "command": "triggerSuggest" }
+  ],
+  "[#": [
+    { "label": "#", "detail": "Type Block", "insertText": "#] ", "kind": "Module", "command": "triggerSuggest" },
+    { "label": ".", "detail": "Fixed Field", "insertText": ".] .", "kind": "Module", "command": "triggerSuggest" },
+    { "label": ":", "detail": "Flexible Field", "insertText": ":] :", "kind": "Module", "command": "triggerSuggest" }
+  ],
+  "-": [
+    { "label": "T", "detail": "Trigger Namespace", "insertText": "T.", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "Q", "detail": "Queue Namespace", "insertText": "Q.", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "W", "detail": "Wrapper Namespace", "insertText": "W.", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "RT", "detail": "Runtime Namespace", "insertText": "RT.", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "DT", "detail": "DateTime Namespace", "insertText": "DT.", "kind": "Module", "command": "triggerSuggest" },
+    { "label": "File", "detail": "Pipeline Namespace", "kind": "Module" },
+    { "label": "Math", "detail": "Pipeline Namespace", "kind": "Module" },
+    { "label": "Sys", "detail": "Pipeline Namespace", "kind": "Module" },
+    { "label": "Text", "detail": "Pipeline Namespace", "kind": "Module" },
+    { "label": "Path", "detail": "Pipeline Namespace", "kind": "Module" }
+  ],
+  "-T.": [
+    { "label": "Call", "kind": "Function" },
+    { "label": "CLI", "kind": "Function" },
+    { "label": "Daily", "kind": "Function" },
+    { "label": "Folder", "kind": "Function" },
+    { "label": "Webhook", "kind": "Function" }
+  ],
+  "-Q.": [
+    { "label": "Pause", "kind": "Function" },
+    { "label": "Resume", "kind": "Function" },
+    { "label": "Kill", "kind": "Function" },
+    { "label": "Assign", "kind": "Function" }
+  ],
+  "-W.": [
+    { "label": "Aljam3", "kind": "Function" },
+    { "label": "DB", "kind": "Function" },
+    { "label": "File", "kind": "Function" },
+    { "label": "HTTP", "kind": "Function" },
+    { "label": "SSH", "kind": "Function" },
+    { "label": "Auth", "kind": "Function" },
+    { "label": "Log", "kind": "Function" },
+    { "label": "Queue", "kind": "Function" },
+    { "label": "Cache", "kind": "Function" },
+    { "label": "RT", "kind": "Function" }
+  ],
+  "=": [
+    { "label": "ForEach", "detail": "Expander Operator", "kind": "Function" }
+  ],
+  "*": [
+    { "label": "All", "detail": "Race Collector", "kind": "Function" },
+    { "label": "First", "detail": "Race Collector", "kind": "Function" },
+    { "label": "Nth", "detail": "Race Collector", "kind": "Function" },
+    { "label": "FirstN", "detail": "Race Collector", "kind": "Function" },
+    { "label": "Collect", "detail": "Collector", "kind": "Function" },
+    { "label": "Into", "detail": "Collector Namespace", "kind": "Module" },
+    { "label": "Agg", "detail": "Collector Namespace", "kind": "Module" }
+  ],
+  "=*": [
+    { "label": "Agg", "detail": "Reassemble Operator", "kind": "Function" },
+    { "label": "Into", "detail": "Reassemble Operator", "kind": "Function" }
+  ],
+  "!": [
+    { "label": "File", "detail": "Error Namespace", "kind": "Event" },
+    { "label": "No", "detail": "Error Namespace", "kind": "Event" },
+    { "label": "Timeout", "detail": "Error Namespace", "kind": "Event" },
+    { "label": "Math", "detail": "Error Namespace", "kind": "Event" },
+    { "label": "Validation", "detail": "Error Namespace", "kind": "Event" },
+    { "label": "Field", "detail": "Error Namespace", "kind": "Event" }
+  ],
+  "__": [
+    { "label": "File", "detail": "Generic Permission", "kind": "Interface" },
+    { "label": "Web", "detail": "Generic Permission", "kind": "Interface" },
+    { "label": "Database", "detail": "Generic Permission", "kind": "Interface" },
+    { "label": "System", "detail": "Generic Permission", "kind": "Interface" }
+  ],
+  "@": [
+    { "label": "Local", "detail": "Provenance Domain", "kind": "Module" },
+    { "label": "Community", "detail": "Provenance Domain", "kind": "Module" },
+    { "label": "Company", "detail": "Provenance Domain", "kind": "Module" }
+  ]
+}

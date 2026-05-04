@@ -23,6 +23,7 @@ This is the single entry point for all Aljam3 documentation. Authority chain: [[
 | Validate an edge case | [[technical/edge-cases/INDEX]] |
 | Understand the type system | [[user/syntax/types/INDEX]] |
 | Find a real-world automation scenario | [[user/scenarios/INDEX]] |
+| Configure my IDE (VS Code / Antigravity) | [[user/ide-integration]] |
 | Check documentation writing rules | [[audit/README]] |
 | See the product vision | [[vision]] |
 | Understand the project philosophy | [[philosophy/core-philosophy]] |
@@ -57,6 +58,7 @@ This is the single entry point for all Aljam3 documentation. Authority chain: [[
 | [[user/concepts/]] | Core concepts: variable lifecycle, collections, conditionals, pipelines, errors, permissions, metadata |
 | [[user/jm3lib/]] | Standard library: pipelines, expanders, collectors, types, errors |
 | [[user/scenarios/INDEX]] | 500 real-world automation scenarios (split into 6 thematic files) |
+| [[user/ide-integration]] | IDE Setup: Semantic Syntax Highlighting and Auto-Complete features |
 
 ### For Designers (language syntax & semantics)
 

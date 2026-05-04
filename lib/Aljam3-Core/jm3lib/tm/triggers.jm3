@@ -7,7 +7,7 @@
    [%] .description << "Pipeline invoked by another pipeline"
    [=] >IsTriggered#bool
 
-{-} =T.Manual
+{-} -T.CLI
    [%] .description << "Pipeline invoked manually from CLI or test harness"
    [=] >IsTriggered#bool
 
